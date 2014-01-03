@@ -1,0 +1,87 @@
+###### made by h0rn3t ######
+
+sysrw() {
+    busybox mount -o remount,rw /system 2>/dev/null;
+}
+sysro() {
+    busybox mount -o remount,ro /system 2>/dev/null;
+}
+
+set_prop() {
+        prop_key=$(busybox echo "$1" | cut -d'=' -f1);
+        prop_value=$(busybox echo "$1" | cut -d'=' -f2);
+        prop_file=${2:-/system/build.prop}
+        seperator="="
+        exit_status=1;
+        if busybox [ -e $prop_file ];then
+            sysrw
+                prop_line=` busybox grep -m 1 $prop_key $prop_file `
+                if busybox [ -n "${prop_line}" ]
+                then
+                        if busybox [ -n "$( echo $prop_line | busybox grep ' = ' )" ];then
+                                seperator=" = "
+                        fi
+                        busybox sed -i "s|${prop_key}${seperator}.*|${prop_key}${seperator}${prop_value}|g" $prop_file
+                        exit_status=$?
+                else
+                    busybox echo "$prop_key$seperator$prop_value" >> $prop_file;
+                    exit_status=$?
+                fi;
+                sysro;
+        fi
+        return $exit_status
+}
+
+count_files(){
+if busybox [ "X$2" == "X" ]; then
+    ext="*";
+else
+    ext="$2";
+fi;
+r="";
+for d in $1; do
+    if busybox [ -d $d ]; then
+        i=$( busybox find $d -type f -name "$ext" | busybox wc -l );
+    else
+        i=0;
+    fi;
+    if busybox [ "X$r" == "X" ]; then
+        r="$i";
+    else
+        r="$r:$i";
+    fi;
+done;
+echo "$r";
+}
+
+get_cpu(){
+c="$1";
+max=`busybox cat /sys/devices/system/cpu/cpu$c/cpufreq/scaling_max_freq`;
+if busybox [ -f /sys/module/cpu_tegra/parameters/cpu_user_cap ]; then
+    max=`busybox cat /sys/module/cpu_tegra/parameters/cpu_user_cap`;
+fi;
+if busybox [ -f /sys/power/cpufreq_max_limit ]; then
+    max=`busybox cat /sys/power/cpufreq_max_limit`;
+fi;
+min=`busybox cat /sys/devices/system/cpu/cpu$c/cpufreq/scaling_min_freq`;
+if busybox [ -f /sys/power/cpufreq_min_limit ]; then
+    min=`busybox cat /sys/power/cpufreq_min_limit`;
+fi;
+gov=`busybox cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`;
+io=`busybox awk -F'[][]' '{print $2}' /sys/block/mmcblk0/queue/scheduler`;
+online=1;
+if busybox [ -f /sys/devices/system/cpu/cpu0/online ]; then
+    online=`busybox cat /sys/devices/system/cpu/cpu0/online`;
+fi;
+echo "$min:$max:$gov:$io:$online";
+}
+
+arg=$1;
+if busybox [ "$arg" == "-count" ]; then
+    count_files "$DIRS";
+elif busybox [ "$arg" == "-setprop" ]; then
+    set_prop "$2" $3;
+elif busybox [ "$arg" == "-getcpu" ]; then
+    get_cpu "$2";
+fi;
+exit;

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--  Copyright (C) 2013 Alexander "Evisceration" Martinz
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<resources>
+
+    <!-- App -->
+    <string name="app_name">Device Control</string>
+    <string name="app_information_help">Welcome to JF Control!\n\nTo get started, swipe out the drawer from the left!\n\nTo edit preferences of JF Control,\nswipe out the drawer from the right!\n\nTo view information about your device,\nswipe right.\n\n\nPlease note, that some functions may\nneed root as well!\n\n</string>
+    <string name="app_device_help">Welcome to the Device Screen!\n\nYou can swipe right,\nto discover device controls!\n\n(Note: if a function is not supported,\nit gets hidden automatically.)\n\n</string>
+    <string name="app_performance_help">Welcome to the Performance Section!\n\nWARNING!\nOnly do changes if you are\n100% sure what you are doing!\n\n</string>
+    <string name="app_tasker_help">Welcome to the Tasker!\n\nYou can swipe right,\nto discover and setup\nautomated tasks!\n\n</string>
+    <string name="app_tools_help">Welcome to the Tools Section!\n\nYou can swipe right,\nto discover various useful tools!\n\n(Note: please be careful though!)\n\n</string>
+
+    <!-- General -->
+    <string name="defaults_button">Reset to default</string>
+    <string name="general_others">Others</string>
+
+    <!-- Dialogs -->
+    <string name="dialog_wait">Please wait…</string>
+    <string name="dialog_getting_information">Getting information about %s …</string>
+
+    <!-- Information -->
+    <string name="info_restart">Please restart the activity!</string>
+
+    <!-- Sections -->
+    <string name="section_title_welcome">Welcome</string>
+    <string name="section_title_information">Information</string>
+    <string name="section_title_general">General</string>
+    <!-- Device -->
+    <string name="section_title_device">Device</string>
+    <string name="section_title_device_input">Input</string>
+    <string name="section_title_device_light">Light</string>
+    <string name="section_title_device_sensors">Sensors</string>
+    <string name="section_title_device_graphics">Graphics</string>
+    <!-- Tasker -->
+    <string name="section_title_tasker">Tasker</string>
+    <string name="section_title_tasker_optimizations">Optimizations</string>
+    <!-- Performance -->
+    <string name="section_title_performance">Performance</string>
+    <string name="section_title_cpu">CPU</string>
+    <!-- Tools -->
+    <string name="section_title_tools">Tools</string>
+    <string name="section_title_tools_sysctl">Sysctl Editor</string>
+    <string name="section_title_tools_vm">VM Editor</string>
+
+    <!-- CPU -->
+    <string name="cpu_hotplug">Hotplugger</string>
+    <string name="cpu_hotplug_mpdecision_title">MPDecision</string>
+    <string name="cpu_hotplug_mpdecision_summary_on">MPDecision is enabled.</string>
+    <string name="cpu_hotplug_mpdecision_summary_off">MPDecision is disabled.</string>
+
+    <!-- Sensors -->
+    <string name="category_sensors_title">Sensors</string>
+    <string name="gyro_subcat_title">Gyroscope</string>
+    <string name="use_gyro_calibration_title_head">Use calibration data</string>
+    <string name="use_gyro_calibration_summary_head">Use the gyroscope calibration values.\nDo a calibration after checking this!</string>
+    <string name="calibrate_gyro_title_head">Calibrate</string>
+    <string name="calibrate_gyro_summary_head">Put your phone on a flat surface, and press to calibrate</string>
+
+    <!-- Touchscreen -->
+    <string name="touchscreen_subcat_title">Touchscreen</string>
+    <string name="touchscreen_sensitivity_title_head">Touch sensitivity</string>
+    <string name="touchscreen_sensitivity_summary_head">Set touch panel sensitivity</string>
+
+    <!-- Key Lights -->
+    <string name="touchkey_subcat_title">Touch key</string>
+    <string name="touchkey_light_title_head">Enable keys backlight</string>
+    <string name="touchkey_light_summary_head">Light up touch keys when screen is on</string>
+    <string name="touchkey_bln_title_head">Enable keys notifications</string>
+    <string name="touchkey_bln_summary_head">Light up touch keys when screen is off and a notification is received</string>
+    <string name="keyboard_light_title_head">Enable keyboard backlight</string>
+    <string name="keyboard_light_summary_head">Light up keyboard backlight when screen is on</string>
+
+    <!-- Vibrator -->
+    <string name="vibrator_title">Vibrator</string>
+    <string name="vibrator_tuning_title">Vibration strength</string>
+    <string name="vibrator_tuning_summary_head">Adjust the strength of the vibration feedback</string>
+    <string name="vibrator_warning">Values higher than %1$d are not recommended</string>
+
+    <!-- Navigation Bar -->
+    <string name="navbar_title">Navigation Bar</string>
+    <string name="navbar_force_title">Force navigation bar</string>
+    <string name="navbar_force_summary">Requires a reboot!</string>
+
+    <!-- Others -->
+    <string name="input_glove_mode_title">Glove Mode</string>
+    <string name="input_glove_mode_summary">Makes the touchscreen more sensitive, eg for using it with gloves.</string>
+
+    <!-- Graphics -->
+    <!-- Panel color -->
+    <string name="panel_gamma_title_head">Screen gamma</string>
+    <string name="panel_gamma_summary_head">Set screen gamma value</string>
+    <string name="panel_color_temp_title_head">Screen color temperature</string>
+    <string name="panel_color_temp_summary_head">Turn screen off and back on to activate</string>
+    <string name="panel_color_temp_cold">Cold</string>
+    <string name="panel_color_temp_cool">Cool</string>
+    <string name="panel_color_temp_normal">Normal</string>
+    <string name="panel_color_temp_warm">Warm</string>
+    <string name="panel_color_temp_hot">Hot</string>
+
+    <!-- Preferences -->
+    <!-- Appearance -->
+    <string name="prefs_jf_appearance">Appearance</string>
+    <string name="prefs_jf_appearance_custom_animations_title">Use Animations</string>
+    <string name="prefs_jf_appearance_custom_animations_summary_on">Custom animations are enabled.</string>
+    <string name="prefs_jf_appearance_custom_animations_summary_off">Custom animations are disabled.</string>
+    <string name="prefs_jf_appearance_custom_transformer_title">Page Transformer</string>
+    <string name="prefs_jf_appearance_custom_transformer_summary">Animation when switching pages in the viewpager.</string>
+    <string name="transformer_zoomout">Zoom Out</string>
+    <string name="transformer_depth">Depth</string>
+    <!-- Debug -->
+    <string name="prefs_jf_debug">Debugging</string>
+    <string name="jf_debug_extensive_logging_title">Extensive Logging</string>
+    <string name="jf_debug_extensive_logging_summary_on">Logging to LogCat enabled.</string>
+    <string name="jf_debug_extensive_logging_summary_off">Logging to LogCat disabled.</string>
+    <!-- Extras -->
+    <string name="prefs_jf_extras">Extras</string>
+    <string name="jf_extras_launcher_title">Show in app drawer</string>
+    <string name="jf_extras_launcher_summary_on">Launcher entry is visible.</string>
+    <string name="jf_extras_launcher_summary_off">Launcher entry is hidden.</string>
+
+    <!-- Tasker -->
+    <string name="tasker_optimization_fstrim_cat_title">Fstrimming</string>
+    <string name="tasker_optimization_filesystem_fstrim_title">Automatic fstrimming</string>
+    <string name="tasker_optimization_filesystem_fstrim_summary_on">Fstrimming enabled.</string>
+    <string name="tasker_optimization_filesystem_fstrim_summary_off">Fstrimming disabled.</string>
+    <string name="tasker_optimization_filesystem_fstrim_interval_title">Fstrim interval</string>
+    <string name="tasker_optimization_filesystem_fstrim_interval_summary">Choose interval for automatic fstrimming.</string>
+
+    <!-- Drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Widgets -->
+    <string name="widget_torch_on">Torch On</string>
+    <string name="widget_torch_off">Torch Off</string>
+
+    <!-- Array Entries -->
+    <string name="five_minutes">5 Minutes</string>
+    <string name="ten_minutes">10 Minutes</string>
+    <string name="twenty_minutes">20 Minutes</string>
+    <string name="thirty_minutes">30 Minutes</string>
+    <string name="one_hours">1 Hour</string>
+    <string name="two_hours">2 Hours</string>
+    <string name="four_hours">4 Hours</string>
+    <string name="eight_hours">8 Hours</string>
+
+    <!-- Etc -->
+    <string name="etc_sob">Set on boot</string>
+    <string name="etc_apply_values">Apply values</string>
+    <string name="etc_filter">Filter</string>
+    <string name="etc_save">"Save"</string>
+    <string name="etc_cancel">Cancel</string>
+    <string name="etc_add_prop_title">Add Parameter</string>
+    <string name="etc_edit_prop_title">Edit Parameter</string>
+
+</resources>

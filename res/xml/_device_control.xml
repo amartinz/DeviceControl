@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  Copyright (C) 2013 Alexander "Evisceration" Martinz
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="prefs_jf_appearance"
+        android:title="@string/prefs_jf_appearance">
+
+        <SwitchPreference
+            android:key="prefs_jf_appearance_custom_animations"
+            android:title="@string/prefs_jf_appearance_custom_animations_title"
+            android:summaryOn="@string/prefs_jf_appearance_custom_animations_summary_on"
+            android:summaryOff="@string/prefs_jf_appearance_custom_animations_summary_off"
+            android:checked="true" />
+
+        <ListPreference
+            android:key="prefs_jf_appearance_custom_transformer"
+            android:title="@string/prefs_jf_appearance_custom_transformer_title"
+            android:summary="@string/prefs_jf_appearance_custom_transformer_summary"
+            android:entries="@array/prefs_jf_appearance_custom_transformer_entries"
+            android:entryValues="@array/prefs_jf_appearance_custom_transformer_values"
+            android:defaultValue="0"
+            android:dependency="prefs_jf_appearance_custom_transformer" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="prefs_jf_debug"
+        android:title="@string/prefs_jf_debug">
+
+        <SwitchPreference
+            android:key="jf_extensive_logging"
+            android:title="@string/jf_debug_extensive_logging_title"
+            android:summaryOn="@string/jf_debug_extensive_logging_summary_on"
+            android:summaryOff="@string/jf_debug_extensive_logging_summary_off" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="prefs_jf_extras"
+        android:title="@string/prefs_jf_extras">
+
+        <SwitchPreference
+            android:key="jf_extras_launcher"
+            android:title="@string/jf_extras_launcher_title"
+            android:summaryOn="@string/jf_extras_launcher_summary_on"
+            android:summaryOff="@string/jf_extras_launcher_summary_off" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
+
