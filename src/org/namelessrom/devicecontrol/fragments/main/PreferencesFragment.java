@@ -173,8 +173,8 @@ public class PreferencesFragment extends PreferenceFragment
     private boolean switchLauncher(boolean shouldSwitch) {
         boolean isShowing;
 
-        ComponentName component = new ComponentName("org.namelessrom.jfcontrol",
-                "org.namelessrom.jfcontrol.activities.DummyLauncher");
+        ComponentName component = new ComponentName(PACKAGE_NAME,
+                PACKAGE_NAME + ".activities.DummyLauncher");
         isShowing = ((mPm.getComponentEnabledSetting(component) ==
                 PackageManager.COMPONENT_ENABLED_STATE_DEFAULT)
                 || (mPm.getComponentEnabledSetting(component) ==
