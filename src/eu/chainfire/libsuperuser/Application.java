@@ -23,6 +23,9 @@ import org.namelessrom.devicecontrol.R;
 
 public class Application extends android.app.Application {
 
+    // Switch to your needs
+    public static final boolean IS_LOG_DEBUG = true;
+
     public static boolean IS_SYSTEM_APP = false;
     public static boolean HAS_ROOT = false;
 

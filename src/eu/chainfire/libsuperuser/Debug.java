@@ -16,7 +16,6 @@
 
 package eu.chainfire.libsuperuser;
 
-import android.os.Looper;
 import android.util.Log;
 
 /**
@@ -26,7 +25,7 @@ public class Debug {
 
     // ----- DEBUGGING -----
 
-    private static boolean debug = false;
+    private static boolean debug = true;
 
     /**
      * <p>Enable or disable debug mode</p>
@@ -84,7 +83,8 @@ public class Debug {
             if (logListener != null) {
                 logListener.onLog(type, typeIndicator, message);
             } else {
-                Log.d(TAG, "[" + TAG + "][" + typeIndicator + "]" + (!message.startsWith("[") && !message.startsWith(" ") ? " " : "") + message);
+                Log.d(TAG, "[" + TAG + "][" + typeIndicator + "]" + (!message.startsWith("[")
+                        && !message.startsWith(" ") ? " " : "") + message);
             }
         }
     }
@@ -234,7 +234,8 @@ public class Debug {
      * @return Running on main thread ?
      */
     public static boolean onMainThread() {
-        return ((Looper.myLooper() != null) && (Looper.myLooper() == Looper.getMainLooper()));
+        return false;
+        //return ((Looper.myLooper() != null) && (Looper.myLooper() == Looper.getMainLooper()));
     }
 
 }
