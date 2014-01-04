@@ -18,6 +18,9 @@
 
 package org.namelessrom.devicecontrol.fragments.performance;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -26,8 +29,8 @@ import android.preference.PreferenceGroup;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.tasks.PerformanceCpuTask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PerformanceCpuFragment extends PreferenceFragment
@@ -60,5 +63,54 @@ public class PerformanceCpuFragment extends PreferenceFragment
 
     public static boolean isSupported() {
         return (false);
+    }
+
+    class PerformanceCpuTask extends AsyncTask<Void, Integer, List<Boolean>>
+            implements DeviceConstants {
+
+        private final Context mContext;
+        private final PerformanceCpuFragment mFragment;
+        private ProgressDialog mDialog;
+
+        public PerformanceCpuTask(PerformanceCpuFragment paramFragment) {
+            mFragment = paramFragment;
+            mContext = mFragment.getActivity();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            mDialog = new ProgressDialog(mContext);
+            mDialog.setTitle("");
+            mDialog.setMessage(mContext.getString(R.string.dialog_getting_information, ""));
+            mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mDialog.setCancelable(false);
+            mDialog.show();
+        }
+
+        @Override
+        protected List<Boolean> doInBackground(Void... voids) {
+            List<Boolean> tmpList = new ArrayList<Boolean>();
+
+            publishProgress(0);
+
+            return tmpList;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... integers) {
+            switch (integers[0]) {
+                default:
+                case 0:
+                    mDialog.setMessage(mContext.getString(
+                            R.string.dialog_getting_information, "Hotplugger"));
+                    break;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<Boolean> booleans) {
+            mDialog.dismiss();
+            mFragment.setResult(booleans);
+        }
     }
 }

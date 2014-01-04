@@ -78,11 +78,13 @@ public class ToolsVmEditor extends Fragment
 
         View view = inflater.inflate(R.layout.prop_view, container, false);
 
-        Shell.SU.run("busybox mkdir -p " + dn);
+        Shell.SH.run("busybox mkdir -p " + dn);
         if (new File(syspath + mod + ".conf").exists()) {
-            Shell.SU.run("busybox cp " + syspath + mod + ".conf" + " " + dn + "/" + mod + ".conf");
+            Shell.SU.run("busybox cp " + syspath + mod + ".conf" + " " +
+                    dn + "/" + mod + ".conf");
         } else {
-            Shell.SU.run("busybox echo \"# created by JFControl\n\" > " + dn + "/" + mod + ".conf");
+            Shell.SH.run("busybox echo \"# created by JFControl\n\" > " +
+                    dn + "/" + mod + ".conf");
         }
 
         packList = (ListView) view.findViewById(R.id.applist);

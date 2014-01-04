@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.DeviceConstants;
@@ -29,11 +28,15 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
 
 import java.io.File;
+import java.util.List;
 
+import eu.chainfire.libsuperuser.Application;
 import eu.chainfire.libsuperuser.Shell;
 
+import static org.namelessrom.devicecontrol.utils.Utils.logDebug;
+
 /**
- * Created by alex on 19.12.13.
+ * Restores and Applies values on boot, as well as starts services.
  */
 public class BootupReceiver extends BroadcastReceiver implements DeviceConstants {
 
@@ -41,6 +44,9 @@ public class BootupReceiver extends BroadcastReceiver implements DeviceConstants
     public void onReceive(Context context, Intent intent) {
 
         PreferenceHelper.getInstance(context);
+
+        final boolean isSystem = Application.IS_SYSTEM_APP;
+        final boolean isDebug = Application.IS_LOG_DEBUG;
 
         /* Reapply values */
         boolean tmp;
@@ -85,8 +91,19 @@ public class BootupReceiver extends BroadcastReceiver implements DeviceConstants
             }
         }
 
-        Shell.SU.run(sb.toString());
-        Log.v(TAG, "bootup | cmd: " + sb.toString());
+        logDebug("bootup | cmd: " + sb.toString(), isDebug);
+        if (isSystem) {
+            List<String> tmpList = Shell.SH.run(sb.toString());
+            logDebug("bootup | SH", isDebug);
+            if (tmpList.get(0) == null) {
+                logDebug("bootup | SU", isDebug);
+                tmpList = Shell.SU.run(sb.toString());
+            }
+            logDebug("bootup | result: " + tmpList.get(0), isDebug);
+        } else {
+            logDebug("bootup | SU", isDebug);
+            Shell.SU.run(sb.toString());
+        }
 
         // Start Tasker Service
         Intent service = new Intent(context, TaskerService.class);
