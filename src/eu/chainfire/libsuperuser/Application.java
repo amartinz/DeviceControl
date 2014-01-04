@@ -21,7 +21,12 @@ import android.os.AsyncTask;
 
 import org.namelessrom.devicecontrol.R;
 
+import static org.namelessrom.devicecontrol.utils.Utils.logDebug;
+
 public class Application extends android.app.Application {
+
+    // Switch to your needs
+    public static final boolean IS_LOG_DEBUG = true;
 
     public static boolean IS_SYSTEM_APP = false;
     public static boolean HAS_ROOT = false;
@@ -31,15 +36,16 @@ public class Application extends android.app.Application {
         super.onCreate();
 
         IS_SYSTEM_APP = getResources().getBoolean(R.bool.is_system_app);
-        if (!IS_SYSTEM_APP) {
-            new DetectSu().execute();
-        }
+
+        // we need to detect SU for some features :)
+        new DetectSu().execute();
 
         try {
             // workaround bug in AsyncTask, can show up (for example) when you toast from a service
             // this makes sure AsyncTask's internal handler is created from the right (main) thread
             Class.forName("android.os.AsyncTask");
         } catch (ClassNotFoundException e) {
+            logDebug("Application: " + e.getMessage(), IS_LOG_DEBUG);
         }
     }
 
