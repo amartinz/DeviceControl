@@ -37,23 +37,33 @@ import eu.chainfire.libsuperuser.Shell;
 
 public class Utils implements DeviceConstants {
 
-    // Read value from sysfs interface
+    /**
+     * Reads a single line from a file.
+     *
+     * @param sFile The files to read from.
+     * @return The read string OR null if not existing.
+     */
     public static String readOneLine(String sFile) {
         String sLine = null;
-        if (Application.IS_SYSTEM_APP) {
-            BufferedReader brBuffer;
-            try {
-                brBuffer = new BufferedReader(new FileReader(sFile), 512);
+        // don't even bother reading nothing, return null
+        if (fileExists(sFile)) {
+            if (Application.IS_SYSTEM_APP) {
+                BufferedReader brBuffer;
                 try {
-                    sLine = brBuffer.readLine();
-                } finally {
-                    brBuffer.close();
+                    brBuffer = new BufferedReader(new FileReader(sFile), 512);
+                    try {
+                        sLine = brBuffer.readLine();
+                    } finally {
+                        brBuffer.close();
+                    }
+                } catch (Exception e) {
+                    logDebug("readOneLine: reading failed: " + e.getMessage(),
+                            Application.IS_LOG_DEBUG);
+                    return readFileViaShell(sFile);
                 }
-            } catch (Exception e) {
+            } else {
                 return readFileViaShell(sFile);
             }
-        } else {
-            return readFileViaShell(sFile);
         }
         return sLine;
     }
@@ -83,19 +93,22 @@ public class Utils implements DeviceConstants {
      * @param value    The value
      */
     public static boolean writeValue(String filename, String value) {
-        boolean success = true;
-        try {
-            FileWriter fw = new FileWriter(filename);
+        // the existence of the file is a requirement for the success ;)
+        boolean success = fileExists(filename);
+        if (success) {
             try {
-                fw.write(value);
-            } finally {
-                fw.close();
+                FileWriter fw = new FileWriter(filename);
+                try {
+                    fw.write(value);
+                } finally {
+                    fw.close();
+                }
+            } catch (IOException e) {
+                logDebug("writeValue: writing failed: " + e.getMessage(),
+                        Application.IS_LOG_DEBUG);
+                success = writeValueViaShell(filename, value);
             }
-        } catch (IOException e) {
-            success = writeValueViaShell(filename, value);
         }
-
-        Log.i(TAG, "SH | writing to: " + filename + " | " + (success ? "true" : "false"));
 
         return success;
     }
@@ -115,8 +128,6 @@ public class Utils implements DeviceConstants {
         if (tmpList != null) {
             if (tmpList.size() == 0) success = true;
         }
-
-        Log.i(TAG, "SU | writing to: " + filename + " | " + (success ? "true" : "false"));
 
         return success;
     }
@@ -139,7 +150,10 @@ public class Utils implements DeviceConstants {
      * @return Whether the file exists or not
      */
     public static boolean fileExists(String filename) {
-        return new File(filename).exists();
+        final boolean isExisting = new File(filename).exists();
+        logDebug("fileExists: " + filename + ": " + (isExisting ? "true" : "false"),
+                Application.IS_LOG_DEBUG);
+        return isExisting;
     }
 
     /**
@@ -168,7 +182,7 @@ public class Utils implements DeviceConstants {
      */
     public static void logDebug(String msg, boolean debug) {
         if (debug) {
-            Log.e("JFCONTROL", msg);
+            Log.e(TAG, msg);
         }
     }
 
@@ -182,7 +196,10 @@ public class Utils implements DeviceConstants {
         for (String s : dirList) {
             dir = new File(s);
             if (!dir.exists()) {
-                dir.mkdirs();
+                logDebug("setupDirectories: creating " + s, Application.IS_LOG_DEBUG);
+                final boolean isSuccess = dir.mkdirs();
+                logDebug("setupDirectories: " + (isSuccess ? "true" : "false"),
+                        Application.IS_LOG_DEBUG);
             }
         }
     }
@@ -190,6 +207,7 @@ public class Utils implements DeviceConstants {
     public static void createFiles(Context context) {
         if (!new File(context.getFilesDir() + "/utils").exists()) {
             get_assetsScript("utils", context, "", "");
+            // needs SU
             Shell.SU.run("busybox chmod 750 " + context.getFilesDir() + "/utils");
         }
     }
@@ -201,7 +219,7 @@ public class Utils implements DeviceConstants {
                 return tmpList.get(0);
             }
         }
-
+        logDebug("getBinPath: found binary at: " + b, Application.IS_LOG_DEBUG);
         return "";
     }
 

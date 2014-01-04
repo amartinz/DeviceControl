@@ -62,7 +62,7 @@ public class DeviceInputFragment extends PreferenceFragment implements DeviceCon
             getPreferenceScreen().removePreference(mGloveMode);
         }
 
-        new DeviceGeneralTask(this).execute();
+        new DeviceInputTask(this).execute();
 
     }
 
@@ -93,14 +93,14 @@ public class DeviceInputFragment extends PreferenceFragment implements DeviceCon
 
     //
 
-    class DeviceGeneralTask extends AsyncTask<Void, Integer, List<Boolean>>
+    class DeviceInputTask extends AsyncTask<Void, Integer, List<Boolean>>
             implements DeviceConstants {
 
         private final Context mContext;
         private final DeviceInputFragment mFragment;
         private ProgressDialog mDialog;
 
-        public DeviceGeneralTask(DeviceInputFragment paramFragment) {
+        public DeviceInputTask(DeviceInputFragment paramFragment) {
             mFragment = paramFragment;
             mContext = mFragment.getActivity();
         }
