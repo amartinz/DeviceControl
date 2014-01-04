@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -29,11 +30,12 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
 
 import java.io.File;
+import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
 
 /**
- * Created by alex on 19.12.13.
+ * Restores and Applies values on boot, as well as starts services.
  */
 public class BootupReceiver extends BroadcastReceiver implements DeviceConstants {
 
@@ -41,6 +43,8 @@ public class BootupReceiver extends BroadcastReceiver implements DeviceConstants
     public void onReceive(Context context, Intent intent) {
 
         PreferenceHelper.getInstance(context);
+
+        boolean isSystem = context.getResources().getBoolean(R.bool.is_system_app);
 
         /* Reapply values */
         boolean tmp;
@@ -85,7 +89,14 @@ public class BootupReceiver extends BroadcastReceiver implements DeviceConstants
             }
         }
 
-        Shell.SU.run(sb.toString());
+        if (isSystem) {
+            List<String> tmpList = Shell.SH.run(sb.toString());
+            if (tmpList.get(0) == null) {
+                Shell.SU.run(sb.toString());
+            }
+        } else {
+            Shell.SU.run(sb.toString());
+        }
         Log.v(TAG, "bootup | cmd: " + sb.toString());
 
         // Start Tasker Service

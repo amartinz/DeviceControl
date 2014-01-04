@@ -71,7 +71,8 @@ public class DeviceLightsFragment extends PreferenceFragment implements DeviceCo
     }
 
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
+                                         Preference preference) {
         if (preference == mBacklightKey) {
             Utils.writeValue(FILE_TOUCHKEY_TOGGLE,
                     mBacklightKey.isChecked() ? "255" : "0");

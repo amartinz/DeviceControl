@@ -22,8 +22,10 @@ import java.util.List;
 import eu.chainfire.libsuperuser.Application;
 import eu.chainfire.libsuperuser.Shell;
 
+import static org.namelessrom.devicecontrol.utils.Utils.logDebug;
+
 /**
- * Created by alex on 22.12.13.
+ * Defines and runs Scripts.
  */
 public class Scripts {
 
@@ -31,26 +33,27 @@ public class Scripts {
         List<String> tmpList;
 
         if (Application.IS_SYSTEM_APP) {
+            logDebug("runScript: SH", Application.IS_LOG_DEBUG);
             tmpList = Shell.SH.run(mCommands);
         } else {
+            logDebug("runScript: SU", Application.IS_LOG_DEBUG);
             tmpList = Shell.SU.run(mCommands);
         }
 
         // System app fallback, in case we need to enforce root
-        if (tmpList == null) {
-            tmpList = Shell.SU.run(mCommands);
-        }
-        if (tmpList.size() <= 0) {
+        if (tmpList.get(0) == null) {
+            logDebug("runScript: tmpList == null", Application.IS_LOG_DEBUG);
             tmpList = Shell.SU.run(mCommands);
         }
 
+        logDebug("runScript: tmpList.get(0) == " + tmpList.get(0), Application.IS_LOG_DEBUG);
         return tmpList;
     }
 
     //
 
     public static boolean getForceNavBar() {
-        boolean tmpBool;
+        boolean tmpBool = false;
         List<String> tmpList;
 
         tmpList = Scripts.runScript(
@@ -60,12 +63,14 @@ public class Scripts {
                         "then echo \"0\";" +
                         "fi");
 
-        if (!(tmpList.size() <= 0)) {
+        if (!(tmpList.get(0) == null)) {
+            logDebug("getForceNavBar: tmpList.get(0) == " + tmpList.get(0),
+                    Application.IS_LOG_DEBUG);
             tmpBool = tmpList.get(0).equals("1");
-        } else {
-            tmpBool = false;
         }
 
+        logDebug("getForceNavBar: tmpBool == " + (tmpBool ? "true" : "false"),
+                Application.IS_LOG_DEBUG);
         return tmpBool;
     }
 

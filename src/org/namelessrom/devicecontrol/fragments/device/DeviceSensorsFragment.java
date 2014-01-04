@@ -50,7 +50,8 @@ public class DeviceSensorsFragment extends PreferenceFragment
     }
 
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
+                                         Preference preference) {
         if (preference == mGyroUse) {
             Utils.writeValue(FILE_USE_GYRO_CALIB, (mGyroUse.isChecked() ? "1" : "0"));
         } else if (preference == mGyroCalibrate) {

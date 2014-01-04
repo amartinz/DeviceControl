@@ -110,13 +110,18 @@ public class VibratorTuningPreference extends DialogPreference
         // can't use onPrepareDialogBuilder for this as we want the dialog
         // to be kept open on click
         AlertDialog d = (AlertDialog) getDialog();
-        Button defaultsButton = d.getButton(DialogInterface.BUTTON_NEUTRAL);
-        defaultsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSeekBar.setProgress(strengthToPercent(VIBRATOR_INTENSITY_DEFAULT_VALUE));
+        if (d != null) {
+            Button defaultsButton = d.getButton(DialogInterface.BUTTON_NEUTRAL);
+            if (defaultsButton != null) {
+                defaultsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mSeekBar.setProgress(
+                                strengthToPercent(VIBRATOR_INTENSITY_DEFAULT_VALUE));
+                    }
+                });
             }
-        });
+        }
     }
 
     @Override
