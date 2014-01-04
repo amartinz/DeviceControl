@@ -36,6 +36,8 @@ import org.namelessrom.devicecontrol.utils.widgets.JfViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.chainfire.libsuperuser.Application;
+
 /**
  * Created by alex on 18.12.13.
  */
@@ -74,16 +76,24 @@ public class ToolsFragment extends AttachFragment {
     private List<Fragment> getFragments() {
         List<Fragment> tmpList = new ArrayList<Fragment>();
         tmpList.add(new ToolsHelpFragment());
-        tmpList.add(new ToolsSysctlEditor());
-        tmpList.add(new ToolsVmEditor());
+        if (Application.HAS_ROOT) {
+            tmpList.add(new ToolsSysctlEditor());
+        }
+        if (Application.HAS_ROOT) {
+            tmpList.add(new ToolsVmEditor());
+        }
         return tmpList;
     }
 
     private List<String> getTitles() {
         List<String> tmpList = new ArrayList<String>();
         tmpList.add(getString(R.string.section_title_information));
-        tmpList.add(getString(R.string.section_title_tools_sysctl));
-        tmpList.add(getString(R.string.section_title_tools_vm));
+        if (Application.HAS_ROOT) {
+            tmpList.add(getString(R.string.section_title_tools_sysctl));
+        }
+        if (Application.HAS_ROOT) {
+            tmpList.add(getString(R.string.section_title_tools_vm));
+        }
         return tmpList;
     }
 }

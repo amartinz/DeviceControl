@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.DeviceConstants;
@@ -29,11 +28,15 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
 
 import java.io.File;
+import java.util.List;
 
+import eu.chainfire.libsuperuser.Application;
 import eu.chainfire.libsuperuser.Shell;
 
+import static org.namelessrom.devicecontrol.utils.Utils.logDebug;
+
 /**
- * Created by alex on 19.12.13.
+ * Restores and Applies values on boot, as well as starts services.
  */
 public class BootupReceiver extends BroadcastReceiver implements DeviceConstants {
 
@@ -41,6 +44,8 @@ public class BootupReceiver extends BroadcastReceiver implements DeviceConstants
     public void onReceive(Context context, Intent intent) {
 
         PreferenceHelper.getInstance(context);
+
+        List<String> tmpList;
 
         /* Reapply values */
         boolean tmp;
@@ -85,8 +90,16 @@ public class BootupReceiver extends BroadcastReceiver implements DeviceConstants
             }
         }
 
-        Shell.SU.run(sb.toString());
-        Log.v(TAG, "bootup | cmd: " + sb.toString());
+        // Without root, these features are not available, sorry!
+        if (!Application.HAS_ROOT) {
+            logDebug("bootUp | SU", Application.IS_LOG_DEBUG);
+            tmpList = Shell.SU.run(sb.toString());
+            if (tmpList.get(0) != null) {
+                for (String s : tmpList) {
+                    logDebug("bootUp | SU result: " + s, Application.IS_LOG_DEBUG);
+                }
+            }
+        }
 
         // Start Tasker Service
         Intent service = new Intent(context, TaskerService.class);
