@@ -23,7 +23,7 @@ import eu.chainfire.libsuperuser.Application;
 import eu.chainfire.libsuperuser.Shell;
 
 /**
- * Created by alex on 22.12.13.
+ * Defines and runs Scripts.
  */
 public class Scripts {
 
@@ -37,10 +37,7 @@ public class Scripts {
         }
 
         // System app fallback, in case we need to enforce root
-        if (tmpList == null) {
-            tmpList = Shell.SU.run(mCommands);
-        }
-        if (tmpList.size() <= 0) {
+        if (tmpList.get(0) == null) {
             tmpList = Shell.SU.run(mCommands);
         }
 
@@ -50,7 +47,7 @@ public class Scripts {
     //
 
     public static boolean getForceNavBar() {
-        boolean tmpBool;
+        boolean tmpBool = false;
         List<String> tmpList;
 
         tmpList = Scripts.runScript(
@@ -60,10 +57,8 @@ public class Scripts {
                         "then echo \"0\";" +
                         "fi");
 
-        if (!(tmpList.size() <= 0)) {
+        if (!(tmpList.get(0) == null)) {
             tmpBool = tmpList.get(0).equals("1");
-        } else {
-            tmpBool = false;
         }
 
         return tmpBool;

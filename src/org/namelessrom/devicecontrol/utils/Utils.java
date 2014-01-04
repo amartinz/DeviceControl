@@ -23,6 +23,8 @@ import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import org.namelessrom.devicecontrol.R;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -168,7 +170,7 @@ public class Utils implements DeviceConstants {
      */
     public static void logDebug(String msg, boolean debug) {
         if (debug) {
-            Log.e("JFCONTROL", msg);
+            Log.e("DEVICECONTROL", msg);
         }
     }
 
@@ -190,7 +192,11 @@ public class Utils implements DeviceConstants {
     public static void createFiles(Context context) {
         if (!new File(context.getFilesDir() + "/utils").exists()) {
             get_assetsScript("utils", context, "", "");
-            Shell.SU.run("busybox chmod 750 " + context.getFilesDir() + "/utils");
+            if (context.getResources().getBoolean(R.bool.is_system_app)) {
+                Shell.SH.run("busybox chmod 750 " + context.getFilesDir() + "/utils");
+            } else {
+                Shell.SU.run("busybox chmod 750 " + context.getFilesDir() + "/utils");
+            }
         }
     }
 
