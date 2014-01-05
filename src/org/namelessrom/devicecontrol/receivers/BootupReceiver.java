@@ -63,7 +63,9 @@ public class BootupReceiver extends BroadcastReceiver implements DeviceConstants
         Utils.writeValue(FILE_PANEL_COLOR_TEMP,
                 PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2"));
 
-        HighTouchSensitivity.setEnabled(PreferenceHelper.getBoolean(KEY_GLOVE_MODE, false));
+        if (HighTouchSensitivity.isSupported()) {
+            HighTouchSensitivity.setEnabled(PreferenceHelper.getBoolean(KEY_GLOVE_MODE, false));
+        }
 
         // Lights
         tmp = PreferenceHelper.getBoolean(KEY_TOUCHKEY_LIGHT, true);
