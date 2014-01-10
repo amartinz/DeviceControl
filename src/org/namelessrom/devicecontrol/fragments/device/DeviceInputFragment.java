@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2012 The CyanogenMod Project
- *  Modifications Copyright (C) 2013 Alexander "Evisceration" Martinz
+ * Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +16,6 @@
 
 package org.namelessrom.devicecontrol.fragments.device;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -37,12 +34,20 @@ import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeviceInputFragment extends PreferenceFragment implements DeviceConstants, Preference.OnPreferenceChangeListener {
+public class DeviceInputFragment extends PreferenceFragment
+        implements DeviceConstants, Preference.OnPreferenceChangeListener {
 
+    //==============================================================================================
+    // Fields
+    //==============================================================================================
     private static final boolean sVibratorTuning = Utils.fileExists(FILE_VIBRATOR);
 
     private CheckBoxPreference mForceNavBar;
     private CheckBoxPreference mGloveMode;
+
+    //==============================================================================================
+    // Overridden Methods
+    //==============================================================================================
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,7 @@ public class DeviceInputFragment extends PreferenceFragment implements DeviceCon
                 (VibratorTuningPreference) findPreference(KEY_VIBRATOR_TUNING);
 
         mForceNavBar = (CheckBoxPreference) findPreference(KEY_NAVBAR_FORCE);
+        mForceNavBar.setEnabled(false);
         mGloveMode = (CheckBoxPreference) findPreference(KEY_GLOVE_MODE);
         mGloveMode.setOnPreferenceChangeListener(this);
 
@@ -69,7 +75,7 @@ public class DeviceInputFragment extends PreferenceFragment implements DeviceCon
             getPreferenceScreen().removePreference(inputOthers);
         }
 
-        new DeviceInputTask(this).execute();
+        new DeviceInputTask().execute();
 
     }
 
@@ -89,8 +95,13 @@ public class DeviceInputFragment extends PreferenceFragment implements DeviceCon
         return changed;
     }
 
+    //==============================================================================================
+    // Methods
+    //==============================================================================================
+
     private void setResult(List<Boolean> paramResult) {
         mForceNavBar.setChecked(paramResult.get(0));
+        mForceNavBar.setEnabled(true);
         mForceNavBar.setOnPreferenceChangeListener(this);
     }
 
@@ -98,29 +109,12 @@ public class DeviceInputFragment extends PreferenceFragment implements DeviceCon
         return (true); // eg mForceNavBar is always showing, so no need to remove this screen
     }
 
-    //
+    //==============================================================================================
+    // Internal Classes
+    //==============================================================================================
 
     class DeviceInputTask extends AsyncTask<Void, Integer, List<Boolean>>
             implements DeviceConstants {
-
-        private final Context mContext;
-        private final DeviceInputFragment mFragment;
-        private ProgressDialog mDialog;
-
-        public DeviceInputTask(DeviceInputFragment paramFragment) {
-            mFragment = paramFragment;
-            mContext = mFragment.getActivity();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            mDialog = new ProgressDialog(mContext);
-            mDialog.setTitle("");
-            mDialog.setMessage(mContext.getString(R.string.dialog_getting_information, ""));
-            mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            mDialog.setCancelable(false);
-            mDialog.show();
-        }
 
         @Override
         protected List<Boolean> doInBackground(Void... voids) {
@@ -133,20 +127,8 @@ public class DeviceInputFragment extends PreferenceFragment implements DeviceCon
         }
 
         @Override
-        protected void onProgressUpdate(Integer... integers) {
-            switch (integers[0]) {
-                default:
-                case 0:
-                    mDialog.setMessage(mContext.getString(
-                            R.string.dialog_getting_information, "Navigationbar"));
-                    break;
-            }
-        }
-
-        @Override
         protected void onPostExecute(List<Boolean> booleans) {
-            mDialog.dismiss();
-            mFragment.setResult(booleans);
+            setResult(booleans);
         }
     }
 }
