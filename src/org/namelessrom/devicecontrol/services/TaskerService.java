@@ -28,12 +28,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
-import eu.chainfire.libsuperuser.Application;
 import eu.chainfire.libsuperuser.Shell;
 
 /**
@@ -45,15 +40,6 @@ public class TaskerService extends Service implements DeviceConstants {
     // Fields
     //==============================================================================================
     private boolean mDebug = false;
-    private boolean mShouldRun = false;
-    private boolean mFstrim = false;
-
-    //==============================================================================================
-    // Scheduler
-    //==============================================================================================
-    private final ScheduledExecutorService scheduler =
-            Executors.newScheduledThreadPool(1);
-    private ScheduledFuture fstrimHandle;
 
     //==============================================================================================
     // Overridden Methods
@@ -70,41 +56,23 @@ public class TaskerService extends Service implements DeviceConstants {
         PreferenceHelper.getInstance(this);
         mDebug = PreferenceHelper.getBoolean(JF_EXTENSIVE_LOGGING);
 
-        update();
+        String action = intent.getAction();
 
-        if (mFstrim) {
-            scheduleFstrim();
+        if (action != null) {
+            if (action.equals(ACTION_TASKER_FSTRIM)) {
+                mFstrimRunnable.run();
+            }
         }
 
-        if (!mShouldRun) {
-            stopSelf();
-        }
+        // Done, staaaahp it
+        stopSelf();
 
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     //==============================================================================================
     // Methods
     //==============================================================================================
-
-    private void update() {
-        mFstrim = PreferenceHelper.getBoolean(TASKER_TOOLS_FSTRIM);
-        logDebug("mFstrim: " + (mFstrim ? "true" : "false"));
-
-        // Set Flag to kill service if no tasker action is used
-        mShouldRun = mFstrim;
-        logDebug("mShouldRun: " + (mShouldRun ? "true" : "false"));
-    }
-
-    private void scheduleFstrim() {
-        if (fstrimHandle != null) {
-            fstrimHandle.cancel(true);
-        }
-        long period = Integer.parseInt(PreferenceHelper.getString(
-                TASKER_TOOLS_FSTRIM_INTERVAL, "30"));
-        fstrimHandle = scheduler.scheduleAtFixedRate(mFstrimRunnable, 1, period, TimeUnit.MINUTES);
-        logDebug("Fstrim scheduled every " + period + " Minutes.");
-    }
 
     private void logDebug(String msg) {
         Utils.logDebug(msg, mDebug);
@@ -115,7 +83,7 @@ public class TaskerService extends Service implements DeviceConstants {
     //================
     private final Runnable mFstrimRunnable = new Runnable() {
         public void run() {
-            List<String> mResults = null;
+            List<String> mResults;
             logDebug("FSTRIM RUNNING");
             FileOutputStream fos = null;
             try {
@@ -126,17 +94,7 @@ public class TaskerService extends Service implements DeviceConstants {
                 mCommands.add("busybox fstrim -v /data\n");
                 mCommands.add("busybox fstrim -v /cache\n");
 
-                if (Application.IS_SYSTEM_APP) {
-                    mResults = Shell.SH.run(mCommands);
-                } else {
-                    if (Application.HAS_ROOT) {
-                        mResults = Shell.SU.run(mCommands);
-                    }
-                }
-
-                if ((mResults == null) || (Application.IS_SYSTEM_APP && mResults.size() <= 1)) {
-                    mResults = Shell.SU.run(mCommands);
-                }
+                mResults = Shell.SU.run(mCommands);
 
                 if (mResults != null) {
                     fos = new FileOutputStream(JF_LOG_FILE_FSSTRIM);

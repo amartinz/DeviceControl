@@ -21,7 +21,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -45,10 +44,13 @@ public class BootupReceiver extends BroadcastReceiver implements DeviceConstants
 
         PreferenceHelper.getInstance(context);
 
-        List<String> tmpList;
+        // Schedule Tasker
+        Utils.setAlarmFstrim(context, Integer.parseInt(
+                PreferenceHelper.getString(TASKER_TOOLS_FSTRIM_INTERVAL, "30")));
 
         /* Reapply values */
         boolean tmp;
+        List<String> tmpList;
         StringBuilder sb = new StringBuilder();
 
         // Custom Shell Command
@@ -102,10 +104,6 @@ public class BootupReceiver extends BroadcastReceiver implements DeviceConstants
                 }
             }
         }
-
-        // Start Tasker Service
-        Intent service = new Intent(context, TaskerService.class);
-        context.startService(service);
     }
 
 }
