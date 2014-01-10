@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2013 h0rn3t
- *  Modifications Copyright (C) 2013 Alexander "Evisceration" Martinz
+ *  Modifications Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -78,15 +79,6 @@ public class ToolsSysctlEditor extends Fragment
 
         View view = inflater.inflate(R.layout.prop_view, container, false);
 
-        Shell.SH.run("busybox mkdir -p " + dn);
-        if (new File(syspath + mod + ".conf").exists()) {
-            Shell.SU.run("busybox cp " + syspath + mod + ".conf" + " " +
-                    dn + "/" + mod + ".conf");
-        } else {
-            Shell.SH.run("busybox echo \"# created by JFControl\n\" > " +
-                    dn + "/" + mod + ".conf");
-        }
-
         packList = (ListView) view.findViewById(R.id.applist);
         packList.setOnItemClickListener(this);
         linlaHeaderProgress = (LinearLayout) view.findViewById(R.id.linlaHeaderProgress);
@@ -131,7 +123,12 @@ public class ToolsSysctlEditor extends Fragment
         tools.setVisibility(View.GONE);
         isdyn = (new File(DYNAMIC_DIRTY_WRITEBACK_PATH).exists());
 
-        new GetPropOperation().execute();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                new GetPropOperation().execute();
+            }
+        }, 500);
 
         return view;
     }
@@ -139,9 +136,22 @@ public class ToolsSysctlEditor extends Fragment
     private class GetPropOperation extends AsyncTask<String, Void, List<String>> {
         @Override
         protected List<String> doInBackground(String... params) {
-            String cmd = "busybox echo `busybox find /proc/sys/* -type f -perm -644 |" +
-                    " grep -v \"vm.\"`";
-            List<String> mResult = Shell.SU.run(cmd);
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("busybox mkdir -p ").append(dn).append(";\n");
+
+            if (new File(syspath + mod + ".conf").exists()) {
+                sb.append("busybox cp " + syspath + mod + ".conf" + " ")
+                        .append(dn).append("/").append(mod).append(".conf;\n");
+            } else {
+                sb.append("busybox echo \"# created by DeviceControl\n\" > ")
+                        .append(dn).append("/").append(mod).append(".conf;\n");
+            }
+
+            sb.append("busybox echo `busybox find /proc/sys/* -type f -perm -644 |")
+                    .append(" grep -v \"vm.\"`;\n");
+
+            List<String> mResult = Shell.SU.run(sb.toString());
             if (mResult != null) {
                 return mResult;
             } else {

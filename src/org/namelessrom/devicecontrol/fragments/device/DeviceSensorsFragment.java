@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2012 The CyanogenMod Project
- *  Modifications Copyright (C) 2013 Alexander "Evisceration" Martinz
+ *  Modifications Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,9 +30,16 @@ import org.namelessrom.devicecontrol.utils.Utils;
 public class DeviceSensorsFragment extends PreferenceFragment
         implements DeviceConstants {
 
+    //==============================================================================================
+    // Fields
+    //==============================================================================================
     private static final boolean sHasGyro = Utils.fileExists(FILE_USE_GYRO_CALIB);
     private CheckBoxPreference mGyroUse;
     private Preference mGyroCalibrate;
+
+    //==============================================================================================
+    // Overridden Methods
+    //==============================================================================================
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,10 @@ public class DeviceSensorsFragment extends PreferenceFragment
         }
         return true;
     }
+
+    //==============================================================================================
+    // Methods
+    //==============================================================================================
 
     public static boolean isSupported() {
         return (sHasGyro);

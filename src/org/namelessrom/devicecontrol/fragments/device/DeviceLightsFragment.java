@@ -31,6 +31,9 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 public class DeviceLightsFragment extends PreferenceFragment implements DeviceConstants {
 
+    //==============================================================================================
+    // Fields
+    //==============================================================================================
     private CheckBoxPreference mBacklightKey;
     private CheckBoxPreference mBacklightNotification;
     private static final boolean sHasTouchkeyToggle = Utils.fileExists(FILE_TOUCHKEY_TOGGLE);
@@ -38,6 +41,10 @@ public class DeviceLightsFragment extends PreferenceFragment implements DeviceCo
 
     private CheckBoxPreference mKeyboardBacklight;
     private static final boolean sHasKeyboardToggle = Utils.fileExists(FILE_KEYBOARD_TOGGLE);
+
+    //==============================================================================================
+    // Overridden Methods
+    //==============================================================================================
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +97,10 @@ public class DeviceLightsFragment extends PreferenceFragment implements DeviceCo
         }
         return true;
     }
+
+    //==============================================================================================
+    // Methods
+    //==============================================================================================
 
     public static boolean isSupported() {
         return (sHasKeyboardToggle || sHasTouchkeyBLN || sHasTouchkeyToggle);

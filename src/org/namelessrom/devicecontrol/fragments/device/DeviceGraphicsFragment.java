@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2012 The CyanogenMod Project
- *  Modifications Copyright (C) 2013 Alexander "Evisceration" Martinz
+ *  Modifications Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,8 +30,16 @@ import org.namelessrom.devicecontrol.utils.Utils;
 public class DeviceGraphicsFragment extends PreferenceFragment
         implements DeviceConstants, Preference.OnPreferenceChangeListener {
 
+    //==============================================================================================
+    // Fields
+    //==============================================================================================
+
     private static final boolean sHasPanel = Utils.fileExists(FILE_PANEL_COLOR_TEMP);
     private PanelColorTemperature mPanelColor;
+
+    //==============================================================================================
+    // Overridden Methods
+    //==============================================================================================
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,10 @@ public class DeviceGraphicsFragment extends PreferenceFragment
 
         return changed;
     }
+
+    //==============================================================================================
+    // Methods
+    //==============================================================================================
 
     public static boolean isSupported() {
         return (sHasPanel);
