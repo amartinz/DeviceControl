@@ -34,11 +34,12 @@ import org.namelessrom.devicecontrol.fragments.main.PerformanceFragment;
 import org.namelessrom.devicecontrol.fragments.main.PreferencesFragment;
 import org.namelessrom.devicecontrol.fragments.main.TaskerFragment;
 import org.namelessrom.devicecontrol.fragments.main.ToolsFragment;
+import org.namelessrom.devicecontrol.utils.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, DeviceConstants {
 
     //==============================================================================================
     // Fields
@@ -75,6 +76,10 @@ public class MainActivity extends Activity
         mPreferencesFragment.setUp(
                 R.id.navigation_drawer_prefs,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        // Schedule Tasker
+        Utils.setAlarmFstrim(this, Integer.parseInt(
+                PreferenceHelper.getString(TASKER_TOOLS_FSTRIM_INTERVAL, "30")));
     }
 
     @Override

@@ -17,11 +17,16 @@
 package org.namelessrom.devicecontrol.utils;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.util.Log;
+
+import org.namelessrom.devicecontrol.services.TaskerService;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,6 +35,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Application;
@@ -268,5 +274,19 @@ public class Utils implements DeviceConstants {
             }
         });
         alertDialog.show();
+    }
+
+    public static void setAlarmFstrim(Context context, int interval) {
+        Intent i = new Intent(context, TaskerService.class);
+        i.setAction(ACTION_TASKER_FSTRIM);
+        PendingIntent pi = PendingIntent.getService(
+                context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (Application.alarmManager == null) {
+            Application.alarmManager = (AlarmManager)
+                    context.getSystemService(Context.ALARM_SERVICE);
+        }
+        Application.alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(),
+                60000 * interval, pi);
     }
 }

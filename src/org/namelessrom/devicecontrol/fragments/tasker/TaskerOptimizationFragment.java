@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments.tasker;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -25,15 +24,11 @@ import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 
-/**
- * Created by alex on 11.11.13.
- */
 public class TaskerOptimizationFragment extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants {
 
@@ -72,11 +67,13 @@ public class TaskerOptimizationFragment extends PreferenceFragment
             mChanged = true;
         }
 
-        try {
-            logDebug("Starting Service!");
-            getActivity().startService(new Intent(getActivity(), TaskerService.class));
-        } catch (Exception exc) {
-            logDebug("Error: " + exc.getMessage());
+        // Handle fstrim
+        if (mChanged) {
+            try {
+                Utils.setAlarmFstrim(getActivity(), Integer.parseInt(mFstrimInterval.getValue()));
+            } catch (Exception exc) {
+                logDebug("Error: " + exc.getMessage());
+            }
         }
 
 
