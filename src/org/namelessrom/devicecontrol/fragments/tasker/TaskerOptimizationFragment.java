@@ -24,6 +24,7 @@ import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -57,27 +58,27 @@ public class TaskerOptimizationFragment extends PreferenceFragment
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        boolean mChanged = false;
 
         if (preference == mFstrim) {
-            PreferenceHelper.setBoolean(TASKER_TOOLS_FSTRIM, mFstrim.isChecked());
-            mChanged = true;
+            boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(TASKER_TOOLS_FSTRIM, value);
+            if (value) {
+                AlarmHelper.setAlarmFstrim(
+                        getActivity(), Integer.parseInt(mFstrimInterval.getValue()));
+            } else {
+                AlarmHelper.cancelAlarmFstrim(getActivity());
+            }
+            return true;
         } else if (preference == mFstrimInterval) {
             PreferenceHelper.setString(TASKER_TOOLS_FSTRIM_INTERVAL, newValue.toString());
-            mChanged = true;
-        }
-
-        // Handle fstrim
-        if (mChanged) {
-            try {
-                Utils.setAlarmFstrim(getActivity(), Integer.parseInt(mFstrimInterval.getValue()));
-            } catch (Exception exc) {
-                logDebug("Error: " + exc.getMessage());
+            if (mFstrim.isChecked()) {
+                AlarmHelper.setAlarmFstrim(
+                        getActivity(), Integer.parseInt(newValue.toString()));
             }
+            return true;
         }
 
-
-        return mChanged;
+        return false;
     }
 
     private void logDebug(String msg) {
