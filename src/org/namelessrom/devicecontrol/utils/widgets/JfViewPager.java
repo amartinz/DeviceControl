@@ -44,10 +44,10 @@ public class JfViewPager extends ViewPager {
             switch (PreferenceHelper.getTransformerId()) {
                 default:
                 case 0:
-                    this.setPageTransformer(true, new ZoomOutPageTransformer());
+                    this.setPageTransformer(true, new DepthPageTransformer());
                     break;
                 case 1:
-                    this.setPageTransformer(true, new DepthPageTransformer());
+                    this.setPageTransformer(true, new ZoomOutPageTransformer());
                     break;
             }
         }

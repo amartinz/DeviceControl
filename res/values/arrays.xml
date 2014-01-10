@@ -19,8 +19,8 @@
 <resources>
 
     <string-array name="prefs_jf_appearance_custom_transformer_entries" translatable="false">
-        <item>@string/transformer_zoomout</item>
         <item>@string/transformer_depth</item>
+        <item>@string/transformer_zoomout</item>
     </string-array>
 
     <string-array name="prefs_jf_appearance_custom_transformer_values" translatable="false">
