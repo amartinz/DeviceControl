@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,12 +38,16 @@ import java.util.List;
 
 import eu.chainfire.libsuperuser.Application;
 
-/**
- * Created by alex on 18.12.13.
- */
 public class ToolsFragment extends AttachFragment {
 
+    //==============================================================================================
+    // Fields
+    //==============================================================================================
     public static final int ID = 4;
+
+    //==============================================================================================
+    // Overridden Methods
+    //==============================================================================================
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -59,10 +63,6 @@ public class ToolsFragment extends AttachFragment {
         mViewPager.setAdapter(mTabsAdapter);
 
         PagerTabStrip mPagerTabStrip = (PagerTabStrip) rootView.findViewById(R.id.pagerTabStrip);
-        /*mPagerTabStrip.setBackgroundColor(getResources()
-                .getColor(android.R.color.holo_green_dark));
-        mPagerTabStrip.setTabIndicatorColor(getResources()
-                .getColor(android.R.color.holo_green_light));*/
         mPagerTabStrip.setDrawFullUnderline(false);
 
         return rootView;
@@ -72,6 +72,10 @@ public class ToolsFragment extends AttachFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity, ToolsFragment.ID);
     }
+
+    //==============================================================================================
+    // Methods
+    //==============================================================================================
 
     private List<Fragment> getFragments() {
         List<Fragment> tmpList = new ArrayList<Fragment>();

@@ -43,7 +43,14 @@ import java.util.List;
  */
 public class DeviceFragment extends AttachFragment {
 
+    //==============================================================================================
+    // Fields
+    //==============================================================================================
     public static final int ID = 1;
+
+    //==============================================================================================
+    // Overridden Methods
+    //==============================================================================================
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -59,10 +66,6 @@ public class DeviceFragment extends AttachFragment {
         mViewPager.setAdapter(mTabsAdapter);
 
         PagerTabStrip mPagerTabStrip = (PagerTabStrip) rootView.findViewById(R.id.pagerTabStrip);
-        /*mPagerTabStrip.setBackgroundColor(getResources()
-                .getColor(android.R.color.holo_green_dark));
-        mPagerTabStrip.setTabIndicatorColor(getResources()
-                .getColor(android.R.color.holo_green_light));*/
         mPagerTabStrip.setDrawFullUnderline(false);
 
         return rootView;
@@ -72,6 +75,10 @@ public class DeviceFragment extends AttachFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity, DeviceFragment.ID);
     }
+
+    //==============================================================================================
+    // Methods
+    //==============================================================================================
 
     private List<Fragment> getFragments() {
         List<Fragment> tmpList = new ArrayList<Fragment>();
