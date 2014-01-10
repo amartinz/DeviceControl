@@ -17,6 +17,8 @@
 
 package eu.chainfire.libsuperuser;
 
+import android.app.AlarmManager;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import org.namelessrom.devicecontrol.R;
@@ -31,9 +33,13 @@ public class Application extends android.app.Application {
     public static boolean IS_SYSTEM_APP = false;
     public static boolean HAS_ROOT = false;
 
+    public static AlarmManager alarmManager;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         IS_SYSTEM_APP = getResources().getBoolean(R.bool.is_system_app);
 

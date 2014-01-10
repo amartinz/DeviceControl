@@ -25,7 +25,7 @@ public class Debug {
 
     // ----- DEBUGGING -----
 
-    private static boolean debug = true;
+    private static boolean debug = Application.IS_LOG_DEBUG;
 
     /**
      * <p>Enable or disable debug mode</p>
