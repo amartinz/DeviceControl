@@ -17,10 +17,12 @@
  */
 package org.namelessrom.devicecontrol.receivers;
 
+import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -45,7 +47,7 @@ public class BootupReceiver extends BroadcastReceiver implements DeviceConstants
         PreferenceHelper.getInstance(context);
 
         // Schedule Tasker
-        Utils.setAlarmFstrim(context, Integer.parseInt(
+        AlarmHelper.setAlarmFstrim(context, Integer.parseInt(
                 PreferenceHelper.getString(TASKER_TOOLS_FSTRIM_INTERVAL, "30")));
 
         /* Reapply values */
