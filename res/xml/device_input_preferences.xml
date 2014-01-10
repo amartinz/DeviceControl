@@ -17,22 +17,30 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/vibrator_title" />
-    <org.namelessrom.devicecontrol.preferences.VibratorTuningPreference
-        android:key="vibrator_tuning"
-        android:title="@string/vibrator_tuning_title"
-        android:dialogTitle="@string/vibrator_tuning_title" />
 
-    <PreferenceCategory android:title="@string/navbar_title" />
-    <CheckBoxPreference
-        android:key="navbar_force"
-        android:title="@string/navbar_force_title"
-        android:summary="@string/navbar_force_summary" />
+    <PreferenceCategory android:title="@string/navbar_title">
 
-    <PreferenceCategory android:title="@string/general_others" />
-    <CheckBoxPreference
-        android:key="input_glove_mode"
-        android:title="@string/input_glove_mode_title"
-        android:summary="@string/input_glove_mode_summary" />
+        <CheckBoxPreference
+            android:key="navbar_force"
+            android:title="@string/navbar_force_title"
+            android:summary="@string/navbar_force_summary" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="input_others"
+        android:title="@string/general_others">
+
+        <CheckBoxPreference
+            android:key="input_glove_mode"
+            android:title="@string/input_glove_mode_title"
+            android:summary="@string/input_glove_mode_summary" />
+
+        <org.namelessrom.devicecontrol.preferences.VibratorTuningPreference
+            android:key="vibrator_tuning"
+            android:title="@string/vibrator_tuning_title"
+            android:dialogTitle="@string/vibrator_tuning_title" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceGroup;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
@@ -55,11 +56,17 @@ public class DeviceInputFragment extends PreferenceFragment implements DeviceCon
         mGloveMode = (CheckBoxPreference) findPreference(KEY_GLOVE_MODE);
         mGloveMode.setOnPreferenceChangeListener(this);
 
+        PreferenceGroup inputOthers = (PreferenceGroup) findPreference("input_others");
+
         if (!sVibratorTuning) {
-            getPreferenceScreen().removePreference(mVibratorTuning);
+            inputOthers.removePreference(mVibratorTuning);
         }
         if (!HighTouchSensitivity.isSupported()) {
-            getPreferenceScreen().removePreference(mGloveMode);
+            inputOthers.removePreference(mGloveMode);
+        }
+
+        if (inputOthers.getPreferenceCount() == 0) {
+            getPreferenceScreen().removePreference(inputOthers);
         }
 
         new DeviceInputTask(this).execute();
