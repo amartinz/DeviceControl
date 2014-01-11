@@ -26,7 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 /**
  * Created by alex on 18.12.13.

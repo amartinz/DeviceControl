@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
-import org.namelessrom.devicecontrol.fragments.performance.PerformanceCpuFragment;
+import org.namelessrom.devicecontrol.fragments.performance.PerformanceGeneralFragment;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceHelpFragment;
 import org.namelessrom.devicecontrol.utils.adapters.ScreenSlidePagerAdapter;
 import org.namelessrom.devicecontrol.utils.widgets.JfViewPager;
@@ -35,9 +35,6 @@ import org.namelessrom.devicecontrol.utils.widgets.JfViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by alex on 18.12.13.
- */
 public class PerformanceFragment extends AttachFragment {
 
     public static final int ID = 2;
@@ -56,10 +53,6 @@ public class PerformanceFragment extends AttachFragment {
         mViewPager.setAdapter(mTabsAdapter);
 
         PagerTabStrip mPagerTabStrip = (PagerTabStrip) rootView.findViewById(R.id.pagerTabStrip);
-        /*mPagerTabStrip.setBackgroundColor(getResources()
-                .getColor(android.R.color.holo_green_dark));
-        mPagerTabStrip.setTabIndicatorColor(getResources()
-                .getColor(android.R.color.holo_green_light));*/
         mPagerTabStrip.setDrawFullUnderline(false);
 
         return rootView;
@@ -73,8 +66,8 @@ public class PerformanceFragment extends AttachFragment {
     private List<Fragment> getFragments() {
         List<Fragment> tmpList = new ArrayList<Fragment>();
         tmpList.add(new PerformanceHelpFragment());
-        if (PerformanceCpuFragment.isSupported()) {
-            tmpList.add(new PerformanceCpuFragment());
+        if (PerformanceGeneralFragment.isSupported()) {
+            tmpList.add(new PerformanceGeneralFragment());
         }
         return tmpList;
     }
@@ -82,9 +75,15 @@ public class PerformanceFragment extends AttachFragment {
     private List<String> getTitles() {
         List<String> tmpList = new ArrayList<String>();
         tmpList.add(getString(R.string.section_title_information));
-        if (PerformanceCpuFragment.isSupported()) {
-            tmpList.add(getString(R.string.section_title_cpu));
+        if (PerformanceGeneralFragment.isSupported()) {
+            tmpList.add(getString(R.string.general));
         }
         return tmpList;
+    }
+
+    public static void restore() {
+        if (PerformanceGeneralFragment.isSupported()) {
+            PerformanceGeneralFragment.restore();
+        }
     }
 }

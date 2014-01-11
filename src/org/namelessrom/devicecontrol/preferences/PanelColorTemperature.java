@@ -21,7 +21,7 @@ import android.content.Context;
 import android.preference.ListPreference;
 import android.util.AttributeSet;
 
-import org.namelessrom.devicecontrol.utils.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class PanelColorTemperature extends ListPreference
         implements DeviceConstants {

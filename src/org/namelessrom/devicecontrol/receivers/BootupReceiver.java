@@ -21,11 +21,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import org.namelessrom.devicecontrol.fragments.main.PerformanceFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
-import org.namelessrom.devicecontrol.utils.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.File;
@@ -87,6 +88,7 @@ public class BootupReceiver extends BroadcastReceiver
             Utils.writeValue(FILE_KEYBOARD_TOGGLE, (tmp ? "255" : "0"));
 
             // Performance
+            PerformanceFragment.restore();
 
             // Tools
             if (new File("/system/etc/sysctl.conf").exists()) {
