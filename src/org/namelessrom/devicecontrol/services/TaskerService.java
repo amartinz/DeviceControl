@@ -21,7 +21,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import org.namelessrom.devicecontrol.utils.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;

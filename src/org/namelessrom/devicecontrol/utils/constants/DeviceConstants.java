@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.utils;
+package org.namelessrom.devicecontrol.utils.constants;
 
 public interface DeviceConstants {
 
@@ -51,7 +51,7 @@ public interface DeviceConstants {
     // Panel
     public static final String KEY_PANEL_COLOR_TEMP = "panel_color_temperature";
     // Performance Cpu
-    public static final String KEY_CPU_MPDECISION = "toggle_mpdecision";
+    public static final String KEY_LCD_POWER_REDUCE = "lcd_power_reduce";
 
     //==============================================================================================
     // Categories
@@ -61,7 +61,7 @@ public interface DeviceConstants {
     public static final String CATEGORY_TOUCHKEY = "touchkey";
     public static final String CATEGORY_GRAPHICS = "graphics";
     // Performance Cpu
-    public static final String CATEGORY_HOTPLUT = "hotplug";
+    public static final String CATEGORY_POWERSAVING = "powersaving";
 
     //==============================================================================================
     // Values

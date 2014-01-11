@@ -42,7 +42,7 @@ public interface FileConstants {
     //==============================================================================================
     public static final String FILE_FLASH_LIGHT = "/sys/class/camera/flash/rear_flash";
     //==============================================================================================
-    public static final String FILE_MPDECISION = "/system/bin/mpdecision";
+    public static final String[] FILES_LCD_POWER_REDUCE = {"/sys/class/lcd/panel/power_reduce"};
     //==============================================================================================
 
 

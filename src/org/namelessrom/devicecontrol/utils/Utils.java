@@ -23,6 +23,7 @@ import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.BufferedReader;

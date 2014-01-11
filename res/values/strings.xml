@@ -28,6 +28,7 @@
 
     <!-- General -->
     <string name="defaults_button">Reset to default</string>
+    <string name="general">General</string>
     <string name="general_others">Others</string>
 
     <!-- Dialogs -->
@@ -52,17 +53,16 @@
     <string name="section_title_tasker_optimizations">Optimizations</string>
     <!-- Performance -->
     <string name="section_title_performance">Performance</string>
-    <string name="section_title_cpu">CPU</string>
     <!-- Tools -->
     <string name="section_title_tools">Tools</string>
     <string name="section_title_tools_sysctl">Sysctl Editor</string>
     <string name="section_title_tools_vm">VM Editor</string>
 
     <!-- CPU -->
-    <string name="cpu_hotplug">Hotplugger</string>
-    <string name="cpu_hotplug_mpdecision_title">MPDecision</string>
-    <string name="cpu_hotplug_mpdecision_summary_on">MPDecision is enabled.</string>
-    <string name="cpu_hotplug_mpdecision_summary_off">MPDecision is disabled.</string>
+    <string name="cpu_powersaving">Powersaving</string>
+    <string name="cpu_powersaving_lcd_title">LCD Power Reduce</string>
+    <string name="cpu_powersaving_lcd_summary_on">Power reducing is enabled.</string>
+    <string name="cpu_powersaving_lcd_summary_off">Power reducing is disabled.</string>
 
     <!-- Sensors -->
     <string name="category_sensors_title">Sensors</string>
