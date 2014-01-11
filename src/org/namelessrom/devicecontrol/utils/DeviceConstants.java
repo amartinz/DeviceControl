@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,7 +82,8 @@ public interface DeviceConstants {
     public static final String FILE_KEYBOARD_TOGGLE =
             "/sys/class/leds/keyboard-backlight/max_brightness";
     public static final String FILE_USE_GYRO_CALIB = "/sys/class/sec/gsensorcal/calibration";
-    public static final String FILE_VIBRATOR = "/sys/class/timed_output/vibrator/pwm_value";
+    public static final String[] FILES_VIBRATOR = {"/sys/class/timed_output/vibrator/pwm_value",
+            "/sys/class/timed_output/vibrator"};
     public static final String FILE_PANEL_COLOR_TEMP = "/sys/class/lcd/panel/panel_colors";
     //==============================================================================================
     public static final String FILE_INFO_DISPLAY_LCD_TYPE = "/sys/class/lcd/panel/lcd_type";

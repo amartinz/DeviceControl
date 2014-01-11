@@ -157,6 +157,21 @@ public class Utils implements DeviceConstants {
     }
 
     /**
+     * Checks if the given paths in a string array are existing and returns the existing path.
+     *
+     * @param paths The string array, containing the file paths
+     * @return The path of the existing file as string
+     */
+    public static String checkPaths(final String[] paths) {
+        for (String s : paths) {
+            if (fileExists(s)) {
+                return s;
+            }
+        }
+        return "";
+    }
+
+    /**
      * Restart the activity smoothly
      *
      * @param activity The activity to restart

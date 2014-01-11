@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,7 +61,8 @@ public class BootupReceiver extends BroadcastReceiver implements DeviceConstants
         // Device
 
         // Input
-        Utils.writeValue(FILE_VIBRATOR, PreferenceHelper.getString(KEY_VIBRATOR_TUNING, "50"));
+        String vibratorPath = Utils.checkPaths(FILES_VIBRATOR);
+        Utils.writeValue(vibratorPath, PreferenceHelper.getString(KEY_VIBRATOR_TUNING, "50"));
 
         Utils.writeValue(FILE_PANEL_COLOR_TEMP,
                 PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2"));
