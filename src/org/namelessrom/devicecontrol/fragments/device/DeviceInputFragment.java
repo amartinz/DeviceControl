@@ -40,7 +40,8 @@ public class DeviceInputFragment extends PreferenceFragment
     //==============================================================================================
     // Fields
     //==============================================================================================
-    private static final boolean sVibratorTuning = Utils.fileExists(FILE_VIBRATOR);
+    private static final String sVibratorTuningFile = Utils.checkPaths(FILES_VIBRATOR);
+    private static final boolean sVibratorTuning = !sVibratorTuningFile.equals("");
 
     private CheckBoxPreference mForceNavBar;
     private CheckBoxPreference mGloveMode;
