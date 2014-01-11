@@ -30,12 +30,13 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DeviceInputFragment extends PreferenceFragment
-        implements DeviceConstants, Preference.OnPreferenceChangeListener {
+        implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
 
     //==============================================================================================
     // Fields

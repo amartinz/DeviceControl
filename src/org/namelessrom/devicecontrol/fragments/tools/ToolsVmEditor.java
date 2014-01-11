@@ -47,6 +47,7 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.utils.classes.Prop;
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ import java.util.List;
 import eu.chainfire.libsuperuser.Shell;
 
 public class ToolsVmEditor extends Fragment
-        implements DeviceConstants, AdapterView.OnItemClickListener {
+        implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener {
 
     private ListView packList;
     private LinearLayout linlaHeaderProgress;
@@ -65,7 +66,7 @@ public class ToolsVmEditor extends Fragment
     private PropAdapter adapter = null;
     private EditText filterText = null;
     private List<Prop> props = new ArrayList<Prop>();
-    private final String dn = JfDirectories.JF_BACKUP_DIR;
+    private final String dn = DC_BACKUP_DIR;
 
     private final String mod = "vm";
     private final String syspath = "/system/etc/";

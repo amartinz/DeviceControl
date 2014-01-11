@@ -24,6 +24,7 @@ import android.os.IBinder;
 import org.namelessrom.devicecontrol.utils.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import eu.chainfire.libsuperuser.Shell;
 /**
  * Created by alex on 11.11.13.
  */
-public class TaskerService extends Service implements DeviceConstants {
+public class TaskerService extends Service implements DeviceConstants, FileConstants {
 
     //==============================================================================================
     // Fields
@@ -97,7 +98,7 @@ public class TaskerService extends Service implements DeviceConstants {
                 mResults = Shell.SU.run(mCommands);
 
                 if (mResults != null) {
-                    fos = new FileOutputStream(JF_LOG_FILE_FSSTRIM);
+                    fos = new FileOutputStream(DC_LOG_FILE_FSSTRIM);
                     for (String s : mResults) {
                         logDebug("Result: " + s);
                         fos.write((s + "\n").getBytes());

@@ -27,8 +27,10 @@ import android.widget.TextView;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
-public class InformationGeneralFragment extends Fragment implements DeviceConstants {
+public class InformationGeneralFragment extends Fragment
+        implements DeviceConstants, FileConstants {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

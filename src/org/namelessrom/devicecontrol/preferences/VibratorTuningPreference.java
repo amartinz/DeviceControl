@@ -37,13 +37,14 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 /**
  * Special preference type that allows configuration of
  * vibrator intensity settings on Samsung devices
  */
 public class VibratorTuningPreference extends DialogPreference
-        implements SeekBar.OnSeekBarChangeListener, DeviceConstants {
+        implements SeekBar.OnSeekBarChangeListener, DeviceConstants, FileConstants {
     private final Context mContext;
     private final String FILE_VIBRATOR = Utils.checkPaths(FILES_VIBRATOR);
     private final Vibrator vib = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);

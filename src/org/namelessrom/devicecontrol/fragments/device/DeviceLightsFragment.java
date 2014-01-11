@@ -28,8 +28,10 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
-public class DeviceLightsFragment extends PreferenceFragment implements DeviceConstants {
+public class DeviceLightsFragment extends PreferenceFragment
+        implements DeviceConstants, FileConstants {
 
     //==============================================================================================
     // Fields

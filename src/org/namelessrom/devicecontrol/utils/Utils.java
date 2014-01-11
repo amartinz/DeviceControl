@@ -23,6 +23,8 @@ import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,7 +37,7 @@ import java.util.List;
 import eu.chainfire.libsuperuser.Application;
 import eu.chainfire.libsuperuser.Shell;
 
-public class Utils implements DeviceConstants {
+public class Utils implements DeviceConstants, FileConstants {
 
     /**
      * Reads a single line from a file.
@@ -206,8 +208,8 @@ public class Utils implements DeviceConstants {
      */
     public static void setupDirectories() {
         File dir;
-        String[] dirList = new String[]{JfDirectories.JF_DATA_DIR, JfDirectories.JF_LOG_DIR,
-                JfDirectories.JF_BACKUP_DIR};
+        String[] dirList = new String[]{DC_DATA_DIR, DC_LOG_DIR,
+                DC_BACKUP_DIR};
         for (String s : dirList) {
             dir = new File(s);
             if (!dir.exists()) {

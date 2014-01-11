@@ -26,9 +26,10 @@ import android.preference.PreferenceScreen;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 public class DeviceSensorsFragment extends PreferenceFragment
-        implements DeviceConstants {
+        implements DeviceConstants, FileConstants {
 
     //==============================================================================================
     // Fields

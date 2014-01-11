@@ -17,13 +17,6 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import android.os.Environment;
-
-import java.io.File;
-
-/**
- * Created by alex on 18.12.13.
- */
 public interface DeviceConstants {
 
     //==============================================================================================
@@ -71,30 +64,6 @@ public interface DeviceConstants {
     public static final String CATEGORY_HOTPLUT = "hotplug";
 
     //==============================================================================================
-    // Files
-    //==============================================================================================
-    public static final String[] FILES_VIBRATOR = {"/sys/class/timed_output/vibrator/pwm_value"};
-    public static final String FILE_TOUCHKEY_TOGGLE =
-            "/sys/class/leds/button-backlight/max_brightness";
-    public static final String FILE_TOUCHKEY_BRIGHTNESS =
-            "/sys/class/leds/button-backlight/brightness";
-    public static final String FILE_BLN_TOGGLE =
-            "/sys/class/misc/backlightnotification/enabled";
-    public static final String FILE_KEYBOARD_TOGGLE =
-            "/sys/class/leds/keyboard-backlight/max_brightness";
-    public static final String FILE_USE_GYRO_CALIB = "/sys/class/sec/gsensorcal/calibration";
-    public static final String FILE_PANEL_COLOR_TEMP = "/sys/class/lcd/panel/panel_colors";
-    //==============================================================================================
-    public static final String FILE_INFO_DISPLAY_LCD_TYPE = "/sys/class/lcd/panel/lcd_type";
-    //==============================================================================================
-    public static final String FILE_FLASH_LIGHT = "/sys/class/camera/flash/rear_flash";
-    //==============================================================================================
-    public static final String FILE_MPDECISION = "/system/bin/mpdecision";
-    //==============================================================================================
-    public static final String JF_LOG_FILE_FSSTRIM =
-            JfDirectories.JF_LOG_DIR + File.separator + "fstrim.log";
-
-    //==============================================================================================
     // Values
     //==============================================================================================
     public static final int VIBRATOR_INTENSITY_MAX = 100;
@@ -120,16 +89,5 @@ public interface DeviceConstants {
             "/proc/sys/vm/dynamic_dirty_writeback";
     public static final String SYSCTL_SOB = "sysctl_sob";
     public static final String VM_SOB = "vm_sob";
-
-    //==============================================================================================
-    // Directories
-    //==============================================================================================
-    public static class JfDirectories {
-        public static final String JF_DATA_DIR =
-                Environment.getExternalStorageDirectory().getPath() + File.separator +
-                        "DeviceControl";
-        public static final String JF_LOG_DIR = JF_DATA_DIR + File.separator + "Logs";
-        public static final String JF_BACKUP_DIR = JF_DATA_DIR + File.separator + "Backup";
-    }
 
 }

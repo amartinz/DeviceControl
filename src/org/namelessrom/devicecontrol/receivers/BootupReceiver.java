@@ -26,6 +26,7 @@ import org.namelessrom.devicecontrol.utils.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.File;
 import java.util.List;
@@ -38,7 +39,8 @@ import static org.namelessrom.devicecontrol.utils.Utils.logDebug;
 /**
  * Restores and Applies values on boot, as well as starts services.
  */
-public class BootupReceiver extends BroadcastReceiver implements DeviceConstants {
+public class BootupReceiver extends BroadcastReceiver
+        implements DeviceConstants, FileConstants {
 
     @Override
     public void onReceive(Context context, Intent intent) {
