@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -73,6 +73,7 @@ public interface DeviceConstants {
     //==============================================================================================
     // Files
     //==============================================================================================
+    public static final String[] FILES_VIBRATOR = {"/sys/class/timed_output/vibrator/pwm_value"};
     public static final String FILE_TOUCHKEY_TOGGLE =
             "/sys/class/leds/button-backlight/max_brightness";
     public static final String FILE_TOUCHKEY_BRIGHTNESS =
@@ -82,7 +83,6 @@ public interface DeviceConstants {
     public static final String FILE_KEYBOARD_TOGGLE =
             "/sys/class/leds/keyboard-backlight/max_brightness";
     public static final String FILE_USE_GYRO_CALIB = "/sys/class/sec/gsensorcal/calibration";
-    public static final String FILE_VIBRATOR = "/sys/class/timed_output/vibrator/pwm_value";
     public static final String FILE_PANEL_COLOR_TEMP = "/sys/class/lcd/panel/panel_colors";
     //==============================================================================================
     public static final String FILE_INFO_DISPLAY_LCD_TYPE = "/sys/class/lcd/panel/lcd_type";
@@ -100,12 +100,13 @@ public interface DeviceConstants {
     public static final int VIBRATOR_INTENSITY_MAX = 100;
     public static final int VIBRATOR_INTENSITY_MIN = 0;
     public static final int VIBRATOR_INTENSITY_DEFAULT_VALUE = 50;
-    public static final int VIBRATOR_INTENSITY_WARNING_TRESHOLD = 75;
+    public static final int VIBRATOR_INTENSITY_WARNING_THRESHOLD = 76;
 
     //==============================================================================================
     // Preferences
     //==============================================================================================
     public static final String JF_EXTENSIVE_LOGGING = "jf_extensive_logging";
+    public static final String DC_FIRST_START = "dc_first_start";
 
     //==============================================================================================
     // Tasker

@@ -22,7 +22,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
+import static org.namelessrom.devicecontrol.utils.DeviceConstants.DC_FIRST_START;
 import static org.namelessrom.devicecontrol.utils.Utils.logDebug;
 
 public class Application extends android.app.Application {
@@ -59,6 +61,7 @@ public class Application extends android.app.Application {
         @Override
         protected Void doInBackground(Void... params) {
             HAS_ROOT = Shell.SU.available();
+            PreferenceHelper.setBoolean(DC_FIRST_START, false);
             return null;
         }
     }

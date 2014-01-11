@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2013 The CyanogenMod Project
- * Modifications Copyright (C) 2013 Alexander "Evisceration" Martinz
+ * Modifications Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,6 @@ package org.namelessrom.devicecontrol.preferences;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
@@ -29,7 +27,6 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.DialogPreference;
-import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +45,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 public class VibratorTuningPreference extends DialogPreference
         implements SeekBar.OnSeekBarChangeListener, DeviceConstants {
     private final Context mContext;
+    private final String FILE_VIBRATOR = Utils.checkPaths(FILES_VIBRATOR);
+    private final Vibrator vib = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
     private SeekBar mSeekBar;
     private TextView mValue;
     private String mOriginalValue;
@@ -78,8 +77,8 @@ public class VibratorTuningPreference extends DialogPreference
         mValue = (TextView) view.findViewById(R.id.vibrator_value);
         TextView mWarning = (TextView) view.findViewById(R.id.textWarn);
 
-        String strWarnMsg = getContext().getResources().getString(
-                R.string.vibrator_warning, strengthToPercent(VIBRATOR_INTENSITY_WARNING_TRESHOLD));
+        final String strWarnMsg = getContext().getResources().getString(
+                R.string.vibrator_warning, strengthToPercent(VIBRATOR_INTENSITY_WARNING_THRESHOLD));
         mWarning.setText(strWarnMsg);
 
         Drawable progressDrawable = mSeekBar.getProgressDrawable();
@@ -95,8 +94,7 @@ public class VibratorTuningPreference extends DialogPreference
         mOriginalValue = Utils.readOneLine(FILE_VIBRATOR);
 
         // Restore percent value from SharedPreferences object
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
-        int percent = settings.getInt("percent",
+        final int percent = PreferenceHelper.getInt(KEY_VIBRATOR_TUNING,
                 strengthToPercent(VIBRATOR_INTENSITY_DEFAULT_VALUE));
 
         mSeekBar.setOnSeekBarChangeListener(this);
@@ -130,10 +128,7 @@ public class VibratorTuningPreference extends DialogPreference
 
         if (positiveResult) {
             // Store percent value in SharedPreferences object
-            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
-            Editor editor = settings.edit();
-            editor.putInt("percent", mSeekBar.getProgress());
-            editor.commit();
+            PreferenceHelper.setInt(KEY_VIBRATOR_TUNING, mSeekBar.getProgress());
         } else {
             Utils.writeValue(FILE_VIBRATOR, String.valueOf(mOriginalValue));
         }
@@ -141,7 +136,8 @@ public class VibratorTuningPreference extends DialogPreference
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        boolean shouldWarn = progress >= strengthToPercent(VIBRATOR_INTENSITY_WARNING_TRESHOLD);
+        final boolean shouldWarn =
+                progress >= strengthToPercent(VIBRATOR_INTENSITY_WARNING_THRESHOLD);
         if (mProgressDrawable != null) {
             mProgressDrawable.setColorFilter(shouldWarn ? mRedFilter : null);
         }
@@ -158,19 +154,18 @@ public class VibratorTuningPreference extends DialogPreference
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        Vibrator vib = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-        vib.vibrate(200);
-        String value = String.valueOf(percentToStrength(seekBar.getProgress()));
+        final String value = String.valueOf(percentToStrength(seekBar.getProgress()));
         Utils.writeValue(FILE_VIBRATOR, value);
-        PreferenceHelper.setString(KEY_VIBRATOR_TUNING, value);
+        // Vibrate after writing, otherwise it will vibrate using the old strength
+        vib.vibrate(200);
     }
 
     /**
      * Convert vibrator strength to percent
      */
     private static int strengthToPercent(int strength) {
-        double maxValue = VIBRATOR_INTENSITY_MAX;
-        double minValue = VIBRATOR_INTENSITY_MIN;
+        final double maxValue = VIBRATOR_INTENSITY_MAX;
+        final double minValue = VIBRATOR_INTENSITY_MIN;
 
         double percent = (strength - minValue) * (100 / (maxValue - minValue));
 

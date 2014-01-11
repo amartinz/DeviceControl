@@ -50,6 +50,14 @@ public class PreferenceHelper {
     // Generic
     //==============================================================================================
 
+    public static int getInt(String key) {
+        return PreferenceHelper.getInt(key, 0);
+    }
+
+    public static int getInt(String key, int defaultValue) {
+        return mSharedPrefs.getInt(key, defaultValue);
+    }
+
     public static String getString(String key) {
         return mSharedPrefs.getString(key, "");
     }
