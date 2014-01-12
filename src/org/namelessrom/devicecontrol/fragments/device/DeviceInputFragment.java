@@ -25,11 +25,10 @@ import android.preference.PreferenceGroup;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
-import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.util.ArrayList;
@@ -41,9 +40,6 @@ public class DeviceInputFragment extends PreferenceFragment
     //==============================================================================================
     // Fields
     //==============================================================================================
-    private static final String sVibratorTuningFile = Utils.checkPaths(FILES_VIBRATOR);
-    private static final boolean sVibratorTuning = !sVibratorTuningFile.equals("");
-
     private CheckBoxPreference mForceNavBar;
     private CheckBoxPreference mGloveMode;
 
@@ -66,7 +62,7 @@ public class DeviceInputFragment extends PreferenceFragment
 
         PreferenceGroup inputOthers = (PreferenceGroup) findPreference("input_others");
 
-        if (!sVibratorTuning) {
+        if (!VibratorTuningPreference.isSupported()) {
             inputOthers.removePreference(mVibratorTuning);
         }
         if (!HighTouchSensitivity.isSupported()) {

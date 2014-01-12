@@ -21,6 +21,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import org.namelessrom.devicecontrol.fragments.main.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.main.PerformanceFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -64,10 +65,7 @@ public class BootupReceiver extends BroadcastReceiver
                     .append(";");
 
             // Device
-
-            // Input
-            String vibratorPath = Utils.checkPaths(FILES_VIBRATOR);
-            Utils.writeValue(vibratorPath, PreferenceHelper.getString(KEY_VIBRATOR_TUNING, "50"));
+            DeviceFragment.restore();
 
             Utils.writeValue(FILE_PANEL_COLOR_TEMP,
                     PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2"));
