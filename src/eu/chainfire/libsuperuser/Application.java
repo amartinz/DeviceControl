@@ -24,8 +24,8 @@ import android.os.AsyncTask;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
-import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.DC_FIRST_START;
 import static org.namelessrom.devicecontrol.utils.Utils.logDebug;
+import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.DC_FIRST_START;
 
 public class Application extends android.app.Application {
 
@@ -40,6 +40,8 @@ public class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        PreferenceHelper.getInstance(this);
 
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
