@@ -34,9 +34,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 /**
@@ -45,8 +45,7 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
  */
 public class VibratorTuningPreference extends DialogPreference
         implements SeekBar.OnSeekBarChangeListener, DeviceConstants, FileConstants {
-    private final Context mContext;
-    private final String FILE_VIBRATOR = Utils.checkPaths(FILES_VIBRATOR);
+    private final static String FILE_VIBRATOR = Utils.checkPaths(FILES_VIBRATOR);
     private final Vibrator vib = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
     private SeekBar mSeekBar;
     private TextView mValue;
@@ -57,7 +56,6 @@ public class VibratorTuningPreference extends DialogPreference
 
     public VibratorTuningPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
         setDialogLayoutResource(R.layout.preference_dialog_vibrator_tuning);
     }
 
@@ -193,4 +191,15 @@ public class VibratorTuningPreference extends DialogPreference
 
         return strength;
     }
+
+    public static boolean isSupported() {
+        return (!FILE_VIBRATOR.equals(""));
+    }
+
+    public static void restore() {
+        final int percent = PreferenceHelper.getInt(KEY_VIBRATOR_TUNING,
+                strengthToPercent(VIBRATOR_INTENSITY_DEFAULT_VALUE));
+        Utils.writeValue(FILE_VIBRATOR, "" + percent);
+    }
+
 }
