@@ -52,6 +52,7 @@ public interface DeviceConstants {
     public static final String KEY_PANEL_COLOR_TEMP = "panel_color_temperature";
     // Performance Cpu
     public static final String KEY_LCD_POWER_REDUCE = "lcd_power_reduce";
+    public static final String KEY_INTELLI_PLUG_ECO = "intelli_plug_eco";
 
     //==============================================================================================
     // Categories

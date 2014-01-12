@@ -63,6 +63,9 @@
     <string name="cpu_powersaving_lcd_title">LCD Power Reduce</string>
     <string name="cpu_powersaving_lcd_summary_on">Power reducing is enabled.</string>
     <string name="cpu_powersaving_lcd_summary_off">Power reducing is disabled.</string>
+    <string name="cpu_powersaving_intelli_plug_eco_title">Eco Mode</string>
+    <string name="cpu_powersaving_intelli_plug_eco_summary_on">Intelli Plug eco mode enabled.</string>
+    <string name="cpu_powersaving_intelli_plug_eco_summary_off">Intelli Plug eco mode disabled.</string>
 
     <!-- Sensors -->
     <string name="category_sensors_title">Sensors</string>

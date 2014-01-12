@@ -28,6 +28,13 @@
             android:summaryOff="@string/cpu_powersaving_lcd_summary_off"
             android:defaultValue="false" />
 
+        <SwitchPreference
+            android:key="intelli_plug_eco"
+            android:title="@string/cpu_powersaving_intelli_plug_eco_title"
+            android:summaryOn="@string/cpu_powersaving_intelli_plug_eco_summary_on"
+            android:summaryOff="@string/cpu_powersaving_intelli_plug_eco_summary_off"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 </PreferenceScreen>
 

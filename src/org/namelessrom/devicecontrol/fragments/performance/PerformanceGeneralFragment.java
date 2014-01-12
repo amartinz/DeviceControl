@@ -44,7 +44,11 @@ public class PerformanceGeneralFragment extends PreferenceFragment
     private static final String sLcdPowerReduceFile = Utils.checkPaths(FILES_LCD_POWER_REDUCE);
     private static final boolean sLcdPowerReduce = !sLcdPowerReduceFile.equals("");
 
+    private static final String sIntelliPlugEcoFile = Utils.checkPaths(FILES_INTELLI_PLUG_ECO);
+    private static final boolean sIntelliPlugEco = !sIntelliPlugEcoFile.equals("");
+
     private SwitchPreference mLcdPowerReduce;
+    private SwitchPreference mIntelliPlugEco;
 
     //==============================================================================================
     // Overridden Methods
@@ -56,10 +60,27 @@ public class PerformanceGeneralFragment extends PreferenceFragment
 
         addPreferencesFromResource(R.xml.performance_general);
 
-        mLcdPowerReduce = (SwitchPreference) findPreference(KEY_LCD_POWER_REDUCE);
-        mLcdPowerReduce.setChecked(Utils.readOneLine(sLcdPowerReduceFile).equals("1"));
-        mLcdPowerReduce.setOnPreferenceChangeListener(this);
+        PreferenceGroup preferenceGroup = (PreferenceGroup) findPreference(CATEGORY_POWERSAVING);
 
+        mLcdPowerReduce = (SwitchPreference) findPreference(KEY_LCD_POWER_REDUCE);
+        if (sLcdPowerReduce) {
+            mLcdPowerReduce.setChecked(Utils.readOneLine(sLcdPowerReduceFile).equals("1"));
+            mLcdPowerReduce.setOnPreferenceChangeListener(this);
+        } else {
+            preferenceGroup.removePreference(mLcdPowerReduce);
+        }
+
+        mIntelliPlugEco = (SwitchPreference) findPreference(KEY_INTELLI_PLUG_ECO);
+        if (sIntelliPlugEco) {
+            mIntelliPlugEco.setChecked(Utils.readOneLine(sIntelliPlugEcoFile).equals("1"));
+            mIntelliPlugEco.setOnPreferenceChangeListener(this);
+        } else {
+            preferenceGroup.removePreference(mIntelliPlugEco);
+        }
+
+        if (preferenceGroup.getPreferenceCount() == 0) {
+            getPreferenceScreen().removePreference(preferenceGroup);
+        }
 
         new PerformanceCpuTask().execute();
 
@@ -73,6 +94,11 @@ public class PerformanceGeneralFragment extends PreferenceFragment
             boolean value = (Boolean) o;
             Utils.writeValue(sLcdPowerReduceFile, (value ? "1" : "0"));
             PreferenceHelper.setBoolean(KEY_LCD_POWER_REDUCE, value);
+            changed = true;
+        } else if (preference == mIntelliPlugEco) {
+            boolean value = (Boolean) o;
+            Utils.writeValue(sIntelliPlugEcoFile, (value ? "1" : "0"));
+            PreferenceHelper.setBoolean(KEY_INTELLI_PLUG_ECO, value);
             changed = true;
         }
 
@@ -89,13 +115,17 @@ public class PerformanceGeneralFragment extends PreferenceFragment
     }
 
     public static boolean isSupported() {
-        return (sLcdPowerReduce);
+        return (sLcdPowerReduce || sIntelliPlugEco);
     }
 
     public static void restore() {
         if (sLcdPowerReduce) {
             Utils.writeValue(sLcdPowerReduceFile,
                     (PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false) ? "1" : "0"));
+        }
+        if (sIntelliPlugEco) {
+            Utils.writeValue(sIntelliPlugEcoFile,
+                    (PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false) ? "1" : "0"));
         }
     }
 
