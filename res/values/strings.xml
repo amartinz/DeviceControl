@@ -58,7 +58,12 @@
     <string name="section_title_tools_sysctl">Sysctl Editor</string>
     <string name="section_title_tools_vm">VM Editor</string>
 
-    <!-- CPU -->
+    <!-- PERFORMANCE -->
+    <!-- Performance : Force high-end graphics -->
+    <string name="pref_force_highend_gfx_title">Force high-end graphics</string>
+    <string name="pref_force_highend_gfx_summary">Enables high-end visual effects such as transparen
+t status/navigation bar (requires reboot)</string>
+
     <string name="cpu_powersaving">Powersaving</string>
     <string name="cpu_powersaving_lcd_title">LCD Power Reduce</string>
     <string name="cpu_powersaving_lcd_summary_on">Power reducing is enabled.</string>

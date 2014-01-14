@@ -86,4 +86,42 @@ public class Scripts {
                 "/system/bin/mount -o remount,ro /system;" +
                 "fi");
     }
+
+    //
+
+    public static boolean getForceHighEndGfx() {
+        boolean tmpBool = false;
+        List<String> tmpList;
+
+        tmpList = Scripts.runScript(
+                "if [ \"`grep 'persist\\.sys\\.force_highendgfx=1' /system/build.prop`\" ];" +
+                        "then echo \"1\";" +
+                        "elif [ -z \"`grep 'persist\\.sys\\.force_highendgfx=1' " +
+                        "/system/build.prop`\" ];" +
+                        "then echo \"0\";" +
+                        "fi");
+
+        if (!(tmpList.get(0) == null)) {
+            logDebug("getForceNavBar: tmpList.get(0) == " + tmpList.get(0),
+                    Application.IS_LOG_DEBUG);
+            tmpBool = tmpList.get(0).equals("1");
+        }
+
+        logDebug("getForceNavBar: tmpBool == " + (tmpBool ? "true" : "false"),
+                Application.IS_LOG_DEBUG);
+        return tmpBool;
+    }
+
+    public static String toggleForceHighEndGfx() {
+
+        return ("if [ \"`grep 'persist\\.sys\\.force_highendgfx=1' /system/build.prop`\" ];" +
+                "then /system/bin/mount -o remount,rw /system;" +
+                "sed -i '/persist\\.sys\\.force_highendgfx=1/d' /system/build.prop;" +
+                "/system/bin/mount -o remount,ro /system;" +
+                "elif [ -z \"`grep 'persist\\.sys\\.force_highendgfx=1' /system/build.prop`\" ];" +
+                "then /system/bin/mount -o remount,rw /system;" +
+                "echo \"persist\\.sys\\.force_highendgfx=1\" >> /system/build.prop;" +
+                "/system/bin/mount -o remount,ro /system;" +
+                "fi");
+    }
 }

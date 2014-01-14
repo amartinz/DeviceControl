@@ -18,16 +18,18 @@
 
 package org.namelessrom.devicecontrol.fragments.performance;
 
+import android.app.ActivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.SwitchPreference;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
@@ -41,6 +43,11 @@ public class PerformanceGeneralFragment extends PreferenceFragment
     //==============================================================================================
     // Fields
     //==============================================================================================
+    private static final boolean IS_LOW_RAM_DEVICE = ActivityManager.isLowRamDeviceStatic();
+    private static final String FORCE_HIGHEND_GFX_PREF = "pref_force_highend_gfx";
+
+    private CheckBoxPreference mForceHighEndGfx;
+
     private static final String sLcdPowerReduceFile = Utils.checkPaths(FILES_LCD_POWER_REDUCE);
     private static final boolean sLcdPowerReduce = !sLcdPowerReduceFile.equals("");
 
@@ -59,6 +66,12 @@ public class PerformanceGeneralFragment extends PreferenceFragment
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.performance_general);
+
+        if (IS_LOW_RAM_DEVICE) {
+            mForceHighEndGfx = (CheckBoxPreference) findPreference(FORCE_HIGHEND_GFX_PREF);
+        } else {
+            getPreferenceScreen().removePreference(findPreference(FORCE_HIGHEND_GFX_PREF));
+        }
 
         PreferenceGroup preferenceGroup = (PreferenceGroup) findPreference(CATEGORY_POWERSAVING);
 
@@ -90,7 +103,10 @@ public class PerformanceGeneralFragment extends PreferenceFragment
     public boolean onPreferenceChange(Preference preference, Object o) {
         boolean changed = false;
 
-        if (preference == mLcdPowerReduce) {
+        if (preference == mForceHighEndGfx) {
+            Scripts.runScript(Scripts.toggleForceHighEndGfx());
+            changed = true;
+        } else if (preference == mLcdPowerReduce) {
             boolean value = (Boolean) o;
             Utils.writeValue(sLcdPowerReduceFile, (value ? "1" : "0"));
             PreferenceHelper.setBoolean(KEY_LCD_POWER_REDUCE, value);
@@ -110,12 +126,16 @@ public class PerformanceGeneralFragment extends PreferenceFragment
     //==============================================================================================
 
     public void setResult(List<Boolean> paramResult) {
-        PreferenceGroup prefs = (PreferenceCategory) findPreference(CATEGORY_POWERSAVING);
-
+        int i = 0;
+        if (IS_LOW_RAM_DEVICE) {
+            mForceHighEndGfx.setChecked(paramResult.get(i));
+            mForceHighEndGfx.setOnPreferenceChangeListener(this);
+            i++;
+        }
     }
 
     public static boolean isSupported() {
-        return (sLcdPowerReduce || sIntelliPlugEco);
+        return (sLcdPowerReduce || sIntelliPlugEco || IS_LOW_RAM_DEVICE);
     }
 
     public static void restore() {
@@ -139,6 +159,10 @@ public class PerformanceGeneralFragment extends PreferenceFragment
         @Override
         protected List<Boolean> doInBackground(Void... voids) {
             List<Boolean> tmpList = new ArrayList<Boolean>();
+
+            if (IS_LOW_RAM_DEVICE) {
+                tmpList.add(Scripts.getForceHighEndGfx());
+            }
 
             return tmpList;
         }
