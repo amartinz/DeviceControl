@@ -37,6 +37,9 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.chainfire.libsuperuser.Application;
+import eu.chainfire.libsuperuser.Shell;
+
 public class PerformanceGeneralFragment extends PreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
 
@@ -104,7 +107,7 @@ public class PerformanceGeneralFragment extends PreferenceFragment
         boolean changed = false;
 
         if (preference == mForceHighEndGfx) {
-            Scripts.runScript(Scripts.toggleForceHighEndGfx());
+            Shell.SU.run(Scripts.toggleForceHighEndGfx());
             changed = true;
         } else if (preference == mLcdPowerReduce) {
             boolean value = (Boolean) o;
@@ -127,10 +130,12 @@ public class PerformanceGeneralFragment extends PreferenceFragment
 
     public void setResult(List<Boolean> paramResult) {
         int i = 0;
-        if (IS_LOW_RAM_DEVICE) {
+        if (IS_LOW_RAM_DEVICE && Application.HAS_ROOT) {
             mForceHighEndGfx.setChecked(paramResult.get(i));
             mForceHighEndGfx.setOnPreferenceChangeListener(this);
             i++;
+        } else {
+            getPreferenceScreen().removePreference(findPreference("pref_force_highend_gfx"));
         }
     }
 
@@ -160,7 +165,7 @@ public class PerformanceGeneralFragment extends PreferenceFragment
         protected List<Boolean> doInBackground(Void... voids) {
             List<Boolean> tmpList = new ArrayList<Boolean>();
 
-            if (IS_LOW_RAM_DEVICE) {
+            if (IS_LOW_RAM_DEVICE && Application.HAS_ROOT) {
                 tmpList.add(Scripts.getForceHighEndGfx());
             }
 
