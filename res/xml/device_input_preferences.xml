@@ -18,7 +18,9 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/navbar_title">
+    <PreferenceCategory
+        android:key="input_navbar"
+        android:title="@string/navbar_title">
 
         <CheckBoxPreference
             android:key="navbar_force"

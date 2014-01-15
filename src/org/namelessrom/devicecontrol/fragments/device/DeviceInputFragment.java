@@ -34,6 +34,9 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.chainfire.libsuperuser.Application;
+import eu.chainfire.libsuperuser.Shell;
+
 public class DeviceInputFragment extends PreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
 
@@ -82,7 +85,7 @@ public class DeviceInputFragment extends PreferenceFragment
         boolean changed = false;
 
         if (preference == mForceNavBar) {
-            Scripts.runScript(Scripts.toggleForceNavBar());
+            Shell.SU.run(Scripts.toggleForceNavBar());
             changed = true;
         } else if (preference == mGloveMode) {
             HighTouchSensitivity.setEnabled(!mGloveMode.isChecked());
@@ -98,9 +101,22 @@ public class DeviceInputFragment extends PreferenceFragment
     //==============================================================================================
 
     private void setResult(List<Boolean> paramResult) {
-        mForceNavBar.setChecked(paramResult.get(0));
-        mForceNavBar.setEnabled(true);
-        mForceNavBar.setOnPreferenceChangeListener(this);
+        int i = 0;
+
+        PreferenceGroup preferenceGroup =
+                (PreferenceGroup) getPreferenceScreen().findPreference("input_navbar");
+
+        if (Application.HAS_ROOT) {
+            mForceNavBar.setChecked(paramResult.get(i));
+            mForceNavBar.setEnabled(true);
+            mForceNavBar.setOnPreferenceChangeListener(this);
+        } else {
+            preferenceGroup.removePreference(mForceNavBar);
+        }
+
+        if (preferenceGroup.getPreferenceCount() == 0) {
+            getPreferenceScreen().removePreference(preferenceGroup);
+        }
     }
 
     public static boolean isSupported() {
@@ -119,7 +135,9 @@ public class DeviceInputFragment extends PreferenceFragment
             List<Boolean> tmpList = new ArrayList<Boolean>();
 
             publishProgress(0);
-            tmpList.add(Scripts.getForceNavBar());
+            if (Application.HAS_ROOT) {
+                tmpList.add(Scripts.getForceNavBar());
+            }
 
             return tmpList;
         }

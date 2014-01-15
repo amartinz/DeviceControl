@@ -32,19 +32,7 @@ public class Scripts {
     public static List<String> runScript(String mCommands) {
         List<String> tmpList;
 
-        if (Application.IS_SYSTEM_APP) {
-            logDebug("runScript: SH", Application.IS_LOG_DEBUG);
-            tmpList = Shell.SH.run(mCommands);
-        } else {
-            logDebug("runScript: SU", Application.IS_LOG_DEBUG);
-            tmpList = Shell.SU.run(mCommands);
-        }
-
-        // System app fallback, in case we need to enforce root
-        if (tmpList.get(0) == null) {
-            logDebug("runScript: tmpList == null", Application.IS_LOG_DEBUG);
-            tmpList = Shell.SU.run(mCommands);
-        }
+        tmpList = Shell.SU.run(mCommands);
 
         logDebug("runScript: tmpList.get(0) == " + tmpList.get(0), Application.IS_LOG_DEBUG);
         return tmpList;
