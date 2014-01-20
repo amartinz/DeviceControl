@@ -109,29 +109,23 @@
             android:layout_height="1dp"
             android:background="@color/grey_dark" />
 
-        <TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/etc_sob"
-            android:id="@+id/set_on_boot"
-            android:layout_alignParentTop="true"
-            android:paddingLeft="4dp"
-            android:paddingBottom="4dp"
-            android:layout_marginTop="10dp" />
-
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/applyAtBoot"
+            android:text="@string/etc_prop_restore_title"
+            android:textSize="14sp"
+            android:id="@+id/restoreBtn"
+            android:layout_gravity="center_vertical|left"
+            android:gravity="center_vertical|center_horizontal"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/set_on_boot" />
+            android:layout_marginTop="10dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/etc_apply_values"
+            android:text="@string/etc_add_prop_title"
             android:textSize="14sp"
-            android:id="@+id/applyBtn"
+            android:id="@+id/addBtn"
             android:layout_gravity="center_vertical|right"
             android:gravity="center_vertical|center_horizontal"
             android:layout_alignParentRight="true"

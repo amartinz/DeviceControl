@@ -77,11 +77,29 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param filePath The file to read
      * @return The file's content
      */
-    private static String readFileViaShell(String filePath) {
-        List<String> mResult = Shell.SU.run("cat " + filePath);
+    public static String readFileViaShell(String filePath) {
+        return readFileViaShell(filePath, true);
+    }
+
+    public static String readFileViaShell(String filePath, boolean useSu) {
+        return readFileViaShell(filePath, useSu, false);
+    }
+
+    public static String readFileViaShell(String filePath, boolean useSu, boolean wholeFile) {
+        List<String> mResult = (useSu
+                ? Shell.SU.run("cat " + filePath)
+                : Shell.SH.run("cat " + filePath));
         if (mResult != null) {
             if (mResult.size() != 0) {
-                return mResult.get(0);
+                if (wholeFile) {
+                    String tmp = "";
+                    for (String s : mResult) {
+                        tmp += s + "\n";
+                    }
+                    return tmp;
+                } else {
+                    return mResult.get(0);
+                }
             } else {
                 return "";
             }

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+~  Copyright (C) 2013 h0rn3t
+~  Modifications Copyright (C) 2014 Alexander "Evisceration" Martinz
+~
+~  This program is free software: you can redistribute it and/or modify
+~  it under the terms of the GNU General Public License as published by
+~  the Free Software Foundation, either version 3 of the License, or
+~  (at your option) any later version.
+~
+~  This program is distributed in the hope that it will be useful,
+~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+~  GNU General Public License for more details.
+~
+~  You should have received a copy of the GNU General Public License
+~  along with this program.  If not, see <http://www.gnu.org/licenses
+-->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip"
+    android:paddingTop="10dip">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lname">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/etc_prop_name"
+                android:id="@+id/text1"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/nprop"
+                android:inputType="text"
+                android:singleLine="true"
+                android:lines="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lval"
+            android:layout_marginTop="10dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/etc_prop_val"
+                android:id="@+id/text2"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/vprop"
+                android:inputType="text"
+                android:singleLine="true"
+                android:lines="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lpresets"
+            android:layout_marginTop="10dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/etc_prop_preset"
+                android:id="@+id/text3"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

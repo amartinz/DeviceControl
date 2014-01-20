@@ -64,6 +64,10 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
                 fragment = ToolsEditor.newInstance(1);
                 mText = getString(R.string.fragment_press_to_load, "SysCtl Editor");
                 break;
+            case 2:
+                fragment = ToolsEditor.newInstance(2);
+                mText = getString(R.string.fragment_press_to_load, "Build.Prop Editor");
+                break;
             default:
                 mText = "Could not identify fragment to load";
                 break;

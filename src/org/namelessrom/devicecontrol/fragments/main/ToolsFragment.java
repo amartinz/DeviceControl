@@ -84,6 +84,9 @@ public class ToolsFragment extends AttachFragment {
         if (Application.HAS_ROOT) {
             tmpList.add(PressToLoadFragment.newInstance(1, R.mipmap.ic_launcher)); // SysCtl
         }
+        if (Application.HAS_ROOT) {
+            tmpList.add(PressToLoadFragment.newInstance(2, R.mipmap.ic_launcher)); // Build.Prop
+        }
         return tmpList;
     }
 
@@ -95,6 +98,9 @@ public class ToolsFragment extends AttachFragment {
         }
         if (Application.HAS_ROOT) {
             tmpList.add(getString(R.string.section_title_tools_sysctl));
+        }
+        if (Application.HAS_ROOT) {
+            tmpList.add(getString(R.string.section_title_tools_buildprop));
         }
         return tmpList;
     }

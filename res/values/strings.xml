@@ -40,6 +40,8 @@
     <!-- Dialogs -->
     <string name="dialog_wait">Please wait…</string>
     <string name="dialog_getting_information">Getting information about %s …</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_cancel">Cancel</string>
 
     <!-- Information -->
     <string name="info_restart">Please restart the activity!</string>
@@ -61,8 +63,9 @@
     <string name="section_title_performance">Performance</string>
     <!-- Tools -->
     <string name="section_title_tools">Tools</string>
-    <string name="section_title_tools_sysctl">Sysctl Editor</string>
+    <string name="section_title_tools_sysctl">SysCtl Editor</string>
     <string name="section_title_tools_vm">VM Editor</string>
+    <string name="section_title_tools_buildprop">Build.Prop Editor</string>
 
     <!-- PERFORMANCE -->
     <string name="pref_force_highend_gfx_title">Force high-end graphics</string>
@@ -180,7 +183,16 @@
     <string name="etc_filter">Filter</string>
     <string name="etc_save">"Save"</string>
     <string name="etc_cancel">Cancel</string>
-    <string name="etc_add_prop_title">Add Parameter</string>
-    <string name="etc_edit_prop_title">Edit Parameter</string>
+    <string name="etc_add_prop_title">Add Property</string>
+    <string name="etc_edit_prop_title">Edit Property</string>
+    <string name="etc_del_prop_title">Delete Parameter</string>
+    <string name="etc_del_prop_msg">%s will be deleted.\n\nContinue?</string>
+    <string name="etc_prop_backup">Backup of build.prop was created in %s</string>
+    <string name="etc_prop_no_backup">Initial backup not found!</string>
+    <string name="etc_prop_restore_title">Restore</string>
+    <string name="etc_prop_restore_msg">Initial build.prop file will be restored.\nYou must reboot your device to take effect.\n\nContinue?</string>
+    <string name="etc_prop_name">Name</string>
+    <string name="etc_prop_val">Value</string>
+    <string name="etc_prop_preset">Presets</string>
 
 </resources>
