@@ -26,7 +26,8 @@ public interface FileConstants {
     //==============================================================================================
     // Files
     //==============================================================================================
-    public static final String[] FILES_VIBRATOR = {"/sys/class/timed_output/vibrator/pwm_value"};
+    public static final String[] FILES_VIBRATOR = {"/sys/class/timed_output/vibrator/pwm_value",
+            "/sys/devices/platform/tspdrv/nforce_timed"};
     public static final String FILE_TOUCHKEY_TOGGLE =
             "/sys/class/leds/button-backlight/max_brightness";
     public static final String FILE_TOUCHKEY_BRIGHTNESS =
