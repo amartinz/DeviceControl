@@ -52,8 +52,10 @@ public class BootupReceiver extends BroadcastReceiver
         if (!PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
 
             // Schedule Tasker
-            AlarmHelper.setAlarmFstrim(context, Integer.parseInt(
-                    PreferenceHelper.getString(TASKER_TOOLS_FSTRIM_INTERVAL, "30")));
+            if (PreferenceHelper.getBoolean(TASKER_TOOLS_FSTRIM, false) && Application.HAS_ROOT) {
+                AlarmHelper.setAlarmFstrim(context, Integer.parseInt(
+                        PreferenceHelper.getString(TASKER_TOOLS_FSTRIM_INTERVAL, "30")));
+            }
 
             /* Reapply values */
             boolean tmp;
