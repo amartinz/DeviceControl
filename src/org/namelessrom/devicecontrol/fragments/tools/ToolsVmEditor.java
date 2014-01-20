@@ -170,7 +170,7 @@ public class ToolsVmEditor extends Fragment
                 } else {
                     nofiles.setVisibility(View.GONE);
                     tools.setVisibility(View.VISIBLE);
-                    adapter = new PropAdapter(getActivity(), R.layout.prop_item, props);
+                    adapter = new PropAdapter(getActivity(), props);
                     packList.setAdapter(adapter);
                 }
             }

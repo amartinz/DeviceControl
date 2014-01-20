@@ -34,14 +34,12 @@ import java.util.List;
 
 public class PropAdapter extends ArrayAdapter<Prop> {
     private final Context mContext;
-    private final int mId;
     private final List<Prop> mProps;
     private static Filter mFilter;
 
-    public PropAdapter(Context context, int textViewResourceId, List<Prop> objects) {
-        super(context, textViewResourceId, objects);
+    public PropAdapter(Context context, List<Prop> objects) {
+        super(context, R.layout.prop_item, objects);
         mContext = context;
-        mId = textViewResourceId;
         mProps = objects;
     }
 
@@ -54,20 +52,25 @@ public class PropAdapter extends ArrayAdapter<Prop> {
         View v = convertView;
 
         if (v == null) {
-            LayoutInflater vi = (LayoutInflater)
-                    mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(mId, null);
+            LayoutInflater vi =
+                    (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            v = vi.inflate(R.layout.prop_item, null);
+        }
+
+        ViewHolder holder = (ViewHolder) v.getTag();
+
+        if (holder == null) {
+            holder = new ViewHolder(v);
+            v.setTag(holder);
         }
 
         final Prop p = mProps.get(position);
         if (p != null) {
-            TextView pp = (TextView) v.findViewById(R.id.prop);
-            TextView pv = (TextView) v.findViewById(R.id.pval);
-            if (pp != null) {
-                pp.setText(p.getName());
+            if (holder.pp != null) {
+                holder.pp.setText(p.getName());
             }
-            if (pv != null) {
-                pv.setText(p.getVal());
+            if (holder.pv != null) {
+                holder.pv.setText(p.getVal());
             }
 
         }
@@ -80,6 +83,17 @@ public class PropAdapter extends ArrayAdapter<Prop> {
             mFilter = new AppFilter(mProps);
         }
         return mFilter;
+    }
+
+    private class ViewHolder {
+        private final TextView pp;
+        private final TextView pv;
+
+        private ViewHolder(View rootView) {
+            pp = (TextView) rootView.findViewById(R.id.prop);
+            pv = (TextView) rootView.findViewById(R.id.pval);
+        }
+
     }
 
     private class AppFilter extends Filter {

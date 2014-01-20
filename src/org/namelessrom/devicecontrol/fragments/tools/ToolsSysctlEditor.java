@@ -42,11 +42,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.utils.classes.Prop;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.File;
@@ -171,7 +171,7 @@ public class ToolsSysctlEditor extends Fragment
                 } else {
                     nofiles.setVisibility(View.GONE);
                     tools.setVisibility(View.VISIBLE);
-                    adapter = new PropAdapter(getActivity(), R.layout.prop_item, props);
+                    adapter = new PropAdapter(getActivity(), props);
                     packList.setAdapter(adapter);
                 }
             }
