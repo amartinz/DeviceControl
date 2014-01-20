@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.main.DeviceFragment;
@@ -46,6 +47,9 @@ public class MainActivity extends Activity
     private static NavigationDrawerFragment mNavigationDrawerFragment;
     private static PreferencesFragment mPreferencesFragment;
     private CharSequence mTitle;
+    private boolean mDoublePress = true;
+    private static long back_pressed;
+    private Toast mToast;
 
     //==============================================================================================
     // Overridden Methods
@@ -131,6 +135,27 @@ public class MainActivity extends Activity
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else if (mDoublePress &&
+                !mNavigationDrawerFragment.isDrawerOpen() && !mPreferencesFragment.isDrawerOpen()) {
+            if (back_pressed + 2000 > System.currentTimeMillis()) {
+                if (mToast != null)
+                    mToast.cancel();
+                finish();
+            } else {
+                mToast = Toast.makeText(getBaseContext(),
+                        getString(R.string.action_press_again), Toast.LENGTH_SHORT);
+                mToast.show();
+            }
+            back_pressed = System.currentTimeMillis();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     //==============================================================================================

@@ -28,8 +28,6 @@ import android.view.ViewGroup;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsHelpFragment;
-import org.namelessrom.devicecontrol.fragments.tools.ToolsSysctlEditor;
-import org.namelessrom.devicecontrol.fragments.tools.ToolsVmEditor;
 import org.namelessrom.devicecontrol.utils.adapters.ScreenSlidePagerAdapter;
 import org.namelessrom.devicecontrol.utils.widgets.JfViewPager;
 
@@ -81,10 +79,10 @@ public class ToolsFragment extends AttachFragment {
         List<Fragment> tmpList = new ArrayList<Fragment>();
         tmpList.add(new ToolsHelpFragment());
         if (Application.HAS_ROOT) {
-            tmpList.add(new ToolsVmEditor());
+            tmpList.add(PressToLoadFragment.newInstance(0, R.mipmap.ic_launcher)); // VM
         }
         if (Application.HAS_ROOT) {
-            tmpList.add(new ToolsSysctlEditor());
+            tmpList.add(PressToLoadFragment.newInstance(1, R.mipmap.ic_launcher)); // SysCtl
         }
         return tmpList;
     }

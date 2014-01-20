@@ -42,11 +42,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.utils.classes.Prop;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.File;
@@ -129,7 +129,7 @@ public class ToolsVmEditor extends Fragment
             public void run() {
                 new GetPropOperation().execute();
             }
-        }, 1500);
+        }, 250);
 
         return view;
     }

@@ -129,7 +129,7 @@ public class ToolsSysctlEditor extends Fragment
             public void run() {
                 new GetPropOperation().execute();
             }
-        }, 500);
+        }, 250);
 
         return view;
     }
