@@ -25,8 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.fragments.tools.ToolsSysctlEditor;
-import org.namelessrom.devicecontrol.fragments.tools.ToolsVmEditor;
+import org.namelessrom.devicecontrol.fragments.tools.ToolsEditor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class PressToLoadFragment extends Fragment implements DeviceConstants {
@@ -58,11 +57,11 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
 
         switch (fragmentId) {
             case 0:
-                fragment = new ToolsVmEditor();
+                fragment = ToolsEditor.newInstance(0);
                 mText = getString(R.string.fragment_press_to_load, "VM Editor");
                 break;
             case 1:
-                fragment = new ToolsSysctlEditor();
+                fragment = ToolsEditor.newInstance(1);
                 mText = getString(R.string.fragment_press_to_load, "SysCtl Editor");
                 break;
             default:

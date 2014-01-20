@@ -56,8 +56,11 @@ import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
 
-public class ToolsVmEditor extends Fragment
+public class ToolsEditor extends Fragment
         implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener {
+
+    private static final String ARG_EDITOR = "arg_editor";
+    private static final int HANDLER_DELAY = 250;
 
     private ListView packList;
     private LinearLayout linlaHeaderProgress;
@@ -65,59 +68,87 @@ public class ToolsVmEditor extends Fragment
     private RelativeLayout tools;
     private PropAdapter adapter = null;
     private EditText filterText = null;
-    private List<Prop> props = new ArrayList<Prop>();
+    private final List<Prop> props = new ArrayList<Prop>();
     private final String dn = DC_BACKUP_DIR;
 
-    private final String mod = "vm";
     private final String syspath = "/system/etc/";
-    private final String sob = VM_SOB;
+    private String mod = "sysctl";
+    private String sob = SYSCTL_SOB;
     private Boolean isdyn = false;
+    private int mEditorType;
+
+    public static ToolsEditor newInstance(final int editor) {
+        Bundle b = new Bundle();
+        b.putInt(ToolsEditor.ARG_EDITOR, editor);
+        ToolsEditor fragment = new ToolsEditor();
+        fragment.setArguments(b);
+        return fragment;
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mEditorType = getArguments().getInt(ARG_EDITOR);
+
+        switch (mEditorType) {
+            default:
+            case 0:
+                mod = "vm";
+                sob = VM_SOB;
+                break;
+            case 1:
+                mod = "sysctl";
+                sob = SYSCTL_SOB;
+                break;
+        }
 
         View view = inflater.inflate(R.layout.prop_view, container, false);
 
         packList = (ListView) view.findViewById(R.id.applist);
         packList.setOnItemClickListener(this);
+        packList.setFastScrollEnabled(true);
+        packList.setFastScrollAlwaysVisible(true);
         linlaHeaderProgress = (LinearLayout) view.findViewById(R.id.linlaHeaderProgress);
         nofiles = (LinearLayout) view.findViewById(R.id.nofiles);
         tools = (RelativeLayout) view.findViewById(R.id.tools);
         filterText = (EditText) view.findViewById(R.id.filtru);
         filterText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(final Editable s) {
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(final CharSequence s, final int start,
+                                          final int count, final int after) {
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (adapter != null)
+            public void onTextChanged(final CharSequence s, final int start,
+                                      final int before, final int count) {
+                if (adapter != null) {
                     adapter.getFilter().filter(filterText.getText().toString());
+                }
             }
         });
         Button applyBtn = (Button) view.findViewById(R.id.applyBtn);
         applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View arg0) {
-                Shell.SU.run("busybox mount -o remount,rw /system" + ";" +
-                        "busybox cp " + dn + "/" + mod + ".conf" +
-                        " " + syspath + mod + ".conf;" +
-                        "busybox chmod 644 " + syspath + mod + ".conf" + ";" +
-                        "busybox mount -o remount,ro /system" + ";" +
-                        "busybox sysctl -p " + syspath + mod + ".conf" + ";");
+            public void onClick(final View arg0) {
+                Shell.SU.run("busybox mount -o remount,rw /system" + ";"
+                        + "busybox cp " + dn + "/" + mod + ".conf"
+                        + " " + syspath + mod + ".conf;"
+                        + "busybox chmod 644 " + syspath + mod + ".conf" + ";"
+                        + "busybox mount -o remount,ro /system" + ";"
+                        + "busybox sysctl -p " + syspath + mod + ".conf" + ";");
             }
         });
         final Switch setOnBoot = (Switch) view.findViewById(R.id.applyAtBoot);
         setOnBoot.setChecked(PreferenceHelper.getBoolean(sob, false));
         setOnBoot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
                 PreferenceHelper.setBoolean(sob, isChecked);
             }
         });
@@ -129,27 +160,37 @@ public class ToolsVmEditor extends Fragment
             public void run() {
                 new GetPropOperation().execute();
             }
-        }, 250);
+        }, HANDLER_DELAY);
 
         return view;
     }
 
     private class GetPropOperation extends AsyncTask<String, Void, List<String>> {
         @Override
-        protected List<String> doInBackground(String... params) {
+        protected List<String> doInBackground(final String... params) {
 
             StringBuilder sb = new StringBuilder();
             sb.append("busybox mkdir -p ").append(dn).append(";\n");
 
             if (new File(syspath + mod + ".conf").exists()) {
-                sb.append("busybox cp " + syspath + mod + ".conf" + " ")
+                sb.append("busybox cp " + syspath).append(mod).append(".conf").append(" ")
                         .append(dn).append("/").append(mod).append(".conf;\n");
             } else {
                 sb.append("busybox echo \"# created by DeviceControl\n\" > ")
                         .append(dn).append("/").append(mod).append(".conf;\n");
             }
 
-            sb.append("busybox echo `busybox find /proc/sys/vm/* -type f -prune -perm -644`;\n");
+            switch (mEditorType) {
+                default:
+                case 0:
+                    sb.append("busybox echo `busybox find /proc/sys/vm/* -type f ")
+                            .append("-prune -perm -644`;\n");
+                    break;
+                case 1:
+                    sb.append("busybox echo `busybox find /proc/sys/* -type f -perm -644 |")
+                            .append(" grep -v \"vm.\"`;\n");
+                    break;
+            }
 
             List<String> mResult = Shell.SU.run(sb.toString());
             if (mResult != null) {
@@ -160,9 +201,9 @@ public class ToolsVmEditor extends Fragment
         }
 
         @Override
-        protected void onPostExecute(List<String> result) {
+        protected void onPostExecute(final List<String> result) {
             if ((result != null) && (result.size() > 0)) {
-                load_prop(result);
+                loadProp(result);
                 Collections.sort(props);
                 linlaHeaderProgress.setVisibility(View.GONE);
                 if (props.isEmpty()) {
@@ -183,18 +224,16 @@ public class ToolsVmEditor extends Fragment
             tools.setVisibility(View.GONE);
         }
 
-        @Override
-        protected void onProgressUpdate(Void... values) {
-        }
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long row) {
+    public void onItemClick(final AdapterView<?> parent, final View view,
+                            final int position, final long row) {
         final Prop p = adapter.getItem(position);
         editPropDialog(p);
     }
 
-    private void editPropDialog(Prop p) {
+    private void editPropDialog(final Prop p) {
         final Prop pp = p;
         String title;
 
@@ -217,32 +256,32 @@ public class ToolsVmEditor extends Fragment
                 .setNegativeButton(getString(R.string.etc_cancel),
                         new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onClick(final DialogInterface dialog, final int which) {
                             }
                         })
                 .setPositiveButton(
                         getString(R.string.etc_save), new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, final int which) {
                         if (pp != null) {
                             if (tv.getText().toString() != null) {
                                 pp.setVal(tv.getText().toString().trim());
-                                String cmd = getActivity().getFilesDir() + "/utils -setprop \"" +
-                                        pp.getName() + "=" + pp.getVal() + "\" " + dn + "/" +
-                                        mod + ".conf";
+                                String cmd = getActivity().getFilesDir() + "/utils -setprop \""
+                                        + pp.getName() + "=" + pp.getVal() + "\" " + dn
+                                        + "/" + mod + ".conf";
                                 Shell.SU.run(cmd);
                                 Log.e("BUILD", "cmd: " + cmd);
                             }
                         } else {
-                            if (tv.getText().toString() != null &&
-                                    tn.getText().toString() != null &&
-                                    tn.getText().toString().trim().length() > 0) {
+                            if (tv.getText().toString() != null
+                                    && tn.getText().toString() != null
+                                    && tn.getText().toString().trim().length() > 0) {
                                 props.add(new Prop(tn.getText().toString().trim(),
                                         tv.getText().toString().trim()));
-                                Shell.SU.run(getActivity().getFilesDir() + "/utils -setprop \"" +
-                                        tn.getText().toString().trim() + "=" +
-                                        tv.getText().toString().trim() + "\" " + dn + "/" +
-                                        mod + ".conf");
+                                Shell.SU.run(getActivity().getFilesDir() + "/utils -setprop \""
+                                        + tn.getText().toString().trim() + "="
+                                        + tv.getText().toString().trim() + "\" " + dn + "/"
+                                        + mod + ".conf");
                             }
                         }
                         Collections.sort(props);
@@ -251,15 +290,15 @@ public class ToolsVmEditor extends Fragment
                 }).create().show();
     }
 
-    void load_prop(List<String> paramResult) {
+    void loadProp(final List<String> paramResult) {
         props.clear();
         for (String s : paramResult) {
-            String p[] = s.split(" ");
+            String[] p = s.split(" ");
             for (String aP : p) {
                 if (aP.trim().length() > 0 && aP != null) {
                     final String pv = Utils.readOneLine(aP).trim();
                     final String pn = aP.trim().replace("/", ".").substring(10, aP.length());
-                    if (testprop(pn)) {
+                    if (testProp(pn)) {
                         props.add(new Prop(pn, pv));
                     }
                 }
@@ -267,11 +306,10 @@ public class ToolsVmEditor extends Fragment
         }
     }
 
-    boolean testprop(String s) {
-        return mod.equals("sysctl") ||
-                !isdyn ||
-                !(s.contains("dirty_writeback_active_centisecs") ||
-                        s.contains("dynamic_dirty_writeback") ||
-                        s.contains("dirty_writeback_suspend_centisecs"));
+    boolean testProp(final String s) {
+        return mod.equals("sysctl") || !isdyn
+                || !(s.contains("dirty_writeback_active_centisecs")
+                || s.contains("dynamic_dirty_writeback")
+                || s.contains("dirty_writeback_suspend_centisecs"));
     }
 }
