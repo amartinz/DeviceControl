@@ -16,12 +16,14 @@
 
 package org.namelessrom.devicecontrol.fragments.device;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+import android.view.ViewConfiguration;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
@@ -48,6 +50,8 @@ public class DeviceInputFragment extends PreferenceFragment
     private CheckBoxPreference mGloveMode;
     private CheckBoxPreference mKnockOn;
 
+    private boolean hasMenuKey;
+
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
@@ -56,6 +60,8 @@ public class DeviceInputFragment extends PreferenceFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.device_input_preferences);
+
+        hasMenuKey = ViewConfiguration.get(getActivity()).hasPermanentMenuKey();
 
         VibratorTuningPreference mVibratorTuning =
                 (VibratorTuningPreference) findPreference(KEY_VIBRATOR_TUNING);
@@ -128,7 +134,7 @@ public class DeviceInputFragment extends PreferenceFragment
         PreferenceGroup preferenceGroup =
                 (PreferenceGroup) getPreferenceScreen().findPreference("input_navbar");
 
-        if (Application.HAS_ROOT) {
+        if (Application.HAS_ROOT && hasMenuKey) {
             mForceNavBar.setChecked(paramResult.get(i));
             mForceNavBar.setEnabled(true);
             mForceNavBar.setOnPreferenceChangeListener(this);
@@ -141,7 +147,7 @@ public class DeviceInputFragment extends PreferenceFragment
         }
     }
 
-    public static void restore() {
+    public static void restore() { // Check for every possible error, caller is unprotected
         if (Utils.fileExists(FILE_KNOCKON)) {
             Utils.writeValue(FILE_KNOCKON,
                     (PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0"));
@@ -151,8 +157,10 @@ public class DeviceInputFragment extends PreferenceFragment
         }
     }
 
-    public static boolean isSupported() {
-        return (true); // eg mForceNavBar is always showing, so no need to remove this screen
+    public static boolean isSupported(Activity activity) {
+        return (ViewConfiguration.get(activity).hasPermanentMenuKey()
+                || VibratorTuningPreference.isSupported()
+                || HighTouchSensitivity.isSupported());
     }
 
     //==============================================================================================
@@ -167,7 +175,7 @@ public class DeviceInputFragment extends PreferenceFragment
             List<Boolean> tmpList = new ArrayList<Boolean>();
 
             publishProgress(0);
-            if (Application.HAS_ROOT) {
+            if (Application.HAS_ROOT && hasMenuKey) {
                 tmpList.add(Scripts.getForceNavBar());
             }
 
