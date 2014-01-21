@@ -83,7 +83,7 @@ public class DeviceFragment extends AttachFragment {
     private List<Fragment> getFragments() {
         List<Fragment> tmpList = new ArrayList<Fragment>();
         tmpList.add(new DeviceHelpFragment());
-        if (DeviceInputFragment.isSupported()) {
+        if (DeviceInputFragment.isSupported(getActivity())) {
             tmpList.add(new DeviceInputFragment());
         }
         if (DeviceLightsFragment.isSupported()) {
@@ -101,7 +101,7 @@ public class DeviceFragment extends AttachFragment {
     private List<String> getTitles() {
         List<String> tmpList = new ArrayList<String>();
         tmpList.add(getString(R.string.section_title_information));
-        if (DeviceInputFragment.isSupported()) {
+        if (DeviceInputFragment.isSupported(getActivity())) {
             tmpList.add(getString(R.string.section_title_device_input));
         }
         if (DeviceLightsFragment.isSupported()) {
@@ -117,8 +117,6 @@ public class DeviceFragment extends AttachFragment {
     }
 
     public static void restore() {
-        if (DeviceInputFragment.isSupported()) {
-            DeviceInputFragment.restore();
-        }
+        DeviceInputFragment.restore(); // No check, error handling needs to be done inside
     }
 }
