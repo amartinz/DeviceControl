@@ -16,6 +16,7 @@
 
 package org.namelessrom.devicecontrol.fragments.device;
 
+import android.view
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -43,7 +44,13 @@ public class DeviceInputFragment extends PreferenceFragment
     //==============================================================================================
     // Fields
     //==============================================================================================
+    
+    // Check for hardware keys, don't need this if device requires navbar
+    public boolean hasMenuKey = ViewConfiguration.get(context).hasPermanentMenuKey(); {
+        if(!hasMenuKey) {
     private CheckBoxPreference mForceNavBar;
+        }
+    }
     private CheckBoxPreference mGloveMode;
 
     //==============================================================================================
