@@ -39,6 +39,8 @@ public interface FileConstants {
     public static final String FILE_USE_GYRO_CALIB = "/sys/class/sec/gsensorcal/calibration";
     public static final String FILE_PANEL_COLOR_TEMP = "/sys/class/lcd/panel/panel_colors";
     //==============================================================================================
+    public static final String FILE_KNOCKON = "/sys/devices/virtual/input/lge_touch/touch_gesture";
+    //==============================================================================================
     public static final String FILE_INFO_DISPLAY_LCD_TYPE = "/sys/class/lcd/panel/lcd_type";
     //==============================================================================================
     public static final String FILE_FLASH_LIGHT = "/sys/class/camera/flash/rear_flash";
