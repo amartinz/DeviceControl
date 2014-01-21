@@ -32,7 +32,6 @@ import org.namelessrom.devicecontrol.fragments.device.DeviceInputFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceLightsFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceSensorsFragment;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
-import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
 import org.namelessrom.devicecontrol.utils.adapters.ScreenSlidePagerAdapter;
 import org.namelessrom.devicecontrol.utils.widgets.JfViewPager;
 
@@ -118,8 +117,8 @@ public class DeviceFragment extends AttachFragment {
     }
 
     public static void restore() {
-        if (VibratorTuningPreference.isSupported()) {
-            VibratorTuningPreference.restore();
+        if (DeviceInputFragment.isSupported()) {
+            DeviceInputFragment.restore();
         }
     }
 }
