@@ -45,7 +45,14 @@ public interface DeviceConstants {
     public static final String KEY_KEYBOARD_LIGHT = "keyboard_light";
     // Vibration
     public static final String KEY_VIBRATOR_TUNING = "vibrator_tuning";
+    // Check for Hardware Keys
+    // If present, display option
+    // If not (nexus, g2, etc) DO NOT display option for NavBar
+    boolean hasMenuKey = ViewConfiguration.get(context).hasPermanentMenuKey(); {
+        if(!hasMenuKey) {
     public static final String KEY_NAVBAR_FORCE = "navbar_force";
+        }
+    }
     // Input
     public static final String KEY_GLOVE_MODE = "input_glove_mode";
     // Panel
