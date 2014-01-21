@@ -111,6 +111,7 @@
     <string name="navbar_title">Navigation Bar</string>
     <string name="navbar_force_title">Force navigation bar</string>
     <string name="navbar_force_summary">Requires a reboot!</string>
+    <string name="navbar_warning">Warning!\nPreference will be hidden, if you close the app, until you reboot!</string>
 
     <!-- Others -->
     <string name="input_glove_mode_title">Glove Mode</string>

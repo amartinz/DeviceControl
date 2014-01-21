@@ -24,6 +24,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.view.ViewConfiguration;
+import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
@@ -51,6 +52,7 @@ public class DeviceInputFragment extends PreferenceFragment
     private CheckBoxPreference mKnockOn;
 
     private boolean hasMenuKey;
+    private Toast mToast;
 
     //==============================================================================================
     // Overridden Methods
@@ -107,8 +109,18 @@ public class DeviceInputFragment extends PreferenceFragment
         boolean changed = false;
 
         if (preference == mForceNavBar) {
+            final boolean value = (Boolean) o;
             Shell.SU.run(Scripts.toggleForceNavBar());
-            PreferenceHelper.setBoolean(KEY_NAVBAR_FORCE, (Boolean) o);
+            PreferenceHelper.setBoolean(KEY_NAVBAR_FORCE, value);
+            if (!value && !hasMenuKey) {
+                if (mToast != null) {
+                    mToast.cancel();
+                }
+                mToast = Toast.makeText(getActivity(),
+                        getString(R.string.navbar_warning),
+                        Toast.LENGTH_LONG);
+                mToast.show();
+            }
             changed = true;
         } else if (preference == mGloveMode) {
             HighTouchSensitivity.setEnabled(!mGloveMode.isChecked());
@@ -135,11 +147,17 @@ public class DeviceInputFragment extends PreferenceFragment
         PreferenceGroup preferenceGroup =
                 (PreferenceGroup) getPreferenceScreen().findPreference("input_navbar");
 
-        if (Application.HAS_ROOT
-                && (hasMenuKey || PreferenceHelper.getBoolean(KEY_NAVBAR_FORCE, false))) {
-            mForceNavBar.setChecked(paramResult.get(i));
-            mForceNavBar.setEnabled(true);
-            mForceNavBar.setOnPreferenceChangeListener(this);
+        boolean tmp;
+
+        if (Application.HAS_ROOT) {
+            tmp = paramResult.get(i);
+            if (tmp || hasMenuKey) {
+                mForceNavBar.setChecked(tmp);
+                mForceNavBar.setEnabled(true);
+                mForceNavBar.setOnPreferenceChangeListener(this);
+            } else {
+                preferenceGroup.removePreference(mForceNavBar);
+            }
         } else {
             preferenceGroup.removePreference(mForceNavBar);
         }
@@ -177,8 +195,7 @@ public class DeviceInputFragment extends PreferenceFragment
             List<Boolean> tmpList = new ArrayList<Boolean>();
 
             publishProgress(0);
-            if (Application.HAS_ROOT
-                    && (hasMenuKey || PreferenceHelper.getBoolean(KEY_NAVBAR_FORCE, false))) {
+            if (Application.HAS_ROOT) {
                 tmpList.add(Scripts.getForceNavBar());
             }
 
