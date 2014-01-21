@@ -27,6 +27,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
@@ -45,6 +46,7 @@ public class DeviceInputFragment extends PreferenceFragment
     //==============================================================================================
     private CheckBoxPreference mForceNavBar;
     private CheckBoxPreference mGloveMode;
+    private CheckBoxPreference mKnockOn;
 
     //==============================================================================================
     // Overridden Methods
@@ -63,17 +65,31 @@ public class DeviceInputFragment extends PreferenceFragment
         mGloveMode = (CheckBoxPreference) findPreference(KEY_GLOVE_MODE);
         mGloveMode.setOnPreferenceChangeListener(this);
 
-        PreferenceGroup inputOthers = (PreferenceGroup) findPreference("input_others");
+        PreferenceGroup group = (PreferenceGroup) findPreference("input_knockon");
+
+        if (!Utils.fileExists(FILE_KNOCKON)) {
+            getPreferenceScreen().removePreference(group);
+        } else {
+            mKnockOn = (CheckBoxPreference) findPreference(KEY_KNOCK_ON);
+            try { // In case the file does not have read permissions
+                mKnockOn.setChecked(Utils.readOneLine(FILE_KNOCKON).equals("1"));
+            } catch (Exception ignored) {
+                // Don't worry, be happy
+            }
+            mKnockOn.setOnPreferenceChangeListener(this);
+        }
+
+        group = (PreferenceGroup) findPreference("input_others");
 
         if (!VibratorTuningPreference.isSupported()) {
-            inputOthers.removePreference(mVibratorTuning);
+            group.removePreference(mVibratorTuning);
         }
         if (!HighTouchSensitivity.isSupported()) {
-            inputOthers.removePreference(mGloveMode);
+            group.removePreference(mGloveMode);
         }
 
-        if (inputOthers.getPreferenceCount() == 0) {
-            getPreferenceScreen().removePreference(inputOthers);
+        if (group.getPreferenceCount() == 0) {
+            getPreferenceScreen().removePreference(group);
         }
 
         new DeviceInputTask().execute();
@@ -90,6 +106,12 @@ public class DeviceInputFragment extends PreferenceFragment
         } else if (preference == mGloveMode) {
             HighTouchSensitivity.setEnabled(!mGloveMode.isChecked());
             PreferenceHelper.setBoolean(KEY_GLOVE_MODE, !mGloveMode.isChecked());
+            changed = true;
+        } else if (preference == mKnockOn) {
+            final boolean newValue = (Boolean) o;
+            final String value = (newValue) ? "1" : "0";
+            Utils.writeValue(FILE_KNOCKON, value);
+            PreferenceHelper.setBoolean(KEY_KNOCK_ON, newValue);
             changed = true;
         }
 
@@ -116,6 +138,16 @@ public class DeviceInputFragment extends PreferenceFragment
 
         if (preferenceGroup.getPreferenceCount() == 0) {
             getPreferenceScreen().removePreference(preferenceGroup);
+        }
+    }
+
+    public static void restore() {
+        if (Utils.fileExists(FILE_KNOCKON)) {
+            Utils.writeValue(FILE_KNOCKON,
+                    (PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0"));
+        }
+        if (VibratorTuningPreference.isSupported()) {
+            VibratorTuningPreference.restore();
         }
     }
 

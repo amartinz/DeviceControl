@@ -30,6 +30,20 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="input_knockon"
+        android:title="@string/knockonoff_panel_title">
+
+        <CheckBoxPreference
+            android:key="knockon_gesture_enable"
+            android:title="@string/knockon_enable_head"
+            android:summaryOn="@string/knockon_enable_summary_on"
+            android:summaryOff="@string/knockon_enable_summary_off"
+            android:enabled="true"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="input_others"
         android:title="@string/general_others">
 
