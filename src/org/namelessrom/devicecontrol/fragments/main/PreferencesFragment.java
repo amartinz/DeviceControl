@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -31,9 +32,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 /**
  * Created by alex on 18.12.13.
@@ -63,6 +64,11 @@ public class PreferencesFragment extends PreferenceFragment
     // Extras
     //==============================================================================================
     private SwitchPreference mExtrasLauncher;
+
+    //==============================================================================================
+    // Support
+    //==============================================================================================
+    private Preference mHelpDialog;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -97,6 +103,8 @@ public class PreferencesFragment extends PreferenceFragment
             getPreferenceScreen().removePreference(findPreference("prefs_jf_extras"));
         }
 
+        mHelpDialog = findPreference("prefs_help_dialog");
+
     }
 
 
@@ -108,6 +116,16 @@ public class PreferencesFragment extends PreferenceFragment
         view.setBackgroundColor(getResources().getColor(R.color.white_dirty));
 
         return view;
+    }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mHelpDialog) {
+            new HelpDialogFragment().show(getChildFragmentManager(), HelpDialogFragment.TAG);
+            return true;
+        }
+
+        return false;
     }
 
     @Override

@@ -63,5 +63,15 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="prefs_jf_support"
+        android:title="@string/prefs_jf_support">
+
+        <Preference
+            android:key="prefs_help_dialog"
+            android:title="@string/prefs_help_dialog_title" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
 

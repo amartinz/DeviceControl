@@ -148,6 +148,9 @@
     <string name="jf_extras_launcher_title">Show in app drawer</string>
     <string name="jf_extras_launcher_summary_on">Launcher entry is visible.</string>
     <string name="jf_extras_launcher_summary_off">Launcher entry is hidden.</string>
+    <!-- Support -->
+    <string name="prefs_jf_support">Support</string>
+    <string name="prefs_help_dialog_title">Help</string>
 
     <!-- Tasker -->
     <string name="tasker_optimization_fstrim_cat_title">Fstrimming</string>
