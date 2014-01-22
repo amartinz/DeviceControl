@@ -84,6 +84,11 @@
     <string name="cpu_powersaving_intelli_plug_eco_title">Eco Mode</string>
     <string name="cpu_powersaving_intelli_plug_eco_summary_on">Intelli Plug eco mode enabled.</string>
     <string name="cpu_powersaving_intelli_plug_eco_summary_off">Intelli Plug eco mode disabled.</string>
+    <string name="cpu_powersaving_sched_mc_title">Power Scheduler</string>
+    <string name="cpu_powersaving_sched_mc_summary">Tries to group tasks on a core until it reaches its maximum load and powers on the next core.\nIf enabled, it sacrifices power in exchange for battery life.\n\n0 for disabling it, 1 for balanced, 2 for aggressive.\nCurrent state: %s</string>
+    <string name="cpu_powersaving_sched_mc_zero">0 - Disabled</string>
+    <string name="cpu_powersaving_sched_mc_one">1 - Balanced</string>
+    <string name="cpu_powersaving_sched_mc_two">2 - Aggressive</string>
 
     <!-- Sensors -->
     <string name="category_sensors_title">Sensors</string>
