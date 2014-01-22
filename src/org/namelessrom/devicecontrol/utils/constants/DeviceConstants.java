@@ -54,6 +54,7 @@ public interface DeviceConstants {
     // Performance Cpu
     public static final String KEY_LCD_POWER_REDUCE = "lcd_power_reduce";
     public static final String KEY_INTELLI_PLUG_ECO = "intelli_plug_eco";
+    public static final String KEY_MC_POWER_SCHEDULER = "sched_mc_power_savings";
 
     //==============================================================================================
     // Categories

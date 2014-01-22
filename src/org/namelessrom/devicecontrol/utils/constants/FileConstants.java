@@ -49,6 +49,8 @@ public interface FileConstants {
     public static final String[] FILES_LCD_POWER_REDUCE = {"/sys/class/lcd/panel/power_reduce"};
     public static final String[] FILES_INTELLI_PLUG_ECO
             = {"/sys/module/intelli_plug/parameters/eco_mode_active"};
+    public static final String[] FILES_MC_POWER_SCHEDULER
+            = {"/sys/devices/system/cpu/sched_mc_power_savings"};
     //==============================================================================================
 
 

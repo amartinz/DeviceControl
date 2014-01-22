@@ -40,6 +40,16 @@
             android:summaryOff="@string/cpu_powersaving_intelli_plug_eco_summary_off"
             android:defaultValue="false" />
 
+        <SeekBarPreference
+            android:key="sched_mc_power_savings"
+            android:title="@string/cpu_powersaving_sched_mc_title"
+            android:max="2"
+            android:defaultValue="2" />
+
+        <Preference
+            android:key="sched_mc_power_savings_extended_summary"
+            android:summary="@string/cpu_powersaving_sched_mc_summary" />
+
     </PreferenceCategory>
 </PreferenceScreen>
 

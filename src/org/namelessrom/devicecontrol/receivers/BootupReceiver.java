@@ -152,6 +152,10 @@ public class BootupReceiver extends BroadcastReceiver
                 valueList.add(PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false)
                         ? "1" : "0");
             }
+            if (PerformanceGeneralFragment.sMcPowerScheduler) {
+                fileList.add(PerformanceGeneralFragment.sMcPowerSchedulerFile);
+                valueList.add(PreferenceHelper.getInt(KEY_MC_POWER_SCHEDULER, 2) + "");
+            }
 
             //======================================================================================
             // Tools
