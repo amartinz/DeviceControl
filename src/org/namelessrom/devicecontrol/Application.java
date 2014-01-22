@@ -20,21 +20,21 @@ package org.namelessrom.devicecontrol;
 
 import android.app.AlarmManager;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.StrictMode;
+import android.util.Log;
 
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.DC_FIRST_START;
+import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.JF_EXTENSIVE_LOGGING;
 
 public class Application extends android.app.Application {
 
     // Switch to your needs
-    public static final boolean IS_LOG_DEBUG = false;
+    public static boolean IS_LOG_DEBUG = false;
 
-    public static boolean IS_SYSTEM_APP = false;
     public static boolean HAS_ROOT = false;
 
     public static AlarmManager alarmManager;
@@ -42,6 +42,9 @@ public class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        PreferenceHelper.getInstance(this);
+        IS_LOG_DEBUG = PreferenceHelper.getBoolean(JF_EXTENSIVE_LOGGING, false);
 
         if (Application.IS_LOG_DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -60,25 +63,30 @@ public class Application extends android.app.Application {
             RootTools.debugMode = true;
         }
 
-        PreferenceHelper.getInstance(this);
-
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        IS_SYSTEM_APP = getResources().getBoolean(R.bool.is_system_app);
-
         // we need to detect SU for some features :)
-        new DetectSu().execute();
+        try {
+            HAS_ROOT = RootTools.isRootAvailable() && RootTools.isAccessGiven();
+        } catch (Exception exc) {
+            logDebug("DetectSu: " + exc.getMessage());
+        }
 
         // Set flag to enable BootUp receiver
         PreferenceHelper.setBoolean(DC_FIRST_START, false);
 
     }
 
-    private class DetectSu extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
-            HAS_ROOT = RootTools.isRootAvailable() && RootTools.isAccessGiven();
-            return null;
+    /**
+     * Logs a message to logcat if boolean param is true.<br />
+     * This is very useful for debugging, just set debug to false on a release build<br />
+     * and it wont show any debug messages.
+     *
+     * @param msg The message to log
+     */
+    public static void logDebug(final String msg) {
+        if (IS_LOG_DEBUG) {
+            Log.e("DeviceControl", msg);
         }
     }
 }

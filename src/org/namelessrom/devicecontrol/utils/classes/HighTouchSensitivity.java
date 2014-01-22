@@ -33,12 +33,12 @@ public class HighTouchSensitivity {
 
     private static final String TAG = "HighTouchSensitivity";
 
-    private final static String COMMAND_PATH = "/sys/class/sec/tsp/cmd";
+    public final static String COMMAND_PATH = "/sys/class/sec/tsp/cmd";
     private final static String COMMAND_LIST_PATH = "/sys/class/sec/tsp/cmd_list";
     private final static String COMMAND_RESULT_PATH = "/sys/class/sec/tsp/cmd_result";
     private final static String GLOVE_MODE = "glove_mode";
-    private final static String GLOVE_MODE_ENABLE = GLOVE_MODE + ",1";
-    private final static String GLOVE_MODE_DISABLE = GLOVE_MODE + ",0";
+    public final static String GLOVE_MODE_ENABLE = GLOVE_MODE + ",1";
+    public final static String GLOVE_MODE_DISABLE = GLOVE_MODE + ",0";
 
     /**
      * Whether device supports high touch sensitivity.

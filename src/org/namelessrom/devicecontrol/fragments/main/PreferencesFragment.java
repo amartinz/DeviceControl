@@ -88,12 +88,8 @@ public class PreferencesFragment extends PreferenceFragment
         if (mTransformerId.getValue() == null) mTransformerId.setValueIndex(0);
         mTransformerId.setOnPreferenceChangeListener(this);
 
-        if (getResources().getBoolean(R.bool.show_debug)) {
-            mExtensiveLogging = (SwitchPreference) findPreference("jf_extensive_logging");
-            mExtensiveLogging.setOnPreferenceChangeListener(this);
-        } else {
-            getPreferenceScreen().removePreference(findPreference("prefs_jf_debug"));
-        }
+        mExtensiveLogging = (SwitchPreference) findPreference("jf_extensive_logging");
+        mExtensiveLogging.setOnPreferenceChangeListener(this);
 
         if (getResources().getBoolean(R.bool.is_system_app)) {
             mExtrasLauncher = (SwitchPreference) findPreference("jf_extras_launcher");

@@ -26,6 +26,9 @@
     <string name="app_tasker_help">Welcome to the Tasker!\n\nYou can swipe right,\nto discover and setup\nautomated tasks!\n\n</string>
     <string name="app_tools_help">Welcome to the Tools Section!\n\nYou can swipe right,\nto discover various useful tools!\n\n(Note: please be careful though!)\n\n</string>
 
+    <!-- Warnings -->
+    <string name="app_warning_root">Please note that %s requires ROOT to fully work!</string>
+
     <!-- Fragment -->
     <string name="fragment_press_to_load">Press me to load %s.</string>
 

@@ -24,7 +24,6 @@ package com.stericson.roottoolstests;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -38,8 +37,9 @@ import com.stericson.roottools.RootTools;
 import com.stericson.roottools.containers.Permissions;
 import com.stericson.roottools.exceptions.RootDeniedException;
 import com.stericson.roottools.execution.CommandCapture;
-import com.stericson.roottools.execution.JavaCommandCapture;
 import com.stericson.roottools.execution.Shell;
+
+import org.namelessrom.devicecontrol.Application;
 
 import java.io.IOException;
 import java.util.List;
@@ -55,20 +55,22 @@ public class SanityCheckRootTools extends Activity {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectDiskReads()
-                .detectDiskWrites()
-                .detectNetwork()   // or .detectAll() for all detectable problems
-                .penaltyLog()
-                .build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectLeakedSqlLiteObjects()
-                .detectLeakedClosableObjects()
-                .penaltyLog()
-                .penaltyDeath()
-                .build());
+        if (Application.IS_LOG_DEBUG) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()   // or .detectAll() for all detectable problems
+                    .penaltyLog()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build());
 
-        RootTools.debugMode = true;
+            RootTools.debugMode = Application.IS_LOG_DEBUG;
+        }
 
         mTextView = new TextView(this);
         mTextView.setText("");
@@ -97,7 +99,6 @@ public class SanityCheckRootTools extends Activity {
         try {
             Shell.startRootShell();
         } catch (IOException e2) {
-            // TODO Auto-generated catch block
             e2.printStackTrace();
         } catch (TimeoutException e) {
             print("[ TIMEOUT EXCEPTION! ]\n");
@@ -108,7 +109,7 @@ public class SanityCheckRootTools extends Activity {
         }
 
         try {
-            if (false == RootTools.isAccessGiven()) {
+            if (!RootTools.isAccessGiven()) {
                 print("ERROR: No root access to this device.\n");
                 return;
             }
@@ -122,7 +123,7 @@ public class SanityCheckRootTools extends Activity {
         mPDialog.setCancelable(false);
         mPDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
-        new SanityCheckThread(this, new TestHandler()).start();
+        new SanityCheckThread(new TestHandler()).start();
     }
 
     protected void print(CharSequence text) {
@@ -139,7 +140,7 @@ public class SanityCheckRootTools extends Activity {
     private class SanityCheckThread extends Thread {
         private Handler mHandler;
 
-        public SanityCheckThread(Context context, Handler handler) {
+        public SanityCheckThread(Handler handler) {
             mHandler = handler;
         }
 
@@ -151,7 +152,8 @@ public class SanityCheckRootTools extends Activity {
             /*
             visualUpdate(TestHandler.ACTION_PDISPLAY, "Installing binary if needed");
             if(false == RootTools.installBinary(mContext, R.raw.nes, "nes_binary")) {
-                visualUpdate(TestHandler.ACTION_HIDE, "ERROR: Failed to install binary. Please see log file.");
+                visualUpdate(TestHandler.ACTION_HIDE
+                , "ERROR: Failed to install binary. Please see log file.");
                 return;
             }
             */
@@ -204,12 +206,15 @@ public class SanityCheckRootTools extends Activity {
 
             visualUpdate(TestHandler.ACTION_PDISPLAY, "Testing getBusyBoxVersion");
             visualUpdate(TestHandler.ACTION_DISPLAY, "[ Checking busybox version ]\n");
-            visualUpdate(TestHandler.ACTION_DISPLAY, RootTools.getBusyBoxVersion("/system/bin/") + " k\n\n");
+            visualUpdate(TestHandler.ACTION_DISPLAY, RootTools.getBusyBoxVersion("/system/bin/")
+                    + " k\n\n");
 
             try {
                 visualUpdate(TestHandler.ACTION_PDISPLAY, "Testing fixUtils");
                 visualUpdate(TestHandler.ACTION_DISPLAY, "[ Checking Utils ]\n");
-                visualUpdate(TestHandler.ACTION_DISPLAY, RootTools.fixUtils(new String[]{"ls", "rm", "ln", "dd", "chmod", "mount"}) + " k\n\n");
+                visualUpdate(TestHandler.ACTION_DISPLAY
+                        , RootTools.fixUtils(new String[]{"ls", "rm", "ln", "dd", "chmod", "mount"})
+                        + " k\n\n");
             } catch (Exception e2) {
                 // TODO Auto-generated catch block
                 e2.printStackTrace();
@@ -218,21 +223,24 @@ public class SanityCheckRootTools extends Activity {
             try {
                 visualUpdate(TestHandler.ACTION_PDISPLAY, "Testing getSymlink");
                 visualUpdate(TestHandler.ACTION_DISPLAY, "[ Checking [[ for symlink ]\n");
-                visualUpdate(TestHandler.ACTION_DISPLAY, RootTools.getSymlink("/system/bin/[[") + " k\n\n");
+                visualUpdate(TestHandler.ACTION_DISPLAY
+                        , RootTools.getSymlink("/system/bin/[[") + " k\n\n");
             } catch (Exception e2) {
-                // TODO Auto-generated catch block
                 e2.printStackTrace();
             }
 
             visualUpdate(TestHandler.ACTION_PDISPLAY, "Testing getInode");
             visualUpdate(TestHandler.ACTION_DISPLAY, "[ Checking Inodes ]\n");
-            visualUpdate(TestHandler.ACTION_DISPLAY, RootTools.getInode("/system/bin/busybox") + " k\n\n");
+            visualUpdate(TestHandler.ACTION_DISPLAY
+                    , RootTools.getInode("/system/bin/busybox") + " k\n\n");
 
             visualUpdate(TestHandler.ACTION_PDISPLAY, "Testing GetBusyBoxapplets");
             try {
 
-                visualUpdate(TestHandler.ACTION_DISPLAY, "[ Getting all available Busybox applets ]\n");
-                for (String applet : RootTools.getBusyBoxApplets("/data/data/stericson.busybox.donate/files/bb")) {
+                visualUpdate(TestHandler.ACTION_DISPLAY
+                        , "[ Getting all available Busybox applets ]\n");
+                for (String applet : RootTools
+                        .getBusyBoxApplets("/data/data/stericson.busybox.donate/files/bb")) {
                     visualUpdate(TestHandler.ACTION_DISPLAY, applet + " k\n\n");
                 }
 
@@ -241,17 +249,25 @@ public class SanityCheckRootTools extends Activity {
                 e1.printStackTrace();
             }
 
-            visualUpdate(TestHandler.ACTION_PDISPLAY, "Testing getFilePermissionsSymlinks");
+            visualUpdate(TestHandler.ACTION_PDISPLAY
+                    , "Testing getFilePermissionsSymlinks");
             Permissions permissions = RootTools.getFilePermissionsSymlinks("/system/bin/busybox");
-            visualUpdate(TestHandler.ACTION_DISPLAY, "[ Checking busybox permissions and symlink ]\n");
+            visualUpdate(TestHandler.ACTION_DISPLAY
+                    , "[ Checking busybox permissions and symlink ]\n");
 
             if (permissions != null) {
-                visualUpdate(TestHandler.ACTION_DISPLAY, "Symlink: " + permissions.getSymlink() + " k\n\n");
-                visualUpdate(TestHandler.ACTION_DISPLAY, "Group Permissions: " + permissions.getGroupPermissions() + " k\n\n");
-                visualUpdate(TestHandler.ACTION_DISPLAY, "Owner Permissions: " + permissions.getOtherPermissions() + " k\n\n");
-                visualUpdate(TestHandler.ACTION_DISPLAY, "Permissions: " + permissions.getPermissions() + " k\n\n");
-                visualUpdate(TestHandler.ACTION_DISPLAY, "Type: " + permissions.getType() + " k\n\n");
-                visualUpdate(TestHandler.ACTION_DISPLAY, "User Permissions: " + permissions.getUserPermissions() + " k\n\n");
+                visualUpdate(TestHandler.ACTION_DISPLAY, "Symlink: "
+                        + permissions.getSymlink() + " k\n\n");
+                visualUpdate(TestHandler.ACTION_DISPLAY, "Group Permissions: "
+                        + permissions.getGroupPermissions() + " k\n\n");
+                visualUpdate(TestHandler.ACTION_DISPLAY, "Owner Permissions: "
+                        + permissions.getOtherPermissions() + " k\n\n");
+                visualUpdate(TestHandler.ACTION_DISPLAY, "Permissions: "
+                        + permissions.getPermissions() + " k\n\n");
+                visualUpdate(TestHandler.ACTION_DISPLAY, "Type: "
+                        + permissions.getType() + " k\n\n");
+                visualUpdate(TestHandler.ACTION_DISPLAY, "User Permissions: "
+                        + permissions.getUserPermissions() + " k\n\n");
             } else {
                 visualUpdate(TestHandler.ACTION_DISPLAY, "Permissions == null k\n\n");
             }
@@ -259,91 +275,71 @@ public class SanityCheckRootTools extends Activity {
             visualUpdate(TestHandler.ACTION_PDISPLAY, "JAVA");
             visualUpdate(TestHandler.ACTION_DISPLAY, "[ Running some Java code ]\n");
 
-            Shell shell;
-            try {
-                shell = RootTools.getShell(true);
-                JavaCommandCapture cmd = new JavaCommandCapture(
-                        43,
-                        false,
-                        SanityCheckRootTools.this,
-                        "com.stericson.RootToolsTests.NativeJavaClass") {
-
-                    @Override
-                    public void commandOutput(int id, String line) {
-                        super.commandOutput(id, line);
-                        visualUpdate(TestHandler.ACTION_DISPLAY, line + "\n");
-                    }
-                };
-                shell.add(cmd);
-
-            } catch (Exception e) {
-                // Oops. Say, did you run RootClass and move the resulting anbuild.dex " file to res/raw?
-                // If you don't you will not be able to check root mode Java.
-                e.printStackTrace();
-            }
-
             visualUpdate(TestHandler.ACTION_PDISPLAY, "Testing df");
             long spaceValue = RootTools.getSpace("/data");
             visualUpdate(TestHandler.ACTION_DISPLAY, "[ Checking /data partition size]\n");
             visualUpdate(TestHandler.ACTION_DISPLAY, spaceValue + "k\n\n");
 
-            try {
-                shell = RootTools.getShell(true);
+            if (Application.IS_LOG_DEBUG) {
+                Shell shell;
+                try {
+                    shell = RootTools.getShell(true);
 
-                CommandCapture cmd = new CommandCapture(42, false, "find /") {
+                    CommandCapture cmd = new CommandCapture(42, false, "find /") {
 
-                    boolean _catch = false;
+                        boolean _catch = false;
 
-                    @Override
-                    public void commandOutput(int id, String line) {
-                        super.commandOutput(id, line);
+                        @Override
+                        public void commandOutput(int id, String line) {
+                            super.commandOutput(id, line);
 
-                        if (_catch) {
-                            RootTools.log("CAUGHT!!!");
-                        }
-                    }
-
-                    @Override
-                    public void commandTerminated(int id, String reason) {
-                        synchronized (SanityCheckRootTools.this) {
-
-                            _catch = true;
-                            visualUpdate(TestHandler.ACTION_PDISPLAY, "All tests complete.");
-                            visualUpdate(TestHandler.ACTION_HIDE, null);
-
-                            try {
-                                RootTools.closeAllShells();
-                            } catch (IOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
+                            if (_catch) {
+                                RootTools.log("CAUGHT!!!");
                             }
-
                         }
-                    }
 
-                    @Override
-                    public void commandCompleted(int id, int exitCode) {
-                        synchronized (SanityCheckRootTools.this) {
-                            _catch = true;
+                        @Override
+                        public void commandTerminated(int id, String reason) {
+                            synchronized (SanityCheckRootTools.this) {
 
-                            visualUpdate(TestHandler.ACTION_PDISPLAY, "All tests complete.");
-                            visualUpdate(TestHandler.ACTION_HIDE, null);
+                                _catch = true;
+                                visualUpdate(TestHandler.ACTION_PDISPLAY, "All tests complete.");
+                                visualUpdate(TestHandler.ACTION_HIDE, null);
 
-                            try {
-                                RootTools.closeAllShells();
-                            } catch (IOException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
+                                try {
+                                    RootTools.closeAllShells();
+                                } catch (IOException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+
                             }
-
                         }
-                    }
-                };
 
-                shell.add(cmd);
+                        @Override
+                        public void commandCompleted(int id, int exitCode) {
+                            synchronized (SanityCheckRootTools.this) {
+                                _catch = true;
 
-            } catch (Exception e) {
-                e.printStackTrace();
+                                visualUpdate(TestHandler.ACTION_PDISPLAY, "All tests complete.");
+                                visualUpdate(TestHandler.ACTION_HIDE, null);
+
+                                try {
+                                    RootTools.closeAllShells();
+                                } catch (IOException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }
+                    };
+
+                    shell.add(cmd);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
         }

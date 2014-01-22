@@ -155,7 +155,6 @@ public class Shell {
 
         while (isCleaning) {
             //Don't add commands while cleaning
-            ;
         }
         commands.add(command);
 
@@ -262,35 +261,21 @@ public class Shell {
     }
 
     public static boolean isShellOpen() {
-        if (shell == null)
-            return false;
-        else
-            return true;
+        return shell != null;
     }
 
     public static boolean isCustomShellOpen() {
-        if (customShell == null)
-            return false;
-        else
-            return true;
+        return customShell != null;
     }
 
     public static boolean isRootShellOpen() {
-        if (rootShell == null)
-            return false;
-        else
-            return true;
+        return rootShell != null;
     }
 
     public static boolean isAnyShellOpen() {
         if (shell != null)
             return true;
-        else if (rootShell != null)
-            return true;
-        else if (customShell != null)
-            return true;
-        else
-            return false;
+        else return rootShell != null || customShell != null;
     }
 
     /**
@@ -459,7 +444,6 @@ public class Shell {
 
                                 read++;
                                 totalRead++;
-                                continue;
                             }
                         }
                     }
@@ -634,7 +618,7 @@ public class Shell {
         private void setShellOom() {
             try {
                 Class<?> processClass = proc.getClass();
-                Field field = null;
+                Field field;
                 try {
                     field = processClass.getDeclaredField("pid");
                 } catch (NoSuchFieldException e) {
