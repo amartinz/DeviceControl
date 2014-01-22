@@ -85,7 +85,16 @@ public interface DeviceConstants {
     public static final String TASKER_TOOLS_FSTRIM = "tasker_tools_fstrim";
     public static final String TASKER_TOOLS_FSTRIM_INTERVAL = "tasker_tools_fstrim_interval";
 
+    //==============================================================================================
+    // Handler Actions
+    //==============================================================================================
+    public static final int READ_VALUE_ACTION_RESULT = 0x1000;
+    public static final String READ_VALUE_ACTION = "read_value_actopn";
+    public static final String READ_VALUE_TEXT = "read_value_text";
+
+    //==============================================================================================
     // Etc
+    //==============================================================================================
     public static final String CUSTOM_SHELL_COMMAND = "custom_shell_command";
     public static final String DYNAMIC_DIRTY_WRITEBACK_PATH =
             "/proc/sys/vm/dynamic_dirty_writeback";

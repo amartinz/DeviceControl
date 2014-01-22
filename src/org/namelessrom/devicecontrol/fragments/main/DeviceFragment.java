@@ -115,8 +115,4 @@ public class DeviceFragment extends AttachFragment {
         }
         return tmpList;
     }
-
-    public static void restore() {
-        DeviceInputFragment.restore(); // No check, error handling needs to be done inside
-    }
 }
