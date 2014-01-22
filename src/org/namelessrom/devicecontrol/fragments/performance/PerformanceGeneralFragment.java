@@ -143,12 +143,12 @@ public class PerformanceGeneralFragment extends PreferenceFragment
 
     public static void restore() {
         if (sLcdPowerReduce) {
-            Utils.writeValue(sLcdPowerReduceFile,
-                    (PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false) ? "1" : "0"));
+            Utils.writeValue(sLcdPowerReduceFile
+                    , (PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false) ? "1" : "0"));
         }
         if (sIntelliPlugEco) {
-            Utils.writeValue(sIntelliPlugEcoFile,
-                    (PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false) ? "1" : "0"));
+            Utils.writeValue(sIntelliPlugEcoFile
+                    , (PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false) ? "1" : "0"));
         }
     }
 
