@@ -35,7 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import eu.chainfire.libsuperuser.Application;
+import org.namelessrom.devicecontrol.Application;
 import eu.chainfire.libsuperuser.Shell;
 
 public class Utils implements DeviceConstants, FileConstants {

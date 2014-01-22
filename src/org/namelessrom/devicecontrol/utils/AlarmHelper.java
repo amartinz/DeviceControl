@@ -27,7 +27,7 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.Calendar;
 
-import eu.chainfire.libsuperuser.Application;
+import org.namelessrom.devicecontrol.Application;
 
 /**
  * Helper class to schedule alarms

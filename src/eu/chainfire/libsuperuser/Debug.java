@@ -18,6 +18,8 @@ package eu.chainfire.libsuperuser;
 
 import android.util.Log;
 
+import org.namelessrom.devicecontrol.Application;
+
 /**
  * Utility class for logging and debug features that (by default) does nothing when not in debug mode
  */

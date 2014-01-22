@@ -37,7 +37,7 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.chainfire.libsuperuser.Application;
+import org.namelessrom.devicecontrol.Application;
 import eu.chainfire.libsuperuser.Shell;
 
 public class PerformanceGeneralFragment extends PreferenceFragment

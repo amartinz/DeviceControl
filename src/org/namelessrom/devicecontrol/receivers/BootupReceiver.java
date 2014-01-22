@@ -33,7 +33,7 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import java.io.File;
 import java.util.List;
 
-import eu.chainfire.libsuperuser.Application;
+import org.namelessrom.devicecontrol.Application;
 import eu.chainfire.libsuperuser.Shell;
 
 import static org.namelessrom.devicecontrol.utils.Utils.logDebug;

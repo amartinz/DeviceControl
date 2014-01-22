@@ -34,7 +34,7 @@ import org.namelessrom.devicecontrol.utils.widgets.JfViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.chainfire.libsuperuser.Application;
+import org.namelessrom.devicecontrol.Application;
 
 public class ToolsFragment extends AttachFragment {
 
