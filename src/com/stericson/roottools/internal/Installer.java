@@ -200,10 +200,9 @@ class Installer {
             byte[] buffer = new byte[4096];
             while (-1 != dis.read(buffer)) ;
             byte[] digest = md.digest();
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
 
-            for (int i = 0; i < digest.length; i++)
-                sb.append(Integer.toHexString(digest[i] & 0xFF));
+            for (byte aDigest : digest) sb.append(Integer.toHexString(aDigest & 0xFF));
 
             signature = sb.toString();
         } catch (IOException ex) {

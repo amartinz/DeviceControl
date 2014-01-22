@@ -375,8 +375,8 @@ public class Shell {
         private boolean autoHandler = true;
         private String shell = "sh";
         private boolean wantSTDERR = false;
-        private List<Command> commands = new LinkedList<Command>();
-        private Map<String, String> environment = new HashMap<String, String>();
+        private final List<Command> commands = new LinkedList<Command>();
+        private final Map<String, String> environment = new HashMap<String, String>();
         private OnLineListener onSTDOUTLineListener = null;
         private OnLineListener onSTDERRLineListener = null;
         private int watchdogTimeout = 0;
@@ -690,8 +690,8 @@ public class Shell {
         private volatile int callbacks = 0;
         private volatile int watchdogCount;
 
-        private Object idleSync = new Object();
-        private Object callbackSync = new Object();
+        private final Object idleSync = new Object();
+        private final Object callbackSync = new Object();
 
         private volatile int lastExitCode = 0;
         private volatile String lastMarkerSTDOUT = null;

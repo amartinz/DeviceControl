@@ -685,7 +685,7 @@ public final class RootToolsInternalMethods {
         try {
             double multiplier = 1.0;
             char c;
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < spaceStr.length(); i++) {
                 c = spaceStr.charAt(i);
                 if (!Character.isDigit(c) && c != '.') {
@@ -718,7 +718,7 @@ public final class RootToolsInternalMethods {
                 @Override
                 public void output(int id, String line) {
                     if (id == Constants.GI) {
-                        if (!line.trim().equals("") && Character.isDigit((char) line.trim().substring(0, 1).toCharArray()[0])) {
+                        if (!line.trim().equals("") && Character.isDigit(line.trim().substring(0, 1).toCharArray()[0])) {
                             InternalVariables.inode = line.trim().split(" ")[0];
                         }
                     }
@@ -765,11 +765,7 @@ public final class RootToolsInternalMethods {
             Shell.startRootShell().add(command);
             commandWait(command);
 
-            if (InternalVariables.accessGiven) {
-                return true;
-            } else {
-                return false;
-            }
+            return InternalVariables.accessGiven;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -791,12 +787,8 @@ public final class RootToolsInternalMethods {
             return false;
         }
 
-        if (installer.isBinaryInstalled("nativetools")) {
-            InternalVariables.nativeToolsReady = true;
-        } else {
-            InternalVariables.nativeToolsReady = installer.installBinary(nativeToolsId,
-                    "nativetools", "700");
-        }
+        InternalVariables.nativeToolsReady = installer.isBinaryInstalled("nativetools")
+                || installer.installBinary(nativeToolsId, "nativetools", "700");
         return InternalVariables.nativeToolsReady;
     }
 
@@ -913,13 +905,11 @@ public final class RootToolsInternalMethods {
         } finally {
             try {
                 fr.close();
-                fr = null;
             } catch (Exception e) {
             }
 
             try {
                 lnr.close();
-                lnr = null;
             } catch (Exception e) {
             }
         }
@@ -1062,7 +1052,7 @@ public final class RootToolsInternalMethods {
             if (symlink.length > 2 && symlink[symlink.length - 2].equals("->")) {
                 RootTools.log("Symlink found.");
 
-                String final_symlink = "";
+                String final_symlink;
                 if (!symlink[symlink.length - 1].equals("") && !symlink[symlink.length - 1].contains("/")) {
                     //We assume that we need to get the path for this symlink as it is probably not absolute.
                     findBinary(symlink[symlink.length - 1]);

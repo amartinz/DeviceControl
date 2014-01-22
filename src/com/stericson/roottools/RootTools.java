@@ -64,7 +64,7 @@ public final class RootTools {
         RootTools.rim = rim;
     }
 
-    private static final RootToolsInternalMethods getInternals() {
+    private static RootToolsInternalMethods getInternals() {
         if (rim == null) {
             RootToolsInternalMethods.getInstance();
             return rim;

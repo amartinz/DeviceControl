@@ -35,8 +35,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.namelessrom.devicecontrol.Application;
 import eu.chainfire.libsuperuser.Shell;
+
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class Utils implements DeviceConstants, FileConstants {
 
@@ -48,23 +49,17 @@ public class Utils implements DeviceConstants, FileConstants {
      */
     public static String readOneLine(String sFile) {
         String sLine = null;
-        // don't even bother reading nothing, return null
         if (fileExists(sFile)) {
-            if (Application.IS_SYSTEM_APP) {
-                BufferedReader brBuffer;
+            BufferedReader brBuffer;
+            try {
+                brBuffer = new BufferedReader(new FileReader(sFile), 512);
                 try {
-                    brBuffer = new BufferedReader(new FileReader(sFile), 512);
-                    try {
-                        sLine = brBuffer.readLine();
-                    } finally {
-                        brBuffer.close();
-                    }
-                } catch (Exception e) {
-                    logDebug("readOneLine: reading failed: " + e.getMessage(),
-                            Application.IS_LOG_DEBUG);
-                    return readFileViaShell(sFile);
+                    sLine = brBuffer.readLine();
+                } finally {
+                    brBuffer.close();
                 }
-            } else {
+            } catch (Exception e) {
+                logDebug("readOneLine: reading failed: " + e.getMessage());
                 return readFileViaShell(sFile);
             }
         }
@@ -81,30 +76,28 @@ public class Utils implements DeviceConstants, FileConstants {
         return readFileViaShell(filePath, true);
     }
 
-    public static String readFileViaShell(String filePath, boolean useSu) {
-        return readFileViaShell(filePath, useSu, false);
-    }
-
-    public static String readFileViaShell(String filePath, boolean useSu, boolean wholeFile) {
-        List<String> mResult = (useSu
-                ? Shell.SU.run("cat " + filePath)
-                : Shell.SH.run("cat " + filePath));
-        if (mResult != null) {
-            if (mResult.size() != 0) {
-                if (wholeFile) {
-                    String tmp = "";
-                    for (String s : mResult) {
-                        tmp += s + "\n";
+    public static String readFileViaShell(String filePath, boolean wholeFile) {
+        try {
+            List<String> mResult = Shell.SU.run("cat " + filePath);
+            if (mResult != null) {
+                if (mResult.size() != 0) {
+                    if (wholeFile) {
+                        String tmp = "";
+                        for (String s : mResult) {
+                            tmp += s + "\n";
+                        }
+                        return tmp;
+                    } else {
+                        return mResult.get(0);
                     }
-                    return tmp;
                 } else {
-                    return mResult.get(0);
+                    return "";
                 }
-            } else {
-                return "";
             }
+            return "";
+        } catch (Exception exc) {
+            return "";
         }
-        return "";
     }
 
     /**
@@ -125,8 +118,7 @@ public class Utils implements DeviceConstants, FileConstants {
                     fw.close();
                 }
             } catch (IOException e) {
-                logDebug("writeValue: writing failed: " + e.getMessage(),
-                        Application.IS_LOG_DEBUG);
+                logDebug("writeValue: writing failed: " + e.getMessage());
                 success = writeValueViaShell(filename, value);
             }
         }
@@ -172,8 +164,7 @@ public class Utils implements DeviceConstants, FileConstants {
      */
     public static boolean fileExists(String filename) {
         final boolean isExisting = new File(filename).exists();
-        logDebug("fileExists: " + filename + ": " + (isExisting ? "true" : "false"),
-                Application.IS_LOG_DEBUG);
+        logDebug("fileExists: " + filename + ": " + (isExisting ? "true" : "false"));
         return isExisting;
     }
 
@@ -209,33 +200,17 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     /**
-     * Logs a message to logcat if boolean param is true.<br />
-     * This is very usefull for debugging, just set debug to false on a release build<br />
-     * and it wont show any debug messages.
-     *
-     * @param msg   The message to log
-     * @param debug If true it logs, else not
-     */
-    public static void logDebug(String msg, boolean debug) {
-        if (debug) {
-            Log.e(TAG, msg);
-        }
-    }
-
-    /**
      * Setup the directories for JF Control
      */
     public static void setupDirectories() {
         File dir;
-        String[] dirList = new String[]{DC_DATA_DIR, DC_LOG_DIR,
-                DC_BACKUP_DIR};
+        String[] dirList = new String[]{DC_DATA_DIR, DC_LOG_DIR, DC_BACKUP_DIR};
         for (String s : dirList) {
             dir = new File(s);
             if (!dir.exists()) {
-                logDebug("setupDirectories: creating " + s, Application.IS_LOG_DEBUG);
+                logDebug("setupDirectories: creating " + s);
                 final boolean isSuccess = dir.mkdirs();
-                logDebug("setupDirectories: " + (isSuccess ? "true" : "false"),
-                        Application.IS_LOG_DEBUG);
+                logDebug("setupDirectories: " + (isSuccess ? "true" : "false"));
             }
         }
     }
@@ -243,7 +218,6 @@ public class Utils implements DeviceConstants, FileConstants {
     public static void createFiles(Context context) {
         if (!new File(context.getFilesDir() + "/utils").exists()) {
             get_assetsScript("utils", context, "", "");
-            // needs SU
             Shell.SU.run("busybox chmod 750 " + context.getFilesDir() + "/utils");
         }
     }
@@ -255,7 +229,7 @@ public class Utils implements DeviceConstants, FileConstants {
                 return tmpList.get(0);
             }
         }
-        logDebug("getBinPath: found binary at: " + b, Application.IS_LOG_DEBUG);
+        logDebug("getBinPath: found binary at: " + b);
         return "";
     }
 

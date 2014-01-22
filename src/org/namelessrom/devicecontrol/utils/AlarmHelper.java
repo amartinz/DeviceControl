@@ -22,12 +22,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.Calendar;
-
-import org.namelessrom.devicecontrol.Application;
 
 /**
  * Helper class to schedule alarms

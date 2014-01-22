@@ -42,6 +42,10 @@ import org.namelessrom.devicecontrol.fragments.main.ToolsFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import java.io.IOException;
+
+import static org.namelessrom.devicecontrol.Application.logDebug;
+
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -51,9 +55,9 @@ public class MainActivity extends Activity
     private static NavigationDrawerFragment mNavigationDrawerFragment;
     private static PreferencesFragment mPreferencesFragment;
     private CharSequence mTitle;
-    private boolean mDoublePress = true;
     private static long back_pressed;
     private Toast mToast;
+    final Object lockObject = new Object();
 
     //==============================================================================================
     // Overridden Methods
@@ -78,6 +82,12 @@ public class MainActivity extends Activity
                     .build());
 
             RootTools.debugMode = true;
+        }
+
+        if (!Application.HAS_ROOT) {
+            Toast.makeText(this
+                    , getString(R.string.app_warning_root, getString(R.string.app_name))
+                    , Toast.LENGTH_LONG).show();
         }
 
         PreferenceHelper.getInstance(this);
@@ -162,8 +172,8 @@ public class MainActivity extends Activity
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
-        } else if (mDoublePress &&
-                !mNavigationDrawerFragment.isDrawerOpen() && !mPreferencesFragment.isDrawerOpen()) {
+        } else if (!mNavigationDrawerFragment.isDrawerOpen()
+                && !mPreferencesFragment.isDrawerOpen()) {
             if (back_pressed + 2000 > System.currentTimeMillis()) {
                 if (mToast != null)
                     mToast.cancel();
@@ -176,6 +186,19 @@ public class MainActivity extends Activity
             back_pressed = System.currentTimeMillis();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        synchronized (lockObject) {
+            try {
+                logDebug("closing shells");
+                RootTools.closeAllShells();
+            } catch (IOException e) {
+                logDebug("Shell error: " + e.getMessage());
+            }
         }
     }
 
