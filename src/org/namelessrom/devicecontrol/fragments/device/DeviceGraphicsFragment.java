@@ -23,9 +23,10 @@ import android.preference.PreferenceFragment;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.preferences.PanelColorTemperature;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 public class DeviceGraphicsFragment extends PreferenceFragment
@@ -35,7 +36,7 @@ public class DeviceGraphicsFragment extends PreferenceFragment
     // Fields
     //==============================================================================================
 
-    private static final boolean sHasPanel = Utils.fileExists(FILE_PANEL_COLOR_TEMP);
+    public static final boolean sHasPanel = Utils.fileExists(FILE_PANEL_COLOR_TEMP);
     private PanelColorTemperature mPanelColor;
 
     //==============================================================================================
@@ -62,7 +63,7 @@ public class DeviceGraphicsFragment extends PreferenceFragment
         boolean changed = false;
 
         if (preference == mPanelColor) {
-            Utils.writeValue(FILE_PANEL_COLOR_TEMP, newValue.toString());
+            new WriteAndForget(FILE_PANEL_COLOR_TEMP, newValue.toString()).run();
             PreferenceHelper.setString(KEY_PANEL_COLOR_TEMP, newValue.toString());
             changed = true;
         }

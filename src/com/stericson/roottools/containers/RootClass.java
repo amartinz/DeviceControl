@@ -53,8 +53,6 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
 
     enum READ_STATE {STARTING, FOUND_ANNOTATION}
 
-    ;
-
     public RootClass(String[] args) throws ClassNotFoundException, NoSuchMethodException,
             IllegalAccessException, InvocationTargetException, InstantiationException {
 
@@ -128,13 +126,13 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                         + "containers" + File.separator
                         + "RootClass$AnnotationsFinder$2.class";
                 String[] cmd;
-                boolean onWindows = (-1 != System.getProperty("os.name").toLowerCase().indexOf("win"));
+                boolean onWindows = (System.getProperty("os.name").toLowerCase().contains("win"));
                 if (onWindows) {
                     StringBuilder sb = new StringBuilder(
                             " " + rc1 + " " + rc2 + " " + rc3 + " " + rc4 + " " + rc5
                     );
                     for (File file : classFiles) {
-                        sb.append(" " + file.getPath());
+                        sb.append(" ").append(file.getPath());
                     }
                     cmd = new String[]{
                             "cmd", "/C",
@@ -195,7 +193,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
             File[] files = path.listFiles();
             for (File file : files) {
                 if (file.isDirectory()) {
-                    if (-1 == file.getAbsolutePath().indexOf(AVOIDDIRPATH)) {
+                    if (!file.getAbsolutePath().contains(AVOIDDIRPATH)) {
                         lookup(file, fileList);
                     }
                 } else {
@@ -228,7 +226,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                 while (null != (line = reader.readLine())) {
                     switch (readState) {
                         case STARTING:
-                            if (-1 < line.indexOf("@RootClass.Candidate"))
+                            if (line.contains("@RootClass.Candidate"))
                                 readState = READ_STATE.FOUND_ANNOTATION;
                             break;
                         case FOUND_ANNOTATION:
@@ -311,8 +309,6 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
 
 
     }
-
-    ;
 
     public static void main(String[] args) {
         try {

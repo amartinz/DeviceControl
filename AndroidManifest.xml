@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.namelessrom.devicecontrol"
-    android:versionCode="11"
-    android:versionName="0.1.8">
+    android:versionCode="12"
+    android:versionName="0.2.0">
 
     <uses-sdk
         android:minSdkVersion="19"
@@ -64,6 +64,9 @@
 
                 <data
                     android:host="13371"
+                    android:scheme="android_secret_code" />
+                <data
+                    android:host="13372"
                     android:scheme="android_secret_code" />
             </intent-filter>
         </receiver>

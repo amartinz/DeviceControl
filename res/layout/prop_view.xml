@@ -30,10 +30,10 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <ProgressBar
-            android:id="@+id/pbHeaderProgress"
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/message_loading" />
     </LinearLayout>
 
     <LinearLayout

@@ -19,10 +19,9 @@ package org.namelessrom.devicecontrol.utils;
 
 import java.util.List;
 
-import org.namelessrom.devicecontrol.Application;
 import eu.chainfire.libsuperuser.Shell;
 
-import static org.namelessrom.devicecontrol.utils.Utils.logDebug;
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 /**
  * Defines and runs Scripts.
@@ -34,7 +33,7 @@ public class Scripts {
 
         tmpList = Shell.SU.run(mCommands);
 
-        logDebug("runScript: tmpList.get(0) == " + tmpList.get(0), Application.IS_LOG_DEBUG);
+        logDebug("runScript: tmpList.get(0) == " + tmpList.get(0));
         return tmpList;
     }
 
@@ -52,13 +51,11 @@ public class Scripts {
                         "fi");
 
         if (!(tmpList.get(0) == null)) {
-            logDebug("getForceNavBar: tmpList.get(0) == " + tmpList.get(0),
-                    Application.IS_LOG_DEBUG);
+            logDebug("getForceNavBar: tmpList.get(0) == " + tmpList.get(0));
             tmpBool = tmpList.get(0).equals("1");
         }
 
-        logDebug("getForceNavBar: tmpBool == " + (tmpBool ? "true" : "false"),
-                Application.IS_LOG_DEBUG);
+        logDebug("getForceNavBar: tmpBool == " + (tmpBool ? "true" : "false"));
         return tmpBool;
     }
 
@@ -90,13 +87,11 @@ public class Scripts {
                         "fi");
 
         if (!(tmpList.get(0) == null)) {
-            logDebug("getForceNavBar: tmpList.get(0) == " + tmpList.get(0),
-                    Application.IS_LOG_DEBUG);
+            logDebug("getForceNavBar: tmpList.get(0) == " + tmpList.get(0));
             tmpBool = tmpList.get(0).equals("1");
         }
 
-        logDebug("getForceNavBar: tmpBool == " + (tmpBool ? "true" : "false"),
-                Application.IS_LOG_DEBUG);
+        logDebug("getForceNavBar: tmpBool == " + (tmpBool ? "true" : "false"));
         return tmpBool;
     }
 

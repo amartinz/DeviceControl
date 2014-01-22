@@ -22,6 +22,8 @@ import android.content.Intent;
 
 import com.stericson.roottoolstests.SanityCheckRootTools;
 
+import org.namelessrom.devicecontrol.activities.MainActivity;
+
 public class SecretCodeReceiver extends BroadcastReceiver {
 
     @Override
@@ -31,6 +33,9 @@ public class SecretCodeReceiver extends BroadcastReceiver {
 
         if (host.equals("13371")) {
             context.startActivity(new Intent(context, SanityCheckRootTools.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        } else if (host.equals("13372")) {
+            context.startActivity(new Intent(context, MainActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
 
