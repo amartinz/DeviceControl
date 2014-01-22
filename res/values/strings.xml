@@ -134,6 +134,8 @@
     <!-- Others -->
     <string name="input_glove_mode_title">Glove Mode</string>
     <string name="input_glove_mode_summary">Makes the touchscreen more sensitive, eg for using it with gloves.</string>
+    <string name="input_tap_to_wake_title">Tap-To-Wake</string>
+    <string name="input_tap_to_wake_summary"></string>
 
     <!-- Graphics -->
     <!-- Panel color -->
