@@ -21,9 +21,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.FileOutputStream;
@@ -31,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
+
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 /**
  * Created by alex on 11.11.13.
@@ -75,9 +76,7 @@ public class TaskerService extends Service implements DeviceConstants, FileConst
     // Methods
     //==============================================================================================
 
-    private void logDebug(String msg) {
-        Utils.logDebug(msg, mDebug);
-    }
+    //
 
     //================
     // Runnable

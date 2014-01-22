@@ -24,8 +24,9 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 public class DeviceSensorsFragment extends PreferenceFragment
@@ -61,10 +62,10 @@ public class DeviceSensorsFragment extends PreferenceFragment
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
                                          Preference preference) {
         if (preference == mGyroUse) {
-            Utils.writeValue(FILE_USE_GYRO_CALIB, (mGyroUse.isChecked() ? "1" : "0"));
+            new WriteAndForget(FILE_USE_GYRO_CALIB, (mGyroUse.isChecked() ? "1" : "0")).run();
         } else if (preference == mGyroCalibrate) {
-            Utils.writeValue(FILE_USE_GYRO_CALIB, "0");
-            Utils.writeValue(FILE_USE_GYRO_CALIB, "1");
+            new WriteAndForget(FILE_USE_GYRO_CALIB, "0")
+                    .append(FILE_USE_GYRO_CALIB, "1").run();
             Utils.showDialog(getActivity(),
                     "Calibration done", "The gyroscope has been successfully calibrated!");
         }

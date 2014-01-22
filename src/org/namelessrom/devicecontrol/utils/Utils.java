@@ -23,6 +23,10 @@ import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import com.stericson.roottools.RootTools;
+import com.stericson.roottools.execution.CommandCapture;
+
+import org.namelessrom.devicecontrol.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
@@ -30,15 +34,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.namelessrom.devicecontrol.Application;
 import eu.chainfire.libsuperuser.Shell;
 
+import static org.namelessrom.devicecontrol.Application.logDebug;
+
 public class Utils implements DeviceConstants, FileConstants {
+
+    private final static Object lockObject = new Object();
 
     /**
      * Reads a single line from a file.
@@ -50,21 +56,16 @@ public class Utils implements DeviceConstants, FileConstants {
         String sLine = null;
         // don't even bother reading nothing, return null
         if (fileExists(sFile)) {
-            if (Application.IS_SYSTEM_APP) {
-                BufferedReader brBuffer;
+            BufferedReader brBuffer;
+            try {
+                brBuffer = new BufferedReader(new FileReader(sFile), 512);
                 try {
-                    brBuffer = new BufferedReader(new FileReader(sFile), 512);
-                    try {
-                        sLine = brBuffer.readLine();
-                    } finally {
-                        brBuffer.close();
-                    }
-                } catch (Exception e) {
-                    logDebug("readOneLine: reading failed: " + e.getMessage(),
-                            Application.IS_LOG_DEBUG);
-                    return readFileViaShell(sFile);
+                    sLine = brBuffer.readLine();
+                } finally {
+                    brBuffer.close();
                 }
-            } else {
+            } catch (Exception e) {
+                logDebug("readOneLine: reading failed: " + e.getMessage());
                 return readFileViaShell(sFile);
             }
         }
@@ -86,71 +87,29 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     public static String readFileViaShell(String filePath, boolean useSu, boolean wholeFile) {
-        List<String> mResult = (useSu
-                ? Shell.SU.run("cat " + filePath)
-                : Shell.SH.run("cat " + filePath));
-        if (mResult != null) {
-            if (mResult.size() != 0) {
-                if (wholeFile) {
-                    String tmp = "";
-                    for (String s : mResult) {
-                        tmp += s + "\n";
+        try {
+            List<String> mResult = (useSu
+                    ? Shell.SU.run("cat " + filePath)
+                    : Shell.SH.run("cat " + filePath));
+            if (mResult != null) {
+                if (mResult.size() != 0) {
+                    if (wholeFile) {
+                        String tmp = "";
+                        for (String s : mResult) {
+                            tmp += s + "\n";
+                        }
+                        return tmp;
+                    } else {
+                        return mResult.get(0);
                     }
-                    return tmp;
                 } else {
-                    return mResult.get(0);
+                    return "";
                 }
-            } else {
-                return "";
             }
+            return "";
+        } catch (Exception exc) {
+            return "";
         }
-        return "";
-    }
-
-    /**
-     * Write a string value to the specified file.
-     *
-     * @param filename The filename
-     * @param value    The value
-     */
-    public static boolean writeValue(String filename, String value) {
-        // the existence of the file is a requirement for the success ;)
-        boolean success = fileExists(filename);
-        if (success) {
-            try {
-                FileWriter fw = new FileWriter(filename);
-                try {
-                    fw.write(value);
-                } finally {
-                    fw.close();
-                }
-            } catch (IOException e) {
-                logDebug("writeValue: writing failed: " + e.getMessage(),
-                        Application.IS_LOG_DEBUG);
-                success = writeValueViaShell(filename, value);
-            }
-        }
-
-        return success;
-    }
-
-    /**
-     * Fallback if everything fails
-     *
-     * @param filename The file to write
-     * @param value    The value to write
-     */
-    private static boolean writeValueViaShell(String filename, String value) {
-        boolean success = false;
-        List<String> tmpList = Shell.SU.run("busybox echo " + value + " > " + filename);
-
-        // if we dont get any result, it means it works, else we got a "permission denied"
-        // message and thus it didnt succeed
-        if (tmpList != null) {
-            if (tmpList.size() == 0) success = true;
-        }
-
-        return success;
     }
 
     /**
@@ -161,7 +120,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param value    The value of max value Integer.MAX
      */
     public static void writeColor(String filename, int value) {
-        writeValue(filename, String.valueOf((long) value * 2));
+        new WriteAndForget(filename, String.valueOf((long) value * 2)).run();
     }
 
     /**
@@ -172,8 +131,7 @@ public class Utils implements DeviceConstants, FileConstants {
      */
     public static boolean fileExists(String filename) {
         final boolean isExisting = new File(filename).exists();
-        logDebug("fileExists: " + filename + ": " + (isExisting ? "true" : "false"),
-                Application.IS_LOG_DEBUG);
+        logDebug("fileExists: " + filename + ": " + (isExisting ? "true" : "false"));
         return isExisting;
     }
 
@@ -209,20 +167,6 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     /**
-     * Logs a message to logcat if boolean param is true.<br />
-     * This is very usefull for debugging, just set debug to false on a release build<br />
-     * and it wont show any debug messages.
-     *
-     * @param msg   The message to log
-     * @param debug If true it logs, else not
-     */
-    public static void logDebug(String msg, boolean debug) {
-        if (debug) {
-            Log.e(TAG, msg);
-        }
-    }
-
-    /**
      * Setup the directories for JF Control
      */
     public static void setupDirectories() {
@@ -232,10 +176,9 @@ public class Utils implements DeviceConstants, FileConstants {
         for (String s : dirList) {
             dir = new File(s);
             if (!dir.exists()) {
-                logDebug("setupDirectories: creating " + s, Application.IS_LOG_DEBUG);
+                logDebug("setupDirectories: creating " + s);
                 final boolean isSuccess = dir.mkdirs();
-                logDebug("setupDirectories: " + (isSuccess ? "true" : "false"),
-                        Application.IS_LOG_DEBUG);
+                logDebug("setupDirectories: " + (isSuccess ? "true" : "false"));
             }
         }
     }
@@ -255,7 +198,7 @@ public class Utils implements DeviceConstants, FileConstants {
                 return tmpList.get(0);
             }
         }
-        logDebug("getBinPath: found binary at: " + b, Application.IS_LOG_DEBUG);
+        logDebug("getBinPath: found binary at: " + b);
         return "";
     }
 
@@ -304,5 +247,51 @@ public class Utils implements DeviceConstants, FileConstants {
             }
         });
         alertDialog.show();
+    }
+
+    //
+
+    public static String runShellCommand(boolean useRoot, String... cmd) {
+
+        final StringBuilder sb = new StringBuilder();
+
+        sb.append("STRINGBUILDER!\n");
+
+        try {
+            com.stericson.roottools.execution.Shell shell = RootTools.getShell(useRoot);
+
+            CommandCapture cmdCap = new CommandCapture(42, false, cmd) {
+
+                @Override
+                public void commandOutput(int id, String line) {
+                    super.commandOutput(id, line);
+
+                    logDebug("appending: " + line);
+                    sb.append(line);
+
+                }
+
+                @Override
+                public void commandCompleted(int id, int exitCode) {
+                    synchronized (lockObject) {
+
+                        try {
+                            logDebug("closing shells");
+                            RootTools.closeAllShells();
+                        } catch (IOException e) {
+                            logDebug("Shell error: " + e.getMessage());
+                        }
+
+                    }
+                }
+            };
+
+            shell.add(cmdCap);
+
+        } catch (Exception exc) {
+            return "";
+        }
+
+        return sb.toString();
     }
 }

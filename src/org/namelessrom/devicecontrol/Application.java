@@ -20,8 +20,8 @@ package org.namelessrom.devicecontrol;
 
 import android.app.AlarmManager;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.StrictMode;
+import android.util.Log;
 
 import com.stericson.roottools.RootTools;
 
@@ -32,7 +32,7 @@ import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.DC_F
 public class Application extends android.app.Application {
 
     // Switch to your needs
-    public static final boolean IS_LOG_DEBUG = false;
+    public static final boolean IS_LOG_DEBUG = true;
 
     public static boolean IS_SYSTEM_APP = false;
     public static boolean HAS_ROOT = false;
@@ -67,18 +67,27 @@ public class Application extends android.app.Application {
         IS_SYSTEM_APP = getResources().getBoolean(R.bool.is_system_app);
 
         // we need to detect SU for some features :)
-        new DetectSu().execute();
+        try {
+            HAS_ROOT = RootTools.isRootAvailable() && RootTools.isAccessGiven();
+        } catch (Exception exc) {
+            logDebug("DetectSu: " + exc.getMessage());
+        }
 
         // Set flag to enable BootUp receiver
         PreferenceHelper.setBoolean(DC_FIRST_START, false);
 
     }
 
-    private class DetectSu extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
-            HAS_ROOT = RootTools.isRootAvailable() && RootTools.isAccessGiven();
-            return null;
+    /**
+     * Logs a message to logcat if boolean param is true.<br />
+     * This is very useful for debugging, just set debug to false on a release build<br />
+     * and it wont show any debug messages.
+     *
+     * @param msg The message to log
+     */
+    public static void logDebug(final String msg) {
+        if (IS_LOG_DEBUG) {
+            Log.e("DeviceControl", msg);
         }
     }
 }

@@ -80,10 +80,4 @@ public class PerformanceFragment extends AttachFragment {
         }
         return tmpList;
     }
-
-    public static void restore() {
-        if (PerformanceGeneralFragment.isSupported()) {
-            PerformanceGeneralFragment.restore();
-        }
-    }
 }

@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -47,6 +48,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.threads.FireAndGet;
+import org.namelessrom.devicecontrol.threads.ReadValue;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.adapters.PropAdapter;
@@ -213,9 +216,9 @@ public class ToolsEditor extends Fragment
         return view;
     }
 
-    private class GetPropOperation extends AsyncTask<String, Void, List<String>> {
+    private class GetPropOperation extends AsyncTask<String, Void, Void> {
         @Override
-        protected List<String> doInBackground(final String... params) {
+        protected Void doInBackground(final String... params) {
 
             StringBuilder sb = new StringBuilder();
             sb.append("busybox mkdir -p ").append(dn).append(";\n");
@@ -240,29 +243,9 @@ public class ToolsEditor extends Fragment
                     break;
             }
 
-            List<String> mResult = Shell.SU.run(sb.toString());
-            if (mResult != null) {
-                return mResult;
-            } else {
-                return null;
-            }
-        }
+            new FireAndGet(sb.toString(), readHandler).run();
 
-        @Override
-        protected void onPostExecute(final List<String> result) {
-            if ((result != null) && (result.size() > 0)) {
-                loadProp(result);
-                Collections.sort(props);
-                linlaHeaderProgress.setVisibility(View.GONE);
-                if (props.isEmpty()) {
-                    nofiles.setVisibility(View.VISIBLE);
-                } else {
-                    nofiles.setVisibility(View.GONE);
-                    tools.setVisibility(View.VISIBLE);
-                    adapter = new PropAdapter(getActivity(), props);
-                    packList.setAdapter(adapter);
-                }
-            }
+            return null;
         }
 
         @Override
@@ -272,6 +255,57 @@ public class ToolsEditor extends Fragment
             tools.setVisibility(View.GONE);
         }
 
+    }
+
+    Handler readHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            final int action = msg.getData().getInt(READ_VALUE_ACTION);
+            final String text = msg.getData().getString(READ_VALUE_TEXT);
+
+            switch (action) {
+                case READ_VALUE_ACTION_RESULT:
+                    if (mEditorType == 2) {
+                        loadBuildProp(text);
+                    } else {
+                        loadProp(text);
+                    }
+                    break;
+            }
+        }
+    };
+
+    void loadProp(final String result) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if ((result != null) && (!result.isEmpty())) {
+                    props.clear();
+                    String[] p = result.split(" ");
+                    for (String aP : p) {
+                        if (aP.trim().length() > 0 && aP != null) {
+                            final String pv = Utils.readOneLine(aP).trim();
+                            final String pn = aP.trim().replace("/", ".").substring(10, aP.length());
+                            props.add(new Prop(pn, pv));
+                        }
+                    }
+                    Collections.sort(props);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            linlaHeaderProgress.setVisibility(View.GONE);
+                            if (props.isEmpty()) {
+                                nofiles.setVisibility(View.VISIBLE);
+                            } else {
+                                nofiles.setVisibility(View.GONE);
+                                tools.setVisibility(View.VISIBLE);
+                                adapter = new PropAdapter(getActivity(), props);
+                                packList.setAdapter(adapter);
+                            }
+                        }
+                    });
+                }
+            }
+        }).run();
     }
 
     @Override
@@ -345,29 +379,6 @@ public class ToolsEditor extends Fragment
                 }).create().show();
     }
 
-    void loadProp(final List<String> paramResult) {
-        props.clear();
-        for (String s : paramResult) {
-            String[] p = s.split(" ");
-            for (String aP : p) {
-                if (aP.trim().length() > 0 && aP != null) {
-                    final String pv = Utils.readOneLine(aP).trim();
-                    final String pn = aP.trim().replace("/", ".").substring(10, aP.length());
-                    if (testProp(pn)) {
-                        props.add(new Prop(pn, pv));
-                    }
-                }
-            }
-        }
-    }
-
-    boolean testProp(final String s) {
-        return mod.equals("sysctl") || !isdyn
-                || !(s.contains("dirty_writeback_active_centisecs")
-                || s.contains("dynamic_dirty_writeback")
-                || s.contains("dirty_writeback_suspend_centisecs"));
-    }
-
     private void makeDialog(String t, String m, byte op, Prop p) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(t)
@@ -392,29 +403,50 @@ public class ToolsEditor extends Fragment
         }
     }
 
-    void loadBuildProp(String s) {
-        props.clear();
-        String p[] = s.split("\n");
-        for (String aP : p) {
-            if (!aP.contains("#") && aP.trim().length() > 0 && aP != null && aP.contains("=")) {
-                aP = aP.replace("[", "").replace("]", "");
-                String pp[] = aP.split("=");
-                if (pp.length >= 2) {
-                    String r = "";
-                    for (int i = 2; i < pp.length; i++) {
-                        r = r + "=" + pp[i];
+    void loadBuildProp(final String s) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                props.clear();
+                String p[] = s.split("\n");
+                for (String aP : p) {
+                    if (!aP.contains("#") && aP.trim().length() > 0 && aP != null && aP.contains("=")) {
+                        aP = aP.replace("[", "").replace("]", "");
+                        String pp[] = aP.split("=");
+                        if (pp.length >= 2) {
+                            String r = "";
+                            for (int i = 2; i < pp.length; i++) {
+                                r = r + "=" + pp[i];
+                            }
+                            props.add(new Prop(pp[0].trim(), pp[1].trim() + r));
+                        } else {
+                            props.add(new Prop(pp[0].trim(), ""));
+                        }
                     }
-                    props.add(new Prop(pp[0].trim(), pp[1].trim() + r));
-                } else {
-                    props.add(new Prop(pp[0].trim(), ""));
                 }
+                Collections.sort(props);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        linlaHeaderProgress.setVisibility(View.GONE);
+                        if (props.isEmpty()) {
+                            nofiles.setVisibility(View.VISIBLE);
+                        } else {
+                            nofiles.setVisibility(View.GONE);
+                            tools.setVisibility(View.VISIBLE);
+                            adapter = new PropAdapter(getActivity(), props);
+                            packList.setAdapter(adapter);
+                        }
+                    }
+                });
             }
-        }
+        }).run();
     }
 
-    private class GetBuildPropOperation extends AsyncTask<String, Void, String> {
+
+    private class GetBuildPropOperation extends AsyncTask<String, Void, Void> {
         @Override
-        protected String doInBackground(String... params) {
+        protected Void doInBackground(String... params) {
 
             mBuildName = "build";
             mBuildName = (Build.DISPLAY.equals("") || Build.DISPLAY == null)
@@ -439,29 +471,9 @@ public class ToolsEditor extends Fragment
                 resultString += s;
             }
             oggs = resultString.split("\0");
-            return Utils.readFileViaShell("/system/build.prop", false, true);
-        }
+            new ReadValue("/system/build.prop", readHandler, true).run();
 
-        @Override
-        protected void onPostExecute(String result) {
-            linlaHeaderProgress.setVisibility(View.GONE);
-
-            if ((result == null) || (result.length() <= 0)) {
-                nofiles.setVisibility(LinearLayout.VISIBLE);
-            } else {
-                nofiles.setVisibility(View.GONE);
-                loadBuildProp(result);
-                Collections.sort(props);
-
-                if (props.isEmpty()) {
-                    nofiles.setVisibility(View.VISIBLE);
-                } else {
-                    nofiles.setVisibility(View.GONE);
-                    tools.setVisibility(View.VISIBLE);
-                    adapter = new PropAdapter(getActivity(), props);
-                    packList.setAdapter(adapter);
-                }
-            }
+            return null;
         }
 
         @Override

@@ -21,22 +21,25 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import org.namelessrom.devicecontrol.fragments.main.DeviceFragment;
-import org.namelessrom.devicecontrol.fragments.main.PerformanceFragment;
+import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.fragments.device.DeviceGraphicsFragment;
+import org.namelessrom.devicecontrol.fragments.device.DeviceInputFragment;
+import org.namelessrom.devicecontrol.fragments.device.DeviceLightsFragment;
+import org.namelessrom.devicecontrol.fragments.performance.PerformanceGeneralFragment;
+import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
+import org.namelessrom.devicecontrol.threads.FireAndForget;
+import org.namelessrom.devicecontrol.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.namelessrom.devicecontrol.Application;
-import eu.chainfire.libsuperuser.Shell;
-
-import static org.namelessrom.devicecontrol.utils.Utils.logDebug;
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 /**
  * Restores and Applies values on boot, as well as starts services.
@@ -47,71 +50,130 @@ public class BootupReceiver extends BroadcastReceiver
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        //==========================================================================================
+        // No Root, No Friends, That's Life ...
+        //==========================================================================================
+        if (!Application.HAS_ROOT) {
+            logDebug("No Root, No Friends, That's Life ...");
+            return;
+        }
+
         PreferenceHelper.getInstance(context);
 
         if (!PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
 
-            // Schedule Tasker
+            //======================================================================================
+            // Tasker
+            //======================================================================================
             if (PreferenceHelper.getBoolean(TASKER_TOOLS_FSTRIM, false) && Application.HAS_ROOT) {
                 AlarmHelper.setAlarmFstrim(context, Integer.parseInt(
                         PreferenceHelper.getString(TASKER_TOOLS_FSTRIM_INTERVAL, "30")));
             }
 
-            /* Reapply values */
+            //======================================================================================
+            // Fields For Reapplying
+            //======================================================================================
             boolean tmp;
-            List<String> tmpList;
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sbCmd = new StringBuilder();
+            List<String> fileList = new ArrayList<String>();
+            List<String> valueList = new ArrayList<String>();
 
+            //======================================================================================
             // Custom Shell Command
-            sb.append(PreferenceHelper.getString(CUSTOM_SHELL_COMMAND, "echo \"Hello world!\""))
+            //======================================================================================
+            sbCmd.append(PreferenceHelper.getString(CUSTOM_SHELL_COMMAND, "echo \"Hello world!\""))
                     .append(";");
 
-            // Device
-            DeviceFragment.restore();
-
-            Utils.writeValue(FILE_PANEL_COLOR_TEMP,
-                    PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2"));
-
-            if (HighTouchSensitivity.isSupported()) {
-                HighTouchSensitivity.setEnabled(PreferenceHelper.getBoolean(KEY_GLOVE_MODE, false));
+            //======================================================================================
+            // Device Input
+            //======================================================================================
+            if (DeviceInputFragment.sKnockOn) {
+                fileList.add(DeviceInputFragment.sKnockOnFile);
+                valueList.add(PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0");
             }
 
-            // Lights
-            tmp = PreferenceHelper.getBoolean(KEY_TOUCHKEY_LIGHT, true);
-            Utils.writeValue(FILE_TOUCHKEY_TOGGLE, (tmp ? "255" : "0"));
-            Utils.writeValue(FILE_TOUCHKEY_BRIGHTNESS, (tmp ? "255" : "0"));
+            if (VibratorTuningPreference.isSupported()) {
+                final int percent = PreferenceHelper.getInt(KEY_VIBRATOR_TUNING
+                        , VibratorTuningPreference
+                        .strengthToPercent(VIBRATOR_INTENSITY_DEFAULT_VALUE));
+                fileList.add(VibratorTuningPreference.FILE_VIBRATOR);
+                valueList.add("" + percent);
+            }
 
-            tmp = PreferenceHelper.getBoolean(KEY_TOUCHKEY_BLN, true);
-            Utils.writeValue(FILE_BLN_TOGGLE, (tmp ? "1" : "0"));
+            if (HighTouchSensitivity.isSupported()) {
+                fileList.add(HighTouchSensitivity.COMMAND_PATH);
+                valueList.add(PreferenceHelper.getBoolean(KEY_GLOVE_MODE, false)
+                        ? HighTouchSensitivity.GLOVE_MODE_ENABLE
+                        : HighTouchSensitivity.GLOVE_MODE_DISABLE);
+            }
 
-            tmp = PreferenceHelper.getBoolean(KEY_KEYBOARD_LIGHT, true);
-            Utils.writeValue(FILE_KEYBOARD_TOGGLE, (tmp ? "255" : "0"));
+            //======================================================================================
+            // Device Graphics
+            //======================================================================================
 
+            if (DeviceGraphicsFragment.sHasPanel) {
+                fileList.add(FILE_PANEL_COLOR_TEMP);
+                valueList.add(PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2"));
+            }
+
+            //======================================================================================
+            // Device Lights
+            //======================================================================================
+            if (DeviceLightsFragment.sHasTouchkeyToggle) {
+                tmp = PreferenceHelper.getBoolean(KEY_TOUCHKEY_LIGHT, true);
+                fileList.add(FILE_TOUCHKEY_TOGGLE);
+                valueList.add(tmp ? "255" : "0");
+                fileList.add(FILE_TOUCHKEY_BRIGHTNESS);
+                valueList.add(tmp ? "255" : "0");
+            }
+
+            if (DeviceLightsFragment.sHasTouchkeyBLN) {
+                tmp = PreferenceHelper.getBoolean(KEY_TOUCHKEY_BLN, true);
+                fileList.add(FILE_BLN_TOGGLE);
+                valueList.add(tmp ? "1" : "0");
+            }
+
+            if (DeviceLightsFragment.sHasKeyboardToggle) {
+                tmp = PreferenceHelper.getBoolean(KEY_KEYBOARD_LIGHT, true);
+                fileList.add(FILE_KEYBOARD_TOGGLE);
+                valueList.add(tmp ? "255" : "0");
+            }
+
+            //======================================================================================
             // Performance
-            PerformanceFragment.restore();
+            //======================================================================================
+            if (PerformanceGeneralFragment.sLcdPowerReduce) {
+                fileList.add(PerformanceGeneralFragment.sLcdPowerReduceFile);
+                valueList.add(PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false)
+                        ? "1" : "0");
+            }
+            if (PerformanceGeneralFragment.sIntelliPlugEco) {
+                fileList.add(PerformanceGeneralFragment.sIntelliPlugEcoFile);
+                valueList.add(PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false)
+                        ? "1" : "0");
+            }
 
+            //======================================================================================
             // Tools
+            //======================================================================================
             if (new File("/system/etc/sysctl.conf").exists()) {
                 if (PreferenceHelper.getBoolean(SYSCTL_SOB, false)) {
-                    sb.append("busybox sysctl -p;");
+                    sbCmd.append("busybox sysctl -p;");
                 }
             }
             if (new File("/system/etc/vm.conf").exists()) {
                 if (PreferenceHelper.getBoolean(VM_SOB, false)) {
-                    sb.append("busybox sysctl -p /system/etc/vm.conf;");
+                    sbCmd.append("busybox sysctl -p /system/etc/vm.conf;");
                 }
             }
 
-            // Without root, these features are not available, sorry!
-            if (!Application.HAS_ROOT) {
-                logDebug("bootUp | SU", Application.IS_LOG_DEBUG);
-                tmpList = Shell.SU.run(sb.toString());
-                if (tmpList.get(0) != null) {
-                    for (String s : tmpList) {
-                        logDebug("bootUp | SU result: " + s, Application.IS_LOG_DEBUG);
-                    }
-                }
-            }
+            //======================================================================================
+            // Execute
+            //======================================================================================
+            final String cmd = sbCmd.toString();
+            logDebug("bootUp | executing: " + cmd);
+            new FireAndForget(cmd).run();
+            new WriteAndForget(fileList, valueList).run();
         }
     }
 }

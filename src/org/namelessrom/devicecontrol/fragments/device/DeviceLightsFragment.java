@@ -25,10 +25,14 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DeviceLightsFragment extends PreferenceFragment
         implements DeviceConstants, FileConstants {
@@ -38,11 +42,11 @@ public class DeviceLightsFragment extends PreferenceFragment
     //==============================================================================================
     private CheckBoxPreference mBacklightKey;
     private CheckBoxPreference mBacklightNotification;
-    private static final boolean sHasTouchkeyToggle = Utils.fileExists(FILE_TOUCHKEY_TOGGLE);
-    private static final boolean sHasTouchkeyBLN = Utils.fileExists(FILE_BLN_TOGGLE);
+    public static final boolean sHasTouchkeyToggle = Utils.fileExists(FILE_TOUCHKEY_TOGGLE);
+    public static final boolean sHasTouchkeyBLN = Utils.fileExists(FILE_BLN_TOGGLE);
 
     private CheckBoxPreference mKeyboardBacklight;
-    private static final boolean sHasKeyboardToggle = Utils.fileExists(FILE_KEYBOARD_TOGGLE);
+    public static final boolean sHasKeyboardToggle = Utils.fileExists(FILE_KEYBOARD_TOGGLE);
 
     //==============================================================================================
     // Overridden Methods
@@ -83,18 +87,25 @@ public class DeviceLightsFragment extends PreferenceFragment
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
                                          Preference preference) {
         if (preference == mBacklightKey) {
-            Utils.writeValue(FILE_TOUCHKEY_TOGGLE,
-                    mBacklightKey.isChecked() ? "255" : "0");
-            Utils.writeValue(FILE_TOUCHKEY_BRIGHTNESS,
-                    mBacklightKey.isChecked() ? "255" : "0");
+            List<String> fileList = new ArrayList<String>();
+            List<String> valueList = new ArrayList<String>();
+
+            fileList.add(FILE_TOUCHKEY_TOGGLE);
+            valueList.add(mBacklightKey.isChecked() ? "255" : "0");
+
+            fileList.add(FILE_TOUCHKEY_BRIGHTNESS);
+            valueList.add(mBacklightKey.isChecked() ? "255" : "0");
+
+            new WriteAndForget(fileList, valueList).run();
+
             PreferenceHelper.setBoolean(KEY_TOUCHKEY_LIGHT, mBacklightKey.isChecked());
         } else if (preference == mBacklightNotification) {
-            Utils.writeValue(FILE_BLN_TOGGLE,
-                    mBacklightNotification.isChecked() ? "1" : "0");
+            new WriteAndForget(FILE_BLN_TOGGLE
+                    , mBacklightNotification.isChecked() ? "1" : "0").run();
             PreferenceHelper.setBoolean(KEY_TOUCHKEY_BLN, mBacklightNotification.isChecked());
         } else if (preference == mKeyboardBacklight) {
-            Utils.writeValue(FILE_KEYBOARD_TOGGLE,
-                    mKeyboardBacklight.isChecked() ? "255" : "0");
+            new WriteAndForget(FILE_KEYBOARD_TOGGLE
+                    , mKeyboardBacklight.isChecked() ? "255" : "0").run();
             PreferenceHelper.setBoolean(KEY_KEYBOARD_LIGHT, mKeyboardBacklight.isChecked());
         }
         return true;

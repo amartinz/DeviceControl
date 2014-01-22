@@ -41,6 +41,8 @@ import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.JavaCommandCapture;
 import com.stericson.roottools.execution.Shell;
 
+import org.namelessrom.devicecontrol.Application;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
@@ -260,26 +262,29 @@ public class SanityCheckRootTools extends Activity {
             visualUpdate(TestHandler.ACTION_DISPLAY, "[ Running some Java code ]\n");
 
             Shell shell;
-            try {
-                shell = RootTools.getShell(true);
-                JavaCommandCapture cmd = new JavaCommandCapture(
-                        43,
-                        false,
-                        SanityCheckRootTools.this,
-                        "com.stericson.RootToolsTests.NativeJavaClass") {
+            if (Application.IS_LOG_DEBUG) {
+                try {
+                    shell = RootTools.getShell(true);
+                    JavaCommandCapture cmd = new JavaCommandCapture(
+                            43,
+                            false,
+                            SanityCheckRootTools.this,
+                            "com.stericson.RootToolsTests.NativeJavaClass") {
 
-                    @Override
-                    public void commandOutput(int id, String line) {
-                        super.commandOutput(id, line);
-                        visualUpdate(TestHandler.ACTION_DISPLAY, line + "\n");
-                    }
-                };
-                shell.add(cmd);
+                        @Override
+                        public void commandOutput(int id, String line) {
+                            super.commandOutput(id, line);
+                            visualUpdate(TestHandler.ACTION_DISPLAY, line + "\n");
+                        }
+                    };
+                    shell.add(cmd);
 
-            } catch (Exception e) {
-                // Oops. Say, did you run RootClass and move the resulting anbuild.dex " file to res/raw?
-                // If you don't you will not be able to check root mode Java.
-                e.printStackTrace();
+                } catch (Exception e) {
+                    // Oops. Say, did you run RootClass and
+                    // move the resulting anbuild.dex " file to res/raw?
+                    // If you don't you will not be able to check root mode Java.
+                    e.printStackTrace();
+                }
             }
 
             visualUpdate(TestHandler.ACTION_PDISPLAY, "Testing df");
