@@ -20,7 +20,7 @@
  * limitations under that License.
  */
 
-package com.stericson.RootTools.execution;
+package com.stericson.roottools.execution;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -28,7 +28,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.stericson.RootTools.RootTools;
+import com.stericson.roottools.RootTools;
 
 import java.io.IOException;
 

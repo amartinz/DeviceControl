@@ -20,22 +20,22 @@
  * limitations under that License.
  */
 
-package com.stericson.RootTools;
+package com.stericson.roottools;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.stericson.RootTools.containers.Mount;
-import com.stericson.RootTools.containers.Permissions;
-import com.stericson.RootTools.containers.Symlink;
-import com.stericson.RootTools.exceptions.RootDeniedException;
-import com.stericson.RootTools.execution.Command;
-import com.stericson.RootTools.execution.Shell;
-import com.stericson.RootTools.internal.Remounter;
-import com.stericson.RootTools.internal.RootToolsInternalMethods;
-import com.stericson.RootTools.internal.Runner;
+import com.stericson.roottools.containers.Mount;
+import com.stericson.roottools.containers.Permissions;
+import com.stericson.roottools.containers.Symlink;
+import com.stericson.roottools.exceptions.RootDeniedException;
+import com.stericson.roottools.execution.Command;
+import com.stericson.roottools.execution.Shell;
+import com.stericson.roottools.internal.Remounter;
+import com.stericson.roottools.internal.RootToolsInternalMethods;
+import com.stericson.roottools.internal.Runner;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -270,7 +270,7 @@ public final class RootTools {
      * @param shellPath a <code>String</code> to Indicate the path to the shell that you want to open.
      * @param timeout   an <code>int</code> to Indicate the length of time before giving up on opening a shell.
      * @throws java.util.concurrent.TimeoutException
-     * @throws com.stericson.RootTools.exceptions.RootDeniedException
+     * @throws com.stericson.roottools.exceptions.RootDeniedException
      * @throws java.io.IOException
      */
     public static Shell getCustomShell(String shellPath, int timeout) throws IOException, TimeoutException, RootDeniedException {
@@ -283,7 +283,7 @@ public final class RootTools {
      *
      * @param shellPath a <code>String</code> to Indicate the path to the shell that you want to open.
      * @throws java.util.concurrent.TimeoutException
-     * @throws com.stericson.RootTools.exceptions.RootDeniedException
+     * @throws com.stericson.roottools.exceptions.RootDeniedException
      * @throws java.io.IOException
      */
     public static Shell getCustomShell(String shellPath) throws IOException, TimeoutException, RootDeniedException {
@@ -353,7 +353,7 @@ public final class RootTools {
      * @param root    a <code>boolean</code> to Indicate whether or not you want to open a root shell or a standard shell
      * @param timeout an <code>int</code> to Indicate the length of time to wait before giving up on opening a shell.
      * @throws java.util.concurrent.TimeoutException
-     * @throws com.stericson.RootTools.exceptions.RootDeniedException
+     * @throws com.stericson.roottools.exceptions.RootDeniedException
      * @throws java.io.IOException
      */
     public static Shell getShell(boolean root, int timeout, int retry) throws IOException, TimeoutException, RootDeniedException {
@@ -370,7 +370,7 @@ public final class RootTools {
      * @param root    a <code>boolean</code> to Indicate whether or not you want to open a root shell or a standard shell
      * @param timeout an <code>int</code> to Indicate the length of time to wait before giving up on opening a shell.
      * @throws java.util.concurrent.TimeoutException
-     * @throws com.stericson.RootTools.exceptions.RootDeniedException
+     * @throws com.stericson.roottools.exceptions.RootDeniedException
      * @throws java.io.IOException
      */
     public static Shell getShell(boolean root, int timeout) throws IOException, TimeoutException, RootDeniedException {
@@ -383,7 +383,7 @@ public final class RootTools {
      *
      * @param root a <code>boolean</code> to Indicate whether or not you want to open a root shell or a standard shell
      * @throws java.util.concurrent.TimeoutException
-     * @throws com.stericson.RootTools.exceptions.RootDeniedException
+     * @throws com.stericson.roottools.exceptions.RootDeniedException
      * @throws java.io.IOException
      */
     public static Shell getShell(boolean root) throws IOException, TimeoutException, RootDeniedException {

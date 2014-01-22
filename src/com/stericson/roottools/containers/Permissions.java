@@ -20,7 +20,7 @@
  * limitations under that License.
  */
 
-package com.stericson.RootTools.containers;
+package com.stericson.roottools.containers;
 
 public class Permissions {
     String type;

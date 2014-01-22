@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsHelpFragment;
@@ -33,8 +34,6 @@ import org.namelessrom.devicecontrol.utils.widgets.JfViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.namelessrom.devicecontrol.Application;
 
 public class ToolsFragment extends AttachFragment {
 

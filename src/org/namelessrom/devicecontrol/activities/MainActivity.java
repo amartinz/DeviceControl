@@ -28,7 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.stericson.RootTools.RootTools;
+import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;

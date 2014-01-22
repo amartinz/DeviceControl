@@ -20,7 +20,7 @@
  * limitations under that License.
  */
 
-package com.stericson.RootTools.containers;
+package com.stericson.roottools.containers;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -51,7 +51,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
 
     static String PATH_TO_DX = "/Users/Chris/Projects/android-sdk-macosx/build-tools/18.0.1/dx";
 
-    enum READ_STATE {STARTING, FOUND_ANNOTATION;}
+    enum READ_STATE {STARTING, FOUND_ANNOTATION}
 
     ;
 
@@ -74,8 +74,6 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
 
     public @interface Candidate {
     }
-
-    ;
 
     public class RootArgs {
         public String args[];

@@ -23,7 +23,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 
-import com.stericson.RootTools.RootTools;
+import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 

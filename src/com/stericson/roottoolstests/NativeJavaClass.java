@@ -20,9 +20,9 @@
  * limitations under that License.
  */
 
-package com.stericson.RootToolsTests;
+package com.stericson.roottoolstests;
 
-import com.stericson.RootTools.containers.RootClass;
+import com.stericson.roottools.containers.RootClass;
 
 import java.io.BufferedWriter;
 import java.io.File;

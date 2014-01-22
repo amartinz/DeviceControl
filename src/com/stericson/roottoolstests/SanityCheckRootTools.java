@@ -20,12 +20,7 @@
  * limitations under that License.
  */
 
-package com.stericson.RootToolsTests;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeoutException;
+package com.stericson.roottoolstests;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -39,21 +34,26 @@ import android.os.StrictMode;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.stericson.RootTools.RootTools;
-import com.stericson.RootTools.containers.Permissions;
-import com.stericson.RootTools.exceptions.RootDeniedException;
-import com.stericson.RootTools.execution.CommandCapture;
-import com.stericson.RootTools.execution.JavaCommandCapture;
-import com.stericson.RootTools.execution.Shell;
+import com.stericson.roottools.RootTools;
+import com.stericson.roottools.containers.Permissions;
+import com.stericson.roottools.exceptions.RootDeniedException;
+import com.stericson.roottools.execution.CommandCapture;
+import com.stericson.roottools.execution.JavaCommandCapture;
+import com.stericson.roottools.execution.Shell;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 public class SanityCheckRootTools extends Activity {
     private ScrollView mScrollView;
     private TextView mTextView;
     private ProgressDialog mPDialog;
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectDiskReads()
@@ -80,18 +80,17 @@ public class SanityCheckRootTools extends Activity {
         String version = "?";
         try {
             PackageInfo packageInfo =
-                    this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+                    this.getPackageManager()
+                            .getPackageInfo(this.getPackageName(), 0);
             version = packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
         }
 
         print("SanityCheckRootTools v " + version + "\n\n");
 
-        if(RootTools.isRootAvailable()) {
+        if (RootTools.isRootAvailable()) {
             print("Root found.\n");
-        }
-        else
-        {
+        } else {
             print("Root not found");
         }
 
@@ -165,9 +164,8 @@ public class SanityCheckRootTools extends Activity {
             try {
                 List<String> paths = RootTools.getPath();
 
-                for(String path : paths)
-                {
-                    visualUpdate(TestHandler.ACTION_DISPLAY,  path + " k\n\n");
+                for (String path : paths) {
+                    visualUpdate(TestHandler.ACTION_DISPLAY, path + " k\n\n");
                 }
 
             } catch (Exception e) {
@@ -187,7 +185,7 @@ public class SanityCheckRootTools extends Activity {
             visualUpdate(TestHandler.ACTION_DISPLAY, result + " k\n\n");
 
             visualUpdate(TestHandler.ACTION_PDISPLAY, "Testing file exists");
-            visualUpdate(TestHandler.ACTION_DISPLAY, "[ Checking Exists() ]\n");
+            visualUpdate(TestHandler.ACTION_DISPLAY, "[ Checking Exists(/system/sbin/[) ]\n");
             visualUpdate(TestHandler.ACTION_DISPLAY, RootTools.exists("/system/sbin/[") + " k\n\n");
 
             visualUpdate(TestHandler.ACTION_PDISPLAY, "Testing Is Access Given");

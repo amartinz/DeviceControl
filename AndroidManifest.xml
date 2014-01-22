@@ -47,6 +47,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="com.stericson.roottoolstests.SanityCheckRootTools" />
 
         <!-- Services -->
         <service android:name=".services.TaskerService" />
@@ -55,6 +56,15 @@
         <receiver android:name=".receivers.BootupReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receivers.SecretCodeReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SECRET_CODE" />
+
+                <data
+                    android:host="13371"
+                    android:scheme="android_secret_code" />
             </intent-filter>
         </receiver>
 
