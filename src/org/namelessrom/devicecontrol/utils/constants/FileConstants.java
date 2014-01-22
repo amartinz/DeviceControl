@@ -26,8 +26,8 @@ public interface FileConstants {
     //==============================================================================================
     // Files
     //==============================================================================================
-    public static final String[] FILES_VIBRATOR = {"/sys/class/timed_output/vibrator/pwm_value",
-            "/sys/devices/platform/tspdrv/nforce_timed"};
+    public static final String[] FILES_VIBRATOR = {"/sys/class/timed_output/vibrator/pwm_value"
+            , "/sys/devices/platform/tspdrv/nforce_timed"};
     public static final String FILE_TOUCHKEY_TOGGLE =
             "/sys/class/leds/button-backlight/max_brightness";
     public static final String FILE_TOUCHKEY_BRIGHTNESS =
@@ -39,15 +39,16 @@ public interface FileConstants {
     public static final String FILE_USE_GYRO_CALIB = "/sys/class/sec/gsensorcal/calibration";
     public static final String FILE_PANEL_COLOR_TEMP = "/sys/class/lcd/panel/panel_colors";
     //==============================================================================================
-    public static final String FILE_KNOCKON = "/sys/devices/virtual/input/lge_touch/touch_gesture";
+    public static final String[] FILES_KNOCKON
+            = {"/sys/devices/virtual/input/lge_touch/touch_gesture"};
     //==============================================================================================
     public static final String FILE_INFO_DISPLAY_LCD_TYPE = "/sys/class/lcd/panel/lcd_type";
     //==============================================================================================
     public static final String FILE_FLASH_LIGHT = "/sys/class/camera/flash/rear_flash";
     //==============================================================================================
     public static final String[] FILES_LCD_POWER_REDUCE = {"/sys/class/lcd/panel/power_reduce"};
-    public static final String[] FILES_INTELLI_PLUG_ECO =
-            {"/sys/module/intelli_plug/parameters/eco_mode_active"};
+    public static final String[] FILES_INTELLI_PLUG_ECO
+            = {"/sys/module/intelli_plug/parameters/eco_mode_active"};
     //==============================================================================================
 
 
@@ -55,8 +56,8 @@ public interface FileConstants {
     // Directories
     //==============================================================================================
     public static final String DC_DATA_DIR =
-            Environment.getExternalStorageDirectory().getPath() + File.separator +
-                    "DeviceControl";
+            Environment.getExternalStorageDirectory().getPath()
+                    + File.separator + "DeviceControl";
     public static final String DC_LOG_DIR = DC_DATA_DIR + File.separator + "Logs";
     public static final String DC_BACKUP_DIR = DC_DATA_DIR + File.separator + "Backup";
     //==============================================================================================

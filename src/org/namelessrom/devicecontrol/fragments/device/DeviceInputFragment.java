@@ -38,11 +38,17 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.chainfire.libsuperuser.Application;
+import org.namelessrom.devicecontrol.Application;
 import eu.chainfire.libsuperuser.Shell;
 
 public class DeviceInputFragment extends PreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
+
+    //==============================================================================================
+    // Files
+    //==============================================================================================
+    private static final String sKnockOnFile = Utils.checkPaths(FILES_KNOCKON);
+    private static final boolean sKnockOn = !sKnockOnFile.equals("");
 
     //==============================================================================================
     // Fields
@@ -65,8 +71,8 @@ public class DeviceInputFragment extends PreferenceFragment
 
         hasMenuKey = ViewConfiguration.get(getActivity()).hasPermanentMenuKey();
 
-        VibratorTuningPreference mVibratorTuning =
-                (VibratorTuningPreference) findPreference(KEY_VIBRATOR_TUNING);
+        VibratorTuningPreference mVibratorTuning
+                = (VibratorTuningPreference) findPreference(KEY_VIBRATOR_TUNING);
 
         mForceNavBar = (CheckBoxPreference) findPreference(KEY_NAVBAR_FORCE);
         mForceNavBar.setEnabled(false);
@@ -75,12 +81,12 @@ public class DeviceInputFragment extends PreferenceFragment
 
         PreferenceGroup group = (PreferenceGroup) findPreference("input_knockon");
 
-        if (!Utils.fileExists(FILE_KNOCKON)) {
+        if (!sKnockOn) {
             getPreferenceScreen().removePreference(group);
         } else {
             mKnockOn = (CheckBoxPreference) findPreference(KEY_KNOCK_ON);
             try { // In case the file does not have read permissions
-                mKnockOn.setChecked(Utils.readOneLine(FILE_KNOCKON).equals("1"));
+                mKnockOn.setChecked(Utils.readOneLine(sKnockOnFile).equals("1"));
             } catch (Exception ignored) {
                 // Don't worry, be happy
             }
@@ -129,7 +135,7 @@ public class DeviceInputFragment extends PreferenceFragment
         } else if (preference == mKnockOn) {
             final boolean newValue = (Boolean) o;
             final String value = (newValue) ? "1" : "0";
-            Utils.writeValue(FILE_KNOCKON, value);
+            Utils.writeValue(sKnockOnFile, value);
             PreferenceHelper.setBoolean(KEY_KNOCK_ON, newValue);
             changed = true;
         }
@@ -144,8 +150,8 @@ public class DeviceInputFragment extends PreferenceFragment
     private void setResult(List<Boolean> paramResult) {
         int i = 0;
 
-        PreferenceGroup preferenceGroup =
-                (PreferenceGroup) getPreferenceScreen().findPreference("input_navbar");
+        PreferenceGroup preferenceGroup
+                = (PreferenceGroup) getPreferenceScreen().findPreference("input_navbar");
 
         boolean tmp;
 
@@ -168,9 +174,9 @@ public class DeviceInputFragment extends PreferenceFragment
     }
 
     public static void restore() { // Check for every possible error, caller is unprotected
-        if (Utils.fileExists(FILE_KNOCKON)) {
-            Utils.writeValue(FILE_KNOCKON,
-                    (PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0"));
+        if (sKnockOn) {
+            Utils.writeValue(sKnockOnFile
+                    , (PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0"));
         }
         if (VibratorTuningPreference.isSupported()) {
             VibratorTuningPreference.restore();
