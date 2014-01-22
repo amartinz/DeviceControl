@@ -34,6 +34,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -45,7 +46,7 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
  */
 public class VibratorTuningPreference extends DialogPreference
         implements SeekBar.OnSeekBarChangeListener, DeviceConstants, FileConstants {
-    private final static String FILE_VIBRATOR = Utils.checkPaths(FILES_VIBRATOR);
+    public final static String FILE_VIBRATOR = Utils.checkPaths(FILES_VIBRATOR);
     private final Vibrator vib = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
     private SeekBar mSeekBar;
     private TextView mValue;
@@ -129,7 +130,7 @@ public class VibratorTuningPreference extends DialogPreference
             // Store percent value in SharedPreferences object
             PreferenceHelper.setInt(KEY_VIBRATOR_TUNING, mSeekBar.getProgress());
         } else {
-            Utils.writeValue(FILE_VIBRATOR, String.valueOf(mOriginalValue));
+            new WriteAndForget(FILE_VIBRATOR, String.valueOf(mOriginalValue)).run();
         }
     }
 
@@ -154,15 +155,15 @@ public class VibratorTuningPreference extends DialogPreference
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         final String value = String.valueOf(percentToStrength(seekBar.getProgress()));
-        Utils.writeValue(FILE_VIBRATOR, value);
-        // Vibrate after writing, otherwise it will vibrate using the old strength
+        new WriteAndForget(FILE_VIBRATOR, value).run();
+        // TODO add to Help Section: Why isn't it using the actual value when vibrating? - Threads
         vib.vibrate(200);
     }
 
     /**
      * Convert vibrator strength to percent
      */
-    private static int strengthToPercent(int strength) {
+    public static int strengthToPercent(int strength) {
         final double maxValue = VIBRATOR_INTENSITY_MAX;
         final double minValue = VIBRATOR_INTENSITY_MIN;
 
@@ -179,7 +180,7 @@ public class VibratorTuningPreference extends DialogPreference
     /**
      * Convert percent to vibrator strength
      */
-    private static int percentToStrength(int percent) {
+    public static int percentToStrength(int percent) {
         int strength = Math.round((
                 ((VIBRATOR_INTENSITY_MAX - VIBRATOR_INTENSITY_MIN) * percent) /
                         100) + VIBRATOR_INTENSITY_MIN);
@@ -194,12 +195,6 @@ public class VibratorTuningPreference extends DialogPreference
 
     public static boolean isSupported() {
         return (!FILE_VIBRATOR.equals(""));
-    }
-
-    public static void restore() {
-        final int percent = PreferenceHelper.getInt(KEY_VIBRATOR_TUNING,
-                strengthToPercent(VIBRATOR_INTENSITY_DEFAULT_VALUE));
-        Utils.writeValue(FILE_VIBRATOR, "" + percent);
     }
 
 }

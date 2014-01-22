@@ -176,22 +176,23 @@ public abstract class Command {
 
         if (javaCommand) {
             String filePath = context.getFilesDir().getPath();
-            for (int i = 0; i < command.length; i++) {
+            for (String aCommand : command) {
                 /*
                  * TODO Make withFramework optional for applications
                  * that do not require access to the fw. -CFR
                  */
-                sb.append(
-                        "dalvikvm -cp " + filePath + "/anbuild.dex"
-                                + " com.android.internal.util.WithFramework"
-                                + " com.stericson.RootTools.containers.RootClass "
-                                + command[i]);
-                sb.append('\n');
+                sb.append("dalvikvm -cp ")
+                        .append(filePath)
+                        .append("/anbuild.dex")
+                        .append(" com.android.internal.util.WithFramework")
+                        .append(" com.stericson.RootTools.containers.RootClass ")
+                        .append(aCommand)
+                        .append('\n');
             }
         } else {
-            for (int i = 0; i < command.length; i++) {
-                sb.append(command[i]);
-                sb.append('\n');
+            for (String aCommand : command) {
+                sb.append(aCommand)
+                        .append('\n');
             }
         }
         return sb.toString();

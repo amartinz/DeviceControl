@@ -26,8 +26,10 @@ import android.preference.PreferenceGroup;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
+import org.namelessrom.devicecontrol.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -38,7 +40,6 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.namelessrom.devicecontrol.Application;
 import eu.chainfire.libsuperuser.Shell;
 
 public class DeviceInputFragment extends PreferenceFragment
@@ -47,8 +48,8 @@ public class DeviceInputFragment extends PreferenceFragment
     //==============================================================================================
     // Files
     //==============================================================================================
-    private static final String sKnockOnFile = Utils.checkPaths(FILES_KNOCKON);
-    private static final boolean sKnockOn = !sKnockOnFile.equals("");
+    public static final String sKnockOnFile = Utils.checkPaths(FILES_KNOCKON);
+    public static final boolean sKnockOn = !sKnockOnFile.equals("");
 
     //==============================================================================================
     // Fields
@@ -135,7 +136,7 @@ public class DeviceInputFragment extends PreferenceFragment
         } else if (preference == mKnockOn) {
             final boolean newValue = (Boolean) o;
             final String value = (newValue) ? "1" : "0";
-            Utils.writeValue(sKnockOnFile, value);
+            new WriteAndForget(sKnockOnFile, value).run();
             PreferenceHelper.setBoolean(KEY_KNOCK_ON, newValue);
             changed = true;
         }
@@ -170,16 +171,6 @@ public class DeviceInputFragment extends PreferenceFragment
 
         if (preferenceGroup.getPreferenceCount() == 0) {
             getPreferenceScreen().removePreference(preferenceGroup);
-        }
-    }
-
-    public static void restore() { // Check for every possible error, caller is unprotected
-        if (sKnockOn) {
-            Utils.writeValue(sKnockOnFile
-                    , (PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0"));
-        }
-        if (VibratorTuningPreference.isSupported()) {
-            VibratorTuningPreference.restore();
         }
     }
 

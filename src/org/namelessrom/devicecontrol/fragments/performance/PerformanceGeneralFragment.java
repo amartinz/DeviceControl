@@ -27,7 +27,9 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.SwitchPreference;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -37,7 +39,6 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.namelessrom.devicecontrol.Application;
 import eu.chainfire.libsuperuser.Shell;
 
 public class PerformanceGeneralFragment extends PreferenceFragment
@@ -51,11 +52,11 @@ public class PerformanceGeneralFragment extends PreferenceFragment
 
     private CheckBoxPreference mForceHighEndGfx;
 
-    private static final String sLcdPowerReduceFile = Utils.checkPaths(FILES_LCD_POWER_REDUCE);
-    private static final boolean sLcdPowerReduce = !sLcdPowerReduceFile.equals("");
+    public static final String sLcdPowerReduceFile = Utils.checkPaths(FILES_LCD_POWER_REDUCE);
+    public static final boolean sLcdPowerReduce = !sLcdPowerReduceFile.equals("");
 
-    private static final String sIntelliPlugEcoFile = Utils.checkPaths(FILES_INTELLI_PLUG_ECO);
-    private static final boolean sIntelliPlugEco = !sIntelliPlugEcoFile.equals("");
+    public static final String sIntelliPlugEcoFile = Utils.checkPaths(FILES_INTELLI_PLUG_ECO);
+    public static final boolean sIntelliPlugEco = !sIntelliPlugEcoFile.equals("");
 
     private SwitchPreference mLcdPowerReduce;
     private SwitchPreference mIntelliPlugEco;
@@ -111,12 +112,12 @@ public class PerformanceGeneralFragment extends PreferenceFragment
             changed = true;
         } else if (preference == mLcdPowerReduce) {
             boolean value = (Boolean) o;
-            Utils.writeValue(sLcdPowerReduceFile, (value ? "1" : "0"));
+            new WriteAndForget(sLcdPowerReduceFile, (value ? "1" : "0")).run();
             PreferenceHelper.setBoolean(KEY_LCD_POWER_REDUCE, value);
             changed = true;
         } else if (preference == mIntelliPlugEco) {
             boolean value = (Boolean) o;
-            Utils.writeValue(sIntelliPlugEcoFile, (value ? "1" : "0"));
+            new WriteAndForget(sIntelliPlugEcoFile, (value ? "1" : "0")).run();
             PreferenceHelper.setBoolean(KEY_INTELLI_PLUG_ECO, value);
             changed = true;
         }
@@ -139,17 +140,6 @@ public class PerformanceGeneralFragment extends PreferenceFragment
 
     public static boolean isSupported() {
         return (sLcdPowerReduce || sIntelliPlugEco || IS_LOW_RAM_DEVICE);
-    }
-
-    public static void restore() {
-        if (sLcdPowerReduce) {
-            Utils.writeValue(sLcdPowerReduceFile
-                    , (PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false) ? "1" : "0"));
-        }
-        if (sIntelliPlugEco) {
-            Utils.writeValue(sIntelliPlugEcoFile
-                    , (PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false) ? "1" : "0"));
-        }
     }
 
     //==============================================================================================

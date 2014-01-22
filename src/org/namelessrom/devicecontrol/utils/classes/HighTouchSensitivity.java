@@ -19,7 +19,7 @@ package org.namelessrom.devicecontrol.utils.classes;
 
 import android.util.Log;
 
-import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.threads.WriteAndForget;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,12 +33,11 @@ public class HighTouchSensitivity {
 
     private static final String TAG = "HighTouchSensitivity";
 
-    private final static String COMMAND_PATH = "/sys/class/sec/tsp/cmd";
+    public final static String COMMAND_PATH = "/sys/class/sec/tsp/cmd";
     private final static String COMMAND_LIST_PATH = "/sys/class/sec/tsp/cmd_list";
-    private final static String COMMAND_RESULT_PATH = "/sys/class/sec/tsp/cmd_result";
     private final static String GLOVE_MODE = "glove_mode";
-    private final static String GLOVE_MODE_ENABLE = GLOVE_MODE + ",1";
-    private final static String GLOVE_MODE_DISABLE = GLOVE_MODE + ",0";
+    public final static String GLOVE_MODE_ENABLE = GLOVE_MODE + ",1";
+    public final static String GLOVE_MODE_DISABLE = GLOVE_MODE + ",0";
 
     /**
      * Whether device supports high touch sensitivity.
@@ -87,32 +86,20 @@ public class HighTouchSensitivity {
 
     /* Synchronized because the result needs to be checked (not sure if anything
      * else writes to that sysfs command path though...) */
-    private static synchronized boolean setAndCheckResult(String command) {
-        boolean status;
-        status = Utils.writeValue(COMMAND_PATH, command);
-        String result = Utils.readOneLine(COMMAND_RESULT_PATH);
-        if (result.equals(command + ":OK")) {
-            status = true;
-            Log.v(TAG, "Successfully sent \"" + command + "\" to kernel");
-        } else {
-            Log.e(TAG, "Sent \"" + command + "\" to kernel, but got back \""
-                    + result + "\"");
-        }
-        return status;
+    private static synchronized void setResult(String command) {
+        new WriteAndForget(COMMAND_PATH, command).run();
     }
 
     /**
      * This method allows to setup high touch sensitivity status.
      *
      * @param status The new high touch sensitivity status
-     * @return boolean Must be false if high touch sensitivity is not supported or the operation
-     * failed; true in any other case.
      */
-    public static boolean setEnabled(boolean status) {
+    public static void setEnabled(boolean status) {
         if (status) {
-            return setAndCheckResult(GLOVE_MODE_ENABLE);
+            setResult(GLOVE_MODE_ENABLE);
         } else {
-            return setAndCheckResult(GLOVE_MODE_DISABLE);
+            setResult(GLOVE_MODE_DISABLE);
         }
     }
 }

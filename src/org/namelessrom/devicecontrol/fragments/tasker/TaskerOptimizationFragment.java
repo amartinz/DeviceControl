@@ -25,15 +25,13 @@ import android.preference.SwitchPreference;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 
 public class TaskerOptimizationFragment extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants {
 
-    private boolean mDebug = false;
     private SwitchPreference mFstrim;
     private ListPreference mFstrimInterval;
 
@@ -42,8 +40,6 @@ public class TaskerOptimizationFragment extends PreferenceFragment
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.tasker_optimizations);
-
-        mDebug = PreferenceHelper.getBoolean(JF_EXTENSIVE_LOGGING);
 
         mFstrim = (SwitchPreference) findPreference("tasker_tools_fstrim");
         mFstrim.setChecked(PreferenceHelper.getBoolean(TASKER_TOOLS_FSTRIM));
@@ -79,9 +75,5 @@ public class TaskerOptimizationFragment extends PreferenceFragment
         }
 
         return false;
-    }
-
-    private void logDebug(String msg) {
-        Utils.logDebug(msg, mDebug);
     }
 }
