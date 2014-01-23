@@ -48,6 +48,12 @@
     <string name="dialog_getting_information">Getting information about %s …</string>
     <string name="dialog_yes">Yes</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_warning">Warning!</string>
+    <string name="dialog_warning_apply">Are you sure that you want to apply your settings?</string>
+    <string name="dialog_warning_restore_prop">Are you sure that you want to restore your build.prop?</string>
+
+    <!-- Toast -->
+    <string name="toast_settings_applied">Successfully applied!</string>
 
     <!-- Information -->
     <string name="info_restart">Please restart the activity!</string>
@@ -69,9 +75,10 @@
     <string name="section_title_performance">Performance</string>
     <!-- Tools -->
     <string name="section_title_tools">Tools</string>
-    <string name="section_title_tools_sysctl">SysCtl Editor</string>
-    <string name="section_title_tools_vm">VM Editor</string>
-    <string name="section_title_tools_buildprop">Build.Prop Editor</string>
+    <string name="section_title_tools_editors">Editors</string>
+    <string name="section_title_tools_sysctl">SysCtl</string>
+    <string name="section_title_tools_vm">VM</string>
+    <string name="section_title_tools_buildprop">Build.Prop</string>
 
     <!-- PERFORMANCE -->
     <string name="pref_force_highend_gfx_title">Force high-end graphics</string>

@@ -15,9 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
-package org.namelessrom.devicecontrol.fragments.main;
+package org.namelessrom.devicecontrol.fragments.tools;
 
-import android.app.DialogFragment;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v13.app.FragmentTabHost;
 import android.view.LayoutInflater;
@@ -25,20 +25,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.fragments.dialogs.DeviceHelpDialog;
+import org.namelessrom.devicecontrol.fragments.main.PressToLoadFragment;
 
 /**
- * Created by alex on 21.01.14.
+ * Created by alex on 23.01.14.
  */
-public class HelpDialogFragment extends DialogFragment {
+public class ToolsEditorTabbed extends Fragment {
 
-    public static final String TAG = "dialog_fragment_help";
+    public static final String TAG = "tools_editor_tabbed";
 
     private FragmentTabHost mTabHost;
-
-    public HelpDialogFragment() {
-        // Empty Constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -48,18 +44,38 @@ public class HelpDialogFragment extends DialogFragment {
         mTabHost = (FragmentTabHost) v.findViewById(android.R.id.tabhost);
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
-        mTabHost.addTab(mTabHost.newTabSpec("device0").setIndicator("Device"),
-                DeviceHelpDialog.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("device1").setIndicator("Device"),
-                DeviceHelpDialog.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("device2").setIndicator("Device"),
-                DeviceHelpDialog.class, null);
+        /* VM EDITOR */
+        Bundle b = new Bundle();
+        b.putInt(PressToLoadFragment.ARG_FRAGMENT, 0);
+        b.putInt(PressToLoadFragment.ARG_IMG, R.mipmap.ic_launcher);
 
-        getDialog().setTitle(R.string.prefs_help_dialog_title);
+        mTabHost.addTab(mTabHost
+                .newTabSpec("vmeditor")
+                .setIndicator(getString(R.string.section_title_tools_vm))
+                , PressToLoadFragment.class, b);
+
+        /* SYSCTL EDITOR */
+        b = new Bundle();
+        b.putInt(PressToLoadFragment.ARG_FRAGMENT, 1);
+        b.putInt(PressToLoadFragment.ARG_IMG, R.mipmap.ic_launcher);
+
+        mTabHost.addTab(mTabHost
+                .newTabSpec("sysctl")
+                .setIndicator(getString(R.string.section_title_tools_sysctl))
+                , PressToLoadFragment.class, b);
+
+        /* BUILD.PROP EDITOR */
+        b = new Bundle();
+        b.putInt(PressToLoadFragment.ARG_FRAGMENT, 2);
+        b.putInt(PressToLoadFragment.ARG_IMG, R.mipmap.ic_launcher);
+
+        mTabHost.addTab(mTabHost
+                .newTabSpec("buildprop")
+                .setIndicator(getString(R.string.section_title_tools_buildprop)),
+                PressToLoadFragment.class, b);
 
         return v;
     }
-
 
     @Override
     public void onDestroyView() {

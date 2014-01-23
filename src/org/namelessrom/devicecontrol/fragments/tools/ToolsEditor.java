@@ -36,20 +36,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.threads.FireAndForget;
 import org.namelessrom.devicecontrol.threads.FireAndGet;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.utils.classes.Prop;
@@ -119,9 +117,7 @@ public class ToolsEditor extends Fragment
                 break;
         }
 
-        View view = inflater.inflate((mEditorType == 2)
-                ? R.layout.build_prop_view
-                : R.layout.prop_view, container, false);
+        View view = inflater.inflate(R.layout.prop_view, container, false);
 
         packList = (ListView) view.findViewById(R.id.applist);
         packList.setOnItemClickListener(this);
@@ -165,14 +161,16 @@ public class ToolsEditor extends Fragment
             }
         });
         if (mEditorType == 2) {
-            Button addButton = (Button) view.findViewById(R.id.addBtn);
+            ImageButton addButton = (ImageButton) view.findViewById(R.id.addBtn);
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     editBuildPropDialog(null);
                 }
             });
-            Button restoreButton = (Button) view.findViewById(R.id.restoreBtn);
+            addButton.setVisibility(View.VISIBLE);
+
+            ImageButton restoreButton = (ImageButton) view.findViewById(R.id.restoreBtn);
             restoreButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -180,28 +178,43 @@ public class ToolsEditor extends Fragment
                             , getString(R.string.etc_prop_restore_msg), (byte) 0, null);
                 }
             });
+            restoreButton.setVisibility(View.VISIBLE);
         } else {
-            Button applyBtn = (Button) view.findViewById(R.id.applyBtn);
+            ImageButton applyBtn = (ImageButton) view.findViewById(R.id.applyBtn);
             applyBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View arg0) {
-                    new FireAndForget("busybox mount -o remount,rw /system" + ";"
-                            + "busybox cp " + dn + "/" + mod + ".conf"
-                            + " " + syspath + mod + ".conf;"
-                            + "busybox chmod 644 " + syspath + mod + ".conf" + ";"
-                            + "busybox mount -o remount,ro /system" + ";"
-                            + "busybox sysctl -p " + syspath + mod + ".conf" + ";", true).run();
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                    dialog.setTitle(getString(R.string.dialog_warning))
+                            .setMessage(getString(R.string.dialog_warning_apply));
+                    dialog.setNegativeButton(getString(R.string.dialog_cancel),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
+                    dialog.setPositiveButton(getString(R.string.dialog_yes),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    new FireAndForget("busybox mount -o remount,rw /system"
+                                            + ";" + "busybox cp " + dn + "/" + mod + ".conf"
+                                            + " " + syspath + mod + ".conf;"
+                                            + "busybox chmod 644 " + syspath + mod + ".conf"
+                                            + ";" + "busybox mount -o remount,ro /system"
+                                            + ";" + "busybox sysctl -p " + syspath + mod
+                                            + ".conf" + ";", true).run();
+                                    dialogInterface.dismiss();
+                                    Toast.makeText(getActivity()
+                                            , getString(R.string.toast_settings_applied)
+                                            , Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    dialog.show();
                 }
             });
-            final Switch setOnBoot = (Switch) view.findViewById(R.id.applyAtBoot);
-            setOnBoot.setChecked(PreferenceHelper.getBoolean(sob, false));
-            setOnBoot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(final CompoundButton buttonView
-                        , final boolean isChecked) {
-                    PreferenceHelper.setBoolean(sob, isChecked);
-                }
-            });
+            applyBtn.setVisibility(View.VISIBLE);
         }
         tools.setVisibility(View.GONE);
 
