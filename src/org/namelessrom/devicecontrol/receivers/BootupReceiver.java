@@ -83,7 +83,7 @@ public class BootupReceiver extends BroadcastReceiver
             // Custom Shell Command
             //======================================================================================
             sbCmd.append(PreferenceHelper.getString(CUSTOM_SHELL_COMMAND, "echo \"Hello world!\""))
-                    .append(";");
+                    .append(";\n");
 
             //======================================================================================
             // Device Input
@@ -174,13 +174,13 @@ public class BootupReceiver extends BroadcastReceiver
             if (PreferenceHelper.getBoolean(SOB_SYSCTL, false)) {
                 if (new File("/system/etc/sysctl.conf").exists()) {
                     logDebug("Reapplying: Sysctl");
-                    sbCmd.append("busybox sysctl -p;");
+                    sbCmd.append("busybox sysctl -p;\n");
                 }
             }
             if (PreferenceHelper.getBoolean(SOB_VM, false)) {
                 if (new File("/system/etc/vm.conf").exists()) {
                     logDebug("Reapplying: Vm");
-                    sbCmd.append("busybox sysctl -p /system/etc/vm.conf;");
+                    sbCmd.append("busybox sysctl -p /system/etc/vm.conf;\n");
                 }
             }
 
