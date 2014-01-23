@@ -22,121 +22,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linlaHeaderProgress"
+
+    <include layout="@layout/include_loading" />
+
+    <include layout="@layout/include_editor_nofiles" />
+
+    <ListView
+        android:id="@+id/applist"
+        android:layout_above="@+id/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/message_loading" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/nofiles"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal|top"
-        android:paddingTop="50dp"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView"
-            android:layout_gravity="center_horizontal"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="center_vertical"
         android:layout_alignParentTop="true"
-        android:paddingTop="10dip"
-        android:paddingBottom="10dip">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/filtru"
-            android:inputType="text"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:layout_marginBottom="10dip"
-            android:hint="@string/etc_filter" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:layout_gravity="top"
-        android:layout_above="@+id/tools"
-        android:layout_marginBottom="4dp"
-        android:layout_below="@+id/search">
+        android:fastScrollEnabled="true" />
 
-        <ListView
-            android:id="@+id/applist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fastScrollEnabled="true" />
-    </LinearLayout>
+    <include layout="@layout/include_editor_tools" />
 
-    <RelativeLayout
-        android:id="@+id/tools"
+    <View
+        android:layout_alignBottom="@+id/applist"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp">
+        android:layout_height="5dp"
+        android:background="@drawable/bottom_shadow" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey_dark" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/etc_sob"
-            android:id="@+id/set_on_boot"
-            android:layout_alignParentTop="true"
-            android:paddingLeft="4dp"
-            android:paddingBottom="4dp"
-            android:layout_marginTop="10dp" />
-
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/applyAtBoot"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/set_on_boot" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/etc_apply_values"
-            android:textSize="14sp"
-            android:id="@+id/applyBtn"
-            android:layout_gravity="center_vertical|right"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp" />
-
-    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/top_shadow" />
 
 </RelativeLayout>
