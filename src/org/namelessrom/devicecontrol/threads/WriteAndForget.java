@@ -34,18 +34,21 @@ public class WriteAndForget extends Thread {
 
 
     public WriteAndForget(String filename, String value) {
-        mCmd.append("busybox echo ").append(value).append(" > ").append(filename);
+        mCmd.append("busybox echo ").append(value).append(" > ").append(filename)
+                .append(";\n");
     }
 
     public WriteAndForget(final List<String> filenames, final List<String> values) {
         for (int i = 0; i < filenames.size(); i++) {
             mCmd.append("busybox echo ").append(values.get(i))
-                    .append(" > ").append(filenames.get(i));
+                    .append(" > ").append(filenames.get(i))
+                    .append(";\n");
         }
     }
 
     public WriteAndForget append(final String filename, final String value) {
-        mCmd.append("busybox echo ").append(value).append(" > ").append(filename);
+        mCmd.append("busybox echo ").append(value).append(" > ").append(filename)
+                .append(";\n");
         return this;
     }
 
