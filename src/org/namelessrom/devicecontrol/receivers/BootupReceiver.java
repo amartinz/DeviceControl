@@ -66,6 +66,7 @@ public class BootupReceiver extends BroadcastReceiver
             // Tasker
             //======================================================================================
             if (PreferenceHelper.getBoolean(TASKER_TOOLS_FSTRIM, false) && Application.HAS_ROOT) {
+                logDebug("Scheduling Tasker - FSTRIM");
                 AlarmHelper.setAlarmFstrim(context, Integer.parseInt(
                         PreferenceHelper.getString(TASKER_TOOLS_FSTRIM_INTERVAL, "30")));
             }
@@ -88,11 +89,13 @@ public class BootupReceiver extends BroadcastReceiver
             // Device Input
             //======================================================================================
             if (DeviceInputFragment.sKnockOn) {
+                logDebug("Reapplying: sKnockOn");
                 fileList.add(DeviceInputFragment.sKnockOnFile);
                 valueList.add(PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0");
             }
 
             if (VibratorTuningPreference.isSupported()) {
+                logDebug("Reapplying: Vibration");
                 final int percent = PreferenceHelper.getInt(KEY_VIBRATOR_TUNING
                         , VibratorTuningPreference
                         .strengthToPercent(VIBRATOR_INTENSITY_DEFAULT_VALUE));
@@ -101,6 +104,7 @@ public class BootupReceiver extends BroadcastReceiver
             }
 
             if (HighTouchSensitivity.isSupported()) {
+                logDebug("Reapplying: Glove Mode");
                 fileList.add(HighTouchSensitivity.COMMAND_PATH);
                 valueList.add(PreferenceHelper.getBoolean(KEY_GLOVE_MODE, false)
                         ? HighTouchSensitivity.GLOVE_MODE_ENABLE
@@ -112,6 +116,7 @@ public class BootupReceiver extends BroadcastReceiver
             //======================================================================================
 
             if (DeviceGraphicsFragment.sHasPanel) {
+                logDebug("Reapplying: Panel Color Temp");
                 fileList.add(FILE_PANEL_COLOR_TEMP);
                 valueList.add(PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2"));
             }
@@ -120,6 +125,7 @@ public class BootupReceiver extends BroadcastReceiver
             // Device Lights
             //======================================================================================
             if (DeviceLightsFragment.sHasTouchkeyToggle) {
+                logDebug("Reapplying: Touchkey Light");
                 tmp = PreferenceHelper.getBoolean(KEY_TOUCHKEY_LIGHT, true);
                 fileList.add(FILE_TOUCHKEY_TOGGLE);
                 valueList.add(tmp ? "255" : "0");
@@ -128,12 +134,14 @@ public class BootupReceiver extends BroadcastReceiver
             }
 
             if (DeviceLightsFragment.sHasTouchkeyBLN) {
+                logDebug("Reapplying: Touchkey BLN");
                 tmp = PreferenceHelper.getBoolean(KEY_TOUCHKEY_BLN, true);
                 fileList.add(FILE_BLN_TOGGLE);
                 valueList.add(tmp ? "1" : "0");
             }
 
             if (DeviceLightsFragment.sHasKeyboardToggle) {
+                logDebug("Reapplying: KeyBoard Light");
                 tmp = PreferenceHelper.getBoolean(KEY_KEYBOARD_LIGHT, true);
                 fileList.add(FILE_KEYBOARD_TOGGLE);
                 valueList.add(tmp ? "255" : "0");
@@ -143,16 +151,19 @@ public class BootupReceiver extends BroadcastReceiver
             // Performance
             //======================================================================================
             if (PerformanceGeneralFragment.sLcdPowerReduce) {
+                logDebug("Reapplying: LcdPowerReduce");
                 fileList.add(PerformanceGeneralFragment.sLcdPowerReduceFile);
                 valueList.add(PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false)
                         ? "1" : "0");
             }
             if (PerformanceGeneralFragment.sIntelliPlugEco) {
+                logDebug("Reapplying: IntelliPlugEco");
                 fileList.add(PerformanceGeneralFragment.sIntelliPlugEcoFile);
                 valueList.add(PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false)
                         ? "1" : "0");
             }
             if (PerformanceGeneralFragment.sMcPowerScheduler) {
+                logDebug("Reapplying: McPowerScheduler");
                 fileList.add(PerformanceGeneralFragment.sMcPowerSchedulerFile);
                 valueList.add(PreferenceHelper.getInt(KEY_MC_POWER_SCHEDULER, 2) + "");
             }
@@ -162,11 +173,13 @@ public class BootupReceiver extends BroadcastReceiver
             //======================================================================================
             if (PreferenceHelper.getBoolean(SOB_SYSCTL, false)) {
                 if (new File("/system/etc/sysctl.conf").exists()) {
+                    logDebug("Reapplying: Sysctl");
                     sbCmd.append("busybox sysctl -p;");
                 }
             }
             if (PreferenceHelper.getBoolean(SOB_VM, false)) {
                 if (new File("/system/etc/vm.conf").exists()) {
+                    logDebug("Reapplying: Vm");
                     sbCmd.append("busybox sysctl -p /system/etc/vm.conf;");
                 }
             }
@@ -178,6 +191,8 @@ public class BootupReceiver extends BroadcastReceiver
             logDebug("bootUp | executing: " + cmd);
             new FireAndForget(cmd).run();
             new WriteAndForget(fileList, valueList).run();
+
+            logDebug("BootUp Done!");
         }
     }
 }
