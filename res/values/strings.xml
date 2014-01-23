@@ -162,6 +162,8 @@
     <string name="jf_debug_extensive_logging_title">Extensive Logging</string>
     <string name="jf_debug_extensive_logging_summary_on">Logging to LogCat enabled.</string>
     <string name="jf_debug_extensive_logging_summary_off">Logging to LogCat disabled.</string>
+    <!-- Reapply on boot -->
+    <string name="prefs_set_on_boot">Reapply on boot</string>
     <!-- Extras -->
     <string name="prefs_jf_extras">Extras</string>
     <string name="jf_extras_launcher_title">Show in app drawer</string>

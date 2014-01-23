@@ -97,7 +97,7 @@ public interface DeviceConstants {
     // Etc
     //==============================================================================================
     public static final String CUSTOM_SHELL_COMMAND = "custom_shell_command";
-    public static final String SYSCTL_SOB = "sysctl_sob";
-    public static final String VM_SOB = "vm_sob";
+    public static final String SOB_SYSCTL = "prefs_sob_sysctl";
+    public static final String SOB_VM = "prefs_sob_vm";
 
 }

@@ -79,7 +79,6 @@ public class ToolsEditor extends Fragment
 
     private final String syspath = "/system/etc/";
     private String mod = "sysctl";
-    private String sob = SYSCTL_SOB;
     private int mEditorType;
     private String mBuildName = "build";
 
@@ -106,11 +105,9 @@ public class ToolsEditor extends Fragment
             default:
             case 0:
                 mod = "vm";
-                sob = VM_SOB;
                 break;
             case 1:
                 mod = "sysctl";
-                sob = SYSCTL_SOB;
                 break;
             case 2:
                 mod = "buildprop";

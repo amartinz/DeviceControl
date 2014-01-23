@@ -160,13 +160,13 @@ public class BootupReceiver extends BroadcastReceiver
             //======================================================================================
             // Tools
             //======================================================================================
-            if (new File("/system/etc/sysctl.conf").exists()) {
-                if (PreferenceHelper.getBoolean(SYSCTL_SOB, false)) {
+            if (PreferenceHelper.getBoolean(SOB_SYSCTL, false)) {
+                if (new File("/system/etc/sysctl.conf").exists()) {
                     sbCmd.append("busybox sysctl -p;");
                 }
             }
-            if (new File("/system/etc/vm.conf").exists()) {
-                if (PreferenceHelper.getBoolean(VM_SOB, false)) {
+            if (PreferenceHelper.getBoolean(SOB_VM, false)) {
+                if (new File("/system/etc/vm.conf").exists()) {
                     sbCmd.append("busybox sysctl -p /system/etc/vm.conf;");
                 }
             }

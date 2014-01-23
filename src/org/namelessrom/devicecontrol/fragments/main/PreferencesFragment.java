@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol.fragments.main;
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -61,6 +62,12 @@ public class PreferencesFragment extends PreferenceFragment
     private SwitchPreference mExtensiveLogging;
 
     //==============================================================================================
+    // Reapply on boot
+    //==============================================================================================
+    private CheckBoxPreference mSobVm;
+    private CheckBoxPreference mSobSysctl;
+
+    //==============================================================================================
     // Extras
     //==============================================================================================
     private SwitchPreference mExtrasLauncher;
@@ -98,6 +105,14 @@ public class PreferencesFragment extends PreferenceFragment
         } else {
             getPreferenceScreen().removePreference(findPreference("prefs_jf_extras"));
         }
+
+        mSobVm = (CheckBoxPreference) findPreference("prefs_sob_vm");
+        mSobVm.setChecked(PreferenceHelper.getBoolean("prefs_sob_vm", false));
+        mSobVm.setOnPreferenceChangeListener(this);
+
+        mSobSysctl = (CheckBoxPreference) findPreference("prefs_sob_sysctl");
+        mSobSysctl.setChecked(PreferenceHelper.getBoolean("prefs_sob_sysctl", false));
+        mSobSysctl.setOnPreferenceChangeListener(this);
 
         mHelpDialog = findPreference("prefs_help_dialog");
 
@@ -142,6 +157,12 @@ public class PreferencesFragment extends PreferenceFragment
             changed = true;
         } else if (preference == mExtrasLauncher) {
             mExtrasLauncher.setChecked(switchLauncher(true));
+            changed = true;
+        } else if (preference == mSobVm) {
+            PreferenceHelper.setBoolean("prefs_sob_vm", (Boolean) newValue);
+            changed = true;
+        } else if (preference == mSobSysctl) {
+            PreferenceHelper.setBoolean("prefs_sob_sysctl", (Boolean) newValue);
             changed = true;
         }
 
