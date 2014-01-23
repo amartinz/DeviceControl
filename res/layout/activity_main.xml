@@ -40,7 +40,6 @@
         android:layout_width="@dimen/navigation_drawer_prefs_width"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:name="org.namelessrom.devicecontrol.fragments.main.PreferencesFragment"
-        android:background="@color/grey_dark" />
+        android:name="org.namelessrom.devicecontrol.fragments.main.PreferencesFragment" />
 
 </android.support.v4.widget.DrawerLayout>
