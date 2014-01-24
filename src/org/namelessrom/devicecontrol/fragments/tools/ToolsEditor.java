@@ -541,7 +541,7 @@ public class ToolsEditor extends Fragment
                             if (tv.getText() != null) {
                                 p.setVal(tv.getText().toString().trim());
                                 new FireAndForget(getActivity().getFilesDir() + "/utils -setprop \""
-                                        + p.getName() + "=" + p.getVal() + "\"", true).run();
+                                        + p.getName() + "=" + p.getVal() + "\"", true, true).run();
                             }
                         } else {
                             if (tv.getText() != null
@@ -551,7 +551,7 @@ public class ToolsEditor extends Fragment
                                         tv.getText().toString().trim()));
                                 new FireAndForget(getActivity().getFilesDir() + "/utils -setprop \""
                                         + tn.getText().toString().trim() + "="
-                                        + tv.getText().toString().trim() + "\"", true).run();
+                                        + tv.getText().toString().trim() + "\"", true, true).run();
                             }
                         }
 
@@ -606,10 +606,9 @@ public class ToolsEditor extends Fragment
             switch (op) {
                 case 0:
                     if (new File(dn + "/" + mBuildName).exists()) {
-                        new FireAndForget("mount -o rw,remount /system;\n" + "busybox cp " + dn + "/"
+                        new FireAndForget("busybox cp " + dn + "/"
                                 + mBuildName + " /system/build.prop;\n" + "busybox chmod 644 "
-                                + "/system/build.prop;\n" + "mount -o ro,remount /system;\n"
-                                , true).run();
+                                + "/system/build.prop;\n", true, true).run();
                         new GetBuildPropOperation().execute();
                     } else {
                         Toast.makeText(getActivity()
@@ -617,9 +616,9 @@ public class ToolsEditor extends Fragment
                     }
                     break;
                 case 1:
-                    new FireAndForget("mount -o rw,remount /system;\n" + "busybox sed -i '/"
+                    new FireAndForget("busybox sed -i '/"
                             + p.getName().replace(".", "\\.") + "/d' " + "/system/build.prop;\n"
-                            + "mount -o ro,remount /system;\n", true).run();
+                            , true, true).run();
                     adapter.remove(p);
                     adapter.notifyDataSetChanged();
                     break;

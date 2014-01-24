@@ -30,6 +30,7 @@ public class FireAndForget extends Thread {
 
     private final boolean mUseRoot;
     private final String mCmd;
+    private final boolean mRemountSystem;
 
     /**
      * Runs the command with SU by default.
@@ -37,18 +38,30 @@ public class FireAndForget extends Thread {
      * @param cmd The command to execute
      */
     public FireAndForget(String cmd) {
-        this(cmd, true);
+        this(cmd, true, false);
     }
 
     /**
      * Runs the command with SU or SH.
      *
-     * @param useRoot If SU or SH should be used
      * @param cmd     The command to execute
+     * @param useRoot If SU or SH should be used
      */
     public FireAndForget(String cmd, boolean useRoot) {
+        this(cmd, useRoot, false);
+    }
+
+    /**
+     * Runs the command with SU or SH and optional system remount.
+     *
+     * @param cmd           The command to execute
+     * @param useRoot       If SU or SH should be used
+     * @param remountSystem If /system should be remounted
+     */
+    public FireAndForget(String cmd, boolean useRoot, boolean remountSystem) {
         mUseRoot = useRoot;
         mCmd = cmd;
+        mRemountSystem = remountSystem;
     }
 
     @Override
@@ -56,7 +69,18 @@ public class FireAndForget extends Thread {
         try {
             Shell shell = RootTools.getShell(mUseRoot);
 
-            CommandCapture cmdCap = new CommandCapture(42, false, mCmd);
+            if (mRemountSystem) {
+                RootTools.remount("/system", "rw");
+            }
+
+            CommandCapture cmdCap = new CommandCapture(42, false, mCmd) {
+                @Override
+                public void commandCompleted(int id, int exitcode) {
+                    if (mRemountSystem) {
+                        RootTools.remount("/system", "ro");
+                    }
+                }
+            };
 
             shell.add(cmdCap);
         } catch (Exception exc) {

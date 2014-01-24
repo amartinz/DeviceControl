@@ -93,7 +93,7 @@ public class MainActivity extends Activity
         PreferenceHelper.getInstance(this);
 
         Utils.setupDirectories();
-        Utils.createFiles(this);
+        Utils.createFiles(this, true);
 
         mTitle = getTitle();
 

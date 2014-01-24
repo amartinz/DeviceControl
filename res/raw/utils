@@ -1,33 +1,32 @@
 ###### made by h0rn3t ######
 
 sysrw() {
-    busybox mount -o remount,rw /system 2>/dev/null;
+    busybox mount -o remount,rw /system 2> /dev/null;
 }
 sysro() {
-    busybox mount -o remount,ro /system 2>/dev/null;
+    busybox mount -o remount,ro /system 2> /dev/null;
 }
 
 set_prop() {
         prop_key=$(busybox echo "$1" | cut -d'=' -f1);
         prop_value=$(busybox echo "$1" | cut -d'=' -f2);
-        prop_file=${2:-/system/build.prop}
-        seperator="="
+        prop_file=${2:-/system/build.prop};
+        seperator="=";
         exit_status=1;
-        if busybox [ -e $prop_file ];then
-            sysrw
-                prop_line=` busybox grep -m 1 $prop_key $prop_file `
-                if busybox [ -n "${prop_line}" ]
-                then
-                        if busybox [ -n "$( echo $prop_line | busybox grep ' = ' )" ];then
-                                seperator=" = "
-                        fi
-                        busybox sed -i "s|${prop_key}${seperator}.*|${prop_key}${seperator}${prop_value}|g" $prop_file
-                        exit_status=$?
-                else
-                    busybox echo "$prop_key$seperator$prop_value" >> $prop_file;
-                    exit_status=$?
-                fi;
-                sysro;
+        if busybox [ -e $prop_file ]; then
+            sysrw;
+            prop_line=` busybox grep -m 1 $prop_key $prop_file `
+            if busybox [ -n "${prop_line}" ]; then
+                if busybox [ -n "$( echo $prop_line | busybox grep ' = ' )" ]; then
+                    seperator=" = "
+                fi
+                busybox sed -i "s|${prop_key}${seperator}.*|${prop_key}${seperator}${prop_value}|g" $prop_file
+                exit_status=$?
+            else
+                busybox echo "$prop_key$seperator$prop_value" >> $prop_file;
+                exit_status=$?
+            fi;
+            sysro;
         fi
         return $exit_status
 }
