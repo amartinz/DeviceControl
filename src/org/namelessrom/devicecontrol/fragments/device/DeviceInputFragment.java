@@ -158,13 +158,14 @@ public class DeviceInputFragment extends PreferenceFragment
 
         if (Application.HAS_ROOT) {
             tmp = paramResult.get(i);
-            if (tmp || hasMenuKey) {
+            if (!tmp && !hasMenuKey) {
+                preferenceGroup.removePreference(mForceNavBar);
+            } else {
                 mForceNavBar.setChecked(tmp);
                 mForceNavBar.setEnabled(true);
                 mForceNavBar.setOnPreferenceChangeListener(this);
-            } else {
-                preferenceGroup.removePreference(mForceNavBar);
             }
+            i++;
         } else {
             preferenceGroup.removePreference(mForceNavBar);
         }
