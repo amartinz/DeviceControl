@@ -23,6 +23,9 @@ import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import com.stericson.roottools.RootTools;
+
+import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
@@ -215,10 +218,11 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
-    public static void createFiles(Context context) {
-        if (!new File(context.getFilesDir() + "/utils").exists()) {
-            get_assetsScript("utils", context, "", "");
-            Shell.SU.run("busybox chmod 750 " + context.getFilesDir() + "/utils");
+    public static void createFiles(Context context, boolean force) {
+        final String filepath = context.getFilesDir().getPath() + "/utils";
+        logDebug("createFiles path: " + filepath);
+        if (!new File(filepath).exists() || force) {
+            RootTools.installBinary(context, R.raw.utils, "utils");
         }
     }
 
