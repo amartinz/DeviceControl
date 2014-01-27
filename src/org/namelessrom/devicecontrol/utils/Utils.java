@@ -17,10 +17,12 @@
 package org.namelessrom.devicecontrol.utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.util.Log;
 
 import com.stericson.roottools.RootTools;
@@ -43,6 +45,8 @@ import eu.chainfire.libsuperuser.Shell;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class Utils implements DeviceConstants, FileConstants {
+
+    private static int isLowRamDevice = -1;
 
     /**
      * Reads a single line from a file.
@@ -283,5 +287,18 @@ public class Utils implements DeviceConstants, FileConstants {
             }
         });
         alertDialog.show();
+    }
+
+    public static boolean getLowRamDevice(Context context) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return false;
+        } else {
+            if (isLowRamDevice == -1) {
+                final ActivityManager activityManager
+                        = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                isLowRamDevice = activityManager.isLowRamDevice() ? 1 : 0;
+            }
+            return (isLowRamDevice == 1);
+        }
     }
 }

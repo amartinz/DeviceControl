@@ -48,7 +48,7 @@ public class PerformanceGeneralFragment extends PreferenceFragment
     //==============================================================================================
     // Fields
     //==============================================================================================
-    private static final boolean IS_LOW_RAM_DEVICE = ActivityManager.isLowRamDeviceStatic();
+    private static final boolean IS_LOW_RAM_DEVICE = Utils.getLowRamDevice();
     private static final String FORCE_HIGHEND_GFX_PREF = "pref_force_highend_gfx";
 
     private CheckBoxPreference mForceHighEndGfx;
