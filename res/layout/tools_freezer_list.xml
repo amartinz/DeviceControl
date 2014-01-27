@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~  Copyright (C) 2013 h0rn3t
+  ~  Modifications Copyright (C) 2014 Alexander "Evisceration" Martinz
+  ~
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License
+  ~  along with this program.  If not, see <http://www.gnu.org/licenses
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linlaHeaderProgress"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/pbHeaderProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/noproc"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal|top"
+        android:paddingTop="50dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etc_no_packages"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_gravity="top"
+        android:layout_alignParentTop="false"
+        android:layout_marginBottom="4dp"
+        android:id="@+id/llist">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/info"
+            android:padding="10dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/infotxt"
+                android:textSize="20sp"
+                android:layout_marginLeft="6dip" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/darker_gray" />
+
+        <ListView
+            android:id="@+id/applist"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fastScrollEnabled="true"
+            android:smoothScrollbar="true" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
