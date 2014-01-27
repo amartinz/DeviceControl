@@ -25,7 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.fragments.main.PressToLoadFragment;
+import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
 
 /**
  * Created by alex on 23.01.14.

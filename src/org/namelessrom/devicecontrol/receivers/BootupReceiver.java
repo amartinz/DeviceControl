@@ -65,7 +65,7 @@ public class BootupReceiver extends BroadcastReceiver
             //======================================================================================
             // Tasker
             //======================================================================================
-            if (PreferenceHelper.getBoolean(TASKER_TOOLS_FSTRIM, false) && Application.HAS_ROOT) {
+            if (PreferenceHelper.getBoolean(TASKER_TOOLS_FSTRIM, false)) {
                 logDebug("Scheduling Tasker - FSTRIM");
                 AlarmHelper.setAlarmFstrim(context, Integer.parseInt(
                         PreferenceHelper.getString(TASKER_TOOLS_FSTRIM_INTERVAL, "30")));
