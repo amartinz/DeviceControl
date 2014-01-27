@@ -19,5 +19,6 @@
 <resources>
 
     <string name="empty" translatable="false" />
+    <string name="unknown">---</string>
 
 </resources>
