@@ -25,10 +25,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsEditorTabbed;
+import org.namelessrom.devicecontrol.fragments.tools.ToolsFreezerTabbed;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsHelpFragment;
 import org.namelessrom.devicecontrol.utils.adapters.ScreenSlidePagerAdapter;
 import org.namelessrom.devicecontrol.utils.widgets.JfViewPager;
@@ -78,9 +78,8 @@ public class ToolsFragment extends AttachFragment {
     private List<Fragment> getFragments() {
         List<Fragment> tmpList = new ArrayList<Fragment>();
         tmpList.add(new ToolsHelpFragment());
-        if (Application.HAS_ROOT) {
-            tmpList.add(new ToolsEditorTabbed());
-        }
+        tmpList.add(new ToolsEditorTabbed());
+        tmpList.add(new ToolsFreezerTabbed());
 
         return tmpList;
     }
@@ -88,9 +87,8 @@ public class ToolsFragment extends AttachFragment {
     private List<String> getTitles() {
         List<String> tmpList = new ArrayList<String>();
         tmpList.add(getString(R.string.section_title_information));
-        if (Application.HAS_ROOT) {
-            tmpList.add(getString(R.string.section_title_tools_editors));
-        }
+        tmpList.add(getString(R.string.section_title_tools_editors));
+        tmpList.add(getString(R.string.section_title_tools_freezer));
 
         return tmpList;
     }

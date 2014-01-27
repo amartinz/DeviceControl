@@ -83,6 +83,8 @@
     <string name="section_title_tools_sysctl">SysCtl</string>
     <string name="section_title_tools_vm">VM</string>
     <string name="section_title_tools_buildprop">Build.Prop</string>
+    <string name="section_title_tools_freezer">Freezer</string>
+    <string name="section_title_tools_unfreezer">Unfreezer</string>
 
     <!-- PERFORMANCE -->
     <string name="pref_force_highend_gfx_title">Force high-end graphics</string>
@@ -207,6 +209,16 @@
     <string name="four_hours">4 Hours</string>
     <string name="eight_hours">8 Hours</string>
 
+    <!-- freezer -->
+    <string name="prefcat_freezer">FREEZE or DEFROST PACKAGES</string>
+    <string name="pt_freeze">Freeze Package</string>
+    <string name="pt_unfreeze">Defrost Package</string>
+    <string name="ps_freeze">List of all installed packages</string>
+    <string name="ps_unfreeze">List of frozen packages</string>
+    <string name="mt_system_packs">System Packages</string>
+    <string name="mt_user_packs">User Packages</string>
+    <string name="freeze_msg">%s will be frozen. Continue?</string>
+    <string name="unfreeze_msg">%s will be defrosted. Continue?</string>
     <!-- Etc -->
     <string name="etc_sob">Set on boot</string>
     <string name="etc_apply_values">Apply values</string>
@@ -224,5 +236,6 @@
     <string name="etc_prop_name">Name</string>
     <string name="etc_prop_val">Value</string>
     <string name="etc_prop_preset">Presets</string>
+    <string name="etc_no_packages">No packages</string>
 
 </resources>

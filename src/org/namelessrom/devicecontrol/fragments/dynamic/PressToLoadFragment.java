@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsEditor;
+import org.namelessrom.devicecontrol.fragments.tools.ToolsFreezer;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class PressToLoadFragment extends Fragment implements DeviceConstants {
@@ -67,6 +68,14 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
             case 2:
                 fragment = ToolsEditor.newInstance(2);
                 mText = getString(R.string.fragment_press_to_load, "Build.Prop Editor");
+                break;
+            case 3:
+                fragment = ToolsFreezer.newInstance(0);
+                mText = getString(R.string.fragment_press_to_load, "Freezer");
+                break;
+            case 4:
+                fragment = ToolsFreezer.newInstance(1);
+                mText = getString(R.string.fragment_press_to_load, "Unfreezer");
                 break;
             default:
                 mText = "Could not identify fragment to load";
