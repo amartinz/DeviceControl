@@ -8,6 +8,8 @@ LOCAL_STATIC_JAVA_LIBRARIES := android-support-v13
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
+LOCAL_ASSET_DIR += packages/apps/DeviceControl/assets
+
 LOCAL_PACKAGE_NAME := DeviceControl
 LOCAL_CERTIFICATE := platform
 LOCAL_PRIVILEGED_MODULE := true

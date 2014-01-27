@@ -18,13 +18,13 @@
 package org.namelessrom.devicecontrol.fragments.main;
 
 import android.content.ComponentName;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -73,9 +73,9 @@ public class PreferencesFragment extends PreferenceFragment
     private SwitchPreference mExtrasLauncher;
 
     //==============================================================================================
-    // Support
+    // About
     //==============================================================================================
-    private Preference mHelpDialog;
+    private Preference mVersion;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -114,8 +114,17 @@ public class PreferencesFragment extends PreferenceFragment
         mSobSysctl.setChecked(PreferenceHelper.getBoolean("prefs_sob_sysctl", false));
         mSobSysctl.setOnPreferenceChangeListener(this);
 
-        mHelpDialog = findPreference("prefs_help_dialog");
-
+        mVersion = findPreference("prefs_version");
+        try {
+            final PackageInfo pInfo = getActivity().getPackageManager()
+                    .getPackageInfo(getActivity().getPackageName(), 0);
+            mVersion.setTitle(pInfo.versionName);
+            mVersion.setSummary(getString(R.string.app_version_code, pInfo.versionCode));
+        } catch (Exception ignored) {
+            final String unknown = getString(R.string.unknown);
+            mVersion.setTitle(unknown);
+            mVersion.setSummary(unknown);
+        }
     }
 
 
@@ -124,20 +133,9 @@ public class PreferencesFragment extends PreferenceFragment
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        //view.setBackgroundColor(getResources().getColor(R.color.kitkat_white));
         view.setBackgroundResource(R.drawable.dark_grey_background);
 
         return view;
-    }
-
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference == mHelpDialog) {
-            new HelpDialogFragment().show(getChildFragmentManager(), HelpDialogFragment.TAG);
-            return true;
-        }
-
-        return false;
     }
 
     @Override

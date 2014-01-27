@@ -17,6 +17,7 @@
 
 package org.namelessrom.devicecontrol.fragments.main;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v13.app.FragmentTabHost;
@@ -40,6 +41,10 @@ public class HelpDialogFragment extends DialogFragment {
         // Empty Constructor
     }
 
+    public static HelpDialogFragment newInstance() {
+        return new HelpDialogFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
 
@@ -48,18 +53,26 @@ public class HelpDialogFragment extends DialogFragment {
         mTabHost = (FragmentTabHost) v.findViewById(android.R.id.tabhost);
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
-        mTabHost.addTab(mTabHost.newTabSpec("device0").setIndicator("Device"),
+        mTabHost.addTab(mTabHost.newTabSpec("about")
+                .setIndicator(getString(R.string.action_about)),
                 DeviceHelpDialog.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("device1").setIndicator("Device"),
+        mTabHost.addTab(mTabHost.newTabSpec("help")
+                .setIndicator(getString(R.string.action_help)),
                 DeviceHelpDialog.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("device2").setIndicator("Device"),
+        mTabHost.addTab(mTabHost.newTabSpec("licenses")
+                .setIndicator(getString(R.string.action_licenses)),
                 DeviceHelpDialog.class, null);
 
-        getDialog().setTitle(R.string.prefs_help_dialog_title);
 
         return v;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle bundle) {
+        super.onViewCreated(view, bundle);
+        Dialog d = getDialog();
+        d.setTitle(R.string.action_help);
+    }
 
     @Override
     public void onDestroyView() {

@@ -18,11 +18,11 @@ package org.namelessrom.devicecontrol.fragments.dialogs;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -32,10 +32,11 @@ public class DeviceHelpDialog extends Fragment implements DeviceConstants {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_fragment_help_device, container, false);
+        View view = inflater.inflate(R.layout.dialog_fragment, container, false);
 
-        TextView tvHelp = (TextView) view.findViewById(R.id.dialog_help_device_textview);
-        tvHelp.setText(Html.fromHtml(getString(R.string.dialog_device_dummy)));
+        WebView wv = (WebView) view.findViewById(R.id.dialog_help_webview);
+        wv.getSettings().setTextSize(WebSettings.TextSize.SMALLER);
+        wv.loadUrl("file:///android_asset/notice.html");
 
         return view;
     }

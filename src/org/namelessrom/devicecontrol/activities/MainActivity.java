@@ -33,6 +33,7 @@ import com.stericson.roottools.RootTools;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.main.DeviceFragment;
+import org.namelessrom.devicecontrol.fragments.main.HelpDialogFragment;
 import org.namelessrom.devicecontrol.fragments.main.InformationFragment;
 import org.namelessrom.devicecontrol.fragments.main.NavigationDrawerFragment;
 import org.namelessrom.devicecontrol.fragments.main.PerformanceFragment;
@@ -163,6 +164,9 @@ public class MainActivity extends Activity
                 } else {
                     mPreferencesFragment.openDrawer();
                 }
+                break;
+            case R.id.action_help:
+                HelpDialogFragment.newInstance().show(getFragmentManager(), HelpDialogFragment.TAG);
                 break;
         }
         return super.onOptionsItemSelected(item);
