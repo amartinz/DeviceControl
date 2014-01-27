@@ -18,7 +18,7 @@
 
 package org.namelessrom.devicecontrol.fragments.performance;
 
-import android.app.ActivityManager;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -48,7 +48,7 @@ public class PerformanceGeneralFragment extends PreferenceFragment
     //==============================================================================================
     // Fields
     //==============================================================================================
-    private static final boolean IS_LOW_RAM_DEVICE = ActivityManager.isLowRamDeviceStatic();
+    private static boolean IS_LOW_RAM_DEVICE = false;
     private static final String FORCE_HIGHEND_GFX_PREF = "pref_force_highend_gfx";
 
     private CheckBoxPreference mForceHighEndGfx;
@@ -76,6 +76,8 @@ public class PerformanceGeneralFragment extends PreferenceFragment
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.performance_general);
+
+        IS_LOW_RAM_DEVICE = Utils.getLowRamDevice(getActivity());
 
         if (IS_LOW_RAM_DEVICE) {
             mForceHighEndGfx = (CheckBoxPreference) findPreference(FORCE_HIGHEND_GFX_PREF);
@@ -184,8 +186,8 @@ public class PerformanceGeneralFragment extends PreferenceFragment
         }
     }
 
-    public static boolean isSupported() {
-        return (sLcdPowerReduce || sIntelliPlugEco || IS_LOW_RAM_DEVICE);
+    public static boolean isSupported(Context context) {
+        return (sLcdPowerReduce || sIntelliPlugEco || Utils.getLowRamDevice(context));
     }
 
     //==============================================================================================

@@ -66,7 +66,7 @@ public class PerformanceFragment extends AttachFragment {
     private List<Fragment> getFragments() {
         List<Fragment> tmpList = new ArrayList<Fragment>();
         tmpList.add(new PerformanceHelpFragment());
-        if (PerformanceGeneralFragment.isSupported()) {
+        if (PerformanceGeneralFragment.isSupported(getActivity())) {
             tmpList.add(new PerformanceGeneralFragment());
         }
         return tmpList;
@@ -75,7 +75,7 @@ public class PerformanceFragment extends AttachFragment {
     private List<String> getTitles() {
         List<String> tmpList = new ArrayList<String>();
         tmpList.add(getString(R.string.section_title_information));
-        if (PerformanceGeneralFragment.isSupported()) {
+        if (PerformanceGeneralFragment.isSupported(getActivity())) {
             tmpList.add(getString(R.string.general));
         }
         return tmpList;
