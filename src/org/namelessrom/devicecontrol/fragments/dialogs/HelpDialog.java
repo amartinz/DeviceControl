@@ -18,24 +18,51 @@ package org.namelessrom.devicecontrol.fragments.dialogs;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class DeviceHelpDialog extends Fragment implements DeviceConstants {
+public class HelpDialog extends Fragment {
+
+    public static final String ARG_TYPE = "arg_type";
+
+    public static HelpDialog newInstance(int typeId) {
+        HelpDialog f = new HelpDialog();
+
+        Bundle b = new Bundle();
+        b.putInt(HelpDialog.ARG_TYPE, typeId);
+        f.setArguments(b);
+
+        return f;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_fragment_help_device, container, false);
+        View view = inflater.inflate(R.layout.dialog_fragment, container, false);
 
-        TextView tvHelp = (TextView) view.findViewById(R.id.dialog_help_device_textview);
-        tvHelp.setText(Html.fromHtml(getString(R.string.dialog_device_dummy)));
+        final int typeId = getArguments().getInt(HelpDialog.ARG_TYPE);
+        String url;
+        switch (typeId) {
+            default:
+            case 0: // About
+                url = "file:///android_asset/notice.html";
+                break;
+            case 1: // Licenses
+                url = "file:///android_asset/notice.html";
+                break;
+            case 2: // Help
+                url = "file:///android_asset/notice.html";
+                break;
+        }
+
+        WebView wv = (WebView) view.findViewById(R.id.dialog_help_webview);
+        wv.getSettings().setTextSize(WebSettings.TextSize.SMALLER);
+        wv.loadUrl(url);
 
         return view;
     }
