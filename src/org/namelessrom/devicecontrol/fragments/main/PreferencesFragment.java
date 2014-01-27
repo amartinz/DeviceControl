@@ -124,7 +124,8 @@ public class PreferencesFragment extends PreferenceFragment
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        view.setBackgroundColor(getResources().getColor(R.color.kitkat_white));
+        //view.setBackgroundColor(getResources().getColor(R.color.kitkat_white));
+        view.setBackgroundResource(R.drawable.dark_grey_background);
 
         return view;
     }

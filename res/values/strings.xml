@@ -20,7 +20,7 @@
 
     <!-- App -->
     <string name="app_name">Device Control</string>
-    <string name="app_information_help">Welcome to DeviceControl!\n\nTo get started, swipe out the drawer from the left!\n\nTo edit preferences of DeviceControl,\nswipe out the drawer from the right!\n\nTo view information about your device,\nswipe right.\n\n\nPlease note, that some functions may\nneed root as well!\n\n</string>
+    <string name="app_information_help">Welcome to %1$s!\n\nTo get started, swipe out the drawer from the left!\n\nTo edit preferences of %2$s,\nswipe out the drawer from the right!\n\n\nPlease note, that %3$s needs root\nto function properly!\n\n</string>
     <string name="app_device_help">Welcome to the Device Screen!\n\nYou can swipe right,\nto discover device controls!\n\n(Note: if a function is not supported,\nit gets hidden automatically.)\n\n</string>
     <string name="app_performance_help">Welcome to the Performance Section!\n\nWARNING!\nOnly do changes if you are\n100% sure what you are doing!\n\n</string>
     <string name="app_tasker_help">Welcome to the Tasker!\n\nYou can swipe right,\nto discover and setup\nautomated tasks!\n\n</string>

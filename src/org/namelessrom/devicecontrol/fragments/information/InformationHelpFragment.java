@@ -36,8 +36,11 @@ public class InformationHelpFragment extends Fragment implements DeviceConstants
         View view = inflater.inflate(R.layout.fragment_help,
                 container, false);
 
+        final String appname = getString(R.string.app_name);
+
         TextView tvHelp = (TextView) view.findViewById(R.id.help_textview);
-        tvHelp.setText(R.string.app_information_help);
+        tvHelp.setText(getString(R.string.app_information_help,
+                appname, appname, appname));
 
         ImageView ivHelp = (ImageView) view.findViewById(R.id.help_imageview);
         ivHelp.setImageResource(R.mipmap.ic_launcher);
