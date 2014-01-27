@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.fragments.dynamic.WebViewFragment;
 import org.namelessrom.devicecontrol.fragments.information.InformationHelpFragment;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 import org.namelessrom.devicecontrol.utils.adapters.ScreenSlidePagerAdapter;
@@ -75,12 +76,18 @@ public class InformationFragment extends AttachFragment {
     private List<Fragment> getFragments() {
         List<Fragment> tmpList = new ArrayList<Fragment>();
         tmpList.add(new InformationHelpFragment());
+        //tmpList.add(WebViewFragment.newInstance(0));
+        tmpList.add(WebViewFragment.newInstance(1));
+        //tmpList.add(WebViewFragment.newInstance(2));
         return tmpList;
     }
 
     private List<String> getTitles() {
         List<String> tmpList = new ArrayList<String>();
         tmpList.add(getString(R.string.section_title_information));
+        //tmpList.add(getString(R.string.action_about));
+        tmpList.add(getString(R.string.action_licenses));
+        //tmpList.add(getString(R.string.action_help));
         return tmpList;
     }
 }
