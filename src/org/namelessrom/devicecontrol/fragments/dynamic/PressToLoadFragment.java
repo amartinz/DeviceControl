@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsEditor;
+import org.namelessrom.devicecontrol.fragments.tools.ToolsFreezer;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class PressToLoadFragment extends Fragment implements DeviceConstants {
@@ -68,6 +69,14 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
                 fragment = ToolsEditor.newInstance(2);
                 mText = getString(R.string.fragment_press_to_load, "Build.Prop Editor");
                 break;
+            case 3:
+                fragment = ToolsFreezer.newInstance(0, "usr");
+                mText = getString(R.string.fragment_press_to_load, "Freezer");
+                break;
+            case 4:
+                fragment = ToolsFreezer.newInstance(1, "usr");
+                mText = getString(R.string.fragment_press_to_load, "Unfreezer");
+                break;
             default:
                 mText = "Could not identify fragment to load";
                 break;
@@ -85,7 +94,7 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
         replaceFragment(new ReplaceFragment());
     }
 
-    private void replaceFragment(Fragment f) {
+    public void replaceFragment(Fragment f) {
         getChildFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
                         R.anim.card_flip_left_in, R.anim.card_flip_left_out)
@@ -117,5 +126,4 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
             return view;
         }
     }
-
 }
