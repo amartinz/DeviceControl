@@ -134,7 +134,7 @@ public class PreferencesFragment extends PreferenceFragment
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        view.setBackgroundResource(R.drawable.dark_grey_background);
+        view.setBackgroundResource(R.drawable.preference_drawer_background);
 
         return view;
     }

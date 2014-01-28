@@ -118,6 +118,9 @@ public class NavigationDrawerFragment extends Fragment {
                 new String[]{"ICON", "TITLE"},
                 new int[]{R.id.drawer_icon, R.id.drawer_title}));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
+        mDrawerListView.setBackgroundResource(R.drawable.navigation_drawer_background);
+
         return mDrawerListView;
     }
 
