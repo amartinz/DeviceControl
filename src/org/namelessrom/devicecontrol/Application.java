@@ -29,14 +29,16 @@ import android.util.Log;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class Application extends android.app.Application implements DeviceConstants {
 
-    // Switch to your needs
+    // Switch to your needs - overrideable in preferences
     public static boolean IS_LOG_DEBUG = false;
 
     public static boolean HAS_ROOT = false;
+    public static final boolean IS_NAMELESS = Utils.isNameless();
 
     public static AlarmManager alarmManager;
     private static PackageManager packageManager;
@@ -64,6 +66,8 @@ public class Application extends android.app.Application implements DeviceConsta
 
             RootTools.debugMode = true;
         }
+
+        logDebug("Is Nameless: " + (IS_NAMELESS ? "true" : "false"));
 
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         packageManager = getPackageManager();

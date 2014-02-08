@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.os.Build;
+import android.os.SystemProperties;
 import android.util.Log;
 
 import com.stericson.roottools.RootTools;
@@ -47,6 +48,12 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 public class Utils implements DeviceConstants, FileConstants {
 
     private static int isLowRamDevice = -1;
+
+    public static boolean isNameless() {
+        final String namelessVersion = SystemProperties.get("ro.nameless.version", "-1");
+        logDebug("NamelessVersion: " + namelessVersion);
+        return !namelessVersion.equals("-1");
+    }
 
     /**
      * Reads a single line from a file.

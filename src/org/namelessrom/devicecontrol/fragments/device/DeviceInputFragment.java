@@ -17,6 +17,7 @@
 package org.namelessrom.devicecontrol.fragments.device;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -24,7 +25,6 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.view.ViewConfiguration;
-import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
@@ -58,8 +58,7 @@ public class DeviceInputFragment extends PreferenceFragment
     private CheckBoxPreference mGloveMode;
     private CheckBoxPreference mKnockOn;
 
-    private boolean hasMenuKey;
-    private Toast mToast;
+    private boolean hasMenuKey = false;
 
     //==============================================================================================
     // Overridden Methods
@@ -70,7 +69,12 @@ public class DeviceInputFragment extends PreferenceFragment
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.device_input_preferences);
 
-        hasMenuKey = ViewConfiguration.get(getActivity()).hasPermanentMenuKey();
+        try {
+            hasMenuKey = !getResources().getBoolean(
+                    com.android.internal.R.bool.config_showNavigationBar);
+        } catch (Resources.NotFoundException exc) { // fallback
+            hasMenuKey = ViewConfiguration.get(getActivity()).hasPermanentMenuKey();
+        }
 
         VibratorTuningPreference mVibratorTuning
                 = (VibratorTuningPreference) findPreference(KEY_VIBRATOR_TUNING);
@@ -119,15 +123,6 @@ public class DeviceInputFragment extends PreferenceFragment
             final boolean value = (Boolean) o;
             Shell.SU.run(Scripts.toggleForceNavBar());
             PreferenceHelper.setBoolean(KEY_NAVBAR_FORCE, value);
-            if (!value && !hasMenuKey) {
-                if (mToast != null) {
-                    mToast.cancel();
-                }
-                mToast = Toast.makeText(getActivity(),
-                        getString(R.string.navbar_warning),
-                        Toast.LENGTH_LONG);
-                mToast.show();
-            }
             changed = true;
         } else if (preference == mGloveMode) {
             HighTouchSensitivity.setEnabled(!mGloveMode.isChecked());
@@ -156,9 +151,9 @@ public class DeviceInputFragment extends PreferenceFragment
 
         boolean tmp;
 
-        if (Application.HAS_ROOT) {
+        if (Application.HAS_ROOT && !Application.IS_NAMELESS) {
             tmp = paramResult.get(i);
-            if (!tmp && !hasMenuKey) {
+            if (!hasMenuKey) {
                 preferenceGroup.removePreference(mForceNavBar);
             } else {
                 mForceNavBar.setChecked(tmp);
@@ -193,7 +188,7 @@ public class DeviceInputFragment extends PreferenceFragment
             List<Boolean> tmpList = new ArrayList<Boolean>();
 
             publishProgress(0);
-            if (Application.HAS_ROOT) {
+            if (Application.HAS_ROOT && !Application.IS_NAMELESS) {
                 tmpList.add(Scripts.getForceNavBar());
             }
 
