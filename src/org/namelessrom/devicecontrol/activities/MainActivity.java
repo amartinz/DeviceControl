@@ -41,13 +41,14 @@ import org.namelessrom.devicecontrol.fragments.main.TaskerFragment;
 import org.namelessrom.devicecontrol.fragments.main.ToolsFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.IOException;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, DeviceConstants {
 
     //==============================================================================================
     // Fields
@@ -91,6 +92,11 @@ public class MainActivity extends Activity
         }
 
         PreferenceHelper.getInstance(this);
+
+        if (PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
+            // Set flag to enable BootUp receiver
+            PreferenceHelper.setBoolean(DC_FIRST_START, false);
+        }
 
         Utils.setupDirectories();
         Utils.createFiles(this, true);

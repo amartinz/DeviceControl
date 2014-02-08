@@ -93,11 +93,6 @@ public class Application extends android.app.Application implements DeviceConsta
             disableLauncher(false);
         }
 
-        if (PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
-            // Set flag to enable BootUp receiver
-            PreferenceHelper.setBoolean(DC_FIRST_START, false);
-        }
-
     }
 
     private void disableLauncher(boolean shouldDisable) {
