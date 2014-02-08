@@ -17,6 +17,8 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import android.os.SystemProperties;
+
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -29,9 +31,13 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 public class Scripts {
 
     public static List<String> runScript(String mCommands) {
+        return runScript(mCommands, true);
+    }
+
+    public static List<String> runScript(String mCommands, boolean useSu) {
         List<String> tmpList;
 
-        tmpList = Shell.SU.run(mCommands);
+        tmpList = (useSu ? Shell.SU.run(mCommands) : Shell.SH.run(mCommands));
 
         logDebug("runScript: tmpList.get(0) == " + tmpList.get(0));
         return tmpList;
@@ -40,23 +46,7 @@ public class Scripts {
     //
 
     public static boolean getForceNavBar() {
-        boolean tmpBool = false;
-        List<String> tmpList;
-
-        tmpList = Scripts.runScript(
-                "if [ \"`grep 'qemu\\.hw\\.mainkeys\\=0' /system/build.prop`\" ];" +
-                        "then echo \"1\";" +
-                        "elif [ -z \"`grep 'qemu\\.hw\\.mainkeys\\=0' /system/build.prop`\" ];" +
-                        "then echo \"0\";" +
-                        "fi");
-
-        if (!(tmpList.get(0) == null)) {
-            logDebug("getForceNavBar: tmpList.get(0) == " + tmpList.get(0));
-            tmpBool = tmpList.get(0).equals("1");
-        }
-
-        logDebug("getForceNavBar: tmpBool == " + (tmpBool ? "true" : "false"));
-        return tmpBool;
+        return SystemProperties.get("qemu.hw.mainkeys", "1").equals("0");
     }
 
     public static String toggleForceNavBar() {
@@ -75,24 +65,7 @@ public class Scripts {
     //
 
     public static boolean getForceHighEndGfx() {
-        boolean tmpBool = false;
-        List<String> tmpList;
-
-        tmpList = Scripts.runScript(
-                "if [ \"`grep 'persist\\.sys\\.force_highendgfx=1' /system/build.prop`\" ];" +
-                        "then echo \"1\";" +
-                        "elif [ -z \"`grep 'persist\\.sys\\.force_highendgfx=1' " +
-                        "/system/build.prop`\" ];" +
-                        "then echo \"0\";" +
-                        "fi");
-
-        if (!(tmpList.get(0) == null)) {
-            logDebug("getForceNavBar: tmpList.get(0) == " + tmpList.get(0));
-            tmpBool = tmpList.get(0).equals("1");
-        }
-
-        logDebug("getForceNavBar: tmpBool == " + (tmpBool ? "true" : "false"));
-        return tmpBool;
+        return SystemProperties.get("persist.sys.force_highendgfx", "0").equals("1");
     }
 
     public static String toggleForceHighEndGfx() {
