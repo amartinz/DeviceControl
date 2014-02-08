@@ -17,8 +17,6 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import android.os.SystemProperties;
-
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -46,7 +44,7 @@ public class Scripts {
     //
 
     public static boolean getForceNavBar() {
-        return SystemProperties.get("qemu.hw.mainkeys", "1").equals("0");
+        return Utils.existsInBuildProp("qemu.hw.mainkeys=0");
     }
 
     public static String toggleForceNavBar() {
@@ -65,7 +63,7 @@ public class Scripts {
     //
 
     public static boolean getForceHighEndGfx() {
-        return SystemProperties.get("persist.sys.force_highendgfx", "0").equals("1");
+        return Utils.existsInBuildProp("persist.sys.force_highendgfx=1");
     }
 
     public static String toggleForceHighEndGfx() {

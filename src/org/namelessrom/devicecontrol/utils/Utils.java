@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.os.Build;
-import android.os.SystemProperties;
 import android.util.Log;
 
 import com.stericson.roottools.RootTools;
@@ -34,11 +33,13 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
@@ -50,9 +51,30 @@ public class Utils implements DeviceConstants, FileConstants {
     private static int isLowRamDevice = -1;
 
     public static boolean isNameless() {
-        final String namelessVersion = SystemProperties.get("ro.nameless.version", "-1");
-        logDebug("NamelessVersion: " + namelessVersion);
-        return !namelessVersion.equals("-1");
+        return existsInBuildProp("ro.nameless.version");
+    }
+
+    public static boolean existsInBuildProp(String filter) {
+        final File f = new File("/system/build.prop");
+        BufferedReader bufferedReader = null;
+        if (f.exists() && f.canRead()) {
+            try {
+                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+                String s = "";
+                while ((s = bufferedReader.readLine()) != null) {
+                    if (s.contains(filter)) return true;
+                }
+            } catch (Exception whoops) {
+                return false;
+            } finally {
+                try {
+                    if (bufferedReader != null) bufferedReader.close();
+                } catch (Exception ignored) {
+                    // mepmep
+                }
+            }
+        }
+        return false;
     }
 
     /**

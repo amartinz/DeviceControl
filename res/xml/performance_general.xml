@@ -16,7 +16,8 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:nameless="http://nameless-rom.org">
     <CheckBoxPreference
         android:key="pref_force_highend_gfx"
         android:title="@string/pref_force_highend_gfx_title"
@@ -40,15 +41,14 @@
             android:summaryOff="@string/cpu_powersaving_intelli_plug_eco_summary_off"
             android:defaultValue="false" />
 
-        <SeekBarPreference
+        <org.namelessrom.devicecontrol.preferences.SeekBarPreference
             android:key="sched_mc_power_savings"
             android:title="@string/cpu_powersaving_sched_mc_title"
+            android:summary="@string/cpu_powersaving_sched_mc_summary"
+            android:defaultValue="0"
             android:max="2"
-            android:defaultValue="2" />
-
-        <Preference
-            android:key="sched_mc_power_savings_extended_summary"
-            android:summary="@string/cpu_powersaving_sched_mc_summary" />
+            nameless:min="0"
+            nameless:customStatus="cpu_powersaving_sched_mc_" />
 
     </PreferenceCategory>
 </PreferenceScreen>
