@@ -19,7 +19,9 @@
 package org.namelessrom.devicecontrol;
 
 import android.app.AlarmManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.util.Log;
@@ -27,11 +29,9 @@ import android.util.Log;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.DC_FIRST_START;
-import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.JF_EXTENSIVE_LOGGING;
-
-public class Application extends android.app.Application {
+public class Application extends android.app.Application implements DeviceConstants {
 
     // Switch to your needs
     public static boolean IS_LOG_DEBUG = false;
@@ -39,6 +39,7 @@ public class Application extends android.app.Application {
     public static boolean HAS_ROOT = false;
 
     public static AlarmManager alarmManager;
+    private static PackageManager packageManager;
 
     @Override
     public void onCreate() {
@@ -65,21 +66,42 @@ public class Application extends android.app.Application {
         }
 
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        packageManager = getPackageManager();
 
         // we need to detect SU for some features :)
+        HAS_ROOT = RootTools.isRootAvailable() && RootTools.isAccessGiven();
+        if (HAS_ROOT) {
+            RootTools.remount(Environment.getExternalStorageDirectory()
+                    .getAbsolutePath(), "rw");
+        }
+
         try {
-            HAS_ROOT = RootTools.isRootAvailable() && RootTools.isAccessGiven();
-            if (HAS_ROOT) {
-                RootTools.remount(Environment.getExternalStorageDirectory()
-                        .getAbsolutePath(), "rw");
+            if (packageManager.getResourcesForApplication("com.android.settings")
+                    .getIdentifier("device_control_settings", "string", "com.android.settings") > 0) {
+                logDebug("Implemented into system!");
+                disableLauncher(true);
+            } else {
+                logDebug("Not implemented into system!");
+                disableLauncher(false);
             }
-        } catch (Exception exc) {
-            logDebug("DetectSu: " + exc.getMessage());
+        } catch (PackageManager.NameNotFoundException exc) {
+            logDebug("You dont have settings? That's weird.");
+            disableLauncher(false);
         }
 
         // Set flag to enable BootUp receiver
         PreferenceHelper.setBoolean(DC_FIRST_START, false);
 
+    }
+
+    private void disableLauncher(boolean shouldDisable) {
+        final ComponentName component = new ComponentName(PACKAGE_NAME,
+                PACKAGE_NAME + ".activities.DummyLauncher");
+        packageManager.setComponentEnabledSetting(component,
+                (shouldDisable
+                        ? PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                        : PackageManager.COMPONENT_ENABLED_STATE_ENABLED),
+                PackageManager.DONT_KILL_APP);
     }
 
     /**

@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments.main;
 
-import android.content.ComponentName;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -68,11 +67,6 @@ public class PreferencesFragment extends PreferenceFragment
     private CheckBoxPreference mSobSysctl;
 
     //==============================================================================================
-    // Extras
-    //==============================================================================================
-    private SwitchPreference mExtrasLauncher;
-
-    //==============================================================================================
     // About
     //==============================================================================================
     private Preference mVersion;
@@ -97,14 +91,6 @@ public class PreferencesFragment extends PreferenceFragment
 
         mExtensiveLogging = (SwitchPreference) findPreference("jf_extensive_logging");
         mExtensiveLogging.setOnPreferenceChangeListener(this);
-
-        if (getResources().getBoolean(R.bool.is_system_app)) {
-            mExtrasLauncher = (SwitchPreference) findPreference("jf_extras_launcher");
-            mExtrasLauncher.setChecked(switchLauncher(false));
-            mExtrasLauncher.setOnPreferenceChangeListener(this);
-        } else {
-            getPreferenceScreen().removePreference(findPreference("prefs_jf_extras"));
-        }
 
         mSobVm = (CheckBoxPreference) findPreference("prefs_sob_vm");
         mSobVm.setChecked(PreferenceHelper.getBoolean("prefs_sob_vm", false));
@@ -155,9 +141,6 @@ public class PreferencesFragment extends PreferenceFragment
         } else if (preference == mExtensiveLogging) {
             PreferenceHelper.setBoolean(JF_EXTENSIVE_LOGGING, mExtensiveLogging.isChecked());
             changed = true;
-        } else if (preference == mExtrasLauncher) {
-            mExtrasLauncher.setChecked(switchLauncher(true));
-            changed = true;
         } else if (preference == mSobVm) {
             PreferenceHelper.setBoolean("prefs_sob_vm", (Boolean) newValue);
             changed = true;
@@ -201,33 +184,5 @@ public class PreferencesFragment extends PreferenceFragment
     public void closeDrawer() {
         if (mDrawerLayout != null)
             mDrawerLayout.closeDrawer(mFragmentContainerView);
-    }
-
-    //
-
-    private boolean switchLauncher(boolean shouldSwitch) {
-        boolean isShowing;
-
-        ComponentName component = new ComponentName(PACKAGE_NAME,
-                PACKAGE_NAME + ".activities.DummyLauncher");
-        isShowing = ((mPm.getComponentEnabledSetting(component) ==
-                PackageManager.COMPONENT_ENABLED_STATE_DEFAULT)
-                || (mPm.getComponentEnabledSetting(component) ==
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED));
-
-        if (shouldSwitch) {
-            if (isShowing) {
-                mPm.setComponentEnabledSetting(component,
-                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                        PackageManager.DONT_KILL_APP);
-            } else {
-                mPm.setComponentEnabledSetting(component,
-                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                        PackageManager.DONT_KILL_APP);
-            }
-            isShowing = !isShowing;
-        }
-
-        return isShowing;
     }
 }

@@ -66,25 +66,13 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="prefs_jf_extras"
-        android:title="@string/prefs_jf_extras">
-
-        <SwitchPreference
-            android:key="jf_extras_launcher"
-            android:title="@string/jf_extras_launcher_title"
-            android:summaryOn="@string/jf_extras_launcher_summary_on"
-            android:summaryOff="@string/jf_extras_launcher_summary_off" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="prefs_jf_version"
         android:title="@string/prefs_jf_version">
 
         <Preference
             android:key="prefs_version"
             android:title="@string/empty"
-            android:summary="@string/empty"/>
+            android:summary="@string/empty" />
 
     </PreferenceCategory>
 

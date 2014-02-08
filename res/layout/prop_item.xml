@@ -35,7 +35,7 @@
         android:layout_marginLeft="5dip"
         android:layout_marginRight="5dip"
         android:textStyle="bold"
-        android:textSize="17dip">
+        android:textSize="17sp">
 
     </TextView>
 

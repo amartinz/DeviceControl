@@ -21,28 +21,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/help_imageview"
+        android:background="@mipmap/ic_launcher"
+        android:cropToPadding="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp" />
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/help_imageview"
-            android:background="@mipmap/ic_launcher"
-            android:cropToPadding="true"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="20dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/app_device_help"
-            android:id="@+id/help_textview"
-            android:layout_below="@+id/help_imageview"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:gravity="center" />
-
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:text="@string/app_device_help"
+        android:id="@+id/help_textview"
+        android:layout_below="@+id/help_imageview"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:gravity="center" />
 
 </RelativeLayout>
