@@ -25,7 +25,7 @@
 
     <string name="app_information_help">Welcome to %1$s!\n\nTo get started, swipe out the drawer from the left!\n\nTo edit preferences of %2$s,\nswipe out the drawer from the right!\n\n\nPlease note, that %3$s needs root\nto function properly!\n\n</string>
     <string name="app_device_help">Welcome to the Device Screen!\n\nYou can swipe right,\nto discover device controls!\n\n(Note: if a function is not supported,\nit gets hidden automatically.)\n\n</string>
-    <string name="app_performance_help">Welcome to the Performance Section!\n\nWARNING!\nOnly do changes if you are\n100% sure what you are doing!\n\n</string>
+    <string name="app_performance_help">Welcome to the Performance Section!\n\nWARNING!\nOnly do changes if you are\n100&#037; sure what you are doing!\n\n</string>
     <string name="app_tasker_help">Welcome to the Tasker!\n\nYou can swipe right,\nto discover and setup\nautomated tasks!\n\n</string>
     <string name="app_tools_help">Welcome to the Tools Section!\n\nYou can swipe right,\nto discover various useful tools!\n\n(Note: please be careful though!)\n\n</string>
 
@@ -170,11 +170,6 @@
     <string name="jf_debug_extensive_logging_summary_off">Logging to LogCat disabled.</string>
     <!-- Reapply on boot -->
     <string name="prefs_set_on_boot">Reapply on boot</string>
-    <!-- Extras -->
-    <string name="prefs_jf_extras">Extras</string>
-    <string name="jf_extras_launcher_title">Show in app drawer</string>
-    <string name="jf_extras_launcher_summary_on">Launcher entry is visible.</string>
-    <string name="jf_extras_launcher_summary_off">Launcher entry is hidden.</string>
     <!-- Version -->
     <string name="prefs_jf_version">Version</string>
 

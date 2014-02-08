@@ -273,9 +273,7 @@ public class Shell {
     }
 
     public static boolean isAnyShellOpen() {
-        if (shell != null)
-            return true;
-        else return rootShell != null || customShell != null;
+        return shell != null || rootShell != null || customShell != null;
     }
 
     /**

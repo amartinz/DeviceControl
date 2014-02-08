@@ -23,5 +23,4 @@
     android:choiceMode="singleChoice"
     android:divider="@color/darker_gray"
     android:dividerHeight="1dp"
-    android:background="@color/grey_dark"
     tools:context="org.namelessrom.devicecontrol.fragments.main.NavigationDrawerFragment" />
