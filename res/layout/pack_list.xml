@@ -73,36 +73,4 @@
             android:smoothScrollbar="true" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/tools"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_alignParentBottom="true"
-        android:gravity="top"
-        android:visibility="gone">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/procNames"
-            android:lines="3"
-            android:padding="10dp"
-            android:editable="true"
-            android:layout_marginTop="10dp"
-            android:enabled="true" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/etc_save"
-            android:textSize="14sp"
-            android:id="@+id/applyBtn"
-            android:layout_gravity="right|center_vertical" />
-
-    </LinearLayout>
-
 </RelativeLayout>

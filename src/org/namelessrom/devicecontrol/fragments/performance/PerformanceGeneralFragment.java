@@ -25,11 +25,11 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
-import android.preference.SeekBarPreference;
 import android.preference.SwitchPreference;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.preferences.SeekBarPreference;
 import org.namelessrom.devicecontrol.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
@@ -65,7 +65,6 @@ public class PerformanceGeneralFragment extends PreferenceFragment
     private SwitchPreference mLcdPowerReduce;
     private SwitchPreference mIntelliPlugEco;
     private SeekBarPreference mMcPowerScheduler;
-    private Preference mMcPowerSchedulerExtendedSummary;
 
     //==============================================================================================
     // Overridden Methods
@@ -104,15 +103,11 @@ public class PerformanceGeneralFragment extends PreferenceFragment
         }
 
         mMcPowerScheduler = (SeekBarPreference) findPreference(KEY_MC_POWER_SCHEDULER);
-        mMcPowerSchedulerExtendedSummary = findPreference("sched_mc_power_savings_extended_summary");
         if (sMcPowerScheduler) {
             mMcPowerScheduler.setProgress(Integer.parseInt(Utils.readOneLine(sMcPowerSchedulerFile)));
             mMcPowerScheduler.setOnPreferenceChangeListener(this);
-            mMcPowerSchedulerExtendedSummary
-                    .setSummary(getMcPowerSchedulerSummary(mMcPowerScheduler.getProgress()));
         } else {
             preferenceGroup.removePreference(mMcPowerScheduler);
-            preferenceGroup.removePreference(mMcPowerSchedulerExtendedSummary);
         }
 
         if (preferenceGroup.getPreferenceCount() == 0) {
@@ -121,28 +116,6 @@ public class PerformanceGeneralFragment extends PreferenceFragment
 
         new PerformanceCpuTask().execute();
 
-    }
-
-    private String getMcPowerSchedulerSummary(final int progress) {
-        String s;
-
-        switch (progress) {
-            default:
-            case 0:
-                s = getString(R.string.cpu_powersaving_sched_mc_summary
-                        , getString(R.string.cpu_powersaving_sched_mc_zero));
-                break;
-            case 1:
-                s = getString(R.string.cpu_powersaving_sched_mc_summary
-                        , getString(R.string.cpu_powersaving_sched_mc_one));
-                break;
-            case 2:
-                s = getString(R.string.cpu_powersaving_sched_mc_summary
-                        , getString(R.string.cpu_powersaving_sched_mc_two));
-                break;
-        }
-
-        return s;
     }
 
     @Override
@@ -166,7 +139,6 @@ public class PerformanceGeneralFragment extends PreferenceFragment
             int value = (Integer) o;
             new WriteAndForget(sMcPowerSchedulerFile, "" + o).run();
             PreferenceHelper.setInt(KEY_MC_POWER_SCHEDULER, value);
-            mMcPowerSchedulerExtendedSummary.setSummary(getMcPowerSchedulerSummary(value));
             changed = true;
         }
 

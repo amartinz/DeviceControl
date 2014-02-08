@@ -43,7 +43,8 @@
                 android:text="@string/etc_prop_name"
                 android:id="@+id/text1"
                 android:textStyle="bold"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:labelFor="@+id/nprop"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -67,7 +68,8 @@
                 android:text="@string/etc_prop_val"
                 android:id="@+id/text2"
                 android:textStyle="bold"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:labelFor="@+id/vprop"/>
 
             <EditText
                 android:layout_width="match_parent"

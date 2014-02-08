@@ -146,6 +146,9 @@ public class VibratorTuningPreference extends DialogPreference
             mProgressThumb.setColorFilter(shouldWarn ? mRedFilter : null);
         }
         mValue.setText(String.format("%d%%", progress));
+
+        final String value = String.valueOf(percentToStrength(seekBar.getProgress()));
+        new WriteAndForget(FILE_VIBRATOR, value).run();
     }
 
     @Override
@@ -155,9 +158,6 @@ public class VibratorTuningPreference extends DialogPreference
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        final String value = String.valueOf(percentToStrength(seekBar.getProgress()));
-        new WriteAndForget(FILE_VIBRATOR, value).run();
-        // TODO add to Help Section: Why isn't it using the actual value when vibrating? - Threads
         vib.vibrate(200);
     }
 

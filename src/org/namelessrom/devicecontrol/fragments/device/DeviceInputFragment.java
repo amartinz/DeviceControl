@@ -17,7 +17,6 @@
 package org.namelessrom.devicecontrol.fragments.device;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -72,7 +71,7 @@ public class DeviceInputFragment extends PreferenceFragment
         try {
             hasMenuKey = !getResources().getBoolean(
                     com.android.internal.R.bool.config_showNavigationBar);
-        } catch (Resources.NotFoundException exc) { // fallback
+        } catch (Exception exc) { // fallback
             hasMenuKey = ViewConfiguration.get(getActivity()).hasPermanentMenuKey();
         }
 
