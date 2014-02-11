@@ -22,19 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linlaHeaderProgress"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ProgressBar
-            android:id="@+id/pbHeaderProgress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+    <include layout="@layout/include_loading" />
 
     <LinearLayout
         android:id="@+id/noproc"
@@ -97,5 +85,16 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_alignBottom="@+id/llist"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/bottom_shadow" />
+
+    <View
+        android:layout_alignTop="@+id/llist"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/top_shadow" />
 
 </RelativeLayout>
