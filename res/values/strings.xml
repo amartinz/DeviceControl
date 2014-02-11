@@ -25,7 +25,7 @@
 
     <string name="app_information_help">Welcome to %1$s!\n\nTo get started, swipe out the drawer from the left!\n\nTo edit preferences of %2$s,\nswipe out the drawer from the right!\n\n\nPlease note, that %3$s needs root\nto function properly!\n\n</string>
     <string name="app_device_help">Welcome to the Device Screen!\n\nYou can swipe right,\nto discover device controls!\n\n(Note: if a function is not supported,\nit gets hidden automatically.)\n\n</string>
-    <string name="app_performance_help">Welcome to the Performance Section!\n\nWARNING!\nOnly do changes if you are\n100&#037; sure what you are doing!\n\n</string>
+    <string name="app_performance_help">Welcome to the Performance Section!\n</string>
     <string name="app_tasker_help">Welcome to the Tasker!\n\nYou can swipe right,\nto discover and setup\nautomated tasks!\n\n</string>
     <string name="app_tools_help">Welcome to the Tools Section!\n\nYou can swipe right,\nto discover various useful tools!\n\n(Note: please be careful though!)\n\n</string>
 
@@ -87,6 +87,17 @@
     <string name="section_title_tools_unfreezer">Unfreezer</string>
 
     <!-- PERFORMANCE -->
+    <!-- Help -->
+    <string name="time_in_state">TIME IN STATE</string>
+    <string name="unused_cpu_states">UNUSED CPU STATES</string>
+    <string name="total_state_time">TOTAL STATE TIME</string>
+    <string name="no_states_file_found">No states file found. Are you sure your phone is
+        compatible?\n\nIf you are running a custom ROM or kernel, try
+        contacting its developer to inform him that the states file is not
+        readable.
+    </string>
+    <string name="deep_sleep">"Deep Sleep"</string>
+    <!-- General -->
     <string name="pref_force_highend_gfx_title">Force high-end graphics</string>
     <string name="pref_force_highend_gfx_summary">Enables high-end visual effects such as transparent status/navigation bar (needs to be supported by your rom, requires reboot)</string>
 
