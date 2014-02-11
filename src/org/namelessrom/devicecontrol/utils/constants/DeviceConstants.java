@@ -52,6 +52,11 @@ public interface DeviceConstants {
     // Panel
     public static final String KEY_PANEL_COLOR_TEMP = "panel_color_temperature";
     // Performance Cpu
+    //==============================================================================================
+    public static final String FORCE_HIGHEND_GFX_PREF = "pref_force_highend_gfx";
+    //==============================================================================================
+    public static final String GROUP_INTELLI_PLUG = "intelli_plug";
+    public static final String KEY_INTELLI_PLUG = "intelli_plug_active";
     public static final String KEY_LCD_POWER_REDUCE = "lcd_power_reduce";
     public static final String KEY_INTELLI_PLUG_ECO = "intelli_plug_eco";
     public static final String KEY_MC_POWER_SCHEDULER = "sched_mc_power_savings";

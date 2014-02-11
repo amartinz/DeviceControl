@@ -19,6 +19,7 @@
 <resources>
 
     <string name="empty" translatable="false" />
-    <string name="unknown">---</string>
+    <string name="unknown" translatable="false">---</string>
+    <string name="intelli_plug" translatable="false">Intelli-Plug</string>
 
 </resources>
