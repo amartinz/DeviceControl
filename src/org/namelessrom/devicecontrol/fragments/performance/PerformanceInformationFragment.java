@@ -54,12 +54,10 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
     private TextView mHeaderAdditionalStates;
     private TextView mHeaderTotalStateTime;
     private TextView mStatesWarning;
-    private ImageView mRefresh;
 
     private LinearLayout mDeviceInfo;
 
     private boolean mUpdatingData = false;
-    private boolean mUpdatingDevice = false;
 
     private int mBatteryTemperature = 0;
     private String mBatteryExtra = " - Getting information...";
@@ -131,7 +129,7 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
         mHeaderTotalStateTime = (TextView) view.findViewById(R.id.ui_header_total_state_time);
         mStatesWarning = (TextView) view.findViewById(R.id.ui_states_warning);
         mTotalStateTime = (TextView) view.findViewById(R.id.ui_total_state_time);
-        mRefresh = (ImageView) view.findViewById(R.id.ui_refresh);
+        final ImageView mRefresh = (ImageView) view.findViewById(R.id.ui_refresh);
         mRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,9 +196,7 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
     Runnable mDeviceUpdater = new Runnable() {
         @Override
         public void run() {
-            if (!mUpdatingDevice) {
-                updateStatus();
-            }
+            updateStatus();
             mHandler.postDelayed(mDeviceUpdater, mInterval);
         }
     };

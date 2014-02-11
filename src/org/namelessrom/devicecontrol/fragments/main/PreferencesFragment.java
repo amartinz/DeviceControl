@@ -64,11 +64,6 @@ public class PreferencesFragment extends PreferenceFragment
     private CheckBoxPreference mSobVm;
     private CheckBoxPreference mSobSysctl;
 
-    //==============================================================================================
-    // About
-    //==============================================================================================
-    private Preference mVersion;
-
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -96,7 +91,7 @@ public class PreferencesFragment extends PreferenceFragment
         mSobSysctl.setChecked(PreferenceHelper.getBoolean("prefs_sob_sysctl", false));
         mSobSysctl.setOnPreferenceChangeListener(this);
 
-        mVersion = findPreference("prefs_version");
+        final Preference mVersion = findPreference("prefs_version");
         mVersion.setEnabled(false);
         try {
             final PackageInfo pInfo = getActivity().getPackageManager()

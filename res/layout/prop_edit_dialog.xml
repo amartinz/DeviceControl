@@ -33,7 +33,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_margin="10dp"
-        android:labelFor="@+id/vprop"/>
+        android:labelFor="@+id/vprop" />
 
     <EditText
         android:layout_width="match_parent"

@@ -96,7 +96,7 @@ public class CMDProcessor implements DeviceConstants {
         }
 
         public Process run(final String s) {
-            Process process = null;
+            Process process;
             try {
                 process = Runtime.getRuntime().exec(SHELL);
                 final DataOutputStream toProcess = new DataOutputStream(

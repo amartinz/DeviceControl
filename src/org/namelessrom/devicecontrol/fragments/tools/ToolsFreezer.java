@@ -50,7 +50,6 @@ public class ToolsFreezer extends Fragment
     private static final String ARG_TYPE = "arg_type";
     private LinearLayout linlaHeaderProgress;
     private LinearLayout linNopack, llist;
-    private Switch mSwitch;
     private String pmList[];
     private PackageManager packageManager;
     private ListView packList;
@@ -85,7 +84,7 @@ public class ToolsFreezer extends Fragment
         linNopack = (LinearLayout) v.findViewById(R.id.noproc);
 
         llist = (LinearLayout) v.findViewById(R.id.llist);
-        mSwitch = (Switch) v.findViewById(R.id.tools_freezer_toggle);
+        final Switch mSwitch = (Switch) v.findViewById(R.id.tools_freezer_toggle);
         mSwitch.setChecked(packs.equals("sys"));
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

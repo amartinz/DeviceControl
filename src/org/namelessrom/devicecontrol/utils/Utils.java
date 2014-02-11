@@ -60,7 +60,7 @@ public class Utils implements DeviceConstants, FileConstants {
         if (f.exists() && f.canRead()) {
             try {
                 bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
-                String s = "";
+                String s;
                 while ((s = bufferedReader.readLine()) != null) {
                     if (s.contains(filter)) return true;
                 }

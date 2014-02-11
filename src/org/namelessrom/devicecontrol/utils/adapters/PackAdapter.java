@@ -87,7 +87,7 @@ public class PackAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        PackageInfo packageInfo = null;
+        PackageInfo packageInfo;
         try {
             packageInfo = context.getPackageManager().getPackageInfo(getItem(position), 0);
             holder.packRaw.setText(packageInfo.packageName);

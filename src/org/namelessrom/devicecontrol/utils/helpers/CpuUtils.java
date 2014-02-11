@@ -115,7 +115,7 @@ public class CpuUtils {
     }
 
     public static int getCpuFrequency(final int cpu) {
-        String path = "";
+        String path;
 
         switch (cpu) {
             default:
