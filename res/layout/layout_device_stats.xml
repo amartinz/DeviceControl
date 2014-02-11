@@ -29,20 +29,11 @@
 
         <TextView
             android:id="@+id/ui_header_device_information"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="?android:attr/listSeparatorTextViewStyle"
-            android:text="@string/device_information"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/ui_device_auto_refresh" />
+            android:text="@string/device_information" />
 
-        <CheckBox
-            android:id="@+id/ui_device_auto_refresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:text="@string/auto_refresh"
-            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <LinearLayout

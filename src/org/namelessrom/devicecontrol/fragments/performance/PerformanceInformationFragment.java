@@ -17,15 +17,19 @@
  */
 package org.namelessrom.devicecontrol.fragments.performance;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -53,10 +57,12 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
     private ImageView mRefresh;
 
     private LinearLayout mDeviceInfo;
-    private CheckBox mDeviceAutoRefresh;
 
     private boolean mUpdatingData = false;
     private boolean mUpdatingDevice = false;
+
+    private int mBatteryTemperature = 0;
+    private String mBatteryExtra = " - Getting information...";
 
     private static final int mInterval = 2000;
     private Handler mHandler;
@@ -67,6 +73,50 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mHandler = new Handler();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        activity.registerReceiver(mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    }
+
+    private BroadcastReceiver mBatteryReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context arg0, Intent intent) {
+            mBatteryTemperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0);
+            mBatteryExtra = " - Health: "
+                    + getBatteryHealth(intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0));
+        }
+    };
+
+    private String getBatteryHealth(int healthInt) {
+        String health;
+
+        switch (healthInt) {
+            case BatteryManager.BATTERY_HEALTH_COLD:
+                health = "cold";
+                break;
+            case BatteryManager.BATTERY_HEALTH_GOOD:
+                health = "good";
+                break;
+            case BatteryManager.BATTERY_HEALTH_DEAD:
+                health = "dead";
+                break;
+            case BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE:
+                health = "overvoltage";
+                break;
+            case BatteryManager.BATTERY_HEALTH_OVERHEAT:
+                health = "overheat";
+                break;
+            default:
+            case BatteryManager.BATTERY_HEALTH_UNKNOWN:
+            case BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE:
+                health = "unknown";
+                break;
+        }
+
+        return health;
     }
 
     @Override
@@ -90,17 +140,6 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
         });
 
         mDeviceInfo = (LinearLayout) view.findViewById(R.id.ui_device_stats_view);
-        mDeviceAutoRefresh = (CheckBox) view.findViewById(R.id.ui_device_auto_refresh);
-        mDeviceAutoRefresh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    startRepeatingTask();
-                } else {
-                    stopRepeatingTask();
-                }
-            }
-        });
 
         return view;
     }
@@ -114,8 +153,14 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
     @Override
     public void onResume() {
         refreshData();
-        updateStatus();
+        startRepeatingTask();
         super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        stopRepeatingTask();
+        super.onPause();
     }
 
     private View generateRow(ViewGroup parent, final String title, final String value,
@@ -160,8 +205,11 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
 
     private void updateStatus() {
         mDeviceInfo.removeAllViews();
-        generateRow(mDeviceInfo, "CPU Temperature:", CpuUtils.getCpuTemperature() + "°C",
+        generateRow(mDeviceInfo, "CPU Temperature:", CpuUtils.getCpuTemperature() + " °C",
                 "0°C", "100°C", CpuUtils.getCpuTemperature());
+        generateRow(mDeviceInfo, "Battery Temperature:",
+                ((float) mBatteryTemperature) / 10 + " °C" + mBatteryExtra,
+                "0°C", "100°C", (mBatteryTemperature / 10));
     }
 
     public void updateView() {
