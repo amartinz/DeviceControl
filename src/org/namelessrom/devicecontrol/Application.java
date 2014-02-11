@@ -28,7 +28,7 @@ import android.util.Log;
 
 import com.stericson.roottools.RootTools;
 
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 

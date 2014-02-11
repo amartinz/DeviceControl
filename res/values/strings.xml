@@ -91,12 +91,17 @@
     <string name="pref_force_highend_gfx_summary">Enables high-end visual effects such as transparent status/navigation bar (needs to be supported by your rom, requires reboot)</string>
 
     <string name="cpu_powersaving">Powersaving</string>
+    <!-- LCD TODO: why it is here?! -->
     <string name="cpu_powersaving_lcd_title">LCD Power Reduce</string>
     <string name="cpu_powersaving_lcd_summary_on">Power reducing is enabled.</string>
     <string name="cpu_powersaving_lcd_summary_off">Power reducing is disabled.</string>
+    <!-- Intelli-Plug -->
+    <string name="cpu_intelli_plug_summary_on">Intelli-Plug is enabled.</string>
+    <string name="cpu_intelli_plug_summary_off">Intelli-Plug is disabled.</string>
     <string name="cpu_powersaving_intelli_plug_eco_title">Eco Mode</string>
-    <string name="cpu_powersaving_intelli_plug_eco_summary_on">Intelli Plug eco mode enabled.</string>
-    <string name="cpu_powersaving_intelli_plug_eco_summary_off">Intelli Plug eco mode disabled.</string>
+    <string name="cpu_powersaving_intelli_plug_eco_summary_on">Intelli-Plug eco mode enabled.</string>
+    <string name="cpu_powersaving_intelli_plug_eco_summary_off">Intelli-Plug eco mode disabled.</string>
+    <!-- Mc Sched -->
     <string name="cpu_powersaving_sched_mc_title">Power Scheduler</string>
     <string name="cpu_powersaving_sched_mc_summary">Tries to group tasks on a core until it reaches its maximum load and powers on the next core.\nIf enabled, it sacrifices power in exchange for battery life.\n\n0 for disabling it, 1 for balanced, 2 for aggressive.</string>
     <string name="cpu_powersaving_sched_mc_0">0 - Disabled</string>
