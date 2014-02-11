@@ -163,6 +163,16 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
         super.onPause();
     }
 
+    @Override
+    public void onDetach() {
+        try {
+            getActivity().unregisterReceiver(mBatteryReceiver);
+        } catch (Exception ignored) {
+            // not registered
+        }
+        super.onDetach();
+    }
+
     private View generateRow(ViewGroup parent, final String title, final String value,
                              final String barLeft, final String barRight, final int progress) {
 
