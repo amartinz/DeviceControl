@@ -31,11 +31,12 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.preferences.SeekBarPreference;
 import org.namelessrom.devicecontrol.threads.WriteAndForget;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
+import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,25 +47,25 @@ public class PerformanceGeneralFragment extends PreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
 
     //==============================================================================================
+    // Files
+    //==============================================================================================
+    public static final String sLcdPowerReduceFile = Utils.checkPaths(FILES_LCD_POWER_REDUCE);
+    public static final boolean sLcdPowerReduce = !sLcdPowerReduceFile.equals("");
+    //----------------------------------------------------------------------------------------------
+    public static final String sMcPowerSchedulerFile = Utils.checkPaths(FILES_MC_POWER_SCHEDULER);
+    public static final boolean sMcPowerScheduler = !sMcPowerSchedulerFile.equals("");
+    //==============================================================================================
     // Fields
     //==============================================================================================
     private static boolean IS_LOW_RAM_DEVICE = false;
-    private static final String FORCE_HIGHEND_GFX_PREF = "pref_force_highend_gfx";
-
+    //----------------------------------------------------------------------------------------------
     private CheckBoxPreference mForceHighEndGfx;
-
-    public static final String sLcdPowerReduceFile = Utils.checkPaths(FILES_LCD_POWER_REDUCE);
-    public static final boolean sLcdPowerReduce = !sLcdPowerReduceFile.equals("");
-
-    public static final String sIntelliPlugEcoFile = Utils.checkPaths(FILES_INTELLI_PLUG_ECO);
-    public static final boolean sIntelliPlugEco = !sIntelliPlugEcoFile.equals("");
-
-    public static final String sMcPowerSchedulerFile = Utils.checkPaths(FILES_MC_POWER_SCHEDULER);
-    public static final boolean sMcPowerScheduler = !sMcPowerSchedulerFile.equals("");
-
+    //----------------------------------------------------------------------------------------------
     private SwitchPreference mLcdPowerReduce;
-    private SwitchPreference mIntelliPlugEco;
     private SeekBarPreference mMcPowerScheduler;
+    //----------------------------------------------------------------------------------------------
+    private SwitchPreference mIntelliPlug;
+    private SwitchPreference mIntelliPlugEco;
 
     //==============================================================================================
     // Overridden Methods
@@ -84,6 +85,10 @@ public class PerformanceGeneralFragment extends PreferenceFragment
             getPreferenceScreen().removePreference(findPreference(FORCE_HIGHEND_GFX_PREF));
         }
 
+        //------------------------------------------------------------------------------------------
+        // Power Saving
+        //------------------------------------------------------------------------------------------
+
         PreferenceGroup preferenceGroup = (PreferenceGroup) findPreference(CATEGORY_POWERSAVING);
 
         mLcdPowerReduce = (SwitchPreference) findPreference(KEY_LCD_POWER_REDUCE);
@@ -94,14 +99,6 @@ public class PerformanceGeneralFragment extends PreferenceFragment
             preferenceGroup.removePreference(mLcdPowerReduce);
         }
 
-        mIntelliPlugEco = (SwitchPreference) findPreference(KEY_INTELLI_PLUG_ECO);
-        if (sIntelliPlugEco) {
-            mIntelliPlugEco.setChecked(Utils.readOneLine(sIntelliPlugEcoFile).equals("1"));
-            mIntelliPlugEco.setOnPreferenceChangeListener(this);
-        } else {
-            preferenceGroup.removePreference(mIntelliPlugEco);
-        }
-
         mMcPowerScheduler = (SeekBarPreference) findPreference(KEY_MC_POWER_SCHEDULER);
         if (sMcPowerScheduler) {
             mMcPowerScheduler.setProgress(Integer.parseInt(Utils.readOneLine(sMcPowerSchedulerFile)));
@@ -110,12 +107,40 @@ public class PerformanceGeneralFragment extends PreferenceFragment
             preferenceGroup.removePreference(mMcPowerScheduler);
         }
 
-        if (preferenceGroup.getPreferenceCount() == 0) {
-            getPreferenceScreen().removePreference(preferenceGroup);
+        removeIfEmpty(preferenceGroup);
+
+        //------------------------------------------------------------------------------------------
+        // Intelli-Plug
+        //------------------------------------------------------------------------------------------
+
+        preferenceGroup = (PreferenceGroup) findPreference(GROUP_INTELLI_PLUG);
+
+        mIntelliPlug = (SwitchPreference) findPreference(KEY_INTELLI_PLUG);
+        if (CpuUtils.hasIntelliPlug()) {
+            mIntelliPlug.setChecked(CpuUtils.getIntelliPlugActive());
+            mIntelliPlug.setOnPreferenceChangeListener(this);
+        } else {
+            preferenceGroup.removePreference(mIntelliPlug);
         }
+
+        mIntelliPlugEco = (SwitchPreference) findPreference(KEY_INTELLI_PLUG_ECO);
+        if (CpuUtils.hasIntelliPlug() && CpuUtils.hasIntelliPlugEcoMode()) {
+            mIntelliPlugEco.setChecked(CpuUtils.getIntelliPlugEcoMode());
+            mIntelliPlugEco.setOnPreferenceChangeListener(this);
+        } else {
+            preferenceGroup.removePreference(mIntelliPlugEco);
+        }
+
+        removeIfEmpty(preferenceGroup);
 
         new PerformanceCpuTask().execute();
 
+    }
+
+    private void removeIfEmpty(PreferenceGroup preferenceGroup) {
+        if (preferenceGroup.getPreferenceCount() == 0) {
+            getPreferenceScreen().removePreference(preferenceGroup);
+        }
     }
 
     @Override
@@ -130,9 +155,14 @@ public class PerformanceGeneralFragment extends PreferenceFragment
             new WriteAndForget(sLcdPowerReduceFile, (value ? "1" : "0")).run();
             PreferenceHelper.setBoolean(KEY_LCD_POWER_REDUCE, value);
             changed = true;
+        } else if (preference == mIntelliPlug) {
+            boolean value = (Boolean) o;
+            CpuUtils.enableIntelliPlug(value);
+            PreferenceHelper.setBoolean(KEY_INTELLI_PLUG, value);
+            changed = true;
         } else if (preference == mIntelliPlugEco) {
             boolean value = (Boolean) o;
-            new WriteAndForget(sIntelliPlugEcoFile, (value ? "1" : "0")).run();
+            CpuUtils.enableIntelliPlugEcoMode(value);
             PreferenceHelper.setBoolean(KEY_INTELLI_PLUG_ECO, value);
             changed = true;
         } else if (preference == mMcPowerScheduler) {
@@ -159,7 +189,9 @@ public class PerformanceGeneralFragment extends PreferenceFragment
     }
 
     public static boolean isSupported(Context context) {
-        return (sLcdPowerReduce || sIntelliPlugEco || Utils.getLowRamDevice(context));
+        return (sLcdPowerReduce
+                || CpuUtils.hasIntelliPlug() // includes eco mode
+                || Utils.getLowRamDevice(context));
     }
 
     //==============================================================================================

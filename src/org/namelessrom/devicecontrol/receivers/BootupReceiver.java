@@ -29,11 +29,12 @@ import org.namelessrom.devicecontrol.fragments.performance.PerformanceGeneralFra
 import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
 import org.namelessrom.devicecontrol.threads.FireAndForget;
 import org.namelessrom.devicecontrol.threads.WriteAndForget;
-import org.namelessrom.devicecontrol.utils.AlarmHelper;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+import org.namelessrom.devicecontrol.utils.helpers.AlarmHelper;
+import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
+import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -156,9 +157,15 @@ public class BootupReceiver extends BroadcastReceiver
                 valueList.add(PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false)
                         ? "1" : "0");
             }
-            if (PerformanceGeneralFragment.sIntelliPlugEco) {
+            if (CpuUtils.hasIntelliPlug()) {
+                logDebug("Reapplying: IntelliPlug");
+                fileList.add(CpuUtils.INTELLI_PLUG_PATH);
+                valueList.add(PreferenceHelper.getBoolean(KEY_INTELLI_PLUG, false)
+                        ? "1" : "0");
+            }
+            if (CpuUtils.hasIntelliPlugEcoMode()) {
                 logDebug("Reapplying: IntelliPlugEco");
-                fileList.add(PerformanceGeneralFragment.sIntelliPlugEcoFile);
+                fileList.add(CpuUtils.INTELLI_PLUG_ECO_MODE_PATH);
                 valueList.add(PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false)
                         ? "1" : "0");
             }
