@@ -19,6 +19,9 @@ package org.namelessrom.devicecontrol.utils.helpers;
 
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +73,8 @@ public class CpuUtils {
     public static final String INTELLI_PLUG_PATH = "/sys/module/intelli_plug/parameters/intelli_plug_active";
     public static final String INTELLI_PLUG_ECO_MODE_PATH = "/sys/module/intelli_plug/parameters/eco_mode_active";
     public static final String INTELLI_PLUG_SUSPEND_PATH = "/sys/kernel/intelliplug/sleep_active_status";
+    //----------------------------------------------------------------------------------------------
+    public static final String CPU_TEMP_PATH = "/sys/class/thermal/thermal_zone0/temp";
     //==============================================================================================
     // Fields
     //==============================================================================================
@@ -84,6 +89,29 @@ public class CpuUtils {
 
     public static void enableIntelliPlugEcoMode(final boolean enable) {
         Utils.writeValue(INTELLI_PLUG_ECO_MODE_PATH, (enable ? "1" : "0"));
+    }
+
+    public static List<Integer> getAvailableFrequencies() {
+        List<Integer> tmpList = new ArrayList<Integer>();
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(FREQ_AVAILABLE_PATH));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] nums = line.split(" ");
+                tmpList.add(Integer.parseInt(nums[0]));
+            }
+        } catch (IOException e) {
+        } finally {
+            try {
+                br.close();
+            } catch (Exception exc) {
+                // ignore
+            }
+        }
+
+        return tmpList;
     }
 
     public static int getCpuFrequency(final int cpu) {
@@ -106,6 +134,13 @@ public class CpuUtils {
         }
 
         return Integer.parseInt(Utils.readOneLine(path).trim());
+    }
+
+    public static int getCpuTemperature() {
+        int temp = Integer.parseInt(Utils.readOneLine(CPU_TEMP_PATH).trim());
+        temp = (temp < 0 ? 0 : temp);
+        temp = (temp > 100 ? 100 : temp);
+        return temp;
     }
 
     public static List<Integer> getCurrentFrequencies() {

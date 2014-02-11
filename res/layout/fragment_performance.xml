@@ -44,10 +44,24 @@
 
         <View
             style="@style/StandardDivider"
-            android:id="@+id/performance_divider1"
+            android:id="@+id/performance_divider0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/help_textview" />
+
+        <include
+            layout="@layout/layout_device_stats"
+            android:layout_below="@+id/performance_divider0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/device_status" />
+
+        <View
+            style="@style/StandardDivider"
+            android:id="@+id/performance_divider1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/device_status" />
 
         <include
             layout="@layout/layout_time_in_state"

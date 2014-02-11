@@ -20,9 +20,12 @@ package org.namelessrom.devicecontrol.fragments.performance;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -31,6 +34,7 @@ import android.widget.TextView;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.CPUStateMonitor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +51,23 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
     private TextView mHeaderTotalStateTime;
     private TextView mStatesWarning;
     private ImageView mRefresh;
+
+    private LinearLayout mDeviceInfo;
+    private CheckBox mDeviceAutoRefresh;
+
     private boolean mUpdatingData = false;
+    private boolean mUpdatingDevice = false;
+
+    private static final int mInterval = 2000;
+    private Handler mHandler;
 
     private CPUStateMonitor monitor = new CPUStateMonitor();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mHandler = new Handler();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,6 +89,19 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
             }
         });
 
+        mDeviceInfo = (LinearLayout) view.findViewById(R.id.ui_device_stats_view);
+        mDeviceAutoRefresh = (CheckBox) view.findViewById(R.id.ui_device_auto_refresh);
+        mDeviceAutoRefresh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    startRepeatingTask();
+                } else {
+                    stopRepeatingTask();
+                }
+            }
+        });
+
         return view;
     }
 
@@ -83,7 +114,54 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
     @Override
     public void onResume() {
         refreshData();
+        updateStatus();
         super.onResume();
+    }
+
+    private View generateRow(ViewGroup parent, final String title, final String value,
+                             final String barLeft, final String barRight, final int progress) {
+
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.row_device, parent, false);
+
+        TextView deviceTitle = (TextView) view.findViewById(R.id.ui_device_title);
+        TextView deviceValue = (TextView) view.findViewById(R.id.ui_device_value);
+        TextView deviceBarLeft = (TextView) view.findViewById(R.id.ui_device_bar_left);
+        TextView deviceBarRight = (TextView) view.findViewById(R.id.ui_device_bar_right);
+        ProgressBar bar = (ProgressBar) view.findViewById(R.id.ui_device_bar);
+
+        deviceTitle.setText(title);
+        deviceValue.setText(value);
+        deviceBarLeft.setText(barLeft);
+        deviceBarRight.setText(barRight);
+        bar.setProgress(progress);
+
+        parent.addView(view);
+        return view;
+    }
+
+    Runnable mDeviceUpdater = new Runnable() {
+        @Override
+        public void run() {
+            if (!mUpdatingDevice) {
+                updateStatus();
+            }
+            mHandler.postDelayed(mDeviceUpdater, mInterval);
+        }
+    };
+
+    void startRepeatingTask() {
+        mDeviceUpdater.run();
+    }
+
+    void stopRepeatingTask() {
+        mHandler.removeCallbacks(mDeviceUpdater);
+    }
+
+    private void updateStatus() {
+        mDeviceInfo.removeAllViews();
+        generateRow(mDeviceInfo, "CPU Temperature:", CpuUtils.getCpuTemperature() + "°C",
+                "0°C", "100°C", CpuUtils.getCpuTemperature());
     }
 
     public void updateView() {
@@ -158,7 +236,7 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
     private View generateStateRow(CPUStateMonitor.CpuState state, ViewGroup parent) {
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.state_row, parent, false);
+        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.row_state, parent, false);
 
         float per = (float) state.duration * 100 / monitor.getTotalStateTime();
         String sPer = (int) per + "%";

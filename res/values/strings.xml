@@ -97,6 +97,7 @@
         readable.
     </string>
     <string name="deep_sleep">"Deep Sleep"</string>
+    <string name="device_information">Device Information</string>
     <!-- General -->
     <string name="pref_force_highend_gfx_title">Force high-end graphics</string>
     <string name="pref_force_highend_gfx_summary">Enables high-end visual effects such as transparent status/navigation bar (needs to be supported by your rom, requires reboot)</string>
@@ -248,5 +249,7 @@
     <string name="etc_prop_val">Value</string>
     <string name="etc_prop_preset">Presets</string>
     <string name="etc_no_packages">No packages</string>
+
+    <string name="auto_refresh">Auto refresh</string>
 
 </resources>
