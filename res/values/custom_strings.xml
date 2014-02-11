@@ -25,4 +25,11 @@
     <string name="knockon_enable_summary_off">Knock on gesture disabled</string>
     <string name="knockon_enable_summary_on">Knock on gesture enabled</string>
 
+    <!-- StandOut -->
+    <string name="window_icon">Window icon</string>
+    <string name="hide">Hide</string>
+    <string name="close">Close</string>
+    <string name="corner">Corner</string>
+    <string name="maximize">Maximize</string>
+
 </resources>

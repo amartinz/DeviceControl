@@ -17,6 +17,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- SuperUser -->
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
+    <!-- Overlay -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
