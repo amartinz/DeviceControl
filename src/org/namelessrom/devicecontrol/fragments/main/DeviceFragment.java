@@ -32,8 +32,8 @@ import org.namelessrom.devicecontrol.fragments.device.DeviceInputFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceLightsFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceSensorsFragment;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
-import org.namelessrom.devicecontrol.utils.adapters.ScreenSlidePagerAdapter;
-import org.namelessrom.devicecontrol.utils.widgets.JfViewPager;
+import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
+import org.namelessrom.devicecontrol.widgets.JfViewPager;
 
 import java.util.ArrayList;
 import java.util.List;

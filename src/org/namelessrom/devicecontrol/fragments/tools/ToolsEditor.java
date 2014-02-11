@@ -46,13 +46,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.threads.FireAndForget;
-import org.namelessrom.devicecontrol.threads.FireAndGet;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.utils.classes.Prop;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+import org.namelessrom.devicecontrol.utils.threads.FireAndForget;
+import org.namelessrom.devicecontrol.utils.threads.FireAndGet;
+import org.namelessrom.devicecontrol.widgets.adapters.PropAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -76,6 +76,7 @@ public class ToolsEditor extends Fragment
     private EditText filterText = null;
     private final List<Prop> props = new ArrayList<Prop>();
     private final String dn = DC_BACKUP_DIR;
+    private View mShadowTop, mShadowBottom;
 
     private final String syspath = "/system/etc/";
     private String mod = "sysctl";
@@ -114,7 +115,7 @@ public class ToolsEditor extends Fragment
                 break;
         }
 
-        View view = inflater.inflate(R.layout.prop_view, container, false);
+        View view = inflater.inflate(R.layout.tools_prop_list, container, false);
 
         packList = (ListView) view.findViewById(R.id.applist);
         packList.setOnItemClickListener(this);
@@ -214,6 +215,9 @@ public class ToolsEditor extends Fragment
             applyBtn.setVisibility(View.VISIBLE);
         }
         tools.setVisibility(View.GONE);
+
+        mShadowTop = view.findViewById(R.id.tools_editor_shadow_top);
+        mShadowBottom = view.findViewById(R.id.tools_editor_shadow_bottom);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -361,6 +365,8 @@ public class ToolsEditor extends Fragment
             } else {
                 nofiles.setVisibility(View.GONE);
                 tools.setVisibility(View.VISIBLE);
+                mShadowTop.setVisibility(View.VISIBLE);
+                mShadowBottom.setVisibility(View.VISIBLE);
                 adapter = new PropAdapter(getActivity(), props);
                 packList.setAdapter(adapter);
             }
@@ -392,6 +398,8 @@ public class ToolsEditor extends Fragment
         } else {
             nofiles.setVisibility(View.GONE);
             tools.setVisibility(View.VISIBLE);
+            mShadowTop.setVisibility(View.VISIBLE);
+            mShadowBottom.setVisibility(View.VISIBLE);
             adapter = new PropAdapter(getActivity(), props);
             packList.setAdapter(adapter);
         }

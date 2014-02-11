@@ -86,15 +86,19 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/tools_freezer_shadow_bottom"
         android:layout_alignBottom="@+id/llist"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@drawable/bottom_shadow" />
+        android:background="@drawable/bottom_shadow"
+        android:visibility="invisible" />
 
     <View
+        android:id="@+id/tools_freezer_shadow_top"
         android:layout_alignTop="@+id/llist"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@drawable/top_shadow" />
+        android:background="@drawable/top_shadow"
+        android:visibility="invisible" />
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package org.namelessrom.devicecontrol.utils.transformers;
+package org.namelessrom.devicecontrol.widgets.transformers;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

@@ -15,15 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.utils.widgets;
+package org.namelessrom.devicecontrol.widgets;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.transformers.DepthPageTransformer;
-import org.namelessrom.devicecontrol.utils.transformers.ZoomOutPageTransformer;
+import org.namelessrom.devicecontrol.widgets.transformers.DepthPageTransformer;
+import org.namelessrom.devicecontrol.widgets.transformers.ZoomOutPageTransformer;
 
 /**
  * Created by alex on 18.12.13.

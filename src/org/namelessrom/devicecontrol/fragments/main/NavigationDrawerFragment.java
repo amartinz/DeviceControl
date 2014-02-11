@@ -37,7 +37,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.adapters.DrawerAdapter;
+import org.namelessrom.devicecontrol.widgets.adapters.DrawerAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

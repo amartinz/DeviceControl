@@ -36,7 +36,6 @@ import android.widget.TextView;
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.containers.Permissions;
 import com.stericson.roottools.exceptions.RootDeniedException;
-import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
 import org.namelessrom.devicecontrol.Application;
@@ -147,17 +146,6 @@ public class SanityCheckRootTools extends Activity {
         public void run() {
             visualUpdate(TestHandler.ACTION_SHOW, null);
 
-            // First test: Install a binary file for future use
-            // if it wasn't already installed.
-            /*
-            visualUpdate(TestHandler.ACTION_PDISPLAY, "Installing binary if needed");
-            if(false == RootTools.installBinary(mContext, R.raw.nes, "nes_binary")) {
-                visualUpdate(TestHandler.ACTION_HIDE
-                , "ERROR: Failed to install binary. Please see log file.");
-                return;
-            }
-            */
-
             boolean result;
 
             visualUpdate(TestHandler.ACTION_PDISPLAY, "Testing getPath");
@@ -216,7 +204,6 @@ public class SanityCheckRootTools extends Activity {
                         , RootTools.fixUtils(new String[]{"ls", "rm", "ln", "dd", "chmod", "mount"})
                         + " k\n\n");
             } catch (Exception e2) {
-                // TODO Auto-generated catch block
                 e2.printStackTrace();
             }
 
@@ -264,68 +251,6 @@ public class SanityCheckRootTools extends Activity {
             long spaceValue = RootTools.getSpace("/data");
             visualUpdate(TestHandler.ACTION_DISPLAY, "[ Checking /data partition size]\n");
             visualUpdate(TestHandler.ACTION_DISPLAY, spaceValue + "k\n\n");
-
-            if (Application.IS_LOG_DEBUG) {
-                Shell shell;
-                try {
-                    shell = RootTools.getShell(true);
-
-                    CommandCapture cmd = new CommandCapture(42, false, "find /") {
-
-                        boolean _catch = false;
-
-                        @Override
-                        public void commandOutput(int id, String line) {
-                            super.commandOutput(id, line);
-
-                            if (_catch) {
-                                RootTools.log("CAUGHT!!!");
-                            }
-                        }
-
-                        @Override
-                        public void commandTerminated(int id, String reason) {
-                            synchronized (SanityCheckRootTools.this) {
-
-                                _catch = true;
-                                visualUpdate(TestHandler.ACTION_PDISPLAY, "All tests complete.");
-                                visualUpdate(TestHandler.ACTION_HIDE, null);
-
-                                try {
-                                    RootTools.closeAllShells();
-                                } catch (IOException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                }
-
-                            }
-                        }
-
-                        @Override
-                        public void commandCompleted(int id, int exitCode) {
-                            synchronized (SanityCheckRootTools.this) {
-                                _catch = true;
-
-                                visualUpdate(TestHandler.ACTION_PDISPLAY, "All tests complete.");
-                                visualUpdate(TestHandler.ACTION_HIDE, null);
-
-                                try {
-                                    RootTools.closeAllShells();
-                                } catch (IOException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                }
-
-                            }
-                        }
-                    };
-
-                    shell.add(cmd);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
 
         }
 

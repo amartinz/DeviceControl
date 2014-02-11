@@ -22,8 +22,8 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.preferences.PanelColorTemperature;
-import org.namelessrom.devicecontrol.threads.WriteAndForget;
+import org.namelessrom.devicecontrol.widgets.preferences.PanelColorTemperature;
+import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;

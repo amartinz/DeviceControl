@@ -52,7 +52,7 @@
             android:title="@string/input_glove_mode_title"
             android:summary="@string/input_glove_mode_summary" />
 
-        <org.namelessrom.devicecontrol.preferences.VibratorTuningPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.VibratorTuningPreference
             android:key="vibrator_tuning"
             android:title="@string/vibrator_tuning_title"
             android:dialogTitle="@string/vibrator_tuning_title" />

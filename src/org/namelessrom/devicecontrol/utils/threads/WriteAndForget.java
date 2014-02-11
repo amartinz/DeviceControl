@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
-package org.namelessrom.devicecontrol.threads;
+package org.namelessrom.devicecontrol.utils.threads;
 
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;

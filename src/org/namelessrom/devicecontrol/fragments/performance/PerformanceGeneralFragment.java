@@ -29,8 +29,8 @@ import android.preference.SwitchPreference;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.preferences.SeekBarPreference;
-import org.namelessrom.devicecontrol.threads.WriteAndForget;
+import org.namelessrom.devicecontrol.widgets.preferences.SeekBarPreference;
+import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;

@@ -39,8 +39,8 @@ import android.widget.Switch;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
 import org.namelessrom.devicecontrol.utils.CMDProcessor;
-import org.namelessrom.devicecontrol.utils.adapters.PackAdapter;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.widgets.adapters.PackAdapter;
 
 
 public class ToolsFreezer extends Fragment
@@ -59,6 +59,7 @@ public class ToolsFreezer extends Fragment
     private String packs;
     private String pn;
     private String titlu;
+    private View mShadowTop, mShadowBottom;
 
     public static ToolsFreezer newInstance(final int freezer, final String type) {
         Bundle b = new Bundle();
@@ -93,6 +94,9 @@ public class ToolsFreezer extends Fragment
                 ((PressToLoadFragment) getParentFragment()).replaceFragment(f);
             }
         });
+
+        mShadowTop = v.findViewById(R.id.tools_freezer_shadow_top);
+        mShadowBottom = v.findViewById(R.id.tools_freezer_shadow_bottom);
 
         packList = (ListView) v.findViewById(R.id.applist);
         packList.setOnItemClickListener(this);
@@ -161,6 +165,8 @@ public class ToolsFreezer extends Fragment
                 packList.setAdapter(adapter);
                 linNopack.setVisibility(View.GONE);
                 llist.setVisibility(LinearLayout.VISIBLE);
+                mShadowTop.setVisibility(View.VISIBLE);
+                mShadowBottom.setVisibility(View.VISIBLE);
             } else {
                 linNopack.setVisibility(View.VISIBLE);
             }

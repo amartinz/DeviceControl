@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.utils.adapters;
+package org.namelessrom.devicecontrol.widgets.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

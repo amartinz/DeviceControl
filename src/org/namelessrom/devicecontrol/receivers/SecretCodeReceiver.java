@@ -28,16 +28,17 @@ public class SecretCodeReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        final String host = intent.getData().getHost().trim();
 
-        String host = intent.getData().getHost();
-
-        if (host.equals("13371")) {
-            context.startActivity(new Intent(context, SanityCheckRootTools.class)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-        } else if (host.equals("13372")) {
-            context.startActivity(new Intent(context, MainActivity.class)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        if (host != null && !host.isEmpty()) {
+            if (host.equals("13371")) {
+                context.startActivity(new Intent(context, SanityCheckRootTools.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            } else if (host.equals("13372")) {
+                context.startActivity(new Intent(context, MainActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            }
         }
-
     }
+
 }

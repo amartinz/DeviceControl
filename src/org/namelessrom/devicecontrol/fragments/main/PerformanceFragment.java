@@ -29,8 +29,8 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceGeneralFragment;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceInformationFragment;
-import org.namelessrom.devicecontrol.utils.adapters.ScreenSlidePagerAdapter;
-import org.namelessrom.devicecontrol.utils.widgets.JfViewPager;
+import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
+import org.namelessrom.devicecontrol.widgets.JfViewPager;
 
 import java.util.ArrayList;
 import java.util.List;

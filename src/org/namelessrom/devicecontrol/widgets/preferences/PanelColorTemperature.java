@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.namelessrom.devicecontrol.preferences;
+package org.namelessrom.devicecontrol.widgets.preferences;
 
 import android.content.Context;
 import android.preference.ListPreference;

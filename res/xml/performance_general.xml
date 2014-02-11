@@ -55,7 +55,7 @@
             android:summaryOff="@string/cpu_powersaving_lcd_summary_off"
             android:defaultValue="false" />
 
-        <org.namelessrom.devicecontrol.preferences.SeekBarPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.SeekBarPreference
             android:key="sched_mc_power_savings"
             android:title="@string/cpu_powersaving_sched_mc_title"
             android:summary="@string/cpu_powersaving_sched_mc_summary"
