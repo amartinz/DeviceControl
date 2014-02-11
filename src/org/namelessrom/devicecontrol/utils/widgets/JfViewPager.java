@@ -21,7 +21,7 @@ import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.transformers.DepthPageTransformer;
 import org.namelessrom.devicecontrol.utils.transformers.ZoomOutPageTransformer;
 

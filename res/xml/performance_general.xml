@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--  Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
+<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -18,10 +18,31 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:nameless="http://nameless-rom.org">
+
     <CheckBoxPreference
         android:key="pref_force_highend_gfx"
         android:title="@string/pref_force_highend_gfx_title"
         android:summary="@string/pref_force_highend_gfx_summary" />
+
+    <PreferenceCategory
+        android:key="intelli_plug"
+        android:title="@string/intelli_plug">
+
+        <SwitchPreference
+            android:key="intelli_plug_active"
+            android:title="@string/intelli_plug"
+            android:summaryOn="@string/cpu_intelli_plug_summary_on"
+            android:summaryOff="@string/cpu_intelli_plug_summary_off"
+            android:defaultValue="false" />
+
+        <SwitchPreference
+            android:key="intelli_plug_eco"
+            android:title="@string/cpu_powersaving_intelli_plug_eco_title"
+            android:summaryOn="@string/cpu_powersaving_intelli_plug_eco_summary_on"
+            android:summaryOff="@string/cpu_powersaving_intelli_plug_eco_summary_off"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
 
     <PreferenceCategory
         android:key="powersaving"
@@ -32,13 +53,6 @@
             android:title="@string/cpu_powersaving_lcd_title"
             android:summaryOn="@string/cpu_powersaving_lcd_summary_on"
             android:summaryOff="@string/cpu_powersaving_lcd_summary_off"
-            android:defaultValue="false" />
-
-        <SwitchPreference
-            android:key="intelli_plug_eco"
-            android:title="@string/cpu_powersaving_intelli_plug_eco_title"
-            android:summaryOn="@string/cpu_powersaving_intelli_plug_eco_summary_on"
-            android:summaryOff="@string/cpu_powersaving_intelli_plug_eco_summary_off"
             android:defaultValue="false" />
 
         <org.namelessrom.devicecontrol.preferences.SeekBarPreference

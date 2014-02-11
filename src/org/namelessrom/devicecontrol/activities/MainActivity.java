@@ -39,7 +39,7 @@ import org.namelessrom.devicecontrol.fragments.main.PerformanceFragment;
 import org.namelessrom.devicecontrol.fragments.main.PreferencesFragment;
 import org.namelessrom.devicecontrol.fragments.main.TaskerFragment;
 import org.namelessrom.devicecontrol.fragments.main.ToolsFragment;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
