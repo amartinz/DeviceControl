@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- SuperUser -->
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
+    <!--uses-permission android:name="android.permission.GET_TASKS"/-->
 
     <application
         android:allowBackup="true"

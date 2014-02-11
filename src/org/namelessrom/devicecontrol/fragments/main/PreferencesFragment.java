@@ -18,7 +18,6 @@
 package org.namelessrom.devicecontrol.fragments.main;
 
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -32,9 +31,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 
 /**
  * Created by alex on 18.12.13.
@@ -47,7 +46,6 @@ public class PreferencesFragment extends PreferenceFragment
     //==============================================================================================
     private DrawerLayout mDrawerLayout;
     private View mFragmentContainerView;
-    private PackageManager mPm;
 
     //==============================================================================================
     // Appearance
@@ -77,8 +75,6 @@ public class PreferencesFragment extends PreferenceFragment
         addPreferencesFromResource(R.xml._device_control);
 
         PreferenceHelper.getInstance(getActivity());
-
-        mPm = getActivity().getPackageManager();
 
         mCustomAnimations = (SwitchPreference)
                 findPreference("prefs_jf_appearance_custom_animations");

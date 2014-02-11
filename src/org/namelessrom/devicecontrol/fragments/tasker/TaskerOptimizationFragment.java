@@ -24,9 +24,9 @@ import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 
 public class TaskerOptimizationFragment extends PreferenceFragment
