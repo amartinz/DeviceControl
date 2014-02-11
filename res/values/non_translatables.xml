@@ -18,8 +18,9 @@
 
 <resources>
 
+    <string name="app_name" translatable="false">"Device Control"</string>
     <string name="empty" translatable="false" />
-    <string name="unknown" translatable="false">---</string>
-    <string name="intelli_plug" translatable="false">Intelli-Plug</string>
+    <string name="unknown" translatable="false">"---"</string>
+    <string name="intelli_plug" translatable="false">"Intelli-Plug"</string>
 
 </resources>
