@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<resources>
+    <!-- App -->
+    <string name="app_version_name">"Versionname: %s"</string>
+    <string name="app_version_code">"Versioncode: %s"</string>
+    <string name="app_information_help">"Willkommen zu %1$s\n\nUm anzufangen, ziehe die Navigation von links heraus!\n\nUm Eigenschaften von %2$s zu ändern,\nziehe die Einstellungen von rechts heraus!\n\n\nHinweis: %3$s benötigt Superuser Rechte,\num vollständig zu funktionieren!\n\n"</string>
+    <string name="app_device_help">"Willkommen zu den Geräte-Einstellungen!\n\nDu kannst nach rechts wischen,\num dein Gerät anzupassen!\n\nHinweis: falls eine Funktion nicht unterstützt wird,\nwird sie automatisch ausgeblendet.\n\n"</string>
+    <string name="app_performance_help">"Willkommen zur Leistungs-Konfiguration!\n"</string>
+    <string name="app_tasker_help">"Willkommen zu automatisierten Aufgaben!\n\nDu kannst nach rechts wischen,\num verschiedene automatisierte Aufgaben zu entdecken!\n\n\n"</string>
+    <string name="app_tools_help">"Willkommen zu den Werkzeugen!\n\nDu kannst nach rechts wischen,\num zahlreiche Werkzeuge zu entdecken!\n\n\n\n"</string>
+    <!-- Warnings -->
+    <string name="app_warning_root">"Hinweis: %s benötigt Superuser Rechte um vollständig zu funktionieren!"</string>
+    <!-- Messages -->
+    <string name="message_loading">"Lade, bitte warten..."</string>
+    <!-- Fragment -->
+    <string name="fragment_press_to_load">"Drück mich, um \"%s\" zu laden."</string>
+    <!-- Actions -->
+    <string name="action_press_again">"Erneut drücken um zu beenden!"</string>
+    <!-- General -->
+    <string name="defaults_button">"Standardeinstellungen wiederherstellen"</string>
+    <string name="general">"Allgemein"</string>
+    <string name="general_others">"Sonstiges"</string>
+    <!-- Dialogs -->
+    <string name="dialog_warning">"Warnung!"</string>
+    <string name="dialog_warning_apply">"Willst du wirklich die folgenden Einstellungen übernehmen?"</string>
+    <!-- Toast -->
+    <string name="toast_settings_applied">"Erfolgreich angewendet!"</string>
+    <!-- Sections -->
+    <string name="section_title_information">"Informationen"</string>
+    <!-- Device -->
+    <string name="section_title_device">"Gerät"</string>
+    <string name="section_title_device_input">"Eingabe"</string>
+    <string name="section_title_device_light">"Licht"</string>
+    <string name="section_title_device_graphics">"Grafik"</string>
+    <!-- Tasker -->
+    <string name="section_title_tasker">"Automatisierung"</string>
+    <string name="section_title_tasker_optimizations">"Optimierungen"</string>
+    <!-- Performance -->
+    <string name="section_title_performance">"Leistung"</string>
+    <!-- Tools -->
+    <string name="section_title_tools">"Werkzeuge"</string>
+    <string name="section_title_tools_editors">"Editoren"</string>
+    <string name="section_title_tools_sysctl">"SysCtl"</string>
+    <string name="section_title_tools_vm">"VM"</string>
+    <string name="section_title_tools_buildprop">"Build.Prop"</string>
+    <string name="section_title_tools_freezer">"Deaktivator"</string>
+    <string name="section_title_tools_unfreezer">"Aktivator"</string>
+    <!-- PERFORMANCE -->
+    <!-- Help -->
+    <string name="time_in_state">"Zeit je Stadium"</string>
+    <string name="unused_cpu_states">"Ungenutze CPU Frequenzen"</string>
+    <string name="total_state_time">"Gesamte Laufzeit"</string>
+    <string name="no_states_file_found">"Status-Datei konnte nicht gefunden werden."</string>
+    <string name="deep_sleep">"\"Tiefschlaf\""</string>
+    <string name="device_information">"Geräte-Informationen"</string>
+    <!-- General -->
+    <string name="pref_force_highend_gfx_title">"High-End Grafik erzwingen"</string>
+    <string name="pref_force_highend_gfx_summary">"Aktiviert High-End-Effekte, wie zum Beispiel transparente Status-/Navigationsleisten (muss von der Rom unterstützt werden, benötigt Neustart des Gerätes)"</string>
+    <string name="cpu_powersaving">"Energiesparen"</string>
+    <!-- LCD TODO: why it is here?! -->
+    <string name="cpu_powersaving_lcd_title">"LCD Strom Reduzierung"</string>
+    <string name="cpu_powersaving_lcd_summary_on">"Stromnutzung wird reduziert."</string>
+    <string name="cpu_powersaving_lcd_summary_off">"Stromnutzung wird nicht reduziert."</string>
+    <!-- Intelli-Plug -->
+    <string name="cpu_intelli_plug_summary_on">"Intelli-Plug ist aktiv."</string>
+    <string name="cpu_intelli_plug_summary_off">"Intelli-Plug ist inaktiv."</string>
+    <string name="cpu_powersaving_intelli_plug_eco_title">"Eco-Modus"</string>
+    <string name="cpu_powersaving_intelli_plug_eco_summary_on">"Intelli-Plug Eco-Modus ist aktiv."</string>
+    <string name="cpu_powersaving_intelli_plug_eco_summary_off">"Intelli-Plug Eco-Modus ist nicht aktiv."</string>
+    <!-- Mc Sched -->
+    <string name="cpu_powersaving_sched_mc_title">"Power-Scheduler"</string>
+    <string name="cpu_powersaving_sched_mc_summary">"Versucht Prozesse auf einen Kern zu gruppieren, um maximale Auslastung zu erreichen, bevor ein zusätzlicher verwendet wird.\nFalls aktiviert, wird die Batterielaufzeit gegen Leistung bevorzugt.\n\n0 zum Deaktivieren, 1 für ausgeglichen, 2 für aggressiv."</string>
+    <string name="cpu_powersaving_sched_mc_0">"0 - Deaktiviert"</string>
+    <string name="cpu_powersaving_sched_mc_1">"1 - Ausgeglichen"</string>
+    <string name="cpu_powersaving_sched_mc_2">"2 - Aggressiv"</string>
+    <!-- Key Lights -->
+    <string name="touchkey_subcat_title">"Hardware-Tasten"</string>
+    <string name="touchkey_light_title_head">"Aktiviert Tasten-Hintergrundbeleuchtung"</string>
+    <string name="touchkey_light_summary_head">"Tasten werden beleuchtet, wenn der Bildschirm eingeschaltet ist."</string>
+    <string name="touchkey_bln_title_head">"Aktiviere Tasten-Benachrichtigungen"</string>
+    <string name="touchkey_bln_summary_head">"Beleuchte die Tasten, wenn du eine Benachrichtigung bekommst."</string>
+    <string name="keyboard_light_title_head">"Tastatur-Beleuchtung"</string>
+    <string name="keyboard_light_summary_head">"Beleuchte die Tastatur, wenn der Bildschirm eingeschaltet ist."</string>
+    <!-- Vibrator -->
+    <string name="vibrator_title">"Vibration"</string>
+    <string name="vibrator_tuning_title">"Vibrationsstärke"</string>
+    <string name="vibrator_tuning_summary_head">"Verändere die Vibrationsstärke"</string>
+    <string name="vibrator_warning">"Werte höher als %1$d sind nicht empfohlen"</string>
+    <!-- Navigation Bar -->
+    <string name="navbar_title">"Navigationsleiste"</string>
+    <string name="navbar_force_title">"Erzwinge Navigationsleiste"</string>
+    <string name="navbar_force_summary">"Benötigt einen Neustart!"</string>
+    <!-- Others -->
+    <string name="input_glove_mode_title">"Handschuh-Modus"</string>
+    <string name="input_glove_mode_summary">"Der Bildschirm wird empfindlicher für Eingaben, zum Beispiel für Eingaben während du Handschuhe trägst."</string>
+    <!-- Graphics -->
+    <!-- Panel color -->
+    <string name="panel_gamma_title_head">"Bildschirm-Gamma"</string>
+    <string name="panel_gamma_summary_head">"Lege den Gamma-Wert für den Bildschirm fest"</string>
+    <string name="panel_color_temp_title_head">"Bildschirm Farbtemperatur"</string>
+    <string name="panel_color_temp_summary_head">"Bildschirm ein- und ausschalten zum Aktivieren"</string>
+    <string name="panel_color_temp_cold">"Kalt"</string>
+    <string name="panel_color_temp_cool">"Kühl"</string>
+    <string name="panel_color_temp_normal">"Normal"</string>
+    <string name="panel_color_temp_warm">"Warm"</string>
+    <string name="panel_color_temp_hot">"Heiß"</string>
+    <!-- Preferences -->
+    <!-- Appearance -->
+    <string name="prefs_jf_appearance">"Aussehen"</string>
+    <string name="prefs_jf_appearance_custom_animations_title">"Benutze Animationen"</string>
+    <string name="prefs_jf_appearance_custom_animations_summary_on">"Animationen sind aktiviert."</string>
+    <string name="prefs_jf_appearance_custom_animations_summary_off">"Animationen sind deaktiviert."</string>
+    <string name="prefs_jf_appearance_custom_transformer_title">"Seiten-Transformator"</string>
+    <string name="prefs_jf_appearance_custom_transformer_summary">"Animation, welche benutzt wird, wenn du die Seiten wechselst."</string>
+    <string name="transformer_zoomout">"Herauszoomen"</string>
+    <string name="transformer_depth">"Tiefe"</string>
+    <!-- Debug -->
+    <string name="prefs_jf_debug">"Debugging"</string>
+    <string name="jf_debug_extensive_logging_title">"Erweitertes Protokollieren"</string>
+    <string name="jf_debug_extensive_logging_summary_on">"Protokollieren in den LogCat aktiviert."</string>
+    <string name="jf_debug_extensive_logging_summary_off">"Protokollieren in den LogCat deaktiviert."</string>
+    <!-- Reapply on boot -->
+    <string name="prefs_set_on_boot">"Nach Neustart wiederanwenden"</string>
+    <!-- Version -->
+    <string name="prefs_jf_version">"Version"</string>
+    <!-- Tasker -->
+    <string name="tasker_optimization_fstrim_cat_title">"Fstrimmen"</string>
+    <string name="tasker_optimization_filesystem_fstrim_title">"Automatisiertes Fstrimmen"</string>
+    <string name="tasker_optimization_filesystem_fstrim_summary_on">"Fstrimmen aktiviert."</string>
+    <string name="tasker_optimization_filesystem_fstrim_summary_off">"Fstrimmen deaktiviert."</string>
+    <string name="tasker_optimization_filesystem_fstrim_interval_title">"Fstrim Intervall"</string>
+    <string name="tasker_optimization_filesystem_fstrim_interval_summary">"Wähle das Intervall für automatisiertes Fstrimmen."</string>
+    <!-- Drawer -->
+    <string name="navigation_drawer_open">"Öffne die Navigation"</string>
+    <string name="navigation_drawer_close">"Schließe die Navigation"</string>
+    <string name="action_settings">"Einstellungen"</string>
+    <string name="action_licenses">"Lizenzen"</string>
+    <!-- Array Entries -->
+    <string name="five_minutes">"5 Minuten"</string>
+    <string name="ten_minutes">"10 Minuten"</string>
+    <string name="twenty_minutes">"20 Minuten"</string>
+    <string name="thirty_minutes">"30 Minuten"</string>
+    <string name="one_hours">"1 Stunde"</string>
+    <string name="two_hours">"2 Stunden"</string>
+    <string name="four_hours">"4 Stunden"</string>
+    <string name="eight_hours">"8 Stunden"</string>
+    <!-- freezer -->
+    <string name="pt_freeze">"Deaktiviere Anwendung"</string>
+    <string name="pt_unfreeze">"Aktiviere Anwendung"</string>
+    <string name="mt_system_packs">"System-Anwendungen"</string>
+    <string name="mt_user_packs">"Benutzer-Anwendungen"</string>
+    <string name="freeze_msg">"%s wird deaktiviert. Fortfahren?"</string>
+    <string name="unfreeze_msg">"%s wird aktiviert. Fortfahren?"</string>
+    <!-- Etc -->
+    <string name="etc_apply_values">"Änderungen übernehmen"</string>
+    <string name="etc_filter">"Filter"</string>
+    <string name="etc_save">"Speichern"</string>
+    <string name="etc_add_prop_title">"Füge Eintrag hinzu"</string>
+    <string name="etc_edit_prop_title">"Ändere Eintrag"</string>
+    <string name="etc_del_prop_title">"Lösche Eintrag"</string>
+    <string name="etc_del_prop_msg">"%s wird gelöscht.\n\nFortfahren?"</string>
+    <string name="etc_prop_backup">"Sicherungskopie von build.prop wurde erstellt in: %s"</string>
+    <string name="etc_prop_no_backup">"Sicherungskopie wurde nicht gefunden!"</string>
+    <string name="etc_prop_restore_title">"Wiederherstellen"</string>
+    <string name="etc_prop_restore_msg">"Sicherungskopie der build.prop wird wiederhergestellt.\nDu musst dein Gerät neustarten, damit Änderungen wirksam werden.\n\nFortfahren?"</string>
+    <string name="etc_prop_name">"Name"</string>
+    <string name="etc_prop_val">"Wert"</string>
+    <string name="etc_prop_preset">"Voreinstellung"</string>
+    <string name="etc_no_packages">"Keine Anwendungen"</string>
+    <!-- Knock On -->
+    <string name="knockonoff_panel_title">Knock On/Off Gesturen</string>
+    <string name="knockon_enable_head">Knock On</string>
+    <string name="knockon_enable_summary_off">Knock On Geste deaktiviert</string>
+    <string name="knockon_enable_summary_on">Knock On Geste aktiviert</string>
+</resources>
