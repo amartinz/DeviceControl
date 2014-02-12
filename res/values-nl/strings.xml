@@ -87,7 +87,7 @@
 
     <!-- PERFORMANCE -->
     <string name="pref_force_highend_gfx_title">"Forceer high-end graphics"</string>
-    <string name="pref_force_highend_gfx_summary">"Activeert high-end visuele effecten, zoals transparante status- & navigatiebalk (moet worden ondersteund door uw ROM, vereist reboot)"</string>
+    <string name="pref_force_highend_gfx_summary">"Activeert high-end visuele effecten, zoals transparante status- en navigatiebalk (moet worden ondersteund door uw ROM, vereist reboot)"</string>
 
     <string name="cpu_powersaving">"Stroombesparing"</string>
     <string name="cpu_powersaving_lcd_title">"LCD vermogenverminderaar"</string>
