@@ -45,11 +45,11 @@
 
         <CheckBoxPreference
             android:key="prefs_sob_vm"
-            android:title="@string/section_title_tools_vm" />
+            android:title="@string/vm" />
 
         <CheckBoxPreference
             android:key="prefs_sob_sysctl"
-            android:title="@string/section_title_tools_sysctl" />
+            android:title="@string/sysctl" />
 
     </PreferenceCategory>
 
