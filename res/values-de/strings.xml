@@ -57,9 +57,6 @@
     <!-- Tools -->
     <string name="section_title_tools">"Werkzeuge"</string>
     <string name="section_title_tools_editors">"Editoren"</string>
-    <string name="section_title_tools_sysctl">"SysCtl"</string>
-    <string name="section_title_tools_vm">"VM"</string>
-    <string name="section_title_tools_buildprop">"Build.Prop"</string>
     <string name="section_title_tools_freezer">"Deaktivator"</string>
     <string name="section_title_tools_unfreezer">"Aktivator"</string>
     <!-- PERFORMANCE -->
