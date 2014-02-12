@@ -39,7 +39,7 @@
             android:summaryOn="@string/knockon_enable_summary_on"
             android:summaryOff="@string/knockon_enable_summary_off"
             android:enabled="true"
-            android:defaultValue="true" />
+            android:defaultValue="false" />
 
     </PreferenceCategory>
 
