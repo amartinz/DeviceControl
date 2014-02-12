@@ -78,11 +78,7 @@
     <string name="time_in_state">"TIME IN STATE"</string>
     <string name="unused_cpu_states">"UNUSED CPU STATES"</string>
     <string name="total_state_time">"TOTAL STATE TIME"</string>
-    <string name="no_states_file_found">"No states file found. Are you sure your phone is
-        compatible?\n\nIf you are running a custom ROM or kernel, try
-        contacting its developer to inform him that the states file is not
-        readable.
-    "</string>
+    <string name="no_states_file_found">"No states file found."</string>
     <string name="deep_sleep">""Deep Sleep""</string>
     <string name="device_information">"Device Information"</string>
     <!-- General -->
