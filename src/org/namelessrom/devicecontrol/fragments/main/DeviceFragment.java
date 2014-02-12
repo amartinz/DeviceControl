@@ -30,10 +30,9 @@ import org.namelessrom.devicecontrol.fragments.device.DeviceGraphicsFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceHelpFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceInputFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceLightsFragment;
-import org.namelessrom.devicecontrol.fragments.device.DeviceSensorsFragment;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
-import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
 import org.namelessrom.devicecontrol.widgets.JfViewPager;
+import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,9 +91,6 @@ public class DeviceFragment extends AttachFragment {
         if (DeviceGraphicsFragment.isSupported()) {
             tmpList.add(new DeviceGraphicsFragment());
         }
-        if (DeviceSensorsFragment.isSupported()) {
-            tmpList.add(new DeviceSensorsFragment());
-        }
         return tmpList;
     }
 
@@ -109,9 +105,6 @@ public class DeviceFragment extends AttachFragment {
         }
         if (DeviceGraphicsFragment.isSupported()) {
             tmpList.add(getString(R.string.section_title_device_graphics));
-        }
-        if (DeviceSensorsFragment.isSupported()) {
-            tmpList.add(getString(R.string.section_title_device_sensors));
         }
         return tmpList;
     }

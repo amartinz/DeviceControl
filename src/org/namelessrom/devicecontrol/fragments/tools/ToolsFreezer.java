@@ -193,14 +193,13 @@ public class ToolsFreezer extends Fragment
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(titlu)
                 .setMessage(msg)
-                .setNegativeButton(getString(R.string.dialog_cancel),
+                .setNegativeButton(getString(android.R.string.cancel),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
-                                //finish();
                             }
                         })
-                .setPositiveButton(getString(R.string.dialog_yes),
+                .setPositiveButton(getString(android.R.string.yes),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();

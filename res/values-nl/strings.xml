@@ -46,30 +46,19 @@
     <string name="general_others">"Andere"</string>
 
     <!-- Dialogs -->
-    <string name="dialog_wait">"Even geduld aub..."</string>
-    <string name="dialog_getting_information">"Informatie opvragen over %s..."</string>
-    <string name="dialog_yes">"Ja"</string>
-    <string name="dialog_ok">"OK"</string>
-    <string name="dialog_cancel">"Annuleren"</string>
     <string name="dialog_warning">"Waarschuwing!"</string>
     <string name="dialog_warning_apply">"Weet u zeker dat u uw instellingen wilt toepassen?"</string>
-    <string name="dialog_warning_restore_prop">"Weet u zeker dat u uw build.prop wilt herstellen?"</string>
 
     <!-- Toast -->
     <string name="toast_settings_applied">"Succesvol toegepast!"</string>
 
-    <!-- Information -->
-    <string name="info_restart">"Herstart de activiteit aub!"</string>
-
     <!-- Sections -->
-    <string name="section_title_welcome">"Welkom"</string>
     <string name="section_title_information">"Informatie"</string>
-    <string name="section_title_general">"Algemeen"</string>
+
     <!-- Device -->
     <string name="section_title_device">"Apparaat"</string>
     <string name="section_title_device_input">"Invoer"</string>
     <string name="section_title_device_light">"Verlichting"</string>
-    <string name="section_title_device_sensors">"Sensoren"</string>
     <string name="section_title_device_graphics">"Graphics"</string>
     <!-- Tasker -->
     <string name="section_title_tasker">"Tasker"</string>
@@ -102,19 +91,6 @@
     <string name="cpu_powersaving_sched_mc_1">"1 - Evenwichtig"</string>
     <string name="cpu_powersaving_sched_mc_2">"2 - Agressief"</string>
 
-    <!-- Sensors -->
-    <string name="category_sensors_title">"Sensoren"</string>
-    <string name="gyro_subcat_title">"Gyroscoop"</string>
-    <string name="use_gyro_calibration_title_head">"Gebruik kalibratiegegevens"</string>
-    <string name="use_gyro_calibration_summary_head">"Gebruik de gyroscoop kalibratiewaarden.\nDoe een kalibratie na het controleren van deze waarden!"</string>
-    <string name="calibrate_gyro_title_head">"Kalibreren"</string>
-    <string name="calibrate_gyro_summary_head">"Leg je telefoon op een plat oppervlak en druk om te kalibreren"</string>
-
-    <!-- Touchscreen -->
-    <string name="touchscreen_subcat_title">"Aanraakscherm"</string>
-    <string name="touchscreen_sensitivity_title_head">"Aanraakgevoeligheid"</string>
-    <string name="touchscreen_sensitivity_summary_head">"Stel aanraakgevoeligheid in"</string>
-
     <!-- Key Lights -->
     <string name="touchkey_subcat_title">"Aanraaktoetsen"</string>
     <string name="touchkey_light_title_head">"Activeer achtergrondverlichting toetsen"</string>
@@ -134,7 +110,6 @@
     <string name="navbar_title">"Navigatiebalk"</string>
     <string name="navbar_force_title">"Forceer navigatiebalk"</string>
     <string name="navbar_force_summary">"Vereist een reboot!"</string>
-    <string name="navbar_warning">"Waarschuwing!\nInstelling zal verborgen zijn nadat je de app sluit, totdat je herstart!"</string>
 
     <!-- Others -->
     <string name="input_glove_mode_title">"Handschoenmodus"</string>
@@ -183,15 +158,8 @@
     <!-- Drawer -->
     <string name="navigation_drawer_open">"Open navigatiescherm"</string>
     <string name="navigation_drawer_close">"Sluit navigatiescherm"</string>
-    <string name="action_example">"Voorbeeldactie"</string>
     <string name="action_settings">"Instellingen"</string>
-    <string name="action_help">"Helpen"</string>
-    <string name="action_about">"Over"</string>
     <string name="action_licenses">"Licenties"</string>
-
-    <!-- Widgets -->
-    <string name="widget_torch_on">"Zaklamp aan"</string>
-    <string name="widget_torch_off">"Zaklamp uit"</string>
 
     <!-- Array Entries -->
     <string name="five_minutes">"5 Minuten"</string>
@@ -204,21 +172,16 @@
     <string name="eight_hours">"8 uur"</string>
 
     <!-- freezer -->
-    <string name="prefcat_freezer">"BEVRIEZEN of ONTDOOIEN PAKKETTEN"</string>
     <string name="pt_freeze">"Bevries pakket"</string>
     <string name="pt_unfreeze">"Ontdooi pakket"</string>
-    <string name="ps_freeze">"Lijst van alle geïnstalleerde pakketten"</string>
-    <string name="ps_unfreeze">"Lijst van bevroren pakketten"</string>
     <string name="mt_system_packs">"Systeempakketten"</string>
     <string name="mt_user_packs">"Gebruikerpakketten"</string>
     <string name="freeze_msg">"%s zal worden bevroren. Doorgaan?"</string>
     <string name="unfreeze_msg">"%s zal worden ontdooid. Doorgaan?"</string>
     <!-- Etc -->
-    <string name="etc_sob">"Activeer bij opstarten"</string>
     <string name="etc_apply_values">"Instellen waarden"</string>
     <string name="etc_filter">"Filteren"</string>
     <string name="etc_save">"Opslaan"</string>
-    <string name="etc_cancel">"Annuleren"</string>
     <string name="etc_add_prop_title">"Instelling toevoegen"</string>
     <string name="etc_edit_prop_title">"Eigenschap bewerken"</string>
     <string name="etc_del_prop_title">"Verwijder parameter"</string>

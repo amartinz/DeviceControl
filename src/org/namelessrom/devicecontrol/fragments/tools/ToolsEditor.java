@@ -185,14 +185,14 @@ public class ToolsEditor extends Fragment
                     AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                     dialog.setTitle(getString(R.string.dialog_warning))
                             .setMessage(getString(R.string.dialog_warning_apply));
-                    dialog.setNegativeButton(getString(R.string.dialog_cancel),
+                    dialog.setNegativeButton(getString(android.R.string.cancel),
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();
                                 }
                             });
-                    dialog.setPositiveButton(getString(R.string.dialog_yes),
+                    dialog.setPositiveButton(getString(android.R.string.yes),
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -428,7 +428,7 @@ public class ToolsEditor extends Fragment
         new AlertDialog.Builder(getActivity())
                 .setTitle(title)
                 .setView(editDialog)
-                .setNegativeButton(getString(R.string.etc_cancel),
+                .setNegativeButton(getString(android.R.string.cancel),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(final DialogInterface dialog, final int which) {
@@ -535,7 +535,7 @@ public class ToolsEditor extends Fragment
         new AlertDialog.Builder(getActivity())
                 .setTitle(title)
                 .setView(editDialog)
-                .setNegativeButton(getString(R.string.dialog_cancel),
+                .setNegativeButton(getString(android.R.string.cancel),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -573,13 +573,13 @@ public class ToolsEditor extends Fragment
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(t)
                 .setMessage(m)
-                .setNegativeButton(getString(R.string.dialog_cancel),
+                .setNegativeButton(getString(android.R.string.cancel),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
                         })
-                .setPositiveButton(getString(R.string.dialog_yes),
+                .setPositiveButton(getString(android.R.string.yes),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();

@@ -19,7 +19,5 @@
 <resources>
 
     <!-- General -->
-    <bool name="show_debug">true</bool>
-    <bool name="is_system_app">true</bool>
 
 </resources>
