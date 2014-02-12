@@ -31,38 +31,38 @@
         <SwitchPreference
             android:key="intelli_plug_active"
             android:title="@string/intelli_plug"
-            android:summaryOn="@string/cpu_intelli_plug_summary_on"
-            android:summaryOff="@string/cpu_intelli_plug_summary_off"
+            android:summaryOn="@string/intelli_plug_summary_on"
+            android:summaryOff="@string/intelli_plug_summary_off"
             android:defaultValue="false" />
 
         <SwitchPreference
             android:key="intelli_plug_eco"
-            android:title="@string/cpu_powersaving_intelli_plug_eco_title"
-            android:summaryOn="@string/cpu_powersaving_intelli_plug_eco_summary_on"
-            android:summaryOff="@string/cpu_powersaving_intelli_plug_eco_summary_off"
+            android:title="@string/intelli_plug_eco_title"
+            android:summaryOn="@string/intelli_plug_eco_summary_on"
+            android:summaryOff="@string/intelli_plug_eco_summary_off"
             android:defaultValue="false" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="powersaving"
-        android:title="@string/cpu_powersaving">
+        android:title="@string/powersaving">
 
         <SwitchPreference
             android:key="lcd_power_reduce"
-            android:title="@string/cpu_powersaving_lcd_title"
-            android:summaryOn="@string/cpu_powersaving_lcd_summary_on"
-            android:summaryOff="@string/cpu_powersaving_lcd_summary_off"
+            android:title="@string/powersaving_lcd_title"
+            android:summaryOn="@string/powersaving_lcd_summary_on"
+            android:summaryOff="@string/powersaving_lcd_summary_off"
             android:defaultValue="false" />
 
         <org.namelessrom.devicecontrol.widgets.preferences.SeekBarPreference
             android:key="sched_mc_power_savings"
-            android:title="@string/cpu_powersaving_sched_mc_title"
-            android:summary="@string/cpu_powersaving_sched_mc_summary"
+            android:title="@string/powersaving_sched_mc_title"
+            android:summary="@string/powersaving_sched_mc_summary"
             android:defaultValue="0"
             android:max="2"
             nameless:min="0"
-            nameless:customStatus="cpu_powersaving_sched_mc_" />
+            nameless:customStatus="powersaving_sched_mc_" />
 
     </PreferenceCategory>
 </PreferenceScreen>

@@ -1,26 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!--  Copyright (C) 2013 Alexander "Evisceration" Martinz
-
- This program is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->
-
 <resources>
-
-    <string name="app_name" translatable="false">"Device Control"</string>
+    <string name="app_name" translatable="false">Device Control</string>
+    <string name="buildprop" translatable="false">Build.Prop</string>
     <string name="empty" translatable="false" />
-    <string name="unknown" translatable="false">"---"</string>
-    <string name="intelli_plug" translatable="false">"Intelli-Plug"</string>
-
+    <string name="intelli_plug" translatable="false">Intelli-Plug</string>
+    <string name="sysctl" translatable="false">SysCtl</string>
+    <string name="unknown" translatable="false">---</string>
+    <string name="vm" translatable="false">VM</string>
 </resources>
