@@ -51,7 +51,7 @@ public class ToolsEditorTabbed extends Fragment {
 
         mTabHost.addTab(mTabHost
                 .newTabSpec("vmeditor")
-                .setIndicator(getString(R.string.section_title_tools_vm))
+                .setIndicator(getString(R.string.vm))
                 , PressToLoadFragment.class, b);
 
         /* SYSCTL EDITOR */
@@ -61,7 +61,7 @@ public class ToolsEditorTabbed extends Fragment {
 
         mTabHost.addTab(mTabHost
                 .newTabSpec("sysctl")
-                .setIndicator(getString(R.string.section_title_tools_sysctl))
+                .setIndicator(getString(R.string.sysctl))
                 , PressToLoadFragment.class, b);
 
         /* BUILD.PROP EDITOR */
@@ -71,7 +71,7 @@ public class ToolsEditorTabbed extends Fragment {
 
         mTabHost.addTab(mTabHost
                 .newTabSpec("buildprop")
-                .setIndicator(getString(R.string.section_title_tools_buildprop)),
+                .setIndicator(getString(R.string.buildprop)),
                 PressToLoadFragment.class, b);
 
         return v;
