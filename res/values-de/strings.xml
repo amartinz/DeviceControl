@@ -57,9 +57,6 @@
     <!-- Tools -->
     <string name="section_title_tools">"Werkzeuge"</string>
     <string name="section_title_tools_editors">"Editoren"</string>
-    <string name="section_title_tools_sysctl">"SysCtl"</string>
-    <string name="section_title_tools_vm">"VM"</string>
-    <string name="section_title_tools_buildprop">"Build.Prop"</string>
     <string name="section_title_tools_freezer">"Deaktivator"</string>
     <string name="section_title_tools_unfreezer">"Aktivator"</string>
     <!-- PERFORMANCE -->
@@ -73,23 +70,23 @@
     <!-- General -->
     <string name="pref_force_highend_gfx_title">"High-End Grafik erzwingen"</string>
     <string name="pref_force_highend_gfx_summary">"Aktiviert High-End-Effekte, wie zum Beispiel transparente Status-/Navigationsleisten (muss von der Rom unterstützt werden, benötigt Neustart des Gerätes)"</string>
-    <string name="cpu_powersaving">"Energiesparen"</string>
+    <string name="powersaving">"Energiesparen"</string>
     <!-- LCD TODO: why it is here?! -->
-    <string name="cpu_powersaving_lcd_title">"LCD Strom Reduzierung"</string>
-    <string name="cpu_powersaving_lcd_summary_on">"Stromnutzung wird reduziert."</string>
-    <string name="cpu_powersaving_lcd_summary_off">"Stromnutzung wird nicht reduziert."</string>
+    <string name="powersaving_lcd_title">"LCD Strom Reduzierung"</string>
+    <string name="powersaving_lcd_summary_on">"Stromnutzung wird reduziert."</string>
+    <string name="powersaving_lcd_summary_off">"Stromnutzung wird nicht reduziert."</string>
     <!-- Intelli-Plug -->
-    <string name="cpu_intelli_plug_summary_on">"Intelli-Plug ist aktiv."</string>
-    <string name="cpu_intelli_plug_summary_off">"Intelli-Plug ist inaktiv."</string>
-    <string name="cpu_powersaving_intelli_plug_eco_title">"Eco-Modus"</string>
-    <string name="cpu_powersaving_intelli_plug_eco_summary_on">"Intelli-Plug Eco-Modus ist aktiv."</string>
-    <string name="cpu_powersaving_intelli_plug_eco_summary_off">"Intelli-Plug Eco-Modus ist nicht aktiv."</string>
+    <string name="intelli_plug_summary_on">"Intelli-Plug ist aktiv."</string>
+    <string name="intelli_plug_summary_off">"Intelli-Plug ist inaktiv."</string>
+    <string name="intelli_plug_eco_title">"Eco-Modus"</string>
+    <string name="intelli_plug_eco_summary_on">"Intelli-Plug Eco-Modus ist aktiv."</string>
+    <string name="intelli_plug_eco_summary_off">"Intelli-Plug Eco-Modus ist nicht aktiv."</string>
     <!-- Mc Sched -->
-    <string name="cpu_powersaving_sched_mc_title">"Power-Scheduler"</string>
-    <string name="cpu_powersaving_sched_mc_summary">"Versucht Prozesse auf einen Kern zu gruppieren, um maximale Auslastung zu erreichen, bevor ein zusätzlicher verwendet wird.\nFalls aktiviert, wird die Batterielaufzeit gegen Leistung bevorzugt.\n\n0 zum Deaktivieren, 1 für ausgeglichen, 2 für aggressiv."</string>
-    <string name="cpu_powersaving_sched_mc_0">"0 - Deaktiviert"</string>
-    <string name="cpu_powersaving_sched_mc_1">"1 - Ausgeglichen"</string>
-    <string name="cpu_powersaving_sched_mc_2">"2 - Aggressiv"</string>
+    <string name="powersaving_sched_mc_title">"Power-Scheduler"</string>
+    <string name="powersaving_sched_mc_summary">"Versucht Prozesse auf einen Kern zu gruppieren, um maximale Auslastung zu erreichen, bevor ein zusätzlicher verwendet wird.\nFalls aktiviert, wird die Batterielaufzeit gegen Leistung bevorzugt.\n\n0 zum Deaktivieren, 1 für ausgeglichen, 2 für aggressiv."</string>
+    <string name="powersaving_sched_mc_0">"0 - Deaktiviert"</string>
+    <string name="powersaving_sched_mc_1">"1 - Ausgeglichen"</string>
+    <string name="powersaving_sched_mc_2">"2 - Aggressiv"</string>
     <!-- Key Lights -->
     <string name="touchkey_subcat_title">"Hardware-Tasten"</string>
     <string name="touchkey_light_title_head">"Aktiviert Tasten-Hintergrundbeleuchtung"</string>

@@ -68,9 +68,6 @@
     <!-- Tools -->
     <string name="section_title_tools">"Hulpmiddelen"</string>
     <string name="section_title_tools_editors">"Bewerkers"</string>
-    <string name="section_title_tools_sysctl">"SysCtl"</string>
-    <string name="section_title_tools_vm">"VM"</string>
-    <string name="section_title_tools_buildprop">"Build.prop"</string>
     <string name="section_title_tools_freezer">"Bevriezer"</string>
     <string name="section_title_tools_unfreezer">"Ontdooier"</string>
 
@@ -78,18 +75,18 @@
     <string name="pref_force_highend_gfx_title">"Forceer high-end graphics"</string>
     <string name="pref_force_highend_gfx_summary">"Activeert high-end visuele effecten, zoals transparante status- en navigatiebalk (moet worden ondersteund door uw ROM, vereist reboot)"</string>
 
-    <string name="cpu_powersaving">"Stroombesparing"</string>
-    <string name="cpu_powersaving_lcd_title">"LCD vermogenverminderaar"</string>
-    <string name="cpu_powersaving_lcd_summary_on">"Vermogen verminderen is ingeschakeld."</string>
-    <string name="cpu_powersaving_lcd_summary_off">"Vermogen verminderen is uitgeschakeld."</string>
-    <string name="cpu_powersaving_intelli_plug_eco_title">"Eco-modus"</string>
-    <string name="cpu_powersaving_intelli_plug_eco_summary_on">"Intelli Plug eco-modus ingeschakeld."</string>
-    <string name="cpu_powersaving_intelli_plug_eco_summary_off">"Intelli Plug eco-modus uitgeschakeld."</string>
-    <string name="cpu_powersaving_sched_mc_title">"Vermogen Scheduler"</string>
-    <string name="cpu_powersaving_sched_mc_summary">"Probeert taken te groeperen op een cpu-kern tot het zijn maximale belasting en start dan pas de volgende kern.\nIndien ingeschakeld, gaat er rekenkracht verloren in ruil voor een langer gebruik van de accu.\n\n0 voor uitschakelen, 1 voor evenwichtig, 2 voor agressief."</string>
-    <string name="cpu_powersaving_sched_mc_0">"0 - Uitgeschakeld"</string>
-    <string name="cpu_powersaving_sched_mc_1">"1 - Evenwichtig"</string>
-    <string name="cpu_powersaving_sched_mc_2">"2 - Agressief"</string>
+    <string name="powersaving">"Stroombesparing"</string>
+    <string name="powersaving_lcd_title">"LCD vermogenverminderaar"</string>
+    <string name="powersaving_lcd_summary_on">"Vermogen verminderen is ingeschakeld."</string>
+    <string name="powersaving_lcd_summary_off">"Vermogen verminderen is uitgeschakeld."</string>
+    <string name="intelli_plug_eco_title">"Eco-modus"</string>
+    <string name="intelli_plug_eco_summary_on">"Intelli Plug eco-modus ingeschakeld."</string>
+    <string name="intelli_plug_eco_summary_off">"Intelli Plug eco-modus uitgeschakeld."</string>
+    <string name="powersaving_sched_mc_title">"Vermogen Scheduler"</string>
+    <string name="powersaving_sched_mc_summary">"Probeert taken te groeperen op een cpu-kern tot het zijn maximale belasting en start dan pas de volgende kern.\nIndien ingeschakeld, gaat er rekenkracht verloren in ruil voor een langer gebruik van de accu.\n\n0 voor uitschakelen, 1 voor evenwichtig, 2 voor agressief."</string>
+    <string name="powersaving_sched_mc_0">"0 - Uitgeschakeld"</string>
+    <string name="powersaving_sched_mc_1">"1 - Evenwichtig"</string>
+    <string name="powersaving_sched_mc_2">"2 - Agressief"</string>
 
     <!-- Key Lights -->
     <string name="touchkey_subcat_title">"Aanraaktoetsen"</string>
