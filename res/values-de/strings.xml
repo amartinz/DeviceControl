@@ -40,7 +40,7 @@
     <string name="unused_cpu_states">"Ungenutze CPU Frequenzen"</string>
     <string name="total_state_time">"Gesamte Laufzeit"</string>
     <string name="no_states_file_found">"Status-Datei konnte nicht gefunden werden."</string>
-    <string name="deep_sleep">"\\"Tiefschlaf\\""</string>
+    <string name="deep_sleep">"\"Tiefschlaf\""</string>
     <string name="device_information">"Geräte-Informationen"</string>
     <!-- Preferences -->
     <string name="pref_force_highend_gfx_title">"High-End Grafik erzwingen"</string>
