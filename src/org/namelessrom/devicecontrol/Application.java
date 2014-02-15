@@ -36,6 +36,7 @@ public class Application extends android.app.Application implements DeviceConsta
 
     // Switch to your needs - overrideable in preferences
     public static boolean IS_LOG_DEBUG = false;
+    public static boolean IS_DEBUG = false;
 
     public static boolean HAS_ROOT = false;
     public static final boolean IS_NAMELESS = Utils.isNameless();
@@ -50,7 +51,9 @@ public class Application extends android.app.Application implements DeviceConsta
         PreferenceHelper.getInstance(this);
         IS_LOG_DEBUG = PreferenceHelper.getBoolean(JF_EXTENSIVE_LOGGING, false);
 
-        if (Application.IS_LOG_DEBUG) {
+        IS_DEBUG = Utils.existsInBuildProp("ro.nameless.debug=1");
+
+        if (Application.IS_DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
                     .detectDiskWrites()
