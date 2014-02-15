@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_version_name">"Versionname: %s"</string>
+    <string name="app_version_code">"Versioncode: %s"</string>
+    <string name="app_information_help">"Vítejte v %1$s!\n\nKe startu potáhněte drawer z leva!\n\nPro úpravu možností %2$s,\npotáhněte drawer z prava!\n\n\nProsím berte v úvahu, že %3$s nemusí fungovat správně!\n"</string>
+    <string name="app_device_help">"Vítejte v nastavení zařízení!\n\nPro dostání se do správy zařízení,\n potáhněte doprava!\n\n(Upozornení: Pokud daná funkce není podporavaná,\nbude automaticky zkryta.)\n\n"</string>
+    <string name="app_performance_help">"Vítejte v sekci výkonu!\n"</string>
+    <string name="app_tasker_help">"Vítejte v plánovači úloh!\n\nPro prozkoumání a nastavení\nautomatizovaných úloh,\n potáhněte doprava!\n\n"</string>
+    <string name="app_tools_help">"Vítejte v sekci nástrojů!\n\nPotáhněte doprava,\npro odhalení všemožných užitečných nástrojů!\n\n(Upozornění: prosím buďte opartní!)  \n\n"</string>
+    <string name="app_warning_root">"Prosím uvědomte si, že %s potřebuje root práva, aby mohl plně fungovat!"</string>
+    <string name="message_loading">"Načítá se, prosím počkejte…"</string>
+    <string name="fragment_press_to_load">"Stiskni mě pro načtení %s."</string>
+    <string name="action_press_again">"Stiskni ještě jednou pro ukončení!"</string>
+    <string name="defaults_button">"Resetovat do továrního nastavení"</string>
+    <string name="general">"Všeobecné"</string>
+    <string name="general_others">"Ostatní"</string>
+    <string name="dialog_warning">"Pozor!"</string>
+    <string name="dialog_warning_apply">"Přejete si potvrdit a uložit vaše změny v nastavení?"</string>
+    <string name="toast_settings_applied">"Úspěšně uloženo!"</string>
+    <!-- Drawer -->
+    <string name="navigation_drawer_open">"Otevřít navigační drawer"</string>
+    <string name="navigation_drawer_close">"Zavřít navigační drawer"</string>
+    <string name="action_settings">"Nastavení"</string>
+    <string name="action_licenses">"Licence"</string>
+    <!-- Sections -->
+    <string name="section_title_device">"Zařízení"</string>
+    <string name="section_title_device_input">"Vstup"</string>
+    <string name="section_title_device_light">"Světlo"</string>
+    <string name="section_title_device_graphics">"Grafika"</string>
+    <string name="section_title_information">"Informace"</string>
+    <string name="section_title_tasker">"Plánovač úloh"</string>
+    <string name="section_title_tasker_optimizations">"Optimizace"</string>
+    <string name="section_title_tools">"Nástroje"</string>
+    <string name="section_title_tools_editors">"Editory"</string>
+    <string name="section_title_tools_freezer">"Zmražovač"</string>
+    <string name="section_title_tools_unfreezer">"Odmražovač"</string>
+    <string name="section_title_performance">"Výkon"</string>
+    <!-- Time In State -->
+    <string name="time_in_state">"Čas při frekvenci"</string>
+    <string name="unused_cpu_states">"Nepoužité stavy CPU"</string>
+    <string name="total_state_time">"Celkový čas ve stavu"</string>
+    <string name="no_states_file_found">"Soubor obsahující data stavu nebyl nalezen."</string>
+    <string name="deep_sleep">"Hluboký spánek"</string>
+    <string name="device_information">"Informace o zařízení"</string>
+    <!-- Preferences -->
+    <string name="pref_force_highend_gfx_title">"Vynutit high-endovou grafiku"</string>
+    <string name="pref_force_highend_gfx_summary">"Povolí high-endové grafické efekty jako např. průhledný statusový/navigační panel (musí být podporované vaší ROM, vyžaduje restartování systému)"</string>
+    <!-- Performance -->
+    <string name="powersaving">Úspora energie</string>
+    <string name="powersaving_lcd_title">Snížení spotřeby LCD</string>
+    <string name="powersaving_lcd_summary_on">Snížení spotřeby LCD je povoleno.</string>
+    <string name="powersaving_lcd_summary_off">Snížení spotřeby LCD je zakázáno.</string>
+    <string name="powersaving_sched_mc_title">Plánovač spotřeby</string>
+    <string name="powersaving_sched_mc_summary">Snaží se sloučit úlohy na jádře tak, že další se nezapne, dokud první není úplně vytíženo.\n\nKdyž je toto povoleno, obětuje výkon za prodloužení života baterie.\n\n0 pro zakázání, 1 pro vyvážené, 2 pro agresivní.</string>
+    <string name="powersaving_sched_mc_0">0 - zakázáno</string>
+    <string name="powersaving_sched_mc_1">1 - vyvážené</string>
+    <string name="powersaving_sched_mc_2">2 - agresivní</string>
+    <string name="intelli_plug_summary_on">Intelli-Plug je povolen</string>
+    <string name="intelli_plug_summary_off">Intelli-Plug je zakázán</string>
+    <string name="intelli_plug_eco_title">Eko mód</string>
+    <string name="intelli_plug_eco_summary_on">Itelli-Plug eko mód je povolen</string>
+    <string name="intelli_plug_eco_summary_off">Itelli-Plug eko mód je zakázán</string>
+    <!-- Input -->
+    <string name="touchkey_subcat_title">"Dotyková klávesa"</string>
+    <string name="touchkey_light_title_head">"Povolit podsvícení kláves"</string>
+    <string name="touchkey_light_summary_head">"Podsvítit dotykové klávesy, když je obrazovka zapnutá"</string>
+    <string name="touchkey_bln_title_head">"Povolit upozornění kláves"</string>
+    <string name="touchkey_bln_summary_head">"Podsvítit dotykové klávesy, když je obrazovka vypnutá a dostanete upozornení "</string>
+    <string name="keyboard_light_title_head">"Povolit podsvícení klávesnice"</string>
+    <string name="keyboard_light_summary_head">"Zapnout podsvícení kláves, když je obrazovka zapnutá"</string>
+    <string name="vibrator_title">"Vibrator"</string>
+    <string name="vibrator_tuning_title">"Síla vibrace"</string>
+    <string name="vibrator_tuning_summary_head">"Nastavit sílu zpětné odezvy vibrace"</string>
+    <string name="vibrator_warning">"Hodnoty větší než %1$d nejsou doporučovány"</string>
+    <string name="navbar_title">"Navigační lišta"</string>
+    <string name="navbar_force_title">"Vynutit navigační lištu"</string>
+    <string name="navbar_force_summary">"Vyžaduje restart!"</string>
+    <string name="input_glove_mode_title">"Mód v rukavicích"</string>
+    <string name="input_glove_mode_summary">"Vetší citlivost dotyků, např. pro používání zařízení v rukavicích."</string>
+    <!-- Graphics -->
+    <string name="panel_gamma_title_head">"Gamma nastavení obrazovky"</string>
+    <string name="panel_gamma_summary_head">"Nastavit gamma hodnotu obrazovky"</string>
+    <string name="panel_color_temp_title_head">"Teplota barev obrazovky"</string>
+    <string name="panel_color_temp_summary_head">"Vypněte a zapněte obrazovku pro aktivaci"</string>
+    <string name="panel_color_temp_cold">"Mrazivé"</string>
+    <string name="panel_color_temp_cool">"Chladné"</string>
+    <string name="panel_color_temp_normal">"Normální"</string>
+    <string name="panel_color_temp_warm">"Teplé"</string>
+    <string name="panel_color_temp_hot">"Horké"</string>
+    <!-- Preferences -->
+    <!-- Appearance -->
+    <string name="prefs_jf_appearance">"Vzhled"</string>
+    <string name="prefs_jf_appearance_custom_animations_title">"Používat animace"</string>
+    <string name="prefs_jf_appearance_custom_animations_summary_on">"Vlastní animace jsou povoleny."</string>
+    <string name="prefs_jf_appearance_custom_animations_summary_off">"Vlastní animace jsou zakázány."</string>
+    <string name="prefs_jf_appearance_custom_transformer_title">"Měnič stránek"</string>
+    <string name="prefs_jf_appearance_custom_transformer_summary">"Animace při přepínání stránek ve viewpageru."</string>
+    <string name="transformer_zoomout">"Oddálit"</string>
+    <string name="transformer_depth">"Hloubka"</string>
+    <!-- Debug -->
+    <string name="prefs_jf_debug">"Debugging"</string>
+    <string name="jf_debug_extensive_logging_title">"Rozšířené logování"</string>
+    <string name="jf_debug_extensive_logging_summary_on">"Logování do LogCatu je povoleno."</string>
+    <string name="jf_debug_extensive_logging_summary_off">"Logování do LogCatu je zakázáno."</string>
+    <string name="prefs_set_on_boot">"Použít při startu"</string>
+    <string name="prefs_jf_version">"Verze"</string>
+    <!-- Tasker -->
+    <string name="tasker_optimization_fstrim_cat_title">"Fstrimming"</string>
+    <string name="tasker_optimization_filesystem_fstrim_title">"Automatické použití fstrimu"</string>
+    <string name="tasker_optimization_filesystem_fstrim_summary_on">"Fstrim je povolen."</string>
+    <string name="tasker_optimization_filesystem_fstrim_summary_off">"Fstrim je zakázán."</string>
+    <string name="tasker_optimization_filesystem_fstrim_interval_title">"Fstrim interval"</string>
+    <string name="tasker_optimization_filesystem_fstrim_interval_summary">"Vyberte interval pro automatické použití fstrimu."</string>
+    <!-- freezer -->
+    <string name="pt_freeze">"Zmrazit balík"</string>
+    <string name="pt_unfreeze">"Odmrazit balík"</string>
+    <string name="mt_system_packs">"Systémové balíky"</string>
+    <string name="mt_user_packs">"Uživatelské balíky"</string>
+    <string name="freeze_msg">"%s bude zmražen. Pokračovat?"</string>
+    <string name="unfreeze_msg">"%s bude odmražen. Pokračovat?"</string>
+    <!-- Etc -->
+    <string name="etc_apply_values">"Použít hodnoty"</string>
+    <string name="etc_filter">"Filter"</string>
+    <string name="etc_save">"Uložit"</string>
+    <string name="etc_add_prop_title">"Přidat vlastnost"</string>
+    <string name="etc_edit_prop_title">"Upravit vlastnost"</string>
+    <string name="etc_del_prop_title">"Odstranit parametr"</string>
+    <string name="etc_del_prop_msg">"%s bude smazán.\n\npokračovat?"</string>
+    <string name="etc_prop_backup">"build.prop záloha byla vytvořena v %s"</string>
+    <string name="etc_prop_no_backup">"Původní záloha nebyla nalezena!"</string>
+    <string name="etc_prop_restore_title">"Obnovit"</string>
+    <string name="etc_prop_restore_msg">"Původní build.prop bude obnoven.\nMusíte restartovat váše zařízení, aby vaše změny nabyly efektu.\n\nPokračovat?"</string>
+    <string name="etc_prop_name">"Jméno"</string>
+    <string name="etc_prop_val">"Hodnota"</string>
+    <string name="etc_prop_preset">"Přednastavené hodnoty"</string>
+    <string name="etc_no_packages">"Žádné balíky"</string>
+    <!-- Knock On -->
+    <string name="knockonoff_panel_title">"\"Knock On\" gesta"</string>
+    <string name="knockon_enable_head">"\"Knock On\""</string>
+    <string name="knockon_enable_summary_off">"\"Knock On\" gesta jsou zakázána"</string>
+    <string name="knockon_enable_summary_on">"\"Knock On\" gesta jsou povolena"</string>
+    <!-- TODO: Plurals -->
+    <!-- Array Entries -->
+    <string name="five_minutes">"5 minut"</string>
+    <string name="ten_minutes">"10 minut"</string>
+    <string name="twenty_minutes">"20 minut"</string>
+    <string name="thirty_minutes">"30 minut"</string>
+    <string name="one_hours">"1 hodina"</string>
+    <string name="two_hours">"2 hodiny"</string>
+    <string name="four_hours">"4 hodiny"</string>
+    <string name="eight_hours">"8 hodin"</string>
+</resources>
