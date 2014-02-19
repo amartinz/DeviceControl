@@ -149,4 +149,7 @@
     <string name="two_hours">2 Hours</string>
     <string name="four_hours">4 Hours</string>
     <string name="eight_hours">8 Hours</string>
+    <!-- Standalone Strings -->
+    <string name="cpu_temperature">CPU Temperature:</string>
+    <string name="battery_temperature">Battery Temperature:</string>
 </resources>
