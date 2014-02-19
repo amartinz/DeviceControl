@@ -211,9 +211,12 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
 
     private void updateStatus() {
         mDeviceInfo.removeAllViews();
-        generateRow(mDeviceInfo, "CPU Temperature:", CpuUtils.getCpuTemperature() + " °C",
-                "0°C", "100°C", CpuUtils.getCpuTemperature());
-        generateRow(mDeviceInfo, "Battery Temperature:",
+        final int cpuTemp = CpuUtils.getCpuTemperature();
+        if (cpuTemp != -1) {
+            generateRow(mDeviceInfo, getString(R.string.cpu_temperature), cpuTemp + " °C",
+                    "0°C", "100°C", cpuTemp);
+        }
+        generateRow(mDeviceInfo, getString(R.string.battery_temperature),
                 ((float) mBatteryTemperature) / 10 + " °C" + mBatteryExtra,
                 "0°C", "100°C", (mBatteryTemperature / 10));
     }
