@@ -17,8 +17,9 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo">
-
+    <style name="AppTheme" parent="@android:style/Theme.Holo">
+        <!-- I want to thank all xml tags, which had to die for this project. -->
+        <item name="android:actionBarStyle">@android:style/Widget.Holo.ActionBar.Solid</item>
     </style>
 
     <style name="StandardDivider">
