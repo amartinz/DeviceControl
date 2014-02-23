@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_version_name">"Versionname: %s"</string>
+    <string name="app_version_code">"Versioncode: %s"</string>
+    <string name="app_information_help">"Bienvenue sur %1$s!\n\nPour commencer, faites glisser le côté de gauche!\n\nPour modifier les préférences de %2$s,\nglisser le côté de la droite!\n\n\nS\'il vous plaît noter que %3$s doit être root\npour fonctionner correctement!\n\n"</string>
+    <string name="app_device_help">"Bienvenue sur l\'écran de l'appareil!\n\nVous pouvez glisser à droite,\npour découvrir les contrôles de l\'appareil!\n\n(Remarque: si une fonction n\'est pas supportée,\nelle se cache automatiquement.)\n\n"</string>
+    <string name="app_performance_help">"Bienvenue sur la section performance!\n"</string>
+    <string name="app_tasker_help">"Bienvenue sur Tasker!\n\nVous pouvez glisser à droite,\npour découvrir et mettre en place\ndes tâches automatisées!\n\n"</string>
+    <string name="app_tools_help">"Bienvenue sur la Section Outils!\n\nVous pouvez glisser à droite,\npour découvrir divers outils utiles!\n\n(Note: s\'il vous plaît soyez prudent!)\n\n"</string>
+    <string name="app_warning_root">"S\'il vous plaît noter que %s nécessite  le ROOT pour fonctionner pleinement!"</string>
+    <string name="message_loading">"Chargement en cours, veuillez patienter…"</string>
+    <string name="fragment_press_to_load">"Appuyez sur moi pour charger %s."</string>
+    <string name="action_press_again">"Appuyez de nouveau pour quitter!"</string>
+    <string name="defaults_button">"Remettre par défaut"</string>
+    <string name="general">"Général"</string>
+    <string name="general_others">"Autres"</string>
+    <string name="dialog_warning">"Attention!"</string>
+    <string name="dialog_warning_apply">"Etes-vous sûr que vous voulez appliquer les paramètres?"</string>
+    <string name="toast_settings_applied">"Appliqué avec succès!"</string>
+    <!-- Drawer -->
+    <string name="navigation_drawer_open">"Ouvrir le drawer de navigation"</string>
+    <string name="navigation_drawer_close">"Fermer la navigation du drawer"</string>
+    <string name="action_settings">"Paramètres"</string>
+    <string name="action_licenses">"Licenses"</string>
+    <!-- Sections -->
+    <string name="section_title_device">"Appareil"</string>
+    <string name="section_title_device_input">"Input"</string>
+    <string name="section_title_device_light">"Lumière"</string>
+    <string name="section_title_device_graphics">"Graphiques"</string>
+    <string name="section_title_information">"Information"</string>
+    <string name="section_title_tasker">"Tasker"</string>
+    <string name="section_title_tasker_optimizations">"Optimisations"</string>
+    <string name="section_title_tools">"Outils"</string>
+    <string name="section_title_tools_editors">"Editeurs"</string>
+    <string name="section_title_tools_freezer">"Congeler"</string>
+    <string name="section_title_tools_unfreezer">"Décongeler"</string>
+    <string name="section_title_performance">"Performance"</string>
+    <!-- Time In State -->
+    <string name="time_in_state">"TEMPS DANS L\'ETAT"</string>
+    <string name="unused_cpu_states">"ETATS CPU NON UTILISES"</string>
+    <string name="total_state_time">"TEMPS TOTAL DE L\'ÉTAT"</string>
+    <string name="no_states_file_found">"Aucun fichier d\'etats trouvé."</string>
+    <string name="deep_sleep">"\"Deep Sleep\""</string>
+    <string name="device_information">"Informations de l\'appareil"</string>
+    <!-- Preferences -->
+    <string name="pref_force_highend_gfx_title">"Forcer les graphiques haut de gamme"</string>
+    <string name="pref_force_highend_gfx_summary">"Activez les effets visuels haut de gamme tels que la barre transparente d\'état/de navigation (qui doit être supporté par votre rom, nécessite un redémarrage)"</string>
+    <!-- Performance -->
+    <string name="powersaving">Economie d\'énergie</string>
+    <string name="powersaving_lcd_title">Réduire la puissance du LCD</string>
+    <string name="powersaving_lcd_summary_on">La Puissance réduite est activée</string>
+    <string name="powersaving_lcd_summary_off">La Puissance réduite est désactivée</string>
+    <string name="powersaving_sched_mc_title">Puissance Scheduler</string>
+    <string name="powersaving_sched_mc_summary">Essaie de tâches de groupe sur un coeur jusqu\'à ce qu\'il atteigne sa charge maximale et la puissance sur le coeur suivant.\nS\'il est activé, il sacrifie la puissance en échange de la vie de la batterie.\n\n0 pour désactivez, 1 pour équilibrez, 2 pour agressive.</string>
+    <string name="powersaving_sched_mc_0">0 - Désactiver</string>
+    <string name="powersaving_sched_mc_1">1 - Equilibrer</string>
+    <string name="powersaving_sched_mc_2">2 - Aggressive</string>
+    <string name="intelli_plug_summary_on">Intelli-Plug est activé.</string>
+    <string name="intelli_plug_summary_off">Intelli-Plug est désactivé.</string>
+    <string name="intelli_plug_eco_title">Eco Mode</string>
+    <string name="intelli_plug_eco_summary_on">Mode éco Intelli-Plug activé.</string>
+    <string name="intelli_plug_eco_summary_off">Mode éco Intelli-Plug désactivé.</string>
+    <!-- Input -->
+    <string name="touchkey_subcat_title">"touchez le bouton"</string>
+    <string name="touchkey_light_title_head">"Activer les touches rétro-éclairées"</string>
+    <string name="touchkey_light_summary_head">"Illuminez les touches tactiles lorsque l\'écran est allumé"</string>
+    <string name="touchkey_bln_title_head">"Activer les touches de notifications"</string>
+    <string name="touchkey_bln_summary_head">"Illuminez les touches tactiles lorsque l\'écran est éteint et qu'une notification est reçue"</string>
+    <string name="keyboard_light_title_head">"Activez lerétroéclairage du clavier"</string>
+    <string name="keyboard_light_summary_head">"Illuminez le rétroéclairage du clavier lorsque l\'écran est allumé"</string>
+    <string name="vibrator_title">"Vibreur"</string>
+    <string name="vibrator_tuning_title">"Force de vibration"</string>
+    <string name="vibrator_tuning_summary_head">"Réglez la force du vibreur"</string>
+    <string name="vibrator_warning">"Des valeurs supérieures à %1$d ne sont pas recommandées"</string>
+    <string name="navbar_title">"Barre de navigation"</string>
+    <string name="navbar_force_title">"Forcer la barre de navigation"</string>
+    <string name="navbar_force_summary">"Nécessite un redémarrage!"</string>
+    <string name="input_glove_mode_title">"Mode Gant"</string>
+    <string name="input_glove_mode_summary">"Définit l\'écran tactile plus sensible, par exemple pour l'utiliser avec des gants"</string>
+    <!-- Graphics -->
+    <string name="panel_gamma_title_head">"Gamma de l\'écran"</string>
+    <string name="panel_gamma_summary_head">"Réglez la valeur gamma de l\'écran"</string>
+    <string name="panel_color_temp_title_head">"couleur de la température de l\'écran"</string>
+    <string name="panel_color_temp_summary_head">"Eteignez et rallumez-le pour l\'activer"</string>
+    <string name="panel_color_temp_cold">"Froid"</string>
+    <string name="panel_color_temp_cool">"Frais"</string>
+    <string name="panel_color_temp_normal">"Normal"</string>
+    <string name="panel_color_temp_warm">"Tiède"</string>
+    <string name="panel_color_temp_hot">"Chaud"</string>
+    <!-- Preferences -->
+    <!-- Appearance -->
+    <string name="prefs_jf_appearance">"Apparence"</string>
+    <string name="prefs_jf_appearance_custom_animations_title">"Utilisez les Animations"</string>
+    <string name="prefs_jf_appearance_custom_animations_summary_on">"Les animations personnalisées sont activées."</string>
+    <string name="prefs_jf_appearance_custom_animations_summary_off">"Les animations personnalisées sont désactivées."</string>
+    <string name="prefs_jf_appearance_custom_transformer_title">"Transformez la page"</string>
+    <string name="prefs_jf_appearance_custom_transformer_summary">"Animation quand on change les pages dans le viewpager."</string>
+    <string name="transformer_zoomout">"Zoom arrière"</string>
+    <string name="transformer_depth">"Depth"</string>
+    <!-- Debug -->
+    <string name="prefs_jf_debug">"Débogage"</string>
+    <string name="jf_debug_extensive_logging_title">"Extensive Logging"</string>
+    <string name="jf_debug_extensive_logging_summary_on">"Connexion au logcat activé."</string>
+    <string name="jf_debug_extensive_logging_summary_off">"Connexion au logcat désactivé."</string>
+    <string name="prefs_set_on_boot">"Re-appliquez au démarrage"</string>
+    <string name="prefs_jf_version">"Version"</string>
+    <!-- Tasker -->
+    <string name="tasker_optimization_fstrim_cat_title">"Fstrimming"</string>
+    <string name="tasker_optimization_filesystem_fstrim_title">"Automatique fstrimming"</string>
+    <string name="tasker_optimization_filesystem_fstrim_summary_on">"Fstrimming activés."</string>
+    <string name="tasker_optimization_filesystem_fstrim_summary_off">"Fstrimming désactivés."</string>
+    <string name="tasker_optimization_filesystem_fstrim_interval_title">"Intervalle Fstrim"</string>
+    <string name="tasker_optimization_filesystem_fstrim_interval_summary">"Choisissez un intervalle de fstrimming automatique."</string>
+    <!-- freezer -->
+    <string name="pt_freeze">"Freeze le Package"</string>
+    <string name="pt_unfreeze">"Defreeze le Package"</string>
+    <string name="mt_system_packs">"Systèmes Packages"</string>
+    <string name="mt_user_packs">"Packages Utilisateur"</string>
+    <string name="freeze_msg">"%s sera gelé. Continuez?"</string>
+    <string name="unfreeze_msg">"%s sera décongelé. Continuez?"</string>
+    <!-- Etc -->
+    <string name="etc_apply_values">"Appliquez les valeurs"</string>
+    <string name="etc_filter">"Filtre"</string>
+    <string name="etc_save">"Sauver"</string>
+    <string name="etc_add_prop_title">"Ajoutez une propriété"</string>
+    <string name="etc_edit_prop_title">"Modifiez la propriété"</string>
+    <string name="etc_del_prop_title">"Supprimez le Paramètre"</string>
+    <string name="etc_del_prop_msg">"%s sera supprimé.\n\nContinuez?"</string>
+    <string name="etc_prop_backup">"La Sauvegarde du build.prop a été créé dans %s"</string>
+    <string name="etc_prop_no_backup">"Sauvegarde initiale non trouvée!"</string>
+    <string name="etc_prop_restore_title">"Restaurez"</string>
+    <string name="etc_prop_restore_msg">"Le Fichier build.prop initial sera restauré.\nVous devez redémarrer votre appareil pour prendre effet.\n\nContinuez?"</string>
+    <string name="etc_prop_name">"Nom"</string>
+    <string name="etc_prop_val">"Valeur"</string>
+    <string name="etc_prop_preset">"Presets"</string>
+    <string name="etc_no_packages">"Aucun packages"</string>
+    <!-- Knock On -->
+    <string name="knockonoff_panel_title">Gestes Knock On/Off</string>
+    <string name="knockon_enable_head">Knock On</string>
+    <string name="knockon_enable_summary_off">Geste du Toucher désactiver</string>
+    <string name="knockon_enable_summary_on">Geste du Toucher activer</string>
+    <!-- TODO: Plurals -->
+    <!-- Array Entries -->
+    <string name="five_minutes">"5 Minutes"</string>
+    <string name="ten_minutes">"10 Minutes"</string>
+    <string name="twenty_minutes">"20 Minutes"</string>
+    <string name="thirty_minutes">"30 Minutes"</string>
+    <string name="one_hours">"1 Heure"</string>
+    <string name="two_hours">"2 Heures"</string>
+    <string name="four_hours">"4 Heures"</string>
+    <string name="eight_hours">"8 Heures"</string>
+</resources>
