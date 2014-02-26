@@ -28,10 +28,23 @@ import android.util.Log;
 
 import com.stericson.roottools.RootTools;
 
+import org.acra.ACRA;
+import org.acra.ReportingInteractionMode;
+import org.acra.annotation.ReportsCrashes;
+import org.acra.sender.HttpSender;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 
+@ReportsCrashes(
+        httpMethod = HttpSender.Method.PUT,
+        reportType = HttpSender.Type.JSON,
+        formKey = "",
+        formUri = "http://reports.nameless-rom.org/acra-devicecontrol/_design/acra-storage/_update/report",
+        formUriBasicAuthLogin = "namelessreporter",
+        formUriBasicAuthPassword = "weareopentoeveryone",
+        mode = ReportingInteractionMode.SILENT
+)
 public class Application extends android.app.Application implements DeviceConstants {
 
     // Switch to your needs - overrideable in preferences
@@ -47,6 +60,7 @@ public class Application extends android.app.Application implements DeviceConsta
     @Override
     public void onCreate() {
         super.onCreate();
+        ACRA.init(this);
 
         PreferenceHelper.getInstance(this);
         IS_LOG_DEBUG = PreferenceHelper.getBoolean(JF_EXTENSIVE_LOGGING, false);
