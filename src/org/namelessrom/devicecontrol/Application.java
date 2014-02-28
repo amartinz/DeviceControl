@@ -43,8 +43,7 @@ import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
         formUri = "http://reports.nameless-rom.org/acra-devicecontrol/_design/acra-storage/_update/report",
         formUriBasicAuthLogin = "namelessreporter",
         formUriBasicAuthPassword = "weareopentoeveryone",
-        mode = ReportingInteractionMode.SILENT
-)
+        mode = ReportingInteractionMode.SILENT)
 public class Application extends android.app.Application implements DeviceConstants {
 
     // Switch to your needs - overrideable in preferences
