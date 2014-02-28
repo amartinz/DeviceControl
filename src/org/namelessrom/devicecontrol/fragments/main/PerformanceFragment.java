@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceCpuSettings;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceGeneralFragment;
@@ -61,7 +62,11 @@ public class PerformanceFragment extends AttachFragment {
 
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity, PerformanceFragment.ID);
+        if (activity instanceof MainActivity) {
+            super.onAttach(activity, PerformanceFragment.ID);
+        } else {
+            super.onAttach(activity);
+        }
     }
 
     private List<Fragment> getFragments() {

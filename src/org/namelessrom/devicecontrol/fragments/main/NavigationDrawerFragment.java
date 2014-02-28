@@ -166,7 +166,6 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
-
     }
 
     //==============================================================================================
@@ -177,13 +176,15 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     public void openDrawer() {
-        if (mDrawerLayout != null)
+        if (mDrawerLayout != null) {
             mDrawerLayout.openDrawer(mFragmentContainerView);
+        }
     }
 
     public void closeDrawer() {
-        if (mDrawerLayout != null)
+        if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
+        }
     }
 
     // TODO: use real drawables
