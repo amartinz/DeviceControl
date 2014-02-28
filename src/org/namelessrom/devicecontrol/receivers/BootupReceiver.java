@@ -26,15 +26,15 @@ import org.namelessrom.devicecontrol.fragments.device.DeviceGraphicsFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceInputFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceLightsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceGeneralFragment;
-import org.namelessrom.devicecontrol.widgets.preferences.VibratorTuningPreference;
-import org.namelessrom.devicecontrol.utils.threads.FireAndForget;
-import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.helpers.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.threads.FireAndForget;
+import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
+import org.namelessrom.devicecontrol.widgets.preferences.VibratorTuningPreference;
 
 import java.io.File;
 import java.util.ArrayList;

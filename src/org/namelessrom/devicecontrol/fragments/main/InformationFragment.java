@@ -29,8 +29,8 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.dynamic.WebViewFragment;
 import org.namelessrom.devicecontrol.fragments.information.InformationHelpFragment;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
-import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
 import org.namelessrom.devicecontrol.widgets.JfViewPager;
+import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

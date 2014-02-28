@@ -30,8 +30,8 @@ import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsEditorTabbed;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsFreezerTabbed;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsHelpFragment;
-import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
 import org.namelessrom.devicecontrol.widgets.JfViewPager;
+import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
