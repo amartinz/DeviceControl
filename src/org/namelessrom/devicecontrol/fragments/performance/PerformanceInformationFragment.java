@@ -292,34 +292,38 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
 
     private View generateStateRow(CPUStateMonitor.CpuState state, ViewGroup parent) {
 
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
-        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.row_state, parent, false);
+        if (isAdded()) {
+            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            LinearLayout view = (LinearLayout) inflater.inflate(R.layout.row_state, parent, false);
 
-        float per = (float) state.duration * 100 / monitor.getTotalStateTime();
-        String sPer = (int) per + "%";
+            float per = (float) state.duration * 100 / monitor.getTotalStateTime();
+            String sPer = (int) per + "%";
 
-        String sFreq;
-        if (state.freq == 0) {
-            sFreq = getString(R.string.deep_sleep);
+            String sFreq;
+            if (state.freq == 0) {
+                sFreq = getString(R.string.deep_sleep);
+            } else {
+                sFreq = state.freq / 1000 + " MHz";
+            }
+
+            long tSec = state.duration / 100;
+            String sDur = toString(tSec);
+
+            TextView freqText = (TextView) view.findViewById(R.id.ui_freq_text);
+            TextView durText = (TextView) view.findViewById(R.id.ui_duration_text);
+            TextView perText = (TextView) view.findViewById(R.id.ui_percentage_text);
+            ProgressBar bar = (ProgressBar) view.findViewById(R.id.ui_bar);
+
+            freqText.setText(sFreq);
+            perText.setText(sPer);
+            durText.setText(sDur);
+            bar.setProgress((int) per);
+
+            parent.addView(view);
+            return view;
         } else {
-            sFreq = state.freq / 1000 + " MHz";
+            return null;
         }
-
-        long tSec = state.duration / 100;
-        String sDur = toString(tSec);
-
-        TextView freqText = (TextView) view.findViewById(R.id.ui_freq_text);
-        TextView durText = (TextView) view.findViewById(R.id.ui_duration_text);
-        TextView perText = (TextView) view.findViewById(R.id.ui_percentage_text);
-        ProgressBar bar = (ProgressBar) view.findViewById(R.id.ui_bar);
-
-        freqText.setText(sFreq);
-        perText.setText(sPer);
-        durText.setText(sDur);
-        bar.setProgress((int) per);
-
-        parent.addView(view);
-        return view;
     }
 
     protected class RefreshStateDataTask extends AsyncTask<Void, Void, Void> {

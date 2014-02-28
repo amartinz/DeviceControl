@@ -129,10 +129,13 @@ public class PropAdapter extends ArrayAdapter<Prop> {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
+            @SuppressWarnings("unchecked")
             List<Prop> filtered = (List<Prop>) results.values;
             notifyDataSetChanged();
             clear();
-            for (Prop aFiltered : filtered) add(aFiltered);
+            if (filtered != null) {
+                for (Prop aFiltered : filtered) add(aFiltered);
+            }
             notifyDataSetInvalidated();
         }
     }
