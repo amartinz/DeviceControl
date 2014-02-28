@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
+import org.namelessrom.devicecontrol.fragments.performance.PerformanceCpuSettings;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceGeneralFragment;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceInformationFragment;
 import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
@@ -66,6 +67,7 @@ public class PerformanceFragment extends AttachFragment {
     private List<Fragment> getFragments() {
         List<Fragment> tmpList = new ArrayList<Fragment>();
         tmpList.add(new PerformanceInformationFragment());
+        tmpList.add(new PerformanceCpuSettings());
         if (PerformanceGeneralFragment.isSupported(getActivity())) {
             tmpList.add(new PerformanceGeneralFragment());
         }
@@ -75,6 +77,7 @@ public class PerformanceFragment extends AttachFragment {
     private List<String> getTitles() {
         List<String> tmpList = new ArrayList<String>();
         tmpList.add(getString(R.string.section_title_information));
+        tmpList.add(getString(R.string.cpusettings));
         if (PerformanceGeneralFragment.isSupported(getActivity())) {
             tmpList.add(getString(R.string.general));
         }
