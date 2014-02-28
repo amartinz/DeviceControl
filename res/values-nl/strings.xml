@@ -32,7 +32,7 @@
     <string name="app_warning_root">Let op: %s vereist dat ROOT volledig werkt!</string>
 
     <!-- Messages -->
-    <string name="message_loading">Laden, even geduld...</string>
+    <string name="message_loading">Laden, even geduld…</string>
 
     <!-- Fragment -->
     <string name="fragment_press_to_load">Druk op mij om %s te laden.</string>

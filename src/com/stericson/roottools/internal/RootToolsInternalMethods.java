@@ -132,13 +132,13 @@ public final class RootToolsInternalMethods {
 
             RootTools.log(permissions.getOtherPermissions());
 
-            StringBuilder finalPermissions = new StringBuilder();
-            finalPermissions.append(parseSpecialPermissions(rawPermissions));
-            finalPermissions.append(parsePermissions(permissions.getUserPermissions()));
-            finalPermissions.append(parsePermissions(permissions.getGroupPermissions()));
-            finalPermissions.append(parsePermissions(permissions.getOtherPermissions()));
+            String finalPermissions = "";
+            finalPermissions += parseSpecialPermissions(rawPermissions);
+            finalPermissions += parsePermissions(permissions.getUserPermissions());
+            finalPermissions += parsePermissions(permissions.getGroupPermissions());
+            finalPermissions += parsePermissions(permissions.getOtherPermissions());
 
-            permissions.setPermissions(Integer.parseInt(finalPermissions.toString()));
+            permissions.setPermissions(Integer.parseInt(finalPermissions));
 
             return permissions;
         }
