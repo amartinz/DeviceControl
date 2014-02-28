@@ -181,6 +181,10 @@ public class Utils implements DeviceConstants, FileConstants {
         return success;
     }
 
+    public static void writeOneLine(String filename, String value) {
+        Shell.SU.run("busybox echo " + value + " > " + filename);
+    }
+
     /**
      * Write the "color value" to the specified file. The value is scaled from
      * an integer to an unsigned integer by multiplying by 2.
@@ -329,5 +333,19 @@ public class Utils implements DeviceConstants, FileConstants {
             }
             return (isLowRamDevice == 1);
         }
+    }
+
+    /**
+     * Reads string array from file
+     *
+     * @param fname
+     * @return string array
+     */
+    public static String[] readStringArray(String fname) {
+        String line = readOneLine(fname);
+        if (line != null) {
+            return line.split(" ");
+        }
+        return null;
     }
 }
