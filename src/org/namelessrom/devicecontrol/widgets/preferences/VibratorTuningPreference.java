@@ -34,11 +34,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
 
 /**
  * Special preference type that allows configuration of

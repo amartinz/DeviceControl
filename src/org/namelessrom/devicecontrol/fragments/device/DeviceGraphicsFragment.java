@@ -22,12 +22,12 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.widgets.preferences.PanelColorTemperature;
-import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
+import org.namelessrom.devicecontrol.widgets.preferences.PanelColorTemperature;
 
 public class DeviceGraphicsFragment extends PreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
