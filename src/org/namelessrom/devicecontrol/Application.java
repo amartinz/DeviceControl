@@ -36,6 +36,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 
+/*
 @ReportsCrashes(
         httpMethod = HttpSender.Method.PUT,
         reportType = HttpSender.Type.JSON,
@@ -44,7 +45,7 @@ import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
         formUriBasicAuthLogin = "namelessreporter",
         formUriBasicAuthPassword = "weareopentoeveryone",
         mode = ReportingInteractionMode.SILENT
-)
+)*/
 public class Application extends android.app.Application implements DeviceConstants {
 
     // Switch to your needs - overrideable in preferences

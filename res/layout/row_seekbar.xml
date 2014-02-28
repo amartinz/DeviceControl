@@ -57,9 +57,8 @@
             android:layout_marginRight="10dp"
             android:textAppearance="?android:textAppearanceSmall" />
 
-        <ProgressBar
+        <SeekBar
             android:id="@+id/ui_device_bar"
-            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/ui_device_bar_right"
