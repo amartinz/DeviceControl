@@ -60,6 +60,24 @@
     <string name="intelli_plug_eco_title">Eco Mode</string>
     <string name="intelli_plug_eco_summary_on">Intelli-Plug eco mode enabled.</string>
     <string name="intelli_plug_eco_summary_off">Intelli-Plug eco mode disabled.</string>
+    <!-- CPU settings -->
+    <string name="cpusettings">CPU Settings</string>
+    <string name="current_speed">Current Speed</string>
+    <string name="current_max">Maximum speed: </string>
+    <string name="current_min">Minimum speed: </string>
+    <string name="governor">Governor</string>
+    <string name="io">I/O Scheduler</string>
+    <string name="sob">Apply automatically on boot</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="cpu_info_list_header">Core Status</string>
+    <string name="cpu_speed_header">Core Limits</string>
+    <string name="other_settings_header">Other settings</string>
+    <string name="core_offline">Offline</string>
+    <string name="core">Core</string>
+    <string name="cpu_info_settings_header">Settings</string>
+    <string name="cpu_info_settings_interval">Refresh interval</string>
+    <string name="cpu_info_hide">Hide status</string>
     <!-- Input -->
     <string name="touchkey_subcat_title">Touch key</string>
     <string name="touchkey_light_title_head">Enable keys backlight</string>
@@ -152,4 +170,5 @@
     <!-- Standalone Strings -->
     <string name="cpu_temperature">CPU Temperature:</string>
     <string name="battery_temperature">Battery Temperature:</string>
+    <string name="off">Off</string>
 </resources>
