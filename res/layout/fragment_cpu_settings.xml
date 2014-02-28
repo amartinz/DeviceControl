@@ -30,30 +30,34 @@ Copyright (C) 2012  James Roberts
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:text="@string/cpu_info_settings_header"
+            style="?android:attr/listSeparatorTextViewStyle" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
+            android:orientation="horizontal"
             android:layout_gravity="top"
             android:id="@+id/settings">
 
-            <TextView
-                android:text="@string/cpu_info_settings_header"
-                style="?android:attr/listSeparatorTextViewStyle" />
-
             <CheckBox
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/cpu_info_hide"
-                android:text="@string/cpu_info_hide" />
+                android:text="@string/cpu_info_hide"
+                android:gravity="center_vertical|left"
+                android:layout_gravity="center_vertical" />
 
             <include
                 layout="@layout/row_seekbar"
                 android:id="@+id/ui_interval"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical" />
 
         </LinearLayout>
 
@@ -73,7 +77,7 @@ Copyright (C) 2012  James Roberts
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="vertical"
                 android:animateLayoutChanges="false" />
 
@@ -95,13 +99,13 @@ Copyright (C) 2012  James Roberts
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -139,7 +143,7 @@ Copyright (C) 2012  James Roberts
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="5dip"
                     android:orientation="horizontal">
 
                     <TextView
@@ -188,7 +192,7 @@ Copyright (C) 2012  James Roberts
             android:gravity="center_vertical|center_horizontal"
             android:baselineAligned="false"
             android:id="@+id/governor"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:id="@+id/governor_label"
@@ -200,7 +204,7 @@ Copyright (C) 2012  James Roberts
 
             <Spinner
                 android:id="@+id/pref_governor"
-                android:layout_width="130dip"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -211,7 +215,7 @@ Copyright (C) 2012  James Roberts
             android:orientation="horizontal"
             android:gravity="center_vertical|center_horizontal"
             android:id="@+id/ioscheduler"
-            android:layout_marginTop="10dip">
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:id="@+id/io_label"
@@ -223,7 +227,7 @@ Copyright (C) 2012  James Roberts
 
             <Spinner
                 android:id="@+id/pref_io"
-                android:layout_width="120dip"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -235,7 +239,8 @@ Copyright (C) 2012  James Roberts
             android:gravity="center_horizontal"
             android:id="@+id/sob"
             android:layout_gravity="bottom"
-            android:paddingTop="30dip">
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
 
             <TextView
                 android:id="@+id/set_on_boot_label"

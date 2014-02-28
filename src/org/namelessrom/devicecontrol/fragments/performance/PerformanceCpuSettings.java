@@ -116,7 +116,7 @@ public class PerformanceCpuSettings extends Fragment
                 updateSharedPrefs(PREF_HIDE_CPU_INFO, b ? "1" : "0");
             }
         });
-        mStatusHide.setChecked(mPreferences.getString(PREF_HIDE_CPU_INFO, "0").equals("1"));
+        mStatusHide.setChecked(mPreferences.getString(PREF_HIDE_CPU_INFO, "1").equals("1"));
 
         CpuCore tmpCore;
         for (int i = 0; i < mCpuNum; i++) {

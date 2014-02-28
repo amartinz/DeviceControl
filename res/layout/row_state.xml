@@ -36,7 +36,7 @@ Copyright (C) 2012  James Roberts
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:textSize="17sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/ui_duration_text"
@@ -44,7 +44,8 @@ Copyright (C) 2012  James Roberts
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:gravity="right" />
+            android:gravity="right"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/ui_percentage_text"
@@ -52,7 +53,8 @@ Copyright (C) 2012  James Roberts
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="0"
-            android:gravity="right" />
+            android:gravity="right"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <ProgressBar

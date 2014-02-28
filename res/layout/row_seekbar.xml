@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
-            android:textAppearance="?android:textAppearanceSmall"
+            android:textSize="12sp"
             android:layout_centerVertical="true" />
 
         <TextView
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:textAppearance="?android:textAppearanceSmall"
+            android:textSize="12sp"
             android:layout_toRightOf="@+id/ui_device_title"
             android:layout_centerVertical="true" />
 
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="10dp"
-            android:textAppearance="?android:textAppearanceSmall" />
+            android:textSize="12sp" />
 
         <SeekBar
             android:id="@+id/ui_device_bar"
@@ -73,6 +73,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="10dp"
-            android:textAppearance="?android:textAppearanceSmall" />
+            android:textSize="12sp" />
     </RelativeLayout>
 </LinearLayout>
