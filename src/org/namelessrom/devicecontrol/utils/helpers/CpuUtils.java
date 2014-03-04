@@ -250,7 +250,11 @@ public class CpuUtils implements PerformanceConstants {
      * @return tagged and converted String
      */
     public static String toMHz(final String mhzString) {
-        return String.valueOf(Integer.parseInt(mhzString) / 1000) + " MHz";
+        if (mhzString != null && !mhzString.isEmpty()) {
+            return String.valueOf(Integer.parseInt(mhzString) / 1000) + " MHz";
+        } else {
+            return "Offline";
+        }
     }
 
     public static void restore() {
