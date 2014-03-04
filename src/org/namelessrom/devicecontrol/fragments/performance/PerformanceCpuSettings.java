@@ -19,10 +19,8 @@
 package org.namelessrom.devicecontrol.fragments.performance;
 
 import android.app.Fragment;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +41,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.CpuCore;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
+import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -60,7 +58,6 @@ public class PerformanceCpuSettings extends Fragment
     private String[] mAvailableFrequencies;
     private String mMaxFreqSetting;
     private String mMinFreqSetting;
-    private SharedPreferences mPreferences;
 
     private TextView mIntervalText;
 
@@ -74,7 +71,6 @@ public class PerformanceCpuSettings extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mHandler = new Handler();
     }
 
@@ -89,7 +85,7 @@ public class PerformanceCpuSettings extends Fragment
         final SeekBar intervalBar = (SeekBar) view.findViewById(R.id.ui_device_bar);
         intervalBar.setMax(4000);
         intervalBar.setProgress(Integer.parseInt(
-                mPreferences.getString(PREF_INTERVAL_CPU_INFO, "1000")) - 1000);
+                PreferenceHelper.getString(PREF_INTERVAL_CPU_INFO, "1000")) - 1000);
         intervalBar.setOnSeekBarChangeListener(this);
         ((TextView) view.findViewById(R.id.ui_device_title)).setText(
                 getString(R.string.cpu_info_settings_interval) + ": ");
@@ -116,7 +112,7 @@ public class PerformanceCpuSettings extends Fragment
                 updateSharedPrefs(PREF_HIDE_CPU_INFO, b ? "1" : "0");
             }
         });
-        mStatusHide.setChecked(mPreferences.getString(PREF_HIDE_CPU_INFO, "1").equals("1"));
+        mStatusHide.setChecked(PreferenceHelper.getString(PREF_HIDE_CPU_INFO, "1").equals("1"));
 
         CpuCore tmpCore;
         for (int i = 0; i < mCpuNum; i++) {
@@ -196,19 +192,21 @@ public class PerformanceCpuSettings extends Fragment
         });
 
         Switch mSetOnBoot = (Switch) view.findViewById(R.id.cpu_sob);
-        mSetOnBoot.setChecked(mPreferences.getBoolean(CPU_SOB, false));
+        mSetOnBoot.setChecked(PreferenceHelper.getBoolean(CPU_SOB, false));
         mSetOnBoot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton v, boolean checked) {
-                final SharedPreferences.Editor editor = mPreferences.edit();
-                editor.putBoolean(CPU_SOB, checked);
+                PreferenceHelper.setBoolean(CPU_SOB, checked);
                 if (checked) {
-                    editor.putString(PREF_MIN_CPU, CpuUtils.getValue(0, CpuUtils.ACTION_FREQ_MIN));
-                    editor.putString(PREF_MAX_CPU, CpuUtils.getValue(0, CpuUtils.ACTION_FREQ_MAX));
-                    editor.putString(PREF_GOV, CpuUtils.getValue(0, CpuUtils.ACTION_GOV));
-                    editor.putString(PREF_IO, CpuUtils.getIOScheduler());
+                    PreferenceHelper.setString(PREF_MIN_CPU,
+                            CpuUtils.getValue(0, CpuUtils.ACTION_FREQ_MIN));
+                    PreferenceHelper.setString(PREF_MAX_CPU,
+                            CpuUtils.getValue(0, CpuUtils.ACTION_FREQ_MAX));
+                    PreferenceHelper.setString(PREF_GOV,
+                            CpuUtils.getValue(0, CpuUtils.ACTION_GOV));
+                    PreferenceHelper.setString(PREF_IO,
+                            CpuUtils.getIOScheduler());
                 }
-                editor.commit();
             }
         });
 
@@ -269,7 +267,8 @@ public class PerformanceCpuSettings extends Fragment
                 CpuUtils.setValue(i, selected, CpuUtils.ACTION_GOV);
             }
             updateSharedPrefs(PREF_GOV, selected);
-            mPreferences.edit().remove(GOV_SETTINGS).remove(GOV_NAME).apply();
+            PreferenceHelper.remove(GOV_SETTINGS);
+            PreferenceHelper.remove(GOV_NAME);
         }
 
         public void onNothingSelected(AdapterView<?> parent) {
@@ -281,7 +280,7 @@ public class PerformanceCpuSettings extends Fragment
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             final String selected = parent.getItemAtPosition(pos).toString();
             for (String aIO_SCHEDULER_PATH : IO_SCHEDULER_PATH) {
-                if (new File(aIO_SCHEDULER_PATH).exists()) {
+                if (Utils.fileExists(aIO_SCHEDULER_PATH)) {
                     Utils.writeValue(aIO_SCHEDULER_PATH, selected);
                 }
             }
@@ -382,9 +381,8 @@ public class PerformanceCpuSettings extends Fragment
         return rowView;
     }
 
-    private void updateSharedPrefs(String var, String value) {
-        final SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putString(var, value).commit();
+    private void updateSharedPrefs(final String var, final String value) {
+        PreferenceHelper.setString(var, value);
     }
 }
 

@@ -50,6 +50,10 @@ public class PreferenceHelper {
     // Generic
     //==============================================================================================
 
+    public static void remove(String key) {
+        mSharedPrefs.edit().remove(key).commit();
+    }
+
     public static int getInt(String key) {
         return PreferenceHelper.getInt(key, 0);
     }

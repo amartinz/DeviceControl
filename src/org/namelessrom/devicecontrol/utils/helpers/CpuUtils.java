@@ -264,6 +264,8 @@ public class CpuUtils implements PerformanceConstants {
     }
 
     public static void restore() {
+        final StringBuilder sb = new StringBuilder();
+
         final int cpuCount = getNumOfCpus();
         for (int i = 0; i < cpuCount; i++) {
             setValue(i,
@@ -279,6 +281,14 @@ public class CpuUtils implements PerformanceConstants {
                             getValue(i, ACTION_GOV)),
                     ACTION_GOV);
         }
+        final String io = PreferenceHelper.getString(PREF_IO, getIOScheduler());
+        for (String aIO_SCHEDULER_PATH : IO_SCHEDULER_PATH) {
+            if (Utils.fileExists(aIO_SCHEDULER_PATH)) {
+                sb.append("busybox echo ").append(io).append(" > ")
+                        .append(aIO_SCHEDULER_PATH).append(";\n");
+            }
+        }
+        Shell.SU.run(sb.toString());
     }
 
 }
