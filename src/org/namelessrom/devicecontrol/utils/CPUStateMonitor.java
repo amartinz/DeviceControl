@@ -20,6 +20,7 @@
 package org.namelessrom.devicecontrol.utils;
 
 import android.os.SystemClock;
+import android.util.SparseArray;
 
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
@@ -31,14 +32,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CPUStateMonitor implements DeviceConstants {
 
     private List<CpuState> mStates = new ArrayList<CpuState>();
-    private Map<Integer, Long> mOffsets = new HashMap<Integer, Long>();
+    private SparseArray<Long> mOffsets = new SparseArray<Long>();
 
     public class CPUStateMonitorException extends Exception {
         public CPUStateMonitorException(String s) {
@@ -67,7 +66,7 @@ public class CPUStateMonitor implements DeviceConstants {
 
         for (CpuState state : mStates) {
             long duration = state.duration;
-            if (mOffsets.containsKey(state.freq)) {
+            if (mOffsets.get(state.freq) != null) {
                 long offset = mOffsets.get(state.freq);
                 if (offset <= duration) {
                     duration -= offset;
@@ -89,17 +88,18 @@ public class CPUStateMonitor implements DeviceConstants {
             sum += state.duration;
         }
 
-        for (Map.Entry<Integer, Long> entry : mOffsets.entrySet()) {
-            offset += entry.getValue();
+        final int size = mOffsets.size();
+        for (int i = 0; i < size; i++) {
+            offset += mOffsets.valueAt(i);
         }
         return sum - offset;
     }
 
-    public Map<Integer, Long> getOffsets() {
+    public SparseArray<Long> getOffsets() {
         return mOffsets;
     }
 
-    public void setOffsets(Map<Integer, Long> offsets) {
+    public void setOffsets(SparseArray<Long> offsets) {
         mOffsets = offsets;
     }
 
