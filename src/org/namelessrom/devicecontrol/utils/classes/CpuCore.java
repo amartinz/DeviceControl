@@ -14,10 +14,10 @@ public class CpuCore {
 
     public CpuCore(final String core, final String coreCurrent,
                    final String coreMax, final String coreGov) {
-        mCore = core;
-        mCoreMax = coreMax;
-        mCoreCurrent = coreCurrent;
-        mCoreGov = coreGov;
+        mCore = ((core != null && !core.isEmpty()) ? core : "0");
+        mCoreMax = ((coreMax != null && !coreMax.isEmpty()) ? coreMax : "0");
+        mCoreCurrent = ((coreCurrent != null && !coreCurrent.isEmpty()) ? coreCurrent : "0");
+        mCoreGov = ((coreGov != null && !coreGov.isEmpty()) ? coreGov : "0");
         logDebug("mCore: [" + mCore + "]");
         logDebug("mCoreMax: [" + mCoreMax + "]");
         logDebug("mCoreCurrent: [" + mCoreCurrent + "]");
