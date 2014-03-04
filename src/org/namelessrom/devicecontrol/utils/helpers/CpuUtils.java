@@ -75,11 +75,14 @@ public class CpuUtils implements PerformanceConstants {
 
     public static int getCpuTemperature() {
         String tmpString = Utils.readOneLine(CPU_TEMP_PATH);
-        tmpString = ((tmpString != null && !tmpString.trim().isEmpty()) ? tmpString : "-1");
-        int temp = Integer.parseInt(tmpString);
-        temp = (temp < 0 ? 0 : temp);
-        temp = (temp > 100 ? 100 : temp);
-        return temp;
+        if (tmpString != null && !tmpString.trim().isEmpty()) {
+            int temp = Integer.parseInt(tmpString);
+            temp = (temp < 0 ? 0 : temp);
+            temp = (temp > 100 ? 100 : temp);
+            return temp;
+        } else {
+            return -1;
+        }
     }
 
     public static boolean getIntelliPlugActive() {
