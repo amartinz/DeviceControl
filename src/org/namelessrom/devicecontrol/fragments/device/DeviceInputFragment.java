@@ -23,6 +23,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+import android.util.Log;
 import android.view.ViewConfiguration;
 
 import org.namelessrom.devicecontrol.Application;
@@ -36,6 +37,7 @@ import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.widgets.preferences.VibratorTuningPreference;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +59,7 @@ public class DeviceInputFragment extends PreferenceFragment
     private CheckBoxPreference mGloveMode;
     private CheckBoxPreference mKnockOn;
 
-    private boolean hasMenuKey = false;
+    private boolean hasNavBar = false;
 
     //==============================================================================================
     // Overridden Methods
@@ -69,10 +71,21 @@ public class DeviceInputFragment extends PreferenceFragment
         addPreferencesFromResource(R.xml.device_input_preferences);
 
         try {
-            hasMenuKey = !getResources().getBoolean(
-                    com.android.internal.R.bool.config_showNavigationBar);
+            Log.e("TEST", "Reflection: getting class");
+            Class<?> cls = Class.forName("com.android.internal.R$bool");
+            Log.e("TEST", "Reflection: getting field");
+            Field field = cls.getDeclaredField("config_showNavigationBar");
+            Log.e("TEST", "Reflection: toString: " + field.toString()
+                    + " | generic: " + field.toGenericString());
+            Log.e("TEST", "Reflection: getting int");
+            final int reflectionInt = (Integer) field.get(null);
+            Log.e("TEST", "Reflection: resource id: " + String.valueOf(reflectionInt));
+            hasNavBar = getResources().getBoolean(reflectionInt);
+            Log.e("TEST", "Reflection: hasMenuKey: " + (hasNavBar ? "true" : "false"));
+            //hasMenuKey = !getResources().getBoolean(
+            //        com.android.internal.R.bool.config_showNavigationBar);
         } catch (Exception exc) { // fallback
-            hasMenuKey = ViewConfiguration.get(getActivity()).hasPermanentMenuKey();
+            hasNavBar = !ViewConfiguration.get(getActivity()).hasPermanentMenuKey();
         }
 
         VibratorTuningPreference mVibratorTuning
@@ -152,7 +165,7 @@ public class DeviceInputFragment extends PreferenceFragment
 
         if (Application.HAS_ROOT && !Application.IS_NAMELESS) {
             tmp = paramResult.get(i);
-            if (!hasMenuKey) {
+            if (hasNavBar) {
                 preferenceGroup.removePreference(mForceNavBar);
             } else {
                 mForceNavBar.setChecked(tmp);
