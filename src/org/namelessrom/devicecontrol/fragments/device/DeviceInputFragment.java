@@ -57,7 +57,7 @@ public class DeviceInputFragment extends PreferenceFragment
     private CheckBoxPreference mGloveMode;
     private CheckBoxPreference mKnockOn;
 
-    private boolean hasMenuKey = false;
+    private boolean hasNavBar = false;
 
     //==============================================================================================
     // Overridden Methods
@@ -69,10 +69,11 @@ public class DeviceInputFragment extends PreferenceFragment
         addPreferencesFromResource(R.xml.device_input_preferences);
 
         try {
-            hasMenuKey = !getResources().getBoolean(
-                    com.android.internal.R.bool.config_showNavigationBar);
+            hasNavBar = getResources().getBoolean(
+                    (Integer) Class.forName("com.android.internal.R$bool")
+                            .getDeclaredField("config_showNavigationBar").get(null));
         } catch (Exception exc) { // fallback
-            hasMenuKey = ViewConfiguration.get(getActivity()).hasPermanentMenuKey();
+            hasNavBar = !ViewConfiguration.get(getActivity()).hasPermanentMenuKey();
         }
 
         VibratorTuningPreference mVibratorTuning
@@ -152,7 +153,7 @@ public class DeviceInputFragment extends PreferenceFragment
 
         if (Application.HAS_ROOT && !Application.IS_NAMELESS) {
             tmp = paramResult.get(i);
-            if (!hasMenuKey) {
+            if (hasNavBar) {
                 preferenceGroup.removePreference(mForceNavBar);
             } else {
                 mForceNavBar.setChecked(tmp);
