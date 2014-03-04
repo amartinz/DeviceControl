@@ -56,10 +56,14 @@ public class Application extends android.app.Application implements DeviceConsta
     public static AlarmManager alarmManager;
     private static PackageManager packageManager;
 
+    public static Context applicationContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
         ACRA.init(this);
+
+        applicationContext = getApplicationContext();
 
         PreferenceHelper.getInstance(this);
         IS_LOG_DEBUG = PreferenceHelper.getBoolean(JF_EXTENSIVE_LOGGING, false);

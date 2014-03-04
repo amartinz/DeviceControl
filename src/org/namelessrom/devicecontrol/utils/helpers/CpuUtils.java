@@ -17,6 +17,8 @@
  */
 package org.namelessrom.devicecontrol.utils.helpers;
 
+import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
@@ -253,7 +255,11 @@ public class CpuUtils implements PerformanceConstants {
         if (mhzString != null && !mhzString.isEmpty()) {
             return String.valueOf(Integer.parseInt(mhzString) / 1000) + " MHz";
         } else {
-            return "Offline";
+            if (Application.applicationContext != null) {
+                return Application.applicationContext.getString(R.string.core_offline);
+            } else {
+                return "Offline";
+            }
         }
     }
 
