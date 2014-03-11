@@ -21,9 +21,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-/**
- * Created by alex on 18.12.13.
- */
 public class PreferenceHelper {
     //==============================================================================================
     // Fields
@@ -78,16 +75,31 @@ public class PreferenceHelper {
         return mSharedPrefs.getBoolean(key, defaultValue);
     }
 
-    public static void setString(String key, String value) {
-        mSharedPrefs.edit().putString(key, value).commit();
+    public static void setString(final String key, final String value) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mSharedPrefs.edit().putString(key, value).commit();
+            }
+        }).start();
     }
 
-    public static void setInt(String key, int value) {
-        mSharedPrefs.edit().putInt(key, value).commit();
+    public static void setInt(final String key, final int value) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mSharedPrefs.edit().putInt(key, value).commit();
+            }
+        }).start();
     }
 
-    public static void setBoolean(String key, boolean value) {
-        mSharedPrefs.edit().putBoolean(key, value).commit();
+    public static void setBoolean(final String key, final boolean value) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mSharedPrefs.edit().putBoolean(key, value).commit();
+            }
+        }).start();
     }
 
     //==============================================================================================

@@ -16,3 +16,10 @@ android {
         }
     }
 }
+
+dependencies {
+    compile 'com.android.support:support-v13:19.+'
+    compile 'ch.acra:acra:4.+'
+    compile 'com.github.gabrielemariotti.cards:library:1.+'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}

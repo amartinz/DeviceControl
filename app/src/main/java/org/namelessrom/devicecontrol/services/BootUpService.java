@@ -93,10 +93,10 @@ public class BootUpService extends Service
                 //==================================================================================
                 // Tasker
                 //==================================================================================
-                if (PreferenceHelper.getBoolean(TASKER_TOOLS_FSTRIM, false)) {
+                if (PreferenceHelper.getBoolean(FSTRIM, false)) {
                     logDebug("Scheduling Tasker - FSTRIM");
-                    AlarmHelper.setAlarmFstrim(mContext, Integer.parseInt(
-                            PreferenceHelper.getString(TASKER_TOOLS_FSTRIM_INTERVAL, "30")));
+                    AlarmHelper.setAlarmFstrim(mContext,
+                            PreferenceHelper.getInt(FSTRIM_INTERVAL, 480));
                 }
 
                 //==================================================================================
