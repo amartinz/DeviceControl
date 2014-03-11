@@ -105,12 +105,9 @@
     <string name="prefs_set_on_boot">"Použít při startu"</string>
     <string name="prefs_jf_version">"Verze"</string>
     <!-- Tasker -->
-    <string name="tasker_optimization_fstrim_cat_title">"Fstrimming"</string>
-    <string name="tasker_optimization_filesystem_fstrim_title">"Automatické použití fstrimu"</string>
-    <string name="tasker_optimization_filesystem_fstrim_summary_on">"Fstrim je povolen."</string>
-    <string name="tasker_optimization_filesystem_fstrim_summary_off">"Fstrim je zakázán."</string>
-    <string name="tasker_optimization_filesystem_fstrim_interval_title">"Fstrim interval"</string>
-    <string name="tasker_optimization_filesystem_fstrim_interval_summary">"Vyberte interval pro automatické použití fstrimu."</string>
+    <string name="fstrim_title">"Automatické použití fstrimu"</string>
+    <string name="fstrim_interval_title">"Fstrim interval"</string>
+    <string name="fstrim_interval_summary">"Vyberte interval pro automatické použití fstrimu."</string>
     <!-- freezer -->
     <string name="pt_freeze">"Zmrazit balík"</string>
     <string name="pt_unfreeze">"Odmrazit balík"</string>

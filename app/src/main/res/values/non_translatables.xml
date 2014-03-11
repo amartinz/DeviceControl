@@ -5,6 +5,7 @@
     <string name="empty" translatable="false" />
     <string name="intelli_plug" translatable="false">Intelli-Plug</string>
     <string name="sysctl" translatable="false">SysCtl</string>
+    <string name="non_TODO_string" translatable="false">TODO: Replace with real string.</string>
     <string name="unknown" translatable="false">---</string>
     <string name="vm" translatable="false">VM</string>
 </resources>
