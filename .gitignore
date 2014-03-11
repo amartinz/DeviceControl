@@ -32,5 +32,6 @@ local.properties
 .idea/workspace.xml
 out/
 proguard_logs/
+build/
 # Others
 .DS_Store
