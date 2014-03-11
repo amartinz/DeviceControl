@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/org.namelessrom.devicecontrol"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <org.namelessrom.devicecontrol.widgets.SwitchWidget
+        android:id="@+id/fstrim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleText="@string/fstrim_title"
+        app:summaryText="@string/fstrim_summary" />
+
+    <View style="@style/StandardDivider" />
+
+    <org.namelessrom.devicecontrol.widgets.SpinnerWidget
+        android:id="@+id/fstrim_interval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleText="@string/fstrim_interval_title"
+        app:summaryText="@string/fstrim_interval_summary"
+        app:entries="@array/fstrim_entries" />
+
+    <View style="@style/BigDivider" />
+
+</LinearLayout>

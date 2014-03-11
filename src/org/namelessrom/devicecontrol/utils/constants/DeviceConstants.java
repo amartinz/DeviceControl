@@ -37,9 +37,6 @@ public interface DeviceConstants {
     //==============================================================================================
     // Keys
     //==============================================================================================
-    public static final String KEY_USE_GYRO_CALIBRATION = "use_gyro_calibration";
-    public static final String KEY_CALIBRATE_GYRO = "calibrate_gyro";
-    public static final String KEY_TOUCHSCREEN_SENSITIVITY = "touchscreen_sensitivity";
     public static final String KEY_TOUCHKEY_LIGHT = "touchkey_light";
     public static final String KEY_TOUCHKEY_BLN = "touchkey_bln";
     public static final String KEY_KEYBOARD_LIGHT = "keyboard_light";
@@ -64,8 +61,6 @@ public interface DeviceConstants {
     //==============================================================================================
     // Categories
     //==============================================================================================
-    public static final String CATEGORY_SENSORS = "sensors";
-    public static final String CATEGORY_TOUCHSCREEN = "touchscreen";
     public static final String CATEGORY_TOUCHKEY = "touchkey";
     public static final String CATEGORY_GRAPHICS = "graphics";
     // Performance Cpu
@@ -88,8 +83,8 @@ public interface DeviceConstants {
     //==============================================================================================
     // Tasker
     //==============================================================================================
-    public static final String TASKER_TOOLS_FSTRIM = "tasker_tools_fstrim";
-    public static final String TASKER_TOOLS_FSTRIM_INTERVAL = "tasker_tools_fstrim_interval";
+    public static final String FSTRIM = "fstrim";
+    public static final String FSTRIM_INTERVAL = "fstrim_interval";
 
     //==============================================================================================
     // Handler Actions

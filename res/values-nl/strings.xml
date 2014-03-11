@@ -145,12 +145,9 @@
     <string name="prefs_jf_version">Versie</string>
 
     <!-- Tasker -->
-    <string name="tasker_optimization_fstrim_cat_title">Fstrimming</string>
-    <string name="tasker_optimization_filesystem_fstrim_title">Automatische fstrimming</string>
-    <string name="tasker_optimization_filesystem_fstrim_summary_on">Fstrimming ingeschakeld.</string>
-    <string name="tasker_optimization_filesystem_fstrim_summary_off">Fstrimming uitgeschakeld.</string>
-    <string name="tasker_optimization_filesystem_fstrim_interval_title">Fstrim interval</string>
-    <string name="tasker_optimization_filesystem_fstrim_interval_summary">Kies interval voor automatische fstrimming.</string>
+    <string name="fstrim_title">Automatische fstrimming</string>
+    <string name="fstrim_interval_title">Fstrim interval</string>
+    <string name="fstrim_interval_summary">Kies interval voor automatische fstrimming.</string>
 
     <!-- Drawer -->
     <string name="navigation_drawer_open">Open navigatiescherm</string>
