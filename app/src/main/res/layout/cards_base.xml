@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.android.cards.view.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/list_cardId"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/list_card"
+    card:card_layout_resourceID="@layout/cards_base_layout" />

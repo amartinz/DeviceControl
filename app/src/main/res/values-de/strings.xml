@@ -105,12 +105,9 @@
     <string name="prefs_set_on_boot">"Nach Neustart wiederanwenden"</string>
     <string name="prefs_jf_version">"Version"</string>
     <!-- Tasker -->
-    <string name="tasker_optimization_fstrim_cat_title">"Fstrimmen"</string>
-    <string name="tasker_optimization_filesystem_fstrim_title">"Automatisiertes Fstrimmen"</string>
-    <string name="tasker_optimization_filesystem_fstrim_summary_on">"Fstrimmen aktiviert."</string>
-    <string name="tasker_optimization_filesystem_fstrim_summary_off">"Fstrimmen deaktiviert."</string>
-    <string name="tasker_optimization_filesystem_fstrim_interval_title">"Fstrim Intervall"</string>
-    <string name="tasker_optimization_filesystem_fstrim_interval_summary">"Wähle das Intervall für automatisiertes Fstrimmen."</string>
+    <string name="fstrim_title">"Automatisiertes Fstrimmen"</string>
+    <string name="fstrim_interval_title">"Fstrim Intervall"</string>
+    <string name="fstrim_interval_summary">"Wähle das Intervall für automatisiertes Fstrimmen."</string>
     <!-- freezer -->
     <string name="pt_freeze">"Deaktiviere Anwendung"</string>
     <string name="pt_unfreeze">"Aktiviere Anwendung"</string>

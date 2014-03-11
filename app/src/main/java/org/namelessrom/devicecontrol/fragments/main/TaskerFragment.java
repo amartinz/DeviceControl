@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,71 +18,136 @@
 package org.namelessrom.devicecontrol.fragments.main;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.view.PagerTabStrip;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.android.cards.internal.Card;
+import com.android.cards.internal.CardArrayAdapter;
+import com.android.cards.internal.CardExpand;
+import com.android.cards.internal.CardHeader;
+import com.android.cards.view.CardListView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
-import org.namelessrom.devicecontrol.fragments.tasker.TaskerHelpFragment;
-import org.namelessrom.devicecontrol.fragments.tasker.TaskerOptimizationFragment;
-import org.namelessrom.devicecontrol.widgets.JfViewPager;
-import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.helpers.AlarmHelper;
+import org.namelessrom.devicecontrol.utils.helpers.ParseUtils;
+import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
+import org.namelessrom.devicecontrol.widgets.SpinnerWidget;
+import org.namelessrom.devicecontrol.widgets.SwitchWidget;
 
 import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Created by alex on 18.12.13.
- */
-public class TaskerFragment extends AttachFragment {
+public class TaskerFragment extends AttachFragment implements DeviceConstants {
 
     public static final int ID = 3;
-
-    @Override
-    public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
-        View rootView = layoutInflater.inflate(R.layout.fragment_viewpager, viewGroup, false);
-
-        List<Fragment> mFragments = getFragments();
-        List<String> mTitles = getTitles();
-
-        JfViewPager mViewPager = (JfViewPager) rootView.findViewById(R.id.pager);
-
-        ScreenSlidePagerAdapter mTabsAdapter = new ScreenSlidePagerAdapter(
-                getChildFragmentManager(), mFragments, mTitles);
-        mViewPager.setAdapter(mTabsAdapter);
-
-        PagerTabStrip mPagerTabStrip = (PagerTabStrip) rootView.findViewById(R.id.pagerTabStrip);
-        /*mPagerTabStrip.setBackgroundColor(getResources()
-                .getColor(android.R.color.holo_green_dark));
-        mPagerTabStrip.setTabIndicatorColor(getResources()
-                .getColor(android.R.color.holo_green_light));*/
-        mPagerTabStrip.setDrawFullUnderline(false);
-
-        return rootView;
-    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity, TaskerFragment.ID);
     }
 
-    private List<Fragment> getFragments() {
-        List<Fragment> tmpList = new ArrayList<Fragment>();
-        tmpList.add(new TaskerHelpFragment());
-        tmpList.add(new TaskerOptimizationFragment());
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_tasker, container, false);
 
-        return tmpList;
+        final TextView tvHelp = (TextView) view.findViewById(R.id.help_textview);
+        tvHelp.setText(R.string.tasker_introduction);
+
+        final ImageView ivHelp = (ImageView) view.findViewById(R.id.help_imageview);
+        ivHelp.setImageResource(R.mipmap.ic_launcher);
+
+        return view;
     }
 
-    private List<String> getTitles() {
-        List<String> tmpList = new ArrayList<String>();
-        tmpList.add(getString(R.string.section_title_information));
-        tmpList.add(getString(R.string.section_title_tasker_optimizations));
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initializeCards(getActivity(), view);
+    }
 
-        return tmpList;
+    private void initializeCards(final Context context, final View view) {
+        final ArrayList<Card> cards = new ArrayList<Card>();
+        final Card optimCard = new Card(context);
+
+        final CardHeader optimHeader = new CardHeader(context);
+        optimHeader.setTitle(getString(R.string.section_title_tasker_optimizations));
+        optimHeader.setButtonExpandVisible(true);
+        optimCard.addCardHeader(optimHeader);
+
+        final OptimExpand optimExpand = new OptimExpand(context);
+        optimCard.addCardExpand(optimExpand);
+
+        optimCard.setSwipeable(false);
+        cards.add(optimCard);
+
+        final CardArrayAdapter mCardArrayAdapter = new CardArrayAdapter(context, cards);
+
+        final CardListView listView = (CardListView) view.findViewById(R.id.cards_list);
+        if (listView != null) {
+            listView.setAdapter(mCardArrayAdapter);
+        }
+    }
+
+    private class OptimExpand extends CardExpand {
+
+        private SwitchWidget mFstrim;
+        private SpinnerWidget mFstrimInterval;
+
+        public OptimExpand(Context context) {
+            super(context, R.layout.card_layout_tasker_optim);
+        }
+
+        @Override
+        public void setupInnerViewElements(ViewGroup parent, View view) {
+            if (view == null) return;
+
+            mFstrim = (SwitchWidget) view.findViewById(R.id.fstrim);
+            mFstrim.setChecked(PreferenceHelper.getBoolean(FSTRIM));
+            mFstrim.setOnToggleListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean value) {
+                    PreferenceHelper.setBoolean(FSTRIM, value);
+                    mFstrimInterval.setEnabled(value);
+                    if (value) {
+                        AlarmHelper.setAlarmFstrim(getActivity(),
+                                ParseUtils.parseFstrim(mFstrimInterval.getSelectedPosition())
+                        );
+                    } else {
+                        AlarmHelper.cancelAlarmFstrim(getActivity());
+                    }
+                }
+            });
+
+            mFstrimInterval = (SpinnerWidget) view.findViewById(R.id.fstrim_interval);
+            mFstrimInterval.getSpinner().setSelection(ParseUtils.getFstrim());
+            mFstrimInterval.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    PreferenceHelper.setInt(FSTRIM_INTERVAL,
+                            ParseUtils.parseFstrim(mFstrimInterval.getSelectedPosition())
+                    );
+                    if (mFstrim.isChecked()) {
+                        AlarmHelper.setAlarmFstrim(
+                                getActivity(),
+                                ParseUtils.parseFstrim(mFstrimInterval.getSelectedPosition())
+                        );
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                }
+            });
+            mFstrimInterval.setEnabled(mFstrim.isChecked());
+        }
     }
 }

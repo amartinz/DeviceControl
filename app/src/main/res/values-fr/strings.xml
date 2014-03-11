@@ -105,12 +105,9 @@
     <string name="prefs_set_on_boot">"Re-appliquez au démarrage"</string>
     <string name="prefs_jf_version">"Version"</string>
     <!-- Tasker -->
-    <string name="tasker_optimization_fstrim_cat_title">"Fstrimming"</string>
-    <string name="tasker_optimization_filesystem_fstrim_title">"Automatique fstrimming"</string>
-    <string name="tasker_optimization_filesystem_fstrim_summary_on">"Fstrimming activés."</string>
-    <string name="tasker_optimization_filesystem_fstrim_summary_off">"Fstrimming désactivés."</string>
-    <string name="tasker_optimization_filesystem_fstrim_interval_title">"Intervalle Fstrim"</string>
-    <string name="tasker_optimization_filesystem_fstrim_interval_summary">"Choisissez un intervalle de fstrimming automatique."</string>
+    <string name="fstrim_title">"Automatique fstrimming"</string>
+    <string name="fstrim_interval_title">"Intervalle Fstrim"</string>
+    <string name="fstrim_interval_summary">"Choisissez un intervalle de fstrimming automatique."</string>
     <!-- freezer -->
     <string name="pt_freeze">"Freeze le Package"</string>
     <string name="pt_unfreeze">"Defreeze le Package"</string>
