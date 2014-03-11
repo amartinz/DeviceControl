@@ -57,15 +57,7 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_tasker, container, false);
-
-        final TextView tvHelp = (TextView) view.findViewById(R.id.help_textview);
-        tvHelp.setText(R.string.tasker_introduction);
-
-        final ImageView ivHelp = (ImageView) view.findViewById(R.id.help_imageview);
-        ivHelp.setImageResource(R.mipmap.ic_launcher);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_tasker, container, false);
     }
 
     @Override

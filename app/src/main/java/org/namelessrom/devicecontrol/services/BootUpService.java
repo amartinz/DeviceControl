@@ -147,7 +147,7 @@ public class BootUpService extends Service
                 if (DeviceGraphicsFragment.sHasPanel) {
                     logDebug("Reapplying: Panel Color Temp");
                     fileList.add(DeviceGraphicsFragment.sHasPanelFile);
-                    valueList.add(PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2"));
+                    valueList.add(String.valueOf(PreferenceHelper.getInt(PANEL_COLOR, 2)));
                 }
 
                 //==================================================================================

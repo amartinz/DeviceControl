@@ -29,19 +29,12 @@
     </string-array>
 
     <!-- Panel Color -->
-    <string-array name="panel_color_temp_entries">
+    <string-array name="panel_color_entries">
         <item>@string/panel_color_temp_cold</item>
         <item>@string/panel_color_temp_cool</item>
         <item>@string/panel_color_temp_normal</item>
         <item>@string/panel_color_temp_warm</item>
         <item>@string/panel_color_temp_hot</item>
-    </string-array>
-    <string-array name="panel_color_temp_entries_values" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
     </string-array>
 
     <!-- FSTRIM -->

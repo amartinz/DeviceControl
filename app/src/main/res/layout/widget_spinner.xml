@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:textAppearance="@android:style/TextAppearance.Medium"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"/>
 
         <Spinner
             android:id="@+id/widget_spinner"
@@ -27,13 +27,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:spinnerMode="dialog" />
+            android:spinnerMode="dialog"/>
 
     </RelativeLayout>
 
     <TextView
         android:id="@+id/widget_spinner_summary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

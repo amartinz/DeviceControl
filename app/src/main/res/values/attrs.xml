@@ -4,5 +4,6 @@
         <attr name="titleText" format="reference" />
         <attr name="summaryText" format="reference" />
         <attr name="entries" format="reference" />
+        <attr name="seperator" format="integer" />
     </declare-styleable>
 </resources>

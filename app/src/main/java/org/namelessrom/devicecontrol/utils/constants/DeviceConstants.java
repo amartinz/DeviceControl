@@ -47,7 +47,7 @@ public interface DeviceConstants {
     public static final String KEY_GLOVE_MODE = "input_glove_mode";
     public static final String KEY_KNOCK_ON = "knockon_gesture_enable";
     // Panel
-    public static final String KEY_PANEL_COLOR_TEMP = "panel_color_temperature";
+    public static final String PANEL_COLOR = "panel_color";
     // Performance Cpu
     //==============================================================================================
     public static final String FORCE_HIGHEND_GFX_PREF = "pref_force_highend_gfx";

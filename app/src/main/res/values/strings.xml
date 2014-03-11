@@ -97,8 +97,8 @@
     <!-- Graphics -->
     <string name="panel_gamma_title_head">Screen gamma</string>
     <string name="panel_gamma_summary_head">Set screen gamma value</string>
-    <string name="panel_color_temp_title_head">Screen color temperature</string>
-    <string name="panel_color_temp_summary_head">Turn screen off and back on to activate</string>
+    <string name="panel_color_title">Screen color temperature</string>
+    <string name="panel_color_summary">Turn screen off and back on to activate</string>
     <string name="panel_color_temp_cold">Cold</string>
     <string name="panel_color_temp_cool">Cool</string>
     <string name="panel_color_temp_normal">Normal</string>
