@@ -37,7 +37,8 @@ public interface FileConstants {
     public static final String FILE_KEYBOARD_TOGGLE =
             "/sys/class/leds/keyboard-backlight/max_brightness";
     public static final String FILE_USE_GYRO_CALIB = "/sys/class/sec/gsensorcal/calibration";
-    public static final String FILE_PANEL_COLOR_TEMP = "/sys/class/lcd/panel/panel_colors";
+    public static final String[] FILES_PANEL_COLOR_TEMP = {"/sys/class/lcd/panel/panel_colors",
+            "/sys/class/sec/tsp/panel_colors"};
     //==============================================================================================
     public static final String[] FILES_KNOCKON
             = {"/sys/devices/virtual/input/lge_touch/touch_gesture"};

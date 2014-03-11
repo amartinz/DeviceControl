@@ -35,8 +35,8 @@ public class DeviceGraphicsFragment extends PreferenceFragment
     //==============================================================================================
     // Fields
     //==============================================================================================
-
-    public static final boolean sHasPanel = Utils.fileExists(FILE_PANEL_COLOR_TEMP);
+    public static final String sHasPanelFile = Utils.checkPaths(FILES_PANEL_COLOR_TEMP);
+    public static final boolean sHasPanel = !sHasPanelFile.equals("");
     private PanelColorTemperature mPanelColor;
 
     //==============================================================================================
@@ -53,7 +53,7 @@ public class DeviceGraphicsFragment extends PreferenceFragment
             getPreferenceScreen().removePreference(findPreference(CATEGORY_GRAPHICS));
         } else {
             mPanelColor = (PanelColorTemperature) findPreference(KEY_PANEL_COLOR_TEMP);
-            mPanelColor.setValue(Utils.readOneLine(FILE_PANEL_COLOR_TEMP));
+            mPanelColor.setValue(Utils.readOneLine(sHasPanelFile));
             mPanelColor.setOnPreferenceChangeListener(this);
         }
     }
@@ -63,7 +63,7 @@ public class DeviceGraphicsFragment extends PreferenceFragment
         boolean changed = false;
 
         if (preference == mPanelColor) {
-            new WriteAndForget(FILE_PANEL_COLOR_TEMP, newValue.toString()).run();
+            new WriteAndForget(sHasPanelFile, newValue.toString()).run();
             PreferenceHelper.setString(KEY_PANEL_COLOR_TEMP, newValue.toString());
             changed = true;
         }
