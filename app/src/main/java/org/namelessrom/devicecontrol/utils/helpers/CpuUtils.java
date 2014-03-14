@@ -34,7 +34,7 @@ public class CpuUtils implements PerformanceConstants {
     //==============================================================================================
     public static final String ACTION_FREQ_MAX = "action_freq_max";
     public static final String ACTION_FREQ_MIN = "action_freq_min";
-    public static final String ACTION_GOV = "action_gov";
+    public static final String ACTION_GOV      = "action_gov";
 
     //==============================================================================================
     // Methods
@@ -108,17 +108,19 @@ public class CpuUtils implements PerformanceConstants {
      */
     public static int getNumOfCpus() {
         int numOfCpu = 1;
-        String numOfCpus = Utils.readOneLine(PRESENT_CPUS);
-        final String[] cpuCount = numOfCpus.split("-");
-        if (cpuCount.length > 1) {
-            try {
-                numOfCpu = Integer.parseInt(cpuCount[1]) - Integer.parseInt(cpuCount[0]) + 1;
+        final String numOfCpus = Utils.readOneLine(PRESENT_CPUS);
+        if (numOfCpus != null && !numOfCpus.isEmpty()) {
+            final String[] cpuCount = numOfCpus.split("-");
+            if (cpuCount.length > 1) {
+                try {
+                    numOfCpu = Integer.parseInt(cpuCount[1]) - Integer.parseInt(cpuCount[0]) + 1;
 
-                if (numOfCpu < 0) {
+                    if (numOfCpu < 0) {
+                        numOfCpu = 1;
+                    }
+                } catch (NumberFormatException ex) {
                     numOfCpu = 1;
                 }
-            } catch (NumberFormatException ex) {
-                numOfCpu = 1;
             }
         }
         return numOfCpu;
@@ -133,7 +135,7 @@ public class CpuUtils implements PerformanceConstants {
     }
 
     private static String getOrSetValue(final int cpu, final String value,
-                                        final String action, final boolean set) {
+            final String action, final boolean set) {
         String path = "";
         String pathOnline;
 
@@ -274,15 +276,18 @@ public class CpuUtils implements PerformanceConstants {
             setValue(i,
                     PreferenceHelper.getString(PREF_MAX_CPU,
                             getValue(i, ACTION_FREQ_MAX)),
-                    ACTION_FREQ_MAX);
+                    ACTION_FREQ_MAX
+            );
             setValue(i,
                     PreferenceHelper.getString(PREF_MIN_CPU,
                             getValue(i, ACTION_FREQ_MIN)),
-                    ACTION_FREQ_MIN);
+                    ACTION_FREQ_MIN
+            );
             setValue(i,
                     PreferenceHelper.getString(PREF_GOV,
                             getValue(i, ACTION_GOV)),
-                    ACTION_GOV);
+                    ACTION_GOV
+            );
         }
         final String io = PreferenceHelper.getString(PREF_IO, getIOScheduler());
         for (String aIO_SCHEDULER_PATH : IO_SCHEDULER_PATH) {

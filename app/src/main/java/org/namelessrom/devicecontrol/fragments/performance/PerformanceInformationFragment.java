@@ -36,36 +36,33 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.CPUStateMonitor;
+import org.namelessrom.devicecontrol.utils.CpuStateMonitor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by alex on 18.12.13.
- */
 public class PerformanceInformationFragment extends Fragment implements DeviceConstants {
 
     private LinearLayout mStatesView;
-    private TextView mAdditionalStates;
-    private TextView mTotalStateTime;
-    private TextView mHeaderAdditionalStates;
-    private TextView mHeaderTotalStateTime;
-    private TextView mStatesWarning;
+    private TextView     mAdditionalStates;
+    private TextView     mTotalStateTime;
+    private TextView     mHeaderAdditionalStates;
+    private TextView     mHeaderTotalStateTime;
+    private TextView     mStatesWarning;
 
     private LinearLayout mDeviceInfo;
 
     private boolean mUpdatingData = false;
 
-    private int mBatteryTemperature = 0;
-    private String mBatteryExtra = " - Getting information...";
+    private int    mBatteryTemperature = 0;
+    private String mBatteryExtra       = " - Getting information...";
 
     private static final int mInterval = 2000;
     private Handler mHandler;
 
-    private CPUStateMonitor monitor = new CPUStateMonitor();
+    private CpuStateMonitor monitor = new CpuStateMonitor();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +73,8 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        activity.registerReceiver(mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        activity.registerReceiver(mBatteryReceiver,
+                new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
     private BroadcastReceiver mBatteryReceiver = new BroadcastReceiver() {
@@ -119,7 +117,7 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_performance,
                 container, false);
 
@@ -171,11 +169,12 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
         super.onDetach();
     }
 
-    private View generateRow(ViewGroup parent, final String title, final String value,
-                             final String barLeft, final String barRight, final int progress) {
+    private View generateRow(final ViewGroup parent, final String title, final String value,
+            final String barLeft, final String barRight, final int progress) {
 
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
-        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.row_device, parent, false);
+        final LayoutInflater inflater = LayoutInflater.from(getActivity());
+        final LinearLayout view = (LinearLayout) inflater.inflate(
+                R.layout.row_device, parent, false);
 
         TextView deviceTitle = (TextView) view.findViewById(R.id.ui_device_title);
         TextView deviceValue = (TextView) view.findViewById(R.id.ui_device_value);
@@ -223,8 +222,8 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
 
     public void updateView() {
         mStatesView.removeAllViews();
-        List<String> extraStates = new ArrayList<String>();
-        for (CPUStateMonitor.CpuState state : monitor.getStates()) {
+        final List<String> extraStates = new ArrayList<String>();
+        for (CpuStateMonitor.CpuState state : monitor.getStates()) {
             if (state.duration > 0) {
                 generateStateRow(state, mStatesView);
             } else {
@@ -272,58 +271,60 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
         }
     }
 
-    private static String toString(long tSec) {
-        long h = (long) Math.floor(tSec / (60 * 60));
-        long m = (long) Math.floor((tSec - h * 60 * 60) / 60);
-        long s = tSec % 60;
-        String sDur;
-        sDur = h + ":";
-        if (m < 10) {
-            sDur += "0";
-        }
-        sDur += m + ":";
-        if (s < 10) {
-            sDur += "0";
-        }
-        sDur += s;
+    private static String toString(final long tSec) {
+        final long h = (long) Math.floor(tSec / (60 * 60));
+        final long m = (long) Math.floor((tSec - h * 60 * 60) / 60);
+        final long s = tSec % 60;
 
-        return sDur;
+        final StringBuilder sDur = new StringBuilder();
+        sDur.append(h).append(":");
+        if (m < 10) {
+            sDur.append("0");
+        }
+        sDur.append(m).append(":");
+        if (s < 10) {
+            sDur.append("0");
+        }
+        sDur.append(s);
+
+        return sDur.toString();
     }
 
-    private View generateStateRow(CPUStateMonitor.CpuState state, ViewGroup parent) {
+    private View generateStateRow(CpuStateMonitor.CpuState state, ViewGroup parent) {
 
-        if (isAdded()) {
-            LayoutInflater inflater = LayoutInflater.from(getActivity());
-            LinearLayout view = (LinearLayout) inflater.inflate(R.layout.row_state, parent, false);
-
-            float per = (float) state.duration * 100 / monitor.getTotalStateTime();
-            String sPer = (int) per + "%";
-
-            String sFreq;
-            if (state.freq == 0) {
-                sFreq = getString(R.string.deep_sleep);
-            } else {
-                sFreq = state.freq / 1000 + " MHz";
-            }
-
-            long tSec = state.duration / 100;
-            String sDur = toString(tSec);
-
-            TextView freqText = (TextView) view.findViewById(R.id.ui_freq_text);
-            TextView durText = (TextView) view.findViewById(R.id.ui_duration_text);
-            TextView perText = (TextView) view.findViewById(R.id.ui_percentage_text);
-            ProgressBar bar = (ProgressBar) view.findViewById(R.id.ui_bar);
-
-            freqText.setText(sFreq);
-            perText.setText(sPer);
-            durText.setText(sDur);
-            bar.setProgress((int) per);
-
-            parent.addView(view);
-            return view;
-        } else {
+        if (!isAdded()) {
             return null;
         }
+
+        final LayoutInflater inflater = LayoutInflater.from(getActivity());
+        final LinearLayout view =
+                (LinearLayout) inflater.inflate(R.layout.row_state, parent, false);
+
+        float per = (float) state.duration * 100 / monitor.getTotalStateTime();
+        final String sPer = (int) per + "%";
+
+        String sFreq;
+        if (state.freq == 0) {
+            sFreq = getString(R.string.deep_sleep);
+        } else {
+            sFreq = state.freq / 1000 + " MHz";
+        }
+
+        long tSec = state.duration / 100;
+        final String sDur = toString(tSec);
+
+        final TextView freqText = (TextView) view.findViewById(R.id.ui_freq_text);
+        final TextView durText = (TextView) view.findViewById(R.id.ui_duration_text);
+        final TextView perText = (TextView) view.findViewById(R.id.ui_percentage_text);
+        final ProgressBar bar = (ProgressBar) view.findViewById(R.id.ui_bar);
+
+        freqText.setText(sFreq);
+        perText.setText(sPer);
+        durText.setText(sDur);
+        bar.setProgress((int) per);
+
+        parent.addView(view);
+        return view;
     }
 
     protected class RefreshStateDataTask extends AsyncTask<Void, Void, Void> {
@@ -331,8 +332,8 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
         protected Void doInBackground(Void... v) {
             try {
                 monitor.updateStates();
-            } catch (CPUStateMonitor.CPUStateMonitorException e) {
-            }
+            } catch (CpuStateMonitor.CPUStateMonitorException ignored) { }
+
             return null;
         }
 
