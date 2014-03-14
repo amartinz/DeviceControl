@@ -73,6 +73,8 @@ public class PerformanceCpuSettings extends Fragment
     private static boolean isUpdating = false;
     private Handler mHandler;
 
+    final Object mLockObject = new Object();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -336,7 +338,9 @@ public class PerformanceCpuSettings extends Fragment
     final Runnable mDeviceUpdater = new Runnable() {
         @Override
         public void run() {
-            new UpdateTask().execute();
+            synchronized (mLockObject) {
+                new UpdateTask().execute();
+            }
         }
     };
 
@@ -413,7 +417,6 @@ public class PerformanceCpuSettings extends Fragment
             startRepeatingTask();
         } else {
             stopRepeatingTask();
-            isUpdating = false;
         }
         logDebug("isVisible:" + (isVisibleToUser ? "true" : "false"));
     }
