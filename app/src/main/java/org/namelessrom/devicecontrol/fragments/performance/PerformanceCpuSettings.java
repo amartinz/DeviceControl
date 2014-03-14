@@ -73,6 +73,8 @@ public class PerformanceCpuSettings extends Fragment
     private static boolean isUpdating = false;
     private Handler mHandler;
 
+    final Object mLockObject = new Object();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -336,7 +338,9 @@ public class PerformanceCpuSettings extends Fragment
     final Runnable mDeviceUpdater = new Runnable() {
         @Override
         public void run() {
-            new UpdateTask().execute();
+            synchronized (mLockObject) {
+                new UpdateTask().execute();
+            }
         }
     };
 
@@ -360,8 +364,10 @@ public class PerformanceCpuSettings extends Fragment
             if (!isUpdating) {
                 isUpdating = true;
                 try {
-                    coreList = CpuCoreMonitor.getInstance(getActivity()).updateStates();
-                } catch (CpuCoreMonitor.CpuCoreMonitorException ignored) { }
+                    if (coreList == null || coreList.isEmpty()) {
+                        coreList = CpuCoreMonitor.getInstance(getActivity()).updateStates();
+                    }
+                } catch (Exception ignored) { }
             }
 
             return null;
@@ -374,6 +380,8 @@ public class PerformanceCpuSettings extends Fragment
                 for (CpuCore c : coreList) {
                     generateRow(mCpuInfo, c);
                 }
+                coreList.clear();
+                coreList = null;
                 isUpdating = false;
             }
             mHandler.postDelayed(mDeviceUpdater, mInterval);
@@ -381,6 +389,11 @@ public class PerformanceCpuSettings extends Fragment
     }
 
     public View generateRow(final ViewGroup parent, final CpuCore cpuCore) {
+
+        if (!isAdded()) {
+            return null;
+        }
+
         final View rowView = mInflater.inflate(R.layout.row_device, parent, false);
 
         final TextView cpuInfoCore = (TextView) rowView.findViewById(R.id.ui_device_title);
@@ -413,9 +426,8 @@ public class PerformanceCpuSettings extends Fragment
             startRepeatingTask();
         } else {
             stopRepeatingTask();
-            isUpdating = false;
         }
-        logDebug("isVisible:" + (isVisibleToUser ? "true" : "false"));
+        logDebug(getClass().getSimpleName() + " isVisible:" + (isVisibleToUser ? "true" : "false"));
     }
 }
 

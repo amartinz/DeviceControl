@@ -43,6 +43,8 @@ import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.namelessrom.devicecontrol.Application.logDebug;
+
 public class PerformanceInformationFragment extends Fragment implements DeviceConstants {
 
     private LinearLayout mStatesView;
@@ -62,7 +64,8 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
     private static final int mInterval = 2000;
     private Handler mHandler;
 
-    private CpuStateMonitor monitor = new CpuStateMonitor();
+    private       CpuStateMonitor monitor     = new CpuStateMonitor();
+    private final Object          mLockObject = new Object();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,16 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
         super.onAttach(activity);
         activity.registerReceiver(mBatteryReceiver,
                 new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+    }
+
+    @Override
+    public void onDetach() {
+        try {
+            getActivity().unregisterReceiver(mBatteryReceiver);
+        } catch (Exception ignored) {
+            // not registered
+        }
+        super.onDetach();
     }
 
     private BroadcastReceiver mBatteryReceiver = new BroadcastReceiver() {
@@ -118,8 +131,7 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_performance,
-                container, false);
+        final View view = inflater.inflate(R.layout.fragment_performance, container, false);
 
         mStatesView = (LinearLayout) view.findViewById(R.id.ui_states_view);
         mAdditionalStates = (TextView) view.findViewById(R.id.ui_additional_states);
@@ -141,6 +153,12 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        refreshData();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean("updatingData", mUpdatingData);
@@ -148,7 +166,6 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
 
     @Override
     public void onResume() {
-        refreshData();
         startRepeatingTask();
         super.onResume();
     }
@@ -159,16 +176,6 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
         super.onPause();
     }
 
-    @Override
-    public void onDetach() {
-        try {
-            getActivity().unregisterReceiver(mBatteryReceiver);
-        } catch (Exception ignored) {
-            // not registered
-        }
-        super.onDetach();
-    }
-
     private View generateRow(final ViewGroup parent, final String title, final String value,
             final String barLeft, final String barRight, final int progress) {
 
@@ -176,11 +183,11 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
         final LinearLayout view = (LinearLayout) inflater.inflate(
                 R.layout.row_device, parent, false);
 
-        TextView deviceTitle = (TextView) view.findViewById(R.id.ui_device_title);
-        TextView deviceValue = (TextView) view.findViewById(R.id.ui_device_value);
-        TextView deviceBarLeft = (TextView) view.findViewById(R.id.ui_device_bar_left);
-        TextView deviceBarRight = (TextView) view.findViewById(R.id.ui_device_bar_right);
-        ProgressBar bar = (ProgressBar) view.findViewById(R.id.ui_device_bar);
+        final TextView deviceTitle = (TextView) view.findViewById(R.id.ui_device_title);
+        final TextView deviceValue = (TextView) view.findViewById(R.id.ui_device_value);
+        final TextView deviceBarLeft = (TextView) view.findViewById(R.id.ui_device_bar_left);
+        final TextView deviceBarRight = (TextView) view.findViewById(R.id.ui_device_bar_right);
+        final ProgressBar bar = (ProgressBar) view.findViewById(R.id.ui_device_bar);
 
         deviceTitle.setText(title);
         deviceValue.setText(value);
@@ -192,32 +199,51 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
         return view;
     }
 
-    Runnable mDeviceUpdater = new Runnable() {
+    final Runnable mDeviceUpdater = new Runnable() {
         @Override
         public void run() {
-            updateStatus();
-            mHandler.postDelayed(mDeviceUpdater, mInterval);
+            synchronized (mLockObject) {
+                new UpdateTask().execute();
+            }
         }
     };
 
     void startRepeatingTask() {
+        stopRepeatingTask();
         mDeviceUpdater.run();
     }
 
     void stopRepeatingTask() {
-        mHandler.removeCallbacks(mDeviceUpdater);
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mDeviceUpdater);
+        }
     }
 
-    private void updateStatus() {
-        mDeviceInfo.removeAllViews();
-        final int cpuTemp = CpuUtils.getCpuTemperature();
-        if (cpuTemp != -1) {
-            generateRow(mDeviceInfo, getString(R.string.cpu_temperature), cpuTemp + " °C",
-                    "0°C", "100°C", cpuTemp);
+    private class UpdateTask extends AsyncTask<Void, Void, Void> {
+
+        private int cpuTemp;
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            cpuTemp = CpuUtils.getCpuTemperature();
+
+            return null;
         }
-        generateRow(mDeviceInfo, getString(R.string.battery_temperature),
-                ((float) mBatteryTemperature) / 10 + " °C" + mBatteryExtra,
-                "0°C", "100°C", (mBatteryTemperature / 10));
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            mDeviceInfo.removeAllViews();
+            if (cpuTemp != -1) {
+                generateRow(mDeviceInfo, getString(R.string.cpu_temperature), cpuTemp + " °C",
+                        "0°C", "100°C", cpuTemp);
+            }
+            generateRow(mDeviceInfo, getString(R.string.battery_temperature),
+                    ((float) mBatteryTemperature) / 10 + " °C" + mBatteryExtra,
+                    "0°C", "100°C", (mBatteryTemperature / 10));
+
+            mHandler.postDelayed(mDeviceUpdater, mInterval);
+        }
     }
 
     public void updateView() {
@@ -347,6 +373,17 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
             updateView();
             mUpdatingData = false;
         }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            startRepeatingTask();
+        } else {
+            stopRepeatingTask();
+        }
+        logDebug(getClass().getSimpleName() + " isVisible:" + (isVisibleToUser ? "true" : "false"));
     }
 
 }

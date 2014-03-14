@@ -40,20 +40,20 @@ import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
         httpMethod = HttpSender.Method.PUT,
         reportType = HttpSender.Type.JSON,
         formKey = "",
-        formUri = "http://reports.nameless-rom.org/acra-devicecontrol/_design/acra-storage/_update/report",
+        formUri = "http://reports.nameless-rom" +
+                ".org/acra-devicecontrol/_design/acra-storage/_update/report",
         formUriBasicAuthLogin = "namelessreporter",
         formUriBasicAuthPassword = "weareopentoeveryone",
         mode = ReportingInteractionMode.SILENT)
 public class Application extends android.app.Application implements DeviceConstants {
 
-    // Switch to your needs - overrideable in preferences
     public static boolean IS_LOG_DEBUG = false;
-    public static boolean IS_DEBUG = false;
+    public static boolean IS_DEBUG     = false;
 
-    public static boolean HAS_ROOT = false;
+    public static       boolean HAS_ROOT    = false;
     public static final boolean IS_NAMELESS = Utils.isNameless();
 
-    public static AlarmManager alarmManager;
+    public static  AlarmManager   alarmManager;
     private static PackageManager packageManager;
 
     public static Context applicationContext;
@@ -72,14 +72,11 @@ public class Application extends android.app.Application implements DeviceConsta
 
         if (Application.IS_DEBUG) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                    .detectDiskReads()
-                    .detectDiskWrites()
-                    .detectNetwork()   // or .detectAll() for all detectable problems
+                    .detectAll()
                     .penaltyLog()
                     .build());
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                    .detectLeakedSqlLiteObjects()
-                    .detectLeakedClosableObjects()
+                    .detectAll()
                     .penaltyLog()
                     .penaltyDeath()
                     .build());
@@ -95,13 +92,19 @@ public class Application extends android.app.Application implements DeviceConsta
         // we need to detect SU for some features :)
         HAS_ROOT = RootTools.isRootAvailable() && RootTools.isAccessGiven();
         if (HAS_ROOT) {
-            RootTools.remount(Environment.getExternalStorageDirectory()
-                    .getAbsolutePath(), "rw");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    RootTools.remount(Environment.getExternalStorageDirectory()
+                            .getAbsolutePath(), "rw");
+                }
+            }).start();
         }
 
         try {
             if (packageManager.getResourcesForApplication("com.android.settings")
-                    .getIdentifier("device_control_settings", "string", "com.android.settings") > 0) {
+                    .getIdentifier("device_control_settings", "string",
+                            "com.android.settings") > 0) {
                 logDebug("Implemented into system!");
                 disableLauncher(true);
             } else {
@@ -122,7 +125,8 @@ public class Application extends android.app.Application implements DeviceConsta
                 (shouldDisable
                         ? PackageManager.COMPONENT_ENABLED_STATE_DISABLED
                         : PackageManager.COMPONENT_ENABLED_STATE_ENABLED),
-                PackageManager.DONT_KILL_APP);
+                PackageManager.DONT_KILL_APP
+        );
     }
 
     /**
