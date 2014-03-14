@@ -19,6 +19,7 @@
 package org.namelessrom.devicecontrol.fragments.performance;
 
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.CpuCore;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
@@ -45,27 +47,30 @@ import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
+
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class PerformanceCpuSettings extends Fragment
         implements SeekBar.OnSeekBarChangeListener, PerformanceConstants {
 
-    private SeekBar mMaxSlider;
-    private SeekBar mMinSlider;
-    private Spinner mGovernor;
-    private Spinner mIo;
+    private SeekBar  mMaxSlider;
+    private SeekBar  mMinSlider;
+    private Spinner  mGovernor;
+    private Spinner  mIo;
     private TextView mMaxSpeedText;
     private TextView mMinSpeedText;
     private String[] mAvailableFrequencies;
-    private String mMaxFreqSetting;
-    private String mMinFreqSetting;
+    private String   mMaxFreqSetting;
+    private String   mMinFreqSetting;
 
     private TextView mIntervalText;
 
-    private int mCpuNum = 1;
     LinearLayout mCpuInfo;
     private LayoutInflater mInflater;
 
-    private static int mInterval = 2000;
+    private static int     mInterval  = 2000;
+    private static boolean isUpdating = false;
     private Handler mHandler;
 
     @Override
@@ -94,8 +99,6 @@ public class PerformanceCpuSettings extends Fragment
                 ? getString(R.string.off)
                 : (((double) mInterval) / 1000) + "s"));
 
-        mCpuNum = CpuUtils.getNumOfCpus();
-
         final CheckBox mStatusHide = (CheckBox) view.findViewById(R.id.cpu_info_hide);
         mStatusHide.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -115,6 +118,7 @@ public class PerformanceCpuSettings extends Fragment
         mStatusHide.setChecked(PreferenceHelper.getString(PREF_HIDE_CPU_INFO, "1").equals("1"));
 
         CpuCore tmpCore;
+        final int mCpuNum = CpuUtils.getNumOfCpus();
         for (int i = 0; i < mCpuNum; i++) {
             tmpCore = new CpuCore(getString(R.string.core) + " " + String.valueOf(i) + ": ",
                     "0",
@@ -249,7 +253,6 @@ public class PerformanceCpuSettings extends Fragment
             if (mInterval >= 5000) {
                 stopRepeatingTask();
             } else {
-                stopRepeatingTask();
                 startRepeatingTask();
             }
             mIntervalText.setText((mInterval == 5000
@@ -333,29 +336,47 @@ public class PerformanceCpuSettings extends Fragment
     final Runnable mDeviceUpdater = new Runnable() {
         @Override
         public void run() {
-            updateStatus();
-            mHandler.postDelayed(mDeviceUpdater, mInterval);
+            new UpdateTask().execute();
         }
     };
 
     private void startRepeatingTask() {
+        stopRepeatingTask();
         mDeviceUpdater.run();
     }
 
     private void stopRepeatingTask() {
-        mHandler.removeCallbacks(mDeviceUpdater);
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mDeviceUpdater);
+        }
     }
 
-    private void updateStatus() {
-        mCpuInfo.removeAllViews();
-        CpuCore tmpCore;
-        for (int i = 0; i < mCpuNum; i++) {
-            final String freqHz = CpuUtils.getCpuFrequency(i);
-            tmpCore = new CpuCore(getString(R.string.core) + " " + String.valueOf(i) + ": ",
-                    freqHz,
-                    CpuUtils.getValue(i, CpuUtils.ACTION_FREQ_MAX),
-                    CpuUtils.getValue(i, CpuUtils.ACTION_GOV));
-            generateRow(mCpuInfo, tmpCore);
+    private class UpdateTask extends AsyncTask<Void, Void, Void> {
+
+        private List<CpuCore> coreList;
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if (!isUpdating) {
+                isUpdating = true;
+                try {
+                    coreList = CpuCoreMonitor.getInstance(getActivity()).updateStates();
+                } catch (CpuCoreMonitor.CpuCoreMonitorException ignored) { }
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            if (coreList != null && !coreList.isEmpty()) {
+                mCpuInfo.removeAllViews();
+                for (CpuCore c : coreList) {
+                    generateRow(mCpuInfo, c);
+                }
+                isUpdating = false;
+            }
+            mHandler.postDelayed(mDeviceUpdater, mInterval);
         }
     }
 
@@ -372,8 +393,8 @@ public class PerformanceCpuSettings extends Fragment
         cpuInfoFreq.setText(isOffline
                 ? getString(R.string.core_offline)
                 : CpuUtils.toMHz(cpuCore.mCoreCurrent)
-                + " / " + CpuUtils.toMHz(cpuCore.mCoreMax)
-                + " [" + cpuCore.mCoreGov + "]");
+                        + " / " + CpuUtils.toMHz(cpuCore.mCoreMax)
+                        + " [" + cpuCore.mCoreGov + "]");
         cpuBar.setMax(Integer.parseInt(cpuCore.mCoreMax));
         cpuBar.setProgress(Integer.parseInt(cpuCore.mCoreCurrent));
 
@@ -383,6 +404,18 @@ public class PerformanceCpuSettings extends Fragment
 
     private void updateSharedPrefs(final String var, final String value) {
         PreferenceHelper.setString(var, value);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            startRepeatingTask();
+        } else {
+            stopRepeatingTask();
+            isUpdating = false;
+        }
+        logDebug("isVisible:" + (isVisibleToUser ? "true" : "false"));
     }
 }
 

@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CPUStateMonitor implements DeviceConstants {
+public class CpuStateMonitor implements DeviceConstants {
 
     private List<CpuState> mStates = new ArrayList<CpuState>();
     private SparseArray<Long> mOffsets = new SparseArray<Long>();
