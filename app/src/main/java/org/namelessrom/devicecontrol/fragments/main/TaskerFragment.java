@@ -28,11 +28,11 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.cards.internal.Card;
-import com.android.cards.internal.CardArrayAdapter;
-import com.android.cards.internal.CardExpand;
-import com.android.cards.internal.CardHeader;
-import com.android.cards.view.CardListView;
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
+import it.gmariotti.cardslib.library.internal.CardExpand;
+import it.gmariotti.cardslib.library.internal.CardHeader;
+import it.gmariotti.cardslib.library.view.CardListView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
