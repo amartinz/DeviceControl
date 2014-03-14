@@ -45,7 +45,7 @@
 
         <View style="@style/StandardDivider" />
 
-        <com.android.cards.view.CardListView
+        <it.gmariotti.cardslib.library.view.CardListView
             android:id="@+id/cards_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
