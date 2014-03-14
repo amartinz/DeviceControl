@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.android.cards.view.component.CardThumbnailView
+        <it.gmariotti.cardslib.library.view.component.CardThumbnailView
             style="@style/card_thumbnail_outer_layout"
             android:id="@+id/card_thumbnail_layout"
             android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.android.cards.view.component.CardHeaderView
+            <it.gmariotti.cardslib.library.view.component.CardHeaderView
                 style="@style/card.header_outer_layout"
                 android:id="@+id/card_header_layout"
                 android:layout_weight="1"
