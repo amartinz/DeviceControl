@@ -28,10 +28,10 @@ import java.util.List;
  */
 public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     private final List<Fragment> fragments;
-    private final List<String> titles;
+    private final List<String>   titles;
 
     public ScreenSlidePagerAdapter(FragmentManager fm, List<Fragment> fragments,
-                                   List<String> titles) {
+            List<String> titles) {
         super(fm);
         this.fragments = fragments;
         this.titles = titles;

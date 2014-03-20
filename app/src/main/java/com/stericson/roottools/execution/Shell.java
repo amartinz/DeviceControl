@@ -8,7 +8,8 @@
  * You may use this code according to either of these licenses as is most appropriate
  * for your project on a case-by-case basis.
  * 
- * The terms of each license can be found in the root directory of this project's repository as well as at:
+ * The terms of each license can be found in the root directory of this project's repository as
+ * well as at:
  * 
  * * http://www.apache.org/licenses/LICENSE-2.0
  * * http://www.gnu.org/licenses/gpl-2.0.txt
@@ -40,30 +41,30 @@ import java.util.concurrent.TimeoutException;
 
 public class Shell {
 
-    private final Process proc;
-    private final BufferedReader in;
+    private final Process            proc;
+    private final BufferedReader     in;
     private final OutputStreamWriter out;
     private final List<Command> commands = new ArrayList<Command>();
 
     //indicates whether or not to close the shell
     private boolean close = false;
 
-    private static String error = "";
-    private static final String token = "F*D^W@#FGF";
-    private static Shell rootShell = null;
-    private static Shell shell = null;
-    private static Shell customShell = null;
+    private static       String error       = "";
+    private static final String token       = "F*D^W@#FGF";
+    private static       Shell  rootShell   = null;
+    private static       Shell  shell       = null;
+    private static       Shell  customShell = null;
 
-    private static int shellTimeout = 25000;
-    public static boolean isExecuting = false;
-    public static boolean isReading = false;
+    private static int     shellTimeout = 25000;
+    public static  boolean isExecuting  = false;
+    public static  boolean isReading    = false;
 
-    private int maxCommands = 1000;
-    private int read = 0;
-    private int write = 0;
-    private int totalExecuted = 0;
-    private int totalRead = 0;
-    private boolean isCleaning = false;
+    private int     maxCommands   = 1000;
+    private int     read          = 0;
+    private int     write         = 0;
+    private int     totalExecuted = 0;
+    private int     totalRead     = 0;
+    private boolean isCleaning    = false;
 
     //private constructor responsible for opening/constructing the shell
     private Shell(String cmd) throws IOException, TimeoutException, RootDeniedException {
@@ -149,9 +150,10 @@ public class Shell {
 
 
     public Command add(Command command) throws IOException {
-        if (close)
+        if (close) {
             throw new IllegalStateException(
                     "Unable to add commands to a closed shell");
+        }
 
         while (isCleaning) {
             //Don't add commands while cleaning
@@ -168,7 +170,8 @@ public class Shell {
                 new CommandCapture(
                         -1,
                         false,
-                        "cd " + context.getApplicationInfo().dataDir));
+                        "cd " + context.getApplicationInfo().dataDir)
+        );
     }
 
     private void cleanCommands() {
@@ -203,12 +206,11 @@ public class Shell {
     }
 
     public void close() throws IOException {
-        if (this == rootShell)
-            rootShell = null;
-        else if (this == shell)
+        if (this == rootShell) { rootShell = null; } else if (this == shell) {
             shell = null;
-        else if (this == customShell)
+        } else if (this == customShell) {
             customShell = null;
+        }
         synchronized (commands) {
             /**
              * instruct the two threads monitoring input and output
@@ -220,20 +222,17 @@ public class Shell {
     }
 
     public static void closeCustomShell() throws IOException {
-        if (customShell == null)
-            return;
+        if (customShell == null) { return; }
         customShell.close();
     }
 
     public static void closeRootShell() throws IOException {
-        if (rootShell == null)
-            return;
+        if (rootShell == null) { return; }
         rootShell.close();
     }
 
     public static void closeShell() throws IOException {
-        if (shell == null)
-            return;
+        if (shell == null) { return; }
         shell.close();
     }
 
@@ -248,16 +247,14 @@ public class Shell {
     }
 
     public String getCommandQueuePositionString(Command cmd) {
-        return "Command is in position " + getCommandQueuePosition(cmd) + " currently executing command at position " + write;
+        return "Command is in position " + getCommandQueuePosition(
+                cmd) + " currently executing command at position " + write;
     }
 
     public static Shell getOpenShell() {
-        if (customShell != null)
-            return customShell;
-        else if (rootShell != null)
+        if (customShell != null) { return customShell; } else if (rootShell != null) {
             return rootShell;
-        else
-            return shell;
+        } else { return shell; }
     }
 
     public static boolean isShellOpen() {
@@ -383,13 +380,11 @@ public class Shell {
                     /**
                      * If we recieve EOF then the shell closed
                      */
-                    if (line == null)
-                        break;
+                    if (line == null) { break; }
 
                     if (command == null) {
                         if (read >= commands.size()) {
-                            if (close)
-                                break;
+                            if (close) { break; }
 
                             continue;
                         }
@@ -460,8 +455,7 @@ public class Shell {
                 RootTools.log("Shell destroyed");
 
                 while (read < commands.size()) {
-                    if (command == null)
-                        command = commands.get(read);
+                    if (command == null) { command = commands.get(read); }
 
                     command.terminated("Unexpected Termination.");
                     command = null;
@@ -476,7 +470,8 @@ public class Shell {
         }
     };
 
-    public static void runRootCommand(Command command) throws IOException, TimeoutException, RootDeniedException {
+    public static void runRootCommand(Command command)
+            throws IOException, TimeoutException, RootDeniedException {
         startRootShell().add(command);
     }
 
@@ -488,11 +483,13 @@ public class Shell {
         return Shell.startRootShell(20000, 3);
     }
 
-    public static Shell startRootShell(int timeout) throws IOException, TimeoutException, RootDeniedException {
+    public static Shell startRootShell(int timeout)
+            throws IOException, TimeoutException, RootDeniedException {
         return Shell.startRootShell(timeout, 3);
     }
 
-    public static Shell startRootShell(int timeout, int retry) throws IOException, TimeoutException, RootDeniedException {
+    public static Shell startRootShell(int timeout, int retry)
+            throws IOException, TimeoutException, RootDeniedException {
 
         Shell.shellTimeout = timeout;
 
@@ -518,18 +515,19 @@ public class Shell {
         return rootShell;
     }
 
-    public static Shell startCustomShell(String shellPath) throws IOException, TimeoutException, RootDeniedException {
+    public static Shell startCustomShell(String shellPath)
+            throws IOException, TimeoutException, RootDeniedException {
         return Shell.startCustomShell(shellPath, 20000);
     }
 
-    public static Shell startCustomShell(String shellPath, int timeout) throws IOException, TimeoutException, RootDeniedException {
+    public static Shell startCustomShell(String shellPath, int timeout)
+            throws IOException, TimeoutException, RootDeniedException {
         Shell.shellTimeout = timeout;
 
         if (customShell == null) {
             RootTools.log("Starting Custom Shell!");
             customShell = new Shell(shellPath);
-        } else
-            RootTools.log("Using Existing Custom Shell!");
+        } else { RootTools.log("Using Existing Custom Shell!"); }
 
         return customShell;
     }
@@ -545,8 +543,7 @@ public class Shell {
             if (shell == null) {
                 RootTools.log("Starting Shell!");
                 shell = new Shell("/system/bin/sh");
-            } else
-                RootTools.log("Using Existing Shell!");
+            } else { RootTools.log("Using Existing Shell!"); }
             return shell;
         } catch (RootDeniedException e) {
             //Root Denied should never be thrown.
@@ -557,8 +554,8 @@ public class Shell {
     protected static class Worker extends Thread {
         public int exit = -911;
 
-        public Process proc;
-        public BufferedReader in;
+        public Process            proc;
+        public BufferedReader     in;
         public OutputStreamWriter out;
 
         private Worker(Process proc, BufferedReader in, OutputStreamWriter out) {
@@ -588,8 +585,7 @@ public class Shell {
                     if (line == null) {
                         throw new EOFException();
                     }
-                    if ("".equals(line))
-                        continue;
+                    if ("".equals(line)) { continue; }
                     if ("Started".equals(line)) {
                         this.exit = 1;
                         setShellOom();
@@ -600,10 +596,9 @@ public class Shell {
                 }
             } catch (IOException e) {
                 exit = -42;
-                if (e.getMessage() != null)
-                    Shell.error = e.getMessage();
-                else
+                if (e.getMessage() != null) { Shell.error = e.getMessage(); } else {
                     Shell.error = "RootAccess denied?.";
+                }
             }
 
         }

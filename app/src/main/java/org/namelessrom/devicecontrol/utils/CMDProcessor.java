@@ -29,8 +29,8 @@ import java.io.InputStream;
 public class CMDProcessor implements DeviceConstants {
 
     private Boolean can_su;
-    public SH sh;
-    public SH su;
+    public  SH      sh;
+    public  SH      su;
 
     public CMDProcessor() {
         sh = new SH("sh");
@@ -46,8 +46,8 @@ public class CMDProcessor implements DeviceConstants {
     }
 
     public class CommandResult {
-        public final String stdout;
-        public final String stderr;
+        public final String  stdout;
+        public final String  stderr;
         public final Integer exit_value;
 
         CommandResult(final Integer exit_value_in) {
@@ -55,7 +55,7 @@ public class CMDProcessor implements DeviceConstants {
         }
 
         CommandResult(final Integer exit_value_in, final String stdout_in,
-                      final String stderr_in) {
+                final String stderr_in) {
             exit_value = exit_value_in;
             stdout = stdout_in;
             stderr = stderr_in;
@@ -106,7 +106,8 @@ public class CMDProcessor implements DeviceConstants {
             } catch (final Exception e) {
                 Log.e(TAG,
                         "Exception while trying to run: '" + s + "' "
-                                + e.getMessage());
+                                + e.getMessage()
+                );
                 process = null;
             }
             return process;

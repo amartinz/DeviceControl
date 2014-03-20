@@ -21,7 +21,8 @@ import android.util.Log;
 import org.namelessrom.devicecontrol.Application;
 
 /**
- * Utility class for logging and debug features that (by default) does nothing when not in debug mode
+ * Utility class for logging and debug features that (by default) does nothing when not in debug
+ * mode
  */
 public class Debug {
 
@@ -60,11 +61,11 @@ public class Debug {
     private static final String TAG = "libsuperuser";
 
     private static final int LOG_GENERAL = 0x0001;
-    public static final int LOG_COMMAND = 0x0002;
-    public static final int LOG_OUTPUT = 0x0004;
+    public static final  int LOG_COMMAND = 0x0002;
+    public static final  int LOG_OUTPUT  = 0x0004;
 
-    public static final int LOG_NONE = 0x0000;
-    private static final int LOG_ALL = 0xFFFF;
+    public static final  int LOG_NONE = 0x0000;
+    private static final int LOG_ALL  = 0xFFFF;
 
     private static int logTypes = LOG_ALL;
 

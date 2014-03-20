@@ -79,11 +79,13 @@ public class Shell {
      *
      * @param shell       The shell to use for executing the commands
      * @param commands    The commands to execute
-     * @param environment List of all environment variables (in 'key=value' format) or null for defaults
+     * @param environment List of all environment variables (in 'key=value' format) or null for
+     *                    defaults
      * @param wantSTDERR  Return STDERR in the output ?
      * @return Output of the commands, or null in case of an error
      */
-    private static List<String> run(String shell, String[] commands, String[] environment, boolean wantSTDERR) {
+    private static List<String> run(String shell, String[] commands, String[] environment,
+            boolean wantSTDERR) {
         String shellUpper = shell.toUpperCase(Locale.ENGLISH);
 
         if (Debug.getSanityChecksEnabledEffective() && Debug.onMainThread()) {
@@ -119,8 +121,10 @@ public class Shell {
             // setup our process, retrieve STDIN stream, and STDOUT/STDERR gobblers
             Process process = Runtime.getRuntime().exec(shell, environment);
             DataOutputStream STDIN = new DataOutputStream(process.getOutputStream());
-            StreamGobbler STDOUT = new StreamGobbler(shellUpper + "-", process.getInputStream(), res);
-            StreamGobbler STDERR = new StreamGobbler(shellUpper + "*", process.getErrorStream(), wantSTDERR ? res : null);
+            StreamGobbler STDOUT =
+                    new StreamGobbler(shellUpper + "-", process.getInputStream(), res);
+            StreamGobbler STDERR = new StreamGobbler(shellUpper + "*", process.getErrorStream(),
+                    wantSTDERR ? res : null);
 
             // start gobbling and write our commands to the shell
             STDOUT.start();
@@ -285,7 +289,8 @@ public class Shell {
          * <p>Detects the version of the su binary installed (if any), if supported by the binary.
          * Most binaries support two different version numbers, the public version that is
          * displayed to users, and an internal version number that is used for version number
-         * comparisons. Returns null if su not available or retrieving the version isn't supported.</p>
+         * comparisons. Returns null if su not available or retrieving the version isn't
+         * supported.</p>
          * <p/>
          * <p>Note that su binary version and GUI (APK) version can be completely different.</p>
          *
@@ -340,12 +345,12 @@ public class Shell {
 
         // for any onCommandResult callback
         public static final int WATCHDOG_EXIT = -1;
-        public static final int SHELL_DIED = -2;
+        public static final int SHELL_DIED    = -2;
 
         // for Interactive.open() callbacks only
         public static final int SHELL_EXEC_FAILED = -3;
-        public static final int SHELL_WRONG_UID = -4;
-        public static final int SHELL_RUNNING = 0;
+        public static final int SHELL_WRONG_UID   = -4;
+        public static final int SHELL_RUNNING     = 0;
     }
 
     /**
@@ -354,12 +359,13 @@ public class Shell {
     private static class Command {
         private static int commandCounter = 0;
 
-        private final String[] commands;
-        private final int code;
+        private final String[]                commands;
+        private final int                     code;
         private final OnCommandResultListener onCommandResultListener;
-        private final String marker;
+        private final String                  marker;
 
-        public Command(String[] commands, int code, OnCommandResultListener onCommandResultListener) {
+        public Command(String[] commands, int code,
+                OnCommandResultListener onCommandResultListener) {
             this.commands = commands;
             this.code = code;
             this.onCommandResultListener = onCommandResultListener;
@@ -371,20 +377,21 @@ public class Shell {
      * Builder class for {@link eu.chainfire.libsuperuser.Shell.Interactive}
      */
     public static class Builder {
-        private Handler handler = null;
-        private boolean autoHandler = true;
-        private String shell = "sh";
-        private boolean wantSTDERR = false;
-        private final List<Command> commands = new LinkedList<Command>();
-        private final Map<String, String> environment = new HashMap<String, String>();
-        private OnLineListener onSTDOUTLineListener = null;
-        private OnLineListener onSTDERRLineListener = null;
-        private int watchdogTimeout = 0;
+        private       Handler             handler              = null;
+        private       boolean             autoHandler          = true;
+        private       String              shell                = "sh";
+        private       boolean             wantSTDERR           = false;
+        private final List<Command>       commands             = new LinkedList<Command>();
+        private final Map<String, String> environment          = new HashMap<String, String>();
+        private       OnLineListener      onSTDOUTLineListener = null;
+        private       OnLineListener      onSTDERRLineListener = null;
+        private       int                 watchdogTimeout      = 0;
 
         /**
          * <p>Set a custom handler that will be used to post all callbacks to</p>
          * <p/>
-         * <p>See {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details on threading and handlers</p>
+         * <p>See {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details on
+         * threading and handlers</p>
          *
          * @param handler Handler to use
          * @return This Builder object for method chaining
@@ -397,7 +404,8 @@ public class Shell {
         /**
          * <p>Automatically create a handler if possible ? Default to true</p>
          * <p/>
-         * <p>See {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details on threading and handlers</p>
+         * <p>See {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details on
+         * threading and handlers</p>
          *
          * @param autoHandler Auto-create handler ?
          * @return This Builder object for method chaining
@@ -484,14 +492,16 @@ public class Shell {
         /**
          * <p>Add a command to execute, with a callback to be called on completion</p>
          * <p/>
-         * <p>The thread on which the callback executes is dependent on various factors, see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
+         * <p>The thread on which the callback executes is dependent on various factors,
+         * see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
          *
          * @param command                 Command to execute
          * @param code                    User-defined value passed back to the callback
          * @param onCommandResultListener Callback to be called on completion
          * @return This Builder object for method chaining
          */
-        public Builder addCommand(String command, int code, OnCommandResultListener onCommandResultListener) {
+        public Builder addCommand(String command, int code,
+                OnCommandResultListener onCommandResultListener) {
             return addCommand(new String[]{command}, code, onCommandResultListener);
         }
 
@@ -506,17 +516,21 @@ public class Shell {
         }
 
         /**
-         * <p>Add commands to execute, with a callback to be called on completion (of all commands)</p>
+         * <p>Add commands to execute, with a callback to be called on completion (of all
+         * commands)</p>
          * <p/>
-         * <p>The thread on which the callback executes is dependent on various factors, see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
+         * <p>The thread on which the callback executes is dependent on various factors,
+         * see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
          *
          * @param commands                Commands to execute
          * @param code                    User-defined value passed back to the callback
          * @param onCommandResultListener Callback to be called on completion (of all commands)
          * @return This Builder object for method chaining
          */
-        public Builder addCommand(List<String> commands, int code, OnCommandResultListener onCommandResultListener) {
-            return addCommand(commands.toArray(new String[commands.size()]), code, onCommandResultListener);
+        public Builder addCommand(List<String> commands, int code,
+                OnCommandResultListener onCommandResultListener) {
+            return addCommand(commands.toArray(new String[commands.size()]), code,
+                    onCommandResultListener);
         }
 
         /**
@@ -530,16 +544,19 @@ public class Shell {
         }
 
         /**
-         * <p>Add commands to execute, with a callback to be called on completion (of all commands)</p>
+         * <p>Add commands to execute, with a callback to be called on completion (of all
+         * commands)</p>
          * <p/>
-         * <p>The thread on which the callback executes is dependent on various factors, see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
+         * <p>The thread on which the callback executes is dependent on various factors,
+         * see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
          *
          * @param commands                Commands to execute
          * @param code                    User-defined value passed back to the callback
          * @param onCommandResultListener Callback to be called on completion (of all commands)
          * @return This Builder object for method chaining
          */
-        public Builder addCommand(String[] commands, int code, OnCommandResultListener onCommandResultListener) {
+        public Builder addCommand(String[] commands, int code,
+                OnCommandResultListener onCommandResultListener) {
             this.commands.add(new Command(commands, code, onCommandResultListener));
             return this;
         }
@@ -547,7 +564,8 @@ public class Shell {
         /**
          * <p>Set a callback called for every line output to STDOUT by the shell</p>
          * <p/>
-         * <p>The thread on which the callback executes is dependent on various factors, see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
+         * <p>The thread on which the callback executes is dependent on various factors,
+         * see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
          *
          * @param onLineListener Callback to be called for each line
          * @return This Builder object for method chaining
@@ -560,7 +578,8 @@ public class Shell {
         /**
          * <p>Set a callback called for every line output to STDERR by the shell</p>
          * <p/>
-         * <p>The thread on which the callback executes is dependent on various factors, see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
+         * <p>The thread on which the callback executes is dependent on various factors,
+         * see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
          *
          * @param onLineListener Callback to be called for each line
          * @return This Builder object for method chaining
@@ -573,10 +592,12 @@ public class Shell {
         /**
          * <p>Enable command timeout callback</p>
          * <p/>
-         * <p>This will invoke the onCommandResult() callback with exitCode WATCHDOG_EXIT if a command takes longer than watchdogTimeout
+         * <p>This will invoke the onCommandResult() callback with exitCode WATCHDOG_EXIT if a
+         * command takes longer than watchdogTimeout
          * seconds to complete.</p>
          * <p/>
-         * <p>If a watchdog timeout occurs, it generally means that the Interactive session is out of sync with the shell process.  The
+         * <p>If a watchdog timeout occurs, it generally means that the Interactive session is
+         * out of sync with the shell process.  The
          * caller should close the current session and open a new one.</p>
          *
          * @param watchdogTimeout Timeout, in seconds; 0 to disable
@@ -601,14 +622,16 @@ public class Shell {
         }
 
         /**
-         * Construct a {@link eu.chainfire.libsuperuser.Shell.Interactive} instance, and start the shell
+         * Construct a {@link eu.chainfire.libsuperuser.Shell.Interactive} instance,
+         * and start the shell
          */
         public Interactive open() {
             return new Interactive(this, null);
         }
 
         /**
-         * Construct a {@link eu.chainfire.libsuperuser.Shell.Interactive} instance, try to start the shell, and
+         * Construct a {@link eu.chainfire.libsuperuser.Shell.Interactive} instance,
+         * try to start the shell, and
          * call onCommandResultListener to report success or failure
          *
          * @param onCommandResultListener Callback to return shell open status
@@ -619,7 +642,8 @@ public class Shell {
     }
 
     /**
-     * <p>An interactive shell - initially created with {@link eu.chainfire.libsuperuser.Shell.Builder} - that
+     * <p>An interactive shell - initially created with {@link eu.chainfire.libsuperuser.Shell
+     * .Builder} - that
      * executes blocks of commands you supply in the background, optionally calling
      * callbacks as each block completes.</p>
      * <p/>
@@ -639,15 +663,19 @@ public class Shell {
      * a deadlock does not occur if the shell produces massive output, the output is
      * still stored in a List&lt;String&gt;, and as such doing something like <em>'ls -lR /'</em>
      * will probably have you run out of memory when using a
-     * {@link eu.chainfire.libsuperuser.Shell.OnCommandResultListener}. A work-around is to not supply this callback,
-     * but using (only) {@link eu.chainfire.libsuperuser.Shell.Builder#setOnSTDOUTLineListener(OnLineListener)}. This
+     * {@link eu.chainfire.libsuperuser.Shell.OnCommandResultListener}. A work-around is to not
+     * supply this callback,
+     * but using (only) {@link eu.chainfire.libsuperuser.Shell.Builder#setOnSTDOUTLineListener
+     * (OnLineListener)}. This
      * way, an internal buffer will not be created and wasting your memory.</p>
      * <p/>
      * <h3>Callbacks, threads and handlers</h3>
      * <p/>
      * <p>On which thread the callbacks execute is dependent on your initialization. You can
-     * supply a custom Handler using {@link eu.chainfire.libsuperuser.Shell.Builder#setHandler(android.os.Handler)} if needed.
-     * If you do not supply a custom Handler - unless you set {@link eu.chainfire.libsuperuser.Shell.Builder#setAutoHandler(boolean)}
+     * supply a custom Handler using {@link eu.chainfire.libsuperuser.Shell.Builder#setHandler
+     * (android.os.Handler)} if needed.
+     * If you do not supply a custom Handler - unless you set {@link eu.chainfire.libsuperuser
+     * .Shell.Builder#setAutoHandler(boolean)}
      * to false - a Handler will be auto-created if the thread used for instantiation
      * of the object has a Looper.</p>
      * <p/>
@@ -656,55 +684,59 @@ public class Shell {
      * threads that should be blocked as little as possible, as blocking them may in rare
      * cases pause the native process or even create a deadlock.</p>
      * <p/>
-     * <p>The main thread must certainly have a Looper, thus if you call {@link eu.chainfire.libsuperuser.Shell.Builder#open()}
+     * <p>The main thread must certainly have a Looper, thus if you call {@link eu.chainfire
+     * .libsuperuser.Shell.Builder#open()}
      * from the main thread, a handler will (by default) be auto-created, and all the callbacks
      * will be called on the main thread. While this is often convenient and easy to code with,
      * you should be aware that if your callbacks are 'expensive' to execute, this may negatively
      * impact UI performance.</p>
      * <p/>
-     * <p>Background threads usually do <em>not</em> have a Looper, so calling {@link eu.chainfire.libsuperuser.Shell.Builder#open()}
+     * <p>Background threads usually do <em>not</em> have a Looper,
+     * so calling {@link eu.chainfire.libsuperuser.Shell.Builder#open()}
      * from such a background thread will (by default) result in all the callbacks being executed
-     * in one of the gobbler threads. You will have to make sure the code you execute in these callbacks
+     * in one of the gobbler threads. You will have to make sure the code you execute in these
+     * callbacks
      * is thread-safe.</p>
      */
     public static class Interactive {
-        private final Handler handler;
-        private final boolean autoHandler;
-        private final String shell;
-        private final boolean wantSTDERR;
-        private final List<Command> commands;
+        private final Handler             handler;
+        private final boolean             autoHandler;
+        private final String              shell;
+        private final boolean             wantSTDERR;
+        private final List<Command>       commands;
         private final Map<String, String> environment;
-        private final OnLineListener onSTDOUTLineListener;
-        private final OnLineListener onSTDERRLineListener;
-        private int watchdogTimeout;
+        private final OnLineListener      onSTDOUTLineListener;
+        private final OnLineListener      onSTDERRLineListener;
+        private       int                 watchdogTimeout;
 
-        private Process process = null;
-        private DataOutputStream STDIN = null;
-        private StreamGobbler STDOUT = null;
-        private StreamGobbler STDERR = null;
+        private Process                     process  = null;
+        private DataOutputStream            STDIN    = null;
+        private StreamGobbler               STDOUT   = null;
+        private StreamGobbler               STDERR   = null;
         private ScheduledThreadPoolExecutor watchdog = null;
 
-        private volatile boolean running = false;
-        private volatile boolean idle = true; // read/write only synchronized
-        private volatile boolean closed = true;
-        private volatile int callbacks = 0;
+        private volatile boolean running   = false;
+        private volatile boolean idle      = true; // read/write only synchronized
+        private volatile boolean closed    = true;
+        private volatile int     callbacks = 0;
         private volatile int watchdogCount;
 
-        private final Object idleSync = new Object();
+        private final Object idleSync     = new Object();
         private final Object callbackSync = new Object();
 
-        private volatile int lastExitCode = 0;
-        private volatile String lastMarkerSTDOUT = null;
-        private volatile String lastMarkerSTDERR = null;
-        private volatile Command command = null;
-        private volatile List<String> buffer = null;
+        private volatile int          lastExitCode     = 0;
+        private volatile String       lastMarkerSTDOUT = null;
+        private volatile String       lastMarkerSTDERR = null;
+        private volatile Command      command          = null;
+        private volatile List<String> buffer           = null;
 
         /**
          * The only way to create an instance: Shell.Builder::open()
          *
          * @param builder Builder class to take values from
          */
-        private Interactive(final Builder builder, final OnCommandResultListener onCommandResultListener) {
+        private Interactive(final Builder builder,
+                final OnCommandResultListener onCommandResultListener) {
             autoHandler = builder.autoHandler;
             shell = builder.shell;
             wantSTDERR = builder.wantSTDERR;
@@ -727,7 +759,8 @@ public class Shell {
             if (onCommandResultListener == null) {
                 return;
             } else if (!ret) {
-                onCommandResultListener.onCommandResult(0, OnCommandResultListener.SHELL_EXEC_FAILED, null);
+                onCommandResultListener
+                        .onCommandResult(0, OnCommandResultListener.SHELL_EXEC_FAILED, null);
                 return;
             }
 
@@ -769,13 +802,15 @@ public class Shell {
         /**
          * <p>Add a command to execute, with a callback to be called on completion</p>
          * <p/>
-         * <p>The thread on which the callback executes is dependent on various factors, see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
+         * <p>The thread on which the callback executes is dependent on various factors,
+         * see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
          *
          * @param command                 Command to execute
          * @param code                    User-defined value passed back to the callback
          * @param onCommandResultListener Callback to be called on completion
          */
-        public void addCommand(String command, int code, OnCommandResultListener onCommandResultListener) {
+        public void addCommand(String command, int code,
+                OnCommandResultListener onCommandResultListener) {
             addCommand(new String[]{command}, code, onCommandResultListener);
         }
 
@@ -789,16 +824,20 @@ public class Shell {
         }
 
         /**
-         * <p>Add commands to execute, with a callback to be called on completion (of all commands)</p>
+         * <p>Add commands to execute, with a callback to be called on completion (of all
+         * commands)</p>
          * <p/>
-         * <p>The thread on which the callback executes is dependent on various factors, see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
+         * <p>The thread on which the callback executes is dependent on various factors,
+         * see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
          *
          * @param commands                Commands to execute
          * @param code                    User-defined value passed back to the callback
          * @param onCommandResultListener Callback to be called on completion (of all commands)
          */
-        public void addCommand(List<String> commands, int code, OnCommandResultListener onCommandResultListener) {
-            addCommand(commands.toArray(new String[commands.size()]), code, onCommandResultListener);
+        public void addCommand(List<String> commands, int code,
+                OnCommandResultListener onCommandResultListener) {
+            addCommand(commands.toArray(new String[commands.size()]), code,
+                    onCommandResultListener);
         }
 
         /**
@@ -811,15 +850,18 @@ public class Shell {
         }
 
         /**
-         * <p>Add commands to execute, with a callback to be called on completion (of all commands)</p>
+         * <p>Add commands to execute, with a callback to be called on completion (of all
+         * commands)</p>
          * <p/>
-         * <p>The thread on which the callback executes is dependent on various factors, see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
+         * <p>The thread on which the callback executes is dependent on various factors,
+         * see {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details</p>
          *
          * @param commands                Commands to execute
          * @param code                    User-defined value passed back to the callback
          * @param onCommandResultListener Callback to be called on completion (of all commands)
          */
-        public synchronized void addCommand(String[] commands, int code, OnCommandResultListener onCommandResultListener) {
+        public synchronized void addCommand(String[] commands, int code,
+                OnCommandResultListener onCommandResultListener) {
             if (running) {
                 this.commands.add(new Command(commands, code, onCommandResultListener));
                 runNextCommand();
@@ -834,7 +876,8 @@ public class Shell {
         }
 
         /**
-         * Called from a ScheduledThreadPoolExecutor timer thread every second when there is an outstanding command
+         * Called from a ScheduledThreadPoolExecutor timer thread every second when there is an
+         * outstanding command
          */
         private synchronized void handleWatchdog() {
             final int exitCode;
@@ -860,7 +903,8 @@ public class Shell {
                     @Override
                     public void run() {
                         try {
-                            fCommand.onCommandResultListener.onCommandResult(fCommand.code, exitCode, fBuffer);
+                            fCommand.onCommandResultListener
+                                    .onCommandResult(fCommand.code, exitCode, fBuffer);
                         } finally {
                             endCallback();
                         }
@@ -928,7 +972,8 @@ public class Shell {
                 if (command.commands.length > 0) {
                     try {
                         if (command.onCommandResultListener != null) {
-                            // no reason to store the output if we don't have an OnCommandResultListener
+                            // no reason to store the output if we don't have an
+                            // OnCommandResultListener
                             // user should catch the output with an OnLineListener in this case
                             buffer = Collections.synchronizedList(new ArrayList<String>());
                         }
@@ -937,7 +982,9 @@ public class Shell {
                         this.command = command;
                         startWatchdog();
                         for (String write : command.commands) {
-                            Debug.logCommand(String.format("[%s+] %s", shell.toUpperCase(Locale.ENGLISH), write));
+                            Debug.logCommand(
+                                    String.format("[%s+] %s", shell.toUpperCase(Locale.ENGLISH),
+                                            write));
                             STDIN.write((write + "\n").getBytes("UTF-8"));
                         }
                         STDIN.write(("echo " + command.marker + " $?\n").getBytes("UTF-8"));
@@ -961,7 +1008,8 @@ public class Shell {
          * Processes a STDOUT/STDERR line containing an end/exitCode marker
          */
         private synchronized void processMarker() {
-            if (command.marker.equals(lastMarkerSTDOUT) && (command.marker.equals(lastMarkerSTDERR))) {
+            if (command.marker.equals(lastMarkerSTDOUT) && (command.marker
+                    .equals(lastMarkerSTDERR))) {
                 if (command.onCommandResultListener != null) {
                     if (buffer != null) {
                         if (handler != null) {
@@ -974,14 +1022,16 @@ public class Shell {
                                 @Override
                                 public void run() {
                                     try {
-                                        fCommand.onCommandResultListener.onCommandResult(fCommand.code, fExitCode, fBuffer);
+                                        fCommand.onCommandResultListener
+                                                .onCommandResult(fCommand.code, fExitCode, fBuffer);
                                     } finally {
                                         endCallback();
                                     }
                                 }
                             });
                         } else {
-                            command.onCommandResultListener.onCommandResult(command.code, lastExitCode, buffer);
+                            command.onCommandResultListener
+                                    .onCommandResult(command.code, lastExitCode, buffer);
                         }
                     }
                 }
@@ -1082,7 +1132,8 @@ public class Shell {
                 }
 
                 STDIN = new DataOutputStream(process.getOutputStream());
-                STDOUT = new StreamGobbler(shell.toUpperCase(Locale.ENGLISH) + "-", process.getInputStream(), new OnLineListener() {
+                STDOUT = new StreamGobbler(shell.toUpperCase(Locale.ENGLISH) + "-",
+                        process.getInputStream(), new OnLineListener() {
                     @Override
                     public void onLine(String line) {
                         synchronized (Interactive.this) {
@@ -1091,7 +1142,8 @@ public class Shell {
                             }
                             if (line.startsWith(command.marker)) {
                                 try {
-                                    lastExitCode = Integer.valueOf(line.substring(command.marker.length() + 1), 10);
+                                    lastExitCode = Integer.valueOf(
+                                            line.substring(command.marker.length() + 1), 10);
                                 } catch (Exception e) {
                                 }
                                 lastMarkerSTDOUT = command.marker;
@@ -1103,7 +1155,8 @@ public class Shell {
                         }
                     }
                 });
-                STDERR = new StreamGobbler(shell.toUpperCase(Locale.ENGLISH) + "*", process.getErrorStream(), new OnLineListener() {
+                STDERR = new StreamGobbler(shell.toUpperCase(Locale.ENGLISH) + "*",
+                        process.getErrorStream(), new OnLineListener() {
                     @Override
                     public void onLine(String line) {
                         synchronized (Interactive.this) {
@@ -1168,9 +1221,12 @@ public class Shell {
                 // wait for our process to finish, while we gobble away in the background
                 process.waitFor();
 
-                // make sure our threads are done gobbling, our streams are closed, and the process is
-                // destroyed - while the latter two shouldn't be needed in theory, and may even produce
-                // warnings, in "normal" Java they are required for guaranteed cleanup of resources, so
+                // make sure our threads are done gobbling, our streams are closed,
+                // and the process is
+                // destroyed - while the latter two shouldn't be needed in theory,
+                // and may even produce
+                // warnings, in "normal" Java they are required for guaranteed cleanup of
+                // resources, so
                 // lets be safe and do this on Android as well
                 try {
                     STDIN.close();
@@ -1239,30 +1295,39 @@ public class Shell {
         }
 
         /**
-         * <p>Wait for idle state. As this is a blocking call, you should not call it from the main UI thread.
-         * If you do so and debug mode is enabled, this method will intentionally crash your app.</p>
+         * <p>Wait for idle state. As this is a blocking call, you should not call it from the
+         * main UI thread.
+         * If you do so and debug mode is enabled, this method will intentionally crash your app
+         * .</p>
          * <p/>
-         * <p>If not interrupted, this method will not return until all commands have finished executing.
+         * <p>If not interrupted, this method will not return until all commands have finished
+         * executing.
          * Note that this does not necessarily mean that all the callbacks have fired yet.</p>
          * <p/>
-         * <p>If no Handler is used, all callbacks will have been executed when this method returns. If
-         * a Handler is used, and this method is called from a different thread than associated with the
+         * <p>If no Handler is used, all callbacks will have been executed when this method
+         * returns. If
+         * a Handler is used, and this method is called from a different thread than associated
+         * with the
          * Handler's Looper, all callbacks will have been executed when this method returns as well.
          * If however a Handler is used but this method is called from the same thread as associated
          * with the Handler's Looper, there is no way to know.</p>
          * <p/>
-         * <p>In practice this means that in most simple cases all callbacks will have completed when this
-         * method returns, but if you actually depend on this behavior, you should make certain this is
+         * <p>In practice this means that in most simple cases all callbacks will have completed
+         * when this
+         * method returns, but if you actually depend on this behavior,
+         * you should make certain this is
          * indeed the case.</p>
          * <p/>
-         * <p>See {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details on threading and handlers</p>
+         * <p>See {@link eu.chainfire.libsuperuser.Shell.Interactive} for further details on
+         * threading and handlers</p>
          *
          * @return True if wait complete, false if wait interrupted
          */
         public boolean waitForIdle() {
             if (Debug.getSanityChecksEnabledEffective() && Debug.onMainThread()) {
                 Debug.log(ShellOnMainThreadException.EXCEPTION_WAIT_IDLE);
-                throw new ShellOnMainThreadException(ShellOnMainThreadException.EXCEPTION_WAIT_IDLE);
+                throw new ShellOnMainThreadException(
+                        ShellOnMainThreadException.EXCEPTION_WAIT_IDLE);
             }
 
             if (isRunning()) {

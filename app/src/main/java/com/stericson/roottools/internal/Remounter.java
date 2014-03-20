@@ -8,7 +8,8 @@
  * You may use this code according to either of these licenses as is most appropriate
  * for your project on a case-by-case basis.
  * 
- * The terms of each license can be found in the root directory of this project's repository as well as at:
+ * The terms of each license can be found in the root directory of this project's repository as
+ * well as at:
  * 
  * * http://www.apache.org/licenses/LICENSE-2.0
  * * http://www.gnu.org/licenses/gpl-2.0.txt
@@ -94,7 +95,8 @@ public class Remounter {
 
         if (mountPoint != null) {
 
-            RootTools.log(Constants.TAG, "Remounting " + mountPoint.getMountPoint().getAbsolutePath() + " as " + mountType.toLowerCase());
+            RootTools.log(Constants.TAG, "Remounting " + mountPoint.getMountPoint()
+                    .getAbsolutePath() + " as " + mountType.toLowerCase());
             final boolean isMountMode = mountPoint.getFlags().contains(mountType.toLowerCase());
 
             if (!isMountMode) {
@@ -102,10 +104,19 @@ public class Remounter {
                 try {
                     CommandCapture command = new CommandCapture(0,
                             true,
-                            "busybox mount -o remount," + mountType.toLowerCase() + " " + mountPoint.getDevice().getAbsolutePath() + " " + mountPoint.getMountPoint().getAbsolutePath(),
-                            "toolbox mount -o remount," + mountType.toLowerCase() + " " + mountPoint.getDevice().getAbsolutePath() + " " + mountPoint.getMountPoint().getAbsolutePath(),
-                            "mount -o remount," + mountType.toLowerCase() + " " + mountPoint.getDevice().getAbsolutePath() + " " + mountPoint.getMountPoint().getAbsolutePath(),
-                            "/system/bin/toolbox mount -o remount," + mountType.toLowerCase() + " " + mountPoint.getDevice().getAbsolutePath() + " " + mountPoint.getMountPoint().getAbsolutePath()
+                            "busybox mount -o remount," + mountType.toLowerCase() + " " + mountPoint
+                                    .getDevice().getAbsolutePath() + " " + mountPoint
+                                    .getMountPoint().getAbsolutePath(),
+                            "toolbox mount -o remount," + mountType.toLowerCase() + " " + mountPoint
+                                    .getDevice().getAbsolutePath() + " " + mountPoint
+                                    .getMountPoint().getAbsolutePath(),
+                            "mount -o remount," + mountType.toLowerCase() + " " + mountPoint
+                                    .getDevice().getAbsolutePath() + " " + mountPoint
+                                    .getMountPoint().getAbsolutePath(),
+                            "/system/bin/toolbox mount -o remount," + mountType
+                                    .toLowerCase() + " " + mountPoint.getDevice()
+                                    .getAbsolutePath() + " " + mountPoint.getMountPoint()
+                                    .getAbsolutePath()
                     );
                     Shell.startRootShell().add(command);
                     commandWait(command);
@@ -117,7 +128,8 @@ public class Remounter {
             }
 
             if (mountPoint != null) {
-                RootTools.log(Constants.TAG, mountPoint.getFlags() + " AND " + mountType.toLowerCase());
+                RootTools.log(Constants.TAG,
+                        mountPoint.getFlags() + " AND " + mountType.toLowerCase());
                 if (mountPoint.getFlags().contains(mountType.toLowerCase())) {
                     RootTools.log(mountPoint.getFlags().toString());
                     return true;

@@ -47,19 +47,19 @@ public class ToolsFreezer extends Fragment
         implements DeviceConstants, AdapterView.OnItemClickListener {
 
     private static final String ARG_FREEZER = "arg_freezer";
-    private static final String ARG_TYPE = "arg_type";
+    private static final String ARG_TYPE    = "arg_type";
     private LinearLayout linlaHeaderProgress;
     private LinearLayout linNopack, llist;
-    private String pmList[];
+    private String         pmList[];
     private PackageManager packageManager;
-    private ListView packList;
-    private PackAdapter adapter;
-    private int curpos;
-    private Boolean freeze;
-    private String packs;
-    private String pn;
-    private String titlu;
-    private View mShadowTop, mShadowBottom;
+    private ListView       packList;
+    private PackAdapter    adapter;
+    private int            curpos;
+    private Boolean        freeze;
+    private String         packs;
+    private String         pn;
+    private String         titlu;
+    private View           mShadowTop, mShadowBottom;
 
     public static ToolsFreezer newInstance(final int freezer, final String type) {
         Bundle b = new Bundle();
@@ -149,8 +149,7 @@ public class ToolsFreezer extends Fragment
                             .sh.runWaitFor("busybox echo `pm list packages -3 -e | cut -d':' -f2`");
                 }
             }
-            if (cr.success() && !cr.stdout.equals(""))
-                return cr.stdout;
+            if (cr.success() && !cr.stdout.equals("")) { return cr.stdout; }
             return null;
         }
 
@@ -198,13 +197,15 @@ public class ToolsFreezer extends Fragment
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
-                        })
+                        }
+                )
                 .setPositiveButton(getString(android.R.string.yes),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
-                        });
+                        }
+                );
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         Button theButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);

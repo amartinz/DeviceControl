@@ -229,8 +229,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param activity The activity to restart
      */
     public static void restartActivity(final Activity activity) {
-        if (activity == null)
-            return;
+        if (activity == null) { return; }
         final int enter_anim = android.R.anim.fade_in;
         final int exit_anim = android.R.anim.fade_out;
         activity.overridePendingTransition(enter_anim, exit_anim);
@@ -315,10 +314,11 @@ public class Utils implements DeviceConstants, FileConstants {
         alertDialog.setMessage(message);
         alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL,
                 "OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                alertDialog.dismiss();
-            }
-        });
+                    public void onClick(DialogInterface dialog, int which) {
+                        alertDialog.dismiss();
+                    }
+                }
+        );
         alertDialog.show();
     }
 

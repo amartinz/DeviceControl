@@ -29,7 +29,7 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 public class FireAndForget extends Thread {
 
     private final boolean mUseRoot;
-    private final String mCmd;
+    private final String  mCmd;
     private final boolean mRemountSystem;
 
     /**

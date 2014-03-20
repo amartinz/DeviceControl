@@ -34,7 +34,7 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
  */
 public class FireAndGet extends Thread implements DeviceConstants {
 
-    private final String mCmd;
+    private final String  mCmd;
     private final Handler mHandler;
     private final boolean mNeedsNewline;
     private final StringBuilder sb = new StringBuilder();

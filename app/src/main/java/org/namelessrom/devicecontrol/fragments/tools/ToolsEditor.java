@@ -65,21 +65,21 @@ public class ToolsEditor extends Fragment
     //==============================================================================================
     // Fields
     //==============================================================================================
-    private static final String ARG_EDITOR = "arg_editor";
-    private static final int HANDLER_DELAY = 250;
+    private static final String ARG_EDITOR    = "arg_editor";
+    private static final int    HANDLER_DELAY = 250;
 
-    private ListView packList;
-    private LinearLayout linlaHeaderProgress;
-    private LinearLayout nofiles;
+    private ListView       packList;
+    private LinearLayout   linlaHeaderProgress;
+    private LinearLayout   nofiles;
     private RelativeLayout tools;
-    private PropAdapter adapter = null;
-    private EditText filterText = null;
-    private final List<Prop> props = new ArrayList<Prop>();
-    private final String dn = DC_BACKUP_DIR;
+    private       PropAdapter adapter    = null;
+    private       EditText    filterText = null;
+    private final List<Prop>  props      = new ArrayList<Prop>();
+    private final String      dn         = DC_BACKUP_DIR;
     private View mShadowTop, mShadowBottom;
 
     private final String syspath = "/system/etc/";
-    private String mod = "sysctl";
+    private       String mod     = "sysctl";
     private int mEditorType;
     private String mBuildName = "build";
 
@@ -97,7 +97,7 @@ public class ToolsEditor extends Fragment
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                             final Bundle savedInstanceState) {
+            final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mEditorType = getArguments().getInt(ARG_EDITOR);
@@ -147,12 +147,12 @@ public class ToolsEditor extends Fragment
 
             @Override
             public void beforeTextChanged(final CharSequence s, final int start,
-                                          final int count, final int after) {
+                    final int count, final int after) {
             }
 
             @Override
             public void onTextChanged(final CharSequence s, final int start,
-                                      final int before, final int count) {
+                    final int before, final int count) {
                 if (adapter != null) {
                     adapter.getFilter().filter(filterText.getText().toString());
                 }
@@ -191,7 +191,8 @@ public class ToolsEditor extends Fragment
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();
                                 }
-                            });
+                            }
+                    );
                     dialog.setPositiveButton(getString(android.R.string.yes),
                             new DialogInterface.OnClickListener() {
                                 @Override
@@ -208,7 +209,8 @@ public class ToolsEditor extends Fragment
                                             , getString(R.string.toast_settings_applied)
                                             , Toast.LENGTH_SHORT).show();
                                 }
-                            });
+                            }
+                    );
                     dialog.show();
                 }
             });
@@ -235,7 +237,7 @@ public class ToolsEditor extends Fragment
 
     @Override
     public void onItemClick(final AdapterView<?> parent, final View view,
-                            final int position, final long row) {
+            final int position, final long row) {
         final Prop p = adapter.getItem(position);
         if (p != null) {
             if (mEditorType == 2) {
@@ -433,7 +435,8 @@ public class ToolsEditor extends Fragment
                             @Override
                             public void onClick(final DialogInterface dialog, final int which) {
                             }
-                        })
+                        }
+                )
                 .setPositiveButton(getString(R.string.etc_save)
                         , new DialogInterface.OnClickListener() {
                     @Override
@@ -524,7 +527,7 @@ public class ToolsEditor extends Fragment
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
-                                       int position, long id) {
+                    int position, long id) {
                 tv.setText(sp.getSelectedItem().toString().trim());
             }
 
@@ -540,7 +543,8 @@ public class ToolsEditor extends Fragment
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }
-                        })
+                        }
+                )
                 .setPositiveButton(getString(R.string.etc_save)
                         , new DialogInterface.OnClickListener() {
                     @Override
@@ -578,13 +582,15 @@ public class ToolsEditor extends Fragment
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
-                        })
+                        }
+                )
                 .setPositiveButton(getString(android.R.string.yes),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
-                        });
+                        }
+                );
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         Button theButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
@@ -599,8 +605,8 @@ public class ToolsEditor extends Fragment
 
     class CustomListener implements View.OnClickListener {
         private final Dialog dialog;
-        private final byte op;
-        private final Prop p;
+        private final byte   op;
+        private final Prop   p;
 
         public CustomListener(Dialog dialog, byte op, Prop p) {
             this.dialog = dialog;

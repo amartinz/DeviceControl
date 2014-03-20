@@ -21,14 +21,14 @@
         android:key="prefs_jf_appearance"
         android:title="@string/prefs_jf_appearance">
 
-        <SwitchPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
             android:key="prefs_jf_appearance_custom_animations"
             android:title="@string/prefs_jf_appearance_custom_animations_title"
             android:summaryOn="@string/prefs_jf_appearance_custom_animations_summary_on"
             android:summaryOff="@string/prefs_jf_appearance_custom_animations_summary_off"
             android:checked="true" />
 
-        <ListPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference
             android:key="prefs_jf_appearance_custom_transformer"
             android:title="@string/prefs_jf_appearance_custom_transformer_title"
             android:summary="@string/prefs_jf_appearance_custom_transformer_summary"
@@ -43,11 +43,11 @@
         android:key="prefs_set_on_boot"
         android:title="@string/prefs_set_on_boot">
 
-        <CheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
             android:key="prefs_sob_vm"
             android:title="@string/vm" />
 
-        <CheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
             android:key="prefs_sob_sysctl"
             android:title="@string/sysctl" />
 
@@ -57,7 +57,7 @@
         android:key="prefs_jf_debug"
         android:title="@string/prefs_jf_debug">
 
-        <SwitchPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
             android:key="jf_extensive_logging"
             android:title="@string/jf_debug_extensive_logging_title"
             android:summaryOn="@string/jf_debug_extensive_logging_summary_on"

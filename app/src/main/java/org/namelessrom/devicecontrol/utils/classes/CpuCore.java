@@ -13,7 +13,7 @@ public class CpuCore {
     public final String mCoreGov;
 
     public CpuCore(final String core, final String coreCurrent,
-                   final String coreMax, final String coreGov) {
+            final String coreMax, final String coreGov) {
         mCore = ((core != null && !core.isEmpty()) ? core : "0");
         mCoreMax = ((coreMax != null && !coreMax.isEmpty()) ? coreMax : "0");
         mCoreCurrent = ((coreCurrent != null && !coreCurrent.isEmpty()) ? coreCurrent : "0");

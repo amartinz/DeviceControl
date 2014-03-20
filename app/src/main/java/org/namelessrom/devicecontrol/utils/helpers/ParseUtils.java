@@ -4,6 +4,14 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class ParseUtils implements DeviceConstants {
 
+    public static int parseFstrim(final String position) {
+        try {
+            return parseFstrim(Integer.parseInt(position));
+        } catch (Exception exc) {
+            return 480;
+        }
+    }
+
     public static int parseFstrim(final int position) {
         int value;
         switch (position) {
