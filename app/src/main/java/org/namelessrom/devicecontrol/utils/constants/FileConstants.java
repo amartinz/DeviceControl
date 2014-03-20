@@ -26,43 +26,48 @@ public interface FileConstants {
     //==============================================================================================
     // Files
     //==============================================================================================
-    public static final String[] FILES_VIBRATOR = {"/sys/class/timed_output/vibrator/pwm_value"
+    public static final String[] FILES_VIBRATOR           = {
+            "/sys/class/timed_output/vibrator/pwm_value"
             , "/sys/devices/platform/tspdrv/nforce_timed"};
-    public static final String FILE_TOUCHKEY_TOGGLE =
+    public static final String   FILE_TOUCHKEY_TOGGLE     =
             "/sys/class/leds/button-backlight/max_brightness";
-    public static final String FILE_TOUCHKEY_BRIGHTNESS =
+    public static final String   FILE_TOUCHKEY_BRIGHTNESS =
             "/sys/class/leds/button-backlight/brightness";
-    public static final String FILE_BLN_TOGGLE =
+    public static final String   FILE_BLN_TOGGLE          =
             "/sys/class/misc/backlightnotification/enabled";
-    public static final String FILE_KEYBOARD_TOGGLE =
+    public static final String   FILE_KEYBOARD_TOGGLE     =
             "/sys/class/leds/keyboard-backlight/max_brightness";
-    public static final String FILE_USE_GYRO_CALIB = "/sys/class/sec/gsensorcal/calibration";
-    public static final String[] FILES_PANEL_COLOR_TEMP = {"/sys/class/lcd/panel/panel_colors",
+    public static final String   FILE_USE_GYRO_CALIB      = "/sys/class/sec/gsensorcal/calibration";
+    public static final String[] FILES_PANEL_COLOR_TEMP   = {
+            "/sys/class/lcd/panel/panel_colors",
             "/sys/class/sec/tsp/panel_colors"};
     //==============================================================================================
     public static final String[] FILES_KNOCKON
-            = {"/sys/devices/virtual/input/lge_touch/touch_gesture"};
+                                                            =
+            {"/sys/devices/virtual/input/lge_touch/touch_gesture"};
     //==============================================================================================
-    public static final String FILE_INFO_DISPLAY_LCD_TYPE = "/sys/class/lcd/panel/lcd_type";
+    public static final String   FILE_INFO_DISPLAY_LCD_TYPE = "/sys/class/lcd/panel/lcd_type";
     //==============================================================================================
-    public static final String FILE_FLASH_LIGHT = "/sys/class/camera/flash/rear_flash";
+    public static final String   FILE_FLASH_LIGHT           = "/sys/class/camera/flash/rear_flash";
     //==============================================================================================
-    public static final String[] FILES_LCD_POWER_REDUCE = {"/sys/class/lcd/panel/power_reduce"};
+    public static final String[] FILES_LCD_POWER_REDUCE     = {"/sys/class/lcd/panel/power_reduce"};
     public static final String[] FILES_INTELLI_PLUG_ECO
-            = {"/sys/module/intelli_plug/parameters/eco_mode_active"};
+                                                            =
+            {"/sys/module/intelli_plug/parameters/eco_mode_active"};
     public static final String[] FILES_MC_POWER_SCHEDULER
-            = {"/sys/devices/system/cpu/sched_mc_power_savings"};
+                                                            =
+            {"/sys/devices/system/cpu/sched_mc_power_savings"};
     //==============================================================================================
 
 
     //==============================================================================================
     // Directories
     //==============================================================================================
-    public static final String DC_DATA_DIR =
+    public static final String DC_DATA_DIR         =
             Environment.getExternalStorageDirectory().getPath()
                     + File.separator + "Nameless/DeviceControl";
-    public static final String DC_LOG_DIR = DC_DATA_DIR + File.separator + "Logs";
-    public static final String DC_BACKUP_DIR = DC_DATA_DIR + File.separator + "Backup";
+    public static final String DC_LOG_DIR          = DC_DATA_DIR + File.separator + "Logs";
+    public static final String DC_BACKUP_DIR       = DC_DATA_DIR + File.separator + "Backup";
     //==============================================================================================
     public static final String DC_LOG_FILE_FSSTRIM = DC_LOG_DIR + File.separator + "fstrim.log";
     //==============================================================================================

@@ -8,7 +8,8 @@
  * You may use this code according to either of these licenses as is most appropriate
  * for your project on a case-by-case basis.
  * 
- * The terms of each license can be found in the root directory of this project's repository as well as at:
+ * The terms of each license can be found in the root directory of this project's repository as
+ * well as at:
  * 
  * * http://www.apache.org/licenses/LICENSE-2.0
  * * http://www.gnu.org/licenses/gpl-2.0.txt
@@ -38,19 +39,19 @@ public class InternalVariables {
     // ----------------------
 
 
-    protected static boolean accessGiven = false;
+    protected static boolean accessGiven      = false;
     protected static boolean nativeToolsReady = false;
-    protected static boolean found = false;
-    protected static boolean processRunning = false;
+    protected static boolean found            = false;
+    protected static boolean processRunning   = false;
 
     protected static String[] space;
-    protected static String getSpaceFor;
-    protected static String busyboxVersion;
+    protected static String   getSpaceFor;
+    protected static String   busyboxVersion;
     protected static String pid_list = "";
-    protected static Set<String> path;
-    protected static ArrayList<Mount> mounts;
+    protected static Set<String>        path;
+    protected static ArrayList<Mount>   mounts;
     protected static ArrayList<Symlink> symlinks;
-    protected static List<String> results;
+    protected static List<String>       results;
     protected static String inode = "";
     protected static Permissions permissions;
 

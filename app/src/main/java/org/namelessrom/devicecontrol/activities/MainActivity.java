@@ -31,7 +31,7 @@ import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.fragments.main.DeviceFragment;
+import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.main.InformationFragment;
 import org.namelessrom.devicecontrol.fragments.main.NavigationDrawerFragment;
 import org.namelessrom.devicecontrol.fragments.main.PerformanceFragment;
@@ -53,10 +53,10 @@ public class MainActivity extends Activity
     // Fields
     //==============================================================================================
     private static NavigationDrawerFragment mNavigationDrawerFragment;
-    private static PreferencesFragment mPreferencesFragment;
-    private CharSequence mTitle;
-    private static long back_pressed;
-    private Toast mToast;
+    private static PreferencesFragment      mPreferencesFragment;
+    private        CharSequence             mTitle;
+    private static long                     back_pressed;
+    private        Toast                    mToast;
     final Object lockObject = new Object();
 
     //==============================================================================================
@@ -163,8 +163,7 @@ public class MainActivity extends Activity
         } else if (!mNavigationDrawerFragment.isDrawerOpen()
                 && !mPreferencesFragment.isDrawerOpen()) {
             if (back_pressed + 2000 > System.currentTimeMillis()) {
-                if (mToast != null)
-                    mToast.cancel();
+                if (mToast != null) { mToast.cancel(); }
                 finish();
             } else {
                 mToast = Toast.makeText(getBaseContext(),

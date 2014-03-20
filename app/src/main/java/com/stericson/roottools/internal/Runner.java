@@ -8,7 +8,8 @@
  * You may use this code according to either of these licenses as is most appropriate
  * for your project on a case-by-case basis.
  * 
- * The terms of each license can be found in the root directory of this project's repository as well as at:
+ * The terms of each license can be found in the root directory of this project's repository as
+ * well as at:
  * 
  * * http://www.apache.org/licenses/LICENSE-2.0
  * * http://www.gnu.org/licenses/gpl-2.0.txt
@@ -37,8 +38,8 @@ public class Runner extends Thread {
     private static final String LOG_TAG = "RootTools::Runner";
 
     Context context;
-    String binaryName;
-    String parameter;
+    String  binaryName;
+    String  parameter;
 
     public Runner(Context context, String binaryName, String parameter) {
         this.context = context;
@@ -58,7 +59,8 @@ public class Runner extends Thread {
         }
         if (privateFilesPath != null) {
             try {
-                CommandCapture command = new CommandCapture(0, false, privateFilesPath + "/" + binaryName + " " + parameter);
+                CommandCapture command = new CommandCapture(0, false,
+                        privateFilesPath + "/" + binaryName + " " + parameter);
                 Shell.startRootShell().add(command);
                 commandWait(command);
 

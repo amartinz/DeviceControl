@@ -17,13 +17,11 @@
  */
 package org.namelessrom.devicecontrol.fragments.main;
 
+import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.preference.SwitchPreference;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -34,6 +32,8 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
 
 /**
  * Created by alex on 18.12.13.
@@ -45,56 +45,58 @@ public class PreferencesFragment extends PreferenceFragment
     // Fields
     //==============================================================================================
     private DrawerLayout mDrawerLayout;
-    private View mFragmentContainerView;
+    private View         mFragmentContainerView;
 
     //==============================================================================================
     // Appearance
     //==============================================================================================
-    private SwitchPreference mCustomAnimations;
-    private ListPreference mTransformerId;
+    private CustomCheckBoxPreference mCustomAnimations;
+    private CustomListPreference     mTransformerId;
 
     //==============================================================================================
     // Debug
     //==============================================================================================
-    private SwitchPreference mExtensiveLogging;
+    private CustomCheckBoxPreference mExtensiveLogging;
 
     //==============================================================================================
     // Reapply on boot
     //==============================================================================================
-    private CheckBoxPreference mSobVm;
-    private CheckBoxPreference mSobSysctl;
+    private CustomCheckBoxPreference mSobVm;
+    private CustomCheckBoxPreference mSobSysctl;
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml._device_control);
 
-        PreferenceHelper.getInstance(getActivity());
+        final Activity activity = getActivity();
+        PreferenceHelper.getInstance(activity);
 
-        mCustomAnimations = (SwitchPreference)
+        mCustomAnimations = (CustomCheckBoxPreference)
                 findPreference("prefs_jf_appearance_custom_animations");
         mCustomAnimations.setChecked(PreferenceHelper.getCustomAnimations());
         mCustomAnimations.setOnPreferenceChangeListener(this);
 
-        mTransformerId = (ListPreference) findPreference("prefs_jf_appearance_custom_transformer");
+        mTransformerId = (CustomListPreference)
+                findPreference("prefs_jf_appearance_custom_transformer");
         if (mTransformerId.getValue() == null) mTransformerId.setValueIndex(0);
         mTransformerId.setOnPreferenceChangeListener(this);
 
-        mExtensiveLogging = (SwitchPreference) findPreference("jf_extensive_logging");
+        mExtensiveLogging = (CustomCheckBoxPreference) findPreference("jf_extensive_logging");
         mExtensiveLogging.setOnPreferenceChangeListener(this);
 
-        mSobVm = (CheckBoxPreference) findPreference("prefs_sob_vm");
+        mSobVm = (CustomCheckBoxPreference) findPreference("prefs_sob_vm");
         mSobVm.setChecked(PreferenceHelper.getBoolean("prefs_sob_vm", false));
         mSobVm.setOnPreferenceChangeListener(this);
 
-        mSobSysctl = (CheckBoxPreference) findPreference("prefs_sob_sysctl");
+        mSobSysctl = (CustomCheckBoxPreference) findPreference("prefs_sob_sysctl");
         mSobSysctl.setChecked(PreferenceHelper.getBoolean("prefs_sob_sysctl", false));
         mSobSysctl.setOnPreferenceChangeListener(this);
 
         final Preference mVersion = findPreference("prefs_version");
         mVersion.setEnabled(false);
         try {
-            final PackageInfo pInfo = getActivity().getPackageManager()
+            final PackageInfo pInfo = activity.getPackageManager()
                     .getPackageInfo(getActivity().getPackageName(), 0);
             mVersion.setTitle(getString(R.string.app_version_name, pInfo.versionName));
             mVersion.setSummary(getString(R.string.app_version_code, pInfo.versionCode));
@@ -108,8 +110,8 @@ public class PreferencesFragment extends PreferenceFragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
+            Bundle savedInstanceState) {
+        final View view = super.onCreateView(inflater, container, savedInstanceState);
 
         view.setBackgroundResource(R.drawable.preference_drawer_background);
 
@@ -122,7 +124,8 @@ public class PreferencesFragment extends PreferenceFragment
         boolean restart = false;
 
         if (preference == mCustomAnimations) {
-            PreferenceHelper.setCustomAnimations(mCustomAnimations.isChecked());
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setCustomAnimations(value);
             changed = true;
             restart = true;
         } else if (preference == mTransformerId) {
@@ -130,13 +133,17 @@ public class PreferencesFragment extends PreferenceFragment
             changed = true;
             restart = mCustomAnimations.isChecked();
         } else if (preference == mExtensiveLogging) {
-            PreferenceHelper.setBoolean(JF_EXTENSIVE_LOGGING, mExtensiveLogging.isChecked());
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(JF_EXTENSIVE_LOGGING, value);
+            org.namelessrom.devicecontrol.Application.IS_LOG_DEBUG = value;
             changed = true;
         } else if (preference == mSobVm) {
-            PreferenceHelper.setBoolean("prefs_sob_vm", (Boolean) newValue);
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean("prefs_sob_vm", value);
             changed = true;
         } else if (preference == mSobSysctl) {
-            PreferenceHelper.setBoolean("prefs_sob_sysctl", (Boolean) newValue);
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean("prefs_sob_sysctl", value);
             changed = true;
         }
 
@@ -168,12 +175,10 @@ public class PreferencesFragment extends PreferenceFragment
     }
 
     public void openDrawer() {
-        if (mDrawerLayout != null)
-            mDrawerLayout.openDrawer(mFragmentContainerView);
+        if (mDrawerLayout != null) { mDrawerLayout.openDrawer(mFragmentContainerView); }
     }
 
     public void closeDrawer() {
-        if (mDrawerLayout != null)
-            mDrawerLayout.closeDrawer(mFragmentContainerView);
+        if (mDrawerLayout != null) { mDrawerLayout.closeDrawer(mFragmentContainerView); }
     }
 }

@@ -8,7 +8,8 @@
  * You may use this code according to either of these licenses as is most appropriate
  * for your project on a case-by-case basis.
  * 
- * The terms of each license can be found in the root directory of this project's repository as well as at:
+ * The terms of each license can be found in the root directory of this project's repository as
+ * well as at:
  * 
  * * http://www.apache.org/licenses/LICENSE-2.0
  * * http://www.gnu.org/licenses/gpl-2.0.txt
@@ -77,7 +78,7 @@ public final class RootTools {
     // # Public Variables #
     // --------------------
 
-    public static boolean debugMode = false;
+    public static boolean      debugMode            = false;
     public static List<String> lastFoundBinaryPaths = new ArrayList<String>();
     public static String utilPath;
 
@@ -140,14 +141,12 @@ public final class RootTools {
     /**
      * This will close either the root shell or the standard shell depending on what you specify.
      *
-     * @param root a <code>boolean</code> to specify whether to close the root shell or the standard shell.
+     * @param root a <code>boolean</code> to specify whether to close the root shell or the
+     *             standard shell.
      * @throws java.io.IOException
      */
     public static void closeShell(boolean root) throws IOException {
-        if (root)
-            Shell.closeRootShell();
-        else
-            Shell.closeShell();
+        if (root) { Shell.closeRootShell(); } else { Shell.closeShell(); }
     }
 
     /**
@@ -157,12 +156,13 @@ public final class RootTools {
      * @param source                 example: /data/data/org.adaway/files/hosts
      * @param destination            example: /system/etc/hosts
      * @param remountAsRw            remounts the destination as read/write before writing to it
-     * @param preserveFileAttributes tries to copy file attributes from source to destination, if only cat is available
+     * @param preserveFileAttributes tries to copy file attributes from source to destination,
+     *                               if only cat is available
      *                               only permissions are preserved
      * @return true if it was successfully copied
      */
     public static boolean copyFile(String source, String destination, boolean remountAsRw,
-                                   boolean preserveFileAttributes) {
+            boolean preserveFileAttributes) {
         return getInternals().copyFile(source, destination, remountAsRw, preserveFileAttributes);
     }
 
@@ -194,7 +194,8 @@ public final class RootTools {
      * permissions if the permissions are not correct.
      *
      * @param util     Name of the utility to fix.
-     * @param utilPath path to the toolbox that provides ln, rm, and chmod. This can be a blank string, a
+     * @param utilPath path to the toolbox that provides ln, rm, and chmod. This can be a blank
+     *                 string, a
      *                 path to a binary that will provide these, or you can use
      *                 RootTools.getWorkingToolbox()
      */
@@ -228,7 +229,8 @@ public final class RootTools {
     }
 
     /**
-     * @param path String that represents the path to the Busybox binary you want to retrieve the version of.
+     * @param path String that represents the path to the Busybox binary you want to retrieve the
+     *             version of.
      * @return BusyBox version is found, "" if not found.
      */
     public static String getBusyBoxVersion(String path) {
@@ -264,29 +266,36 @@ public final class RootTools {
     }
 
     /**
-     * This will open or return, if one is already open, a custom shell, you are responsible for managing the shell, reading the output
+     * This will open or return, if one is already open, a custom shell,
+     * you are responsible for managing the shell, reading the output
      * and for closing the shell when you are done using it.
      *
-     * @param shellPath a <code>String</code> to Indicate the path to the shell that you want to open.
-     * @param timeout   an <code>int</code> to Indicate the length of time before giving up on opening a shell.
+     * @param shellPath a <code>String</code> to Indicate the path to the shell that you want to
+     *                  open.
+     * @param timeout   an <code>int</code> to Indicate the length of time before giving up on
+     *                  opening a shell.
      * @throws java.util.concurrent.TimeoutException
      * @throws com.stericson.roottools.exceptions.RootDeniedException
      * @throws java.io.IOException
      */
-    public static Shell getCustomShell(String shellPath, int timeout) throws IOException, TimeoutException, RootDeniedException {
+    public static Shell getCustomShell(String shellPath, int timeout)
+            throws IOException, TimeoutException, RootDeniedException {
         return Shell.startCustomShell(shellPath, timeout);
     }
 
     /**
-     * This will open or return, if one is already open, a custom shell, you are responsible for managing the shell, reading the output
+     * This will open or return, if one is already open, a custom shell,
+     * you are responsible for managing the shell, reading the output
      * and for closing the shell when you are done using it.
      *
-     * @param shellPath a <code>String</code> to Indicate the path to the shell that you want to open.
+     * @param shellPath a <code>String</code> to Indicate the path to the shell that you want to
+     *                  open.
      * @throws java.util.concurrent.TimeoutException
      * @throws com.stericson.roottools.exceptions.RootDeniedException
      * @throws java.io.IOException
      */
-    public static Shell getCustomShell(String shellPath) throws IOException, TimeoutException, RootDeniedException {
+    public static Shell getCustomShell(String shellPath)
+            throws IOException, TimeoutException, RootDeniedException {
         return RootTools.getCustomShell(shellPath, 10000);
     }
 
@@ -301,7 +310,8 @@ public final class RootTools {
     }
 
     /**
-     * This method will return the inode number of a file. This method is dependent on having a version of
+     * This method will return the inode number of a file. This method is dependent on having a
+     * version of
      * ls that supports the -i parameter.
      *
      * @param file path to the file that you wish to return the inode number
@@ -339,54 +349,66 @@ public final class RootTools {
     /**
      * This will return the environment variable PATH
      *
-     * @return <code>List<String></code> A List of Strings representing the environment variable $PATH
+     * @return <code>List<String></code> A List of Strings representing the environment variable
+     * $PATH
      */
     public static List<String> getPath() {
         return Arrays.asList(System.getenv("PATH").split(":"));
     }
 
     /**
-     * This will open or return, if one is already open, a shell, you are responsible for managing the shell, reading the output
+     * This will open or return, if one is already open, a shell,
+     * you are responsible for managing the shell, reading the output
      * and for closing the shell when you are done using it.
      *
-     * @param retry   a <code>int</code> to indicate how many times the ROOT shell should try to open with root priviliges...
-     * @param root    a <code>boolean</code> to Indicate whether or not you want to open a root shell or a standard shell
-     * @param timeout an <code>int</code> to Indicate the length of time to wait before giving up on opening a shell.
+     * @param retry   a <code>int</code> to indicate how many times the ROOT shell should try to
+     *                open with root priviliges...
+     * @param root    a <code>boolean</code> to Indicate whether or not you want to open a root
+     *                shell or a standard shell
+     * @param timeout an <code>int</code> to Indicate the length of time to wait before giving up
+     *                on opening a shell.
      * @throws java.util.concurrent.TimeoutException
      * @throws com.stericson.roottools.exceptions.RootDeniedException
      * @throws java.io.IOException
      */
-    public static Shell getShell(boolean root, int timeout, int retry) throws IOException, TimeoutException, RootDeniedException {
-        if (root)
-            return Shell.startRootShell(timeout);
-        else
+    public static Shell getShell(boolean root, int timeout, int retry)
+            throws IOException, TimeoutException, RootDeniedException {
+        if (root) { return Shell.startRootShell(timeout); } else {
             return Shell.startShell(timeout);
+        }
     }
 
     /**
-     * This will open or return, if one is already open, a shell, you are responsible for managing the shell, reading the output
+     * This will open or return, if one is already open, a shell,
+     * you are responsible for managing the shell, reading the output
      * and for closing the shell when you are done using it.
      *
-     * @param root    a <code>boolean</code> to Indicate whether or not you want to open a root shell or a standard shell
-     * @param timeout an <code>int</code> to Indicate the length of time to wait before giving up on opening a shell.
+     * @param root    a <code>boolean</code> to Indicate whether or not you want to open a root
+     *                shell or a standard shell
+     * @param timeout an <code>int</code> to Indicate the length of time to wait before giving up
+     *                on opening a shell.
      * @throws java.util.concurrent.TimeoutException
      * @throws com.stericson.roottools.exceptions.RootDeniedException
      * @throws java.io.IOException
      */
-    public static Shell getShell(boolean root, int timeout) throws IOException, TimeoutException, RootDeniedException {
+    public static Shell getShell(boolean root, int timeout)
+            throws IOException, TimeoutException, RootDeniedException {
         return getShell(root, timeout, 3);
     }
 
     /**
-     * This will open or return, if one is already open, a shell, you are responsible for managing the shell, reading the output
+     * This will open or return, if one is already open, a shell,
+     * you are responsible for managing the shell, reading the output
      * and for closing the shell when you are done using it.
      *
-     * @param root a <code>boolean</code> to Indicate whether or not you want to open a root shell or a standard shell
+     * @param root a <code>boolean</code> to Indicate whether or not you want to open a root
+     *             shell or a standard shell
      * @throws java.util.concurrent.TimeoutException
      * @throws com.stericson.roottools.exceptions.RootDeniedException
      * @throws java.io.IOException
      */
-    public static Shell getShell(boolean root) throws IOException, TimeoutException, RootDeniedException {
+    public static Shell getShell(boolean root)
+            throws IOException, TimeoutException, RootDeniedException {
         return RootTools.getShell(root, 25000);
     }
 
@@ -475,7 +497,8 @@ public final class RootTools {
      * @return a <code>boolean</code> which indicates whether or not we were able to create the new
      * file.
      */
-    public static boolean installBinary(Context context, int sourceId, String destName, String mode) {
+    public static boolean installBinary(Context context, int sourceId, String destName,
+            String mode) {
         return getInternals().installBinary(context, sourceId, destName, mode);
     }
 
@@ -531,7 +554,8 @@ public final class RootTools {
 
     /**
      * @return <code>true</code> if your app has been given root access.
-     * @throws java.util.concurrent.TimeoutException if this operation times out. (cannot determine if access is given)
+     * @throws java.util.concurrent.TimeoutException if this operation times out. (cannot
+     * determine if access is given)
      */
     public static boolean isAccessGiven() {
         return getInternals().isAccessGiven();
@@ -667,12 +691,15 @@ public final class RootTools {
     }
 
     /**
-     * Executes a given command with root access or without depending on the value of the boolean passed.
-     * This will also start a root shell or a standard shell without you having to open it specifically.
+     * Executes a given command with root access or without depending on the value of the boolean
+     * passed.
+     * This will also start a root shell or a standard shell without you having to open it
+     * specifically.
      * <p/>
      * You will still need to close the shell after you are done using the shell.
      *
-     * @param shell   The shell to execute the command on, this can be a root shell or a standard shell.
+     * @param shell   The shell to execute the command on, this can be a root shell or a standard
+     *                shell.
      * @param command The command to execute in the shell
      * @throws java.io.IOException
      */

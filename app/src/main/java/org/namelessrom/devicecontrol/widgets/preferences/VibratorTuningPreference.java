@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -46,18 +47,37 @@ import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
  */
 public class VibratorTuningPreference extends DialogPreference
         implements SeekBar.OnSeekBarChangeListener, DeviceConstants, FileConstants {
-    public final static String FILE_VIBRATOR = Utils.checkPaths(FILES_VIBRATOR);
-    private final Vibrator vib = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-    private SeekBar mSeekBar;
-    private TextView mValue;
-    private String mOriginalValue;
-    private Drawable mProgressDrawable;
-    private Drawable mProgressThumb;
+    public final static String   FILE_VIBRATOR = Utils.checkPaths(FILES_VIBRATOR);
+    private final       Vibrator vib           =
+            (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+    private SeekBar             mSeekBar;
+    private TextView            mValue;
+    private String              mOriginalValue;
+    private Drawable            mProgressDrawable;
+    private Drawable            mProgressThumb;
     private LightingColorFilter mRedFilter;
+
+    private String color = "#FFFFFF";
 
     public VibratorTuningPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setDialogLayoutResource(R.layout.preference_dialog_vibrator_tuning);
+    }
+
+    public void setTitleColor(String color) {
+        this.color = color;
+    }
+
+    @Override
+    protected void onBindView(View view) {
+        super.onBindView(view);
+
+        final TextView mTitle = (TextView) view.findViewById(android.R.id.title);
+        mTitle.setTextColor(Color.parseColor(color));
+        mTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+
+        final TextView mSummary = (TextView) view.findViewById(android.R.id.summary);
+        mSummary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
     }
 
     @Override
@@ -170,10 +190,7 @@ public class VibratorTuningPreference extends DialogPreference
 
         double percent = (strength - minValue) * (100 / (maxValue - minValue));
 
-        if (percent > 100)
-            percent = 100;
-        else if (percent < 0)
-            percent = 0;
+        if (percent > 100) { percent = 100; } else if (percent < 0) { percent = 0; }
 
         return (int) percent;
     }
@@ -186,10 +203,9 @@ public class VibratorTuningPreference extends DialogPreference
                 ((VIBRATOR_INTENSITY_MAX - VIBRATOR_INTENSITY_MIN) * percent) /
                         100) + VIBRATOR_INTENSITY_MIN);
 
-        if (strength > VIBRATOR_INTENSITY_MAX)
+        if (strength > VIBRATOR_INTENSITY_MAX) {
             strength = VIBRATOR_INTENSITY_MAX;
-        else if (strength < VIBRATOR_INTENSITY_MIN)
-            strength = VIBRATOR_INTENSITY_MIN;
+        } else if (strength < VIBRATOR_INTENSITY_MIN) { strength = VIBRATOR_INTENSITY_MIN; }
 
         return strength;
     }

@@ -15,22 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.widgets.adapters;
+package org.namelessrom.devicecontrol.fragments.parents;
 
-import android.content.Context;
-import android.widget.SimpleAdapter;
+import android.app.Activity;
+import android.preference.PreferenceFragment;
 
-import java.util.List;
-import java.util.Map;
+import org.namelessrom.devicecontrol.activities.MainActivity;
 
 /**
  * Created by alex on 18.12.13.
  */
-public class DrawerAdapter extends SimpleAdapter {
+public class AttachPreferenceFragment extends PreferenceFragment {
 
-    public DrawerAdapter(Context context, List<? extends Map<String, ?>> maps,
-            int i, String[] strings, int[] ints) {
-        super(context, maps, i, strings, ints);
+    protected void onAttach(Activity activity, int number) {
+        super.onAttach(activity);
+
+        ((MainActivity) activity).onSectionAttached(number);
     }
-
 }

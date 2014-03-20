@@ -70,9 +70,10 @@ public class ToolsEditorTabbed extends Fragment {
         b.putInt(PressToLoadFragment.ARG_IMG, R.mipmap.ic_launcher);
 
         mTabHost.addTab(mTabHost
-                .newTabSpec("buildprop")
-                .setIndicator(getString(R.string.buildprop)),
-                PressToLoadFragment.class, b);
+                        .newTabSpec("buildprop")
+                        .setIndicator(getString(R.string.buildprop)),
+                PressToLoadFragment.class, b
+        );
 
         return v;
     }

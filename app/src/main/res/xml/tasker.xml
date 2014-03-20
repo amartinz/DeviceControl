@@ -17,19 +17,28 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:key="graphics"
-        android:title="@string/section_title_device_graphics">
 
-        <!-- Use sensor calibration -->
-        <org.namelessrom.devicecontrol.widgets.preferences.PanelColorTemperature
-            android:key="panel_color_temperature"
-            android:title="@string/panel_color_temp_title_head"
-            android:summary="@string/panel_color_temp_summary_head"
-            android:entries="@array/panel_color_temp_entries"
-            android:entryValues="@array/panel_color_temp_entries_values"
-            android:defaultValue="2" />
+    <PreferenceCategory
+        android:key="fstrim_cat"
+        android:title="@string/fstrim_title">
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+            android:key="fstrim"
+            android:title="@string/fstrim_title"
+            android:summary="@string/fstrim_summary"
+            android:persistent="false" />
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference
+            android:key="fstrim_interval"
+            android:dependency="fstrim"
+            android:title="@string/fstrim_interval_title"
+            android:summary="@string/fstrim_interval_summary"
+            android:entries="@array/fstrim_entries"
+            android:entryValues="@array/fstrim_values"
+            android:defaultValue="7"
+            android:persistent="false" />
 
     </PreferenceCategory>
+
 </PreferenceScreen>
 

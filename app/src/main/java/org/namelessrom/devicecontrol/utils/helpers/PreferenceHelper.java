@@ -25,7 +25,7 @@ public class PreferenceHelper {
     //==============================================================================================
     // Fields
     //==============================================================================================
-    private static PreferenceHelper ourInstance;
+    private static PreferenceHelper  ourInstance;
     private static SharedPreferences mSharedPrefs;
 
     //==============================================================================================

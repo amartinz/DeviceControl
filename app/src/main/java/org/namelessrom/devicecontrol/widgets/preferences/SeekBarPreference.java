@@ -2,6 +2,8 @@ package org.namelessrom.devicecontrol.widgets.preferences;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.preference.Preference;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,18 +22,20 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
     private final String TAG = getClass().getName();
 
-    private static final String ANDROIDNS = "http://schemas.android.com/apk/res/android";
-    private static final String APPLICATIONS = "http://nameless-rom.org";
-    private static final int DEFAULT_VALUE = 50;
+    private static final String ANDROIDNS     = "http://schemas.android.com/apk/res/android";
+    private static final String APPLICATIONS  = "http://nameless-rom.org";
+    private static final int    DEFAULT_VALUE = 50;
 
-    private boolean mHideValue = false;
-    private String mCustomStatus = "";
+    private String color = "#FFFFFF";
+
+    private boolean mHideValue    = false;
+    private String  mCustomStatus = "";
 
     private int mMaxValue = 100;
     private int mMinValue = 0;
     private int mInterval = 1;
     private int mCurrentValue;
-    private String mUnitsLeft = "";
+    private String mUnitsLeft  = "";
     private String mUnitsRight = "";
     private SeekBar mSeekBar;
 
@@ -45,6 +49,10 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     public SeekBarPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initPreference(context, attrs);
+    }
+
+    public void setTitleColor(String color) {
+        this.color = color;
     }
 
     private void initPreference(Context context, AttributeSet attrs) {
@@ -61,7 +69,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
         mMinValue = attrs.getAttributeIntValue(APPLICATIONS, "min", 0);
 
         mUnitsLeft = getAttributeStringValue(attrs, APPLICATIONS, "unitsLeft", "");
-        String units = getAttributeStringValue(attrs, APPLICATIONS, "units", "");
+        final String units = getAttributeStringValue(attrs, APPLICATIONS, "units", "");
         mUnitsRight = getAttributeStringValue(attrs, APPLICATIONS, "unitsRight", units);
 
         mHideValue = getAttributeStringValue(attrs,
@@ -79,7 +87,8 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
     }
 
-    private String getAttributeStringValue(AttributeSet attrs, String namespace, String name, String defaultValue) {
+    private String getAttributeStringValue(AttributeSet attrs, String namespace, String name,
+            String defaultValue) {
         String value = attrs.getAttributeValue(namespace, name);
         if (value == null) {
             value = defaultValue;
@@ -101,6 +110,13 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     @Override
     public void onBindView(View view) {
         super.onBindView(view);
+
+        final TextView mTitle = (TextView) view.findViewById(android.R.id.title);
+        mTitle.setTextColor(Color.parseColor(color));
+        mTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+
+        final TextView mSummary = (TextView) view.findViewById(android.R.id.summary);
+        mSummary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
 
         try {
             // move our seekbar to the new view we've been given
@@ -156,10 +172,10 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
                 mStatusText.setText(context.getString(resId));
             }
 
-            TextView unitsRight = (TextView) view.findViewById(R.id.seekBarPrefUnitsRight);
+            final TextView unitsRight = (TextView) view.findViewById(R.id.seekBarPrefUnitsRight);
             unitsRight.setText(mUnitsRight);
 
-            TextView unitsLeft = (TextView) view.findViewById(R.id.seekBarPrefUnitsLeft);
+            final TextView unitsLeft = (TextView) view.findViewById(R.id.seekBarPrefUnitsLeft);
             unitsLeft.setText(mUnitsLeft);
 
         } catch (Exception e) {

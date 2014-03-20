@@ -8,7 +8,8 @@
  * You may use this code according to either of these licenses as is most appropriate
  * for your project on a case-by-case basis.
  * 
- * The terms of each license can be found in the root directory of this project's repository as well as at:
+ * The terms of each license can be found in the root directory of this project's repository as
+ * well as at:
  * 
  * * http://www.apache.org/licenses/LICENSE-2.0
  * * http://www.gnu.org/licenses/gpl-2.0.txt
@@ -45,8 +46,8 @@ import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 public class SanityCheckRootTools extends Activity {
-    private ScrollView mScrollView;
-    private TextView mTextView;
+    private ScrollView     mScrollView;
+    private TextView       mTextView;
     private ProgressDialog mPDialog;
 
 
@@ -265,12 +266,12 @@ public class SanityCheckRootTools extends Activity {
     }
 
     private class TestHandler extends Handler {
-        static final public String ACTION = "action";
-        static final public int ACTION_SHOW = 0x01;
-        static final public int ACTION_HIDE = 0x02;
-        static final public int ACTION_DISPLAY = 0x03;
-        static final public int ACTION_PDISPLAY = 0x04;
-        static final public String TEXT = "text";
+        static final public String ACTION          = "action";
+        static final public int    ACTION_SHOW     = 0x01;
+        static final public int    ACTION_HIDE     = 0x02;
+        static final public int    ACTION_DISPLAY  = 0x03;
+        static final public int    ACTION_PDISPLAY = 0x04;
+        static final public String TEXT            = "text";
 
         public void handleMessage(Message msg) {
             int action = msg.getData().getInt(ACTION);
@@ -282,8 +283,7 @@ public class SanityCheckRootTools extends Activity {
                     mPDialog.setMessage("Running Root Library Tests...");
                     break;
                 case ACTION_HIDE:
-                    if (null != text)
-                        print(text);
+                    if (null != text) { print(text); }
                     mPDialog.hide();
                     break;
                 case ACTION_DISPLAY:

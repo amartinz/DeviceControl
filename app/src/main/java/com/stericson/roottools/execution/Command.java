@@ -8,7 +8,8 @@
  * You may use this code according to either of these licenses as is most appropriate
  * for your project on a case-by-case basis.
  * 
- * The terms of each license can be found in the root directory of this project's repository as well as at:
+ * The terms of each license can be found in the root directory of this project's repository as
+ * well as at:
  * 
  * * http://www.apache.org/licenses/LICENSE-2.0
  * * http://www.gnu.org/licenses/gpl-2.0.txt
@@ -35,18 +36,18 @@ import java.io.IOException;
 public abstract class Command {
 
     ExecutionMonitor executionMonitor = null;
-    Handler mHandler = null;
-    boolean executing = false;
+    Handler          mHandler         = null;
+    boolean          executing        = false;
 
-    String[] command = {};
-    boolean javaCommand = false;
-    Context context = null;
-    boolean finished = false;
-    boolean terminated = false;
-    boolean handlerEnabled = true;
-    int exitCode = -1;
-    int id = 0;
-    int timeout = RootTools.default_Command_Timeout;
+    String[] command        = {};
+    boolean  javaCommand    = false;
+    Context  context        = null;
+    boolean  finished       = false;
+    boolean  terminated     = false;
+    boolean  handlerEnabled = true;
+    int      exitCode       = -1;
+    int      id             = 0;
+    int      timeout        = RootTools.default_Command_Timeout;
 
     public abstract void commandOutput(int id, String line);
 
@@ -116,7 +117,8 @@ public abstract class Command {
      * @param javaCommand when True, it is a java command.
      * @param context     needed to execute java command.
      */
-    public Command(int id, boolean handlerEnabled, boolean javaCommand, Context context, String... command) {
+    public Command(int id, boolean handlerEnabled, boolean javaCommand, Context context,
+            String... command) {
         this(id, handlerEnabled, command);
         this.javaCommand = javaCommand;
         this.context = context;
@@ -251,7 +253,9 @@ public abstract class Command {
                 commandTerminated(id, reason);
             }
 
-            RootTools.log("Command " + id + " did not finish because it was terminated. Termination reason: " + reason);
+            RootTools
+                    .log("Command " + id + " did not finish because it was terminated. " +
+                            "Termination reason: " + reason);
             setExitCode(-1);
             terminated = true;
             finishCommand();
@@ -292,10 +296,10 @@ public abstract class Command {
 
     private class CommandHandler extends Handler {
         static final public String ACTION = "action";
-        static final public String TEXT = "text";
+        static final public String TEXT   = "text";
 
-        static final public int COMMAND_OUTPUT = 0x01;
-        static final public int COMMAND_COMPLETED = 0x02;
+        static final public int COMMAND_OUTPUT     = 0x01;
+        static final public int COMMAND_COMPLETED  = 0x02;
         static final public int COMMAND_TERMINATED = 0x03;
 
         public void handleMessage(Message msg) {

@@ -19,7 +19,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:nameless="http://nameless-rom.org">
 
-    <CheckBoxPreference
+    <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
         android:key="pref_force_highend_gfx"
         android:title="@string/pref_force_highend_gfx_title"
         android:summary="@string/pref_force_highend_gfx_summary" />
@@ -28,14 +28,14 @@
         android:key="intelli_plug"
         android:title="@string/intelli_plug">
 
-        <SwitchPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
             android:key="intelli_plug_active"
             android:title="@string/intelli_plug"
             android:summaryOn="@string/intelli_plug_summary_on"
             android:summaryOff="@string/intelli_plug_summary_off"
             android:defaultValue="false" />
 
-        <SwitchPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
             android:key="intelli_plug_eco"
             android:title="@string/intelli_plug_eco_title"
             android:summaryOn="@string/intelli_plug_eco_summary_on"
@@ -48,7 +48,7 @@
         android:key="powersaving"
         android:title="@string/powersaving">
 
-        <SwitchPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
             android:key="lcd_power_reduce"
             android:title="@string/powersaving_lcd_title"
             android:summaryOn="@string/powersaving_lcd_summary_on"
