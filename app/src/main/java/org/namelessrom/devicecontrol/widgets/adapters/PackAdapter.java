@@ -35,8 +35,8 @@ import java.util.Arrays;
 
 public class PackAdapter extends BaseAdapter {
 
-    Activity context;
-    PackageManager packageManager;
+    Activity          context;
+    PackageManager    packageManager;
     ArrayList<String> pList;
 
 
@@ -48,8 +48,8 @@ public class PackAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-        TextView packRaw;
-        TextView packName;
+        TextView  packRaw;
+        TextView  packName;
         ImageView imageView;
     }
 
@@ -91,8 +91,10 @@ public class PackAdapter extends BaseAdapter {
         try {
             packageInfo = context.getPackageManager().getPackageInfo(getItem(position), 0);
             holder.packRaw.setText(packageInfo.packageName);
-            holder.packName.setText(packageManager.getApplicationLabel(packageInfo.applicationInfo).toString());
-            holder.imageView.setImageDrawable(packageManager.getApplicationIcon(packageInfo.applicationInfo));
+            holder.packName.setText(
+                    packageManager.getApplicationLabel(packageInfo.applicationInfo).toString());
+            holder.imageView.setImageDrawable(
+                    packageManager.getApplicationIcon(packageInfo.applicationInfo));
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

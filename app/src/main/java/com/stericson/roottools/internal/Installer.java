@@ -8,7 +8,8 @@
  * You may use this code according to either of these licenses as is most appropriate
  * for your project on a case-by-case basis.
  * 
- * The terms of each license can be found in the root directory of this project's repository as well as at:
+ * The terms of each license can be found in the root directory of this project's repository as
+ * well as at:
  * 
  * * http://www.apache.org/licenses/LICENSE-2.0
  * * http://www.gnu.org/licenses/gpl-2.0.txt
@@ -54,7 +55,7 @@ class Installer {
     static final String BOGUS_FILE_NAME = "bogus";
 
     Context context;
-    String filesPath;
+    String  filesPath;
 
     public Installer(Context context)
             throws IOException {
@@ -126,8 +127,7 @@ class Installer {
                 try {
                     long size = iss.available();
                     while ((pos += ofc.transferFrom(rfc, pos, size
-                            - pos)) < size)
-                        ;
+                            - pos)) < size) { /* Do nothing */ }
                 } catch (IOException ex) {
                     if (RootTools.debugMode) {
                         Log.e(LOG_TAG, ex.toString());
@@ -159,7 +159,8 @@ class Installer {
             }
 
             try {
-                CommandCapture command = new CommandCapture(0, false, "chmod " + mode + " " + filesPath + File.separator + destName);
+                CommandCapture command = new CommandCapture(0, false,
+                        "chmod " + mode + " " + filesPath + File.separator + destName);
                 Shell.startRootShell().add(command);
                 commandWait(command);
 

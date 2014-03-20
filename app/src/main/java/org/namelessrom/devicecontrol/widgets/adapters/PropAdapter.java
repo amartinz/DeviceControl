@@ -33,9 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PropAdapter extends ArrayAdapter<Prop> {
-    private final Context mContext;
-    private final List<Prop> mProps;
-    private static Filter mFilter;
+    private final  Context    mContext;
+    private final  List<Prop> mProps;
+    private static Filter     mFilter;
 
     public PropAdapter(Context context, List<Prop> objects) {
         super(context, R.layout.prop_item, objects);
@@ -113,8 +113,7 @@ public class PropAdapter extends ArrayAdapter<Prop> {
             if (filterSeq != null && filterSeq.length() > 0) {
                 List<Prop> filter = new ArrayList<Prop>();
                 for (Prop o : mProps) {
-                    if (o.getName().toLowerCase().contains(filterSeq))
-                        filter.add(o);
+                    if (o.getName().toLowerCase().contains(filterSeq)) { filter.add(o); }
                 }
                 result.count = filter.size();
                 result.values = filter;

@@ -8,7 +8,8 @@
  * You may use this code according to either of these licenses as is most appropriate
  * for your project on a case-by-case basis.
  *
- * The terms of each license can be found in the root directory of this project's repository as well as at:
+ * The terms of each license can be found in the root directory of this project's repository as
+ * well as at:
  *
  * * http://www.apache.org/licenses/LICENSE-2.0
  * * http://www.gnu.org/licenses/gpl-2.0.txt
@@ -36,13 +37,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/* #ANNOTATIONS @SupportedAnnotationTypes("com.stericson.RootTools.containers.RootClass.Candidate") */
+/* #ANNOTATIONS @SupportedAnnotationTypes("com.stericson.RootTools.containers.RootClass
+.Candidate") */
 /* #ANNOTATIONS @SupportedSourceVersion(SourceVersion.RELEASE_6) */
 public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
 
     /* #ANNOTATIONS
     @Override
-    public boolean process(Set<? extends TypeElement> typeElements, RoundEnvironment roundEnvironment) {
+    public boolean process(Set<? extends TypeElement> typeElements,
+    RoundEnvironment roundEnvironment) {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "I was invoked!!!");
 
         return false;
@@ -89,7 +92,8 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
     // and immediately re-generate the necessary jar file.
     static public class AnnotationsFinder {
 
-        private final String AVOIDDIRPATH = "stericson" + File.separator + "RootTools" + File.separator;
+        private final String AVOIDDIRPATH =
+                "stericson" + File.separator + "RootTools" + File.separator;
         private List<File> classFiles;
 
         public AnnotationsFinder() throws IOException {
@@ -185,7 +189,9 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                 } catch (InterruptedException e) {
                 }
             }
-            System.out.println("All done. ::: anbuild.dex should now be in your project's res/raw/ folder :::");
+            System.out.println(
+                    "All done. ::: anbuild.dex should now be in your project's res/raw/ folder " +
+                            ":::");
         }
 
         protected void lookup(File path, List<File> fileList) {
@@ -200,15 +206,18 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                     if (file.getName().endsWith(".java")) {
                         if (hasClassAnnotation(file)) {
                             final String fileNamePrefix = file.getName().replace(".java", "");
-                            final File compiledPath = new File(getBuiltPath().toString() + File.separator + desourcedPath);
-                            File[] classAndInnerClassFiles = compiledPath.listFiles(new FilenameFilter() {
-                                @Override
-                                public boolean accept(File dir, String filename) {
-                                    return filename.startsWith(fileNamePrefix);
-                                }
-                            });
+                            final File compiledPath = new File(
+                                    getBuiltPath().toString() + File.separator + desourcedPath);
+                            File[] classAndInnerClassFiles =
+                                    compiledPath.listFiles(new FilenameFilter() {
+                                        @Override
+                                        public boolean accept(File dir, String filename) {
+                                            return filename.startsWith(fileNamePrefix);
+                                        }
+                                    });
                             for (final File matchingFile : classAndInnerClassFiles) {
-                                fileList.add(new File(desourcedPath + File.separator + matchingFile.getName()));
+                                fileList.add(new File(
+                                        desourcedPath + File.separator + matchingFile.getName()));
                             }
 
                         }
@@ -226,8 +235,9 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                 while (null != (line = reader.readLine())) {
                     switch (readState) {
                         case STARTING:
-                            if (line.contains("@RootClass.Candidate"))
+                            if (line.contains("@RootClass.Candidate")) {
                                 readState = READ_STATE.FOUND_ANNOTATION;
+                            }
                             break;
                         case FOUND_ANNOTATION:
                             Matcher m = p.matcher(line);
@@ -294,7 +304,8 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                     }
                 });
                 if (children.length > 0) {
-                    foundPath = new File(ideaPath.getAbsolutePath() + File.separator + children[0].getName());
+                    foundPath = new File(
+                            ideaPath.getAbsolutePath() + File.separator + children[0].getName());
                 }
             }
             if (null == foundPath) {

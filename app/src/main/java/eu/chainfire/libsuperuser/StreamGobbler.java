@@ -42,9 +42,9 @@ class StreamGobbler extends Thread {
         public void onLine(String line);
     }
 
-    private String shell = null;
-    private BufferedReader reader = null;
-    private List<String> writer = null;
+    private String         shell    = null;
+    private BufferedReader reader   = null;
+    private List<String>   writer   = null;
     private OnLineListener listener = null;
 
     /**

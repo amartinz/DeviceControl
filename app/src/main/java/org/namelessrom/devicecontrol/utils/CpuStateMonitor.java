@@ -36,7 +36,7 @@ import java.util.List;
 
 public class CpuStateMonitor implements DeviceConstants {
 
-    private List<CpuState> mStates = new ArrayList<CpuState>();
+    private List<CpuState>    mStates  = new ArrayList<CpuState>();
     private SparseArray<Long> mOffsets = new SparseArray<Long>();
 
     public class CPUStateMonitorException extends Exception {
@@ -51,7 +51,7 @@ public class CpuStateMonitor implements DeviceConstants {
             duration = b;
         }
 
-        public int freq = 0;
+        public int  freq     = 0;
         public long duration = 0;
 
         public int compareTo(CpuState state) {

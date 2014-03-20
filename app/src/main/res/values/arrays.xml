@@ -45,7 +45,7 @@
     </string-array>
 
     <!-- FSTRIM -->
-    <string-array name="fstrim_entries">
+    <string-array name="fstrim_entries" translatable="false">
         <item>@string/five_minutes</item>
         <item>@string/ten_minutes</item>
         <item>@string/twenty_minutes</item>
@@ -54,6 +54,17 @@
         <item>@string/two_hours</item>
         <item>@string/four_hours</item>
         <item>@string/eight_hours</item>
+    </string-array>
+
+    <string-array name="fstrim_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
     </string-array>
 
 </resources>

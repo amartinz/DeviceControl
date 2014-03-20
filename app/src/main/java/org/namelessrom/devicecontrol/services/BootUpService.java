@@ -24,9 +24,7 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.fragments.device.DeviceGraphicsFragment;
-import org.namelessrom.devicecontrol.fragments.device.DeviceInputFragment;
-import org.namelessrom.devicecontrol.fragments.device.DeviceLightsFragment;
+import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceGeneralFragment;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -63,7 +61,7 @@ public class BootUpService extends Service
     }
 
     private class BootTask extends AsyncTask<Void, Void, Void> {
-        Context mContext;
+        private final Context mContext;
 
         private BootTask(Context c) {
             mContext = c;
@@ -117,9 +115,9 @@ public class BootUpService extends Service
                 //==================================================================================
                 // Device Input
                 //==================================================================================
-                if (DeviceInputFragment.sKnockOn) {
+                if (DeviceFragment.sKnockOn) {
                     logDebug("Reapplying: sKnockOn");
-                    fileList.add(DeviceInputFragment.sKnockOnFile);
+                    fileList.add(DeviceFragment.sKnockOnFile);
                     valueList.add(PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0");
                 }
 
@@ -144,16 +142,16 @@ public class BootUpService extends Service
                 // Device Graphics
                 //==================================================================================
 
-                if (DeviceGraphicsFragment.sHasPanel) {
+                if (DeviceFragment.sHasPanel) {
                     logDebug("Reapplying: Panel Color Temp");
-                    fileList.add(DeviceGraphicsFragment.sHasPanelFile);
+                    fileList.add(DeviceFragment.sHasPanelFile);
                     valueList.add(PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2"));
                 }
 
                 //==================================================================================
                 // Device Lights
                 //==================================================================================
-                if (DeviceLightsFragment.sHasTouchkeyToggle) {
+                if (DeviceFragment.sHasTouchkeyToggle) {
                     logDebug("Reapplying: Touchkey Light");
                     tmp = PreferenceHelper.getBoolean(KEY_TOUCHKEY_LIGHT, true);
                     fileList.add(FILE_TOUCHKEY_TOGGLE);
@@ -162,14 +160,14 @@ public class BootUpService extends Service
                     valueList.add(tmp ? "255" : "0");
                 }
 
-                if (DeviceLightsFragment.sHasTouchkeyBLN) {
+                if (DeviceFragment.sHasTouchkeyBLN) {
                     logDebug("Reapplying: Touchkey BLN");
                     tmp = PreferenceHelper.getBoolean(KEY_TOUCHKEY_BLN, true);
                     fileList.add(FILE_BLN_TOGGLE);
                     valueList.add(tmp ? "1" : "0");
                 }
 
-                if (DeviceLightsFragment.sHasKeyboardToggle) {
+                if (DeviceFragment.sHasKeyboardToggle) {
                     logDebug("Reapplying: KeyBoard Light");
                     tmp = PreferenceHelper.getBoolean(KEY_KEYBOARD_LIGHT, true);
                     fileList.add(FILE_KEYBOARD_TOGGLE);

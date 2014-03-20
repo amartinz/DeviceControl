@@ -32,10 +32,10 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 public class PressToLoadFragment extends Fragment implements DeviceConstants {
 
     public static final String ARG_FRAGMENT = "arg_fragment";
-    public static final String ARG_IMG = "arg_img";
+    public static final String ARG_IMG      = "arg_img";
 
     private Fragment fragment;
-    private String mText;
+    private String   mText;
     private int mImgId = R.mipmap.ic_launcher;
 
     public static PressToLoadFragment newInstance(int fragmentId, int imgId) {
@@ -107,7 +107,7 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+                Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_press_to_load, container, false);
 
             TextView tvHelp = (TextView) view.findViewById(R.id.help_textview);

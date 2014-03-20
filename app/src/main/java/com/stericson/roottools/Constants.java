@@ -8,7 +8,8 @@
  * You may use this code according to either of these licenses as is most appropriate
  * for your project on a case-by-case basis.
  *
- * The terms of each license can be found in the root directory of this project's repository as well as at:
+ * The terms of each license can be found in the root directory of this project's repository as
+ * well as at:
  *
  * * http://www.apache.org/licenses/LICENSE-2.0
  * * http://www.gnu.org/licenses/gpl-2.0.txt
@@ -23,13 +24,13 @@
 package com.stericson.roottools;
 
 public class Constants {
-    public static final String TAG = "RootTools v3.4";
-    public static final int FPS = 1;
-    public static final int IAG = 2;
-    public static final int BBA = 3;
-    public static final int BBV = 4;
-    public static final int GI = 5;
-    public static final int GS = 6;
-    public static final int GSYM = 7;
+    public static final String TAG  = "RootTools v3.4";
+    public static final int    FPS  = 1;
+    public static final int    IAG  = 2;
+    public static final int    BBA  = 3;
+    public static final int    BBV  = 4;
+    public static final int    GI   = 5;
+    public static final int    GS   = 6;
+    public static final int    GSYM = 7;
 
 }

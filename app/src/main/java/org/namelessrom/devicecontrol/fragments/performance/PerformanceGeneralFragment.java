@@ -21,11 +21,9 @@ package org.namelessrom.devicecontrol.fragments.performance;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
-import android.preference.SwitchPreference;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
@@ -36,6 +34,7 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.SeekBarPreference;
 
 import java.util.ArrayList;
@@ -49,23 +48,23 @@ public class PerformanceGeneralFragment extends PreferenceFragment
     //==============================================================================================
     // Files
     //==============================================================================================
-    public static final String sLcdPowerReduceFile = Utils.checkPaths(FILES_LCD_POWER_REDUCE);
-    public static final boolean sLcdPowerReduce = !sLcdPowerReduceFile.equals("");
+    public static final String  sLcdPowerReduceFile   = Utils.checkPaths(FILES_LCD_POWER_REDUCE);
+    public static final boolean sLcdPowerReduce       = !sLcdPowerReduceFile.equals("");
     //----------------------------------------------------------------------------------------------
-    public static final String sMcPowerSchedulerFile = Utils.checkPaths(FILES_MC_POWER_SCHEDULER);
-    public static final boolean sMcPowerScheduler = !sMcPowerSchedulerFile.equals("");
+    public static final String  sMcPowerSchedulerFile = Utils.checkPaths(FILES_MC_POWER_SCHEDULER);
+    public static final boolean sMcPowerScheduler     = !sMcPowerSchedulerFile.equals("");
     //==============================================================================================
     // Fields
     //==============================================================================================
-    private static boolean IS_LOW_RAM_DEVICE = false;
+    private static      boolean IS_LOW_RAM_DEVICE     = false;
     //----------------------------------------------------------------------------------------------
-    private CheckBoxPreference mForceHighEndGfx;
+    private CustomCheckBoxPreference mForceHighEndGfx;
     //----------------------------------------------------------------------------------------------
-    private SwitchPreference mLcdPowerReduce;
-    private SeekBarPreference mMcPowerScheduler;
+    private CustomCheckBoxPreference mLcdPowerReduce;
+    private SeekBarPreference        mMcPowerScheduler;
     //----------------------------------------------------------------------------------------------
-    private SwitchPreference mIntelliPlug;
-    private SwitchPreference mIntelliPlugEco;
+    private CustomCheckBoxPreference mIntelliPlug;
+    private CustomCheckBoxPreference mIntelliPlugEco;
 
     //==============================================================================================
     // Overridden Methods
@@ -80,7 +79,7 @@ public class PerformanceGeneralFragment extends PreferenceFragment
         IS_LOW_RAM_DEVICE = Utils.getLowRamDevice(getActivity());
 
         if (IS_LOW_RAM_DEVICE) {
-            mForceHighEndGfx = (CheckBoxPreference) findPreference(FORCE_HIGHEND_GFX_PREF);
+            mForceHighEndGfx = (CustomCheckBoxPreference) findPreference(FORCE_HIGHEND_GFX_PREF);
         } else {
             getPreferenceScreen().removePreference(findPreference(FORCE_HIGHEND_GFX_PREF));
         }
@@ -91,7 +90,7 @@ public class PerformanceGeneralFragment extends PreferenceFragment
 
         PreferenceGroup preferenceGroup = (PreferenceGroup) findPreference(CATEGORY_POWERSAVING);
 
-        mLcdPowerReduce = (SwitchPreference) findPreference(KEY_LCD_POWER_REDUCE);
+        mLcdPowerReduce = (CustomCheckBoxPreference) findPreference(KEY_LCD_POWER_REDUCE);
         if (sLcdPowerReduce) {
             mLcdPowerReduce.setChecked(Utils.readOneLine(sLcdPowerReduceFile).equals("1"));
             mLcdPowerReduce.setOnPreferenceChangeListener(this);
@@ -101,7 +100,8 @@ public class PerformanceGeneralFragment extends PreferenceFragment
 
         mMcPowerScheduler = (SeekBarPreference) findPreference(KEY_MC_POWER_SCHEDULER);
         if (sMcPowerScheduler) {
-            mMcPowerScheduler.setProgress(Integer.parseInt(Utils.readOneLine(sMcPowerSchedulerFile)));
+            mMcPowerScheduler
+                    .setProgress(Integer.parseInt(Utils.readOneLine(sMcPowerSchedulerFile)));
             mMcPowerScheduler.setOnPreferenceChangeListener(this);
         } else {
             preferenceGroup.removePreference(mMcPowerScheduler);
@@ -115,7 +115,7 @@ public class PerformanceGeneralFragment extends PreferenceFragment
 
         preferenceGroup = (PreferenceGroup) findPreference(GROUP_INTELLI_PLUG);
 
-        mIntelliPlug = (SwitchPreference) findPreference(KEY_INTELLI_PLUG);
+        mIntelliPlug = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG);
         if (CpuUtils.hasIntelliPlug()) {
             mIntelliPlug.setChecked(CpuUtils.getIntelliPlugActive());
             mIntelliPlug.setOnPreferenceChangeListener(this);
@@ -123,7 +123,7 @@ public class PerformanceGeneralFragment extends PreferenceFragment
             preferenceGroup.removePreference(mIntelliPlug);
         }
 
-        mIntelliPlugEco = (SwitchPreference) findPreference(KEY_INTELLI_PLUG_ECO);
+        mIntelliPlugEco = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG_ECO);
         if (CpuUtils.hasIntelliPlug() && CpuUtils.hasIntelliPlugEcoMode()) {
             mIntelliPlugEco.setChecked(CpuUtils.getIntelliPlugEcoMode());
             mIntelliPlugEco.setOnPreferenceChangeListener(this);
