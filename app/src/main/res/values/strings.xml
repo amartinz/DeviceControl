@@ -3,9 +3,7 @@
     <string name="app_version_name">Versionname: %s</string>
     <string name="app_version_code">Versioncode: %s</string>
     <string name="app_information_help">Welcome to %1$s!\n\nTo get started, swipe out the drawer from the left!\n\nTo edit preferences of %2$s,\nswipe out the drawer from the right!\n\n\nPlease note, that %3$s needs root\nto function properly!\n\n</string>
-    <string name="app_device_help">Welcome to the Device Screen!\n\nYou can swipe right,\nto discover device controls!\n\n(Note: if a function is not supported,\nit gets hidden automatically.)\n\n</string>
     <string name="app_performance_help">Welcome to the Performance Section!\n</string>
-    <string name="app_tools_help">Welcome to the Tools Section!\n\nYou can swipe right,\nto discover various useful tools!\n\n(Note: please be careful though!)\n\n</string>
     <string name="app_warning_root">Please note that %s requires ROOT to fully work!</string>
     <string name="message_loading">Loading, please stand by…</string>
     <string name="fragment_press_to_load">Press me to load %s.</string>
@@ -13,27 +11,23 @@
     <string name="defaults_button">Reset to default</string>
     <string name="general">General</string>
     <string name="general_others">Others</string>
+    <string name="help">Help</string>
     <string name="dialog_warning">Warning!</string>
     <string name="dialog_warning_apply">Are you sure that you want to apply your settings?</string>
     <string name="toast_settings_applied">Successfully applied!</string>
-    <!-- Drawer -->
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_licenses">Licenses</string>
-    <!-- Sections -->
-    <string name="section_title_device">Device</string>
-    <string name="section_title_device_input">Input</string>
-    <string name="section_title_device_light">Light</string>
-    <string name="section_title_device_graphics">Graphics</string>
-    <string name="section_title_information">Information</string>
-    <string name="section_title_tasker">Tasker</string>
-    <string name="section_title_tasker_optimizations">Optimizations</string>
-    <string name="section_title_tools">Tools</string>
-    <string name="section_title_tools_editors">Editors</string>
-    <string name="section_title_tools_freezer">Freezer</string>
-    <string name="section_title_tools_unfreezer">Unfreezer</string>
-    <string name="section_title_performance">Performance</string>
+    <!-- Menu -->
+    <string name="device">Device</string>
+    <string name="performance">Performance</string>
+    <string name="information">Information</string>
+    <string name="extras">Extras</string>
+    <string name="tools">Tools</string>
+    <string name="tasker">Tasker</string>
+    <string name="editors">Editors</string>
+    <string name="freezer">Freezer</string>
+    <string name="device_control_header">--Device Control</string>
+    <string name="licenses">Licenses</string>
+    <string name="unfreezer">Unfreezer</string>
+    <string name="graphics">Graphics</string>
     <!-- Time In State -->
     <string name="time_in_state">TIME IN STATE</string>
     <string name="unused_cpu_states">UNUSED CPU STATES</string>

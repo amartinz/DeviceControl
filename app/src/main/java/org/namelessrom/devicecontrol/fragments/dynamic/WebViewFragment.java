@@ -16,7 +16,7 @@
  */
 package org.namelessrom.devicecontrol.fragments.dynamic;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +25,17 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 
-public class WebViewFragment extends Fragment {
+public class WebViewFragment extends AttachFragment {
 
     public static final String ARG_TYPE = "arg_type";
+    public static final int    ID       = 9999;
+
+    public static final int TYPE_ABOUT    = 0;
+    public static final int TYPE_LICENSES = 1;
+    public static final int TYPE_HELP     = 2;
 
     public static WebViewFragment newInstance(int typeId) {
         WebViewFragment f = new WebViewFragment();
@@ -41,6 +48,11 @@ public class WebViewFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity, WebViewFragment.ID);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment, container, false);
@@ -49,13 +61,13 @@ public class WebViewFragment extends Fragment {
         String url;
         switch (typeId) {
             default:
-            case 0: // About
+            case TYPE_ABOUT: // About
                 url = "file:///android_asset/notice.html";
                 break;
-            case 1: // Licenses
+            case TYPE_LICENSES: // Licenses
                 url = "file:///android_asset/notice.html";
                 break;
-            case 2: // Help
+            case TYPE_HELP: // Help
                 url = "file:///android_asset/notice.html";
                 break;
         }
@@ -65,5 +77,13 @@ public class WebViewFragment extends Fragment {
         wv.loadUrl(url);
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
+            MainActivity.mSlidingMenu.toggle(true);
+        }
     }
 }

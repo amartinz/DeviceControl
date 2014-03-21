@@ -18,15 +18,18 @@
 
 package org.namelessrom.devicecontrol.fragments.performance;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
+import android.view.View;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.fragments.parents.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -42,8 +45,10 @@ import java.util.List;
 
 import eu.chainfire.libsuperuser.Shell;
 
-public class PerformanceGeneralFragment extends PreferenceFragment
+public class PerformanceExtrasFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
+
+    public static final int ID = 220;
 
     //==============================================================================================
     // Files
@@ -69,6 +74,23 @@ public class PerformanceGeneralFragment extends PreferenceFragment
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
+
+    @Override
+    public void onAttach(Activity activity) {
+        if (activity instanceof MainActivity) {
+            super.onAttach(activity, PerformanceExtrasFragment.ID);
+        } else {
+            super.onAttach(activity);
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
+            MainActivity.mSlidingMenu.toggle(true);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

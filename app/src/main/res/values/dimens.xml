@@ -20,4 +20,8 @@
      https://developer.android.com/design/patterns/navigation-drawer.html -->
     <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="navigation_drawer_prefs_width">320dp</dimen>
+
+    <dimen name="slidingmenu_offset">200dp</dimen>
+    <dimen name="list_padding">10dp</dimen>
+    <dimen name="shadow_width">15dp</dimen>
 </resources>

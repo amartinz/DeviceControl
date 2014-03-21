@@ -24,8 +24,8 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
-import org.namelessrom.devicecontrol.fragments.performance.PerformanceGeneralFragment;
+import org.namelessrom.devicecontrol.fragments.main.DeviceFragment;
+import org.namelessrom.devicecontrol.fragments.performance.PerformanceExtrasFragment;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
@@ -181,9 +181,9 @@ public class BootUpService extends Service
                     CpuUtils.restore();
                 }
 
-                if (PerformanceGeneralFragment.sLcdPowerReduce) {
+                if (PerformanceExtrasFragment.sLcdPowerReduce) {
                     logDebug("Reapplying: LcdPowerReduce");
-                    fileList.add(PerformanceGeneralFragment.sLcdPowerReduceFile);
+                    fileList.add(PerformanceExtrasFragment.sLcdPowerReduceFile);
                     valueList.add(PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false)
                             ? "1" : "0");
                 }
@@ -199,9 +199,9 @@ public class BootUpService extends Service
                     valueList.add(PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false)
                             ? "1" : "0");
                 }
-                if (PerformanceGeneralFragment.sMcPowerScheduler) {
+                if (PerformanceExtrasFragment.sMcPowerScheduler) {
                     logDebug("Reapplying: McPowerScheduler");
-                    fileList.add(PerformanceGeneralFragment.sMcPowerSchedulerFile);
+                    fileList.add(PerformanceExtrasFragment.sMcPowerSchedulerFile);
                     valueList.add(PreferenceHelper.getInt(KEY_MC_POWER_SCHEDULER, 2) + "");
                 }
 

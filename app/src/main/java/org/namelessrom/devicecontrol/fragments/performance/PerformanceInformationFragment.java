@@ -18,7 +18,6 @@
 package org.namelessrom.devicecontrol.fragments.performance;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +35,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 import org.namelessrom.devicecontrol.utils.CpuStateMonitor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
@@ -45,7 +46,9 @@ import java.util.List;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-public class PerformanceInformationFragment extends Fragment implements DeviceConstants {
+public class PerformanceInformationFragment extends AttachFragment implements DeviceConstants {
+
+    public static final int ID = 200;
 
     private LinearLayout mStatesView;
     private TextView     mAdditionalStates;
@@ -75,7 +78,11 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
 
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity);
+        if (activity instanceof MainActivity) {
+            super.onAttach(activity, PerformanceInformationFragment.ID);
+        } else {
+            super.onAttach(activity);
+        }
         activity.registerReceiver(mBatteryReceiver,
                 new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
@@ -156,6 +163,10 @@ public class PerformanceInformationFragment extends Fragment implements DeviceCo
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         refreshData();
+
+        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
+            MainActivity.mSlidingMenu.toggle(true);
+        }
     }
 
     @Override

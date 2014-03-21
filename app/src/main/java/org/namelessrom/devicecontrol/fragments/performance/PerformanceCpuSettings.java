@@ -18,7 +18,7 @@
 
 package org.namelessrom.devicecontrol.fragments.performance;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +38,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 import org.namelessrom.devicecontrol.utils.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.CpuCore;
@@ -51,8 +53,10 @@ import java.util.List;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-public class PerformanceCpuSettings extends Fragment
+public class PerformanceCpuSettings extends AttachFragment
         implements SeekBar.OnSeekBarChangeListener, PerformanceConstants {
+
+    public static final int ID = 210;
 
     private SeekBar  mMaxSlider;
     private SeekBar  mMinSlider;
@@ -74,6 +78,23 @@ public class PerformanceCpuSettings extends Fragment
     private Handler mHandler;
 
     final Object mLockObject = new Object();
+
+    @Override
+    public void onAttach(Activity activity) {
+        if (activity instanceof MainActivity) {
+            super.onAttach(activity, PerformanceCpuSettings.ID);
+        } else {
+            super.onAttach(activity);
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
+            MainActivity.mSlidingMenu.toggle(true);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

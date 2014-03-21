@@ -16,7 +16,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
@@ -29,18 +29,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <fragment
-        android:id="@+id/navigation_drawer"
-        android:layout_width="@dimen/navigation_drawer_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:name="org.namelessrom.devicecontrol.fragments.main.NavigationDrawerFragment" />
-
-    <fragment
-        android:id="@+id/navigation_drawer_prefs"
-        android:layout_width="@dimen/navigation_drawer_prefs_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:name="org.namelessrom.devicecontrol.fragments.main.PreferencesFragment" />
-
-</android.support.v4.widget.DrawerLayout>
+</RelativeLayout>
