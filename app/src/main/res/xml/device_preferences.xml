@@ -84,7 +84,7 @@
 
     <PreferenceCategory
         android:key="graphics"
-        android:title="@string/section_title_device_graphics">
+        android:title="@string/graphics">
 
         <org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference
             android:key="panel_color_temperature"

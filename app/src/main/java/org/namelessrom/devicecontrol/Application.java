@@ -66,8 +66,7 @@ public class Application extends android.app.Application implements DeviceConsta
         applicationContext = getApplicationContext();
 
         PreferenceHelper.getInstance(this);
-        IS_LOG_DEBUG = PreferenceHelper.getBoolean(JF_EXTENSIVE_LOGGING, false);
-
+        IS_LOG_DEBUG = PreferenceHelper.getBoolean(EXTENSIVE_LOGGING, false);
         IS_DEBUG = Utils.existsInBuildProp("ro.nameless.debug=1");
 
         if (Application.IS_DEBUG) {

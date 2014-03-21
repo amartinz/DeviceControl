@@ -17,7 +17,7 @@
 
 package org.namelessrom.devicecontrol.fragments.tools;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v13.app.FragmentTabHost;
 import android.view.LayoutInflater;
@@ -25,16 +25,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
+import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 
 /**
  * Created by alex on 23.01.14.
  */
-public class ToolsFreezerTabbed extends Fragment {
+public class ToolsFreezerTabbed extends AttachFragment {
 
     public static final String TAG = "tools_freezer_tabbed";
+    public static final int    ID  = 320;
 
     private FragmentTabHost mTabHost;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity, ToolsFreezerTabbed.ID);
+    }
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -51,7 +59,7 @@ public class ToolsFreezerTabbed extends Fragment {
 
         mTabHost.addTab(mTabHost
                 .newTabSpec("freezer")
-                .setIndicator(getString(R.string.section_title_tools_freezer))
+                .setIndicator(getString(R.string.freezer))
                 , PressToLoadFragment.class, b);
 
         /* Unfreezer */
@@ -61,10 +69,18 @@ public class ToolsFreezerTabbed extends Fragment {
 
         mTabHost.addTab(mTabHost
                 .newTabSpec("unfreezer")
-                .setIndicator(getString(R.string.section_title_tools_unfreezer))
+                .setIndicator(getString(R.string.unfreezer))
                 , PressToLoadFragment.class, b);
 
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
+            MainActivity.mSlidingMenu.toggle(true);
+        }
     }
 
     @Override

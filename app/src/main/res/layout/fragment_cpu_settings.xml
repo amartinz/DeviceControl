@@ -251,7 +251,7 @@ Copyright (C) 2012  James Roberts
                 android:textSize="14sp" />
 
             <Switch
-                android:id="@+id/cpu_sob"
+                android:id="@+id/sob_cpu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

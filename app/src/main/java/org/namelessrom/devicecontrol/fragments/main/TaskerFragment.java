@@ -24,6 +24,7 @@ import android.preference.Preference;
 import android.view.View;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.parents.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.AlarmHelper;
@@ -36,7 +37,7 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 public class TaskerFragment extends AttachPreferenceFragment implements DeviceConstants,
         Preference.OnPreferenceChangeListener {
 
-    public static final int ID = 3;
+    public static final int ID = 300;
 
     private CustomCheckBoxPreference mFstrim;
     private ListPreference           mFstrimInterval;
@@ -62,6 +63,10 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
         mFstrimInterval = (ListPreference) findPreference(FSTRIM_INTERVAL);
         mFstrimInterval.setValueIndex(ParseUtils.getFstrim());
         mFstrimInterval.setOnPreferenceChangeListener(this);
+
+        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
+            MainActivity.mSlidingMenu.toggle(true);
+        }
     }
 
     @Override

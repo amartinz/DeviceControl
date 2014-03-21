@@ -16,58 +16,40 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:key="prefs_jf_appearance"
-        android:title="@string/prefs_jf_appearance">
-
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
-            android:key="prefs_jf_appearance_custom_animations"
-            android:title="@string/prefs_jf_appearance_custom_animations_title"
-            android:summaryOn="@string/prefs_jf_appearance_custom_animations_summary_on"
-            android:summaryOff="@string/prefs_jf_appearance_custom_animations_summary_off"
-            android:checked="true" />
-
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference
-            android:key="prefs_jf_appearance_custom_transformer"
-            android:title="@string/prefs_jf_appearance_custom_transformer_title"
-            android:summary="@string/prefs_jf_appearance_custom_transformer_summary"
-            android:entries="@array/prefs_jf_appearance_custom_transformer_entries"
-            android:entryValues="@array/prefs_jf_appearance_custom_transformer_values"
-            android:defaultValue="0"
-            android:dependency="prefs_jf_appearance_custom_transformer" />
-
-    </PreferenceCategory>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:key="prefs_set_on_boot"
-        android:title="@string/prefs_set_on_boot">
+        android:title="@string/reapply_on_boot">
 
         <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
-            android:key="prefs_sob_vm"
-            android:title="@string/vm" />
+            android:key="sob_vm"
+            android:title="@string/vm"
+            app:auto_handle="true" />
 
         <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
-            android:key="prefs_sob_sysctl"
-            android:title="@string/sysctl" />
+            android:key="sob_sysctl"
+            android:title="@string/sysctl"
+            app:auto_handle="true" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="prefs_jf_debug"
-        android:title="@string/prefs_jf_debug">
+        android:key="prefs_debug"
+        android:title="@string/debugging">
 
         <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
-            android:key="jf_extensive_logging"
-            android:title="@string/jf_debug_extensive_logging_title"
-            android:summaryOn="@string/jf_debug_extensive_logging_summary_on"
-            android:summaryOff="@string/jf_debug_extensive_logging_summary_off" />
+            android:key="extensive_logging"
+            android:title="@string/extensive_logging_title"
+            android:summaryOn="@string/extensive_logging_summary_on"
+            android:summaryOff="@string/extensive_logging_summary_off" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="prefs_jf_version"
-        android:title="@string/prefs_jf_version">
+        android:key="prefs_version_cat"
+        android:title="@string/version">
 
         <Preference
             android:key="prefs_version"

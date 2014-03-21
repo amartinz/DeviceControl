@@ -17,7 +17,7 @@
 
 package org.namelessrom.devicecontrol.fragments.tools;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v13.app.FragmentTabHost;
 import android.view.LayoutInflater;
@@ -25,16 +25,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
+import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 
 /**
  * Created by alex on 23.01.14.
  */
-public class ToolsEditorTabbed extends Fragment {
+public class ToolsEditorTabbed extends AttachFragment {
 
     public static final String TAG = "tools_editor_tabbed";
+    public static final int    ID  = 310;
 
     private FragmentTabHost mTabHost;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity, ToolsEditorTabbed.ID);
+    }
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -76,6 +84,14 @@ public class ToolsEditorTabbed extends Fragment {
         );
 
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
+            MainActivity.mSlidingMenu.toggle(true);
+        }
     }
 
     @Override

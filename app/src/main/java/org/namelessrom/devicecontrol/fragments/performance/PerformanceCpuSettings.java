@@ -18,7 +18,7 @@
 
 package org.namelessrom.devicecontrol.fragments.performance;
 
-import android.app.Fragment;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +38,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 import org.namelessrom.devicecontrol.utils.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.CpuCore;
@@ -50,9 +52,12 @@ import java.util.Comparator;
 import java.util.List;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
+import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.SOB_CPU;
 
-public class PerformanceCpuSettings extends Fragment
+public class PerformanceCpuSettings extends AttachFragment
         implements SeekBar.OnSeekBarChangeListener, PerformanceConstants {
+
+    public static final int ID = 210;
 
     private SeekBar  mMaxSlider;
     private SeekBar  mMinSlider;
@@ -74,6 +79,23 @@ public class PerformanceCpuSettings extends Fragment
     private Handler mHandler;
 
     final Object mLockObject = new Object();
+
+    @Override
+    public void onAttach(Activity activity) {
+        if (activity instanceof MainActivity) {
+            super.onAttach(activity, PerformanceCpuSettings.ID);
+        } else {
+            super.onAttach(activity);
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
+            MainActivity.mSlidingMenu.toggle(true);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -197,12 +219,12 @@ public class PerformanceCpuSettings extends Fragment
             }
         });
 
-        Switch mSetOnBoot = (Switch) view.findViewById(R.id.cpu_sob);
-        mSetOnBoot.setChecked(PreferenceHelper.getBoolean(CPU_SOB, false));
+        Switch mSetOnBoot = (Switch) view.findViewById(R.id.sob_cpu);
+        mSetOnBoot.setChecked(PreferenceHelper.getBoolean(SOB_CPU, false));
         mSetOnBoot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton v, boolean checked) {
-                PreferenceHelper.setBoolean(CPU_SOB, checked);
+                PreferenceHelper.setBoolean(SOB_CPU, checked);
                 if (checked) {
                     PreferenceHelper.setString(PREF_MIN_CPU,
                             CpuUtils.getValue(0, CpuUtils.ACTION_FREQ_MIN));

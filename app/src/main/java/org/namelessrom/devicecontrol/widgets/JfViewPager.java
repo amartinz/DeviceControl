@@ -21,9 +21,7 @@ import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
-import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.widgets.transformers.DepthPageTransformer;
-import org.namelessrom.devicecontrol.widgets.transformers.ZoomOutPageTransformer;
 
 /**
  * Created by alex on 18.12.13.
@@ -36,21 +34,8 @@ public class JfViewPager extends ViewPager {
 
     public JfViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        //setClipChildren(false);
 
-        this.setOffscreenPageLimit(3);
-
-        if (PreferenceHelper.getCustomAnimations()) {
-            switch (PreferenceHelper.getTransformerId()) {
-                default:
-                case 0:
-                    this.setPageTransformer(true, new DepthPageTransformer());
-                    break;
-                case 1:
-                    this.setPageTransformer(true, new ZoomOutPageTransformer());
-                    break;
-            }
-        }
-
+        setOffscreenPageLimit(3);
+        setPageTransformer(true, new DepthPageTransformer());
     }
 }
