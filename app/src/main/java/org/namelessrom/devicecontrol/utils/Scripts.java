@@ -17,31 +17,10 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import java.util.List;
-
-import eu.chainfire.libsuperuser.Shell;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
-
 /**
  * Defines and runs Scripts.
  */
 public class Scripts {
-
-    public static List<String> runScript(String mCommands) {
-        return runScript(mCommands, true);
-    }
-
-    public static List<String> runScript(String mCommands, boolean useSu) {
-        List<String> tmpList;
-
-        tmpList = (useSu ? Shell.SU.run(mCommands) : Shell.SH.run(mCommands));
-
-        logDebug("runScript: tmpList.get(0) == " + tmpList.get(0));
-        return tmpList;
-    }
-
-    //
 
     public static boolean getForceNavBar() {
         return Utils.existsInBuildProp("qemu.hw.mainkeys=0");

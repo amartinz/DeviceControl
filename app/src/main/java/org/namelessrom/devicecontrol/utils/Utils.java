@@ -26,23 +26,23 @@ import android.os.Build;
 import android.util.Log;
 
 import com.stericson.roottools.RootTools;
+import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
-
-import eu.chainfire.libsuperuser.Shell;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -112,28 +112,53 @@ public class Utils implements DeviceConstants, FileConstants {
         return readFileViaShell(filePath, true);
     }
 
-    public static String readFileViaShell(String filePath, boolean wholeFile) {
+    public static String readFileViaShell(String filePath, boolean useSu) {
+        final String command = "cat " + filePath;
+        return useSu ? CMDProcessor.runSuCommand(command).getStdout()
+                : CMDProcessor.runShellCommand(command).getStdout();
+    }
+
+
+    public static boolean getMount(String mount) {
+        String[] mounts = getMounts("/system");
+        if (mounts != null && mounts.length >= 3) {
+            String device = mounts[0];
+            String path = mounts[1];
+            String point = mounts[2];
+            String preferredMountCmd = new String(
+                    "mount -o " + mount + ",remount -t " + point + ' ' + device + ' ' + path);
+            if (CMDProcessor.runSuCommand(preferredMountCmd).success()) {
+                return true;
+            }
+        }
+        String fallbackMountCmd = new String("busybox mount -o remount," + mount + " /system");
+        return CMDProcessor.runSuCommand(fallbackMountCmd).success();
+    }
+
+    public static String[] getMounts(CharSequence path) {
+        BufferedReader bufferedReader = null;
         try {
-            List<String> mResult = Shell.SU.run("cat " + filePath);
-            if (mResult != null) {
-                if (mResult.size() != 0) {
-                    if (wholeFile) {
-                        String tmp = "";
-                        for (String s : mResult) {
-                            tmp += s + "\n";
-                        }
-                        return tmp;
-                    } else {
-                        return mResult.get(0);
-                    }
-                } else {
-                    return "";
+            bufferedReader = new BufferedReader(new FileReader("/proc/mounts"), 256);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.contains(path)) {
+                    return line.split(" ");
                 }
             }
-            return "";
-        } catch (Exception exc) {
-            return "";
+        } catch (FileNotFoundException ignored) {
+            logDebug("/proc/mounts does not exist");
+        } catch (IOException ignored) {
+            logDebug("Error reading /proc/mounts");
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException ignored) {
+                    // ignored
+                }
+            }
         }
+        return null;
     }
 
     /**
@@ -142,12 +167,12 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param filename The filename
      * @param value    The value
      */
-    public static boolean writeValue(String filename, String value) {
+    public static void writeValue(String filename, String value) {
         // the existence of the file is a requirement for the success ;)
         boolean success = fileExists(filename);
         if (success) {
             try {
-                FileWriter fw = new FileWriter(filename);
+                final FileWriter fw = new FileWriter(filename);
                 try {
                     fw.write(value);
                 } finally {
@@ -155,11 +180,9 @@ public class Utils implements DeviceConstants, FileConstants {
                 }
             } catch (IOException e) {
                 logDebug("writeValue: writing failed: " + e.getMessage());
-                success = writeValueViaShell(filename, value);
+                writeValueViaShell(filename, value);
             }
         }
-
-        return success;
     }
 
     /**
@@ -168,21 +191,8 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param filename The file to write
      * @param value    The value to write
      */
-    private static boolean writeValueViaShell(String filename, String value) {
-        boolean success = false;
-        List<String> tmpList = Shell.SU.run("busybox echo " + value + " > " + filename);
-
-        // if we dont get any result, it means it works, else we got a "permission denied"
-        // message and thus it didnt succeed
-        if (tmpList != null) {
-            if (tmpList.size() == 0) success = true;
-        }
-
-        return success;
-    }
-
-    public static void writeOneLine(String filename, String value) {
-        Shell.SU.run("busybox echo " + value + " > " + filename);
+    private static void writeValueViaShell(String filename, String value) {
+        runRootCommand("busybox echo " + value + " > " + filename);
     }
 
     /**
@@ -263,15 +273,14 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
-    private static String getBinPath(String b) {
-        List<String> tmpList = Shell.SH.run("busybox which " + b);
-        if (tmpList != null) {
-            if (tmpList.size() > 0) {
-                return tmpList.get(0);
-            }
+    public static String getBinPath(String b) {
+        final CMDProcessor.CommandResult2 cr =
+                new CMDProcessor().sh.runWaitFor("busybox which " + b);
+        if (cr.success()) {
+            return cr.stdout;
+        } else {
+            return "";
         }
-        logDebug("getBinPath: found binary at: " + b);
-        return "";
     }
 
     private static void get_assetsScript(String fn, Context c, String prefix, String postfix) {
@@ -348,4 +357,21 @@ public class Utils implements DeviceConstants, FileConstants {
         }
         return null;
     }
+
+    public static void setPermissions(String file) {
+        if (new File(file).exists()) {
+            runRootCommand("chmod 655 " + file);
+        }
+    }
+
+
+    public static void runRootCommand(String command) {
+        final CommandCapture comm = new CommandCapture(0, false, command);
+        try {
+            RootTools.getShell(true).add(comm);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

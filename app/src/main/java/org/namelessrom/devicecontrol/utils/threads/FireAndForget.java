@@ -73,7 +73,7 @@ public class FireAndForget extends Thread {
                 RootTools.remount("/system", "rw");
             }
 
-            CommandCapture cmdCap = new CommandCapture(42, false, mCmd) {
+            CommandCapture cmdCap = new CommandCapture(0, false, mCmd) {
                 @Override
                 public void commandCompleted(int id, int exitcode) {
                     if (mRemountSystem) {

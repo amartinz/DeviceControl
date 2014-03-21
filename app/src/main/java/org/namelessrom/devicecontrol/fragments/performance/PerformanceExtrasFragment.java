@@ -43,8 +43,6 @@ import org.namelessrom.devicecontrol.widgets.preferences.SeekBarPreference;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.chainfire.libsuperuser.Shell;
-
 public class PerformanceExtrasFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
 
@@ -170,7 +168,7 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
         boolean changed = false;
 
         if (preference == mForceHighEndGfx) {
-            Shell.SU.run(Scripts.toggleForceHighEndGfx());
+            Utils.runRootCommand(Scripts.toggleForceHighEndGfx());
             changed = true;
         } else if (preference == mLcdPowerReduce) {
             boolean value = (Boolean) o;

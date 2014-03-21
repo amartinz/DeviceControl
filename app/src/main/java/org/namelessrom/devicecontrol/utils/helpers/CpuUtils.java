@@ -22,8 +22,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
-import eu.chainfire.libsuperuser.Shell;
-
 /**
  * Generic CPU Tasks.
  */
@@ -192,7 +190,7 @@ public class CpuUtils implements PerformanceConstants {
                     sb.append("busybox echo 1 > ").append(pathOnline).append(";");
                 }
                 sb.append("busybox echo ").append(value).append(" > ").append(path);
-                Shell.SU.run(sb.toString());
+                Utils.runRootCommand(sb.toString());
             }
         } else {
             if (!path.isEmpty() && Utils.fileExists(path)) {
@@ -296,7 +294,7 @@ public class CpuUtils implements PerformanceConstants {
                         .append(aIO_SCHEDULER_PATH).append(";\n");
             }
         }
-        Shell.SU.run(sb.toString());
+        Utils.runRootCommand(sb.toString());
     }
 
 }
