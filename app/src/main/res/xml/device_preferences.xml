@@ -22,7 +22,7 @@
         android:key="input_navbar"
         android:title="@string/navbar_title">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="navbar_force"
             android:title="@string/navbar_force_title"
             android:summary="@string/navbar_force_summary" />
@@ -33,7 +33,7 @@
         android:key="input_knockon"
         android:title="@string/knockonoff_panel_title">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="knockon_gesture_enable"
             android:title="@string/knockon_enable_head"
             android:summaryOn="@string/knockon_enable_summary_on"
@@ -47,12 +47,12 @@
         android:key="input_others"
         android:title="@string/general_others">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="input_glove_mode"
             android:title="@string/input_glove_mode_title"
             android:summary="@string/input_glove_mode_summary" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.VibratorTuningPreference
+        <org.namelessrom.devicecontrol.preferences.VibratorTuningPreference
             android:key="vibrator_tuning"
             android:title="@string/vibrator_tuning_title"
             android:summary="@string/vibrator_tuning_summary_head"
@@ -65,17 +65,17 @@
         android:title="@string/touchkey_subcat_title">
 
         <!-- Touchkey backlight -->
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="touchkey_light"
             android:title="@string/touchkey_light_title_head"
             android:summary="@string/touchkey_light_summary_head"
             android:defaultValue="true" />
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="touchkey_bln"
             android:title="@string/touchkey_bln_title_head"
             android:summary="@string/touchkey_bln_summary_head"
             android:defaultValue="true" />
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="keyboard_light"
             android:title="@string/keyboard_light_title_head"
             android:summary="@string/keyboard_light_summary_head"
@@ -86,7 +86,7 @@
         android:key="graphics"
         android:title="@string/graphics">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.preferences.CustomListPreference
             android:key="panel_color_temperature"
             android:title="@string/panel_color_temp_title_head"
             android:summary="@string/panel_color_temp_summary_head"

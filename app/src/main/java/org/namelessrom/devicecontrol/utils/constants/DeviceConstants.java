@@ -94,8 +94,29 @@ public interface DeviceConstants {
     public static final String READ_VALUE_TEXT          = "read_value_text";
 
     //==============================================================================================
+    // VM settings
+    //==============================================================================================
+    public static final String PREF_DIRTY_RATIO        = "pref_dirty_ratio";
+    public static final String PREF_DIRTY_BACKGROUND   = "pref_dirty_background";
+    public static final String PREF_DIRTY_EXPIRE       = "pref_dirty_expire";
+    public static final String PREF_DIRTY_WRITEBACK    = "pref_dirty_writeback";
+    public static final String PREF_MIN_FREE_KB        = "pref_min_free_kb";
+    public static final String PREF_OVERCOMMIT         = "pref_overcommit";
+    public static final String PREF_SWAPPINESS         = "pref_swappiness";
+    public static final String PREF_VFS                = "pref_vfs";
+    public static final String DIRTY_RATIO_PATH        = "/proc/sys/vm/dirty_ratio";
+    public static final String DIRTY_BACKGROUND_PATH   = "/proc/sys/vm/dirty_background_ratio";
+    public static final String DIRTY_EXPIRE_PATH       = "/proc/sys/vm/dirty_expire_centisecs";
+    public static final String DIRTY_WRITEBACK_PATH    = "/proc/sys/vm/dirty_writeback_centisecs";
+    public static final String MIN_FREE_PATH           = "/proc/sys/vm/min_free_kbytes";
+    public static final String OVERCOMMIT_PATH         = "/proc/sys/vm/overcommit_ratio";
+    public static final String SWAPPINESS_PATH         = "/proc/sys/vm/swappiness";
+    public static final String VFS_CACHE_PRESSURE_PATH = "/proc/sys/vm/vfs_cache_pressure";
+
+    //==============================================================================================
     // Etc
     //==============================================================================================
+    public static final String PREF_FULL_EDITOR     = "pref_full_editor";
     public static final String CUSTOM_SHELL_COMMAND = "custom_shell_command";
     public static final String SOB_SYSCTL           = "sob_sysctl";
     public static final String SOB_VM               = "sob_vm";

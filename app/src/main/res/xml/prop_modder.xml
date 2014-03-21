@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
+        android:key="pref_full_editor"
+        android:title="@string/full_editor" />
+
+    <PreferenceCategory
+        android:title="@string/performance_settings_warning_header">
+
+        <PreferenceScreen
+            android:title="@string/performance_settings_warning_title"
+            android:summary="@string/buildprop_settings_warning" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="general_category"
+        android:title="@string/buildprop_title">
+
+        <ListPreference
+            android:key="pref_wifi_scan_interval"
+            android:dialogTitle="@string/pref_wifi_scan_interval_title"
+            android:title="@string/pref_wifi_scan_interval_title"
+            android:summary="@string/pref_wifi_scan_interval_summary"
+            android:entries="@array/entries_wifi_scan"
+            android:entryValues="@array/entries_wifi_scan"
+            android:persistent="true" />
+
+        <ListPreference
+            android:key="pref_sleep"
+            android:dialogTitle="@string/pref_sleep_title"
+            android:title="@string/pref_sleep_title"
+            android:summary="@string/pref_sleep_summary"
+            android:entries="@array/entries_sleep_explain"
+            android:entryValues="@array/entries_sleep"
+            android:persistent="true" />
+
+        <ListPreference
+            android:key="pref_vm_heapsize"
+            android:dialogTitle="@string/pref_vm_heapsize_title"
+            android:title="@string/pref_vm_heapsize_title"
+            android:summary="@string/pref_vm_heapsize_summary"
+            android:entries="@array/entries_vm_heapsize"
+            android:entryValues="@array/entries_vm_heapsize"
+            android:persistent="true" />
+
+        <ListPreference
+            android:key="pref_max_events"
+            android:dialogTitle="@string/pref_max_events_title"
+            android:title="@string/pref_max_events_title"
+            android:summary="@string/pref_max_events_summary"
+            android:entries="@array/entries_max_events"
+            android:entryValues="@array/entries_max_events"
+            android:persistent="true" />
+
+        <ListPreference
+            android:key="pref_ring_delay"
+            android:dialogTitle="@string/pref_ring_delay_title"
+            android:title="@string/pref_ring_delay_title"
+            android:summary="@string/pref_ring_delay_summary"
+            android:entries="@array/entries_ring_delay"
+            android:entryValues="@array/entries_ring_delay"
+            android:persistent="true" />
+
+        <ListPreference
+            android:key="pref_fast_up"
+            android:dialogTitle="@string/pref_fast_up_title"
+            android:title="@string/pref_fast_up_title"
+            android:summary="@string/pref_fast_up_summary"
+            android:entries="@array/entries_fast_up_explain"
+            android:entryValues="@array/entries_fast_up"
+            android:persistent="true" />
+
+        <ListPreference
+            android:key="pref_prox_delay"
+            android:dialogTitle="@string/pref_prox_delay_title"
+            android:title="@string/pref_prox_delay_title"
+            android:summary="@string/pref_prox_delay_summary"
+            android:entries="@array/entries_prox_delay_explain"
+            android:entryValues="@array/entries_prox_delay"
+            android:persistent="true" />
+
+        <EditTextPreference
+            android:key="pref_lcd_density"
+            android:dialogTitle="@string/pref_lcd_title"
+            android:title="@string/pref_lcd_title"
+            android:summary="@string/pref_lcd_summary"
+            android:singleLine="true"
+            android:hint="@string/pref_lcd_default"
+            android:persistent="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/propmodder_switches">
+
+        <CheckBoxPreference
+            android:key="pref_g_speed"
+            android:title="@string/pref_g_speed_title"
+            android:summary="@string/pref_g_speed_summary"
+            android:persistent="true" />
+
+        <CheckBoxPreference
+            android:key="pref_tcp_stack"
+            android:title="@string/pref_tcp_stack_title"
+            android:summary="@string/pref_tcp_stack_summary"
+            android:persistent="true" />
+
+        <CheckBoxPreference
+            android:key="pref_jit"
+            android:title="@string/pref_jit_title"
+            android:summary="@string/pref_jit_summary"
+            android:persistent="true" />
+
+        <CheckBoxPreference
+            android:key="pref_gpu"
+            android:title="@string/pref_gpu_title"
+            android:summary="@string/pref_gpu_summary"
+            android:persistent="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

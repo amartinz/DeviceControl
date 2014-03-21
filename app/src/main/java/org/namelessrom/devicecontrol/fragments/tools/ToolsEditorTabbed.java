@@ -54,7 +54,7 @@ public class ToolsEditorTabbed extends AttachFragment {
 
         /* VM EDITOR */
         Bundle b = new Bundle();
-        b.putInt(PressToLoadFragment.ARG_FRAGMENT, 0);
+        b.putInt(PressToLoadFragment.ARG_FRAGMENT, PressToLoadFragment.FRAGMENT_VM);
         b.putInt(PressToLoadFragment.ARG_IMG, R.mipmap.ic_launcher);
 
         mTabHost.addTab(mTabHost

@@ -35,7 +35,7 @@ import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.threads.FireAndForget;
 import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
-import org.namelessrom.devicecontrol.widgets.preferences.VibratorTuningPreference;
+import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
 
 import java.io.File;
 import java.util.ArrayList;

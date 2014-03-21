@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.namelessrom.devicecontrol.widgets.preferences;
+package org.namelessrom.devicecontrol.preferences;
 
 import android.app.AlertDialog;
 import android.content.Context;

@@ -26,8 +26,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.fragments.tools.PropModder;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsEditor;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsFreezer;
+import org.namelessrom.devicecontrol.fragments.tools.VmFragment;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class PressToLoadFragment extends Fragment implements DeviceConstants {
@@ -35,14 +37,19 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
     public static final String ARG_FRAGMENT = "arg_fragment";
     public static final String ARG_IMG      = "arg_img";
 
+    public static final int FRAGMENT_VM         = 0;
+    public static final int FRAGMENT_BUILD_PROP = 2;
+
     private Fragment fragment;
     private String   mText;
+
     private int mImgId = R.mipmap.ic_launcher;
+    private int mFragmentId;
 
     public static PressToLoadFragment newInstance(int fragmentId, int imgId) {
-        PressToLoadFragment f = new PressToLoadFragment();
+        final PressToLoadFragment f = new PressToLoadFragment();
 
-        Bundle b = new Bundle();
+        final Bundle b = new Bundle();
         b.putInt(PressToLoadFragment.ARG_FRAGMENT, fragmentId);
         b.putInt(PressToLoadFragment.ARG_IMG, imgId);
         f.setArguments(b);
@@ -54,21 +61,13 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        final int fragmentId = getArguments().getInt(ARG_FRAGMENT);
+        mFragmentId = getArguments().getInt(ARG_FRAGMENT);
         mImgId = getArguments().getInt(ARG_IMG);
 
-        switch (fragmentId) {
-            case 0:
-                fragment = ToolsEditor.newInstance(0);
-                mText = getString(R.string.fragment_press_to_load, "VM Editor");
-                break;
+        switch (mFragmentId) {
             case 1:
                 fragment = ToolsEditor.newInstance(1);
                 mText = getString(R.string.fragment_press_to_load, "SysCtl Editor");
-                break;
-            case 2:
-                fragment = ToolsEditor.newInstance(2);
-                mText = getString(R.string.fragment_press_to_load, "Build.Prop Editor");
                 break;
             case 3:
                 fragment = ToolsFreezer.newInstance(0, "usr");
@@ -92,7 +91,19 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
     @Override
     public void onViewCreated(View view, Bundle bundle) {
         super.onViewCreated(view, bundle);
-        replaceFragment(new ReplaceFragment(), false);
+        Fragment f;
+        switch (mFragmentId) {
+            case FRAGMENT_VM:
+                f = new VmFragment();
+                break;
+            case FRAGMENT_BUILD_PROP:
+                f = new PropModder();
+                break;
+            default:
+                f = new ReplaceFragment();
+                break;
+        }
+        replaceFragment(f, false);
     }
 
     public void replaceFragment(Fragment f, boolean animate) {
@@ -109,14 +120,14 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
     private class ReplaceFragment extends Fragment {
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_press_to_load, container, false);
+        public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+                final Bundle savedInstanceState) {
+            final View view = inflater.inflate(R.layout.fragment_press_to_load, container, false);
 
-            TextView tvHelp = (TextView) view.findViewById(R.id.help_textview);
+            final TextView tvHelp = (TextView) view.findViewById(R.id.help_textview);
             tvHelp.setText(mText);
 
-            ImageView ivHelp = (ImageView) view.findViewById(R.id.help_imageview);
+            final ImageView ivHelp = (ImageView) view.findViewById(R.id.help_imageview);
             ivHelp.setImageResource(mImgId);
 
             view.setOnClickListener(new View.OnClickListener() {

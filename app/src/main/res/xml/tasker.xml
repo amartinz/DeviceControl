@@ -22,13 +22,13 @@
         android:key="fstrim_cat"
         android:title="@string/fstrim_title">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="fstrim"
             android:title="@string/fstrim_title"
             android:summary="@string/fstrim_summary"
             android:persistent="false" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.preferences.CustomListPreference
             android:key="fstrim_interval"
             android:dependency="fstrim"
             android:title="@string/fstrim_interval_title"

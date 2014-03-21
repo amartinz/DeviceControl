@@ -43,6 +43,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Properties;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -75,6 +76,31 @@ public class Utils implements DeviceConstants, FileConstants {
             }
         }
         return false;
+    }
+
+    public static String findBuildPropValueOf(String prop) {
+        final String mBuildPath = "/system/build.prop";
+        final String DISABLE = "disable";
+        String value = null;
+        try {
+            //create properties construct and load build.prop
+            Properties mProps = new Properties();
+            mProps.load(new FileInputStream(mBuildPath));
+            //get the property
+            value = mProps.getProperty(prop, DISABLE);
+            logDebug(String.format("Helpers:findBuildPropValueOf found {%s} with the value (%s)",
+                    prop, value));
+        } catch (IOException ioe) {
+            Log.d("TAG", "failed to load input stream");
+        } catch (NullPointerException npe) {
+            //swallowed thrown by ill formatted requests
+        }
+
+        if (value != null) {
+            return value;
+        } else {
+            return DISABLE;
+        }
     }
 
     /**

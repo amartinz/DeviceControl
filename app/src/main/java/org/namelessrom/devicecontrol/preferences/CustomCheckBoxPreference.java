@@ -1,4 +1,4 @@
-package org.namelessrom.devicecontrol.widgets.preferences;
+package org.namelessrom.devicecontrol.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;

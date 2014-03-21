@@ -23,12 +23,12 @@
         android:key="prefs_set_on_boot"
         android:title="@string/reapply_on_boot">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_vm"
             android:title="@string/vm"
             app:auto_handle="true" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_sysctl"
             android:title="@string/sysctl"
             app:auto_handle="true" />
@@ -39,7 +39,7 @@
         android:key="prefs_debug"
         android:title="@string/debugging">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="extensive_logging"
             android:title="@string/extensive_logging_title"
             android:summaryOn="@string/extensive_logging_summary_on"
