@@ -449,7 +449,7 @@ public class PerformanceCpuSettings extends AttachFragment
         } else {
             stopRepeatingTask();
         }
-        logDebug(getClass().getSimpleName() + " isVisible:" + (isVisibleToUser ? "true" : "false"));
+        logDebug("isVisible: " + (isVisibleToUser ? "true" : "false"));
     }
 }
 

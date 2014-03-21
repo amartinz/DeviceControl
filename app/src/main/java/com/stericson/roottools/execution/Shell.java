@@ -281,7 +281,7 @@ public class Shell {
      * <p/>
      * The notification of a new command is handled by the method add in this class
      */
-    private Runnable input = new Runnable() {
+    private final Runnable input = new Runnable() {
         public void run() {
             try {
                 while (true) {
@@ -367,7 +367,7 @@ public class Shell {
     /**
      * Runnable to monitor the responses from the open shell.
      */
-    private Runnable output = new Runnable() {
+    private final Runnable output = new Runnable() {
         public void run() {
             try {
                 Command command = null;

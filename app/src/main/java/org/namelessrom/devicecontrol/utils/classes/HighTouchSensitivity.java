@@ -26,6 +26,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static org.namelessrom.devicecontrol.Application.logDebug;
+
 /**
  * Glove mode / high touch sensitivity (on Samsung Galaxy S4)
  */
@@ -88,15 +90,14 @@ public class HighTouchSensitivity {
     /* Synchronized because the result needs to be checked (not sure if anything
      * else writes to that sysfs command path though...) */
     private static synchronized boolean setAndCheckResult(String command) {
-        boolean status;
-        status = Utils.writeValue(COMMAND_PATH, command);
-        String result = Utils.readOneLine(COMMAND_RESULT_PATH);
+        boolean status = false;
+        Utils.writeValue(COMMAND_PATH, command);
+        final String result = Utils.readOneLine(COMMAND_RESULT_PATH);
         if (result.equals(command + ":OK")) {
             status = true;
-            Log.v(TAG, "Successfully sent \"" + command + "\" to kernel");
+            logDebug("Successfully sent \"" + command + "\" to kernel");
         } else {
-            Log.e(TAG, "Sent \"" + command + "\" to kernel, but got back \""
-                    + result + "\"");
+            logDebug("Sent \"" + command + "\" to kernel, but got back \"" + result + "\"");
         }
         return status;
     }

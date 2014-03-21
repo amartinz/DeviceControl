@@ -54,7 +54,7 @@ public class FireAndGet extends Thread implements DeviceConstants {
         try {
             final Shell shell = RootTools.getShell(true);
 
-            CommandCapture cmdCap = new CommandCapture(42, false, mCmd) {
+            CommandCapture cmdCap = new CommandCapture(0, false, mCmd) {
                 @Override
                 public void commandOutput(int id, String line) {
                     sb.append(line);

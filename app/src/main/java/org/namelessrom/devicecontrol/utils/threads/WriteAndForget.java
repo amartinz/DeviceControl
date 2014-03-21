@@ -59,7 +59,7 @@ public class WriteAndForget extends Thread {
             final Shell shell = RootTools.getShell(true);
             final String cmd = mCmd.toString();
             logDebug("WriteAndForget: " + cmd);
-            final CommandCapture cmdCap = new CommandCapture(40, false, cmd);
+            final CommandCapture cmdCap = new CommandCapture(0, false, cmd);
             shell.add(cmdCap);
         } catch (Exception exc) {
             logDebug("Error when executing: " + mCmd);

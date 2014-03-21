@@ -38,7 +38,8 @@ import android.widget.Switch;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
-import org.namelessrom.devicecontrol.utils.CMDProcessor;
+import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
+import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor.CommandResult2;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.adapters.PackAdapter;
 
@@ -131,7 +132,7 @@ public class ToolsFreezer extends Fragment
     private class GetPacksOperation extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            CMDProcessor.CommandResult cr;
+            CommandResult2 cr;
             if (!freeze) {
                 if (packs.equals("sys")) {
                     cr = new CMDProcessor()
@@ -231,7 +232,7 @@ public class ToolsFreezer extends Fragment
     private class FreezeOperation extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            CMDProcessor.CommandResult cr;
+            CommandResult2 cr;
             if (freeze) {
                 cr = new CMDProcessor().su.runWaitFor("pm disable " + pn + " 2> /dev/null");
             } else {
