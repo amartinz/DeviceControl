@@ -17,6 +17,7 @@
 package org.namelessrom.devicecontrol.fragments.dynamic;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,14 +92,16 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
     @Override
     public void onViewCreated(View view, Bundle bundle) {
         super.onViewCreated(view, bundle);
-        replaceFragment(new ReplaceFragment());
+        replaceFragment(new ReplaceFragment(), false);
     }
 
-    public void replaceFragment(Fragment f) {
-        getChildFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
-                        R.anim.card_flip_left_in, R.anim.card_flip_left_out)
-                .replace(R.id.container_ptl, f)
+    public void replaceFragment(Fragment f, boolean animate) {
+        final FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        if (animate) {
+            ft.setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
+                    R.anim.card_flip_left_in, R.anim.card_flip_left_out);
+        }
+        ft.replace(R.id.container_ptl, f)
                 .addToBackStack(null)
                 .commit();
     }
@@ -119,7 +122,7 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    replaceFragment(fragment);
+                    replaceFragment(fragment, true);
                 }
             });
 

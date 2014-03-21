@@ -92,7 +92,7 @@ public class ToolsFreezer extends Fragment
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 Fragment f = ToolsFreezer.newInstance(freeze ? 0 : 1, b ? "sys" : "usr");
-                ((PressToLoadFragment) getParentFragment()).replaceFragment(f);
+                ((PressToLoadFragment) getParentFragment()).replaceFragment(f, true);
             }
         });
 
