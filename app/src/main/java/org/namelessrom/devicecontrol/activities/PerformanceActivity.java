@@ -28,7 +28,7 @@ import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.fragments.main.PerformanceFragment;
+import org.namelessrom.devicecontrol.fragments.performance.PerformanceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 
@@ -66,7 +66,7 @@ public class PerformanceActivity extends Activity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setTitle(R.string.section_title_performance);
+            actionBar.setTitle(R.string.performance);
         }
 
         FragmentManager fragmentManager = getFragmentManager();

@@ -77,8 +77,8 @@ public interface DeviceConstants {
     //==============================================================================================
     // Preferences
     //==============================================================================================
-    public static final String JF_EXTENSIVE_LOGGING = "jf_extensive_logging";
-    public static final String DC_FIRST_START       = "dc_first_start";
+    public static final String EXTENSIVE_LOGGING = "extensive_logging";
+    public static final String DC_FIRST_START    = "dc_first_start";
 
     //==============================================================================================
     // Tasker
@@ -97,7 +97,8 @@ public interface DeviceConstants {
     // Etc
     //==============================================================================================
     public static final String CUSTOM_SHELL_COMMAND = "custom_shell_command";
-    public static final String SOB_SYSCTL           = "prefs_sob_sysctl";
-    public static final String SOB_VM               = "prefs_sob_vm";
+    public static final String SOB_SYSCTL           = "sob_sysctl";
+    public static final String SOB_VM               = "sob_vm";
+    public static final String SOB_CPU              = "sob_cpu";
 
 }

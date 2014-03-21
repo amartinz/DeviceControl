@@ -36,7 +36,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_device_help"
+            android:text="@string/help"
             android:id="@+id/help_textview"
             android:layout_below="@+id/help_imageview"
             android:textAppearance="?android:attr/textAppearanceMedium"

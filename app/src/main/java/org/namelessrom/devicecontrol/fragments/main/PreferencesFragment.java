@@ -22,18 +22,14 @@ import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
 
 /**
  * Created by alex on 18.12.13.
@@ -42,27 +38,9 @@ public class PreferencesFragment extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants {
 
     //==============================================================================================
-    // Fields
-    //==============================================================================================
-    private DrawerLayout mDrawerLayout;
-    private View         mFragmentContainerView;
-
-    //==============================================================================================
-    // Appearance
-    //==============================================================================================
-    private CustomCheckBoxPreference mCustomAnimations;
-    private CustomListPreference     mTransformerId;
-
-    //==============================================================================================
     // Debug
     //==============================================================================================
     private CustomCheckBoxPreference mExtensiveLogging;
-
-    //==============================================================================================
-    // Reapply on boot
-    //==============================================================================================
-    private CustomCheckBoxPreference mSobVm;
-    private CustomCheckBoxPreference mSobSysctl;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -72,26 +50,8 @@ public class PreferencesFragment extends PreferenceFragment
         final Activity activity = getActivity();
         PreferenceHelper.getInstance(activity);
 
-        mCustomAnimations = (CustomCheckBoxPreference)
-                findPreference("prefs_jf_appearance_custom_animations");
-        mCustomAnimations.setChecked(PreferenceHelper.getCustomAnimations());
-        mCustomAnimations.setOnPreferenceChangeListener(this);
-
-        mTransformerId = (CustomListPreference)
-                findPreference("prefs_jf_appearance_custom_transformer");
-        if (mTransformerId.getValue() == null) mTransformerId.setValueIndex(0);
-        mTransformerId.setOnPreferenceChangeListener(this);
-
-        mExtensiveLogging = (CustomCheckBoxPreference) findPreference("jf_extensive_logging");
+        mExtensiveLogging = (CustomCheckBoxPreference) findPreference(EXTENSIVE_LOGGING);
         mExtensiveLogging.setOnPreferenceChangeListener(this);
-
-        mSobVm = (CustomCheckBoxPreference) findPreference("prefs_sob_vm");
-        mSobVm.setChecked(PreferenceHelper.getBoolean("prefs_sob_vm", false));
-        mSobVm.setOnPreferenceChangeListener(this);
-
-        mSobSysctl = (CustomCheckBoxPreference) findPreference("prefs_sob_sysctl");
-        mSobSysctl.setChecked(PreferenceHelper.getBoolean("prefs_sob_sysctl", false));
-        mSobSysctl.setOnPreferenceChangeListener(this);
 
         final Preference mVersion = findPreference("prefs_version");
         mVersion.setEnabled(false);
@@ -121,64 +81,15 @@ public class PreferencesFragment extends PreferenceFragment
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         boolean changed = false;
-        boolean restart = false;
 
-        if (preference == mCustomAnimations) {
+        if (preference == mExtensiveLogging) {
             final boolean value = (Boolean) newValue;
-            PreferenceHelper.setCustomAnimations(value);
-            changed = true;
-            restart = true;
-        } else if (preference == mTransformerId) {
-            PreferenceHelper.setTransformerId(newValue.toString());
-            changed = true;
-            restart = mCustomAnimations.isChecked();
-        } else if (preference == mExtensiveLogging) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(JF_EXTENSIVE_LOGGING, value);
+            PreferenceHelper.setBoolean(EXTENSIVE_LOGGING, value);
             org.namelessrom.devicecontrol.Application.IS_LOG_DEBUG = value;
             changed = true;
-        } else if (preference == mSobVm) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean("prefs_sob_vm", value);
-            changed = true;
-        } else if (preference == mSobSysctl) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean("prefs_sob_sysctl", value);
-            changed = true;
-        }
-
-        if (restart) {
-            Utils.restartActivity(getActivity());
         }
 
         return changed;
     }
 
-    //
-
-    /**
-     * Users of this fragment must call this method to set up the navigation drawer interactions.
-     *
-     * @param fragmentId   The android:id of this fragment in its activity's layout.
-     * @param drawerLayout The DrawerLayout containing this fragment's UI.
-     */
-    public void setUp(int fragmentId, DrawerLayout drawerLayout) {
-        mFragmentContainerView = getActivity().findViewById(fragmentId);
-        mDrawerLayout = drawerLayout;
-
-        // set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow_prefs, GravityCompat.END);
-    }
-
-    public boolean isDrawerOpen() {
-        return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
-    }
-
-    public void openDrawer() {
-        if (mDrawerLayout != null) { mDrawerLayout.openDrawer(mFragmentContainerView); }
-    }
-
-    public void closeDrawer() {
-        if (mDrawerLayout != null) { mDrawerLayout.closeDrawer(mFragmentContainerView); }
-    }
 }

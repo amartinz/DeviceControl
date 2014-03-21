@@ -18,76 +18,50 @@
 package org.namelessrom.devicecontrol.fragments.main;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.view.PagerTabStrip;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.fragments.dynamic.WebViewFragment;
-import org.namelessrom.devicecontrol.fragments.information.InformationHelpFragment;
+import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
-import org.namelessrom.devicecontrol.widgets.JfViewPager;
-import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-import java.util.ArrayList;
-import java.util.List;
+public class InformationFragment extends AttachFragment implements DeviceConstants {
 
-public class InformationFragment extends AttachFragment {
-
-    //==============================================================================================
-    // Fields
-    //==============================================================================================
     public static final int ID = 0;
-
-    //==============================================================================================
-    // Overridden Methods
-    //==============================================================================================
-    @Override
-    public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
-        View rootView = layoutInflater.inflate(R.layout.fragment_viewpager, viewGroup, false);
-
-        List<Fragment> mFragments = getFragments();
-        List<String> mTitles = getTitles();
-
-        JfViewPager mViewPager = (JfViewPager) rootView.findViewById(R.id.pager);
-
-        ScreenSlidePagerAdapter mTabsAdapter = new ScreenSlidePagerAdapter(
-                getChildFragmentManager(), mFragments, mTitles);
-        mViewPager.setAdapter(mTabsAdapter);
-
-        PagerTabStrip mPagerTabStrip = (PagerTabStrip) rootView.findViewById(R.id.pagerTabStrip);
-        mPagerTabStrip.setDrawFullUnderline(false);
-
-        return rootView;
-    }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity, InformationFragment.ID);
     }
 
-    //==============================================================================================
-    // Methods
-    //==============================================================================================
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_help,
+                container, false);
 
-    private List<Fragment> getFragments() {
-        List<Fragment> tmpList = new ArrayList<Fragment>();
-        tmpList.add(new InformationHelpFragment());
-        //tmpList.add(WebViewFragment.newInstance(0));
-        tmpList.add(WebViewFragment.newInstance(1));
-        //tmpList.add(WebViewFragment.newInstance(2));
-        return tmpList;
+        final String appname = getString(R.string.app_name);
+
+        TextView tvHelp = (TextView) view.findViewById(R.id.help_textview);
+        tvHelp.setText(getString(R.string.app_information_help,
+                appname, appname, appname));
+
+        ImageView ivHelp = (ImageView) view.findViewById(R.id.help_imageview);
+        ivHelp.setImageResource(R.mipmap.ic_launcher);
+
+        return view;
     }
 
-    private List<String> getTitles() {
-        List<String> tmpList = new ArrayList<String>();
-        tmpList.add(getString(R.string.section_title_information));
-        //tmpList.add(getString(R.string.action_about));
-        tmpList.add(getString(R.string.action_licenses));
-        //tmpList.add(getString(R.string.action_help));
-        return tmpList;
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
+            MainActivity.mSlidingMenu.toggle(true);
+        }
     }
 }

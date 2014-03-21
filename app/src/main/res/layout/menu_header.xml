@@ -1,0 +1,13 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/menu_header"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/holo_green_dark" />
+
+</LinearLayout>
