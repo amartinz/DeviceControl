@@ -53,7 +53,7 @@ public class TaskerService extends Service implements DeviceConstants, FileConst
 
         if (action != null) {
             if (action.equals(ACTION_TASKER_FSTRIM)) {
-                mFstrimRunnable.run();
+                mFstrimThread.run();
             }
         }
 
@@ -72,7 +72,7 @@ public class TaskerService extends Service implements DeviceConstants, FileConst
     //================
     // Runnable
     //================
-    private final Runnable mFstrimRunnable = new Runnable() {
+    private final Thread mFstrimThread = new Thread(new Runnable() {
         public void run() {
             logDebug("FSTRIM RUNNING");
             try {
@@ -109,6 +109,6 @@ public class TaskerService extends Service implements DeviceConstants, FileConst
             }
             logDebug("FSTRIM RAN");
         }
-    };
+    });
 
 }
