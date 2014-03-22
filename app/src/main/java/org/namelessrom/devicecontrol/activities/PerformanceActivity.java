@@ -62,14 +62,14 @@ public class PerformanceActivity extends Activity {
         Utils.setupDirectories();
         Utils.createFiles(this, true);
 
-        ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
             actionBar.setTitle(R.string.performance);
         }
 
-        FragmentManager fragmentManager = getFragmentManager();
+        final FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, new PerformanceFragment())
                 .commit();

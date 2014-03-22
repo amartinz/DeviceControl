@@ -64,7 +64,7 @@ public class PerformanceInformationFragment extends AttachFragment implements De
     private int    mBatteryTemperature = 0;
     private String mBatteryExtra       = " - Getting information...";
 
-    private static final int mInterval = 2000;
+    private static final int mInterval = 3000;
     private Handler mHandler;
 
     private       CpuStateMonitor monitor     = new CpuStateMonitor();
@@ -176,15 +176,9 @@ public class PerformanceInformationFragment extends AttachFragment implements De
     }
 
     @Override
-    public void onResume() {
-        startRepeatingTask();
-        super.onResume();
-    }
-
-    @Override
     public void onPause() {
-        stopRepeatingTask();
         super.onPause();
+        stopRepeatingTask();
     }
 
     private View generateRow(final ViewGroup parent, final String title, final String value,
@@ -219,12 +213,12 @@ public class PerformanceInformationFragment extends AttachFragment implements De
         }
     };
 
-    void startRepeatingTask() {
+    private synchronized void startRepeatingTask() {
         stopRepeatingTask();
         mDeviceUpdater.run();
     }
 
-    void stopRepeatingTask() {
+    private synchronized void stopRepeatingTask() {
         if (mHandler != null) {
             mHandler.removeCallbacks(mDeviceUpdater);
         }
@@ -394,7 +388,7 @@ public class PerformanceInformationFragment extends AttachFragment implements De
         } else {
             stopRepeatingTask();
         }
-        logDebug(getClass().getSimpleName() + " isVisible:" + (isVisibleToUser ? "true" : "false"));
+        logDebug("isVisible: " + (isVisibleToUser ? "true" : "false"));
     }
 
 }

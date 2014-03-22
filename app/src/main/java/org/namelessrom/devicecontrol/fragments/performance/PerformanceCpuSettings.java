@@ -140,6 +140,11 @@ public class PerformanceCpuSettings extends AttachFragment
             }
         });
         mStatusHide.setChecked(PreferenceHelper.getString(PREF_HIDE_CPU_INFO, "1").equals("1"));
+        if (mStatusHide.isChecked()) {
+            startRepeatingTask();
+        } else {
+            stopRepeatingTask();
+        }
 
         CpuCore tmpCore;
         final int mCpuNum = CpuUtils.getNumOfCpus();
@@ -153,7 +158,7 @@ public class PerformanceCpuSettings extends AttachFragment
 
         mAvailableFrequencies = new String[0];
 
-        String availableFrequenciesLine = Utils.readOneLine(FREQ_AVAILABLE_PATH);
+        final String availableFrequenciesLine = Utils.readOneLine(FREQ_AVAILABLE_PATH);
         if (availableFrequenciesLine != null) {
             mAvailableFrequencies = availableFrequenciesLine.split(" ");
             Arrays.sort(mAvailableFrequencies, new Comparator<String>() {
@@ -346,15 +351,9 @@ public class PerformanceCpuSettings extends AttachFragment
     }
 
     @Override
-    public void onResume() {
-        startRepeatingTask();
-        super.onResume();
-    }
-
-    @Override
     public void onPause() {
-        stopRepeatingTask();
         super.onPause();
+        stopRepeatingTask();
     }
 
     final Runnable mDeviceUpdater = new Runnable() {
@@ -366,16 +365,24 @@ public class PerformanceCpuSettings extends AttachFragment
         }
     };
 
-    private void startRepeatingTask() {
+    private synchronized void startRepeatingTask() {
         stopRepeatingTask();
+        mStopUpdating = false;
+        if (mHandler == null) {
+            mHandler = new Handler();
+        }
         mDeviceUpdater.run();
     }
 
-    private void stopRepeatingTask() {
+    private synchronized void stopRepeatingTask() {
+        mStopUpdating = true;
         if (mHandler != null) {
             mHandler.removeCallbacks(mDeviceUpdater);
+            mHandler = null;
         }
     }
+
+    private boolean mStopUpdating = false;
 
     private class UpdateTask extends AsyncTask<Void, Void, Void> {
 
@@ -406,7 +413,11 @@ public class PerformanceCpuSettings extends AttachFragment
                 coreList = null;
                 isUpdating = false;
             }
-            mHandler.postDelayed(mDeviceUpdater, mInterval);
+            if (!mStopUpdating) {
+                if (mHandler != null) {
+                    mHandler.postDelayed(mDeviceUpdater, mInterval);
+                }
+            }
         }
     }
 
@@ -445,7 +456,9 @@ public class PerformanceCpuSettings extends AttachFragment
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-            startRepeatingTask();
+            if (PreferenceHelper.getString(PREF_HIDE_CPU_INFO, "1").equals("1")) {
+                startRepeatingTask();
+            }
         } else {
             stopRepeatingTask();
         }
