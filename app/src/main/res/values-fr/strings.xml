@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_version_name">Versionname: %s</string>
+    <string name="app_version_code">Versioncode: %s</string>
+    <string name="app_information_help">Bienvenue sur %1$s!\n\nPour commencer, faites glisser le côté de gauche!\n\nPour modifier les préférences de %2$s,\nglisser le côté de la droite!\n\n\nS\'il vous plaît noter que %3$s doit être root\npour fonctionner correctement!\n\n</string>
+    <string name="app_performance_help">Bienvenue sur la section performance!\n</string>
+    <string name="app_warning_root">S\'il vous plaît noter que %s nécessite le ROOT pour fonctionner pleinement!</string>
+    <string name="message_loading">Chargement en cours, veuillez patienter…</string>
+    <string name="fragment_press_to_load">Appuyer sur moi pour charger %s.</string>
+    <string name="action_press_again">Appuyer de nouveau pour quitter!</string>
+    <string name="defaults_button">Remettre par défaut</string>
+    <string name="general">Général</string>
+    <string name="general_others">Autres</string>
+    <string name="help">Aide</string>
+    <string name="dialog_warning">Attention!</string>
+    <string name="dialog_warning_apply">Etes-vous sûr que vous voulez appliquer les paramètres?</string>
+    <string name="toast_settings_applied">Appliqué avec succès!</string>
+    <!-- Menu -->
+    <string name="device">Appareil</string>
+    <string name="performance">Performance</string>
+    <string name="information">Information</string>
+    <string name="extras">Extras</string>
+    <string name="tools">Tools</string>
+    <string name="tasker">Tasker</string>
+    <string name="editors">Editors</string>
+    <string name="freezer">Freezer</string>
+    <string name="device_control_header">--Device Control</string>
+    <string name="licenses">Licenses</string>
+    <string name="unfreezer">Unfreezer</string>
+    <string name="graphics">Graphics</string>
+    <!-- Time In State -->
+    <string name="time_in_state">TIME IN STATE</string>
+    <string name="unused_cpu_states">UNUSED CPU STATES</string>
+    <string name="total_state_time">TOTAL STATE TIME</string>
+    <string name="no_states_file_found">No states file found.</string>
+    <string name="deep_sleep">\"Deep Sleep\"</string>
+    <string name="device_information">Device Information</string>
+    <!-- Preferences -->
+    <string name="pref_force_highend_gfx_title">Force high-end graphics</string>
+    <string name="pref_force_highend_gfx_summary">Enables high-end visual effects such as transparent status/navigation bar (needs to be supported by your rom, requires reboot)</string>
+    <!-- Performance -->
+    <string name="powersaving">Powersaving</string>
+    <string name="powersaving_lcd_title">LCD Power Reduce</string>
+    <string name="powersaving_lcd_summary_on">Power reducing is enabled.</string>
+    <string name="powersaving_lcd_summary_off">Power reducing is disabled.</string>
+    <string name="powersaving_sched_mc_title">Power Scheduler</string>
+    <string name="powersaving_sched_mc_summary">Tries to group tasks on a core until it reaches its maximum load and powers on the next core.\nIf enabled, it sacrifices power in exchange for battery life.\n\n0 for disabling it, 1 for balanced, 2 for aggressive.</string>
+    <string name="powersaving_sched_mc_0">0 - Disabled</string>
+    <string name="powersaving_sched_mc_1">1 - Balanced</string>
+    <string name="powersaving_sched_mc_2">2 - Aggressive</string>
+    <string name="intelli_plug_summary_on">Intelli-Plug is enabled.</string>
+    <string name="intelli_plug_summary_off">Intelli-Plug is disabled.</string>
+    <string name="intelli_plug_eco_title">Eco Mode</string>
+    <string name="intelli_plug_eco_summary_on">Intelli-Plug eco mode enabled.</string>
+    <string name="intelli_plug_eco_summary_off">Intelli-Plug eco mode disabled.</string>
+    <!-- CPU settings -->
+    <string name="cpusettings">CPU Settings</string>
+    <string name="current_speed">Current Speed</string>
+    <string name="current_max">Maximum speed: </string>
+    <string name="current_min">Minimum speed: </string>
+    <string name="governor">Governor</string>
+    <string name="io">I/O Scheduler</string>
+    <string name="sob">Apply automatically on boot</string>
+    <string name="cpu_info_list_header">Core Status</string>
+    <string name="cpu_speed_header">Core Limits</string>
+    <string name="other_settings_header">Other settings</string>
+    <string name="core_offline">Offline</string>
+    <string name="core">Core</string>
+    <string name="cpu_info_settings_header">Settings</string>
+    <string name="cpu_info_settings_interval">Refresh interval</string>
+    <string name="cpu_info_hide">Hide status</string>
+    <!-- Input -->
+    <string name="touchkey_subcat_title">Touch key</string>
+    <string name="touchkey_light_title_head">Enable keys backlight</string>
+    <string name="touchkey_light_summary_head">Light up touch keys when screen is on</string>
+    <string name="touchkey_bln_title_head">Enable keys notifications</string>
+    <string name="touchkey_bln_summary_head">Light up touch keys when screen is off and a notification is received</string>
+    <string name="keyboard_light_title_head">Enable keyboard backlight</string>
+    <string name="keyboard_light_summary_head">Light up keyboard backlight when screen is on</string>
+    <string name="vibrator_title">Vibrator</string>
+    <string name="vibrator_tuning_title">Vibration strength</string>
+    <string name="vibrator_tuning_summary_head">Adjust the strength of the vibration feedback</string>
+    <string name="vibrator_warning">Values higher than %1$d are not recommended</string>
+    <string name="navbar_title">Navigation Bar</string>
+    <string name="navbar_force_title">Force navigation bar</string>
+    <string name="navbar_force_summary">Requires a reboot!</string>
+    <string name="input_glove_mode_title">Glove Mode</string>
+    <string name="input_glove_mode_summary">Makes the touchscreen more sensitive, eg for using it with gloves.</string>
+    <!-- Graphics -->
+    <string name="panel_gamma_title_head">Screen gamma</string>
+    <string name="panel_gamma_summary_head">Set screen gamma value</string>
+    <string name="panel_color_temp_title_head">Screen color temperature</string>
+    <string name="panel_color_temp_summary_head">Turn screen off and back on to activate</string>
+    <string name="panel_color_temp_cold">Cold</string>
+    <string name="panel_color_temp_cool">Cool</string>
+    <string name="panel_color_temp_normal">Normal</string>
+    <string name="panel_color_temp_warm">Warm</string>
+    <string name="panel_color_temp_hot">Hot</string>
+    <!-- Preferences -->
+    <!-- Debug -->
+    <string name="debugging">Debugging</string>
+    <string name="extensive_logging_title">Extensive Logging</string>
+    <string name="extensive_logging_summary_on">Logging to LogCat enabled.</string>
+    <string name="extensive_logging_summary_off">Logging to LogCat disabled.</string>
+    <string name="reapply_on_boot">Reapply on boot</string>
+    <string name="version">Version</string>
+    <!-- Tasker -->
+    <string name="fstrim_title">Automatic fstrimming</string>
+    <string name="fstrim_summary">Fstrim is used to discard (or \"trim\") blocks which are not in use by the filesystem.\nThis can improve performance and reduce lags.</string>
+    <string name="fstrim_interval_title">Fstrim interval</string>
+    <string name="fstrim_interval_summary">Choose interval for automatic fstrimming.</string>
+    <!-- Freezer -->
+    <string name="pt_freeze">Freeze Package</string>
+    <string name="pt_unfreeze">Defrost Package</string>
+    <string name="mt_system_packs">System Packages</string>
+    <string name="mt_user_packs">User Packages</string>
+    <string name="freeze_msg">%s will be frozen. Continue?</string>
+    <string name="unfreeze_msg">%s will be defrosted. Continue?</string>
+    <!-- VM Settings -->
+    <string name="vm_settings">DALVIK SETTINGS</string>
+    <string name="dirty_ratio_title">Dirty ratio</string>
+    <string name="dirty_background_title">Dirty background ratio</string>
+    <string name="dirty_expire_title">Dirty expire centisecs</string>
+    <string name="dirty_writeback_title">Dirty writeback centisecs</string>
+    <string name="min_free_title">Minfree kbytes</string>
+    <string name="overcommit_title">Overcommit ratio</string>
+    <string name="swappiness_title">Swappiness</string>
+    <string name="vfs_title">VFS cache pressure</string>
+    <string name="full_editor">Press to load full editor</string>
+    <!-- Performance Settings | Warning dialog -->
+    <string name="performance_settings_warning_title">Proceed with Caution</string>
+    <string name="performance_settings_warning_header">Warning</string>
+    <!-- PropModder -->
+    <string name="propmodder_title">Build.prop Mods</string>
+    <string name="propmodder_switches">Switches</string>
+    <string name="buildprop_title">build.prop mods (reboot required)</string>
+    <string name="buildprop_settings_warning">These settings are for experimentation and any changes made to them have the potential to cause instability, crashes, data loss or hardware failures.</string>
+    <string name="nonprop_cat_title">Mods involving init.d script</string>
+    <string name="pref_wifi_scan_interval_title">Wifi scan interval</string>
+    <string name="pref_wifi_scan_interval_summary">The time between wifi scans when no stored access points are available</string>
+    <string name="pref_wifi_scan_alt_summary">Time between wifi scans: %s</string>
+    <string name="pref_max_events_title">Windows Manager\'s max events per second</string>
+    <string name="pref_max_events_summary">This is a runtime value that controls the number of events the system will allow in a second</string>
+    <string name="pref_max_events_alt_summary">Max number of system events: %s</string>
+    <string name="pref_ring_delay_title">Telephone ringer delay</string>
+    <string name="pref_ring_delay_summary">The amount of time from when the system registers an incoming phone call until the ringer</string>
+    <string name="pref_ring_delay_alt_summary">Incoming call Delay: %s</string>
+    <string name="pref_vm_heapsize_title">Dalvik cache heapsize</string>
+    <string name="pref_vm_heapsize_summary">This controls the size of the cache the Dalvik VM has access to</string>
+    <string name="pref_vm_heapsize_alt_summary">Dalvik VM cache size: %s</string>
+    <string name="showbuild_title">Show The Build.Prop</string>
+    <string name="buildprop_summary">Find out whats in there</string>
+    <string name="showbuild_dialog">Displaying /system/Build.Prop</string>
+    <string name="showbuild_loading">Loading build.prop\u2026</string>
+    <string name="showbuild_error">Error loading build.prop\u2026</string>
+    <string name="showbuild_unknown">Unknown</string>
+    <string name="showbuild_version">Version</string>
+    <string name="showbuild_label">We should look because knowing is half the battle</string>
+    <string name="pref_fast_up_title">HSUPA upload speed hack</string>
+    <string name="pref_fast_up_summary">*WARNING* if you change this value it will add the needed values to your build.prop if they are not already present</string>
+    <string name="pref_fast_up_alt_summary">Fast up found active: %s</string>
+    <string name="pref_prox_delay_title">Proximity sensor delay</string>
+    <string name="pref_prox_delay_summary">When you are in-call screen is off when the device moves away from your face this delay value controls how long before screen turns on</string>
+    <string name="pref_prox_delay_alt_summary">Proximity sensor set to: %s</string>
+    <string name="pref_sleep_title">PM Sleep mode</string>
+    <string name="pref_sleep_summary">Modify Nighttime sleep policy</string>
+    <string name="pref_sleep_alt_summary">Current Sleep Mode: %s</string>
+    <string name="pref_jit_title">Just In Time Compiler</string>
+    <string name="pref_jit_summary">Enables/Disables JIT compiler</string>
+    <string name="pref_tcp_stack_title">Optimize TCP Stack</string>
+    <string name="pref_tcp_stack_summary">Modify the buffer-size for better performance</string>
+    <string name="pref_g_speed_title">3G Speed Hack</string>
+    <string name="pref_g_speed_summary">Uncap 3g speed</string>
+    <string name="pref_gpu_title">GPU Acceleration</string>
+    <string name="pref_gpu_summary">Enable hardware acceleration where the GPU controls the UI instead of the CPU</string>
+    <string name="pref_lcd_title">Change LCD density</string>
+    <string name="pref_lcd_summary">Set your desired LCD density</string>
+    <string name="pref_lcd_default">480</string>
+    <string name="pref_lcd_alt_summary">Screen density: %s</string>
+    <!-- Etc -->
+    <string name="etc_apply_values">Apply values</string>
+    <string name="etc_filter">Filter</string>
+    <string name="etc_save">"Save"</string>
+    <string name="etc_add_prop_title">Add Property</string>
+    <string name="etc_edit_prop_title">Edit Property</string>
+    <string name="etc_del_prop_title">Delete Parameter</string>
+    <string name="etc_del_prop_msg">%s will be deleted.\n\nContinue?</string>
+    <string name="etc_prop_backup">Backup of build.prop was created in %s</string>
+    <string name="etc_prop_no_backup">Initial backup not found!</string>
+    <string name="etc_prop_restore_title">Restore</string>
+    <string name="etc_prop_restore_msg">Initial build.prop file will be restored.\nYou must reboot your device to take effect.\n\nContinue?</string>
+    <string name="etc_prop_name">Name</string>
+    <string name="etc_prop_val">Value</string>
+    <string name="etc_prop_preset">Presets</string>
+    <string name="etc_no_packages">No packages</string>
+    <!-- Knock On -->
+    <string name="knockonoff_panel_title">Knock On/Off Gestures</string>
+    <string name="knockon_enable_head">Knock On</string>
+    <string name="knockon_enable_summary_off">Knock on gesture disabled</string>
+    <string name="knockon_enable_summary_on">Knock on gesture enabled</string>
+    <!-- TODO: Plurals -->
+    <!-- Array Entries -->
+    <string name="five_minutes">5 Minutes</string>
+    <string name="ten_minutes">10 Minutes</string>
+    <string name="twenty_minutes">20 Minutes</string>
+    <string name="thirty_minutes">30 Minutes</string>
+    <string name="one_hours">1 Hour</string>
+    <string name="two_hours">2 Hours</string>
+    <string name="four_hours">4 Hours</string>
+    <string name="eight_hours">8 Hours</string>
+    <!-- Standalone Strings -->
+    <string name="cpu_temperature">CPU Temperature:</string>
+    <string name="battery_temperature">Battery Temperature:</string>
+    <string name="off">Off</string>
+</resources>
