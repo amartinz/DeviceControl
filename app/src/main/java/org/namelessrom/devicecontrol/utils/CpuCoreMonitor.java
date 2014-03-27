@@ -79,8 +79,10 @@ public class CpuCoreMonitor implements DeviceConstants {
     public void stop() {
         isStarted = false;
         mHandler.removeCallbacks(mUpdater);
-        mShell.close();
-        mShell = null;
+        if (mShell != null) {
+            mShell.close();
+            mShell = null;
+        }
         logDebug("Stopped CpuCoreMonitor!");
     }
 

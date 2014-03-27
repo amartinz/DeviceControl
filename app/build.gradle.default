@@ -9,11 +9,26 @@ android {
         targetSdkVersion 19
     }
 
+    signingConfigs {
+        release {
+            storeFile file("*Path*To*Keystore*")
+            storePassword "*Your*Store*Pass*"
+            keyAlias "*Your*Key*Alias*"
+            keyPassword "*Your*Key*Pass*"
+        }
+    }
+
     buildTypes {
         release {
             runProguard true
             proguardFiles 'src/main/proguard.flags'
+            signingConfig signingConfigs.release
         }
+    }
+
+    lintOptions {
+        disable 'HardcodedDebugMode'
+        disable 'ValidFragment'
     }
 }
 
