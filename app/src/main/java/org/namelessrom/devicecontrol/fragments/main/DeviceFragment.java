@@ -29,16 +29,16 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.parents.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.utils.Scripts;
-import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
-import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
+import org.namelessrom.devicecontrol.utils.Scripts;
+import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
+import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -217,39 +217,43 @@ public class DeviceFragment extends AttachPreferenceFragment
         } else if (preference == mKnockOn) {
             final boolean newValue = (Boolean) o;
             final String value = (newValue) ? "1" : "0";
-            new WriteAndForget(sKnockOnFile, value).run();
+            CMDProcessor.runSuCommand(
+                    Utils.getWriteCommand(sKnockOnFile, value)
+            );
             PreferenceHelper.setBoolean(KEY_KNOCK_ON, newValue);
             changed = true;
         } else if (preference == mBacklightKey) { // ======================================== LIGHTS
             final boolean newValue = (Boolean) o;
             final String value = newValue ? "255" : "0";
-            List<String> fileList = new ArrayList<String>();
-            List<String> valueList = new ArrayList<String>();
 
-            fileList.add(FILE_TOUCHKEY_TOGGLE);
-            valueList.add(value);
+            CMDProcessor.runSuCommand(
+                    Utils.getWriteCommand(FILE_TOUCHKEY_TOGGLE, value) +
+                            Utils.getWriteCommand(FILE_TOUCHKEY_BRIGHTNESS, value)
+            );
 
-            fileList.add(FILE_TOUCHKEY_BRIGHTNESS);
-            valueList.add(value);
-
-            new WriteAndForget(fileList, valueList).run();
             PreferenceHelper.setBoolean(KEY_TOUCHKEY_LIGHT, newValue);
             changed = true;
         } else if (preference == mBacklightNotification) {
             final boolean newValue = (Boolean) o;
             final String value = newValue ? "1" : "0";
-            new WriteAndForget(FILE_BLN_TOGGLE, value).run();
+            CMDProcessor.runSuCommand(
+                    Utils.getWriteCommand(FILE_BLN_TOGGLE, value)
+            );
             PreferenceHelper.setBoolean(KEY_TOUCHKEY_BLN, newValue);
             changed = true;
         } else if (preference == mKeyboardBacklight) {
             final boolean newValue = (Boolean) o;
             final String value = newValue ? "255" : "0";
-            new WriteAndForget(FILE_KEYBOARD_TOGGLE, value).run();
+            CMDProcessor.runSuCommand(
+                    Utils.getWriteCommand(FILE_KEYBOARD_TOGGLE, value)
+            );
             PreferenceHelper.setBoolean(KEY_KEYBOARD_LIGHT, newValue);
             changed = true;
         } else if (preference == mPanelColor) { // ======================================== GRAPHICS
             final String value = String.valueOf(o);
-            new WriteAndForget(sHasPanelFile, value).run();
+            CMDProcessor.runSuCommand(
+                    Utils.getWriteCommand(sHasPanelFile, value)
+            );
             PreferenceHelper.setString(KEY_PANEL_COLOR_TEMP, value);
             changed = true;
         }

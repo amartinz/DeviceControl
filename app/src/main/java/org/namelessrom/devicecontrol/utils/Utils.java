@@ -400,4 +400,10 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
+    public static String getWriteCommand(final String path, final String value) {
+        final String cmd = String.format("busybox echo \"%s\" > %s;\n", value, path);
+        logDebug("WriteCommand: " + cmd);
+        return cmd;
+    }
+
 }

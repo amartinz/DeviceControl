@@ -26,6 +26,7 @@ import android.os.IBinder;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.fragments.main.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceExtrasFragment;
+import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
@@ -34,8 +35,6 @@ import org.namelessrom.devicecontrol.utils.helpers.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.threads.FireAndForget;
-import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
-import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class BootUpService extends Service
             stopSelf();
         }
         new BootTask(this).execute();
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     private class BootTask extends AsyncTask<Void, Void, Void> {
@@ -222,12 +221,20 @@ public class BootUpService extends Service
                 }
 
                 //==================================================================================
+                // Turn file and value list into commands
+                //==================================================================================
+                for (int i = 0; i < fileList.size(); i++) {
+                    sbCmd.append("busybox echo ").append(valueList.get(i))
+                            .append(" > ").append(fileList.get(i))
+                            .append(";\n");
+                }
+
+                //==================================================================================
                 // Execute
                 //==================================================================================
                 final String cmd = sbCmd.toString();
                 logDebug("bootUp | executing: " + cmd);
                 new FireAndForget(cmd).run();
-                new WriteAndForget(fileList, valueList).run();
 
                 logDebug("BootUp Done!");
             }

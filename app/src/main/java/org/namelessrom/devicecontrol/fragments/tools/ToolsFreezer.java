@@ -38,13 +38,14 @@ import android.widget.Switch;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
+import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor.CommandResult2;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.adapters.PackAdapter;
 
 
-public class ToolsFreezer extends Fragment
+public class ToolsFreezer extends AttachFragment
         implements DeviceConstants, AdapterView.OnItemClickListener {
 
     private static final String ARG_FREEZER = "arg_freezer";
@@ -63,7 +64,7 @@ public class ToolsFreezer extends Fragment
     private View           mShadowTop, mShadowBottom;
 
     public static ToolsFreezer newInstance(final int freezer, final String type) {
-        Bundle b = new Bundle();
+        final Bundle b = new Bundle();
         b.putBoolean(ToolsFreezer.ARG_FREEZER, (freezer == 0));
         b.putString(ToolsFreezer.ARG_TYPE, type);
         ToolsFreezer fragment = new ToolsFreezer();
@@ -73,14 +74,13 @@ public class ToolsFreezer extends Fragment
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
-        View v = layoutInflater.inflate(R.layout.tools_freezer_list, viewGroup, false);
-
+        final View v = layoutInflater.inflate(R.layout.tools_freezer_list, viewGroup, false);
 
         freeze = getArguments().getBoolean(ToolsFreezer.ARG_FREEZER, false);
         packs = getArguments().getString(ToolsFreezer.ARG_TYPE, "usr");
 
         pmList = new String[]{};
-        packageManager = getActivity().getPackageManager();
+        packageManager = mActivity.getPackageManager();
 
         linlaHeaderProgress = (LinearLayout) v.findViewById(R.id.linlaHeaderProgress);
         linNopack = (LinearLayout) v.findViewById(R.id.noproc);
@@ -161,7 +161,7 @@ public class ToolsFreezer extends Fragment
             }
             linlaHeaderProgress.setVisibility(View.GONE);
             if (pmList.length > 0) {
-                adapter = new PackAdapter(getActivity(), pmList, packageManager);
+                adapter = new PackAdapter(mActivity, pmList, packageManager);
                 packList.setAdapter(adapter);
                 linNopack.setVisibility(View.GONE);
                 llist.setVisibility(LinearLayout.VISIBLE);
@@ -179,18 +179,10 @@ public class ToolsFreezer extends Fragment
             llist.setVisibility(LinearLayout.GONE);
         }
 
-        @Override
-        protected void onProgressUpdate(Void... values) {
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     private void makedialog(String titlu, String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         builder.setTitle(titlu)
                 .setMessage(msg)
                 .setNegativeButton(getString(android.R.string.cancel),
