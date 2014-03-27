@@ -46,17 +46,6 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
     private int mImgId = R.mipmap.ic_launcher;
     private int mFragmentId;
 
-    public static PressToLoadFragment newInstance(int fragmentId, int imgId) {
-        final PressToLoadFragment f = new PressToLoadFragment();
-
-        final Bundle b = new Bundle();
-        b.putInt(PressToLoadFragment.ARG_FRAGMENT, fragmentId);
-        b.putInt(PressToLoadFragment.ARG_IMG, imgId);
-        f.setArguments(b);
-
-        return f;
-    }
-
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);

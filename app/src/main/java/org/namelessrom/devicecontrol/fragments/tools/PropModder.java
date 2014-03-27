@@ -437,7 +437,7 @@ public class PropModder extends PreferenceFragment implements
             m3gSpeedPref.setChecked(false);
         }
         final String gpu = Utils.findBuildPropValueOf(GPU_PROP);
-        if (!gpu.equals(DISABLE)) {
+        if (!gpu.equals(DISABLE) && !gpu.equals("0")) {
             mGpuPref.setChecked(true);
         } else {
             mGpuPref.setChecked(false);

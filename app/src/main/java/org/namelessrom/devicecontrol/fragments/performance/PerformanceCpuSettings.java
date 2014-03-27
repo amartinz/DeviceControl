@@ -190,7 +190,7 @@ public class PerformanceCpuSettings extends AttachFragment
         mMinSlider.setOnSeekBarChangeListener(this);
 
         mGovernor = (Spinner) view.findViewById(R.id.pref_governor);
-        ArrayAdapter<CharSequence> governorAdapter = new ArrayAdapter<CharSequence>(
+        final ArrayAdapter<CharSequence> governorAdapter = new ArrayAdapter<CharSequence>(
                 getActivity(), android.R.layout.simple_spinner_item);
         governorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         for (String mAvailableGovernor : mAvailableGovernors) {
@@ -205,7 +205,7 @@ public class PerformanceCpuSettings extends AttachFragment
         });
 
         mIo = (Spinner) view.findViewById(R.id.pref_io);
-        ArrayAdapter<CharSequence> ioAdapter = new ArrayAdapter<CharSequence>(
+        final ArrayAdapter<CharSequence> ioAdapter = new ArrayAdapter<CharSequence>(
                 getActivity(), android.R.layout.simple_spinner_item);
         ioAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         for (String aMAvailableIo : mAvailableIo) {
@@ -219,7 +219,7 @@ public class PerformanceCpuSettings extends AttachFragment
             }
         });
 
-        Switch mSetOnBoot = (Switch) view.findViewById(R.id.sob_cpu);
+        final Switch mSetOnBoot = (Switch) view.findViewById(R.id.sob_cpu);
         mSetOnBoot.setChecked(PreferenceHelper.getBoolean(SOB_CPU, false));
         mSetOnBoot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

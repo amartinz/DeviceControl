@@ -26,7 +26,7 @@ package com.stericson.roottools.execution;
 import com.stericson.roottools.RootTools;
 
 public class CommandCapture extends Command {
-    private StringBuilder sb = new StringBuilder();
+    private final StringBuilder sb = new StringBuilder();
 
     public CommandCapture(int id, String... command) {
         super(id, command);

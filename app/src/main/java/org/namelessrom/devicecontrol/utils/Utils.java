@@ -16,12 +16,8 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.AssetManager;
 import android.os.Build;
 import android.util.Log;
 
@@ -37,11 +33,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
@@ -222,17 +216,6 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     /**
-     * Write the "color value" to the specified file. The value is scaled from
-     * an integer to an unsigned integer by multiplying by 2.
-     *
-     * @param filename The filename
-     * @param value    The value of max value Integer.MAX
-     */
-    public static void writeColor(String filename, int value) {
-        writeValue(filename, String.valueOf((long) value * 2));
-    }
-
-    /**
      * Check if the specified file exists.
      *
      * @param filename The filename
@@ -260,22 +243,7 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     /**
-     * Restart the activity smoothly
-     *
-     * @param activity The activity to restart
-     */
-    public static void restartActivity(final Activity activity) {
-        if (activity == null) { return; }
-        final int enter_anim = android.R.anim.fade_in;
-        final int exit_anim = android.R.anim.fade_out;
-        activity.overridePendingTransition(enter_anim, exit_anim);
-        activity.finish();
-        activity.overridePendingTransition(enter_anim, exit_anim);
-        activity.startActivity(activity.getIntent());
-    }
-
-    /**
-     * Setup the directories for JF Control
+     * Setup the directories for Device Control
      */
     public static void setupDirectories() {
         File dir;
@@ -290,71 +258,13 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
-    public static void createFiles(Context context, boolean force) {
+    public static void createFiles(final Context context, final boolean force) {
         final String filepath = context.getFilesDir().getPath() + "/utils";
         logDebug("createFiles path: " + filepath);
         if (!new File(filepath).exists() || force) {
             RootTools.installBinary(context, R.raw.utils, "utils");
             logDebug("createFiles installed: utils");
         }
-    }
-
-    public static String getBinPath(String b) {
-        final CMDProcessor.CommandResult2 cr =
-                new CMDProcessor().sh.runWaitFor("busybox which " + b);
-        if (cr.success()) {
-            return cr.stdout;
-        } else {
-            return "";
-        }
-    }
-
-    private static void get_assetsScript(String fn, Context c, String prefix, String postfix) {
-        byte[] buffer;
-        final AssetManager assetManager = c.getAssets();
-        try {
-            InputStream f = assetManager.open(fn);
-            buffer = new byte[f.available()];
-            f.read(buffer);
-            f.close();
-            final String s = new String(buffer);
-            final StringBuilder sb = new StringBuilder(s);
-            if (!postfix.equals("")) {
-                sb.append("\n\n").append(postfix);
-            }
-            if (!prefix.equals("")) {
-                sb.insert(0, prefix + "\n");
-            }
-            sb.insert(0, "#!" + getBinPath("sh") + "\n\n");
-            try {
-                FileOutputStream fos;
-                fos = c.openFileOutput(fn, Context.MODE_PRIVATE);
-                fos.write(sb.toString().getBytes());
-                fos.close();
-
-            } catch (IOException e) {
-                Log.d(TAG, "error write " + fn + " file");
-                e.printStackTrace();
-            }
-
-        } catch (IOException e) {
-            Log.d(TAG, "error read " + fn + " file");
-            e.printStackTrace();
-        }
-    }
-
-    public static void showDialog(Context ctx, String title, String message) {
-        final AlertDialog alertDialog = new AlertDialog.Builder(ctx).create();
-        alertDialog.setTitle(title);
-        alertDialog.setMessage(message);
-        alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL,
-                "OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        alertDialog.dismiss();
-                    }
-                }
-        );
-        alertDialog.show();
     }
 
     public static boolean getLowRamDevice(Context context) {
@@ -373,11 +283,11 @@ public class Utils implements DeviceConstants, FileConstants {
     /**
      * Reads string array from file
      *
-     * @param fname
+     * @param path File to read from
      * @return string array
      */
-    public static String[] readStringArray(String fname) {
-        String line = readOneLine(fname);
+    public static String[] readStringArray(final String path) {
+        final String line = readOneLine(path);
         if (line != null) {
             return line.split(" ");
         }
@@ -390,14 +300,19 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
-
     public static void runRootCommand(String command) {
         final CommandCapture comm = new CommandCapture(0, false, command);
         try {
             RootTools.getShell(true).add(comm);
         } catch (Exception e) {
-            e.printStackTrace();
+            logDebug("runRootCommand: " + e.getMessage());
         }
+    }
+
+    public static String getWriteCommand(final String path, final String value) {
+        final String cmd = String.format("busybox echo \"%s\" > %s;\n", value, path);
+        logDebug("WriteCommand: " + cmd);
+        return cmd;
     }
 
 }

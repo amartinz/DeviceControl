@@ -51,10 +51,6 @@ public class PreferenceHelper {
         mSharedPrefs.edit().remove(key).commit();
     }
 
-    public static int getInt(String key) {
-        return PreferenceHelper.getInt(key, 0);
-    }
-
     public static int getInt(String key, int defaultValue) {
         return mSharedPrefs.getInt(key, defaultValue);
     }
@@ -102,24 +98,4 @@ public class PreferenceHelper {
         }).start();
     }
 
-    //==============================================================================================
-    // Specific
-    //==============================================================================================
-
-    public static int getTransformerId() {
-        return Integer.parseInt(mSharedPrefs.getString(
-                "prefs_jf_appearance_custom_transformer", "0"));
-    }
-
-    public static void setTransformerId(String value) {
-        mSharedPrefs.edit().putString("prefs_jf_appearance_custom_transformer", value).commit();
-    }
-
-    public static boolean getCustomAnimations() {
-        return mSharedPrefs.getBoolean("prefs_jf_appearance_custom_animations", true);
-    }
-
-    public static void setCustomAnimations(boolean value) {
-        mSharedPrefs.edit().putBoolean("prefs_jf_appearance_custom_animations", value).commit();
-    }
 }

@@ -54,7 +54,7 @@ public class PropAdapter extends ArrayAdapter<Prop> {
         if (v == null) {
             LayoutInflater vi =
                     (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.prop_item, null);
+            v = vi.inflate(R.layout.prop_item, parent, false);
         }
 
         ViewHolder holder = (ViewHolder) v.getTag();
@@ -108,11 +108,11 @@ public class PropAdapter extends ArrayAdapter<Prop> {
 
         @Override
         protected FilterResults performFiltering(CharSequence chars) {
-            String filterSeq = chars.toString().toLowerCase();
-            FilterResults result = new FilterResults();
+            final String filterSeq = chars.toString().toLowerCase();
+            final FilterResults result = new FilterResults();
             if (filterSeq != null && filterSeq.length() > 0) {
-                List<Prop> filter = new ArrayList<Prop>();
-                for (Prop o : mProps) {
+                final List<Prop> filter = new ArrayList<Prop>();
+                for (final Prop o : mProps) {
                     if (o.getName().toLowerCase().contains(filterSeq)) { filter.add(o); }
                 }
                 result.count = filter.size();
@@ -129,11 +129,11 @@ public class PropAdapter extends ArrayAdapter<Prop> {
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             @SuppressWarnings("unchecked")
-            List<Prop> filtered = (List<Prop>) results.values;
+            final List<Prop> filtered = (List<Prop>) results.values;
             notifyDataSetChanged();
             clear();
             if (filtered != null) {
-                for (Prop aFiltered : filtered) add(aFiltered);
+                for (final Prop aFiltered : filtered) add(aFiltered);
             }
             notifyDataSetInvalidated();
         }

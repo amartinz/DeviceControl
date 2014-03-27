@@ -87,13 +87,6 @@ public interface DeviceConstants {
     public static final String FSTRIM_INTERVAL = "fstrim_interval";
 
     //==============================================================================================
-    // Handler Actions
-    //==============================================================================================
-    public static final int    READ_VALUE_ACTION_RESULT = 0x1000;
-    public static final String READ_VALUE_ACTION        = "read_value_actopn";
-    public static final String READ_VALUE_TEXT          = "read_value_text";
-
-    //==============================================================================================
     // VM settings
     //==============================================================================================
     public static final String PREF_DIRTY_RATIO        = "pref_dirty_ratio";

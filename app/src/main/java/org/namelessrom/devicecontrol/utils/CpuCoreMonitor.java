@@ -35,30 +35,20 @@ public class CpuCoreMonitor implements DeviceConstants {
     private static Context        mContext;
     private static CpuCoreMonitor cpuFrequencyMonitor;
 
-    private List<CpuCore> mStates = new ArrayList<CpuCore>();
+    private final List<CpuCore> mStates = new ArrayList<CpuCore>();
 
-    private CpuCoreMonitor(Context context) {
+    private CpuCoreMonitor(final Context context) {
         mContext = context;
     }
 
-    public static CpuCoreMonitor getInstance(Context context) {
+    public static CpuCoreMonitor getInstance(final Context context) {
         if (cpuFrequencyMonitor == null) {
             cpuFrequencyMonitor = new CpuCoreMonitor(context);
         }
         return cpuFrequencyMonitor;
     }
 
-    public class CpuCoreMonitorException extends Exception {
-        public CpuCoreMonitorException(String s) {
-            super(s);
-        }
-    }
-
-    public List<CpuCore> getCores() {
-        return mStates;
-    }
-
-    public List<CpuCore> updateStates() throws CpuCoreMonitorException {
+    public List<CpuCore> updateStates() {
         mStates.clear();
 
         CpuCore tmpCore;

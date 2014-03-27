@@ -40,8 +40,8 @@ import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
         httpMethod = HttpSender.Method.PUT,
         reportType = HttpSender.Type.JSON,
         formKey = "",
-        formUri = "http://reports.nameless-rom" +
-                ".org/acra-devicecontrol/_design/acra-storage/_update/report",
+        formUri = "http://reports.nameless-rom.org" +
+                "/acra-devicecontrol/_design/acra-storage/_update/report",
         formUriBasicAuthLogin = "namelessreporter",
         formUriBasicAuthPassword = "weareopentoeveryone",
         mode = ReportingInteractionMode.SILENT)

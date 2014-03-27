@@ -17,24 +17,20 @@
  */
 package org.namelessrom.devicecontrol.fragments.main;
 
-import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.fragments.parents.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
-import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 
-/**
- * Created by alex on 18.12.13.
- */
-public class PreferencesFragment extends PreferenceFragment
+public class PreferencesFragment extends AttachPreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants {
 
     //==============================================================================================
@@ -47,8 +43,7 @@ public class PreferencesFragment extends PreferenceFragment
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml._device_control);
 
-        final Activity activity = getActivity();
-        PreferenceHelper.getInstance(activity);
+        PreferenceHelper.getInstance(mActivity);
 
         mExtensiveLogging = (CustomCheckBoxPreference) findPreference(EXTENSIVE_LOGGING);
         mExtensiveLogging.setOnPreferenceChangeListener(this);
@@ -56,8 +51,8 @@ public class PreferencesFragment extends PreferenceFragment
         final Preference mVersion = findPreference("prefs_version");
         mVersion.setEnabled(false);
         try {
-            final PackageInfo pInfo = activity.getPackageManager()
-                    .getPackageInfo(getActivity().getPackageName(), 0);
+            final PackageInfo pInfo = mActivity.getPackageManager()
+                    .getPackageInfo(mActivity.getPackageName(), 0);
             mVersion.setTitle(getString(R.string.app_version_name, pInfo.versionName));
             mVersion.setSummary(getString(R.string.app_version_code, pInfo.versionCode));
         } catch (Exception ignored) {

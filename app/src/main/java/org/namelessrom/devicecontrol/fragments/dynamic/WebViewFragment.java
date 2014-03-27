@@ -55,7 +55,7 @@ public class WebViewFragment extends AttachFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_fragment, container, false);
+        final View view = inflater.inflate(R.layout.dialog_fragment, container, false);
 
         final int typeId = getArguments().getInt(WebViewFragment.ARG_TYPE);
         String url;
@@ -72,7 +72,7 @@ public class WebViewFragment extends AttachFragment {
                 break;
         }
 
-        WebView wv = (WebView) view.findViewById(R.id.dialog_help_webview);
+        final WebView wv = (WebView) view.findViewById(R.id.dialog_help_webview);
         wv.getSettings().setTextSize(WebSettings.TextSize.SMALLER);
         wv.loadUrl(url);
 
