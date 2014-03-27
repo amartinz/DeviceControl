@@ -33,5 +33,6 @@ local.properties
 out/
 proguard_logs/
 build/
+app/build.gradle
 # Others
 .DS_Store
