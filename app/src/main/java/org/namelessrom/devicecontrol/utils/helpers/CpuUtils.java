@@ -45,24 +45,78 @@ public class CpuUtils implements PerformanceConstants {
         Utils.writeValue(INTELLI_PLUG_ECO_MODE_PATH, (enable ? "1" : "0"));
     }
 
-    public static String getCpuFrequency(final int cpu) {
-        String path;
-
+    public static String getCpuFrequencyPath(final int cpu) {
         switch (cpu) {
             default:
             case 0:
-                path = CPU0_FREQ_CURRENT_PATH;
-                break;
+                return CPU0_FREQ_CURRENT_PATH;
             case 1:
-                path = CPU1_FREQ_CURRENT_PATH;
-                break;
+                return CPU1_FREQ_CURRENT_PATH;
             case 2:
-                path = CPU2_FREQ_CURRENT_PATH;
-                break;
+                return CPU2_FREQ_CURRENT_PATH;
             case 3:
-                path = CPU3_FREQ_CURRENT_PATH;
-                break;
+                return CPU3_FREQ_CURRENT_PATH;
         }
+    }
+
+    public static String getMaxCpuFrequencyPath(final int cpu) {
+        switch (cpu) {
+            default:
+            case 0:
+                return FREQ0_MAX_PATH;
+            case 1:
+                return FREQ1_MAX_PATH;
+            case 2:
+                return FREQ2_MAX_PATH;
+            case 3:
+                return FREQ3_MAX_PATH;
+        }
+    }
+
+    public static String getMinCpuFrequencyPath(final int cpu) {
+        switch (cpu) {
+            default:
+            case 0:
+                return FREQ0_MIN_PATH;
+            case 1:
+                return FREQ1_MIN_PATH;
+            case 2:
+                return FREQ2_MIN_PATH;
+            case 3:
+                return FREQ3_MIN_PATH;
+        }
+    }
+
+    public static String getGovernorPath(final int cpu) {
+        switch (cpu) {
+            default:
+            case 0:
+                return GOV0_CURRENT_PATH;
+            case 1:
+                return GOV1_CURRENT_PATH;
+            case 2:
+                return GOV2_CURRENT_PATH;
+            case 3:
+                return GOV3_CURRENT_PATH;
+        }
+    }
+
+    public static String getOnlinePath(final int cpu) {
+        switch (cpu) {
+            default:
+            case 0:
+                return "";
+            case 1:
+                return CORE1_ONLINE;
+            case 2:
+                return CORE2_ONLINE;
+            case 3:
+                return CORE3_ONLINE;
+        }
+    }
+
+    public static String getCpuFrequency(final int cpu) {
+        final String path = getCpuFrequencyPath(cpu);
 
         if (Utils.fileExists(path)) {
             return Utils.readOneLine(path);
@@ -135,50 +189,14 @@ public class CpuUtils implements PerformanceConstants {
     private static String getOrSetValue(final int cpu, final String value,
             final String action, final boolean set) {
         String path = "";
-        String pathOnline;
+        final String pathOnline = getOnlinePath(cpu);
 
-        switch (cpu) {
-            default:
-            case 0: // CPU 0
-                if (action.equals(ACTION_FREQ_MAX)) {
-                    path = FREQ0_MAX_PATH;
-                } else if (action.equals(ACTION_FREQ_MIN)) {
-                    path = FREQ0_MIN_PATH;
-                } else if (action.equals(ACTION_GOV)) {
-                    path = GOV0_CURRENT_PATH;
-                }
-                pathOnline = "";
-                break;
-            case 1: // CPU 1
-                if (action.equals(ACTION_FREQ_MAX)) {
-                    path = FREQ1_MAX_PATH;
-                } else if (action.equals(ACTION_FREQ_MIN)) {
-                    path = FREQ1_MIN_PATH;
-                } else if (action.equals(ACTION_GOV)) {
-                    path = GOV1_CURRENT_PATH;
-                }
-                pathOnline = CORE1_ONLINE;
-                break;
-            case 2: // CPU 2
-                if (action.equals(ACTION_FREQ_MAX)) {
-                    path = FREQ2_MAX_PATH;
-                } else if (action.equals(ACTION_FREQ_MIN)) {
-                    path = FREQ2_MIN_PATH;
-                } else if (action.equals(ACTION_GOV)) {
-                    path = GOV2_CURRENT_PATH;
-                }
-                pathOnline = CORE2_ONLINE;
-                break;
-            case 3: // CPU 3
-                if (action.equals(ACTION_FREQ_MAX)) {
-                    path = FREQ3_MAX_PATH;
-                } else if (action.equals(ACTION_FREQ_MIN)) {
-                    path = FREQ3_MIN_PATH;
-                } else if (action.equals(ACTION_GOV)) {
-                    path = GOV3_CURRENT_PATH;
-                }
-                pathOnline = CORE3_ONLINE;
-                break;
+        if (action.equals(ACTION_FREQ_MAX)) {
+            path = getMaxCpuFrequencyPath(cpu);
+        } else if (action.equals(ACTION_FREQ_MIN)) {
+            path = getMinCpuFrequencyPath(cpu);
+        } else if (action.equals(ACTION_GOV)) {
+            path = getGovernorPath(cpu);
         }
 
         if (set) {

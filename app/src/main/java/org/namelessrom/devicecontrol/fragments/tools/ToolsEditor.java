@@ -102,6 +102,24 @@ public class ToolsEditor extends AttachFragment
     // Overridden Methods
     //==============================================================================================
 
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        BusProvider.getBus().register(this);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mEditorType == 2) {
+                    new GetBuildPropOperation().execute();
+                } else {
+                    new GetPropOperation().execute();
+                }
+            }
+        }, HANDLER_DELAY);
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -233,19 +251,6 @@ public class ToolsEditor extends AttachFragment
 
         mShadowTop = view.findViewById(R.id.tools_editor_shadow_top);
         mShadowBottom = view.findViewById(R.id.tools_editor_shadow_bottom);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mEditorType == 2) {
-                    new GetBuildPropOperation().execute();
-                } else {
-                    new GetPropOperation().execute();
-                }
-            }
-        }, HANDLER_DELAY);
-
-        BusProvider.getBus().register(this);
 
         return view;
     }
