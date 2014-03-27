@@ -2,9 +2,7 @@ package org.namelessrom.devicecontrol.widgets.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,25 +14,23 @@ import org.namelessrom.devicecontrol.R;
 
 public class MenuListArrayAdapter extends BaseAdapter {
 
-    Context           mContext;
-    int               layoutResourceId;
-    String[]          titles;
-    int[]             icons;
-    SharedPreferences mPrefs;
+    private Context  mContext;
+    private int      mLayoutResourceId;
+    private String[] mTitles;
+    private int[]    mIcons;
 
-    public MenuListArrayAdapter(final Context mContext, final int layoutResourceId,
+    public MenuListArrayAdapter(final Context context, final int layoutResourceId,
             final String[] titles, final int[] icons) {
 
-        this.layoutResourceId = layoutResourceId;
-        this.mContext = mContext;
-        this.titles = titles;
-        this.icons = icons;
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mContext = context;
+        mLayoutResourceId = layoutResourceId;
+        mTitles = titles;
+        mIcons = icons;
     }
 
     @Override
     public int getCount() {
-        return titles.length;
+        return mTitles.length;
     }
 
     @Override
@@ -55,7 +51,7 @@ public class MenuListArrayAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        return (icons[position] == -1) ? 1 : 0;
+        return (mIcons[position] == -1) ? 1 : 0;
     }
 
     @Override
@@ -69,7 +65,7 @@ public class MenuListArrayAdapter extends BaseAdapter {
         if (v == null) {
             LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             if (type == 0) {
-                v = inflater.inflate(layoutResourceId, parent, false);
+                v = inflater.inflate(mLayoutResourceId, parent, false);
             } else if (type == 1) {
                 v = inflater.inflate(R.layout.menu_header, parent, false);
             }
@@ -77,27 +73,26 @@ public class MenuListArrayAdapter extends BaseAdapter {
 
         final int defaultColor = mContext.getResources().getColor(android.R.color.white);
         if (type == 0) {
-
             final TextView text1 = (TextView) v.findViewById(android.R.id.text1);
             text1.setTextColor(Color.WHITE);
-            text1.setText(titles[position]);
+            text1.setText(mTitles[position]);
 
             final ImageView image = (ImageView) v.findViewById(R.id.image);
-            final int imageRes = icons[position];
+            final int imageRes = mIcons[position];
             if (imageRes == 0) {
                 image.setVisibility(View.INVISIBLE);
             } else {
-                image.setImageDrawable(mContext.getResources().getDrawable(icons[position]));
+                image.setImageDrawable(mContext.getResources().getDrawable(mIcons[position]));
                 image.setColorFilter(Color.parseColor("#FFFFFF"));
                 image.setColorFilter(defaultColor);
             }
-
         } else if (type == 1) {
             final TextView header = (TextView) v.findViewById(R.id.menu_header);
-            header.setText(titles[position].replaceAll("--", ""));
+            header.setText(mTitles[position].replaceAll("--", ""));
             header.setClickable(false);
             header.setTextColor(defaultColor);
         }
+
         return v;
     }
 

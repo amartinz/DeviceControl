@@ -19,6 +19,7 @@
 package org.namelessrom.devicecontrol.widgets.adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
@@ -35,14 +36,14 @@ import java.util.Arrays;
 
 public class PackAdapter extends BaseAdapter {
 
-    Activity          context;
+    Activity          mContext;
     PackageManager    packageManager;
     ArrayList<String> pList;
 
 
     public PackAdapter(Activity context, String pmList[], PackageManager packageManager) {
         super();
-        this.context = context;
+        this.mContext = context;
         this.packageManager = packageManager;
         this.pList = new ArrayList<String>(Arrays.asList(pmList));
     }
@@ -70,37 +71,37 @@ public class PackAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        LayoutInflater inflater = context.getLayoutInflater();
+        View v = convertView;
 
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.pack_item, null);
-
-            holder = new ViewHolder();
-
-            holder.packRaw = (TextView) convertView.findViewById(R.id.packraw);
-            holder.packName = (TextView) convertView.findViewById(R.id.packname);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+        if (v == null) {
+            LayoutInflater vi =
+                    (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            v = vi.inflate(R.layout.pack_item, null);
         }
 
-        PackageInfo packageInfo;
+        ViewHolder holder = (ViewHolder) v.getTag();
+
+        if (holder == null) {
+            holder = new ViewHolder();
+
+            holder.packRaw = (TextView) v.findViewById(R.id.packraw);
+            holder.packName = (TextView) v.findViewById(R.id.packname);
+            holder.imageView = (ImageView) v.findViewById(R.id.icon);
+
+            v.setTag(holder);
+        }
+
         try {
-            packageInfo = context.getPackageManager().getPackageInfo(getItem(position), 0);
+            final PackageManager pm = mContext.getPackageManager();
+            final PackageInfo packageInfo = pm.getPackageInfo(getItem(position), 0);
             holder.packRaw.setText(packageInfo.packageName);
             holder.packName.setText(
                     packageManager.getApplicationLabel(packageInfo.applicationInfo).toString());
             holder.imageView.setImageDrawable(
                     packageManager.getApplicationIcon(packageInfo.applicationInfo));
 
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        } catch (PackageManager.NameNotFoundException ignored) { /* TODO: Error? */ }
 
-
-        return convertView;
+        return v;
     }
 }

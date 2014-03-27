@@ -23,32 +23,29 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-/**
- * Created by alex on 18.12.13.
- */
 public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-    private final List<Fragment> fragments;
-    private final List<String>   titles;
+    private final List<Fragment> mFragments;
+    private final List<String>   mTitles;
 
-    public ScreenSlidePagerAdapter(FragmentManager fm, List<Fragment> fragments,
-            List<String> titles) {
+    public ScreenSlidePagerAdapter(final FragmentManager fm, final List<Fragment> fragments,
+            final List<String> titles) {
         super(fm);
-        this.fragments = fragments;
-        this.titles = titles;
+        mFragments = fragments;
+        mTitles = titles;
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
-        return titles.get(position);
+    public CharSequence getPageTitle(final int position) {
+        return mTitles.get(position);
     }
 
     @Override
-    public Fragment getItem(int position) {
-        return this.fragments.get(position);
+    public Fragment getItem(final int position) {
+        return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return this.fragments.size();
+        return mFragments.size();
     }
 }

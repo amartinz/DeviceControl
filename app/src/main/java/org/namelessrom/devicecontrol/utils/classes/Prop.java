@@ -41,11 +41,11 @@ public class Prop implements Comparable<Prop> {
         return mData;
     }
 
-    public void setVal(String d) {
+    public void setVal(final String d) {
         mData = d;
     }
 
-    public int compareTo(Prop o) {
+    public int compareTo(final Prop o) {
         if (mName != null) {
             return mName.toLowerCase().compareTo(o.getName().toLowerCase());
         } else {

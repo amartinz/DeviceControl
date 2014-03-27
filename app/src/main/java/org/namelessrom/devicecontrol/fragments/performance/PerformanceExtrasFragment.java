@@ -30,15 +30,15 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.parents.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.SeekBarPreference;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
-import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.preferences.SeekBarPreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,23 +171,27 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             Utils.runRootCommand(Scripts.toggleForceHighEndGfx());
             changed = true;
         } else if (preference == mLcdPowerReduce) {
-            boolean value = (Boolean) o;
-            new WriteAndForget(sLcdPowerReduceFile, (value ? "1" : "0")).run();
+            final boolean value = (Boolean) o;
+            CMDProcessor.runSuCommand(
+                    Utils.getWriteCommand(sLcdPowerReduceFile, (value ? "1" : "0"))
+            );
             PreferenceHelper.setBoolean(KEY_LCD_POWER_REDUCE, value);
             changed = true;
         } else if (preference == mIntelliPlug) {
-            boolean value = (Boolean) o;
+            final boolean value = (Boolean) o;
             CpuUtils.enableIntelliPlug(value);
             PreferenceHelper.setBoolean(KEY_INTELLI_PLUG, value);
             changed = true;
         } else if (preference == mIntelliPlugEco) {
-            boolean value = (Boolean) o;
+            final boolean value = (Boolean) o;
             CpuUtils.enableIntelliPlugEcoMode(value);
             PreferenceHelper.setBoolean(KEY_INTELLI_PLUG_ECO, value);
             changed = true;
         } else if (preference == mMcPowerScheduler) {
-            int value = (Integer) o;
-            new WriteAndForget(sMcPowerSchedulerFile, "" + o).run();
+            final int value = (Integer) o;
+            CMDProcessor.runSuCommand(
+                    Utils.getWriteCommand(sLcdPowerReduceFile, String.valueOf(value))
+            );
             PreferenceHelper.setInt(KEY_MC_POWER_SCHEDULER, value);
             changed = true;
         }

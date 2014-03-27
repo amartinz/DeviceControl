@@ -57,7 +57,8 @@ public class PerformanceInformationFragment extends AttachFragment implements De
     private TextView     mHeaderTotalStateTime;
     private TextView     mStatesWarning;
 
-    private LinearLayout mDeviceInfo;
+    private LinearLayout   mDeviceInfo;
+    private LayoutInflater mInflater;
 
     private boolean mUpdatingData = false;
 
@@ -90,7 +91,7 @@ public class PerformanceInformationFragment extends AttachFragment implements De
     @Override
     public void onDetach() {
         try {
-            getActivity().unregisterReceiver(mBatteryReceiver);
+            mActivity.unregisterReceiver(mBatteryReceiver);
         } catch (Exception ignored) {
             // not registered
         }
@@ -138,7 +139,8 @@ public class PerformanceInformationFragment extends AttachFragment implements De
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_performance, container, false);
+        mInflater = inflater;
+        final View view = mInflater.inflate(R.layout.fragment_performance, container, false);
 
         mStatesView = (LinearLayout) view.findViewById(R.id.ui_states_view);
         mAdditionalStates = (TextView) view.findViewById(R.id.ui_additional_states);
@@ -189,9 +191,8 @@ public class PerformanceInformationFragment extends AttachFragment implements De
 
     private View generateRow(final ViewGroup parent, final String title, final String value,
             final String barLeft, final String barRight, final int progress) {
-
-        final LayoutInflater inflater = LayoutInflater.from(getActivity());
-        final LinearLayout view = (LinearLayout) inflater.inflate(
+        ;
+        final LinearLayout view = (LinearLayout) mInflater.inflate(
                 R.layout.row_device, parent, false);
 
         final TextView deviceTitle = (TextView) view.findViewById(R.id.ui_device_title);
@@ -328,14 +329,10 @@ public class PerformanceInformationFragment extends AttachFragment implements De
     }
 
     private View generateStateRow(CpuStateMonitor.CpuState state, ViewGroup parent) {
+        if (!isAdded()) { return null; }
 
-        if (!isAdded()) {
-            return null;
-        }
-
-        final LayoutInflater inflater = LayoutInflater.from(getActivity());
         final LinearLayout view =
-                (LinearLayout) inflater.inflate(R.layout.row_state, parent, false);
+                (LinearLayout) mInflater.inflate(R.layout.row_state, parent, false);
 
         float per = (float) state.duration * 100 / monitor.getTotalStateTime();
         final String sPer = (int) per + "%";
@@ -394,7 +391,7 @@ public class PerformanceInformationFragment extends AttachFragment implements De
         } else {
             stopRepeatingTask();
         }
-        logDebug(getClass().getSimpleName() + " isVisible:" + (isVisibleToUser ? "true" : "false"));
+        logDebug("isVisible: " + (isVisibleToUser ? "true" : "false"));
     }
 
 }

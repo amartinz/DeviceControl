@@ -21,13 +21,11 @@ package org.namelessrom.devicecontrol.fragments.tools;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -45,9 +43,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.otto.Subscribe;
+
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.Prop;
+import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.threads.FireAndForget;
@@ -59,34 +63,37 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ToolsEditor extends Fragment
+import static org.namelessrom.devicecontrol.Application.logDebug;
+
+public class ToolsEditor extends AttachFragment
         implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener {
 
     //==============================================================================================
     // Fields
     //==============================================================================================
     private static final String ARG_EDITOR    = "arg_editor";
-    private static final int    HANDLER_DELAY = 250;
+    private static final int    HANDLER_DELAY = 200;
 
     private ListView       packList;
     private LinearLayout   linlaHeaderProgress;
     private LinearLayout   nofiles;
     private RelativeLayout tools;
+    private View           mShadowTop, mShadowBottom;
+
     private       PropAdapter adapter    = null;
     private       EditText    filterText = null;
     private final List<Prop>  props      = new ArrayList<Prop>();
     private final String      dn         = DC_BACKUP_DIR;
-    private View mShadowTop, mShadowBottom;
 
-    private final String syspath = "/system/etc/";
-    private       String mod     = "sysctl";
+    private final String syspath    = "/system/etc/";
+    private       String mod        = "sysctl";
+    private       String mBuildName = "build";
     private int mEditorType;
-    private String mBuildName = "build";
 
     public static ToolsEditor newInstance(final int editor) {
-        Bundle b = new Bundle();
+        final Bundle b = new Bundle();
         b.putInt(ToolsEditor.ARG_EDITOR, editor);
-        ToolsEditor fragment = new ToolsEditor();
+        final ToolsEditor fragment = new ToolsEditor();
         fragment.setArguments(b);
         return fragment;
     }
@@ -94,6 +101,12 @@ public class ToolsEditor extends Fragment
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        BusProvider.getBus().unregister(this);
+    }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -115,7 +128,7 @@ public class ToolsEditor extends Fragment
                 break;
         }
 
-        View view = inflater.inflate(R.layout.tools_prop_list, container, false);
+        final View view = inflater.inflate(R.layout.tools_prop_list, container, false);
 
         packList = (ListView) view.findViewById(R.id.applist);
         packList.setOnItemClickListener(this);
@@ -159,7 +172,7 @@ public class ToolsEditor extends Fragment
             }
         });
         if (mEditorType == 2) {
-            ImageButton addButton = (ImageButton) view.findViewById(R.id.addBtn);
+            final ImageButton addButton = (ImageButton) view.findViewById(R.id.addBtn);
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -168,7 +181,7 @@ public class ToolsEditor extends Fragment
             });
             addButton.setVisibility(View.VISIBLE);
 
-            ImageButton restoreButton = (ImageButton) view.findViewById(R.id.restoreBtn);
+            final ImageButton restoreButton = (ImageButton) view.findViewById(R.id.restoreBtn);
             restoreButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -178,11 +191,11 @@ public class ToolsEditor extends Fragment
             });
             restoreButton.setVisibility(View.VISIBLE);
         } else {
-            ImageButton applyBtn = (ImageButton) view.findViewById(R.id.applyBtn);
+            final ImageButton applyBtn = (ImageButton) view.findViewById(R.id.applyBtn);
             applyBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View arg0) {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
                     dialog.setTitle(getString(R.string.dialog_warning))
                             .setMessage(getString(R.string.dialog_warning_apply));
                     dialog.setNegativeButton(getString(android.R.string.cancel),
@@ -205,7 +218,7 @@ public class ToolsEditor extends Fragment
                                             + ";" + "busybox sysctl -p " + syspath + mod
                                             + ".conf" + ";", true).run();
                                     dialogInterface.dismiss();
-                                    Toast.makeText(getActivity()
+                                    Toast.makeText(mActivity
                                             , getString(R.string.toast_settings_applied)
                                             , Toast.LENGTH_SHORT).show();
                                 }
@@ -232,6 +245,8 @@ public class ToolsEditor extends Fragment
             }
         }, HANDLER_DELAY);
 
+        BusProvider.getBus().register(this);
+
         return view;
     }
 
@@ -257,8 +272,7 @@ public class ToolsEditor extends Fragment
     private class GetPropOperation extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(final String... params) {
-
-            StringBuilder sb = new StringBuilder();
+            final StringBuilder sb = new StringBuilder();
             sb.append("busybox mkdir -p ").append(dn).append(";\n");
 
             if (new File(syspath + mod + ".conf").exists()) {
@@ -281,7 +295,7 @@ public class ToolsEditor extends Fragment
                     break;
             }
 
-            new FireAndGet(sb.toString(), readHandler).run();
+            new FireAndGet(sb.toString(), false, mActivity).run();
 
             return null;
         }
@@ -292,9 +306,7 @@ public class ToolsEditor extends Fragment
             nofiles.setVisibility(View.GONE);
             tools.setVisibility(View.GONE);
         }
-
     }
-
 
     private class GetBuildPropOperation extends AsyncTask<String, Void, Void> {
         @Override
@@ -305,19 +317,19 @@ public class ToolsEditor extends Fragment
                     ? mBuildName + ".prop"
                     : mBuildName + "-" + Build.DISPLAY.replace(" ", "_") + ".prop";
             if (!new File(dn + "/" + mBuildName).exists()) {
-                new FireAndForget("busybox cp /system/build.prop "
-                        + dn + "/" + mBuildName, false).run();
-                getActivity().runOnUiThread(new Runnable() {
+                CMDProcessor.runShellCommand("busybox cp /system/build.prop "
+                        + dn + "/" + mBuildName);
+                mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getActivity(),
+                        Toast.makeText(mActivity,
                                 getString(R.string.etc_prop_backup, dn + "/" + mBuildName),
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
             }
 
-            new FireAndGet("cat /system/build.prop", readHandler, true).run();
+            new FireAndGet("cat /system/build.prop", true, mActivity).run();
 
             return null;
         }
@@ -328,22 +340,16 @@ public class ToolsEditor extends Fragment
         }
     }
 
-    final Handler readHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            final int action = msg.getData().getInt(READ_VALUE_ACTION);
-            final String text = msg.getData().getString(READ_VALUE_TEXT);
-
-            switch (action) {
-                case READ_VALUE_ACTION_RESULT:
-                    if (mEditorType == 2) {
-                        loadBuildProp(text);
-                    } else {
-                        loadProp(text);
-                    }
-                    break;
-            }
+    @Subscribe
+    public void onReadPropsCompleted(final ShellOutputEvent event) {
+        final String text = event.getOutput();
+        logDebug("onReadPropsCompleted: " + text);
+        if (mEditorType == 2) {
+            loadBuildProp(text);
+        } else {
+            loadProp(text);
         }
-    };
+    }
 
     //==============================================================================================
     // Methods
@@ -352,7 +358,7 @@ public class ToolsEditor extends Fragment
     void loadProp(final String result) {
         if ((result != null) && (!result.isEmpty())) {
             props.clear();
-            String[] p = result.split(" ");
+            final String[] p = result.split(" ");
             for (String aP : p) {
                 if (aP.trim().length() > 0 && aP != null) {
                     final String pv = Utils.readOneLine(aP).trim();
@@ -369,7 +375,7 @@ public class ToolsEditor extends Fragment
                 tools.setVisibility(View.VISIBLE);
                 mShadowTop.setVisibility(View.VISIBLE);
                 mShadowBottom.setVisibility(View.VISIBLE);
-                adapter = new PropAdapter(getActivity(), props);
+                adapter = new PropAdapter(mActivity, props);
                 packList.setAdapter(adapter);
             }
         }
@@ -377,7 +383,7 @@ public class ToolsEditor extends Fragment
 
     void loadBuildProp(final String s) {
         props.clear();
-        String p[] = s.split("\n");
+        final String p[] = s.split("\n");
         for (String aP : p) {
             if (!aP.contains("#") && aP.trim().length() > 0 && aP != null && aP.contains("=")) {
                 aP = aP.replace("[", "").replace("]", "");
@@ -402,7 +408,7 @@ public class ToolsEditor extends Fragment
             tools.setVisibility(View.VISIBLE);
             mShadowTop.setVisibility(View.VISIBLE);
             mShadowBottom.setVisibility(View.VISIBLE);
-            adapter = new PropAdapter(getActivity(), props);
+            adapter = new PropAdapter(mActivity, props);
             packList.setAdapter(adapter);
         }
     }
@@ -414,8 +420,8 @@ public class ToolsEditor extends Fragment
     private void editPropDialog(final Prop p) {
         String title;
 
-        LayoutInflater factory = LayoutInflater.from(getActivity());
-        final View editDialog = factory.inflate(R.layout.prop_edit_dialog, null);
+        final View editDialog = LayoutInflater.from(mActivity)
+                .inflate(R.layout.prop_edit_dialog, null);
         final EditText tv = (EditText) editDialog.findViewById(R.id.vprop);
         final TextView tn = (TextView) editDialog.findViewById(R.id.nprop);
 
@@ -427,14 +433,13 @@ public class ToolsEditor extends Fragment
             title = getString(R.string.etc_add_prop_title);
         }
 
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(mActivity)
                 .setTitle(title)
                 .setView(editDialog)
                 .setNegativeButton(getString(android.R.string.cancel),
                         new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(final DialogInterface dialog, final int which) {
-                            }
+                            public void onClick(final DialogInterface dialog, final int which) { }
                         }
                 )
                 .setPositiveButton(getString(R.string.etc_save)
@@ -444,7 +449,7 @@ public class ToolsEditor extends Fragment
                         if (p != null) {
                             if (tv.getText() != null) {
                                 p.setVal(tv.getText().toString().trim());
-                                new FireAndForget(getActivity().getFilesDir() + "/utils -setprop \""
+                                new FireAndForget(mActivity.getFilesDir() + "/utils -setprop \""
                                         + p.getName() + "=" + p.getVal() + "\" " + dn
                                         + "/" + mod + ".conf", true).run();
                             }
@@ -454,7 +459,7 @@ public class ToolsEditor extends Fragment
                                     && tn.getText().toString().trim().length() > 0) {
                                 props.add(new Prop(tn.getText().toString().trim(),
                                         tv.getText().toString().trim()));
-                                new FireAndForget(getActivity().getFilesDir() + "/utils -setprop \""
+                                new FireAndForget(mActivity.getFilesDir() + "/utils -setprop \""
                                         + tn.getText().toString().trim() + "="
                                         + tv.getText().toString().trim() + "\" " + dn + "/"
                                         + mod + ".conf", true).run();
@@ -469,15 +474,15 @@ public class ToolsEditor extends Fragment
     private void editBuildPropDialog(final Prop p) {
         String title;
 
-        LayoutInflater factory = LayoutInflater.from(getActivity());
-        final View editDialog = factory.inflate(R.layout.prop_build_prop_dialog, null);
+        final View editDialog = LayoutInflater.from(mActivity)
+                .inflate(R.layout.prop_build_prop_dialog, null);
         final EditText tv = (EditText) editDialog.findViewById(R.id.vprop);
         final EditText tn = (EditText) editDialog.findViewById(R.id.nprop);
         final TextView tt = (TextView) editDialog.findViewById(R.id.text1);
         final Spinner sp = (Spinner) editDialog.findViewById(R.id.spinner);
         final LinearLayout lpresets = (LinearLayout) editDialog.findViewById(R.id.lpresets);
-        ArrayAdapter<CharSequence> vAdapter =
-                new ArrayAdapter<CharSequence>(getActivity(), android.R.layout.simple_spinner_item);
+        final ArrayAdapter<CharSequence> vAdapter =
+                new ArrayAdapter<CharSequence>(mActivity, android.R.layout.simple_spinner_item);
         vAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         vAdapter.clear();
 
@@ -535,7 +540,7 @@ public class ToolsEditor extends Fragment
             public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(mActivity)
                 .setTitle(title)
                 .setView(editDialog)
                 .setNegativeButton(getString(android.R.string.cancel),
@@ -552,7 +557,7 @@ public class ToolsEditor extends Fragment
                         if (p != null) {
                             if (tv.getText() != null) {
                                 p.setVal(tv.getText().toString().trim());
-                                new FireAndForget(getActivity().getFilesDir() + "/utils -setprop \""
+                                new FireAndForget(mActivity.getFilesDir() + "/utils -setprop \""
                                         + p.getName() + "=" + p.getVal() + "\"", true, true).run();
                             }
                         } else {
@@ -561,7 +566,7 @@ public class ToolsEditor extends Fragment
                                     && tn.getText().toString().trim().length() > 0) {
                                 props.add(new Prop(tn.getText().toString().trim(),
                                         tv.getText().toString().trim()));
-                                new FireAndForget(getActivity().getFilesDir() + "/utils -setprop \""
+                                new FireAndForget(mActivity.getFilesDir() + "/utils -setprop \""
                                         + tn.getText().toString().trim() + "="
                                         + tv.getText().toString().trim() + "\"", true, true).run();
                             }
@@ -574,7 +579,7 @@ public class ToolsEditor extends Fragment
     }
 
     private void makeDialog(String t, String m, byte op, Prop p) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         builder.setTitle(t)
                 .setMessage(m)
                 .setNegativeButton(getString(android.R.string.cancel),
@@ -625,7 +630,7 @@ public class ToolsEditor extends Fragment
                                 + "/system/build.prop;\n", true, true).run();
                         new GetBuildPropOperation().execute();
                     } else {
-                        Toast.makeText(getActivity()
+                        Toast.makeText(mActivity
                                 , getString(R.string.etc_prop_no_backup), Toast.LENGTH_LONG).show();
                     }
                     break;
