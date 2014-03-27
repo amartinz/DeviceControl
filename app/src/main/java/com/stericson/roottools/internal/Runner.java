@@ -37,9 +37,9 @@ public class Runner extends Thread {
 
     private static final String LOG_TAG = "RootTools::Runner";
 
-    Context context;
-    String  binaryName;
-    String  parameter;
+    final Context context;
+    final String  binaryName;
+    final String  parameter;
 
     public Runner(Context context, String binaryName, String parameter) {
         this.context = context;

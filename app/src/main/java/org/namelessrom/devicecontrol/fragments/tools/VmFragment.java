@@ -1,7 +1,6 @@
 package org.namelessrom.devicecontrol.fragments.tools;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -136,11 +135,10 @@ public class VmFragment extends AttachPreferenceFragment implements DeviceConsta
 
     private void openDialog(int currentProgress, String title, final int min, final int max,
             final Preference pref, final String path, final String key) {
-        final Context context = getActivity();
-        final Resources res = getActivity().getResources();
+        final Resources res = mActivity.getResources();
         final String cancel = res.getString(android.R.string.cancel);
         final String ok = res.getString(android.R.string.ok);
-        final LayoutInflater factory = LayoutInflater.from(context);
+        final LayoutInflater factory = LayoutInflater.from(mActivity);
         final View alphaDialog = factory.inflate(R.layout.dialog_seekbar, null);
 
         final SeekBar seekbar = (SeekBar) alphaDialog.findViewById(R.id.seek_bar);
@@ -179,8 +177,7 @@ public class VmFragment extends AttachPreferenceFragment implements DeviceConsta
                         val = max;
                     }
                     seekbar.setProgress(val);
-                } catch (NumberFormatException ex) {
-                }
+                } catch (NumberFormatException ignored) { }
             }
         });
 
@@ -204,7 +201,7 @@ public class VmFragment extends AttachPreferenceFragment implements DeviceConsta
                 };
         seekbar.setOnSeekBarChangeListener(seekBarChangeListener);
 
-        new AlertDialog.Builder(context)
+        new AlertDialog.Builder(mActivity)
                 .setTitle(title)
                 .setView(alphaDialog)
                 .setNegativeButton(cancel,
@@ -227,7 +224,7 @@ public class VmFragment extends AttachPreferenceFragment implements DeviceConsta
                         pref.setSummary(Integer.toString(newProgress));
                         Utils.writeValue(path, Integer.toString(newProgress));
                         final SharedPreferences.Editor editor =
-                                PreferenceManager.getDefaultSharedPreferences(context).edit();
+                                PreferenceManager.getDefaultSharedPreferences(mActivity).edit();
                         editor.putInt(key, newProgress);
                         editor.commit();
                     }

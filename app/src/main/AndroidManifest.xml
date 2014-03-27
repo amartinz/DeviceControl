@@ -65,7 +65,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.stericson.roottoolstests.SanityCheckRootTools" />
 
         <!-- Services -->
         <service android:name=".services.TaskerService" />
@@ -81,9 +80,6 @@
             <intent-filter>
                 <action android:name="android.provider.Telephony.SECRET_CODE" />
 
-                <data
-                    android:host="13371"
-                    android:scheme="android_secret_code" />
                 <data
                     android:host="13372"
                     android:scheme="android_secret_code" />

@@ -251,7 +251,7 @@ public class CpuUtils implements PerformanceConstants {
     /**
      * Convert to MHz and append a tag
      *
-     * @param mhzString
+     * @param mhzString The string to convert to MHz
      * @return tagged and converted String
      */
     public static String toMHz(final String mhzString) {

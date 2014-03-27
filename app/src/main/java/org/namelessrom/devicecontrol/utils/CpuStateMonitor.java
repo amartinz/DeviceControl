@@ -36,8 +36,8 @@ import java.util.List;
 
 public class CpuStateMonitor implements DeviceConstants {
 
-    private List<CpuState>    mStates  = new ArrayList<CpuState>();
-    private SparseArray<Long> mOffsets = new SparseArray<Long>();
+    private final List<CpuState>    mStates  = new ArrayList<CpuState>();
+    private final SparseArray<Long> mOffsets = new SparseArray<Long>();
 
     public class CPUStateMonitorException extends Exception {
         public CPUStateMonitorException(String s) {
@@ -54,15 +54,15 @@ public class CpuStateMonitor implements DeviceConstants {
         public int  freq     = 0;
         public long duration = 0;
 
-        public int compareTo(CpuState state) {
-            Integer a = freq;
-            Integer b = state.freq;
+        public int compareTo(final CpuState state) {
+            final Integer a = freq;
+            final Integer b = state.freq;
             return a.compareTo(b);
         }
     }
 
     public List<CpuState> getStates() {
-        List<CpuState> states = new ArrayList<CpuState>();
+        final List<CpuState> states = new ArrayList<CpuState>();
 
         for (CpuState state : mStates) {
             long duration = state.duration;
@@ -95,41 +95,19 @@ public class CpuStateMonitor implements DeviceConstants {
         return sum - offset;
     }
 
-    public SparseArray<Long> getOffsets() {
-        return mOffsets;
-    }
-
-    public void setOffsets(SparseArray<Long> offsets) {
-        mOffsets = offsets;
-    }
-
-    public void setOffsets() throws CPUStateMonitorException {
-        mOffsets.clear();
-        updateStates();
-
-        for (CpuState state : mStates) {
-            mOffsets.put(state.freq, state.duration);
-        }
-    }
-
-    public void removeOffsets() {
-        mOffsets.clear();
-    }
-
     public List<CpuState> updateStates() throws CPUStateMonitorException {
         try {
-            InputStream is = new FileInputStream(CpuUtils.FREQ_TIME_IN_STATE_PATH);
-            InputStreamReader ir = new InputStreamReader(is);
-            BufferedReader br = new BufferedReader(ir);
+            final InputStream is = new FileInputStream(CpuUtils.FREQ_TIME_IN_STATE_PATH);
+            final InputStreamReader ir = new InputStreamReader(is);
+            final BufferedReader br = new BufferedReader(ir);
             mStates.clear();
             readInStates(br);
             is.close();
         } catch (IOException e) {
-            throw new CPUStateMonitorException(
-                    "Problem opening time-in-states file");
+            throw new CPUStateMonitorException("Problem processing time-in-states file");
         }
 
-        long sleepTime = (SystemClock.elapsedRealtime() - SystemClock.uptimeMillis()) / 10;
+        final long sleepTime = (SystemClock.elapsedRealtime() - SystemClock.uptimeMillis()) / 10;
         mStates.add(new CpuState(0, sleepTime));
 
         Collections.sort(mStates, Collections.reverseOrder());
@@ -137,17 +115,12 @@ public class CpuStateMonitor implements DeviceConstants {
         return mStates;
     }
 
-    private void readInStates(BufferedReader br)
-            throws CPUStateMonitorException {
-        try {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] nums = line.split(" ");
-                mStates.add(new CpuState(Integer.parseInt(nums[0]), Long.parseLong(nums[1])));
-            }
-        } catch (IOException e) {
-            throw new CPUStateMonitorException(
-                    "Problem processing time-in-states file");
+    private void readInStates(final BufferedReader br) throws IOException {
+        String line;
+        String[] nums;
+        while ((line = br.readLine()) != null) {
+            nums = line.split(" ");
+            mStates.add(new CpuState(Integer.parseInt(nums[0]), Long.parseLong(nums[1])));
         }
     }
 }

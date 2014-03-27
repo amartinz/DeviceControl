@@ -17,8 +17,6 @@
 
 package org.namelessrom.devicecontrol.utils.classes;
 
-import android.util.Log;
-
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.BufferedReader;
@@ -32,8 +30,6 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
  * Glove mode / high touch sensitivity (on Samsung Galaxy S4)
  */
 public class HighTouchSensitivity {
-
-    private static final String TAG = "HighTouchSensitivity";
 
     public final static  String COMMAND_PATH        = "/sys/class/sec/tsp/cmd";
     private final static String COMMAND_LIST_PATH   = "/sys/class/sec/tsp/cmd_list";
@@ -49,7 +45,7 @@ public class HighTouchSensitivity {
      */
     public static boolean isSupported() {
         boolean supported = false;
-        File f = new File(COMMAND_PATH);
+        final File f = new File(COMMAND_PATH);
 
         // Check to make sure that the kernel supports glove mode
         if (f.exists()) {
@@ -63,22 +59,18 @@ public class HighTouchSensitivity {
                         break;
                     }
                 }
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             } finally {
                 try {
                     if (reader != null) {
                         reader.close();
                     }
-                } catch (IOException e) {
+                } catch (IOException ignored) {
                 }
             }
         }
 
-        if (supported) {
-            Log.v(TAG, "Glove mode / high touch sensitivity is supported");
-        } else {
-            Log.e(TAG, "Glove mode / high touch sensitivity is NOT supported");
-        }
+        logDebug("Glove mode / high touch sensitivity supported" + (supported ? "true" : "false"));
 
         return supported;
     }

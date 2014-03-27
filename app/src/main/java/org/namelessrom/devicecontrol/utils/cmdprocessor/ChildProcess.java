@@ -10,8 +10,8 @@ public class ChildProcess {
     private static final int PIPE_SIZE = 1024;
 
     private class ChildReader extends Thread {
-        InputStream  mStream;
-        StringBuffer mBuffer;
+        final InputStream  mStream;
+        final StringBuffer mBuffer;
 
         ChildReader(InputStream is, StringBuffer buf) {
             mStream = is;
@@ -38,8 +38,8 @@ public class ChildProcess {
     }
 
     private class ChildWriter extends Thread {
-        OutputStream mStream;
-        String       mBuffer;
+        final OutputStream mStream;
+        final String       mBuffer;
 
         ChildWriter(OutputStream os, String buf) {
             mStream = os;
@@ -66,15 +66,15 @@ public class ChildProcess {
         }
     }
 
-    private long         mStartTime;
-    private Process      mChildProc;
-    private ChildWriter  mChildStdinWriter;
-    private ChildReader  mChildStdoutReader;
-    private ChildReader  mChildStderrReader;
-    private StringBuffer mChildStdout;
-    private StringBuffer mChildStderr;
-    private int          mExitValue;
-    private long         mEndTime;
+    private final long         mStartTime;
+    private       Process      mChildProc;
+    private       ChildWriter  mChildStdinWriter;
+    private       ChildReader  mChildStdoutReader;
+    private       ChildReader  mChildStderrReader;
+    private       StringBuffer mChildStdout;
+    private       StringBuffer mChildStderr;
+    private       int          mExitValue;
+    private       long         mEndTime;
 
     public ChildProcess(String[] cmdarray, String childStdin) {
         mStartTime = nanoTime();

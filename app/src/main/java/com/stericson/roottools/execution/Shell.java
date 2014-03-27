@@ -59,12 +59,12 @@ public class Shell {
     public static  boolean isExecuting  = false;
     public static  boolean isReading    = false;
 
-    private int     maxCommands   = 1000;
-    private int     read          = 0;
-    private int     write         = 0;
-    private int     totalExecuted = 0;
-    private int     totalRead     = 0;
-    private boolean isCleaning    = false;
+    private final int     maxCommands   = 1000;
+    private       int     read          = 0;
+    private       int     write         = 0;
+    private       int     totalExecuted = 0;
+    private       int     totalRead     = 0;
+    private       boolean isCleaning    = false;
 
     //private constructor responsible for opening/constructing the shell
     private Shell(String cmd) throws IOException, TimeoutException, RootDeniedException {
@@ -149,7 +149,7 @@ public class Shell {
     }
 
 
-    public Command add(Command command) throws IOException {
+    public Command add(Command command) {
         if (close) {
             throw new IllegalStateException(
                     "Unable to add commands to a closed shell");
@@ -165,7 +165,7 @@ public class Shell {
         return command;
     }
 
-    public void useCWD(Context context) throws IOException, TimeoutException, RootDeniedException {
+    public void useCWD(Context context) throws IOException {
         add(
                 new CommandCapture(
                         -1,
@@ -205,7 +205,7 @@ public class Shell {
         }
     }
 
-    public void close() throws IOException {
+    public void close() {
         if (this == rootShell) { rootShell = null; } else if (this == shell) {
             shell = null;
         } else if (this == customShell) {
@@ -554,9 +554,9 @@ public class Shell {
     protected static class Worker extends Thread {
         public int exit = -911;
 
-        public Process            proc;
-        public BufferedReader     in;
-        public OutputStreamWriter out;
+        public final Process            proc;
+        public final BufferedReader     in;
+        public final OutputStreamWriter out;
 
         private Worker(Process proc, BufferedReader in, OutputStreamWriter out) {
             this.proc = proc;

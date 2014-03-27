@@ -14,7 +14,7 @@ import org.namelessrom.devicecontrol.R;
 
 public class SlidingActivityHelper {
 
-    private Activity mActivity;
+    private final Activity mActivity;
 
     private SlidingMenu mSlidingMenu;
 

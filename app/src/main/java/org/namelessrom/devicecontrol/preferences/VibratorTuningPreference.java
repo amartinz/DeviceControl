@@ -36,10 +36,10 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.threads.WriteAndForget;
 
 /**
  * Special preference type that allows configuration of
@@ -151,7 +151,9 @@ public class VibratorTuningPreference extends DialogPreference
             // Store percent value in SharedPreferences object
             PreferenceHelper.setInt(KEY_VIBRATOR_TUNING, mSeekBar.getProgress());
         } else {
-            new WriteAndForget(FILE_VIBRATOR, String.valueOf(mOriginalValue)).run();
+            CMDProcessor.runSuCommand(
+                    Utils.getWriteCommand(FILE_VIBRATOR, String.valueOf(mOriginalValue))
+            );
         }
     }
 
@@ -166,9 +168,6 @@ public class VibratorTuningPreference extends DialogPreference
             mProgressThumb.setColorFilter(shouldWarn ? mRedFilter : null);
         }
         mValue.setText(String.format("%d%%", progress));
-
-        final String value = String.valueOf(percentToStrength(seekBar.getProgress()));
-        new WriteAndForget(FILE_VIBRATOR, value).run();
     }
 
     @Override
@@ -178,6 +177,9 @@ public class VibratorTuningPreference extends DialogPreference
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+        final String value = String.valueOf(percentToStrength(seekBar.getProgress()));
+        CMDProcessor.runSuCommand(Utils.getWriteCommand(FILE_VIBRATOR, value));
+
         vib.vibrate(200);
     }
 

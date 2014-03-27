@@ -28,7 +28,7 @@ import android.content.Context;
 import com.stericson.roottools.RootTools;
 
 public class JavaCommandCapture extends Command {
-    private StringBuilder sb = new StringBuilder();
+    private final StringBuilder sb = new StringBuilder();
 
     public JavaCommandCapture(int id, Context context, String... command) {
         super(id, true, context, command);
