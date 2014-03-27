@@ -19,9 +19,7 @@
 package org.namelessrom.devicecontrol.fragments.performance;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +35,13 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
+
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.events.CpuCoreEvent;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.CpuCore;
@@ -51,7 +53,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.namelessrom.devicecontrol.Application.logDebug;
 import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.SOB_CPU;
 
 public class PerformanceCpuSettings extends AttachFragment
@@ -59,6 +60,7 @@ public class PerformanceCpuSettings extends AttachFragment
 
     public static final int ID = 210;
 
+    private CheckBox mStatusHide;
     private SeekBar  mMaxSlider;
     private SeekBar  mMinSlider;
     private Spinner  mGovernor;
@@ -74,11 +76,7 @@ public class PerformanceCpuSettings extends AttachFragment
     LinearLayout mCpuInfo;
     private LayoutInflater mInflater;
 
-    private static int     mInterval  = 2000;
-    private static boolean isUpdating = false;
-    private Handler mHandler;
-
-    final Object mLockObject = new Object();
+    private static int mInterval = 2000;
 
     @Override
     public void onAttach(Activity activity) {
@@ -98,9 +96,30 @@ public class PerformanceCpuSettings extends AttachFragment
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mHandler = new Handler();
+    public void onResume() {
+        super.onResume();
+        BusProvider.getBus().register(this);
+        if (!mStatusHide.isChecked()) {
+            CpuCoreMonitor.getInstance(getActivity()).start(mInterval);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BusProvider.getBus().unregister(this);
+        CpuCoreMonitor.getInstance(getActivity()).stop();
+    }
+
+    @Subscribe
+    public void onCoresUpdated(final CpuCoreEvent event) {
+        final List<CpuCore> coreList = event.getStates();
+        if (coreList != null && !coreList.isEmpty()) {
+            mCpuInfo.removeAllViews();
+            for (CpuCore c : coreList) {
+                generateRow(mCpuInfo, c);
+            }
+        }
     }
 
     @Override
@@ -123,18 +142,18 @@ public class PerformanceCpuSettings extends AttachFragment
                 ? getString(R.string.off)
                 : (((double) mInterval) / 1000) + "s"));
 
-        final CheckBox mStatusHide = (CheckBox) view.findViewById(R.id.cpu_info_hide);
+        mStatusHide = (CheckBox) view.findViewById(R.id.cpu_info_hide);
         mStatusHide.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 view.findViewById(R.id.ui_interval).setVisibility(b ? View.GONE : View.VISIBLE);
                 if (b) {
-                    stopRepeatingTask();
+                    CpuCoreMonitor.getInstance(getActivity()).stop();
                     view.findViewById(R.id.speed).setVisibility(View.GONE);
                 } else {
                     view.findViewById(R.id.speed).setVisibility(View.VISIBLE);
                     mInterval = intervalBar.getProgress() + 1000;
-                    startRepeatingTask();
+                    CpuCoreMonitor.getInstance(getActivity()).start(mInterval);
                 }
                 updateSharedPrefs(PREF_HIDE_CPU_INFO, b ? "1" : "0");
             }
@@ -275,9 +294,9 @@ public class PerformanceCpuSettings extends AttachFragment
         } else if (seekBarId == R.id.ui_device_bar) {
             mInterval = seekBar.getProgress() + 1000;
             if (mInterval >= 5000) {
-                stopRepeatingTask();
+                CpuCoreMonitor.getInstance(getActivity()).stop();
             } else {
-                startRepeatingTask();
+                CpuCoreMonitor.getInstance(getActivity()).start(mInterval);
             }
             mIntervalText.setText((mInterval == 5000
                     ? getString(R.string.off)
@@ -345,71 +364,6 @@ public class PerformanceCpuSettings extends AttachFragment
         updateSharedPrefs(PREF_MIN_CPU, current);
     }
 
-    @Override
-    public void onResume() {
-        startRepeatingTask();
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        stopRepeatingTask();
-        super.onPause();
-    }
-
-    final Runnable mDeviceUpdater = new Runnable() {
-        @Override
-        public void run() {
-            synchronized (mLockObject) {
-                new UpdateTask().execute();
-            }
-        }
-    };
-
-    private void startRepeatingTask() {
-        stopRepeatingTask();
-        mDeviceUpdater.run();
-    }
-
-    private void stopRepeatingTask() {
-        if (mHandler != null) {
-            mHandler.removeCallbacks(mDeviceUpdater);
-        }
-    }
-
-    private class UpdateTask extends AsyncTask<Void, Void, Void> {
-
-        private List<CpuCore> coreList;
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            if (!isUpdating) {
-                isUpdating = true;
-                try {
-                    if (coreList == null || coreList.isEmpty()) {
-                        coreList = CpuCoreMonitor.getInstance(getActivity()).updateStates();
-                    }
-                } catch (Exception ignored) { }
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            if (coreList != null && !coreList.isEmpty()) {
-                mCpuInfo.removeAllViews();
-                for (CpuCore c : coreList) {
-                    generateRow(mCpuInfo, c);
-                }
-                coreList.clear();
-                coreList = null;
-                isUpdating = false;
-            }
-            mHandler.postDelayed(mDeviceUpdater, mInterval);
-        }
-    }
-
     public View generateRow(final ViewGroup parent, final CpuCore cpuCore) {
 
         if (!isAdded()) {
@@ -439,17 +393,6 @@ public class PerformanceCpuSettings extends AttachFragment
 
     private void updateSharedPrefs(final String var, final String value) {
         PreferenceHelper.setString(var, value);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            startRepeatingTask();
-        } else {
-            stopRepeatingTask();
-        }
-        logDebug("isVisible: " + (isVisibleToUser ? "true" : "false"));
     }
 }
 
