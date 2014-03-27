@@ -7,9 +7,16 @@ DeviceControl
 
 Third party libraries:
 
-* [ACRA](https://github.com/ACRA/acra)
-* [SlidingMenu by jfeinstein10](https://github.com/jfeinstein10/slidingmenu)
 * android-support-v13
+* [ACRA by Kevin Gaudin](https://github.com/ACRA/acra)
+* [Otto by Square](http://square.github.io/otto/)
+* [SlidingMenu by jfeinstein10](https://github.com/jfeinstein10/slidingmenu)
+
+---
+
+Other third party usages:
+
+* [Subtle Patterns](http://subtlepatterns.com/)
 
 ---
 
