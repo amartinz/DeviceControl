@@ -12,16 +12,10 @@ public final class CMDProcessor {
     private static final String TAG = "aCMDProcessor";
 
     private Boolean can_su;
-    public  sh      sh;
-    public  sh      su;
+    public final sh sh = new sh("sh");
+    public final sh su = new sh("su");
 
-    public CMDProcessor() {
-        // Cannot instantiate this class
-        sh = new sh("sh");
-        su = new sh("su");
-        //throw new AssertionError();
-    }
-
+    public CMDProcessor() { }
 
     /* Run a system command with full redirection */
     public static ChildProcess startSysCmd(String[] cmdarray, String childStdin) {

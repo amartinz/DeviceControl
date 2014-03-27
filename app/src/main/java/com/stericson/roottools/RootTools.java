@@ -78,8 +78,8 @@ public final class RootTools {
     // # Public Variables #
     // --------------------
 
-    public static boolean      debugMode            = false;
-    public static List<String> lastFoundBinaryPaths = new ArrayList<String>();
+    public static       boolean      debugMode            = false;
+    public static final List<String> lastFoundBinaryPaths = new ArrayList<String>();
     public static String utilPath;
 
     /**
@@ -89,7 +89,7 @@ public final class RootTools {
      * By disabling this all callbacks will be called from a thread other than
      * the main UI thread.
      */
-    public static boolean handlerEnabled = true;
+    public static final boolean handlerEnabled = true;
 
 
     /**
@@ -97,7 +97,7 @@ public final class RootTools {
      * <p/>
      * The default is 20000ms
      */
-    public static int default_Command_Timeout = 20000;
+    public static final int default_Command_Timeout = 20000;
 
 
     // ---------------------------
@@ -555,7 +555,7 @@ public final class RootTools {
     /**
      * @return <code>true</code> if your app has been given root access.
      * @throws java.util.concurrent.TimeoutException if this operation times out. (cannot
-     * determine if access is given)
+     *                                               determine if access is given)
      */
     public static boolean isAccessGiven() {
         return getInternals().isAccessGiven();

@@ -147,7 +147,7 @@ public class CommandResult implements Parcelable {
         if (this == o) return true;
         if (!(o instanceof CommandResult)) return false;
 
-        CommandResult that = (CommandResult) o;
+        final CommandResult that = (CommandResult) o;
 
         return (mStartTime == that.mStartTime &&
                 mExitValue == that.mExitValue &&

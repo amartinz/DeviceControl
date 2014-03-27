@@ -94,7 +94,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
 
         private final String AVOIDDIRPATH =
                 "stericson" + File.separator + "RootTools" + File.separator;
-        private List<File> classFiles;
+        private final List<File> classFiles;
 
         public AnnotationsFinder() throws IOException {
             System.out.println("Discovering root class annotations...");
@@ -191,7 +191,8 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
             }
             System.out.println(
                     "All done. ::: anbuild.dex should now be in your project's res/raw/ folder " +
-                            ":::");
+                            ":::"
+            );
         }
 
         protected void lookup(File path, List<File> fileList) {

@@ -49,7 +49,7 @@ public class TaskerService extends Service implements DeviceConstants, FileConst
 
         PreferenceHelper.getInstance(this);
 
-        String action = intent.getAction();
+        final String action = intent.getAction();
 
         if (action != null) {
             if (action.equals(ACTION_TASKER_FSTRIM)) {

@@ -26,11 +26,11 @@ import android.view.View;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.parents.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.helpers.ParseUtils;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
-import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 

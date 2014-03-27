@@ -499,7 +499,7 @@ public final class RootToolsInternalMethods {
      * exceptions.
      * @throws Exception if the operation cannot be completed.
      */
-    public boolean fixUtils(String[] utils) throws Exception {
+    public boolean fixUtils(String[] utils) {
 
         for (String util : utils) {
             if (!checkUtil(util)) {
@@ -745,7 +745,7 @@ public final class RootToolsInternalMethods {
     /**
      * @return <code>true</code> if your app has been given root access.
      * @throws java.util.concurrent.TimeoutException if this operation times out. (cannot
-     * determine if access is given)
+     *                                               determine if access is given)
      */
     public boolean isAccessGiven() {
         try {
@@ -1444,7 +1444,7 @@ public final class RootToolsInternalMethods {
         return i;
     }
 
-    private void commandWait(Command cmd) throws Exception {
+    private void commandWait(Command cmd) {
 
         while (!cmd.isFinished()) {
 
@@ -1465,21 +1465,26 @@ public final class RootToolsInternalMethods {
                     Log.e(Constants.TAG,
                             "Waiting for a command to be executed in a shell that is not " +
                                     "executing and not reading! \n\n Command: " + cmd
-                                    .getCommand());
+                                    .getCommand()
+                    );
                     Exception e = new Exception();
                     e.setStackTrace(Thread.currentThread().getStackTrace());
                     e.printStackTrace();
                 } else if (Shell.isExecuting && !Shell.isReading) {
                     Log.e(Constants.TAG,
-                            "Waiting for a command to be executed in a shell that is executing but not reading! \n\n Command: " + cmd
-                                    .getCommand());
+                            "Waiting for a command to be executed in a shell that is executing " +
+                                    "but not reading! \n\n Command: " + cmd
+                                    .getCommand()
+                    );
                     Exception e = new Exception();
                     e.setStackTrace(Thread.currentThread().getStackTrace());
                     e.printStackTrace();
                 } else {
                     Log.e(Constants.TAG,
-                            "Waiting for a command to be executed in a shell that is not reading! \n\n Command: " + cmd
-                                    .getCommand());
+                            "Waiting for a command to be executed in a shell that is not reading!" +
+                                    " \n\n Command: " + cmd
+                                    .getCommand()
+                    );
                     Exception e = new Exception();
                     e.setStackTrace(Thread.currentThread().getStackTrace());
                     e.printStackTrace();

@@ -17,14 +17,14 @@
 
 package org.namelessrom.devicecontrol.utils.threads;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.app.Activity;
 
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
+import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
@@ -35,18 +35,14 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 public class FireAndGet extends Thread implements DeviceConstants {
 
     private final String  mCmd;
-    private final Handler mHandler;
     private final boolean mNeedsNewline;
     private final StringBuilder sb = new StringBuilder();
+    private final Activity mActivity;
 
-    public FireAndGet(String cmd, Handler handler) {
-        this(cmd, handler, false);
-    }
-
-    public FireAndGet(String cmd, Handler handler, boolean needsNewline) {
+    public FireAndGet(String cmd, boolean needsNewline, Activity activity) {
         mCmd = cmd;
-        mHandler = handler;
         mNeedsNewline = needsNewline;
+        mActivity = activity;
     }
 
     @Override
@@ -54,7 +50,7 @@ public class FireAndGet extends Thread implements DeviceConstants {
         try {
             final Shell shell = RootTools.getShell(true);
 
-            CommandCapture cmdCap = new CommandCapture(0, false, mCmd) {
+            final CommandCapture cmdCap = new CommandCapture(0, false, mCmd) {
                 @Override
                 public void commandOutput(int id, String line) {
                     sb.append(line);
@@ -65,13 +61,13 @@ public class FireAndGet extends Thread implements DeviceConstants {
 
                 @Override
                 public void commandCompleted(int id, int exitcode) {
-                    if (mHandler != null) {
-                        Message msg = mHandler.obtainMessage();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt(READ_VALUE_ACTION, READ_VALUE_ACTION_RESULT);
-                        bundle.putString(READ_VALUE_TEXT, sb.toString());
-                        msg.setData(bundle);
-                        mHandler.sendMessage(msg);
+                    if (mActivity != null) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                BusProvider.getBus().post(new ShellOutputEvent(sb.toString()));
+                            }
+                        });
                     }
                 }
             };

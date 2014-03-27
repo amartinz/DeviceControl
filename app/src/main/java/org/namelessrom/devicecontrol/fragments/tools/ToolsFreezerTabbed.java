@@ -29,9 +29,6 @@ import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
 import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 
-/**
- * Created by alex on 23.01.14.
- */
 public class ToolsFreezerTabbed extends AttachFragment {
 
     public static final String TAG = "tools_freezer_tabbed";

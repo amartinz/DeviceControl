@@ -54,8 +54,8 @@ class Installer {
 
     static final String BOGUS_FILE_NAME = "bogus";
 
-    Context context;
-    String  filesPath;
+    final Context context;
+    String filesPath;
 
     public Installer(Context context)
             throws IOException {

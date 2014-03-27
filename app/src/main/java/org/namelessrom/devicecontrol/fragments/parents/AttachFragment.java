@@ -22,14 +22,18 @@ import android.app.Fragment;
 
 import org.namelessrom.devicecontrol.activities.MainActivity;
 
-/**
- * Created by alex on 18.12.13.
- */
 public class AttachFragment extends Fragment {
 
-    protected void onAttach(Activity activity, int number) {
-        super.onAttach(activity);
+    protected Activity mActivity;
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity = activity;
+    }
+
+    protected void onAttach(final Activity activity, final int number) {
+        super.onAttach(activity);
         ((MainActivity) activity).onSectionAttached(number);
     }
 }

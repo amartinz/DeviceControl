@@ -9,7 +9,7 @@ public class CanvasTransformerBuilder {
 
     private CanvasTransformer mTrans;
 
-    private static Interpolator lin = new Interpolator() {
+    private static final Interpolator lin = new Interpolator() {
         public float getInterpolation(float t) {
             return t;
         }
