@@ -61,7 +61,7 @@
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="extensive_logging"
-            android:title="@string/extensive_logging_title"
+            android:title="@string/extensive_logging"
             android:summaryOn="@string/extensive_logging_summary_on"
             android:summaryOff="@string/extensive_logging_summary_off" />
 

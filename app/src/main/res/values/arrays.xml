@@ -31,7 +31,8 @@
         <item>@string/tasker</item>
         <item>@string/editors</item>
         <item>@string/freezer</item>
-        <item>@string/device_control_header</item>
+        <item>@string/app_name</item>
+        <item>@string/preferences</item>
         <item>@string/licenses</item>
     </string-array>
 

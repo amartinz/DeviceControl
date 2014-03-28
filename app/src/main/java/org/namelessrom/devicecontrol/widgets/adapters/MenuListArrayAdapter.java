@@ -21,7 +21,6 @@ public class MenuListArrayAdapter extends BaseAdapter {
 
     public MenuListArrayAdapter(final Context context, final int layoutResourceId,
             final String[] titles, final int[] icons) {
-
         mContext = context;
         mLayoutResourceId = layoutResourceId;
         mTitles = titles;
@@ -44,10 +43,7 @@ public class MenuListArrayAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getViewTypeCount() {
-        return 2; //return 2, you have two types that the getView() method will return,
-        // normal(0) and for the last row(1)
-    }
+    public int getViewTypeCount() { return 2; }
 
     @Override
     public int getItemViewType(int position) {
