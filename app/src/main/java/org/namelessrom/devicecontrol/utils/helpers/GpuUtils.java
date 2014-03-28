@@ -1,13 +1,14 @@
 package org.namelessrom.devicecontrol.utils.helpers;
 
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GpuUtils {
+public class GpuUtils implements PerformanceConstants {
 
     public static String[] getFreqToMhz(final String file) throws IOException {
         final ArrayList<String> names = new ArrayList<String>();
@@ -35,6 +36,18 @@ public class GpuUtils {
 
     public static String toMhz(final String mhz) {
         return (String.valueOf(Integer.parseInt(mhz) / 1000000) + " MHz");
+    }
+
+    public static void restore() {
+        final StringBuilder sb = new StringBuilder();
+
+        final String gpuMax = PreferenceHelper.getString(PREF_MAX_GPU, "");
+        if (gpuMax != null && !gpuMax.isEmpty()) {
+            Utils.setPermissions(GPU_MAX_FREQ_FILE);
+            sb.append("busybox echo ").append(gpuMax).append(" > ").append(GPU_MAX_FREQ_FILE);
+        }
+
+        Utils.runRootCommand(sb.toString());
     }
 
 }

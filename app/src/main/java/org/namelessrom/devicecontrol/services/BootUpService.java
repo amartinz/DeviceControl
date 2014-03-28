@@ -33,6 +33,7 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
+import org.namelessrom.devicecontrol.utils.helpers.GpuUtils;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.threads.FireAndForget;
 
@@ -112,65 +113,60 @@ public class BootUpService extends Service
                         .append(";\n");
                 */
                 //==================================================================================
-                // Device Input
+                // Device
                 //==================================================================================
-                if (DeviceFragment.sKnockOn) {
-                    logDebug("Reapplying: sKnockOn");
-                    fileList.add(DeviceFragment.sKnockOnFile);
-                    valueList.add(PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0");
-                }
+                if (PreferenceHelper.getBoolean(SOB_DEVICE, false)) {
+                    if (DeviceFragment.sKnockOn) {
+                        logDebug("Reapplying: sKnockOn");
+                        fileList.add(DeviceFragment.sKnockOnFile);
+                        valueList.add(PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0");
+                    }
 
-                if (VibratorTuningPreference.isSupported()) {
-                    logDebug("Reapplying: Vibration");
-                    final int percent = PreferenceHelper.getInt(KEY_VIBRATOR_TUNING
-                            , VibratorTuningPreference
-                            .strengthToPercent(VIBRATOR_INTENSITY_DEFAULT_VALUE));
-                    fileList.add(VibratorTuningPreference.FILE_VIBRATOR);
-                    valueList.add("" + percent);
-                }
+                    if (VibratorTuningPreference.isSupported()) {
+                        logDebug("Reapplying: Vibration");
+                        final int percent = PreferenceHelper.getInt(KEY_VIBRATOR_TUNING
+                                , VibratorTuningPreference
+                                .strengthToPercent(VIBRATOR_INTENSITY_DEFAULT_VALUE));
+                        fileList.add(VibratorTuningPreference.FILE_VIBRATOR);
+                        valueList.add("" + percent);
+                    }
 
-                if (HighTouchSensitivity.isSupported()) {
-                    logDebug("Reapplying: Glove Mode");
-                    fileList.add(HighTouchSensitivity.COMMAND_PATH);
-                    valueList.add(PreferenceHelper.getBoolean(KEY_GLOVE_MODE, false)
-                            ? HighTouchSensitivity.GLOVE_MODE_ENABLE
-                            : HighTouchSensitivity.GLOVE_MODE_DISABLE);
-                }
+                    if (HighTouchSensitivity.isSupported()) {
+                        logDebug("Reapplying: Glove Mode");
+                        fileList.add(HighTouchSensitivity.COMMAND_PATH);
+                        valueList.add(PreferenceHelper.getBoolean(KEY_GLOVE_MODE, false)
+                                ? HighTouchSensitivity.GLOVE_MODE_ENABLE
+                                : HighTouchSensitivity.GLOVE_MODE_DISABLE);
+                    }
 
-                //==================================================================================
-                // Device Graphics
-                //==================================================================================
+                    if (DeviceFragment.sHasPanel) {
+                        logDebug("Reapplying: Panel Color Temp");
+                        fileList.add(DeviceFragment.sHasPanelFile);
+                        valueList.add(PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2"));
+                    }
 
-                if (DeviceFragment.sHasPanel) {
-                    logDebug("Reapplying: Panel Color Temp");
-                    fileList.add(DeviceFragment.sHasPanelFile);
-                    valueList.add(PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2"));
-                }
+                    if (DeviceFragment.sHasTouchkeyToggle) {
+                        logDebug("Reapplying: Touchkey Light");
+                        tmp = PreferenceHelper.getBoolean(KEY_TOUCHKEY_LIGHT, true);
+                        fileList.add(FILE_TOUCHKEY_TOGGLE);
+                        valueList.add(tmp ? "255" : "0");
+                        fileList.add(FILE_TOUCHKEY_BRIGHTNESS);
+                        valueList.add(tmp ? "255" : "0");
+                    }
 
-                //==================================================================================
-                // Device Lights
-                //==================================================================================
-                if (DeviceFragment.sHasTouchkeyToggle) {
-                    logDebug("Reapplying: Touchkey Light");
-                    tmp = PreferenceHelper.getBoolean(KEY_TOUCHKEY_LIGHT, true);
-                    fileList.add(FILE_TOUCHKEY_TOGGLE);
-                    valueList.add(tmp ? "255" : "0");
-                    fileList.add(FILE_TOUCHKEY_BRIGHTNESS);
-                    valueList.add(tmp ? "255" : "0");
-                }
+                    if (DeviceFragment.sHasTouchkeyBLN) {
+                        logDebug("Reapplying: Touchkey BLN");
+                        tmp = PreferenceHelper.getBoolean(KEY_TOUCHKEY_BLN, true);
+                        fileList.add(FILE_BLN_TOGGLE);
+                        valueList.add(tmp ? "1" : "0");
+                    }
 
-                if (DeviceFragment.sHasTouchkeyBLN) {
-                    logDebug("Reapplying: Touchkey BLN");
-                    tmp = PreferenceHelper.getBoolean(KEY_TOUCHKEY_BLN, true);
-                    fileList.add(FILE_BLN_TOGGLE);
-                    valueList.add(tmp ? "1" : "0");
-                }
-
-                if (DeviceFragment.sHasKeyboardToggle) {
-                    logDebug("Reapplying: KeyBoard Light");
-                    tmp = PreferenceHelper.getBoolean(KEY_KEYBOARD_LIGHT, true);
-                    fileList.add(FILE_KEYBOARD_TOGGLE);
-                    valueList.add(tmp ? "255" : "0");
+                    if (DeviceFragment.sHasKeyboardToggle) {
+                        logDebug("Reapplying: KeyBoard Light");
+                        tmp = PreferenceHelper.getBoolean(KEY_KEYBOARD_LIGHT, true);
+                        fileList.add(FILE_KEYBOARD_TOGGLE);
+                        valueList.add(tmp ? "255" : "0");
+                    }
                 }
 
                 //==================================================================================
@@ -180,28 +176,34 @@ public class BootUpService extends Service
                     CpuUtils.restore();
                 }
 
-                if (PerformanceExtrasFragment.sLcdPowerReduce) {
-                    logDebug("Reapplying: LcdPowerReduce");
-                    fileList.add(PerformanceExtrasFragment.sLcdPowerReduceFile);
-                    valueList.add(PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false)
-                            ? "1" : "0");
+                if (PreferenceHelper.getBoolean(SOB_GPU, false)) {
+                    GpuUtils.restore();
                 }
-                if (CpuUtils.hasIntelliPlug()) {
-                    logDebug("Reapplying: IntelliPlug");
-                    fileList.add(CpuUtils.INTELLI_PLUG_PATH);
-                    valueList.add(PreferenceHelper.getBoolean(KEY_INTELLI_PLUG, false)
-                            ? "1" : "0");
-                }
-                if (CpuUtils.hasIntelliPlugEcoMode()) {
-                    logDebug("Reapplying: IntelliPlugEco");
-                    fileList.add(CpuUtils.INTELLI_PLUG_ECO_MODE_PATH);
-                    valueList.add(PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false)
-                            ? "1" : "0");
-                }
-                if (PerformanceExtrasFragment.sMcPowerScheduler) {
-                    logDebug("Reapplying: McPowerScheduler");
-                    fileList.add(PerformanceExtrasFragment.sMcPowerSchedulerFile);
-                    valueList.add(PreferenceHelper.getInt(KEY_MC_POWER_SCHEDULER, 2) + "");
+
+                if (PreferenceHelper.getBoolean(SOB_EXTRAS, false)) {
+                    if (PerformanceExtrasFragment.sLcdPowerReduce) {
+                        logDebug("Reapplying: LcdPowerReduce");
+                        fileList.add(PerformanceExtrasFragment.sLcdPowerReduceFile);
+                        valueList.add(PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false)
+                                ? "1" : "0");
+                    }
+                    if (CpuUtils.hasIntelliPlug()) {
+                        logDebug("Reapplying: IntelliPlug");
+                        fileList.add(CpuUtils.INTELLI_PLUG_PATH);
+                        valueList.add(PreferenceHelper.getBoolean(KEY_INTELLI_PLUG, false)
+                                ? "1" : "0");
+                    }
+                    if (CpuUtils.hasIntelliPlugEcoMode()) {
+                        logDebug("Reapplying: IntelliPlugEco");
+                        fileList.add(CpuUtils.INTELLI_PLUG_ECO_MODE_PATH);
+                        valueList.add(PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false)
+                                ? "1" : "0");
+                    }
+                    if (PerformanceExtrasFragment.sMcPowerScheduler) {
+                        logDebug("Reapplying: McPowerScheduler");
+                        fileList.add(PerformanceExtrasFragment.sMcPowerSchedulerFile);
+                        valueList.add(PreferenceHelper.getInt(KEY_MC_POWER_SCHEDULER, 2) + "");
+                    }
                 }
 
                 //==================================================================================

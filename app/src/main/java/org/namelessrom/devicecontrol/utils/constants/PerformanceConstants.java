@@ -87,12 +87,18 @@ public interface PerformanceConstants {
             "/sys/block/mmcblk0/queue/scheduler",
             "/sys/block/mmcblk1/queue/scheduler"};
     //----------------------------------------------------------------------------------------------
+    public static final String   GPU_FOLDER                 = "/sys/class/kgsl";
+    public static final String   GPU_FREQUENCIES_FILE       =
+            GPU_FOLDER + "/kgsl-3d0/gpu_available_frequencies";
+    public static final String   GPU_MAX_FREQ_FILE          = GPU_FOLDER + "/kgsl-3d0/max_gpuclk";
+    //----------------------------------------------------------------------------------------------
     public static final String   PREF_HIDE_CPU_INFO         = "pref_hide_cpu_info";
     public static final String   PREF_INTERVAL_CPU_INFO     = "pref_interval_cpu_info";
     public static final String   PREF_MAX_CPU               = "pref_max_cpu";
     public static final String   PREF_MIN_CPU               = "pref_min_cpu";
     public static final String   PREF_GOV                   = "pref_gov";
     public static final String   PREF_IO                    = "pref_io";
+    public static final String   PREF_MAX_GPU               = "pref_max_gpu";
     public static final String   GOV_SETTINGS               = "gov_settings";
     public static final String   GOV_NAME                   = "gov_name";
 }

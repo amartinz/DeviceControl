@@ -24,6 +24,26 @@
         android:title="@string/reapply_on_boot">
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+            android:key="sob_device"
+            android:title="@string/device"
+            app:auto_handle="true" />
+
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+            android:key="sob_cpu"
+            android:title="@string/cpusettings"
+            app:auto_handle="true" />
+
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+            android:key="sob_gpu"
+            android:title="@string/gpusettings"
+            app:auto_handle="true" />
+
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+            android:key="sob_extras"
+            android:title="@string/extras"
+            app:auto_handle="true" />
+
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_vm"
             android:title="@string/vm"
             app:auto_handle="true" />

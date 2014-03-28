@@ -215,7 +215,8 @@ Copyright (C) 2012  James Roberts
             android:orientation="horizontal"
             android:gravity="center_vertical|center_horizontal"
             android:id="@+id/ioscheduler"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:paddingBottom="20dp">
 
             <TextView
                 android:id="@+id/io_label"
@@ -228,31 +229,6 @@ Copyright (C) 2012  James Roberts
             <Spinner
                 android:id="@+id/pref_io"
                 android:layout_width="120dp"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            android:id="@+id/sob"
-            android:layout_gravity="bottom"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp">
-
-            <TextView
-                android:id="@+id/set_on_boot_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dip"
-                android:text="@string/sob"
-                android:textSize="14sp" />
-
-            <Switch
-                android:id="@+id/sob_cpu"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>

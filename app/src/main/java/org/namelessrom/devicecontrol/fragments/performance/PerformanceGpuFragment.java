@@ -11,20 +11,17 @@ import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.GpuUtils;
+import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
 import java.io.IOException;
 
 public class PerformanceGpuFragment extends AttachPreferenceFragment
-        implements Preference.OnPreferenceChangeListener {
+        implements PerformanceConstants, Preference.OnPreferenceChangeListener {
 
     public static final int ID = 215;
-
-    private static final String GPU_FOLDER           = "/sys/class/kgsl";
-    private static final String GPU_FREQUENCIES_FILE =
-            GPU_FOLDER + "/kgsl-3d0/gpu_available_frequencies";
-    private static final String GPU_MAX_FREQ_FILE    = GPU_FOLDER + "/kgsl-3d0/max_gpuclk";
 
     private PreferenceCategory   mRoot;
     private CustomListPreference mGpuFrequency;
@@ -110,9 +107,14 @@ public class PerformanceGpuFragment extends AttachPreferenceFragment
             mGpuFrequency.setValue(value);
             mGpuFrequency.setSummary(GpuUtils.toMhz(value));
             Utils.writeValue(GPU_MAX_FREQ_FILE, value);
+            updateSharedPrefs(PREF_MAX_GPU, value);
             return true;
         }
         return false;
+    }
+
+    private void updateSharedPrefs(final String var, final String value) {
+        PreferenceHelper.setString(var, value);
     }
 }
 

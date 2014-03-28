@@ -32,7 +32,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
@@ -52,8 +51,6 @@ import org.namelessrom.devicecontrol.widgets.AttachFragment;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-
-import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.SOB_CPU;
 
 public class PerformanceCpuSettings extends AttachFragment
         implements SeekBar.OnSeekBarChangeListener, PerformanceConstants {
@@ -231,25 +228,6 @@ public class PerformanceCpuSettings extends AttachFragment
         mIo.post(new Runnable() {
             public void run() {
                 mIo.setOnItemSelectedListener(new IOListener());
-            }
-        });
-
-        final Switch mSetOnBoot = (Switch) view.findViewById(R.id.sob_cpu);
-        mSetOnBoot.setChecked(PreferenceHelper.getBoolean(SOB_CPU, false));
-        mSetOnBoot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton v, boolean checked) {
-                PreferenceHelper.setBoolean(SOB_CPU, checked);
-                if (checked) {
-                    PreferenceHelper.setString(PREF_MIN_CPU,
-                            CpuUtils.getValue(0, CpuUtils.ACTION_FREQ_MIN));
-                    PreferenceHelper.setString(PREF_MAX_CPU,
-                            CpuUtils.getValue(0, CpuUtils.ACTION_FREQ_MAX));
-                    PreferenceHelper.setString(PREF_GOV,
-                            CpuUtils.getValue(0, CpuUtils.ACTION_GOV));
-                    PreferenceHelper.setString(PREF_IO,
-                            CpuUtils.getIOScheduler());
-                }
             }
         });
 

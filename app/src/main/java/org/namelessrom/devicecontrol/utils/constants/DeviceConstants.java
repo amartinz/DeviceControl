@@ -114,5 +114,8 @@ public interface DeviceConstants {
     public static final String SOB_SYSCTL           = "sob_sysctl";
     public static final String SOB_VM               = "sob_vm";
     public static final String SOB_CPU              = "sob_cpu";
+    public static final String SOB_GPU              = "sob_gpu";
+    public static final String SOB_EXTRAS           = "sob_extras";
+    public static final String SOB_DEVICE           = "sob_device";
 
 }
