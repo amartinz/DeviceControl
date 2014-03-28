@@ -266,15 +266,15 @@ public class MainActivity extends Activity
                 break;
             case ID_TASKER:
                 main = new TaskerFragment();
-                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                right = HelpFragment.newInstance(HelpFragment.TYPE_TASKER);
                 break;
             case ID_TOOLS_EDITORS:
                 main = new ToolsEditorTabbed();
-                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                right = HelpFragment.newInstance(HelpFragment.TYPE_EDITORS);
                 break;
             case ID_TOOLS_FREEZER:
                 main = new ToolsFreezerTabbed();
-                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                right = HelpFragment.newInstance(HelpFragment.TYPE_FREEZER);
                 break;
             case ID_PREFERENCES:
                 main = new PreferencesFragment();
@@ -282,7 +282,7 @@ public class MainActivity extends Activity
                 break;
             case ID_LICENSES:
                 main = WebViewFragment.newInstance(WebViewFragment.TYPE_LICENSES);
-                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                right = HelpFragment.newInstance(HelpFragment.TYPE_LICENSES);
                 break;
         }
 

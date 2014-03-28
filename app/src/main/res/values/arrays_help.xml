@@ -18,19 +18,53 @@
 
 <resources>
     <!-- Dummy -->
-    <string-array name="dummy_titles">
+    <string-array name="dummy_titles" translatable="false">
         <item>@string/dummy</item>
     </string-array>
-    <string-array name="dummy_content">
+    <string-array name="dummy_content" translatable="false">
         <item>@string/dummy_help</item>
     </string-array>
+    <!-- Tasker -->
+    <string-array name="tasker_titles" translatable="false">
+        <item>@string/fstrim_title</item>
+    </string-array>
+    <string-array name="tasker_content" translatable="false">
+        <item>@string/fstrim_help</item>
+    </string-array>
+    <!-- Editors -->
+    <string-array name="editors_titles" translatable="false">
+        <item>@string/vm</item>
+        <item>@string/sysctl</item>
+        <item>@string/buildprop</item>
+    </string-array>
+    <string-array name="editors_content" translatable="false">
+        <item>@string/vm_help</item>
+        <item>@string/sysctl_help</item>
+        <item>@string/buildprop_help</item>
+    </string-array>
+    <!-- Freezer -->
+    <string-array name="freezer_titles" translatable="false">
+        <item>@string/freezer</item>
+        <item>@string/unfreezer</item>
+    </string-array>
+    <string-array name="freezer_content" translatable="false">
+        <item>@string/freezer_help</item>
+        <item>@string/unfreezer_help</item>
+    </string-array>
     <!-- Preferences -->
-    <string-array name="preference_titles">
+    <string-array name="preference_titles" translatable="false">
         <item>@string/reapply_on_boot</item>
         <item>@string/extensive_logging</item>
     </string-array>
-    <string-array name="preference_content">
+    <string-array name="preference_content" translatable="false">
         <item>@string/reapply_on_boot_help</item>
         <item>@string/extensive_logging_help</item>
+    </string-array>
+    <!-- Licenses -->
+    <string-array name="licenses_titles" translatable="false">
+        <item>@string/app_name</item>
+    </string-array>
+    <string-array name="licenses_content" translatable="false">
+        <item>@string/copyright_help</item>
     </string-array>
 </resources>

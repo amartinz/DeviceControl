@@ -15,7 +15,11 @@ public class HelpFragment extends Fragment {
     public static final String ARG_TYPE = "arg_type";
 
     public static final int TYPE_DUMMY      = -1;
-    public static final int TYPE_PREFERENCE = 0;
+    public static final int TYPE_TASKER     = 900;
+    public static final int TYPE_EDITORS    = 910;
+    public static final int TYPE_FREEZER    = 920;
+    public static final int TYPE_PREFERENCE = 1000;
+    public static final int TYPE_LICENSES   = 1100;
 
     public static HelpFragment newInstance(final int type) {
         final HelpFragment f = new HelpFragment();
@@ -56,9 +60,25 @@ public class HelpFragment extends Fragment {
                 ids[0] = R.array.dummy_titles;
                 ids[1] = R.array.dummy_content;
                 break;
+            case TYPE_TASKER:
+                ids[0] = R.array.tasker_titles;
+                ids[1] = R.array.tasker_content;
+                break;
+            case TYPE_EDITORS:
+                ids[0] = R.array.editors_titles;
+                ids[1] = R.array.editors_content;
+                break;
+            case TYPE_FREEZER:
+                ids[0] = R.array.freezer_titles;
+                ids[1] = R.array.freezer_content;
+                break;
             case TYPE_PREFERENCE:
                 ids[0] = R.array.preference_titles;
                 ids[1] = R.array.preference_content;
+                break;
+            case TYPE_LICENSES:
+                ids[0] = R.array.licenses_titles;
+                ids[1] = R.array.licenses_content;
                 break;
         }
 
