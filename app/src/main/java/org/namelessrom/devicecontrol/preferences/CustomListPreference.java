@@ -14,7 +14,7 @@ public class CustomListPreference extends ListPreference {
 
     private String color = "#FFFFFF";
 
-    public CustomListPreference(Context context, String category) {
+    public CustomListPreference(Context context) {
         super(context);
         setLayoutResource(R.layout.preference);
     }

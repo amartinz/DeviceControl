@@ -41,6 +41,7 @@ import org.namelessrom.devicecontrol.fragments.main.PreferencesFragment;
 import org.namelessrom.devicecontrol.fragments.main.TaskerFragment;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceCpuSettings;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceExtrasFragment;
+import org.namelessrom.devicecontrol.fragments.performance.PerformanceGpuFragment;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceInformationFragment;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsEditorTabbed;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsFreezerTabbed;
@@ -69,16 +70,18 @@ public class MainActivity extends Activity
     private static final int ID_DEVICE                   = 1;
     private static final int ID_PERFORMANCE_INFO         = 3;
     private static final int ID_PERFORMANCE_CPU_SETTINGS = 4;
-    private static final int ID_PERFORMANCE_EXTRA        = 5;
-    private static final int ID_TASKER                   = 7;
-    private static final int ID_TOOLS_EDITORS            = 8;
-    private static final int ID_TOOLS_FREEZER            = 9;
-    private static final int ID_LICENSES                 = 11;
+    private static final int ID_PERFORMANCE_GPU_SETTINGS = 5;
+    private static final int ID_PERFORMANCE_EXTRA        = 6;
+    private static final int ID_TASKER                   = 8;
+    private static final int ID_TOOLS_EDITORS            = 9;
+    private static final int ID_TOOLS_FREEZER            = 10;
+    private static final int ID_LICENSES                 = 12;
 
     public static final int[] MENU_ICONS = {
             -1, // Device
             0,
             -1, // Performance
+            0,
             0,
             0,
             0,
@@ -166,6 +169,10 @@ public class MainActivity extends Activity
                 break;
             case ID_PERFORMANCE_CPU_SETTINGS:
                 main = new PerformanceCpuSettings();
+                right = new PreferencesFragment();
+                break;
+            case ID_PERFORMANCE_GPU_SETTINGS:
+                main = new PerformanceGpuFragment();
                 right = new PreferencesFragment();
                 break;
             case ID_PERFORMANCE_EXTRA:
@@ -268,6 +275,9 @@ public class MainActivity extends Activity
                 break;
             case PerformanceCpuSettings.ID:
                 mTitle = getString(R.string.cpusettings);
+                break;
+            case PerformanceGpuFragment.ID:
+                mTitle = getString(R.string.gpusettings);
                 break;
             case PerformanceExtrasFragment.ID:
                 mTitle = getString(R.string.extras);

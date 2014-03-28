@@ -70,6 +70,7 @@ public class PerformanceFragment extends AttachFragment {
         List<Fragment> tmpList = new ArrayList<Fragment>();
         tmpList.add(new PerformanceInformationFragment());
         tmpList.add(new PerformanceCpuSettings());
+        tmpList.add(new PerformanceGpuFragment());
         if (PerformanceExtrasFragment.isSupported(getActivity())) {
             tmpList.add(new PerformanceExtrasFragment());
         }
@@ -80,6 +81,7 @@ public class PerformanceFragment extends AttachFragment {
         List<String> tmpList = new ArrayList<String>();
         tmpList.add(getString(R.string.information));
         tmpList.add(getString(R.string.cpusettings));
+        tmpList.add(getString(R.string.gpusettings));
         if (PerformanceExtrasFragment.isSupported(getActivity())) {
             tmpList.add(getString(R.string.general));
         }
