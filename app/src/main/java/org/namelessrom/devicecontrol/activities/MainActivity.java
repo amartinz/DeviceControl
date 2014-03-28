@@ -88,18 +88,18 @@ public class MainActivity extends Activity
 
     public static final int[] MENU_ICONS = {
             -1, // Device
-            0,
+            R.drawable.ic_menu_device,
             -1, // Performance
-            0,
-            0,
-            0,
-            0,
+            R.drawable.ic_menu_perf_info,
+            R.drawable.ic_menu_perf_cpu,
+            R.drawable.ic_menu_perf_gpu,
+            R.drawable.ic_menu_perf_extras,
             -1, // Tools
-            0,
-            0,
-            0,
+            R.drawable.ic_menu_tasker,
+            R.drawable.ic_menu_editor,
+            R.drawable.ic_menu_freezer,
             -1, // Information
-            0
+            R.drawable.ic_menu_licences
     };
 
     //==============================================================================================
