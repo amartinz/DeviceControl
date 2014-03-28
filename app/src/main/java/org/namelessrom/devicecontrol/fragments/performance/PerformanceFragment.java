@@ -26,8 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.activities.MainActivity;
-import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
+import org.namelessrom.devicecontrol.widgets.AttachFragment;
 import org.namelessrom.devicecontrol.widgets.JfViewPager;
 import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
 
@@ -59,11 +58,7 @@ public class PerformanceFragment extends AttachFragment {
 
     @Override
     public void onAttach(Activity activity) {
-        if (activity instanceof MainActivity) {
-            super.onAttach(activity, PerformanceFragment.ID);
-        } else {
-            super.onAttach(activity);
-        }
+        super.onAttach(activity, ID);
     }
 
     private List<Fragment> getFragments() {
@@ -83,7 +78,7 @@ public class PerformanceFragment extends AttachFragment {
         tmpList.add(getString(R.string.cpusettings));
         tmpList.add(getString(R.string.gpusettings));
         if (PerformanceExtrasFragment.isSupported(getActivity())) {
-            tmpList.add(getString(R.string.general));
+            tmpList.add(getString(R.string.extras));
         }
         return tmpList;
     }

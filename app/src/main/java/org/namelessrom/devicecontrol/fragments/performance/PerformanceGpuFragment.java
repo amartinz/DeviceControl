@@ -8,11 +8,11 @@ import android.preference.PreferenceCategory;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
-import org.namelessrom.devicecontrol.fragments.parents.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.helpers.GpuUtils;
+import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
 import java.io.IOException;
 
@@ -31,11 +31,7 @@ public class PerformanceGpuFragment extends AttachPreferenceFragment
 
     @Override
     public void onAttach(Activity activity) {
-        if (activity instanceof MainActivity) {
-            super.onAttach(activity, ID);
-        } else {
-            super.onAttach(activity);
-        }
+        super.onAttach(activity, ID);
     }
 
     @Override

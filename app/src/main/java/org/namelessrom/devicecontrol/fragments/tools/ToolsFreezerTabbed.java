@@ -27,7 +27,7 @@ import android.view.ViewGroup;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
-import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
+import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
 public class ToolsFreezerTabbed extends AttachFragment {
 

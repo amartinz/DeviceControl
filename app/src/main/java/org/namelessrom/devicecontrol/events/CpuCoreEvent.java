@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CpuCoreEvent {
 
-    public List<CpuCore> mCoreList;
+    public final List<CpuCore> mCoreList;
 
     public CpuCoreEvent(List<CpuCore> coreList) {
         mCoreList = coreList;

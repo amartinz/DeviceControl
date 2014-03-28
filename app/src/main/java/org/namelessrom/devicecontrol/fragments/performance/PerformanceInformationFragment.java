@@ -36,10 +36,10 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
-import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 import org.namelessrom.devicecontrol.utils.CpuStateMonitor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
+import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,11 +79,7 @@ public class PerformanceInformationFragment extends AttachFragment implements De
 
     @Override
     public void onAttach(Activity activity) {
-        if (activity instanceof MainActivity) {
-            super.onAttach(activity, PerformanceInformationFragment.ID);
-        } else {
-            super.onAttach(activity);
-        }
+        super.onAttach(activity, ID);
         activity.registerReceiver(mBatteryReceiver,
                 new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }

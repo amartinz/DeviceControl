@@ -218,4 +218,6 @@
     <string name="cpu_temperature">CPU Temperature:</string>
     <string name="battery_temperature">Battery Temperature:</string>
     <string name="off">Off</string>
+    <string name="menu">Menu</string>
+    <string name="preferences">Preferences</string>
 </resources>

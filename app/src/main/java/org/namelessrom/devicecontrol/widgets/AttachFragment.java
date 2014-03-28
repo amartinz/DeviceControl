@@ -15,14 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.fragments.parents;
+package org.namelessrom.devicecontrol.widgets;
 
 import android.app.Activity;
-import android.preference.PreferenceFragment;
+import android.app.Fragment;
 
-import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 
-public class AttachPreferenceFragment extends PreferenceFragment {
+public class AttachFragment extends Fragment {
 
     protected Activity mActivity;
 
@@ -32,8 +33,8 @@ public class AttachPreferenceFragment extends PreferenceFragment {
         mActivity = activity;
     }
 
-    protected void onAttach(Activity activity, int number) {
+    protected void onAttach(final Activity activity, final int number) {
         super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(number);
+        BusProvider.getBus().post(new SectionAttachedEvent(number));
     }
 }

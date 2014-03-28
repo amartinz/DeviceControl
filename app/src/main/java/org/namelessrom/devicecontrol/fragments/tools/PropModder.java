@@ -35,7 +35,6 @@ public class PropModder extends PreferenceFragment implements
             "busybox mount -o %s,remount -t yaffs2 /dev/block/mtdblock1 /system";
     private static final String PROP_EXISTS_CMD          = "grep -q %s /system/build.prop";
     private static final String DISABLE                  = "disable";
-    private static final String SHOWBUILD_PATH           = "/system/tmp/showbuild";
     private static final String WIFI_SCAN_PREF           = "pref_wifi_scan_interval";
     private static final String WIFI_SCAN_PROP           = "wifi.supplicant_scan_interval";
     private static final String WIFI_SCAN_PERSIST_PROP   = "persist.wifi_scan_interval";

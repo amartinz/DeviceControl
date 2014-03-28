@@ -30,10 +30,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.squareup.otto.Subscribe;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.fragments.dynamic.WebViewFragment;
 import org.namelessrom.devicecontrol.fragments.main.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.main.InformationFragment;
@@ -45,6 +47,7 @@ import org.namelessrom.devicecontrol.fragments.performance.PerformanceGpuFragmen
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceInformationFragment;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsEditorTabbed;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsFreezerTabbed;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
@@ -55,17 +58,23 @@ import java.io.IOException;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class MainActivity extends Activity
-        implements DeviceConstants, AdapterView.OnItemClickListener {
+        implements DeviceConstants, AdapterView.OnItemClickListener, SlidingMenu.OnClosedListener,
+        SlidingMenu.OnOpenedListener {
 
     //==============================================================================================
     // Fields
     //==============================================================================================
-    private        CharSequence mTitle;
-    private static long         back_pressed;
-    private        Toast        mToast;
+    private static long  back_pressed;
+    private        Toast mToast;
     final Object lockObject = new Object();
 
     public static SlidingMenu mSlidingMenu;
+    private static final int ID_RESTORE     = 10;
+    private static final int ID_FIRST_MENU  = 20;
+    private static final int ID_SECOND_MENU = 30;
+
+    private int mTitle         = R.string.app_name;
+    private int mFragmentTitle = R.string.app_name;
 
     private static final int ID_DEVICE                   = 1;
     private static final int ID_PERFORMANCE_INFO         = 3;
@@ -96,6 +105,18 @@ public class MainActivity extends Activity
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BusProvider.getBus().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BusProvider.getBus().unregister(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +164,9 @@ public class MainActivity extends Activity
         mMenuList.setAdapter(mAdapter);
         mMenuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         mMenuList.setOnItemClickListener(this);
+
+        mSlidingMenu.setOnClosedListener(this);
+        mSlidingMenu.setOnOpenedListener(this);
 
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
         final Fragment main = new InformationFragment();
@@ -209,7 +233,6 @@ public class MainActivity extends Activity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.main, menu);
         restoreActionBar();
         return super.onCreateOptionsMenu(menu);
     }
@@ -262,37 +285,45 @@ public class MainActivity extends Activity
     // Methods
     //==============================================================================================
 
-    /**
-     * @param id The id of the attached Fragment
-     */
-    public void onSectionAttached(int id) {
+    @Subscribe
+    public void onSectionAttached(final SectionAttachedEvent event) {
+        final int id = event.getId();
         switch (id) {
-            case DeviceFragment.ID:
-                mTitle = getString(R.string.device);
+            case ID_RESTORE:
+                mTitle = mFragmentTitle;
                 break;
-            case PerformanceInformationFragment.ID:
-                mTitle = getString(R.string.information);
+            case ID_FIRST_MENU:
+                mTitle = R.string.menu;
                 break;
-            case PerformanceCpuSettings.ID:
-                mTitle = getString(R.string.cpusettings);
-                break;
-            case PerformanceGpuFragment.ID:
-                mTitle = getString(R.string.gpusettings);
-                break;
-            case PerformanceExtrasFragment.ID:
-                mTitle = getString(R.string.extras);
-                break;
-            case TaskerFragment.ID:
-                mTitle = getString(R.string.tasker);
-                break;
-            case ToolsEditorTabbed.ID:
-                mTitle = getString(R.string.editors);
-                break;
-            case ToolsFreezerTabbed.ID:
-                mTitle = getString(R.string.freezer);
+            case ID_SECOND_MENU:
+                mTitle = R.string.preferences;
                 break;
             default:
-                mTitle = getString(R.string.app_name);
+                mTitle = mFragmentTitle = R.string.app_name;
+                break;
+            case DeviceFragment.ID:
+                mTitle = mFragmentTitle = R.string.device;
+                break;
+            case PerformanceInformationFragment.ID:
+                mTitle = mFragmentTitle = R.string.information;
+                break;
+            case PerformanceCpuSettings.ID:
+                mTitle = mFragmentTitle = R.string.cpusettings;
+                break;
+            case PerformanceGpuFragment.ID:
+                mTitle = mFragmentTitle = R.string.gpusettings;
+                break;
+            case PerformanceExtrasFragment.ID:
+                mTitle = mFragmentTitle = R.string.extras;
+                break;
+            case TaskerFragment.ID:
+                mTitle = mFragmentTitle = R.string.tasker;
+                break;
+            case ToolsEditorTabbed.ID:
+                mTitle = mFragmentTitle = R.string.editors;
+                break;
+            case ToolsFreezerTabbed.ID:
+                mTitle = mFragmentTitle = R.string.freezer;
                 break;
         }
         restoreActionBar();
@@ -305,5 +336,21 @@ public class MainActivity extends Activity
             actionBar.setHomeButtonEnabled(true);
             actionBar.setTitle(mTitle);
         }
+    }
+
+    @Override
+    public void onOpened() {
+        int id;
+        if (mSlidingMenu.isMenuShowing() && !mSlidingMenu.isSecondaryMenuShowing()) {
+            id = ID_FIRST_MENU;
+        } else {
+            id = ID_SECOND_MENU;
+        }
+        onSectionAttached(new SectionAttachedEvent(id));
+    }
+
+    @Override
+    public void onClosed() {
+        onSectionAttached(new SectionAttachedEvent(ID_RESTORE));
     }
 }

@@ -40,7 +40,6 @@ import com.squareup.otto.Subscribe;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
-import org.namelessrom.devicecontrol.fragments.parents.AttachFragment;
 import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -48,6 +47,7 @@ import org.namelessrom.devicecontrol.utils.classes.CpuCore;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
+import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -80,11 +80,7 @@ public class PerformanceCpuSettings extends AttachFragment
 
     @Override
     public void onAttach(Activity activity) {
-        if (activity instanceof MainActivity) {
-            super.onAttach(activity, PerformanceCpuSettings.ID);
-        } else {
-            super.onAttach(activity);
-        }
+        super.onAttach(activity, ID);
     }
 
     @Override
