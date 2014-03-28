@@ -26,7 +26,6 @@
     <string name="tasker">Tasker</string>
     <string name="editors">Editors</string>
     <string name="freezer">Freezer</string>
-    <string name="device_control_header">--Device Control</string>
     <string name="licenses">Licenses</string>
     <string name="unfreezer">Unfreezer</string>
     <string name="graphics">Graphics</string>
@@ -105,7 +104,7 @@
     <!-- Preferences -->
     <!-- Debug -->
     <string name="debugging">Debugging</string>
-    <string name="extensive_logging_title">Extensive Logging</string>
+    <string name="extensive_logging">Extensive Logging</string>
     <string name="extensive_logging_summary_on">Logging to LogCat enabled.</string>
     <string name="extensive_logging_summary_off">Logging to LogCat disabled.</string>
     <string name="reapply_on_boot">Reapply on boot</string>

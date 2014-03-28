@@ -76,7 +76,7 @@ class EventProducer {
      *
      * @throws IllegalStateException                       if previously invalidated.
      * @throws java.lang.reflect.InvocationTargetException if the wrapped method throws any {@link
-     * Throwable} that is not
+     *                                                     Throwable} that is not
      *                                                     an {@link Error} ({@code Error}s are
      *                                                     propagated as-is).
      */

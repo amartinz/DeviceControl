@@ -36,6 +36,7 @@ import com.stericson.roottools.RootTools;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
+import org.namelessrom.devicecontrol.fragments.HelpFragment;
 import org.namelessrom.devicecontrol.fragments.dynamic.WebViewFragment;
 import org.namelessrom.devicecontrol.fragments.main.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.main.InformationFragment;
@@ -76,6 +77,7 @@ public class MainActivity extends Activity
     private int mTitle         = R.string.app_name;
     private int mFragmentTitle = R.string.app_name;
 
+    private static final int ID_INFORMATION              = -1;
     private static final int ID_DEVICE                   = 1;
     private static final int ID_PERFORMANCE_INFO         = 3;
     private static final int ID_PERFORMANCE_CPU_SETTINGS = 4;
@@ -84,7 +86,8 @@ public class MainActivity extends Activity
     private static final int ID_TASKER                   = 8;
     private static final int ID_TOOLS_EDITORS            = 9;
     private static final int ID_TOOLS_FREEZER            = 10;
-    private static final int ID_LICENSES                 = 12;
+    private static final int ID_PREFERENCES              = 12;
+    private static final int ID_LICENSES                 = 13;
 
     public static final int[] MENU_ICONS = {
             -1, // Device
@@ -99,6 +102,7 @@ public class MainActivity extends Activity
             R.drawable.ic_menu_editor,
             R.drawable.ic_menu_freezer,
             -1, // Information
+            R.drawable.ic_menu_preferences,
             R.drawable.ic_menu_licences
     };
 
@@ -168,67 +172,12 @@ public class MainActivity extends Activity
         mSlidingMenu.setOnClosedListener(this);
         mSlidingMenu.setOnOpenedListener(this);
 
-        final FragmentTransaction ft = getFragmentManager().beginTransaction();
-        final Fragment main = new InformationFragment();
-        final Fragment right = new PreferencesFragment();
-        ft.replace(R.id.container, main);
-        ft.replace(R.id.menu_frame, right);
-        ft.commit();
+        loadFragment(ID_INFORMATION);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Fragment main;
-        Fragment right;
-
-        switch (i) {
-            default:
-            case ID_DEVICE:
-                main = new DeviceFragment();
-                right = new PreferencesFragment();
-                break;
-            case ID_PERFORMANCE_INFO:
-                main = new PerformanceInformationFragment();
-                right = new PreferencesFragment();
-                break;
-            case ID_PERFORMANCE_CPU_SETTINGS:
-                main = new PerformanceCpuSettings();
-                right = new PreferencesFragment();
-                break;
-            case ID_PERFORMANCE_GPU_SETTINGS:
-                main = new PerformanceGpuFragment();
-                right = new PreferencesFragment();
-                break;
-            case ID_PERFORMANCE_EXTRA:
-                main = new PerformanceExtrasFragment();
-                right = new PreferencesFragment();
-                break;
-            case ID_TASKER:
-                main = new TaskerFragment();
-                right = new PreferencesFragment();
-                break;
-            case ID_TOOLS_EDITORS:
-                main = new ToolsEditorTabbed();
-                right = new PreferencesFragment();
-                break;
-            case ID_TOOLS_FREEZER:
-                main = new ToolsFreezerTabbed();
-                right = new PreferencesFragment();
-                break;
-            case ID_LICENSES:
-                main = WebViewFragment.newInstance(WebViewFragment.TYPE_LICENSES);
-                right = new PreferencesFragment();
-                break;
-
-        }
-
-        final FragmentTransaction ft = getFragmentManager().beginTransaction();
-
-        ft.replace(R.id.container, main);
-        ft.replace(R.id.menu_frame, right);
-
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.commit();
+        loadFragment(i);
     }
 
     @Override
@@ -285,6 +234,67 @@ public class MainActivity extends Activity
     // Methods
     //==============================================================================================
 
+    private void loadFragment(final int i) {
+        Fragment main;
+        Fragment right;
+
+        switch (i) {
+            case ID_INFORMATION:
+                main = new InformationFragment();
+                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                break;
+            default:
+            case ID_DEVICE:
+                main = new DeviceFragment();
+                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                break;
+            case ID_PERFORMANCE_INFO:
+                main = new PerformanceInformationFragment();
+                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                break;
+            case ID_PERFORMANCE_CPU_SETTINGS:
+                main = new PerformanceCpuSettings();
+                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                break;
+            case ID_PERFORMANCE_GPU_SETTINGS:
+                main = new PerformanceGpuFragment();
+                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                break;
+            case ID_PERFORMANCE_EXTRA:
+                main = new PerformanceExtrasFragment();
+                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                break;
+            case ID_TASKER:
+                main = new TaskerFragment();
+                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                break;
+            case ID_TOOLS_EDITORS:
+                main = new ToolsEditorTabbed();
+                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                break;
+            case ID_TOOLS_FREEZER:
+                main = new ToolsFreezerTabbed();
+                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                break;
+            case ID_PREFERENCES:
+                main = new PreferencesFragment();
+                right = HelpFragment.newInstance(HelpFragment.TYPE_PREFERENCE);
+                break;
+            case ID_LICENSES:
+                main = WebViewFragment.newInstance(WebViewFragment.TYPE_LICENSES);
+                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                break;
+        }
+
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        ft.replace(R.id.container, main);
+        ft.replace(R.id.menu_frame, right);
+
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+    }
+
     @Subscribe
     public void onSectionAttached(final SectionAttachedEvent event) {
         final int id = event.getId();
@@ -296,7 +306,7 @@ public class MainActivity extends Activity
                 mTitle = R.string.menu;
                 break;
             case ID_SECOND_MENU:
-                mTitle = R.string.preferences;
+                mTitle = R.string.help;
                 break;
             default:
                 mTitle = mFragmentTitle = R.string.app_name;
