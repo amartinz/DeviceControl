@@ -25,6 +25,7 @@
         <item>@string/performance</item>
         <item>@string/information</item>
         <item>@string/cpusettings</item>
+        <item>@string/gpusettings</item>
         <item>@string/extras</item>
         <item>@string/tools</item>
         <item>@string/tasker</item>

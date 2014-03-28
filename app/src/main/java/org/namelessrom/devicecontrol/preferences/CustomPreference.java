@@ -22,16 +22,13 @@ public class CustomPreference extends Preference {
     String color    = "#FFFFFF";
     String sumColor = null;
     Preference        pref;
-    boolean           excludeDialog;
     boolean           checkBoxState;
     boolean           areMilliVolts;
     String            category;
     SharedPreferences mPrefs;
 
-    public CustomPreference(Context context, boolean excludeDialog, String category) {
+    public CustomPreference(Context context) {
         super(context);
-        this.excludeDialog = excludeDialog;
-        this.category = category;
         setLayoutResource(R.layout.preference);
     }
 
@@ -94,10 +91,6 @@ public class CustomPreference extends Preference {
 
     public void setSummaryColor(String color) {
         this.sumColor = color;
-    }
-
-    public void excludeFromDialog(boolean exclude) {
-        this.excludeDialog = exclude;
     }
 
     public String getCategory() {

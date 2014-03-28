@@ -15,6 +15,8 @@
     <string name="dialog_warning">Warning!</string>
     <string name="dialog_warning_apply">Are you sure that you want to apply your settings?</string>
     <string name="toast_settings_applied">Successfully applied!</string>
+    <string name="no_tweakable_values">No Tweakable Values</string>
+    <string name="no_tweakable_gpu">This kernel doesn\'t support GPU Tweaks</string>
     <!-- Menu -->
     <string name="device">Device</string>
     <string name="performance">Performance</string>
@@ -69,6 +71,10 @@
     <string name="cpu_info_settings_header">Settings</string>
     <string name="cpu_info_settings_interval">Refresh interval</string>
     <string name="cpu_info_hide">Hide status</string>
+    <!-- GPU Settings -->
+    <string name="gpu">GPU</string>
+    <string name="gpusettings">GPU Settings</string>
+    <string name="gpu_freq_max">GPU Max Frequency</string>
     <!-- Input -->
     <string name="touchkey_subcat_title">Touch key</string>
     <string name="touchkey_light_title_head">Enable keys backlight</string>
