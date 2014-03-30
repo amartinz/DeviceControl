@@ -183,7 +183,9 @@ public class CpuCoreMonitor implements DeviceConstants {
         };
 
         openShell();
-        mShell.add(commandCapture);
+        if (!mShell.isClosed()) {
+            mShell.add(commandCapture);
+        }
     }
 
 }

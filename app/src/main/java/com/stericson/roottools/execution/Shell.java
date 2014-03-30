@@ -148,6 +148,9 @@ public class Shell {
         }
     }
 
+    public boolean isClosed() {
+        return close;
+    }
 
     public Command add(Command command) {
         if (close) {
