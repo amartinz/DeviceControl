@@ -79,6 +79,7 @@ public interface DeviceConstants {
     //==============================================================================================
     public static final String EXTENSIVE_LOGGING = "extensive_logging";
     public static final String DC_FIRST_START    = "dc_first_start";
+    public static final String SHOW_LAUNCHER     = "show_launcher";
 
     //==============================================================================================
     // Tasker
