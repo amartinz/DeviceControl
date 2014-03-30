@@ -39,18 +39,19 @@ public class PerformanceFragment extends AttachFragment {
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
-        View rootView = layoutInflater.inflate(R.layout.fragment_viewpager, viewGroup, false);
+        final View rootView = layoutInflater.inflate(R.layout.fragment_viewpager, viewGroup, false);
 
-        List<Fragment> mFragments = getFragments();
-        List<String> mTitles = getTitles();
+        final List<Fragment> mFragments = getFragments();
+        final List<String> mTitles = getTitles();
 
-        JfViewPager mViewPager = (JfViewPager) rootView.findViewById(R.id.pager);
+        final JfViewPager mViewPager = (JfViewPager) rootView.findViewById(R.id.pager);
 
-        ScreenSlidePagerAdapter mTabsAdapter = new ScreenSlidePagerAdapter(
-                getChildFragmentManager(), mFragments, mTitles);
+        final ScreenSlidePagerAdapter mTabsAdapter =
+                new ScreenSlidePagerAdapter(getChildFragmentManager(), mFragments, mTitles);
         mViewPager.setAdapter(mTabsAdapter);
 
-        PagerTabStrip mPagerTabStrip = (PagerTabStrip) rootView.findViewById(R.id.pagerTabStrip);
+        final PagerTabStrip mPagerTabStrip =
+                (PagerTabStrip) rootView.findViewById(R.id.pagerTabStrip);
         mPagerTabStrip.setDrawFullUnderline(false);
 
         return rootView;
@@ -62,24 +63,20 @@ public class PerformanceFragment extends AttachFragment {
     }
 
     private List<Fragment> getFragments() {
-        List<Fragment> tmpList = new ArrayList<Fragment>();
+        final List<Fragment> tmpList = new ArrayList<Fragment>();
         tmpList.add(new PerformanceInformationFragment());
         tmpList.add(new PerformanceCpuSettings());
         tmpList.add(new PerformanceGpuFragment());
-        if (PerformanceExtrasFragment.isSupported(getActivity())) {
-            tmpList.add(new PerformanceExtrasFragment());
-        }
+        tmpList.add(new PerformanceExtrasFragment());
         return tmpList;
     }
 
     private List<String> getTitles() {
-        List<String> tmpList = new ArrayList<String>();
+        final List<String> tmpList = new ArrayList<String>();
         tmpList.add(getString(R.string.information));
         tmpList.add(getString(R.string.cpusettings));
         tmpList.add(getString(R.string.gpusettings));
-        if (PerformanceExtrasFragment.isSupported(getActivity())) {
-            tmpList.add(getString(R.string.extras));
-        }
+        tmpList.add(getString(R.string.extras));
         return tmpList;
     }
 }

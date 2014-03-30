@@ -9,7 +9,6 @@ import android.preference.PreferenceCategory;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
-import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.GpuUtils;
@@ -47,14 +46,7 @@ public class PerformanceGpuFragment extends AttachPreferenceFragment
             } catch (Exception ignored) { }
         }
 
-        if (mRoot.getPreferenceCount() == 0) {
-            final CustomPreference pref = new CustomPreference(context);
-            pref.setTitle(R.string.no_tweakable_values);
-            pref.setSummary(R.string.no_tweakable_gpu);
-            pref.setTitleColor("#ffffff");
-            pref.setSummaryColor("#ffffff");
-            mRoot.addPreference(pref);
-        }
+        isSupported(mRoot, context);
 
         if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
             MainActivity.mSlidingMenu.toggle(true);

@@ -19,11 +19,11 @@
 package org.namelessrom.devicecontrol.fragments.performance;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceGroup;
+import android.preference.PreferenceScreen;
 import android.view.View;
 
 import org.namelessrom.devicecontrol.Application;
@@ -60,6 +60,8 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
     //==============================================================================================
     private static      boolean IS_LOW_RAM_DEVICE     = false;
     //----------------------------------------------------------------------------------------------
+    private PreferenceScreen         mRoot;
+    //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mForceHighEndGfx;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mLcdPowerReduce;
@@ -88,15 +90,15 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         addPreferencesFromResource(R.xml.performance_extras);
+        mRoot = getPreferenceScreen();
 
         IS_LOW_RAM_DEVICE = Utils.getLowRamDevice(getActivity());
 
         if (IS_LOW_RAM_DEVICE) {
             mForceHighEndGfx = (CustomCheckBoxPreference) findPreference(FORCE_HIGHEND_GFX_PREF);
         } else {
-            getPreferenceScreen().removePreference(findPreference(FORCE_HIGHEND_GFX_PREF));
+            mRoot.removePreference(findPreference(FORCE_HIGHEND_GFX_PREF));
         }
 
         //------------------------------------------------------------------------------------------
@@ -149,13 +151,15 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
 
         removeIfEmpty(preferenceGroup);
 
+        isSupported(mRoot, getActivity());
+
         new PerformanceCpuTask().execute();
 
     }
 
-    private void removeIfEmpty(PreferenceGroup preferenceGroup) {
+    private void removeIfEmpty(final PreferenceGroup preferenceGroup) {
         if (preferenceGroup.getPreferenceCount() == 0) {
-            getPreferenceScreen().removePreference(preferenceGroup);
+            mRoot.removePreference(preferenceGroup);
         }
     }
 
@@ -208,12 +212,6 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
         }
     }
 
-    public static boolean isSupported(Context context) {
-        return (sLcdPowerReduce
-                || CpuUtils.hasIntelliPlug() // includes eco mode
-                || Utils.getLowRamDevice(context));
-    }
-
     //==============================================================================================
     // Internal Classes
     //==============================================================================================
@@ -223,7 +221,7 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
 
         @Override
         protected List<Boolean> doInBackground(Void... voids) {
-            List<Boolean> tmpList = new ArrayList<Boolean>();
+            final List<Boolean> tmpList = new ArrayList<Boolean>();
 
             if (IS_LOW_RAM_DEVICE && Application.HAS_ROOT) {
                 tmpList.add(Scripts.getForceHighEndGfx());

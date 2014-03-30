@@ -104,7 +104,6 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         final PreferenceScreen preferenceScreen = getPreferenceScreen();
 
-        mForceNavBar = (CustomCheckBoxPreference) findPreference(KEY_NAVBAR_FORCE);
         try {
             hasNavBar = getResources().getBoolean(
                     (Integer) Class.forName("com.android.internal.R$bool")
@@ -114,7 +113,18 @@ public class DeviceFragment extends AttachPreferenceFragment
             hasNavBar = !ViewConfiguration.get(mActivity).hasPermanentMenuKey();
         }
 
-        PreferenceCategory category = (PreferenceCategory) findPreference("input_knockon");
+        PreferenceCategory category = (PreferenceCategory) findPreference("input_navbar");
+        if (category != null) {
+            mForceNavBar = (CustomCheckBoxPreference) findPreference(KEY_NAVBAR_FORCE);
+            if (hasNavBar || Application.IS_NAMELESS) {
+                category.removePreference(mForceNavBar);
+            }
+            if (category.getPreferenceCount() == 0) {
+                preferenceScreen.removePreference(category);
+            }
+        }
+
+        category = (PreferenceCategory) findPreference("input_knockon");
         if (category != null) {
             mKnockOn = (CustomCheckBoxPreference) findPreference(KEY_KNOCK_ON);
             if (!sKnockOn) {
@@ -194,8 +204,9 @@ public class DeviceFragment extends AttachPreferenceFragment
             }
         }
 
-        new DeviceTask().execute();
+        isSupported(preferenceScreen, getActivity());
 
+        new DeviceTask().execute();
     }
 
     @Override
@@ -267,28 +278,14 @@ public class DeviceFragment extends AttachPreferenceFragment
     private void setResult(List<Boolean> paramResult) {
         int i = 0;
 
-        final PreferenceScreen preferenceScreen = getPreferenceScreen();
-        final PreferenceCategory category =
-                (PreferenceCategory) preferenceScreen.findPreference("input_navbar");
-
         boolean tmp;
-        if (Application.HAS_ROOT && !Application.IS_NAMELESS) {
+        if (!hasNavBar && !Application.IS_NAMELESS) {
             tmp = paramResult.get(i);
-            if (hasNavBar) {
-                category.removePreference(mForceNavBar);
-            } else {
-                mForceNavBar.setChecked(tmp);
-                mForceNavBar.setEnabled(true);
-                mForceNavBar.setOnPreferenceChangeListener(this);
-            }
-            i++;
-        } else {
-            category.removePreference(mForceNavBar);
+            mForceNavBar.setChecked(tmp);
+            mForceNavBar.setEnabled(true);
+            mForceNavBar.setOnPreferenceChangeListener(this);
         }
-
-        if (category.getPreferenceCount() == 0) {
-            preferenceScreen.removePreference(category);
-        }
+        i++;
     }
 
     //==============================================================================================
@@ -302,7 +299,7 @@ public class DeviceFragment extends AttachPreferenceFragment
         protected List<Boolean> doInBackground(Void... voids) {
             final List<Boolean> tmpList = new ArrayList<Boolean>();
 
-            if (Application.HAS_ROOT && !Application.IS_NAMELESS) {
+            if (!hasNavBar && !Application.IS_NAMELESS) {
                 tmpList.add(Scripts.getForceNavBar());
             }
 

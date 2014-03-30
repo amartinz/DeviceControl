@@ -15,8 +15,8 @@
     <string name="dialog_warning">Warning!</string>
     <string name="dialog_warning_apply">Are you sure that you want to apply your settings?</string>
     <string name="toast_settings_applied">Successfully applied!</string>
-    <string name="no_tweakable_values">No Tweakable Values</string>
-    <string name="no_tweakable_gpu">This kernel doesn\'t support GPU Tweaks</string>
+    <string name="no_tweaks_available">No tweaks available</string>
+    <string name="no_tweaks_message">Sorry but your device doesn\'t have any supported features</string>
     <!-- Menu -->
     <string name="device">Device</string>
     <string name="performance">Performance</string>

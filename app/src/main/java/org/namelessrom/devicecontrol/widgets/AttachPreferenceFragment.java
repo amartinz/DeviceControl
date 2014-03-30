@@ -18,9 +18,14 @@
 package org.namelessrom.devicecontrol.widgets;
 
 import android.app.Activity;
+import android.content.Context;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 
+import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.BusProvider;
 
 public class AttachPreferenceFragment extends PreferenceFragment {
@@ -36,5 +41,26 @@ public class AttachPreferenceFragment extends PreferenceFragment {
     protected void onAttach(Activity activity, int number) {
         super.onAttach(activity);
         BusProvider.getBus().post(new SectionAttachedEvent(number));
+    }
+
+    protected void isSupported(final PreferenceScreen preferenceScreen, final Context context) {
+        if (preferenceScreen.getPreferenceCount() == 0) {
+            preferenceScreen.addPreference(createPreference(context));
+        }
+    }
+
+    protected void isSupported(final PreferenceCategory preferenceCategory, final Context context) {
+        if (preferenceCategory.getPreferenceCount() == 0) {
+            preferenceCategory.addPreference(createPreference(context));
+        }
+    }
+
+    private CustomPreference createPreference(final Context context) {
+        final CustomPreference pref = new CustomPreference(context);
+        pref.setTitle(R.string.no_tweaks_available);
+        pref.setSummary(R.string.no_tweaks_message);
+        pref.setTitleColor("#ffffff");
+        pref.setSummaryColor("#ffffff");
+        return pref;
     }
 }
