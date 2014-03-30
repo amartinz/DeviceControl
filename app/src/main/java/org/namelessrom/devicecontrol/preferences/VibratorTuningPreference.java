@@ -36,7 +36,6 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
@@ -95,14 +94,14 @@ public class VibratorTuningPreference extends DialogPreference
 
         mSeekBar = (SeekBar) view.findViewById(R.id.vibrator_seekbar);
         mValue = (TextView) view.findViewById(R.id.vibrator_value);
-        TextView mWarning = (TextView) view.findViewById(R.id.textWarn);
+        final TextView mWarning = (TextView) view.findViewById(R.id.textWarn);
 
         final String strWarnMsg = getContext().getResources().getString(
                 R.string.vibrator_warning
                 , strengthToPercent(VIBRATOR_INTENSITY_WARNING_THRESHOLD) - 1);
         mWarning.setText(strWarnMsg);
 
-        Drawable progressDrawable = mSeekBar.getProgressDrawable();
+        final Drawable progressDrawable = mSeekBar.getProgressDrawable();
         if (progressDrawable instanceof LayerDrawable) {
             LayerDrawable ld = (LayerDrawable) progressDrawable;
             mProgressDrawable = ld.findDrawableByLayerId(android.R.id.progress);
@@ -120,6 +119,17 @@ public class VibratorTuningPreference extends DialogPreference
 
         mSeekBar.setOnSeekBarChangeListener(this);
         mSeekBar.setProgress(percent);
+
+        final Button testVibration = (Button) view.findViewById(R.id.vibrator_test);
+        testVibration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (vib != null) {
+                    vib.cancel();
+                    vib.vibrate(250);
+                }
+            }
+        });
     }
 
     @Override
@@ -128,15 +138,18 @@ public class VibratorTuningPreference extends DialogPreference
 
         // can't use onPrepareDialogBuilder for this as we want the dialog
         // to be kept open on click
-        AlertDialog d = (AlertDialog) getDialog();
+        final AlertDialog d = (AlertDialog) getDialog();
         if (d != null) {
-            Button defaultsButton = d.getButton(DialogInterface.BUTTON_NEUTRAL);
+            final Button defaultsButton = d.getButton(DialogInterface.BUTTON_NEUTRAL);
             if (defaultsButton != null) {
                 defaultsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mSeekBar.setProgress(
-                                strengthToPercent(VIBRATOR_INTENSITY_DEFAULT_VALUE));
+                        final int progress = strengthToPercent(VIBRATOR_INTENSITY_DEFAULT_VALUE);
+                        mSeekBar.setProgress(progress);
+
+                        final String value = String.valueOf(percentToStrength(progress));
+                        Utils.runRootCommand(Utils.getWriteCommand(FILE_VIBRATOR, value));
                     }
                 });
             }
@@ -151,7 +164,7 @@ public class VibratorTuningPreference extends DialogPreference
             // Store percent value in SharedPreferences object
             PreferenceHelper.setInt(KEY_VIBRATOR_TUNING, mSeekBar.getProgress());
         } else {
-            CMDProcessor.runSuCommand(
+            Utils.runRootCommand(
                     Utils.getWriteCommand(FILE_VIBRATOR, String.valueOf(mOriginalValue))
             );
         }
@@ -171,16 +184,12 @@ public class VibratorTuningPreference extends DialogPreference
     }
 
     @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-        // Do nothing
-    }
+    public void onStartTrackingTouch(SeekBar seekBar) { }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         final String value = String.valueOf(percentToStrength(seekBar.getProgress()));
-        CMDProcessor.runSuCommand(Utils.getWriteCommand(FILE_VIBRATOR, value));
-
-        vib.vibrate(200);
+        Utils.runRootCommand(Utils.getWriteCommand(FILE_VIBRATOR, value));
     }
 
     /**
@@ -201,9 +210,10 @@ public class VibratorTuningPreference extends DialogPreference
      * Convert percent to vibrator strength
      */
     public static int percentToStrength(int percent) {
-        int strength = Math.round((
-                ((VIBRATOR_INTENSITY_MAX - VIBRATOR_INTENSITY_MIN) * percent) /
-                        100) + VIBRATOR_INTENSITY_MIN);
+        int strength = Math.round(
+                (((VIBRATOR_INTENSITY_MAX - VIBRATOR_INTENSITY_MIN) * percent) / 100)
+                        + VIBRATOR_INTENSITY_MIN
+        );
 
         if (strength > VIBRATOR_INTENSITY_MAX) {
             strength = VIBRATOR_INTENSITY_MAX;

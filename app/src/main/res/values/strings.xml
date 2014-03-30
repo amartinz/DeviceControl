@@ -86,6 +86,7 @@
     <string name="vibrator_tuning_title">Vibration strength</string>
     <string name="vibrator_tuning_summary_head">Adjust the strength of the vibration feedback</string>
     <string name="vibrator_warning">Values higher than %1$d are not recommended</string>
+    <string name="test">Test</string>
     <string name="navbar_title">Navigation Bar</string>
     <string name="navbar_force_title">Force navigation bar</string>
     <string name="navbar_force_summary">Requires a reboot!</string>

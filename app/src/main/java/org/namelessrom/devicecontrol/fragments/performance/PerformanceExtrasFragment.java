@@ -33,7 +33,6 @@ import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.SeekBarPreference;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
@@ -168,7 +167,7 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             changed = true;
         } else if (preference == mLcdPowerReduce) {
             final boolean value = (Boolean) o;
-            CMDProcessor.runSuCommand(
+            Utils.runRootCommand(
                     Utils.getWriteCommand(sLcdPowerReduceFile, (value ? "1" : "0"))
             );
             PreferenceHelper.setBoolean(KEY_LCD_POWER_REDUCE, value);
@@ -185,7 +184,7 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             changed = true;
         } else if (preference == mMcPowerScheduler) {
             final int value = (Integer) o;
-            CMDProcessor.runSuCommand(
+            Utils.runRootCommand(
                     Utils.getWriteCommand(sLcdPowerReduceFile, String.valueOf(value))
             );
             PreferenceHelper.setInt(KEY_MC_POWER_SCHEDULER, value);

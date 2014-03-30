@@ -50,7 +50,6 @@ import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.Prop;
-import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.threads.FireAndForget;
@@ -322,8 +321,7 @@ public class ToolsEditor extends AttachFragment
                     ? mBuildName + ".prop"
                     : mBuildName + "-" + Build.DISPLAY.replace(" ", "_") + ".prop";
             if (!new File(dn + "/" + mBuildName).exists()) {
-                CMDProcessor.runShellCommand("busybox cp /system/build.prop "
-                        + dn + "/" + mBuildName);
+                Utils.runRootCommand("busybox cp /system/build.prop " + dn + "/" + mBuildName);
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

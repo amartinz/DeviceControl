@@ -23,41 +23,61 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:paddingBottom="20dip">
+        android:paddingBottom="20dp">
 
         <TextView
             android:id="@+id/vibrator_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/vibrator_tuning_title"
-            android:paddingTop="10dip"
-            android:paddingLeft="20dip"
-            android:paddingRight="20dip" />
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" />
 
         <TextView
             android:id="@+id/vibrator_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:paddingTop="10dip"
-            android:paddingLeft="20dip"
-            android:paddingRight="20dip" />
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" />
 
-        <SeekBar
-            android:id="@+id/vibrator_seekbar"
+        <LinearLayout
+            android:id="@+id/seekbar_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/vibrator_text"
-            android:paddingTop="2dip"
-            android:paddingLeft="20dip"
-            android:paddingRight="20dip" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/vibrator_text">
+
+            <SeekBar
+                android:id="@+id/vibrator_seekbar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" />
+
+            <Button
+                android:id="@+id/vibrator_test"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/test"
+                android:layout_toRightOf="@+id/vibrator_seekbar" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textWarn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/vibrator_seekbar"
-            android:paddingTop="8dip"
+            android:layout_below="@+id/seekbar_container"
+            android:paddingTop="8dp"
             android:gravity="center"
             android:text="@string/vibrator_warning"
             android:textSize="15sp" />

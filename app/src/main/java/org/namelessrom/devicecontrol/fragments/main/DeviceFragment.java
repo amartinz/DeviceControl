@@ -34,7 +34,6 @@ import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
-import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
@@ -217,7 +216,7 @@ public class DeviceFragment extends AttachPreferenceFragment
         } else if (preference == mKnockOn) {
             final boolean newValue = (Boolean) o;
             final String value = (newValue) ? "1" : "0";
-            CMDProcessor.runSuCommand(
+            Utils.runRootCommand(
                     Utils.getWriteCommand(sKnockOnFile, value)
             );
             PreferenceHelper.setBoolean(KEY_KNOCK_ON, newValue);
@@ -226,7 +225,7 @@ public class DeviceFragment extends AttachPreferenceFragment
             final boolean newValue = (Boolean) o;
             final String value = newValue ? "255" : "0";
 
-            CMDProcessor.runSuCommand(
+            Utils.runRootCommand(
                     Utils.getWriteCommand(FILE_TOUCHKEY_TOGGLE, value) +
                             Utils.getWriteCommand(FILE_TOUCHKEY_BRIGHTNESS, value)
             );
@@ -236,7 +235,7 @@ public class DeviceFragment extends AttachPreferenceFragment
         } else if (preference == mBacklightNotification) {
             final boolean newValue = (Boolean) o;
             final String value = newValue ? "1" : "0";
-            CMDProcessor.runSuCommand(
+            Utils.runRootCommand(
                     Utils.getWriteCommand(FILE_BLN_TOGGLE, value)
             );
             PreferenceHelper.setBoolean(KEY_TOUCHKEY_BLN, newValue);
@@ -244,14 +243,14 @@ public class DeviceFragment extends AttachPreferenceFragment
         } else if (preference == mKeyboardBacklight) {
             final boolean newValue = (Boolean) o;
             final String value = newValue ? "255" : "0";
-            CMDProcessor.runSuCommand(
+            Utils.runRootCommand(
                     Utils.getWriteCommand(FILE_KEYBOARD_TOGGLE, value)
             );
             PreferenceHelper.setBoolean(KEY_KEYBOARD_LIGHT, newValue);
             changed = true;
         } else if (preference == mPanelColor) { // ======================================== GRAPHICS
             final String value = String.valueOf(o);
-            CMDProcessor.runSuCommand(
+            Utils.runRootCommand(
                     Utils.getWriteCommand(sHasPanelFile, value)
             );
             PreferenceHelper.setString(KEY_PANEL_COLOR_TEMP, value);

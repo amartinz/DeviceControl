@@ -42,16 +42,16 @@ public class InformationFragment extends AttachFragment implements DeviceConstan
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_help,
+        final View view = inflater.inflate(R.layout.fragment_help,
                 container, false);
 
         final String appname = getString(R.string.app_name);
 
-        TextView tvHelp = (TextView) view.findViewById(R.id.help_textview);
+        final TextView tvHelp = (TextView) view.findViewById(R.id.help_textview);
         tvHelp.setText(getString(R.string.app_information_help,
                 appname, appname, appname));
 
-        ImageView ivHelp = (ImageView) view.findViewById(R.id.help_imageview);
+        final ImageView ivHelp = (ImageView) view.findViewById(R.id.help_imageview);
         ivHelp.setImageResource(R.mipmap.ic_launcher);
 
         return view;
