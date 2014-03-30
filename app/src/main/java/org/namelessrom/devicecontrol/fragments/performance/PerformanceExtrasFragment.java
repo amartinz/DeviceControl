@@ -89,7 +89,7 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.performance_general);
+        addPreferencesFromResource(R.xml.performance_extras);
 
         IS_LOW_RAM_DEVICE = Utils.getLowRamDevice(getActivity());
 
@@ -115,8 +115,9 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
 
         mMcPowerScheduler = (SeekBarPreference) findPreference(KEY_MC_POWER_SCHEDULER);
         if (sMcPowerScheduler) {
-            mMcPowerScheduler
-                    .setProgress(Integer.parseInt(Utils.readOneLine(sMcPowerSchedulerFile)));
+            mMcPowerScheduler.setProgress(
+                    Integer.parseInt(Utils.readOneLine(sMcPowerSchedulerFile))
+            );
             mMcPowerScheduler.setOnPreferenceChangeListener(this);
         } else {
             preferenceGroup.removePreference(mMcPowerScheduler);
@@ -185,7 +186,7 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
         } else if (preference == mMcPowerScheduler) {
             final int value = (Integer) o;
             Utils.runRootCommand(
-                    Utils.getWriteCommand(sLcdPowerReduceFile, String.valueOf(value))
+                    Utils.getWriteCommand(sMcPowerSchedulerFile, String.valueOf(value))
             );
             PreferenceHelper.setInt(KEY_MC_POWER_SCHEDULER, value);
             changed = true;
