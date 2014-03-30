@@ -47,16 +47,16 @@ import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
         mode = ReportingInteractionMode.SILENT)
 public class Application extends android.app.Application implements DeviceConstants {
 
-    public static boolean IS_LOG_DEBUG = false;
-    public static boolean IS_DEBUG     = false;
-
-    public static       boolean HAS_ROOT    = false;
     public static final boolean IS_NAMELESS = Utils.isNameless();
 
-    public static  AlarmManager   alarmManager;
-    private static PackageManager packageManager;
+    public static boolean IS_LOG_DEBUG = false;
+    public static boolean IS_DEBUG     = false;
+    public static boolean HAS_ROOT     = false;
 
-    public static Context applicationContext;
+    public static AlarmManager alarmManager;
+    public static Context      applicationContext;
+
+    private static PackageManager packageManager;
 
     @Override
     public void onCreate() {
@@ -100,10 +100,18 @@ public class Application extends android.app.Application implements DeviceConsta
             }).start();
         }
 
+        final boolean showLauncher =
+                PreferenceHelper.getBoolean(SHOW_LAUNCHER, true) || !Application.IS_NAMELESS;
+        toggleLauncherIcon(showLauncher);
+    }
+
+    public static void toggleLauncherIcon(final boolean showLauncher) {
         try {
-            if (packageManager.getResourcesForApplication("com.android.settings")
+            if (packageManager == null) { return; }
+            if ((packageManager.getResourcesForApplication("com.android.settings")
                     .getIdentifier("device_control_settings", "string",
-                            "com.android.settings") > 0) {
+                            "com.android.settings") > 0)
+                    && !showLauncher) {
                 logDebug("Implemented into system!");
                 disableLauncher(true);
             } else {
@@ -114,10 +122,9 @@ public class Application extends android.app.Application implements DeviceConsta
             logDebug("You dont have settings? That's weird.");
             disableLauncher(false);
         }
-
     }
 
-    private void disableLauncher(boolean shouldDisable) {
+    private static void disableLauncher(boolean shouldDisable) {
         final ComponentName component = new ComponentName(PACKAGE_NAME,
                 PACKAGE_NAME + ".activities.DummyLauncher");
         packageManager.setComponentEnabledSetting(component,

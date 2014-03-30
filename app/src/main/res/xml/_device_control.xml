@@ -56,6 +56,17 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="prefs_general"
+        android:title="@string/general">
+
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+            android:key="show_launcher"
+            android:title="@string/show_launcher"
+            android:summary="@string/show_launcher_summary" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="prefs_debug"
         android:title="@string/debugging">
 

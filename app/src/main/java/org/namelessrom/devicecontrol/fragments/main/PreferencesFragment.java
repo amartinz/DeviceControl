@@ -20,10 +20,12 @@ package org.namelessrom.devicecontrol.fragments.main;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
@@ -38,6 +40,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
     // Debug
     //==============================================================================================
     private CustomCheckBoxPreference mExtensiveLogging;
+    private CustomCheckBoxPreference mShowLauncher;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -48,6 +51,19 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
         mExtensiveLogging = (CustomCheckBoxPreference) findPreference(EXTENSIVE_LOGGING);
         mExtensiveLogging.setOnPreferenceChangeListener(this);
+
+        PreferenceCategory category = (PreferenceCategory) findPreference("prefs_general");
+        if (category != null) {
+            mShowLauncher = (CustomCheckBoxPreference) findPreference(SHOW_LAUNCHER);
+            if (Application.IS_NAMELESS) {
+                mShowLauncher.setOnPreferenceChangeListener(this);
+            } else {
+                category.removePreference(mShowLauncher);
+            }
+            if (category.getPreferenceCount() == 0) {
+                getPreferenceScreen().removePreference(category);
+            }
+        }
 
         final Preference mVersion = findPreference("prefs_version");
         mVersion.setEnabled(false);
@@ -86,10 +102,15 @@ public class PreferencesFragment extends AttachPreferenceFragment
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         boolean changed = false;
 
-        if (preference == mExtensiveLogging) {
+        if (mExtensiveLogging == preference) {
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(EXTENSIVE_LOGGING, value);
-            org.namelessrom.devicecontrol.Application.IS_LOG_DEBUG = value;
+            Application.IS_LOG_DEBUG = value;
+            changed = true;
+        } else if (mShowLauncher == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(SHOW_LAUNCHER, value);
+            Application.toggleLauncherIcon(value);
             changed = true;
         }
 

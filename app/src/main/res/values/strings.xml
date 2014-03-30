@@ -103,6 +103,9 @@
     <string name="panel_color_temp_warm">Warm</string>
     <string name="panel_color_temp_hot">Hot</string>
     <!-- Preferences -->
+    <!-- General -->
+    <string name="show_launcher">Show launcher icon</string>
+    <string name="show_launcher_summary">Hides/unhides the launcher icon</string>
     <!-- Debug -->
     <string name="debugging">Debugging</string>
     <string name="extensive_logging">Extensive Logging</string>
