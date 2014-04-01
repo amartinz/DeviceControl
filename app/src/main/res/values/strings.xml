@@ -125,6 +125,8 @@
     <string name="mt_user_packs">User Packages</string>
     <string name="freeze_msg">%s will be frozen. Continue?</string>
     <string name="unfreeze_msg">%s will be defrosted. Continue?</string>
+    <string name="package_frozen">Package is frozen.</string>
+    <string name="package_defrost">Package is defrosted.</string>
     <!-- VM Settings -->
     <string name="vm_settings">DALVIK SETTINGS</string>
     <string name="dirty_ratio_title">Dirty ratio</string>

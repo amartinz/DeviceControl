@@ -25,11 +25,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
+
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
 import org.namelessrom.devicecontrol.fragments.tools.PropModder;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsEditor;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsFreezer;
 import org.namelessrom.devicecontrol.fragments.tools.VmFragment;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class PressToLoadFragment extends Fragment implements DeviceConstants {
@@ -45,6 +49,18 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
 
     private int mImgId = R.mipmap.ic_launcher;
     private int mFragmentId;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BusProvider.getBus().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BusProvider.getBus().unregister(this);
+    }
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -92,10 +108,16 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
                 f = new ReplaceFragment();
                 break;
         }
-        replaceFragment(f, false);
+        onReplaceFragment(new ReplaceFragmentEvent(f, false));
     }
 
-    public void replaceFragment(Fragment f, boolean animate) {
+    @Subscribe
+    public void onReplaceFragment(final ReplaceFragmentEvent event) {
+        if (event == null) { return; }
+
+        final Fragment f = event.getFragment();
+        final boolean animate = event.isAnimate();
+
         final FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         if (animate) {
             ft.setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
@@ -122,7 +144,7 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    replaceFragment(fragment, true);
+                    onReplaceFragment(new ReplaceFragmentEvent(fragment, true));
                 }
             });
 

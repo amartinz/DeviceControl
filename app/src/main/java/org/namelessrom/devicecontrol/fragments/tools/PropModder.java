@@ -14,8 +14,10 @@ import android.text.InputFilter.LengthFilter;
 import android.widget.EditText;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 
@@ -173,12 +175,9 @@ public class PropModder extends PreferenceFragment implements
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
         if (preference == mFullEditor) {
-            final PressToLoadFragment ptlFragment = ((PressToLoadFragment) getParentFragment());
-            if (ptlFragment != null) {
-                ptlFragment.replaceFragment(
-                        ToolsEditor.newInstance(PressToLoadFragment.FRAGMENT_BUILD_PROP), true
-                );
-            }
+            BusProvider.getBus().post(new ReplaceFragmentEvent(
+                    ToolsEditor.newInstance(PressToLoadFragment.FRAGMENT_BUILD_PROP), true
+            ));
             return true;
         } else if (preference == mTcpStackPref) {
             logDebug("mTcpStackPref.onPreferenceTreeClick()");

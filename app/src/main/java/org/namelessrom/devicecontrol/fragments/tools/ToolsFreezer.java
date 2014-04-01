@@ -18,12 +18,12 @@
 
 package org.namelessrom.devicecontrol.fragments.tools;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,14 +34,23 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
+import android.widget.Toast;
+
+import com.squareup.otto.Subscribe;
+import com.stericson.roottools.RootTools;
+import com.stericson.roottools.execution.CommandCapture;
+import com.stericson.roottools.execution.Shell;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
-import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
-import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor.CommandResult2;
+import org.namelessrom.devicecontrol.events.FreezeEvent;
+import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
+import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 import org.namelessrom.devicecontrol.widgets.adapters.PackAdapter;
+
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class ToolsFreezer extends AttachFragment
         implements DeviceConstants, AdapterView.OnItemClickListener {
@@ -55,8 +64,7 @@ public class ToolsFreezer extends AttachFragment
     private ListView       packList;
     private PackAdapter    adapter;
     private int            curpos;
-    private Boolean        freeze;
-    private String         packs;
+    private boolean        mFreeze;
     private String         pn;
     private String         titlu;
     private View           mShadowTop, mShadowBottom;
@@ -71,11 +79,23 @@ public class ToolsFreezer extends AttachFragment
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        BusProvider.getBus().register(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        BusProvider.getBus().unregister(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
         final View v = layoutInflater.inflate(R.layout.tools_freezer_list, viewGroup, false);
 
-        freeze = getArguments().getBoolean(ToolsFreezer.ARG_FREEZER, false);
-        packs = getArguments().getString(ToolsFreezer.ARG_TYPE, "usr");
+        mFreeze = getArguments().getBoolean(ToolsFreezer.ARG_FREEZER, false);
+        final boolean sys = getArguments().getString(ToolsFreezer.ARG_TYPE, "usr").equals("sys");
 
         pmList = new String[]{};
         packageManager = mActivity.getPackageManager();
@@ -85,12 +105,12 @@ public class ToolsFreezer extends AttachFragment
 
         llist = (LinearLayout) v.findViewById(R.id.llist);
         final Switch mSwitch = (Switch) v.findViewById(R.id.tools_freezer_toggle);
-        mSwitch.setChecked(packs.equals("sys"));
+        mSwitch.setChecked(sys);
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Fragment f = ToolsFreezer.newInstance(freeze ? 0 : 1, b ? "sys" : "usr");
-                ((PressToLoadFragment) getParentFragment()).replaceFragment(f, true);
+                Fragment f = ToolsFreezer.newInstance(mFreeze ? 0 : 1, b ? "sys" : "usr");
+                BusProvider.getBus().post(new ReplaceFragmentEvent(f, true));
             }
         });
 
@@ -99,12 +119,12 @@ public class ToolsFreezer extends AttachFragment
 
         packList = (ListView) v.findViewById(R.id.applist);
         packList.setOnItemClickListener(this);
-        if (freeze) {
+        if (mFreeze) {
             titlu = getString(R.string.pt_freeze);
         } else {
             titlu = getString(R.string.pt_unfreeze);
         }
-        new GetPacksOperation().execute();
+        getFreezer(mFreeze, sys);
 
         return v;
     }
@@ -113,7 +133,7 @@ public class ToolsFreezer extends AttachFragment
     public void onItemClick(AdapterView<?> parent, View view, int position, long row) {
         pn = (String) parent.getItemAtPosition(position);
         curpos = position;
-        if (freeze) {
+        if (mFreeze) {
             makedialog(titlu, getString(R.string.freeze_msg, pn));
         } else {
             makedialog(titlu, getString(R.string.unfreeze_msg, pn));
@@ -121,56 +141,81 @@ public class ToolsFreezer extends AttachFragment
 
     }
 
-    private class GetPacksOperation extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            CommandResult2 cr;
-            if (!freeze) {
-                if (packs.equals("sys")) {
-                    cr = new CMDProcessor()
-                            .sh.runWaitFor("busybox echo `pm list packages -s -d | cut -d':' -f2`");
-                } else {
-                    cr = new CMDProcessor()
-                            .sh.runWaitFor("busybox echo `pm list packages -3 -d | cut -d':' -f2`");
-                }
-            } else {
-                if (packs.equals("sys")) {
-                    cr = new CMDProcessor()
-                            .sh.runWaitFor("busybox echo `pm list packages -s -e | cut -d':' -f2`");
-                } else {
-                    cr = new CMDProcessor()
-                            .sh.runWaitFor("busybox echo `pm list packages -3 -e | cut -d':' -f2`");
-                }
-            }
-            if (cr.success() && !cr.stdout.equals("")) { return cr.stdout; }
-            return null;
-        }
+    @Subscribe
+    public void onFreezer(final FreezeEvent event) {
+        if (event == null) { return; }
 
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                pmList = result.split(" ");
-            }
-            linlaHeaderProgress.setVisibility(View.GONE);
-            if (pmList.length > 0) {
-                adapter = new PackAdapter(mActivity, pmList, packageManager);
-                packList.setAdapter(adapter);
-                linNopack.setVisibility(View.GONE);
-                llist.setVisibility(LinearLayout.VISIBLE);
-                mShadowTop.setVisibility(View.VISIBLE);
-                mShadowBottom.setVisibility(View.VISIBLE);
-            } else {
-                linNopack.setVisibility(View.VISIBLE);
-            }
+        final String result = event.getPackages();
+        if (result != null) {
+            pmList = result.split(" ");
         }
-
-        @Override
-        protected void onPreExecute() {
-            linlaHeaderProgress.setVisibility(View.VISIBLE);
+        linlaHeaderProgress.setVisibility(View.GONE);
+        if (pmList.length > 0) {
+            adapter = new PackAdapter(mActivity, pmList, packageManager);
+            packList.setAdapter(adapter);
             linNopack.setVisibility(View.GONE);
-            llist.setVisibility(LinearLayout.GONE);
+            llist.setVisibility(LinearLayout.VISIBLE);
+            mShadowTop.setVisibility(View.VISIBLE);
+            mShadowBottom.setVisibility(View.VISIBLE);
+        } else {
+            linNopack.setVisibility(View.VISIBLE);
         }
+    }
 
+    private void getFreezer(final boolean isFreeze, final boolean isSys) {
+        final Activity activity = getActivity();
+        if (activity == null) { return; }
+
+        linlaHeaderProgress.setVisibility(View.VISIBLE);
+        linNopack.setVisibility(View.GONE);
+        llist.setVisibility(LinearLayout.GONE);
+
+        final StringBuilder sb = new StringBuilder();
+        sb.append("busybox echo `pm list packages ");
+        if (isSys) {
+            sb.append("-s ");
+        } else {
+            sb.append("-3 ");
+        }
+        if (isFreeze) {
+            sb.append("-e ");
+        } else {
+            sb.append("-d ");
+        }
+        sb.append("| cut -d':' -f2`");
+
+        final String cmd = sb.toString();
+        logDebug(cmd);
+
+        try {
+            final Shell mShell = RootTools.getShell(true);
+
+            final StringBuilder outputCollector = new StringBuilder();
+            final CommandCapture commandCapture = new CommandCapture(0, false, cmd) {
+                @Override
+                public void commandOutput(int id, String line) {
+                    outputCollector.append(line);
+                    logDebug(line);
+                }
+
+                @Override
+                public void commandCompleted(int id, int exitcode) {
+                    final String result = outputCollector.toString();
+                    logDebug(result);
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            BusProvider.getBus().post(new FreezeEvent(result));
+                        }
+                    });
+                }
+            };
+
+            if (mShell == null || mShell.isClosed()) {
+                throw new Exception("Shell not available");
+            }
+            mShell.add(commandCapture);
+        } catch (Exception exc) { /* TODO: throw error? */ }
     }
 
     private void makedialog(String titlu, String msg) {
@@ -200,45 +245,82 @@ public class ToolsFreezer extends AttachFragment
     }
 
     class FreezeListener implements View.OnClickListener {
-        private final Dialog dialog;
+        private final Dialog mDialog;
 
-        public FreezeListener(Dialog dialog) {
-            this.dialog = dialog;
+        public FreezeListener(final Dialog dialog) {
+            mDialog = dialog;
         }
 
         @Override
-        public void onClick(View v) {
-            dialog.cancel();
-            new FreezeOperation().execute();
+        public void onClick(final View v) {
+            mDialog.cancel();
+            doFreeze();
         }
     }
 
-    private class FreezeOperation extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            CommandResult2 cr;
-            if (freeze) {
-                cr = new CMDProcessor().su.runWaitFor("pm disable " + pn + " 2> /dev/null");
-            } else {
-                cr = new CMDProcessor().su.runWaitFor("pm enable " + pn + " 2> /dev/null");
-            }
-            if (cr.success()) {
-                return "ok";
-            } else {
-                return null;
-            }
+    private void doFreeze() {
+        final Activity activity = getActivity();
+
+        String cmd;
+        if (mFreeze) {
+            cmd = "pm disable " + pn + " 2> /dev/null";
+        } else {
+            cmd = "pm enable " + pn + " 2> /dev/null";
         }
 
-        @Override
-        protected void onPostExecute(String result) {
-            if (result.equals("ok")) {
-                adapter.delItem(curpos);
-                adapter.notifyDataSetChanged();
-                if (adapter.isEmpty()) {
-                    llist.setVisibility(LinearLayout.GONE);
-                    linNopack.setVisibility(View.VISIBLE);
+        try {
+            final Shell mShell = RootTools.getShell(true);
+
+            final StringBuilder outputCollector = new StringBuilder();
+            final CommandCapture commandCapture = new CommandCapture(0, false, cmd) {
+                @Override
+                public void commandOutput(int id, String line) {
+                    outputCollector.append(line);
+                    logDebug(line);
                 }
+
+                @Override
+                public void commandCompleted(int id, int exitcode) {
+                    final String result = outputCollector.toString();
+                    logDebug("Result: " + result);
+
+                    // here we can just ignore if the activity is null,
+                    // as the package is disabled and next time we launch the editor,
+                    // it is already frozen
+                    if (activity != null) {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                BusProvider.getBus().post(new ShellOutputEvent(result));
+                            }
+                        });
+                    }
+                }
+            };
+
+            if (mShell == null || mShell.isClosed()) {
+                throw new Exception("Shell not available");
             }
+            mShell.add(commandCapture);
+        } catch (Exception ignored) { }
+
+    }
+
+    @Subscribe
+    public void onFreezeComplete(final ShellOutputEvent event) {
+        if (event != null) {
+            logDebug("onFreezeComplete");
+        }
+        adapter.delItem(curpos);
+        adapter.notifyDataSetChanged();
+        if (adapter.isEmpty()) {
+            llist.setVisibility(LinearLayout.GONE);
+            linNopack.setVisibility(View.VISIBLE);
+        }
+        final Activity activity = getActivity();
+        if (activity != null) {
+            final int msgId = (mFreeze ? R.string.package_frozen : R.string.package_defrost);
+            Toast.makeText(activity, msgId, Toast.LENGTH_SHORT).show();
         }
     }
 }
