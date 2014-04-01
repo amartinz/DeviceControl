@@ -17,10 +17,22 @@
  */
 package org.namelessrom.devicecontrol.utils.helpers;
 
+import android.app.Activity;
+
+import com.stericson.roottools.RootTools;
+import com.stericson.roottools.execution.CommandCapture;
+import com.stericson.roottools.execution.Shell;
+
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.events.CpuFreqEvent;
+import org.namelessrom.devicecontrol.events.GovernorEvent;
+import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
+
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 /**
  * Generic CPU Tasks.
@@ -248,9 +260,9 @@ public class CpuUtils implements PerformanceConstants {
      *
      * @return current io scheduler
      */
-    public static String getIOScheduler() {
+    public static String getIOScheduler(final int id) {
         String scheduler = null;
-        final String[] schedulers = Utils.readStringArray(IO_SCHEDULER_PATH[0]);
+        final String[] schedulers = Utils.readStringArray(IO_SCHEDULER_PATH[id]);
         if (schedulers != null) {
             for (String s : schedulers) {
                 if (s.charAt(0) == '[') {
@@ -263,7 +275,7 @@ public class CpuUtils implements PerformanceConstants {
     }
 
     public static String getAvailableGovernors() {
-        return Utils.readOneLine(GOV_AVAIALBLE_PATH);
+        return Utils.readOneLine(GOV_AVAILALBLE_PATH);
     }
 
     /**
@@ -282,6 +294,18 @@ public class CpuUtils implements PerformanceConstants {
                 return "Offline";
             }
         }
+    }
+
+    /**
+     * Convert from MHz to its original frequency
+     *
+     * @param mhzString The MHz string to convert to a frequency
+     * @return the original frequency
+     */
+    public static String fromMHz(final String mhzString) {
+        if (mhzString != null && !mhzString.isEmpty()) {
+            return String.valueOf(Integer.parseInt(mhzString.replace(" MHz", "")) * 1000);
+        } else { return "0"; }
     }
 
     public static void restore() {
@@ -305,7 +329,7 @@ public class CpuUtils implements PerformanceConstants {
                     ACTION_GOV
             );
         }
-        final String io = PreferenceHelper.getString(PREF_IO, getIOScheduler());
+        final String io = PreferenceHelper.getString(PREF_IO, getIOScheduler(0));
         for (String aIO_SCHEDULER_PATH : IO_SCHEDULER_PATH) {
             if (Utils.fileExists(aIO_SCHEDULER_PATH)) {
                 sb.append("busybox echo ").append(io).append(" > ")
@@ -313,6 +337,181 @@ public class CpuUtils implements PerformanceConstants {
             }
         }
         Utils.runRootCommand(sb.toString());
+    }
+
+    //==============================================================================================
+    // Events
+    //==============================================================================================
+    public static void getCpuFreqEvent(final Activity activity) {
+        try {
+            final Shell mShell = RootTools.getShell(true);
+            if (mShell == null) { throw new Exception("Shell is null"); }
+
+            final StringBuilder cmd = new StringBuilder();
+            cmd.append("command=$(");
+            cmd.append("cat ").append(FREQ_AVAILABLE_PATH).append(" 2> /dev/null;");
+            cmd.append("echo -n \"[\";");
+            cmd.append("cat ").append(FREQ0_MAX_PATH).append(" 2> /dev/null;");
+            cmd.append("echo -n \"]\";");
+            cmd.append("cat ").append(FREQ0_MIN_PATH).append(" 2> /dev/null;");
+            cmd.append(");").append("echo $command | tr -d \"\\n\"");
+            logDebug(cmd.toString());
+
+            final StringBuilder outputCollector = new StringBuilder();
+            final CommandCapture cmdCapture = new CommandCapture(0, false, cmd.toString()) {
+                @Override
+                public void commandOutput(int id, String line) {
+                    outputCollector.append(line);
+                    logDebug(line);
+                }
+
+                @Override
+                public void commandCompleted(int id, int exitcode) {
+                    final String[] result = outputCollector.toString().split(" ");
+                    final int length = result.length;
+                    String tmpMax = "", tmpMin = "";
+                    String[] tmpArray = new String[length - 2];
+
+                    String s;
+                    for (int i = 0; i < length; i++) {
+                        s = result[i];
+                        if (s.charAt(0) == '[') {
+                            tmpMax = s.substring(1, s.length());
+                        } else if (s.charAt(0) == ']') {
+                            tmpMin = s.substring(1, s.length());
+                        } else {
+                            tmpArray[i] = s;
+                        }
+                    }
+
+                    final String max = tmpMax;
+                    final String min = tmpMin;
+                    final String[] avail = tmpArray;
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            BusProvider.getBus().post(new CpuFreqEvent(avail, max, min));
+                        }
+                    });
+
+                }
+            };
+
+            if (mShell.isClosed()) { throw new Exception("Shell is closed"); }
+            mShell.add(cmdCapture);
+        } catch (Exception exc) {
+            logDebug("Error: " + exc.getMessage());
+        }
+    }
+
+    public static void getGovernorEvent(final Activity activity) {
+        try {
+            final Shell mShell = RootTools.getShell(true);
+            if (mShell == null) { throw new Exception("Shell is null"); }
+
+            final StringBuilder cmd = new StringBuilder();
+            cmd.append("command=$(");
+            cmd.append("cat ").append(GOV_AVAILALBLE_PATH).append(" 2> /dev/null;");
+            cmd.append("echo -n \"[\";");
+            cmd.append("cat ").append(GOV0_CURRENT_PATH).append(" 2> /dev/null;");
+            cmd.append(");").append("echo $command | tr -d \"\\n\"");
+            logDebug(cmd.toString());
+
+            final StringBuilder outputCollector = new StringBuilder();
+            final CommandCapture cmdCapture = new CommandCapture(0, false, cmd.toString()) {
+                @Override
+                public void commandOutput(int id, String line) {
+                    outputCollector.append(line);
+                    logDebug(line);
+                }
+
+                @Override
+                public void commandCompleted(int id, int exitcode) {
+                    final String[] result = outputCollector.toString().split(" ");
+                    final int length = result.length;
+                    String tmpString = "";
+                    String[] tmpArray = new String[length - 1];
+
+                    String s;
+                    for (int i = 0; i < length; i++) {
+                        s = result[i];
+                        if (s.charAt(0) == '[') {
+                            tmpString = s.substring(1, s.length());
+                        } else {
+                            tmpArray[i] = s;
+                        }
+                    }
+
+                    final String gov = tmpString;
+                    final String[] availGovs = tmpArray;
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            BusProvider.getBus().post(new GovernorEvent(availGovs, gov));
+                        }
+                    });
+
+                }
+            };
+
+            if (mShell.isClosed()) { throw new Exception("Shell is closed"); }
+            mShell.add(cmdCapture);
+        } catch (Exception exc) {
+            logDebug("Error: " + exc.getMessage());
+        }
+    }
+
+    public static void getIoSchedulerEvent(final Activity activity) {
+        try {
+            final Shell mShell = RootTools.getShell(true);
+            if (mShell == null) { throw new Exception("Shell is null"); }
+
+            final String cmd = "cat " + IO_SCHEDULER_PATH[0] + " 2> /dev/null;";
+
+            final StringBuilder outputCollector = new StringBuilder();
+            final CommandCapture cmdCapture = new CommandCapture(0, false, cmd) {
+                @Override
+                public void commandOutput(int id, String line) {
+                    outputCollector.append(line);
+                }
+
+                @Override
+                public void commandCompleted(int id, int exitcode) {
+                    final String[] result = outputCollector.toString().split(" ");
+                    final int length = result.length;
+                    String tmpString = "";
+                    String[] tmpArray = new String[length];
+
+                    String s;
+                    for (int i = 0; i < length; i++) {
+                        s = result[i];
+                        if (s.charAt(0) == '[') {
+                            tmpString = s.substring(1, s.length() - 1);
+                            tmpArray[i] = tmpString;
+                        } else {
+                            tmpArray[i] = s;
+                        }
+                    }
+
+                    final String scheduler = tmpString;
+                    final String[] availableSchedulers = tmpArray;
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            BusProvider.getBus().post(
+                                    new IoSchedulerEvent(availableSchedulers, scheduler)
+                            );
+                        }
+                    });
+
+                }
+            };
+
+            if (mShell.isClosed()) { throw new Exception("Shell is closed"); }
+            mShell.add(cmdCapture);
+        } catch (Exception exc) {
+            logDebug("Error: " + exc.getMessage());
+        }
     }
 
 }

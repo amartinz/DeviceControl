@@ -39,6 +39,9 @@ import com.squareup.otto.Subscribe;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
+import org.namelessrom.devicecontrol.events.CpuFreqEvent;
+import org.namelessrom.devicecontrol.events.GovernorEvent;
+import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
 import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -49,26 +52,19 @@ import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class PerformanceCpuSettings extends AttachFragment
-        implements SeekBar.OnSeekBarChangeListener, PerformanceConstants {
+public class PerformanceCpuSettings extends AttachFragment implements PerformanceConstants {
 
     public static final int ID = 210;
 
     private CheckBox mStatusHide;
-    private SeekBar  mMaxSlider;
-    private SeekBar  mMinSlider;
+    private Spinner  mMax;
+    private Spinner  mMin;
     private Spinner  mGovernor;
     private Spinner  mIo;
-    private TextView mMaxSpeedText;
-    private TextView mMinSpeedText;
-    private String[] mAvailableFrequencies;
-    private String   mMaxFreqSetting;
-    private String   mMinFreqSetting;
-
-    private TextView mIntervalText;
 
     LinearLayout mCpuInfo;
     private LayoutInflater mInflater;
@@ -81,18 +77,10 @@ public class PerformanceCpuSettings extends AttachFragment
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
-            MainActivity.mSlidingMenu.toggle(true);
-        }
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         BusProvider.getBus().register(this);
-        if (!mStatusHide.isChecked()) {
+        if (mStatusHide != null && !mStatusHide.isChecked()) {
             CpuCoreMonitor.getInstance(getActivity()).start(mInterval);
         }
     }
@@ -109,7 +97,7 @@ public class PerformanceCpuSettings extends AttachFragment
         final List<CpuCore> coreList = event.getStates();
         if (coreList != null && !coreList.isEmpty()) {
             mCpuInfo.removeAllViews();
-            for (CpuCore c : coreList) {
+            for (final CpuCore c : coreList) {
                 generateRow(mCpuInfo, c);
             }
         }
@@ -122,14 +110,39 @@ public class PerformanceCpuSettings extends AttachFragment
 
         mCpuInfo = (LinearLayout) view.findViewById(R.id.cpu_info);
 
-        mIntervalText = (TextView) view.findViewById(R.id.ui_device_value);
+        final TextView mIntervalText = (TextView) view.findViewById(R.id.ui_device_value);
         final SeekBar intervalBar = (SeekBar) view.findViewById(R.id.ui_device_bar);
         intervalBar.setMax(4000);
         intervalBar.setProgress(Integer.parseInt(
                 PreferenceHelper.getString(PREF_INTERVAL_CPU_INFO, "1000")) - 1000);
-        intervalBar.setOnSeekBarChangeListener(this);
-        ((TextView) view.findViewById(R.id.ui_device_title)).setText(
-                getString(R.string.cpu_info_settings_interval) + ": ");
+        intervalBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mIntervalText.setText((progress == 4000
+                        ? getString(R.string.off)
+                        : (((double) progress + 1000) / 1000) + "s"));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mInterval = seekBar.getProgress() + 1000;
+                if (mInterval >= 5000) {
+                    CpuCoreMonitor.getInstance(getActivity()).stop();
+                } else {
+                    CpuCoreMonitor.getInstance(getActivity()).start(mInterval);
+                }
+                mIntervalText.setText((mInterval == 5000
+                        ? getString(R.string.off)
+                        : (((double) mInterval) / 1000) + "s"));
+                updateSharedPrefs(PREF_INTERVAL_CPU_INFO, String.valueOf(mInterval));
+            }
+        });
+
+        ((TextView) view.findViewById(R.id.ui_device_title))
+                .setText(R.string.cpu_info_settings_interval);
         mInterval = intervalBar.getProgress() + 1000;
         mIntervalText.setText((mInterval == 5000
                 ? getString(R.string.off)
@@ -138,7 +151,7 @@ public class PerformanceCpuSettings extends AttachFragment
         mStatusHide = (CheckBox) view.findViewById(R.id.cpu_info_hide);
         mStatusHide.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            public void onCheckedChanged(final CompoundButton compoundButton, final boolean b) {
                 view.findViewById(R.id.ui_interval).setVisibility(b ? View.GONE : View.VISIBLE);
                 if (b) {
                     CpuCoreMonitor.getInstance(getActivity()).stop();
@@ -158,147 +171,183 @@ public class PerformanceCpuSettings extends AttachFragment
         for (int i = 0; i < mCpuNum; i++) {
             tmpCore = new CpuCore(getString(R.string.core) + " " + String.valueOf(i) + ": ",
                     "0",
-                    CpuUtils.getValue(i, CpuUtils.ACTION_FREQ_MAX),
-                    CpuUtils.getValue(i, CpuUtils.ACTION_GOV));
+                    "0",
+                    "0");
             generateRow(mCpuInfo, tmpCore);
         }
 
-        mAvailableFrequencies = new String[0];
+        mMax = (Spinner) view.findViewById(R.id.pref_max);
+        mMax.setEnabled(false);
 
-        String availableFrequenciesLine = Utils.readOneLine(FREQ_AVAILABLE_PATH);
-        if (availableFrequenciesLine != null) {
-            mAvailableFrequencies = availableFrequenciesLine.split(" ");
+        mMin = (Spinner) view.findViewById(R.id.pref_min);
+        mMin.setEnabled(false);
+
+        mGovernor = (Spinner) view.findViewById(R.id.pref_governor);
+        mGovernor.setEnabled(false);
+
+        mIo = (Spinner) view.findViewById(R.id.pref_io);
+        mIo.setEnabled(false);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
+            MainActivity.mSlidingMenu.toggle(true);
+        }
+
+        final Activity activity = getActivity();
+
+        CpuUtils.getCpuFreqEvent(activity);
+        CpuUtils.getGovernorEvent(activity);
+        CpuUtils.getIoSchedulerEvent(activity);
+    }
+
+    @Subscribe
+    public void onCpuFreq(final CpuFreqEvent event) {
+        final Activity activity = getActivity();
+        if (activity != null && event != null) {
+            final String mCurMaxSpeed = event.getCpuFreqMax();
+            final String mCurMinSpeed = event.getCpuFreqMin();
+
+            String[] mAvailableFrequencies = event.getCpuFreqAvail();
             Arrays.sort(mAvailableFrequencies, new Comparator<String>() {
                 @Override
                 public int compare(String object1, String object2) {
                     return Integer.valueOf(object1).compareTo(Integer.valueOf(object2));
                 }
             });
-        }
+            Collections.reverse(Arrays.asList(mAvailableFrequencies));
 
-        final int mFrequenciesNum = mAvailableFrequencies.length - 1;
-        final String[] mAvailableGovernors = CpuUtils.getAvailableGovernors().split(" ");
-        final String[] mAvailableIo = CpuUtils.getAvailableIOSchedulers();
-
-        final String mCurrentGovernor = CpuUtils.getValue(0, CpuUtils.ACTION_GOV);
-        final String mCurrentIo = CpuUtils.getIOScheduler();
-        final String mCurMaxSpeed = CpuUtils.getValue(0, CpuUtils.ACTION_FREQ_MAX);
-        final String mCurMinSpeed = CpuUtils.getValue(0, CpuUtils.ACTION_FREQ_MIN);
-
-        mMaxSlider = (SeekBar) view.findViewById(R.id.max_slider);
-        mMaxSlider.setMax(mFrequenciesNum);
-        mMaxSpeedText = (TextView) view.findViewById(R.id.max_speed_text);
-        mMaxSpeedText.setText(CpuUtils.toMHz(mCurMaxSpeed));
-        mMaxSlider.setProgress(Arrays.asList(mAvailableFrequencies).indexOf(mCurMaxSpeed));
-        mMaxFreqSetting = mCurMaxSpeed;
-        mMaxSlider.setOnSeekBarChangeListener(this);
-
-        mMinSlider = (SeekBar) view.findViewById(R.id.min_slider);
-        mMinSlider.setMax(mFrequenciesNum);
-        mMinSpeedText = (TextView) view.findViewById(R.id.min_speed_text);
-        mMinSpeedText.setText(CpuUtils.toMHz(mCurMinSpeed));
-        mMinSlider.setProgress(Arrays.asList(mAvailableFrequencies).indexOf(mCurMinSpeed));
-        mMinFreqSetting = mCurMinSpeed;
-        mMinSlider.setOnSeekBarChangeListener(this);
-
-        mGovernor = (Spinner) view.findViewById(R.id.pref_governor);
-        final ArrayAdapter<CharSequence> governorAdapter = new ArrayAdapter<CharSequence>(
-                getActivity(), android.R.layout.simple_spinner_item);
-        governorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        for (String mAvailableGovernor : mAvailableGovernors) {
-            governorAdapter.add(mAvailableGovernor);
-        }
-        mGovernor.setAdapter(governorAdapter);
-        mGovernor.setSelection(Arrays.asList(mAvailableGovernors).indexOf(mCurrentGovernor));
-        mGovernor.post(new Runnable() {
-            public void run() {
-                mGovernor.setOnItemSelectedListener(new GovListener());
+            final ArrayAdapter<CharSequence> freqAdapter = new ArrayAdapter<CharSequence>(
+                    activity, android.R.layout.simple_spinner_item);
+            freqAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            for (final String mAvailableFreq : mAvailableFrequencies) {
+                freqAdapter.add(CpuUtils.toMHz(mAvailableFreq));
             }
-        });
 
-        mIo = (Spinner) view.findViewById(R.id.pref_io);
-        final ArrayAdapter<CharSequence> ioAdapter = new ArrayAdapter<CharSequence>(
-                getActivity(), android.R.layout.simple_spinner_item);
-        ioAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        for (String aMAvailableIo : mAvailableIo) {
-            ioAdapter.add(aMAvailableIo);
-        }
-        mIo.setAdapter(ioAdapter);
-        mIo.setSelection(Arrays.asList(mAvailableIo).indexOf(mCurrentIo));
-        mIo.post(new Runnable() {
-            public void run() {
-                mIo.setOnItemSelectedListener(new IOListener());
-            }
-        });
+            mMax.setAdapter(freqAdapter);
+            mMax.setSelection(Arrays.asList(mAvailableFrequencies).indexOf(mCurMaxSpeed));
+            mMax.post(new Runnable() {
+                public void run() {
+                    mMax.setOnItemSelectedListener(new MaxListener());
+                }
+            });
+            mMax.setEnabled(true);
 
-        return view;
-    }
-
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (fromUser) {
-            final int seekBarId = seekBar.getId();
-            if (seekBarId == R.id.max_slider) {
-                setMaxSpeed(progress);
-            } else if (seekBarId == R.id.min_slider) {
-                setMinSpeed(progress);
-            } else if (seekBarId == R.id.ui_device_bar) {
-                mIntervalText.setText((progress == 4000
-                        ? getString(R.string.off)
-                        : (((double) progress + 1000) / 1000) + "s"));
-            }
+            mMin.setAdapter(freqAdapter);
+            mMin.setSelection(Arrays.asList(mAvailableFrequencies).indexOf(mCurMinSpeed));
+            mMin.post(new Runnable() {
+                public void run() {
+                    mMin.setOnItemSelectedListener(new MinListener());
+                }
+            });
+            mMin.setEnabled(true);
         }
     }
 
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
+    @Subscribe
+    public void onGovernor(final GovernorEvent event) {
+        final Activity activity = getActivity();
+        if (activity != null && event != null) {
+            final String[] availableGovernors = event.getAvailableGovernors();
+            final String currentGovernor = event.getCurrentGovernor();
+            final ArrayAdapter<CharSequence> governorAdapter = new ArrayAdapter<CharSequence>(
+                    activity, android.R.layout.simple_spinner_item);
+            governorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            for (final String availableGovernor : availableGovernors) {
+                governorAdapter.add(availableGovernor);
+            }
+            mGovernor.setAdapter(governorAdapter);
+            mGovernor.setSelection(Arrays.asList(availableGovernors).indexOf(currentGovernor));
+            mGovernor.post(new Runnable() {
+                public void run() {
+                    mGovernor.setOnItemSelectedListener(new GovListener());
+                }
+            });
+            mGovernor.setEnabled(true);
+        }
     }
 
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        final int seekBarId = seekBar.getId();
-        if (seekBarId == R.id.max_slider || seekBarId == R.id.min_slider) {
-            final int cpuCount = CpuUtils.getNumOfCpus();
-            for (int i = 0; i < cpuCount; i++) {
-                CpuUtils.setValue(i, mMinFreqSetting, CpuUtils.ACTION_FREQ_MIN);
-                CpuUtils.setValue(i, mMaxFreqSetting, CpuUtils.ACTION_FREQ_MAX);
-                updateSharedPrefs(PREF_MIN_CPU, mMinFreqSetting);
-                updateSharedPrefs(PREF_MAX_CPU, mMaxFreqSetting);
+    @Subscribe
+    public void onIoScheduler(final IoSchedulerEvent event) {
+        final Activity activity = getActivity();
+        if (activity != null && event != null) {
+            final String[] mAvailableIo = event.getAvailableIoScheduler();
+            final String mCurrentIo = event.getCurrentIoScheduler();
+            final ArrayAdapter<CharSequence> ioAdapter = new ArrayAdapter<CharSequence>(
+                    activity, android.R.layout.simple_spinner_item
+            );
+            ioAdapter.setDropDownViewResource(
+                    android.R.layout.simple_spinner_dropdown_item
+            );
+            for (final String availableIo : mAvailableIo) {
+                ioAdapter.add(availableIo);
             }
-        } else if (seekBarId == R.id.ui_device_bar) {
-            mInterval = seekBar.getProgress() + 1000;
-            if (mInterval >= 5000) {
-                CpuCoreMonitor.getInstance(getActivity()).stop();
-            } else {
-                CpuCoreMonitor.getInstance(getActivity()).start(mInterval);
-            }
-            mIntervalText.setText((mInterval == 5000
-                    ? getString(R.string.off)
-                    : (((double) mInterval) / 1000) + "s"));
-            updateSharedPrefs(PREF_INTERVAL_CPU_INFO, String.valueOf(mInterval));
+            mIo.setAdapter(ioAdapter);
+            mIo.setSelection(Arrays.asList(mAvailableIo).indexOf(mCurrentIo));
+            mIo.post(new Runnable() {
+                public void run() {
+                    mIo.setOnItemSelectedListener(new IOListener());
+                }
+            });
+            mIo.setEnabled(true);
         }
+    }
+
+    public class MaxListener implements OnItemSelectedListener {
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            final String selected = CpuUtils.fromMHz(String.valueOf(parent.getItemAtPosition(pos)));
+            final String other = CpuUtils.fromMHz(String.valueOf(mMin.getSelectedItem()));
+            final boolean updateOther = Integer.parseInt(selected) < Integer.parseInt(other);
+            if (updateOther) { mMin.setSelection(pos);}
+
+            final int cpuNum = CpuUtils.getNumOfCpus();
+            for (int i = 0; i < cpuNum; i++) {
+                CpuUtils.setValue(i, selected, CpuUtils.ACTION_FREQ_MAX);
+            }
+            updateSharedPrefs(PREF_MAX_CPU, selected);
+        }
+
+        public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
+    }
+
+    public class MinListener implements OnItemSelectedListener {
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            final String selected = CpuUtils.fromMHz(String.valueOf(parent.getItemAtPosition(pos)));
+            final String other = CpuUtils.fromMHz(String.valueOf(mMax.getSelectedItem()));
+            final boolean updateOther = Integer.parseInt(selected) > Integer.parseInt(other);
+            if (updateOther) { mMax.setSelection(pos);}
+
+            final int cpuNum = CpuUtils.getNumOfCpus();
+            for (int i = 0; i < cpuNum; i++) {
+                CpuUtils.setValue(i, selected, CpuUtils.ACTION_FREQ_MIN);
+            }
+            updateSharedPrefs(PREF_MIN_CPU, selected);
+        }
+
+        public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
     }
 
     public class GovListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            final String selected = parent.getItemAtPosition(pos).toString();
+            final String selected = String.valueOf(parent.getItemAtPosition(pos));
             final int cpuNum = CpuUtils.getNumOfCpus();
             for (int i = 0; i < cpuNum; i++) {
                 CpuUtils.setValue(i, selected, CpuUtils.ACTION_GOV);
             }
             updateSharedPrefs(PREF_GOV, selected);
-            PreferenceHelper.remove(GOV_SETTINGS);
-            PreferenceHelper.remove(GOV_NAME);
         }
 
-        public void onNothingSelected(AdapterView<?> parent) {
-            // Do nothing.
-        }
+        public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
     }
 
     public class IOListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            final String selected = parent.getItemAtPosition(pos).toString();
+            final String selected = String.valueOf(parent.getItemAtPosition(pos));
             for (String aIO_SCHEDULER_PATH : IO_SCHEDULER_PATH) {
                 if (Utils.fileExists(aIO_SCHEDULER_PATH)) {
                     Utils.writeValue(aIO_SCHEDULER_PATH, selected);
@@ -307,42 +356,12 @@ public class PerformanceCpuSettings extends AttachFragment
             updateSharedPrefs(PREF_IO, selected);
         }
 
-        public void onNothingSelected(AdapterView<?> parent) {
-            // Do nothing.
-        }
-    }
-
-    public void setMaxSpeed(int progress) {
-        final String current = mAvailableFrequencies[progress];
-        final int minSliderProgress = mMinSlider.getProgress();
-        if (progress <= minSliderProgress) {
-            mMinSlider.setProgress(progress);
-            mMinSpeedText.setText(CpuUtils.toMHz(current));
-            mMinFreqSetting = current;
-        }
-        mMaxSpeedText.setText(CpuUtils.toMHz(current));
-        mMaxFreqSetting = current;
-        updateSharedPrefs(PREF_MAX_CPU, current);
-    }
-
-    public void setMinSpeed(int progress) {
-        final String current = mAvailableFrequencies[progress];
-        final int maxSliderProgress = mMaxSlider.getProgress();
-        if (progress >= maxSliderProgress) {
-            mMaxSlider.setProgress(progress);
-            mMaxSpeedText.setText(CpuUtils.toMHz(current));
-            mMaxFreqSetting = current;
-        }
-        mMinSpeedText.setText(CpuUtils.toMHz(current));
-        mMinFreqSetting = current;
-        updateSharedPrefs(PREF_MIN_CPU, current);
+        public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
     }
 
     public View generateRow(final ViewGroup parent, final CpuCore cpuCore) {
 
-        if (!isAdded()) {
-            return null;
-        }
+        if (!isAdded()) { return null; }
 
         final View rowView = mInflater.inflate(R.layout.row_device, parent, false);
 
