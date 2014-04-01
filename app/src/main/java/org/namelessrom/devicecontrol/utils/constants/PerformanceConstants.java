@@ -1,8 +1,5 @@
 package org.namelessrom.devicecontrol.utils.constants;
 
-/**
- * Created by alex on 28.02.14.
- */
 public interface PerformanceConstants {
 
     //==============================================================================================
@@ -91,6 +88,11 @@ public interface PerformanceConstants {
     public static final String   GPU_FREQUENCIES_FILE       =
             GPU_FOLDER + "/kgsl-3d0/gpu_available_frequencies";
     public static final String   GPU_MAX_FREQ_FILE          = GPU_FOLDER + "/kgsl-3d0/max_gpuclk";
+    public static final String   GPU_GOV_PATH               =
+            GPU_FOLDER + "/kgsl-3d0/pwrscale/trustzone/governor";
+    //----------------------------------------------------------------------------------------------
+    public static final String[] GPU_GOVS                   =
+            {"performance", "simple", "ondemand", "interactive"};
     //----------------------------------------------------------------------------------------------
     public static final String   PREF_HIDE_CPU_INFO         = "pref_hide_cpu_info";
     public static final String   PREF_INTERVAL_CPU_INFO     = "pref_interval_cpu_info";
@@ -99,5 +101,6 @@ public interface PerformanceConstants {
     public static final String   PREF_GOV                   = "pref_gov";
     public static final String   PREF_IO                    = "pref_io";
     public static final String   PREF_MAX_GPU               = "pref_max_gpu";
+    public static final String   PREF_GPU_GOV               = "pref_gpu_gov";
 }
 

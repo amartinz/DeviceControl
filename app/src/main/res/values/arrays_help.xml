@@ -24,6 +24,15 @@
     <string-array name="dummy_content" translatable="false">
         <item>@string/dummy_help</item>
     </string-array>
+    <!-- GPU -->
+    <string-array name="gpu_titles" translatable="false">
+        <item>@string/gpu_freq_max</item>
+        <item>@string/governor</item>
+    </string-array>
+    <string-array name="gpu_content" translatable="false">
+        <item>@string/gpu_freq_max_help</item>
+        <item>@string/gpu_gov_help</item>
+    </string-array>
     <!-- Tasker -->
     <string-array name="tasker_titles" translatable="false">
         <item>@string/fstrim_title</item>

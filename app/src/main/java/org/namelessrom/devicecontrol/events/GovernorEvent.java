@@ -2,8 +2,8 @@ package org.namelessrom.devicecontrol.events;
 
 public class GovernorEvent {
 
-    public static String[] mAvailableGovernors;
-    public static String   mCurrentGovernor;
+    private final String[] mAvailableGovernors;
+    private final String   mCurrentGovernor;
 
     public GovernorEvent(final String[] availableGovernors, final String governor) {
         mAvailableGovernors = availableGovernors;

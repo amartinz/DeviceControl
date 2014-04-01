@@ -258,7 +258,7 @@ public class MainActivity extends Activity
                 break;
             case ID_PERFORMANCE_GPU_SETTINGS:
                 main = new PerformanceGpuFragment();
-                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                right = HelpFragment.newInstance(HelpFragment.TYPE_GPU);
                 break;
             case ID_PERFORMANCE_EXTRA:
                 main = new PerformanceExtrasFragment();

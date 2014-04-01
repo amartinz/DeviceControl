@@ -2,8 +2,8 @@ package org.namelessrom.devicecontrol.events;
 
 public class IoSchedulerEvent {
 
-    public static String[] mAvailableIoSchedulers;
-    public static String   mCurrentIoScheduler;
+    private final String[] mAvailableIoSchedulers;
+    private final String   mCurrentIoScheduler;
 
     public IoSchedulerEvent(final String[] availableIoSchedulers, final String ioScheduler) {
         mAvailableIoSchedulers = availableIoSchedulers;

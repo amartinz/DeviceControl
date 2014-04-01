@@ -1,5 +1,13 @@
 package org.namelessrom.devicecontrol.utils.helpers;
 
+import android.app.Activity;
+
+import com.stericson.roottools.RootTools;
+import com.stericson.roottools.execution.CommandCapture;
+import com.stericson.roottools.execution.Shell;
+
+import org.namelessrom.devicecontrol.events.GpuEvent;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
@@ -7,6 +15,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class GpuUtils implements PerformanceConstants {
 
@@ -43,11 +53,98 @@ public class GpuUtils implements PerformanceConstants {
 
         final String gpuMax = PreferenceHelper.getString(PREF_MAX_GPU, "");
         if (gpuMax != null && !gpuMax.isEmpty()) {
-            Utils.setPermissions(GPU_MAX_FREQ_FILE);
             sb.append("busybox echo ").append(gpuMax).append(" > ").append(GPU_MAX_FREQ_FILE);
         }
 
+        final String gpuGov = PreferenceHelper.getString(PREF_GOV, "");
+        if (gpuGov != null && !gpuGov.isEmpty()) {
+            sb.append("busybox echo ").append(gpuGov).append(" > ").append(GPU_GOV_PATH);
+        }
+
         Utils.runRootCommand(sb.toString());
+    }
+
+    public static String[] freqsToMhz(final String[] frequencies) {
+        final int length = frequencies.length;
+        final String[] names = new String[length];
+
+        for (int i = 0; i < length; i++) {
+            names[i] = toMhz(frequencies[i]);
+        }
+
+        return names;
+    }
+
+    public static boolean containsGov(final String gov) {
+        for (final String s : GPU_GOVS) {
+            if (gov.toLowerCase().equals(s.toLowerCase())) { return true; }
+        }
+        return false;
+    }
+
+    //==============================================================================================
+    // Events
+    //==============================================================================================
+    public static void getOnGpuEvent(final Activity activity) {
+        try {
+            final Shell mShell = RootTools.getShell(true);
+            if (mShell == null) { throw new Exception("Shell is null"); }
+
+            final StringBuilder cmd = new StringBuilder();
+            cmd.append("command=$(");
+            cmd.append("cat ").append(GPU_FREQUENCIES_FILE).append(" 2> /dev/null;");
+            cmd.append("echo -n \"[\";");
+            cmd.append("cat ").append(GPU_MAX_FREQ_FILE).append(" 2> /dev/null;");
+            cmd.append("echo -n \"]\";");
+            cmd.append("cat ").append(GPU_GOV_PATH).append(" 2> /dev/null;");
+            cmd.append(");").append("echo $command | tr -d \"\\n\"");
+            logDebug(cmd.toString());
+
+            final StringBuilder outputCollector = new StringBuilder();
+            final CommandCapture cmdCapture = new CommandCapture(0, false, cmd.toString()) {
+                @Override
+                public void commandOutput(int id, String line) {
+                    outputCollector.append(line);
+                    logDebug(line);
+                }
+
+                @Override
+                public void commandCompleted(int id, int exitcode) {
+                    final String[] result = outputCollector.toString().split(" ");
+                    final int length = result.length;
+                    String tmpMax = "", tmpGov = "";
+                    String[] tmpArray = new String[length - 2];
+
+                    String s;
+                    for (int i = 0; i < length; i++) {
+                        s = result[i];
+                        if (s.charAt(0) == '[') {
+                            tmpMax = s.substring(1, s.length());
+                        } else if (s.charAt(0) == ']') {
+                            tmpGov = s.substring(1, s.length());
+                        } else {
+                            tmpArray[i] = s;
+                        }
+                    }
+
+                    final String[] avail = tmpArray;
+                    final String max = tmpMax;
+                    final String gov = tmpGov;
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            BusProvider.getBus().post(new GpuEvent(avail, max, gov));
+                        }
+                    });
+
+                }
+            };
+
+            if (mShell.isClosed()) { throw new Exception("Shell is closed"); }
+            mShell.add(cmdCapture);
+        } catch (Exception exc) {
+            logDebug("Error: " + exc.getMessage());
+        }
     }
 
 }
