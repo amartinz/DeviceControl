@@ -92,8 +92,6 @@ public class PerformanceGpuFragment extends AttachPreferenceFragment
             }
 
             if (mGpuFrequency != null) {
-                mGpuFrequency.setEntries(gpuNames);
-                mGpuFrequency.setEntryValues(frequencies);
                 mGpuFrequency.setSummary(value);
                 mGpuFrequency.setValue(value);
             } else {
