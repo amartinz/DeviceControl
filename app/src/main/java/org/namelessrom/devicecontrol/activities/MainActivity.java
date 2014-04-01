@@ -65,9 +65,9 @@ public class MainActivity extends Activity
     //==============================================================================================
     // Fields
     //==============================================================================================
+    private static final Object lockObject = new Object();
     private static long  back_pressed;
     private        Toast mToast;
-    final Object lockObject = new Object();
 
     public static SlidingMenu mSlidingMenu;
     private static final int ID_RESTORE     = 10;

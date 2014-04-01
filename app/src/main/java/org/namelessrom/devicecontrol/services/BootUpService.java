@@ -124,9 +124,10 @@ public class BootUpService extends Service
 
                     if (VibratorTuningPreference.isSupported()) {
                         logDebug("Reapplying: Vibration");
-                        final int percent = PreferenceHelper.getInt(KEY_VIBRATOR_TUNING
-                                , VibratorTuningPreference
-                                .strengthToPercent(VIBRATOR_INTENSITY_DEFAULT_VALUE));
+                        final int percent = VibratorTuningPreference.strengthToPercent(
+                                PreferenceHelper.getInt(KEY_VIBRATOR_TUNING,
+                                        VIBRATOR_INTENSITY_DEFAULT_VALUE)
+                        );
                         fileList.add(VibratorTuningPreference.FILE_VIBRATOR);
                         valueList.add("" + percent);
                     }
