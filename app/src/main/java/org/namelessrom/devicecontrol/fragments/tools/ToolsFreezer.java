@@ -59,7 +59,6 @@ public class ToolsFreezer extends AttachFragment
     private static final String ARG_TYPE    = "arg_type";
     private LinearLayout linlaHeaderProgress;
     private LinearLayout linNopack, llist;
-    private String         pmList[];
     private PackageManager packageManager;
     private ListView       packList;
     private PackAdapter    adapter;
@@ -97,7 +96,6 @@ public class ToolsFreezer extends AttachFragment
         mFreeze = getArguments().getBoolean(ToolsFreezer.ARG_FREEZER, false);
         final boolean sys = getArguments().getString(ToolsFreezer.ARG_TYPE, "usr").equals("sys");
 
-        pmList = new String[]{};
         packageManager = mActivity.getPackageManager();
 
         linlaHeaderProgress = (LinearLayout) v.findViewById(R.id.linlaHeaderProgress);
@@ -146,11 +144,12 @@ public class ToolsFreezer extends AttachFragment
         if (event == null) { return; }
 
         final String result = event.getPackages();
+        String[] pmList = null;
         if (result != null) {
             pmList = result.split(" ");
         }
         linlaHeaderProgress.setVisibility(View.GONE);
-        if (pmList.length > 0) {
+        if (pmList != null && pmList.length > 0) {
             adapter = new PackAdapter(mActivity, pmList, packageManager);
             packList.setAdapter(adapter);
             linNopack.setVisibility(View.GONE);

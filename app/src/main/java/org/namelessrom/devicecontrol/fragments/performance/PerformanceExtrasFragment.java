@@ -26,11 +26,15 @@ import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.view.View;
 
+import com.squareup.otto.Subscribe;
+
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.events.PerformanceExtrasFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.SeekBarPreference;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -39,8 +43,7 @@ import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class PerformanceExtrasFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
@@ -75,8 +78,18 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
     //==============================================================================================
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity, ID);
+    public void onAttach(Activity activity) { super.onAttach(activity, ID); }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BusProvider.getBus().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BusProvider.getBus().unregister(this);
     }
 
     @Override
@@ -172,9 +185,7 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             changed = true;
         } else if (preference == mLcdPowerReduce) {
             final boolean value = (Boolean) o;
-            Utils.runRootCommand(
-                    Utils.getWriteCommand(sLcdPowerReduceFile, (value ? "1" : "0"))
-            );
+            Utils.writeValue(sLcdPowerReduceFile, (value ? "1" : "0"));
             PreferenceHelper.setBoolean(KEY_LCD_POWER_REDUCE, value);
             changed = true;
         } else if (preference == mIntelliPlug) {
@@ -189,9 +200,7 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             changed = true;
         } else if (preference == mMcPowerScheduler) {
             final int value = (Integer) o;
-            Utils.runRootCommand(
-                    Utils.getWriteCommand(sMcPowerSchedulerFile, String.valueOf(value))
-            );
+            Utils.writeValue(sMcPowerSchedulerFile, String.valueOf(value));
             PreferenceHelper.setInt(KEY_MC_POWER_SCHEDULER, value);
             changed = true;
         }
@@ -203,12 +212,41 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
     // Methods
     //==============================================================================================
 
-    public void setResult(List<Boolean> paramResult) {
-        int i = 0;
-        if (IS_LOW_RAM_DEVICE && Application.HAS_ROOT) {
-            mForceHighEndGfx.setChecked(paramResult.get(i));
+    public static String restore() {
+        final StringBuilder sbCmd = new StringBuilder();
+        String value;
+
+        if (PerformanceExtrasFragment.sLcdPowerReduce) {
+            logDebug("Reapplying: LcdPowerReduce");
+            value = PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false) ? "1" : "0";
+            sbCmd.append(Utils.getWriteCommand(sLcdPowerReduceFile, value));
+        }
+        if (CpuUtils.hasIntelliPlug()) {
+            logDebug("Reapplying: IntelliPlug");
+            value = PreferenceHelper.getBoolean(KEY_INTELLI_PLUG, false) ? "1" : "0";
+            sbCmd.append(Utils.getWriteCommand(CpuUtils.INTELLI_PLUG_PATH, value));
+        }
+        if (CpuUtils.hasIntelliPlugEcoMode()) {
+            logDebug("Reapplying: IntelliPlugEco");
+            value = PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false) ? "1" : "0";
+            sbCmd.append(Utils.getWriteCommand(CpuUtils.INTELLI_PLUG_ECO_MODE_PATH, value));
+        }
+        if (PerformanceExtrasFragment.sMcPowerScheduler) {
+            logDebug("Reapplying: McPowerScheduler");
+            value = String.valueOf(PreferenceHelper.getInt(KEY_MC_POWER_SCHEDULER, 2));
+            sbCmd.append(Utils.getWriteCommand(sMcPowerSchedulerFile, value));
+        }
+
+        return sbCmd.toString();
+    }
+
+    @Subscribe
+    public void onPerformanceExtrasEvent(final PerformanceExtrasFragmentEvent event) {
+        if (event == null) { return; }
+        final boolean forceHighEndGfx = event.isForceHighEndGfx();
+        if (mForceHighEndGfx != null) {
+            mForceHighEndGfx.setChecked(forceHighEndGfx);
             mForceHighEndGfx.setOnPreferenceChangeListener(this);
-            i++;
         }
     }
 
@@ -216,23 +254,25 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
     // Internal Classes
     //==============================================================================================
 
-    class PerformanceCpuTask extends AsyncTask<Void, Integer, List<Boolean>>
+    class PerformanceCpuTask extends AsyncTask<Void, Void, PerformanceExtrasFragmentEvent>
             implements DeviceConstants {
 
         @Override
-        protected List<Boolean> doInBackground(Void... voids) {
-            final List<Boolean> tmpList = new ArrayList<Boolean>();
+        protected PerformanceExtrasFragmentEvent doInBackground(Void... voids) {
+            boolean isForceHighEndGfx = false;
 
             if (IS_LOW_RAM_DEVICE && Application.HAS_ROOT) {
-                tmpList.add(Scripts.getForceHighEndGfx());
+                isForceHighEndGfx = Scripts.getForceHighEndGfx();
             }
 
-            return tmpList;
+            return new PerformanceExtrasFragmentEvent(isForceHighEndGfx);
         }
 
         @Override
-        protected void onPostExecute(List<Boolean> booleans) {
-            setResult(booleans);
+        protected void onPostExecute(final PerformanceExtrasFragmentEvent event) {
+            if (event != null) {
+                BusProvider.getBus().post(event);
+            }
         }
     }
 }

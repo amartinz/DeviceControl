@@ -32,8 +32,6 @@ import org.namelessrom.devicecontrol.fragments.performance.PerformanceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 
-import java.io.IOException;
-
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class PerformanceActivity extends Activity {
@@ -91,12 +89,8 @@ public class PerformanceActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         synchronized (lockObject) {
-            try {
-                logDebug("closing shells");
-                RootTools.closeAllShells();
-            } catch (IOException e) {
-                logDebug("Shell error: " + e.getMessage());
-            }
+            logDebug("closing shells");
+            RootTools.closeAllShells();
         }
     }
 }

@@ -187,7 +187,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param filename The filename
      * @param value    The value
      */
-    public static void writeValue(String filename, String value) {
+    public static void writeValue(final String filename, final String value) {
         // the existence of the file is a requirement for the success ;)
         boolean success = fileExists(filename);
         if (success) {
@@ -198,10 +198,7 @@ public class Utils implements DeviceConstants, FileConstants {
                 } finally {
                     fw.close();
                 }
-            } catch (IOException e) {
-                logDebug("writeValue: writing failed: " + e.getMessage());
-                writeValueViaShell(filename, value);
-            }
+            } catch (IOException ignored) { writeValueViaShell(filename, value); }
         }
     }
 
@@ -211,8 +208,8 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param filename The file to write
      * @param value    The value to write
      */
-    private static void writeValueViaShell(String filename, String value) {
-        runRootCommand("busybox echo " + value + " > " + filename);
+    private static void writeValueViaShell(final String filename, final String value) {
+        runRootCommand(Utils.getWriteCommand(filename, value));
     }
 
     /**
@@ -267,7 +264,7 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
-    public static boolean getLowRamDevice(Context context) {
+    public static boolean getLowRamDevice(final Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return false;
         } else {

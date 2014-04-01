@@ -30,4 +30,5 @@ public class BootUpReceiver extends BroadcastReceiver {
         final Intent service = new Intent(context, BootUpService.class);
         context.startService(service);
     }
+
 }

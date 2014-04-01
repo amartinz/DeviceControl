@@ -54,8 +54,6 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.widgets.adapters.MenuListArrayAdapter;
 
-import java.io.IOException;
-
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class MainActivity extends Activity
@@ -221,12 +219,8 @@ public class MainActivity extends Activity
     protected void onDestroy() {
         super.onDestroy();
         synchronized (lockObject) {
-            try {
-                logDebug("closing shells");
-                RootTools.closeAllShells();
-            } catch (IOException e) {
-                logDebug("Shell error: " + e.getMessage());
-            }
+            logDebug("closing shells");
+            RootTools.closeAllShells();
         }
     }
 

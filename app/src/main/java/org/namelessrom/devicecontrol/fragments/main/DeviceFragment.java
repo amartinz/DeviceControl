@@ -25,12 +25,16 @@ import android.preference.PreferenceScreen;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import com.squareup.otto.Subscribe;
+
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.events.DeviceFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.classes.HighTouchSensitivity;
@@ -39,8 +43,7 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class DeviceFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
@@ -85,8 +88,18 @@ public class DeviceFragment extends AttachPreferenceFragment
     //==============================================================================================
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity, DeviceFragment.ID);
+    public void onAttach(Activity activity) { super.onAttach(activity, ID); }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BusProvider.getBus().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BusProvider.getBus().unregister(this);
     }
 
     @Override
@@ -116,9 +129,12 @@ public class DeviceFragment extends AttachPreferenceFragment
         PreferenceCategory category = (PreferenceCategory) findPreference("input_navbar");
         if (category != null) {
             mForceNavBar = (CustomCheckBoxPreference) findPreference(KEY_NAVBAR_FORCE);
-            if (hasNavBar || Application.IS_NAMELESS) {
-                category.removePreference(mForceNavBar);
+            if (mForceNavBar != null) {
+                if (hasNavBar || Application.IS_NAMELESS) {
+                    category.removePreference(mForceNavBar);
+                }
             }
+
             if (category.getPreferenceCount() == 0) {
                 preferenceScreen.removePreference(category);
             }
@@ -127,16 +143,15 @@ public class DeviceFragment extends AttachPreferenceFragment
         category = (PreferenceCategory) findPreference("input_knockon");
         if (category != null) {
             mKnockOn = (CustomCheckBoxPreference) findPreference(KEY_KNOCK_ON);
-            if (!sKnockOn) {
-                category.removePreference(mKnockOn);
-            } else {
-                try { // In case the file does not have read permissions
+            if (mKnockOn != null) {
+                if (!sKnockOn) {
+                    category.removePreference(mKnockOn);
+                } else {
                     mKnockOn.setChecked(Utils.readOneLine(sKnockOnFile).equals("1"));
                     mKnockOn.setOnPreferenceChangeListener(this);
-                } catch (Exception ignored) {
-                    // Don't worry, be happy
                 }
             }
+
             if (category.getPreferenceCount() == 0) {
                 preferenceScreen.removePreference(category);
             }
@@ -144,15 +159,23 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         category = (PreferenceCategory) findPreference("input_others");
         if (category != null) {
-            if (!VibratorTuningPreference.isSupported()) {
-                category.removePreference(findPreference(KEY_VIBRATOR_TUNING));
+            final VibratorTuningPreference pref =
+                    (VibratorTuningPreference) findPreference(KEY_VIBRATOR_TUNING);
+            if (pref != null && !VibratorTuningPreference.isSupported()) {
+                category.removePreference(pref);
             }
+
             mGloveMode = (CustomCheckBoxPreference) findPreference(KEY_GLOVE_MODE);
-            if (!HighTouchSensitivity.isSupported()) {
-                category.removePreference(mGloveMode);
-            } else {
-                mGloveMode.setOnPreferenceChangeListener(this);
+            if (mGloveMode != null) {
+                try {
+                    if (!HighTouchSensitivity.isSupported()) {
+                        category.removePreference(mGloveMode);
+                    } else {
+                        mGloveMode.setOnPreferenceChangeListener(this);
+                    }
+                } catch (Exception exc) { category.removePreference(mGloveMode); }
             }
+
             if (category.getPreferenceCount() == 0) {
                 preferenceScreen.removePreference(category);
             }
@@ -163,26 +186,39 @@ public class DeviceFragment extends AttachPreferenceFragment
         category = (PreferenceCategory) findPreference(CATEGORY_TOUCHKEY);
         if (category != null) {
             mBacklightKey = (CustomCheckBoxPreference) findPreference(KEY_TOUCHKEY_LIGHT);
-            if (!sHasTouchkeyToggle) {
-                category.removePreference(mBacklightKey);
-            } else {
-                mBacklightKey.setChecked(!Utils.readOneLine(FILE_TOUCHKEY_TOGGLE).equals("0"));
-                mBacklightKey.setOnPreferenceChangeListener(this);
+            if (mBacklightKey != null) {
+                if (!sHasTouchkeyToggle) {
+                    category.removePreference(mBacklightKey);
+                } else {
+                    mBacklightKey.setChecked(!Utils.readOneLine(FILE_TOUCHKEY_TOGGLE).equals("0"));
+                    mBacklightKey.setOnPreferenceChangeListener(this);
+                }
             }
+
             mBacklightNotification = (CustomCheckBoxPreference) findPreference(KEY_TOUCHKEY_BLN);
-            if (!sHasTouchkeyBLN) {
-                category.removePreference(mBacklightNotification);
-            } else {
-                mBacklightNotification.setChecked(Utils.readOneLine(FILE_BLN_TOGGLE).equals("1"));
-                mBacklightNotification.setOnPreferenceChangeListener(this);
+            if (mBacklightNotification != null) {
+                if (!sHasTouchkeyBLN) {
+                    category.removePreference(mBacklightNotification);
+                } else {
+                    mBacklightNotification.setChecked(
+                            Utils.readOneLine(FILE_BLN_TOGGLE).equals("1")
+                    );
+                    mBacklightNotification.setOnPreferenceChangeListener(this);
+                }
             }
+
             mKeyboardBacklight = (CustomCheckBoxPreference) findPreference(KEY_KEYBOARD_LIGHT);
-            if (!sHasKeyboardToggle) {
-                category.removePreference(mKeyboardBacklight);
-            } else {
-                mKeyboardBacklight.setChecked(Utils.readOneLine(FILE_KEYBOARD_TOGGLE).equals("1"));
-                mKeyboardBacklight.setOnPreferenceChangeListener(this);
+            if (mKeyboardBacklight != null) {
+                if (!sHasKeyboardToggle) {
+                    category.removePreference(mKeyboardBacklight);
+                } else {
+                    mKeyboardBacklight.setChecked(
+                            Utils.readOneLine(FILE_KEYBOARD_TOGGLE).equals("1")
+                    );
+                    mKeyboardBacklight.setOnPreferenceChangeListener(this);
+                }
             }
+
             if (category.getPreferenceCount() == 0) {
                 preferenceScreen.removePreference(category);
             }
@@ -193,11 +229,13 @@ public class DeviceFragment extends AttachPreferenceFragment
         category = (PreferenceCategory) findPreference(CATEGORY_GRAPHICS);
         if (category != null) {
             mPanelColor = (CustomListPreference) findPreference(KEY_PANEL_COLOR_TEMP);
-            if (!sHasPanel) {
-                category.removePreference(mPanelColor);
-            } else {
-                mPanelColor.setValue(Utils.readOneLine(sHasPanelFile));
-                mPanelColor.setOnPreferenceChangeListener(this);
+            if (mPanelColor != null) {
+                if (!sHasPanel) {
+                    category.removePreference(mPanelColor);
+                } else {
+                    mPanelColor.setValue(Utils.readOneLine(sHasPanelFile));
+                    mPanelColor.setOnPreferenceChangeListener(this);
+                }
             }
             if (category.getPreferenceCount() == 0) {
                 preferenceScreen.removePreference(category);
@@ -227,43 +265,31 @@ public class DeviceFragment extends AttachPreferenceFragment
         } else if (preference == mKnockOn) {
             final boolean newValue = (Boolean) o;
             final String value = (newValue) ? "1" : "0";
-            Utils.runRootCommand(
-                    Utils.getWriteCommand(sKnockOnFile, value)
-            );
+            Utils.writeValue(sKnockOnFile, value);
             PreferenceHelper.setBoolean(KEY_KNOCK_ON, newValue);
             changed = true;
         } else if (preference == mBacklightKey) { // ======================================== LIGHTS
             final boolean newValue = (Boolean) o;
             final String value = newValue ? "255" : "0";
-
-            Utils.runRootCommand(
-                    Utils.getWriteCommand(FILE_TOUCHKEY_TOGGLE, value) +
-                            Utils.getWriteCommand(FILE_TOUCHKEY_BRIGHTNESS, value)
-            );
-
+            Utils.writeValue(FILE_TOUCHKEY_TOGGLE, value);
+            Utils.writeValue(FILE_TOUCHKEY_BRIGHTNESS, value);
             PreferenceHelper.setBoolean(KEY_TOUCHKEY_LIGHT, newValue);
             changed = true;
         } else if (preference == mBacklightNotification) {
             final boolean newValue = (Boolean) o;
             final String value = newValue ? "1" : "0";
-            Utils.runRootCommand(
-                    Utils.getWriteCommand(FILE_BLN_TOGGLE, value)
-            );
+            Utils.writeValue(FILE_BLN_TOGGLE, value);
             PreferenceHelper.setBoolean(KEY_TOUCHKEY_BLN, newValue);
             changed = true;
         } else if (preference == mKeyboardBacklight) {
             final boolean newValue = (Boolean) o;
             final String value = newValue ? "255" : "0";
-            Utils.runRootCommand(
-                    Utils.getWriteCommand(FILE_KEYBOARD_TOGGLE, value)
-            );
+            Utils.writeValue(FILE_KEYBOARD_TOGGLE, value);
             PreferenceHelper.setBoolean(KEY_KEYBOARD_LIGHT, newValue);
             changed = true;
         } else if (preference == mPanelColor) { // ======================================== GRAPHICS
             final String value = String.valueOf(o);
-            Utils.runRootCommand(
-                    Utils.getWriteCommand(sHasPanelFile, value)
-            );
+            Utils.writeValue(sHasPanelFile, value);
             PreferenceHelper.setString(KEY_PANEL_COLOR_TEMP, value);
             changed = true;
         }
@@ -275,40 +301,97 @@ public class DeviceFragment extends AttachPreferenceFragment
     // Methods
     //==============================================================================================
 
-    private void setResult(List<Boolean> paramResult) {
-        int i = 0;
+    public static String restore() {
+        final StringBuilder sbCmd = new StringBuilder();
+        String value;
 
-        boolean tmp;
-        if (!hasNavBar && !Application.IS_NAMELESS) {
-            tmp = paramResult.get(i);
-            mForceNavBar.setChecked(tmp);
+        if (DeviceFragment.sKnockOn) {
+            logDebug("Reapplying: sKnockOn");
+            value = PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0";
+            sbCmd.append(Utils.getWriteCommand(DeviceFragment.sKnockOnFile, value));
+        }
+
+        if (VibratorTuningPreference.isSupported()) {
+            logDebug("Reapplying: Vibration");
+            value = String.valueOf(VibratorTuningPreference.strengthToPercent(
+                    PreferenceHelper.getInt(KEY_VIBRATOR_TUNING,
+                            VIBRATOR_INTENSITY_DEFAULT_VALUE)
+            ));
+            sbCmd.append(Utils.getWriteCommand(VibratorTuningPreference.FILE_VIBRATOR, value));
+        }
+
+        try {
+            if (HighTouchSensitivity.isSupported()) {
+                logDebug("Reapplying: Glove Mode");
+                value = PreferenceHelper.getBoolean(KEY_GLOVE_MODE, false)
+                        ? HighTouchSensitivity.GLOVE_MODE_ENABLE
+                        : HighTouchSensitivity.GLOVE_MODE_DISABLE;
+                sbCmd.append(Utils.getWriteCommand(HighTouchSensitivity.COMMAND_PATH, value));
+            }
+        } catch (Exception ignored) { }
+
+        if (DeviceFragment.sHasPanel) {
+            logDebug("Reapplying: Panel Color Temp");
+            value = PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2");
+            sbCmd.append(Utils.getWriteCommand(DeviceFragment.sHasPanelFile, value));
+        }
+
+        if (DeviceFragment.sHasTouchkeyToggle) {
+            logDebug("Reapplying: Touchkey Light");
+            value = PreferenceHelper.getBoolean(KEY_TOUCHKEY_LIGHT, true) ? "255" : "0";
+            sbCmd.append(Utils.getWriteCommand(FILE_TOUCHKEY_TOGGLE, value));
+            sbCmd.append(Utils.getWriteCommand(FILE_TOUCHKEY_BRIGHTNESS, value));
+        }
+
+        if (DeviceFragment.sHasTouchkeyBLN) {
+            logDebug("Reapplying: Touchkey BLN");
+            value = PreferenceHelper.getBoolean(KEY_TOUCHKEY_BLN, true) ? "1" : "0";
+            sbCmd.append(Utils.getWriteCommand(FILE_BLN_TOGGLE, value));
+        }
+
+        if (DeviceFragment.sHasKeyboardToggle) {
+            logDebug("Reapplying: KeyBoard Light");
+            value = PreferenceHelper.getBoolean(KEY_KEYBOARD_LIGHT, true) ? "255" : "0";
+            sbCmd.append(Utils.getWriteCommand(FILE_KEYBOARD_TOGGLE, value));
+        }
+
+        return sbCmd.toString();
+    }
+
+    @Subscribe
+    public void onDeviceFragment(final DeviceFragmentEvent event) {
+        if (event == null) { return; }
+        final boolean isForceNavBar = event.isForceNavBar();
+
+        if (mForceNavBar != null) {
+            mForceNavBar.setChecked(isForceNavBar);
             mForceNavBar.setEnabled(true);
             mForceNavBar.setOnPreferenceChangeListener(this);
         }
-        i++;
     }
 
     //==============================================================================================
     // Internal Classes
     //==============================================================================================
 
-    class DeviceTask extends AsyncTask<Void, Integer, List<Boolean>>
-            implements DeviceConstants {
+    class DeviceTask extends AsyncTask<Void, Void, DeviceFragmentEvent> {
 
         @Override
-        protected List<Boolean> doInBackground(Void... voids) {
-            final List<Boolean> tmpList = new ArrayList<Boolean>();
+        protected DeviceFragmentEvent doInBackground(Void... voids) {
+            boolean isForceNavBar = false;
 
             if (!hasNavBar && !Application.IS_NAMELESS) {
-                tmpList.add(Scripts.getForceNavBar());
+                isForceNavBar = Scripts.getForceNavBar();
             }
 
-            return tmpList;
+            return new DeviceFragmentEvent(isForceNavBar);
         }
 
         @Override
-        protected void onPostExecute(List<Boolean> booleans) {
-            setResult(booleans);
+        protected void onPostExecute(final DeviceFragmentEvent event) {
+            if (event != null) {
+                BusProvider.getBus().post(event);
+            }
         }
     }
 }

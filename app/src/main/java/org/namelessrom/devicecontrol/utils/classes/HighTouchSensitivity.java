@@ -43,7 +43,7 @@ public class HighTouchSensitivity {
      *
      * @return boolean Supported devices must return always true
      */
-    public static boolean isSupported() {
+    public static boolean isSupported() throws IOException {
         boolean supported = false;
         final File f = new File(COMMAND_PATH);
 
@@ -59,18 +59,12 @@ public class HighTouchSensitivity {
                         break;
                     }
                 }
-            } catch (IOException ignored) {
             } finally {
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                } catch (IOException ignored) {
+                if (reader != null) {
+                    reader.close();
                 }
             }
         }
-
-        logDebug("Glove mode / high touch sensitivity supported" + (supported ? "true" : "false"));
 
         return supported;
     }
@@ -87,9 +81,9 @@ public class HighTouchSensitivity {
         final String result = Utils.readOneLine(COMMAND_RESULT_PATH);
         if (result.equals(command + ":OK")) {
             status = true;
-            logDebug("Successfully sent \"" + command + "\" to kernel");
+            logDebug("HTS: Successfully sent \"" + command + "\" to kernel");
         } else {
-            logDebug("Sent \"" + command + "\" to kernel, but got back \"" + result + "\"");
+            logDebug("HTS: Sent \"" + command + "\" to kernel, but got back \"" + result + "\"");
         }
         return status;
     }

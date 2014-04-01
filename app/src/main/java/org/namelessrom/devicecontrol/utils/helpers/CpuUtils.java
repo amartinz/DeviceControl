@@ -178,7 +178,6 @@ public class CpuUtils implements PerformanceConstants {
             if (cpuCount.length > 1) {
                 try {
                     numOfCpu = Integer.parseInt(cpuCount[1]) - Integer.parseInt(cpuCount[0]) + 1;
-
                     if (numOfCpu < 0) {
                         numOfCpu = 1;
                     }
@@ -216,10 +215,10 @@ public class CpuUtils implements PerformanceConstants {
                 // Bring them online to apply values on all cores
                 final StringBuilder sb = new StringBuilder();
                 if (!pathOnline.isEmpty()) {
-                    sb.append("busybox echo 0 > ").append(pathOnline).append(";");
-                    sb.append("busybox echo 1 > ").append(pathOnline).append(";");
+                    sb.append(Utils.getWriteCommand(pathOnline, "0"));
+                    sb.append(Utils.getWriteCommand(pathOnline, "1"));
                 }
-                sb.append("busybox echo ").append(value).append(" > ").append(path);
+                sb.append(Utils.getWriteCommand(path, value));
                 Utils.runRootCommand(sb.toString());
             }
         } else {
@@ -308,35 +307,42 @@ public class CpuUtils implements PerformanceConstants {
         } else { return "0"; }
     }
 
-    public static void restore() {
+    public static String restore() {
         final StringBuilder sb = new StringBuilder();
 
         final int cpuCount = getNumOfCpus();
+        String path, value, pathOnline;
         for (int i = 0; i < cpuCount; i++) {
-            setValue(i,
-                    PreferenceHelper.getString(PREF_MAX_CPU,
-                            getValue(i, ACTION_FREQ_MAX)),
-                    ACTION_FREQ_MAX
-            );
-            setValue(i,
-                    PreferenceHelper.getString(PREF_MIN_CPU,
-                            getValue(i, ACTION_FREQ_MIN)),
-                    ACTION_FREQ_MIN
-            );
-            setValue(i,
-                    PreferenceHelper.getString(PREF_GOV,
-                            getValue(i, ACTION_GOV)),
-                    ACTION_GOV
-            );
-        }
-        final String io = PreferenceHelper.getString(PREF_IO, getIOScheduler(0));
-        for (String aIO_SCHEDULER_PATH : IO_SCHEDULER_PATH) {
-            if (Utils.fileExists(aIO_SCHEDULER_PATH)) {
-                sb.append("busybox echo ").append(io).append(" > ")
-                        .append(aIO_SCHEDULER_PATH).append(";\n");
+            pathOnline = getOnlinePath(i);
+            if (!pathOnline.isEmpty()) {
+                sb.append(Utils.getWriteCommand(pathOnline, "0"));
+                sb.append(Utils.getWriteCommand(pathOnline, "1"));
+            }
+            path = getMaxCpuFrequencyPath(i);
+            value = PreferenceHelper.getString(PREF_MAX_CPU, "");
+            if (!value.isEmpty()) {
+                sb.append(Utils.getWriteCommand(path, value));
+            }
+            path = getMinCpuFrequencyPath(i);
+            value = PreferenceHelper.getString(PREF_MIN_CPU, "");
+            if (!value.isEmpty()) {
+                sb.append(Utils.getWriteCommand(path, value));
+            }
+            path = getGovernorPath(i);
+            value = PreferenceHelper.getString(PREF_GOV, "");
+            if (!value.isEmpty()) {
+                sb.append(Utils.getWriteCommand(path, value));
             }
         }
-        Utils.runRootCommand(sb.toString());
+
+        final String io = PreferenceHelper.getString(PREF_IO, "");
+        if (!io.isEmpty()) {
+            for (final String schedulerPath : IO_SCHEDULER_PATH) {
+                sb.append(Utils.getWriteCommand(schedulerPath, io));
+            }
+        }
+
+        return sb.toString();
     }
 
     //==============================================================================================

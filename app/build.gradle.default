@@ -21,8 +21,9 @@ android {
     buildTypes {
         release {
             runProguard true
-            proguardFiles 'src/main/proguard.flags'
             signingConfig signingConfigs.release
+            proguardFile 'src/main/proguard.flags'
+            zipAlign true
         }
     }
 

@@ -34,17 +34,20 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
+
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.events.CpuStateEvent;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuStateMonitor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class PerformanceInformationFragment extends AttachFragment implements DeviceConstants {
 
@@ -68,8 +71,7 @@ public class PerformanceInformationFragment extends AttachFragment implements De
     private static final int mInterval = 2000;
     private Handler mHandler;
 
-    private final CpuStateMonitor monitor     = new CpuStateMonitor();
-    private final Object          mLockObject = new Object();
+    private static final Object mLockObject = new Object();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,8 +82,23 @@ public class PerformanceInformationFragment extends AttachFragment implements De
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity, ID);
-        activity.registerReceiver(mBatteryReceiver,
-                new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        activity.registerReceiver(
+                mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+        );
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BusProvider.getBus().register(this);
+        startRepeatingTask();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BusProvider.getBus().unregister(this);
+        stopRepeatingTask();
     }
 
     @Override
@@ -98,8 +115,9 @@ public class PerformanceInformationFragment extends AttachFragment implements De
         @Override
         public void onReceive(Context arg0, Intent intent) {
             mBatteryTemperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0);
-            mBatteryExtra = " - Health: "
-                    + getBatteryHealth(intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0));
+            mBatteryExtra = " - Health: " + getBatteryHealth(
+                    intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0)
+            );
         }
     };
 
@@ -160,6 +178,7 @@ public class PerformanceInformationFragment extends AttachFragment implements De
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         refreshData();
 
         if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
@@ -167,44 +186,8 @@ public class PerformanceInformationFragment extends AttachFragment implements De
         }
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean("updatingData", mUpdatingData);
-    }
-
-    @Override
-    public void onResume() {
-        startRepeatingTask();
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        stopRepeatingTask();
-        super.onPause();
-    }
-
-    private View generateRow(final ViewGroup parent, final String title, final String value,
-            final String barLeft, final String barRight, final int progress) {
-
-        final LinearLayout view = (LinearLayout) mInflater.inflate(
-                R.layout.row_device, parent, false);
-
-        final TextView deviceTitle = (TextView) view.findViewById(R.id.ui_device_title);
-        final TextView deviceValue = (TextView) view.findViewById(R.id.ui_device_value);
-        final TextView deviceBarLeft = (TextView) view.findViewById(R.id.ui_device_bar_left);
-        final TextView deviceBarRight = (TextView) view.findViewById(R.id.ui_device_bar_right);
-        final ProgressBar bar = (ProgressBar) view.findViewById(R.id.ui_device_bar);
-
-        deviceTitle.setText(title);
-        deviceValue.setText(value);
-        deviceBarLeft.setText(barLeft);
-        deviceBarRight.setText(barRight);
-        bar.setProgress(progress);
-
-        parent.addView(view);
-        return view;
+    private void refreshData() {
+        new CpuStateUpdater().execute();
     }
 
     final Runnable mDeviceUpdater = new Runnable() {
@@ -227,39 +210,18 @@ public class PerformanceInformationFragment extends AttachFragment implements De
         }
     }
 
-    private class UpdateTask extends AsyncTask<Void, Void, Void> {
+    @Subscribe
+    public void onCpuStateEvent(final CpuStateEvent event) {
+        if (event == null) { return; }
 
-        private int cpuTemp;
+        final List<CpuStateMonitor.CpuState> states = event.getStates();
+        final long totalStateTime = event.getTotalStateTime();
 
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            cpuTemp = CpuUtils.getCpuTemperature();
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            mDeviceInfo.removeAllViews();
-            if (cpuTemp != -1) {
-                generateRow(mDeviceInfo, getString(R.string.cpu_temperature), cpuTemp + " °C",
-                        "0°C", "100°C", cpuTemp);
-            }
-            generateRow(mDeviceInfo, getString(R.string.battery_temperature),
-                    ((float) mBatteryTemperature) / 10 + " °C" + mBatteryExtra,
-                    "0°C", "100°C", (mBatteryTemperature / 10));
-
-            mHandler.postDelayed(mDeviceUpdater, mInterval);
-        }
-    }
-
-    public void updateView() {
         mStatesView.removeAllViews();
         final List<String> extraStates = new ArrayList<String>();
-        for (CpuStateMonitor.CpuState state : monitor.getStates()) {
+        for (CpuStateMonitor.CpuState state : states) {
             if (state.duration > 0) {
-                generateStateRow(state, mStatesView);
+                generateStateRow(state, mStatesView, totalStateTime);
             } else {
                 if (state.freq == 0) {
                     extraStates.add(getString(R.string.deep_sleep));
@@ -269,14 +231,14 @@ public class PerformanceInformationFragment extends AttachFragment implements De
             }
         }
 
-        if (monitor.getStates().size() == 0) {
+        if (states.size() == 0) {
             mStatesWarning.setVisibility(View.VISIBLE);
             mHeaderTotalStateTime.setVisibility(View.GONE);
             mTotalStateTime.setVisibility(View.GONE);
             mStatesView.setVisibility(View.GONE);
         }
 
-        final long totTime = monitor.getTotalStateTime() / 100;
+        final long totTime = totalStateTime / 100;
         mTotalStateTime.setText(toString(totTime));
 
         if (extraStates.size() > 0) {
@@ -299,12 +261,6 @@ public class PerformanceInformationFragment extends AttachFragment implements De
         }
     }
 
-    public void refreshData() {
-        if (!mUpdatingData) {
-            new RefreshStateDataTask().execute((Void) null);
-        }
-    }
-
     private static String toString(final long tSec) {
         final long h = (long) Math.floor(tSec / (60 * 60));
         final long m = (long) Math.floor((tSec - h * 60 * 60) / 60);
@@ -324,13 +280,38 @@ public class PerformanceInformationFragment extends AttachFragment implements De
         return sDur.toString();
     }
 
-    private View generateStateRow(CpuStateMonitor.CpuState state, ViewGroup parent) {
+    private View generateRow(final ViewGroup parent, final String title, final String value,
+            final String barLeft, final String barRight, final int progress) {
+
+        final LinearLayout view = (LinearLayout) mInflater.inflate(
+                R.layout.row_device, parent, false
+        );
+
+        final TextView deviceTitle = (TextView) view.findViewById(R.id.ui_device_title);
+        final TextView deviceValue = (TextView) view.findViewById(R.id.ui_device_value);
+        final TextView deviceBarLeft = (TextView) view.findViewById(R.id.ui_device_bar_left);
+        final TextView deviceBarRight = (TextView) view.findViewById(R.id.ui_device_bar_right);
+        final ProgressBar bar = (ProgressBar) view.findViewById(R.id.ui_device_bar);
+
+        deviceTitle.setText(title);
+        deviceValue.setText(value);
+        deviceBarLeft.setText(barLeft);
+        deviceBarRight.setText(barRight);
+        bar.setProgress(progress);
+
+        parent.addView(view);
+        return view;
+    }
+
+    private View generateStateRow(final CpuStateMonitor.CpuState state, final ViewGroup parent,
+            final long totalStateTime) {
+
         if (!isAdded()) { return null; }
 
         final LinearLayout view =
                 (LinearLayout) mInflater.inflate(R.layout.row_state, parent, false);
 
-        float per = (float) state.duration * 100 / monitor.getTotalStateTime();
+        float per = (float) state.duration * 100 / totalStateTime;
         final String sPer = (int) per + "%";
 
         String sFreq;
@@ -357,37 +338,49 @@ public class PerformanceInformationFragment extends AttachFragment implements De
         return view;
     }
 
-    protected class RefreshStateDataTask extends AsyncTask<Void, Void, Void> {
+    private class CpuStateUpdater extends AsyncTask<Void, Void, Void> {
+
         @Override
-        protected Void doInBackground(Void... v) {
-            try {
-                monitor.updateStates();
-            } catch (CpuStateMonitor.CPUStateMonitorException ignored) { }
+        protected Void doInBackground(Void... params) {
+            if (!mUpdatingData) {
+                mUpdatingData = true;
+                try {
+                    CpuStateMonitor.getInstance(getActivity()).updateStates();
+                } catch (IOException ignored) { }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            mUpdatingData = false;
+        }
+    }
+
+    private class UpdateTask extends AsyncTask<Void, Void, Void> {
+
+        private int cpuTemp;
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            cpuTemp = CpuUtils.getCpuTemperature();
 
             return null;
         }
 
         @Override
-        protected void onPreExecute() {
-            mUpdatingData = true;
-        }
+        protected void onPostExecute(Void aVoid) {
+            mDeviceInfo.removeAllViews();
+            if (cpuTemp != -1) {
+                generateRow(mDeviceInfo, getString(R.string.cpu_temperature), cpuTemp + " °C",
+                        "0°C", "100°C", cpuTemp);
+            }
+            generateRow(mDeviceInfo, getString(R.string.battery_temperature),
+                    ((float) mBatteryTemperature) / 10 + " °C" + mBatteryExtra,
+                    "0°C", "100°C", (mBatteryTemperature / 10));
 
-        @Override
-        protected void onPostExecute(Void v) {
-            updateView();
-            mUpdatingData = false;
+            mHandler.postDelayed(mDeviceUpdater, mInterval);
         }
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            startRepeatingTask();
-        } else {
-            stopRepeatingTask();
-        }
-        logDebug("isVisible: " + (isVisibleToUser ? "true" : "false"));
     }
 
 }

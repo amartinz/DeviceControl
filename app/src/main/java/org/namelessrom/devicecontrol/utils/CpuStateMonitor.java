@@ -19,9 +19,11 @@
 
 package org.namelessrom.devicecontrol.utils;
 
+import android.app.Activity;
 import android.os.SystemClock;
 import android.util.SparseArray;
 
+import org.namelessrom.devicecontrol.events.CpuStateEvent;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
 
@@ -39,10 +41,19 @@ public class CpuStateMonitor implements DeviceConstants {
     private final List<CpuState>    mStates  = new ArrayList<CpuState>();
     private final SparseArray<Long> mOffsets = new SparseArray<Long>();
 
-    public class CPUStateMonitorException extends Exception {
-        public CPUStateMonitorException(String s) {
-            super(s);
+    private static CpuStateMonitor mCpuStateMonitor;
+    private static Activity        mActivity;
+
+    private CpuStateMonitor(final Activity activity) {
+        mActivity = activity;
+    }
+
+    public static CpuStateMonitor getInstance(final Activity activity) {
+        if (mCpuStateMonitor == null) {
+            mCpuStateMonitor = new CpuStateMonitor(activity);
         }
+
+        return mCpuStateMonitor;
     }
 
     public class CpuState implements Comparable<CpuState> {
@@ -61,30 +72,11 @@ public class CpuStateMonitor implements DeviceConstants {
         }
     }
 
-    public List<CpuState> getStates() {
-        final List<CpuState> states = new ArrayList<CpuState>();
-
-        for (CpuState state : mStates) {
-            long duration = state.duration;
-            if (mOffsets.get(state.freq) != null) {
-                long offset = mOffsets.get(state.freq);
-                if (offset <= duration) {
-                    duration -= offset;
-                } else {
-                    mOffsets.clear();
-                    return getStates();
-                }
-            }
-            states.add(new CpuState(state.freq, duration));
-        }
-        return states;
-    }
-
-    public long getTotalStateTime() {
+    private long getTotalStateTime() {
         long sum = 0;
         long offset = 0;
 
-        for (CpuState state : mStates) {
+        for (final CpuState state : mStates) {
             sum += state.duration;
         }
 
@@ -95,16 +87,20 @@ public class CpuStateMonitor implements DeviceConstants {
         return sum - offset;
     }
 
-    public List<CpuState> updateStates() throws CPUStateMonitorException {
+    public void updateStates() throws IOException {
+        InputStream is = null;
+        InputStreamReader ir = null;
+        BufferedReader br = null;
         try {
-            final InputStream is = new FileInputStream(CpuUtils.FREQ_TIME_IN_STATE_PATH);
-            final InputStreamReader ir = new InputStreamReader(is);
-            final BufferedReader br = new BufferedReader(ir);
+            is = new FileInputStream(CpuUtils.FREQ_TIME_IN_STATE_PATH);
+            ir = new InputStreamReader(is);
+            br = new BufferedReader(ir);
             mStates.clear();
             readInStates(br);
-            is.close();
-        } catch (IOException e) {
-            throw new CPUStateMonitorException("Problem processing time-in-states file");
+        } finally {
+            if (br != null) br.close();
+            if (ir != null) ir.close();
+            if (is != null) is.close();
         }
 
         final long sleepTime = (SystemClock.elapsedRealtime() - SystemClock.uptimeMillis()) / 10;
@@ -112,7 +108,13 @@ public class CpuStateMonitor implements DeviceConstants {
 
         Collections.sort(mStates, Collections.reverseOrder());
 
-        return mStates;
+        final long totalStateTime = getTotalStateTime();
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                BusProvider.getBus().post(new CpuStateEvent(mStates, totalStateTime));
+            }
+        });
     }
 
     private void readInStates(final BufferedReader br) throws IOException {
