@@ -248,9 +248,9 @@ public class CpuUtils implements PerformanceConstants {
      *
      * @return current io scheduler
      */
-    public static String getIOScheduler() {
+    public static String getIOScheduler(final int id) {
         String scheduler = null;
-        final String[] schedulers = Utils.readStringArray(IO_SCHEDULER_PATH[0]);
+        final String[] schedulers = Utils.readStringArray(IO_SCHEDULER_PATH[id]);
         if (schedulers != null) {
             for (String s : schedulers) {
                 if (s.charAt(0) == '[') {
@@ -284,6 +284,18 @@ public class CpuUtils implements PerformanceConstants {
         }
     }
 
+    /**
+     * Convert from MHz to its original frequency
+     *
+     * @param mhzString The MHz string to convert to a frequency
+     * @return the original frequency
+     */
+    public static String fromMHz(final String mhzString) {
+        if (mhzString != null && !mhzString.isEmpty()) {
+            return String.valueOf(Integer.parseInt(mhzString.replace(" MHz", "")) * 1000);
+        } else { return "0"; }
+    }
+
     public static void restore() {
         final StringBuilder sb = new StringBuilder();
 
@@ -305,7 +317,7 @@ public class CpuUtils implements PerformanceConstants {
                     ACTION_GOV
             );
         }
-        final String io = PreferenceHelper.getString(PREF_IO, getIOScheduler());
+        final String io = PreferenceHelper.getString(PREF_IO, getIOScheduler(0));
         for (String aIO_SCHEDULER_PATH : IO_SCHEDULER_PATH) {
             if (Utils.fileExists(aIO_SCHEDULER_PATH)) {
                 sb.append("busybox echo ").append(io).append(" > ")

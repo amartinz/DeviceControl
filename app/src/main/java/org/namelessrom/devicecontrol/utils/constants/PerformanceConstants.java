@@ -99,7 +99,5 @@ public interface PerformanceConstants {
     public static final String   PREF_GOV                   = "pref_gov";
     public static final String   PREF_IO                    = "pref_io";
     public static final String   PREF_MAX_GPU               = "pref_max_gpu";
-    public static final String   GOV_SETTINGS               = "gov_settings";
-    public static final String   GOV_NAME                   = "gov_name";
 }
 
