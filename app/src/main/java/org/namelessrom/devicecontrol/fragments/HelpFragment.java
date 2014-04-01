@@ -16,6 +16,7 @@ public class HelpFragment extends Fragment {
 
     public static final int TYPE_DUMMY      = -1;
     public static final int TYPE_GPU        = 830;
+    public static final int TYPE_EXTRAS     = 840;
     public static final int TYPE_TASKER     = 900;
     public static final int TYPE_EDITORS    = 910;
     public static final int TYPE_FREEZER    = 920;
@@ -64,6 +65,10 @@ public class HelpFragment extends Fragment {
             case TYPE_GPU:
                 ids[0] = R.array.gpu_titles;
                 ids[1] = R.array.gpu_content;
+                break;
+            case TYPE_EXTRAS:
+                ids[0] = R.array.extras_titles;
+                ids[1] = R.array.extras_content;
                 break;
             case TYPE_TASKER:
                 ids[0] = R.array.tasker_titles;

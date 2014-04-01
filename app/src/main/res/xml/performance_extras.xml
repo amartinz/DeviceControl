@@ -37,7 +37,7 @@
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="intelli_plug_eco"
-            android:title="@string/intelli_plug_eco_title"
+            android:title="@string/intelli_plug_eco"
             android:summaryOn="@string/intelli_plug_eco_summary_on"
             android:summaryOff="@string/intelli_plug_eco_summary_off"
             android:defaultValue="false" />

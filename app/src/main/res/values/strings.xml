@@ -51,7 +51,7 @@
     <string name="powersaving_sched_mc_2">2 - Aggressive</string>
     <string name="intelli_plug_summary_on">Intelli-Plug is enabled.</string>
     <string name="intelli_plug_summary_off">Intelli-Plug is disabled.</string>
-    <string name="intelli_plug_eco_title">Eco Mode</string>
+    <string name="intelli_plug_eco">Eco Mode</string>
     <string name="intelli_plug_eco_summary_on">Intelli-Plug eco mode enabled.</string>
     <string name="intelli_plug_eco_summary_off">Intelli-Plug eco mode disabled.</string>
     <!-- CPU settings -->

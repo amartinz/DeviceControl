@@ -28,6 +28,18 @@
         The governor for the gpu. Please note that some default governors are listed, which do not have to exist!
         If they exist, the value will stick.
     </string>
+    <!-- Extras -->
+    <string name="intelli_plug_help">
+        Intelli-Plug is a replacement for Qualcomm\'s proprietary mpdecsion, which runs in userspace.
+        It is done in kernel instead in userspace which is faster as in userspace it has to poll the kernel.
+    </string>
+    <string name="intelli_plug_eco_help">
+        Eco Mode is a optimized dual core solution for quadcore CPU \'s.
+        This should allow for maximum battery life without sacrificing performance.
+    </string>
+    <string name="lcd_power_reduce_help">
+        Intelligently varies the backlight brightness of the display and helps maximizing battery life.
+    </string>
     <!-- Tasker -->
     <string name="fstrim_help">
         Fstrim is used on a mounted filesystem to discard (or "trim") blocks which are not in use by the filesystem.\n

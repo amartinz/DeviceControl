@@ -262,7 +262,7 @@ public class MainActivity extends Activity
                 break;
             case ID_PERFORMANCE_EXTRA:
                 main = new PerformanceExtrasFragment();
-                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                right = HelpFragment.newInstance(HelpFragment.TYPE_EXTRAS);
                 break;
             case ID_TASKER:
                 main = new TaskerFragment();
