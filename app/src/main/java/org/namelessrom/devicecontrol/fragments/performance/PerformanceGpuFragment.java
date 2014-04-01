@@ -67,7 +67,7 @@ public class PerformanceGpuFragment extends AttachPreferenceFragment
 
             final int freqsLength = frequencies.length;
             final int namesLength = gpuNames.length;
-            String value = Utils.readFileViaShell(GPU_MAX_FREQ_FILE);
+            String value = Utils.readOneLine(GPU_MAX_FREQ_FILE);
             if (value != null && freqsLength == namesLength) {
                 value = value.trim();
                 for (int i = 0; i < freqsLength; i++) {

@@ -57,8 +57,8 @@
     <!-- CPU settings -->
     <string name="cpusettings">CPU Settings</string>
     <string name="current_speed">Current Speed</string>
-    <string name="current_max">Maximum speed: </string>
-    <string name="current_min">Minimum speed: </string>
+    <string name="current_max">Maximum speed</string>
+    <string name="current_min">Minimum speed</string>
     <string name="governor">Governor</string>
     <string name="io">I/O Scheduler</string>
     <string name="sob">Apply automatically on boot</string>
