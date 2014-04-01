@@ -48,6 +48,12 @@ public class GpuUtils implements PerformanceConstants {
         return (String.valueOf(Integer.parseInt(mhz) / 1000000) + " MHz");
     }
 
+    public static String fromMHz(final String mhzString) {
+        if (mhzString != null && !mhzString.isEmpty()) {
+            return String.valueOf(Integer.parseInt(mhzString.replace(" MHz", "")) * 1000000);
+        } else { return "0"; }
+    }
+
     public static void restore() {
         final StringBuilder sb = new StringBuilder();
 

@@ -92,18 +92,16 @@ public class PerformanceGpuFragment extends AttachPreferenceFragment
             }
 
             if (mGpuFrequency != null) {
-                mGpuFrequency.setEntries(gpuNames);
-                mGpuFrequency.setEntryValues(frequencies);
+                mGpuFrequency.setValue(GpuUtils.fromMHz(value));
                 mGpuFrequency.setSummary(value);
-                mGpuFrequency.setValue(value);
             } else {
                 mGpuFrequency = new CustomListPreference(getActivity());
                 mGpuFrequency.setKey("gpu_freq");
                 mGpuFrequency.setTitle(R.string.gpu_freq_max);
                 mGpuFrequency.setEntries(gpuNames);
                 mGpuFrequency.setEntryValues(frequencies);
+                mGpuFrequency.setValue(GpuUtils.fromMHz(value));
                 mGpuFrequency.setSummary(value);
-                mGpuFrequency.setValue(value);
                 mGpuFrequency.setOnPreferenceChangeListener(this);
                 mRoot.addPreference(mGpuFrequency);
             }
