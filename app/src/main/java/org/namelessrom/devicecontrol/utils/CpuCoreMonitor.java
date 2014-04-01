@@ -79,10 +79,6 @@ public class CpuCoreMonitor implements DeviceConstants {
     public void stop() {
         isStarted = false;
         mHandler.removeCallbacks(mUpdater);
-        if (mShell != null) {
-            mShell.close();
-            mShell = null;
-        }
         logDebug("Stopped CpuCoreMonitor!");
     }
 
@@ -96,7 +92,7 @@ public class CpuCoreMonitor implements DeviceConstants {
     };
 
     private void openShell() {
-        if (mShell == null) {
+        if (mShell == null || mShell.isClosed()) {
             try {
                 mShell = RootTools.getShell(true);
             } catch (Exception exc) {
@@ -183,7 +179,7 @@ public class CpuCoreMonitor implements DeviceConstants {
         };
 
         openShell();
-        if (!mShell.isClosed()) {
+        if (!mShell.isClosed() && isStarted) {
             mShell.add(commandCapture);
         }
     }
