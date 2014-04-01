@@ -32,7 +32,8 @@ Copyright (C) 2012  James Roberts
 
         <TextView
             android:text="@string/cpu_info_settings_header"
-            style="?android:attr/listSeparatorTextViewStyle" />
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:textColor="@android:color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,7 +71,8 @@ Copyright (C) 2012  James Roberts
 
             <TextView
                 android:text="@string/cpu_info_list_header"
-                style="?android:attr/listSeparatorTextViewStyle" />
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:textColor="@android:color/white" />
 
             <LinearLayout
                 android:id="@+id/cpu_info"
@@ -92,82 +94,50 @@ Copyright (C) 2012  James Roberts
 
             <TextView
                 android:text="@string/cpu_speed_header"
-                style="?android:attr/listSeparatorTextViewStyle" />
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:textColor="@android:color/white" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/current_max_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/current_max"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/max_speed_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <SeekBar
-                    android:id="@+id/max_slider"
-                    style="?android:attr/progressBarStyleHorizontal"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginRight="17dp" />
+                    android:text="@string/current_max"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/pref_max"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/min_speed_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dip"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/current_min_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/current_min"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/min_speed_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <SeekBar
-                    android:id="@+id/min_slider"
-                    style="?android:attr/progressBarStyleHorizontal"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginRight="17dp" />
+                    android:text="@string/current_min"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/pref_min"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp" />
 
             </LinearLayout>
 
@@ -181,55 +151,52 @@ Copyright (C) 2012  James Roberts
 
             <TextView
                 android:text="@string/other_settings_header"
-                style="?android:attr/listSeparatorTextViewStyle" />
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:textColor="@android:color/white" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical|center_horizontal"
-            android:baselineAligned="false"
-            android:id="@+id/governor"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/governor_label"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dip"
                 android:text="@string/governor"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <Spinner
                 android:id="@+id/pref_governor"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical|center_horizontal"
-            android:id="@+id/ioscheduler"
             android:layout_marginTop="5dp"
-            android:paddingBottom="20dp">
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/io_label"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dip"
                 android:text="@string/io"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <Spinner
                 android:id="@+id/pref_io"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp" />
 
         </LinearLayout>
 

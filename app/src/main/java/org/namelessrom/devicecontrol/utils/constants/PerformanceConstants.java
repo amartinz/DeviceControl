@@ -70,7 +70,7 @@ public interface PerformanceConstants {
     public static final String   GOV3_CURRENT_PATH          =
             "/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor";
     //----------------------------------------------------------------------------------------------
-    public static final String   GOV_AVAIALBLE_PATH         =
+    public static final String   GOV_AVAILALBLE_PATH        =
             "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors";
     //----------------------------------------------------------------------------------------------
     public static final String   INTELLI_PLUG_PATH          =
@@ -99,7 +99,5 @@ public interface PerformanceConstants {
     public static final String   PREF_GOV                   = "pref_gov";
     public static final String   PREF_IO                    = "pref_io";
     public static final String   PREF_MAX_GPU               = "pref_max_gpu";
-    public static final String   GOV_SETTINGS               = "gov_settings";
-    public static final String   GOV_NAME                   = "gov_name";
 }
 
