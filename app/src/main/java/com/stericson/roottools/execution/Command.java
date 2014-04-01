@@ -31,8 +31,6 @@ import android.os.Message;
 
 import com.stericson.roottools.RootTools;
 
-import java.io.IOException;
-
 public abstract class Command {
 
     ExecutionMonitor executionMonitor = null;
@@ -230,12 +228,9 @@ public abstract class Command {
     }
 
     public void terminate(String reason) {
-        try {
-            Shell.closeAll();
-            RootTools.log("Terminating all shells.");
-            terminated(reason);
-        } catch (IOException e) {
-        }
+        Shell.closeAll();
+        RootTools.log("Terminating all shells.");
+        terminated(reason);
     }
 
     protected void terminated(String reason) {

@@ -54,20 +54,20 @@ public class GpuUtils implements PerformanceConstants {
         } else { return "0"; }
     }
 
-    public static void restore() {
+    public static String restore() {
         final StringBuilder sb = new StringBuilder();
 
         final String gpuMax = PreferenceHelper.getString(PREF_MAX_GPU, "");
         if (gpuMax != null && !gpuMax.isEmpty()) {
-            sb.append("busybox echo ").append(gpuMax).append(" > ").append(GPU_MAX_FREQ_FILE);
+            sb.append(Utils.getWriteCommand(GPU_MAX_FREQ_FILE, gpuMax));
         }
 
         final String gpuGov = PreferenceHelper.getString(PREF_GOV, "");
         if (gpuGov != null && !gpuGov.isEmpty()) {
-            sb.append("busybox echo ").append(gpuGov).append(" > ").append(GPU_GOV_PATH);
+            sb.append(Utils.getWriteCommand(GPU_GOV_PATH, gpuGov));
         }
 
-        Utils.runRootCommand(sb.toString());
+        return sb.toString();
     }
 
     public static String[] freqsToMhz(final String[] frequencies) {

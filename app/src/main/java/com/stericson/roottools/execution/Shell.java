@@ -168,7 +168,7 @@ public class Shell {
         return command;
     }
 
-    public void useCWD(Context context) throws IOException {
+    public void useCWD(Context context) {
         add(
                 new CommandCapture(
                         -1,
@@ -224,22 +224,22 @@ public class Shell {
         }
     }
 
-    public static void closeCustomShell() throws IOException {
+    public static void closeCustomShell() {
         if (customShell == null) { return; }
         customShell.close();
     }
 
-    public static void closeRootShell() throws IOException {
+    public static void closeRootShell() {
         if (rootShell == null) { return; }
         rootShell.close();
     }
 
-    public static void closeShell() throws IOException {
+    public static void closeShell() {
         if (shell == null) { return; }
         shell.close();
     }
 
-    public static void closeAll() throws IOException {
+    public static void closeAll() {
         closeShell();
         closeRootShell();
         closeCustomShell();

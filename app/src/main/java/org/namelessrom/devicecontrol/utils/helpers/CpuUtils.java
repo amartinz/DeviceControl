@@ -198,8 +198,17 @@ public class CpuUtils implements PerformanceConstants {
         getOrSetValue(cpu, value, action, true);
     }
 
+    public static String getSetCommand(final int cpu, final String value, final String action) {
+        return getOrSetValue(cpu, value, action, true, true);
+    }
+
     private static String getOrSetValue(final int cpu, final String value,
             final String action, final boolean set) {
+        return getOrSetValue(cpu, value, action, set, false);
+    }
+
+    private static String getOrSetValue(final int cpu, final String value,
+            final String action, final boolean set, final boolean isRestore) {
         String path = "";
         final String pathOnline = getOnlinePath(cpu);
 
@@ -220,7 +229,11 @@ public class CpuUtils implements PerformanceConstants {
                     sb.append("busybox echo 1 > ").append(pathOnline).append(";");
                 }
                 sb.append("busybox echo ").append(value).append(" > ").append(path);
-                Utils.runRootCommand(sb.toString());
+                if (isRestore) {
+                    return sb.toString();
+                } else {
+                    Utils.runRootCommand(sb.toString());
+                }
             }
         } else {
             if (!path.isEmpty() && Utils.fileExists(path)) {
@@ -308,35 +321,41 @@ public class CpuUtils implements PerformanceConstants {
         } else { return "0"; }
     }
 
-    public static void restore() {
+    public static String restore() {
         final StringBuilder sb = new StringBuilder();
 
         final int cpuCount = getNumOfCpus();
         for (int i = 0; i < cpuCount; i++) {
-            setValue(i,
+            sb.append(getSetCommand(
+                    i,
                     PreferenceHelper.getString(PREF_MAX_CPU,
                             getValue(i, ACTION_FREQ_MAX)),
                     ACTION_FREQ_MAX
-            );
-            setValue(i,
+            ));
+            sb.append(getSetCommand(
+                    i,
                     PreferenceHelper.getString(PREF_MIN_CPU,
                             getValue(i, ACTION_FREQ_MIN)),
                     ACTION_FREQ_MIN
-            );
-            setValue(i,
+            ));
+            sb.append(getSetCommand(
+                    i,
                     PreferenceHelper.getString(PREF_GOV,
                             getValue(i, ACTION_GOV)),
                     ACTION_GOV
-            );
+            ));
         }
-        final String io = PreferenceHelper.getString(PREF_IO, getIOScheduler(0));
-        for (String aIO_SCHEDULER_PATH : IO_SCHEDULER_PATH) {
-            if (Utils.fileExists(aIO_SCHEDULER_PATH)) {
-                sb.append("busybox echo ").append(io).append(" > ")
-                        .append(aIO_SCHEDULER_PATH).append(";\n");
+
+        final String io = PreferenceHelper.getString(PREF_IO, "");
+        if (!io.isEmpty()) {
+            for (String aIO_SCHEDULER_PATH : IO_SCHEDULER_PATH) {
+                if (Utils.fileExists(aIO_SCHEDULER_PATH)) {
+                    sb.append(Utils.getWriteCommand(aIO_SCHEDULER_PATH, io));
+                }
             }
         }
-        Utils.runRootCommand(sb.toString());
+
+        return sb.toString();
     }
 
     //==============================================================================================

@@ -42,6 +42,8 @@ import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.namelessrom.devicecontrol.Application.logDebug;
+
 public class PerformanceExtrasFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
 
@@ -210,6 +212,34 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             mForceHighEndGfx.setOnPreferenceChangeListener(this);
             i++;
         }
+    }
+
+    public static String restore() {
+        final StringBuilder sbCmd = new StringBuilder();
+        String value;
+
+        if (PerformanceExtrasFragment.sLcdPowerReduce) {
+            logDebug("Reapplying: LcdPowerReduce");
+            value = PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false) ? "1" : "0";
+            sbCmd.append(Utils.getWriteCommand(sLcdPowerReduceFile, value));
+        }
+        if (CpuUtils.hasIntelliPlug()) {
+            logDebug("Reapplying: IntelliPlug");
+            value = PreferenceHelper.getBoolean(KEY_INTELLI_PLUG, false) ? "1" : "0";
+            sbCmd.append(Utils.getWriteCommand(CpuUtils.INTELLI_PLUG_PATH, value));
+        }
+        if (CpuUtils.hasIntelliPlugEcoMode()) {
+            logDebug("Reapplying: IntelliPlugEco");
+            value = PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false) ? "1" : "0";
+            sbCmd.append(Utils.getWriteCommand(CpuUtils.INTELLI_PLUG_ECO_MODE_PATH, value));
+        }
+        if (PerformanceExtrasFragment.sMcPowerScheduler) {
+            logDebug("Reapplying: McPowerScheduler");
+            value = String.valueOf(PreferenceHelper.getInt(KEY_MC_POWER_SCHEDULER, 2));
+            sbCmd.append(Utils.getWriteCommand(sMcPowerSchedulerFile, value));
+        }
+
+        return sbCmd.toString();
     }
 
     //==============================================================================================

@@ -42,6 +42,8 @@ import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.namelessrom.devicecontrol.Application.logDebug;
+
 public class DeviceFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
 
@@ -286,6 +288,65 @@ public class DeviceFragment extends AttachPreferenceFragment
             mForceNavBar.setOnPreferenceChangeListener(this);
         }
         i++;
+    }
+
+    public static String restore() {
+        final StringBuilder sbCmd = new StringBuilder();
+        String value;
+
+        if (DeviceFragment.sKnockOn) {
+            logDebug("Reapplying: sKnockOn");
+            value = PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0";
+            sbCmd.append(Utils.getWriteCommand(DeviceFragment.sKnockOnFile, value));
+        }
+
+        if (VibratorTuningPreference.isSupported()) {
+            logDebug("Reapplying: Vibration");
+            value = String.valueOf(VibratorTuningPreference.strengthToPercent(
+                    PreferenceHelper.getInt(KEY_VIBRATOR_TUNING,
+                            VIBRATOR_INTENSITY_DEFAULT_VALUE)
+            ));
+            sbCmd.append(Utils.getWriteCommand(
+                            VibratorTuningPreference.FILE_VIBRATOR, value)
+            );
+        }
+
+        if (HighTouchSensitivity.isSupported()) {
+            logDebug("Reapplying: Glove Mode");
+            value = PreferenceHelper.getBoolean(KEY_GLOVE_MODE, false)
+                    ? HighTouchSensitivity.GLOVE_MODE_ENABLE
+                    : HighTouchSensitivity.GLOVE_MODE_DISABLE;
+            sbCmd.append(
+                    Utils.getWriteCommand(HighTouchSensitivity.COMMAND_PATH, value)
+            );
+        }
+
+        if (DeviceFragment.sHasPanel) {
+            logDebug("Reapplying: Panel Color Temp");
+            value = PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2");
+            sbCmd.append(Utils.getWriteCommand(DeviceFragment.sHasPanelFile, value));
+        }
+
+        if (DeviceFragment.sHasTouchkeyToggle) {
+            logDebug("Reapplying: Touchkey Light");
+            value = PreferenceHelper.getBoolean(KEY_TOUCHKEY_LIGHT, true) ? "255" : "0";
+            sbCmd.append(Utils.getWriteCommand(FILE_TOUCHKEY_TOGGLE, value));
+            sbCmd.append(Utils.getWriteCommand(FILE_TOUCHKEY_BRIGHTNESS, value));
+        }
+
+        if (DeviceFragment.sHasTouchkeyBLN) {
+            logDebug("Reapplying: Touchkey BLN");
+            value = PreferenceHelper.getBoolean(KEY_TOUCHKEY_BLN, true) ? "1" : "0";
+            sbCmd.append(Utils.getWriteCommand(FILE_BLN_TOGGLE, value));
+        }
+
+        if (DeviceFragment.sHasKeyboardToggle) {
+            logDebug("Reapplying: KeyBoard Light");
+            value = PreferenceHelper.getBoolean(KEY_KEYBOARD_LIGHT, true) ? "255" : "0";
+            sbCmd.append(Utils.getWriteCommand(FILE_KEYBOARD_TOGGLE, value));
+        }
+
+        return sbCmd.toString();
     }
 
     //==============================================================================================

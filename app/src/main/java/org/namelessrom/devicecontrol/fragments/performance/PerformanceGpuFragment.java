@@ -16,7 +16,6 @@ import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.GpuUtils;
-import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
 public class PerformanceGpuFragment extends AttachPreferenceFragment
@@ -96,7 +95,7 @@ public class PerformanceGpuFragment extends AttachPreferenceFragment
                 mGpuFrequency.setSummary(value);
             } else {
                 mGpuFrequency = new CustomListPreference(getActivity());
-                mGpuFrequency.setKey("gpu_freq");
+                mGpuFrequency.setKey(PREF_MAX_GPU);
                 mGpuFrequency.setTitle(R.string.gpu_freq_max);
                 mGpuFrequency.setEntries(gpuNames);
                 mGpuFrequency.setEntryValues(frequencies);
@@ -114,7 +113,7 @@ public class PerformanceGpuFragment extends AttachPreferenceFragment
                 mGpuGovernor.setValue(gov);
             } else {
                 mGpuGovernor = new CustomListPreference(getActivity());
-                mGpuGovernor.setKey("gpu_gov");
+                mGpuGovernor.setKey(PREF_GPU_GOV);
                 mGpuGovernor.setTitle(R.string.governor);
                 mGpuGovernor.setEntries(GPU_GOVS);
                 mGpuGovernor.setEntryValues(GPU_GOVS);
@@ -135,14 +134,12 @@ public class PerformanceGpuFragment extends AttachPreferenceFragment
             mGpuFrequency.setValue(value);
             mGpuFrequency.setSummary(GpuUtils.toMhz(value));
             Utils.writeValue(GPU_MAX_FREQ_FILE, value);
-            updateSharedPrefs(PREF_MAX_GPU, value);
             changed = true;
         } else if (mGpuGovernor == preference) {
             final String value = String.valueOf(newValue);
             mGpuGovernor.setValue(value);
             mGpuGovernor.setSummary(value);
             Utils.writeValue(GPU_GOV_PATH, value);
-            updateSharedPrefs(PREF_GPU_GOV, value);
             changed = true;
         }
 
@@ -153,9 +150,6 @@ public class PerformanceGpuFragment extends AttachPreferenceFragment
         return changed;
     }
 
-    private void updateSharedPrefs(final String var, final String value) {
-        PreferenceHelper.setString(var, value);
-    }
 }
 
 
