@@ -125,7 +125,7 @@ public final class RootTools {
      *
      * @throws java.io.IOException
      */
-    public static void closeAllShells() throws IOException {
+    public static void closeAllShells() {
         Shell.closeAll();
     }
 
@@ -134,7 +134,7 @@ public final class RootTools {
      *
      * @throws java.io.IOException
      */
-    public static void closeCustomShell() throws IOException {
+    public static void closeCustomShell() {
         Shell.closeCustomShell();
     }
 
@@ -145,7 +145,7 @@ public final class RootTools {
      *             standard shell.
      * @throws java.io.IOException
      */
-    public static void closeShell(boolean root) throws IOException {
+    public static void closeShell(boolean root) {
         if (root) { Shell.closeRootShell(); } else { Shell.closeShell(); }
     }
 
@@ -214,7 +214,7 @@ public final class RootTools {
      * exceptions.
      * @throws Exception if the operation cannot be completed.
      */
-    public static boolean fixUtils(String[] utils) throws Exception {
+    public static boolean fixUtils(String[] utils) {
         return getInternals().fixUtils(utils);
     }
 
@@ -703,7 +703,7 @@ public final class RootTools {
      * @param command The command to execute in the shell
      * @throws java.io.IOException
      */
-    public static void runShellCommand(Shell shell, Command command) throws IOException {
+    public static void runShellCommand(Shell shell, Command command) {
         shell.add(command);
     }
 

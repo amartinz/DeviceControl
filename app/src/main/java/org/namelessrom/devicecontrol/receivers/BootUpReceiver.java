@@ -23,7 +23,7 @@ import android.content.Intent;
 
 import org.namelessrom.devicecontrol.services.BootUpService;
 
-public class BootUpReceiver extends BroadcastReceiver {
+class BootUpReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, final Intent intent) {

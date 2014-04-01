@@ -5,7 +5,7 @@ android {
     buildToolsVersion '19.0.3'
 
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 14
         targetSdkVersion 19
     }
 
@@ -21,8 +21,9 @@ android {
     buildTypes {
         release {
             runProguard true
-            proguardFiles 'src/main/proguard.flags'
             signingConfig signingConfigs.release
+            proguardFile 'src/main/proguard.flags'
+            zipAlign true
         }
     }
 
