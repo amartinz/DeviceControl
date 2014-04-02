@@ -24,6 +24,20 @@
     <string-array name="dummy_content" translatable="false">
         <item>@string/dummy_help</item>
     </string-array>
+    <!-- Welcome -->
+    <string-array name="welcome_titles" translatable="false">
+        <item>@string/sorry</item>
+    </string-array>
+    <string-array name="welcome_content" translatable="false">
+        <item>@string/no_help</item>
+    </string-array>
+    <!-- Device -->
+    <string-array name="device_titles" translatable="false">
+        <item>@string/sorry</item>
+    </string-array>
+    <string-array name="device_content" translatable="false">
+        <item>@string/no_help</item>
+    </string-array>
     <!-- Perf Info -->
     <string-array name="perf_info_titles" translatable="false">
         <item>@string/total_state_time</item>

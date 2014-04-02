@@ -20,6 +20,9 @@
     <!-- Dummy -->
     <string name="dummy" translatable="false">Work In Progress</string>
     <string name="dummy_help" translatable="false">The texts of the help you see here is still beeing written, sorry!</string>
+    <!-- No Help -->
+    <string name="sorry">Sorry!</string>
+    <string name="no_help">No help for this section available! You are on your own ;)</string>
     <!-- Perf Info -->
     <string name="total_state_time_help">
         The total time of all cpu states together. Normally this is equal to the uptime of your device / time since last reboot.

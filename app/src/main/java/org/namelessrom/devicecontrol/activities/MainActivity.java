@@ -243,14 +243,14 @@ public class MainActivity extends Activity
         Fragment right;
 
         switch (i) {
+            default:
             case ID_INFORMATION:
                 main = new InformationFragment();
-                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                right = HelpFragment.newInstance(HelpFragment.TYPE_WELCOME);
                 break;
-            default:
             case ID_DEVICE:
                 main = new DeviceFragment();
-                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                right = HelpFragment.newInstance(HelpFragment.TYPE_DEVICE);
                 break;
             case ID_PERFORMANCE_INFO:
                 main = new PerformanceInformationFragment();
