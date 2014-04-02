@@ -20,6 +20,16 @@
     <!-- Dummy -->
     <string name="dummy" translatable="false">Work In Progress</string>
     <string name="dummy_help" translatable="false">The texts of the help you see here is still beeing written, sorry!</string>
+    <!-- Perf Info -->
+    <string name="total_state_time_help">
+        The total time of all cpu states together. Normally this is equal to the uptime of your device / time since last reboot.
+    </string>
+    <string name="time_in_state_help">
+        The time of how long the cpu stayed in a specific state. States are the frequencies of your cpu together with special states like \"Deep Sleep\".
+    </string>
+    <string name="unused_cpu_states_help">
+        Lists the states your cpu is supporting, but hasn\'t spent any time in.
+    </string>
     <!-- CPU -->
     <string name="max_freq_help">
         The maximum clock that the CPU can use. Reduce this frequency for better battery life at cost of performance.

@@ -254,7 +254,7 @@ public class MainActivity extends Activity
                 break;
             case ID_PERFORMANCE_INFO:
                 main = new PerformanceInformationFragment();
-                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                right = HelpFragment.newInstance(HelpFragment.TYPE_PERF_INFO);
                 break;
             case ID_PERFORMANCE_CPU_SETTINGS:
                 main = new PerformanceCpuSettings();

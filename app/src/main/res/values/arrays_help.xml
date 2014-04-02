@@ -24,6 +24,17 @@
     <string-array name="dummy_content" translatable="false">
         <item>@string/dummy_help</item>
     </string-array>
+    <!-- Perf Info -->
+    <string-array name="perf_info_titles" translatable="false">
+        <item>@string/total_state_time</item>
+        <item>@string/time_in_state</item>
+        <item>@string/unused_cpu_states</item>
+    </string-array>
+    <string-array name="perf_info_content" translatable="false">
+        <item>@string/total_state_time_help</item>
+        <item>@string/time_in_state_help</item>
+        <item>@string/unused_cpu_states_help</item>
+    </string-array>
     <!-- CPU -->
     <string-array name="cpu_titles" translatable="false">
         <item>@string/current_max</item>
