@@ -20,6 +20,7 @@
 
     <!-- Menu -->
     <string-array name="menu_entries">
+        <item>@string/home</item>
         <item>@string/device</item>
         <item>@string/device</item>
         <item>@string/performance</item>

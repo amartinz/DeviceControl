@@ -2,8 +2,7 @@
 <resources>
     <string name="app_version_name">Versionname: %s</string>
     <string name="app_version_code">Versioncode: %s</string>
-    <string name="app_information_help">Welcome to %1$s!\n\nTo get started, swipe out the drawer from the left!\n\nTo edit preferences of %2$s,\nswipe out the drawer from the right!\n\n\nPlease note, that %3$s needs root\nto function properly!\n\n</string>
-    <string name="app_performance_help">Welcome to the Performance Section!\n</string>
+    <string name="app_information_help">Welcome to %1$s!\n\nTo get started, swipe out the menu from the left!\n\nIf you need help or don\'t understand what a specific funtion is doing, swipe right and look at the help!\n\nIf a feature is not supported by your device, it gets automatically hidden!\n\n\nPlease note, that %2$s needs root\nto function properly!\n\n</string>
     <string name="app_warning_root">Please note that %s requires ROOT to fully work!</string>
     <string name="message_loading">Loading, please stand by…</string>
     <string name="fragment_press_to_load">Press me to load %s.</string>
@@ -18,6 +17,7 @@
     <string name="no_tweaks_available">No tweaks available</string>
     <string name="no_tweaks_message">Sorry but your device doesn\'t have any supported features</string>
     <!-- Menu -->
+    <string name="home">Home</string>
     <string name="device">Device</string>
     <string name="performance">Performance</string>
     <string name="information">Information</string>

@@ -24,34 +24,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/help_imageview"
-            android:background="@mipmap/ic_launcher"
-            android:cropToPadding="true"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="20dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/app_performance_help"
-            android:id="@+id/help_textview"
-            android:layout_below="@+id/help_imageview"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:gravity="center" />
-
-        <View
-            style="@style/StandardDivider"
-            android:id="@+id/performance_divider0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/help_textview" />
-
         <include
             layout="@layout/layout_device_stats"
-            android:layout_below="@+id/performance_divider0"
+            android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/device_status" />
