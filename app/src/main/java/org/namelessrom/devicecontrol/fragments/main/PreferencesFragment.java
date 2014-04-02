@@ -17,25 +17,41 @@
  */
 package org.namelessrom.devicecontrol.fragments.main;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
+import android.preference.PreferenceScreen;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
+import static org.namelessrom.devicecontrol.Application.logDebug;
+
 public class PreferencesFragment extends AttachPreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants {
 
+    //==============================================================================================
+    // In App Purchase
+    //==============================================================================================
+    private CustomPreference         mDonatePreference;
     //==============================================================================================
     // Debug
     //==============================================================================================
@@ -77,6 +93,9 @@ public class PreferencesFragment extends AttachPreferenceFragment
             mVersion.setTitle(unknown);
             mVersion.setSummary(unknown);
         }
+
+        mDonatePreference = (CustomPreference) findPreference("pref_donate");
+        mDonatePreference.setEnabled(PreferenceHelper.getBoolean(Application.Iab.getPref(), false));
     }
 
 
@@ -116,5 +135,50 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
         return changed;
     }
+
+    @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+
+        if (mDonatePreference == preference) {
+            final Activity activity = getActivity();
+            if (activity == null) { return false; }
+            final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.setTitle(R.string.donate)
+                    .setNegativeButton(android.R.string.cancel,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            }
+                    );
+            final ListView listView = new ListView(activity);
+            final String[] items = getResources().getStringArray(R.array.donation_items);
+            listView.setAdapter(new ArrayAdapter<String>(
+                    activity,
+                    android.R.layout.simple_list_item_1,
+                    items));
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    int i = position;
+                    if (i > 5) i = 5;
+                    if (i < 0) i = 0;
+                    final String sku = DonationStartedEvent.SKU_DONATION_BASE + String.valueOf(i);
+                    logDebug("SKU: " + sku);
+                    BusProvider.getBus().post(new DonationStartedEvent(sku));
+                }
+            });
+            builder.setView(listView);
+
+            final AlertDialog alert = builder.create();
+            alert.show();
+
+            return true;
+        }
+
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
+    }
+
 
 }

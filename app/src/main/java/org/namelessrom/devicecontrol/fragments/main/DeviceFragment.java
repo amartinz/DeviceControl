@@ -308,14 +308,13 @@ public class DeviceFragment extends AttachPreferenceFragment
         if (DeviceFragment.sKnockOn) {
             logDebug("Reapplying: sKnockOn");
             value = PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0";
-            sbCmd.append(Utils.getWriteCommand(DeviceFragment.sKnockOnFile, value));
+            sbCmd.append(Utils.getWriteCommand(sKnockOnFile, value));
         }
 
         if (VibratorTuningPreference.isSupported()) {
             logDebug("Reapplying: Vibration");
             value = String.valueOf(VibratorTuningPreference.strengthToPercent(
-                    PreferenceHelper.getInt(KEY_VIBRATOR_TUNING,
-                            VIBRATOR_INTENSITY_DEFAULT_VALUE)
+                    PreferenceHelper.getInt(KEY_VIBRATOR_TUNING, VIBRATOR_INTENSITY_DEFAULT_VALUE)
             ));
             sbCmd.append(Utils.getWriteCommand(VibratorTuningPreference.FILE_VIBRATOR, value));
         }
@@ -333,7 +332,7 @@ public class DeviceFragment extends AttachPreferenceFragment
         if (DeviceFragment.sHasPanel) {
             logDebug("Reapplying: Panel Color Temp");
             value = PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2");
-            sbCmd.append(Utils.getWriteCommand(DeviceFragment.sHasPanelFile, value));
+            sbCmd.append(Utils.getWriteCommand(sHasPanelFile, value));
         }
 
         if (DeviceFragment.sHasTouchkeyToggle) {
