@@ -103,3 +103,6 @@
     @com.squareup.otto.Subscribe public *;
     @com.squareup.otto.Produce public *;
 }
+
+# In App Purchases
+-keep class com.android.vending.billing.**

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Strings -->
     <string name="app_name" translatable="false">Device Control</string>
     <string name="buildprop" translatable="false">Build.Prop</string>
     <string name="empty" translatable="false" />
@@ -8,4 +9,13 @@
     <string name="non_TODO_string" translatable="false">TODO: Replace with real string.</string>
     <string name="unknown" translatable="false">---</string>
     <string name="vm" translatable="false">VM</string>
+    <!-- Arrays -->
+    <string-array name="donation_items" translatable="false">
+        <item>€0,99</item>
+        <item>€1,99</item>
+        <item>€4,99</item>
+        <item>€9,99</item>
+        <item>€19,99</item>
+        <item>€49,99</item>
+    </string-array>
 </resources>
