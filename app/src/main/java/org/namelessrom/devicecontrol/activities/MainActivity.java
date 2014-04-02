@@ -21,6 +21,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,12 +30,16 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.vending.billing.util.IabHelper;
+import com.android.vending.billing.util.IabResult;
+import com.android.vending.billing.util.Purchase;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.squareup.otto.Subscribe;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.fragments.HelpFragment;
 import org.namelessrom.devicecontrol.fragments.dynamic.WebViewFragment;
@@ -66,6 +71,8 @@ public class MainActivity extends Activity
     private static final Object lockObject = new Object();
     private static long  back_pressed;
     private        Toast mToast;
+
+    private IabHelper mHelper;
 
     public static SlidingMenu mSlidingMenu;
     private static final int ID_RESTORE     = 10;
@@ -131,7 +138,6 @@ public class MainActivity extends Activity
         }
 
         PreferenceHelper.getInstance(this);
-
         if (PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
             // Set flag to enable BootUp receiver
             PreferenceHelper.setBoolean(DC_FIRST_START, false);
@@ -169,6 +175,8 @@ public class MainActivity extends Activity
 
         mSlidingMenu.setOnClosedListener(this);
         mSlidingMenu.setOnOpenedListener(this);
+
+        setUpIab();
 
         loadFragment(ID_INFORMATION);
     }
@@ -221,6 +229,8 @@ public class MainActivity extends Activity
         synchronized (lockObject) {
             logDebug("closing shells");
             RootTools.closeAllShells();
+            if (mHelper != null) mHelper.dispose();
+            mHelper = null;
         }
     }
 
@@ -354,7 +364,49 @@ public class MainActivity extends Activity
     }
 
     @Override
-    public void onClosed() {
-        onSectionAttached(new SectionAttachedEvent(ID_RESTORE));
+    public void onClosed() { onSectionAttached(new SectionAttachedEvent(ID_RESTORE)); }
+
+    //==============================================================================================
+    // In App Purchase
+    //==============================================================================================
+    private void setUpIab() {
+        mHelper = new IabHelper(this, Application.Iab.getKey());
+        if (Application.IS_LOG_DEBUG) {
+            mHelper.enableDebugLogging(true, "IABDEVICECONTROL");
+        }
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            @Override
+            public void onIabSetupFinished(IabResult result) {
+                logDebug("IAB: " + result);
+                PreferenceHelper.setBoolean(Application.Iab.getPref(), result.isSuccess());
+            }
+        });
     }
+
+    @Subscribe
+    public void onDonationStartedEvent(final DonationStartedEvent event) {
+        if (event == null) { return; }
+
+        final String sku = event.getSku();
+        final int reqCode = event.getReqCode();
+        final String token = event.getToken();
+        mHelper.launchPurchaseFlow(this, sku, reqCode, mPurchaseFinishedListener, token);
+    }
+
+    private final IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener
+            = new IabHelper.OnIabPurchaseFinishedListener() {
+        public void onIabPurchaseFinished(final IabResult result, final Purchase purchase) {
+            if (result.isSuccess()) {
+                mHelper.consumeAsync(purchase, null);
+            }
+        }
+    };
+
+    @Override
+    protected void onActivityResult(final int req, final int res, final Intent data) {
+        if (!mHelper.handleActivityResult(req, res, data)) {
+            super.onActivityResult(req, res, data);
+        }
+    }
+
 }

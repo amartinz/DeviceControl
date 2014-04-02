@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.namelessrom.devicecontrol"
-    android:versionCode="32"
-    android:versionName="0.4.1">
+    android:versionCode="35"
+    android:versionName="0.4.2">
 
     <uses-sdk
         android:minSdkVersion="17"
@@ -22,6 +22,8 @@
     <!-- SuperUser -->
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
     <!--uses-permission android:name="android.permission.GET_TASKS"/-->
+    <!-- In-App-Purchases -->
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:allowBackup="true"

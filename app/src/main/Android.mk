@@ -6,7 +6,8 @@ LOCAL_MODULE_TAGS := optional
 
 LOCAL_STATIC_JAVA_LIBRARIES := android-support-v13 acra
 
-LOCAL_SRC_FILES     := $(call all-java-files-under,java)
+LOCAL_SRC_FILES     := $(call all-java-files-under,java) \
+        aidl/com/android/vending/billing/IInAppBillingService.aidl
 LOCAL_ASSET_DIR     := $(LOCAL_PATH)/assets
 LOCAL_RESOURCE_DIR  := $(LOCAL_PATH)/res
 
