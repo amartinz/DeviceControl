@@ -103,6 +103,9 @@
     <string name="panel_color_temp_warm">Warm</string>
     <string name="panel_color_temp_hot">Hot</string>
     <!-- Preferences -->
+    <!-- App -->
+    <string name="donate">Donate \u2665</string>
+    <string name="donate_summary">Please consider a donation if you like this app and would like to contribute in further development of it.\nThank you! - Alex</string>
     <!-- General -->
     <string name="show_launcher">Show launcher icon</string>
     <string name="show_launcher_summary">Hides/unhides the launcher icon</string>
