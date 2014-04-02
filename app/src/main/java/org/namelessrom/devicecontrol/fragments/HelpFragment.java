@@ -15,6 +15,7 @@ public class HelpFragment extends Fragment {
     public static final String ARG_TYPE = "arg_type";
 
     public static final int TYPE_DUMMY      = -1;
+    public static final int TYPE_CPU        = 820;
     public static final int TYPE_GPU        = 830;
     public static final int TYPE_EXTRAS     = 840;
     public static final int TYPE_TASKER     = 900;
@@ -61,6 +62,10 @@ public class HelpFragment extends Fragment {
             case TYPE_DUMMY:
                 ids[0] = R.array.dummy_titles;
                 ids[1] = R.array.dummy_content;
+                break;
+            case TYPE_CPU:
+                ids[0] = R.array.cpu_titles;
+                ids[1] = R.array.cpu_content;
                 break;
             case TYPE_GPU:
                 ids[0] = R.array.gpu_titles;

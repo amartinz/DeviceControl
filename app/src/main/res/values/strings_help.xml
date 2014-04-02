@@ -20,6 +20,19 @@
     <!-- Dummy -->
     <string name="dummy" translatable="false">Work In Progress</string>
     <string name="dummy_help" translatable="false">The texts of the help you see here is still beeing written, sorry!</string>
+    <!-- CPU -->
+    <string name="max_freq_help">
+        The maximum clock that the CPU can use. Reduce this frequency for better battery life at cost of performance.
+    </string>
+    <string name="min_freq_help">
+        The minimum clock that the CPU can use. Reduce this frequency for better battery life at cost of performance. If you experience audio stuttering etc while your screen is off, try increasing it.
+    </string>
+    <string name="governor_help">
+        The governor controls the scaling of the CPU frequencies depending on CPU load.
+    </string>
+    <string name="io_help">
+        I/O Scheduling is the method that operating systems use to decide in which priority I/O operations will be submitted to storage volumes. I/O Scheduling is sometimes also called disk scheduling.
+    </string>
     <!-- GPU -->
     <string name="gpu_freq_max_help">
         The maximum clock that the GPU can use. Reduce this frequency for better battery life at cost of performance.

@@ -24,6 +24,19 @@
     <string-array name="dummy_content" translatable="false">
         <item>@string/dummy_help</item>
     </string-array>
+    <!-- CPU -->
+    <string-array name="cpu_titles" translatable="false">
+        <item>@string/current_max</item>
+        <item>@string/current_min</item>
+        <item>@string/governor</item>
+        <item>@string/io</item>
+    </string-array>
+    <string-array name="cpu_content" translatable="false">
+        <item>@string/max_freq_help</item>
+        <item>@string/min_freq_help</item>
+        <item>@string/governor_help</item>
+        <item>@string/io_help</item>
+    </string-array>
     <!-- GPU -->
     <string-array name="gpu_titles" translatable="false">
         <item>@string/gpu_freq_max</item>
