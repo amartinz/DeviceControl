@@ -15,7 +15,7 @@ public class HelpFragment extends Fragment {
     public static final String ARG_TYPE = "arg_type";
 
     public static final int TYPE_DUMMY      = -1;
-    public static final int TYPE_WELCOME    = 110;
+    public static final int TYPE_HOME       = 110;
     public static final int TYPE_DEVICE     = 710;
     public static final int TYPE_PERF_INFO  = 810;
     public static final int TYPE_CPU        = 820;
@@ -66,9 +66,9 @@ public class HelpFragment extends Fragment {
                 ids[0] = R.array.dummy_titles;
                 ids[1] = R.array.dummy_content;
                 break;
-            case TYPE_WELCOME:
-                ids[0] = R.array.welcome_titles;
-                ids[1] = R.array.welcome_content;
+            case TYPE_HOME:
+                ids[0] = R.array.home_titles;
+                ids[1] = R.array.home_content;
                 break;
             case TYPE_DEVICE:
                 ids[0] = R.array.device_titles;

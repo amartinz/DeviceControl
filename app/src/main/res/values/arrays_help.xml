@@ -25,10 +25,10 @@
         <item>@string/dummy_help</item>
     </string-array>
     <!-- Welcome -->
-    <string-array name="welcome_titles" translatable="false">
+    <string-array name="home_titles" translatable="false">
         <item>@string/sorry</item>
     </string-array>
-    <string-array name="welcome_content" translatable="false">
+    <string-array name="home_content" translatable="false">
         <item>@string/no_help</item>
     </string-array>
     <!-- Device -->

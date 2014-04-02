@@ -44,7 +44,7 @@ import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.fragments.HelpFragment;
 import org.namelessrom.devicecontrol.fragments.dynamic.WebViewFragment;
 import org.namelessrom.devicecontrol.fragments.main.DeviceFragment;
-import org.namelessrom.devicecontrol.fragments.main.InformationFragment;
+import org.namelessrom.devicecontrol.fragments.main.HomeFragment;
 import org.namelessrom.devicecontrol.fragments.main.PreferencesFragment;
 import org.namelessrom.devicecontrol.fragments.main.TaskerFragment;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceCpuSettings;
@@ -82,19 +82,20 @@ public class MainActivity extends Activity
     private int mTitle         = R.string.app_name;
     private int mFragmentTitle = R.string.app_name;
 
-    private static final int ID_INFORMATION              = -1;
-    private static final int ID_DEVICE                   = 1;
-    private static final int ID_PERFORMANCE_INFO         = 3;
-    private static final int ID_PERFORMANCE_CPU_SETTINGS = 4;
-    private static final int ID_PERFORMANCE_GPU_SETTINGS = 5;
-    private static final int ID_PERFORMANCE_EXTRA        = 6;
-    private static final int ID_TASKER                   = 8;
-    private static final int ID_TOOLS_EDITORS            = 9;
-    private static final int ID_TOOLS_FREEZER            = 10;
-    private static final int ID_PREFERENCES              = 12;
-    private static final int ID_LICENSES                 = 13;
+    private static final int ID_HOME                     = 0;
+    private static final int ID_DEVICE                   = 2;
+    private static final int ID_PERFORMANCE_INFO         = 4;
+    private static final int ID_PERFORMANCE_CPU_SETTINGS = 5;
+    private static final int ID_PERFORMANCE_GPU_SETTINGS = 6;
+    private static final int ID_PERFORMANCE_EXTRA        = 7;
+    private static final int ID_TASKER                   = 9;
+    private static final int ID_TOOLS_EDITORS            = 10;
+    private static final int ID_TOOLS_FREEZER            = 11;
+    private static final int ID_PREFERENCES              = 13;
+    private static final int ID_LICENSES                 = 14;
 
     public static final int[] MENU_ICONS = {
+            R.drawable.ic_menu_home,
             -1, // Device
             R.drawable.ic_menu_device,
             -1, // Performance
@@ -178,7 +179,7 @@ public class MainActivity extends Activity
 
         setUpIab();
 
-        loadFragment(ID_INFORMATION);
+        loadFragment(ID_HOME);
     }
 
     @Override
@@ -244,9 +245,9 @@ public class MainActivity extends Activity
 
         switch (i) {
             default:
-            case ID_INFORMATION:
-                main = new InformationFragment();
-                right = HelpFragment.newInstance(HelpFragment.TYPE_WELCOME);
+            case ID_HOME:
+                main = new HomeFragment();
+                right = HelpFragment.newInstance(HelpFragment.TYPE_HOME);
                 break;
             case ID_DEVICE:
                 main = new DeviceFragment();
@@ -314,6 +315,9 @@ public class MainActivity extends Activity
                 break;
             default:
                 mTitle = mFragmentTitle = R.string.app_name;
+                break;
+            case HomeFragment.ID:
+                mTitle = mFragmentTitle = R.string.home;
                 break;
             case DeviceFragment.ID:
                 mTitle = mFragmentTitle = R.string.device;
