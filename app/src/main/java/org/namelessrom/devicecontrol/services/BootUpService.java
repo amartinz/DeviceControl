@@ -26,14 +26,14 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.fragments.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.VoltageFragment;
-import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.GpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.io.File;
 

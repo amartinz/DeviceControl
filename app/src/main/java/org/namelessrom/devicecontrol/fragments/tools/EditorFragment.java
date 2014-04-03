@@ -460,7 +460,8 @@ public class EditorFragment extends AttachFragment
                                 new FireAndForget(
                                         mActivity.getFilesDir().getPath() + "/utils -setprop \""
                                                 + p.getName() + "=" + p.getVal() + "\" " + dn
-                                                + "/" + mod + ".conf", true).run();
+                                                + "/" + mod + ".conf", true
+                                ).run();
                             }
                         } else {
                             if (tv.getText() != null
@@ -472,7 +473,8 @@ public class EditorFragment extends AttachFragment
                                         mActivity.getFilesDir().getPath() + "/utils -setprop \""
                                                 + tn.getText().toString().trim() + "="
                                                 + tv.getText().toString().trim() + "\" " + dn + "/"
-                                                + mod + ".conf", true).run();
+                                                + mod + ".conf", true
+                                ).run();
                             }
                         }
                         Collections.sort(props);
@@ -569,7 +571,8 @@ public class EditorFragment extends AttachFragment
                                 p.setVal(tv.getText().toString().trim());
                                 new FireAndForget(
                                         mActivity.getFilesDir().getPath() + "/utils -setprop \""
-                                                + p.getName() + "=" + p.getVal() + "\"", true, true)
+                                                + p.getName() + "=" + p.getVal() + "\"", true, true
+                                )
                                         .run();
                             }
                         } else {
@@ -581,7 +584,8 @@ public class EditorFragment extends AttachFragment
                                 new FireAndForget(
                                         mActivity.getFilesDir().getPath() + "/utils -setprop \""
                                                 + tn.getText().toString().trim() + "="
-                                                + tv.getText().toString().trim() + "\"", true, true)
+                                                + tv.getText().toString().trim() + "\"", true, true
+                                )
                                         .run();
                             }
                         }

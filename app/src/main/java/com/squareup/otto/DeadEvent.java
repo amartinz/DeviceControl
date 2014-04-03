@@ -34,7 +34,7 @@ public class DeadEvent {
      * Creates a new DeadEvent.
      *
      * @param source object broadcasting the DeadEvent (generally the {@link com.squareup.otto
-     * .Bus}).
+     *               .Bus}).
      * @param event  the event that could not be delivered.
      */
     public DeadEvent(Object source, Object event) {

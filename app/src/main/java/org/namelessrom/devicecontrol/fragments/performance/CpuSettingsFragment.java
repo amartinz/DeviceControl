@@ -42,13 +42,13 @@ import org.namelessrom.devicecontrol.events.CpuCoreEvent;
 import org.namelessrom.devicecontrol.events.CpuFreqEvent;
 import org.namelessrom.devicecontrol.events.GovernorEvent;
 import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
-import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.monitors.CpuCoreMonitor;
-import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.objects.CpuCore;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
 import java.util.Arrays;
