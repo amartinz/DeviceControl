@@ -50,6 +50,20 @@ public class CpuUtils implements PerformanceConstants {
     //==============================================================================================
     // Methods
     //==============================================================================================
+    public static boolean hasMsmDcvs() {
+        return Utils.fileExists(MSM_DCVS_FILE);
+    }
+
+    public static boolean isMsmDcvs() {
+        final String s = Utils.readOneLine(MSM_DCVS_FILE);
+        if (s == null || s.isEmpty()) { return false; }
+        return s.trim().equals("1");
+    }
+
+    public static void enableMsmDcvs(final boolean enable) {
+        Utils.writeValue(MSM_DCVS_FILE, (enable ? "1" : "0"));
+    }
+
     public static void enableIntelliPlug(final boolean enable) {
         Utils.writeValue(INTELLI_PLUG_PATH, (enable ? "1" : "0"));
     }
@@ -527,4 +541,5 @@ public class CpuUtils implements PerformanceConstants {
     public static String enableMpDecision(boolean start) {
         return (start ? "start mpdecision 2> /dev/null;\n" : "stop mpdecision 2> /dev/null;\n");
     }
+
 }

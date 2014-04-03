@@ -45,6 +45,9 @@
     <string name="mpdecision">MPDecision</string>
     <string name="mpdecision_summary_on">MPDecision is running.</string>
     <string name="mpdecision_summary_off">MPDecision is turned off.</string>
+    <!-- Voltage -->
+    <string name="voltage">Voltage</string>
+    <string name="msm_dcvs_summary">Use MSM DCVS for CPU/GPU Frequency control</string>
     <!-- Performance -->
     <string name="powersaving">Powersaving</string>
     <string name="powersaving_lcd_title">LCD Power Reduce</string>

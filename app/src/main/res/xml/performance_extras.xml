@@ -22,17 +22,19 @@
     <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
         android:key="pref_force_highend_gfx"
         android:title="@string/pref_force_highend_gfx_title"
-        android:summary="@string/pref_force_highend_gfx_summary" />
+        android:summary="@string/pref_force_highend_gfx_summary"
+        android:defaultValue="false" />
 
     <PreferenceCategory
-        android:key="hotpluging"
+        android:key="hotplugging"
         android:title="@string/hotplugging">
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="mpdecision"
             android:title="@string/mpdecision"
             android:summaryOn="@string/mpdecision_summary_on"
-            android:summaryOff="@string/mpdecision_summary_off" />
+            android:summaryOff="@string/mpdecision_summary_off"
+            android:defaultValue="false" />
 
     </PreferenceCategory>
 
@@ -68,6 +70,18 @@
             android:max="2"
             nameless:min="0"
             nameless:customStatus="powersaving_sched_mc_" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="voltage"
+        android:title="@string/voltage">
+
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+            android:key="msm_dcvs"
+            android:title="@string/msm_dcvs"
+            android:summary="@string/msm_dcvs_summary"
+            android:defaultValue="false" />
 
     </PreferenceCategory>
 </PreferenceScreen>

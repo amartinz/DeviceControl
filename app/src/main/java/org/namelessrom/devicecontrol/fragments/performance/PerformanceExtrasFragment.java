@@ -41,6 +41,7 @@ import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
@@ -48,7 +49,8 @@ import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class PerformanceExtrasFragment extends AttachPreferenceFragment
-        implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
+        implements DeviceConstants, FileConstants, PerformanceConstants,
+        Preference.OnPreferenceChangeListener {
 
     public static final int ID = 220;
 
@@ -71,6 +73,8 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference mMpDecision;
     private CustomCheckBoxPreference mIntelliPlug;
     private CustomCheckBoxPreference mIntelliPlugEco;
+    //----------------------------------------------------------------------------------------------
+    private CustomCheckBoxPreference mMsmDcvs;
 
     //==============================================================================================
     // Overridden Methods
@@ -118,20 +122,24 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
 
         PreferenceCategory category = (PreferenceCategory) findPreference(CATEGORY_POWERSAVING);
-
-        mMcPowerScheduler = (SeekBarPreference) findPreference(KEY_MC_POWER_SCHEDULER);
-        if (sMcPowerScheduler) {
-            mMcPowerScheduler.setProgress(
-                    Integer.parseInt(Utils.readOneLine(sMcPowerSchedulerFile))
-            );
-            mMcPowerScheduler.setOnPreferenceChangeListener(this);
-        } else {
-            category.removePreference(mMcPowerScheduler);
+        if (category != null) {
+            mMcPowerScheduler = (SeekBarPreference) findPreference(KEY_MC_POWER_SCHEDULER);
+            if (sMcPowerScheduler) {
+                mMcPowerScheduler.setProgress(
+                        Integer.parseInt(Utils.readOneLine(sMcPowerSchedulerFile))
+                );
+                mMcPowerScheduler.setOnPreferenceChangeListener(this);
+            } else {
+                category.removePreference(mMcPowerScheduler);
+            }
         }
 
         removeIfEmpty(category);
+        //------------------------------------------------------------------------------------------
+        // Hotplugging
+        //------------------------------------------------------------------------------------------
 
-        category = (PreferenceCategory) findPreference("hotpluging");
+        category = (PreferenceCategory) findPreference("hotplugging");
         if (category != null) {
             if (Utils.fileExists(MPDECISION_PATH)) {
                 mMpDecision = (CustomCheckBoxPreference) findPreference("mpdecision");
@@ -140,29 +148,48 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             }
         }
 
+        removeIfEmpty(category);
         //------------------------------------------------------------------------------------------
         // Intelli-Plug
         //------------------------------------------------------------------------------------------
 
         category = (PreferenceCategory) findPreference(GROUP_INTELLI_PLUG);
+        if (category != null) {
+            mIntelliPlug = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG);
+            if (CpuUtils.hasIntelliPlug()) {
+                mIntelliPlug.setChecked(CpuUtils.getIntelliPlugActive());
+                mIntelliPlug.setOnPreferenceChangeListener(this);
+            } else {
+                category.removePreference(mIntelliPlug);
+            }
 
-        mIntelliPlug = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG);
-        if (CpuUtils.hasIntelliPlug()) {
-            mIntelliPlug.setChecked(CpuUtils.getIntelliPlugActive());
-            mIntelliPlug.setOnPreferenceChangeListener(this);
-        } else {
-            category.removePreference(mIntelliPlug);
-        }
-
-        mIntelliPlugEco = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG_ECO);
-        if (CpuUtils.hasIntelliPlug() && CpuUtils.hasIntelliPlugEcoMode()) {
-            mIntelliPlugEco.setChecked(CpuUtils.getIntelliPlugEcoMode());
-            mIntelliPlugEco.setOnPreferenceChangeListener(this);
-        } else {
-            category.removePreference(mIntelliPlugEco);
+            mIntelliPlugEco = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG_ECO);
+            if (CpuUtils.hasIntelliPlug() && CpuUtils.hasIntelliPlugEcoMode()) {
+                mIntelliPlugEco.setChecked(CpuUtils.getIntelliPlugEcoMode());
+                mIntelliPlugEco.setOnPreferenceChangeListener(this);
+            } else {
+                category.removePreference(mIntelliPlugEco);
+            }
         }
 
         removeIfEmpty(category);
+        //------------------------------------------------------------------------------------------
+        // Voltage
+        //------------------------------------------------------------------------------------------
+
+        category = (PreferenceCategory) findPreference("voltage");
+        if (category != null) {
+            mMsmDcvs = (CustomCheckBoxPreference) findPreference("msm_dcvs");
+            if (CpuUtils.hasMsmDcvs()) {
+                mMsmDcvs.setChecked(CpuUtils.isMsmDcvs());
+                mMsmDcvs.setOnPreferenceChangeListener(this);
+            } else {
+                category.removePreference(mMsmDcvs);
+            }
+        }
+
+        removeIfEmpty(category);
+
         isSupported(mRoot, getActivity());
         getOnPerformanceExtrasFragmentEvent();
 
@@ -201,6 +228,11 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             Utils.writeValue(sMcPowerSchedulerFile, String.valueOf(value));
             PreferenceHelper.setInt(KEY_MC_POWER_SCHEDULER, value);
             changed = true;
+        } else if (preference == mMsmDcvs) {
+            final boolean value = (Boolean) o;
+            CpuUtils.enableMsmDcvs(value);
+            PreferenceHelper.setBoolean("msm_dcvs", value);
+            changed = true;
         }
 
         return changed;
@@ -228,6 +260,11 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             logDebug("Reapplying: McPowerScheduler");
             value = String.valueOf(PreferenceHelper.getInt(KEY_MC_POWER_SCHEDULER, 2));
             sbCmd.append(Utils.getWriteCommand(sMcPowerSchedulerFile, value));
+        }
+        if (CpuUtils.hasMsmDcvs()) {
+            logDebug("Reapplying: MSM DCVS");
+            value = PreferenceHelper.getBoolean("msm_dcvs", false) ? "1" : "0";
+            sbCmd.append(Utils.getWriteCommand(MSM_DCVS_FILE, value));
         }
 
         return sbCmd.toString();

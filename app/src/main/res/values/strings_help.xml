@@ -66,6 +66,9 @@
         Eco Mode is a optimized dual core solution for quadcore CPU \'s.
         This should allow for maximum battery life without sacrificing performance.
     </string>
+    <string name="msm_dcvs_help">
+        Enable support for MSM DCVS to control all CPU and GPU core frequencies. The DCVS manager allows idle driver to feed the idle information to the algorithm and the algorithm returns a frequency for the core which is passed to the frequency change driver.
+    </string>
     <!-- Tasker -->
     <string name="fstrim_help">
         Fstrim is used on a mounted filesystem to discard (or "trim") blocks which are not in use by the filesystem.\n

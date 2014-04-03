@@ -94,6 +94,9 @@ public interface PerformanceConstants {
     public static final String[] GPU_GOVS                   =
             {"performance", "simple", "ondemand", "interactive"};
     //----------------------------------------------------------------------------------------------
+    public static final String   MSM_DCVS_FILE              =
+            "/sys/module/msm_dcvs/parameters/enable";
+    //----------------------------------------------------------------------------------------------
     public static final String   PREF_HIDE_CPU_INFO         = "pref_hide_cpu_info";
     public static final String   PREF_INTERVAL_CPU_INFO     = "pref_interval_cpu_info";
     public static final String   PREF_MAX_CPU               = "pref_max_cpu";
