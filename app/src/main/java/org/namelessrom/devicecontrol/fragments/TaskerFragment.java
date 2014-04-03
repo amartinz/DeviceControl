@@ -19,17 +19,17 @@ package org.namelessrom.devicecontrol.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.view.View;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.ParseUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
@@ -40,12 +40,10 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
     public static final int ID = 300;
 
     private CustomCheckBoxPreference mFstrim;
-    private ListPreference           mFstrimInterval;
+    private CustomListPreference     mFstrimInterval;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity, TaskerFragment.ID);
-    }
+    public void onAttach(Activity activity) { super.onAttach(activity, ID); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,11 +54,12 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mFstrim = (CustomCheckBoxPreference) findPreference(FSTRIM);
         mFstrim.setChecked(PreferenceHelper.getBoolean(FSTRIM));
         mFstrim.setOnPreferenceChangeListener(this);
 
-        mFstrimInterval = (ListPreference) findPreference(FSTRIM_INTERVAL);
+        mFstrimInterval = (CustomListPreference) findPreference(FSTRIM_INTERVAL);
         mFstrimInterval.setValueIndex(ParseUtils.getFstrim());
         mFstrimInterval.setOnPreferenceChangeListener(this);
 
@@ -74,7 +73,6 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
         if (mFstrim == preference) {
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(FSTRIM, value);
-            mFstrimInterval.setEnabled(value);
             if (value) {
                 AlarmHelper.setAlarmFstrim(getActivity(),
                         ParseUtils.parseFstrim(mFstrimInterval.getValue())
@@ -86,9 +84,10 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
             return true;
         } else if (mFstrimInterval == preference) {
             final String value = String.valueOf(newValue);
-            PreferenceHelper.setInt(FSTRIM_INTERVAL, ParseUtils.parseFstrim(value));
+            final int realValue = ParseUtils.parseFstrim(value);
+            PreferenceHelper.setInt(FSTRIM_INTERVAL, realValue);
             if (mFstrim.isChecked()) {
-                AlarmHelper.setAlarmFstrim(getActivity(), ParseUtils.parseFstrim(value));
+                AlarmHelper.setAlarmFstrim(getActivity(), realValue);
             }
             logDebug("mFstrimInterval: " + value);
             return true;

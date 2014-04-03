@@ -23,12 +23,12 @@ import android.os.IBinder;
 
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
-import com.stericson.roottools.execution.Shell;
 
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
+import java.io.File;
 import java.io.FileOutputStream;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
@@ -76,7 +76,15 @@ public class TaskerService extends Service implements DeviceConstants, FileConst
         public void run() {
             logDebug("FSTRIM RUNNING");
             try {
-                final FileOutputStream fos = new FileOutputStream(DC_LOG_FILE_FSSTRIM);
+                final File filesDir = getFilesDir();
+                String path;
+                if (filesDir != null && filesDir.exists()) {
+                    path = filesDir.getPath() + DC_LOG_FILE_FSTRIM;
+                } else {
+                    path = "/data/data/" + getPackageName() + "files" + DC_LOG_FILE_FSTRIM;
+                }
+
+                final FileOutputStream fos = new FileOutputStream(path);
                 final String sb = "date;\n"
                         + "busybox fstrim -v /system;\n"
                         + "busybox fstrim -v /data;\n"
@@ -102,8 +110,7 @@ public class TaskerService extends Service implements DeviceConstants, FileConst
                     }
                 };
 
-                final Shell shell = RootTools.getShell(true);
-                shell.add(comm);
+                RootTools.getShell(true).add(comm);
             } catch (Exception exc) {
                 logDebug("Fstrim error: " + exc.getLocalizedMessage());
             }

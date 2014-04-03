@@ -145,7 +145,7 @@ public class MainActivity extends Activity
             PreferenceHelper.setBoolean(DC_FIRST_START, false);
         }
 
-        Utils.setupDirectories();
+        Utils.setupDirectories(this);
         Utils.createFiles(this, true);
 
         final View v = getLayoutInflater().inflate(R.layout.menu_list, null, false);

@@ -47,13 +47,13 @@ import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
-import org.namelessrom.devicecontrol.providers.BusProvider;
-import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.objects.Prop;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.threads.FireAndForget;
 import org.namelessrom.devicecontrol.threads.FireAndGet;
+import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 import org.namelessrom.devicecontrol.widgets.adapters.PropAdapter;
 
@@ -82,7 +82,6 @@ public class EditorFragment extends AttachFragment
     private       PropAdapter adapter    = null;
     private       EditText    filterText = null;
     private final List<Prop>  props      = new ArrayList<Prop>();
-    private final String      dn         = DC_BACKUP_DIR;
 
     private final String syspath    = "/system/etc/";
     private       String mod        = "sysctl";
@@ -228,7 +227,9 @@ public class EditorFragment extends AttachFragment
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     new FireAndForget("busybox mount -o remount,rw /system"
-                                            + ";" + "busybox cp " + dn + "/" + mod + ".conf"
+                                            + ";" + "busybox cp " + getActivity()
+                                            .getFilesDir()
+                                            .getPath() + DC_BACKUP_DIR + "/" + mod + ".conf"
                                             + " " + syspath + mod + ".conf;"
                                             + "busybox chmod 644 " + syspath + mod + ".conf"
                                             + ";" + "busybox mount -o remount,ro /system"
@@ -277,6 +278,8 @@ public class EditorFragment extends AttachFragment
         @Override
         protected Void doInBackground(final String... params) {
             final StringBuilder sb = new StringBuilder();
+            final String dn = getActivity().getFilesDir().getPath() + DC_BACKUP_DIR;
+
             sb.append("busybox mkdir -p ").append(dn).append(";\n");
 
             if (new File(syspath + mod + ".conf").exists()) {
@@ -315,6 +318,7 @@ public class EditorFragment extends AttachFragment
     private class GetBuildPropOperation extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... params) {
+            final String dn = getActivity().getFilesDir().getPath() + DC_BACKUP_DIR;
 
             mBuildName = "build";
             mBuildName = (Build.DISPLAY.equals("") || Build.DISPLAY == null)
@@ -421,6 +425,7 @@ public class EditorFragment extends AttachFragment
     //==============================================================================================
 
     private void editPropDialog(final Prop p) {
+        final String dn = getActivity().getFilesDir().getPath() + DC_BACKUP_DIR;
         String title;
 
         final View editDialog = LayoutInflater.from(mActivity)
@@ -452,9 +457,10 @@ public class EditorFragment extends AttachFragment
                         if (p != null) {
                             if (tv.getText() != null) {
                                 p.setVal(tv.getText().toString().trim());
-                                new FireAndForget(mActivity.getFilesDir() + "/utils -setprop \""
-                                        + p.getName() + "=" + p.getVal() + "\" " + dn
-                                        + "/" + mod + ".conf", true).run();
+                                new FireAndForget(
+                                        mActivity.getFilesDir().getPath() + "/utils -setprop \""
+                                                + p.getName() + "=" + p.getVal() + "\" " + dn
+                                                + "/" + mod + ".conf", true).run();
                             }
                         } else {
                             if (tv.getText() != null
@@ -462,10 +468,11 @@ public class EditorFragment extends AttachFragment
                                     && tn.getText().toString().trim().length() > 0) {
                                 props.add(new Prop(tn.getText().toString().trim(),
                                         tv.getText().toString().trim()));
-                                new FireAndForget(mActivity.getFilesDir() + "/utils -setprop \""
-                                        + tn.getText().toString().trim() + "="
-                                        + tv.getText().toString().trim() + "\" " + dn + "/"
-                                        + mod + ".conf", true).run();
+                                new FireAndForget(
+                                        mActivity.getFilesDir().getPath() + "/utils -setprop \""
+                                                + tn.getText().toString().trim() + "="
+                                                + tv.getText().toString().trim() + "\" " + dn + "/"
+                                                + mod + ".conf", true).run();
                             }
                         }
                         Collections.sort(props);
@@ -560,8 +567,10 @@ public class EditorFragment extends AttachFragment
                         if (p != null) {
                             if (tv.getText() != null) {
                                 p.setVal(tv.getText().toString().trim());
-                                new FireAndForget(mActivity.getFilesDir() + "/utils -setprop \""
-                                        + p.getName() + "=" + p.getVal() + "\"", true, true).run();
+                                new FireAndForget(
+                                        mActivity.getFilesDir().getPath() + "/utils -setprop \""
+                                                + p.getName() + "=" + p.getVal() + "\"", true, true)
+                                        .run();
                             }
                         } else {
                             if (tv.getText() != null
@@ -569,9 +578,11 @@ public class EditorFragment extends AttachFragment
                                     && tn.getText().toString().trim().length() > 0) {
                                 props.add(new Prop(tn.getText().toString().trim(),
                                         tv.getText().toString().trim()));
-                                new FireAndForget(mActivity.getFilesDir() + "/utils -setprop \""
-                                        + tn.getText().toString().trim() + "="
-                                        + tv.getText().toString().trim() + "\"", true, true).run();
+                                new FireAndForget(
+                                        mActivity.getFilesDir().getPath() + "/utils -setprop \""
+                                                + tn.getText().toString().trim() + "="
+                                                + tv.getText().toString().trim() + "\"", true, true)
+                                        .run();
                             }
                         }
 
@@ -625,6 +636,7 @@ public class EditorFragment extends AttachFragment
         @Override
         public void onClick(View v) {
             dialog.cancel();
+            final String dn = getActivity().getFilesDir().getPath() + DC_BACKUP_DIR;
             switch (op) {
                 case 0:
                     if (new File(dn + "/" + mBuildName).exists()) {

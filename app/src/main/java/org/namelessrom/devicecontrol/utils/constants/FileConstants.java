@@ -16,8 +16,6 @@
  */
 package org.namelessrom.devicecontrol.utils.constants;
 
-import android.os.Environment;
-
 import java.io.File;
 
 public interface FileConstants {
@@ -61,12 +59,9 @@ public interface FileConstants {
     //==============================================================================================
     // Directories
     //==============================================================================================
-    public static final String DC_DATA_DIR         =
-            Environment.getExternalStorageDirectory().getPath()
-                    + File.separator + "Nameless/DeviceControl";
-    public static final String DC_LOG_DIR          = DC_DATA_DIR + File.separator + "Logs";
-    public static final String DC_BACKUP_DIR       = DC_DATA_DIR + File.separator + "Backup";
+    public static final String DC_LOG_DIR         = File.separator + "Logs";
+    public static final String DC_BACKUP_DIR      = File.separator + "Backup";
     //==============================================================================================
-    public static final String DC_LOG_FILE_FSSTRIM = DC_LOG_DIR + File.separator + "fstrim.log";
+    public static final String DC_LOG_FILE_FSTRIM = DC_LOG_DIR + File.separator + "fstrim.log";
     //==============================================================================================
 }

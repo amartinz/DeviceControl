@@ -16,6 +16,7 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Build;
@@ -242,9 +243,11 @@ public class Utils implements DeviceConstants, FileConstants {
     /**
      * Setup the directories for Device Control
      */
-    public static void setupDirectories() {
+    public static void setupDirectories(final Activity activity) {
         File dir;
-        String[] dirList = new String[]{DC_DATA_DIR, DC_LOG_DIR, DC_BACKUP_DIR};
+        final String logDir = activity.getFilesDir().getPath() + DC_LOG_DIR;
+        final String backupDir = activity.getFilesDir().getPath() + DC_BACKUP_DIR;
+        String[] dirList = new String[]{logDir, backupDir};
         for (String s : dirList) {
             dir = new File(s);
             if (!dir.exists()) {

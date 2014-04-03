@@ -32,8 +32,8 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceFragment;
 import org.namelessrom.devicecontrol.providers.BusProvider;
-import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -72,7 +72,7 @@ public class PerformanceActivity extends Activity {
 
         PreferenceHelper.getInstance(this);
 
-        Utils.setupDirectories();
+        Utils.setupDirectories(this);
         Utils.createFiles(this, true);
 
         ActionBar actionBar = getActionBar();
