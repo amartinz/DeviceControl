@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.utils.classes;
+package org.namelessrom.devicecontrol.objects;
 
 public class Prop implements Comparable<Prop> {
 

@@ -17,6 +17,8 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import org.namelessrom.devicecontrol.utils.Utils;
+
 /**
  * Defines and runs Scripts.
  */

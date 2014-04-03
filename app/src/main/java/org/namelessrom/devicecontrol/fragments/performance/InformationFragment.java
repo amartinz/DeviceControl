@@ -39,17 +39,17 @@ import com.squareup.otto.Subscribe;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.events.CpuStateEvent;
-import org.namelessrom.devicecontrol.utils.BusProvider;
-import org.namelessrom.devicecontrol.utils.CpuStateMonitor;
+import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.monitors.CpuStateMonitor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
+import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PerformanceInformationFragment extends AttachFragment implements DeviceConstants {
+public class InformationFragment extends AttachFragment implements DeviceConstants {
 
     public static final int ID = 200;
 

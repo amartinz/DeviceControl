@@ -156,7 +156,7 @@
     <!-- Performance Settings | Warning dialog -->
     <string name="performance_settings_warning_title">Proceed with Caution</string>
     <string name="performance_settings_warning_header">Warning</string>
-    <!-- PropModder -->
+    <!-- PropModderFragment -->
     <string name="propmodder_title">Build.prop Mods</string>
     <string name="propmodder_switches">Switches</string>
     <string name="buildprop_title">build.prop mods (reboot required)</string>

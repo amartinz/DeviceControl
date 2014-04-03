@@ -1,4 +1,4 @@
-package org.namelessrom.devicecontrol.utils.classes;
+package org.namelessrom.devicecontrol.objects;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 

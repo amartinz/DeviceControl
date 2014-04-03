@@ -1,4 +1,4 @@
-package org.namelessrom.devicecontrol.utils;
+package org.namelessrom.devicecontrol.providers;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;

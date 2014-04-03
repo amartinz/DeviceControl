@@ -1,6 +1,6 @@
 package org.namelessrom.devicecontrol.events;
 
-import org.namelessrom.devicecontrol.utils.classes.CpuCore;
+import org.namelessrom.devicecontrol.objects.CpuCore;
 
 import java.util.List;
 

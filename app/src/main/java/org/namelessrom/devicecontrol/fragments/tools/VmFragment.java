@@ -22,7 +22,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.utils.BusProvider;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
@@ -68,7 +68,7 @@ public class VmFragment extends AttachPreferenceFragment implements DeviceConsta
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mFullEditor) {
             BusProvider.getBus().post(new ReplaceFragmentEvent(
-                    ToolsEditor.newInstance(PressToLoadFragment.FRAGMENT_VM), true
+                    EditorFragment.newInstance(PressToLoadFragment.FRAGMENT_VM), true
             ));
             return true;
         } else if (preference == mDirtyRatio) {

@@ -29,7 +29,7 @@ import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
-public class ToolsEditorTabbed extends AttachFragment {
+public class EditorTabbedFragment extends AttachFragment {
 
     public static final String TAG = "tools_editor_tabbed";
     public static final int    ID  = 310;
@@ -38,7 +38,7 @@ public class ToolsEditorTabbed extends AttachFragment {
 
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity, ToolsEditorTabbed.ID);
+        super.onAttach(activity, EditorTabbedFragment.ID);
     }
 
     @Override

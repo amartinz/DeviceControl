@@ -17,15 +17,16 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.namelessrom.devicecontrol.utils;
+package org.namelessrom.devicecontrol.monitors;
 
 import android.app.Activity;
 import android.os.SystemClock;
 import android.util.SparseArray;
 
 import org.namelessrom.devicecontrol.events.CpuStateEvent;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
+import org.namelessrom.devicecontrol.utils.CpuUtils;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

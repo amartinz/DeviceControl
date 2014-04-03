@@ -47,13 +47,13 @@ import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
-import org.namelessrom.devicecontrol.utils.BusProvider;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.classes.Prop;
+import org.namelessrom.devicecontrol.objects.Prop;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
-import org.namelessrom.devicecontrol.utils.threads.FireAndForget;
-import org.namelessrom.devicecontrol.utils.threads.FireAndGet;
+import org.namelessrom.devicecontrol.threads.FireAndForget;
+import org.namelessrom.devicecontrol.threads.FireAndGet;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 import org.namelessrom.devicecontrol.widgets.adapters.PropAdapter;
 
@@ -64,7 +64,7 @@ import java.util.List;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-public class ToolsEditor extends AttachFragment
+public class EditorFragment extends AttachFragment
         implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener {
 
     //==============================================================================================
@@ -89,10 +89,10 @@ public class ToolsEditor extends AttachFragment
     private       String mBuildName = "build";
     private int mEditorType;
 
-    public static ToolsEditor newInstance(final int editor) {
+    public static EditorFragment newInstance(final int editor) {
         final Bundle b = new Bundle();
-        b.putInt(ToolsEditor.ARG_EDITOR, editor);
-        final ToolsEditor fragment = new ToolsEditor();
+        b.putInt(EditorFragment.ARG_EDITOR, editor);
+        final EditorFragment fragment = new EditorFragment();
         fragment.setArguments(b);
         return fragment;
     }

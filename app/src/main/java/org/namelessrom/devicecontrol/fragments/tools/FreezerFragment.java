@@ -45,14 +45,14 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.FreezeEvent;
 import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
-import org.namelessrom.devicecontrol.utils.BusProvider;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 import org.namelessrom.devicecontrol.widgets.adapters.PackAdapter;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-public class ToolsFreezer extends AttachFragment
+public class FreezerFragment extends AttachFragment
         implements DeviceConstants, AdapterView.OnItemClickListener {
 
     private static final String ARG_FREEZER = "arg_freezer";
@@ -68,11 +68,11 @@ public class ToolsFreezer extends AttachFragment
     private String         titlu;
     private View           mShadowTop, mShadowBottom;
 
-    public static ToolsFreezer newInstance(final int freezer, final String type) {
+    public static FreezerFragment newInstance(final int freezer, final String type) {
         final Bundle b = new Bundle();
-        b.putBoolean(ToolsFreezer.ARG_FREEZER, (freezer == 0));
-        b.putString(ToolsFreezer.ARG_TYPE, type);
-        ToolsFreezer fragment = new ToolsFreezer();
+        b.putBoolean(FreezerFragment.ARG_FREEZER, (freezer == 0));
+        b.putString(FreezerFragment.ARG_TYPE, type);
+        FreezerFragment fragment = new FreezerFragment();
         fragment.setArguments(b);
         return fragment;
     }
@@ -93,8 +93,8 @@ public class ToolsFreezer extends AttachFragment
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
         final View v = layoutInflater.inflate(R.layout.tools_freezer_list, viewGroup, false);
 
-        mFreeze = getArguments().getBoolean(ToolsFreezer.ARG_FREEZER, false);
-        final boolean sys = getArguments().getString(ToolsFreezer.ARG_TYPE, "usr").equals("sys");
+        mFreeze = getArguments().getBoolean(FreezerFragment.ARG_FREEZER, false);
+        final boolean sys = getArguments().getString(FreezerFragment.ARG_TYPE, "usr").equals("sys");
 
         packageManager = mActivity.getPackageManager();
 
@@ -107,7 +107,7 @@ public class ToolsFreezer extends AttachFragment
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Fragment f = ToolsFreezer.newInstance(mFreeze ? 0 : 1, b ? "sys" : "usr");
+                Fragment f = FreezerFragment.newInstance(mFreeze ? 0 : 1, b ? "sys" : "usr");
                 BusProvider.getBus().post(new ReplaceFragmentEvent(f, true));
             }
         });

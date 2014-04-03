@@ -1,4 +1,4 @@
-package org.namelessrom.devicecontrol.utils.helpers;
+package org.namelessrom.devicecontrol.utils;
 
 import android.app.Activity;
 
@@ -7,8 +7,7 @@ import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
 import org.namelessrom.devicecontrol.events.GpuEvent;
-import org.namelessrom.devicecontrol.utils.BusProvider;
-import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.io.File;

@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
-package org.namelessrom.devicecontrol.utils.helpers;
+package org.namelessrom.devicecontrol.utils;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

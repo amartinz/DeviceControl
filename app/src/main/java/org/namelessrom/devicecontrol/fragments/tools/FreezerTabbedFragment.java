@@ -29,7 +29,7 @@ import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
-public class ToolsFreezerTabbed extends AttachFragment {
+public class FreezerTabbedFragment extends AttachFragment {
 
     public static final String TAG = "tools_freezer_tabbed";
     public static final int    ID  = 320;
@@ -38,7 +38,7 @@ public class ToolsFreezerTabbed extends AttachFragment {
 
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity, ToolsFreezerTabbed.ID);
+        super.onAttach(activity, FreezerTabbedFragment.ID);
     }
 
     @Override

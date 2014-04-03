@@ -44,20 +44,20 @@ import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.fragments.HelpFragment;
 import org.namelessrom.devicecontrol.fragments.dynamic.WebViewFragment;
-import org.namelessrom.devicecontrol.fragments.main.DeviceFragment;
-import org.namelessrom.devicecontrol.fragments.main.HomeFragment;
-import org.namelessrom.devicecontrol.fragments.main.PreferencesFragment;
-import org.namelessrom.devicecontrol.fragments.main.TaskerFragment;
-import org.namelessrom.devicecontrol.fragments.performance.PerformanceCpuSettings;
-import org.namelessrom.devicecontrol.fragments.performance.PerformanceExtrasFragment;
-import org.namelessrom.devicecontrol.fragments.performance.PerformanceGpuFragment;
-import org.namelessrom.devicecontrol.fragments.performance.PerformanceInformationFragment;
-import org.namelessrom.devicecontrol.fragments.tools.ToolsEditorTabbed;
-import org.namelessrom.devicecontrol.fragments.tools.ToolsFreezerTabbed;
-import org.namelessrom.devicecontrol.utils.BusProvider;
+import org.namelessrom.devicecontrol.fragments.DeviceFragment;
+import org.namelessrom.devicecontrol.fragments.HomeFragment;
+import org.namelessrom.devicecontrol.fragments.PreferencesFragment;
+import org.namelessrom.devicecontrol.fragments.TaskerFragment;
+import org.namelessrom.devicecontrol.fragments.performance.CpuSettingsFragment;
+import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
+import org.namelessrom.devicecontrol.fragments.performance.GpuSettingsFragment;
+import org.namelessrom.devicecontrol.fragments.performance.InformationFragment;
+import org.namelessrom.devicecontrol.fragments.tools.EditorTabbedFragment;
+import org.namelessrom.devicecontrol.fragments.tools.FreezerTabbedFragment;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.widgets.adapters.MenuListArrayAdapter;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
@@ -255,19 +255,19 @@ public class MainActivity extends Activity
                 right = HelpFragment.newInstance(HelpFragment.TYPE_DEVICE);
                 break;
             case ID_PERFORMANCE_INFO:
-                main = new PerformanceInformationFragment();
+                main = new InformationFragment();
                 right = HelpFragment.newInstance(HelpFragment.TYPE_PERF_INFO);
                 break;
             case ID_PERFORMANCE_CPU_SETTINGS:
-                main = new PerformanceCpuSettings();
+                main = new CpuSettingsFragment();
                 right = HelpFragment.newInstance(HelpFragment.TYPE_CPU);
                 break;
             case ID_PERFORMANCE_GPU_SETTINGS:
-                main = new PerformanceGpuFragment();
+                main = new GpuSettingsFragment();
                 right = HelpFragment.newInstance(HelpFragment.TYPE_GPU);
                 break;
             case ID_PERFORMANCE_EXTRA:
-                main = new PerformanceExtrasFragment();
+                main = new ExtrasFragment();
                 right = HelpFragment.newInstance(HelpFragment.TYPE_EXTRAS);
                 break;
             case ID_TASKER:
@@ -275,11 +275,11 @@ public class MainActivity extends Activity
                 right = HelpFragment.newInstance(HelpFragment.TYPE_TASKER);
                 break;
             case ID_TOOLS_EDITORS:
-                main = new ToolsEditorTabbed();
+                main = new EditorTabbedFragment();
                 right = HelpFragment.newInstance(HelpFragment.TYPE_EDITORS);
                 break;
             case ID_TOOLS_FREEZER:
-                main = new ToolsFreezerTabbed();
+                main = new FreezerTabbedFragment();
                 right = HelpFragment.newInstance(HelpFragment.TYPE_FREEZER);
                 break;
             case ID_PREFERENCES:
@@ -328,25 +328,25 @@ public class MainActivity extends Activity
             case DeviceFragment.ID:
                 mTitle = mFragmentTitle = R.string.device;
                 break;
-            case PerformanceInformationFragment.ID:
+            case InformationFragment.ID:
                 mTitle = mFragmentTitle = R.string.information;
                 break;
-            case PerformanceCpuSettings.ID:
+            case CpuSettingsFragment.ID:
                 mTitle = mFragmentTitle = R.string.cpusettings;
                 break;
-            case PerformanceGpuFragment.ID:
+            case GpuSettingsFragment.ID:
                 mTitle = mFragmentTitle = R.string.gpusettings;
                 break;
-            case PerformanceExtrasFragment.ID:
+            case ExtrasFragment.ID:
                 mTitle = mFragmentTitle = R.string.extras;
                 break;
             case TaskerFragment.ID:
                 mTitle = mFragmentTitle = R.string.tasker;
                 break;
-            case ToolsEditorTabbed.ID:
+            case EditorTabbedFragment.ID:
                 mTitle = mFragmentTitle = R.string.editors;
                 break;
-            case ToolsFreezerTabbed.ID:
+            case FreezerTabbedFragment.ID:
                 mTitle = mFragmentTitle = R.string.freezer;
                 break;
         }

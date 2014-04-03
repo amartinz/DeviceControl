@@ -64,10 +64,10 @@ public class PerformanceFragment extends AttachFragment {
 
     private List<Fragment> getFragments() {
         final List<Fragment> tmpList = new ArrayList<Fragment>();
-        tmpList.add(new PerformanceInformationFragment());
-        tmpList.add(new PerformanceCpuSettings());
-        tmpList.add(new PerformanceGpuFragment());
-        tmpList.add(new PerformanceExtrasFragment());
+        tmpList.add(new InformationFragment());
+        tmpList.add(new CpuSettingsFragment());
+        tmpList.add(new GpuSettingsFragment());
+        tmpList.add(new ExtrasFragment());
         return tmpList;
     }
 

@@ -12,13 +12,13 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.events.GpuEvent;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
-import org.namelessrom.devicecontrol.utils.BusProvider;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.utils.helpers.GpuUtils;
+import org.namelessrom.devicecontrol.utils.GpuUtils;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
-public class PerformanceGpuFragment extends AttachPreferenceFragment
+public class GpuSettingsFragment extends AttachPreferenceFragment
         implements PerformanceConstants, Preference.OnPreferenceChangeListener {
 
     public static final int ID = 215;

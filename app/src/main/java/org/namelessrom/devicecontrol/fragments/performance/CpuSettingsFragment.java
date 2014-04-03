@@ -42,13 +42,13 @@ import org.namelessrom.devicecontrol.events.CpuCoreEvent;
 import org.namelessrom.devicecontrol.events.CpuFreqEvent;
 import org.namelessrom.devicecontrol.events.GovernorEvent;
 import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
-import org.namelessrom.devicecontrol.utils.BusProvider;
-import org.namelessrom.devicecontrol.utils.CpuCoreMonitor;
+import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.classes.CpuCore;
+import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
-import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.CpuUtils;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
 import java.util.Arrays;
@@ -56,7 +56,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class PerformanceCpuSettings extends AttachFragment implements PerformanceConstants {
+public class CpuSettingsFragment extends AttachFragment implements PerformanceConstants {
 
     public static final int ID = 210;
 

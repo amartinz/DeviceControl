@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.namelessrom.devicecontrol.utils.classes;
+package org.namelessrom.devicecontrol.objects;
 
 import org.namelessrom.devicecontrol.utils.Utils;
 

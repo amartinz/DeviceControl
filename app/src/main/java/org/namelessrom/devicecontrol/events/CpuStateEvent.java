@@ -1,6 +1,6 @@
 package org.namelessrom.devicecontrol.events;
 
-import org.namelessrom.devicecontrol.utils.CpuStateMonitor;
+import org.namelessrom.devicecontrol.monitors.CpuStateMonitor;
 
 import java.util.List;
 

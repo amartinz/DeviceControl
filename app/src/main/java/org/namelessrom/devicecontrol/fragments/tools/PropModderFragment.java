@@ -17,7 +17,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.utils.BusProvider;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 
@@ -25,7 +25,7 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.PREF_FULL_EDITOR;
 
 
-public class PropModder extends PreferenceFragment implements
+public class PropModderFragment extends PreferenceFragment implements
         Preference.OnPreferenceChangeListener {
 
     private static final String APPEND_CMD               = "echo \"%s=%s\" >> /system/build.prop";
@@ -176,7 +176,7 @@ public class PropModder extends PreferenceFragment implements
         boolean value;
         if (preference == mFullEditor) {
             BusProvider.getBus().post(new ReplaceFragmentEvent(
-                    ToolsEditor.newInstance(PressToLoadFragment.FRAGMENT_BUILD_PROP), true
+                    EditorFragment.newInstance(PressToLoadFragment.FRAGMENT_BUILD_PROP), true
             ));
             return true;
         } else if (preference == mTcpStackPref) {

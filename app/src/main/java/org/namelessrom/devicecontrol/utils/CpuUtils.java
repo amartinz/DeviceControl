@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.utils.helpers;
+package org.namelessrom.devicecontrol.utils;
 
 import android.app.Activity;
 
@@ -28,8 +28,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.CpuFreqEvent;
 import org.namelessrom.devicecontrol.events.GovernorEvent;
 import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
-import org.namelessrom.devicecontrol.utils.BusProvider;
-import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.io.BufferedReader;

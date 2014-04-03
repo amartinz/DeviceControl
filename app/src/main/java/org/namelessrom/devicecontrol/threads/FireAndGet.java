@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
-package org.namelessrom.devicecontrol.utils.threads;
+package org.namelessrom.devicecontrol.threads;
 
 import android.app.Activity;
 
@@ -24,7 +24,7 @@ import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
-import org.namelessrom.devicecontrol.utils.BusProvider;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;

@@ -27,7 +27,7 @@ import com.stericson.roottools.execution.Shell;
 
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
-import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 import java.io.FileOutputStream;
 

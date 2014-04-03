@@ -37,19 +37,19 @@ import org.namelessrom.devicecontrol.events.PerformanceExtrasFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.preferences.SeekBarPreference;
-import org.namelessrom.devicecontrol.utils.BusProvider;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
-import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.CpuUtils;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-public class PerformanceExtrasFragment extends AttachPreferenceFragment
+public class ExtrasFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
         Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
@@ -276,7 +276,7 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             value = PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false) ? "1" : "0";
             sbCmd.append(Utils.getWriteCommand(CpuUtils.INTELLI_PLUG_ECO_MODE_PATH, value));
         }
-        if (PerformanceExtrasFragment.sMcPowerScheduler) {
+        if (ExtrasFragment.sMcPowerScheduler) {
             logDebug("Reapplying: McPowerScheduler");
             value = String.valueOf(PreferenceHelper.getInt(KEY_MC_POWER_SCHEDULER, 2));
             sbCmd.append(Utils.getWriteCommand(sMcPowerSchedulerFile, value));

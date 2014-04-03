@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.fragments.main;
+package org.namelessrom.devicecontrol.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;

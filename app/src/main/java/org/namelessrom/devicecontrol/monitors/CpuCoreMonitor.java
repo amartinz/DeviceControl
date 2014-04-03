@@ -16,7 +16,7 @@
  *
  */
 
-package org.namelessrom.devicecontrol.utils;
+package org.namelessrom.devicecontrol.monitors;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -27,9 +27,10 @@ import com.stericson.roottools.execution.Shell;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
-import org.namelessrom.devicecontrol.utils.classes.CpuCore;
+import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
+import org.namelessrom.devicecontrol.utils.CpuUtils;
 
 import java.util.ArrayList;
 import java.util.List;

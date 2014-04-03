@@ -21,7 +21,7 @@ import android.app.Activity;
 import android.app.Fragment;
 
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
-import org.namelessrom.devicecontrol.utils.BusProvider;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 
 public class AttachFragment extends Fragment {
 

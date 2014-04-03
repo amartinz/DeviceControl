@@ -29,11 +29,11 @@ import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
-import org.namelessrom.devicecontrol.fragments.tools.PropModder;
-import org.namelessrom.devicecontrol.fragments.tools.ToolsEditor;
-import org.namelessrom.devicecontrol.fragments.tools.ToolsFreezer;
+import org.namelessrom.devicecontrol.fragments.tools.EditorFragment;
+import org.namelessrom.devicecontrol.fragments.tools.FreezerFragment;
+import org.namelessrom.devicecontrol.fragments.tools.PropModderFragment;
 import org.namelessrom.devicecontrol.fragments.tools.VmFragment;
-import org.namelessrom.devicecontrol.utils.BusProvider;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class PressToLoadFragment extends Fragment implements DeviceConstants {
@@ -71,15 +71,15 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
 
         switch (mFragmentId) {
             case 1:
-                fragment = ToolsEditor.newInstance(1);
+                fragment = EditorFragment.newInstance(1);
                 mText = getString(R.string.fragment_press_to_load, "SysCtl Editor");
                 break;
             case 3:
-                fragment = ToolsFreezer.newInstance(0, "usr");
+                fragment = FreezerFragment.newInstance(0, "usr");
                 mText = getString(R.string.fragment_press_to_load, "Freezer");
                 break;
             case 4:
-                fragment = ToolsFreezer.newInstance(1, "usr");
+                fragment = FreezerFragment.newInstance(1, "usr");
                 mText = getString(R.string.fragment_press_to_load, "Unfreezer");
                 break;
             default:
@@ -102,7 +102,7 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
                 f = new VmFragment();
                 break;
             case FRAGMENT_BUILD_PROP:
-                f = new PropModder();
+                f = new PropModderFragment();
                 break;
             default:
                 f = new ReplaceFragment();

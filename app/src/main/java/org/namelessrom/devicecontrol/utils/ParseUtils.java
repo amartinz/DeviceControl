@@ -1,4 +1,4 @@
-package org.namelessrom.devicecontrol.utils.helpers;
+package org.namelessrom.devicecontrol.utils;
 
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 

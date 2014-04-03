@@ -23,17 +23,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.fragments.main.DeviceFragment;
-import org.namelessrom.devicecontrol.fragments.performance.PerformanceExtrasFragment;
+import org.namelessrom.devicecontrol.fragments.DeviceFragment;
+import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.VoltageFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.utils.helpers.AlarmHelper;
-import org.namelessrom.devicecontrol.utils.helpers.CpuUtils;
-import org.namelessrom.devicecontrol.utils.helpers.GpuUtils;
-import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.AlarmHelper;
+import org.namelessrom.devicecontrol.utils.CpuUtils;
+import org.namelessrom.devicecontrol.utils.GpuUtils;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 import java.io.File;
 
@@ -118,7 +118,7 @@ public class BootUpService extends IntentService
                 }
 
                 if (PreferenceHelper.getBoolean(SOB_EXTRAS, false)) {
-                    sbCmd.append(PerformanceExtrasFragment.restore());
+                    sbCmd.append(ExtrasFragment.restore());
                 }
 
                 if (PreferenceHelper.getBoolean(SOB_VOLTAGE, false)) {
