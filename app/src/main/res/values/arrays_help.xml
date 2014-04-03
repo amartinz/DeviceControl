@@ -75,10 +75,12 @@
     <string-array name="extras_titles" translatable="false">
         <item>@string/intelli_plug</item>
         <item>@string/intelli_plug_eco</item>
+        <item>@string/mpdecision</item>
     </string-array>
     <string-array name="extras_content" translatable="false">
         <item>@string/intelli_plug_help</item>
         <item>@string/intelli_plug_eco_help</item>
+        <item>@string/mpdecision_help</item>
     </string-array>
     <!-- Tasker -->
     <string-array name="tasker_titles" translatable="false">

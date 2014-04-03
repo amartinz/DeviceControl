@@ -40,11 +40,15 @@
     <!-- Preferences -->
     <string name="pref_force_highend_gfx_title">Force high-end graphics</string>
     <string name="pref_force_highend_gfx_summary">Enables high-end visual effects such as transparent status/navigation bar (needs to be supported by your rom, requires reboot)</string>
+    <!-- Hotplug -->
+    <string name="hotpluging">Hotpluging</string>
+    <string name="mpdecision">MPDecision</string>
+    <string name="mpdecision_summary_on">MPDecision is running.</string>
+    <string name="mpdecision_summary_off">MPDecision is turned off.</string>
     <!-- Performance -->
     <string name="powersaving">Powersaving</string>
     <string name="powersaving_lcd_title">LCD Power Reduce</string>
-    <string name="powersaving_lcd_summary_on">Power reducing is enabled.</string>
-    <string name="powersaving_lcd_summary_off">Power reducing is disabled.</string>
+    <string name="lcd_power_reduce_help">Intelligently varies the backlight brightness of the display and helps maximizing battery life.</string>
     <string name="powersaving_sched_mc_title">Power Scheduler</string>
     <string name="powersaving_sched_mc_summary">Tries to group tasks on a core until it reaches its maximum load and powers on the next core.\nIf enabled, it sacrifices power in exchange for battery life.\n\n0 for disabling it, 1 for balanced, 2 for aggressive.</string>
     <string name="powersaving_sched_mc_0">0 - Disabled</string>

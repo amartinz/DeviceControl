@@ -63,8 +63,8 @@
         Eco Mode is a optimized dual core solution for quadcore CPU \'s.
         This should allow for maximum battery life without sacrificing performance.
     </string>
-    <string name="lcd_power_reduce_help">
-        Intelligently varies the backlight brightness of the display and helps maximizing battery life.
+    <string name="mpdecision_help">
+        MPDecision is a proprietary Qualcomm daemon that makes calls to the SoC to manage the cpu cores. WARNING: Only stop if you have a valid hotplug replacement like Intelli-Plug!
     </string>
     <!-- Tasker -->
     <string name="fstrim_help">
