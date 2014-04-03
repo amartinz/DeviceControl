@@ -73,10 +73,12 @@
     </string-array>
     <!-- Extras -->
     <string-array name="extras_titles" translatable="false">
+        <item>@string/mpdecision</item>
         <item>@string/intelli_plug</item>
         <item>@string/intelli_plug_eco</item>
     </string-array>
     <string-array name="extras_content" translatable="false">
+        <item>@string/mpdecision_help</item>
         <item>@string/intelli_plug_help</item>
         <item>@string/intelli_plug_eco_help</item>
     </string-array>

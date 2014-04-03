@@ -33,6 +33,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
+import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.KEY_MPDECISION;
 
 /**
  * Generic CPU Tasks.
@@ -342,6 +343,9 @@ public class CpuUtils implements PerformanceConstants {
             }
         }
 
+        final boolean mpdecision = PreferenceHelper.getBoolean(KEY_MPDECISION, false);
+        sb.append(enableMpDecision(mpdecision));
+
         return sb.toString();
     }
 
@@ -520,4 +524,7 @@ public class CpuUtils implements PerformanceConstants {
         }
     }
 
+    public static String enableMpDecision(boolean start) {
+        return (start ? "start mpdecision 2> /dev/null;\n" : "stop mpdecision 2> /dev/null;\n");
+    }
 }

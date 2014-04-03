@@ -19,7 +19,6 @@
 package org.namelessrom.devicecontrol.fragments.performance;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -28,6 +27,8 @@ import android.preference.PreferenceScreen;
 import android.view.View;
 
 import com.squareup.otto.Subscribe;
+import com.stericson.roottools.RootTools;
+import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
@@ -67,6 +68,7 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
     //----------------------------------------------------------------------------------------------
     private SeekBarPreference        mMcPowerScheduler;
     //----------------------------------------------------------------------------------------------
+    private CustomCheckBoxPreference mMpDecision;
     private CustomCheckBoxPreference mIntelliPlug;
     private CustomCheckBoxPreference mIntelliPlugEco;
 
@@ -129,6 +131,15 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
 
         removeIfEmpty(category);
 
+        category = (PreferenceCategory) findPreference("hotpluging");
+        if (category != null) {
+            if (Utils.fileExists(MPDECISION_PATH)) {
+                mMpDecision = (CustomCheckBoxPreference) findPreference("mpdecision");
+            } else {
+                category.removePreference(mMpDecision);
+            }
+        }
+
         //------------------------------------------------------------------------------------------
         // Intelli-Plug
         //------------------------------------------------------------------------------------------
@@ -152,10 +163,8 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
         }
 
         removeIfEmpty(category);
-
         isSupported(mRoot, getActivity());
-
-        new PerformanceCpuTask().execute();
+        getOnPerformanceExtrasFragmentEvent();
 
     }
 
@@ -171,6 +180,11 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
 
         if (preference == mForceHighEndGfx) {
             Utils.runRootCommand(Scripts.toggleForceHighEndGfx());
+            changed = true;
+        } else if (preference == mMpDecision) {
+            final boolean value = (Boolean) o;
+            Utils.runRootCommand(CpuUtils.enableMpDecision(value));
+            PreferenceHelper.setBoolean(KEY_MPDECISION, value);
             changed = true;
         } else if (preference == mIntelliPlug) {
             final boolean value = (Boolean) o;
@@ -227,31 +241,74 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             mForceHighEndGfx.setChecked(forceHighEndGfx);
             mForceHighEndGfx.setOnPreferenceChangeListener(this);
         }
+        final boolean isMpDecisionRunning = event.isMpDecisionRunning();
+        if (mMpDecision != null) {
+            mMpDecision.setChecked(isMpDecisionRunning);
+            mMpDecision.setOnPreferenceChangeListener(this);
+        }
     }
 
-    //==============================================================================================
-    // Internal Classes
-    //==============================================================================================
-
-    class PerformanceCpuTask extends AsyncTask<Void, Void, PerformanceExtrasFragmentEvent>
-            implements DeviceConstants {
-
-        @Override
-        protected PerformanceExtrasFragmentEvent doInBackground(Void... voids) {
-            boolean isForceHighEndGfx = false;
+    private void getOnPerformanceExtrasFragmentEvent() {
+        final Activity activity = getActivity();
+        if (activity != null) {
+            boolean tmp = false;
+            final StringBuilder sb = new StringBuilder();
+            sb.append("command=$(");
 
             if (IS_LOW_RAM_DEVICE && Application.HAS_ROOT) {
-                isForceHighEndGfx = Scripts.getForceHighEndGfx();
+                tmp = Scripts.getForceHighEndGfx();
+            }
+            final boolean isForceHighEndGfx = tmp;
+
+            if (Utils.fileExists(MPDECISION_PATH)) {
+                sb.append("echo -n \"[mpdecision]\";");
+                sb.append("pgrep mpdecision 2> /dev/null;");
             }
 
-            return new PerformanceExtrasFragmentEvent(isForceHighEndGfx);
-        }
+            sb.append(");").append("echo \"$command\" | tr -d \"\\n\"");
+            final String cmd = sb.toString();
+            logDebug("cmd: " + cmd);
 
-        @Override
-        protected void onPostExecute(final PerformanceExtrasFragmentEvent event) {
-            if (event != null) {
-                BusProvider.getBus().post(event);
-            }
+            final StringBuilder outputCapture = new StringBuilder();
+            final CommandCapture commandCapture = new CommandCapture(0, false, cmd) {
+                @Override
+                public void commandOutput(final int id, final String line) {
+                    outputCapture.append(line);
+                    logDebug("line: " + line);
+                }
+
+                @Override
+                public void commandCompleted(int id, int exitcode) {
+                    final String output = outputCapture.toString();
+                    logDebug("output: " + output);
+
+                    final String[] result = output.split(" ");
+                    String tmpMpDecision = "";
+
+                    for (final String s : result) {
+                        if (s.contains("[mpdecision]")) {
+                            tmpMpDecision = s.replace("[mpdecision]", "");
+                        }
+                    }
+
+                    final boolean isMpDecisionRunning = !tmpMpDecision.isEmpty();
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            BusProvider.getBus().post(
+                                    new PerformanceExtrasFragmentEvent(
+                                            isForceHighEndGfx,
+                                            isMpDecisionRunning
+                                    )
+                            );
+                        }
+                    });
+                }
+            };
+            try {
+                RootTools.getShell(true).add(commandCapture);
+            } catch (Exception ignored) { }
         }
     }
+
 }

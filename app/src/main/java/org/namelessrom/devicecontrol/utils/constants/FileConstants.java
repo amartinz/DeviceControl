@@ -56,7 +56,7 @@ public interface FileConstants {
     public static final String[] FILES_MC_POWER_SCHEDULER   =
             {"/sys/devices/system/cpu/sched_mc_power_savings"};
     //==============================================================================================
-
+    public static final String   MPDECISION_PATH            = "/system/bin/mpdecision";
 
     //==============================================================================================
     // Directories
