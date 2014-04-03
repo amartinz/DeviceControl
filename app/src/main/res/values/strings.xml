@@ -29,6 +29,7 @@
     <string name="licenses">Licenses</string>
     <string name="unfreezer">Unfreezer</string>
     <string name="graphics">Graphics</string>
+    <string name="display">Display</string>
     <!-- Time In State -->
     <string name="time_in_state">TIME IN STATE</string>
     <string name="unused_cpu_states">UNUSED CPU STATES</string>

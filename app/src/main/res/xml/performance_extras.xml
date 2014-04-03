@@ -48,13 +48,6 @@
         android:key="powersaving"
         android:title="@string/powersaving">
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
-            android:key="lcd_power_reduce"
-            android:title="@string/powersaving_lcd_title"
-            android:summaryOn="@string/powersaving_lcd_summary_on"
-            android:summaryOff="@string/powersaving_lcd_summary_off"
-            android:defaultValue="false" />
-
         <org.namelessrom.devicecontrol.preferences.SeekBarPreference
             android:key="sched_mc_power_savings"
             android:title="@string/powersaving_sched_mc_title"

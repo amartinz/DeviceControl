@@ -84,7 +84,13 @@
 
     <PreferenceCategory
         android:key="graphics"
-        android:title="@string/graphics">
+        android:title="@string/display">
+
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+            android:key="lcd_power_reduce"
+            android:title="@string/powersaving_lcd_title"
+            android:summary="@string/lcd_power_reduce_help"
+            android:defaultValue="false" />
 
         <org.namelessrom.devicecontrol.preferences.CustomListPreference
             android:key="panel_color_temperature"

@@ -77,10 +77,14 @@ public class DeviceFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference mKeyboardBacklight;
 
     //==============================================================================================
-    // Graphics
+    // Display
     //==============================================================================================
-    public static final String  sHasPanelFile = Utils.checkPaths(FILES_PANEL_COLOR_TEMP);
-    public static final boolean sHasPanel     = !sHasPanelFile.equals("");
+    private CustomCheckBoxPreference mLcdPowerReduce;
+    public static final String  sLcdPowerReduceFile = Utils.checkPaths(FILES_LCD_POWER_REDUCE);
+    public static final boolean sLcdPowerReduce     = !sLcdPowerReduceFile.equals("");
+    //----------------------------------------------------------------------------------------------
+    public static final String  sHasPanelFile       = Utils.checkPaths(FILES_PANEL_COLOR_TEMP);
+    public static final boolean sHasPanel           = !sHasPanelFile.equals("");
     private CustomListPreference mPanelColor;
 
     //==============================================================================================
@@ -224,7 +228,7 @@ public class DeviceFragment extends AttachPreferenceFragment
             }
         }
 
-        // GRAPHICS
+        // Display
 
         category = (PreferenceCategory) findPreference(CATEGORY_GRAPHICS);
         if (category != null) {
@@ -237,6 +241,15 @@ public class DeviceFragment extends AttachPreferenceFragment
                     mPanelColor.setOnPreferenceChangeListener(this);
                 }
             }
+
+            mLcdPowerReduce = (CustomCheckBoxPreference) findPreference(KEY_LCD_POWER_REDUCE);
+            if (sLcdPowerReduce) {
+                mLcdPowerReduce.setChecked(Utils.readOneLine(sLcdPowerReduceFile).equals("1"));
+                mLcdPowerReduce.setOnPreferenceChangeListener(this);
+            } else {
+                category.removePreference(mLcdPowerReduce);
+            }
+
             if (category.getPreferenceCount() == 0) {
                 preferenceScreen.removePreference(category);
             }
@@ -292,6 +305,11 @@ public class DeviceFragment extends AttachPreferenceFragment
             Utils.writeValue(sHasPanelFile, value);
             PreferenceHelper.setString(KEY_PANEL_COLOR_TEMP, value);
             changed = true;
+        } else if (preference == mLcdPowerReduce) {
+            final boolean value = (Boolean) o;
+            Utils.writeValue(sLcdPowerReduceFile, (value ? "1" : "0"));
+            PreferenceHelper.setBoolean(KEY_LCD_POWER_REDUCE, value);
+            changed = true;
         }
 
         return changed;
@@ -333,6 +351,12 @@ public class DeviceFragment extends AttachPreferenceFragment
             logDebug("Reapplying: Panel Color Temp");
             value = PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2");
             sbCmd.append(Utils.getWriteCommand(sHasPanelFile, value));
+        }
+
+        if (DeviceFragment.sLcdPowerReduce) {
+            logDebug("Reapplying: LcdPowerReduce");
+            value = PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false) ? "1" : "0";
+            sbCmd.append(Utils.getWriteCommand(sLcdPowerReduceFile, value));
         }
 
         if (DeviceFragment.sHasTouchkeyToggle) {

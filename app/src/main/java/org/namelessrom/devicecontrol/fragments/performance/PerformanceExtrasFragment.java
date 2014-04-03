@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.view.View;
@@ -53,9 +54,6 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
     //==============================================================================================
     // Files
     //==============================================================================================
-    public static final String  sLcdPowerReduceFile   = Utils.checkPaths(FILES_LCD_POWER_REDUCE);
-    public static final boolean sLcdPowerReduce       = !sLcdPowerReduceFile.equals("");
-    //----------------------------------------------------------------------------------------------
     public static final String  sMcPowerSchedulerFile = Utils.checkPaths(FILES_MC_POWER_SCHEDULER);
     public static final boolean sMcPowerScheduler     = !sMcPowerSchedulerFile.equals("");
     //==============================================================================================
@@ -67,7 +65,6 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mForceHighEndGfx;
     //----------------------------------------------------------------------------------------------
-    private CustomCheckBoxPreference mLcdPowerReduce;
     private SeekBarPreference        mMcPowerScheduler;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mIntelliPlug;
@@ -118,15 +115,7 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
         // Power Saving
         //------------------------------------------------------------------------------------------
 
-        PreferenceGroup preferenceGroup = (PreferenceGroup) findPreference(CATEGORY_POWERSAVING);
-
-        mLcdPowerReduce = (CustomCheckBoxPreference) findPreference(KEY_LCD_POWER_REDUCE);
-        if (sLcdPowerReduce) {
-            mLcdPowerReduce.setChecked(Utils.readOneLine(sLcdPowerReduceFile).equals("1"));
-            mLcdPowerReduce.setOnPreferenceChangeListener(this);
-        } else {
-            preferenceGroup.removePreference(mLcdPowerReduce);
-        }
+        PreferenceCategory category = (PreferenceCategory) findPreference(CATEGORY_POWERSAVING);
 
         mMcPowerScheduler = (SeekBarPreference) findPreference(KEY_MC_POWER_SCHEDULER);
         if (sMcPowerScheduler) {
@@ -135,23 +124,23 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             );
             mMcPowerScheduler.setOnPreferenceChangeListener(this);
         } else {
-            preferenceGroup.removePreference(mMcPowerScheduler);
+            category.removePreference(mMcPowerScheduler);
         }
 
-        removeIfEmpty(preferenceGroup);
+        removeIfEmpty(category);
 
         //------------------------------------------------------------------------------------------
         // Intelli-Plug
         //------------------------------------------------------------------------------------------
 
-        preferenceGroup = (PreferenceGroup) findPreference(GROUP_INTELLI_PLUG);
+        category = (PreferenceCategory) findPreference(GROUP_INTELLI_PLUG);
 
         mIntelliPlug = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG);
         if (CpuUtils.hasIntelliPlug()) {
             mIntelliPlug.setChecked(CpuUtils.getIntelliPlugActive());
             mIntelliPlug.setOnPreferenceChangeListener(this);
         } else {
-            preferenceGroup.removePreference(mIntelliPlug);
+            category.removePreference(mIntelliPlug);
         }
 
         mIntelliPlugEco = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG_ECO);
@@ -159,10 +148,10 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             mIntelliPlugEco.setChecked(CpuUtils.getIntelliPlugEcoMode());
             mIntelliPlugEco.setOnPreferenceChangeListener(this);
         } else {
-            preferenceGroup.removePreference(mIntelliPlugEco);
+            category.removePreference(mIntelliPlugEco);
         }
 
-        removeIfEmpty(preferenceGroup);
+        removeIfEmpty(category);
 
         isSupported(mRoot, getActivity());
 
@@ -182,11 +171,6 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
 
         if (preference == mForceHighEndGfx) {
             Utils.runRootCommand(Scripts.toggleForceHighEndGfx());
-            changed = true;
-        } else if (preference == mLcdPowerReduce) {
-            final boolean value = (Boolean) o;
-            Utils.writeValue(sLcdPowerReduceFile, (value ? "1" : "0"));
-            PreferenceHelper.setBoolean(KEY_LCD_POWER_REDUCE, value);
             changed = true;
         } else if (preference == mIntelliPlug) {
             final boolean value = (Boolean) o;
@@ -216,11 +200,6 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
         final StringBuilder sbCmd = new StringBuilder();
         String value;
 
-        if (PerformanceExtrasFragment.sLcdPowerReduce) {
-            logDebug("Reapplying: LcdPowerReduce");
-            value = PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false) ? "1" : "0";
-            sbCmd.append(Utils.getWriteCommand(sLcdPowerReduceFile, value));
-        }
         if (CpuUtils.hasIntelliPlug()) {
             logDebug("Reapplying: IntelliPlug");
             value = PreferenceHelper.getBoolean(KEY_INTELLI_PLUG, false) ? "1" : "0";
