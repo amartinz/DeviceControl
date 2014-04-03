@@ -27,10 +27,10 @@ import com.stericson.roottools.execution.Shell;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
-import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.objects.CpuCore;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -180,7 +180,7 @@ public class CpuCoreMonitor implements DeviceConstants {
         };
 
         openShell();
-        if (!mShell.isClosed() && isStarted) {
+        if (mShell != null && !mShell.isClosed() && isStarted) {
             mShell.add(commandCapture);
         }
     }
