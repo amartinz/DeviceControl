@@ -62,7 +62,7 @@ public class GpuUtils implements PerformanceConstants {
             sb.append(Utils.getWriteCommand(GPU_MAX_FREQ_FILE, gpuMax));
         }
 
-        final String gpuGov = PreferenceHelper.getString(PREF_GOV, "");
+        final String gpuGov = PreferenceHelper.getString(PREF_GPU_GOV, "");
         if (gpuGov != null && !gpuGov.isEmpty()) {
             sb.append(Utils.getWriteCommand(GPU_GOV_PATH, gpuGov));
         }

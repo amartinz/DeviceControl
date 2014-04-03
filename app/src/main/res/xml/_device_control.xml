@@ -55,6 +55,11 @@
             app:auto_handle="true" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+            android:key="sob_voltage"
+            android:title="@string/voltage_control"
+            app:auto_handle="true" />
+
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_vm"
             android:title="@string/vm"
             app:auto_handle="true" />

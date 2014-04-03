@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol.activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -291,7 +292,12 @@ public class MainActivity extends Activity
                 break;
         }
 
-        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        final FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+
+        final FragmentTransaction ft = fragmentManager.beginTransaction();
 
         ft.replace(R.id.container, main);
         ft.replace(R.id.menu_frame, right);
@@ -414,6 +420,14 @@ public class MainActivity extends Activity
         if (!mHelper.handleActivityResult(req, res, data)) {
             super.onActivityResult(req, res, data);
         }
+    }
+
+    @Subscribe
+    public void onAddFragmentToBackstack(final Fragment f) {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, f)
+                .addToBackStack(null)
+                .commit();
     }
 
 }
