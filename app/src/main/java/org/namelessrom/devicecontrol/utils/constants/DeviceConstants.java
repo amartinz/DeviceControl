@@ -119,5 +119,6 @@ public interface DeviceConstants {
     public static final String SOB_GPU              = "sob_gpu";
     public static final String SOB_EXTRAS           = "sob_extras";
     public static final String SOB_DEVICE           = "sob_device";
+    public static final String SOB_VOLTAGE          = "sob_voltage";
 
 }

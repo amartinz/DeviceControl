@@ -48,6 +48,10 @@
     <!-- Voltage -->
     <string name="voltage">Voltage</string>
     <string name="msm_dcvs_summary">Use MSM DCVS for CPU/GPU Frequency control</string>
+    <string name="voltage_control">Voltage Control</string>
+    <string name="voltage_control_summary">Edit the voltages used per frequency</string>
+    <string name="menu_plus">+25mV</string>
+    <string name="menu_minus">-25mV</string>
     <!-- Performance -->
     <string name="powersaving">Powersaving</string>
     <string name="powersaving_lcd_title">LCD Power Reduce</string>
@@ -200,7 +204,7 @@
     <string name="pref_lcd_default">480</string>
     <string name="pref_lcd_alt_summary">Screen density: %s</string>
     <!-- Etc -->
-    <string name="etc_apply_values">Apply values</string>
+    <string name="apply">Apply</string>
     <string name="etc_filter">Filter</string>
     <string name="etc_save">"Save"</string>
     <string name="etc_add_prop_title">Add Property</string>

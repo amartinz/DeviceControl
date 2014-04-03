@@ -83,6 +83,11 @@
             android:summary="@string/msm_dcvs_summary"
             android:defaultValue="false" />
 
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
+            android:key="voltage_control"
+            android:title="@string/voltage_control"
+            android:summary="@string/voltage_control_summary" />
+
     </PreferenceCategory>
 </PreferenceScreen>
 

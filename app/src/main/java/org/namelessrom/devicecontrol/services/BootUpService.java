@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.fragments.main.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceExtrasFragment;
+import org.namelessrom.devicecontrol.fragments.performance.VoltageFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
@@ -118,6 +119,10 @@ public class BootUpService extends IntentService
 
                 if (PreferenceHelper.getBoolean(SOB_EXTRAS, false)) {
                     sbCmd.append(PerformanceExtrasFragment.restore());
+                }
+
+                if (PreferenceHelper.getBoolean(SOB_VOLTAGE, false)) {
+                    sbCmd.append(VoltageFragment.restore());
                 }
 
                 //==================================================================================

@@ -82,7 +82,7 @@
             android:src="@drawable/ic_action_editor_apply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/etc_apply_values"
+            android:contentDescription="@string/apply"
             android:id="@+id/applyBtn"
             android:layout_gravity="center_vertical|right"
             android:gravity="center_vertical|center_horizontal"

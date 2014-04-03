@@ -35,6 +35,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.events.PerformanceExtrasFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.preferences.SeekBarPreference;
 import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.Scripts;
@@ -50,7 +51,7 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class PerformanceExtrasFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
-        Preference.OnPreferenceChangeListener {
+        Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
     public static final int ID = 220;
 
@@ -75,6 +76,7 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference mIntelliPlugEco;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mMsmDcvs;
+    private CustomPreference         mVoltageControl;
 
     //==============================================================================================
     // Overridden Methods
@@ -186,6 +188,13 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
             } else {
                 category.removePreference(mMsmDcvs);
             }
+
+            mVoltageControl = (CustomPreference) findPreference("voltage_control");
+            if (Utils.fileExists(VDD_TABLE_FILE) || Utils.fileExists(UV_TABLE_FILE)) {
+                mVoltageControl.setOnPreferenceClickListener(this);
+            } else {
+                category.removePreference(mVoltageControl);
+            }
         }
 
         removeIfEmpty(category);
@@ -199,6 +208,17 @@ public class PerformanceExtrasFragment extends AttachPreferenceFragment
         if (preferenceGroup.getPreferenceCount() == 0) {
             mRoot.removePreference(preferenceGroup);
         }
+    }
+
+    @Override
+    public boolean onPreferenceClick(final Preference preference) {
+
+        if (mVoltageControl == preference) {
+            BusProvider.getBus().post(new VoltageFragment());
+            return true;
+        }
+
+        return false;
     }
 
     @Override

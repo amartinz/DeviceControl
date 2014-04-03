@@ -32,6 +32,14 @@ import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 import static org.namelessrom.devicecontrol.Application.logDebug;
 import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.KEY_MPDECISION;
 
@@ -50,9 +58,50 @@ public class CpuUtils implements PerformanceConstants {
     //==============================================================================================
     // Methods
     //==============================================================================================
-    public static boolean hasMsmDcvs() {
-        return Utils.fileExists(MSM_DCVS_FILE);
+    public static String[] getUvValues(final boolean getName) throws IOException {
+        final ArrayList<String> valueList = new ArrayList<String>();
+        DataInputStream in = null;
+        BufferedReader br = null;
+        FileInputStream fstream = null;
+        try {
+            File f = new File(VDD_TABLE_FILE);
+            if (f.exists()) {
+                fstream = new FileInputStream(VDD_TABLE_FILE);
+            } else {
+                f = new File(UV_TABLE_FILE);
+                if (f.exists()) {
+                    fstream = new FileInputStream(UV_TABLE_FILE);
+                }
+            }
+
+            if (fstream != null) {
+                in = new DataInputStream(fstream);
+                br = new BufferedReader(new InputStreamReader(in));
+                String strLine;
+                String[] values;
+                while ((strLine = br.readLine()) != null) {
+                    strLine = strLine.trim();
+                    if ((strLine.length() != 0)) {
+                        if (getName) {
+                            values = strLine.replaceAll(":", "").split("\\s+");
+                            valueList.add(values[0]);
+                        } else {
+                            values = strLine.split("\\s+");
+                            valueList.add(values[1]);
+                        }
+                    }
+                }
+            }
+        } finally {
+            if (br != null) br.close();
+            if (in != null) in.close();
+            if (fstream != null) fstream.close();
+        }
+
+        return valueList.toArray(new String[valueList.size() - 1]);
     }
+
+    public static boolean hasMsmDcvs() { return Utils.fileExists(MSM_DCVS_FILE); }
 
     public static boolean isMsmDcvs() {
         final String s = Utils.readOneLine(MSM_DCVS_FILE);

@@ -19,16 +19,19 @@ package org.namelessrom.devicecontrol.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.squareup.otto.Subscribe;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceFragment;
+import org.namelessrom.devicecontrol.utils.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.helpers.PreferenceHelper;
 
@@ -44,6 +47,18 @@ public class PerformanceActivity extends Activity {
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BusProvider.getBus().register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BusProvider.getBus().unregister(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,4 +108,13 @@ public class PerformanceActivity extends Activity {
             RootTools.closeAllShells();
         }
     }
+
+    @Subscribe
+    public void onAddFragmentToBackstack(final Fragment f) {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, f)
+                .addToBackStack(null)
+                .commit();
+    }
+
 }
