@@ -25,6 +25,18 @@
         android:summary="@string/pref_force_highend_gfx_summary" />
 
     <PreferenceCategory
+        android:key="hotpluging"
+        android:title="@string/hotplugging">
+
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+            android:key="mpdecision"
+            android:title="@string/mpdecision"
+            android:summaryOn="@string/mpdecision_summary_on"
+            android:summaryOff="@string/mpdecision_summary_off" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="intelli_plug"
         android:title="@string/intelli_plug">
 

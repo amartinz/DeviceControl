@@ -55,6 +55,9 @@
         If they exist, the value will stick.
     </string>
     <!-- Extras -->
+    <string name="mpdecision_help">
+        MPDecision is a proprietary Qualcomm daemon that makes calls to the SoC to manage the cpu cores.\nWARNING: Only stop if you have a valid hotplug replacement like Intelli-Plug!
+    </string>
     <string name="intelli_plug_help">
         Intelli-Plug is a replacement for Qualcomm\'s proprietary mpdecsion, which runs in userspace.
         It is done in kernel instead in userspace which is faster as in userspace it has to poll the kernel.
@@ -62,9 +65,6 @@
     <string name="intelli_plug_eco_help">
         Eco Mode is a optimized dual core solution for quadcore CPU \'s.
         This should allow for maximum battery life without sacrificing performance.
-    </string>
-    <string name="lcd_power_reduce_help">
-        Intelligently varies the backlight brightness of the display and helps maximizing battery life.
     </string>
     <!-- Tasker -->
     <string name="fstrim_help">
