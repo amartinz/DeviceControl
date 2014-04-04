@@ -143,9 +143,8 @@ public class ExtrasFragment extends AttachPreferenceFragment
 
         category = (PreferenceCategory) findPreference("hotplugging");
         if (category != null) {
-            if (Utils.fileExists(MPDECISION_PATH)) {
-                mMpDecision = (CustomCheckBoxPreference) findPreference("mpdecision");
-            } else {
+            mMpDecision = (CustomCheckBoxPreference) findPreference("mpdecision");
+            if (!Utils.fileExists(MPDECISION_PATH)) {
                 category.removePreference(mMpDecision);
             }
         }
