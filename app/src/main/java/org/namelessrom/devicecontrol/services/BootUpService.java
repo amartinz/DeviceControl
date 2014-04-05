@@ -23,6 +23,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.fragments.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.VoltageFragment;
@@ -36,6 +38,7 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.io.File;
+import java.util.List;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -74,6 +77,7 @@ public class BootUpService extends IntentService
                 return null;
             }
 
+            final DatabaseHandler db = DatabaseHandler.getInstance(mContext);
             PreferenceHelper.getInstance(mContext);
 
             if (!PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
@@ -91,6 +95,7 @@ public class BootUpService extends IntentService
                 // Fields For Reapplying
                 //==================================================================================
                 StringBuilder sbCmd = new StringBuilder();
+                List<DataItem> items;
 
                 //==================================================================================
                 // Custom Shell Command
@@ -111,6 +116,10 @@ public class BootUpService extends IntentService
                 //==================================================================================
                 if (PreferenceHelper.getBoolean(SOB_CPU, false)) {
                     sbCmd.append(CpuUtils.restore());
+                    items = db.getAllItems(DatabaseHandler.TABLE_BOOTUP, DataItem.CATEGORY_CPU);
+                    for (final DataItem item : items) {
+                        sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
+                    }
                 }
 
                 if (PreferenceHelper.getBoolean(SOB_GPU, false)) {
