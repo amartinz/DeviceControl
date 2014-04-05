@@ -40,7 +40,7 @@
             android:src="@drawable/ic_action_editor_restore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/etc_prop_restore_title"
+            android:contentDescription="@string/restore"
             android:id="@+id/restoreBtn"
             android:layout_gravity="center_vertical|left"
             android:gravity="center_vertical|center_horizontal"

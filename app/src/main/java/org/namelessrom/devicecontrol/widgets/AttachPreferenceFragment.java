@@ -44,21 +44,31 @@ public class AttachPreferenceFragment extends PreferenceFragment {
     }
 
     protected void isSupported(final PreferenceScreen preferenceScreen, final Context context) {
+        isSupported(preferenceScreen, context, R.string.no_tweaks_message);
+    }
+
+    protected void isSupported(final PreferenceScreen preferenceScreen, final Context context,
+            final int sId) {
         if (preferenceScreen.getPreferenceCount() == 0) {
-            preferenceScreen.addPreference(createPreference(context));
+            preferenceScreen.addPreference(createPreference(context, sId));
         }
     }
 
     protected void isSupported(final PreferenceCategory preferenceCategory, final Context context) {
+        isSupported(preferenceCategory, context, R.string.no_tweaks_message);
+    }
+
+    protected void isSupported(final PreferenceCategory preferenceCategory, final Context context,
+            final int sId) {
         if (preferenceCategory.getPreferenceCount() == 0) {
-            preferenceCategory.addPreference(createPreference(context));
+            preferenceCategory.addPreference(createPreference(context, sId));
         }
     }
 
-    private CustomPreference createPreference(final Context context) {
+    private CustomPreference createPreference(final Context context, final int sId) {
         final CustomPreference pref = new CustomPreference(context);
         pref.setTitle(R.string.no_tweaks_available);
-        pref.setSummary(R.string.no_tweaks_message);
+        pref.setSummary(sId);
         pref.setTitleColor("#ffffff");
         pref.setSummaryColor("#ffffff");
         return pref;

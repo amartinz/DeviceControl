@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -184,6 +185,14 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
 
         mGovernor = (Spinner) view.findViewById(R.id.pref_governor);
         mGovernor.setEnabled(false);
+
+        final Button govButton = (Button) view.findViewById(R.id.governor_tuning);
+        govButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BusProvider.getBus().post(new CpuGovernorFragment());
+            }
+        });
 
         mIo = (Spinner) view.findViewById(R.id.pref_io);
         mIo.setEnabled(false);

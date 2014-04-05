@@ -47,7 +47,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.performance_gpu);
+        addPreferencesFromResource(R.xml.gpu);
 
         final Context context = getActivity();
 

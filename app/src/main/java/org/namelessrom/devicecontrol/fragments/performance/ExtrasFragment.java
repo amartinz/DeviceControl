@@ -108,7 +108,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.performance_extras);
+        addPreferencesFromResource(R.xml.extras);
         mRoot = getPreferenceScreen();
 
         IS_LOW_RAM_DEVICE = Utils.getLowRamDevice(getActivity());

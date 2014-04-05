@@ -16,7 +16,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:key="uv_category"
-        android:title="@string/voltage_control" />
+        android:key="key_gov_category"
+        android:title="@string/governor" />
 
 </PreferenceScreen>

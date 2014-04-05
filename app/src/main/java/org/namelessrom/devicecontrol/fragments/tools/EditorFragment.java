@@ -201,7 +201,7 @@ public class EditorFragment extends AttachFragment
             restoreButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    makeDialog(getString(R.string.etc_prop_restore_title)
+                    makeDialog(getString(R.string.restore)
                             , getString(R.string.etc_prop_restore_msg), (byte) 0, null);
                 }
             });

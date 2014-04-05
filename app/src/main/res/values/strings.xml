@@ -16,6 +16,7 @@
     <string name="toast_settings_applied">Successfully applied!</string>
     <string name="no_tweaks_available">No tweaks available</string>
     <string name="no_tweaks_message">Sorry but your device doesn\'t have any supported features</string>
+    <string name="no_gov_tweaks_message">Sorry but this governor has no tunable values</string>
     <!-- Menu -->
     <string name="home">Home</string>
     <string name="device">Device</string>
@@ -72,6 +73,7 @@
     <string name="current_max">Maximum speed</string>
     <string name="current_min">Minimum speed</string>
     <string name="governor">Governor</string>
+    <string name="governor_tuning">Governor Tuning</string>
     <string name="io">I/O Scheduler</string>
     <string name="sob">Apply automatically on boot</string>
     <string name="cpu_info_list_header">Core Status</string>
@@ -205,6 +207,7 @@
     <string name="pref_lcd_alt_summary">Screen density: %s</string>
     <!-- Etc -->
     <string name="apply">Apply</string>
+    <string name="restore">Restore</string>
     <string name="etc_filter">Filter</string>
     <string name="etc_save">"Save"</string>
     <string name="etc_add_prop_title">Add Property</string>
@@ -213,7 +216,6 @@
     <string name="etc_del_prop_msg">%s will be deleted.\n\nContinue?</string>
     <string name="etc_prop_backup">Backup of build.prop was created in %s</string>
     <string name="etc_prop_no_backup">Initial backup not found!</string>
-    <string name="etc_prop_restore_title">Restore</string>
     <string name="etc_prop_restore_msg">Initial build.prop file will be restored.\nYou must reboot your device to take effect.\n\nContinue?</string>
     <string name="etc_prop_name">Name</string>
     <string name="etc_prop_val">Value</string>
