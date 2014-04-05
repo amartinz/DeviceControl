@@ -19,12 +19,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
 import java.io.File;
+import java.util.List;
 
 public class CpuGovernorFragment extends AttachPreferenceFragment {
 
@@ -47,7 +50,7 @@ public class CpuGovernorFragment extends AttachPreferenceFragment {
         final File f = new File("/sys/devices/system/cpu/cpufreq/" + curGov);
         if (f.exists()) {
             mCategory.setTitle(curGov + " Tweakable values");
-            new LongOperation().execute(curGov);
+            new addPreferences().execute(curGov);
         } else {
             preferenceScreen.removeAll();
         }
@@ -72,7 +75,7 @@ public class CpuGovernorFragment extends AttachPreferenceFragment {
         return false;
     }
 
-    class LongOperation extends AsyncTask<String, Void, Void> {
+    class addPreferences extends AsyncTask<String, Void, Void> {
 
         @Override
         protected Void doInBackground(String... params) {
@@ -129,6 +132,7 @@ public class CpuGovernorFragment extends AttachPreferenceFragment {
                                             String value = et.getText().toString();
                                             p.setSummary(value);
                                             Utils.writeValue(p.getKey(), value);
+                                            updateBootupListDb(p, value);
                                         }
                                     }
                             );
@@ -146,6 +150,34 @@ public class CpuGovernorFragment extends AttachPreferenceFragment {
             return null;
         }
 
+    }
+
+    private static void updateBootupListDb(final Preference p, final String value) {
+
+        class updateListDb extends AsyncTask<String, Void, Void> {
+
+            @Override
+            protected Void doInBackground(String... params) {
+                final DatabaseHandler db = DatabaseHandler.getInstance(mContext);
+                final String name = p.getTitle().toString();
+                final String key = p.getKey();
+
+                final List<DataItem> items =
+                        db.getAllItems(DatabaseHandler.TABLE_BOOTUP, DataItem.CATEGORY_CPU);
+                for (final DataItem item : items) {
+                    if (item.getName().equals(name)
+                            && item.getCategory().equals(DataItem.CATEGORY_CPU)) {
+                        db.deleteItemByName(name, DatabaseHandler.TABLE_BOOTUP);
+                    }
+                }
+                db.addItem(new DataItem(DataItem.CATEGORY_CPU, name, key, value),
+                        DatabaseHandler.TABLE_BOOTUP);
+
+                return null;
+            }
+
+        }
+        new updateListDb().execute();
     }
 
 }
