@@ -68,7 +68,7 @@
         android:layout_alignParentRight="true">
 
         <ImageButton
-            android:src="@drawable/ic_action_editor_add"
+            android:src="@drawable/ic_action_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/etc_add_prop_title"

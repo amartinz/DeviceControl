@@ -18,6 +18,11 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
+        android:key="tasker"
+        android:title="@string/tasklist"
+        android:summary="@string/tasklist_summary" />
+
     <PreferenceCategory
         android:key="fstrim_cat"
         android:title="@string/fstrim_title">

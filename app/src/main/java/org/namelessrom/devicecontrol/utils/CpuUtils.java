@@ -413,6 +413,14 @@ public class CpuUtils implements PerformanceConstants {
         return sb.toString();
     }
 
+    public static String[] getAvailableFrequencies() {
+        final String freqsRaw = Utils.readOneLine(FREQ_AVAILABLE_PATH);
+        if (freqsRaw != null && !freqsRaw.isEmpty()) {
+            return freqsRaw.split(" ");
+        }
+        return null;
+    }
+
     //==============================================================================================
     // Events
     //==============================================================================================

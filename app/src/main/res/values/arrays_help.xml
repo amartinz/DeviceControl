@@ -86,9 +86,11 @@
     </string-array>
     <!-- Tasker -->
     <string-array name="tasker_titles" translatable="false">
+        <item>@string/tasklist</item>
         <item>@string/fstrim_title</item>
     </string-array>
     <string-array name="tasker_content" translatable="false">
+        <item>@string/tasklist_help</item>
         <item>@string/fstrim_help</item>
     </string-array>
     <!-- Editors -->
