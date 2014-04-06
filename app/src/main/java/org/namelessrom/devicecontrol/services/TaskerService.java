@@ -1,43 +1,22 @@
-/*
- *  Copyright (C) 2013 Alexander "Evisceration" Martinz
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
 package org.namelessrom.devicecontrol.services;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.IBinder;
 
-import com.stericson.roottools.RootTools;
-import com.stericson.roottools.execution.CommandCapture;
-
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
-
-import java.io.File;
-import java.io.FileOutputStream;
+import org.namelessrom.devicecontrol.receivers.ScreenReceiver;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-public class TaskerService extends Service implements DeviceConstants, FileConstants {
+public class TaskerService extends Service {
 
-    //==============================================================================================
-    // Overridden Methods
-    //==============================================================================================
+    public static final String ACTION_START = "action_start";
+    public static final String ACTION_STOP  = "action_stop";
+
+    private ScreenReceiver mScreenReceiver = null;
+
+    public TaskerService() { }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -45,77 +24,39 @@ public class TaskerService extends Service implements DeviceConstants, FileConst
     }
 
     @Override
-    public int onStartCommand(Intent intent, int i, int i2) {
-
-        PreferenceHelper.getInstance(this);
+    public int onStartCommand(Intent intent, int flags, int startId) {
 
         final String action = intent.getAction();
-
-        if (action != null) {
-            if (action.equals(ACTION_TASKER_FSTRIM)) {
-                mFstrimThread.run();
-            }
+        if (action == null || action.isEmpty() || action.equals(ACTION_STOP)) {
+            logDebug("Stopping TaskerService");
+            stopSelf();
+            return START_NOT_STICKY;
         }
 
-        // Done, staaaahp it
-        stopSelf();
+        logDebug("TaskerService: Action: " + action);
 
-        return START_NOT_STICKY;
+        if (action.equals(ACTION_START)) {
+            final IntentFilter filter = new IntentFilter();
+            filter.addAction(Intent.ACTION_SCREEN_ON);
+            filter.addAction(Intent.ACTION_SCREEN_OFF);
+            if (mScreenReceiver == null) {
+                mScreenReceiver = new ScreenReceiver();
+                registerReceiver(mScreenReceiver, filter);
+                logDebug("TaskerService: Starting Service");
+            }
+            return START_STICKY;
+        } else {
+            stopSelf();
+            return START_NOT_STICKY;
+        }
     }
 
-    //==============================================================================================
-    // Methods
-    //==============================================================================================
-
-    //
-
-    //================
-    // Runnable
-    //================
-    private final Thread mFstrimThread = new Thread(new Runnable() {
-        public void run() {
-            logDebug("FSTRIM RUNNING");
-            try {
-                final File filesDir = getFilesDir();
-                String path;
-                if (filesDir != null && filesDir.exists()) {
-                    path = filesDir.getPath() + DC_LOG_FILE_FSTRIM;
-                } else {
-                    path = "/data/data/" + getPackageName() + "files" + DC_LOG_FILE_FSTRIM;
-                }
-
-                final FileOutputStream fos = new FileOutputStream(path);
-                final String sb = "date;\n"
-                        + "busybox fstrim -v /system;\n"
-                        + "busybox fstrim -v /data;\n"
-                        + "busybox fstrim -v /cache;\n";
-
-                final CommandCapture comm = new CommandCapture(0, false, sb) {
-
-                    @Override
-                    public void commandOutput(int id, String line) {
-                        logDebug("Result: " + line);
-                        try {
-                            fos.write((line + "\n").getBytes());
-                        } catch (Exception ignored) { }
-                    }
-
-                    @Override
-                    public void commandCompleted(int id, int exitcode) {
-                        try {
-                            fos.write("\n\n".getBytes());
-                            fos.flush();
-                            fos.close();
-                        } catch (Exception ignored) { }
-                    }
-                };
-
-                RootTools.getShell(true).add(comm);
-            } catch (Exception exc) {
-                logDebug("Fstrim error: " + exc.getLocalizedMessage());
-            }
-            logDebug("FSTRIM RAN");
-        }
-    });
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {
+            if (mScreenReceiver != null) { unregisterReceiver(mScreenReceiver); }
+        } catch (Exception ignored) { }
+        mScreenReceiver = null;
+    }
 }

@@ -19,9 +19,9 @@
 package org.namelessrom.devicecontrol;
 
 import android.app.AlarmManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.util.Log;
@@ -108,31 +108,30 @@ public class Application extends android.app.Application implements DeviceConsta
     public static void toggleLauncherIcon(final boolean showLauncher) {
         try {
             if (packageManager == null) { return; }
-            if ((packageManager.getResourcesForApplication("com.android.settings")
-                    .getIdentifier("device_control_settings", "string",
-                            "com.android.settings") > 0)
-                    && (!showLauncher && Application.IS_NAMELESS)) {
-                logDebug("Implemented into system!");
-                disableLauncher(true);
+            if (Application.IS_NAMELESS) {
+                final Resources res =
+                        packageManager.getResourcesForApplication("com.android.settings");
+                if (res != null
+                        && res.getIdentifier("device_control_settings", "string",
+                        "com.android.settings") > 0
+                        && !showLauncher) {
+                    logDebug("Implemented into system and showLauncher is not set!");
+                    Utils.disableComponent(applicationContext, PACKAGE_NAME,
+                            ".activities.DummyLauncher");
+                } else {
+                    logDebug("Implemented into system and showLauncher is set!");
+                    Utils.enableComponent(applicationContext, PACKAGE_NAME,
+                            ".activities.DummyLauncher");
+                }
             } else {
                 logDebug("Not implemented into system!");
-                disableLauncher(false);
+                Utils.enableComponent(applicationContext, PACKAGE_NAME,
+                        ".activities.DummyLauncher");
             }
         } catch (PackageManager.NameNotFoundException exc) {
             logDebug("You dont have settings? That's weird.");
-            disableLauncher(false);
+            Utils.enableComponent(applicationContext, PACKAGE_NAME, ".activities.DummyLauncher");
         }
-    }
-
-    private static void disableLauncher(boolean shouldDisable) {
-        final ComponentName component = new ComponentName(PACKAGE_NAME,
-                PACKAGE_NAME + ".activities.DummyLauncher");
-        packageManager.setComponentEnabledSetting(component,
-                (shouldDisable
-                        ? PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-                        : PackageManager.COMPONENT_ENABLED_STATE_ENABLED),
-                PackageManager.DONT_KILL_APP
-        );
     }
 
     /**
