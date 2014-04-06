@@ -40,6 +40,7 @@ import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
@@ -49,9 +50,10 @@ public class PreferencesFragment extends AttachPreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants {
 
     //==============================================================================================
-    // In App Purchase
+    // App
     //==============================================================================================
     private CustomPreference         mDonatePreference;
+    private CustomCheckBoxPreference mMonkeyPref;
     //==============================================================================================
     // Debug
     //==============================================================================================
@@ -66,36 +68,60 @@ public class PreferencesFragment extends AttachPreferenceFragment
         PreferenceHelper.getInstance(mActivity);
 
         mExtensiveLogging = (CustomCheckBoxPreference) findPreference(EXTENSIVE_LOGGING);
-        mExtensiveLogging.setOnPreferenceChangeListener(this);
+        if (mExtensiveLogging != null) {
+            mExtensiveLogging.setOnPreferenceChangeListener(this);
+        }
 
         PreferenceCategory category = (PreferenceCategory) findPreference("prefs_general");
         if (category != null) {
             mShowLauncher = (CustomCheckBoxPreference) findPreference(SHOW_LAUNCHER);
-            if (Application.IS_NAMELESS) {
-                mShowLauncher.setOnPreferenceChangeListener(this);
-            } else {
-                category.removePreference(mShowLauncher);
+            if (mShowLauncher != null) {
+                if (Application.IS_NAMELESS) {
+                    mShowLauncher.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mShowLauncher);
+                }
             }
+
             if (category.getPreferenceCount() == 0) {
                 getPreferenceScreen().removePreference(category);
             }
         }
 
         final Preference mVersion = findPreference("prefs_version");
-        mVersion.setEnabled(false);
-        try {
-            final PackageInfo pInfo = mActivity.getPackageManager()
-                    .getPackageInfo(mActivity.getPackageName(), 0);
-            mVersion.setTitle(getString(R.string.app_version_name, pInfo.versionName));
-            mVersion.setSummary(getString(R.string.app_version_code, pInfo.versionCode));
-        } catch (Exception ignored) {
-            final String unknown = getString(R.string.unknown);
-            mVersion.setTitle(unknown);
-            mVersion.setSummary(unknown);
+        if (mVersion != null) {
+            mVersion.setEnabled(false);
+            try {
+                final PackageInfo pInfo = mActivity.getPackageManager()
+                        .getPackageInfo(mActivity.getPackageName(), 0);
+                mVersion.setTitle(getString(R.string.app_version_name, pInfo.versionName));
+                mVersion.setSummary(getString(R.string.app_version_code, pInfo.versionCode));
+            } catch (Exception ignored) {
+                final String unknown = getString(R.string.unknown);
+                mVersion.setTitle(unknown);
+                mVersion.setSummary(unknown);
+            }
         }
 
-        mDonatePreference = (CustomPreference) findPreference("pref_donate");
-        mDonatePreference.setEnabled(PreferenceHelper.getBoolean(Application.Iab.getPref(), false));
+        category = (PreferenceCategory) findPreference("prefs_app");
+        if (category != null) {
+            mDonatePreference = (CustomPreference) findPreference("pref_donate");
+            if (mDonatePreference != null) {
+                mDonatePreference
+                        .setEnabled(PreferenceHelper.getBoolean(Application.Iab.getPref(), false));
+            }
+
+            if (Utils.existsInBuildProp("ro.nameless.secret=1")) {
+                mMonkeyPref = new CustomCheckBoxPreference(getActivity());
+                mMonkeyPref.setKey("monkey");
+                mMonkeyPref.setTitle(R.string.become_a_monkey);
+                mMonkeyPref.setSummaryOn(R.string.is_monkey);
+                mMonkeyPref.setSummaryOff(R.string.no_monkey);
+                mMonkeyPref.setChecked(PreferenceHelper.getBoolean("monkey", false));
+                mMonkeyPref.setOnPreferenceChangeListener(this);
+                category.addPreference(mMonkeyPref);
+            }
+        }
     }
 
 
@@ -130,6 +156,11 @@ public class PreferencesFragment extends AttachPreferenceFragment
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(SHOW_LAUNCHER, value);
             Application.toggleLauncherIcon(value);
+            changed = true;
+        } else if (mMonkeyPref == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean("monkey", value);
+            // TODO: add some more easter eggs?
             changed = true;
         }
 

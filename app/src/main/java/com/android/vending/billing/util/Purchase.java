@@ -22,7 +22,7 @@ import org.json.JSONObject;
  * Represents an in-app billing purchase.
  */
 public class Purchase {
-    String mItemType;  // ITEM_TYPE_INAPP or ITEM_TYPE_SUBS
+    final String mItemType;  // ITEM_TYPE_INAPP or ITEM_TYPE_SUBS
     String mOrderId;
     String mPackageName;
     String mSku;
@@ -30,7 +30,7 @@ public class Purchase {
     int    mPurchaseState;
     String mDeveloperPayload;
     String mToken;
-    String mOriginalJson;
+    final String mOriginalJson;
     String mSignature;
 
     public Purchase(String itemType, String jsonPurchaseInfo, String signature)
