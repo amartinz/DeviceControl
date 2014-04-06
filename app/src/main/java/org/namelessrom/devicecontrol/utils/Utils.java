@@ -18,7 +18,9 @@ package org.namelessrom.devicecontrol.utils;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
@@ -27,6 +29,8 @@ import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
@@ -327,6 +331,50 @@ public class Utils implements DeviceConstants, FileConstants {
             return false;
         }
         return false;
+    }
+
+    public static void disableComponent(final Context context, final String packageName,
+            final String componentName) {
+        toggleComponent(context, packageName, componentName, true);
+    }
+
+    public static void enableComponent(final Context context, final String packageName,
+            final String componentName) {
+        toggleComponent(context, packageName, componentName, false);
+    }
+
+    private static void toggleComponent(final Context context, final String packageName,
+            final String componentName, boolean disable) {
+        final ComponentName component = new ComponentName(packageName,
+                packageName + componentName);
+        final PackageManager pm = context.getPackageManager();
+        if (pm != null) {
+            pm.setComponentEnabledSetting(component,
+                    (disable
+                            ? PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                            : PackageManager.COMPONENT_ENABLED_STATE_ENABLED),
+                    PackageManager.DONT_KILL_APP
+            );
+        }
+    }
+
+    public static void startTaskerService(final Context context) {
+        final String packageName = context.getPackageName();
+        final String componentName = TaskerService.class.getName().replace(packageName, "");
+        final DatabaseHandler db = DatabaseHandler.getInstance(context);
+        if (db.getTableCount(DatabaseHandler.TABLE_TASKER) > 0) {
+            enableComponent(context, packageName, componentName);
+            final Intent tasker = new Intent(context, TaskerService.class);
+            tasker.setAction(TaskerService.ACTION_START);
+            context.startService(tasker);
+            Log.i("DeviceControl", "Service Started: " + componentName);
+        } else {
+            final Intent tasker = new Intent(context, TaskerService.class);
+            tasker.setAction(TaskerService.ACTION_STOP);
+            context.startService(tasker);
+            disableComponent(context, packageName, componentName);
+            Log.i("DeviceControl", "Service NOT Started: " + componentName);
+        }
     }
 
 }
