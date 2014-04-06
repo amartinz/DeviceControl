@@ -181,6 +181,7 @@ public class MainActivity extends Activity
         setUpIab();
 
         loadFragment(ID_HOME);
+        Utils.startTaskerService(this);
     }
 
     @Override
