@@ -38,6 +38,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.KEY_MPDECISION;
@@ -439,26 +441,24 @@ public class CpuUtils implements PerformanceConstants {
 
                 @Override
                 public void commandCompleted(int id, int exitcode) {
-                    final String[] result = outputCollector.toString().split(" ");
-                    final int length = result.length;
+                    final List<String> result =
+                            Arrays.asList(outputCollector.toString().split(" "));
+                    final List<String> tmpList = new ArrayList<String>();
                     String tmpMax = "", tmpMin = "";
-                    String[] tmpArray = new String[length - 2];
 
-                    String s;
-                    for (int i = 0; i < length; i++) {
-                        s = result[i];
+                    for (final String s : result) {
                         if (s.charAt(0) == '[') {
                             tmpMax = s.substring(1, s.length());
                         } else if (s.charAt(0) == ']') {
                             tmpMin = s.substring(1, s.length());
                         } else {
-                            tmpArray[i] = s;
+                            tmpList.add(s);
                         }
                     }
 
                     final String max = tmpMax;
                     final String min = tmpMin;
-                    final String[] avail = tmpArray;
+                    final String[] avail = tmpList.toArray(new String[tmpList.size()]);
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -499,23 +499,21 @@ public class CpuUtils implements PerformanceConstants {
 
                 @Override
                 public void commandCompleted(int id, int exitcode) {
-                    final String[] result = outputCollector.toString().split(" ");
-                    final int length = result.length;
+                    final List<String> result =
+                            Arrays.asList(outputCollector.toString().split(" "));
+                    final List<String> tmpList = new ArrayList<String>();
                     String tmpString = "";
-                    String[] tmpArray = new String[length - 1];
 
-                    String s;
-                    for (int i = 0; i < length; i++) {
-                        s = result[i];
+                    for (final String s : result) {
                         if (s.charAt(0) == '[') {
                             tmpString = s.substring(1, s.length());
                         } else {
-                            tmpArray[i] = s;
+                            tmpList.add(s);
                         }
                     }
 
                     final String gov = tmpString;
-                    final String[] availGovs = tmpArray;
+                    final String[] availGovs = tmpList.toArray(new String[tmpList.size()]);
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -549,24 +547,23 @@ public class CpuUtils implements PerformanceConstants {
 
                 @Override
                 public void commandCompleted(int id, int exitcode) {
-                    final String[] result = outputCollector.toString().split(" ");
-                    final int length = result.length;
+                    final List<String> result =
+                            Arrays.asList(outputCollector.toString().split(" "));
+                    final List<String> tmpList = new ArrayList<String>();
                     String tmpString = "";
-                    String[] tmpArray = new String[length];
 
-                    String s;
-                    for (int i = 0; i < length; i++) {
-                        s = result[i];
+                    for (final String s : result) {
                         if (s.charAt(0) == '[') {
                             tmpString = s.substring(1, s.length() - 1);
-                            tmpArray[i] = tmpString;
+                            tmpList.add(tmpString);
                         } else {
-                            tmpArray[i] = s;
+                            tmpList.add(s);
                         }
                     }
 
                     final String scheduler = tmpString;
-                    final String[] availableSchedulers = tmpArray;
+                    final String[] availableSchedulers =
+                            tmpList.toArray(new String[tmpList.size()]);
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

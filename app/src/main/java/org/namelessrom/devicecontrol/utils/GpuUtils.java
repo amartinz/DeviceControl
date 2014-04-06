@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -115,24 +117,22 @@ public class GpuUtils implements PerformanceConstants {
 
                 @Override
                 public void commandCompleted(int id, int exitcode) {
-                    final String[] result = outputCollector.toString().split(" ");
-                    final int length = result.length;
+                    final List<String> result =
+                            Arrays.asList(outputCollector.toString().split(" "));
+                    final List<String> tmpList = new ArrayList<String>();
                     String tmpMax = "", tmpGov = "";
-                    String[] tmpArray = new String[length - 2];
 
-                    String s;
-                    for (int i = 0; i < length; i++) {
-                        s = result[i];
+                    for (final String s : result) {
                         if (s.charAt(0) == '[') {
                             tmpMax = s.substring(1, s.length());
                         } else if (s.charAt(0) == ']') {
                             tmpGov = s.substring(1, s.length());
                         } else {
-                            tmpArray[i] = s;
+                            tmpList.add(s);
                         }
                     }
 
-                    final String[] avail = tmpArray;
+                    final String[] avail = tmpList.toArray(new String[tmpList.size()]);
                     final String max = tmpMax;
                     final String gov = tmpGov;
                     activity.runOnUiThread(new Runnable() {

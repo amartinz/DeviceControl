@@ -351,10 +351,14 @@ public class EditorFragment extends AttachFragment
     public void onReadPropsCompleted(final ShellOutputEvent event) {
         final String text = event.getOutput();
         logDebug("onReadPropsCompleted: " + text);
-        if (mEditorType == 2) {
-            loadBuildProp(text);
+        if (isAdded()) {
+            if (mEditorType == 2) {
+                loadBuildProp(text);
+            } else {
+                loadProp(text);
+            }
         } else {
-            loadProp(text);
+            logDebug("Not attached!");
         }
     }
 
@@ -367,10 +371,17 @@ public class EditorFragment extends AttachFragment
             props.clear();
             final String[] p = result.split(" ");
             for (String aP : p) {
-                if (aP.trim().length() > 0 && aP != null) {
-                    final String pv = Utils.readOneLine(aP).trim();
-                    final String pn = aP.trim().replace("/", ".").substring(10, aP.length());
-                    props.add(new Prop(pn, pv));
+                if (aP != null && !aP.isEmpty()) {
+                    aP = aP.trim();
+                    final int length = aP.length();
+                    if (length > 0) {
+                        String pv = Utils.readOneLine(aP);
+                        if (pv != null && !pv.isEmpty()) {
+                            pv = pv.trim();
+                        }
+                        final String pn = aP.replace("/", ".").substring(10, length);
+                        props.add(new Prop(pn, pv));
+                    }
                 }
             }
             Collections.sort(props);

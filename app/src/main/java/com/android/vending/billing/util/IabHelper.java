@@ -20,8 +20,11 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.IntentSender.SendIntentException;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -268,7 +271,10 @@ public class IabHelper {
 
         Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
         serviceIntent.setPackage("com.android.vending");
-        if (!mContext.getPackageManager().queryIntentServices(serviceIntent, 0).isEmpty()) {
+        final PackageManager pm = mContext.getPackageManager();
+        final List<ResolveInfo> list =
+                (pm != null ? pm.queryIntentServices(serviceIntent, 0) : null);
+        if (list != null && !list.isEmpty()) {
             // service available to handle that Intent
             mContext.bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
         } else {
@@ -411,10 +417,14 @@ public class IabHelper {
             mRequestCode = requestCode;
             mPurchaseListener = listener;
             mPurchasingItemType = itemType;
-            act.startIntentSenderForResult(pendingIntent.getIntentSender(),
-                    requestCode, new Intent(),
-                    Integer.valueOf(0), Integer.valueOf(0),
-                    Integer.valueOf(0));
+            final IntentSender sender =
+                    pendingIntent != null ? pendingIntent.getIntentSender() : null;
+            if (sender != null) {
+                act.startIntentSenderForResult(sender,
+                        requestCode, new Intent(),
+                        0, 0,
+                        0);
+            }
         } catch (SendIntentException e) {
             logError("SendIntentException while launching purchase flow for sku " + sku);
             e.printStackTrace();
@@ -476,7 +486,7 @@ public class IabHelper {
 
             if (purchaseData == null || dataSignature == null) {
                 logError("BUG: either purchaseData or dataSignature is null.");
-                logDebug("Extras: " + data.getExtras().toString());
+                logDebug("Extras: " + data.getExtras());
                 result = new IabResult(IABHELPER_UNKNOWN_ERROR,
                         "IAB returned null purchaseData or dataSignature");
                 if (mPurchaseListener != null) {
@@ -485,7 +495,7 @@ public class IabHelper {
                 return true;
             }
 
-            Purchase purchase = null;
+            Purchase purchase;
             try {
                 purchase = new Purchase(mPurchasingItemType, purchaseData, dataSignature);
                 String sku = purchase.getSku();
@@ -822,7 +832,7 @@ public class IabHelper {
             logDebug("Bundle with null response code, assuming OK (known issue)");
             return BILLING_RESPONSE_RESULT_OK;
         } else if (o instanceof Integer) {
-            return ((Integer) o).intValue();
+            return (Integer) o;
         } else if (o instanceof Long) { return (int) ((Long) o).longValue(); } else {
             logError("Unexpected type for bundle response code.");
             logError(o.getClass().getName());
@@ -832,13 +842,18 @@ public class IabHelper {
     }
 
     // Workaround to bug where sometimes response codes come as Long instead of Integer
-    int getResponseCodeFromIntent(Intent i) {
+    int getResponseCodeFromIntent(final Intent i) {
+        final Bundle extras = i.getExtras();
+        if (extras == null) {
+            logError("Ignore it");
+            return BILLING_RESPONSE_RESULT_OK;
+        }
         Object o = i.getExtras().get(RESPONSE_CODE);
         if (o == null) {
             logError("Intent with no response code, assuming OK (known issue)");
             return BILLING_RESPONSE_RESULT_OK;
         } else if (o instanceof Integer) {
-            return ((Integer) o).intValue();
+            return (Integer) o;
         } else if (o instanceof Long) { return (int) ((Long) o).longValue(); } else {
             logError("Unexpected type for intent response code.");
             logError(o.getClass().getName());
@@ -898,26 +913,31 @@ public class IabHelper {
             ArrayList<String> signatureList = ownedItems.getStringArrayList(
                     RESPONSE_INAPP_SIGNATURE_LIST);
 
-            for (int i = 0; i < purchaseDataList.size(); ++i) {
-                String purchaseData = purchaseDataList.get(i);
-                String signature = signatureList.get(i);
-                String sku = ownedSkus.get(i);
-                if (Security.verifyPurchase(mSignatureBase64, purchaseData, signature)) {
-                    logDebug("Sku is owned: " + sku);
-                    Purchase purchase = new Purchase(itemType, purchaseData, signature);
+            if (ownedSkus != null
+                    && purchaseDataList != null
+                    && signatureList != null) {
+                final int size = purchaseDataList.size();
+                for (int i = 0; i < size; ++i) {
+                    String purchaseData = purchaseDataList.get(i);
+                    String signature = signatureList.get(i);
+                    String sku = ownedSkus.get(i);
+                    if (Security.verifyPurchase(mSignatureBase64, purchaseData, signature)) {
+                        logDebug("Sku is owned: " + sku);
+                        Purchase purchase = new Purchase(itemType, purchaseData, signature);
 
-                    if (TextUtils.isEmpty(purchase.getToken())) {
-                        logWarn("BUG: empty/null token!");
-                        logDebug("Purchase data: " + purchaseData);
+                        if (TextUtils.isEmpty(purchase.getToken())) {
+                            logWarn("BUG: empty/null token!");
+                            logDebug("Purchase data: " + purchaseData);
+                        }
+
+                        // Record ownership and token
+                        inv.addPurchase(purchase);
+                    } else {
+                        logWarn("Purchase signature verification **FAILED**. Not adding item.");
+                        logDebug("   Purchase data: " + purchaseData);
+                        logDebug("   Signature: " + signature);
+                        verificationFailed = true;
                     }
-
-                    // Record ownership and token
-                    inv.addPurchase(purchase);
-                } else {
-                    logWarn("Purchase signature verification **FAILED**. Not adding item.");
-                    logDebug("   Purchase data: " + purchaseData);
-                    logDebug("   Signature: " + signature);
-                    verificationFailed = true;
                 }
             }
 
@@ -968,7 +988,7 @@ public class IabHelper {
         ArrayList<String> responseList = skuDetails.getStringArrayList(
                 RESPONSE_GET_SKU_DETAILS_LIST);
 
-        for (String thisResponse : responseList) {
+        for (final String thisResponse : responseList) {
             SkuDetails d = new SkuDetails(itemType, thisResponse);
             logDebug("Got sku details: " + d);
             inv.addSkuDetails(d);

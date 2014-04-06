@@ -113,10 +113,12 @@ public class ExtrasFragment extends AttachPreferenceFragment
 
         IS_LOW_RAM_DEVICE = Utils.getLowRamDevice(getActivity());
 
-        if (IS_LOW_RAM_DEVICE) {
-            mForceHighEndGfx = (CustomCheckBoxPreference) findPreference(FORCE_HIGHEND_GFX_PREF);
-        } else {
-            mRoot.removePreference(findPreference(FORCE_HIGHEND_GFX_PREF));
+        mForceHighEndGfx = (CustomCheckBoxPreference) findPreference(FORCE_HIGHEND_GFX_PREF);
+        if (mForceHighEndGfx != null) {
+            if (!IS_LOW_RAM_DEVICE) {
+                mRoot.removePreference(mForceHighEndGfx);
+                mForceHighEndGfx = null;
+            }
         }
 
         //------------------------------------------------------------------------------------------
@@ -126,13 +128,15 @@ public class ExtrasFragment extends AttachPreferenceFragment
         PreferenceCategory category = (PreferenceCategory) findPreference(CATEGORY_POWERSAVING);
         if (category != null) {
             mMcPowerScheduler = (SeekBarPreference) findPreference(KEY_MC_POWER_SCHEDULER);
-            if (sMcPowerScheduler) {
-                mMcPowerScheduler.setProgress(
-                        Integer.parseInt(Utils.readOneLine(sMcPowerSchedulerFile))
-                );
-                mMcPowerScheduler.setOnPreferenceChangeListener(this);
-            } else {
-                category.removePreference(mMcPowerScheduler);
+            if (mMcPowerScheduler != null) {
+                if (sMcPowerScheduler) {
+                    mMcPowerScheduler.setProgress(
+                            Integer.parseInt(Utils.readOneLine(sMcPowerSchedulerFile))
+                    );
+                    mMcPowerScheduler.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mMcPowerScheduler);
+                }
             }
         }
 
@@ -144,7 +148,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
         category = (PreferenceCategory) findPreference("hotplugging");
         if (category != null) {
             mMpDecision = (CustomCheckBoxPreference) findPreference("mpdecision");
-            if (!Utils.fileExists(MPDECISION_PATH)) {
+            if (mMpDecision != null && !Utils.fileExists(MPDECISION_PATH)) {
                 category.removePreference(mMpDecision);
             }
         }
@@ -157,19 +161,23 @@ public class ExtrasFragment extends AttachPreferenceFragment
         category = (PreferenceCategory) findPreference(GROUP_INTELLI_PLUG);
         if (category != null) {
             mIntelliPlug = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG);
-            if (CpuUtils.hasIntelliPlug()) {
-                mIntelliPlug.setChecked(CpuUtils.getIntelliPlugActive());
-                mIntelliPlug.setOnPreferenceChangeListener(this);
-            } else {
-                category.removePreference(mIntelliPlug);
+            if (mIntelliPlug != null) {
+                if (CpuUtils.hasIntelliPlug()) {
+                    mIntelliPlug.setChecked(CpuUtils.getIntelliPlugActive());
+                    mIntelliPlug.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mIntelliPlug);
+                }
             }
 
             mIntelliPlugEco = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG_ECO);
-            if (CpuUtils.hasIntelliPlug() && CpuUtils.hasIntelliPlugEcoMode()) {
-                mIntelliPlugEco.setChecked(CpuUtils.getIntelliPlugEcoMode());
-                mIntelliPlugEco.setOnPreferenceChangeListener(this);
-            } else {
-                category.removePreference(mIntelliPlugEco);
+            if (mIntelliPlugEco != null) {
+                if (CpuUtils.hasIntelliPlug() && CpuUtils.hasIntelliPlugEcoMode()) {
+                    mIntelliPlugEco.setChecked(CpuUtils.getIntelliPlugEcoMode());
+                    mIntelliPlugEco.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mIntelliPlugEco);
+                }
             }
         }
 
@@ -181,18 +189,22 @@ public class ExtrasFragment extends AttachPreferenceFragment
         category = (PreferenceCategory) findPreference("voltage");
         if (category != null) {
             mMsmDcvs = (CustomCheckBoxPreference) findPreference("msm_dcvs");
-            if (CpuUtils.hasMsmDcvs()) {
-                mMsmDcvs.setChecked(CpuUtils.isMsmDcvs());
-                mMsmDcvs.setOnPreferenceChangeListener(this);
-            } else {
-                category.removePreference(mMsmDcvs);
+            if (mMsmDcvs != null) {
+                if (CpuUtils.hasMsmDcvs()) {
+                    mMsmDcvs.setChecked(CpuUtils.isMsmDcvs());
+                    mMsmDcvs.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mMsmDcvs);
+                }
             }
 
             mVoltageControl = (CustomPreference) findPreference("voltage_control");
-            if (Utils.fileExists(VDD_TABLE_FILE) || Utils.fileExists(UV_TABLE_FILE)) {
-                mVoltageControl.setOnPreferenceClickListener(this);
-            } else {
-                category.removePreference(mVoltageControl);
+            if (mVoltageControl != null) {
+                if (Utils.fileExists(VDD_TABLE_FILE) || Utils.fileExists(UV_TABLE_FILE)) {
+                    mVoltageControl.setOnPreferenceClickListener(this);
+                } else {
+                    category.removePreference(mVoltageControl);
+                }
             }
         }
 

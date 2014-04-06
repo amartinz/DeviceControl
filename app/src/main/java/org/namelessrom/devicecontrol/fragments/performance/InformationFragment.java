@@ -370,16 +370,18 @@ public class InformationFragment extends AttachFragment implements DeviceConstan
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            mDeviceInfo.removeAllViews();
-            if (cpuTemp != -1) {
-                generateRow(mDeviceInfo, getString(R.string.cpu_temperature), cpuTemp + " °C",
-                        "0°C", "100°C", cpuTemp);
-            }
-            generateRow(mDeviceInfo, getString(R.string.battery_temperature),
-                    ((float) mBatteryTemperature) / 10 + " °C" + mBatteryExtra,
-                    "0°C", "100°C", (mBatteryTemperature / 10));
+            if (isAdded()) {
+                mDeviceInfo.removeAllViews();
+                if (cpuTemp != -1) {
+                    generateRow(mDeviceInfo, getString(R.string.cpu_temperature), cpuTemp + " °C",
+                            "0°C", "100°C", cpuTemp);
+                }
+                generateRow(mDeviceInfo, getString(R.string.battery_temperature),
+                        ((float) mBatteryTemperature) / 10 + " °C" + mBatteryExtra,
+                        "0°C", "100°C", (mBatteryTemperature / 10));
 
-            mHandler.postDelayed(mDeviceUpdater, mInterval);
+                mHandler.postDelayed(mDeviceUpdater, mInterval);
+            }
         }
     }
 
