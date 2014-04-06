@@ -20,15 +20,20 @@ package org.namelessrom.devicecontrol.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import org.namelessrom.devicecontrol.services.BootUpService;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 public class BootUpReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
-        final Intent service = new Intent(context, BootUpService.class);
-        context.startService(service);
+        final Intent bootup = new Intent(context, BootUpService.class);
+        context.startService(bootup);
+        Log.i("DeviceControl", "Service Started: BootUpService");
+
+        Utils.startTaskerService(context);
     }
 
 }

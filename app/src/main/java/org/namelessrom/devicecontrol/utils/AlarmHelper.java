@@ -23,7 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.services.TaskerService;
+import org.namelessrom.devicecontrol.services.FstrimService;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.Calendar;
@@ -34,13 +34,13 @@ import java.util.Calendar;
 public class AlarmHelper implements DeviceConstants {
 
     /**
-     * Schedules the TaskerService with the FSTRIM flag.
+     * Schedules the FstrimService with the FSTRIM flag.
      *
      * @param context  The context
      * @param interval The interval in minutes
      */
     public static void setAlarmFstrim(Context context, int interval) {
-        Intent i = new Intent(context, TaskerService.class);
+        Intent i = new Intent(context, FstrimService.class);
         i.setAction(ACTION_TASKER_FSTRIM);
         PendingIntent pi = PendingIntent.getService(
                 context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -59,7 +59,7 @@ public class AlarmHelper implements DeviceConstants {
      * @param context The context
      */
     public static void cancelAlarmFstrim(Context context) {
-        Intent i = new Intent(context, TaskerService.class);
+        Intent i = new Intent(context, FstrimService.class);
         i.setAction(ACTION_TASKER_FSTRIM);
         PendingIntent pi = PendingIntent.getService(
                 context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);

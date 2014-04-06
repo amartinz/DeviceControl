@@ -131,6 +131,13 @@
     <string name="reapply_on_boot">Reapply on boot</string>
     <string name="version">Version</string>
     <!-- Tasker -->
+    <string name="add_task">Add Task</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="delete_task_question">Do you really want to delete this task?</string>
+    <string name="category">Category</string>
+    <string name="action">Action</string>
+    <string name="value">Value</string>
+    <!-- Fstrim -->
     <string name="fstrim_title">Automatic fstrimming</string>
     <string name="fstrim_summary">Fstrim is used to discard (or \"trim\") blocks which are not in use by the filesystem.\nThis can improve performance and reduce lags.</string>
     <string name="fstrim_interval_title">Fstrim interval</string>
