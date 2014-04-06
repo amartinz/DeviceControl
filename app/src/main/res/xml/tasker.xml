@@ -40,5 +40,9 @@
 
     </PreferenceCategory>
 
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
+        android:key="tasker"
+        android:title="@string/tasker" />
+
 </PreferenceScreen>
 
