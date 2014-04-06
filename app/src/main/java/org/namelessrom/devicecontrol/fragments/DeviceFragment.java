@@ -151,7 +151,12 @@ public class DeviceFragment extends AttachPreferenceFragment
                 if (!sKnockOn) {
                     category.removePreference(mKnockOn);
                 } else {
-                    mKnockOn.setChecked(Utils.readOneLine(sKnockOnFile).equals("1"));
+                    try {
+                        final String value = Utils.readOneLine(sKnockOnFile);
+                        if (value != null && !value.isEmpty()) {
+                            mKnockOn.setChecked("1".equals(value));
+                        }
+                    } catch (Exception ignored) { /* ignore it */ }
                     mKnockOn.setOnPreferenceChangeListener(this);
                 }
             }
