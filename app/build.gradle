@@ -11,10 +11,15 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("*Path*To*Keystore*")
-            storePassword "*Your*Store*Pass*"
-            keyAlias "*Your*Key*Alias*"
-            keyPassword "*Your*Key*Pass*"
+            def Properties localProps = new Properties()
+            localProps.load(new FileInputStream(file('../local.properties')))
+            def Properties keyProps = new Properties()
+            assert localProps['keystore.props.file'];
+            keyProps.load(new FileInputStream(file(localProps['keystore.props.file'])))
+            storeFile file(keyProps["store"])
+            keyAlias keyProps["alias"]
+            storePassword keyProps["storePass"]
+            keyPassword keyProps["pass"]
         }
     }
 
@@ -36,5 +41,4 @@ android {
 dependencies {
     compile 'com.android.support:support-v13:19.+'
     compile 'ch.acra:acra:4.+'
-    compile 'com.squareup:otto:1.+'
 }

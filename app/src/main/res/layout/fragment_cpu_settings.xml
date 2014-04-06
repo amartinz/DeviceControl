@@ -146,8 +146,7 @@ Copyright (C) 2012  James Roberts
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/header">
+            android:orientation="vertical">
 
             <TextView
                 android:text="@string/governor"
@@ -184,8 +183,7 @@ Copyright (C) 2012  James Roberts
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/header">
+            android:orientation="vertical">
 
             <TextView
                 android:text="@string/io"
