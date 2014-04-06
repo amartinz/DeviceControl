@@ -380,17 +380,21 @@ public class MainActivity extends Activity
     // In App Purchase
     //==============================================================================================
     private void setUpIab() {
-        mHelper = new IabHelper(this, Application.Iab.getKey());
-        if (Application.IS_LOG_DEBUG) {
-            mHelper.enableDebugLogging(true, "IABDEVICECONTROL");
-        }
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            @Override
-            public void onIabSetupFinished(IabResult result) {
-                logDebug("IAB: " + result);
-                PreferenceHelper.setBoolean(Application.Iab.getPref(), result.isSuccess());
+        if (Utils.isPackageInstalled(this, "com.android.vending")) {
+            mHelper = new IabHelper(this, Application.Iab.getKey());
+            if (Application.IS_LOG_DEBUG) {
+                mHelper.enableDebugLogging(true, "IABDEVICECONTROL");
             }
-        });
+            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+                @Override
+                public void onIabSetupFinished(IabResult result) {
+                    logDebug("IAB: " + result);
+                    PreferenceHelper.setBoolean(Application.Iab.getPref(), result.isSuccess());
+                }
+            });
+        } else {
+            PreferenceHelper.setBoolean(Application.Iab.getPref(), false);
+        }
     }
 
     @Subscribe
