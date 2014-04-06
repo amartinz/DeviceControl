@@ -11,8 +11,8 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int    DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME    = "DeviceControl";
+    private static final int    DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME    = "DeviceControl.db";
 
     private static final String KEY_ID       = "id";
     private static final String KEY_CATEGORY = "category";
@@ -20,7 +20,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_FILENAME = "filename";
     private static final String KEY_VALUE    = "value";
 
-    public static final String TABLE_BOOTUP = "BootUp";
+    public static final String TABLE_BOOTUP = "boot_up";
+    public static final String TABLE_TASKER = "tasker";
+
+    private static final String CREATE_BOOTUP_TABLE = "CREATE TABLE " + TABLE_BOOTUP + "("
+            + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_NAME + " TEXT,"
+            + KEY_FILENAME + " TEXT," + KEY_VALUE + " TEXT)";
+    private static final String DROP_BOOTUP_TABLE   = "DROP TABLE IF EXISTS " + TABLE_BOOTUP;
+
+    private static final String CREATE_TASKER_TABLE = "CREATE TABLE " + TABLE_TASKER + "("
+            + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_NAME + " TEXT,"
+            + KEY_FILENAME + " TEXT," + KEY_VALUE + " TEXT)";
+    private static final String DROP_TASKER_TABLE   = "DROP TABLE IF EXISTS " + TABLE_TASKER;
 
     private static DatabaseHandler sDatabaseHandler = null;
 
@@ -37,16 +48,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(final SQLiteDatabase db) {
-        final String CREATE_TABLE = "CREATE TABLE " + TABLE_BOOTUP + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_NAME + " TEXT,"
-                + KEY_FILENAME + " TEXT," + KEY_VALUE + " TEXT)";
-        db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_BOOTUP_TABLE);
+        db.execSQL(CREATE_TASKER_TABLE);
     }
 
     @Override
     public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOOTUP);
-        onCreate(db);
+        int currentVersion = oldVersion;
+
+        if (currentVersion < 1) {
+            db.execSQL(DROP_BOOTUP_TABLE);
+            db.execSQL(CREATE_BOOTUP_TABLE);
+            currentVersion = 1;
+        }
+
+        if (currentVersion < 2) { // new tasker table, renamed bootup table
+            db.execSQL(DROP_BOOTUP_TABLE);
+            db.execSQL(CREATE_BOOTUP_TABLE);
+            db.execSQL(DROP_TASKER_TABLE);
+            db.execSQL(CREATE_TASKER_TABLE);
+            currentVersion = 2;
+        }
     }
 
     //==============================================================================================
