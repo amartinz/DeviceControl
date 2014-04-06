@@ -19,6 +19,7 @@ package org.namelessrom.devicecontrol.utils;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
 
@@ -313,6 +314,19 @@ public class Utils implements DeviceConstants, FileConstants {
         final String cmd = String.format("busybox echo \"%s\" > %s;\n", value, path);
         logDebug("WriteCommand: " + cmd);
         return cmd;
+    }
+
+    public static boolean isPackageInstalled(final Context context, final String packageName) {
+        try {
+            final PackageManager pm = context.getPackageManager();
+            if (pm != null) {
+                pm.getPackageInfo(packageName, 0);
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
     }
 
 }
