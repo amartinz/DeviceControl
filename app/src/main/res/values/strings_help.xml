@@ -17,9 +17,6 @@
 -->
 
 <resources>
-    <!-- Dummy -->
-    <string name="dummy" translatable="false">Work In Progress</string>
-    <string name="dummy_help" translatable="false">The texts of the help you see here is still beeing written, sorry!</string>
     <!-- No Help -->
     <string name="sorry">Sorry!</string>
     <string name="no_help">No help for this section available! You are on your own ;)</string>
@@ -103,6 +100,4 @@
         Should be used only for debugging purposes.\n
         Logs extra information to the logcat.
     </string>
-    <!-- Licenses -->
-    <string name="copyright_help" translatable="false">Copyright (C) 2013-2014 Alexander \"Evisceration\" Martinz.</string>
 </resources>
