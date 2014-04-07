@@ -23,7 +23,7 @@ import java.util.List;
 public class TaskerAdapter extends BaseAdapter {
 
     private final Context          mContext;
-    private       DatabaseHandler  mDatabase;
+    private final DatabaseHandler  mDatabase;
     private       List<TaskerItem> mTaskerList;
 
     public TaskerAdapter(final Context context) {

@@ -223,7 +223,7 @@ public class Bus {
                 throw new IllegalArgumentException("Producer method for type " + type
                         + " found on type " + producer.target.getClass()
                         + ", but already registered by type " + previousProducer.target
-                        .getClass() + ".");
+                        .getClass() + '.');
             }
             Set<EventHandler> handlers = handlersByType.get(type);
             if (handlers != null && !handlers.isEmpty()) {

@@ -24,12 +24,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String TABLE_BOOTUP = "boot_up";
     public static final String TABLE_TASKER = "tasker";
 
-    private static final String CREATE_BOOTUP_TABLE = "CREATE TABLE " + TABLE_BOOTUP + "("
+    private static final String CREATE_BOOTUP_TABLE = "CREATE TABLE " + TABLE_BOOTUP + '('
             + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_NAME + " TEXT,"
             + KEY_FILENAME + " TEXT," + KEY_VALUE + " TEXT)";
     private static final String DROP_BOOTUP_TABLE   = "DROP TABLE IF EXISTS " + TABLE_BOOTUP;
 
-    private static final String CREATE_TASKER_TABLE = "CREATE TABLE " + TABLE_TASKER + "("
+    private static final String CREATE_TASKER_TABLE = "CREATE TABLE " + TABLE_TASKER + '('
             + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_NAME + " TEXT,"
             + KEY_FILENAME + " TEXT," + KEY_VALUE + " TEXT," + KEY_ENABLED + " TEXT)";
     private static final String DROP_TASKER_TABLE   = "DROP TABLE IF EXISTS " + TABLE_TASKER;
@@ -112,7 +112,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         final List<DataItem> itemList = new ArrayList<DataItem>();
         final String selectQuery = "SELECT * FROM " + tableName + (category.isEmpty()
                 ? ""
-                : " WHERE " + KEY_CATEGORY + " = '" + category + "'");
+                : " WHERE " + KEY_CATEGORY + " = '" + category + '\'');
 
         final SQLiteDatabase db = getWritableDatabase();
 
@@ -248,7 +248,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         final List<TaskerItem> itemList = new ArrayList<TaskerItem>();
         final String selectQuery = "SELECT * FROM " + TABLE_TASKER + (category.isEmpty()
                 ? ""
-                : " WHERE " + KEY_CATEGORY + " = '" + category + "'");
+                : " WHERE " + KEY_CATEGORY + " = '" + category + '\'');
 
         final SQLiteDatabase db = getWritableDatabase();
 

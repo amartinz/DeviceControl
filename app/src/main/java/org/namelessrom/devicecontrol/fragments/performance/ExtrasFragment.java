@@ -59,7 +59,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
     // Files
     //==============================================================================================
     public static final String  sMcPowerSchedulerFile = Utils.checkPaths(FILES_MC_POWER_SCHEDULER);
-    public static final boolean sMcPowerScheduler     = !sMcPowerSchedulerFile.equals("");
+    public static final boolean sMcPowerScheduler     = !sMcPowerSchedulerFile.isEmpty();
     //==============================================================================================
     // Fields
     //==============================================================================================

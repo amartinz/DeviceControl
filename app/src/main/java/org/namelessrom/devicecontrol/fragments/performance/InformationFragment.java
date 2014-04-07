@@ -267,13 +267,13 @@ public class InformationFragment extends AttachFragment implements DeviceConstan
         final long s = tSec % 60;
 
         final StringBuilder sDur = new StringBuilder();
-        sDur.append(h).append(":");
+        sDur.append(h).append(':');
         if (m < 10) {
-            sDur.append("0");
+            sDur.append('0');
         }
-        sDur.append(m).append(":");
+        sDur.append(m).append(':');
         if (s < 10) {
-            sDur.append("0");
+            sDur.append('0');
         }
         sDur.append(s);
 

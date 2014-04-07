@@ -40,7 +40,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/etc_prop_name"
+                android:text="@string/name"
                 android:id="@+id/text1"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -65,7 +65,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/etc_prop_val"
+                android:text="@string/value"
                 android:id="@+id/text2"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -90,7 +90,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/etc_prop_preset"
+                android:text="@string/presets"
                 android:id="@+id/text3"
                 android:textStyle="bold"
                 android:textSize="16sp" />

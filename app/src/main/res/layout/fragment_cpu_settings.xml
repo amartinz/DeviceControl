@@ -31,7 +31,7 @@ Copyright (C) 2012  James Roberts
         android:orientation="vertical">
 
         <TextView
-            android:text="@string/cpu_info_settings_header"
+            android:text="@string/settings"
             style="?android:attr/listSeparatorTextViewStyle"
             android:textColor="@android:color/white" />
 
@@ -46,7 +46,7 @@ Copyright (C) 2012  James Roberts
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/cpu_info_hide"
-                android:text="@string/cpu_info_hide"
+                android:text="@string/hide_status"
                 android:gravity="center_vertical|left"
                 android:layout_gravity="center_vertical" />
 
@@ -70,7 +70,7 @@ Copyright (C) 2012  James Roberts
             android:id="@+id/speed">
 
             <TextView
-                android:text="@string/cpu_info_list_header"
+                android:text="@string/core_status"
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:textColor="@android:color/white" />
 
@@ -93,7 +93,7 @@ Copyright (C) 2012  James Roberts
             android:gravity="center_horizontal">
 
             <TextView
-                android:text="@string/cpu_speed_header"
+                android:text="@string/core_limits"
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:textColor="@android:color/white" />
 
@@ -108,7 +108,7 @@ Copyright (C) 2012  James Roberts
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/current_max"
+                    android:text="@string/maximum_speed"
                     android:textSize="16sp" />
 
                 <Spinner
@@ -130,7 +130,7 @@ Copyright (C) 2012  James Roberts
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/current_min"
+                    android:text="@string/minimum_speed"
                     android:textSize="16sp" />
 
                 <Spinner

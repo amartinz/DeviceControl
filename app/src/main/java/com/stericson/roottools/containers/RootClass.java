@@ -133,10 +133,10 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                 boolean onWindows = (System.getProperty("os.name").toLowerCase().contains("win"));
                 if (onWindows) {
                     StringBuilder sb = new StringBuilder(
-                            " " + rc1 + " " + rc2 + " " + rc3 + " " + rc4 + " " + rc5
+                            ' ' + rc1 + ' ' + rc2 + ' ' + rc3 + ' ' + rc4 + ' ' + rc5
                     );
                     for (File file : classFiles) {
-                        sb.append(" ").append(file.getPath());
+                        sb.append(' ').append(file.getPath());
                     }
                     cmd = new String[]{
                             "cmd", "/C",

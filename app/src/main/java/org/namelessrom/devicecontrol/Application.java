@@ -176,7 +176,7 @@ public class Application extends android.app.Application implements DeviceConsta
             sb.append(j);
             key = key + sb.toString() + ">1>";
             String tmp = key.replace("<<", "");
-            key = tmp.replace(">" + String.valueOf(1) + ">", "");
+            key = tmp.replace('>' + String.valueOf(1) + '>', "");
 
             return key;
         }

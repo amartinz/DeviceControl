@@ -57,7 +57,7 @@ public class DeviceFragment extends AttachPreferenceFragment
     // Input
     //==============================================================================================
     public static final String  sKnockOnFile = Utils.checkPaths(FILES_KNOCKON);
-    public static final boolean sKnockOn     = !sKnockOnFile.equals("");
+    public static final boolean sKnockOn     = !sKnockOnFile.isEmpty();
 
     private CustomCheckBoxPreference mForceNavBar;
     private CustomCheckBoxPreference mGloveMode;
@@ -81,10 +81,10 @@ public class DeviceFragment extends AttachPreferenceFragment
     //==============================================================================================
     private CustomCheckBoxPreference mLcdPowerReduce;
     public static final String  sLcdPowerReduceFile = Utils.checkPaths(FILES_LCD_POWER_REDUCE);
-    public static final boolean sLcdPowerReduce     = !sLcdPowerReduceFile.equals("");
+    public static final boolean sLcdPowerReduce     = !sLcdPowerReduceFile.isEmpty();
     //----------------------------------------------------------------------------------------------
     public static final String  sHasPanelFile       = Utils.checkPaths(FILES_PANEL_COLOR_TEMP);
-    public static final boolean sHasPanel           = !sHasPanelFile.equals("");
+    public static final boolean sHasPanel           = !sHasPanelFile.isEmpty();
     private CustomListPreference mPanelColor;
 
     //==============================================================================================

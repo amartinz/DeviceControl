@@ -705,11 +705,11 @@ public class IabHelper {
         try {
             String token = itemInfo.getToken();
             String sku = itemInfo.getSku();
-            if (token == null || token.equals("")) {
+            if (token == null || token.isEmpty()) {
                 logError("Can't consume " + sku + ". No token.");
                 throw new IabException(IABHELPER_MISSING_TOKEN,
                         "PurchaseInfo is missing token for sku: "
-                                + sku + " " + itemInfo
+                                + sku + ' ' + itemInfo
                 );
             }
 
@@ -866,7 +866,7 @@ public class IabHelper {
         if (mAsyncInProgress) {
             throw new IllegalStateException("Can't start async operation (" +
                     operation + ") because another async operation(" + mAsyncOperation + ") is in" +
-                    " " +
+                    ' ' +
                     "progress.");
         }
         mAsyncOperation = operation;

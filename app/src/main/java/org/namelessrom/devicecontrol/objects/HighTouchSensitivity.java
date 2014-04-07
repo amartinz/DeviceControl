@@ -83,7 +83,7 @@ public class HighTouchSensitivity {
             status = true;
             logDebug("HTS: Successfully sent \"" + command + "\" to kernel");
         } else {
-            logDebug("HTS: Sent \"" + command + "\" to kernel, but got back \"" + result + "\"");
+            logDebug("HTS: Sent \"" + command + "\" to kernel, but got back \"" + result + '"');
         }
         return status;
     }

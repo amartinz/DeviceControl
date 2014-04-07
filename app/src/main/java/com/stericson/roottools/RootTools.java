@@ -796,7 +796,7 @@ public final class RootTools {
      * @param e    The exception that was thrown (Needed for errors)
      */
     public static void log(String TAG, String msg, int type, Exception e) {
-        if (msg != null && !msg.equals("")) {
+        if (msg != null && !msg.isEmpty()) {
             if (debugMode) {
                 if (TAG == null) {
                     TAG = Constants.TAG;

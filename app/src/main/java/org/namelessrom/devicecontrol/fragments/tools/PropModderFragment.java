@@ -158,11 +158,10 @@ public class PropModderFragment extends PreferenceFragment implements
                 lcdET.setFilters(new InputFilter[]{lengthFilter});
                 lcdET.setSingleLine(true);
             }
-            mLcdPref.setSummary(String.format(getString(R.string.pref_lcd_alt_summary), lcd));
+            mLcdPref.setSummary(String.format(getString(R.string.lcd_density_alt_summary), lcd));
             mLcdPref.setText(lcd);
+            mLcdPref.setOnPreferenceChangeListener(this);
         }
-        //logDebug( String.format("ModPrefHoler = '%s' found build number = '%s'",  mod));
-        mLcdPref.setOnPreferenceChangeListener(this);
 
         m3gSpeedPref = (CheckBoxPreference) prefSet.findPreference(THREE_G_PREF);
 
@@ -359,7 +358,7 @@ public class PropModderFragment extends PreferenceFragment implements
         if (!wifi.equals(DISABLE)) {
             mWifiScanPref.setValue(wifi);
             mWifiScanPref.setSummary(
-                    String.format(getString(R.string.pref_wifi_scan_alt_summary), wifi));
+                    String.format(getString(R.string.wifi_scan_alt_summary), wifi));
         } else {
             mWifiScanPref.setValue(WIFI_SCAN_DEFAULT);
         }
@@ -367,7 +366,7 @@ public class PropModderFragment extends PreferenceFragment implements
         if (!maxE.equals(DISABLE)) {
             mMaxEventsPref.setValue(maxE);
             mMaxEventsPref.setSummary(
-                    String.format(getString(R.string.pref_max_events_alt_summary), maxE));
+                    String.format(getString(R.string.max_events_alt_summary), maxE));
         } else {
             mMaxEventsPref.setValue(MAX_EVENTS_DEFAULT);
         }
@@ -375,7 +374,7 @@ public class PropModderFragment extends PreferenceFragment implements
         if (!ring.equals(DISABLE)) {
             mRingDelayPref.setValue(ring);
             mRingDelayPref.setSummary(
-                    String.format(getString(R.string.pref_ring_delay_alt_summary), ring));
+                    String.format(getString(R.string.ring_delay_alt_summary), ring));
         } else {
             mRingDelayPref.setValue(RING_DELAY_DEFAULT);
         }
@@ -383,7 +382,7 @@ public class PropModderFragment extends PreferenceFragment implements
         if (!vm.equals(DISABLE)) {
             mVmHeapsizePref.setValue(vm);
             mVmHeapsizePref.setSummary(
-                    String.format(getString(R.string.pref_vm_heapsize_alt_summary), vm));
+                    String.format(getString(R.string.vm_heapsize_alt_summary), vm));
         } else {
             mVmHeapsizePref.setValue(VM_HEAPSIZE_DEFAULT);
         }
@@ -391,7 +390,7 @@ public class PropModderFragment extends PreferenceFragment implements
         if (!fast.equals(DISABLE)) {
             mFastUpPref.setValue(fast);
             mFastUpPref
-                    .setSummary(String.format(getString(R.string.pref_fast_up_alt_summary), fast));
+                    .setSummary(String.format(getString(R.string.fast_up_alt_summary), fast));
         } else {
             mFastUpPref.setValue(FAST_UP_DEFAULT);
         }
@@ -399,14 +398,14 @@ public class PropModderFragment extends PreferenceFragment implements
         if (!prox.equals(DISABLE)) {
             mProxDelayPref.setValue(prox);
             mProxDelayPref.setSummary(
-                    String.format(getString(R.string.pref_prox_delay_alt_summary), prox));
+                    String.format(getString(R.string.prox_delay_alt_summary), prox));
         } else {
             mProxDelayPref.setValue(PROX_DELAY_DEFAULT);
         }
         final String sleep = Utils.findBuildPropValueOf(SLEEP_PROP);
         if (!sleep.equals(DISABLE)) {
             mSleepPref.setValue(sleep);
-            mSleepPref.setSummary(String.format(getString(R.string.pref_sleep_alt_summary), sleep));
+            mSleepPref.setSummary(String.format(getString(R.string.sleep_alt_summary), sleep));
         } else {
             mSleepPref.setValue(SLEEP_DEFAULT);
         }
@@ -424,7 +423,7 @@ public class PropModderFragment extends PreferenceFragment implements
         }
 
         final String lcd = Utils.findBuildPropValueOf(MOD_LCD_PROP);
-        mLcdPref.setSummary(String.format(getString(R.string.pref_lcd_alt_summary), lcd));
+        mLcdPref.setSummary(String.format(getString(R.string.lcd_density_alt_summary), lcd));
 
         final String g0 = Utils.findBuildPropValueOf(THREE_G_PROP_0);
         final String g3 = Utils.findBuildPropValueOf(THREE_G_PROP_3);

@@ -125,7 +125,6 @@ public class TaskListFragment extends ListFragment {
     private RelativeLayout mValueContainer;
 
     private Button mAddTask;
-    private Button mCancelTask;
 
     private View getDialogView(final Activity activity, final TaskerItem item) {
         final LayoutInflater inflater = LayoutInflater.from(activity);
@@ -168,7 +167,7 @@ public class TaskListFragment extends ListFragment {
                 }
             }
         });
-        mCancelTask = (Button) v.findViewById(R.id.cancel_task);
+        final Button mCancelTask = (Button) v.findViewById(R.id.cancel_task);
         mCancelTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

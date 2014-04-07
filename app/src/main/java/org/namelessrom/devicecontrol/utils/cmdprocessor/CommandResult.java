@@ -72,7 +72,7 @@ public class CommandResult implements Parcelable {
     @SuppressWarnings("UnnecessaryExplicitNumericCast")
     private void checkForErrors() {
         if (mExitValue != 0
-                || !"".equals(mStderr.trim())) {
+                || mStderr.trim() != null && !mStderr.trim().isEmpty()) {
             // don't log the commands that failed
             // because the cpu was offline
             boolean skipOfflineCpu =
@@ -136,8 +136,8 @@ public class CommandResult implements Parcelable {
         return "CommandResult{" +
                 ", mStartTime=" + mStartTime +
                 ", mExitValue=" + mExitValue +
-                ", stdout='" + mStdout + "'" +
-                ", stderr='" + mStderr + "'" +
+                ", stdout='" + mStdout + '\'' +
+                ", stderr='" + mStderr + '\'' +
                 ", mEndTime=" + mEndTime +
                 '}';
     }

@@ -330,7 +330,7 @@ public class VoltageFragment extends AttachPreferenceFragment implements Perform
         final int length = vals.length;
         for (int j = 0; j < length; j++) {
             if (j != length - 1) {
-                newTable += vals[j] + " ";
+                newTable += vals[j] + ' ';
             } else {
                 newTable += vals[j];
             }

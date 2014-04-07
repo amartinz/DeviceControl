@@ -105,7 +105,7 @@ class EventHandler {
 
     @Override
     public String toString() {
-        return "[EventHandler " + method + "]";
+        return "[EventHandler " + method + ']';
     }
 
     @Override

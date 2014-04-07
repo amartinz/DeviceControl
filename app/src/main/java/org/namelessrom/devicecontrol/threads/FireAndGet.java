@@ -55,7 +55,7 @@ public class FireAndGet extends Thread implements DeviceConstants {
                 public void commandOutput(int id, String line) {
                     sb.append(line);
                     if (mNeedsNewline) {
-                        sb.append("\n");
+                        sb.append('\n');
                     }
                 }
 

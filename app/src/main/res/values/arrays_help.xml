@@ -51,8 +51,8 @@
     </string-array>
     <!-- CPU -->
     <string-array name="cpu_titles" translatable="false">
-        <item>@string/current_max</item>
-        <item>@string/current_min</item>
+        <item>@string/maximum_speed</item>
+        <item>@string/minimum_speed</item>
         <item>@string/governor</item>
         <item>@string/io</item>
     </string-array>

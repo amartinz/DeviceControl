@@ -118,9 +118,9 @@ public class FreezerFragment extends AttachFragment
         packList = (ListView) v.findViewById(R.id.applist);
         packList.setOnItemClickListener(this);
         if (mFreeze) {
-            titlu = getString(R.string.pt_freeze);
+            titlu = getString(R.string.freeze);
         } else {
-            titlu = getString(R.string.pt_unfreeze);
+            titlu = getString(R.string.defrost);
         }
         getFreezer(mFreeze, sys);
 
@@ -134,7 +134,7 @@ public class FreezerFragment extends AttachFragment
         if (mFreeze) {
             makedialog(titlu, getString(R.string.freeze_msg, pn));
         } else {
-            makedialog(titlu, getString(R.string.unfreeze_msg, pn));
+            makedialog(titlu, getString(R.string.defrost_msg, pn));
         }
 
     }
