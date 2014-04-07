@@ -35,6 +35,7 @@ android {
     lintOptions {
         disable 'HardcodedDebugMode'
         disable 'ValidFragment'
+        disable 'MissingTranslation'
     }
 }
 
