@@ -45,7 +45,7 @@
 
     <PreferenceCategory
         android:key="input_others"
-        android:title="@string/general_others">
+        android:title="@string/others">
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="input_glove_mode"

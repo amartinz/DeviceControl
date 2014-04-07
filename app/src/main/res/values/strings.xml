@@ -9,7 +9,7 @@
     <string name="action_press_again">Press once again to exit!</string>
     <string name="defaults_button">Reset to default</string>
     <string name="general">General</string>
-    <string name="general_others">Others</string>
+    <string name="others">Others</string>
     <string name="help">Help</string>
     <string name="dialog_warning">Warning!</string>
     <string name="dialog_warning_apply">Are you sure that you want to apply your settings?</string>
@@ -42,7 +42,6 @@
     <string name="force_highend_gfx_summary">Enables high-end visual effects such as transparent status/navigation bar (needs to be supported by your rom, requires reboot)</string>
     <!-- Hotplug -->
     <string name="hotplugging">Hotplugging</string>
-    <string name="mpdecision">MPDecision</string>
     <string name="mpdecision_summary_on">MPDecision is running.</string>
     <string name="mpdecision_summary_off">MPDecision is turned off.</string>
     <!-- Voltage -->
@@ -152,15 +151,7 @@
     <string name="package_frozen">Package is frozen.</string>
     <string name="package_defrost">Package is defrosted.</string>
     <!-- VM Settings -->
-    <string name="vm_settings">DALVIK SETTINGS</string>
-    <string name="dirty_ratio_title">Dirty ratio</string>
-    <string name="dirty_background_title">Dirty background ratio</string>
-    <string name="dirty_expire_title">Dirty expire centisecs</string>
-    <string name="dirty_writeback_title">Dirty writeback centisecs</string>
-    <string name="min_free_title">Minfree kbytes</string>
-    <string name="overcommit_title">Overcommit ratio</string>
-    <string name="swappiness_title">Swappiness</string>
-    <string name="vfs_title">VFS cache pressure</string>
+    <string name="vm_settings">Dalvik Settings</string>
     <string name="full_editor">Press to load full editor</string>
     <!-- Performance Settings | Warning dialog -->
     <string name="performance_settings_warning_title">Proceed with Caution</string>
@@ -183,12 +174,6 @@
     <string name="vm_heapsize_title">Dalvik cache heapsize</string>
     <string name="vm_heapsize_summary">This controls the size of the cache the Dalvik VM has access to</string>
     <string name="vm_heapsize_alt_summary">Dalvik VM cache size: %s</string>
-    <string name="showbuild_title">Show The Build.Prop</string>
-    <string name="buildprop_summary">Find out whats in there</string>
-    <string name="showbuild_dialog">Displaying /system/Build.Prop</string>
-    <string name="showbuild_loading">Loading build.prop\u2026</string>
-    <string name="showbuild_error">Error loading build.prop\u2026</string>
-    <string name="showbuild_label">We should look because knowing is half the battle</string>
     <string name="fast_up_title">HSUPA upload speed hack</string>
     <string name="fast_up_summary">*WARNING* if you change this value it will add the needed values to your build.prop if they are not already present</string>
     <string name="fast_up_alt_summary">Fast up found active: %s</string>

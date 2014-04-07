@@ -12,6 +12,16 @@
     <string name="non_TODO_string" translatable="false">TODO: Replace with real string.</string>
     <string name="unknown" translatable="false">---</string>
     <string name="vm" translatable="false">VM</string>
+    <string name="mpdecision">MPDecision</string>
+    <!-- Dalvik -->
+    <string name="dirty_ratio_title">Dirty ratio</string>
+    <string name="dirty_background_title">Dirty background ratio</string>
+    <string name="dirty_expire_title">Dirty expire centisecs</string>
+    <string name="dirty_writeback_title">Dirty writeback centisecs</string>
+    <string name="min_free_title">Minfree kbytes</string>
+    <string name="overcommit_title">Overcommit ratio</string>
+    <string name="swappiness_title">Swappiness</string>
+    <string name="vfs_title">VFS cache pressure</string>
     <!-- Arrays -->
     <string-array name="donation_items" translatable="false">
         <item>€ 0,99</item>
