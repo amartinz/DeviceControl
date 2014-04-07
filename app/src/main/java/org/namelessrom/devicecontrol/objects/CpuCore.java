@@ -18,10 +18,10 @@ public class CpuCore {
         mCoreMax = ((coreMax != null && !coreMax.isEmpty()) ? coreMax : "0");
         mCoreCurrent = ((coreCurrent != null && !coreCurrent.isEmpty()) ? coreCurrent : "0");
         mCoreGov = ((coreGov != null && !coreGov.isEmpty()) ? coreGov : "0");
-        logDebug("mCore: [" + mCore + "]");
-        logDebug("mCoreMax: [" + mCoreMax + "]");
-        logDebug("mCoreCurrent: [" + mCoreCurrent + "]");
-        logDebug("mCoreGov: [" + mCoreGov + "]");
+        logDebug("mCore: [" + mCore + ']');
+        logDebug("mCoreMax: [" + mCoreMax + ']');
+        logDebug("mCoreCurrent: [" + mCoreCurrent + ']');
+        logDebug("mCoreGov: [" + mCoreGov + ']');
     }
 
 }

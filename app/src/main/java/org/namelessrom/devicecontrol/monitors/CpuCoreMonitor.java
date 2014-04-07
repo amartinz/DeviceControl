@@ -149,14 +149,14 @@ public class CpuCoreMonitor implements DeviceConstants {
                         try {
                             tmp = new CpuCore(
                                     mActivity.getString(
-                                            R.string.core) + " " + String.valueOf(i) + ":",
+                                            R.string.core) + ' ' + String.valueOf(i) + ':',
                                     parts[i + mult + 0],
                                     parts[i + mult + 1],
                                     parts[i + mult + 2]
                             );
                         } catch (IndexOutOfBoundsException iob) {
                             tmp = new CpuCore(mActivity.getString(
-                                    R.string.core) + " " + String.valueOf(i) + ":",
+                                    R.string.core) + ' ' + String.valueOf(i) + ':',
                                     "0",
                                     "0",
                                     "0"

@@ -223,7 +223,7 @@ public class VibratorTuningPreference extends DialogPreference
     }
 
     public static boolean isSupported() {
-        return (!FILE_VIBRATOR.equals(""));
+        return (!FILE_VIBRATOR.isEmpty());
     }
 
 }

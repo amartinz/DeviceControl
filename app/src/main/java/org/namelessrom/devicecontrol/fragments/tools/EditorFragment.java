@@ -157,8 +157,8 @@ public class EditorFragment extends AttachFragment
                         , final int i, final long l) {
                     final Prop p = adapter.getItem(i);
                     if (!p.getName().contains("fingerprint")) {
-                        makeDialog(getString(R.string.etc_del_prop_title)
-                                , getString(R.string.etc_del_prop_msg, p.getName())
+                        makeDialog(getString(R.string.delete_property)
+                                , getString(R.string.delete_property_message, p.getName())
                                 , (byte) 1, p);
                     }
                     return true;
@@ -183,7 +183,8 @@ public class EditorFragment extends AttachFragment
             public void onTextChanged(final CharSequence s, final int start,
                     final int before, final int count) {
                 if (adapter != null) {
-                    adapter.getFilter().filter(filterText.getText().toString());
+                    final Editable filter = filterText.getText();
+                    adapter.getFilter().filter(filter != null ? filter.toString() : "");
                 }
             }
         });
@@ -202,7 +203,7 @@ public class EditorFragment extends AttachFragment
                 @Override
                 public void onClick(View view) {
                     makeDialog(getString(R.string.restore)
-                            , getString(R.string.etc_prop_restore_msg), (byte) 0, null);
+                            , getString(R.string.backup_message_restore), (byte) 0, null);
                 }
             });
             restoreButton.setVisibility(View.VISIBLE);
@@ -227,14 +228,14 @@ public class EditorFragment extends AttachFragment
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     new FireAndForget("busybox mount -o remount,rw /system"
-                                            + ";" + "busybox cp " + getActivity()
+                                            + ';' + "busybox cp " + getActivity()
                                             .getFilesDir()
-                                            .getPath() + DC_BACKUP_DIR + "/" + mod + ".conf"
-                                            + " " + syspath + mod + ".conf;"
+                                            .getPath() + DC_BACKUP_DIR + '/' + mod + ".conf"
+                                            + ' ' + syspath + mod + ".conf;"
                                             + "busybox chmod 644 " + syspath + mod + ".conf"
-                                            + ";" + "busybox mount -o remount,ro /system"
-                                            + ";" + "busybox sysctl -p " + syspath + mod
-                                            + ".conf" + ";", true).run();
+                                            + ';' + "busybox mount -o remount,ro /system"
+                                            + ';' + "busybox sysctl -p " + syspath + mod
+                                            + ".conf" + ';', true).run();
                                     dialogInterface.dismiss();
                                     Toast.makeText(mActivity
                                             , getString(R.string.toast_settings_applied)
@@ -283,11 +284,11 @@ public class EditorFragment extends AttachFragment
             sb.append("busybox mkdir -p ").append(dn).append(";\n");
 
             if (new File(syspath + mod + ".conf").exists()) {
-                sb.append("busybox cp " + syspath).append(mod).append(".conf").append(" ")
-                        .append(dn).append("/").append(mod).append(".conf;\n");
+                sb.append("busybox cp " + syspath).append(mod).append(".conf").append(' ')
+                        .append(dn).append('/').append(mod).append(".conf;\n");
             } else {
                 sb.append("busybox echo \"# created by DeviceControl\n\" > ")
-                        .append(dn).append("/").append(mod).append(".conf;\n");
+                        .append(dn).append('/').append(mod).append(".conf;\n");
             }
 
             switch (mEditorType) {
@@ -321,16 +322,16 @@ public class EditorFragment extends AttachFragment
             final String dn = getActivity().getFilesDir().getPath() + DC_BACKUP_DIR;
 
             mBuildName = "build";
-            mBuildName = (Build.DISPLAY.equals("") || Build.DISPLAY == null)
+            mBuildName = (Build.DISPLAY.isEmpty() || Build.DISPLAY == null)
                     ? mBuildName + ".prop"
-                    : mBuildName + "-" + Build.DISPLAY.replace(" ", "_") + ".prop";
-            if (!new File(dn + "/" + mBuildName).exists()) {
-                Utils.runRootCommand("busybox cp /system/build.prop " + dn + "/" + mBuildName);
+                    : mBuildName + '-' + Build.DISPLAY.replace(" ", "_") + ".prop";
+            if (!new File(dn + '/' + mBuildName).exists()) {
+                Utils.runRootCommand("busybox cp /system/build.prop " + dn + '/' + mBuildName);
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(mActivity,
-                                getString(R.string.etc_prop_backup, dn + "/" + mBuildName),
+                                getString(R.string.backup_message, dn + '/' + mBuildName),
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -409,7 +410,7 @@ public class EditorFragment extends AttachFragment
                 if (pp.length >= 2) {
                     String r = "";
                     for (int i = 2; i < pp.length; i++) {
-                        r = r + "=" + pp[i];
+                        r = r + '=' + pp[i];
                     }
                     props.add(new Prop(pp[0].trim(), pp[1].trim() + r));
                 } else {
@@ -447,9 +448,9 @@ public class EditorFragment extends AttachFragment
         if (p != null) {
             tv.setText(p.getVal());
             tn.setText(p.getName());
-            title = getString(R.string.etc_edit_prop_title);
+            title = getString(R.string.edit_property);
         } else {
-            title = getString(R.string.etc_add_prop_title);
+            title = getString(R.string.add_property);
         }
 
         new AlertDialog.Builder(mActivity)
@@ -461,7 +462,7 @@ public class EditorFragment extends AttachFragment
                             public void onClick(final DialogInterface dialog, final int which) { }
                         }
                 )
-                .setPositiveButton(getString(R.string.etc_save)
+                .setPositiveButton(getString(R.string.save)
                         , new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int which) {
@@ -470,8 +471,8 @@ public class EditorFragment extends AttachFragment
                                 p.setVal(tv.getText().toString().trim());
                                 new FireAndForget(
                                         mActivity.getFilesDir().getPath() + "/utils -setprop \""
-                                                + p.getName() + "=" + p.getVal() + "\" " + dn
-                                                + "/" + mod + ".conf", true
+                                                + p.getName() + '=' + p.getVal() + "\" " + dn
+                                                + '/' + mod + ".conf", true
                                 ).run();
                             }
                         } else {
@@ -482,8 +483,8 @@ public class EditorFragment extends AttachFragment
                                         tv.getText().toString().trim()));
                                 new FireAndForget(
                                         mActivity.getFilesDir().getPath() + "/utils -setprop \""
-                                                + tn.getText().toString().trim() + "="
-                                                + tv.getText().toString().trim() + "\" " + dn + "/"
+                                                + tn.getText().toString().trim() + '='
+                                                + tv.getText().toString().trim() + "\" " + dn + '/'
                                                 + mod + ".conf", true
                                 ).run();
                             }
@@ -539,9 +540,9 @@ public class EditorFragment extends AttachFragment
             tn.setText(p.getName());
             tn.setVisibility(EditText.GONE);
             tt.setText(p.getName());
-            title = getString(R.string.etc_edit_prop_title);
+            title = getString(R.string.edit_property);
         } else {
-            title = getString(R.string.etc_add_prop_title);
+            title = getString(R.string.add_property);
             vAdapter.add("");
             vAdapter.add("0");
             vAdapter.add("1");
@@ -549,7 +550,7 @@ public class EditorFragment extends AttachFragment
             vAdapter.add("false");
             sp.setAdapter(vAdapter);
             lpresets.setVisibility(LinearLayout.VISIBLE);
-            tt.setText(getString(R.string.etc_prop_name));
+            tt.setText(getString(R.string.name));
             tn.setVisibility(EditText.VISIBLE);
         }
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -573,7 +574,7 @@ public class EditorFragment extends AttachFragment
                             }
                         }
                 )
-                .setPositiveButton(getString(R.string.etc_save)
+                .setPositiveButton(getString(R.string.save)
                         , new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -582,7 +583,7 @@ public class EditorFragment extends AttachFragment
                                 p.setVal(tv.getText().toString().trim());
                                 new FireAndForget(
                                         mActivity.getFilesDir().getPath() + "/utils -setprop \""
-                                                + p.getName() + "=" + p.getVal() + "\"", true, true
+                                                + p.getName() + '=' + p.getVal() + '"', true, true
                                 )
                                         .run();
                             }
@@ -594,8 +595,8 @@ public class EditorFragment extends AttachFragment
                                         tv.getText().toString().trim()));
                                 new FireAndForget(
                                         mActivity.getFilesDir().getPath() + "/utils -setprop \""
-                                                + tn.getText().toString().trim() + "="
-                                                + tv.getText().toString().trim() + "\"", true, true
+                                                + tn.getText().toString().trim() + '='
+                                                + tv.getText().toString().trim() + '"', true, true
                                 )
                                         .run();
                             }
@@ -654,14 +655,14 @@ public class EditorFragment extends AttachFragment
             final String dn = getActivity().getFilesDir().getPath() + DC_BACKUP_DIR;
             switch (op) {
                 case 0:
-                    if (new File(dn + "/" + mBuildName).exists()) {
-                        new FireAndForget("busybox cp " + dn + "/"
+                    if (new File(dn + '/' + mBuildName).exists()) {
+                        new FireAndForget("busybox cp " + dn + '/'
                                 + mBuildName + " /system/build.prop;\n" + "busybox chmod 644 "
                                 + "/system/build.prop;\n", true, true).run();
                         new GetBuildPropOperation().execute();
                     } else {
-                        Toast.makeText(mActivity
-                                , getString(R.string.etc_prop_no_backup), Toast.LENGTH_LONG).show();
+                        Toast.makeText(mActivity, getString(R.string.backup_message_not_found),
+                                Toast.LENGTH_LONG).show();
                     }
                     break;
                 case 1:

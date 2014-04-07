@@ -87,7 +87,7 @@ public class FstrimService extends IntentService implements DeviceConstants, Fil
                     public void commandOutput(int id, String line) {
                         logDebug("Result: " + line);
                         try {
-                            fos.write((line + "\n").getBytes());
+                            fos.write((line + '\n').getBytes());
                         } catch (Exception ignored) { }
                     }
 

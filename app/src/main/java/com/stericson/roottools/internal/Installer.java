@@ -160,7 +160,7 @@ class Installer {
 
             try {
                 CommandCapture command = new CommandCapture(0, false,
-                        "chmod " + mode + " " + filesPath + File.separator + destName);
+                        "chmod " + mode + ' ' + filesPath + File.separator + destName);
                 Shell.startRootShell().add(command);
                 commandWait(command);
 

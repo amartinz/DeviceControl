@@ -21,8 +21,8 @@
 
     <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
         android:key="pref_force_highend_gfx"
-        android:title="@string/pref_force_highend_gfx_title"
-        android:summary="@string/pref_force_highend_gfx_summary"
+        android:title="@string/force_highend_gfx"
+        android:summary="@string/force_highend_gfx_summary"
         android:defaultValue="false" />
 
     <PreferenceCategory

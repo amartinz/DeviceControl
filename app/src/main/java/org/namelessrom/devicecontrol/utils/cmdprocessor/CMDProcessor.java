@@ -97,18 +97,22 @@ public final class CMDProcessor {
         private String getStreamLines(final InputStream is) {
             String out = null;
             StringBuffer buffer = null;
-            final DataInputStream dis = new DataInputStream(is);
+            DataInputStream dis = new DataInputStream(is);
 
             try {
                 if (dis.available() > 0) {
                     buffer = new StringBuffer(dis.readLine());
                     while (dis.available() > 0) {
-                        buffer.append("\n").append(dis.readLine());
+                        buffer.append('\n').append(dis.readLine());
                     }
                 }
                 dis.close();
             } catch (final Exception ex) {
                 Log.e(TAG, ex.getMessage());
+            } finally {
+                try {
+                    dis.close();
+                } catch (Exception ignored) { }
             }
             if (buffer != null) {
                 out = buffer.toString();
@@ -122,7 +126,7 @@ public final class CMDProcessor {
                 process = Runtime.getRuntime().exec(SHELL);
                 final DataOutputStream toProcess = new DataOutputStream(
                         process.getOutputStream());
-                toProcess.writeBytes("exec " + s + "\n");
+                toProcess.writeBytes("exec " + s + '\n');
                 toProcess.flush();
             } catch (final Exception e) {
                 Log.e(TAG,

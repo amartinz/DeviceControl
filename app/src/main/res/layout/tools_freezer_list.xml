@@ -37,7 +37,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/etc_no_packages"
+            android:text="@string/no_packages"
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
             android:textSize="16sp" />
@@ -55,8 +55,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tools_freezer_toggle"
-            android:textOn="@string/mt_system_packs"
-            android:textOff="@string/mt_user_packs"
+            android:textOn="@string/system_packs"
+            android:textOff="@string/user_packs"
             android:layout_centerInParent="true" />
 
     </RelativeLayout>

@@ -109,7 +109,7 @@ final class AnnotatedHandlerFinder {
                 if (eventType.equals(Void.TYPE)) {
                     throw new IllegalArgumentException(
                             "Method " + method + " has @Produce annotation but has no return type" +
-                                    "."
+                                    '.'
                     );
                 }
 

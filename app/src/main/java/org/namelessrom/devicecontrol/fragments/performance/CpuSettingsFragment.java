@@ -143,7 +143,7 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
         });
 
         ((TextView) view.findViewById(R.id.ui_device_title))
-                .setText(R.string.cpu_info_settings_interval);
+                .setText(R.string.refresh_interval);
         mInterval = intervalBar.getProgress() + 1000;
         mIntervalText.setText((mInterval == 5000
                 ? getString(R.string.off)
@@ -170,7 +170,7 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
         CpuCore tmpCore;
         final int mCpuNum = CpuUtils.getNumOfCpus();
         for (int i = 0; i < mCpuNum; i++) {
-            tmpCore = new CpuCore(getString(R.string.core) + " " + String.valueOf(i) + ": ",
+            tmpCore = new CpuCore(getString(R.string.core) + ' ' + String.valueOf(i) + ": ",
                     "0",
                     "0",
                     "0");
@@ -385,7 +385,7 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
                 ? getString(R.string.core_offline)
                 : CpuUtils.toMHz(cpuCore.mCoreCurrent)
                         + " / " + CpuUtils.toMHz(cpuCore.mCoreMax)
-                        + " [" + cpuCore.mCoreGov + "]");
+                        + " [" + cpuCore.mCoreGov + ']');
         cpuBar.setMax(Integer.parseInt(cpuCore.mCoreMax));
         cpuBar.setProgress(Integer.parseInt(cpuCore.mCoreCurrent));
 

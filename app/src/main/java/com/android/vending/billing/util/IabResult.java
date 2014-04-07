@@ -32,7 +32,7 @@ public class IabResult {
         if (message == null || message.trim().length() == 0) {
             mMessage = IabHelper.getResponseDesc(response);
         } else {
-            mMessage = message + " (response: " + IabHelper.getResponseDesc(response) + ")";
+            mMessage = message + " (response: " + IabHelper.getResponseDesc(response) + ')';
         }
     }
 

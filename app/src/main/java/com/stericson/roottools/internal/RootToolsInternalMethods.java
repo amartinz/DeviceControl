@@ -209,7 +209,7 @@ public final class RootToolsInternalMethods {
                 RootTools.log("cp command is available!");
 
                 if (preserveFileAttributes) {
-                    command = new CommandCapture(0, false, "cp -fp " + source + " " + destination);
+                    command = new CommandCapture(0, false, "cp -fp " + source + ' ' + destination);
                     Shell.startRootShell().add(command);
                     commandWait(command);
 
@@ -217,7 +217,7 @@ public final class RootToolsInternalMethods {
                     result = command.getExitCode() == 0;
 
                 } else {
-                    command = new CommandCapture(0, false, "cp -f " + source + " " + destination);
+                    command = new CommandCapture(0, false, "cp -f " + source + ' ' + destination);
                     Shell.startRootShell().add(command);
                     commandWait(command);
 
@@ -231,13 +231,13 @@ public final class RootToolsInternalMethods {
 
                     if (preserveFileAttributes) {
                         command = new CommandCapture(0, false,
-                                "busybox cp -fp " + source + " " + destination);
+                                "busybox cp -fp " + source + ' ' + destination);
                         Shell.startRootShell().add(command);
                         commandWait(command);
 
                     } else {
                         command = new CommandCapture(0, false,
-                                "busybox cp -f " + source + " " + destination);
+                                "busybox cp -f " + source + ' ' + destination);
                         Shell.startRootShell().add(command);
                         commandWait(command);
 
@@ -263,7 +263,7 @@ public final class RootToolsInternalMethods {
                         if (preserveFileAttributes) {
                             // set premissions of source to destination
                             command = new CommandCapture(0, false,
-                                    "chmod " + filePermission + " " + destination);
+                                    "chmod " + filePermission + ' ' + destination);
                             Shell.startRootShell().add(command);
                             commandWait(command);
                         }
@@ -306,7 +306,7 @@ public final class RootToolsInternalMethods {
 
             for (String path : binaryPaths) {
                 Permissions permissions = RootTools
-                        .getFilePermissionsSymlinks(path + "/" + util);
+                        .getFilePermissionsSymlinks(path + '/' + util);
 
                 if (permissions != null) {
                     String permission;
@@ -317,7 +317,7 @@ public final class RootToolsInternalMethods {
 
                     if (permission.equals("755") || permission.equals("777")
                             || permission.equals("775")) {
-                        RootTools.utilPath = path + "/" + util;
+                        RootTools.utilPath = path + '/' + util;
                         return true;
                     }
                 }
@@ -469,7 +469,7 @@ public final class RootToolsInternalMethods {
                 paths.addAll(RootTools.lastFoundBinaryPaths);
                 for (String path : paths) {
                     CommandCapture command =
-                            new CommandCapture(0, false, utilPath + " rm " + path + "/" + util);
+                            new CommandCapture(0, false, utilPath + " rm " + path + '/' + util);
                     Shell.startRootShell().add(command);
                     commandWait(command);
 
@@ -589,7 +589,7 @@ public final class RootToolsInternalMethods {
 
                 if (paths != null) {
                     for (String path : paths) {
-                        if (RootTools.exists(path + "/" + binaryName)) {
+                        if (RootTools.exists(path + '/' + binaryName)) {
                             RootTools.log(binaryName + " was found here: " + path);
                             list.add(path);
                             found = true;
@@ -621,7 +621,7 @@ public final class RootToolsInternalMethods {
      */
     public List<String> getBusyBoxApplets(String path) throws Exception {
 
-        if (path != null && !path.endsWith("/") && !path.equals("")) {
+        if (path != null && !path.endsWith("/") && !path.isEmpty()) {
             path += "/";
         } else if (path == null) {
             //Don't know what the user wants to do...what am I pshycic?
@@ -635,7 +635,7 @@ public final class RootToolsInternalMethods {
             @Override
             public void output(int id, String line) {
                 if (id == Constants.BBA) {
-                    if (!line.trim().equals("") && !line.trim().contains("not found")) {
+                    if (!line.trim().isEmpty() && !line.trim().contains("not found")) {
                         results.add(line);
                     }
                 }
@@ -652,7 +652,7 @@ public final class RootToolsInternalMethods {
      */
     public String getBusyBoxVersion(String path) {
 
-        if (!path.equals("") && !path.endsWith("/")) {
+        if (!path.isEmpty() && !path.endsWith("/")) {
             path += "/";
         }
 
@@ -664,7 +664,7 @@ public final class RootToolsInternalMethods {
                 public void output(int id, String line) {
                     if (id == Constants.BBV) {
                         if (line.startsWith("BusyBox") && InternalVariables.busyboxVersion
-                                .equals("")) {
+                                .isEmpty()) {
                             String[] temp = line.split(" ");
                             InternalVariables.busyboxVersion = temp[1];
                         }
@@ -726,7 +726,7 @@ public final class RootToolsInternalMethods {
                         @Override
                         public void output(int id, String line) {
                             if (id == Constants.GI) {
-                                if (!line.trim().equals("") && Character
+                                if (!line.trim().isEmpty() && Character
                                         .isDigit(line.trim().substring(0, 1).toCharArray()[0])) {
                                     InternalVariables.inode = line.trim().split(" ")[0];
                                 }
@@ -949,7 +949,7 @@ public final class RootToolsInternalMethods {
                     }
                 }
 
-                if (path.equals(mp) || path.startsWith(mp + "/")) {
+                if (path.equals(mp) || path.startsWith(mp + '/')) {
                     RootTools.log((String) mount.getFlags().toArray()[0]);
                     return (String) mount.getFlags().toArray()[0];
                 }
@@ -1049,7 +1049,7 @@ public final class RootToolsInternalMethods {
                 @Override
                 public void output(int id, String line) {
                     if (id == Constants.GSYM) {
-                        if (!line.trim().equals("")) {
+                        if (!line.trim().isEmpty()) {
                             results.add(line);
                         }
                     }
@@ -1063,7 +1063,7 @@ public final class RootToolsInternalMethods {
                 RootTools.log("Symlink found.");
 
                 String final_symlink;
-                if (!symlink[symlink.length - 1].equals("") && !symlink[symlink.length - 1]
+                if (!symlink[symlink.length - 1].isEmpty() && !symlink[symlink.length - 1]
                         .contains("/")) {
                     //We assume that we need to get the path for this symlink as it is probably
                     // not absolute.
@@ -1071,7 +1071,7 @@ public final class RootToolsInternalMethods {
                     if (RootTools.lastFoundBinaryPaths.size() > 0) {
                         //We return the first found location.
                         final_symlink = RootTools.lastFoundBinaryPaths
-                                .get(0) + "/" + symlink[symlink.length - 1];
+                                .get(0) + '/' + symlink[symlink.length - 1];
                     } else {
                         //we couldnt find a path, return the symlink by itself.
                         final_symlink = symlink[symlink.length - 1];
@@ -1183,7 +1183,7 @@ public final class RootToolsInternalMethods {
         try {
 
             CommandCapture command = new CommandCapture(0, false,
-                    box.endsWith("toolbox") ? box + " " + util : box + " --list") {
+                    box.endsWith("toolbox") ? box + ' ' + util : box + " --list") {
 
                 @Override
                 public void output(int id, String line) {
@@ -1345,7 +1345,7 @@ public final class RootToolsInternalMethods {
                             if (psMatcher.find()) {
                                 String pid = psMatcher.group(1);
 
-                                InternalVariables.pid_list += " " + pid;
+                                InternalVariables.pid_list += ' ' + pid;
                                 InternalVariables.pid_list = InternalVariables.pid_list.trim();
 
                                 RootTools.log("Found pid: " + pid);
@@ -1366,7 +1366,7 @@ public final class RootToolsInternalMethods {
             String pids = InternalVariables.pid_list;
 
             // kill processes
-            if (!pids.equals("")) {
+            if (!pids.isEmpty()) {
                 try {
                     // example: kill -9 1234 1222 5343
                     command = new CommandCapture(0, false, "kill -9 " + pids);

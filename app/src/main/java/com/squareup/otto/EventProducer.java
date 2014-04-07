@@ -99,7 +99,7 @@ class EventProducer {
 
     @Override
     public String toString() {
-        return "[EventProducer " + method + "]";
+        return "[EventProducer " + method + ']';
     }
 
     @Override

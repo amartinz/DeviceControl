@@ -104,18 +104,18 @@ public class Remounter {
                 try {
                     CommandCapture command = new CommandCapture(0,
                             true,
-                            "busybox mount -o remount," + mountType.toLowerCase() + " " + mountPoint
-                                    .getDevice().getAbsolutePath() + " " + mountPoint
+                            "busybox mount -o remount," + mountType.toLowerCase() + ' ' + mountPoint
+                                    .getDevice().getAbsolutePath() + ' ' + mountPoint
                                     .getMountPoint().getAbsolutePath(),
-                            "toolbox mount -o remount," + mountType.toLowerCase() + " " + mountPoint
-                                    .getDevice().getAbsolutePath() + " " + mountPoint
+                            "toolbox mount -o remount," + mountType.toLowerCase() + ' ' + mountPoint
+                                    .getDevice().getAbsolutePath() + ' ' + mountPoint
                                     .getMountPoint().getAbsolutePath(),
-                            "mount -o remount," + mountType.toLowerCase() + " " + mountPoint
-                                    .getDevice().getAbsolutePath() + " " + mountPoint
+                            "mount -o remount," + mountType.toLowerCase() + ' ' + mountPoint
+                                    .getDevice().getAbsolutePath() + ' ' + mountPoint
                                     .getMountPoint().getAbsolutePath(),
                             "/system/bin/toolbox mount -o remount," + mountType
-                                    .toLowerCase() + " " + mountPoint.getDevice()
-                                    .getAbsolutePath() + " " + mountPoint.getMountPoint()
+                                    .toLowerCase() + ' ' + mountPoint.getDevice()
+                                    .getAbsolutePath() + ' ' + mountPoint.getMountPoint()
                                     .getAbsolutePath()
                     );
                     Shell.startRootShell().add(command);

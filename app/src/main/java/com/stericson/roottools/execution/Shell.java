@@ -328,7 +328,7 @@ public class Shell {
                         RootTools.log("Executing: " + cmd.getCommand());
 
                         out.write(cmd.getCommand());
-                        String line = "\necho " + token + " " + totalExecuted + " $?\n";
+                        String line = "\necho " + token + ' ' + totalExecuted + " $?\n";
                         out.write(line);
                         out.flush();
                         write++;
@@ -588,7 +588,7 @@ public class Shell {
                     if (line == null) {
                         throw new EOFException();
                     }
-                    if ("".equals(line)) { continue; }
+                    if (line != null && line.isEmpty()) { continue; }
                     if ("Started".equals(line)) {
                         this.exit = 1;
                         setShellOom();
