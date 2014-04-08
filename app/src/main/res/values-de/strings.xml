@@ -49,7 +49,6 @@
     <string name="lcd_power_reduce">LCD Stromsparen</string>
     <string name="lcd_power_reduce_summary">Die Hintergrundbeleuchtung des Bildschirms intelligent regeln, um die Akkulaufzeit zu verbessern.</string>
     <string name="powersaving_sched_mc_title">Leistungs-Scheduler</string>
-    <string name="powersaving_sched_mc_summary">Versucht Prozesse auf einem Kern bis zum Maximum zu gruppieren, bevor ein weiterer Kern benutzt wird.\nFalls aktiviert, wird Leistung verringert und Batterie Laufzeit erhöht.\n\n0 zum Deaktivieren, 1 für ausgewogen, 2 für aggressiv.</string>
     <string name="powersaving_sched_mc_0">0 - Deaktiviert</string>
     <string name="powersaving_sched_mc_1">1 - Ausgewogen</string>
     <string name="powersaving_sched_mc_2">2 - Aggressiv</string>

@@ -30,6 +30,8 @@ import com.squareup.otto.Subscribe;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.DeviceFragmentEvent;
 import org.namelessrom.devicecontrol.objects.HighTouchSensitivity;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
@@ -43,7 +45,7 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
-import static org.namelessrom.devicecontrol.Application.logDebug;
+import java.util.List;
 
 public class DeviceFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
@@ -248,11 +250,13 @@ public class DeviceFragment extends AttachPreferenceFragment
             }
 
             mLcdPowerReduce = (CustomCheckBoxPreference) findPreference(KEY_LCD_POWER_REDUCE);
-            if (sLcdPowerReduce) {
-                mLcdPowerReduce.setChecked(Utils.readOneLine(sLcdPowerReduceFile).equals("1"));
-                mLcdPowerReduce.setOnPreferenceChangeListener(this);
-            } else {
-                category.removePreference(mLcdPowerReduce);
+            if (mLcdPowerReduce != null) {
+                if (sLcdPowerReduce) {
+                    mLcdPowerReduce.setChecked(Utils.readOneLine(sLcdPowerReduceFile).equals("1"));
+                    mLcdPowerReduce.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mLcdPowerReduce);
+                }
             }
 
             if (category.getPreferenceCount() == 0) {
@@ -269,51 +273,74 @@ public class DeviceFragment extends AttachPreferenceFragment
     public boolean onPreferenceChange(Preference preference, Object o) {
         boolean changed = false;
 
-        // INPUT
-        if (preference == mForceNavBar) {
-            final boolean value = (Boolean) o;
+        if (preference == mForceNavBar) { // ================================================= INPUT
             Utils.runRootCommand(Scripts.toggleForceNavBar());
-            PreferenceHelper.setBoolean(KEY_NAVBAR_FORCE, value);
             changed = true;
         } else if (preference == mGloveMode) {
             final boolean value = (Boolean) o;
             HighTouchSensitivity.setEnabled(value);
-            PreferenceHelper.setBoolean(KEY_GLOVE_MODE, value);
+            PreferenceHelper.setBootup(
+                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mGloveMode.getKey(),
+                            KEY_GLOVE_MODE, (value ? "1" : "0"))
+            );
             changed = true;
         } else if (preference == mKnockOn) {
             final boolean newValue = (Boolean) o;
             final String value = (newValue) ? "1" : "0";
             Utils.writeValue(sKnockOnFile, value);
-            PreferenceHelper.setBoolean(KEY_KNOCK_ON, newValue);
+            PreferenceHelper.setBootup(
+                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mKnockOn.getKey(),
+                            sKnockOnFile, value)
+            );
             changed = true;
         } else if (preference == mBacklightKey) { // ======================================== LIGHTS
             final boolean newValue = (Boolean) o;
             final String value = newValue ? "255" : "0";
             Utils.writeValue(FILE_TOUCHKEY_TOGGLE, value);
             Utils.writeValue(FILE_TOUCHKEY_BRIGHTNESS, value);
-            PreferenceHelper.setBoolean(KEY_TOUCHKEY_LIGHT, newValue);
+            PreferenceHelper.setBootup(
+                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mBacklightKey.getKey() + '0',
+                            FILE_TOUCHKEY_TOGGLE, value)
+            );
+            PreferenceHelper.setBootup(
+                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mBacklightKey.getKey() + '1',
+                            FILE_TOUCHKEY_BRIGHTNESS, value)
+            );
             changed = true;
         } else if (preference == mBacklightNotification) {
             final boolean newValue = (Boolean) o;
             final String value = newValue ? "1" : "0";
             Utils.writeValue(FILE_BLN_TOGGLE, value);
-            PreferenceHelper.setBoolean(KEY_TOUCHKEY_BLN, newValue);
+            PreferenceHelper.setBootup(
+                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mBacklightNotification.getKey(),
+                            FILE_BLN_TOGGLE, value)
+            );
             changed = true;
         } else if (preference == mKeyboardBacklight) {
             final boolean newValue = (Boolean) o;
             final String value = newValue ? "255" : "0";
             Utils.writeValue(FILE_KEYBOARD_TOGGLE, value);
-            PreferenceHelper.setBoolean(KEY_KEYBOARD_LIGHT, newValue);
+            PreferenceHelper.setBootup(
+                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mKeyboardBacklight.getKey(),
+                            FILE_KEYBOARD_TOGGLE, value)
+            );
             changed = true;
         } else if (preference == mPanelColor) { // ======================================== GRAPHICS
             final String value = String.valueOf(o);
             Utils.writeValue(sHasPanelFile, value);
-            PreferenceHelper.setString(KEY_PANEL_COLOR_TEMP, value);
+            PreferenceHelper.setBootup(
+                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mPanelColor.getKey(),
+                            sHasPanelFile, value)
+            );
             changed = true;
         } else if (preference == mLcdPowerReduce) {
-            final boolean value = (Boolean) o;
-            Utils.writeValue(sLcdPowerReduceFile, (value ? "1" : "0"));
-            PreferenceHelper.setBoolean(KEY_LCD_POWER_REDUCE, value);
+            final boolean newValue = (Boolean) o;
+            final String value = newValue ? "1" : "0";
+            Utils.writeValue(sLcdPowerReduceFile, value);
+            PreferenceHelper.setBootup(
+                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mLcdPowerReduce.getKey(),
+                            sLcdPowerReduceFile, value)
+            );
             changed = true;
         }
 
@@ -324,63 +351,13 @@ public class DeviceFragment extends AttachPreferenceFragment
     // Methods
     //==============================================================================================
 
-    public static String restore() {
+    public static String restore(final DatabaseHandler db) {
         final StringBuilder sbCmd = new StringBuilder();
-        String value;
 
-        if (DeviceFragment.sKnockOn) {
-            logDebug("Reapplying: sKnockOn");
-            value = PreferenceHelper.getBoolean(KEY_KNOCK_ON, false) ? "1" : "0";
-            sbCmd.append(Utils.getWriteCommand(sKnockOnFile, value));
-        }
-
-        if (VibratorTuningPreference.isSupported()) {
-            logDebug("Reapplying: Vibration");
-            value = String.valueOf(VibratorTuningPreference.strengthToPercent(
-                    PreferenceHelper.getInt(KEY_VIBRATOR_TUNING, VIBRATOR_INTENSITY_DEFAULT_VALUE)
-            ));
-            sbCmd.append(Utils.getWriteCommand(VibratorTuningPreference.FILE_VIBRATOR, value));
-        }
-
-        try {
-            if (HighTouchSensitivity.isSupported()) {
-                logDebug("Reapplying: Glove Mode");
-                value = PreferenceHelper.getBoolean(KEY_GLOVE_MODE, false)
-                        ? HighTouchSensitivity.GLOVE_MODE_ENABLE
-                        : HighTouchSensitivity.GLOVE_MODE_DISABLE;
-                sbCmd.append(Utils.getWriteCommand(HighTouchSensitivity.COMMAND_PATH, value));
-            }
-        } catch (Exception ignored) { }
-
-        if (DeviceFragment.sHasPanel) {
-            logDebug("Reapplying: Panel Color Temp");
-            value = PreferenceHelper.getString(KEY_PANEL_COLOR_TEMP, "2");
-            sbCmd.append(Utils.getWriteCommand(sHasPanelFile, value));
-        }
-
-        if (DeviceFragment.sLcdPowerReduce) {
-            logDebug("Reapplying: LcdPowerReduce");
-            value = PreferenceHelper.getBoolean(KEY_LCD_POWER_REDUCE, false) ? "1" : "0";
-            sbCmd.append(Utils.getWriteCommand(sLcdPowerReduceFile, value));
-        }
-
-        if (DeviceFragment.sHasTouchkeyToggle) {
-            logDebug("Reapplying: Touchkey Light");
-            value = PreferenceHelper.getBoolean(KEY_TOUCHKEY_LIGHT, true) ? "255" : "0";
-            sbCmd.append(Utils.getWriteCommand(FILE_TOUCHKEY_TOGGLE, value));
-            sbCmd.append(Utils.getWriteCommand(FILE_TOUCHKEY_BRIGHTNESS, value));
-        }
-
-        if (DeviceFragment.sHasTouchkeyBLN) {
-            logDebug("Reapplying: Touchkey BLN");
-            value = PreferenceHelper.getBoolean(KEY_TOUCHKEY_BLN, true) ? "1" : "0";
-            sbCmd.append(Utils.getWriteCommand(FILE_BLN_TOGGLE, value));
-        }
-
-        if (DeviceFragment.sHasKeyboardToggle) {
-            logDebug("Reapplying: KeyBoard Light");
-            value = PreferenceHelper.getBoolean(KEY_KEYBOARD_LIGHT, true) ? "255" : "0";
-            sbCmd.append(Utils.getWriteCommand(FILE_KEYBOARD_TOGGLE, value));
+        final List<DataItem> items =
+                db.getAllItems(DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_DEVICE);
+        for (final DataItem item : items) {
+            sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
         }
 
         return sbCmd.toString();

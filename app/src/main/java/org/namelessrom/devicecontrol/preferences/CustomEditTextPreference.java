@@ -40,4 +40,14 @@ public class CustomEditTextPreference extends EditTextPreference {
         summary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
     }
 
+    @Override
+    public boolean isPersistent() {
+        return false;
+    }
+
+    @Override
+    protected boolean shouldPersist() {
+        return false;
+    }
+
 }
