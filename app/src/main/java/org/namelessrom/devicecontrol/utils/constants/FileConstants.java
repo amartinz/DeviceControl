@@ -57,6 +57,9 @@ public interface FileConstants {
             {"/sys/devices/system/cpu/sched_mc_power_savings"};
     //==============================================================================================
     public static final String   MPDECISION_PATH            = "/system/bin/mpdecision";
+    //==============================================================================================
+    public static final String   LOGGER_MODE_PATH           = "/sys/kernel/logger_mode/logger_mode";
+    //==============================================================================================
 
     //==============================================================================================
     // Directories

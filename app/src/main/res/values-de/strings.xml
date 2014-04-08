@@ -42,7 +42,7 @@
     <string name="mpdecision_summary_on">MPDecision ist aktiv.</string>
     <string name="mpdecision_summary_off">MPDecision ist deaktiviert.</string>
     <string name="voltage">Spannung</string>
-    <string name="msm_dcvs_summary">Verwnde MSM DCVS für CPU/GPU Frequenz-Verwaltung</string>
+    <string name="msm_dcvs_summary">Verwende MSM DCVS für CPU/GPU Frequenz-Verwaltung</string>
     <string name="voltage_control">Spannungs-Steuerung</string>
     <string name="voltage_control_summary">Bearbeite die Spannungen per Frequenz</string>
     <string name="powersaving">Energiesparen</string>

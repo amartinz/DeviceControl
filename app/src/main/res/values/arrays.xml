@@ -23,6 +23,7 @@
         <item>@string/home</item>
         <item>@string/device</item>
         <item>@string/device</item>
+        <item>@string/features</item>
         <item>@string/performance</item>
         <item>@string/information</item>
         <item>@string/cpusettings</item>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.namelessrom.devicecontrol.fragments;
+package org.namelessrom.devicecontrol.fragments.device;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -117,7 +117,7 @@ public class DeviceFragment extends AttachPreferenceFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.device_preferences);
+        addPreferencesFromResource(R.xml.device);
 
         final PreferenceScreen preferenceScreen = getPreferenceScreen();
 

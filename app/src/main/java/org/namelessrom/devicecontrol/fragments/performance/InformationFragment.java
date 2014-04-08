@@ -82,33 +82,32 @@ public class InformationFragment extends AttachFragment implements DeviceConstan
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity, ID);
-        activity.registerReceiver(
-                mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)
-        );
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        final Activity activity = getActivity();
         BusProvider.getBus().register(this);
         startRepeatingTask();
+        if (activity != null) {
+            activity.registerReceiver(
+                    mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+            );
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        final Activity activity = getActivity();
         BusProvider.getBus().unregister(this);
         stopRepeatingTask();
-    }
-
-    @Override
-    public void onDetach() {
-        try {
-            mActivity.unregisterReceiver(mBatteryReceiver);
-        } catch (Exception ignored) {
-            // not registered
+        if (activity != null) {
+            try {
+                activity.unregisterReceiver(mBatteryReceiver);
+            } catch (Exception ignored) { }
         }
-        super.onDetach();
     }
 
     private final BroadcastReceiver mBatteryReceiver = new BroadcastReceiver() {

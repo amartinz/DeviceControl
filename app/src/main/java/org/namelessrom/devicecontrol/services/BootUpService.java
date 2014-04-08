@@ -25,7 +25,7 @@ import android.os.AsyncTask;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.fragments.DeviceFragment;
+import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.VoltageFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
