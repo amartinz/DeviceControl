@@ -30,8 +30,7 @@
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="fstrim"
             android:title="@string/fstrim_title"
-            android:summary="@string/fstrim_summary"
-            android:persistent="false" />
+            android:summary="@string/fstrim_summary" />
 
         <org.namelessrom.devicecontrol.preferences.CustomListPreference
             android:key="fstrim_interval"
@@ -40,8 +39,7 @@
             android:summary="@string/fstrim_interval_summary"
             android:entries="@array/fstrim_entries"
             android:entryValues="@array/fstrim_values"
-            android:defaultValue="7"
-            android:persistent="false" />
+            android:defaultValue="7" />
 
     </PreferenceCategory>
 
