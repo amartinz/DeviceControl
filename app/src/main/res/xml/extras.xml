@@ -17,7 +17,7 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:nameless="http://nameless-rom.org">
+    >
 
     <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
         android:key="pref_force_highend_gfx"
@@ -67,14 +67,11 @@
             android:title="@string/power_efficient_work"
             android:summary="@string/power_efficient_work_summary" />
 
-        <org.namelessrom.devicecontrol.preferences.SeekBarPreference
+        <org.namelessrom.devicecontrol.preferences.CustomListPreference
             android:key="sched_mc_power_savings"
             android:title="@string/powersaving_sched_mc_title"
-            android:summary="@string/powersaving_sched_mc_summary"
-            android:defaultValue="0"
-            android:max="2"
-            nameless:min="0"
-            nameless:customStatus="powersaving_sched_mc_" />
+            android:entries="@array/mc_power_savings_entries"
+            android:entryValues="@array/mc_power_savings_values" />
 
     </PreferenceCategory>
 

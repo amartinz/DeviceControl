@@ -26,6 +26,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
+import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.VoltageFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
@@ -108,26 +109,23 @@ public class BootUpService extends IntentService
                 // Device
                 //==================================================================================
                 if (PreferenceHelper.getBoolean(SOB_DEVICE, false)) {
-                    sbCmd.append(DeviceFragment.restore());
+                    sbCmd.append(DeviceFragment.restore(db));
+                    sbCmd.append(FeaturesFragment.restore(db));
                 }
 
                 //==================================================================================
                 // Performance
                 //==================================================================================
                 if (PreferenceHelper.getBoolean(SOB_CPU, false)) {
-                    sbCmd.append(CpuUtils.restore());
-                    items = db.getAllItems(DatabaseHandler.TABLE_BOOTUP, DataItem.CATEGORY_CPU);
-                    for (final DataItem item : items) {
-                        sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
-                    }
+                    sbCmd.append(CpuUtils.restore(db));
                 }
 
                 if (PreferenceHelper.getBoolean(SOB_GPU, false)) {
-                    sbCmd.append(GpuUtils.restore());
+                    sbCmd.append(GpuUtils.restore(db));
                 }
 
                 if (PreferenceHelper.getBoolean(SOB_EXTRAS, false)) {
-                    sbCmd.append(ExtrasFragment.restore());
+                    sbCmd.append(ExtrasFragment.restore(db));
                 }
 
                 if (PreferenceHelper.getBoolean(SOB_VOLTAGE, false)) {

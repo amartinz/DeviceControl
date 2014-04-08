@@ -17,7 +17,7 @@
 -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
     <PreferenceCategory
         android:key="prefs_app"
@@ -36,38 +36,31 @@
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_device"
-            android:title="@string/device"
-            app:auto_handle="true" />
+            android:title="@string/device" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_cpu"
-            android:title="@string/cpusettings"
-            app:auto_handle="true" />
+            android:title="@string/cpusettings" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_gpu"
-            android:title="@string/gpusettings"
-            app:auto_handle="true" />
+            android:title="@string/gpusettings" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_extras"
-            android:title="@string/extras"
-            app:auto_handle="true" />
+            android:title="@string/extras" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_voltage"
-            android:title="@string/voltage_control"
-            app:auto_handle="true" />
+            android:title="@string/voltage_control" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_vm"
-            android:title="@string/vm"
-            app:auto_handle="true" />
+            android:title="@string/vm" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_sysctl"
-            android:title="@string/sysctl"
-            app:auto_handle="true" />
+            android:title="@string/sysctl" />
 
     </PreferenceCategory>
 
@@ -98,7 +91,7 @@
         android:key="prefs_version_cat"
         android:title="@string/version">
 
-        <Preference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="prefs_version"
             android:title="@string/empty"
             android:summary="@string/empty" />

@@ -23,11 +23,11 @@ import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
 import java.io.File;
-import java.util.List;
 
 public class CpuGovernorFragment extends AttachPreferenceFragment {
 
@@ -158,20 +158,10 @@ public class CpuGovernorFragment extends AttachPreferenceFragment {
 
             @Override
             protected Void doInBackground(String... params) {
-                final DatabaseHandler db = DatabaseHandler.getInstance(mContext);
                 final String name = p.getTitle().toString();
                 final String key = p.getKey();
-
-                final List<DataItem> items =
-                        db.getAllItems(DatabaseHandler.TABLE_BOOTUP, DataItem.CATEGORY_CPU);
-                for (final DataItem item : items) {
-                    if (item.getName().equals(name)
-                            && item.getCategory().equals(DataItem.CATEGORY_CPU)) {
-                        db.deleteItemByName(name, DatabaseHandler.TABLE_BOOTUP);
-                    }
-                }
-                db.addItem(new DataItem(DataItem.CATEGORY_CPU, name, key, value),
-                        DatabaseHandler.TABLE_BOOTUP);
+                PreferenceHelper.setBootup(new DataItem(
+                        DatabaseHandler.CATEGORY_CPU, name, key, value));
 
                 return null;
             }

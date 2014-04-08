@@ -25,7 +25,6 @@ import android.view.View;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.fragments.tasker.TaskListFragment;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
@@ -58,8 +57,6 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.tasker);
         setHasOptionsMenu(true);
-
-        final DatabaseHandler db = DatabaseHandler.getInstance(getActivity());
 
         mFstrim = (CustomCheckBoxPreference) findPreference(FSTRIM);
         if (mFstrim != null) {
@@ -103,11 +100,11 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
             PreferenceHelper.setBoolean(FSTRIM, value);
             if (value) {
                 AlarmHelper.setAlarmFstrim(getActivity(),
-                        ParseUtils.parseFstrim(mFstrimInterval.getValue())
-                );
+                        ParseUtils.parseFstrim(mFstrimInterval.getValue()));
             } else {
                 AlarmHelper.cancelAlarmFstrim(getActivity());
             }
+            mFstrim.setChecked(value);
             logDebug("mFstrim: " + (value ? "true" : "false"));
             return true;
         } else if (mFstrimInterval == preference) {

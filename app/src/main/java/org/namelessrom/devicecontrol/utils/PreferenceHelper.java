@@ -18,84 +18,84 @@
 package org.namelessrom.devicecontrol.utils;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+
+import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 
 public class PreferenceHelper {
     //==============================================================================================
     // Fields
     //==============================================================================================
-    private static PreferenceHelper  ourInstance;
-    private static SharedPreferences mSharedPrefs;
+    private static PreferenceHelper ourInstance;
+    private static DatabaseHandler  mDatabaseHandler;
 
     //==============================================================================================
     // Initialization
     //==============================================================================================
 
-    public static PreferenceHelper getInstance(Context context) {
+    public static PreferenceHelper getInstance(final Context context) {
         if (ourInstance == null) {
             ourInstance = new PreferenceHelper(context);
         }
         return ourInstance;
     }
 
-    private PreferenceHelper(Context context) {
-        mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+    private PreferenceHelper(final Context context) {
+        mDatabaseHandler = DatabaseHandler.getInstance(context);
     }
 
     //==============================================================================================
     // Generic
     //==============================================================================================
 
-    public static void remove(String key) {
-        mSharedPrefs.edit().remove(key).commit();
+    public static void remove(final String name) {
+        mDatabaseHandler.deleteItemByName(name, DatabaseHandler.TABLE_DC);
     }
 
-    public static int getInt(String key, int defaultValue) {
-        return mSharedPrefs.getInt(key, defaultValue);
+    public static int getInt(final String name) {
+        return getInt(name, 0);
     }
 
-    public static String getString(String key) {
-        return mSharedPrefs.getString(key, "");
+    public static int getInt(final String name, final int defaultValue) {
+        final String value = mDatabaseHandler.getValueByName(name, DatabaseHandler.TABLE_DC);
+        return (value == null || value.isEmpty() ? defaultValue : Integer.parseInt(value));
     }
 
-    public static String getString(String key, String defaultValue) {
-        return mSharedPrefs.getString(key, defaultValue);
+    public static String getString(final String key) {
+        return PreferenceHelper.getString(key, "");
     }
 
-    public static boolean getBoolean(String key) {
-        return mSharedPrefs.getBoolean(key, false);
+    public static String getString(final String name, final String defaultValue) {
+        final String value = mDatabaseHandler.getValueByName(name, DatabaseHandler.TABLE_DC);
+        return (value == null || value.isEmpty() ? defaultValue : value);
     }
 
-    public static boolean getBoolean(String key, boolean defaultValue) {
-        return mSharedPrefs.getBoolean(key, defaultValue);
+    public static boolean getBoolean(final String name) {
+        return PreferenceHelper.getBoolean(name, false);
     }
 
-    public static void setString(final String key, final String value) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mSharedPrefs.edit().putString(key, value).commit();
-            }
-        }).start();
+    public static boolean getBoolean(final String name, final boolean defaultValue) {
+        final String value = mDatabaseHandler.getValueByName(name, DatabaseHandler.TABLE_DC);
+        return (value == null || value.isEmpty() ? defaultValue : value.equals("1"));
     }
 
-    public static void setInt(final String key, final int value) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mSharedPrefs.edit().putInt(key, value).commit();
-            }
-        }).start();
+    public static void setString(final String name, final String value) {
+        mDatabaseHandler.insertOrUpdate(name, value, DatabaseHandler.TABLE_DC);
     }
 
-    public static void setBoolean(final String key, final boolean value) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mSharedPrefs.edit().putBoolean(key, value).commit();
-            }
-        }).start();
+    public static void setInt(final String name, final int value) {
+        mDatabaseHandler.insertOrUpdate(name, String.valueOf(value), DatabaseHandler.TABLE_DC);
     }
 
+    public static void setBoolean(final String name, final boolean value) {
+        mDatabaseHandler.insertOrUpdate(name, (value ? "1" : "0"), DatabaseHandler.TABLE_DC);
+    }
+
+    public static String getBootupValue(final String name) {
+        return mDatabaseHandler.getValueByName(name, DatabaseHandler.TABLE_BOOTUP);
+    }
+
+    public static void setBootup(final DataItem dataItem) {
+        mDatabaseHandler.updateBootup(dataItem);
+    }
 }

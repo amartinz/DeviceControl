@@ -30,10 +30,12 @@ import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.preferences.SeekBarPreference;
 import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -43,6 +45,8 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+
+import java.util.List;
 
 public class ExtrasFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
@@ -69,7 +73,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference mForceHighEndGfx;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mPowerEfficientWork;
-    private SeekBarPreference        mMcPowerScheduler;
+    private CustomListPreference     mMcPowerScheduler;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mMpDecision;
     private CustomCheckBoxPreference mIntelliPlug;
@@ -137,12 +141,12 @@ public class ExtrasFragment extends AttachPreferenceFragment
                     category.removePreference(mPowerEfficientWork);
                 }
             }
-            mMcPowerScheduler = (SeekBarPreference) findPreference(KEY_MC_POWER_SCHEDULER);
+            mMcPowerScheduler = (CustomListPreference) findPreference(KEY_MC_POWER_SCHEDULER);
             if (mMcPowerScheduler != null) {
                 if (sMcPowerScheduler) {
-                    mMcPowerScheduler.setProgress(
-                            Integer.parseInt(Utils.readOneLine(sMcPowerSchedulerFile))
-                    );
+                    final String value = Utils.readOneLine(sMcPowerSchedulerFile);
+                    mMcPowerScheduler.setValue(value);
+                    mMcPowerScheduler.setSummary(mMcPowerScheduler.getEntry());
                     mMcPowerScheduler.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mMcPowerScheduler);
@@ -254,33 +258,50 @@ public class ExtrasFragment extends AttachPreferenceFragment
         } else if (preference == mMpDecision) {
             final boolean value = (Boolean) o;
             Utils.runRootCommand(CpuUtils.enableMpDecision(value));
-            PreferenceHelper.setBoolean(KEY_MPDECISION, value);
+            PreferenceHelper.setBootup(new DataItem(
+                    DatabaseHandler.CATEGORY_EXTRAS, mMpDecision.getKey(),
+                    FILE_TOUCHKEY_TOGGLE, value ? "1" : "0"));
             changed = true;
         } else if (preference == mIntelliPlug) {
             final boolean value = (Boolean) o;
             CpuUtils.enableIntelliPlug(value);
-            PreferenceHelper.setBoolean(KEY_INTELLI_PLUG, value);
+            PreferenceHelper.setBootup(new DataItem(
+                    DatabaseHandler.CATEGORY_EXTRAS, mIntelliPlug.getKey(),
+                    INTELLI_PLUG_PATH, value ? "1" : "0"));
             changed = true;
         } else if (preference == mIntelliPlugEco) {
             final boolean value = (Boolean) o;
             CpuUtils.enableIntelliPlugEcoMode(value);
-            PreferenceHelper.setBoolean(KEY_INTELLI_PLUG_ECO, value);
+            PreferenceHelper.setBootup(new DataItem(
+                    DatabaseHandler.CATEGORY_EXTRAS, mIntelliPlugEco.getKey(),
+                    INTELLI_PLUG_ECO_MODE_PATH, value ? "1" : "0"));
             changed = true;
         } else if (preference == mPowerEfficientWork) {
             final boolean rawValue = (Boolean) o;
             final String value = rawValue ? "1" : "0";
             Utils.runRootCommand(Utils.getWriteCommand(sPowerEfficientWorkFile, value));
-            PreferenceHelper.setBoolean(KEY_POWER_EFFICIENT_WORK, rawValue);
+            PreferenceHelper.setBootup(new DataItem(
+                    DatabaseHandler.CATEGORY_EXTRAS, mPowerEfficientWork.getKey(),
+                    sPowerEfficientWorkFile, value));
             changed = true;
         } else if (preference == mMcPowerScheduler) {
-            final int value = (Integer) o;
-            Utils.writeValue(sMcPowerSchedulerFile, String.valueOf(value));
-            PreferenceHelper.setInt(KEY_MC_POWER_SCHEDULER, value);
+            final String value = String.valueOf(o);
+            Utils.writeValue(sMcPowerSchedulerFile, value);
+            PreferenceHelper.setBootup(new DataItem(
+                    DatabaseHandler.CATEGORY_EXTRAS,
+                    mMcPowerScheduler.getKey(), sMcPowerSchedulerFile, value));
+            if (mMcPowerScheduler.getEntries() != null) {
+                final String summary = String.valueOf(
+                        mMcPowerScheduler.getEntries()[Integer.parseInt(value)]);
+                mMcPowerScheduler.setSummary(summary);
+            }
             changed = true;
         } else if (preference == mMsmDcvs) {
             final boolean value = (Boolean) o;
             CpuUtils.enableMsmDcvs(value);
-            PreferenceHelper.setBoolean("msm_dcvs", value);
+            PreferenceHelper.setBootup(new DataItem(
+                    DatabaseHandler.CATEGORY_EXTRAS, mMsmDcvs.getKey(),
+                    sMcPowerSchedulerFile, value ? "1" : "0"));
             changed = true;
         }
 
@@ -315,29 +336,13 @@ public class ExtrasFragment extends AttachPreferenceFragment
     // Methods
     //==============================================================================================
 
-    public static String restore() {
+    public static String restore(final DatabaseHandler db) {
         final StringBuilder sbCmd = new StringBuilder();
-        String value;
 
-        if (CpuUtils.hasIntelliPlug()) {
-            value = PreferenceHelper.getBoolean(KEY_INTELLI_PLUG, false) ? "1" : "0";
-            sbCmd.append(Utils.getWriteCommand(CpuUtils.INTELLI_PLUG_PATH, value));
-        }
-        if (CpuUtils.hasIntelliPlugEcoMode()) {
-            value = PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false) ? "1" : "0";
-            sbCmd.append(Utils.getWriteCommand(CpuUtils.INTELLI_PLUG_ECO_MODE_PATH, value));
-        }
-        if (sPowerEfficientWork) {
-            value = PreferenceHelper.getBoolean(KEY_POWER_EFFICIENT_WORK, false) ? "1" : "0";
-            sbCmd.append(Utils.getWriteCommand(sPowerEfficientWorkFile, value));
-        }
-        if (sMcPowerScheduler) {
-            value = String.valueOf(PreferenceHelper.getInt(KEY_MC_POWER_SCHEDULER, 2));
-            sbCmd.append(Utils.getWriteCommand(sMcPowerSchedulerFile, value));
-        }
-        if (CpuUtils.hasMsmDcvs()) {
-            value = PreferenceHelper.getBoolean("msm_dcvs", false) ? "1" : "0";
-            sbCmd.append(Utils.getWriteCommand(MSM_DCVS_FILE, value));
+        final List<DataItem> items = db.getAllItems(
+                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_EXTRAS);
+        for (final DataItem item : items) {
+            sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
         }
 
         return sbCmd.toString();
