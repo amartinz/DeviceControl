@@ -41,6 +41,7 @@ import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.FreezeEvent;
 import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
@@ -201,7 +202,7 @@ public class FreezerFragment extends AttachFragment
                 public void commandCompleted(int id, int exitcode) {
                     final String result = outputCollector.toString();
                     logDebug(result);
-                    activity.runOnUiThread(new Runnable() {
+                    Application.HANDLER.post(new Runnable() {
                         @Override
                         public void run() {
                             BusProvider.getBus().post(new FreezeEvent(result));
@@ -287,10 +288,10 @@ public class FreezerFragment extends AttachFragment
                     // as the package is disabled and next time we launch the editor,
                     // it is already frozen
                     if (activity != null) {
-                        activity.runOnUiThread(new Runnable() {
+                        Application.HANDLER.post(new Runnable() {
                             @Override
                             public void run() {
-                                BusProvider.getBus().post(new ShellOutputEvent(result));
+                                BusProvider.getBus().post(new ShellOutputEvent(-1, result));
                             }
                         });
                     }

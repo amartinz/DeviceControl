@@ -44,13 +44,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
+import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.objects.Prop;
 import org.namelessrom.devicecontrol.providers.BusProvider;
-import org.namelessrom.devicecontrol.threads.FireAndForget;
-import org.namelessrom.devicecontrol.threads.FireAndGet;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
@@ -72,6 +71,11 @@ public class EditorFragment extends AttachFragment
     //==============================================================================================
     private static final String ARG_EDITOR    = "arg_editor";
     private static final int    HANDLER_DELAY = 200;
+
+    private static final int CLICK_0 = 100;
+    private static final int CLICK_1 = 101;
+    private static final int APPLY   = 200;
+    private static final int SAVE    = 201;
 
     private ListView       packList;
     private LinearLayout   linlaHeaderProgress;
@@ -227,15 +231,13 @@ public class EditorFragment extends AttachFragment
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    new FireAndForget("busybox mount -o remount,rw /system"
-                                            + ';' + "busybox cp " + getActivity()
-                                            .getFilesDir()
-                                            .getPath() + DC_BACKUP_DIR + '/' + mod + ".conf"
-                                            + ' ' + syspath + mod + ".conf;"
-                                            + "busybox chmod 644 " + syspath + mod + ".conf"
-                                            + ';' + "busybox mount -o remount,ro /system"
-                                            + ';' + "busybox sysctl -p " + syspath + mod
-                                            + ".conf" + ';', true).run();
+                                    RootTools.remount("/system", "rw");
+                                    Utils.getCommandResult(APPLY,
+                                            "busybox cp "
+                                                    + getActivity().getFilesDir().getPath()
+                                                    + DC_BACKUP_DIR + '/' + mod + ".conf"
+                                                    + ' ' + syspath + mod + ".conf;"
+                                    );
                                     dialogInterface.dismiss();
                                     Toast.makeText(mActivity
                                             , getString(R.string.toast_settings_applied)
@@ -303,7 +305,7 @@ public class EditorFragment extends AttachFragment
                     break;
             }
 
-            new FireAndGet(sb.toString(), false, mActivity).run();
+            Utils.getCommandResult(-1, sb.toString(), false);
 
             return null;
         }
@@ -337,7 +339,7 @@ public class EditorFragment extends AttachFragment
                 });
             }
 
-            new FireAndGet("cat /system/build.prop", true, mActivity).run();
+            Utils.getCommandResult(-1, "cat /system/build.prop", true);
 
             return null;
         }
@@ -349,17 +351,36 @@ public class EditorFragment extends AttachFragment
     }
 
     @Subscribe
-    public void onReadPropsCompleted(final ShellOutputEvent event) {
-        final String text = event.getOutput();
-        logDebug("onReadPropsCompleted: " + text);
-        if (isAdded()) {
-            if (mEditorType == 2) {
-                loadBuildProp(text);
-            } else {
-                loadProp(text);
-            }
-        } else {
-            logDebug("Not attached!");
+    public void onShellOutput(final ShellOutputEvent event) {
+        final int id = event.getId();
+        final String result = event.getOutput();
+        switch (id) {
+            case SAVE:
+                RootTools.remount("/system", "ro"); // slip through to APPLY
+            case APPLY:
+                Utils.runRootCommand("busybox chmod 644 " + syspath + mod + ".conf;"
+                        + "busybox sysctl -p " + syspath + mod + ".conf;");
+                break;
+            case CLICK_0:
+                RootTools.remount("/system", "ro");
+                new GetBuildPropOperation().execute();
+                break;
+            case CLICK_1:
+                RootTools.remount("/system", "ro");
+                adapter.notifyDataSetChanged();
+                break;
+            default:
+                logDebug("onReadPropsCompleted: " + result);
+                if (isAdded()) {
+                    if (mEditorType == 2) {
+                        loadBuildProp(result);
+                    } else {
+                        loadProp(result);
+                    }
+                } else {
+                    logDebug("Not attached!");
+                }
+                break;
         }
     }
 
@@ -469,11 +490,11 @@ public class EditorFragment extends AttachFragment
                         if (p != null) {
                             if (tv.getText() != null) {
                                 p.setVal(tv.getText().toString().trim());
-                                new FireAndForget(
+                                Utils.getCommandResult(SAVE,
                                         mActivity.getFilesDir().getPath() + "/utils -setprop \""
                                                 + p.getName() + '=' + p.getVal() + "\" " + dn
-                                                + '/' + mod + ".conf", true
-                                ).run();
+                                                + '/' + mod + ".conf"
+                                );
                             }
                         } else {
                             if (tv.getText() != null
@@ -481,12 +502,12 @@ public class EditorFragment extends AttachFragment
                                     && tn.getText().toString().trim().length() > 0) {
                                 props.add(new Prop(tn.getText().toString().trim(),
                                         tv.getText().toString().trim()));
-                                new FireAndForget(
+                                Utils.getCommandResult(SAVE,
                                         mActivity.getFilesDir().getPath() + "/utils -setprop \""
                                                 + tn.getText().toString().trim() + '='
                                                 + tv.getText().toString().trim() + "\" " + dn + '/'
-                                                + mod + ".conf", true
-                                ).run();
+                                                + mod + ".conf"
+                                );
                             }
                         }
                         Collections.sort(props);
@@ -581,11 +602,11 @@ public class EditorFragment extends AttachFragment
                         if (p != null) {
                             if (tv.getText() != null) {
                                 p.setVal(tv.getText().toString().trim());
-                                new FireAndForget(
+                                RootTools.remount("/system", "rw");
+                                Utils.getCommandResult(SAVE,
                                         mActivity.getFilesDir().getPath() + "/utils -setprop \""
-                                                + p.getName() + '=' + p.getVal() + '"', true, true
-                                )
-                                        .run();
+                                                + p.getName() + '=' + p.getVal() + '"'
+                                );
                             }
                         } else {
                             if (tv.getText() != null
@@ -593,12 +614,12 @@ public class EditorFragment extends AttachFragment
                                     && tn.getText().toString().trim().length() > 0) {
                                 props.add(new Prop(tn.getText().toString().trim(),
                                         tv.getText().toString().trim()));
-                                new FireAndForget(
+                                RootTools.remount("/system", "rw");
+                                Utils.getCommandResult(SAVE,
                                         mActivity.getFilesDir().getPath() + "/utils -setprop \""
                                                 + tn.getText().toString().trim() + '='
-                                                + tv.getText().toString().trim() + '"', true, true
-                                )
-                                        .run();
+                                                + tv.getText().toString().trim() + '"'
+                                );
                             }
                         }
 
@@ -655,22 +676,25 @@ public class EditorFragment extends AttachFragment
             final String dn = getActivity().getFilesDir().getPath() + DC_BACKUP_DIR;
             switch (op) {
                 case 0:
-                    if (new File(dn + '/' + mBuildName).exists()) {
-                        new FireAndForget("busybox cp " + dn + '/'
-                                + mBuildName + " /system/build.prop;\n" + "busybox chmod 644 "
-                                + "/system/build.prop;\n", true, true).run();
-                        new GetBuildPropOperation().execute();
+                    final String path = dn + '/' + mBuildName;
+                    if (new File(path).exists()) {
+                        RootTools.remount("/system", "rw");
+                        Utils.getCommandResult(CLICK_0,
+                                "busybox chmod 644 " + "/system/build.prop;\n"
+                                        + "busybox cp " + path + " /system/build.prop;\n"
+                        );
                     } else {
                         Toast.makeText(mActivity, getString(R.string.backup_message_not_found),
                                 Toast.LENGTH_LONG).show();
                     }
                     break;
                 case 1:
-                    new FireAndForget("busybox sed -i '/"
-                            + p.getName().replace(".", "\\.") + "/d' " + "/system/build.prop;\n"
-                            , true, true).run();
+                    RootTools.remount("/system", "rw");
+                    Utils.getCommandResult(CLICK_1,
+                            "busybox sed -i '/" + p.getName().replace(".", "\\.")
+                                    + "/d' " + "/system/build.prop;\n"
+                    );
                     adapter.remove(p);
-                    adapter.notifyDataSetChanged();
                     break;
             }
         }

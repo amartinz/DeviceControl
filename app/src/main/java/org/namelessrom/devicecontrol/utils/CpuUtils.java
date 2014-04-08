@@ -467,7 +467,7 @@ public class CpuUtils implements PerformanceConstants {
                     final String max = tmpMax;
                     final String min = tmpMin;
                     final String[] avail = tmpList.toArray(new String[tmpList.size()]);
-                    activity.runOnUiThread(new Runnable() {
+                    Application.HANDLER.post(new Runnable() {
                         @Override
                         public void run() {
                             BusProvider.getBus().post(new CpuFreqEvent(avail, max, min));
@@ -522,7 +522,7 @@ public class CpuUtils implements PerformanceConstants {
 
                     final String gov = tmpString;
                     final String[] availGovs = tmpList.toArray(new String[tmpList.size()]);
-                    activity.runOnUiThread(new Runnable() {
+                    Application.HANDLER.post(new Runnable() {
                         @Override
                         public void run() {
                             BusProvider.getBus().post(new GovernorEvent(availGovs, gov));
@@ -572,7 +572,7 @@ public class CpuUtils implements PerformanceConstants {
                     final String scheduler = tmpString;
                     final String[] availableSchedulers =
                             tmpList.toArray(new String[tmpList.size()]);
-                    activity.runOnUiThread(new Runnable() {
+                    Application.HANDLER.post(new Runnable() {
                         @Override
                         public void run() {
                             BusProvider.getBus().post(
