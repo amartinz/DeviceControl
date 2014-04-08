@@ -20,6 +20,7 @@
     <!-- Menu -->
     <string name="home">Home</string>
     <string name="device">Device</string>
+    <string name="features">Features</string>
     <string name="performance">Performance</string>
     <string name="information">Information</string>
     <string name="extras">Extras</string>
@@ -113,6 +114,9 @@
     <string name="normal">Normal</string>
     <string name="warm">Warm</string>
     <string name="hot">Hot</string>
+    <!-- Features -->
+    <string name="logger_mode">Enable Logcat</string>
+    <string name="logger_mode_summary">Uncheck to remove any logs from logcat</string>
     <!-- Preferences -->
     <!-- App -->
     <string name="donate">Donate \u2665</string>
