@@ -49,8 +49,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.objects.Prop;
 import org.namelessrom.devicecontrol.providers.BusProvider;
-import org.namelessrom.devicecontrol.threads.FireAndForget;
-import org.namelessrom.devicecontrol.threads.FireAndGet;
+import org.namelessrom.devicecontrol.utils.FireAndForget;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
@@ -303,7 +302,7 @@ public class EditorFragment extends AttachFragment
                     break;
             }
 
-            new FireAndGet(sb.toString(), false, mActivity).run();
+            Utils.getCommandResult(-1, sb.toString(), false);
 
             return null;
         }
@@ -337,7 +336,7 @@ public class EditorFragment extends AttachFragment
                 });
             }
 
-            new FireAndGet("cat /system/build.prop", true, mActivity).run();
+            Utils.getCommandResult(-1, "cat /system/build.prop", true);
 
             return null;
         }

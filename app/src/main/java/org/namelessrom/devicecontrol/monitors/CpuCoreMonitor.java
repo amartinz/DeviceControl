@@ -25,6 +25,7 @@ import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
 import org.namelessrom.devicecontrol.objects.CpuCore;
@@ -166,7 +167,7 @@ public class CpuCoreMonitor implements DeviceConstants {
                         mult += 2;
                     }
 
-                    mActivity.runOnUiThread(new Runnable() {
+                    Application.HANDLER.post(new Runnable() {
                         @Override
                         public void run() {
                             BusProvider.getBus().post(new CpuCoreEvent(mCoreList));

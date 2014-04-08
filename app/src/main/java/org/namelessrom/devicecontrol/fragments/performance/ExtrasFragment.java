@@ -27,13 +27,10 @@ import android.preference.PreferenceScreen;
 import android.view.View;
 
 import com.squareup.otto.Subscribe;
-import com.stericson.roottools.RootTools;
-import com.stericson.roottools.execution.CommandCapture;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
-import org.namelessrom.devicecontrol.events.PerformanceExtrasFragmentEvent;
+import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.preferences.SeekBarPreference;
@@ -47,28 +44,31 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
-import static org.namelessrom.devicecontrol.Application.logDebug;
-
 public class ExtrasFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
         Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
     public static final int ID = 220;
 
+    private static final int ID_WORK       = 100;
+    private static final int ID_MPDECISION = 200;
+
     //==============================================================================================
     // Files
     //==============================================================================================
-    public static final String  sMcPowerSchedulerFile = Utils.checkPaths(FILES_MC_POWER_SCHEDULER);
-    public static final boolean sMcPowerScheduler     = !sMcPowerSchedulerFile.isEmpty();
-    //==============================================================================================
-    // Fields
-    //==============================================================================================
-    private static      boolean IS_LOW_RAM_DEVICE     = false;
+    public static final String  sPowerEfficientWorkFile =
+            Utils.checkPaths(FILES_POWER_EFFICIENT_WORK);
+    public static final boolean sPowerEfficientWork     = !sPowerEfficientWorkFile.isEmpty();
+    //----------------------------------------------------------------------------------------------
+    public static final String  sMcPowerSchedulerFile   =
+            Utils.checkPaths(FILES_MC_POWER_SCHEDULER);
+    public static final boolean sMcPowerScheduler       = !sMcPowerSchedulerFile.isEmpty();
     //----------------------------------------------------------------------------------------------
     private PreferenceScreen         mRoot;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mForceHighEndGfx;
     //----------------------------------------------------------------------------------------------
+    private CustomCheckBoxPreference mPowerEfficientWork;
     private SeekBarPreference        mMcPowerScheduler;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mMpDecision;
@@ -111,13 +111,14 @@ public class ExtrasFragment extends AttachPreferenceFragment
         addPreferencesFromResource(R.xml.extras);
         mRoot = getPreferenceScreen();
 
-        IS_LOW_RAM_DEVICE = Utils.getLowRamDevice(getActivity());
-
         mForceHighEndGfx = (CustomCheckBoxPreference) findPreference(FORCE_HIGHEND_GFX_PREF);
         if (mForceHighEndGfx != null) {
-            if (!IS_LOW_RAM_DEVICE) {
+            if (Utils.getLowRamDevice(getActivity())) {
+                mForceHighEndGfx
+                        .setChecked(Utils.existsInBuildProp("persist.sys.force_highendgfx=1"));
+                mForceHighEndGfx.setOnPreferenceChangeListener(this);
+            } else {
                 mRoot.removePreference(mForceHighEndGfx);
-                mForceHighEndGfx = null;
             }
         }
 
@@ -127,6 +128,15 @@ public class ExtrasFragment extends AttachPreferenceFragment
 
         PreferenceCategory category = (PreferenceCategory) findPreference(CATEGORY_POWERSAVING);
         if (category != null) {
+            mPowerEfficientWork =
+                    (CustomCheckBoxPreference) findPreference(KEY_POWER_EFFICIENT_WORK);
+            if (mPowerEfficientWork != null) {
+                if (sPowerEfficientWork) {
+                    Utils.getCommandResult(ID_WORK, Utils.getReadCommand(sPowerEfficientWorkFile));
+                } else {
+                    category.removePreference(mPowerEfficientWork);
+                }
+            }
             mMcPowerScheduler = (SeekBarPreference) findPreference(KEY_MC_POWER_SCHEDULER);
             if (mMcPowerScheduler != null) {
                 if (sMcPowerScheduler) {
@@ -148,8 +158,12 @@ public class ExtrasFragment extends AttachPreferenceFragment
         category = (PreferenceCategory) findPreference("hotplugging");
         if (category != null) {
             mMpDecision = (CustomCheckBoxPreference) findPreference("mpdecision");
-            if (mMpDecision != null && !Utils.fileExists(MPDECISION_PATH)) {
-                category.removePreference(mMpDecision);
+            if (mMpDecision != null) {
+                if (Utils.fileExists(MPDECISION_PATH)) {
+                    Utils.getCommandResult(ID_MPDECISION, "pgrep mpdecision 2> /dev/null;");
+                } else {
+                    category.removePreference(mMpDecision);
+                }
             }
         }
 
@@ -211,8 +225,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
         removeIfEmpty(category);
 
         isSupported(mRoot, getActivity());
-        getOnPerformanceExtrasFragmentEvent();
-
     }
 
     private void removeIfEmpty(final PreferenceGroup preferenceGroup) {
@@ -254,6 +266,12 @@ public class ExtrasFragment extends AttachPreferenceFragment
             CpuUtils.enableIntelliPlugEcoMode(value);
             PreferenceHelper.setBoolean(KEY_INTELLI_PLUG_ECO, value);
             changed = true;
+        } else if (preference == mPowerEfficientWork) {
+            final boolean rawValue = (Boolean) o;
+            final String value = rawValue ? "1" : "0";
+            Utils.runRootCommand(Utils.getWriteCommand(sPowerEfficientWorkFile, value));
+            PreferenceHelper.setBoolean(KEY_POWER_EFFICIENT_WORK, rawValue);
+            changed = true;
         } else if (preference == mMcPowerScheduler) {
             final int value = (Integer) o;
             Utils.writeValue(sMcPowerSchedulerFile, String.valueOf(value));
@@ -269,6 +287,30 @@ public class ExtrasFragment extends AttachPreferenceFragment
         return changed;
     }
 
+    @Subscribe
+    public void onGetCommandResult(final ShellOutputEvent event) {
+        if (event != null) {
+            final int id = event.getId();
+            final String result = event.getOutput();
+            switch (id) {
+                case ID_WORK:
+                    if (mPowerEfficientWork != null) {
+                        mPowerEfficientWork.setChecked(result.equals("Y"));
+                        mPowerEfficientWork.setOnPreferenceChangeListener(this);
+                    }
+                    break;
+                case ID_MPDECISION:
+                    if (mMpDecision != null) {
+                        mMpDecision.setChecked(!result.isEmpty());
+                        mMpDecision.setOnPreferenceChangeListener(this);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     //==============================================================================================
     // Methods
     //==============================================================================================
@@ -278,105 +320,27 @@ public class ExtrasFragment extends AttachPreferenceFragment
         String value;
 
         if (CpuUtils.hasIntelliPlug()) {
-            logDebug("Reapplying: IntelliPlug");
             value = PreferenceHelper.getBoolean(KEY_INTELLI_PLUG, false) ? "1" : "0";
             sbCmd.append(Utils.getWriteCommand(CpuUtils.INTELLI_PLUG_PATH, value));
         }
         if (CpuUtils.hasIntelliPlugEcoMode()) {
-            logDebug("Reapplying: IntelliPlugEco");
             value = PreferenceHelper.getBoolean(KEY_INTELLI_PLUG_ECO, false) ? "1" : "0";
             sbCmd.append(Utils.getWriteCommand(CpuUtils.INTELLI_PLUG_ECO_MODE_PATH, value));
         }
-        if (ExtrasFragment.sMcPowerScheduler) {
-            logDebug("Reapplying: McPowerScheduler");
+        if (sPowerEfficientWork) {
+            value = PreferenceHelper.getBoolean(KEY_POWER_EFFICIENT_WORK, false) ? "1" : "0";
+            sbCmd.append(Utils.getWriteCommand(sPowerEfficientWorkFile, value));
+        }
+        if (sMcPowerScheduler) {
             value = String.valueOf(PreferenceHelper.getInt(KEY_MC_POWER_SCHEDULER, 2));
             sbCmd.append(Utils.getWriteCommand(sMcPowerSchedulerFile, value));
         }
         if (CpuUtils.hasMsmDcvs()) {
-            logDebug("Reapplying: MSM DCVS");
             value = PreferenceHelper.getBoolean("msm_dcvs", false) ? "1" : "0";
             sbCmd.append(Utils.getWriteCommand(MSM_DCVS_FILE, value));
         }
 
         return sbCmd.toString();
-    }
-
-    @Subscribe
-    public void onPerformanceExtrasEvent(final PerformanceExtrasFragmentEvent event) {
-        if (event == null) { return; }
-        final boolean forceHighEndGfx = event.isForceHighEndGfx();
-        if (mForceHighEndGfx != null) {
-            mForceHighEndGfx.setChecked(forceHighEndGfx);
-            mForceHighEndGfx.setOnPreferenceChangeListener(this);
-        }
-        final boolean isMpDecisionRunning = event.isMpDecisionRunning();
-        if (mMpDecision != null) {
-            mMpDecision.setChecked(isMpDecisionRunning);
-            mMpDecision.setOnPreferenceChangeListener(this);
-        }
-    }
-
-    private void getOnPerformanceExtrasFragmentEvent() {
-        final Activity activity = getActivity();
-        if (activity != null) {
-            boolean tmp = false;
-            final StringBuilder sb = new StringBuilder();
-            sb.append("command=$(");
-
-            if (IS_LOW_RAM_DEVICE && Application.HAS_ROOT) {
-                tmp = Scripts.getForceHighEndGfx();
-            }
-            final boolean isForceHighEndGfx = tmp;
-
-            if (Utils.fileExists(MPDECISION_PATH)) {
-                sb.append("echo -n \"[mpdecision]\";");
-                sb.append("pgrep mpdecision 2> /dev/null;");
-            }
-
-            sb.append(");").append("echo \"$command\" | tr -d \"\\n\"");
-            final String cmd = sb.toString();
-            logDebug("cmd: " + cmd);
-
-            final StringBuilder outputCapture = new StringBuilder();
-            final CommandCapture commandCapture = new CommandCapture(0, false, cmd) {
-                @Override
-                public void commandOutput(final int id, final String line) {
-                    outputCapture.append(line);
-                    logDebug("line: " + line);
-                }
-
-                @Override
-                public void commandCompleted(int id, int exitcode) {
-                    final String output = outputCapture.toString();
-                    logDebug("output: " + output);
-
-                    final String[] result = output.split(" ");
-                    String tmpMpDecision = "";
-
-                    for (final String s : result) {
-                        if (s.contains("[mpdecision]")) {
-                            tmpMpDecision = s.replace("[mpdecision]", "");
-                        }
-                    }
-
-                    final boolean isMpDecisionRunning = !tmpMpDecision.isEmpty();
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            BusProvider.getBus().post(
-                                    new PerformanceExtrasFragmentEvent(
-                                            isForceHighEndGfx,
-                                            isMpDecisionRunning
-                                    )
-                            );
-                        }
-                    });
-                }
-            };
-            try {
-                RootTools.getShell(true).add(commandCapture);
-            } catch (Exception ignored) { }
-        }
     }
 
 }

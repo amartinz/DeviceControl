@@ -26,7 +26,10 @@ public class TaskerService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        final String action = intent.getAction();
+        String action = "";
+        if (intent != null) {
+            action = intent.getAction();
+        }
         if (action == null || action.isEmpty() || action.equals(ACTION_STOP)) {
             logDebug("Stopping TaskerService");
             stopSelf();
