@@ -17,14 +17,14 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import android.app.Activity;
-
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.CpuFreqEvent;
 import org.namelessrom.devicecontrol.events.GovernorEvent;
 import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
@@ -42,7 +42,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
-import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.KEY_MPDECISION;
 
 /**
  * Generic CPU Tasks.
@@ -372,45 +371,16 @@ public class CpuUtils implements PerformanceConstants {
         } else { return "0"; }
     }
 
-    public static String restore() {
-        final StringBuilder sb = new StringBuilder();
+    public static String restore(final DatabaseHandler db) {
+        final StringBuilder sbCmd = new StringBuilder();
 
-        final int cpuCount = getNumOfCpus();
-        String path, value, pathOnline;
-        for (int i = 0; i < cpuCount; i++) {
-            pathOnline = getOnlinePath(i);
-            if (!pathOnline.isEmpty()) {
-                sb.append(Utils.getWriteCommand(pathOnline, "0"));
-                sb.append(Utils.getWriteCommand(pathOnline, "1"));
-            }
-            path = getMaxCpuFrequencyPath(i);
-            value = PreferenceHelper.getString(PREF_MAX_CPU, "");
-            if (!value.isEmpty()) {
-                sb.append(Utils.getWriteCommand(path, value));
-            }
-            path = getMinCpuFrequencyPath(i);
-            value = PreferenceHelper.getString(PREF_MIN_CPU, "");
-            if (!value.isEmpty()) {
-                sb.append(Utils.getWriteCommand(path, value));
-            }
-            path = getGovernorPath(i);
-            value = PreferenceHelper.getString(PREF_GOV, "");
-            if (!value.isEmpty()) {
-                sb.append(Utils.getWriteCommand(path, value));
-            }
+        final List<DataItem> items = db.getAllItems(
+                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_CPU);
+        for (final DataItem item : items) {
+            sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
         }
 
-        final String io = PreferenceHelper.getString(PREF_IO, "");
-        if (!io.isEmpty()) {
-            for (final String schedulerPath : IO_SCHEDULER_PATH) {
-                sb.append(Utils.getWriteCommand(schedulerPath, io));
-            }
-        }
-
-        final boolean mpdecision = PreferenceHelper.getBoolean(KEY_MPDECISION, false);
-        sb.append(enableMpDecision(mpdecision));
-
-        return sb.toString();
+        return sbCmd.toString();
     }
 
     public static String[] getAvailableFrequencies() {
@@ -424,7 +394,7 @@ public class CpuUtils implements PerformanceConstants {
     //==============================================================================================
     // Events
     //==============================================================================================
-    public static void getCpuFreqEvent(final Activity activity) {
+    public static void getCpuFreqEvent() {
         try {
             final Shell mShell = RootTools.getShell(true);
             if (mShell == null) { throw new Exception("Shell is null"); }
@@ -484,7 +454,7 @@ public class CpuUtils implements PerformanceConstants {
         }
     }
 
-    public static void getGovernorEvent(final Activity activity) {
+    public static void getGovernorEvent() {
         try {
             final Shell mShell = RootTools.getShell(true);
             if (mShell == null) { throw new Exception("Shell is null"); }
@@ -539,7 +509,7 @@ public class CpuUtils implements PerformanceConstants {
         }
     }
 
-    public static void getIoSchedulerEvent(final Activity activity) {
+    public static void getIoSchedulerEvent() {
         try {
             final Shell mShell = RootTools.getShell(true);
             if (mShell == null) { throw new Exception("Shell is null"); }

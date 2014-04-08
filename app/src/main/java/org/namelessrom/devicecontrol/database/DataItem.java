@@ -2,8 +2,6 @@ package org.namelessrom.devicecontrol.database;
 
 public class DataItem {
 
-    public static final String CATEGORY_CPU = "cpu";
-
     private int    _id;
     private String _category;
     private String _name;

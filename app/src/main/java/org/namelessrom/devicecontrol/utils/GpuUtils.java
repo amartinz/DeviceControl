@@ -1,12 +1,12 @@
 package org.namelessrom.devicecontrol.utils;
 
-import android.app.Activity;
-
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.GpuEvent;
 import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
@@ -56,20 +56,16 @@ public class GpuUtils implements PerformanceConstants {
         } else { return "0"; }
     }
 
-    public static String restore() {
-        final StringBuilder sb = new StringBuilder();
+    public static String restore(final DatabaseHandler db) {
+        final StringBuilder sbCmd = new StringBuilder();
 
-        final String gpuMax = PreferenceHelper.getString(PREF_MAX_GPU, "");
-        if (gpuMax != null && !gpuMax.isEmpty()) {
-            sb.append(Utils.getWriteCommand(GPU_MAX_FREQ_FILE, gpuMax));
+        final List<DataItem> items = db.getAllItems(
+                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_GPU);
+        for (final DataItem item : items) {
+            sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
         }
 
-        final String gpuGov = PreferenceHelper.getString(PREF_GPU_GOV, "");
-        if (gpuGov != null && !gpuGov.isEmpty()) {
-            sb.append(Utils.getWriteCommand(GPU_GOV_PATH, gpuGov));
-        }
-
-        return sb.toString();
+        return sbCmd.toString();
     }
 
     public static String[] freqsToMhz(final String[] frequencies) {
@@ -93,7 +89,7 @@ public class GpuUtils implements PerformanceConstants {
     //==============================================================================================
     // Events
     //==============================================================================================
-    public static void getOnGpuEvent(final Activity activity) {
+    public static void getOnGpuEvent() {
         try {
             final Shell mShell = RootTools.getShell(true);
             if (mShell == null) { throw new Exception("Shell is null"); }
