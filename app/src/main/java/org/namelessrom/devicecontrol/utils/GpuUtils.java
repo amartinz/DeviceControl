@@ -6,6 +6,7 @@ import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.events.GpuEvent;
 import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
@@ -23,7 +24,7 @@ public class GpuUtils implements PerformanceConstants {
 
     public static String[] getFreqToMhz(final String file) throws IOException {
         final ArrayList<String> names = new ArrayList<String>();
-        Utils.setPermissions(file);
+        Utils.runRootCommand(String.format("chmod 644 %s", file));
 
         final File freqfile = new File(file);
         FileInputStream fin1 = null;
@@ -135,7 +136,7 @@ public class GpuUtils implements PerformanceConstants {
                     final String[] avail = tmpList.toArray(new String[tmpList.size()]);
                     final String max = tmpMax;
                     final String gov = tmpGov;
-                    activity.runOnUiThread(new Runnable() {
+                    Application.HANDLER.post(new Runnable() {
                         @Override
                         public void run() {
                             BusProvider.getBus().post(new GpuEvent(avail, max, gov));

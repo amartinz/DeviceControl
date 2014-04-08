@@ -30,6 +30,8 @@ import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -38,13 +40,13 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
+import static org.namelessrom.devicecontrol.Application.HANDLER;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class Utils implements DeviceConstants, FileConstants {
@@ -144,49 +146,6 @@ public class Utils implements DeviceConstants, FileConstants {
                 : CMDProcessor.runShellCommand(command).getStdout();
     }
 
-
-    public static boolean getMount(final String mount) {
-        final String[] mounts = getMounts("/system");
-        if (mounts != null && mounts.length >= 3) {
-            final String device = mounts[0];
-            final String path = mounts[1];
-            final String point = mounts[2];
-            final String preferredMountCmd =
-                    "mount -o " + mount + ",remount -t " + point + ' ' + device + ' ' + path;
-            if (CMDProcessor.runSuCommand(preferredMountCmd).success()) {
-                return true;
-            }
-        }
-        final String fallbackMountCmd = "busybox mount -o remount," + mount + " /system";
-        return CMDProcessor.runSuCommand(fallbackMountCmd).success();
-    }
-
-    public static String[] getMounts(CharSequence path) {
-        BufferedReader bufferedReader = null;
-        try {
-            bufferedReader = new BufferedReader(new FileReader("/proc/mounts"), 256);
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                if (line.contains(path)) {
-                    return line.split(" ");
-                }
-            }
-        } catch (FileNotFoundException ignored) {
-            logDebug("/proc/mounts does not exist");
-        } catch (IOException ignored) {
-            logDebug("Error reading /proc/mounts");
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException ignored) {
-                    // ignored
-                }
-            }
-        }
-        return null;
-    }
-
     /**
      * Write a string value to the specified file.
      *
@@ -272,7 +231,7 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
-    public static boolean getLowRamDevice(final Context context) {
+    public static boolean isLowRamDevice(final Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return false;
         } else {
@@ -299,12 +258,6 @@ public class Utils implements DeviceConstants, FileConstants {
         return null;
     }
 
-    public static void setPermissions(String file) {
-        if (new File(file).exists()) {
-            runRootCommand("chmod 655 " + file);
-        }
-    }
-
     public static void runRootCommand(String command) {
         final CommandCapture comm = new CommandCapture(0, false, command);
         try {
@@ -314,8 +267,49 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
+    public static void getCommandResult(final int ID, final String COMMAND) {
+        getCommandResult(ID, COMMAND, false);
+    }
+
+    public static void getCommandResult(final int ID, final String COMMAND, final boolean NEWLINE) {
+        final StringBuilder sb = new StringBuilder();
+        final CommandCapture comm = new CommandCapture(0, false, COMMAND) {
+            @Override
+            public void commandOutput(int id, String line) {
+                sb.append(line);
+                if (NEWLINE) {
+                    sb.append('\n');
+                }
+            }
+
+            @Override
+            public void commandCompleted(int id, int exitcode) {
+                final String result = sb.toString();
+                logDebug(String.format("Generic Output for %s: %s", String.valueOf(ID), result));
+                HANDLER.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        BusProvider.getBus().post(new ShellOutputEvent(ID, result));
+                    }
+                });
+            }
+        };
+        try {
+            RootTools.getShell(true).add(comm);
+        } catch (Exception e) {
+            logDebug("runRootCommand: " + e.getMessage());
+        }
+    }
+
+    public static String getReadCommand(final String path) {
+        final String cmd = String.format("cat %s 2> /dev/null", path);
+        logDebug("ReadCommand: " + cmd);
+        return cmd;
+    }
+
     public static String getWriteCommand(final String path, final String value) {
-        final String cmd = String.format("busybox echo \"%s\" > %s;\n", value, path);
+        final String cmd = String.format("chmod 644 %s;\n", path) +
+                String.format("busybox echo \"%s\" > %s;\n", value, path);
         logDebug("WriteCommand: " + cmd);
         return cmd;
     }

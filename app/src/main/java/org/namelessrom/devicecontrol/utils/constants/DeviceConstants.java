@@ -37,27 +37,28 @@ public interface DeviceConstants {
     //==============================================================================================
     // Keys
     //==============================================================================================
-    public static final String KEY_TOUCHKEY_LIGHT     = "touchkey_light";
-    public static final String KEY_TOUCHKEY_BLN       = "touchkey_bln";
-    public static final String KEY_KEYBOARD_LIGHT     = "keyboard_light";
+    public static final String KEY_TOUCHKEY_LIGHT       = "touchkey_light";
+    public static final String KEY_TOUCHKEY_BLN         = "touchkey_bln";
+    public static final String KEY_KEYBOARD_LIGHT       = "keyboard_light";
     // Vibration
-    public static final String KEY_VIBRATOR_TUNING    = "vibrator_tuning";
-    public static final String KEY_NAVBAR_FORCE       = "navbar_force";
+    public static final String KEY_VIBRATOR_TUNING      = "vibrator_tuning";
+    public static final String KEY_NAVBAR_FORCE         = "navbar_force";
     // Input
-    public static final String KEY_GLOVE_MODE         = "input_glove_mode";
-    public static final String KEY_KNOCK_ON           = "knockon_gesture_enable";
+    public static final String KEY_GLOVE_MODE           = "input_glove_mode";
+    public static final String KEY_KNOCK_ON             = "knockon_gesture_enable";
     // Panel
-    public static final String KEY_PANEL_COLOR_TEMP   = "panel_color_temperature";
+    public static final String KEY_PANEL_COLOR_TEMP     = "panel_color_temperature";
     // Performance Cpu
     //==============================================================================================
-    public static final String FORCE_HIGHEND_GFX_PREF = "pref_force_highend_gfx";
+    public static final String FORCE_HIGHEND_GFX_PREF   = "pref_force_highend_gfx";
     //==============================================================================================
-    public static final String KEY_MPDECISION         = "mpdecision";
-    public static final String GROUP_INTELLI_PLUG     = "intelli_plug";
-    public static final String KEY_INTELLI_PLUG       = "intelli_plug_active";
-    public static final String KEY_LCD_POWER_REDUCE   = "lcd_power_reduce";
-    public static final String KEY_INTELLI_PLUG_ECO   = "intelli_plug_eco";
-    public static final String KEY_MC_POWER_SCHEDULER = "sched_mc_power_savings";
+    public static final String KEY_MPDECISION           = "mpdecision";
+    public static final String GROUP_INTELLI_PLUG       = "intelli_plug";
+    public static final String KEY_INTELLI_PLUG         = "intelli_plug_active";
+    public static final String KEY_LCD_POWER_REDUCE     = "lcd_power_reduce";
+    public static final String KEY_INTELLI_PLUG_ECO     = "intelli_plug_eco";
+    public static final String KEY_MC_POWER_SCHEDULER   = "sched_mc_power_savings";
+    public static final String KEY_POWER_EFFICIENT_WORK = "power_efficient_work";
 
     //==============================================================================================
     // Categories

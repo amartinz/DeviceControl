@@ -19,10 +19,10 @@
 
 package org.namelessrom.devicecontrol.monitors;
 
-import android.app.Activity;
 import android.os.SystemClock;
 import android.util.SparseArray;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.events.CpuStateEvent;
 import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
@@ -43,15 +43,12 @@ public class CpuStateMonitor implements DeviceConstants {
     private final SparseArray<Long> mOffsets = new SparseArray<Long>();
 
     private static CpuStateMonitor mCpuStateMonitor;
-    private static Activity        mActivity;
 
-    private CpuStateMonitor(final Activity activity) {
-        mActivity = activity;
-    }
+    private CpuStateMonitor() { }
 
-    public static CpuStateMonitor getInstance(final Activity activity) {
+    public static CpuStateMonitor getInstance() {
         if (mCpuStateMonitor == null) {
-            mCpuStateMonitor = new CpuStateMonitor(activity);
+            mCpuStateMonitor = new CpuStateMonitor();
         }
 
         return mCpuStateMonitor;
@@ -110,7 +107,7 @@ public class CpuStateMonitor implements DeviceConstants {
         Collections.sort(mStates, Collections.reverseOrder());
 
         final long totalStateTime = getTotalStateTime();
-        mActivity.runOnUiThread(new Runnable() {
+        Application.HANDLER.post(new Runnable() {
             @Override
             public void run() {
                 BusProvider.getBus().post(new CpuStateEvent(mStates, totalStateTime));
