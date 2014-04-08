@@ -345,7 +345,7 @@ public class InformationFragment extends AttachFragment implements DeviceConstan
             if (!mUpdatingData) {
                 mUpdatingData = true;
                 try {
-                    CpuStateMonitor.getInstance(getActivity()).updateStates();
+                    CpuStateMonitor.getInstance().updateStates();
                 } catch (IOException ignored) { }
             }
             return null;

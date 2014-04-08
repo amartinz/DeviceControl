@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -55,6 +56,8 @@ public class Application extends android.app.Application implements DeviceConsta
 
     public static AlarmManager alarmManager;
     public static Context      applicationContext;
+
+    public static final Handler HANDLER = new Handler();
 
     private static PackageManager packageManager;
 
