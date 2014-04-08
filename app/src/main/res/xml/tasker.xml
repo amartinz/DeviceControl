@@ -16,7 +16,8 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <org.namelessrom.devicecontrol.preferences.CustomPreference
         android:key="tasker"
@@ -31,7 +32,8 @@
             android:key="fstrim"
             android:title="@string/fstrim_title"
             android:summary="@string/fstrim_summary"
-            android:persistent="false" />
+            android:persistent="false"
+            app:hide_boot="true" />
 
         <org.namelessrom.devicecontrol.preferences.CustomListPreference
             android:key="fstrim_interval"
@@ -41,7 +43,8 @@
             android:entries="@array/fstrim_entries"
             android:entryValues="@array/fstrim_values"
             android:defaultValue="7"
-            android:persistent="false" />
+            android:persistent="false"
+            app:hide_boot="true" />
 
     </PreferenceCategory>
 

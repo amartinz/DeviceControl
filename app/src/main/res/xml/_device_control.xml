@@ -26,7 +26,8 @@
         <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="pref_donate"
             android:title="@string/donate"
-            android:summary="@string/donate_summary" />
+            android:summary="@string/donate_summary"
+            app:hide_boot="true" />
 
     </PreferenceCategory>
 
@@ -37,37 +38,37 @@
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_device"
             android:title="@string/device"
-            app:auto_handle="true" />
+            app:hide_boot="true" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_cpu"
             android:title="@string/cpusettings"
-            app:auto_handle="true" />
+            app:hide_boot="true" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_gpu"
             android:title="@string/gpusettings"
-            app:auto_handle="true" />
+            app:hide_boot="true" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_extras"
             android:title="@string/extras"
-            app:auto_handle="true" />
+            app:hide_boot="true" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_voltage"
             android:title="@string/voltage_control"
-            app:auto_handle="true" />
+            app:hide_boot="true" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_vm"
             android:title="@string/vm"
-            app:auto_handle="true" />
+            app:hide_boot="true" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="sob_sysctl"
             android:title="@string/sysctl"
-            app:auto_handle="true" />
+            app:hide_boot="true" />
 
     </PreferenceCategory>
 
@@ -78,7 +79,8 @@
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="show_launcher"
             android:title="@string/show_launcher"
-            android:summary="@string/show_launcher_summary" />
+            android:summary="@string/show_launcher_summary"
+            app:hide_boot="true" />
 
     </PreferenceCategory>
 
@@ -90,7 +92,8 @@
             android:key="extensive_logging"
             android:title="@string/extensive_logging"
             android:summaryOn="@string/extensive_logging_summary_on"
-            android:summaryOff="@string/extensive_logging_summary_off" />
+            android:summaryOff="@string/extensive_logging_summary_off"
+            app:hide_boot="true" />
 
     </PreferenceCategory>
 
@@ -98,10 +101,11 @@
         android:key="prefs_version_cat"
         android:title="@string/version">
 
-        <Preference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="prefs_version"
             android:title="@string/empty"
-            android:summary="@string/empty" />
+            android:summary="@string/empty"
+            app:hide_boot="true" />
 
     </PreferenceCategory>
 

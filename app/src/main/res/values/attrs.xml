@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CustomPreferences">
-        <attr name="auto_handle" format="boolean" />
+    <declare-styleable name="AnimatedCheckbox">
+        <attr name="cb_color" format="color" />
+        <attr name="cb_pressed_ring_width" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="CustomCheckBoxPreference">
+        <attr name="hide_boot" format="boolean" />
     </declare-styleable>
 </resources>

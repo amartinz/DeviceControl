@@ -32,8 +32,8 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.preferences.SeekBarPreference;
 import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -69,7 +69,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference mForceHighEndGfx;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mPowerEfficientWork;
-    private SeekBarPreference        mMcPowerScheduler;
+    private CustomListPreference     mMcPowerScheduler;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mMpDecision;
     private CustomCheckBoxPreference mIntelliPlug;
@@ -137,12 +137,12 @@ public class ExtrasFragment extends AttachPreferenceFragment
                     category.removePreference(mPowerEfficientWork);
                 }
             }
-            mMcPowerScheduler = (SeekBarPreference) findPreference(KEY_MC_POWER_SCHEDULER);
+            mMcPowerScheduler = (CustomListPreference) findPreference(KEY_MC_POWER_SCHEDULER);
             if (mMcPowerScheduler != null) {
                 if (sMcPowerScheduler) {
-                    mMcPowerScheduler.setProgress(
-                            Integer.parseInt(Utils.readOneLine(sMcPowerSchedulerFile))
-                    );
+                    final String value = Utils.readOneLine(sMcPowerSchedulerFile);
+                    mMcPowerScheduler.setValue(value);
+                    mMcPowerScheduler.setSummary(mMcPowerScheduler.getEntry());
                     mMcPowerScheduler.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mMcPowerScheduler);
@@ -273,9 +273,14 @@ public class ExtrasFragment extends AttachPreferenceFragment
             PreferenceHelper.setBoolean(KEY_POWER_EFFICIENT_WORK, rawValue);
             changed = true;
         } else if (preference == mMcPowerScheduler) {
-            final int value = (Integer) o;
-            Utils.writeValue(sMcPowerSchedulerFile, String.valueOf(value));
-            PreferenceHelper.setInt(KEY_MC_POWER_SCHEDULER, value);
+            final String value = String.valueOf(o);
+            Utils.writeValue(sMcPowerSchedulerFile, value);
+            PreferenceHelper.setString(KEY_MC_POWER_SCHEDULER, value);
+            if (mMcPowerScheduler.getEntries() != null) {
+                final String summary = String.valueOf(
+                        mMcPowerScheduler.getEntries()[Integer.parseInt(value)]);
+                mMcPowerScheduler.setSummary(summary);
+            }
             changed = true;
         } else if (preference == mMsmDcvs) {
             final boolean value = (Boolean) o;

@@ -1,93 +1,109 @@
 package org.namelessrom.devicecontrol.preferences;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.preference.CheckBoxPreference;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.widgets.AnimatedCheckbox;
 
-public class CustomCheckBoxPreference extends CheckBoxPreference
-        implements Preference.OnPreferenceChangeListener {
+public class CustomCheckBoxPreference extends CheckBoxPreference {
 
-    private String color = "#FFFFFF";
-    private String            value;
-    private SharedPreferences mPrefs;
-    private boolean mAutoHandle = false;
+    private String  mColor = "#FFFFFF";
+    private boolean mHide  = false;
+    private String mValue;
+
+    private View             mSeperator;
+    private AnimatedCheckbox mCheckBox;
 
     public CustomCheckBoxPreference(Context context) {
         super(context);
-        setLayoutResource(R.layout.preference);
+        mHide = true;
+        setLayoutResource(R.layout.preference_checkbox);
     }
 
     public CustomCheckBoxPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setLayoutResource(R.layout.preference);
-        init(attrs);
+        init(attrs, context);
+        setLayoutResource(R.layout.preference_checkbox);
     }
 
     public CustomCheckBoxPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        setLayoutResource(R.layout.preference);
-        init(attrs);
+        init(attrs, context);
+        setLayoutResource(R.layout.preference_checkbox);
     }
 
-    private void init(AttributeSet attrs) {
-        final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.CustomPreferences, 0, 0
-        );
-        if (a != null) {
-            mAutoHandle = a.getBoolean(R.styleable.CustomPreferences_auto_handle, false);
-            a.recycle();
+    private void init(final AttributeSet attrs, final Context context) {
+        if (attrs != null) {
+            final TypedArray a = context.obtainStyledAttributes(
+                    attrs, R.styleable.CustomCheckBoxPreference);
+            if (a != null) {
+                mHide = a.getBoolean(R.styleable.CustomCheckBoxPreference_hide_boot, mHide);
+                a.recycle();
+            }
         }
     }
 
     public void setTitleColor(String color) {
-        this.color = color;
+        mColor = color;
     }
 
     public void setValue(String value) {
-        this.value = value;
+        mValue = value;
     }
 
     public String getValue() {
-        return this.value;
+        return mValue;
     }
 
     @Override
-    protected void onBindView(View view) {
+    protected void onBindView(final View view) {
         super.onBindView(view);
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         final TextView mTitle = (TextView) view.findViewById(android.R.id.title);
-        mTitle.setTextColor(Color.parseColor(color));
+        mTitle.setTextColor(Color.parseColor(mColor));
         mTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
 
         final TextView mSummary = (TextView) view.findViewById(android.R.id.summary);
         mSummary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
 
-        final boolean checked = mPrefs.getBoolean(getKey(), false);
-        final CheckBox mCheckBox = (CheckBox) view.findViewById(android.R.id.checkbox);
-        mCheckBox.setChecked(checked);
-        if (mAutoHandle) {
-            setOnPreferenceChangeListener(this);
+        mSeperator = view.findViewById(R.id.separator);
+        mCheckBox = (AnimatedCheckbox) view.findViewById(R.id.cb);
+        hideBootup();
+    }
+
+    public void setOnCheckedChangeListener(final CompoundButton.OnCheckedChangeListener listener) {
+        if (mCheckBox != null) {
+            mCheckBox.setOnCheckedChangeListener(listener);
+        }
+    }
+
+    public void hideBootup() {
+        if (mHide) {
+            if (mSeperator != null) {
+                mSeperator.setVisibility(View.GONE);
+            }
+            if (mCheckBox != null) {
+                mCheckBox.setVisibility(View.GONE);
+            }
         }
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object o) {
-        final boolean value = (Boolean) o;
-        final SharedPreferences.Editor editor = mPrefs.edit();
-        editor.putBoolean(getKey(), value);
-        editor.commit();
-        return true;
+    public boolean isPersistent() {
+        return false;
     }
+
+    @Override
+    protected boolean shouldPersist() {
+        return false;
+    }
+
 }

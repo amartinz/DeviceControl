@@ -83,8 +83,7 @@ public class VibratorTuningPreference extends DialogPreference
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
         builder.setNeutralButton(R.string.defaults_button, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
+            public void onClick(DialogInterface dialog, int which) { }
         });
     }
 
@@ -224,6 +223,16 @@ public class VibratorTuningPreference extends DialogPreference
 
     public static boolean isSupported() {
         return (!FILE_VIBRATOR.isEmpty());
+    }
+
+    @Override
+    public boolean isPersistent() {
+        return false;
+    }
+
+    @Override
+    protected boolean shouldPersist() {
+        return false;
     }
 
 }
