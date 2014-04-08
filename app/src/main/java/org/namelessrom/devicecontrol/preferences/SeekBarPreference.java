@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 public class SeekBarPreference extends Preference implements OnSeekBarChangeListener {
 
@@ -214,7 +215,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
         if (!mHideValue && mCustomStatus.isEmpty()) {
             mStatusText.setText(String.valueOf(newValue));
         }
-        persistInt(newValue);
+        PreferenceHelper.setInt(getKey(), newValue);
         notifyChanged();
     }
 
@@ -226,19 +227,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
     @Override
     protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        if (restoreValue) {
-            mCurrentValue = getPersistedInt(mCurrentValue);
-        } else {
-            int temp = 0;
-            try {
-                temp = (Integer) defaultValue;
-            } catch (Exception ex) {
-                Log.e(TAG, "Invalid default value: " + defaultValue.toString());
-            }
-
-            persistInt(temp);
-            mCurrentValue = temp;
-        }
+        PreferenceHelper.getInt(getKey(), Integer.parseInt(String.valueOf(defaultValue)));
     }
 
     /**
@@ -267,6 +256,15 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
         mCurrentValue = progress;
     }
 
+    @Override
+    public boolean isPersistent() {
+        return false;
+    }
+
+    @Override
+    protected boolean shouldPersist() {
+        return false;
+    }
 
 }
 
