@@ -98,7 +98,7 @@
         android:key="prefs_version_cat"
         android:title="@string/version">
 
-        <Preference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="prefs_version"
             android:title="@string/empty"
             android:summary="@string/empty" />

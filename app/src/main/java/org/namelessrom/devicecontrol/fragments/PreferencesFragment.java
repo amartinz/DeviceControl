@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -55,6 +56,16 @@ public class PreferencesFragment extends AttachPreferenceFragment
     private CustomPreference         mDonatePreference;
     private CustomCheckBoxPreference mMonkeyPref;
     //==============================================================================================
+    // Set On Boot
+    //==============================================================================================
+    private CustomCheckBoxPreference mSobDevice;
+    private CustomCheckBoxPreference mSobCpu;
+    private CustomCheckBoxPreference mSobGpu;
+    private CustomCheckBoxPreference mSobExtras;
+    private CustomCheckBoxPreference mSobVoltage;
+    private CustomCheckBoxPreference mSobVm;
+    private CustomCheckBoxPreference mSobSysCtl;
+    //==============================================================================================
     // Debug
     //==============================================================================================
     private CustomCheckBoxPreference mExtensiveLogging;
@@ -69,6 +80,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
         mExtensiveLogging = (CustomCheckBoxPreference) findPreference(EXTENSIVE_LOGGING);
         if (mExtensiveLogging != null) {
+            mExtensiveLogging.setChecked(PreferenceHelper.getBoolean(EXTENSIVE_LOGGING));
             mExtensiveLogging.setOnPreferenceChangeListener(this);
         }
 
@@ -77,6 +89,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
             mShowLauncher = (CustomCheckBoxPreference) findPreference(SHOW_LAUNCHER);
             if (mShowLauncher != null) {
                 if (Application.IS_NAMELESS) {
+                    mShowLauncher.setChecked(PreferenceHelper.getBoolean(SHOW_LAUNCHER));
                     mShowLauncher.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mShowLauncher);
@@ -88,14 +101,17 @@ public class PreferencesFragment extends AttachPreferenceFragment
             }
         }
 
-        final Preference mVersion = findPreference("prefs_version");
+        final CustomPreference mVersion = (CustomPreference) findPreference("prefs_version");
         if (mVersion != null) {
             mVersion.setEnabled(false);
             try {
-                final PackageInfo pInfo = mActivity.getPackageManager()
-                        .getPackageInfo(mActivity.getPackageName(), 0);
-                mVersion.setTitle(getString(R.string.app_version_name, pInfo.versionName));
-                mVersion.setSummary(getString(R.string.app_version_code, pInfo.versionCode));
+                final PackageManager pm = mActivity.getPackageManager();
+                if (pm != null) {
+                    final PackageInfo pInfo = pm.getPackageInfo(
+                            mActivity.getPackageName(), 0);
+                    mVersion.setTitle(getString(R.string.app_version_name, pInfo.versionName));
+                    mVersion.setSummary(getString(R.string.app_version_code, pInfo.versionCode));
+                }
             } catch (Exception ignored) {
                 final String unknown = getString(R.string.unknown);
                 mVersion.setTitle(unknown);
@@ -122,6 +138,48 @@ public class PreferencesFragment extends AttachPreferenceFragment
                 category.addPreference(mMonkeyPref);
             }
         }
+
+        mSobDevice = (CustomCheckBoxPreference) findPreference(SOB_DEVICE);
+        if (mSobDevice != null) {
+            mSobDevice.setChecked(PreferenceHelper.getBoolean(SOB_DEVICE));
+            mSobDevice.setOnPreferenceChangeListener(this);
+        }
+
+        mSobCpu = (CustomCheckBoxPreference) findPreference(SOB_CPU);
+        if (mSobCpu != null) {
+            mSobCpu.setChecked(PreferenceHelper.getBoolean(SOB_CPU));
+            mSobCpu.setOnPreferenceChangeListener(this);
+        }
+
+        mSobGpu = (CustomCheckBoxPreference) findPreference(SOB_GPU);
+        if (mSobGpu != null) {
+            mSobGpu.setChecked(PreferenceHelper.getBoolean(SOB_GPU));
+            mSobGpu.setOnPreferenceChangeListener(this);
+        }
+
+        mSobExtras = (CustomCheckBoxPreference) findPreference(SOB_EXTRAS);
+        if (mSobExtras != null) {
+            mSobExtras.setChecked(PreferenceHelper.getBoolean(SOB_EXTRAS));
+            mSobExtras.setOnPreferenceChangeListener(this);
+        }
+
+        mSobVoltage = (CustomCheckBoxPreference) findPreference(SOB_VOLTAGE);
+        if (mSobVoltage != null) {
+            mSobVoltage.setChecked(PreferenceHelper.getBoolean(SOB_VOLTAGE));
+            mSobVoltage.setOnPreferenceChangeListener(this);
+        }
+
+        mSobVm = (CustomCheckBoxPreference) findPreference(SOB_VM);
+        if (mSobVm != null) {
+            mSobVm.setChecked(PreferenceHelper.getBoolean(SOB_VM));
+            mSobVm.setOnPreferenceChangeListener(this);
+        }
+
+        mSobSysCtl = (CustomCheckBoxPreference) findPreference(SOB_SYSCTL);
+        if (mSobSysCtl != null) {
+            mSobSysCtl.setChecked(PreferenceHelper.getBoolean(SOB_SYSCTL));
+            mSobSysCtl.setOnPreferenceChangeListener(this);
+        }
     }
 
 
@@ -130,7 +188,9 @@ public class PreferencesFragment extends AttachPreferenceFragment
             Bundle savedInstanceState) {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        view.setBackgroundResource(R.drawable.preference_drawer_background);
+        if (view != null) {
+            view.setBackgroundResource(R.drawable.preference_drawer_background);
+        }
 
         return view;
     }
@@ -151,16 +211,53 @@ public class PreferencesFragment extends AttachPreferenceFragment
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(EXTENSIVE_LOGGING, value);
             Application.IS_LOG_DEBUG = value;
+            mExtensiveLogging.setChecked(value);
             changed = true;
         } else if (mShowLauncher == preference) {
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(SHOW_LAUNCHER, value);
             Application.toggleLauncherIcon(value);
+            mShowLauncher.setChecked(value);
             changed = true;
         } else if (mMonkeyPref == preference) {
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean("monkey", value);
             // TODO: add some more easter eggs?
+            changed = true;
+        } else if (mSobDevice == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(SOB_DEVICE, value);
+            mSobDevice.setChecked(value);
+            changed = true;
+        } else if (mSobCpu == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(SOB_CPU, value);
+            mSobCpu.setChecked(value);
+            changed = true;
+        } else if (mSobGpu == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(SOB_GPU, value);
+            mSobGpu.setChecked(value);
+            changed = true;
+        } else if (mSobExtras == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(SOB_EXTRAS, value);
+            mSobExtras.setChecked(value);
+            changed = true;
+        } else if (mSobVoltage == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(SOB_VOLTAGE, value);
+            mSobVoltage.setChecked(value);
+            changed = true;
+        } else if (mSobVm == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(SOB_VM, value);
+            mSobVm.setChecked(value);
+            changed = true;
+        } else if (mSobSysCtl == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(SOB_SYSCTL, value);
+            mSobSysCtl.setChecked(value);
             changed = true;
         }
 

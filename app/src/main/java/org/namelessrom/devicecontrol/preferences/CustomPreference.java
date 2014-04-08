@@ -112,5 +112,6 @@ public class CustomPreference extends Preference {
         title.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
         summary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
     }
+
 }
 

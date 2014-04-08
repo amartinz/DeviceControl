@@ -57,7 +57,6 @@
     <string name="power_efficient_work">Power Efficient Workqueue</string>
     <string name="power_efficient_work_summary">Allows the work to be rescheduled on a core that is already awake.</string>
     <string name="powersaving_sched_mc_title">Power Scheduler</string>
-    <string name="powersaving_sched_mc_summary">Tries to group tasks on a core until it reaches its maximum load and powers on the next core.\nIf enabled, it sacrifices power in exchange for battery life.\n\n0 for disabling it, 1 for balanced, 2 for aggressive.</string>
     <string name="powersaving_sched_mc_0">0 - Disabled</string>
     <string name="powersaving_sched_mc_1">1 - Balanced</string>
     <string name="powersaving_sched_mc_2">2 - Aggressive</string>
