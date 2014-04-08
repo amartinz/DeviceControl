@@ -63,6 +63,7 @@
         Eco Mode is a optimized dual core solution for quadcore CPU \'s.
         This should allow for maximum battery life without sacrificing performance.
     </string>
+    <string name="powersaving_sched_mc_help">Tries to group tasks on a core until it reaches its maximum load and powers on the next core.\nIf enabled, it sacrifices power in exchange for battery life.</string>
     <string name="msm_dcvs_help">
         Enable support for MSM DCVS to control all CPU and GPU core frequencies. The DCVS manager allows idle driver to feed the idle information to the algorithm and the algorithm returns a frequency for the core which is passed to the frequency change driver.
     </string>

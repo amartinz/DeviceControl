@@ -18,6 +18,7 @@ Wenn der ausgewählte Governor existiert, wird er beibehalten.</string>
   <string name="intelli_plug_eco_help">Der Energiespar-Modus ist eine optimierte Dual-Core-Lösung für Quadcore CPU\'s.
 Er erlaubt maximale Batterie-Laufzeit ohne viel Leistung zu opfern.</string>
     <string name="msm_dcvs_help">Aktiviert Unterstützung für MSM DCVS, welches alle CPU und GPU Frequenzen regelt. Der DCVS-Manager erlaubt dem Leerlauf-Treiber den Algorithmus mit Informationen zu füttern, welcher eine Frequenz für den Kern zurückgibt.</string>
+    <string name="powersaving_sched_mc_help">Versucht Prozesse auf einem Kern bis zum Maximum zu gruppieren, bevor ein weiterer Kern benutzt wird.\nFalls aktiviert, wird Leistung verringert und Batterie Laufzeit erhöht.</string>
     <string name="tasklist_help">MPDecision überschreibt möglicherweise CPU/GPU Aktionen, welche dann nicht zuverlässig funktionieren!</string>
   <string name="fstrim_help">Fstrim wird für ein eingehängtes Dateisystem benutzt, um Blöcke, welche nicht in Verwendung sind, zu \"trimmen\".\n
 Dies kann die Performance steigern und Ruckler reduzieren.</string>

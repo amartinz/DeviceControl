@@ -26,6 +26,8 @@ import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.providers.BusProvider;
@@ -34,6 +36,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+
+import java.util.List;
 
 public class FeaturesFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
@@ -97,9 +101,12 @@ public class FeaturesFragment extends AttachPreferenceFragment
         boolean changed = false;
 
         if (preference == mLoggerMode) {
-            final boolean value = (Boolean) o;
-            Utils.writeValue(LOGGER_MODE_PATH, value ? "1" : "0");
-            PreferenceHelper.setBoolean("logger_mode", value);
+            final String value = ((Boolean) o) ? "1" : "0";
+            Utils.writeValue(LOGGER_MODE_PATH, value);
+            PreferenceHelper.setBootup(
+                    new DataItem(DatabaseHandler.CATEGORY_FEATURES, mLoggerMode.getKey(),
+                            LOGGER_MODE_PATH, value)
+            );
             changed = true;
         }
 
@@ -110,13 +117,13 @@ public class FeaturesFragment extends AttachPreferenceFragment
     // Methods
     //==============================================================================================
 
-    public static String restore() {
+    public static String restore(final DatabaseHandler db) {
         final StringBuilder sbCmd = new StringBuilder();
-        String value;
 
-        if (Utils.fileExists(LOGGER_MODE_PATH)) {
-            value = PreferenceHelper.getBoolean("logger_mode", true) ? "1" : "0";
-            sbCmd.append(Utils.getWriteCommand(LOGGER_MODE_PATH, value));
+        final List<DataItem> items =
+                db.getAllItems(DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_FEATURES);
+        for (final DataItem item : items) {
+            sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
         }
 
         return sbCmd.toString();

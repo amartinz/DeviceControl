@@ -295,4 +295,16 @@
         <item>4</item>
     </string-array>
 
+    <string-array name="mc_power_savings_entries" translatable="false">
+        <item>@string/powersaving_sched_mc_0</item>
+        <item>@string/powersaving_sched_mc_1</item>
+        <item>@string/powersaving_sched_mc_2</item>
+    </string-array>
+
+    <string-array name="mc_power_savings_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
 </resources>

@@ -35,6 +35,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -114,8 +116,10 @@ public class VibratorTuningPreference extends DialogPreference
         mOriginalValue = Utils.readOneLine(FILE_VIBRATOR);
 
         // Restore percent value from SharedPreferences object
-        final int percent = PreferenceHelper.getInt(KEY_VIBRATOR_TUNING,
-                strengthToPercent(VIBRATOR_INTENSITY_DEFAULT_VALUE));
+        final String value = PreferenceHelper.getBootupValue(KEY_VIBRATOR_TUNING);
+        final int percent = strengthToPercent(value != null
+                ? Integer.parseInt(value)
+                : VIBRATOR_INTENSITY_DEFAULT_VALUE);
 
         mSeekBar.setOnSeekBarChangeListener(this);
         mSeekBar.setProgress(percent);
@@ -161,8 +165,9 @@ public class VibratorTuningPreference extends DialogPreference
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
-            // Store percent value in SharedPreferences object
-            PreferenceHelper.setInt(KEY_VIBRATOR_TUNING, mSeekBar.getProgress());
+            PreferenceHelper.setBootup(new DataItem(
+                    DatabaseHandler.CATEGORY_DEVICE, KEY_VIBRATOR_TUNING,
+                    FILE_VIBRATOR, String.valueOf(mSeekBar.getProgress())));
         } else {
             Utils.runRootCommand(
                     Utils.getWriteCommand(FILE_VIBRATOR, String.valueOf(mOriginalValue))

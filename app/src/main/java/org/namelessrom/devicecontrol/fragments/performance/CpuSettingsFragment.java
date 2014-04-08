@@ -39,6 +39,8 @@ import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
 import org.namelessrom.devicecontrol.events.CpuFreqEvent;
 import org.namelessrom.devicecontrol.events.GovernorEvent;
@@ -208,11 +210,9 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
             MainActivity.mSlidingMenu.toggle(true);
         }
 
-        final Activity activity = getActivity();
-
-        CpuUtils.getCpuFreqEvent(activity);
-        CpuUtils.getGovernorEvent(activity);
-        CpuUtils.getIoSchedulerEvent(activity);
+        CpuUtils.getCpuFreqEvent();
+        CpuUtils.getGovernorEvent();
+        CpuUtils.getIoSchedulerEvent();
     }
 
     @Subscribe
@@ -317,8 +317,11 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
             final int cpuNum = CpuUtils.getNumOfCpus();
             for (int i = 0; i < cpuNum; i++) {
                 CpuUtils.setValue(i, selected, CpuUtils.ACTION_FREQ_MAX);
+                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
+                        "cpu_max_on" + i, CpuUtils.getOnlinePath(i), selected));
+                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU, "cpu_max" + i,
+                        CpuUtils.getCpuFrequencyPath(i), selected));
             }
-            updateSharedPrefs(PREF_MAX_CPU, selected);
         }
 
         public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
@@ -334,6 +337,10 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
             final int cpuNum = CpuUtils.getNumOfCpus();
             for (int i = 0; i < cpuNum; i++) {
                 CpuUtils.setValue(i, selected, CpuUtils.ACTION_FREQ_MIN);
+                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
+                        "cpu_min_on" + i, CpuUtils.getOnlinePath(i), selected));
+                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU, "cpu_min" + i,
+                        CpuUtils.getCpuFrequencyPath(i), selected));
             }
             updateSharedPrefs(PREF_MIN_CPU, selected);
         }
@@ -347,8 +354,11 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
             final int cpuNum = CpuUtils.getNumOfCpus();
             for (int i = 0; i < cpuNum; i++) {
                 CpuUtils.setValue(i, selected, CpuUtils.ACTION_GOV);
+                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
+                        "cpu_gov_on" + i, CpuUtils.getOnlinePath(i), selected));
+                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU, "cpu_gov" + i,
+                        CpuUtils.getGovernorPath(i), selected));
             }
-            updateSharedPrefs(PREF_GOV, selected);
         }
 
         public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
@@ -357,12 +367,14 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
     public class IOListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             final String selected = String.valueOf(parent.getItemAtPosition(pos));
+            int c = 0;
             for (String aIO_SCHEDULER_PATH : IO_SCHEDULER_PATH) {
                 if (Utils.fileExists(aIO_SCHEDULER_PATH)) {
                     Utils.writeValue(aIO_SCHEDULER_PATH, selected);
+                    PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
+                            "io" + (c++), aIO_SCHEDULER_PATH, selected));
                 }
             }
-            updateSharedPrefs(PREF_IO, selected);
         }
 
         public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
