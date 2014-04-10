@@ -32,6 +32,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
@@ -69,6 +70,8 @@ public class ExtrasFragment extends AttachPreferenceFragment
     public static final boolean sMcPowerScheduler       = !sMcPowerSchedulerFile.isEmpty();
     //----------------------------------------------------------------------------------------------
     private PreferenceScreen         mRoot;
+    //----------------------------------------------------------------------------------------------
+    private CustomListPreference     mIoScheduler;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mForceHighEndGfx;
     //----------------------------------------------------------------------------------------------
@@ -124,6 +127,12 @@ public class ExtrasFragment extends AttachPreferenceFragment
             } else {
                 mRoot.removePreference(mForceHighEndGfx);
             }
+        }
+
+        mIoScheduler = (CustomListPreference) findPreference("io");
+        if (mIoScheduler != null) {
+            mIoScheduler.setEnabled(false);
+            CpuUtils.getIoSchedulerEvent();
         }
 
         //------------------------------------------------------------------------------------------
@@ -255,6 +264,18 @@ public class ExtrasFragment extends AttachPreferenceFragment
         if (preference == mForceHighEndGfx) {
             Utils.runRootCommand(Scripts.toggleForceHighEndGfx());
             changed = true;
+        } else if (preference == mIoScheduler) {
+            final String value = String.valueOf(o);
+            int c = 0;
+            for (final String path : IO_SCHEDULER_PATH) {
+                if (Utils.fileExists(path)) {
+                    Utils.writeValue(path, value);
+                    PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
+                            "io" + (c++), path, value));
+                }
+            }
+            mIoScheduler.setSummary(value);
+            changed = true;
         } else if (preference == mMpDecision) {
             final boolean value = (Boolean) o;
             Utils.runRootCommand(CpuUtils.enableMpDecision(value));
@@ -328,6 +349,24 @@ public class ExtrasFragment extends AttachPreferenceFragment
                     break;
                 default:
                     break;
+            }
+        }
+    }
+
+    @Subscribe
+    public void onIoScheduler(final IoSchedulerEvent event) {
+        final Activity activity = getActivity();
+        if (activity != null && event != null) {
+            final String[] mAvailableIo = event.getAvailableIoScheduler();
+            final String mCurrentIo = event.getCurrentIoScheduler();
+            if (mAvailableIo != null && mAvailableIo.length > 0
+                    && mCurrentIo != null && !mCurrentIo.isEmpty()) {
+                mIoScheduler.setEntries(mAvailableIo);
+                mIoScheduler.setEntryValues(mAvailableIo);
+                mIoScheduler.setValue(mCurrentIo);
+                mIoScheduler.setSummary(mCurrentIo);
+                mIoScheduler.setOnPreferenceChangeListener(this);
+                mIoScheduler.setEnabled(true);
             }
         }
     }
