@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants {
 
-    private static final int    DATABASE_VERSION = 7;
+    private static final int    DATABASE_VERSION = 8;
     private static final String DATABASE_NAME    = "DeviceControl.db";
 
     private static final String KEY_ID       = "id";
@@ -50,11 +50,9 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     private static final String DROP_TASKER_TABLE   = "DROP TABLE IF EXISTS " + TABLE_TASKER;
 
     private static DatabaseHandler sDatabaseHandler = null;
-    private static Context mContext;
 
     private DatabaseHandler(final Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        mContext = context;
     }
 
     public static DatabaseHandler getInstance(final Context context) {
@@ -89,44 +87,12 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
             currentVersion = 3;
         }
 
-        if (currentVersion < 7) {
+        if (currentVersion < 8) {
             db.execSQL(DROP_BOOTUP_TABLE);
             db.execSQL(CREATE_BOOTUP_TABLE);
             db.execSQL(DROP_DEVICE_CONTROL_TABLE);
             db.execSQL(CREATE_DEVICE_CONTROL_TABLE);
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-
-            // Migrate app preferences from shared preferences to database
-            insertOrUpdate(EXTENSIVE_LOGGING,
-                    prefs.getBoolean(EXTENSIVE_LOGGING, false) ? "1" : "0",
-                    TABLE_DC, db, true);
-            insertOrUpdate(SHOW_LAUNCHER,
-                    prefs.getBoolean(SHOW_LAUNCHER, false) ? "1" : "0",
-                    TABLE_DC, db, true);
-            insertOrUpdate(SOB_DEVICE,
-                    prefs.getBoolean(SOB_DEVICE, false) ? "1" : "0",
-                    TABLE_DC, db, true);
-            insertOrUpdate(SOB_CPU,
-                    prefs.getBoolean(SOB_CPU, false) ? "1" : "0",
-                    TABLE_DC, db, true);
-            insertOrUpdate(SOB_GPU,
-                    prefs.getBoolean(SOB_DEVICE, false) ? "1" : "0",
-                    TABLE_DC, db, true);
-            insertOrUpdate(SOB_EXTRAS,
-                    prefs.getBoolean(SOB_CPU, false) ? "1" : "0",
-                    TABLE_DC, db, true);
-            insertOrUpdate(SOB_VOLTAGE,
-                    prefs.getBoolean(SOB_DEVICE, false) ? "1" : "0",
-                    TABLE_DC, db, true);
-            insertOrUpdate(SOB_VM,
-                    prefs.getBoolean(SOB_VM, false) ? "1" : "0",
-                    TABLE_DC, db, true);
-            insertOrUpdate(SOB_SYSCTL,
-                    prefs.getBoolean(SOB_SYSCTL, false) ? "1" : "0",
-                    TABLE_DC, db, true);
-
-            prefs.edit().clear().commit();
-            currentVersion = 7;
+            currentVersion = 8;
         }
     }
 

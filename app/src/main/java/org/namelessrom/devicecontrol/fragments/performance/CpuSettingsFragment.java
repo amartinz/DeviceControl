@@ -317,10 +317,8 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
             final int cpuNum = CpuUtils.getNumOfCpus();
             for (int i = 0; i < cpuNum; i++) {
                 CpuUtils.setValue(i, selected, CpuUtils.ACTION_FREQ_MAX);
-                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                        "cpu_max_on" + i, CpuUtils.getOnlinePath(i), selected));
                 PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU, "cpu_max" + i,
-                        CpuUtils.getCpuFrequencyPath(i), selected));
+                        CpuUtils.getMaxCpuFrequencyPath(i), selected));
             }
         }
 
@@ -338,9 +336,7 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
             for (int i = 0; i < cpuNum; i++) {
                 CpuUtils.setValue(i, selected, CpuUtils.ACTION_FREQ_MIN);
                 PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                        "cpu_min_on" + i, CpuUtils.getOnlinePath(i), selected));
-                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU, "cpu_min" + i,
-                        CpuUtils.getCpuFrequencyPath(i), selected));
+                        "cpu_min" + i, CpuUtils.getMinCpuFrequencyPath(i), selected));
             }
             updateSharedPrefs(PREF_MIN_CPU, selected);
         }
@@ -354,8 +350,6 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
             final int cpuNum = CpuUtils.getNumOfCpus();
             for (int i = 0; i < cpuNum; i++) {
                 CpuUtils.setValue(i, selected, CpuUtils.ACTION_GOV);
-                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                        "cpu_gov_on" + i, CpuUtils.getOnlinePath(i), selected));
                 PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU, "cpu_gov" + i,
                         CpuUtils.getGovernorPath(i), selected));
             }
