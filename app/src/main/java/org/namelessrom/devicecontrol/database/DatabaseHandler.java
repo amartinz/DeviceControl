@@ -2,18 +2,20 @@ package org.namelessrom.devicecontrol.database;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.preference.PreferenceManager;
+import android.util.Log;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants {
+public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants, FileConstants {
 
     private static final int    DATABASE_VERSION = 8;
     private static final String DATABASE_NAME    = "DeviceControl.db";
@@ -71,6 +73,9 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
 
     @Override
     public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+        Log.e("DeviceControl", "onUpgrade"
+                + " | oldVersion: " + String.valueOf(oldVersion)
+                + " | newVersion: " + String.valueOf(newVersion));
         int currentVersion = oldVersion;
 
         if (currentVersion < 1) {
@@ -96,7 +101,25 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         }
     }
 
-    //==============================================================================================
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.e("DeviceControl", "onDowngrade"
+                + " | oldVersion: " + String.valueOf(oldVersion)
+                + " | newVersion: " + String.valueOf(newVersion));
+        // TODO: a more grateful way?
+        if (newVersion <= 3) {
+            db.execSQL(DROP_BOOTUP_TABLE);
+            db.execSQL(DROP_DEVICE_CONTROL_TABLE);
+            db.execSQL(DROP_TASKER_TABLE);
+            onCreate(db);
+            try {
+                new File(Application.applicationContext.getFilesDir() + DC_DOWNGRADE)
+                        .createNewFile();
+            } catch (Exception ignored) { }
+        }
+    }
+
+//==============================================================================================
     // All CRUD(Create, Read, Update, Delete) Operations
     //==============================================================================================
 
