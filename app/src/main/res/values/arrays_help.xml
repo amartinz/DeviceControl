@@ -54,13 +54,11 @@
         <item>@string/maximum_speed</item>
         <item>@string/minimum_speed</item>
         <item>@string/governor</item>
-        <item>@string/io</item>
     </string-array>
     <string-array name="cpu_content" translatable="false">
         <item>@string/max_freq_help</item>
         <item>@string/min_freq_help</item>
         <item>@string/governor_help</item>
-        <item>@string/io_help</item>
     </string-array>
     <!-- GPU -->
     <string-array name="gpu_titles" translatable="false">
@@ -73,6 +71,7 @@
     </string-array>
     <!-- Extras -->
     <string-array name="extras_titles" translatable="false">
+        <item>@string/io</item>
         <item>@string/mpdecision</item>
         <item>@string/intelli_plug</item>
         <item>@string/intelli_plug_eco</item>
@@ -80,6 +79,7 @@
         <item>@string/msm_dcvs</item>
     </string-array>
     <string-array name="extras_content" translatable="false">
+        <item>@string/io_help</item>
         <item>@string/mpdecision_help</item>
         <item>@string/intelli_plug_help</item>
         <item>@string/intelli_plug_eco_help</item>

@@ -44,13 +44,11 @@ import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
 import org.namelessrom.devicecontrol.events.CpuFreqEvent;
 import org.namelessrom.devicecontrol.events.GovernorEvent;
-import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
 import org.namelessrom.devicecontrol.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
@@ -67,7 +65,6 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
     private Spinner  mMax;
     private Spinner  mMin;
     private Spinner  mGovernor;
-    private Spinner  mIo;
 
     LinearLayout mCpuInfo;
     private LayoutInflater mInflater;
@@ -196,9 +193,6 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
             }
         });
 
-        mIo = (Spinner) view.findViewById(R.id.pref_io);
-        mIo.setEnabled(false);
-
         return view;
     }
 
@@ -212,7 +206,6 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
 
         CpuUtils.getCpuFreqEvent();
         CpuUtils.getGovernorEvent();
-        CpuUtils.getIoSchedulerEvent();
     }
 
     @Subscribe
@@ -281,32 +274,6 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
         }
     }
 
-    @Subscribe
-    public void onIoScheduler(final IoSchedulerEvent event) {
-        final Activity activity = getActivity();
-        if (activity != null && event != null) {
-            final String[] mAvailableIo = event.getAvailableIoScheduler();
-            final String mCurrentIo = event.getCurrentIoScheduler();
-            final ArrayAdapter<CharSequence> ioAdapter = new ArrayAdapter<CharSequence>(
-                    activity, android.R.layout.simple_spinner_item
-            );
-            ioAdapter.setDropDownViewResource(
-                    android.R.layout.simple_spinner_dropdown_item
-            );
-            for (final String availableIo : mAvailableIo) {
-                ioAdapter.add(availableIo);
-            }
-            mIo.setAdapter(ioAdapter);
-            mIo.setSelection(Arrays.asList(mAvailableIo).indexOf(mCurrentIo));
-            mIo.post(new Runnable() {
-                public void run() {
-                    mIo.setOnItemSelectedListener(new IOListener());
-                }
-            });
-            mIo.setEnabled(true);
-        }
-    }
-
     public class MaxListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             final String selected = CpuUtils.fromMHz(String.valueOf(parent.getItemAtPosition(pos)));
@@ -352,22 +319,6 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
                 CpuUtils.setValue(i, selected, CpuUtils.ACTION_GOV);
                 PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU, "cpu_gov" + i,
                         CpuUtils.getGovernorPath(i), selected));
-            }
-        }
-
-        public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
-    }
-
-    public class IOListener implements OnItemSelectedListener {
-        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            final String selected = String.valueOf(parent.getItemAtPosition(pos));
-            int c = 0;
-            for (String aIO_SCHEDULER_PATH : IO_SCHEDULER_PATH) {
-                if (Utils.fileExists(aIO_SCHEDULER_PATH)) {
-                    Utils.writeValue(aIO_SCHEDULER_PATH, selected);
-                    PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                            "io" + (c++), aIO_SCHEDULER_PATH, selected));
-                }
             }
         }
 
