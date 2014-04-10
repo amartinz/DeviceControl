@@ -239,4 +239,5 @@
     <string name="become_a_monkey">Become a monkey</string>
     <string name="is_monkey">Wait, are you serious?\nYou are pretty smart for a monkey.\nNot that they are stupid but...\nWell, lets skip this.</string>
     <string name="no_monkey">Not a monkey? *Sigh* :(</string>
+    <string name="downgraded">Database got wiped due a downgrade!</string>
 </resources>
