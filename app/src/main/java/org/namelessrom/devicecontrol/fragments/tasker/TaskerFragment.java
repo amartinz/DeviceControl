@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.fragments;
+package org.namelessrom.devicecontrol.fragments.tasker;
 
 import android.app.Activity;
 import android.os.Bundle;

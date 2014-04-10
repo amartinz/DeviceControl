@@ -348,8 +348,17 @@ public class CpuUtils implements PerformanceConstants {
      * @return tagged and converted String
      */
     public static String toMHz(final String mhzString) {
+        int value = -1;
         if (mhzString != null && !mhzString.isEmpty()) {
-            return String.valueOf(Integer.parseInt(mhzString) / 1000) + " MHz";
+            try {
+                value = Integer.parseInt(mhzString) / 1000;
+            } catch (NumberFormatException exc) {
+                value = -1;
+            }
+        }
+
+        if (value != -1) {
+            return String.valueOf(value) + " MHz";
         } else {
             if (Application.applicationContext != null) {
                 return Application.applicationContext.getString(R.string.core_offline);
@@ -376,7 +385,26 @@ public class CpuUtils implements PerformanceConstants {
 
         final List<DataItem> items = db.getAllItems(
                 DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_CPU);
+        String tmpString;
+        int tmpInt;
         for (final DataItem item : items) {
+            tmpInt = -1;
+            tmpString = item.getName();
+            if (tmpString != null && !tmpString.contains("io")) {
+                try {
+                    tmpInt = Integer.parseInt(
+                            String.valueOf(tmpString.charAt(tmpString.length() - 1)));
+                } catch (Exception exc) {
+                    tmpInt = -1;
+                }
+            }
+            if (tmpInt != -1) {
+                final String path = CpuUtils.getOnlinePath(tmpInt);
+                if (path != null && !path.isEmpty()) {
+                    sbCmd.append(Utils.getWriteCommand(path, "0"));
+                    sbCmd.append(Utils.getWriteCommand(path, "1"));
+                }
+            }
             sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
         }
 

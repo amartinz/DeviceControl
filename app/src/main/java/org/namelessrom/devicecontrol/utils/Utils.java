@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.util.Log;
 
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
@@ -93,7 +92,7 @@ public class Utils implements DeviceConstants, FileConstants {
             logDebug(String.format("Helpers:findBuildPropValueOf found {%s} with the value (%s)",
                     prop, value));
         } catch (IOException ioe) {
-            Log.d("TAG", "failed to load input stream");
+            logDebug("failed to load input stream");
         } catch (NullPointerException npe) {
             //swallowed thrown by ill formatted requests
         }
@@ -123,7 +122,6 @@ public class Utils implements DeviceConstants, FileConstants {
                     brBuffer.close();
                 }
             } catch (Exception e) {
-                logDebug("readOneLine: reading failed: " + e.getMessage());
                 return readFileViaShell(sFile);
             }
         }
@@ -183,10 +181,8 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param filename The filename
      * @return Whether the file exists or not
      */
-    public static boolean fileExists(String filename) {
-        final boolean isExisting = new File(filename).exists();
-        logDebug("fileExists: " + filename + ": " + (isExisting ? "true" : "false"));
-        return isExisting;
+    public static boolean fileExists(final String filename) {
+        return new File(filename).exists();
     }
 
     /**
@@ -302,16 +298,12 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     public static String getReadCommand(final String path) {
-        final String cmd = String.format("cat %s 2> /dev/null", path);
-        logDebug("ReadCommand: " + cmd);
-        return cmd;
+        return String.format("cat %s 2> /dev/null", path);
     }
 
     public static String getWriteCommand(final String path, final String value) {
-        final String cmd = String.format("chmod 644 %s;\n", path) +
+        return String.format("chmod 644 %s;\n", path) +
                 String.format("busybox echo \"%s\" > %s;\n", value, path);
-        logDebug("WriteCommand: " + cmd);
-        return cmd;
     }
 
     public static boolean isPackageInstalled(final Context context, final String packageName) {
@@ -361,13 +353,13 @@ public class Utils implements DeviceConstants, FileConstants {
             final Intent tasker = new Intent(context, TaskerService.class);
             tasker.setAction(TaskerService.ACTION_START);
             context.startService(tasker);
-            Log.i("DeviceControl", "Service Started: " + componentName);
+            logDebug("Service Started: " + componentName);
         } else {
             final Intent tasker = new Intent(context, TaskerService.class);
             tasker.setAction(TaskerService.ACTION_STOP);
             context.startService(tasker);
             disableComponent(context, packageName, componentName);
-            Log.i("DeviceControl", "Service NOT Started: " + componentName);
+            logDebug("Service NOT Started: " + componentName);
         }
     }
 

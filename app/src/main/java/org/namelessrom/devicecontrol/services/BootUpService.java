@@ -94,6 +94,7 @@ public class BootUpService extends IntentService
                 // Fields For Reapplying
                 //==================================================================================
                 StringBuilder sbCmd = new StringBuilder();
+                String cmd;
 
                 //==================================================================================
                 // Custom Shell Command
@@ -105,29 +106,48 @@ public class BootUpService extends IntentService
                 //==================================================================================
                 // Device
                 //==================================================================================
+                logDebug("----- DEVICE START -----");
                 if (PreferenceHelper.getBoolean(SOB_DEVICE, false)) {
-                    sbCmd.append(DeviceFragment.restore(db));
-                    sbCmd.append(FeaturesFragment.restore(db));
+                    cmd = DeviceFragment.restore(db);
+                    logDebug(cmd);
+                    sbCmd.append(cmd);
+                    cmd = FeaturesFragment.restore(db);
+                    logDebug(cmd);
+                    sbCmd.append(cmd);
                 }
+                logDebug("----- DEVICE END -----");
 
                 //==================================================================================
                 // Performance
                 //==================================================================================
+                logDebug("----- CPU START -----");
                 if (PreferenceHelper.getBoolean(SOB_CPU, false)) {
-                    sbCmd.append(CpuUtils.restore(db));
+                    cmd = CpuUtils.restore(db);
+                    logDebug(cmd);
+                    sbCmd.append(cmd);
                 }
-
+                logDebug("----- CPU END -----");
+                logDebug("----- GPU START -----");
                 if (PreferenceHelper.getBoolean(SOB_GPU, false)) {
-                    sbCmd.append(GpuUtils.restore(db));
+                    cmd = GpuUtils.restore(db);
+                    logDebug(cmd);
+                    sbCmd.append(cmd);
                 }
-
+                logDebug("----- GPU END -----");
+                logDebug("----- EXTRAS START -----");
                 if (PreferenceHelper.getBoolean(SOB_EXTRAS, false)) {
-                    sbCmd.append(ExtrasFragment.restore(db));
+                    cmd = ExtrasFragment.restore(db);
+                    logDebug(cmd);
+                    sbCmd.append(cmd);
                 }
-
+                logDebug("----- EXTRAS END -----");
+                logDebug("----- VOLTAGE START -----");
                 if (PreferenceHelper.getBoolean(SOB_VOLTAGE, false)) {
-                    sbCmd.append(VoltageFragment.restore());
+                    cmd = VoltageFragment.restore();
+                    logDebug(cmd);
+                    sbCmd.append(cmd);
                 }
+                logDebug("----- VOLTAGE END -----");
 
                 //==================================================================================
                 // Tools
@@ -146,10 +166,7 @@ public class BootUpService extends IntentService
                 //==================================================================================
                 // Execute
                 //==================================================================================
-                final String cmd = sbCmd.toString();
-                logDebug("bootUp | executing: " + cmd);
-                Utils.runRootCommand(cmd);
-
+                Utils.runRootCommand(sbCmd.toString());
                 logDebug("BootUp Done!");
             }
 

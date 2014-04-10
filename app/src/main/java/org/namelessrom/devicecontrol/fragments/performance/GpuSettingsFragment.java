@@ -137,7 +137,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
             mGpuFrequency.setSummary(GpuUtils.toMhz(value));
             Utils.writeValue(GPU_MAX_FREQ_FILE, value);
             PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_GPU, mGpuFrequency.getKey(),
+                    new DataItem(DatabaseHandler.CATEGORY_GPU, "gpu_max",
                             GPU_MAX_FREQ_FILE, value)
             );
             changed = true;
@@ -147,7 +147,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
             mGpuGovernor.setSummary(value);
             Utils.writeValue(GPU_GOV_PATH, value);
             PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_GPU, mGpuGovernor.getKey(),
+                    new DataItem(DatabaseHandler.CATEGORY_GPU, "gpu_gov",
                             GPU_GOV_PATH, value)
             );
             changed = true;

@@ -279,20 +279,22 @@ public class TaskListFragment extends ListFragment {
             valueEntries = CpuUtils.getAvailableFrequencies();
         }
 
-        for (final String valueEntry : valueEntries) {
-            valueAdapter.add(valueEntry);
-        }
-
-        mValueSpinner.setAdapter(valueAdapter);
-        mValueSpinner.setSelection(Arrays.asList(valueEntries).indexOf(value));
-        mValueSpinner.post(new Runnable() {
-            public void run() {
-                mValueSpinner.setOnItemSelectedListener(new ValueListener(activity, taskerItem));
+        if (valueEntries != null) {
+            for (final String valueEntry : valueEntries) {
+                valueAdapter.add(valueEntry);
             }
-        });
-        mValueContainer.setVisibility(View.VISIBLE);
-        mValueSpinner.setVisibility(View.VISIBLE);
-        mAddTask.setEnabled(true);
+            mValueSpinner.setAdapter(valueAdapter);
+            mValueSpinner.setSelection(Arrays.asList(valueEntries).indexOf(value));
+            mValueSpinner.post(new Runnable() {
+                public void run() {
+                    mValueSpinner
+                            .setOnItemSelectedListener(new ValueListener(activity, taskerItem));
+                }
+            });
+            mValueContainer.setVisibility(View.VISIBLE);
+            mValueSpinner.setVisibility(View.VISIBLE);
+            mAddTask.setEnabled(true);
+        }
     }
 
     private class CategoryListener implements AdapterView.OnItemSelectedListener {
