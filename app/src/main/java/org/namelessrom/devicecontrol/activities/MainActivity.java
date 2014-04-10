@@ -45,7 +45,6 @@ import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.fragments.HelpFragment;
 import org.namelessrom.devicecontrol.fragments.HomeFragment;
 import org.namelessrom.devicecontrol.fragments.PreferencesFragment;
-import org.namelessrom.devicecontrol.fragments.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
 import org.namelessrom.devicecontrol.fragments.dynamic.WebViewFragment;
@@ -53,18 +52,23 @@ import org.namelessrom.devicecontrol.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.GpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.InformationFragment;
+import org.namelessrom.devicecontrol.fragments.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.fragments.tools.EditorTabbedFragment;
 import org.namelessrom.devicecontrol.fragments.tools.FreezerTabbedFragment;
 import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.widgets.adapters.MenuListArrayAdapter;
+
+import java.io.File;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class MainActivity extends Activity
-        implements DeviceConstants, AdapterView.OnItemClickListener, SlidingMenu.OnClosedListener,
+        implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener,
+        SlidingMenu.OnClosedListener,
         SlidingMenu.OnOpenedListener {
 
     //==============================================================================================
@@ -184,6 +188,12 @@ public class MainActivity extends Activity
 
         loadFragment(ID_HOME);
         Utils.startTaskerService(this);
+
+        final String downgradePath = getFilesDir() + DC_DOWNGRADE;
+        if (Utils.fileExists(downgradePath)) {
+            new File(downgradePath).delete();
+            Toast.makeText(this, R.string.downgraded, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

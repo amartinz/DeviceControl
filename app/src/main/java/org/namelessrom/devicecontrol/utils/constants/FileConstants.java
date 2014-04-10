@@ -69,4 +69,6 @@ public interface FileConstants {
     //==============================================================================================
     public static final String DC_LOG_FILE_FSTRIM = DC_LOG_DIR + File.separator + "fstrim.log";
     //==============================================================================================
+    public static final String DC_DOWNGRADE       = File.separator + ".downgraded";
+    //==============================================================================================
 }
