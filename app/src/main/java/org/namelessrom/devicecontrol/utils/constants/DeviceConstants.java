@@ -26,6 +26,20 @@ public interface DeviceConstants {
     public static final String PACKAGE_NAME = "org.namelessrom.devicecontrol";
 
     //==============================================================================================
+    // Fragments
+    //==============================================================================================
+    public static final int ID_DUMMY            = -1;
+    public static final int ID_RESTORE          = 0;
+    public static final int ID_RESTORE_FROM_SUB = 1;
+    public static final int ID_FIRST_MENU       = 2;
+    public static final int ID_SECOND_MENU      = 3;
+    //----------------------------------------------------------------------------------------------
+    public static final int ID_EXTRAS           = 20;
+    public static final int ID_HOTPLUGGING      = ID_EXTRAS + 1000;
+    public static final int ID_VOLTAGE          = ID_EXTRAS + 1100;
+    //----------------------------------------------------------------------------------------------
+
+    //==============================================================================================
     // Actions
     //==============================================================================================
     public static final String ACTION_TASKER_FSTRIM = "action_tasker_fstrim";

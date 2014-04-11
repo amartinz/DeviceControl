@@ -42,6 +42,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
+import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.fragments.HelpFragment;
 import org.namelessrom.devicecontrol.fragments.HomeFragment;
 import org.namelessrom.devicecontrol.fragments.PreferencesFragment;
@@ -52,6 +53,8 @@ import org.namelessrom.devicecontrol.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.GpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.InformationFragment;
+import org.namelessrom.devicecontrol.fragments.performance.sub.HotpluggingFragment;
+import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.fragments.tools.EditorTabbedFragment;
 import org.namelessrom.devicecontrol.fragments.tools.FreezerTabbedFragment;
@@ -81,12 +84,10 @@ public class MainActivity extends Activity
     private IabHelper mHelper;
 
     public static SlidingMenu mSlidingMenu;
-    private static final int ID_RESTORE     = 10;
-    private static final int ID_FIRST_MENU  = 20;
-    private static final int ID_SECOND_MENU = 30;
 
-    private int mTitle         = R.string.home;
-    private int mFragmentTitle = R.string.home;
+    private int mTitle            = R.string.home;
+    private int mFragmentTitle    = R.string.home;
+    private int mSubFragmentTitle = -1;
 
     private static final int ID_HOME                     = 0;
     private static final int ID_DEVICE                   = 2;
@@ -269,7 +270,7 @@ public class MainActivity extends Activity
                 break;
             case ID_FEATURES:
                 main = new FeaturesFragment();
-                right = HelpFragment.newInstance(HelpFragment.TYPE_DUMMY);
+                right = HelpFragment.newInstance(ID_DUMMY);
                 break;
             case ID_PERFORMANCE_INFO:
                 main = new InformationFragment();
@@ -319,7 +320,6 @@ public class MainActivity extends Activity
         ft.replace(R.id.container, main);
         ft.replace(R.id.menu_frame, right);
 
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
     }
 
@@ -328,6 +328,14 @@ public class MainActivity extends Activity
         final int id = event.getId();
         switch (id) {
             case ID_RESTORE:
+                if (mSubFragmentTitle != -1) {
+                    mTitle = mSubFragmentTitle;
+                } else {
+                    mTitle = mFragmentTitle;
+                }
+                break;
+            case ID_RESTORE_FROM_SUB:
+                mSubFragmentTitle = -1;
                 mTitle = mFragmentTitle;
                 break;
             case ID_FIRST_MENU:
@@ -338,36 +346,63 @@ public class MainActivity extends Activity
                 break;
             default:
                 mTitle = mFragmentTitle = R.string.app_name;
+                mSubFragmentTitle = -1;
                 break;
+            //--------------------------------------------------------------------------------------
             case HomeFragment.ID:
                 mTitle = mFragmentTitle = R.string.home;
+                mSubFragmentTitle = -1;
                 break;
+            //--------------------------------------------------------------------------------------
             case DeviceFragment.ID:
                 mTitle = mFragmentTitle = R.string.device;
+                mSubFragmentTitle = -1;
                 break;
+            //--------------------------------------------------------------------------------------
             case FeaturesFragment.ID:
                 mTitle = mFragmentTitle = R.string.features;
+                mSubFragmentTitle = -1;
                 break;
+            //--------------------------------------------------------------------------------------
             case InformationFragment.ID:
                 mTitle = mFragmentTitle = R.string.information;
+                mSubFragmentTitle = -1;
                 break;
+            //--------------------------------------------------------------------------------------
             case CpuSettingsFragment.ID:
                 mTitle = mFragmentTitle = R.string.cpusettings;
+                mSubFragmentTitle = -1;
                 break;
+            //--------------------------------------------------------------------------------------
             case GpuSettingsFragment.ID:
                 mTitle = mFragmentTitle = R.string.gpusettings;
+                mSubFragmentTitle = -1;
                 break;
-            case ExtrasFragment.ID:
+            //--------------------------------------------------------------------------------------
+            case ID_EXTRAS:
                 mTitle = mFragmentTitle = R.string.extras;
+                mSubFragmentTitle = -1;
                 break;
+            case ID_HOTPLUGGING:
+                mTitle = mSubFragmentTitle = R.string.hotplugging;
+                break;
+            case ID_VOLTAGE:
+                mTitle = mSubFragmentTitle = R.string.voltage_control;
+                break;
+            //--------------------------------------------------------------------------------------
             case TaskerFragment.ID:
                 mTitle = mFragmentTitle = R.string.tasker;
+                mSubFragmentTitle = -1;
                 break;
+            //--------------------------------------------------------------------------------------
             case EditorTabbedFragment.ID:
                 mTitle = mFragmentTitle = R.string.editors;
+                mSubFragmentTitle = -1;
                 break;
+            //--------------------------------------------------------------------------------------
             case FreezerTabbedFragment.ID:
                 mTitle = mFragmentTitle = R.string.freezer;
+                mSubFragmentTitle = -1;
                 break;
         }
         restoreActionBar();
@@ -451,7 +486,40 @@ public class MainActivity extends Activity
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, f)
                 .addToBackStack(null)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
+    }
+
+    @Subscribe
+    public void onSubFragmentEvent(final SubFragmentEvent event) {
+        if (event == null) return;
+
+        Fragment main = null, right = null;
+        final int id = event.getId();
+
+        switch (id) {
+            case ID_HOTPLUGGING:
+                main = new HotpluggingFragment();
+                right = HelpFragment.newInstance(ID_HOTPLUGGING);
+                break;
+            case ID_VOLTAGE:
+                main = new VoltageFragment();
+                right = HelpFragment.newInstance(ID_DUMMY);
+                break;
+            default:
+                break;
+        }
+
+        if (main == null || right == null) return;
+
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        ft.replace(R.id.container, main);
+        ft.replace(R.id.menu_frame, right);
+        ft.addToBackStack(null);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+        ft.commit();
     }
 
 }

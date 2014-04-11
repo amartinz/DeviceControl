@@ -8,13 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.adapters.HelpArrayAdapter;
 
-public class HelpFragment extends Fragment {
+public class HelpFragment extends Fragment implements DeviceConstants {
 
     public static final String ARG_TYPE = "arg_type";
 
-    public static final int TYPE_DUMMY      = -1;
     public static final int TYPE_HOME       = 110;
     public static final int TYPE_DEVICE     = 710;
     public static final int TYPE_PERF_INFO  = 810;
@@ -62,7 +62,7 @@ public class HelpFragment extends Fragment {
 
         switch (type) {
             default:
-            case TYPE_DUMMY:
+            case ID_DUMMY:
                 ids[0] = R.array.dummy_titles;
                 ids[1] = R.array.dummy_content;
                 break;
@@ -89,6 +89,10 @@ public class HelpFragment extends Fragment {
             case TYPE_EXTRAS:
                 ids[0] = R.array.extras_titles;
                 ids[1] = R.array.extras_content;
+                break;
+            case ID_HOTPLUGGING:
+                ids[0] = R.array.extras_hotplugging_titles;
+                ids[1] = R.array.extras_hotplugging_content;
                 break;
             case TYPE_TASKER:
                 ids[0] = R.array.tasker_titles;
