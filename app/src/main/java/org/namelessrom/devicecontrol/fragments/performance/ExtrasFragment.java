@@ -34,6 +34,7 @@ import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
@@ -53,10 +54,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
         Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
-    public static final int ID = 220;
-
-    private static final int ID_WORK       = 100;
-    private static final int ID_MPDECISION = 200;
+    private static final int ID_WORK = 100;
 
     //==============================================================================================
     // Files
@@ -72,15 +70,11 @@ public class ExtrasFragment extends AttachPreferenceFragment
     private PreferenceScreen         mRoot;
     //----------------------------------------------------------------------------------------------
     private CustomListPreference     mIoScheduler;
-    //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mForceHighEndGfx;
+    private CustomPreference         mHotplugging;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mPowerEfficientWork;
     private CustomListPreference     mMcPowerScheduler;
-    //----------------------------------------------------------------------------------------------
-    private CustomCheckBoxPreference mMpDecision;
-    private CustomCheckBoxPreference mIntelliPlug;
-    private CustomCheckBoxPreference mIntelliPlugEco;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mMsmDcvs;
     private CustomPreference         mVoltageControl;
@@ -90,7 +84,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
     //==============================================================================================
 
     @Override
-    public void onAttach(Activity activity) { super.onAttach(activity, ID); }
+    public void onAttach(Activity activity) { super.onAttach(activity, ID_PERFORMANCE_EXTRA); }
 
     @Override
     public void onResume() {
@@ -135,6 +129,11 @@ public class ExtrasFragment extends AttachPreferenceFragment
             CpuUtils.getIoSchedulerEvent();
         }
 
+        mHotplugging = (CustomPreference) findPreference("hotplugging");
+        if (mHotplugging != null) {
+            mHotplugging.setOnPreferenceClickListener(this);
+        }
+
         //------------------------------------------------------------------------------------------
         // Power Saving
         //------------------------------------------------------------------------------------------
@@ -159,51 +158,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
                     mMcPowerScheduler.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mMcPowerScheduler);
-                }
-            }
-        }
-
-        removeIfEmpty(category);
-        //------------------------------------------------------------------------------------------
-        // Hotplugging
-        //------------------------------------------------------------------------------------------
-
-        category = (PreferenceCategory) findPreference("hotplugging");
-        if (category != null) {
-            mMpDecision = (CustomCheckBoxPreference) findPreference("mpdecision");
-            if (mMpDecision != null) {
-                if (Utils.fileExists(MPDECISION_PATH)) {
-                    Utils.getCommandResult(ID_MPDECISION, "pgrep mpdecision 2> /dev/null;");
-                } else {
-                    category.removePreference(mMpDecision);
-                }
-            }
-        }
-
-        removeIfEmpty(category);
-        //------------------------------------------------------------------------------------------
-        // Intelli-Plug
-        //------------------------------------------------------------------------------------------
-
-        category = (PreferenceCategory) findPreference(GROUP_INTELLI_PLUG);
-        if (category != null) {
-            mIntelliPlug = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG);
-            if (mIntelliPlug != null) {
-                if (CpuUtils.hasIntelliPlug()) {
-                    mIntelliPlug.setChecked(CpuUtils.getIntelliPlugActive());
-                    mIntelliPlug.setOnPreferenceChangeListener(this);
-                } else {
-                    category.removePreference(mIntelliPlug);
-                }
-            }
-
-            mIntelliPlugEco = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG_ECO);
-            if (mIntelliPlugEco != null) {
-                if (CpuUtils.hasIntelliPlug() && CpuUtils.hasIntelliPlugEcoMode()) {
-                    mIntelliPlugEco.setChecked(CpuUtils.getIntelliPlugEcoMode());
-                    mIntelliPlugEco.setOnPreferenceChangeListener(this);
-                } else {
-                    category.removePreference(mIntelliPlugEco);
                 }
             }
         }
@@ -241,7 +195,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
     }
 
     private void removeIfEmpty(final PreferenceGroup preferenceGroup) {
-        if (preferenceGroup.getPreferenceCount() == 0) {
+        if (mRoot != null && preferenceGroup.getPreferenceCount() == 0) {
             mRoot.removePreference(preferenceGroup);
         }
     }
@@ -250,7 +204,10 @@ public class ExtrasFragment extends AttachPreferenceFragment
     public boolean onPreferenceClick(final Preference preference) {
 
         if (mVoltageControl == preference) {
-            BusProvider.getBus().post(new VoltageFragment());
+            BusProvider.getBus().post(new SubFragmentEvent(ID_VOLTAGE));
+            return true;
+        } else if (mHotplugging == preference) {
+            BusProvider.getBus().post(new SubFragmentEvent(ID_HOTPLUGGING));
             return true;
         }
 
@@ -275,27 +232,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
                 }
             }
             mIoScheduler.setSummary(value);
-            changed = true;
-        } else if (preference == mMpDecision) {
-            final boolean value = (Boolean) o;
-            Utils.runRootCommand(CpuUtils.enableMpDecision(value));
-            PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_EXTRAS, mMpDecision.getKey(),
-                    FILE_TOUCHKEY_TOGGLE, value ? "1" : "0"));
-            changed = true;
-        } else if (preference == mIntelliPlug) {
-            final boolean value = (Boolean) o;
-            CpuUtils.enableIntelliPlug(value);
-            PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_EXTRAS, mIntelliPlug.getKey(),
-                    INTELLI_PLUG_PATH, value ? "1" : "0"));
-            changed = true;
-        } else if (preference == mIntelliPlugEco) {
-            final boolean value = (Boolean) o;
-            CpuUtils.enableIntelliPlugEcoMode(value);
-            PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_EXTRAS, mIntelliPlugEco.getKey(),
-                    INTELLI_PLUG_ECO_MODE_PATH, value ? "1" : "0"));
             changed = true;
         } else if (preference == mPowerEfficientWork) {
             final boolean rawValue = (Boolean) o;
@@ -339,12 +275,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
                     if (mPowerEfficientWork != null) {
                         mPowerEfficientWork.setChecked(result.equals("Y"));
                         mPowerEfficientWork.setOnPreferenceChangeListener(this);
-                    }
-                    break;
-                case ID_MPDECISION:
-                    if (mMpDecision != null) {
-                        mMpDecision.setChecked(!result.isEmpty());
-                        mMpDecision.setOnPreferenceChangeListener(this);
                     }
                     break;
                 default:

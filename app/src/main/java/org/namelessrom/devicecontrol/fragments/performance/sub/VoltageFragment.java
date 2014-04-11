@@ -1,4 +1,4 @@
-package org.namelessrom.devicecontrol.fragments.performance;
+package org.namelessrom.devicecontrol.fragments.performance.sub;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,16 +27,20 @@ import android.widget.ListView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-public class VoltageFragment extends AttachPreferenceFragment implements PerformanceConstants {
+public class VoltageFragment extends AttachPreferenceFragment
+        implements DeviceConstants, PerformanceConstants {
 
     private static final String PREF_UV  = "pref_uv";
     private static final String PREF_VDD = "pref_vdd";
@@ -47,6 +51,17 @@ public class VoltageFragment extends AttachPreferenceFragment implements Perform
     private String[]           mValues;
     private LinearLayout       mButtonLayout;
     private boolean isVdd = false;
+
+    @Override
+    public void onAttach(final Activity activity) {
+        super.onAttach(activity, ID_VOLTAGE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

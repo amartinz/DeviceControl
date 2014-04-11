@@ -27,18 +27,18 @@ import android.view.ViewGroup;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
-public class EditorTabbedFragment extends AttachFragment {
+public class EditorTabbedFragment extends AttachFragment implements DeviceConstants {
 
     public static final String TAG = "tools_editor_tabbed";
-    public static final int    ID  = 310;
 
     private FragmentTabHost mTabHost;
 
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity, EditorTabbedFragment.ID);
+        super.onAttach(activity, ID_TOOLS_EDITORS);
     }
 
     @Override

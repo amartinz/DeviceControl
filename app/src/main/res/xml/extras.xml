@@ -28,38 +28,9 @@
         android:key="io"
         android:title="@string/io" />
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
         android:key="hotplugging"
-        android:title="@string/hotplugging">
-
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
-            android:key="mpdecision"
-            android:title="@string/mpdecision"
-            android:summaryOn="@string/mpdecision_summary_on"
-            android:summaryOff="@string/mpdecision_summary_off"
-            android:defaultValue="false" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="intelli_plug"
-        android:title="@string/intelli_plug">
-
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
-            android:key="intelli_plug_active"
-            android:title="@string/intelli_plug"
-            android:summaryOn="@string/intelli_plug_summary_on"
-            android:summaryOff="@string/intelli_plug_summary_off"
-            android:defaultValue="false" />
-
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
-            android:key="intelli_plug_eco"
-            android:title="@string/intelli_plug_eco"
-            android:summaryOn="@string/intelli_plug_eco_summary_on"
-            android:summaryOff="@string/intelli_plug_eco_summary_off"
-            android:defaultValue="false" />
-
-    </PreferenceCategory>
+        android:title="@string/hotplugging" />
 
     <PreferenceCategory
         android:key="powersaving"

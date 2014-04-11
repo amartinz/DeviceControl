@@ -32,11 +32,9 @@ import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
 public class HomeFragment extends AttachFragment implements DeviceConstants {
 
-    public static final int ID = 50;
-
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity, ID);
+        super.onAttach(activity, ID_HOME);
     }
 
     @Override
