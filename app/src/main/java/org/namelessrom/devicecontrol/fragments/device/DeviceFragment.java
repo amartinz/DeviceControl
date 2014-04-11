@@ -51,11 +51,6 @@ public class DeviceFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
 
     //==============================================================================================
-    // Fields
-    //==============================================================================================
-    public static final int ID = 100;
-
-    //==============================================================================================
     // Input
     //==============================================================================================
     public static final String  sKnockOnFile = Utils.checkPaths(FILES_KNOCKON);
@@ -94,7 +89,7 @@ public class DeviceFragment extends AttachPreferenceFragment
     //==============================================================================================
 
     @Override
-    public void onAttach(Activity activity) { super.onAttach(activity, ID); }
+    public void onAttach(Activity activity) { super.onAttach(activity, ID_DEVICE); }
 
     @Override
     public void onResume() {

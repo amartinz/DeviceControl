@@ -51,8 +51,6 @@ import java.util.List;
 
 public class InformationFragment extends AttachFragment implements DeviceConstants {
 
-    public static final int ID = 200;
-
     private LinearLayout mStatesView;
     private TextView     mAdditionalStates;
     private TextView     mTotalStateTime;
@@ -81,7 +79,7 @@ public class InformationFragment extends AttachFragment implements DeviceConstan
 
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity, ID);
+        super.onAttach(activity, ID_PERFORMANCE_INFO);
     }
 
     @Override

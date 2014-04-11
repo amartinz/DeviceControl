@@ -26,6 +26,34 @@ public interface DeviceConstants {
     public static final String PACKAGE_NAME = "org.namelessrom.devicecontrol";
 
     //==============================================================================================
+    // Fragments
+    //==============================================================================================
+    public static final int ID_WEBVIEW                  = -9999;
+    public static final int ID_PERFORMANCE              = -8888;
+    public static final int ID_DUMMY                    = -5;
+    public static final int ID_FIRST_MENU               = -4;
+    public static final int ID_SECOND_MENU              = -3;
+    public static final int ID_RESTORE                  = -2;
+    public static final int ID_RESTORE_FROM_SUB         = -1;
+    //----------------------------------------------------------------------------------------------
+    public static final int ID_HOME                     = 0;
+    public static final int ID_DEVICE                   = 2;
+    public static final int ID_FEATURES                 = 3;
+    public static final int ID_PERFORMANCE_INFO         = 5;
+    public static final int ID_PERFORMANCE_CPU_SETTINGS = 6;
+    public static final int ID_GOVERNOR_TUNABLE         = ID_PERFORMANCE_CPU_SETTINGS + 1000;
+    public static final int ID_PERFORMANCE_GPU_SETTINGS = 7;
+    public static final int ID_PERFORMANCE_EXTRA        = 8;
+    public static final int ID_HOTPLUGGING              = ID_PERFORMANCE_EXTRA + 1000;
+    public static final int ID_VOLTAGE                  = ID_PERFORMANCE_EXTRA + 1100;
+    public static final int ID_TOOLS_TASKER             = 10;
+    public static final int ID_TOOLS_EDITORS            = 11;
+    public static final int ID_TOOLS_FREEZER            = 12;
+    public static final int ID_PREFERENCES              = 14;
+    public static final int ID_LICENSES                 = 15;
+    //----------------------------------------------------------------------------------------------
+
+    //==============================================================================================
     // Actions
     //==============================================================================================
     public static final String ACTION_TASKER_FSTRIM = "action_tasker_fstrim";

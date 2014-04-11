@@ -72,6 +72,11 @@ public class PreferencesFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference mShowLauncher;
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity, ID_DUMMY);
+    }
+
+    @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml._device_control);

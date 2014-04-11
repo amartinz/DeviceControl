@@ -44,11 +44,13 @@ import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
 import org.namelessrom.devicecontrol.events.CpuFreqEvent;
 import org.namelessrom.devicecontrol.events.GovernorEvent;
+import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
@@ -57,9 +59,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class CpuSettingsFragment extends AttachFragment implements PerformanceConstants {
-
-    public static final int ID = 210;
+public class CpuSettingsFragment extends AttachFragment
+        implements DeviceConstants, PerformanceConstants {
 
     private CheckBox mStatusHide;
     private Spinner  mMax;
@@ -73,7 +74,7 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
 
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity, ID);
+        super.onAttach(activity, ID_PERFORMANCE_CPU_SETTINGS);
     }
 
     @Override
@@ -189,7 +190,7 @@ public class CpuSettingsFragment extends AttachFragment implements PerformanceCo
         govButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BusProvider.getBus().post(new CpuGovernorFragment());
+                BusProvider.getBus().post(new SubFragmentEvent(ID_GOVERNOR_TUNABLE));
             }
         });
 

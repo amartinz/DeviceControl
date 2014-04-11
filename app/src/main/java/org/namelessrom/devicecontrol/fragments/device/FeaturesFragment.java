@@ -42,11 +42,6 @@ import java.util.List;
 public class FeaturesFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
 
-    //==============================================================================================
-    // Fields
-    //==============================================================================================
-    public static final int ID = 101;
-
     private static final int ID_LOGGER_MODE = 1001;
 
     private CustomCheckBoxPreference mLoggerMode;
@@ -56,7 +51,7 @@ public class FeaturesFragment extends AttachPreferenceFragment
     //==============================================================================================
 
     @Override
-    public void onAttach(Activity activity) { super.onAttach(activity, ID); }
+    public void onAttach(Activity activity) { super.onAttach(activity, ID_FEATURES); }
 
     @Override
     public void onResume() {

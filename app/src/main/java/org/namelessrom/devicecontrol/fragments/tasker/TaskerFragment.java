@@ -25,7 +25,6 @@ import android.view.View;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
-import org.namelessrom.devicecontrol.fragments.tasker.TaskListFragment;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
@@ -42,15 +41,13 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 public class TaskerFragment extends AttachPreferenceFragment implements DeviceConstants,
         Preference.OnPreferenceChangeListener {
 
-    public static final int ID = 300;
-
     private CustomCheckBoxPreference mFstrim;
     private CustomListPreference     mFstrimInterval;
 
     private CustomPreference mTasker;
 
     @Override
-    public void onAttach(Activity activity) { super.onAttach(activity, ID); }
+    public void onAttach(Activity activity) { super.onAttach(activity, ID_TOOLS_TASKER); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
