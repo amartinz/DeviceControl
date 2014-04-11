@@ -72,11 +72,17 @@ public class PreferencesFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference mShowLauncher;
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity, ID_DUMMY);
+    }
+
+    @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml._device_control);
 
-        PreferenceHelper.getInstance(mActivity);
+        final Activity activity = getActivity();
+        PreferenceHelper.getInstance(activity);
 
         mExtensiveLogging = (CustomCheckBoxPreference) findPreference(EXTENSIVE_LOGGING);
         if (mExtensiveLogging != null) {
@@ -104,19 +110,24 @@ public class PreferencesFragment extends AttachPreferenceFragment
         final CustomPreference mVersion = (CustomPreference) findPreference("prefs_version");
         if (mVersion != null) {
             mVersion.setEnabled(false);
+            String title, summary;
             try {
-                final PackageManager pm = mActivity.getPackageManager();
+                if (activity == null) { throw new Exception("activity is null"); }
+                final PackageManager pm = activity.getPackageManager();
                 if (pm != null) {
                     final PackageInfo pInfo = pm.getPackageInfo(
-                            mActivity.getPackageName(), 0);
-                    mVersion.setTitle(getString(R.string.app_version_name, pInfo.versionName));
-                    mVersion.setSummary(getString(R.string.app_version_code, pInfo.versionCode));
+                            activity.getPackageName(), 0);
+                    title = getString(R.string.app_version_name, pInfo.versionName);
+                    summary = getString(R.string.app_version_code, pInfo.versionCode);
+                } else {
+                    throw new Exception("pm not null");
                 }
             } catch (Exception ignored) {
-                final String unknown = getString(R.string.unknown);
-                mVersion.setTitle(unknown);
-                mVersion.setSummary(unknown);
+                title = getString(R.string.app_version_name, getString(R.string.unknown));
+                summary = getString(R.string.app_version_code, getString(R.string.unknown));
             }
+            mVersion.setTitle(title);
+            mVersion.setSummary(summary);
         }
 
         category = (PreferenceCategory) findPreference("prefs_app");

@@ -44,7 +44,7 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
     public static final int FRAGMENT_VM         = 0;
     public static final int FRAGMENT_BUILD_PROP = 2;
 
-    private Fragment fragment;
+    private Fragment mFragment;
     private String   mText;
 
     private int mImgId = R.mipmap.ic_launcher;
@@ -71,15 +71,15 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
 
         switch (mFragmentId) {
             case 1:
-                fragment = EditorFragment.newInstance(1);
+                mFragment = EditorFragment.newInstance(1);
                 mText = getString(R.string.fragment_press_to_load, "SysCtl Editor");
                 break;
             case 3:
-                fragment = FreezerFragment.newInstance(0, "usr");
+                mFragment = FreezerFragment.newInstance(0, "usr");
                 mText = getString(R.string.fragment_press_to_load, "Freezer");
                 break;
             case 4:
-                fragment = FreezerFragment.newInstance(1, "usr");
+                mFragment = FreezerFragment.newInstance(1, "usr");
                 mText = getString(R.string.fragment_press_to_load, "Unfreezer");
                 break;
             default:
@@ -144,7 +144,7 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onReplaceFragment(new ReplaceFragmentEvent(fragment, true));
+                    onReplaceFragment(new ReplaceFragmentEvent(mFragment, true));
                 }
             });
 

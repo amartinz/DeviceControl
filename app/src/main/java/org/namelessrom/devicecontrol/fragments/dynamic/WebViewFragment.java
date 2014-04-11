@@ -26,12 +26,12 @@ import android.webkit.WebView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
-public class WebViewFragment extends AttachFragment {
+public class WebViewFragment extends AttachFragment implements DeviceConstants {
 
     public static final String ARG_TYPE = "arg_type";
-    public static final int    ID       = 9999;
 
     public static final int TYPE_ABOUT    = 0;
     public static final int TYPE_LICENSES = 1;
@@ -49,7 +49,7 @@ public class WebViewFragment extends AttachFragment {
 
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity, WebViewFragment.ID);
+        super.onAttach(activity, ID_DUMMY);
     }
 
     @Override

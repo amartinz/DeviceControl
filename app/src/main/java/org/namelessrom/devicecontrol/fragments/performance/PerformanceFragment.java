@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 import org.namelessrom.devicecontrol.widgets.JfViewPager;
 import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
@@ -33,9 +34,7 @@ import org.namelessrom.devicecontrol.widgets.adapters.ScreenSlidePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PerformanceFragment extends AttachFragment {
-
-    public static final int ID = 2;
+public class PerformanceFragment extends AttachFragment implements DeviceConstants {
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -59,7 +58,7 @@ public class PerformanceFragment extends AttachFragment {
 
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity, ID);
+        super.onAttach(activity, ID_PERFORMANCE);
     }
 
     private List<Fragment> getFragments() {

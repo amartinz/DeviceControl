@@ -18,13 +18,12 @@ import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.GpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
 public class GpuSettingsFragment extends AttachPreferenceFragment
-        implements PerformanceConstants, Preference.OnPreferenceChangeListener {
-
-    public static final int ID = 215;
+        implements DeviceConstants, PerformanceConstants, Preference.OnPreferenceChangeListener {
 
     private PreferenceCategory mRoot;
     private CustomListPreference mGpuFrequency = null;
@@ -32,7 +31,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
 
     @Override
     public void onAttach(final Activity activity) {
-        super.onAttach(activity, ID);
+        super.onAttach(activity, ID_PERFORMANCE_GPU_SETTINGS);
     }
 
     @Override

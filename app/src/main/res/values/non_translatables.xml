@@ -22,9 +22,6 @@
     <string name="overcommit_title">Overcommit ratio</string>
     <string name="swappiness_title">Swappiness</string>
     <string name="vfs_title">VFS cache pressure</string>
-    <!-- Dummy -->
-    <string name="dummy" translatable="false">Work In Progress</string>
-    <string name="dummy_help" translatable="false">The texts of the help you see here is still beeing written, sorry!</string>
     <!-- Licenses -->
     <string name="copyright_help" translatable="false">Copyright \u00A9 2013-2014 Alexander \"Evisceration\" Martinz.</string>
     <!-- Arrays -->

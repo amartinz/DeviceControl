@@ -30,15 +30,7 @@ import org.namelessrom.devicecontrol.providers.BusProvider;
 
 public class AttachPreferenceFragment extends PreferenceFragment {
 
-    protected Activity mActivity;
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = activity;
-    }
-
-    protected void onAttach(Activity activity, int number) {
+    protected void onAttach(final Activity activity, final int number) {
         super.onAttach(activity);
         BusProvider.getBus().post(new SectionAttachedEvent(number));
     }

@@ -1,5 +1,6 @@
 package org.namelessrom.devicecontrol.fragments.tools;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -134,10 +135,14 @@ public class VmFragment extends AttachPreferenceFragment implements DeviceConsta
 
     private void openDialog(int currentProgress, String title, final int min, final int max,
             final Preference pref, final String path, final String key) {
-        final Resources res = mActivity.getResources();
+        final Activity activity = getActivity();
+
+        if (activity == null) return;
+
+        final Resources res = activity.getResources();
         final String cancel = res.getString(android.R.string.cancel);
         final String ok = res.getString(android.R.string.ok);
-        final LayoutInflater factory = LayoutInflater.from(mActivity);
+        final LayoutInflater factory = LayoutInflater.from(activity);
         final View alphaDialog = factory.inflate(R.layout.dialog_seekbar, null);
 
         final SeekBar seekbar = (SeekBar) alphaDialog.findViewById(R.id.seek_bar);
@@ -191,16 +196,14 @@ public class VmFragment extends AttachPreferenceFragment implements DeviceConsta
                     }
 
                     @Override
-                    public void onStopTrackingTouch(SeekBar seekbar) {
-                    }
+                    public void onStopTrackingTouch(SeekBar seekbar) { }
 
                     @Override
-                    public void onStartTrackingTouch(SeekBar seekbar) {
-                    }
+                    public void onStartTrackingTouch(SeekBar seekbar) { }
                 };
         seekbar.setOnSeekBarChangeListener(seekBarChangeListener);
 
-        new AlertDialog.Builder(mActivity)
+        new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setView(alphaDialog)
                 .setNegativeButton(cancel,
@@ -223,7 +226,7 @@ public class VmFragment extends AttachPreferenceFragment implements DeviceConsta
                         pref.setSummary(Integer.toString(newProgress));
                         Utils.writeValue(path, Integer.toString(newProgress));
                         final SharedPreferences.Editor editor =
-                                PreferenceManager.getDefaultSharedPreferences(mActivity).edit();
+                                PreferenceManager.getDefaultSharedPreferences(activity).edit();
                         editor.putInt(key, newProgress);
                         editor.commit();
                     }

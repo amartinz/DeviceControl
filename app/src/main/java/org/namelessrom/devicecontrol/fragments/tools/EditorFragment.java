@@ -19,6 +19,7 @@
 package org.namelessrom.devicecontrol.fragments.tools;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -133,6 +134,8 @@ public class EditorFragment extends AttachFragment
             final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        final Activity activity = getActivity();
+
         mEditorType = getArguments().getInt(ARG_EDITOR);
 
         switch (mEditorType) {
@@ -216,7 +219,7 @@ public class EditorFragment extends AttachFragment
             applyBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View arg0) {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
                     dialog.setTitle(getString(R.string.dialog_warning))
                             .setMessage(getString(R.string.dialog_warning_apply));
                     dialog.setNegativeButton(getString(android.R.string.cancel),
@@ -239,9 +242,9 @@ public class EditorFragment extends AttachFragment
                                                     + ' ' + syspath + mod + ".conf;"
                                     );
                                     dialogInterface.dismiss();
-                                    Toast.makeText(mActivity
-                                            , getString(R.string.toast_settings_applied)
-                                            , Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(activity,
+                                            getString(R.string.toast_settings_applied),
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             }
                     );
@@ -321,7 +324,8 @@ public class EditorFragment extends AttachFragment
     private class GetBuildPropOperation extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... params) {
-            final String dn = getActivity().getFilesDir().getPath() + DC_BACKUP_DIR;
+            final Activity activity = getActivity();
+            final String dn = activity.getFilesDir().getPath() + DC_BACKUP_DIR;
 
             mBuildName = "build";
             mBuildName = (Build.DISPLAY.isEmpty() || Build.DISPLAY == null)
@@ -329,10 +333,10 @@ public class EditorFragment extends AttachFragment
                     : mBuildName + '-' + Build.DISPLAY.replace(" ", "_") + ".prop";
             if (!new File(dn + '/' + mBuildName).exists()) {
                 Utils.runRootCommand("busybox cp /system/build.prop " + dn + '/' + mBuildName);
-                mActivity.runOnUiThread(new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(mActivity,
+                        Toast.makeText(activity,
                                 getString(R.string.backup_message, dn + '/' + mBuildName),
                                 Toast.LENGTH_SHORT).show();
                     }
@@ -389,7 +393,8 @@ public class EditorFragment extends AttachFragment
     //==============================================================================================
 
     void loadProp(final String result) {
-        if ((result != null) && (!result.isEmpty())) {
+        final Activity activity = getActivity();
+        if ((activity != null) && (result != null) && (!result.isEmpty())) {
             props.clear();
             final String[] p = result.split(" ");
             for (String aP : p) {
@@ -415,13 +420,15 @@ public class EditorFragment extends AttachFragment
                 tools.setVisibility(View.VISIBLE);
                 mShadowTop.setVisibility(View.VISIBLE);
                 mShadowBottom.setVisibility(View.VISIBLE);
-                adapter = new PropAdapter(mActivity, props);
+                adapter = new PropAdapter(activity, props);
                 packList.setAdapter(adapter);
             }
         }
     }
 
     void loadBuildProp(final String s) {
+        final Activity activity = getActivity();
+
         props.clear();
         final String p[] = s.split("\n");
         for (String aP : p) {
@@ -448,7 +455,7 @@ public class EditorFragment extends AttachFragment
             tools.setVisibility(View.VISIBLE);
             mShadowTop.setVisibility(View.VISIBLE);
             mShadowBottom.setVisibility(View.VISIBLE);
-            adapter = new PropAdapter(mActivity, props);
+            adapter = new PropAdapter(activity, props);
             packList.setAdapter(adapter);
         }
     }
@@ -458,10 +465,11 @@ public class EditorFragment extends AttachFragment
     //==============================================================================================
 
     private void editPropDialog(final Prop p) {
-        final String dn = getActivity().getFilesDir().getPath() + DC_BACKUP_DIR;
+        final Activity activity = getActivity();
+        final String dn = activity.getFilesDir().getPath() + DC_BACKUP_DIR;
         String title;
 
-        final View editDialog = LayoutInflater.from(mActivity)
+        final View editDialog = LayoutInflater.from(activity)
                 .inflate(R.layout.prop_edit_dialog, null);
         final EditText tv = (EditText) editDialog.findViewById(R.id.vprop);
         final TextView tn = (TextView) editDialog.findViewById(R.id.nprop);
@@ -474,7 +482,7 @@ public class EditorFragment extends AttachFragment
             title = getString(R.string.add_property);
         }
 
-        new AlertDialog.Builder(mActivity)
+        new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setView(editDialog)
                 .setNegativeButton(getString(android.R.string.cancel),
@@ -491,7 +499,7 @@ public class EditorFragment extends AttachFragment
                             if (tv.getText() != null) {
                                 p.setVal(tv.getText().toString().trim());
                                 Utils.getCommandResult(SAVE,
-                                        mActivity.getFilesDir().getPath() + "/utils -setprop \""
+                                        activity.getFilesDir().getPath() + "/utils -setprop \""
                                                 + p.getName() + '=' + p.getVal() + "\" " + dn
                                                 + '/' + mod + ".conf"
                                 );
@@ -503,7 +511,7 @@ public class EditorFragment extends AttachFragment
                                 props.add(new Prop(tn.getText().toString().trim(),
                                         tv.getText().toString().trim()));
                                 Utils.getCommandResult(SAVE,
-                                        mActivity.getFilesDir().getPath() + "/utils -setprop \""
+                                        activity.getFilesDir().getPath() + "/utils -setprop \""
                                                 + tn.getText().toString().trim() + '='
                                                 + tv.getText().toString().trim() + "\" " + dn + '/'
                                                 + mod + ".conf"
@@ -517,9 +525,10 @@ public class EditorFragment extends AttachFragment
     }
 
     private void editBuildPropDialog(final Prop p) {
+        final Activity activity = getActivity();
         String title;
 
-        final View editDialog = LayoutInflater.from(mActivity)
+        final View editDialog = LayoutInflater.from(activity)
                 .inflate(R.layout.prop_build_prop_dialog, null);
         final EditText tv = (EditText) editDialog.findViewById(R.id.vprop);
         final EditText tn = (EditText) editDialog.findViewById(R.id.nprop);
@@ -527,7 +536,7 @@ public class EditorFragment extends AttachFragment
         final Spinner sp = (Spinner) editDialog.findViewById(R.id.spinner);
         final LinearLayout lpresets = (LinearLayout) editDialog.findViewById(R.id.lpresets);
         final ArrayAdapter<CharSequence> vAdapter =
-                new ArrayAdapter<CharSequence>(mActivity, android.R.layout.simple_spinner_item);
+                new ArrayAdapter<CharSequence>(activity, android.R.layout.simple_spinner_item);
         vAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         vAdapter.clear();
 
@@ -582,10 +591,9 @@ public class EditorFragment extends AttachFragment
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-            }
+            public void onNothingSelected(AdapterView<?> parentView) { }
         });
-        new AlertDialog.Builder(mActivity)
+        new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setView(editDialog)
                 .setNegativeButton(getString(android.R.string.cancel),
@@ -604,7 +612,7 @@ public class EditorFragment extends AttachFragment
                                 p.setVal(tv.getText().toString().trim());
                                 RootTools.remount("/system", "rw");
                                 Utils.getCommandResult(SAVE,
-                                        mActivity.getFilesDir().getPath() + "/utils -setprop \""
+                                        activity.getFilesDir().getPath() + "/utils -setprop \""
                                                 + p.getName() + '=' + p.getVal() + '"'
                                 );
                             }
@@ -616,7 +624,7 @@ public class EditorFragment extends AttachFragment
                                         tv.getText().toString().trim()));
                                 RootTools.remount("/system", "rw");
                                 Utils.getCommandResult(SAVE,
-                                        mActivity.getFilesDir().getPath() + "/utils -setprop \""
+                                        activity.getFilesDir().getPath() + "/utils -setprop \""
                                                 + tn.getText().toString().trim() + '='
                                                 + tv.getText().toString().trim() + '"'
                                 );
@@ -630,7 +638,7 @@ public class EditorFragment extends AttachFragment
     }
 
     private void makeDialog(String t, String m, byte op, Prop p) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(t)
                 .setMessage(m)
                 .setNegativeButton(getString(android.R.string.cancel),
@@ -684,7 +692,7 @@ public class EditorFragment extends AttachFragment
                                         + "busybox cp " + path + " /system/build.prop;\n"
                         );
                     } else {
-                        Toast.makeText(mActivity, getString(R.string.backup_message_not_found),
+                        Toast.makeText(getActivity(), getString(R.string.backup_message_not_found),
                                 Toast.LENGTH_LONG).show();
                     }
                     break;

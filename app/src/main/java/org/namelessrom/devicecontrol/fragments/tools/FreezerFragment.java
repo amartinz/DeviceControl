@@ -94,10 +94,12 @@ public class FreezerFragment extends AttachFragment
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
         final View v = layoutInflater.inflate(R.layout.tools_freezer_list, viewGroup, false);
 
+        final Activity activity = getActivity();
+
         mFreeze = getArguments().getBoolean(FreezerFragment.ARG_FREEZER, false);
         final boolean sys = getArguments().getString(FreezerFragment.ARG_TYPE, "usr").equals("sys");
 
-        packageManager = mActivity.getPackageManager();
+        packageManager = activity.getPackageManager();
 
         linlaHeaderProgress = (LinearLayout) v.findViewById(R.id.linlaHeaderProgress);
         linNopack = (LinearLayout) v.findViewById(R.id.noproc);
@@ -142,7 +144,10 @@ public class FreezerFragment extends AttachFragment
 
     @Subscribe
     public void onFreezer(final FreezeEvent event) {
-        if (event == null) { return; }
+        if (event == null) return;
+
+        final Activity activity = getActivity();
+        if (activity == null) return;
 
         final String result = event.getPackages();
         String[] pmList = null;
@@ -151,7 +156,7 @@ public class FreezerFragment extends AttachFragment
         }
         linlaHeaderProgress.setVisibility(View.GONE);
         if (pmList != null && pmList.length > 0) {
-            adapter = new PackAdapter(mActivity, pmList, packageManager);
+            adapter = new PackAdapter(activity, pmList, packageManager);
             packList.setAdapter(adapter);
             linNopack.setVisibility(View.GONE);
             llist.setVisibility(LinearLayout.VISIBLE);
@@ -219,7 +224,10 @@ public class FreezerFragment extends AttachFragment
     }
 
     private void makedialog(String titlu, String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        final Activity activity = getActivity();
+        if (activity == null) return;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(titlu)
                 .setMessage(msg)
                 .setNegativeButton(getString(android.R.string.cancel),

@@ -8,24 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.adapters.HelpArrayAdapter;
 
-public class HelpFragment extends Fragment {
+public class HelpFragment extends Fragment implements DeviceConstants {
 
     public static final String ARG_TYPE = "arg_type";
-
-    public static final int TYPE_DUMMY      = -1;
-    public static final int TYPE_HOME       = 110;
-    public static final int TYPE_DEVICE     = 710;
-    public static final int TYPE_PERF_INFO  = 810;
-    public static final int TYPE_CPU        = 820;
-    public static final int TYPE_GPU        = 830;
-    public static final int TYPE_EXTRAS     = 840;
-    public static final int TYPE_TASKER     = 910;
-    public static final int TYPE_EDITORS    = 920;
-    public static final int TYPE_FREEZER    = 930;
-    public static final int TYPE_PREFERENCE = 1100;
-    public static final int TYPE_LICENSES   = 1200;
 
     public static HelpFragment newInstance(final int type) {
         final HelpFragment f = new HelpFragment();
@@ -41,7 +29,12 @@ public class HelpFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         final View v = inflater.inflate(R.layout.menu_list, container, false);
 
-        final int type = getArguments().getInt(ARG_TYPE, 0);
+        final Bundle b = getArguments();
+
+        int type = ID_DUMMY;
+        if (b != null) {
+            type = b.getInt(ARG_TYPE, 0);
+        }
         final int[] ids = getIds(type);
         final int titleId = ids[0];
         final int contentId = ids[1];
@@ -62,51 +55,55 @@ public class HelpFragment extends Fragment {
 
         switch (type) {
             default:
-            case TYPE_DUMMY:
+            case ID_DUMMY:
                 ids[0] = R.array.dummy_titles;
                 ids[1] = R.array.dummy_content;
                 break;
-            case TYPE_HOME:
+            case ID_HOME:
                 ids[0] = R.array.home_titles;
                 ids[1] = R.array.home_content;
                 break;
-            case TYPE_DEVICE:
+            case ID_DEVICE:
                 ids[0] = R.array.device_titles;
                 ids[1] = R.array.device_content;
                 break;
-            case TYPE_PERF_INFO:
+            case ID_PERFORMANCE_INFO:
                 ids[0] = R.array.perf_info_titles;
                 ids[1] = R.array.perf_info_content;
                 break;
-            case TYPE_CPU:
+            case ID_PERFORMANCE_CPU_SETTINGS:
                 ids[0] = R.array.cpu_titles;
                 ids[1] = R.array.cpu_content;
                 break;
-            case TYPE_GPU:
+            case ID_PERFORMANCE_GPU_SETTINGS:
                 ids[0] = R.array.gpu_titles;
                 ids[1] = R.array.gpu_content;
                 break;
-            case TYPE_EXTRAS:
+            case ID_PERFORMANCE_EXTRA:
                 ids[0] = R.array.extras_titles;
                 ids[1] = R.array.extras_content;
                 break;
-            case TYPE_TASKER:
+            case ID_HOTPLUGGING:
+                ids[0] = R.array.extras_hotplugging_titles;
+                ids[1] = R.array.extras_hotplugging_content;
+                break;
+            case ID_TOOLS_TASKER:
                 ids[0] = R.array.tasker_titles;
                 ids[1] = R.array.tasker_content;
                 break;
-            case TYPE_EDITORS:
+            case ID_TOOLS_EDITORS:
                 ids[0] = R.array.editors_titles;
                 ids[1] = R.array.editors_content;
                 break;
-            case TYPE_FREEZER:
+            case ID_TOOLS_FREEZER:
                 ids[0] = R.array.freezer_titles;
                 ids[1] = R.array.freezer_content;
                 break;
-            case TYPE_PREFERENCE:
+            case ID_PREFERENCES:
                 ids[0] = R.array.preference_titles;
                 ids[1] = R.array.preference_content;
                 break;
-            case TYPE_LICENSES:
+            case ID_LICENSES:
                 ids[0] = R.array.licenses_titles;
                 ids[1] = R.array.licenses_content;
                 break;

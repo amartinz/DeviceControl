@@ -27,18 +27,18 @@ import android.view.ViewGroup;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
-public class FreezerTabbedFragment extends AttachFragment {
+public class FreezerTabbedFragment extends AttachFragment implements DeviceConstants {
 
     public static final String TAG = "tools_freezer_tabbed";
-    public static final int    ID  = 320;
 
     private FragmentTabHost mTabHost;
 
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity, FreezerTabbedFragment.ID);
+        super.onAttach(activity, ID_TOOLS_FREEZER);
     }
 
     @Override
