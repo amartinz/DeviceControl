@@ -64,6 +64,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="org.namelessrom.devicecontrol.wizard.AddTaskActivity" />
 
         <!-- Services -->
         <service

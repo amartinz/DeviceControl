@@ -246,4 +246,14 @@
     <string name="is_monkey">Wait, are you serious?\nYou are pretty smart for a monkey.\nNot that they are stupid but...\nWell, lets skip this.</string>
     <string name="no_monkey">Not a monkey? *Sigh* :(</string>
     <string name="downgraded">Database got wiped due a downgrade!</string>
+    <!-- Wizard -->
+    <string name="task_type">Task type</string>
+    <string name="event_based">Event based</string>
+    <string name="next">Next</string>
+    <string name="prev">Previous</string>
+    <string name="review">Review</string>
+    <string name="finish">Add Task</string>
+
+    <string name="submit_confirm_message">Do you want to add this task?</string>
+    <string name="submit_confirm_button">Add Task</string>
 </resources>
