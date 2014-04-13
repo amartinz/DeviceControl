@@ -118,6 +118,8 @@ public class HotpluggingFragment extends AttachPreferenceFragment
         }
 
         removeIfEmpty(category);
+
+        isSupported(mRoot, getActivity());
     }
 
     private void removeIfEmpty(final PreferenceGroup preferenceGroup) {

@@ -44,7 +44,8 @@ public interface DeviceConstants {
     public static final int ID_PERFORMANCE_GPU_SETTINGS = 7;
     public static final int ID_PERFORMANCE_EXTRA        = 8;
     public static final int ID_HOTPLUGGING              = ID_PERFORMANCE_EXTRA + 1000;
-    public static final int ID_VOLTAGE                  = ID_PERFORMANCE_EXTRA + 1100;
+    public static final int ID_THERMAL                  = ID_PERFORMANCE_EXTRA + 1100;
+    public static final int ID_VOLTAGE                  = ID_PERFORMANCE_EXTRA + 1200;
     public static final int ID_TOOLS_TASKER             = 10;
     public static final int ID_TOOLS_EDITORS            = 11;
     public static final int ID_TOOLS_FREEZER            = 12;

@@ -55,6 +55,7 @@ import org.namelessrom.devicecontrol.fragments.performance.GpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.InformationFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.GovernorFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.HotpluggingFragment;
+import org.namelessrom.devicecontrol.fragments.performance.sub.ThermalFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.fragments.tools.EditorTabbedFragment;
@@ -368,6 +369,9 @@ public class MainActivity extends Activity
             case ID_HOTPLUGGING:
                 mTitle = mSubFragmentTitle = R.string.hotplugging;
                 break;
+            case ID_THERMAL:
+                mTitle = mSubFragmentTitle = R.string.thermal;
+                break;
             case ID_VOLTAGE:
                 mTitle = mSubFragmentTitle = R.string.voltage_control;
                 break;
@@ -481,21 +485,23 @@ public class MainActivity extends Activity
     public void onSubFragmentEvent(final SubFragmentEvent event) {
         if (event == null) return;
 
-        Fragment main = null, right = null;
+        Fragment main = null;
         final int id = event.getId();
+
+        Fragment right = HelpFragment.newInstance(id);
 
         switch (id) {
             case ID_GOVERNOR_TUNABLE:
                 main = new GovernorFragment();
-                right = HelpFragment.newInstance(ID_GOVERNOR_TUNABLE);
                 break;
             case ID_HOTPLUGGING:
                 main = new HotpluggingFragment();
-                right = HelpFragment.newInstance(ID_HOTPLUGGING);
+                break;
+            case ID_THERMAL:
+                main = new ThermalFragment();
                 break;
             case ID_VOLTAGE:
                 main = new VoltageFragment();
-                right = HelpFragment.newInstance(ID_VOLTAGE);
                 break;
             default:
                 break;

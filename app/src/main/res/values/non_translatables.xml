@@ -6,6 +6,7 @@
     <string name="msm_dcvs" translatable="false">MSM DCVS</string>
     <string name="empty" translatable="false" />
     <string name="intelli_plug" translatable="false">Intelli-Plug</string>
+    <string name="intelli_thermal" translatable="false">Intelli-Thermal</string>
     <string name="sysctl" translatable="false">SysCtl</string>
     <string name="menu_plus">+25mV</string>
     <string name="menu_minus">-25mV</string>

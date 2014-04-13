@@ -32,6 +32,10 @@
         android:key="hotplugging"
         android:title="@string/hotplugging" />
 
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
+        android:key="thermal"
+        android:title="@string/thermal" />
+
     <PreferenceCategory
         android:key="powersaving"
         android:title="@string/powersaving">

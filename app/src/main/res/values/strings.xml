@@ -45,6 +45,12 @@
     <string name="hotplugging">Hotplugging</string>
     <string name="mpdecision_summary_on">MPDecision is running.</string>
     <string name="mpdecision_summary_off">MPDecision is turned off.</string>
+    <!-- Thermal -->
+    <string name="thermal">Thermal Driver</string>
+    <string name="core_control">Core Control</string>
+    <string name="core_control_summary">Turns cpu cores off if temperature limit is reached</string>
+    <string name="intelli_thermal_enabled">Enable Intelli-Thermal</string>
+    <string name="intelli_thermal_enabled_summary">If deactivated without valid replacement, your device may overheat!</string>
     <!-- Voltage -->
     <string name="voltage">Voltage</string>
     <string name="msm_dcvs_summary">Use MSM DCVS for CPU/GPU Frequency control</string>

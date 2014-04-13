@@ -363,4 +363,11 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
+    public static boolean isEnabled(String s) {
+        if (s != null) {
+            s = s.trim().toUpperCase();
+            return s.equals("Y") || s.equals("1");
+        } else { return false; }
+    }
+
 }

@@ -72,6 +72,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
     private CustomListPreference     mIoScheduler;
     private CustomCheckBoxPreference mForceHighEndGfx;
     private CustomPreference         mHotplugging;
+    private CustomPreference         mThermal;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mPowerEfficientWork;
     private CustomListPreference     mMcPowerScheduler;
@@ -132,6 +133,11 @@ public class ExtrasFragment extends AttachPreferenceFragment
         mHotplugging = (CustomPreference) findPreference("hotplugging");
         if (mHotplugging != null) {
             mHotplugging.setOnPreferenceClickListener(this);
+        }
+
+        mThermal = (CustomPreference) findPreference("thermal");
+        if (mThermal != null) {
+            mThermal.setOnPreferenceClickListener(this);
         }
 
         //------------------------------------------------------------------------------------------
@@ -208,6 +214,9 @@ public class ExtrasFragment extends AttachPreferenceFragment
             return true;
         } else if (mHotplugging == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_HOTPLUGGING));
+            return true;
+        } else if (mThermal == preference) {
+            BusProvider.getBus().post(new SubFragmentEvent(ID_THERMAL));
             return true;
         }
 

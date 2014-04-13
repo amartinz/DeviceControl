@@ -102,6 +102,11 @@ public interface PerformanceConstants {
     public static final String   VDD_TABLE_FILE             =
             "/sys/devices/system/cpu/cpufreq/vdd_table/vdd_levels";
     //----------------------------------------------------------------------------------------------
+    public static final String   INTELLI_THERMAL_CC_ENABLED =
+            "/sys/module/msm_intelli_thermal/core_control/enabled";
+    public static final String   INTELLI_THERMAL_ENABLED    =
+            "/sys/module/msm_intelli_thermal/parameters/enabled";
+    //----------------------------------------------------------------------------------------------
     public static final String   PREF_HIDE_CPU_INFO         = "pref_hide_cpu_info";
     public static final String   PREF_INTERVAL_CPU_INFO     = "pref_interval_cpu_info";
     public static final String   PREF_MAX_CPU               = "pref_max_cpu";
