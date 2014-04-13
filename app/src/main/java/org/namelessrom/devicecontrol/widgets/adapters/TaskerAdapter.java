@@ -1,9 +1,7 @@
 package org.namelessrom.devicecontrol.widgets.adapters;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +34,7 @@ public class TaskerAdapter extends BaseAdapter {
     public int getCount() { return mTaskerList.size(); }
 
     @Override
-    public Object getItem(int position) { return position; }
+    public TaskerItem getItem(int position) { return mTaskerList.get(position); }
 
     @Override
     public long getItemId(int arg0) { return 0; }
@@ -62,32 +60,6 @@ public class TaskerAdapter extends BaseAdapter {
                 BusProvider.getBus().post(item);
             }
         });
-        holder.container.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle(R.string.delete_task);
-                builder.setMessage(R.string.delete_task_question);
-                builder.setPositiveButton(android.R.string.yes, new DialogInterface
-                        .OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mDatabase.deleteTaskerItem(item);
-                        notifyDataSetChanged();
-                    }
-                });
-                builder.setNegativeButton(android.R.string.no, new DialogInterface
-                        .OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.create().show();
-
-                return true;
-            }
-        });
         holder.category.setText(item.getCategory());
         holder.action.setText(item.getName());
         holder.value.setText(item.getValue());
@@ -105,8 +77,8 @@ public class TaskerAdapter extends BaseAdapter {
 
     @Override
     public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
         mTaskerList = mDatabase.getAllTaskerItems("");
+        super.notifyDataSetChanged();
     }
 
     class ViewHolder {

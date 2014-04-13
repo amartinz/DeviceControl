@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="10dp"
-    android:background="?android:attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingEnd="?android:attr/scrollbarSize">
@@ -51,6 +50,8 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <View style="@style/VerticalDivider" />
 
     <CheckBox
         android:id="@+id/enabled"

@@ -1,6 +1,8 @@
 package org.namelessrom.devicecontrol.database;
 
-public class TaskerItem {
+import java.io.Serializable;
+
+public class TaskerItem implements Serializable {
 
     public static final String CATEGORY_SCREEN_ON  = "screen_on";
     public static final String CATEGORY_SCREEN_OFF = "screen_off";
