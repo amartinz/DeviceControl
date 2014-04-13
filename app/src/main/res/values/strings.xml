@@ -140,6 +140,7 @@
     <string name="tasker">Tasker</string>
     <string name="tasklist">Tasklist</string>
     <string name="tasklist_summary">Setup, modify, enable or disable tasks.</string>
+    <string name="tasklist_empty">You have not set up any tasks yet!\nHow about adding some? :)\n\n(Press the \"+\" at the top right)</string>
     <string name="add_task">Add Task</string>
     <string name="edit_task">Edit Task</string>
     <string name="delete_task">Delete Task</string>
@@ -246,4 +247,13 @@
     <string name="is_monkey">Wait, are you serious?\nYou are pretty smart for a monkey.\nNot that they are stupid but...\nWell, lets skip this.</string>
     <string name="no_monkey">Not a monkey? *Sigh* :(</string>
     <string name="downgraded">Database got wiped due a downgrade!</string>
+    <!-- Wizard -->
+    <string name="task_type">Task type</string>
+    <string name="event_based">Event based</string>
+    <string name="next">Next</string>
+    <string name="prev">Previous</string>
+    <string name="review">Review</string>
+    <string name="finish">Add Task</string>
+    <string name="submit_confirm_message">Do you want to add this task?</string>
+    <string name="submit_confirm_button">Add Task</string>
 </resources>
