@@ -36,7 +36,7 @@ public class TaskerAdapter extends BaseAdapter {
     public int getCount() { return mTaskerList.size(); }
 
     @Override
-    public Object getItem(int position) { return position; }
+    public TaskerItem getItem(int position) { return mTaskerList.get(position); }
 
     @Override
     public long getItemId(int arg0) { return 0; }
@@ -105,8 +105,8 @@ public class TaskerAdapter extends BaseAdapter {
 
     @Override
     public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
         mTaskerList = mDatabase.getAllTaskerItems("");
+        super.notifyDataSetChanged();
     }
 
     class ViewHolder {

@@ -23,7 +23,7 @@ import android.os.Bundle;
 
 /**
  * Dummy Activity, used as Launcher.
- * The MainActivity still stays fully functional even if we deactivate this class component.
+ * The AddTaskActivity still stays fully functional even if we deactivate this class component.
  * <p/>
  * If we deactivate this activity, the launcher icon disappears.
  */

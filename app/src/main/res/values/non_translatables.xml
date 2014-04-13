@@ -14,6 +14,7 @@
     <string name="unknown" translatable="false">---</string>
     <string name="vm" translatable="false">VM</string>
     <string name="mpdecision">MPDecision</string>
+    <string name="submit_confirm_button" translatable="false">@string/finish</string>
     <!-- Dalvik -->
     <string name="dirty_ratio_title">Dirty ratio</string>
     <string name="dirty_background_title">Dirty background ratio</string>
