@@ -319,8 +319,16 @@ public class ExtrasFragment extends AttachPreferenceFragment
 
         final List<DataItem> items = db.getAllItems(
                 DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_EXTRAS);
+        String name, value;
         for (final DataItem item : items) {
-            sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
+            name = item.getFileName();
+            value = item.getValue();
+
+            if (MPDECISION_PATH.equals(name)) {
+                sbCmd.append(CpuUtils.enableMpDecision(value.equals("1")));
+            } else {
+                sbCmd.append(Utils.getWriteCommand(name, value));
+            }
         }
 
         return sbCmd.toString();
