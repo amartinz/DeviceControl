@@ -112,6 +112,7 @@ public class TaskerWizardModel extends AbstractWizardModel {
                                     getCategoryPage(),
                                     getActionPage())
                             .addBranch(getString(R.string.delete_task))
+                            .setRequired(true)
             );
         }
 

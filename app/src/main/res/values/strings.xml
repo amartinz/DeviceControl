@@ -144,7 +144,6 @@
     <string name="add_task">Add Task</string>
     <string name="edit_task">Edit Task</string>
     <string name="delete_task">Delete Task</string>
-    <string name="delete_task_question">Do you really want to delete this task?</string>
     <string name="category">Category</string>
     <string name="action">Action</string>
     <string name="value">Value</string>
