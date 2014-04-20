@@ -427,8 +427,9 @@ public class MainActivity extends Activity
     // In App Purchase
     //==============================================================================================
     private void setUpIab() {
-        if (Utils.isGmsInstalled(this)) {
-            mHelper = new IabHelper(this, Constants.Iab.getKey());
+        final String key = Constants.Iab.getKey();
+        if (!key.equals("---") && Utils.isGmsInstalled(this)) {
+            mHelper = new IabHelper(this, key);
             if (Application.IS_LOG_DEBUG) {
                 mHelper.enableDebugLogging(true, "IABDEVICECONTROL");
             }
