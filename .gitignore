@@ -33,5 +33,9 @@ local.properties
 out/
 proguard_logs/
 build/
+
+# Proprietary
+proprietary/
+
 # Others
 .DS_Store
