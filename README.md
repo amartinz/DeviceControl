@@ -1,13 +1,15 @@
 DeviceControl
 ===============================
 
-* **[Play Store link] (https://play.google.com/store/apps/details?id=org.namelessrom.devicecontrol)**
+* **[Play Store link](https://play.google.com/store/apps/details?id=org.namelessrom.devicecontrol)**
 
 ---
 
 Third party libraries:
 
+* android-support-v7-mediarouter
 * android-support-v13
+* google-play-services
 * [ACRA by Kevin Gaudin](https://github.com/ACRA/acra)
 * [Otto by Square](http://square.github.io/otto/)
 * [SlidingMenu by jfeinstein10](https://github.com/jfeinstein10/slidingmenu)
