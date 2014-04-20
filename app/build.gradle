@@ -36,6 +36,7 @@ android {
         disable 'HardcodedDebugMode'
         disable 'ValidFragment'
         disable 'MissingTranslation'
+        disable 'ExtraTranslation'
     }
 }
 

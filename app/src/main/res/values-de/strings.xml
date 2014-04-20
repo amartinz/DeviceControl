@@ -117,7 +117,6 @@
     <string name="add_task">Aufgabe hinzufügen</string>
     <string name="edit_task">Aufgabe bearbeiten</string>
     <string name="delete_task">Aufgabe löschen</string>
-    <string name="delete_task_question">Möchtest du diese Aufgabe wirklich löschen?</string>
     <string name="category">Kategorie</string>
     <string name="action">Aktion</string>
     <string name="value">Wert</string>

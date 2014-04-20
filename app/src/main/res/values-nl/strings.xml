@@ -122,7 +122,6 @@
   <string name="add_task">Taak toevoegen</string>
   <string name="edit_task">Taak bewerken</string>
   <string name="delete_task">Verwijder taak</string>
-  <string name="delete_task_question">Wilt u echt deze taak verwijderen?</string>
   <string name="category">Categorie</string>
   <string name="action">Actie</string>
   <string name="value">Waarde</string>
