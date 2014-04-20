@@ -60,6 +60,7 @@ import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.fragments.tools.EditorTabbedFragment;
 import org.namelessrom.devicecontrol.fragments.tools.FreezerTabbedFragment;
+import org.namelessrom.devicecontrol.proprietary.Constants;
 import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -426,8 +427,8 @@ public class MainActivity extends Activity
     // In App Purchase
     //==============================================================================================
     private void setUpIab() {
-        if (Utils.isPackageInstalled(this, "com.android.vending")) {
-            mHelper = new IabHelper(this, Application.Iab.getKey());
+        if (Utils.isGmsInstalled(this)) {
+            mHelper = new IabHelper(this, Constants.Iab.getKey());
             if (Application.IS_LOG_DEBUG) {
                 mHelper.enableDebugLogging(true, "IABDEVICECONTROL");
             }
@@ -435,11 +436,11 @@ public class MainActivity extends Activity
                 @Override
                 public void onIabSetupFinished(IabResult result) {
                     logDebug("IAB: " + result);
-                    PreferenceHelper.setBoolean(Application.Iab.getPref(), result.isSuccess());
+                    PreferenceHelper.setBoolean(Constants.Iab.getPref(), result.isSuccess());
                 }
             });
         } else {
-            PreferenceHelper.setBoolean(Application.Iab.getPref(), false);
+            PreferenceHelper.setBoolean(Constants.Iab.getPref(), false);
         }
     }
 

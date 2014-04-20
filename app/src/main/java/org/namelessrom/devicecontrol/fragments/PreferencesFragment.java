@@ -39,6 +39,7 @@ import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.proprietary.Constants;
 import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -135,7 +136,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
             mDonatePreference = (CustomPreference) findPreference("pref_donate");
             if (mDonatePreference != null) {
                 mDonatePreference
-                        .setEnabled(PreferenceHelper.getBoolean(Application.Iab.getPref(), false));
+                        .setEnabled(PreferenceHelper.getBoolean(Constants.Iab.getPref(), false));
             }
 
             if (Utils.existsInBuildProp("ro.nameless.secret=1")) {
