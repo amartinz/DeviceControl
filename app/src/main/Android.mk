@@ -20,9 +20,7 @@ LOCAL_ASSET_DIR     := $(LOCAL_PATH)/assets
 
 google_play_dir := \
         ../../../../../../external/google/google_play_services/libproject/google-play-services_lib/res
-proprietary_dir := \
-        ../../../proprietary/src/main/res
-res_dir := $(google_play_dir) $(proprietary_dir) res
+res_dir := $(google_play_dir) res
 
 LOCAL_RESOURCE_DIR := $(addprefix $(LOCAL_PATH)/, $(res_dir))
 LOCAL_AAPT_FLAGS := --auto-add-overlay
