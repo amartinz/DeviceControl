@@ -42,6 +42,9 @@ android {
 
 dependencies {
     compile project(':proprietary')
+    compile 'com.google.android.gms:play-services:+'
+    compile "com.android.support:appcompat-v7:19.+"
+    compile 'com.android.support:mediarouter-v7:19.+'
     compile 'com.android.support:support-v13:19.+'
     compile 'ch.acra:acra:4.+'
 }
