@@ -123,3 +123,16 @@
 }
 
 -keep public class com.google.** {*;}
+
+# Preserve all fundamental application classes.
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.view.View
+-keep public class * extends android.preference.Preference
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+
+# Preserve Android support libraries` classes and interfaces
+-keep class android.support.** { *; }
+-keep interface android.support.** { *; }

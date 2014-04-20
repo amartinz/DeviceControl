@@ -20,11 +20,15 @@ LOCAL_ASSET_DIR     := $(LOCAL_PATH)/assets
 
 google_play_dir := \
         ../../../../../../external/google/google_play_services/libproject/google-play-services_lib/res
-res_dir := $(google_play_dir) res
+appcompat_dir := \
+        ../../../../../../frameworks/support/v7/appcompat/res
+media_router_dir := \
+        ../../../../../../frameworks/support/v7/mediarouter/res
+res_dir := $(google_play_dir) $(appcompat_dir) $(media_router_dir) res
 
 LOCAL_RESOURCE_DIR := $(addprefix $(LOCAL_PATH)/, $(res_dir))
 LOCAL_AAPT_FLAGS := --auto-add-overlay
-LOCAL_AAPT_FLAGS += --extra-packages com.google.android.gms
+LOCAL_AAPT_FLAGS += --extra-packages com.google.android.gms:android.support.v7.mediarouter:android.support.v7.appcompat
 
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 

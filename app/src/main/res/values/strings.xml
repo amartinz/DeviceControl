@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_version_name">Versionname: %s</string>
     <string name="app_version_code">Versioncode: %s</string>
     <string name="app_information_help">Welcome to %1$s!\n\nTo get started, swipe out the menu from the left!\n\nIf you need help or don\'t understand what a specific funtion is doing, swipe right and look at the help!\n\nIf a feature is not supported by your device, it gets automatically hidden!\n\n\nPlease note, that %2$s needs root\nto function properly!\n\n</string>
@@ -255,4 +256,8 @@
     <string name="finish">Finish</string>
     <string name="submit_confirm_message">Do you want to proceed?</string>
     <string name="edit">Edit</string>
+    <string name="title_activity_cast">CastActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
 </resources>
