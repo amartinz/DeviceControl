@@ -24,8 +24,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 
@@ -59,8 +57,11 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     public static boolean isGmsInstalled(final Context context) {
+        /*
         final int statusCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
         return statusCode == ConnectionResult.SUCCESS;
+        */
+        return isPackageInstalled(context, "com.android.vending");
     }
 
     public static boolean existsInBuildProp(String filter) {
