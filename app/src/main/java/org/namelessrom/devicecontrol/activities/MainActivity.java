@@ -204,7 +204,9 @@ public class MainActivity extends Activity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                mSlidingMenu.toggle(true);
+                if (mSubFragmentTitle == -1) {
+                    mSlidingMenu.toggle(true);
+                }
                 break;
             //case R.id.action_settings:
             //    break;
