@@ -432,15 +432,15 @@ public class EditorFragment extends AttachFragment
         props.clear();
         final String p[] = s.split("\n");
         for (String aP : p) {
-            if (!aP.contains("#") && aP.trim().length() > 0 && aP != null && aP.contains("=")) {
+            if (!aP.contains("#") && aP.trim().length() > 0 && aP.contains("=")) {
                 aP = aP.replace("[", "").replace("]", "");
                 String pp[] = aP.split("=");
                 if (pp.length >= 2) {
-                    String r = "";
+                    final StringBuilder sb = new StringBuilder();
                     for (int i = 2; i < pp.length; i++) {
-                        r = r + '=' + pp[i];
+                        sb.append('=').append(pp[i]);
                     }
-                    props.add(new Prop(pp[0].trim(), pp[1].trim() + r));
+                    props.add(new Prop(pp[0].trim(), pp[1].trim() + sb.toString()));
                 } else {
                     props.add(new Prop(pp[0].trim(), ""));
                 }

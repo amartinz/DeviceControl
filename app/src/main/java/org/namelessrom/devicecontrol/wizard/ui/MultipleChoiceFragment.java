@@ -43,7 +43,6 @@ public class MultipleChoiceFragment extends ListFragment {
     private static final String ARG_KEY = "key";
 
     private PageFragmentCallbacks mCallbacks;
-    private String                mKey;
     private List<String>          mChoices;
     private Page                  mPage;
 
@@ -64,8 +63,7 @@ public class MultipleChoiceFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        mKey = args.getString(ARG_KEY);
-        mPage = mCallbacks.onGetPage(mKey);
+        mPage = mCallbacks.onGetPage(args.getString(ARG_KEY));
 
         MultipleFixedChoicePage fixedChoicePage = (MultipleFixedChoicePage) mPage;
         mChoices = new ArrayList<String>();

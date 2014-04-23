@@ -46,6 +46,7 @@ public abstract class AbstractWizardModel implements ModelCallbacks {
     public void onPageDataChanged(Page page) {
         // can't use for each because of concurrent modification (review fragment
         // can get added or removed and will register itself as a listener)
+        //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < mListeners.size(); i++) {
             mListeners.get(i).onPageDataChanged(page);
         }
@@ -55,6 +56,7 @@ public abstract class AbstractWizardModel implements ModelCallbacks {
     public void onPageTreeChanged() {
         // can't use for each because of concurrent modification (review fragment
         // can get added or removed and will register itself as a listener)
+        //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < mListeners.size(); i++) {
             mListeners.get(i).onPageTreeChanged();
         }

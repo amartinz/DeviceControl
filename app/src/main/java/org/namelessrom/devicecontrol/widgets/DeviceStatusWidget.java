@@ -75,7 +75,7 @@ public class DeviceStatusWidget extends LinearLayout {
     };
 
     private void createViews(final Context context) {
-        final View view = inflate(context, R.layout.layout_device_stats, this);
+        final View view = inflate(context, R.layout.widget_device_stats, this);
 
         mDeviceInfo = (LinearLayout) view.findViewById(R.id.ui_device_stats_view);
 

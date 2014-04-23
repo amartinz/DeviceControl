@@ -105,8 +105,7 @@ public class CpuUtils implements PerformanceConstants {
 
     public static boolean isMsmDcvs() {
         final String s = Utils.readOneLine(MSM_DCVS_FILE);
-        if (s == null || s.isEmpty()) { return false; }
-        return s.trim().equals("1");
+        return (s != null && !s.isEmpty() && s.trim().equals("1"));
     }
 
     public static void enableMsmDcvs(final boolean enable) {

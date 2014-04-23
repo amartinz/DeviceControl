@@ -332,16 +332,16 @@ public class VoltageFragment extends AttachPreferenceFragment
     }
 
     private String buildTable(final String[] vals) {
-        String newTable = "";
+        final StringBuilder sb = new StringBuilder();
         final int length = vals.length;
         for (int j = 0; j < length; j++) {
             if (j != length - 1) {
-                newTable += vals[j] + ' ';
+                sb.append(vals[j]).append(' ');
             } else {
-                newTable += vals[j];
+                sb.append(vals[j]);
             }
         }
-        return newTable;
+        return sb.toString();
     }
 
     public static String restore() {

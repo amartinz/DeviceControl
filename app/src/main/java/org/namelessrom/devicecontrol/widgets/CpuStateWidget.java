@@ -63,7 +63,7 @@ public class CpuStateWidget extends LinearLayout {
     }
 
     private void createViews(final Context context) {
-        final View view = inflate(context, R.layout.layout_time_in_state, this);
+        final View view = inflate(context, R.layout.widget_cpu_states, this);
 
         mStatesView = (LinearLayout) view.findViewById(R.id.ui_states_view);
         mAdditionalStates = (TextView) view.findViewById(R.id.ui_additional_states);

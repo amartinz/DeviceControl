@@ -54,7 +54,7 @@ public class WebViewFragment extends AttachFragment implements DeviceConstants {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.dialog_fragment, container, false);
+        final View view = inflater.inflate(R.layout.fragment_webview, container, false);
 
         final int typeId = getArguments().getInt(WebViewFragment.ARG_TYPE);
         String url;

@@ -59,19 +59,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.namelessrom.devicecontrol.activities.PerformanceActivity"
-            android:clearTaskOnLaunch="true"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:excludeFromRecents="true"
-            android:label="@string/performance"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="org.namelessrom.devicecontrol.activities.PerformanceActivity" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="org.namelessrom.devicecontrol.wizard.AddTaskActivity"
             android:label="@string/add_task"
             android:parentActivityName=".activities.MainActivity" />
