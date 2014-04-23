@@ -19,7 +19,7 @@ Copyright (C) 2012  James Roberts
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -29,73 +29,66 @@ Copyright (C) 2012  James Roberts
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <TextView
-                android:id="@+id/ui_header_total_state_time"
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:text="@string/total_state_time"
-                android:layout_weight="0.9" />
-
-            <ImageView
-                android:id="@+id/ui_refresh"
-                android:src="@drawable/ic_action_refresh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:layout_weight="0.1" />
-        </LinearLayout>
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <TextView
-            android:id="@+id/ui_total_state_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:padding="7dp"
-            android:textSize="25sp" />
-
-        <View style="@style/StandardDivider" />
-
-        <TextView
+            android:id="@+id/ui_header_total_state_time"
             style="?android:attr/listSeparatorTextViewStyle"
-            android:text="@string/time_in_state" />
+            android:text="@string/total_state_time"
+            android:layout_weight="0.9" />
 
-        <LinearLayout
-            android:id="@+id/ui_states_view"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/ui_refresh"
+            android:src="@drawable/ic_action_refresh"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="10dp" />
-
-        <TextView
-            android:id="@+id/ui_states_warning"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#551111"
-            android:padding="15dp"
-            android:text="@string/no_states_file_found"
-            android:textSize="20sp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/ui_header_additional_states"
             style="?android:attr/listSeparatorTextViewStyle"
-            android:text="@string/unused_cpu_states"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/ui_additional_states"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="6dp"
-            android:visibility="gone" />
-
+            android:layout_weight="0.1" />
     </LinearLayout>
 
-</ScrollView>
+    <TextView
+        android:id="@+id/ui_total_state_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="7dp"
+        android:textSize="25sp" />
+
+    <View style="@style/StandardDivider" />
+
+    <TextView
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:text="@string/time_in_state" />
+
+    <LinearLayout
+        android:id="@+id/ui_states_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="10dp" />
+
+    <TextView
+        android:id="@+id/ui_states_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#551111"
+        android:padding="15dp"
+        android:text="@string/no_states_file_found"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/ui_header_additional_states"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:text="@string/unused_cpu_states"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/ui_additional_states"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:visibility="gone" />
+
+</LinearLayout>

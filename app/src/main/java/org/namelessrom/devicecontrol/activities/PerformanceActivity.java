@@ -19,25 +19,23 @@ package org.namelessrom.devicecontrol.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.squareup.otto.Subscribe;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.performance.PerformanceFragment;
-import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-public class PerformanceActivity extends Activity {
+public class PerformanceActivity extends Activity implements DeviceConstants {
 
     //==============================================================================================
     // Fields
@@ -47,27 +45,16 @@ public class PerformanceActivity extends Activity {
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
-    @Override
-    protected void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_no_drawers);
+        setContentView(R.layout.activity_main);
 
         if (!Application.HAS_ROOT) {
-            Toast.makeText(this
-                    , getString(R.string.app_warning_root, getString(R.string.app_name))
-                    , Toast.LENGTH_LONG).show();
+            Toast.makeText(this,
+                    getString(R.string.app_warning_root, getString(R.string.app_name)),
+                    Toast.LENGTH_LONG).show();
         }
 
         PreferenceHelper.getInstance(this);
@@ -86,7 +73,6 @@ public class PerformanceActivity extends Activity {
         fragmentManager.beginTransaction()
                 .replace(R.id.container, new PerformanceFragment())
                 .commit();
-
     }
 
     @Override
@@ -107,14 +93,6 @@ public class PerformanceActivity extends Activity {
             logDebug("closing shells");
             RootTools.closeAllShells();
         }
-    }
-
-    @Subscribe
-    public void onAddFragmentToBackstack(final Fragment f) {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.container, f)
-                .addToBackStack(null)
-                .commit();
     }
 
 }

@@ -9,7 +9,6 @@ import android.preference.PreferenceCategory;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.GpuEvent;
@@ -59,10 +58,6 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
             refreshPreferences();
         } else {
             isSupported(mRoot, context);
-        }
-
-        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
-            MainActivity.mSlidingMenu.toggle(true);
         }
     }
 

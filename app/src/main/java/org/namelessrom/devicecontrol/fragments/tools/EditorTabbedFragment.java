@@ -84,14 +84,6 @@ public class EditorTabbedFragment extends AttachFragment implements DeviceConsta
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
-            MainActivity.mSlidingMenu.toggle(true);
-        }
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         mTabHost = null;

@@ -22,6 +22,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.BatteryManager;
 import android.os.Build;
 
 import com.stericson.roottools.RootTools;
@@ -381,6 +382,35 @@ public class Utils implements DeviceConstants, FileConstants {
             s = s.trim().toUpperCase();
             return s.equals("Y") || s.equals("1");
         } else { return false; }
+    }
+
+    public static String getBatteryHealth(final int healthInt) {
+        String health;
+
+        switch (healthInt) {
+            case BatteryManager.BATTERY_HEALTH_COLD:
+                health = "cold";
+                break;
+            case BatteryManager.BATTERY_HEALTH_GOOD:
+                health = "good";
+                break;
+            case BatteryManager.BATTERY_HEALTH_DEAD:
+                health = "dead";
+                break;
+            case BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE:
+                health = "overvoltage";
+                break;
+            case BatteryManager.BATTERY_HEALTH_OVERHEAT:
+                health = "overheat";
+                break;
+            default:
+            case BatteryManager.BATTERY_HEALTH_UNKNOWN:
+            case BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE:
+                health = "unknown";
+                break;
+        }
+
+        return health;
     }
 
 }

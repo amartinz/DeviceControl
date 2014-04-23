@@ -51,7 +51,6 @@ public class Application extends android.app.Application implements DeviceConsta
     public static final boolean IS_NAMELESS = Utils.isNameless();
 
     public static boolean IS_LOG_DEBUG = false;
-    public static boolean IS_DEBUG     = false;
     public static boolean HAS_ROOT     = false;
 
     public static AlarmManager alarmManager;
@@ -70,9 +69,8 @@ public class Application extends android.app.Application implements DeviceConsta
 
         PreferenceHelper.getInstance(this);
         IS_LOG_DEBUG = PreferenceHelper.getBoolean(EXTENSIVE_LOGGING, false);
-        IS_DEBUG = Utils.existsInBuildProp("ro.nameless.debug=1");
 
-        if (Application.IS_DEBUG) {
+        if (Utils.existsInBuildProp("ro.nameless.debug=1")) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectAll()
                     .penaltyLog()

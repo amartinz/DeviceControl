@@ -19,7 +19,10 @@ package org.namelessrom.devicecontrol.widgets;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.os.Bundle;
+import android.view.View;
 
+import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.providers.BusProvider;
 
@@ -28,5 +31,14 @@ public class AttachFragment extends Fragment {
     protected void onAttach(final Activity activity, final int number) {
         super.onAttach(activity);
         BusProvider.getBus().post(new SectionAttachedEvent(number));
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
+            MainActivity.mSlidingMenu.toggle(true);
+        }
     }
 }

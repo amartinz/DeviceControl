@@ -16,25 +16,18 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingRight="10dp"
     android:paddingLeft="10dp">
 
-    <RelativeLayout
-        android:id="@+id/device_header"
+    <TextView
+        style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/ui_header_device_information"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:text="@string/device_information" />
-
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:text="@string/device_information" />
 
     <LinearLayout
         android:id="@+id/ui_device_stats_view"
@@ -42,7 +35,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:layout_below="@+id/device_header" />
+        android:paddingBottom="10dp" />
 
-</RelativeLayout>
+</LinearLayout>
