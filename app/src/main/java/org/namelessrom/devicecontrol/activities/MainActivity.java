@@ -88,9 +88,10 @@ public class MainActivity extends Activity
 
     public static SlidingMenu mSlidingMenu;
 
-    private int mTitle            = R.string.home;
-    private int mFragmentTitle    = R.string.home;
-    private int mSubFragmentTitle = -1;
+    private int mActionBarDrawable = R.mipmap.ic_launcher;
+    private int mTitle             = R.string.home;
+    private int mFragmentTitle     = R.string.home;
+    private int mSubFragmentTitle  = -1;
 
     public static final int[] MENU_ICONS = {
             R.drawable.ic_menu_home,
@@ -328,31 +329,37 @@ public class MainActivity extends Activity
                 mTitle = R.string.help;
                 break;
             default:
+                mActionBarDrawable = R.mipmap.ic_launcher;
                 mTitle = mFragmentTitle = R.string.app_name;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_HOME:
+                mActionBarDrawable = R.mipmap.ic_launcher;
                 mTitle = mFragmentTitle = R.string.home;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_DEVICE:
+                mActionBarDrawable = R.drawable.ic_menu_device;
                 mTitle = mFragmentTitle = R.string.device;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_FEATURES:
+                mActionBarDrawable = R.drawable.ic_menu_features;
                 mTitle = mFragmentTitle = R.string.features;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_INFO:
+                mActionBarDrawable = R.drawable.ic_menu_perf_info;
                 mTitle = mFragmentTitle = R.string.information;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_CPU_SETTINGS:
+                mActionBarDrawable = R.drawable.ic_menu_perf_cpu;
                 mTitle = mFragmentTitle = R.string.cpusettings;
                 mSubFragmentTitle = -1;
                 break;
@@ -361,11 +368,13 @@ public class MainActivity extends Activity
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_GPU_SETTINGS:
+                mActionBarDrawable = R.drawable.ic_menu_perf_gpu;
                 mTitle = mFragmentTitle = R.string.gpusettings;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_EXTRA:
+                mActionBarDrawable = R.drawable.ic_menu_perf_extras;
                 mTitle = mFragmentTitle = R.string.extras;
                 mSubFragmentTitle = -1;
                 break;
@@ -380,21 +389,25 @@ public class MainActivity extends Activity
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_TASKER:
+                mActionBarDrawable = R.drawable.ic_menu_tasker;
                 mTitle = mFragmentTitle = R.string.tasker;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_EDITORS:
+                mActionBarDrawable = R.drawable.ic_menu_editor;
                 mTitle = mFragmentTitle = R.string.editors;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_FREEZER:
+                mActionBarDrawable = R.drawable.ic_menu_freezer;
                 mTitle = mFragmentTitle = R.string.freezer;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE:
+                mActionBarDrawable = R.mipmap.ic_launcher;
                 mTitle = mFragmentTitle = R.string.performance;
                 mSubFragmentTitle = -1;
                 break;
@@ -405,6 +418,7 @@ public class MainActivity extends Activity
     public void restoreActionBar() {
         final ActionBar actionBar = getActionBar();
         if (actionBar != null) {
+            actionBar.setIcon(mActionBarDrawable);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
             actionBar.setTitle(mTitle);
