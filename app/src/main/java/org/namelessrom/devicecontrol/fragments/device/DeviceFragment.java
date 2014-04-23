@@ -33,7 +33,7 @@ import org.namelessrom.devicecontrol.activities.MainActivity;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.DeviceFragmentEvent;
-import org.namelessrom.devicecontrol.objects.HighTouchSensitivity;
+import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
@@ -45,7 +45,13 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
+
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class DeviceFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
@@ -175,9 +181,14 @@ public class DeviceFragment extends AttachPreferenceFragment
             mGloveMode = (CustomCheckBoxPreference) findPreference(KEY_GLOVE_MODE);
             if (mGloveMode != null) {
                 try {
-                    if (!HighTouchSensitivity.isSupported()) {
+                    if (!isHtsSupported()) {
                         category.removePreference(mGloveMode);
                     } else {
+                        final String value = DatabaseHandler.getInstance(getActivity())
+                                .getValueByName(KEY_GLOVE_MODE, DatabaseHandler.TABLE_BOOTUP);
+                        final boolean enableGlove = (value != null && value.equals("1"));
+
+                        enableHts(enableGlove);
                         mGloveMode.setOnPreferenceChangeListener(this);
                     }
                 } catch (Exception exc) { category.removePreference(mGloveMode); }
@@ -272,9 +283,9 @@ public class DeviceFragment extends AttachPreferenceFragment
         if (preference == mForceNavBar) { // ================================================= INPUT
             Utils.runRootCommand(Scripts.toggleForceNavBar());
             changed = true;
-        } else if (preference == mGloveMode) {
+        } else if (preference == mGloveMode && mGloveMode.isEnabled()) {
             final boolean value = (Boolean) o;
-            HighTouchSensitivity.setEnabled(value);
+            enableHts(value);
             PreferenceHelper.setBootup(
                     new DataItem(DatabaseHandler.CATEGORY_DEVICE, mGloveMode.getKey(),
                             KEY_GLOVE_MODE, (value ? "1" : "0"))
@@ -347,13 +358,100 @@ public class DeviceFragment extends AttachPreferenceFragment
     // Methods
     //==============================================================================================
 
+    private static final int SHELL_HTS = 1000;
+
+    private static String COMMAND_PATH       = "/sys/class/sec/tsp/cmd";
+    private static String GLOVE_MODE         = "glove_mode";
+    private static String GLOVE_MODE_ENABLE  = GLOVE_MODE + ",1";
+    private static String GLOVE_MODE_DISABLE = GLOVE_MODE + ",0";
+
+    private void enableHts(final boolean enable) {
+        if (mGloveMode != null) mGloveMode.setEnabled(false);
+        final String mode = (enable ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
+        Utils.getCommandResult(SHELL_HTS,
+                Utils.getWriteCommand(COMMAND_PATH, mode) +
+                        Utils.getReadCommand("/sys/class/sec/tsp/cmd_result")
+        );
+    }
+
+    @Subscribe
+    public void onShellOutputEvent(final ShellOutputEvent event) {
+        if (event == null) return;
+
+        final int id = event.getId();
+        final String output = event.getOutput();
+        switch (id) {
+            case SHELL_HTS:
+                if (output == null || mGloveMode == null) break;
+                mGloveMode.setChecked(output.contains(GLOVE_MODE_ENABLE));
+                mGloveMode.setEnabled(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Whether device supports high touch sensitivity.
+     *
+     * @return boolean Supported devices must return always true
+     */
+    private static boolean isHtsSupported() {
+        boolean supported = false;
+        File f = new File(COMMAND_PATH);
+
+        // Check to make sure that the kernel supports glove mode
+        if (f.exists()) {
+            BufferedReader reader = null;
+            try {
+                reader = new BufferedReader(new FileReader("/sys/class/sec/tsp/cmd_list"));
+                String currentLine;
+                while ((currentLine = reader.readLine()) != null) {
+                    if (currentLine.equals(GLOVE_MODE)) {
+                        supported = true;
+                        break;
+                    }
+                }
+            } catch (IOException ignored) {
+                // ignored
+            } finally {
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException ignored) {
+                    // ignored
+                }
+            }
+        }
+
+        if (supported) {
+            logDebug("Glove mode / high touch sensitivity is supported");
+        } else {
+            logDebug("Glove mode / high touch sensitivity is NOT supported");
+        }
+
+        return supported;
+    }
+
     public static String restore(final DatabaseHandler db) {
         final StringBuilder sbCmd = new StringBuilder();
 
         final List<DataItem> items =
                 db.getAllItems(DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_DEVICE);
+        String filename, value;
         for (final DataItem item : items) {
-            sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
+            filename = item.getFileName();
+            value = item.getValue();
+            if (KEY_GLOVE_MODE.equals(filename)) {
+                final String mode = (value.equals("1") ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
+                Utils.getCommandResult(SHELL_HTS,
+                        Utils.getWriteCommand(COMMAND_PATH, mode) +
+                                Utils.getReadCommand("/sys/class/sec/tsp/cmd_result")
+                );
+            } else {
+                sbCmd.append(Utils.getWriteCommand(filename, value));
+            }
         }
 
         return sbCmd.toString();
@@ -371,9 +469,9 @@ public class DeviceFragment extends AttachPreferenceFragment
         }
     }
 
-    //==============================================================================================
-    // Internal Classes
-    //==============================================================================================
+//==============================================================================================
+// Internal Classes
+//==============================================================================================
 
     class DeviceTask extends AsyncTask<Void, Void, DeviceFragmentEvent> {
 

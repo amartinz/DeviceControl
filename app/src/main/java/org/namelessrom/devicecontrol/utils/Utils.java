@@ -272,10 +272,15 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     public static void getCommandResult(final int ID, final String COMMAND) {
-        getCommandResult(ID, COMMAND, false);
+        getCommandResult(ID, COMMAND, null, false);
     }
 
-    public static void getCommandResult(final int ID, final String COMMAND, final boolean NEWLINE) {
+    public static void getCommandResult(final int ID, final String COMMAND, final String EXTRAS) {
+        getCommandResult(ID, COMMAND, EXTRAS, false);
+    }
+
+    public static void getCommandResult(final int ID, final String COMMAND, final String EXTRAS,
+            final boolean NEWLINE) {
         final StringBuilder sb = new StringBuilder();
         final CommandCapture comm = new CommandCapture(0, false, COMMAND) {
             @Override
@@ -293,7 +298,7 @@ public class Utils implements DeviceConstants, FileConstants {
                 HANDLER.post(new Runnable() {
                     @Override
                     public void run() {
-                        BusProvider.getBus().post(new ShellOutputEvent(ID, result));
+                        BusProvider.getBus().post(new ShellOutputEvent(ID, result, EXTRAS));
                     }
                 });
             }

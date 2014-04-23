@@ -267,7 +267,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
             CpuUtils.enableMsmDcvs(value);
             PreferenceHelper.setBootup(new DataItem(
                     DatabaseHandler.CATEGORY_EXTRAS, mMsmDcvs.getKey(),
-                    sMcPowerSchedulerFile, value ? "1" : "0"));
+                    MSM_DCVS_FILE, value ? "1" : "0"));
             changed = true;
         }
 

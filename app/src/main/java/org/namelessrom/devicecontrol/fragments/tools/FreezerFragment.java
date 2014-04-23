@@ -299,7 +299,7 @@ public class FreezerFragment extends AttachFragment
                         Application.HANDLER.post(new Runnable() {
                             @Override
                             public void run() {
-                                BusProvider.getBus().post(new ShellOutputEvent(-1, result));
+                                BusProvider.getBus().post(new ShellOutputEvent(-1, result, null));
                             }
                         });
                     }

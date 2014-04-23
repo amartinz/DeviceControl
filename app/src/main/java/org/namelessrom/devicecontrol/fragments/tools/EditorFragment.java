@@ -343,7 +343,7 @@ public class EditorFragment extends AttachFragment
                 });
             }
 
-            Utils.getCommandResult(-1, "cat /system/build.prop", true);
+            Utils.getCommandResult(-1, "cat /system/build.prop", null, true);
 
             return null;
         }
