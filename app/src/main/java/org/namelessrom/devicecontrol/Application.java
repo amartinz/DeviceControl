@@ -45,7 +45,10 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
                 "/acra-devicecontrol/_design/acra-storage/_update/report",
         formUriBasicAuthLogin = "namelessreporter",
         formUriBasicAuthPassword = "weareopentoeveryone",
-        mode = ReportingInteractionMode.SILENT)
+        mode = ReportingInteractionMode.DIALOG,
+        resToastText = R.string.crash_toast_text,
+        resDialogText = R.string.crash_dialog_text,
+        resDialogOkToast = R.string.crash_dialog_ok_toast)
 public class Application extends android.app.Application implements DeviceConstants {
 
     public static final boolean IS_NAMELESS = Utils.isNameless();
