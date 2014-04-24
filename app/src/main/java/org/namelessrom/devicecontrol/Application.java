@@ -41,7 +41,7 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
         httpMethod = HttpSender.Method.PUT,
         reportType = HttpSender.Type.JSON,
         formKey = "",
-        formUri = "http://reports.nameless-rom.org" +
+        formUri = "https://reports.nameless-rom.org" +
                 "/acra-devicecontrol/_design/acra-storage/_update/report",
         formUriBasicAuthLogin = "namelessreporter",
         formUriBasicAuthPassword = "weareopentoeveryone",
