@@ -451,7 +451,10 @@ public class CpuUtils implements PerformanceConstants {
                     final List<String> tmpList = new ArrayList<String>();
                     String tmpMax = "", tmpMin = "";
 
+                    if (result.size() <= 0) return;
+
                     for (final String s : result) {
+                        if (s.isEmpty()) continue;
                         if (s.charAt(0) == '[') {
                             tmpMax = s.substring(1, s.length());
                         } else if (s.charAt(0) == ']') {
@@ -509,7 +512,10 @@ public class CpuUtils implements PerformanceConstants {
                     final List<String> tmpList = new ArrayList<String>();
                     String tmpString = "";
 
+                    if (result.size() <= 0) return;
+
                     for (final String s : result) {
+                        if (s.isEmpty()) continue;
                         if (s.charAt(0) == '[') {
                             tmpString = s.substring(1, s.length());
                         } else {
@@ -557,7 +563,10 @@ public class CpuUtils implements PerformanceConstants {
                     final List<String> tmpList = new ArrayList<String>();
                     String tmpString = "";
 
+                    if (result.size() <= 0) return;
+
                     for (final String s : result) {
+                        if (s.isEmpty()) continue;
                         if (s.charAt(0) == '[') {
                             tmpString = s.substring(1, s.length() - 1);
                             tmpList.add(tmpString);
