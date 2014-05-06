@@ -29,11 +29,11 @@ import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
-import org.namelessrom.devicecontrol.fragments.tools.EditorFragment;
-import org.namelessrom.devicecontrol.fragments.tools.FreezerFragment;
-import org.namelessrom.devicecontrol.fragments.tools.PropModderFragment;
-import org.namelessrom.devicecontrol.fragments.tools.VmFragment;
-import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.fragments.tools.sub.editor.EditorFragment;
+import org.namelessrom.devicecontrol.fragments.tools.sub.freezer.FreezerFragment;
+import org.namelessrom.devicecontrol.fragments.tools.sub.editor.PropModderFragment;
+import org.namelessrom.devicecontrol.fragments.tools.sub.editor.VmFragment;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class PressToLoadFragment extends Fragment implements DeviceConstants {

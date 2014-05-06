@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.fragments.tools;
+package org.namelessrom.devicecontrol.fragments.tools.sub.editor;
 
 
 import android.app.Activity;
@@ -50,7 +50,7 @@ import com.stericson.roottools.RootTools;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.objects.Prop;
-import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;

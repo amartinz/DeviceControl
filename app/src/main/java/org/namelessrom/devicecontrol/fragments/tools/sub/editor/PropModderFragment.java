@@ -1,4 +1,4 @@
-package org.namelessrom.devicecontrol.fragments.tools;
+package org.namelessrom.devicecontrol.fragments.tools.sub.editor;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -16,8 +16,8 @@ import android.widget.EditText;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
 import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
-import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 

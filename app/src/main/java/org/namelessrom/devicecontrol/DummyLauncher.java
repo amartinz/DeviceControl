@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.activities;
+package org.namelessrom.devicecontrol;
 
 import android.app.Activity;
 import android.content.Intent;

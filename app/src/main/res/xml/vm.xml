@@ -2,7 +2,7 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <org.namelessrom.devicecontrol.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="pref_full_editor"
         android:title="@string/full_editor" />
 
@@ -10,35 +10,35 @@
         android:key="vm_settings"
         android:title="@string/vm_settings">
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
             android:key="pref_dirty_ratio"
             android:title="@string/dirty_ratio_title" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
             android:key="pref_dirty_background"
             android:title="@string/dirty_background_title" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
             android:key="pref_dirty_expire"
             android:title="@string/dirty_expire_title" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
             android:key="pref_dirty_writeback"
             android:title="@string/dirty_writeback_title" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
             android:key="pref_min_free_kb"
             android:title="@string/min_free_title" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
             android:key="pref_overcommit"
             android:title="@string/overcommit_title" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
             android:key="pref_swappiness"
             android:title="@string/swappiness_title" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
             android:key="pref_vfs"
             android:title="@string/vfs_title" />
     </PreferenceCategory>

@@ -47,10 +47,11 @@ public interface DeviceConstants {
     public static final int ID_THERMAL                  = ID_PERFORMANCE_EXTRA + 1100;
     public static final int ID_VOLTAGE                  = ID_PERFORMANCE_EXTRA + 1200;
     public static final int ID_TOOLS_TASKER             = 10;
-    public static final int ID_TOOLS_EDITORS            = 11;
-    public static final int ID_TOOLS_FREEZER            = 12;
-    public static final int ID_PREFERENCES              = 14;
-    public static final int ID_LICENSES                 = 15;
+    public static final int ID_TOOLS_MORE               = 11;
+    public static final int ID_TOOLS_EDITORS            = ID_TOOLS_MORE + 1000;
+    public static final int ID_TOOLS_FREEZER            = ID_TOOLS_MORE + 1100;
+    public static final int ID_PREFERENCES              = 13;
+    public static final int ID_LICENSES                 = 14;
     //----------------------------------------------------------------------------------------------
 
     //==============================================================================================

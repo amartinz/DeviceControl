@@ -8,7 +8,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.GpuEvent;
-import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.io.File;

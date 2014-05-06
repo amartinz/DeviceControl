@@ -6,12 +6,12 @@
         android:key="intelli_thermal"
         android:title="@string/intelli_thermal">
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
             android:key="intelli_thermal_cc_enabled"
             android:title="@string/core_control"
             android:summary="@string/core_control_summary" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
             android:key="intelli_thermal_enabled"
             android:title="@string/intelli_thermal_enabled"
             android:summary="@string/intelli_thermal_enabled_summary" />
