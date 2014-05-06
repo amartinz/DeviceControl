@@ -26,10 +26,10 @@ import android.preference.PreferenceScreen;
 import android.view.View;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
-import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 public class AttachPreferenceFragment extends PreferenceFragment {
 

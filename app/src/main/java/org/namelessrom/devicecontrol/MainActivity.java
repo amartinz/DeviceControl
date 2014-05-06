@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.activities;
+package org.namelessrom.devicecontrol;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -57,15 +57,16 @@ import org.namelessrom.devicecontrol.fragments.performance.sub.GovernorFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.HotpluggingFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.ThermalFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
-import org.namelessrom.devicecontrol.fragments.tasker.TaskerFragment;
-import org.namelessrom.devicecontrol.fragments.tools.EditorTabbedFragment;
-import org.namelessrom.devicecontrol.fragments.tools.FreezerTabbedFragment;
+import org.namelessrom.devicecontrol.fragments.tools.ToolsMoreFragment;
+import org.namelessrom.devicecontrol.fragments.tools.sub.editor.EditorTabbedFragment;
+import org.namelessrom.devicecontrol.fragments.tools.sub.freezer.FreezerTabbedFragment;
+import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.proprietary.Constants;
-import org.namelessrom.devicecontrol.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.adapters.MenuListArrayAdapter;
 
 import java.io.File;
@@ -88,10 +89,11 @@ public class MainActivity extends Activity
 
     public static SlidingMenu mSlidingMenu;
 
-    private int mActionBarDrawable = R.mipmap.ic_launcher;
-    private int mTitle             = R.string.home;
-    private int mFragmentTitle     = R.string.home;
-    private int mSubFragmentTitle  = -1;
+    private int mActionBarDrawable    = R.mipmap.ic_launcher;
+    private int mSubActionBarDrawable = -1;
+    private int mTitle                = R.string.home;
+    private int mFragmentTitle        = R.string.home;
+    private int mSubFragmentTitle     = -1;
 
     public static final int[] MENU_ICONS = {
             R.drawable.ic_menu_home,
@@ -105,8 +107,7 @@ public class MainActivity extends Activity
             R.drawable.ic_menu_perf_extras,
             -1, // Tools
             R.drawable.ic_menu_tasker,
-            R.drawable.ic_menu_editor,
-            R.drawable.ic_menu_freezer,
+            R.drawable.ic_menu_code,
             -1, // Information
             R.drawable.ic_menu_preferences,
             R.drawable.ic_menu_licences
@@ -217,10 +218,10 @@ public class MainActivity extends Activity
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
-        } else if (mSlidingMenu.isMenuShowing()) {
+        if (mSlidingMenu.isMenuShowing()) {
             mSlidingMenu.toggle(true);
+        } else if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
         } else {
             if (back_pressed + 2000 > System.currentTimeMillis()) {
                 if (mToast != null) { mToast.cancel(); }
@@ -280,11 +281,8 @@ public class MainActivity extends Activity
             case ID_TOOLS_TASKER:
                 main = new TaskerFragment();
                 break;
-            case ID_TOOLS_EDITORS:
-                main = new EditorTabbedFragment();
-                break;
-            case ID_TOOLS_FREEZER:
-                main = new FreezerTabbedFragment();
+            case ID_TOOLS_MORE:
+                main = new ToolsMoreFragment();
                 break;
             case ID_PREFERENCES:
                 main = new PreferencesFragment();
@@ -320,6 +318,7 @@ public class MainActivity extends Activity
                 break;
             case ID_RESTORE_FROM_SUB:
                 mSubFragmentTitle = -1;
+                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle;
                 break;
             case ID_FIRST_MENU:
@@ -330,36 +329,42 @@ public class MainActivity extends Activity
                 break;
             default:
                 mActionBarDrawable = R.mipmap.ic_launcher;
+                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.app_name;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_HOME:
                 mActionBarDrawable = R.mipmap.ic_launcher;
+                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.home;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_DEVICE:
                 mActionBarDrawable = R.drawable.ic_menu_device;
+                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.device;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_FEATURES:
                 mActionBarDrawable = R.drawable.ic_menu_features;
+                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.features;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_INFO:
                 mActionBarDrawable = R.drawable.ic_menu_perf_info;
+                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.information;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_CPU_SETTINGS:
                 mActionBarDrawable = R.drawable.ic_menu_perf_cpu;
+                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.cpusettings;
                 mSubFragmentTitle = -1;
                 break;
@@ -369,12 +374,14 @@ public class MainActivity extends Activity
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_GPU_SETTINGS:
                 mActionBarDrawable = R.drawable.ic_menu_perf_gpu;
+                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.gpusettings;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_EXTRA:
                 mActionBarDrawable = R.drawable.ic_menu_perf_extras;
+                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.extras;
                 mSubFragmentTitle = -1;
                 break;
@@ -390,24 +397,29 @@ public class MainActivity extends Activity
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_TASKER:
                 mActionBarDrawable = R.drawable.ic_menu_tasker;
+                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.tasker;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_TOOLS_EDITORS:
-                mActionBarDrawable = R.drawable.ic_menu_editor;
-                mTitle = mFragmentTitle = R.string.editors;
+            case ID_TOOLS_MORE:
+                mActionBarDrawable = R.drawable.ic_menu_code;
+                mSubActionBarDrawable = -1;
+                mTitle = mFragmentTitle = R.string.more;
                 mSubFragmentTitle = -1;
                 break;
-            //--------------------------------------------------------------------------------------
+            case ID_TOOLS_EDITORS:
+                mSubActionBarDrawable = R.drawable.ic_menu_editor;
+                mTitle = mSubFragmentTitle = R.string.editors;
+                break;
             case ID_TOOLS_FREEZER:
-                mActionBarDrawable = R.drawable.ic_menu_freezer;
-                mTitle = mFragmentTitle = R.string.freezer;
-                mSubFragmentTitle = -1;
+                mSubActionBarDrawable = R.drawable.ic_menu_freezer;
+                mTitle = mSubFragmentTitle = R.string.freezer;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE:
                 mActionBarDrawable = R.mipmap.ic_launcher;
+                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.performance;
                 mSubFragmentTitle = -1;
                 break;
@@ -418,7 +430,9 @@ public class MainActivity extends Activity
     public void restoreActionBar() {
         final ActionBar actionBar = getActionBar();
         if (actionBar != null) {
-            actionBar.setIcon(mActionBarDrawable);
+            final int drawableId = ((mSubActionBarDrawable != -1)
+                    ? mSubActionBarDrawable : mActionBarDrawable);
+            actionBar.setIcon(drawableId);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
             actionBar.setTitle(mTitle);
@@ -509,6 +523,7 @@ public class MainActivity extends Activity
         Fragment right = HelpFragment.newInstance(id);
 
         switch (id) {
+            //--------------------------------------------------------------------------------------
             case ID_GOVERNOR_TUNABLE:
                 main = new GovernorFragment();
                 break;
@@ -521,6 +536,14 @@ public class MainActivity extends Activity
             case ID_VOLTAGE:
                 main = new VoltageFragment();
                 break;
+            //--------------------------------------------------------------------------------------
+            case ID_TOOLS_EDITORS:
+                main = new EditorTabbedFragment();
+                break;
+            case ID_TOOLS_FREEZER:
+                main = new FreezerTabbedFragment();
+                break;
+            //--------------------------------------------------------------------------------------
             default:
                 break;
         }

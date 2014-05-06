@@ -17,14 +17,14 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.namelessrom.devicecontrol.monitors;
+package org.namelessrom.devicecontrol.utils.monitors;
 
 import android.os.SystemClock;
 import android.util.SparseArray;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.events.CpuStateEvent;
-import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
