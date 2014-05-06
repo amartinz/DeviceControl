@@ -11,6 +11,7 @@
     <string name="general">General</string>
     <string name="others">Others</string>
     <string name="help">Help</string>
+    <string name="more">More&#8230;</string>
     <string name="dialog_warning">Warning!</string>
     <string name="dialog_warning_apply">Are you sure that you want to apply your settings?</string>
     <string name="toast_settings_applied">Successfully applied!</string>
@@ -246,6 +247,8 @@
     <string name="is_monkey">Wait, are you serious?\nYou are pretty smart for a monkey.\nNot that they are stupid but...\nWell, lets skip this.</string>
     <string name="no_monkey">Not a monkey? *Sigh* :(</string>
     <string name="downgraded">Database got wiped due a downgrade!</string>
+    <string name="media_scan_trigger">Trigger media scan</string>
+    <string name="media_scan_summary">Manuall trigger a media scan, in case you have your phone connected via MTP and new files are not visible.</string>
     <!-- Wizard -->
     <string name="task_type">Task type</string>
     <string name="event_based">Event based</string>

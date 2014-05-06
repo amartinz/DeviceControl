@@ -31,8 +31,7 @@
         <item>@string/extras</item>
         <item>@string/tools</item>
         <item>@string/tasker</item>
-        <item>@string/editors</item>
-        <item>@string/freezer</item>
+        <item>@string/more</item>
         <item>@string/app_name</item>
         <item>@string/preferences</item>
         <item>@string/licenses</item>

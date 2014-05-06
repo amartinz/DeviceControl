@@ -1,4 +1,4 @@
-package org.namelessrom.devicecontrol.fragments.tasker;
+package org.namelessrom.devicecontrol.fragments.tools.tasker;
 
 import android.app.Activity;
 import android.app.ListFragment;
@@ -15,7 +15,7 @@ import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.TaskerItem;
-import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.adapters.TaskerAdapter;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
