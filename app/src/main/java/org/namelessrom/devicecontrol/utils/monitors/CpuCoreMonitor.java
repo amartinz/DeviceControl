@@ -16,7 +16,7 @@
  *
  */
 
-package org.namelessrom.devicecontrol.monitors;
+package org.namelessrom.devicecontrol.utils.monitors;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -29,7 +29,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
 import org.namelessrom.devicecontrol.objects.CpuCore;
-import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 

@@ -22,4 +22,4 @@
     android:layout_height="match_parent"
     android:id="@+id/container"
     android:background="@drawable/main_background"
-    tools:context="org.namelessrom.devicecontrol.activities.MainActivity" />
+    tools:context="org.namelessrom.devicecontrol.MainActivity" />

@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses
  */
 
-package org.namelessrom.devicecontrol.fragments.tools;
+package org.namelessrom.devicecontrol.fragments.tools.sub.freezer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -46,7 +46,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.FreezeEvent;
 import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
-import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 import org.namelessrom.devicecontrol.widgets.adapters.PackAdapter;

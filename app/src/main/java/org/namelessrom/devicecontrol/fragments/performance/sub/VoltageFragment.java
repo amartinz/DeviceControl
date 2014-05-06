@@ -27,8 +27,8 @@ import android.widget.ListView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
-import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;

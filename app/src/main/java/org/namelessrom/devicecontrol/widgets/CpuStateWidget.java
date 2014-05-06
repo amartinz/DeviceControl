@@ -14,8 +14,8 @@ import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.CpuStateEvent;
-import org.namelessrom.devicecontrol.monitors.CpuStateMonitor;
-import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.utils.monitors.CpuStateMonitor;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.io.IOException;
 import java.util.ArrayList;
