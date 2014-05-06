@@ -22,9 +22,9 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 
-import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
-import org.namelessrom.devicecontrol.providers.BusProvider;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 public class AttachFragment extends Fragment {
 

@@ -20,7 +20,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import org.namelessrom.devicecontrol.activities.MainActivity;
+import org.namelessrom.devicecontrol.MainActivity;
 
 public class SecretCodeReceiver extends BroadcastReceiver {
 

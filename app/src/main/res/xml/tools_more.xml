@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="media_scan"
+        android:title="@string/media_scan_trigger"
+        android:summary="@string/media_scan_summary"
+        android:icon="@drawable/ic_media_scan" />
+
+    <PreferenceScreen
+        android:key="editors"
+        android:title="@string/editors"
+        android:icon="@drawable/ic_menu_editor" />
+
+    <PreferenceScreen
+        android:key="freezer"
+        android:title="@string/freezer"
+        android:icon="@drawable/ic_menu_freezer" />
+
+</PreferenceScreen>

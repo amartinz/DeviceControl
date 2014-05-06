@@ -120,21 +120,18 @@ public class Application extends android.app.Application implements DeviceConsta
                         "com.android.settings") > 0
                         && !showLauncher) {
                     logDebug("Implemented into system and showLauncher is not set!");
-                    Utils.disableComponent(applicationContext, PACKAGE_NAME,
-                            ".activities.DummyLauncher");
+                    Utils.disableComponent(applicationContext, PACKAGE_NAME, ".DummyLauncher");
                 } else {
                     logDebug("Implemented into system and showLauncher is set!");
-                    Utils.enableComponent(applicationContext, PACKAGE_NAME,
-                            ".activities.DummyLauncher");
+                    Utils.enableComponent(applicationContext, PACKAGE_NAME, ".DummyLauncher");
                 }
             } else {
                 logDebug("Not implemented into system!");
-                Utils.enableComponent(applicationContext, PACKAGE_NAME,
-                        ".activities.DummyLauncher");
+                Utils.enableComponent(applicationContext, PACKAGE_NAME, ".DummyLauncher");
             }
         } catch (PackageManager.NameNotFoundException exc) {
             logDebug("You dont have settings? That's weird.");
-            Utils.enableComponent(applicationContext, PACKAGE_NAME, ".activities.DummyLauncher");
+            Utils.enableComponent(applicationContext, PACKAGE_NAME, ".DummyLauncher");
         }
     }
 
