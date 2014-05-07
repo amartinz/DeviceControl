@@ -21,6 +21,14 @@
     <!-- uses-permission android:name="android.permission.GET_TASKS"/ -->
     <!-- Device Information -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- Device Control -->
+    <uses-permission android:name="org.namelessrom.devicecontrol.API" />
+
+    <permission
+        android:name="org.namelessrom.devicecontrol.API"
+        android:label="@string/permission_api_label"
+        android:description="@string/permission_api_description"
+        android:protectionLevel="dangerous" />"
 
     <application
         android:name="org.namelessrom.devicecontrol.Application"
@@ -77,6 +85,18 @@
         <service
             android:name="org.namelessrom.devicecontrol.services.TaskerService"
             android:enabled="true" />
+        <service
+            android:name=".api.RemoteService"
+            android:permission="org.namelessrom.devicecontrol.API"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="org.namelessrom.devicecontrol.api.IRemoteService" />
+                <action android:name="org.namelessrom.devicecontrol.api.RemoteService" />
+                <action android:name="org.namelessrom.devicecontrol.api.REMOTE_SERVICE" />
+            </intent-filter>
+        </service>
 
         <!-- Broadcast Receivers -->
         <receiver android:name="org.namelessrom.devicecontrol.receivers.BootUpReceiver">

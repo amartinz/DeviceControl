@@ -17,6 +17,8 @@
 -->
 
 <resources>
+    <string name="permission_api_label">Access DeviceControl API</string>
+    <string name="permission_api_description">Allows the app to access and use the DeviceControl API.\nThis means the app can control device features, including manipulating your device\'s hardware.</string>
     <string name="crash_toast_text">Device Control has crashed...</string>
     <string name="crash_dialog_text">An unexpected error occurred forcing the
         application to stop.\nPlease help us fix this by sending us error data!\n\n

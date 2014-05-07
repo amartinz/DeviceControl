@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_refresh"
+        android:title="@string/refresh"
+        android:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/menu_set_max"
+        android:title="@string/random_max_freq"
+        android:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_set_min"
+        android:title="@string/random_min_freq"
+        android:showAsAction="never" />
+
+</menu>
