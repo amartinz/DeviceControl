@@ -33,6 +33,7 @@ import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
+import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
@@ -222,15 +223,8 @@ public class ExtrasFragment extends AttachPreferenceFragment
             changed = true;
         } else if (preference == mIoScheduler) {
             final String value = String.valueOf(o);
-            int c = 0;
-            for (final String path : IO_SCHEDULER_PATH) {
-                if (Utils.fileExists(path)) {
-                    Utils.writeValue(path, value);
-                    PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                            "io" + (c++), path, value));
-                }
-            }
             mIoScheduler.setSummary(value);
+            ActionProcessor.processAction(ActionProcessor.ACTION_IO_SCHEDULER, value, true);
             changed = true;
         } else if (preference == mPowerEfficientWork) {
             final boolean rawValue = (Boolean) o;

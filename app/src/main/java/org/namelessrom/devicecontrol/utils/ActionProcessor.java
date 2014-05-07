@@ -93,8 +93,13 @@ public class ActionProcessor implements PerformanceConstants {
                 );
             }
         } else if (ACTION_IO_SCHEDULER.equals(action)) {
-            for (final String schedulerPath : IO_SCHEDULER_PATH) {
-                sb.append(Utils.getWriteCommand(schedulerPath, value));
+            int c = 0;
+            for (final String ioPath : IO_SCHEDULER_PATH) {
+                sb.append(Utils.getWriteCommand(ioPath, value));
+                if (boot) {
+                    PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
+                            "io" + (c++), ioPath, value));
+                }
             }
         }
 
