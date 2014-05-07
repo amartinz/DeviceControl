@@ -11,7 +11,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 
 LOCAL_SRC_FILES     := \
         $(call all-java-files-under,java) \
-        aidl/com/android/vending/billing/IInAppBillingService.aidl \
+        $(call all-subdir-Iaidl-files) \
         $(call all-java-files-under,../../../proprietary/src/main/java)
 
 LOCAL_ASSET_DIR     := $(LOCAL_PATH)/assets
