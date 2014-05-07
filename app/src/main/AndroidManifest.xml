@@ -77,6 +77,17 @@
         <service
             android:name="org.namelessrom.devicecontrol.services.TaskerService"
             android:enabled="true" />
+        <service
+            android:name=".api.RemoteService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="org.namelessrom.devicecontrol.api.IRemoteService" />
+                <action android:name="org.namelessrom.devicecontrol.api.RemoteService" />
+                <action android:name="org.namelessrom.devicecontrol.api.REMOTE_SERVICE" />
+            </intent-filter>
+        </service>
 
         <!-- Broadcast Receivers -->
         <receiver android:name="org.namelessrom.devicecontrol.receivers.BootUpReceiver">
