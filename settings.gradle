@@ -1,1 +1,1 @@
-include ':app', ':proprietary'
+include ':app', ':proprietary', ':Sample'
