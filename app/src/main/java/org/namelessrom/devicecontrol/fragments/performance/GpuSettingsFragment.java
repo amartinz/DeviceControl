@@ -9,17 +9,15 @@ import android.preference.PreferenceCategory;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.DataItem;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.GpuEvent;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.GpuUtils;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
 
 public class GpuSettingsFragment extends AttachPreferenceFragment
         implements DeviceConstants, PerformanceConstants, Preference.OnPreferenceChangeListener {
@@ -129,21 +127,13 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
             final String value = String.valueOf(newValue);
             mGpuFrequency.setValue(value);
             mGpuFrequency.setSummary(GpuUtils.toMhz(value));
-            Utils.writeValue(GPU_MAX_FREQ_FILE, value);
-            PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_GPU, "gpu_max",
-                            GPU_MAX_FREQ_FILE, value)
-            );
+            ActionProcessor.processAction(ActionProcessor.ACTION_GPU_FREQUENCY_MAX, value, true);
             changed = true;
         } else if (mGpuGovernor == preference) {
             final String value = String.valueOf(newValue);
             mGpuGovernor.setValue(value);
             mGpuGovernor.setSummary(value);
-            Utils.writeValue(GPU_GOV_PATH, value);
-            PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_GPU, "gpu_gov",
-                            GPU_GOV_PATH, value)
-            );
+            ActionProcessor.processAction(ActionProcessor.ACTION_GPU_GOVERNOR, value, true);
             changed = true;
         }
 
