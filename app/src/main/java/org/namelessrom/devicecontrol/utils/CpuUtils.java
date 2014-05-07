@@ -28,8 +28,8 @@ import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.CpuFreqEvent;
 import org.namelessrom.devicecontrol.events.GovernorEvent;
 import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -47,13 +47,6 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
  * Generic CPU Tasks.
  */
 public class CpuUtils implements PerformanceConstants {
-
-    //==============================================================================================
-    // Fields
-    //==============================================================================================
-    public static final String ACTION_FREQ_MAX = "action_freq_max";
-    public static final String ACTION_FREQ_MIN = "action_freq_min";
-    public static final String ACTION_GOV      = "action_gov";
 
     //==============================================================================================
     // Methods
@@ -252,50 +245,6 @@ public class CpuUtils implements PerformanceConstants {
         return numOfCpu;
     }
 
-    public static String getValue(final int cpu, final String action) {
-        return getOrSetValue(cpu, "", action, false);
-    }
-
-    public static void setValue(final int cpu, final String value, final String action) {
-        getOrSetValue(cpu, value, action, true);
-    }
-
-    private static String getOrSetValue(final int cpu, final String value,
-            final String action, final boolean set) {
-        String path = "";
-        final String pathOnline = getOnlinePath(cpu);
-
-        if (action.equals(ACTION_FREQ_MAX)) {
-            path = getMaxCpuFrequencyPath(cpu);
-        } else if (action.equals(ACTION_FREQ_MIN)) {
-            path = getMinCpuFrequencyPath(cpu);
-        } else if (action.equals(ACTION_GOV)) {
-            path = getGovernorPath(cpu);
-        }
-
-        if (set) {
-            if (!path.isEmpty()) {
-                // Bring them online to apply values on all cores
-                final StringBuilder sb = new StringBuilder();
-                if (!pathOnline.isEmpty()) {
-                    sb.append(Utils.getWriteCommand(pathOnline, "0"));
-                    sb.append(Utils.getWriteCommand(pathOnline, "1"));
-                }
-                sb.append(Utils.getWriteCommand(path, value));
-                Utils.runRootCommand(sb.toString());
-            }
-        } else {
-            if (!path.isEmpty() && Utils.fileExists(path)) {
-                final String result = Utils.readOneLine(path);
-                return (result != null ? result.trim() : "0");
-            } else {
-                return "0";
-            }
-        }
-
-        return null;
-    }
-
     /**
      * Gets available schedulers from file
      *
@@ -326,7 +275,7 @@ public class CpuUtils implements PerformanceConstants {
         String scheduler = null;
         final String[] schedulers = Utils.readStringArray(IO_SCHEDULER_PATH[id]);
         if (schedulers != null) {
-            for (String s : schedulers) {
+            for (final String s : schedulers) {
                 if (s.charAt(0) == '[') {
                     scheduler = s.substring(1, s.length() - 1);
                     break;
@@ -599,6 +548,16 @@ public class CpuUtils implements PerformanceConstants {
 
     public static String enableMpDecision(boolean start) {
         return (start ? "start mpdecision 2> /dev/null;\n" : "stop mpdecision 2> /dev/null;\n");
+    }
+
+    public static String onlineCpu(final int cpu) {
+        final StringBuilder sb = new StringBuilder();
+        final String pathOnline = CpuUtils.getOnlinePath(cpu);
+        if (!pathOnline.isEmpty()) {
+            sb.append(Utils.getWriteCommand(pathOnline, "0"));
+            sb.append(Utils.getWriteCommand(pathOnline, "1"));
+        }
+        return sb.toString();
     }
 
 }

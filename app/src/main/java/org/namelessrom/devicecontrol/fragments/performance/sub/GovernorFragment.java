@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceScreen;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -18,17 +17,20 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.squareup.otto.Subscribe;
+
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.events.GovernorEvent;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
 import java.io.File;
 
@@ -40,6 +42,18 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
     @Override
     public void onAttach(final Activity activity) {
         super.onAttach(activity, ID_GOVERNOR_TUNABLE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BusProvider.getBus().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BusProvider.getBus().unregister(this);
     }
 
     @Override
@@ -55,21 +69,25 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
 
         setHasOptionsMenu(true);
 
-        final PreferenceScreen preferenceScreen = getPreferenceScreen();
         mCategory = (PreferenceCategory) findPreference("key_gov_category");
         mContext = getActivity();
 
-        final String curGov = CpuUtils.getValue(0, CpuUtils.ACTION_GOV);
+        CpuUtils.getGovernorEvent();
+    }
 
-        final File f = new File("/sys/devices/system/cpu/cpufreq/" + curGov);
-        if (f.exists()) {
+    @Subscribe
+    public void onGovernor(final GovernorEvent event) {
+        if (event == null) return;
+
+        final String curGov = event.getCurrentGovernor();
+        if (new File("/sys/devices/system/cpu/cpufreq/" + curGov).exists()) {
             mCategory.setTitle(curGov + " Tweakable values");
             new addPreferences().execute(curGov);
         } else {
-            preferenceScreen.removeAll();
+            getPreferenceScreen().removeAll();
         }
 
-        isSupported(preferenceScreen, mContext, R.string.no_gov_tweaks_message);
+        isSupported(getPreferenceScreen(), mContext, R.string.no_gov_tweaks_message);
     }
 
     @Override

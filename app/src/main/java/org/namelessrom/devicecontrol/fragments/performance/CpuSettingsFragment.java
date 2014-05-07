@@ -38,19 +38,18 @@ import android.widget.TextView;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.DataItem;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
 import org.namelessrom.devicecontrol.events.CpuFreqEvent;
 import org.namelessrom.devicecontrol.events.GovernorEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
-import org.namelessrom.devicecontrol.utils.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.objects.CpuCore;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
+import org.namelessrom.devicecontrol.utils.monitors.CpuCoreMonitor;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
 import java.util.Arrays;
@@ -277,12 +276,7 @@ public class CpuSettingsFragment extends AttachFragment
             final boolean updateOther = Integer.parseInt(selected) < Integer.parseInt(other);
             if (updateOther) { mMin.setSelection(pos);}
 
-            final int cpuNum = CpuUtils.getNumOfCpus();
-            for (int i = 0; i < cpuNum; i++) {
-                CpuUtils.setValue(i, selected, CpuUtils.ACTION_FREQ_MAX);
-                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU, "cpu_max" + i,
-                        CpuUtils.getMaxCpuFrequencyPath(i), selected));
-            }
+            ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MAX, selected, true);
         }
 
         public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
@@ -295,13 +289,7 @@ public class CpuSettingsFragment extends AttachFragment
             final boolean updateOther = Integer.parseInt(selected) > Integer.parseInt(other);
             if (updateOther) { mMax.setSelection(pos);}
 
-            final int cpuNum = CpuUtils.getNumOfCpus();
-            for (int i = 0; i < cpuNum; i++) {
-                CpuUtils.setValue(i, selected, CpuUtils.ACTION_FREQ_MIN);
-                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                        "cpu_min" + i, CpuUtils.getMinCpuFrequencyPath(i), selected));
-            }
-            updateSharedPrefs(PREF_MIN_CPU, selected);
+            ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MIN, selected, true);
         }
 
         public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
@@ -310,12 +298,7 @@ public class CpuSettingsFragment extends AttachFragment
     public class GovListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             final String selected = String.valueOf(parent.getItemAtPosition(pos));
-            final int cpuNum = CpuUtils.getNumOfCpus();
-            for (int i = 0; i < cpuNum; i++) {
-                CpuUtils.setValue(i, selected, CpuUtils.ACTION_GOV);
-                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU, "cpu_gov" + i,
-                        CpuUtils.getGovernorPath(i), selected));
-            }
+            ActionProcessor.processAction(ActionProcessor.ACTION_CPU_GOVERNOR, selected, true);
         }
 
         public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
