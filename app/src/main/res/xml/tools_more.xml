@@ -2,18 +2,18 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceScreen
+    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="media_scan"
         android:title="@string/media_scan_trigger"
         android:summary="@string/media_scan_summary"
         android:icon="@drawable/ic_media_scan" />
 
-    <PreferenceScreen
+    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="editors"
         android:title="@string/editors"
         android:icon="@drawable/ic_menu_editor" />
 
-    <PreferenceScreen
+    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="freezer"
         android:title="@string/freezer"
         android:icon="@drawable/ic_menu_freezer" />

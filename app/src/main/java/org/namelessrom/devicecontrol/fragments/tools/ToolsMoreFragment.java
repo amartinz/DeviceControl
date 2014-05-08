@@ -14,12 +14,13 @@ import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
 public class ToolsMoreFragment extends AttachPreferenceFragment implements DeviceConstants,
         MediaScannerConnection.MediaScannerConnectionClient {
 
     private MediaScannerConnection mMediaScannerConnection;
-    private PreferenceScreen       mMediaScan;
+    private CustomPreference       mMediaScan;
     private String                 mMediaScanPath;
 
     @Override
@@ -32,7 +33,7 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.tools_more);
 
-        mMediaScan = (PreferenceScreen) findPreference("media_scan");
+        mMediaScan = (CustomPreference) findPreference("media_scan");
     }
 
     @Override
