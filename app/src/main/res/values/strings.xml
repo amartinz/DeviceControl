@@ -57,6 +57,19 @@
     <string name="msm_dcvs_summary">Use MSM DCVS for CPU/GPU Frequency control</string>
     <string name="voltage_control">Voltage Control</string>
     <string name="voltage_control_summary">Edit the voltages used per frequency</string>
+    <string name="fast_charge">Fast Charge</string>
+    <string name="fast_charge_summary">Allows you to change the charging level</string>
+    <string name="force_fast_charge">Force fast charge</string>
+    <string name="fast_charge_0">0 - Disabled</string>
+    <string name="fast_charge_1_new">1 - Use stock AC level on USB</string>
+    <string name="fast_charge_1_old">1 - Enabled</string>
+    <string name="fast_charge_2">2 - Use custom mA on AC and USB</string>
+    <string name="failsafe">Failsafe</string>
+    <string name="ac_level">AC level</string>
+    <string name="ac_levels_valid">Valid AC levels</string>
+    <string name="usb_level">USB level</string>
+    <string name="usb_levels_valid">Valid USB levels</string>
+    <string name="any_level_valid">CAUTION! Any level is valid!</string>
     <!-- Performance -->
     <string name="powersaving">Powersaving</string>
     <string name="lcd_power_reduce">LCD Power Reduce</string>

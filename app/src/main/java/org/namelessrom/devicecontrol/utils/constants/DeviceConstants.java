@@ -38,6 +38,7 @@ public interface DeviceConstants {
     public static final int ID_HOME                     = 0;
     public static final int ID_DEVICE                   = 2;
     public static final int ID_FEATURES                 = 3;
+    public static final int ID_FAST_CHARGE              = ID_FEATURES + 1000;
     public static final int ID_PERFORMANCE_INFO         = 5;
     public static final int ID_PERFORMANCE_CPU_SETTINGS = 6;
     public static final int ID_GOVERNOR_TUNABLE         = ID_PERFORMANCE_CPU_SETTINGS + 1000;

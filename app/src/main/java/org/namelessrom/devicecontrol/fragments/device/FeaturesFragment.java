@@ -27,22 +27,28 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
 import java.util.List;
 
 public class FeaturesFragment extends AttachPreferenceFragment
-        implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
+        implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener,
+        Preference.OnPreferenceClickListener {
 
     private static final int ID_LOGGER_MODE = 1001;
 
+    private static final String FC_PATH = "/sys/kernel/fast_charge";
+
     private CustomCheckBoxPreference mLoggerMode;
+    private CustomPreference         mFastCharge;
 
     //==============================================================================================
     // Overridden Methods
@@ -78,6 +84,16 @@ public class FeaturesFragment extends AttachPreferenceFragment
                 preferenceScreen.removePreference(mLoggerMode);
             }
         }
+
+        mFastCharge = (CustomPreference) findPreference("fast_charge");
+        if (mFastCharge != null) {
+            if (Utils.fileExists(FC_PATH)) {
+                mFastCharge.setOnPreferenceClickListener(this);
+            } else {
+                preferenceScreen.removePreference(mFastCharge);
+            }
+        }
+
         isSupported(preferenceScreen, getActivity());
     }
 
@@ -133,4 +149,13 @@ public class FeaturesFragment extends AttachPreferenceFragment
         }
     }
 
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+        if (mFastCharge == preference) {
+            BusProvider.getBus().post(new SubFragmentEvent(ID_FAST_CHARGE));
+            return true;
+        }
+
+        return false;
+    }
 }
