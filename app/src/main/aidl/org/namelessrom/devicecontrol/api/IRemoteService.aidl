@@ -24,5 +24,14 @@ interface IRemoteService {
     String getCurrentGovernor();
     void setGovernor(in String value);
 //--------------------------------------------------------------------------------------------------
+// GPU
+//--------------------------------------------------------------------------------------------------
+    void prepareGpu();
+    boolean isGpuAvailable();
+    List<String> getAvailableGpuFrequencies();
+    String getMaxGpuFrequency();
+    String getCurrentGpuGovernor();
+    void setMaxGpuFrequency(in String value);
+    void setGpuGovernor(in String value);
 
 }

@@ -20,6 +20,7 @@ import org.namelessrom.devicecontrol.sample.events.ServiceConnectedEvent;
 import org.namelessrom.devicecontrol.sample.events.ServiceDisconnectedEvent;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +36,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // registering the bus
         BusProvider.getBus().register(this);
         setContentView(R.layout.activity_main);
@@ -81,29 +83,49 @@ public class MainActivity extends Activity {
         try {
             final SecureRandom secureRandom = new SecureRandom();
             final List<String> list;
-            if (id == R.id.menu_set_max || id == R.id.menu_set_min) {
+            if (id == R.id.menu_set_cpu_max || id == R.id.menu_set_cpu_min) {
                 list = mIRemoteService.getAvailableCpuFrequencies();
-            } else {
+            } else if (id == R.id.menu_set_cpu_gov) {
                 list = mIRemoteService.getAvailableGovernors();
+            } else if (id == R.id.menu_set_gpu_max) {
+                list = mIRemoteService.getAvailableGpuFrequencies();
+            } else {
+                // with the gpu governor we have to guess...
+                list = new ArrayList<String>(4);
+                list.add("ondemand");
+                list.add("performance");
+                list.add("interactive");
+                list.add("simple");
             }
             String value;
 
             switch (id) {
-                case R.id.menu_set_max:
+                case R.id.menu_set_cpu_max:
                     value = list.get(secureRandom.nextInt(list.size() - 1));
                     mIRemoteService.setMaxFrequency(value);
                     break;
-                case R.id.menu_set_min:
+                case R.id.menu_set_cpu_min:
                     value = list.get(secureRandom.nextInt(list.size() - 1));
                     mIRemoteService.setMinFrequency(value);
                     break;
-                case R.id.menu_set_gov:
+                case R.id.menu_set_cpu_gov:
                     value = list.get(secureRandom.nextInt(list.size() - 1));
                     mIRemoteService.setGovernor(value);
                     break;
+                case R.id.menu_set_gpu_max:
+                    value = list.get(secureRandom.nextInt(list.size() - 1));
+                    mIRemoteService.setMaxGpuFrequency(value);
+                    break;
+                case R.id.menu_set_gpu_gov:
+                    value = list.get(secureRandom.nextInt(list.size() - 1));
+                    mIRemoteService.setGpuGovernor(value);
+                    break;
                 default:
+                    value = "nothing";
                     break;
             }
+
+            Log.e(TAG, "Applied: " + value);
         } catch (Exception ignored) { return false; }
 
         return false;
@@ -179,12 +201,18 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPreExecute() {
-            // Prepare what we need
+            // check if service is null and cancel
+            if (mIRemoteService == null) {
+                cancel(true);
+            }
+
+            // prepare what we need
             sb = new StringBuilder();
             try {
                 // we need to tell the service to prepare the things we need...
                 mIRemoteService.prepareCpuFreq();
                 mIRemoteService.prepareGovernor();
+                mIRemoteService.prepareGpu();
             } catch (RemoteException e) {
                 sb.append("Error: ").append(e);
             }
@@ -212,10 +240,10 @@ public class MainActivity extends Activity {
                     sb.append(s).append('\n');
                 }
                 sb.append('\n');
-                sb.append("Current Maximum Frequency: ")
+                sb.append("Current Maximum CPU-Frequency: ")
                         .append(mIRemoteService.getMaxFrequency())
                         .append('\n');
-                sb.append("Current Minimum Frequency: ")
+                sb.append("Current Minimum CPU-Frequency: ")
                         .append(mIRemoteService.getMinFrequency())
                         .append('\n');
                 sb.append('\n');
@@ -227,13 +255,34 @@ public class MainActivity extends Activity {
                 sb = new StringBuilder();
 
                 list = mIRemoteService.getAvailableGovernors();
-                sb.append("Available Governors:\n");
+                sb.append("Available CPU-Governors:\n");
                 for (final String s : list) {
                     sb.append(s).append('\n');
                 }
                 sb.append('\n');
-                sb.append("Current Governor: ")
+                sb.append("Current CPU-Governor: ")
                         .append(mIRemoteService.getCurrentGovernor())
+                        .append('\n');
+                sb.append('\n');
+                appendText(sb.toString());
+
+                while (mIRemoteService != null && !mIRemoteService.isGpuAvailable()) {
+                    /* wait */
+                }
+                sb = new StringBuilder();
+
+                list = mIRemoteService.getAvailableGpuFrequencies();
+                sb.append("Available GPU-Frequencies:\n");
+                for (final String s : list) {
+                    sb.append(s).append('\n');
+                }
+                sb.append('\n');
+                sb.append("Current Maximum GPU-Frequency: ")
+                        .append(mIRemoteService.getMaxGpuFrequency())
+                        .append('\n');
+                sb.append('\n');
+                sb.append("Current GPU-Governor: ")
+                        .append(mIRemoteService.getCurrentGpuGovernor())
                         .append('\n');
                 sb.append('\n');
                 appendText(sb.toString());

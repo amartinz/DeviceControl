@@ -9,8 +9,10 @@ import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.events.CpuFreqEvent;
 import org.namelessrom.devicecontrol.events.GovernorEvent;
+import org.namelessrom.devicecontrol.events.GpuEvent;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
+import org.namelessrom.devicecontrol.utils.GpuUtils;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.util.Arrays;
@@ -23,6 +25,7 @@ public class RemoteService extends Service {
 
     private CpuFreqEvent  mCpuFreqEvent;
     private GovernorEvent mGovernorEvent;
+    private GpuEvent      mGpuEvent;
 
     @Override
     public IBinder onBind(final Intent intent) { return mBinder; }
@@ -53,8 +56,18 @@ public class RemoteService extends Service {
         mGovernorEvent = event;
     }
 
+    @Subscribe
+    public void onGpuEvent(final GpuEvent event) {
+        if (event == null) return;
+
+        mGpuEvent = event;
+    }
+
     private final IRemoteService.Stub mBinder = new IRemoteService.Stub() {
 
+        //------------------------------------------------------------------------------------------
+        // CPU
+        //------------------------------------------------------------------------------------------
         @Override
         public boolean isCpuFreqAvailable() throws RemoteException {
             return (mCpuFreqEvent != null);
@@ -102,6 +115,8 @@ public class RemoteService extends Service {
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MIN, value);
         }
 
+        //------------------------------------------------------------------------------------------
+
         @Override
         public void prepareGovernor() throws RemoteException {
             mGovernorEvent = null;
@@ -130,6 +145,51 @@ public class RemoteService extends Service {
         @Override
         public void setGovernor(String value) throws RemoteException {
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_GOVERNOR, value);
+        }
+
+        //------------------------------------------------------------------------------------------
+        // GPU
+        //------------------------------------------------------------------------------------------
+        @Override
+        public void prepareGpu() throws RemoteException {
+            mGpuEvent = null;
+            GpuUtils.getOnGpuEvent();
+        }
+
+        @Override
+        public boolean isGpuAvailable() throws RemoteException {
+            return (mGpuEvent != null);
+        }
+
+        @Override
+        public List<String> getAvailableGpuFrequencies() throws RemoteException {
+            if (mGpuEvent == null) return null;
+
+            return Arrays.asList(mGpuEvent.getAvailFreqs());
+        }
+
+        @Override
+        public String getMaxGpuFrequency() throws RemoteException {
+            if (mGpuEvent == null) return null;
+
+            return mGpuEvent.getMaxFreq();
+        }
+
+        @Override
+        public String getCurrentGpuGovernor() throws RemoteException {
+            if (mGpuEvent == null) return null;
+
+            return mGpuEvent.getGovernor();
+        }
+
+        @Override
+        public void setMaxGpuFrequency(final String value) throws RemoteException {
+            ActionProcessor.processAction(ActionProcessor.ACTION_GPU_FREQUENCY_MAX, value);
+        }
+
+        @Override
+        public void setGpuGovernor(String value) throws RemoteException {
+            ActionProcessor.processAction(ActionProcessor.ACTION_GPU_GOVERNOR, value);
         }
     };
 }

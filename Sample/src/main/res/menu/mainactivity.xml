@@ -8,18 +8,28 @@
         android:showAsAction="always|withText" />
 
     <item
-        android:id="@+id/menu_set_max"
-        android:title="@string/random_max_freq"
+        android:id="@+id/menu_set_cpu_max"
+        android:title="@string/random_cpu_max_freq"
         android:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_set_min"
-        android:title="@string/random_min_freq"
+        android:id="@+id/menu_set_cpu_min"
+        android:title="@string/random_cpu_min_freq"
         android:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_set_gov"
-        android:title="@string/random_governor"
+        android:id="@+id/menu_set_cpu_gov"
+        android:title="@string/random_cpu_governor"
+        android:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_set_gpu_max"
+        android:title="@string/random_gpu_max_freq"
+        android:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_set_gpu_gov"
+        android:title="@string/random_gpu_governor"
         android:showAsAction="never" />
 
 </menu>
