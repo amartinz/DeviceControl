@@ -38,8 +38,6 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.squareup.otto.Subscribe;
 import com.stericson.roottools.RootTools;
 
-import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
@@ -53,6 +51,7 @@ import org.namelessrom.devicecontrol.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.GpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.InformationFragment;
+import org.namelessrom.devicecontrol.fragments.device.sub.FastChargeFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.GovernorFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.HotpluggingFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.ThermalFragment;
@@ -354,6 +353,9 @@ public class MainActivity extends Activity
                 mTitle = mFragmentTitle = R.string.features;
                 mSubFragmentTitle = -1;
                 break;
+            case ID_FAST_CHARGE:
+                mTitle = mSubFragmentTitle = R.string.fast_charge;
+                break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_INFO:
                 mActionBarDrawable = R.drawable.ic_menu_perf_info;
@@ -523,6 +525,10 @@ public class MainActivity extends Activity
         Fragment right = HelpFragment.newInstance(id);
 
         switch (id) {
+            //--------------------------------------------------------------------------------------
+            case ID_FAST_CHARGE:
+                main = new FastChargeFragment();
+                break;
             //--------------------------------------------------------------------------------------
             case ID_GOVERNOR_TUNABLE:
                 main = new GovernorFragment();

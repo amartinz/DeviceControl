@@ -24,4 +24,9 @@
         android:summary="@string/logger_mode_summary"
         android:defaultValue="false" />
 
+    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+        android:key="fast_charge"
+        android:title="@string/fast_charge"
+        android:summary="@string/fast_charge_summary" />
+
 </PreferenceScreen>
