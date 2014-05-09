@@ -38,7 +38,6 @@
             android:title="@string/knock_on"
             android:summaryOn="@string/knock_on_summary_on"
             android:summaryOff="@string/knock_on_summary_off"
-            android:enabled="true"
             android:defaultValue="false" />
 
     </PreferenceCategory>

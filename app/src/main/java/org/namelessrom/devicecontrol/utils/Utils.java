@@ -17,13 +17,11 @@
 package org.namelessrom.devicecontrol.utils;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.BatteryManager;
-import android.os.Build;
 
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
@@ -31,11 +29,11 @@ import com.stericson.roottools.execution.CommandCapture;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -50,8 +48,6 @@ import static org.namelessrom.devicecontrol.Application.HANDLER;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class Utils implements DeviceConstants, FileConstants {
-
-    private static int isLowRamDevice = -1;
 
     public static boolean isNameless() {
         return existsInBuildProp("ro.nameless.version");
@@ -201,7 +197,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @return The path of the existing file as string
      */
     public static String checkPaths(final String[] paths) {
-        for (String s : paths) {
+        for (final String s : paths) {
             if (fileExists(s)) {
                 return s;
             }
@@ -233,19 +229,6 @@ public class Utils implements DeviceConstants, FileConstants {
         if (!new File(filepath).exists() || force) {
             RootTools.installBinary(context, R.raw.utils, "utils");
             logDebug("createFiles installed: utils");
-        }
-    }
-
-    public static boolean isLowRamDevice(final Context context) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            return false;
-        } else {
-            if (isLowRamDevice == -1) {
-                final ActivityManager activityManager
-                        = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-                isLowRamDevice = activityManager.isLowRamDevice() ? 1 : 0;
-            }
-            return (isLowRamDevice == 1);
         }
     }
 

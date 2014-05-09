@@ -32,16 +32,16 @@ import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.DeviceFragmentEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
-import org.namelessrom.devicecontrol.widgets.preferences.VibratorTuningPreference;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.VibratorTuningPreference;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -57,9 +57,6 @@ public class DeviceFragment extends AttachPreferenceFragment
     //==============================================================================================
     // Input
     //==============================================================================================
-    public static final String  sKnockOnFile = Utils.checkPaths(FILES_KNOCKON);
-    public static final boolean sKnockOn     = !sKnockOnFile.isEmpty();
-
     private CustomCheckBoxPreference mForceNavBar;
     private CustomCheckBoxPreference mGloveMode;
     private CustomCheckBoxPreference mKnockOn;
@@ -69,10 +66,6 @@ public class DeviceFragment extends AttachPreferenceFragment
     //==============================================================================================
     // Lights
     //==============================================================================================
-    public static final boolean sHasTouchkeyToggle = Utils.fileExists(FILE_TOUCHKEY_TOGGLE);
-    public static final boolean sHasTouchkeyBLN    = Utils.fileExists(FILE_BLN_TOGGLE);
-    public static final boolean sHasKeyboardToggle = Utils.fileExists(FILE_KEYBOARD_TOGGLE);
-
     private CustomCheckBoxPreference mBacklightKey;
     private CustomCheckBoxPreference mBacklightNotification;
     private CustomCheckBoxPreference mKeyboardBacklight;
@@ -80,12 +73,12 @@ public class DeviceFragment extends AttachPreferenceFragment
     //==============================================================================================
     // Display
     //==============================================================================================
-    private CustomCheckBoxPreference mLcdPowerReduce;
     public static final String  sLcdPowerReduceFile = Utils.checkPaths(FILES_LCD_POWER_REDUCE);
     public static final boolean sLcdPowerReduce     = !sLcdPowerReduceFile.isEmpty();
+    private CustomCheckBoxPreference mLcdPowerReduce;
     //----------------------------------------------------------------------------------------------
-    public static final String  sHasPanelFile       = Utils.checkPaths(FILES_PANEL_COLOR_TEMP);
-    public static final boolean sHasPanel           = !sHasPanelFile.isEmpty();
+    public static final String  sHasPanelFile = Utils.checkPaths(FILES_PANEL_COLOR_TEMP);
+    public static final boolean sHasPanel     = !sHasPanelFile.isEmpty();
     private CustomListPreference mPanelColor;
 
     //==============================================================================================
@@ -142,11 +135,11 @@ public class DeviceFragment extends AttachPreferenceFragment
         if (category != null) {
             mKnockOn = (CustomCheckBoxPreference) findPreference(KEY_KNOCK_ON);
             if (mKnockOn != null) {
-                if (!sKnockOn) {
+                if (!Utils.fileExists(FILE_KNOCKON)) {
                     category.removePreference(mKnockOn);
                 } else {
                     try {
-                        final String value = Utils.readOneLine(sKnockOnFile);
+                        final String value = Utils.readOneLine(FILE_KNOCKON);
                         if (value != null && !value.isEmpty()) {
                             mKnockOn.setChecked("1".equals(value));
                         }
@@ -195,7 +188,7 @@ public class DeviceFragment extends AttachPreferenceFragment
         if (category != null) {
             mBacklightKey = (CustomCheckBoxPreference) findPreference(KEY_TOUCHKEY_LIGHT);
             if (mBacklightKey != null) {
-                if (!sHasTouchkeyToggle) {
+                if (!Utils.fileExists(FILE_TOUCHKEY_TOGGLE)) {
                     category.removePreference(mBacklightKey);
                 } else {
                     mBacklightKey.setChecked(!Utils.readOneLine(FILE_TOUCHKEY_TOGGLE).equals("0"));
@@ -205,7 +198,7 @@ public class DeviceFragment extends AttachPreferenceFragment
 
             mBacklightNotification = (CustomCheckBoxPreference) findPreference(KEY_TOUCHKEY_BLN);
             if (mBacklightNotification != null) {
-                if (!sHasTouchkeyBLN) {
+                if (!Utils.fileExists(FILE_BLN_TOGGLE)) {
                     category.removePreference(mBacklightNotification);
                 } else {
                     mBacklightNotification.setChecked(
@@ -217,7 +210,7 @@ public class DeviceFragment extends AttachPreferenceFragment
 
             mKeyboardBacklight = (CustomCheckBoxPreference) findPreference(KEY_KEYBOARD_LIGHT);
             if (mKeyboardBacklight != null) {
-                if (!sHasKeyboardToggle) {
+                if (!Utils.fileExists(FILE_KEYBOARD_TOGGLE)) {
                     category.removePreference(mKeyboardBacklight);
                 } else {
                     mKeyboardBacklight.setChecked(
@@ -284,10 +277,10 @@ public class DeviceFragment extends AttachPreferenceFragment
         } else if (preference == mKnockOn) {
             final boolean newValue = (Boolean) o;
             final String value = (newValue) ? "1" : "0";
-            Utils.writeValue(sKnockOnFile, value);
+            Utils.writeValue(FILE_KNOCKON, value);
             PreferenceHelper.setBootup(
                     new DataItem(DatabaseHandler.CATEGORY_DEVICE, mKnockOn.getKey(),
-                            sKnockOnFile, value)
+                            FILE_KNOCKON, value)
             );
             changed = true;
         } else if (preference == mBacklightKey) { // ======================================== LIGHTS

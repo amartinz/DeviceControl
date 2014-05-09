@@ -43,8 +43,8 @@ public interface FileConstants {
             "/sys/class/sec/tsp/panel_colors"
     };
     //==============================================================================================
-    public static final String[] FILES_KNOCKON              =
-            {"/sys/devices/virtual/input/lge_touch/touch_gesture"};
+    public static final String   FILE_KNOCKON               =
+            "/sys/devices/virtual/input/lge_touch/touch_gesture";
     //==============================================================================================
     public static final String   FILE_INFO_DISPLAY_LCD_TYPE = "/sys/class/lcd/panel/lcd_type";
     //==============================================================================================

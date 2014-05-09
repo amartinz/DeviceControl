@@ -36,7 +36,6 @@ import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
@@ -69,7 +68,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
     private PreferenceScreen         mRoot;
     //----------------------------------------------------------------------------------------------
     private CustomListPreference     mIoScheduler;
-    private CustomCheckBoxPreference mForceHighEndGfx;
     private CustomPreference         mHotplugging;
     private CustomPreference         mThermal;
     //----------------------------------------------------------------------------------------------
@@ -103,17 +101,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.extras);
         mRoot = getPreferenceScreen();
-
-        mForceHighEndGfx = (CustomCheckBoxPreference) findPreference(FORCE_HIGHEND_GFX_PREF);
-        if (mForceHighEndGfx != null) {
-            if (Utils.isLowRamDevice(getActivity())) {
-                mForceHighEndGfx.setChecked(
-                        Utils.existsInBuildProp("persist.sys.force_highendgfx=1"));
-                mForceHighEndGfx.setOnPreferenceChangeListener(this);
-            } else {
-                mRoot.removePreference(mForceHighEndGfx);
-            }
-        }
 
         mIoScheduler = (CustomListPreference) findPreference("io");
         if (mIoScheduler != null) {
@@ -218,10 +205,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
     public boolean onPreferenceChange(Preference preference, Object o) {
         boolean changed = false;
 
-        if (preference == mForceHighEndGfx) {
-            Utils.runRootCommand(Scripts.toggleForceHighEndGfx());
-            changed = true;
-        } else if (preference == mIoScheduler) {
+        if (preference == mIoScheduler) {
             final String value = String.valueOf(o);
             mIoScheduler.setSummary(value);
             ActionProcessor.processAction(ActionProcessor.ACTION_IO_SCHEDULER, value, true);
