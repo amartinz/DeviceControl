@@ -46,12 +46,12 @@ import org.namelessrom.devicecontrol.fragments.HomeFragment;
 import org.namelessrom.devicecontrol.fragments.PreferencesFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
+import org.namelessrom.devicecontrol.fragments.device.sub.FastChargeFragment;
 import org.namelessrom.devicecontrol.fragments.dynamic.WebViewFragment;
 import org.namelessrom.devicecontrol.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.GpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.InformationFragment;
-import org.namelessrom.devicecontrol.fragments.device.sub.FastChargeFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.GovernorFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.HotpluggingFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.ThermalFragment;
@@ -354,6 +354,7 @@ public class MainActivity extends Activity
                 mSubFragmentTitle = -1;
                 break;
             case ID_FAST_CHARGE:
+                mSubActionBarDrawable = R.drawable.ic_general_battery;
                 mTitle = mSubFragmentTitle = R.string.fast_charge;
                 break;
             //--------------------------------------------------------------------------------------
@@ -388,12 +389,15 @@ public class MainActivity extends Activity
                 mSubFragmentTitle = -1;
                 break;
             case ID_HOTPLUGGING:
+                mSubActionBarDrawable = R.drawable.ic_general_hotplug;
                 mTitle = mSubFragmentTitle = R.string.hotplugging;
                 break;
             case ID_THERMAL:
+                mSubActionBarDrawable = R.drawable.ic_general_heat;
                 mTitle = mSubFragmentTitle = R.string.thermal;
                 break;
             case ID_VOLTAGE:
+                mSubActionBarDrawable = R.drawable.ic_general_voltage;
                 mTitle = mSubFragmentTitle = R.string.voltage_control;
                 break;
             //--------------------------------------------------------------------------------------
@@ -411,11 +415,11 @@ public class MainActivity extends Activity
                 mSubFragmentTitle = -1;
                 break;
             case ID_TOOLS_EDITORS:
-                mSubActionBarDrawable = R.drawable.ic_menu_editor;
+                mSubActionBarDrawable = R.drawable.ic_general_editor;
                 mTitle = mSubFragmentTitle = R.string.editors;
                 break;
             case ID_TOOLS_FREEZER:
-                mSubActionBarDrawable = R.drawable.ic_menu_freezer;
+                mSubActionBarDrawable = R.drawable.ic_general_freezer;
                 mTitle = mSubFragmentTitle = R.string.freezer;
                 break;
             //--------------------------------------------------------------------------------------

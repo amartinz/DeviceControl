@@ -6,16 +6,16 @@
         android:key="media_scan"
         android:title="@string/media_scan_trigger"
         android:summary="@string/media_scan_summary"
-        android:icon="@drawable/ic_media_scan" />
+        android:icon="@drawable/ic_general_media_scan" />
 
     <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="editors"
         android:title="@string/editors"
-        android:icon="@drawable/ic_menu_editor" />
+        android:icon="@drawable/ic_general_editor" />
 
     <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="freezer"
         android:title="@string/freezer"
-        android:icon="@drawable/ic_menu_freezer" />
+        android:icon="@drawable/ic_general_freezer" />
 
 </PreferenceScreen>

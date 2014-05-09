@@ -24,11 +24,13 @@
 
     <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="hotplugging"
-        android:title="@string/hotplugging" />
+        android:title="@string/hotplugging"
+        android:icon="@drawable/ic_general_hotplug" />
 
     <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="thermal"
-        android:title="@string/thermal" />
+        android:title="@string/thermal"
+        android:icon="@drawable/ic_general_heat" />
 
     <PreferenceCategory
         android:key="powersaving"
@@ -60,7 +62,8 @@
         <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
             android:key="voltage_control"
             android:title="@string/voltage_control"
-            android:summary="@string/voltage_control_summary" />
+            android:summary="@string/voltage_control_summary"
+            android:icon="@drawable/ic_general_voltage" />
 
     </PreferenceCategory>
 

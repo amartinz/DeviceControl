@@ -27,6 +27,7 @@
     <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="fast_charge"
         android:title="@string/fast_charge"
-        android:summary="@string/fast_charge_summary" />
+        android:summary="@string/fast_charge_summary"
+        android:icon="@drawable/ic_general_battery" />
 
 </PreferenceScreen>
