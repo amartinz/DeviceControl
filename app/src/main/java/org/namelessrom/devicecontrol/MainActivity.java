@@ -95,7 +95,6 @@ public class MainActivity extends Activity
     private int mSubFragmentTitle     = -1;
 
     public static final int[] MENU_ICONS = {
-            R.drawable.ic_menu_home,
             -1, // Device
             R.drawable.ic_menu_device,
             R.drawable.ic_menu_features,
