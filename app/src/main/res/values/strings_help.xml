@@ -12,7 +12,7 @@
     <string name="gpu_freq_max_help">The maximum clock that the GPU can use. Reduce this frequency for better battery life at cost of performance.</string>
     <string name="gpu_gov_help">The governor for the gpu. Please note that some default governors are listed, which do not have to exist! If they exist, the value will stick.</string>
     <string name="mpdecision_help">MPDecision is a proprietary Qualcomm daemon that makes calls to the SoC to manage the cpu cores.\nWARNING: Only stop if you have a valid hotplug replacement like Intelli-Plug!</string>
-    <string name="intelli_plug_help">Intelli-Plug is a replacement for Qualcomm\'s proprietary mpdecsion, which runs in userspace. It is done in kernel instead in userspace which is faster as in userspace it has to poll the kernel.</string>
+    <string name="intelli_plug_help">Intelli-Plug is a replacement for Qualcomm\'s proprietary MPDecision, which runs in userspace. It is done in kernel instead in userspace which is faster as in userspace it has to poll the kernel.</string>
     <string name="intelli_plug_eco_help">Eco Mode is a optimized dual core solution for quadcore CPU \'s. This should allow for maximum battery life without sacrificing performance.</string>
     <string name="powersaving_sched_mc_help">Tries to group tasks on a core until it reaches its maximum load and powers on the next core.\nIf enabled, it sacrifices power in exchange for battery life.</string>
     <string name="msm_dcvs_help">Enable support for MSM DCVS to control all CPU and GPU core frequencies. The DCVS manager allows idle driver to feed the idle information to the algorithm and the algorithm returns a frequency for the core which is passed to the frequency change driver.</string>
