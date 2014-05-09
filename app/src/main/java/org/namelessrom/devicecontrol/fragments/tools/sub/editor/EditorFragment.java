@@ -104,7 +104,6 @@ public class EditorFragment extends AttachFragment
     // Overridden Methods
     //==============================================================================================
 
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -177,13 +176,11 @@ public class EditorFragment extends AttachFragment
         filterText = (EditText) view.findViewById(R.id.filtru);
         filterText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(final Editable s) {
-            }
+            public void afterTextChanged(final Editable s) { }
 
             @Override
             public void beforeTextChanged(final CharSequence s, final int start,
-                    final int count, final int after) {
-            }
+                    final int count, final int after) { }
 
             @Override
             public void onTextChanged(final CharSequence s, final int start,
