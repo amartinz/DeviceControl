@@ -4,7 +4,7 @@
     <string name="app_version_code">Versioncode: %s</string>
     <string name="app_information_help">Welcome to %1$s!\n\nTo get started, swipe out the menu from the left!\n\nIf you need help or don\'t understand what a specific funtion is doing, swipe right and look at the help!\n\nIf a feature is not supported by your device, it gets automatically hidden!\n\n\nPlease note, that %2$s needs root\nto function properly!\n\n</string>
     <string name="app_warning_root">Please note that %s requires ROOT to fully work!</string>
-    <string name="message_loading">Loading, please stand by…</string>
+    <string name="message_loading">Loading, please stand by&#8230;</string>
     <string name="fragment_press_to_load">Press me to load %s.</string>
     <string name="action_press_again">Press once again to exit!</string>
     <string name="defaults_button">Reset to default</string>
@@ -33,15 +33,12 @@
     <string name="graphics">Graphics</string>
     <string name="display">Display</string>
     <!-- Time In State -->
-    <string name="time_in_state">TIME IN STATE</string>
-    <string name="unused_cpu_states">UNUSED CPU STATES</string>
-    <string name="total_state_time">TOTAL STATE TIME</string>
+    <string name="time_in_state">Time in state</string>
+    <string name="unused_cpu_states">Unused cpu states</string>
+    <string name="total_state_time">Total state time</string>
     <string name="no_states_file_found">No states file found.</string>
     <string name="deep_sleep">\"Deep Sleep\"</string>
     <string name="device_information">Device Information</string>
-    <!-- Preferences -->
-    <string name="force_highend_gfx">Force high-end graphics</string>
-    <string name="force_highend_gfx_summary">Enables high-end visual effects such as transparent status/navigation bar (needs to be supported by your rom, requires reboot)</string>
     <!-- Hotplug -->
     <string name="hotplugging">Hotplugging</string>
     <string name="mpdecision_summary_on">MPDecision is running.</string>
@@ -152,26 +149,26 @@
     <string name="version">Version</string>
     <!-- Tasker -->
     <string name="tasker">Tasker</string>
-    <string name="tasklist">Tasklist</string>
+    <string name="tasklist">Task list</string>
     <string name="tasklist_summary">Setup, modify, enable or disable tasks.</string>
     <string name="tasklist_empty">You have not set up any tasks yet!\nHow about adding some? :)\n\n(Press the \"+\" at the top right)</string>
-    <string name="add_task">Add Task</string>
-    <string name="edit_task">Edit Task</string>
-    <string name="delete_task">Delete Task</string>
+    <string name="add_task">Add task</string>
+    <string name="edit_task">Edit task</string>
+    <string name="delete_task">Delete task</string>
     <string name="category">Category</string>
     <string name="action">Action</string>
     <string name="value">Value</string>
     <!-- Fstrim -->
-    <string name="fstrim_title">Automatic fstrimming</string>
-    <string name="fstrim_summary">Fstrim is used to discard (or \"trim\") blocks which are not in use by the filesystem.\nThis can improve performance and reduce lags.</string>
-    <string name="fstrim_interval_title">Fstrim interval</string>
-    <string name="fstrim_interval_summary">Choose interval for automatic fstrimming.</string>
+    <string name="fstrim_title">Automatic FStrimming</string>
+    <string name="fstrim_summary">FStrim is used to discard (or \"trim\") blocks which are not in use by the filesystem.\nThis can improve performance and reduce lags.</string>
+    <string name="fstrim_interval_title">FStrim interval</string>
+    <string name="fstrim_interval_summary">Choose interval for automatic FStrimming.</string>
     <!-- Freezer -->
-    <string name="freeze">Freeze Package</string>
-    <string name="defrost">Defrost Package</string>
+    <string name="freeze">Freeze package</string>
+    <string name="defrost">Defrost package</string>
     <string name="defrost_msg">%s will be defrosted. Continue?</string>
-    <string name="system_packs">System Packages</string>
-    <string name="user_packs">User Packages</string>
+    <string name="system_packs">System packages</string>
+    <string name="user_packs">User packages</string>
     <string name="freeze_msg">%s will be frozen. Continue?</string>
     <string name="package_frozen">Package is frozen.</string>
     <string name="package_defrost">Package is defrosted.</string>
@@ -179,7 +176,7 @@
     <string name="vm_settings">Dalvik Settings</string>
     <string name="full_editor">Press to load full editor</string>
     <!-- Performance Settings | Warning dialog -->
-    <string name="performance_settings_warning_title">Proceed with Caution</string>
+    <string name="performance_settings_warning_title">Proceed with caution</string>
     <string name="performance_settings_warning_header">Warning</string>
     <!-- PropModderFragment -->
     <string name="build_prop_mods">Build.prop Mods</string>
@@ -201,12 +198,12 @@
     <string name="vm_heapsize_alt_summary">Dalvik VM cache size: %s</string>
     <string name="fast_up_title">HSUPA upload speed hack</string>
     <string name="fast_up_summary">*WARNING* if you change this value it will add the needed values to your build.prop if they are not already present</string>
-    <string name="fast_up_alt_summary">Fast up found active: %s</string>
+    <string name="fast_up_alt_summary">Fast upload found active: %s</string>
     <string name="prox_delay_title">Proximity sensor delay</string>
-    <string name="prox_delay_summary">When you are in-call screen is off when the device moves away from your face this delay value controls how long before screen turns on</string>
+    <string name="prox_delay_summary">Controls the delay, when your screen will turn back on while you are in-call and move your phone away from your head.</string>
     <string name="prox_delay_alt_summary">Proximity sensor set to: %s</string>
     <string name="sleep_title">PM Sleep mode</string>
-    <string name="sleep_summary">Modify Nighttime sleep policy</string>
+    <string name="sleep_summary">Modify night time sleep policy</string>
     <string name="sleep_alt_summary">Current Sleep Mode: %s</string>
     <string name="jit_title">Just In Time Compiler</string>
     <string name="jit_summary">Enables/Disables JIT compiler</string>
@@ -238,8 +235,8 @@
     <!-- Knock On -->
     <string name="knock_on_off_gestures">Knock On/Off Gestures</string>
     <string name="knock_on">Knock On</string>
-    <string name="knock_on_summary_off">Knock on gesture disabled</string>
-    <string name="knock_on_summary_on">Knock on gesture enabled</string>
+    <string name="knock_on_summary_off">Knock On gesture disabled</string>
+    <string name="knock_on_summary_on">Knock On gesture enabled</string>
     <!-- TODO: Plurals -->
     <!-- Array Entries -->
     <string name="five_minutes">5 Minutes</string>

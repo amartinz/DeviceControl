@@ -15,7 +15,7 @@
 -->
 
 <resources>
-
+    <!-- Sliding Menu -->
     <declare-styleable name="SlidingMenu">
         <attr name="mode">
             <enum name="left" value="0" />
@@ -43,5 +43,8 @@
         <attr name="selectorEnabled" format="boolean" />
         <attr name="selectorDrawable" format="reference" />
     </declare-styleable>
-
+    <!-- Wizard -->
+    <declare-styleable name="AppTheme">
+        <attr name="textAppearanceFinish" format="reference" />
+    </declare-styleable>
 </resources>

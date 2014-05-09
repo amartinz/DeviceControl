@@ -15,25 +15,23 @@
 -->
 
 <resources>
-
     <color name="red_middle">#DC3D24</color>
     <color name="red_dark">#670909</color>
-    <!-- 990d0d -->
     <color name="darker_gray">#666</color>
     <color name="gray_activated">#66666666</color>
     <color name="grey_dark">#232B2B</color>
     <color name="beige_middle">#E3AE57</color>
-
     <color name="orange">#E9633B</color>
-
     <color name="white_dirty">#ECEAE0</color>
-
     <color name="blueish">#63AA9C</color>
     <color name="blueish_strong">#4EB1BA</color>
-
     <color name="greenish">#50d07d</color>
-
     <color name="kitkat_white">#FFBEBEBE</color>
     <color name="grey">#AA242424</color>
-
+    <!-- Wizard -->
+    <color name="step_pager_previous_tab_color">#44ffffff</color>
+    <color name="step_pager_selected_tab_color">#ffffffff</color>
+    <color name="step_pager_selected_last_tab_color">#ff669900</color>
+    <color name="step_pager_next_tab_color">#10ffffff</color>
+    <color name="review_green">#ff669900</color>
 </resources>

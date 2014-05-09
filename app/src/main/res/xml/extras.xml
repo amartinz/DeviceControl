@@ -18,12 +18,6 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
-        android:key="pref_force_highend_gfx"
-        android:title="@string/force_highend_gfx"
-        android:summary="@string/force_highend_gfx_summary"
-        android:defaultValue="false" />
-
     <org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference
         android:key="io"
         android:title="@string/io" />
