@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.BatteryManager;
+import android.util.Log;
 
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
@@ -394,6 +395,15 @@ public class Utils implements DeviceConstants, FileConstants {
         }
 
         return health;
+    }
+
+    public static void remount(final String path, final String mode) {
+        try {
+            RootTools.remount(path, mode);
+        } catch (Exception e) {
+            Log.e(TAG, String.format("Could not remount %s with options \"%s\", error: %s",
+                    path, mode, e));
+        }
     }
 
 }

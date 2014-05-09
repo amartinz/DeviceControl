@@ -2,21 +2,18 @@ package org.namelessrom.devicecontrol.objects;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-/**
- * Created by alex on 28.02.14.
- */
 public class CpuCore {
 
     public final String mCore;
-    public final String mCoreMax;
-    public final String mCoreCurrent;
+    public final int    mCoreMax;
+    public final int    mCoreCurrent;
     public final String mCoreGov;
 
-    public CpuCore(final String core, final String coreCurrent,
-            final String coreMax, final String coreGov) {
+    public CpuCore(final String core, final int coreCurrent,
+            final int coreMax, final String coreGov) {
         mCore = ((core != null && !core.isEmpty()) ? core : "0");
-        mCoreMax = ((coreMax != null && !coreMax.isEmpty()) ? coreMax : "0");
-        mCoreCurrent = ((coreCurrent != null && !coreCurrent.isEmpty()) ? coreCurrent : "0");
+        mCoreMax = coreMax;
+        mCoreCurrent = coreCurrent;
         mCoreGov = ((coreGov != null && !coreGov.isEmpty()) ? coreGov : "0");
         logDebug("mCore: [" + mCore + ']');
         logDebug("mCoreMax: [" + mCoreMax + ']');

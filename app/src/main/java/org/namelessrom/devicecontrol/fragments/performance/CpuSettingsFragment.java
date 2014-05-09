@@ -169,8 +169,8 @@ public class CpuSettingsFragment extends AttachFragment
         final int mCpuNum = CpuUtils.getNumOfCpus();
         for (int i = 0; i < mCpuNum; i++) {
             tmpCore = new CpuCore(getString(R.string.core) + ' ' + String.valueOf(i) + ": ",
-                    "0",
-                    "0",
+                    0,
+                    0,
                     "0");
             generateRow(mCpuInfo, tmpCore);
         }
@@ -314,16 +314,16 @@ public class CpuSettingsFragment extends AttachFragment
         final TextView cpuInfoFreq = (TextView) rowView.findViewById(R.id.ui_device_value);
         final ProgressBar cpuBar = (ProgressBar) rowView.findViewById(R.id.ui_device_bar);
 
-        final boolean isOffline = cpuCore.mCoreCurrent.equals("0");
+        final boolean isOffline = cpuCore.mCoreCurrent == 0;
 
         cpuInfoCore.setText(cpuCore.mCore);
         cpuInfoFreq.setText(isOffline
                 ? getString(R.string.core_offline)
-                : CpuUtils.toMHz(cpuCore.mCoreCurrent)
-                        + " / " + CpuUtils.toMHz(cpuCore.mCoreMax)
+                : CpuUtils.toMHz(String.valueOf(cpuCore.mCoreCurrent))
+                        + " / " + CpuUtils.toMHz(String.valueOf(cpuCore.mCoreMax))
                         + " [" + cpuCore.mCoreGov + ']');
-        cpuBar.setMax(Integer.parseInt(cpuCore.mCoreMax));
-        cpuBar.setProgress(Integer.parseInt(cpuCore.mCoreCurrent));
+        cpuBar.setMax(cpuCore.mCoreMax);
+        cpuBar.setProgress(cpuCore.mCoreCurrent);
 
         parent.addView(rowView);
         return rowView;

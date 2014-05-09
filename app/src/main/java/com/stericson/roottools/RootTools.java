@@ -658,11 +658,8 @@ public final class RootTools {
      * @return a <code>boolean</code> which indicates whether or not the partition has been
      * remounted as specified.
      */
-    public static boolean remount(String file, String mountType) {
-        // Recieved a request, get an instance of Remounter
-        Remounter remounter = new Remounter();
-        // send the request.
-        return (remounter.remount(file, mountType));
+    public static boolean remount(final String file, final String mountType) throws Exception {
+        return (new Remounter().remount(file, mountType));
     }
 
     /**

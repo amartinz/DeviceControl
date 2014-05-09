@@ -45,15 +45,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
-import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.objects.Prop;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 import org.namelessrom.devicecontrol.widgets.adapters.PropAdapter;
 
@@ -234,7 +233,7 @@ public class EditorFragment extends AttachFragment
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    RootTools.remount("/system", "rw");
+                                    Utils.remount("/system", "rw");
                                     Utils.getCommandResult(APPLY,
                                             "busybox cp "
                                                     + getActivity().getFilesDir().getPath()
@@ -360,17 +359,17 @@ public class EditorFragment extends AttachFragment
         final String result = event.getOutput();
         switch (id) {
             case SAVE:
-                RootTools.remount("/system", "ro"); // slip through to APPLY
+                Utils.remount("/system", "ro"); // slip through to APPLY
             case APPLY:
                 Utils.runRootCommand("busybox chmod 644 " + syspath + mod + ".conf;"
                         + "busybox sysctl -p " + syspath + mod + ".conf;");
                 break;
             case CLICK_0:
-                RootTools.remount("/system", "ro");
+                Utils.remount("/system", "ro");
                 new GetBuildPropOperation().execute();
                 break;
             case CLICK_1:
-                RootTools.remount("/system", "ro");
+                Utils.remount("/system", "ro");
                 adapter.notifyDataSetChanged();
                 break;
             default:
@@ -610,7 +609,7 @@ public class EditorFragment extends AttachFragment
                         if (p != null) {
                             if (tv.getText() != null) {
                                 p.setVal(tv.getText().toString().trim());
-                                RootTools.remount("/system", "rw");
+                                Utils.remount("/system", "rw");
                                 Utils.getCommandResult(SAVE,
                                         activity.getFilesDir().getPath() + "/utils -setprop \""
                                                 + p.getName() + '=' + p.getVal() + '"'
@@ -622,7 +621,7 @@ public class EditorFragment extends AttachFragment
                                     && tn.getText().toString().trim().length() > 0) {
                                 props.add(new Prop(tn.getText().toString().trim(),
                                         tv.getText().toString().trim()));
-                                RootTools.remount("/system", "rw");
+                                Utils.remount("/system", "rw");
                                 Utils.getCommandResult(SAVE,
                                         activity.getFilesDir().getPath() + "/utils -setprop \""
                                                 + tn.getText().toString().trim() + '='
@@ -686,7 +685,7 @@ public class EditorFragment extends AttachFragment
                 case 0:
                     final String path = dn + '/' + mBuildName;
                     if (new File(path).exists()) {
-                        RootTools.remount("/system", "rw");
+                        Utils.remount("/system", "rw");
                         Utils.getCommandResult(CLICK_0,
                                 "busybox chmod 644 " + "/system/build.prop;\n"
                                         + "busybox cp " + path + " /system/build.prop;\n"
@@ -697,7 +696,7 @@ public class EditorFragment extends AttachFragment
                     }
                     break;
                 case 1:
-                    RootTools.remount("/system", "rw");
+                    Utils.remount("/system", "rw");
                     Utils.getCommandResult(CLICK_1,
                             "busybox sed -i '/" + p.getName().replace(".", "\\.")
                                     + "/d' " + "/system/build.prop;\n"

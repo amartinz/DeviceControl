@@ -8,12 +8,8 @@ public class CpuCoreEvent {
 
     private final List<CpuCore> mCoreList;
 
-    public CpuCoreEvent(List<CpuCore> coreList) {
-        mCoreList = coreList;
-    }
+    public CpuCoreEvent(final List<CpuCore> coreList) { mCoreList = coreList; }
 
-    public List<CpuCore> getStates() {
-        return mCoreList;
-    }
+    public List<CpuCore> getStates() { return mCoreList; }
 
 }

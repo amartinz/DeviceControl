@@ -56,7 +56,7 @@ public class Remounter {
      * has been remounted as specified.
      */
 
-    public boolean remount(String file, String mountType) {
+    public boolean remount(String file, String mountType) throws Exception {
 
         //if the path has a trailing slash get rid of it.
         if (file.endsWith("/") && !file.equals("/")) {
@@ -66,28 +66,16 @@ public class Remounter {
         boolean foundMount = false;
 
         while (!foundMount) {
-            try {
-                for (Mount mount : RootTools.getMounts()) {
-                    RootTools.log(mount.getMountPoint().toString());
+            for (final Mount mount : RootTools.getMounts()) {
+                RootTools.log(mount.getMountPoint().toString());
 
-                    if (file.equals(mount.getMountPoint().toString())) {
-                        foundMount = true;
-                        break;
-                    }
+                if (file.equals(mount.getMountPoint().toString())) {
+                    foundMount = true;
+                    break;
                 }
-            } catch (Exception e) {
-                if (RootTools.debugMode) {
-                    e.printStackTrace();
-                }
-                return false;
             }
             if (!foundMount) {
-                try {
-                    file = (new File(file).getParent());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return false;
-                }
+                file = (new File(file).getParent());
             }
         }
 
@@ -101,28 +89,24 @@ public class Remounter {
 
             if (!isMountMode) {
                 //grab an instance of the internal class
-                try {
-                    CommandCapture command = new CommandCapture(0,
-                            true,
-                            "busybox mount -o remount," + mountType.toLowerCase() + ' ' + mountPoint
-                                    .getDevice().getAbsolutePath() + ' ' + mountPoint
-                                    .getMountPoint().getAbsolutePath(),
-                            "toolbox mount -o remount," + mountType.toLowerCase() + ' ' + mountPoint
-                                    .getDevice().getAbsolutePath() + ' ' + mountPoint
-                                    .getMountPoint().getAbsolutePath(),
-                            "mount -o remount," + mountType.toLowerCase() + ' ' + mountPoint
-                                    .getDevice().getAbsolutePath() + ' ' + mountPoint
-                                    .getMountPoint().getAbsolutePath(),
-                            "/system/bin/toolbox mount -o remount," + mountType
-                                    .toLowerCase() + ' ' + mountPoint.getDevice()
-                                    .getAbsolutePath() + ' ' + mountPoint.getMountPoint()
-                                    .getAbsolutePath()
-                    );
-                    Shell.startRootShell().add(command);
-                    commandWait(command);
-
-                } catch (Exception e) {
-                }
+                final CommandCapture command = new CommandCapture(0,
+                        true,
+                        "busybox mount -o remount," + mountType.toLowerCase() + ' ' + mountPoint
+                                .getDevice().getAbsolutePath() + ' ' + mountPoint
+                                .getMountPoint().getAbsolutePath(),
+                        "toolbox mount -o remount," + mountType.toLowerCase() + ' ' + mountPoint
+                                .getDevice().getAbsolutePath() + ' ' + mountPoint
+                                .getMountPoint().getAbsolutePath(),
+                        "mount -o remount," + mountType.toLowerCase() + ' ' + mountPoint
+                                .getDevice().getAbsolutePath() + ' ' + mountPoint
+                                .getMountPoint().getAbsolutePath(),
+                        "/system/bin/toolbox mount -o remount," + mountType
+                                .toLowerCase() + ' ' + mountPoint.getDevice()
+                                .getAbsolutePath() + ' ' + mountPoint.getMountPoint()
+                                .getAbsolutePath()
+                );
+                Shell.startRootShell().add(command);
+                commandWait(command);
 
                 mountPoint = findMountPointRecursive(file);
             }
@@ -151,7 +135,7 @@ public class Remounter {
         try {
             ArrayList<Mount> mounts = RootTools.getMounts();
 
-            for (File path = new File(file); path != null; ) {
+            for (final File path = new File(file); path != null; ) {
                 for (Mount mount : mounts) {
                     if (mount.getMountPoint().equals(path)) {
                         return mount;

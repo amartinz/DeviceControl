@@ -294,7 +294,7 @@ public class IabHelper {
      * used by it such as service connections. Naturally, once the object is
      * disposed of, it can't be used again.
      */
-    public void dispose() {
+    public void dispose() throws Exception{
         logDebug("Disposing.");
         mSetupDone = false;
         if (mServiceConn != null) {

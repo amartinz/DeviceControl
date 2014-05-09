@@ -239,9 +239,15 @@ public class MainActivity extends Activity
         super.onDestroy();
         synchronized (lockObject) {
             logDebug("closing shells");
-            RootTools.closeAllShells();
-            if (mHelper != null) mHelper.dispose();
-            mHelper = null;
+            try {
+                RootTools.closeAllShells();
+                if (mHelper != null) {
+                    mHelper.dispose();
+                    mHelper = null;
+                }
+            } catch (Exception e) {
+                logDebug("onDestroy(): " + e);
+            }
         }
     }
 

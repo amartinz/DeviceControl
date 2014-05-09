@@ -98,8 +98,10 @@ public class Application extends android.app.Application implements DeviceConsta
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    RootTools.remount(Environment.getExternalStorageDirectory()
-                            .getAbsolutePath(), "rw");
+                    try {
+                        RootTools.remount(Environment.getExternalStorageDirectory()
+                                .getAbsolutePath(), "rw");
+                    } catch (Exception ignored) { /* ignored */ }
                 }
             }).start();
         }

@@ -29,9 +29,9 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
 import org.namelessrom.devicecontrol.objects.CpuCore;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,20 +146,23 @@ public class CpuCoreMonitor implements DeviceConstants {
                     final List<CpuCore> mCoreList = new ArrayList<CpuCore>(CPU_COUNT);
                     int mult = 0;
                     CpuCore tmp;
+                    int max, current;
                     for (int i = 0; i < CPU_COUNT; i++) {
                         try {
+                            max = Integer.parseInt(parts[i + mult + 0]);
+                            current = Integer.parseInt(parts[i + mult + 1]);
                             tmp = new CpuCore(
                                     mActivity.getString(
                                             R.string.core) + ' ' + String.valueOf(i) + ':',
-                                    parts[i + mult + 0],
-                                    parts[i + mult + 1],
+                                    max,
+                                    current,
                                     parts[i + mult + 2]
                             );
                         } catch (IndexOutOfBoundsException iob) {
                             tmp = new CpuCore(mActivity.getString(
                                     R.string.core) + ' ' + String.valueOf(i) + ':',
-                                    "0",
-                                    "0",
+                                    0,
+                                    0,
                                     "0"
                             );
                         }
