@@ -22,7 +22,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-import org.namelessrom.devicecontrol.Application;
+import com.stericson.roottools.RootTools;
+
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
@@ -68,18 +69,18 @@ public class BootUpService extends IntentService
         @Override
         protected Void doInBackground(Void... voids) {
 
-            //======================================================================================
-            // No Root, No Friends, That's Life ...
-            //======================================================================================
-            if (!Application.HAS_ROOT) {
-                logDebug("No Root, No Friends, That's Life ...");
-                return null;
-            }
-
             final DatabaseHandler db = DatabaseHandler.getInstance(mContext);
             PreferenceHelper.getInstance(mContext);
 
             if (!PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
+
+                //==================================================================================
+                // No Root, No Friends, That's Life ...
+                //==================================================================================
+                if (!RootTools.isRootAvailable() || !RootTools.isAccessGiven()) {
+                    logDebug("No Root, No Friends, That's Life ...");
+                    return null;
+                }
 
                 //==================================================================================
                 // Tasker
@@ -93,7 +94,7 @@ public class BootUpService extends IntentService
                 //==================================================================================
                 // Fields For Reapplying
                 //==================================================================================
-                StringBuilder sbCmd = new StringBuilder();
+                final StringBuilder sbCmd = new StringBuilder();
                 String cmd;
 
                 //==================================================================================
@@ -166,7 +167,10 @@ public class BootUpService extends IntentService
                 //==================================================================================
                 // Execute
                 //==================================================================================
-                Utils.runRootCommand(sbCmd.toString());
+                cmd = sbCmd.toString();
+                if (!cmd.isEmpty()) {
+                    Utils.runRootCommand(cmd);
+                }
                 logDebug("BootUp Done!");
             }
 

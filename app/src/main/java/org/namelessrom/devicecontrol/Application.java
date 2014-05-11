@@ -54,7 +54,6 @@ public class Application extends android.app.Application implements DeviceConsta
     public static final boolean IS_NAMELESS = Utils.isNameless();
 
     public static boolean IS_LOG_DEBUG = false;
-    public static boolean HAS_ROOT     = false;
 
     public static AlarmManager alarmManager;
     public static Context      applicationContext;
@@ -92,9 +91,8 @@ public class Application extends android.app.Application implements DeviceConsta
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         packageManager = getPackageManager();
 
-        // we need to detect SU for some features :)
-        HAS_ROOT = RootTools.isRootAvailable() && RootTools.isAccessGiven();
-        if (HAS_ROOT) {
+        // TODO: drop for internal storage
+        if (RootTools.isRootAvailable() && RootTools.isAccessGiven()) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {

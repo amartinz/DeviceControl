@@ -1395,7 +1395,7 @@ public final class RootToolsInternalMethods {
      */
     public void offerBusyBox(Activity activity) {
         RootTools.log("Launching Market for BusyBox");
-        Intent i = new Intent(Intent.ACTION_VIEW,
+        final Intent i = new Intent(Intent.ACTION_VIEW,
                 Uri.parse("market://details?id=stericson.busybox"));
         activity.startActivity(i);
     }
@@ -1410,7 +1410,7 @@ public final class RootToolsInternalMethods {
      */
     public Intent offerBusyBox(Activity activity, int requestCode) {
         RootTools.log("Launching Market for BusyBox");
-        Intent i = new Intent(Intent.ACTION_VIEW,
+        final Intent i = new Intent(Intent.ACTION_VIEW,
                 Uri.parse("market://details?id=stericson.busybox"));
         activity.startActivityForResult(i, requestCode);
         return i;
@@ -1423,8 +1423,8 @@ public final class RootToolsInternalMethods {
      */
     public void offerSuperUser(Activity activity) {
         RootTools.log("Launching Market for SuperUser");
-        Intent i = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("market://details?id=com.noshufou.android.su"));
+        final Intent i = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("market://details?id=eu.chainfire.supersu"));
         activity.startActivity(i);
     }
 
@@ -1438,8 +1438,8 @@ public final class RootToolsInternalMethods {
      */
     public Intent offerSuperUser(Activity activity, int requestCode) {
         RootTools.log("Launching Market for SuperUser");
-        Intent i = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("market://details?id=com.noshufou.android.su"));
+        final Intent i = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("market://details?id=eu.chainfire.supersu"));
         activity.startActivityForResult(i, requestCode);
         return i;
     }

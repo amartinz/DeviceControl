@@ -131,12 +131,6 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (!Application.HAS_ROOT) {
-            Toast.makeText(this
-                    , getString(R.string.app_warning_root, getString(R.string.app_name))
-                    , Toast.LENGTH_LONG).show();
-        }
-
         PreferenceHelper.getInstance(this);
         if (PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
             PreferenceHelper.setBoolean(DC_FIRST_START, false);

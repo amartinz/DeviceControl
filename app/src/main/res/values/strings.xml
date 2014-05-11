@@ -4,6 +4,10 @@
     <string name="app_version_code">Versioncode: %s</string>
     <string name="app_information_help">Welcome to %1$s!\n\nTo get started, swipe out the menu from the left!\n\nIf you need help or don\'t understand what a specific funtion is doing, swipe right and look at the help!\n\nIf a feature is not supported by your device, it gets automatically hidden!\n\n\nPlease note, that %2$s needs root\nto function properly!\n\n</string>
     <string name="app_warning_root">Please note that %s requires ROOT to fully work!</string>
+    <string name="app_warning_busybox">Please note that %s requires a BusyBox to fully work!</string>
+    <string name="get_busybox">Install BusyBox</string>
+    <string name="get_superuser">Install Superuser</string>
+    <string name="exit">Exit</string>
     <string name="message_loading">Loading, please stand by&#8230;</string>
     <string name="fragment_press_to_load">Press me to load %s.</string>
     <string name="action_press_again">Press once again to exit!</string>
