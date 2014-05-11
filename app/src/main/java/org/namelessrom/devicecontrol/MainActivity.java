@@ -143,7 +143,7 @@ public class MainActivity extends Activity
         final ListView mMenuList = (ListView) v.findViewById(R.id.navbarlist);
 
         mSlidingMenu = new SlidingMenu(this);
-        mSlidingMenu.setBackground(getResources().getDrawable(R.drawable.bg_menu_dark));
+        mSlidingMenu.setBackgroundResource(R.drawable.bg_menu_dark);
         mSlidingMenu.setMode(SlidingMenu.LEFT_RIGHT);
         mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);

@@ -118,6 +118,7 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
         final Fragment f = event.getFragment();
         final boolean animate = event.isAnimate();
 
+        // TODO: fix it up for API 14
         final FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         if (animate) {
             ft.setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
