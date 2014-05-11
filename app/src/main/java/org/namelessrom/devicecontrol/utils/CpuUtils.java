@@ -285,8 +285,15 @@ public class CpuUtils implements PerformanceConstants {
         return scheduler;
     }
 
-    public static String getAvailableGovernors() {
-        return Utils.readOneLine(GOV_AVAILALBLE_PATH);
+    public static String[] getAvailableGovernors() {
+        String[] govArray = null;
+        final String govs = Utils.readOneLine(GOV_AVAILALBLE_PATH);
+
+        if (govs != null && !govs.isEmpty()) {
+            govArray = govs.split(" ");
+        }
+
+        return govArray;
     }
 
     /**

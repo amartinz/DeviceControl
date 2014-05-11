@@ -62,7 +62,7 @@ public class DummyLauncher extends Activity {
             }
         });
 
-        if (hasRoot && hasBusyBox) {
+        if (hasRoot && hasBusyBox || true) {
             startActivity(new Intent(DummyLauncher.this, MainActivity.class));
             finish();
         } else if (hasRoot) {

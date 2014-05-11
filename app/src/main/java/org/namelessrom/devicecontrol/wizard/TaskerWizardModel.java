@@ -68,7 +68,7 @@ public class TaskerWizardModel extends AbstractWizardModel {
         final BranchPage actionPage = new BranchPage(this, "2) " + getString(R.string.action));
 
         final String[] freqs = CpuUtils.getAvailableFrequencies();
-        final String[] governors = CpuUtils.getAvailableGovernors().split(" ");
+        final String[] governors = CpuUtils.getAvailableGovernors();
         final String[] ioschedulers = CpuUtils.getAvailableIOSchedulers();
 
         if (freqs != null) {

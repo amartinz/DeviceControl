@@ -20,6 +20,7 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -180,7 +181,11 @@ public class AddTaskActivity extends FragmentActivity implements
     public void onItemSelectedEvent(final ItemSelectedEvent event) {
         if (event == null) return;
 
-        mNextButton.callOnClick();
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+            mNextButton.callOnClick();
+        } else {
+            mNextButton.performClick();
+        }
     }
 
     private DialogInterface.OnClickListener mSubListener = new DialogInterface.OnClickListener() {
