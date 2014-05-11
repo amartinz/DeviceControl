@@ -48,13 +48,7 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
             }
         }
 
-        // TODO: fix it up for API 14
         mFreezer = (CustomPreference) findPreference("freezer");
-        if (mFreezer != null) {
-            if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                root.removePreference(mFreezer);
-            }
-        }
     }
 
     @Override

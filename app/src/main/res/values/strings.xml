@@ -8,6 +8,7 @@
     <string name="get_busybox">Install BusyBox</string>
     <string name="get_superuser">Install Superuser</string>
     <string name="exit">Exit</string>
+    <string name="close">Close</string>
     <string name="message_loading">Loading, please stand by&#8230;</string>
     <string name="fragment_press_to_load">Press me to load %s.</string>
     <string name="action_press_again">Press once again to exit!</string>
@@ -150,12 +151,14 @@
     <string name="fstrim_summary">FStrim is used to discard (or \"trim\") blocks which are not in use by the filesystem.\nThis can improve performance and reduce lags.</string>
     <string name="fstrim_interval_title">FStrim interval</string>
     <string name="fstrim_interval_summary">Choose interval for automatic FStrimming.</string>
-    <string name="freeze">Freeze package</string>
-    <string name="defrost">Defrost package</string>
-    <string name="defrost_msg">%s will be defrosted. Continue?</string>
+    <string name="app_system"><![CDATA[WARNING!<br /><b>%s</b> is a system application!]]></string>
+    <string name="app_user"><![CDATA[<b>%s</b> is a user application.]]></string>
+    <string name="enable">Enable</string>
+    <string name="enable_msg">%s will be enabled.\n\nContinue?</string>
+    <string name="disable">Disable</string>
+    <string name="disable_msg">%s will be disabled.\n\nContinue?</string>
     <string name="system_packs">System packages</string>
     <string name="user_packs">User packages</string>
-    <string name="freeze_msg">%s will be frozen. Continue?</string>
     <string name="package_frozen">Package is frozen.</string>
     <string name="package_defrost">Package is defrosted.</string>
     <string name="vm_settings">Dalvik Settings</string>

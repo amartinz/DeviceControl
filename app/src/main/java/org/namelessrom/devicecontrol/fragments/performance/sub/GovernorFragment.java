@@ -40,9 +40,7 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
     private static Context            mContext;
 
     @Override
-    public void onAttach(final Activity activity) {
-        super.onAttach(activity, ID_GOVERNOR_TUNABLE);
-    }
+    public void onAttach(final Activity activity) { super.onAttach(activity, ID_GOVERNOR_TUNABLE); }
 
     @Override
     public void onResume() {
@@ -171,7 +169,7 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
                             AlertDialog dialog = builder.create();
                             dialog.show();
                             Window window = dialog.getWindow();
-                            window.setLayout(800, LayoutParams.WRAP_CONTENT);
+                            window.setLayout(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
                             return true;
                         }
 

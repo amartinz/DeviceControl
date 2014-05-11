@@ -23,6 +23,8 @@
 
 package com.stericson.roottools.execution;
 
+import android.os.Handler;
+
 import com.stericson.roottools.RootTools;
 
 public class CommandCapture extends Command {
@@ -40,6 +42,9 @@ public class CommandCapture extends Command {
         super(id, timeout, command);
     }
 
+    public CommandCapture(final Handler handler, final String... command) {
+        super(handler, command);
+    }
 
     @Override
     public void commandOutput(int id, String line) {

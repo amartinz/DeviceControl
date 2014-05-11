@@ -66,6 +66,12 @@ public abstract class Command {
         createHandler(RootTools.handlerEnabled);
     }
 
+    public Command(final Handler handler, final String... command) {
+        this.id = 0;
+        this.command = command;
+        mHandler = handler;
+    }
+
     /**
      * Constructor for executing a normal shell command
      *
@@ -236,7 +242,6 @@ public abstract class Command {
     protected void terminated(String reason) {
         synchronized (Command.this) {
 
-
             if (mHandler != null && handlerEnabled) {
                 Message msg = mHandler.obtainMessage();
                 Bundle bundle = new Bundle();
@@ -248,9 +253,8 @@ public abstract class Command {
                 commandTerminated(id, reason);
             }
 
-            RootTools
-                    .log("Command " + id + " did not finish because it was terminated. " +
-                            "Termination reason: " + reason);
+            RootTools.log("Command " + id + " did not finish because it was terminated. " +
+                    "Termination reason: " + reason);
             setExitCode(-1);
             terminated = true;
             finishCommand();

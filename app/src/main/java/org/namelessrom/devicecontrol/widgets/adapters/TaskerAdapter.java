@@ -81,7 +81,7 @@ public class TaskerAdapter extends BaseAdapter {
         super.notifyDataSetChanged();
     }
 
-    class ViewHolder {
+    private static class ViewHolder {
         private final LinearLayout container;
         private final TextView     category;
         private final TextView     action;

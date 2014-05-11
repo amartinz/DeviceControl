@@ -56,9 +56,9 @@ import org.namelessrom.devicecontrol.fragments.performance.sub.GovernorFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.HotpluggingFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.ThermalFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
+import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.fragments.tools.sub.editor.EditorTabbedFragment;
-import org.namelessrom.devicecontrol.fragments.tools.sub.freezer.FreezerTabbedFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.proprietary.Constants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -550,7 +550,7 @@ public class MainActivity extends Activity
                 main = new EditorTabbedFragment();
                 break;
             case ID_TOOLS_FREEZER:
-                main = new FreezerTabbedFragment();
+                main = new AppListFragment();
                 break;
             //--------------------------------------------------------------------------------------
             default:

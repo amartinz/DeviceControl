@@ -30,11 +30,10 @@ import com.squareup.otto.Subscribe;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
 import org.namelessrom.devicecontrol.fragments.tools.sub.editor.EditorFragment;
-import org.namelessrom.devicecontrol.fragments.tools.sub.freezer.FreezerFragment;
 import org.namelessrom.devicecontrol.fragments.tools.sub.editor.PropModderFragment;
 import org.namelessrom.devicecontrol.fragments.tools.sub.editor.VmFragment;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 public class PressToLoadFragment extends Fragment implements DeviceConstants {
 
@@ -73,14 +72,6 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
             case 1:
                 mFragment = EditorFragment.newInstance(1);
                 mText = getString(R.string.fragment_press_to_load, "SysCtl Editor");
-                break;
-            case 3:
-                mFragment = FreezerFragment.newInstance(0, "usr");
-                mText = getString(R.string.fragment_press_to_load, "Freezer");
-                break;
-            case 4:
-                mFragment = FreezerFragment.newInstance(1, "usr");
-                mText = getString(R.string.fragment_press_to_load, "Unfreezer");
                 break;
             default:
                 mText = "Could not identify fragment to load";
