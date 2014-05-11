@@ -10,7 +10,6 @@
         android:layout_marginRight="5dp"
         android:layout_height="match_parent"
         android:scrollbarStyle="outsideOverlay"
-        android:smoothScrollbar="true">
-    </ListView>
+        android:smoothScrollbar="true" />
 
 </LinearLayout>
