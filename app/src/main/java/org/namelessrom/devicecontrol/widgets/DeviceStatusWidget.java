@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.BatteryManager;
+import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
@@ -28,6 +29,8 @@ public class DeviceStatusWidget extends LinearLayout {
 
     private int    mBatteryTemperature = 0;
     private String mBatteryExtra       = " - Getting information...";
+
+    private boolean mIsAttached = false;
 
     private static final int     mInterval = 2000;
     private static final Handler mHandler  = new Handler();
@@ -52,6 +55,7 @@ public class DeviceStatusWidget extends LinearLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        mIsAttached = true;
         Application.applicationContext.registerReceiver(mBatteryReceiver,
                 new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
@@ -59,6 +63,7 @@ public class DeviceStatusWidget extends LinearLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        mIsAttached = false;
         try {
             Application.applicationContext.unregisterReceiver(mBatteryReceiver);
         } catch (Exception ignored) { }
@@ -85,7 +90,7 @@ public class DeviceStatusWidget extends LinearLayout {
     private View generateRow(final ViewGroup parent, final String title, final String value,
             final String barLeft, final String barRight, final int progress) {
 
-        if (!isAttachedToWindow()) { return null; }
+        if (!isAttached()) { return null; }
 
         final Context context = getContext();
 
@@ -121,7 +126,7 @@ public class DeviceStatusWidget extends LinearLayout {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            if (isAttachedToWindow() && getContext() != null) {
+            if (isAttached() && getContext() != null) {
                 mDeviceInfo.removeAllViews();
                 if (cpuTemp != -1) {
                     generateRow(mDeviceInfo, getContext().getString(R.string.cpu_temperature),
@@ -134,6 +139,14 @@ public class DeviceStatusWidget extends LinearLayout {
                 mHandler.removeCallbacks(mDeviceUpdater);
                 mHandler.postDelayed(mDeviceUpdater, mInterval);
             }
+        }
+    }
+
+    private boolean isAttached() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return isAttachedToWindow();
+        } else {
+            return mIsAttached;
         }
     }
 

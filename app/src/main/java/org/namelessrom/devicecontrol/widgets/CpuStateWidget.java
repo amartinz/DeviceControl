@@ -2,6 +2,7 @@ package org.namelessrom.devicecontrol.widgets;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class CpuStateWidget extends LinearLayout {
     private TextView     mStatesWarning;
 
     private boolean mUpdatingData = false;
+    private boolean mIsAttached   = false;
 
     public CpuStateWidget(Context context) {
         super(context);
@@ -53,12 +55,14 @@ public class CpuStateWidget extends LinearLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        mIsAttached = true;
         BusProvider.getBus().register(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        mIsAttached = false;
         BusProvider.getBus().unregister(this);
     }
 
@@ -127,7 +131,7 @@ public class CpuStateWidget extends LinearLayout {
     private View generateStateRow(final CpuStateMonitor.CpuState state, final ViewGroup parent,
             final long totalStateTime) {
 
-        if (!isAttachedToWindow()) { return null; }
+        if (!isAttached()) { return null; }
 
         final Context context = getContext();
 
@@ -165,7 +169,7 @@ public class CpuStateWidget extends LinearLayout {
     @Subscribe
     public void onCpuStateEvent(final CpuStateEvent event) {
         if (event == null) { return; }
-        if (!isAttachedToWindow() || getContext() == null) { return; }
+        if (!isAttached() || getContext() == null) { return; }
 
         final List<CpuStateMonitor.CpuState> states = event.getStates();
         final long totalStateTime = event.getTotalStateTime();
@@ -211,6 +215,14 @@ public class CpuStateWidget extends LinearLayout {
         } else {
             mAdditionalStates.setVisibility(View.GONE);
             mHeaderAdditionalStates.setVisibility(View.GONE);
+        }
+    }
+
+    private boolean isAttached() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return isAttachedToWindow();
+        } else {
+            return mIsAttached;
         }
     }
 
