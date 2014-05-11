@@ -71,6 +71,7 @@ public class FreezerTabbedFragment extends AttachFragment implements DeviceConst
         final View v = layoutInflater.inflate(R.layout.fragment_tabhost, viewGroup, false);
 
         mTabHost = (FragmentTabHost) v.findViewById(android.R.id.tabhost);
+        // TODO: fix it up for API 14
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
         /* Freezer */

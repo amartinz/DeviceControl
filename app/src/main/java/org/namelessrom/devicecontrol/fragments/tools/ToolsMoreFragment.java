@@ -3,6 +3,7 @@ package org.namelessrom.devicecontrol.fragments.tools;
 import android.app.Activity;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.Preference;
@@ -23,6 +24,9 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
     private CustomPreference       mMediaScan;
     private String                 mMediaScanPath;
 
+    private CustomPreference mEditors;
+    private CustomPreference mFreezer;
+
     @Override
     public void onAttach(final Activity activity) {
         super.onAttach(activity, ID_TOOLS_MORE);
@@ -32,8 +36,25 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.tools_more);
+        final PreferenceScreen root = getPreferenceScreen();
 
         mMediaScan = (CustomPreference) findPreference("media_scan");
+
+        // TODO: fix it up for API 14
+        mEditors = (CustomPreference) findPreference("editors");
+        if (mEditors != null) {
+            if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                root.removePreference(mEditors);
+            }
+        }
+
+        // TODO: fix it up for API 14
+        mFreezer = (CustomPreference) findPreference("freezer");
+        if (mFreezer != null) {
+            if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                root.removePreference(mFreezer);
+            }
+        }
     }
 
     @Override
@@ -42,11 +63,11 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
 
         if (key == null || key.isEmpty()) return false;
 
-        if (key.equals("media_scan")) {
+        if (mMediaScan == preference) {
             startMediaScan();
-        } else if (key.equals("freezer")) {
+        } else if (mFreezer == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_FREEZER));
-        } else if (key.equals("editors")) {
+        } else if (mEditors == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_EDITORS));
         }
 
