@@ -67,8 +67,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="@string/test"
-                android:layout_toRightOf="@+id/vibrator_seekbar" />
+                android:text="@string/test" />
 
         </LinearLayout>
 
