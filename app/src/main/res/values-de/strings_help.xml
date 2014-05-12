@@ -26,7 +26,6 @@ Dies kann die Performance steigern und Ruckler reduzieren.</string>
   <string name="sysctl_help">Manuelles Optimieren der Sysctl-Eigenschaften deines Gerätes.</string>
   <string name="buildprop_help">Wende schnelle Optimierungen an oder bearbeite die Build.Prop manuell.</string>
   <string name="freezer_help">Der Freezer deaktiviert bzw \"friert\" Anwendungen ein und verhindert, dass diese gestartet werden.\nHinweis: Deine eingefrorenen Anwendungen werden aus der App-Übersicht deines Launchers verschwinden.</string>
-  <string name="unfreezer_help">Bewirkt das Gegenteil des Freezers, der Unfreezer reaktiviert bzw. \"taut\" Anwendungen auf und macht sie wieder zugänglich.</string>
   <string name="reapply_on_boot_help">Stellt die Veränderungen beim Starten des Gerätes wieder her.</string>
   <string name="extensive_logging_help">Sollte nur für Debugging-Zwecke benutzt werden.\n
 Protokolliert zusätzliche Informationen in den LogCat.</string>
