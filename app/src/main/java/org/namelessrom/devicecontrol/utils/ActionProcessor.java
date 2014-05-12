@@ -1,8 +1,11 @@
 package org.namelessrom.devicecontrol.utils;
 
+import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
+import org.namelessrom.devicecontrol.objects.Action;
+import org.namelessrom.devicecontrol.objects.Category;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.util.ArrayList;
@@ -30,30 +33,87 @@ public class ActionProcessor implements PerformanceConstants {
     //----------------------------------------------------------------------------------------------
     public static final String ACTION_IO_SCHEDULER      = "io_scheduler";
 
-    public static final String[] CATEGORIES =
-            {TaskerItem.CATEGORY_SCREEN_ON, TaskerItem.CATEGORY_SCREEN_OFF};
+    public static List<Category> getCategories() {
+        final List<Category> categories = new ArrayList<Category>();
 
-    public static List<String> getActions() {
-        final List<String> actions = new ArrayList<String>();
+        categories.add(new Category(TaskerItem.CATEGORY_SCREEN_ON,
+                Utils.getString(R.string.screen_on)));
+        categories.add(new Category(TaskerItem.CATEGORY_SCREEN_OFF,
+                Utils.getString(R.string.screen_off)));
+
+        return categories;
+    }
+
+    public static String applyCategoryValue(final String category) {
+        final List<Category> categories = getCategories();
+
+        for (final Category c : categories) {
+            if (c.mValue.equals(category)) return c.mDisplay;
+        }
+
+        return category;
+    }
+
+    public static String restoreCategoryValue(final String category) {
+        final List<Category> categories = getCategories();
+
+        for (final Category c : categories) {
+            if (c.mDisplay.equals(category)) return c.mValue;
+        }
+
+        return category;
+    }
+
+    public static List<Action> getActions() {
+        final List<Action> actions = new ArrayList<Action>();
 
         //------------------------------------------------------------------------------------------
         // General Actions
         //------------------------------------------------------------------------------------------
-        actions.add(ACTION_CPU_FREQUENCY_MAX);
-        actions.add(ACTION_CPU_FREQUENCY_MIN);
-        actions.add(ACTION_CPU_GOVERNOR);
-        actions.add(ACTION_IO_SCHEDULER);
+        actions.add(new Action(ACTION_CPU_FREQUENCY_MAX, Utils.getString(R.string.cpu_freq_max)));
+        actions.add(new Action(ACTION_CPU_FREQUENCY_MIN, Utils.getString(R.string.cpu_freq_min)));
+        actions.add(new Action(ACTION_CPU_GOVERNOR, Utils.getString(R.string.cpu_governor)));
+        actions.add(new Action(ACTION_IO_SCHEDULER, Utils.getString(R.string.io)));
 
         //------------------------------------------------------------------------------------------
         // GPU
         //------------------------------------------------------------------------------------------
         if (Utils.fileExists(GPU_FREQUENCIES_FILE)) {
-            if (Utils.fileExists(GPU_MAX_FREQ_FILE)) { actions.add(ACTION_GPU_FREQUENCY_MAX); }
-            if (Utils.fileExists(GPU_GOV_PATH)) { actions.add(ACTION_GPU_GOVERNOR); }
-            if (Utils.fileExists(FILE_3D_SCALING)) { actions.add(ACTION_3D_SCALING); }
+            if (Utils.fileExists(GPU_MAX_FREQ_FILE)) {
+                actions.add(new Action(ACTION_GPU_FREQUENCY_MAX,
+                        Utils.getString(R.string.gpu_freq_max)));
+            }
+            if (Utils.fileExists(GPU_GOV_PATH)) {
+                actions.add(new Action(ACTION_GPU_GOVERNOR,
+                        Utils.getString(R.string.gpu_governor)));
+            }
+            if (Utils.fileExists(FILE_3D_SCALING)) {
+                actions.add(new Action(ACTION_3D_SCALING,
+                        Utils.getString(R.string.gpu_3d_scaling)));
+            }
         }
 
         return actions;
+    }
+
+    public static String applyActionValue(final String action) {
+        final List<Action> actions = getActions();
+
+        for (final Action a : actions) {
+            if (a.mValue.equals(action)) return a.mDisplay;
+        }
+
+        return action;
+    }
+
+    public static String restoreActionValue(final String action) {
+        final List<Action> actions = getActions();
+
+        for (final Action a : actions) {
+            if (a.mDisplay.equals(action)) return a.mValue;
+        }
+
+        return action;
     }
 
     public static void processAction(final String cmd) {

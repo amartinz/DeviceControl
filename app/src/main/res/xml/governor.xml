@@ -17,6 +17,6 @@
 
     <PreferenceCategory
         android:key="key_gov_category"
-        android:title="@string/governor" />
+        android:title="@string/cpu_governor" />
 
 </PreferenceScreen>

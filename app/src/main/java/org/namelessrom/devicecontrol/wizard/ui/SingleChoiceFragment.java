@@ -18,7 +18,6 @@ package org.namelessrom.devicecontrol.wizard.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.wizard.events.ItemSelectedEvent;
 import org.namelessrom.devicecontrol.wizard.model.Page;
@@ -36,11 +36,14 @@ import org.namelessrom.devicecontrol.wizard.model.SingleFixedChoicePage;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.namelessrom.devicecontrol.Application.logDebug;
+
 public class SingleChoiceFragment extends ListFragment {
     private static final String ARG_KEY = "key";
 
     private PageFragmentCallbacks mCallbacks;
     private List<String>          mChoices;
+    private List<String>          mValues;
     private String                mKey;
     private Page                  mPage;
 
@@ -69,6 +72,13 @@ public class SingleChoiceFragment extends ListFragment {
         for (int i = 0; i < fixedChoicePage.getOptionCount(); i++) {
             mChoices.add(fixedChoicePage.getOptionAt(i));
         }
+
+        mValues = new ArrayList<String>();
+        for (int i = 0; i < fixedChoicePage.getValueCount(); i++) {
+            mValues.add(fixedChoicePage.getValueAt(i));
+        }
+
+        logDebug("mChoices.size(): " + mChoices.size() + " | mValues.size(): " + mValues.size());
     }
 
     @Override
@@ -85,12 +95,12 @@ public class SingleChoiceFragment extends ListFragment {
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         // Pre-select currently selected item.
-        new Handler().post(new Runnable() {
+        listView.post(new Runnable() {
             @Override
             public void run() {
                 String selection = mPage.getData().getString(Page.SIMPLE_DATA_KEY);
-                for (int i = 0; i < mChoices.size(); i++) {
-                    if (mChoices.get(i).equals(selection)) {
+                for (int i = 0; i < mValues.size(); i++) {
+                    if (mValues.get(i).equals(selection)) {
                         listView.setItemChecked(i, true);
                         break;
                     }
@@ -120,8 +130,12 @@ public class SingleChoiceFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        mPage.getData().putString(Page.SIMPLE_DATA_KEY,
-                getListAdapter().getItem(position).toString());
+        final String value = ActionProcessor.restoreActionValue(
+                ActionProcessor.restoreCategoryValue(
+                        getListAdapter().getItem(position).toString())
+        );
+        logDebug("onListItemClick().value: " + value);
+        mPage.getData().putString(Page.SIMPLE_DATA_KEY, value);
         mPage.notifyDataChanged();
         BusProvider.getBus().post(new ItemSelectedEvent());
     }

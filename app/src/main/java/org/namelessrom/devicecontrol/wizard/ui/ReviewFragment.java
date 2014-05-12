@@ -32,6 +32,7 @@ import com.squareup.otto.Subscribe;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
+import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.wizard.TaskerWizardModel;
 import org.namelessrom.devicecontrol.wizard.events.SaveTaskEvent;
@@ -44,6 +45,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class ReviewFragment extends ListFragment implements ModelCallbacks {
     private Callbacks           mCallbacks;
@@ -134,13 +137,15 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
             title = item.getTitle();
             displayValue = item.getDisplayValue();
             if (title.contains("1)")) {
-                category = displayValue;
+                category = ActionProcessor.restoreCategoryValue(displayValue);
             } else if (title.contains("2)")) {
-                action = displayValue;
+                action = ActionProcessor.restoreActionValue(displayValue);
             } else if (title.contains("3)")) {
                 value = displayValue;
             }
         }
+        logDebug("title: " + title + " | displayValue: " + displayValue);
+        logDebug("category: " + category + " | action: " + action + " | value: " + value);
 
         TaskerItem item = null;
         if (mWizardModel instanceof TaskerWizardModel) {
