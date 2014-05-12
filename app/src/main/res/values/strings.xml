@@ -99,6 +99,8 @@
     <string name="gpu">GPU</string>
     <string name="gpusettings">GPU Settings</string>
     <string name="gpu_freq_max">GPU Max Frequency</string>
+    <string name="gpu_3d_scaling">3D Scaling</string>
+    <string name="gpu_3d_scaling_summary">3D Scaling intelligently regulates the gpu frequency</string>
     <string name="touchkey">Touch key</string>
     <string name="enable_keys_backlight">Enable keys backlight</string>
     <string name="enable_keys_backlight_summary">Light up touch keys when screen is on</string>
