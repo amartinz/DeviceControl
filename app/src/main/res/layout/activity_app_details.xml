@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_background"
+    tools:context="org.namelessrom.devicecontrol.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
+
+        <include
+            android:id="@+id/item_app"
+            layout="@layout/item_app" />
+
+        <TextView
+            android:id="@+id/app_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/item_app"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:layout_below="@+id/app_status"
+            android:id="@+id/app_actions_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right">
+
+            <Button
+                android:id="@+id/app_kill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/kill_app" />
+
+            <Button
+                android:id="@+id/app_disabler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@+id/app_actions_container"
+            android:id="@+id/app_cache_info_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:animateLayoutChanges="true" />
+
+        <LinearLayout
+            android:layout_below="@+id/app_cache_info_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right">
+
+            <Button
+                android:id="@+id/app_data_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/clear_data" />
+
+            <Button
+                android:id="@+id/app_cache_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/clear_cache" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
