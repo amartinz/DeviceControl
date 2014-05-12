@@ -23,13 +23,15 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
+import org.namelessrom.devicecontrol.utils.GpuUtils;
+import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.wizard.model.AbstractWizardModel;
 import org.namelessrom.devicecontrol.wizard.model.BranchPage;
 import org.namelessrom.devicecontrol.wizard.model.Page;
 import org.namelessrom.devicecontrol.wizard.model.PageList;
 import org.namelessrom.devicecontrol.wizard.model.SingleFixedChoicePage;
 
-public class TaskerWizardModel extends AbstractWizardModel {
+public class TaskerWizardModel extends AbstractWizardModel implements PerformanceConstants {
     private TaskerItem mItem;
     private String mCategory = "";
     private String mAction   = "";
@@ -79,6 +81,9 @@ public class TaskerWizardModel extends AbstractWizardModel {
 
     private Page getValuePage(final String action) {
         final String[] choices;
+        //------------------------------------------------------------------------------------------
+        // General Actions
+        //------------------------------------------------------------------------------------------
         if (ActionProcessor.ACTION_CPU_FREQUENCY_MAX.equals(action)
                 || ActionProcessor.ACTION_CPU_FREQUENCY_MIN.equals(action)) {
             choices = CpuUtils.getAvailableFrequencies();
@@ -86,12 +91,26 @@ public class TaskerWizardModel extends AbstractWizardModel {
             choices = CpuUtils.getAvailableGovernors();
         } else if (ActionProcessor.ACTION_IO_SCHEDULER.equals(action)) {
             choices = CpuUtils.getAvailableIOSchedulers();
+        }
+        //------------------------------------------------------------------------------------------
+        // GPU
+        //------------------------------------------------------------------------------------------
+        else if (ActionProcessor.ACTION_GPU_FREQUENCY_MAX.equals(action)) {
+            choices = GpuUtils.getAvailableFrequencies();
+        } else if (ActionProcessor.ACTION_GPU_GOVERNOR.equals(action)) {
+            choices = GPU_GOVS;
+        } else if (ActionProcessor.ACTION_3D_SCALING.equals(action)) {
+            choices = getBooleanChoices();
         } else { choices = null; }
 
         return new SingleFixedChoicePage(this, "3) " + getString(R.string.value))
                 .setChoices(choices)
                 .setValue(mValue)
                 .setRequired(true);
+    }
+
+    private String[] getBooleanChoices() {
+        return new String[]{"0", "1"};
     }
 
     private String getString(final int id) {

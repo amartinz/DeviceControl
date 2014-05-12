@@ -36,10 +36,22 @@ public class ActionProcessor implements PerformanceConstants {
     public static List<String> getActions() {
         final List<String> actions = new ArrayList<String>();
 
+        //------------------------------------------------------------------------------------------
+        // General Actions
+        //------------------------------------------------------------------------------------------
         actions.add(ACTION_CPU_FREQUENCY_MAX);
         actions.add(ACTION_CPU_FREQUENCY_MIN);
         actions.add(ACTION_CPU_GOVERNOR);
         actions.add(ACTION_IO_SCHEDULER);
+
+        //------------------------------------------------------------------------------------------
+        // GPU
+        //------------------------------------------------------------------------------------------
+        if (Utils.fileExists(GPU_FREQUENCIES_FILE)) {
+            if (Utils.fileExists(GPU_MAX_FREQ_FILE)) { actions.add(ACTION_GPU_FREQUENCY_MAX); }
+            if (Utils.fileExists(GPU_GOV_PATH)) { actions.add(ACTION_GPU_GOVERNOR); }
+            if (Utils.fileExists(FILE_3D_SCALING)) { actions.add(ACTION_3D_SCALING); }
+        }
 
         return actions;
     }

@@ -8,8 +8,8 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.GpuEvent;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -66,6 +66,14 @@ public class GpuUtils implements PerformanceConstants {
         }
 
         return sbCmd.toString();
+    }
+
+    public static String[] getAvailableFrequencies() {
+        final String freqsRaw = Utils.readOneLine(GPU_FREQUENCIES_FILE);
+        if (freqsRaw != null && !freqsRaw.isEmpty()) {
+            return freqsRaw.split(" ");
+        }
+        return null;
     }
 
     public static String[] freqsToMhz(final String[] frequencies) {
