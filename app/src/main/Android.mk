@@ -12,7 +12,8 @@ LOCAL_RESOURCE_DIR  := $(LOCAL_PATH)/res
 LOCAL_SRC_FILES     := \
         $(call all-java-files-under,java) \
         $(call all-java-files-under,../../../proprietary/src/main/java) \
-        $(call all-subdir-Iaidl-files)
+        aidl/com/android/vending/billing/IInAppBillingService.aidl \
+        aidl/org/namelessrom/devicecontrol/api/IRemoteService.aidl
 
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 
