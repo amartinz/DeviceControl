@@ -27,6 +27,7 @@ import android.util.Log;
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
@@ -49,6 +50,10 @@ import static org.namelessrom.devicecontrol.Application.HANDLER;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class Utils implements DeviceConstants, FileConstants {
+
+    public static String getString(final int id) {
+        return Application.applicationContext.getString(id);
+    }
 
     public static boolean isNameless() {
         return existsInBuildProp("ro.nameless.version");
