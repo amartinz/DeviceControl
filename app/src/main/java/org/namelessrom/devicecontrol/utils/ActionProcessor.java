@@ -5,6 +5,9 @@ import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class ActionProcessor implements PerformanceConstants {
@@ -29,18 +32,39 @@ public class ActionProcessor implements PerformanceConstants {
 
     public static final String[] CATEGORIES =
             {TaskerItem.CATEGORY_SCREEN_ON, TaskerItem.CATEGORY_SCREEN_OFF};
-    public static final String[] ACTIONS    =
-            {
-                    ACTION_CPU_FREQUENCY_MAX, ACTION_CPU_FREQUENCY_MIN, ACTION_CPU_GOVERNOR,
-                    ACTION_IO_SCHEDULER
-            };
+
+    public static List<String> getActions() {
+        final List<String> actions = new ArrayList<String>();
+
+        actions.add(ACTION_CPU_FREQUENCY_MAX);
+        actions.add(ACTION_CPU_FREQUENCY_MIN);
+        actions.add(ACTION_CPU_GOVERNOR);
+        actions.add(ACTION_IO_SCHEDULER);
+
+        return actions;
+    }
+
+    public static void processAction(final String cmd) {
+        if (cmd == null || cmd.isEmpty()) {
+            logDebug("Can not perform action, command is empty!");
+            return;
+        }
+
+        logDebug("Performing Action: " + cmd);
+        Utils.runRootCommand(cmd);
+    }
 
     public static void processAction(final String action, final String value) {
         processAction(action, value, false);
     }
 
     public static void processAction(final String action, final String value, final boolean boot) {
-        if (action == null || action.isEmpty() || value == null || value.isEmpty()) return;
+        processAction(getProcessAction(action, value, boot));
+    }
+
+    public static String getProcessAction(final String action, final String value,
+            final boolean boot) {
+        if (action == null || action.isEmpty() || value == null || value.isEmpty()) return "";
 
         final StringBuilder sb = new StringBuilder();
         //------------------------------------------------------------------------------------------
@@ -79,7 +103,11 @@ public class ActionProcessor implements PerformanceConstants {
                             "cpu_gov" + i, CpuUtils.getGovernorPath(i), value));
                 }
             }
-        } else if (ACTION_GPU_FREQUENCY_MAX.equals(action)) {
+        }
+        //------------------------------------------------------------------------------------------
+        // GPU
+        //------------------------------------------------------------------------------------------
+        else if (ACTION_GPU_FREQUENCY_MAX.equals(action)) {
             sb.append(Utils.getWriteCommand(GPU_MAX_FREQ_FILE, value));
             if (boot) {
                 PreferenceHelper.setBootup(
@@ -98,11 +126,15 @@ public class ActionProcessor implements PerformanceConstants {
             sb.append(Utils.getWriteCommand(FILE_3D_SCALING, value));
             if (boot) {
                 PreferenceHelper.setBootup(
-                        new DataItem(DatabaseHandler.CATEGORY_GPU, "3d_scaling", FILE_3D_SCALING,
+                        new DataItem(DatabaseHandler.CATEGORY_GPU, PREF_3D_SCALING, FILE_3D_SCALING,
                                 value)
                 );
             }
-        } else if (ACTION_IO_SCHEDULER.equals(action)) {
+        }
+        //------------------------------------------------------------------------------------------
+        // Extras
+        //------------------------------------------------------------------------------------------
+        else if (ACTION_IO_SCHEDULER.equals(action)) {
             int c = 0;
             for (final String ioPath : IO_SCHEDULER_PATH) {
                 sb.append(Utils.getWriteCommand(ioPath, value));
@@ -113,9 +145,7 @@ public class ActionProcessor implements PerformanceConstants {
             }
         }
 
-        final String cmd = sb.toString();
-        logDebug("Performing Action: " + cmd);
-        Utils.runRootCommand(cmd);
+        return sb.toString();
     }
 
 }

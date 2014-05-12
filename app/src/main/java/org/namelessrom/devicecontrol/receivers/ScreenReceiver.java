@@ -41,6 +41,7 @@ public class ScreenReceiver extends BroadcastReceiver {
             final DatabaseHandler db = DatabaseHandler.getInstance(mContext);
             final List<TaskerItem> itemList = db.getAllTaskerItems(category);
 
+            final StringBuilder sb = new StringBuilder();
             String name, value;
             boolean enabled;
             for (final TaskerItem item : itemList) {
@@ -49,9 +50,10 @@ public class ScreenReceiver extends BroadcastReceiver {
                 enabled = item.getEnabled();
                 logDebug("Processing: " + name + " | " + value + " | " + (enabled ? "1" : "0"));
                 if (enabled) {
-                    ActionProcessor.processAction(name, value);
+                    sb.append(ActionProcessor.getProcessAction(name, value, false));
                 }
             }
+            ActionProcessor.processAction(sb.toString());
 
             return null;
         }

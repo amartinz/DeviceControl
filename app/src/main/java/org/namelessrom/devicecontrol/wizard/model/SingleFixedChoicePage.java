@@ -57,8 +57,10 @@ public class SingleFixedChoicePage extends Page {
         return !TextUtils.isEmpty(mData.getString(SIMPLE_DATA_KEY));
     }
 
-    public SingleFixedChoicePage setChoices(String... choices) {
-        mChoices.addAll(Arrays.asList(choices));
+    public SingleFixedChoicePage setChoices(String[] choices) {
+        if (choices != null) {
+            mChoices.addAll(Arrays.asList(choices));
+        }
         return this;
     }
 

@@ -67,29 +67,27 @@ public class TaskerWizardModel extends AbstractWizardModel {
     private Page getActionPage() {
         final BranchPage actionPage = new BranchPage(this, "2) " + getString(R.string.action));
 
-        final String[] freqs = CpuUtils.getAvailableFrequencies();
-        final String[] governors = CpuUtils.getAvailableGovernors();
-        final String[] ioschedulers = CpuUtils.getAvailableIOSchedulers();
-
-        if (freqs != null) {
-            actionPage.addBranch(ActionProcessor.ACTION_CPU_FREQUENCY_MAX, getValuePage(freqs));
-            actionPage.addBranch(ActionProcessor.ACTION_CPU_FREQUENCY_MIN, getValuePage(freqs));
-        }
-
-        if (governors != null) {
-            actionPage.addBranch(ActionProcessor.ACTION_CPU_GOVERNOR, getValuePage(governors));
-        }
-
-        if (ioschedulers != null) {
-            actionPage.addBranch(ActionProcessor.ACTION_IO_SCHEDULER, getValuePage(ioschedulers));
+        for (final String s : ActionProcessor.getActions()) {
+            actionPage.addBranch(s, getValuePage(s));
         }
 
         actionPage.setValue(mAction);
+        actionPage.setRequired(true);
 
         return actionPage;
     }
 
-    private Page getValuePage(final String... choices) {
+    private Page getValuePage(final String action) {
+        final String[] choices;
+        if (ActionProcessor.ACTION_CPU_FREQUENCY_MAX.equals(action)
+                || ActionProcessor.ACTION_CPU_FREQUENCY_MIN.equals(action)) {
+            choices = CpuUtils.getAvailableFrequencies();
+        } else if (ActionProcessor.ACTION_CPU_GOVERNOR.equals(action)) {
+            choices = CpuUtils.getAvailableGovernors();
+        } else if (ActionProcessor.ACTION_IO_SCHEDULER.equals(action)) {
+            choices = CpuUtils.getAvailableIOSchedulers();
+        } else { choices = null; }
+
         return new SingleFixedChoicePage(this, "3) " + getString(R.string.value))
                 .setChoices(choices)
                 .setValue(mValue)
