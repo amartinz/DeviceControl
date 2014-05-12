@@ -195,7 +195,6 @@
   <string name="gpu_acceleration_summary">Aktiviere Hardware-Beschleunigung, wo die GPU das UI anstelle der CPU kontrolliert</string>
   <string name="lcd_density">LCD-Auflösung ändern</string>
   <string name="lcd_density_summary">Lege die gewünschte LCD-Auflösung fest</string>
-  <string name="lcd_density_default">480</string>
   <string name="lcd_density_alt_summary">LCD-Auflösung: %s</string>
   <string name="apply">Übernehmen</string>
   <string name="restore">Wiederherstellen</string>

@@ -58,9 +58,9 @@
     </string-array>
     <!-- CPU -->
     <string-array name="cpu_titles" translatable="false">
-        <item>@string/maximum_speed</item>
-        <item>@string/minimum_speed</item>
-        <item>@string/governor</item>
+        <item>@string/cpu_freq_max</item>
+        <item>@string/cpu_freq_min</item>
+        <item>@string/cpu_governor</item>
     </string-array>
     <string-array name="cpu_content" translatable="false">
         <item>@string/max_freq_help</item>
@@ -70,7 +70,7 @@
     <!-- GPU -->
     <string-array name="gpu_titles" translatable="false">
         <item>@string/gpu_freq_max</item>
-        <item>@string/governor</item>
+        <item>@string/gpu_governor</item>
     </string-array>
     <string-array name="gpu_content" translatable="false">
         <item>@string/gpu_freq_max_help</item>
@@ -120,11 +120,9 @@
     <!-- Freezer -->
     <string-array name="freezer_titles" translatable="false">
         <item>@string/freezer</item>
-        <item>@string/unfreezer</item>
     </string-array>
     <string-array name="freezer_content" translatable="false">
         <item>@string/freezer_help</item>
-        <item>@string/unfreezer_help</item>
     </string-array>
     <!-- Preferences -->
     <string-array name="preference_titles" translatable="false">

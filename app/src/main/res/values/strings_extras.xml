@@ -47,7 +47,6 @@
     <string name="gpu_acceleration_summary">Enable hardware acceleration where the GPU controls the UI instead of the CPU</string>
     <string name="lcd_density">Change LCD density</string>
     <string name="lcd_density_summary">Set your desired LCD density</string>
-    <string name="lcd_density_default">480</string>
     <string name="lcd_density_alt_summary">Screen density: %s</string>
     <!-- Wizard -->
     <string name="task_type">Task type</string>
