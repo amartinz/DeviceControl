@@ -106,7 +106,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
                 } else {
                     mGpuGovernor = new CustomListPreference(getActivity());
                     mGpuGovernor.setKey(PREF_GPU_GOV);
-                    mGpuGovernor.setTitle(R.string.governor);
+                    mGpuGovernor.setTitle(R.string.gpu_governor);
                     mGpuGovernor.setEntries(GPU_GOVS);
                     mGpuGovernor.setEntryValues(GPU_GOVS);
                     mGpuGovernor.setSummary(tmp);

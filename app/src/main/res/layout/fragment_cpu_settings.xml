@@ -108,7 +108,7 @@ Copyright (C) 2012  James Roberts
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/maximum_speed"
+                    android:text="@string/cpu_freq_max"
                     android:textSize="16sp" />
 
                 <Spinner
@@ -130,7 +130,7 @@ Copyright (C) 2012  James Roberts
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/minimum_speed"
+                    android:text="@string/cpu_freq_min"
                     android:textSize="16sp" />
 
                 <Spinner
@@ -149,7 +149,7 @@ Copyright (C) 2012  James Roberts
             android:orientation="vertical">
 
             <TextView
-                android:text="@string/governor"
+                android:text="@string/cpu_governor"
                 style="?android:attr/listSeparatorTextViewStyle"
                 android:textColor="@android:color/white" />
 
@@ -176,7 +176,7 @@ Copyright (C) 2012  James Roberts
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@color/grey"
-                android:text="@string/governor_tuning" />
+                android:text="@string/cpu_governor_tuning" />
 
         </LinearLayout>
 
