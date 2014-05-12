@@ -177,6 +177,16 @@ public class AddTaskActivity extends FragmentActivity implements
         updateBottomBar();
     }
 
+    @Override
+    public void onBackPressed() {
+        final int item = mPager.getCurrentItem();
+        if (item > 0) {
+            mPager.setCurrentItem(item - 1);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     @Subscribe
     public void onItemSelectedEvent(final ItemSelectedEvent event) {
         if (event == null) return;
