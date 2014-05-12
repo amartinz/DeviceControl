@@ -82,9 +82,10 @@
     <string name="intelli_plug_eco_summary_off">Intelli-Plug eco mode disabled.</string>
     <string name="cpusettings">CPU Settings</string>
     <string name="current_speed">Current Speed</string>
-    <string name="maximum_speed">Maximum speed</string>
-    <string name="minimum_speed">Minimum speed</string>
-    <string name="governor">Governor</string>
+    <string name="cpu_freq_max">CPU maximum speed</string>
+    <string name="cpu_freq_min">CPU minimum speed</string>
+    <string name="cpu_governor">CPU Governor</string>
+    <string name="gpu_governor">GPU Governor</string>
     <string name="governor_tuning">Governor Tuning</string>
     <string name="io">I/O Scheduler</string>
     <string name="sob">Apply automatically on boot</string>
@@ -99,6 +100,7 @@
     <string name="gpu">GPU</string>
     <string name="gpusettings">GPU Settings</string>
     <string name="gpu_freq_max">GPU Max Frequency</string>
+    <string name="gpu_3d_scaling">GPU 3D scaling</string>
     <string name="touchkey">Touch key</string>
     <string name="enable_keys_backlight">Enable keys backlight</string>
     <string name="enable_keys_backlight_summary">Light up touch keys when screen is on</string>

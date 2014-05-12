@@ -18,18 +18,24 @@ package org.namelessrom.devicecontrol.wizard;
 
 import android.content.Context;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.TaskerItem;
+import org.namelessrom.devicecontrol.objects.Action;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.GpuUtils;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.wizard.model.AbstractWizardModel;
 import org.namelessrom.devicecontrol.wizard.model.BranchPage;
 import org.namelessrom.devicecontrol.wizard.model.Page;
 import org.namelessrom.devicecontrol.wizard.model.PageList;
 import org.namelessrom.devicecontrol.wizard.model.SingleFixedChoicePage;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class TaskerWizardModel extends AbstractWizardModel implements PerformanceConstants {
     private TaskerItem mItem;
@@ -54,25 +60,31 @@ public class TaskerWizardModel extends AbstractWizardModel implements Performanc
         setRootPageList(getRootPageList());
     }
 
-    public TaskerItem getItem() {
-        return mItem;
-    }
+    public TaskerItem getItem() { return mItem; }
 
     private Page getCategoryPage() {
         return new SingleFixedChoicePage(this,
-                "1) " + getString(R.string.category))
-                .setChoices(ActionProcessor.CATEGORIES)
+                "1) " + Utils.getString(R.string.category))
+                .setChoices(ActionProcessor.CATEGORIES_TEST)
+                .setValues(ActionProcessor.CATEGORIES)
                 .setValue(mCategory)
                 .setRequired(true);
     }
 
     private Page getActionPage() {
-        final BranchPage actionPage = new BranchPage(this, "2) " + getString(R.string.action));
+        final BranchPage actionPage = new BranchPage(this,
+                "2) " + Utils.getString(R.string.action));
 
-        for (final String s : ActionProcessor.getActions()) {
-            actionPage.addBranch(s, getValuePage(s));
+        final List<Action> actions = ActionProcessor.getActions();
+        final List<String> values = new ArrayList<String>();
+        for (final Action a : actions) {
+            actionPage.addBranch(a.mDisplay, getValuePage(a.mValue));
+            values.add(a.mValue);
+            logDebug("Action.mDisplay: " + a.mDisplay + " | Action.mValue: " + a.mValue);
         }
 
+        logDebug("getActionPage().setValue(" + mAction + ')');
+        actionPage.setValues(values.toArray(new String[values.size()]));
         actionPage.setValue(mAction);
         actionPage.setRequired(true);
 
@@ -103,19 +115,14 @@ public class TaskerWizardModel extends AbstractWizardModel implements Performanc
             choices = getBooleanChoices();
         } else { choices = null; }
 
-        return new SingleFixedChoicePage(this, "3) " + getString(R.string.value))
+        return new SingleFixedChoicePage(this, "3) " + Utils.getString(R.string.value))
                 .setChoices(choices)
+                .setValues(choices)
                 .setValue(mValue)
                 .setRequired(true);
     }
 
-    private String[] getBooleanChoices() {
-        return new String[]{"0", "1"};
-    }
-
-    private String getString(final int id) {
-        return Application.applicationContext.getString(id);
-    }
+    private String[] getBooleanChoices() { return new String[]{"0", "1"}; }
 
     private PageList getRootPageList() {
         PageList pageList;
@@ -124,11 +131,11 @@ public class TaskerWizardModel extends AbstractWizardModel implements Performanc
             pageList = new PageList(getCategoryPage(), getActionPage());
         } else {
             pageList = new PageList(
-                    new BranchPage(this, "0) " + getString(R.string.edit))
-                            .addBranch(getString(R.string.edit_task),
+                    new BranchPage(this, "0) " + Utils.getString(R.string.edit))
+                            .addBranch(Utils.getString(R.string.edit_task),
                                     getCategoryPage(),
                                     getActionPage())
-                            .addBranch(getString(R.string.delete_task))
+                            .addBranch(Utils.getString(R.string.delete_task))
                             .setRequired(true)
             );
         }
