@@ -21,6 +21,8 @@ public class ActionProcessor implements PerformanceConstants {
     public static final String ACTION_GPU_FREQUENCY_MAX = "gpu_frequency_max";
     public static final String ACTION_GPU_GOVERNOR      = "gpu_governor";
     //----------------------------------------------------------------------------------------------
+    public static final String ACTION_3D_SCALING        = "3d_scaling";
+    //----------------------------------------------------------------------------------------------
     // Extras
     //----------------------------------------------------------------------------------------------
     public static final String ACTION_IO_SCHEDULER      = "io_scheduler";
@@ -90,6 +92,14 @@ public class ActionProcessor implements PerformanceConstants {
             if (boot) {
                 PreferenceHelper.setBootup(
                         new DataItem(DatabaseHandler.CATEGORY_GPU, "gpu_gov", GPU_GOV_PATH, value)
+                );
+            }
+        } else if (ACTION_3D_SCALING.equals(action)) {
+            sb.append(Utils.getWriteCommand(FILE_3D_SCALING, value));
+            if (boot) {
+                PreferenceHelper.setBootup(
+                        new DataItem(DatabaseHandler.CATEGORY_GPU, "3d_scaling", FILE_3D_SCALING,
+                                value)
                 );
             }
         } else if (ACTION_IO_SCHEDULER.equals(action)) {

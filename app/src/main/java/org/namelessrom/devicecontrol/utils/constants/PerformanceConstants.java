@@ -115,5 +115,8 @@ public interface PerformanceConstants {
     public static final String   PREF_IO                    = "pref_io";
     public static final String   PREF_MAX_GPU               = "pref_max_gpu";
     public static final String   PREF_GPU_GOV               = "pref_gpu_gov";
+    //----------------------------------------------------------------------------------------------
+    public static final String   PREF_3D_SCALING            = "3d_scaling";
+    public static final String   FILE_3D_SCALING            = "/sys/devices/gr3d/enable_3d_scaling";
 }
 
