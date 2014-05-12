@@ -196,4 +196,14 @@
     <string name="downgraded">Database got wiped due a downgrade!</string>
     <string name="media_scan_trigger">Trigger media scan</string>
     <string name="media_scan_summary">Manuall trigger a media scan, in case you have your phone connected via MTP and new files are not visible.</string>
+    <string name="app_details">App Details</string>
+    <string name="clear_cache">Clear Cache</string>
+    <string name="total">Total</string>
+    <string name="app">App</string>
+    <string name="ext_app">External app</string>
+    <string name="data">Data</string>
+    <string name="ext_data">External data</string>
+    <string name="ext_media">External media</string>
+    <string name="ext_obb">External obb</string>
+    <string name="cache">Cache</string>
 </resources>

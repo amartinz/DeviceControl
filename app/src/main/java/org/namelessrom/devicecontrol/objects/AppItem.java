@@ -1,6 +1,7 @@
 package org.namelessrom.devicecontrol.objects;
 
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.graphics.drawable.Drawable;
 
 /**
@@ -8,31 +9,37 @@ import android.graphics.drawable.Drawable;
  */
 public class AppItem {
 
-    private final ApplicationInfo info;
-    private final Drawable        icon;
-    private final String          label;
+    private final PackageInfo     pkgInfo;
+    private final ApplicationInfo appInfo;
 
-    private boolean enabled;
+    private final String   label;
+    private final Drawable icon;
 
-    public AppItem(final Drawable icon, final String label, final ApplicationInfo info) {
-        this.info = info;
-        this.icon = icon;
+    private boolean enabled = false;
+
+    public AppItem(final PackageInfo info, final String label, final Drawable icon) {
+        this.pkgInfo = info;
+        this.appInfo = info.applicationInfo;
+
         this.label = label;
+        this.icon = icon;
 
-        this.enabled = info.enabled;
+        enabled = (appInfo != null && appInfo.enabled);
     }
-
-    public Drawable getIcon() { return icon; }
 
     public String getLabel() { return label; }
 
-    public String getPackageName() { return info.packageName; }
+    public Drawable getIcon() { return icon; }
 
-    public int getFlags() { return info.flags; }
+    public PackageInfo getPackageInfo() { return pkgInfo; }
+
+    public ApplicationInfo getApplicationInfo() { return appInfo; }
+
+    public String getPackageName() { return pkgInfo.packageName; }
 
     public boolean isSystemApp() {
         final int mask = (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP);
-        return ((info.flags & mask) != 0);
+        return ((appInfo.flags & mask) != 0);
     }
 
     public boolean isEnabled() { return enabled; }
