@@ -21,7 +21,6 @@
     <string name="vm_help">Manually tune the virtual machine properties of your device.</string>
     <string name="sysctl_help">Manually tune the sysctl properties of your device.</string>
     <string name="buildprop_help">Apply quick tweaks to your build.prop or manually edit it with the full editor.</string>
-    <string name="freezer_help">The Freezer deactivates (\"freezes\") apps and prevents them from running.\nNote: your frozen apps will also disappear from your app drawer.</string>
     <string name="reapply_on_boot_help">Restores the changes you did when the device is booting up.</string>
     <string name="extensive_logging_help">Should be used only for debugging purposes.\nLogs extra information to the logcat.</string>
 </resources>

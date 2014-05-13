@@ -39,22 +39,4 @@ public class Scripts {
                 "fi");
     }
 
-    //
-
-    public static boolean getForceHighEndGfx() {
-        return Utils.existsInBuildProp("persist.sys.force_highendgfx=1");
-    }
-
-    public static String toggleForceHighEndGfx() {
-
-        return ("if [ \"`grep 'persist\\.sys\\.force_highendgfx=1' /system/build.prop`\" ];" +
-                "then /system/bin/mount -o remount,rw /system;" +
-                "sed -i '/persist\\.sys\\.force_highendgfx=1/d' /system/build.prop;" +
-                "/system/bin/mount -o remount,ro /system;" +
-                "elif [ -z \"`grep 'persist\\.sys\\.force_highendgfx=1' /system/build.prop`\" ];" +
-                "then /system/bin/mount -o remount,rw /system;" +
-                "echo \"persist\\.sys\\.force_highendgfx=1\" >> /system/build.prop;" +
-                "/system/bin/mount -o remount,ro /system;" +
-                "fi");
-    }
 }

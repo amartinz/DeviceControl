@@ -14,8 +14,8 @@
         android:icon="@drawable/ic_general_editor" />
 
     <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
-        android:key="freezer"
-        android:title="@string/freezer"
-        android:icon="@drawable/ic_general_freezer" />
+        android:key="app_manager"
+        android:title="@string/app_manager"
+        android:icon="@drawable/ic_general_app" />
 
 </PreferenceScreen>

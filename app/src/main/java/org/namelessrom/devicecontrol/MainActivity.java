@@ -94,7 +94,7 @@ public class MainActivity extends Activity
     private int mFragmentTitle        = R.string.home;
     private int mSubFragmentTitle     = -1;
 
-    public static final int[] MENU_ICONS = {
+    private static final int[] MENU_ICONS = {
             -1, // Device
             R.drawable.ic_menu_device,
             R.drawable.ic_menu_features,
@@ -417,17 +417,11 @@ public class MainActivity extends Activity
                 mSubActionBarDrawable = R.drawable.ic_general_editor;
                 mTitle = mSubFragmentTitle = R.string.editors;
                 break;
-            case ID_TOOLS_FREEZER:
-                mSubActionBarDrawable = R.drawable.ic_general_freezer;
-                mTitle = mSubFragmentTitle = R.string.freezer;
+            case ID_TOOLS_APP_MANAGER:
+                mSubActionBarDrawable = R.drawable.ic_general_app;
+                mTitle = mSubFragmentTitle = R.string.app_manager;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_PERFORMANCE:
-                mActionBarDrawable = R.mipmap.ic_launcher;
-                mSubActionBarDrawable = -1;
-                mTitle = mFragmentTitle = R.string.performance;
-                mSubFragmentTitle = -1;
-                break;
         }
         restoreActionBar();
     }
@@ -549,7 +543,7 @@ public class MainActivity extends Activity
             case ID_TOOLS_EDITORS:
                 main = new EditorTabbedFragment();
                 break;
-            case ID_TOOLS_FREEZER:
+            case ID_TOOLS_APP_MANAGER:
                 main = new AppListFragment();
                 break;
             //--------------------------------------------------------------------------------------

@@ -117,13 +117,6 @@
         <item>@string/sysctl_help</item>
         <item>@string/buildprop_help</item>
     </string-array>
-    <!-- Freezer -->
-    <string-array name="freezer_titles" translatable="false">
-        <item>@string/freezer</item>
-    </string-array>
-    <string-array name="freezer_content" translatable="false">
-        <item>@string/freezer_help</item>
-    </string-array>
     <!-- Preferences -->
     <string-array name="preference_titles" translatable="false">
         <item>@string/reapply_on_boot</item>

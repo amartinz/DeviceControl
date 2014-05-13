@@ -1,5 +1,6 @@
 package org.namelessrom.devicecontrol;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -75,10 +76,12 @@ public class AppDetailActivity extends Activity {
             appInfo = null;
         }
 
-        if (pkgInfo != null && appInfo != null) {
-            mAppItem = new AppItem(pkgInfo, String.valueOf(appInfo.loadLabel(mPm)),
-                    appInfo.loadIcon(mPm));
-        }
+        assert (pkgInfo != null && appInfo != null);
+
+        mAppItem = new AppItem(pkgInfo, String.valueOf(appInfo.loadLabel(mPm)),
+                appInfo.loadIcon(mPm));
+
+        setupActionBar();
 
         final ImageView appIcon = (ImageView) findViewById(R.id.app_icon);
         appIcon.setImageDrawable(mAppItem.getIcon());
@@ -150,6 +153,13 @@ public class AppDetailActivity extends Activity {
         try {
             AppHelper.getSize(mPm, mAppItem.getPackageName());
         } catch (Exception e) { logDebug("AppHelper.getSize(): " + e); }
+    }
+
+    private void setupActionBar() {
+        final ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setIcon(mAppItem.getIcon());
+        }
     }
 
     private void showConfirmationDialog() {

@@ -28,7 +28,6 @@ public interface DeviceConstants {
     //==============================================================================================
     // Fragments
     //==============================================================================================
-    public static final int ID_PERFORMANCE              = -9999;
     public static final int ID_HOME                     = -100;
     public static final int ID_DUMMY                    = -5;
     public static final int ID_FIRST_MENU               = -4;
@@ -50,7 +49,7 @@ public interface DeviceConstants {
     public static final int ID_TOOLS_TASKER             = 9;
     public static final int ID_TOOLS_MORE               = 10;
     public static final int ID_TOOLS_EDITORS            = ID_TOOLS_MORE + 1000;
-    public static final int ID_TOOLS_FREEZER            = ID_TOOLS_MORE + 1100;
+    public static final int ID_TOOLS_APP_MANAGER        = ID_TOOLS_MORE + 1100;
     public static final int ID_PREFERENCES              = 12;
     public static final int ID_LICENSES                 = 13;
     //----------------------------------------------------------------------------------------------

@@ -25,7 +25,7 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
     private String                 mMediaScanPath;
 
     private CustomPreference mEditors;
-    private CustomPreference mFreezer;
+    private CustomPreference mAppManager;
 
     @Override
     public void onAttach(final Activity activity) {
@@ -48,7 +48,7 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
             }
         }
 
-        mFreezer = (CustomPreference) findPreference("freezer");
+        mAppManager = (CustomPreference) findPreference("app_manager");
     }
 
     @Override
@@ -59,8 +59,8 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
 
         if (mMediaScan == preference) {
             startMediaScan();
-        } else if (mFreezer == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_FREEZER));
+        } else if (mAppManager == preference) {
+            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_APP_MANAGER));
         } else if (mEditors == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_EDITORS));
         }
