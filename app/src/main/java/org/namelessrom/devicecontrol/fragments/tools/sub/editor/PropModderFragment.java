@@ -1,5 +1,6 @@
 package org.namelessrom.devicecontrol.fragments.tools.sub.editor;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,88 +15,62 @@ import android.text.InputFilter.LengthFilter;
 import android.widget.EditText;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
-import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+import org.namelessrom.devicecontrol.events.SubFragmentEvent;
+import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
-import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.PREF_FULL_EDITOR;
 
+public class PropModderFragment extends PreferenceFragment
+        implements DeviceConstants, Preference.OnPreferenceChangeListener {
 
-public class PropModderFragment extends PreferenceFragment implements
-        Preference.OnPreferenceChangeListener {
-
-    private static final String APPEND_CMD               = "echo \"%s=%s\" >> /system/build.prop";
-    private static final String KILL_PROP_CMD            =
-            "busybox sed -i \"/%s/D\" /system/build.prop";
-    private static final String REPLACE_CMD              =
-            "busybox sed -i \"/%s/ c %<s=%s\" /system/build.prop";
-    private static final String REMOUNT_CMD              =
-            "busybox mount -o %s,remount -t yaffs2 /dev/block/mtdblock1 /system";
-    private static final String PROP_EXISTS_CMD          = "grep -q %s /system/build.prop";
-    private static final String DISABLE                  = "disable";
-    private static final String WIFI_SCAN_PREF           = "pref_wifi_scan_interval";
-    private static final String WIFI_SCAN_PROP           = "wifi.supplicant_scan_interval";
-    private static final String WIFI_SCAN_PERSIST_PROP   = "persist.wifi_scan_interval";
-    private static final String WIFI_SCAN_DEFAULT        = System.getProperty(WIFI_SCAN_PROP);
-    private static final String MAX_EVENTS_PREF          = "pref_max_events";
-    private static final String MAX_EVENTS_PROP          = "windowsmgr.max_events_per_sec";
-    private static final String MAX_EVENTS_PERSIST_PROP  = "persist.max_events";
-    private static final String MAX_EVENTS_DEFAULT       = System.getProperty(MAX_EVENTS_PROP);
-    private static final String USB_MODE_PROP            = "ro.default_usb_mode";
-    private static final String USB_MODE_DEFAULT         = System.getProperty(USB_MODE_PROP);
-    private static final String RING_DELAY_PREF          = "pref_ring_delay";
-    private static final String RING_DELAY_PROP          = "ro.telephony.call_ring.delay";
-    private static final String RING_DELAY_PERSIST_PROP  = "persist.call_ring.delay";
-    private static final String RING_DELAY_DEFAULT       = System.getProperty(RING_DELAY_PROP);
-    private static final String VM_HEAPSIZE_PREF         = "pref_vm_heapsize";
-    private static final String VM_HEAPSIZE_PROP         = "dalvik.vm.heapsize";
-    private static final String VM_HEAPSIZE_PERSIST_PROP = "persist.vm_heapsize";
-    private static final String VM_HEAPSIZE_DEFAULT      = System.getProperty(VM_HEAPSIZE_PROP);
-    private static final String FAST_UP_PREF             = "pref_fast_up";
-    private static final String FAST_UP_PROP             = "ro.ril.hsxpa";
-    private static final String FAST_UP_PERSIST_PROP     = "persist.fast_up";
-    private static final String FAST_UP_DEFAULT          = System.getProperty(FAST_UP_PROP);
-    private static final String PROX_DELAY_PREF          = "pref_prox_delay";
-    private static final String PROX_DELAY_PROP          = "mot.proximity.delay";
-    private static final String PROX_DELAY_PERSIST_PROP  = "persist.prox.delay";
-    private static final String PROX_DELAY_DEFAULT       = System.getProperty(PROX_DELAY_PROP);
-
-    private static final String MOD_LCD_PROP         = "ro.sf.lcd_density";
-    private static final String MOD_LCD_PREF         = "pref_lcd_density";
-    private static final String MOD_LCD_PERSIST_PROP = "persist.lcd_density";
-
-    private static final String SLEEP_PREF             = "pref_sleep";
-    private static final String SLEEP_PROP             = "pm.sleep_mode";
-    private static final String SLEEP_PERSIST_PROP     = "persist.sleep";
-    private static final String SLEEP_DEFAULT          = System.getProperty(SLEEP_PROP);
-    private static final String TCP_STACK_PREF         = "pref_tcp_stack";
-    private static final String TCP_STACK_PERSIST_PROP = "persist_tcp_stack";
-    private static final String TCP_STACK_PROP_0       = "net.tcp.buffersize.default";
-    private static final String TCP_STACK_PROP_1       = "net.tcp.buffersize.wifi";
-    private static final String TCP_STACK_PROP_2       = "net.tcp.buffersize.umts";
-    private static final String TCP_STACK_PROP_3       = "net.tcp.buffersize.gprs";
-    private static final String TCP_STACK_PROP_4       = "net.tcp.buffersize.edge";
-    private static final String TCP_STACK_BUFFER       = "4096,87380,256960,4096,16384,256960";
-    private static final String JIT_PREF               = "pref_jit";
-    private static final String JIT_PERSIST_PROP       = "persist_jit";
-    private static final String JIT_PROP               = "dalvik.vm.execution-mode";
-    private static final String THREE_G_PREF           = "pref_g_speed";
-    private static final String THREE_G_PERSIST_PROP   = "persist_3g_speed";
-    private static final String THREE_G_PROP_0         = "ro.ril.enable.3g.prefix";
-    private static final String THREE_G_PROP_1         = "ro.ril.hep";
-    private static final String THREE_G_PROP_2         = FAST_UP_PROP;
-    private static final String THREE_G_PROP_3         = "ro.ril.enable.dtm";
-    private static final String THREE_G_PROP_4         = "ro.ril.gprsclass";
-    private static final String THREE_G_PROP_5         = "ro.ril.hsdpa.category";
-    private static final String THREE_G_PROP_6         = "ro.ril.enable.a53";
-    private static final String THREE_G_PROP_7         = "ro.ril.hsupa.category";
-    private static final String GPU_PREF               = "pref_gpu";
-    private static final String GPU_PERSIST_PROP       = "persist_gpu";
-    private static final String GPU_PROP               = "debug.sf.hw";
+    private static final String DISABLE             = "disable";
+    private static final String WIFI_SCAN_PREF      = "pref_wifi_scan_interval";
+    private static final String WIFI_SCAN_PROP      = "wifi.supplicant_scan_interval";
+    private static final String WIFI_SCAN_DEFAULT   = System.getProperty(WIFI_SCAN_PROP);
+    private static final String MAX_EVENTS_PREF     = "pref_max_events";
+    private static final String MAX_EVENTS_PROP     = "windowsmgr.max_events_per_sec";
+    private static final String MAX_EVENTS_DEFAULT  = System.getProperty(MAX_EVENTS_PROP);
+    private static final String RING_DELAY_PREF     = "pref_ring_delay";
+    private static final String RING_DELAY_PROP     = "ro.telephony.call_ring.delay";
+    private static final String RING_DELAY_DEFAULT  = System.getProperty(RING_DELAY_PROP);
+    private static final String VM_HEAPSIZE_PREF    = "pref_vm_heapsize";
+    private static final String VM_HEAPSIZE_PROP    = "dalvik.vm.heapsize";
+    private static final String VM_HEAPSIZE_DEFAULT = System.getProperty(VM_HEAPSIZE_PROP);
+    private static final String FAST_UP_PREF        = "pref_fast_up";
+    private static final String FAST_UP_PROP        = "ro.ril.hsxpa";
+    private static final String FAST_UP_DEFAULT     = System.getProperty(FAST_UP_PROP);
+    private static final String PROX_DELAY_PREF     = "pref_prox_delay";
+    private static final String PROX_DELAY_PROP     = "mot.proximity.delay";
+    private static final String PROX_DELAY_DEFAULT  = System.getProperty(PROX_DELAY_PROP);
+    private static final String MOD_LCD_PROP        = "ro.sf.lcd_density";
+    private static final String MOD_LCD_PREF        = "pref_lcd_density";
+    private static final String SLEEP_PREF          = "pref_sleep";
+    private static final String SLEEP_PROP          = "pm.sleep_mode";
+    private static final String SLEEP_DEFAULT       = System.getProperty(SLEEP_PROP);
+    private static final String TCP_STACK_PREF      = "pref_tcp_stack";
+    private static final String TCP_STACK_PROP_0    = "net.tcp.buffersize.default";
+    private static final String TCP_STACK_PROP_1    = "net.tcp.buffersize.wifi";
+    private static final String TCP_STACK_PROP_2    = "net.tcp.buffersize.umts";
+    private static final String TCP_STACK_PROP_3    = "net.tcp.buffersize.gprs";
+    private static final String TCP_STACK_PROP_4    = "net.tcp.buffersize.edge";
+    private static final String TCP_STACK_BUFFER    = "4096,87380,256960,4096,16384,256960";
+    private static final String JIT_PREF            = "pref_jit";
+    private static final String JIT_PROP            = "dalvik.vm.execution-mode";
+    private static final String THREE_G_PREF        = "pref_g_speed";
+    private static final String THREE_G_PROP_0      = "ro.ril.enable.3g.prefix";
+    private static final String THREE_G_PROP_1      = "ro.ril.hep";
+    private static final String THREE_G_PROP_2      = FAST_UP_PROP;
+    private static final String THREE_G_PROP_3      = "ro.ril.enable.dtm";
+    private static final String THREE_G_PROP_4      = "ro.ril.gprsclass";
+    private static final String THREE_G_PROP_5      = "ro.ril.hsdpa.category";
+    private static final String THREE_G_PROP_6      = "ro.ril.enable.a53";
+    private static final String THREE_G_PROP_7      = "ro.ril.hsupa.category";
+    private static final String GPU_PREF            = "pref_gpu";
+    private static final String GPU_PROP            = "debug.sf.hw";
 
     private CustomPreference   mFullEditor;
     private ListPreference     mWifiScanPref;
@@ -113,9 +88,6 @@ public class PropModderFragment extends PreferenceFragment implements
 
     private boolean result = false;
 
-    private final CMDProcessor cmd = new CMDProcessor();
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,32 +97,46 @@ public class PropModderFragment extends PreferenceFragment implements
         mFullEditor = (CustomPreference) prefSet.findPreference(PREF_FULL_EDITOR);
 
         mWifiScanPref = (ListPreference) prefSet.findPreference(WIFI_SCAN_PREF);
-        mWifiScanPref.setOnPreferenceChangeListener(this);
+        if (mWifiScanPref != null) {
+            mWifiScanPref.setOnPreferenceChangeListener(this);
+        }
 
         mMaxEventsPref = (ListPreference) prefSet.findPreference(MAX_EVENTS_PREF);
-        mMaxEventsPref.setOnPreferenceChangeListener(this);
+        if (mMaxEventsPref != null) {
+            mMaxEventsPref.setOnPreferenceChangeListener(this);
+        }
 
         mRingDelayPref = (ListPreference) prefSet.findPreference(RING_DELAY_PREF);
-        mRingDelayPref.setOnPreferenceChangeListener(this);
+        if (mRingDelayPref != null) {
+            mRingDelayPref.setOnPreferenceChangeListener(this);
+        }
 
         mVmHeapsizePref = (ListPreference) prefSet.findPreference(VM_HEAPSIZE_PREF);
-        mVmHeapsizePref.setOnPreferenceChangeListener(this);
+        if (mVmHeapsizePref != null) {
+            mVmHeapsizePref.setOnPreferenceChangeListener(this);
+        }
 
         mFastUpPref = (ListPreference) prefSet.findPreference(FAST_UP_PREF);
-        mFastUpPref.setOnPreferenceChangeListener(this);
+        if (mFastUpPref != null) {
+            mFastUpPref.setOnPreferenceChangeListener(this);
+        }
 
         mProxDelayPref = (ListPreference) prefSet.findPreference(PROX_DELAY_PREF);
-        mProxDelayPref.setOnPreferenceChangeListener(this);
+        if (mProxDelayPref != null) {
+            mProxDelayPref.setOnPreferenceChangeListener(this);
+        }
 
         mSleepPref = (ListPreference) prefSet.findPreference(SLEEP_PREF);
-        mSleepPref.setOnPreferenceChangeListener(this);
+        if (mSleepPref != null) {
+            mSleepPref.setOnPreferenceChangeListener(this);
+        }
 
         mTcpStackPref = (CheckBoxPreference) prefSet.findPreference(TCP_STACK_PREF);
 
         mJitPref = (CheckBoxPreference) prefSet.findPreference(JIT_PREF);
 
         mLcdPref = (EditTextPreference) prefSet.findPreference(MOD_LCD_PREF);
-        final String lcd = Utils.findBuildPropValueOf(MOD_LCD_PROP);
+        final String lcd = Utils.findBuildPropValue(MOD_LCD_PROP);
         if (mLcdPref != null) {
             final EditText lcdET = mLcdPref.getEditText();
             if (lcdET != null) {
@@ -174,105 +160,94 @@ public class PropModderFragment extends PreferenceFragment implements
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
         if (preference == mFullEditor) {
-            BusProvider.getBus().post(new ReplaceFragmentEvent(
-                    EditorFragment.newInstance(PressToLoadFragment.FRAGMENT_BUILD_PROP), true
-            ));
+            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_EDITORS_BUILD_PROP));
             return true;
         } else if (preference == mTcpStackPref) {
-            logDebug("mTcpStackPref.onPreferenceTreeClick()");
             value = mTcpStackPref.isChecked();
-            return doMod(null, TCP_STACK_PROP_0, String.valueOf(value ? TCP_STACK_BUFFER : DISABLE))
-                    && doMod(null, TCP_STACK_PROP_1,
+            return doMod(TCP_STACK_PROP_0, String.valueOf(value ? TCP_STACK_BUFFER : DISABLE))
+                    && doMod(TCP_STACK_PROP_1,
                     String.valueOf(value ? TCP_STACK_BUFFER : DISABLE))
-                    && doMod(null, TCP_STACK_PROP_2,
+                    && doMod(TCP_STACK_PROP_2,
                     String.valueOf(value ? TCP_STACK_BUFFER : DISABLE))
-                    && doMod(null, TCP_STACK_PROP_3,
+                    && doMod(TCP_STACK_PROP_3,
                     String.valueOf(value ? TCP_STACK_BUFFER : DISABLE))
-                    && doMod(TCP_STACK_PERSIST_PROP, TCP_STACK_PROP_4,
+                    && doMod(TCP_STACK_PROP_4,
                     String.valueOf(value ? TCP_STACK_BUFFER : DISABLE));
         } else if (preference == mJitPref) {
-            logDebug("mJitPref.onPreferenceTreeClick()");
             value = mJitPref.isChecked();
             if (value) {
-                return doMod(JIT_PERSIST_PROP, JIT_PROP, "int:jit");
+                return doMod(JIT_PROP, "int:jit");
             } else {
-                return doMod(JIT_PERSIST_PROP, JIT_PROP, "int:fast");
+                return doMod(JIT_PROP, "int:fast");
             }
         } else if (preference == m3gSpeedPref) {
             value = m3gSpeedPref.isChecked();
-            return doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_0, String.valueOf(value ? 1 : DISABLE))
-                    && doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_1,
+            return doMod(THREE_G_PROP_0, String.valueOf(value ? 1 : DISABLE))
+                    && doMod(THREE_G_PROP_1,
                     String.valueOf(value ? 1 : DISABLE))
-                    && doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_2,
+                    && doMod(THREE_G_PROP_2,
                     String.valueOf(value ? 2 : DISABLE))
-                    && doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_3,
+                    && doMod(THREE_G_PROP_3,
                     String.valueOf(value ? 1 : DISABLE))
-                    && doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_4,
+                    && doMod(THREE_G_PROP_4,
                     String.valueOf(value ? 12 : DISABLE))
-                    && doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_5,
+                    && doMod(THREE_G_PROP_5,
                     String.valueOf(value ? 8 : DISABLE))
-                    && doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_6,
+                    && doMod(THREE_G_PROP_6,
                     String.valueOf(value ? 1 : DISABLE))
-                    && doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_7,
+                    && doMod(THREE_G_PROP_7,
                     String.valueOf(value ? 5 : DISABLE));
         } else if (preference == mGpuPref) {
             value = mGpuPref.isChecked();
-            return doMod(GPU_PERSIST_PROP, GPU_PROP, String.valueOf(value ? 1 : DISABLE));
+            return doMod(GPU_PROP, String.valueOf(value ? 1 : DISABLE));
         }
 
         return false;
     }
 
-    /* handle ListPreferences and EditTextPreferences */
+    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (newValue != null) {
-            logDebug("New preference selected: " + newValue);
             if (preference == mWifiScanPref) {
-                return doMod(WIFI_SCAN_PERSIST_PROP, WIFI_SCAN_PROP,
-                        newValue.toString());
+                return doMod(WIFI_SCAN_PROP, newValue.toString());
             } else if (preference == mMaxEventsPref) {
-                return doMod(MAX_EVENTS_PERSIST_PROP, MAX_EVENTS_PROP,
-                        newValue.toString());
+                return doMod(MAX_EVENTS_PROP, newValue.toString());
             } else if (preference == mRingDelayPref) {
-                return doMod(RING_DELAY_PERSIST_PROP, RING_DELAY_PROP,
-                        newValue.toString());
+                return doMod(RING_DELAY_PROP, newValue.toString());
             } else if (preference == mVmHeapsizePref) {
-                return doMod(VM_HEAPSIZE_PERSIST_PROP, VM_HEAPSIZE_PROP,
-                        newValue.toString());
+                return doMod(VM_HEAPSIZE_PROP, newValue.toString());
             } else if (preference == mFastUpPref) {
-                return doMod(FAST_UP_PERSIST_PROP, FAST_UP_PROP,
-                        newValue.toString());
+                return doMod(FAST_UP_PROP, newValue.toString());
             } else if (preference == mProxDelayPref) {
-                return doMod(PROX_DELAY_PERSIST_PROP, PROX_DELAY_PROP,
-                        newValue.toString());
+                return doMod(PROX_DELAY_PROP, newValue.toString());
             } else if (preference == mLcdPref) {
-                return doMod(MOD_LCD_PERSIST_PROP, MOD_LCD_PROP,
-                        newValue.toString());
+                return doMod(MOD_LCD_PROP, newValue.toString());
             } else if (preference == mSleepPref) {
-                return doMod(SLEEP_PERSIST_PROP, SLEEP_PROP,
-                        newValue.toString());
+                return doMod(SLEEP_PROP, newValue.toString());
             }
         }
 
         return false;
     }
 
-    /* method to handle mods */
-    private boolean doMod(final String persist, final String key, final String value) {
+    private boolean doMod(final String key, final String value) {
 
         result = false;
 
         class AsyncDoModTask extends AsyncTask<Void, Void, Boolean> {
 
-            private ProgressDialog pd;
+            private ProgressDialog pd = null;
 
             @Override
             protected void onPreExecute() {
-                pd = new ProgressDialog(getActivity());
-                pd.setIndeterminate(true);
-                pd.setMessage("Applying values...Please wait");
-                pd.setCancelable(false);
-                pd.show();
+                final Activity activity = getActivity();
+                if (activity != null) {
+                    pd = new ProgressDialog(activity);
+                    pd.setIndeterminate(true);
+                    pd.setMessage(getString(R.string.applying_wait));
+                    pd.setCancelable(false);
+                    pd.show();
+                }
             }
 
             @Override
@@ -280,31 +255,20 @@ public class PropModderFragment extends PreferenceFragment implements
 
                 logDebug(String.format("Calling script with args '%s' and '%s'", key, value));
                 backupBuildProp();
-                if (!mount("rw")) {
-                    throw new RuntimeException("Could not remount /system rw");
-                }
+                Utils.remount("/system", "rw");
                 boolean success = false;
                 try {
-                    if (!propExists(key) && value.equals(DISABLE)) {
-                        logDebug(String.format(
-                                "We want {%s} DISABLED however it doesn't exist so we " +
-                                        "do nothing and move on", key
-                        ));
-                    } else if (propExists(key)) {
-                        if (value.equals(DISABLE)) {
-                            logDebug(String.format("value == %s", DISABLE));
-                            success =
-                                    cmd.su.runWaitFor(String.format(KILL_PROP_CMD, key)).success();
-                            cmd.su.runWaitFor(String.format(KILL_PROP_CMD, key)).success();
+                    if (value.equals(DISABLE)) {
+                        logDebug(String.format("value == %s", DISABLE));
+                        final String cmd = Scripts.removeProperty(key);
+                        if (!cmd.isEmpty()) {
+                            success = Utils.getCommandResult(cmd);
                         } else {
-                            logDebug(String.format("value != %s", DISABLE));
-                            success = cmd.su.runWaitFor(String.format(REPLACE_CMD, key, value))
-                                    .success();
+                            success = true;
                         }
                     } else {
                         logDebug("append command starting");
-                        success =
-                                cmd.su.runWaitFor(String.format(APPEND_CMD, key, value)).success();
+                        success = Utils.getCommandResult(Scripts.addOrUpdate(key, value));
                     }
 
                 } catch (Exception exc) {
@@ -315,46 +279,35 @@ public class PropModderFragment extends PreferenceFragment implements
             }
 
             @Override
-            protected void onPostExecute(Boolean res) {
-                // result holds what you return from doInBackground
-                super.onPostExecute(res);
+            protected void onPostExecute(final Boolean res) {
                 result = res;
                 if (!res) {
                     restoreBuildProp();
                 } else {
                     updateScreen();
                 }
-                mount("ro");
-                pd.dismiss();
+                Utils.remount("/system", "ro");
+                if (pd != null) {
+                    pd.dismiss();
+                }
             }
         }
         new AsyncDoModTask().execute();
         return result;
     }
 
-
-    public boolean mount(String read_value) {
-        logDebug("Remounting /system " + read_value);
-        return cmd.su.runWaitFor(String.format(REMOUNT_CMD, read_value)).success();
+    private boolean backupBuildProp() {
+        logDebug("Backing up build.prop to /data/local/tmp/pm_build.prop");
+        return Utils.getCommandResult("cp /system/build.prop /data/local/tmp/pm_build.prop");
     }
 
-    public boolean propExists(String prop) {
-        logDebug("Checking if prop " + prop + " exists in /system/build.prop");
-        return cmd.su.runWaitFor(String.format(PROP_EXISTS_CMD, prop)).success();
+    private boolean restoreBuildProp() {
+        logDebug("Restoring build.prop from /data/local/tmp/pm_build.prop");
+        return Utils.getCommandResult("cp /data/local/tmp/pm_build.prop /system/build.prop");
     }
 
-    public boolean backupBuildProp() {
-        logDebug("Backing up build.prop to /system/tmp/pm_build.prop");
-        return cmd.su.runWaitFor("cp /system/build.prop /system/tmp/pm_build.prop").success();
-    }
-
-    public boolean restoreBuildProp() {
-        logDebug("Restoring build.prop from /system/tmp/pm_build.prop");
-        return cmd.su.runWaitFor("cp /system/tmp/pm_build.prop /system/build.prop").success();
-    }
-
-    public void updateScreen() {
-        final String wifi = Utils.findBuildPropValueOf(WIFI_SCAN_PROP);
+    private void updateScreen() {
+        final String wifi = Utils.findBuildPropValue(WIFI_SCAN_PROP);
         if (!wifi.equals(DISABLE)) {
             mWifiScanPref.setValue(wifi);
             mWifiScanPref.setSummary(
@@ -362,7 +315,7 @@ public class PropModderFragment extends PreferenceFragment implements
         } else {
             mWifiScanPref.setValue(WIFI_SCAN_DEFAULT);
         }
-        final String maxE = Utils.findBuildPropValueOf(MAX_EVENTS_PROP);
+        final String maxE = Utils.findBuildPropValue(MAX_EVENTS_PROP);
         if (!maxE.equals(DISABLE)) {
             mMaxEventsPref.setValue(maxE);
             mMaxEventsPref.setSummary(
@@ -370,7 +323,7 @@ public class PropModderFragment extends PreferenceFragment implements
         } else {
             mMaxEventsPref.setValue(MAX_EVENTS_DEFAULT);
         }
-        final String ring = Utils.findBuildPropValueOf(RING_DELAY_PROP);
+        final String ring = Utils.findBuildPropValue(RING_DELAY_PROP);
         if (!ring.equals(DISABLE)) {
             mRingDelayPref.setValue(ring);
             mRingDelayPref.setSummary(
@@ -378,7 +331,7 @@ public class PropModderFragment extends PreferenceFragment implements
         } else {
             mRingDelayPref.setValue(RING_DELAY_DEFAULT);
         }
-        final String vm = Utils.findBuildPropValueOf(VM_HEAPSIZE_PROP);
+        final String vm = Utils.findBuildPropValue(VM_HEAPSIZE_PROP);
         if (!vm.equals(DISABLE)) {
             mVmHeapsizePref.setValue(vm);
             mVmHeapsizePref.setSummary(
@@ -386,7 +339,7 @@ public class PropModderFragment extends PreferenceFragment implements
         } else {
             mVmHeapsizePref.setValue(VM_HEAPSIZE_DEFAULT);
         }
-        final String fast = Utils.findBuildPropValueOf(FAST_UP_PROP);
+        final String fast = Utils.findBuildPropValue(FAST_UP_PROP);
         if (!fast.equals(DISABLE)) {
             mFastUpPref.setValue(fast);
             mFastUpPref
@@ -394,7 +347,7 @@ public class PropModderFragment extends PreferenceFragment implements
         } else {
             mFastUpPref.setValue(FAST_UP_DEFAULT);
         }
-        final String prox = Utils.findBuildPropValueOf(PROX_DELAY_PROP);
+        final String prox = Utils.findBuildPropValue(PROX_DELAY_PROP);
         if (!prox.equals(DISABLE)) {
             mProxDelayPref.setValue(prox);
             mProxDelayPref.setSummary(
@@ -402,38 +355,38 @@ public class PropModderFragment extends PreferenceFragment implements
         } else {
             mProxDelayPref.setValue(PROX_DELAY_DEFAULT);
         }
-        final String sleep = Utils.findBuildPropValueOf(SLEEP_PROP);
+        final String sleep = Utils.findBuildPropValue(SLEEP_PROP);
         if (!sleep.equals(DISABLE)) {
             mSleepPref.setValue(sleep);
             mSleepPref.setSummary(String.format(getString(R.string.sleep_alt_summary), sleep));
         } else {
             mSleepPref.setValue(SLEEP_DEFAULT);
         }
-        final String tcp = Utils.findBuildPropValueOf(TCP_STACK_PROP_0);
+        final String tcp = Utils.findBuildPropValue(TCP_STACK_PROP_0);
         if (tcp.equals(TCP_STACK_BUFFER)) {
             mTcpStackPref.setChecked(true);
         } else {
             mTcpStackPref.setChecked(false);
         }
-        final String jit = Utils.findBuildPropValueOf(JIT_PROP);
+        final String jit = Utils.findBuildPropValue(JIT_PROP);
         if (jit.equals("int:jit")) {
             mJitPref.setChecked(true);
         } else {
             mJitPref.setChecked(false);
         }
 
-        final String lcd = Utils.findBuildPropValueOf(MOD_LCD_PROP);
+        final String lcd = Utils.findBuildPropValue(MOD_LCD_PROP);
         mLcdPref.setSummary(String.format(getString(R.string.lcd_density_alt_summary), lcd));
 
-        final String g0 = Utils.findBuildPropValueOf(THREE_G_PROP_0);
-        final String g3 = Utils.findBuildPropValueOf(THREE_G_PROP_3);
-        final String g6 = Utils.findBuildPropValueOf(THREE_G_PROP_6);
+        final String g0 = Utils.findBuildPropValue(THREE_G_PROP_0);
+        final String g3 = Utils.findBuildPropValue(THREE_G_PROP_3);
+        final String g6 = Utils.findBuildPropValue(THREE_G_PROP_6);
         if (g0.equals("1") && g3.equals("1") && g6.equals("1")) {
             m3gSpeedPref.setChecked(true);
         } else {
             m3gSpeedPref.setChecked(false);
         }
-        final String gpu = Utils.findBuildPropValueOf(GPU_PROP);
+        final String gpu = Utils.findBuildPropValue(GPU_PROP);
         if (!gpu.equals(DISABLE) && !gpu.equals("0")) {
             mGpuPref.setChecked(true);
         } else {

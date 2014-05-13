@@ -22,10 +22,10 @@ import android.app.AlarmManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.LayoutInflater;
 
 import com.stericson.roottools.RootTools;
 
@@ -36,6 +36,8 @@ import org.acra.sender.HttpSender;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+
+import java.io.File;
 
 @ReportsCrashes(
         httpMethod = HttpSender.Method.PUT,
@@ -91,22 +93,23 @@ public class Application extends android.app.Application implements DeviceConsta
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         packageManager = getPackageManager();
 
-        // TODO: drop for internal storage
-        if (RootTools.isRootAvailable() && RootTools.isAccessGiven()) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        RootTools.remount(Environment.getExternalStorageDirectory()
-                                .getAbsolutePath(), "rw");
-                    } catch (Exception ignored) { /* ignored */ }
-                }
-            }).start();
-        }
-
         final boolean showLauncher =
                 PreferenceHelper.getBoolean(SHOW_LAUNCHER, true) || !Application.IS_NAMELESS;
         toggleLauncherIcon(showLauncher);
+    }
+
+    public static LayoutInflater getLayoutInflater() {
+        return (LayoutInflater) Application.applicationContext.getSystemService(
+                Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public static String getFilesDirectory() {
+        final File tmp = Application.applicationContext.getFilesDir();
+        if (tmp != null && tmp.exists()) {
+            return tmp.getPath();
+        } else {
+            return "/data/data/" + Application.applicationContext.getPackageName();
+        }
     }
 
     public static void toggleLauncherIcon(final boolean showLauncher) {
@@ -120,18 +123,18 @@ public class Application extends android.app.Application implements DeviceConsta
                         "com.android.settings") > 0
                         && !showLauncher) {
                     logDebug("Implemented into system and showLauncher is not set!");
-                    Utils.disableComponent(applicationContext, PACKAGE_NAME, ".DummyLauncher");
+                    Utils.disableComponent(PACKAGE_NAME, ".DummyLauncher");
                 } else {
                     logDebug("Implemented into system and showLauncher is set!");
-                    Utils.enableComponent(applicationContext, PACKAGE_NAME, ".DummyLauncher");
+                    Utils.enableComponent(PACKAGE_NAME, ".DummyLauncher");
                 }
             } else {
                 logDebug("Not implemented into system!");
-                Utils.enableComponent(applicationContext, PACKAGE_NAME, ".DummyLauncher");
+                Utils.enableComponent(PACKAGE_NAME, ".DummyLauncher");
             }
         } catch (PackageManager.NameNotFoundException exc) {
             logDebug("You dont have settings? That's weird.");
-            Utils.enableComponent(applicationContext, PACKAGE_NAME, ".DummyLauncher");
+            Utils.enableComponent(PACKAGE_NAME, ".DummyLauncher");
         }
     }
 

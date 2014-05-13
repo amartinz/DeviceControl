@@ -47,7 +47,7 @@ import org.namelessrom.devicecontrol.fragments.PreferencesFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
 import org.namelessrom.devicecontrol.fragments.device.sub.FastChargeFragment;
-import org.namelessrom.devicecontrol.fragments.dynamic.WebViewFragment;
+import org.namelessrom.devicecontrol.fragments.WebViewFragment;
 import org.namelessrom.devicecontrol.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.GpuSettingsFragment;
@@ -58,7 +58,11 @@ import org.namelessrom.devicecontrol.fragments.performance.sub.ThermalFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsMoreFragment;
-import org.namelessrom.devicecontrol.fragments.tools.sub.editor.EditorTabbedFragment;
+import org.namelessrom.devicecontrol.fragments.tools.sub.editor.BuildPropEditorFragment;
+import org.namelessrom.devicecontrol.fragments.tools.sub.editor.PropModderFragment;
+import org.namelessrom.devicecontrol.fragments.tools.sub.editor.VmEditorFragment;
+import org.namelessrom.devicecontrol.fragments.tools.sub.editor.VmFragment;
+import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.proprietary.Constants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -136,8 +140,8 @@ public class MainActivity extends Activity
             PreferenceHelper.setBoolean(DC_FIRST_START, false);
         }
 
-        Utils.setupDirectories(this);
-        Utils.createFiles(this, true);
+        Utils.setupDirectories();
+        Utils.createFiles(true);
 
         final View v = getLayoutInflater().inflate(R.layout.menu_list, null, false);
         final ListView mMenuList = (ListView) v.findViewById(R.id.navbarlist);
@@ -172,7 +176,7 @@ public class MainActivity extends Activity
         setUpIab();
 
         loadFragment(ID_HOME);
-        Utils.startTaskerService(this);
+        Utils.startTaskerService();
 
         final String downgradePath = getFilesDir() + DC_DOWNGRADE;
         if (Utils.fileExists(downgradePath)) {
@@ -371,7 +375,7 @@ public class MainActivity extends Activity
                 mSubFragmentTitle = -1;
                 break;
             case ID_GOVERNOR_TUNABLE:
-                mTitle = mSubFragmentTitle = R.string.governor_tuning;
+                mTitle = mSubFragmentTitle = R.string.cpu_governor_tuning;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_GPU_SETTINGS:
@@ -406,6 +410,10 @@ public class MainActivity extends Activity
                 mTitle = mFragmentTitle = R.string.tasker;
                 mSubFragmentTitle = -1;
                 break;
+            case ID_TOOLS_TASKER_LIST:
+                mSubActionBarDrawable = R.drawable.ic_menu_tasker;
+                mTitle = mSubFragmentTitle = R.string.tasker;
+                break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_MORE:
                 mActionBarDrawable = R.drawable.ic_menu_code;
@@ -413,9 +421,15 @@ public class MainActivity extends Activity
                 mTitle = mFragmentTitle = R.string.more;
                 mSubFragmentTitle = -1;
                 break;
-            case ID_TOOLS_EDITORS:
+            case ID_TOOLS_VM:
+            case ID_TOOLS_EDITORS_VM:
                 mSubActionBarDrawable = R.drawable.ic_general_editor;
-                mTitle = mSubFragmentTitle = R.string.editors;
+                mTitle = mSubFragmentTitle = R.string.vm;
+                break;
+            case ID_TOOLS_BUILD_PROP:
+            case ID_TOOLS_EDITORS_BUILD_PROP:
+                mSubActionBarDrawable = R.drawable.ic_general_editor;
+                mTitle = mSubFragmentTitle = R.string.buildprop;
                 break;
             case ID_TOOLS_APP_MANAGER:
                 mSubActionBarDrawable = R.drawable.ic_general_app;
@@ -457,7 +471,7 @@ public class MainActivity extends Activity
     //==============================================================================================
     private void setUpIab() {
         final String key = Constants.Iab.getKey();
-        if (!key.equals("---") && Utils.isGmsInstalled(this)) {
+        if (!key.equals("---") && Utils.isGmsInstalled()) {
             mHelper = new IabHelper(this, key);
             if (Application.IS_LOG_DEBUG) {
                 mHelper.enableDebugLogging(true, "IABDEVICECONTROL");
@@ -504,15 +518,6 @@ public class MainActivity extends Activity
     }
 
     @Subscribe
-    public void onAddFragmentToBackstack(final Fragment f) {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.container, f)
-                .addToBackStack(null)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit();
-    }
-
-    @Subscribe
     public void onSubFragmentEvent(final SubFragmentEvent event) {
         if (event == null) return;
 
@@ -530,6 +535,7 @@ public class MainActivity extends Activity
             case ID_GOVERNOR_TUNABLE:
                 main = new GovernorFragment();
                 break;
+            //--------------------------------------------------------------------------------------
             case ID_HOTPLUGGING:
                 main = new HotpluggingFragment();
                 break;
@@ -540,8 +546,20 @@ public class MainActivity extends Activity
                 main = new VoltageFragment();
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_TOOLS_EDITORS:
-                main = new EditorTabbedFragment();
+            case ID_TOOLS_TASKER_LIST:
+                main = new TaskListFragment();
+                break;
+            case ID_TOOLS_VM:
+                main = new VmFragment();
+                break;
+            case ID_TOOLS_BUILD_PROP:
+                main = new PropModderFragment();
+                break;
+            case ID_TOOLS_EDITORS_VM:
+                main = new VmEditorFragment();
+                break;
+            case ID_TOOLS_EDITORS_BUILD_PROP:
+                main = new BuildPropEditorFragment();
                 break;
             case ID_TOOLS_APP_MANAGER:
                 main = new AppListFragment();
@@ -554,11 +572,12 @@ public class MainActivity extends Activity
         if (main == null || right == null) return;
 
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_right,
+                R.animator.slide_in_left, R.animator.slide_out_left);
 
         ft.replace(R.id.container, main);
         ft.replace(R.id.menu_frame, right);
         ft.addToBackStack(null);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
         ft.commit();
     }

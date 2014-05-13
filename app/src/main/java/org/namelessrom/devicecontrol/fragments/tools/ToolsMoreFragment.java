@@ -3,7 +3,6 @@ package org.namelessrom.devicecontrol.fragments.tools;
 import android.app.Activity;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.Preference;
@@ -24,7 +23,8 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
     private CustomPreference       mMediaScan;
     private String                 mMediaScanPath;
 
-    private CustomPreference mEditors;
+    private CustomPreference mBuildProp;
+    private CustomPreference mVm;
     private CustomPreference mAppManager;
 
     @Override
@@ -40,13 +40,8 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
 
         mMediaScan = (CustomPreference) findPreference("media_scan");
 
-        // TODO: fix it up for API 14
-        mEditors = (CustomPreference) findPreference("editors");
-        if (mEditors != null) {
-            if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                root.removePreference(mEditors);
-            }
-        }
+        mBuildProp = (CustomPreference) findPreference("build_prop");
+        mVm = (CustomPreference) findPreference("vm");
 
         mAppManager = (CustomPreference) findPreference("app_manager");
     }
@@ -61,8 +56,10 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
             startMediaScan();
         } else if (mAppManager == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_APP_MANAGER));
-        } else if (mEditors == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_EDITORS));
+        } else if (mBuildProp == preference) {
+            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_BUILD_PROP));
+        } else if (mVm == preference) {
+            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_VM));
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);

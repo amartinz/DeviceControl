@@ -23,12 +23,39 @@
     android:layout_height="match_parent">
 
 
-    <include layout="@layout/include_loading" />
+    <LinearLayout
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <include layout="@layout/include_editor_nofiles" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/message_loading" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nofiles"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal|top"
+        android:paddingTop="50dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp" />
+    </LinearLayout>
 
     <ListView
-        android:id="@+id/applist"
+        android:id="@+id/proplist"
         android:layout_above="@id/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,11 +65,84 @@
         android:layout_gravity="top"
         android:fastScrollEnabled="true" />
 
-    <include layout="@layout/include_editor_tools" />
+    <RelativeLayout
+        android:id="@+id/tools"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+
+        <RelativeLayout
+            android:id="@+id/include_editor_tools_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true">
+
+            <ImageButton
+                android:src="@drawable/ic_action_editor_restore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/restore"
+                android:id="@+id/restoreBtn"
+                android:layout_gravity="center_vertical|left"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/filter"
+            android:inputType="text"
+            android:hint="@string/filter"
+            android:layout_gravity="center_vertical|left"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_toLeftOf="@+id/include_editor_tools_right"
+            android:layout_toRightOf="@+id/include_editor_tools_left" />
+
+        <RelativeLayout
+            android:id="@+id/include_editor_tools_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+
+            <ImageButton
+                android:src="@drawable/ic_action_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/add_property"
+                android:id="@+id/addBtn"
+                android:layout_gravity="center_vertical|right"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:src="@drawable/ic_action_editor_apply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/apply"
+                android:id="@+id/applyBtn"
+                android:layout_gravity="center_vertical|right"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginTop="10dp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
     <View
         android:id="@+id/tools_editor_shadow_bottom"
-        android:layout_alignBottom="@+id/applist"
+        android:layout_alignBottom="@+id/proplist"
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:background="@drawable/bottom_shadow"

@@ -8,14 +8,24 @@
         android:summary="@string/media_scan_summary"
         android:icon="@drawable/ic_general_media_scan" />
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
-        android:key="editors"
-        android:title="@string/editors"
-        android:icon="@drawable/ic_general_editor" />
 
     <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="app_manager"
         android:title="@string/app_manager"
         android:icon="@drawable/ic_general_app" />
+
+    <PreferenceCategory android:title="@string/editors">
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+            android:key="build_prop"
+            android:title="@string/buildprop"
+            android:icon="@drawable/ic_general_editor" />
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+            android:key="vm"
+            android:title="@string/vm"
+            android:icon="@drawable/ic_general_editor" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

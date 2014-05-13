@@ -20,13 +20,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
-import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
 public class VmFragment extends AttachPreferenceFragment implements DeviceConstants {
 
@@ -68,9 +67,7 @@ public class VmFragment extends AttachPreferenceFragment implements DeviceConsta
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mFullEditor) {
-            BusProvider.getBus().post(new ReplaceFragmentEvent(
-                    EditorFragment.newInstance(PressToLoadFragment.FRAGMENT_VM), true
-            ));
+            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_EDITORS_VM));
             return true;
         } else if (preference == mDirtyRatio) {
             final String title = getString(R.string.dirty_ratio_title);
