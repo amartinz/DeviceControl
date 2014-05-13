@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <!--
-  ~ Copyright (C) 2014 Alexander "Evisceration" Martinz
+  ~  Copyright (C) 2013 h0rn3t
+  ~  Modifications Copyright (C) 2014 Alexander "Evisceration" Martinz
   ~
   ~  This program is free software: you can redistribute it and/or modify
   ~  it under the terms of the GNU General Public License as published by
@@ -19,15 +19,30 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linlaHeaderProgress"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:visibility="gone">
+    android:gravity="center_vertical|center_horizontal"
+    android:padding="10dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/message_loading" />
+        android:id="@+id/prop_name_tv"
+        android:layout_gravity="left|center_vertical"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:labelFor="@+id/prop_value" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/prop_value"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:singleLine="true"
+        android:layout_marginRight="5dp"
+        android:inputType="text" />
+
 </LinearLayout>

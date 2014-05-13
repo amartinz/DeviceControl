@@ -22,18 +22,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
-import org.namelessrom.devicecontrol.fragments.tools.sub.editor.EditorFragment;
 import org.namelessrom.devicecontrol.fragments.tools.sub.editor.PropModderFragment;
 import org.namelessrom.devicecontrol.fragments.tools.sub.editor.VmFragment;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 public class PressToLoadFragment extends Fragment implements DeviceConstants {
 
@@ -43,40 +36,13 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
     public static final int FRAGMENT_VM         = 0;
     public static final int FRAGMENT_BUILD_PROP = 2;
 
-    private Fragment mFragment;
-    private String   mText;
-
-    private int mImgId = R.mipmap.ic_launcher;
     private int mFragmentId;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
         mFragmentId = getArguments().getInt(ARG_FRAGMENT);
-        mImgId = getArguments().getInt(ARG_IMG);
-
-        switch (mFragmentId) {
-            case 1:
-                mFragment = EditorFragment.newInstance(1);
-                mText = getString(R.string.fragment_press_to_load, "SysCtl Editor");
-                break;
-            default:
-                mText = "Could not identify fragment to load";
-                break;
-        }
     }
 
     @Override
@@ -96,51 +62,25 @@ public class PressToLoadFragment extends Fragment implements DeviceConstants {
                 f = new PropModderFragment();
                 break;
             default:
-                f = new ReplaceFragment();
+                f = null;
                 break;
         }
-        onReplaceFragment(new ReplaceFragmentEvent(f, false));
+        if (f == null) return;
+
+        onReplaceFragment(f, false);
     }
 
-    @Subscribe
-    public void onReplaceFragment(final ReplaceFragmentEvent event) {
-        if (event == null) { return; }
-
-        final Fragment f = event.getFragment();
-        final boolean animate = event.isAnimate();
+    private void onReplaceFragment(final Fragment f, final boolean animate) {
 
         // TODO: fix it up for API 14
         final FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         if (animate) {
-            ft.setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out,
-                    R.anim.card_flip_left_in, R.anim.card_flip_left_out);
+            ft.setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out,
+                    R.animator.card_flip_left_in, R.animator.card_flip_left_out);
         }
         ft.replace(R.id.container_ptl, f)
                 .addToBackStack(null)
                 .commit();
     }
 
-    private class ReplaceFragment extends Fragment {
-
-        @Override
-        public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                final Bundle savedInstanceState) {
-            final View view = inflater.inflate(R.layout.fragment_press_to_load, container, false);
-
-            final TextView tvHelp = (TextView) view.findViewById(R.id.help_textview);
-            tvHelp.setText(mText);
-
-            final ImageView ivHelp = (ImageView) view.findViewById(R.id.help_imageview);
-            ivHelp.setImageResource(mImgId);
-
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onReplaceFragment(new ReplaceFragmentEvent(mFragment, true));
-                }
-            });
-
-            return view;
-        }
-    }
 }

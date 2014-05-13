@@ -84,16 +84,6 @@ public class EditorTabbedFragment extends AttachFragment implements DeviceConsta
                 .setIndicator(getString(R.string.vm))
                 , PressToLoadFragment.class, b);
 
-        /* SYSCTL EDITOR */
-        b = new Bundle();
-        b.putInt(PressToLoadFragment.ARG_FRAGMENT, 1);
-        b.putInt(PressToLoadFragment.ARG_IMG, R.mipmap.ic_launcher);
-
-        mTabHost.addTab(mTabHost
-                .newTabSpec("sysctl")
-                .setIndicator(getString(R.string.sysctl))
-                , PressToLoadFragment.class, b);
-
         /* BUILD.PROP EDITOR */
         b = new Bundle();
         b.putInt(PressToLoadFragment.ARG_FRAGMENT, 2);
