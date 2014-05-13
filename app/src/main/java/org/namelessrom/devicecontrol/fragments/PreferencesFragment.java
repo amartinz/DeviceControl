@@ -36,14 +36,15 @@ import android.widget.ListView;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.proprietary.Constants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -63,7 +64,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference mSobGpu;
     private CustomCheckBoxPreference mSobExtras;
     private CustomCheckBoxPreference mSobVoltage;
-    private CustomCheckBoxPreference mSobVm;
     private CustomCheckBoxPreference mSobSysCtl;
     //==============================================================================================
     // Debug
@@ -138,7 +138,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
                         .setEnabled(PreferenceHelper.getBoolean(Constants.Iab.getPref(), false));
             }
 
-            if (Utils.existsInBuildProp("ro.nameless.secret=1")) {
+            if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.secret=1")) {
                 mMonkeyPref = new CustomCheckBoxPreference(getActivity());
                 mMonkeyPref.setKey("monkey");
                 mMonkeyPref.setTitle(R.string.become_a_monkey);
@@ -178,12 +178,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
         if (mSobVoltage != null) {
             mSobVoltage.setChecked(PreferenceHelper.getBoolean(SOB_VOLTAGE));
             mSobVoltage.setOnPreferenceChangeListener(this);
-        }
-
-        mSobVm = (CustomCheckBoxPreference) findPreference(SOB_VM);
-        if (mSobVm != null) {
-            mSobVm.setChecked(PreferenceHelper.getBoolean(SOB_VM));
-            mSobVm.setOnPreferenceChangeListener(this);
         }
 
         mSobSysCtl = (CustomCheckBoxPreference) findPreference(SOB_SYSCTL);
@@ -252,11 +246,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(SOB_VOLTAGE, value);
             mSobVoltage.setChecked(value);
-            changed = true;
-        } else if (mSobVm == preference) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(SOB_VM, value);
-            mSobVm.setChecked(value);
             changed = true;
         } else if (mSobSysCtl == preference) {
             final boolean value = (Boolean) newValue;

@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -20,15 +21,15 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.ReplaceFragmentEvent;
-import org.namelessrom.devicecontrol.fragments.dynamic.PressToLoadFragment;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
+import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
-public class VmFragment extends AttachPreferenceFragment implements DeviceConstants {
+public class SysctlFragment extends AttachPreferenceFragment implements DeviceConstants {
 
     private CustomPreference mFullEditor;
     private CustomPreference mDirtyRatio;
@@ -41,9 +42,38 @@ public class VmFragment extends AttachPreferenceFragment implements DeviceConsta
     private CustomPreference mVfs;
 
     @Override
+    public void onAttach(final Activity activity) { super.onAttach(activity, ID_TOOLS_VM); }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        final int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home: {
+                final Activity activity = getActivity();
+                if (activity != null) {
+                    activity.onBackPressed();
+                }
+                return true;
+            }
+            default: {
+                break;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.vm);
+        setHasOptionsMenu(true);
 
         mFullEditor = (CustomPreference) findPreference(PREF_FULL_EDITOR);
         mDirtyRatio = (CustomPreference) findPreference(PREF_DIRTY_RATIO);
@@ -68,9 +98,7 @@ public class VmFragment extends AttachPreferenceFragment implements DeviceConsta
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mFullEditor) {
-            BusProvider.getBus().post(new ReplaceFragmentEvent(
-                    EditorFragment.newInstance(PressToLoadFragment.FRAGMENT_VM), true
-            ));
+            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_EDITORS_VM));
             return true;
         } else if (preference == mDirtyRatio) {
             final String title = getString(R.string.dirty_ratio_title);

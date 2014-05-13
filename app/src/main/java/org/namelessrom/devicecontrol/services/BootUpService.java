@@ -158,11 +158,6 @@ public class BootUpService extends IntentService
                         sbCmd.append("busybox sysctl -p;\n");
                     }
                 }
-                if (PreferenceHelper.getBoolean(SOB_VM, false)) {
-                    if (new File("/system/etc/vm.conf").exists()) {
-                        sbCmd.append("busybox sysctl -p /system/etc/vm.conf;\n");
-                    }
-                }
 
                 //==================================================================================
                 // Execute

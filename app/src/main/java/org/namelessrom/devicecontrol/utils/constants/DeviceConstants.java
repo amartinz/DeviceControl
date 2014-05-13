@@ -47,9 +47,13 @@ public interface DeviceConstants {
     public static final int ID_THERMAL                  = ID_PERFORMANCE_EXTRA + 1100;
     public static final int ID_VOLTAGE                  = ID_PERFORMANCE_EXTRA + 1200;
     public static final int ID_TOOLS_TASKER             = 9;
+    public static final int ID_TOOLS_TASKER_LIST        = ID_TOOLS_TASKER + 1000;
     public static final int ID_TOOLS_MORE               = 10;
-    public static final int ID_TOOLS_EDITORS            = ID_TOOLS_MORE + 1000;
-    public static final int ID_TOOLS_APP_MANAGER        = ID_TOOLS_MORE + 1100;
+    public static final int ID_TOOLS_VM                 = ID_TOOLS_MORE + 1000;
+    public static final int ID_TOOLS_EDITORS_VM         = ID_TOOLS_MORE + 1010;
+    public static final int ID_TOOLS_BUILD_PROP         = ID_TOOLS_MORE + 1100;
+    public static final int ID_TOOLS_EDITORS_BUILD_PROP = ID_TOOLS_MORE + 1110;
+    public static final int ID_TOOLS_APP_MANAGER        = ID_TOOLS_MORE + 1200;
     public static final int ID_PREFERENCES              = 12;
     public static final int ID_LICENSES                 = 13;
     //----------------------------------------------------------------------------------------------
@@ -78,8 +82,6 @@ public interface DeviceConstants {
     // Panel
     public static final String KEY_PANEL_COLOR_TEMP     = "panel_color_temperature";
     // Performance Cpu
-    //==============================================================================================
-    public static final String FORCE_HIGHEND_GFX_PREF   = "pref_force_highend_gfx";
     //==============================================================================================
     public static final String KEY_MPDECISION           = "mpdecision";
     public static final String GROUP_INTELLI_PLUG       = "intelli_plug";
@@ -144,7 +146,6 @@ public interface DeviceConstants {
     public static final String PREF_FULL_EDITOR     = "pref_full_editor";
     public static final String CUSTOM_SHELL_COMMAND = "custom_shell_command";
     public static final String SOB_SYSCTL           = "sob_sysctl";
-    public static final String SOB_VM               = "sob_vm";
     public static final String SOB_CPU              = "sob_cpu";
     public static final String SOB_GPU              = "sob_gpu";
     public static final String SOB_EXTRAS           = "sob_extras";
