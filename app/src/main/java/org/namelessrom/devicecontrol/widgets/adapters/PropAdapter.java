@@ -38,7 +38,7 @@ public class PropAdapter extends ArrayAdapter<Prop> {
     private static Filter     mFilter;
 
     public PropAdapter(Context context, List<Prop> objects) {
-        super(context, R.layout.prop_item, objects);
+        super(context, R.layout.list_item_prop, objects);
         mContext = context;
         mProps = objects;
     }
@@ -54,7 +54,7 @@ public class PropAdapter extends ArrayAdapter<Prop> {
         if (v == null) {
             LayoutInflater vi =
                     (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.prop_item, parent, false);
+            v = vi.inflate(R.layout.list_item_prop, parent, false);
         }
 
         ViewHolder holder = (ViewHolder) v.getTag();

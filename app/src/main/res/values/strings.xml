@@ -10,7 +10,6 @@
     <string name="exit">Exit</string>
     <string name="close">Close</string>
     <string name="message_loading">Loading, please stand by&#8230;</string>
-    <string name="fragment_press_to_load">Press me to load %s.</string>
     <string name="action_press_again">Press once again to exit!</string>
     <string name="defaults_button">Reset to default</string>
     <string name="general">General</string>
@@ -159,6 +158,7 @@
     <string name="disable_msg">%s will be disabled.\n\nContinue?</string>
     <string name="vm_settings">Dalvik Settings</string>
     <string name="full_editor">Press to load full editor</string>
+    <string name="toggle_vm_sysctl">Toggle SysCtl / VM</string>
     <string name="apply">Apply</string>
     <string name="restore">Restore</string>
     <string name="filter">Filter</string>
@@ -167,12 +167,8 @@
     <string name="edit_property">Edit Property</string>
     <string name="delete_property">Delete Property</string>
     <string name="delete_property_message">%s will be deleted.\n\nContinue?</string>
-    <string name="backup_message">Backup of build.prop was created in %s</string>
-    <string name="backup_message_not_found">Initial backup not found!</string>
-    <string name="backup_message_restore">Initial build.prop file will be restored.\nYou must reboot your device to take effect.\n\nContinue?</string>
     <string name="name">Name</string>
     <string name="presets">Presets</string>
-    <string name="no_packages">No packages</string>
     <string name="knock_on_off_gestures">Knock On/Off Gestures</string>
     <string name="knock_on">Knock On</string>
     <string name="knock_on_summary_off">Knock On gesture disabled</string>
@@ -208,4 +204,5 @@
     <string name="ext_media">External media</string>
     <string name="ext_obb">External obb</string>
     <string name="cache">Cache</string>
+    <string name="applying_wait">Applying values, please wait&#8230;</string>
 </resources>

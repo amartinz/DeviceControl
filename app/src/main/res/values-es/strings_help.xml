@@ -15,15 +15,10 @@
   <string name="mpdecision_help">MPDecision es un demonio ( daemon ) patentado de Qualcomm que hace llamadas al SoC para gestionar la cpu cores.\nWARNING: ¡Parar sólo si se tiene un reemplazo válido para conexiones en caliente ( hot plug ) como Intelli-Plug!</string>
   <string name="intelli_plug_help">Intelli-Plug es un reemplazo para la propiedad en MPDecision de Qualcomm, que corre en el espacio del usuario. Ya está en el kernel en su lugar del espacio de usuario que es más rápido que en el espacio de usuario teniendo que sondear el kernel.</string>
   <string name="intelli_plug_eco_help">Modo Eco es una solución optimizada del doble núcleo para CPU\'s quadcore. Esto debería permitir la mejora de la vida útil sin sacrificar por ello el rendimiento.</string>
-  <string name="powersaving_sched_mc_help">Procurar que las tareas de grupo estén en un núcleo hasta que alcance su máxima carga y dar poderes en el siguiente core.\nIf habilitado, sacrifica potencia a cambio de la vida de la batería.</string>
+  <string name="powersaving_sched_mc_help">Procurar que las tareas de grupo estén en un núcleo hasta que alcance su máxima carga y dar poderes al siguiente núcleo.\nSi está habilitado, sacrifica potencia a cambio de la vida de la batería.</string>
   <string name="msm_dcvs_help">Habilitar el soporte para MSM DCVS que controla las frecuencias base todos los CPU y GPU. El gestor de DCVS permite al conductor libre alimentar la información inactiva en el algoritmo y el algoritmo devuelve una frecuencia para el núcleo que se pasa al controlador de cambio de frecuencia.</string>
   <string name="tasklist_help">¡MPDecision pueden omitir acciones de la CPU/GPU y así pudiendo no llegar a funcionar, si está ejecutando MPDecision!</string>
-  <string name="fstrim_help">FStrim se utiliza en un sistema de archivos montado para descartar (o \"ajustar\") los bloques que no estén en uso por los archivos del sistema.\nThis pudiendo ayudar a reducir los retrasos y mantener el rendimiento de su dispositivo.</string>
-  <string name="vm_help">Ajustar manualmente las propiedades de la máquina virtual de tu dispositivo.</string>
-  <string name="sysctl_help">Ajustar manualmente las propiedades de sysctl en tu dispositivo.</string>
-  <string name="buildprop_help">Aplicar ajustes rápidos a su build.prop o editar manualmente con el editor completo.</string>
-  <string name="freezer_help">El congelador desactiva aplicaciones (\"freezes\") y les impide correr.\nNota: tus aplicaciones congeladas también desaparecerán de su cajón de aplicaciones.</string>
-  <string name="unfreezer_help">Hace lo contrario del congelador, el descongelador puede reactivar sus aplicaciones congeladas y hacerlos accesibles nuevamente.</string>
+  <string name="fstrim_help">FStrim se utiliza en un sistema de archivos montado para descartar (o \"ajustar\") los bloques que no estén en uso por los archivos del sistema.\nPudiendo este ayudar a reducir los retrasos y mantener el rendimiento de su dispositivo.</string>
   <string name="reapply_on_boot_help">Restaura los cambios para cuando el dispositivo es nuevamente arrancado.</string>
   <string name="extensive_logging_help">Debe utilizarse sólo para propósitos de depuración.\nLogs de depuración con información extra para el logcat.</string>
 </resources>

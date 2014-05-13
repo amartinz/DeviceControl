@@ -3,7 +3,7 @@
 <resources>
   <string name="app_version_name">Versions-Name: %s</string>
   <string name="app_version_code">Versions-Code: %s</string>
-  <string name="app_information_help">Willkommen bei %1$s!\n\nUm zu starten, wische das Menü auf der linken Seite heraus!\n\nFalls du Hilfe benötigst oder eine bestimmte Funktion nicht verstehst, wische die Hilfe aus der rechten Seite herraus!\n\nFalls eine Funktion von deinem Gerät nicht unterstützt wird, wird sie automatisch ausgeblendet!\n\n\nBitte beachte, dass %2$s Root-Rechte benötigt,\num richtig zu funktionieren!\n\n</string>
+  <string name="app_information_help">Willkommen bei %1$s!\n\nUm zu starten, wische das Menü auf der linken Seite heraus!\n\nFalls du Hilfe benötigst oder eine bestimmte Funktion nicht verstehst, wische die Hilfe aus der rechten Seite heraus!\n\nFalls eine Funktion von deinem Gerät nicht unterstützt wird, wird sie automatisch ausgeblendet!\n\n\nBitte beachte, dass %2$s Root-Rechte benötigt,\num richtig zu funktionieren!\n\n</string>
   <string name="app_warning_root">Bitte beachte, dass %s Root-Rechte benötigt, um richtig zu funktionieren!</string>
   <string name="app_warning_busybox">Bitte beachte, dass %s eine BusyBox erfordert, um vollständig zu funktionieren!</string>
   <string name="get_busybox">BusyBox installieren</string>
@@ -11,7 +11,6 @@
   <string name="exit">Beenden</string>
   <string name="close">Schließen</string>
   <string name="message_loading">Lade, bitte warten&#8230;</string>
-  <string name="fragment_press_to_load">Drück mich, um %s zu laden.</string>
   <string name="action_press_again">Drücke erneut zum Beenden!</string>
   <string name="defaults_button">Standards wiederherstellen</string>
   <string name="general">Allgemein</string>
@@ -32,7 +31,7 @@
   <string name="extras">Extras</string>
   <string name="tools">Werkzeuge</string>
   <string name="editors">Editoren</string>
-  <string name="freezer">Freezer</string>
+  <string name="app_manager">Anwendungs-Manager</string>
   <string name="licenses">Lizenzen</string>
   <string name="graphics">Grafik</string>
   <string name="display">Bildschirm</string>
@@ -160,6 +159,7 @@
   <string name="disable_msg">%s wird deaktiviert.\n\nFortfahren?</string>
   <string name="vm_settings">Dalvik-Einstellungen</string>
   <string name="full_editor">Drücke, um den vollständigen Editor zu laden</string>
+  <string name="toggle_vm_sysctl">Wechsel zwischen SysCtl / VM</string>
   <string name="apply">Übernehmen</string>
   <string name="restore">Wiederherstellen</string>
   <string name="filter">Filter</string>
@@ -168,12 +168,8 @@
   <string name="edit_property">Eigenschaft bearbeiten</string>
   <string name="delete_property">Eigenschaft löschen</string>
   <string name="delete_property_message">%s wird gelöscht.\n\nFortfahren?</string>
-  <string name="backup_message">Sicherung der Build.Prop erstellt in %s</string>
-  <string name="backup_message_not_found">Ursprüngliche Sicherung konnte nicht gefunden werden!</string>
-  <string name="backup_message_restore">Ursprüngliche Build.Prop Datei wird wiederhergestellt.\nDu musst dein Gerät neustarten, um die Änderungen anzuwenden.\n\nFortfahren?</string>
   <string name="name">Name</string>
   <string name="presets">Voreinstellungen</string>
-  <string name="no_packages">Keine Anwendungen</string>
   <string name="knock_on_off_gestures">Knock On/Off Gesten</string>
   <string name="knock_on">Knock On</string>
   <string name="knock_on_summary_off">Knock On Geste deaktiviert</string>
@@ -197,4 +193,17 @@
   <string name="downgraded">Datenbank wurde aufgrund eines Downgrades gelöscht!</string>
   <string name="media_scan_trigger">Media-Scanner auslösen</string>
   <string name="media_scan_summary">Löst einen Media-Scan aus, für den Fall, dass du dein Gerät über MTP angeschlossen hast und neue Dateien nicht sichtbar sind.</string>
+  <string name="kill_app">Anwendung beenden</string>
+  <string name="app_details">Anwendungs-Details</string>
+  <string name="clear_cache">Cache leeren</string>
+  <string name="clear_data">Daten löschen</string>
+  <string name="total">Gesamt</string>
+  <string name="app">Anwendung</string>
+  <string name="ext_app">Externe Anwendung</string>
+  <string name="data">Daten</string>
+  <string name="ext_data">Externe Daten</string>
+  <string name="ext_media">Externe Medien</string>
+  <string name="ext_obb">Externe obb</string>
+  <string name="cache">Cache</string>
+  <string name="applying_wait">Anwenden der Werte, bitte warten&#8230;</string>
 </resources>

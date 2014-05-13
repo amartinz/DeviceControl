@@ -11,9 +11,6 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachListFragment;
 import org.namelessrom.devicecontrol.widgets.adapters.AppListAdapter;
 
-/**
- * Created by alex on 11.05.14.
- */
 public class AppListFragment extends AttachListFragment implements DeviceConstants {
 
     @Override

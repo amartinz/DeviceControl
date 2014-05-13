@@ -91,10 +91,6 @@ public class HelpFragment extends Fragment implements DeviceConstants {
                 ids[0] = R.array.tasker_titles;
                 ids[1] = R.array.tasker_content;
                 break;
-            case ID_TOOLS_EDITORS:
-                ids[0] = R.array.editors_titles;
-                ids[1] = R.array.editors_content;
-                break;
             case ID_PREFERENCES:
                 ids[0] = R.array.preference_titles;
                 ids[1] = R.array.preference_content;

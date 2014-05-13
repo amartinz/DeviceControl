@@ -18,35 +18,31 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:clickable="false"
-    android:paddingLeft="10dp"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp"
-    android:paddingRight="10dp">
-
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="44dp"
-        android:layout_height="44dp" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical|center_horizontal"
+    android:padding="10dp">
 
     <TextView
-        android:id="@+id/packname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/icon"
+        android:id="@+id/prop_name_tv"
+        android:layout_gravity="left|center_vertical"
         android:textSize="16sp"
-        android:layout_marginLeft="5dp" />
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:labelFor="@+id/prop_value" />
 
-    <TextView
-        android:id="@+id/packraw"
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/packname"
-        android:layout_toRightOf="@+id/icon"
-        android:textSize="14sp"
-        android:layout_marginLeft="5dp" />
+        android:id="@+id/prop_value"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:singleLine="true"
+        android:layout_marginRight="5dp"
+        android:inputType="text" />
 
-</RelativeLayout>
+</LinearLayout>
