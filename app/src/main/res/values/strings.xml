@@ -208,4 +208,5 @@
     <string name="ext_media">External media</string>
     <string name="ext_obb">External obb</string>
     <string name="cache">Cache</string>
+    <string name="applying_wait">Applying values, please wait&#8230;</string>
 </resources>

@@ -46,9 +46,11 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.objects.Prop;
+import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
@@ -233,7 +235,7 @@ public class EditorFragment extends AttachFragment
                                     Utils.remount("/system", "rw");
                                     Utils.getCommandResult(APPLY,
                                             "busybox cp "
-                                                    + getActivity().getFilesDir().getPath()
+                                                    + Application.getFilesDirectory()
                                                     + DC_BACKUP_DIR + '/' + mod + ".conf"
                                                     + ' ' + syspath + mod + ".conf;"
                                     );
@@ -280,7 +282,7 @@ public class EditorFragment extends AttachFragment
         @Override
         protected Void doInBackground(final String... params) {
             final StringBuilder sb = new StringBuilder();
-            final String dn = getActivity().getFilesDir().getPath() + DC_BACKUP_DIR;
+            final String dn = Application.getFilesDirectory() + DC_BACKUP_DIR;
 
             sb.append("busybox mkdir -p ").append(dn).append(";\n");
 
@@ -320,8 +322,7 @@ public class EditorFragment extends AttachFragment
     private class GetBuildPropOperation extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... params) {
-            final Activity activity = getActivity();
-            final String dn = activity.getFilesDir().getPath() + DC_BACKUP_DIR;
+            final String dn = Application.getFilesDirectory() + DC_BACKUP_DIR;
 
             mBuildName = "build";
             mBuildName = (Build.DISPLAY.isEmpty() || Build.DISPLAY == null)
@@ -329,10 +330,10 @@ public class EditorFragment extends AttachFragment
                     : mBuildName + '-' + Build.DISPLAY.replace(" ", "_") + ".prop";
             if (!new File(dn + '/' + mBuildName).exists()) {
                 Utils.runRootCommand("busybox cp /system/build.prop " + dn + '/' + mBuildName);
-                activity.runOnUiThread(new Runnable() {
+                Application.HANDLER.post(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(activity,
+                        Toast.makeText(Application.applicationContext,
                                 getString(R.string.backup_message, dn + '/' + mBuildName),
                                 Toast.LENGTH_SHORT).show();
                     }
@@ -462,7 +463,7 @@ public class EditorFragment extends AttachFragment
 
     private void editPropDialog(final Prop p) {
         final Activity activity = getActivity();
-        final String dn = activity.getFilesDir().getPath() + DC_BACKUP_DIR;
+        final String dn = Application.getFilesDirectory() + DC_BACKUP_DIR;
         String title;
 
         final View editDialog = LayoutInflater.from(activity)
@@ -605,25 +606,21 @@ public class EditorFragment extends AttachFragment
                     public void onClick(DialogInterface dialog, int which) {
                         if (p != null) {
                             if (tv.getText() != null) {
-                                p.setVal(tv.getText().toString().trim());
+                                final String name = p.getName();
+                                final String value = tv.getText().toString().trim();
+                                p.setVal(value);
                                 Utils.remount("/system", "rw");
-                                Utils.getCommandResult(SAVE,
-                                        activity.getFilesDir().getPath() + "/utils -setprop \""
-                                                + p.getName() + '=' + p.getVal() + '"'
-                                );
+                                Utils.getCommandResult(SAVE, Scripts.addOrUpdate(name, value));
                             }
                         } else {
                             if (tv.getText() != null
                                     && tn.getText() != null
                                     && tn.getText().toString().trim().length() > 0) {
-                                props.add(new Prop(tn.getText().toString().trim(),
-                                        tv.getText().toString().trim()));
+                                final String name = tn.getText().toString().trim();
+                                final String value = tv.getText().toString().trim();
+                                props.add(new Prop(name, value));
                                 Utils.remount("/system", "rw");
-                                Utils.getCommandResult(SAVE,
-                                        activity.getFilesDir().getPath() + "/utils -setprop \""
-                                                + tn.getText().toString().trim() + '='
-                                                + tv.getText().toString().trim() + '"'
-                                );
+                                Utils.getCommandResult(SAVE, Scripts.addOrUpdate(name, value));
                             }
                         }
 
@@ -677,7 +674,7 @@ public class EditorFragment extends AttachFragment
         @Override
         public void onClick(View v) {
             dialog.cancel();
-            final String dn = getActivity().getFilesDir().getPath() + DC_BACKUP_DIR;
+            final String dn = Application.getFilesDirectory() + DC_BACKUP_DIR;
             switch (op) {
                 case 0:
                     final String path = dn + '/' + mBuildName;
@@ -688,16 +685,14 @@ public class EditorFragment extends AttachFragment
                                         + "busybox cp " + path + " /system/build.prop;\n"
                         );
                     } else {
-                        Toast.makeText(getActivity(), getString(R.string.backup_message_not_found),
+                        Toast.makeText(Application.applicationContext,
+                                getString(R.string.backup_message_not_found),
                                 Toast.LENGTH_LONG).show();
                     }
                     break;
                 case 1:
                     Utils.remount("/system", "rw");
-                    Utils.getCommandResult(CLICK_1,
-                            "busybox sed -i '/" + p.getName().replace(".", "\\.")
-                                    + "/d' " + "/system/build.prop;\n"
-                    );
+                    Utils.getCommandResult(CLICK_1, Scripts.removeProperty(p.getName()));
                     adapter.remove(p);
                     break;
             }
