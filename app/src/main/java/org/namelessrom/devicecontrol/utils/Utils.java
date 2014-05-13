@@ -16,17 +16,15 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import android.app.Activity;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.BatteryManager;
-import android.util.Log;
 
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
@@ -43,71 +41,43 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Properties;
 
-import static org.namelessrom.devicecontrol.Application.HANDLER;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class Utils implements DeviceConstants, FileConstants {
 
-    public static boolean isNameless() {
-        return existsInBuildProp("ro.nameless.version");
+    public static boolean isNameless() { return existsInBuildProp("ro.nameless.version"); }
+
+    public static boolean isGmsInstalled() { return isPackageInstalled("com.android.vending"); }
+
+    public static boolean existsInBuildProp(final String prop) {
+        return !findBuildPropValue(prop).isEmpty();
     }
 
-    public static boolean isGmsInstalled(final Context context) {
-        /*
-        final int statusCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
-        return statusCode == ConnectionResult.SUCCESS;
-        */
-        return isPackageInstalled(context, "com.android.vending");
-    }
-
-    public static boolean existsInBuildProp(String filter) {
-        final File f = new File("/system/build.prop");
-        BufferedReader bufferedReader = null;
-        if (f.exists() && f.canRead()) {
-            try {
-                bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
-                String s;
-                while ((s = bufferedReader.readLine()) != null) {
-                    if (s.contains(filter)) return true;
-                }
-            } catch (Exception whoops) {
-                return false;
-            } finally {
-                try {
-                    if (bufferedReader != null) bufferedReader.close();
-                } catch (Exception ignored) {
-                    // mepmep
-                }
-            }
-        }
-        return false;
-    }
-
-    public static String findBuildPropValueOf(String prop) {
-        final String mBuildPath = "/system/build.prop";
-        final String DISABLE = "disable";
-        String value = null;
+    public static String findBuildPropValue(final String prop) {
+        String value;
         try {
-            //create properties construct and load build.prop
-            Properties mProps = new Properties();
-            mProps.load(new FileInputStream(mBuildPath));
-            //get the property
-            value = mProps.getProperty(prop, DISABLE);
-            logDebug(String.format("Helpers:findBuildPropValueOf found {%s} with the value (%s)",
-                    prop, value));
-        } catch (IOException ioe) {
-            logDebug("failed to load input stream");
-        } catch (NullPointerException npe) {
-            //swallowed thrown by ill formatted requests
+            value = findBuildPropValueOf(prop);
+        } catch (Exception e) { value = ""; }
+
+        return value;
+    }
+
+    private static String findBuildPropValueOf(final String prop) throws Exception {
+        final File f = new File("/system/build.prop");
+        if (f.exists() && f.canRead()) {
+            final BufferedReader br =
+                    new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+
+            String s;
+            while ((s = br.readLine()) != null) {
+                if (s.contains(prop)) return s.replace(prop + '=', "");
+            }
+
+            br.close();
         }
 
-        if (value != null) {
-            return value;
-        } else {
-            return DISABLE;
-        }
+        return "";
     }
 
     /**
@@ -157,9 +127,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param value    The value
      */
     public static void writeValue(final String filename, final String value) {
-        // the existence of the file is a requirement for the success ;)
-        boolean success = fileExists(filename);
-        if (success) {
+        if (fileExists(filename)) {
             try {
                 final FileWriter fw = new FileWriter(filename);
                 try {
@@ -199,9 +167,7 @@ public class Utils implements DeviceConstants, FileConstants {
      */
     public static String checkPaths(final String[] paths) {
         for (final String s : paths) {
-            if (fileExists(s)) {
-                return s;
-            }
+            if (fileExists(s)) { return s; }
         }
         return "";
     }
@@ -209,11 +175,12 @@ public class Utils implements DeviceConstants, FileConstants {
     /**
      * Setup the directories for Device Control
      */
-    public static void setupDirectories(final Activity activity) {
+    public static void setupDirectories() {
+        final String basePath = Application.getFilesDirectory();
+        final String logDir = basePath + DC_LOG_DIR;
+        final String backupDir = basePath + DC_BACKUP_DIR;
+        final String[] dirList = new String[]{logDir, backupDir};
         File dir;
-        final String logDir = activity.getFilesDir().getPath() + DC_LOG_DIR;
-        final String backupDir = activity.getFilesDir().getPath() + DC_BACKUP_DIR;
-        String[] dirList = new String[]{logDir, backupDir};
         for (String s : dirList) {
             dir = new File(s);
             if (!dir.exists()) {
@@ -224,11 +191,11 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
-    public static void createFiles(final Context context, final boolean force) {
-        final String filepath = context.getFilesDir().getPath() + "/utils";
+    public static void createFiles(final boolean force) {
+        final String filepath = Application.getFilesDirectory() + "/utils";
         logDebug("createFiles path: " + filepath);
         if (!new File(filepath).exists() || force) {
-            RootTools.installBinary(context, R.raw.utils, "utils");
+            RootTools.installBinary(Application.applicationContext, R.raw.utils, "utils");
             logDebug("createFiles installed: utils");
         }
     }
@@ -247,7 +214,11 @@ public class Utils implements DeviceConstants, FileConstants {
         return null;
     }
 
-    public static void runRootCommand(String command) {
+    public static boolean getCommandResult(final String command) {
+        return new CMDProcessor().su.runWaitFor(command).success();
+    }
+
+    public static void runRootCommand(final String command) {
         final CommandCapture comm = new CommandCapture(0, false, command);
         try {
             RootTools.getShell(true).add(comm);
@@ -280,7 +251,7 @@ public class Utils implements DeviceConstants, FileConstants {
             public void commandCompleted(int id, int exitcode) {
                 final String result = sb.toString();
                 logDebug(String.format("Generic Output for %s: %s", String.valueOf(ID), result));
-                HANDLER.post(new Runnable() {
+                Application.HANDLER.post(new Runnable() {
                     @Override
                     public void run() {
                         BusProvider.getBus().post(new ShellOutputEvent(ID, result, EXTRAS));
@@ -304,9 +275,9 @@ public class Utils implements DeviceConstants, FileConstants {
                 String.format("busybox echo \"%s\" > %s;\n", value, path);
     }
 
-    public static boolean isPackageInstalled(final Context context, final String packageName) {
+    public static boolean isPackageInstalled(final String packageName) {
         try {
-            final PackageManager pm = context.getPackageManager();
+            final PackageManager pm = Application.applicationContext.getPackageManager();
             if (pm != null) {
                 pm.getPackageInfo(packageName, 0);
                 return true;
@@ -317,21 +288,19 @@ public class Utils implements DeviceConstants, FileConstants {
         return false;
     }
 
-    public static void disableComponent(final Context context, final String packageName,
-            final String componentName) {
-        toggleComponent(context, packageName, componentName, true);
+    public static void disableComponent(final String packageName, final String componentName) {
+        toggleComponent(packageName, componentName, true);
     }
 
-    public static void enableComponent(final Context context, final String packageName,
-            final String componentName) {
-        toggleComponent(context, packageName, componentName, false);
+    public static void enableComponent(final String packageName, final String componentName) {
+        toggleComponent(packageName, componentName, false);
     }
 
-    private static void toggleComponent(final Context context, final String packageName,
-            final String componentName, boolean disable) {
+    private static void toggleComponent(final String packageName, final String componentName,
+            boolean disable) {
         final ComponentName component = new ComponentName(packageName,
                 packageName + componentName);
-        final PackageManager pm = context.getPackageManager();
+        final PackageManager pm = Application.applicationContext.getPackageManager();
         if (pm != null) {
             pm.setComponentEnabledSetting(component,
                     (disable
@@ -342,21 +311,21 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
-    public static void startTaskerService(final Context context) {
-        final String packageName = context.getPackageName();
+    public static void startTaskerService() {
+        final String packageName = Application.applicationContext.getPackageName();
         final String componentName = TaskerService.class.getName().replace(packageName, "");
-        final DatabaseHandler db = DatabaseHandler.getInstance(context);
+        final DatabaseHandler db = DatabaseHandler.getInstance(Application.applicationContext);
         if (db.getTableCount(DatabaseHandler.TABLE_TASKER) > 0) {
-            enableComponent(context, packageName, componentName);
-            final Intent tasker = new Intent(context, TaskerService.class);
+            enableComponent(packageName, componentName);
+            final Intent tasker = new Intent(Application.applicationContext, TaskerService.class);
             tasker.setAction(TaskerService.ACTION_START);
-            context.startService(tasker);
+            Application.applicationContext.startService(tasker);
             logDebug("Service Started: " + componentName);
         } else {
-            final Intent tasker = new Intent(context, TaskerService.class);
+            final Intent tasker = new Intent(Application.applicationContext, TaskerService.class);
             tasker.setAction(TaskerService.ACTION_STOP);
-            context.startService(tasker);
-            disableComponent(context, packageName, componentName);
+            Application.applicationContext.startService(tasker);
+            disableComponent(packageName, componentName);
             logDebug("Service NOT Started: " + componentName);
         }
     }
@@ -401,7 +370,7 @@ public class Utils implements DeviceConstants, FileConstants {
         try {
             RootTools.remount(path, mode);
         } catch (Exception e) {
-            Log.e(TAG, String.format("Could not remount %s with options \"%s\", error: %s",
+            logDebug(String.format("Could not remount %s with options \"%s\", error: %s",
                     path, mode, e));
         }
     }

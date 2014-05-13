@@ -23,16 +23,17 @@ import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.ParseUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -71,8 +72,8 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (mTasker == preference) {
-            Utils.startTaskerService(getActivity());
-            BusProvider.getBus().post(new TaskListFragment());
+            Utils.startTaskerService();
+            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_TASKER_LIST));
             return true;
         }
 

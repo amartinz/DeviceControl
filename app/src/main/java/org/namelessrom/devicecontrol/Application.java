@@ -37,6 +37,8 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
+import java.io.File;
+
 @ReportsCrashes(
         httpMethod = HttpSender.Method.PUT,
         reportType = HttpSender.Type.JSON,
@@ -109,6 +111,15 @@ public class Application extends android.app.Application implements DeviceConsta
         toggleLauncherIcon(showLauncher);
     }
 
+    public static String getFilesDirectory() {
+        final File tmp = Application.applicationContext.getFilesDir();
+        if (tmp != null && tmp.exists()) {
+            return tmp.getPath();
+        } else {
+            return "/data/data/" + Application.applicationContext.getPackageName();
+        }
+    }
+
     public static void toggleLauncherIcon(final boolean showLauncher) {
         try {
             if (packageManager == null) { return; }
@@ -120,18 +131,18 @@ public class Application extends android.app.Application implements DeviceConsta
                         "com.android.settings") > 0
                         && !showLauncher) {
                     logDebug("Implemented into system and showLauncher is not set!");
-                    Utils.disableComponent(applicationContext, PACKAGE_NAME, ".DummyLauncher");
+                    Utils.disableComponent(PACKAGE_NAME, ".DummyLauncher");
                 } else {
                     logDebug("Implemented into system and showLauncher is set!");
-                    Utils.enableComponent(applicationContext, PACKAGE_NAME, ".DummyLauncher");
+                    Utils.enableComponent(PACKAGE_NAME, ".DummyLauncher");
                 }
             } else {
                 logDebug("Not implemented into system!");
-                Utils.enableComponent(applicationContext, PACKAGE_NAME, ".DummyLauncher");
+                Utils.enableComponent(PACKAGE_NAME, ".DummyLauncher");
             }
         } catch (PackageManager.NameNotFoundException exc) {
             logDebug("You dont have settings? That's weird.");
-            Utils.enableComponent(applicationContext, PACKAGE_NAME, ".DummyLauncher");
+            Utils.enableComponent(PACKAGE_NAME, ".DummyLauncher");
         }
     }
 
