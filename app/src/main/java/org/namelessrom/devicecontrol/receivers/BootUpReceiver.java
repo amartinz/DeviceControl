@@ -33,7 +33,7 @@ public class BootUpReceiver extends BroadcastReceiver {
         context.startService(bootup);
         Log.i("DeviceControl", "Service Started: BootUpService");
 
-        Utils.startTaskerService(context);
+        Utils.startTaskerService();
     }
 
 }

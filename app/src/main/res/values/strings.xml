@@ -159,6 +159,7 @@
     <string name="disable_msg">%s will be disabled.\n\nContinue?</string>
     <string name="vm_settings">Dalvik Settings</string>
     <string name="full_editor">Press to load full editor</string>
+    <string name="toggle_vm_sysctl">Toggle SysCtl / VM</string>
     <string name="apply">Apply</string>
     <string name="restore">Restore</string>
     <string name="filter">Filter</string>
@@ -208,4 +209,5 @@
     <string name="ext_media">External media</string>
     <string name="ext_obb">External obb</string>
     <string name="cache">Cache</string>
+    <string name="applying_wait">Applying values, please wait&#8230;</string>
 </resources>

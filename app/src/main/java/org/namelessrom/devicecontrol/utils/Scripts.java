@@ -22,21 +22,51 @@ package org.namelessrom.devicecontrol.utils;
  */
 public class Scripts {
 
+    public static final String BUILD_PROP = "/system/build.prop";
+    public static final String SYSCTL     = "/system/etc/sysctl.conf";
+
+    public static final String APPEND_CMD    = "echo \"%s=%s\" >> %s;";
+    public static final String COPY_CMD      = "busybox cp %s %s;";
+    public static final String KILL_PROP_CMD = "busybox sed -i \"/%s/D\" %s;";
+    public static final String REPLACE_CMD   = "busybox sed -i \"/%s/ c %<s=%s\" %s;";
+
+    public static String copyFile(final String source, final String destination) {
+        return String.format(COPY_CMD, source, destination);
+    }
+
+    public static String addOrUpdate(final String property, final String value) {
+        return addOrUpdate(property, value, BUILD_PROP);
+    }
+
+    public static String addOrUpdate(final String property, final String value, final String file) {
+        if (Utils.existsInFile(file, property)) {
+            return String.format(REPLACE_CMD, property, value, file);
+        } else {
+            return String.format(APPEND_CMD, property, value, file);
+        }
+    }
+
+    public static String removeProperty(final String property) {
+        return removeProperty(property, BUILD_PROP);
+    }
+
+    public static String removeProperty(final String property, final String file) {
+        if (Utils.existsInFile(file, property)) {
+            return String.format(KILL_PROP_CMD, property, file);
+        }
+        return "";
+    }
+
     public static boolean getForceNavBar() {
-        return Utils.existsInBuildProp("qemu.hw.mainkeys=0");
+        return Utils.existsInFile(BUILD_PROP, "qemu.hw.mainkeys");
     }
 
     public static String toggleForceNavBar() {
-
-        return ("if [ \"`grep 'qemu\\.hw\\.mainkeys\\=0' /system/build.prop`\" ];" +
-                "then /system/bin/mount -o remount,rw /system;" +
-                "sed -i '/qemu\\.hw\\.mainkeys\\=0/d' /system/build.prop;" +
-                "/system/bin/mount -o remount,ro /system;" +
-                "elif [ -z \"`grep 'qemu\\.hw\\.mainkeys\\=0' /system/build.prop`\" ];" +
-                "then /system/bin/mount -o remount,rw /system;" +
-                "echo \"qemu.hw.mainkeys=0\" >> /system/build.prop;" +
-                "/system/bin/mount -o remount,ro /system;" +
-                "fi");
+        if (getForceNavBar()) {
+            return String.format(KILL_PROP_CMD, "qemu.hw.mainkeys", BUILD_PROP);
+        } else {
+            return String.format(APPEND_CMD, "qemu.hw.mainkeys", "0", BUILD_PROP);
+        }
     }
 
 }

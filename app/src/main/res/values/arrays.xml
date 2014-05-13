@@ -75,7 +75,7 @@
         <item>7</item>
     </string-array>
 
-    <!-- PropModderFragment -->
+    <!-- BuildPropFragment -->
     <string-array name="entries_wifi_scan" translatable="false">
         <item>0</item>
         <item>15</item>
