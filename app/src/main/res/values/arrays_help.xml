@@ -106,17 +106,6 @@
         <item>@string/tasklist_help</item>
         <item>@string/fstrim_help</item>
     </string-array>
-    <!-- Editors -->
-    <string-array name="editors_titles" translatable="false">
-        <item>@string/vm</item>
-        <item>@string/sysctl</item>
-        <item>@string/buildprop</item>
-    </string-array>
-    <string-array name="editors_content" translatable="false">
-        <item>@string/vm_help</item>
-        <item>@string/sysctl_help</item>
-        <item>@string/buildprop_help</item>
-    </string-array>
     <!-- Preferences -->
     <string-array name="preference_titles" translatable="false">
         <item>@string/reapply_on_boot</item>

@@ -24,12 +24,12 @@
         android:visibility="visible">
 
         <Button
-            android:id="@+id/btn_apply"
+            android:id="@+id/btn_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="sans-serif-condensed"
-            android:text="@string/apply"
+            android:text="@android:string/cancel"
             android:background="@drawable/transparent_button" />
 
         <LinearLayout
@@ -47,12 +47,12 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_cancel"
+            android:id="@+id/btn_apply"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="sans-serif-condensed"
-            android:text="@android:string/cancel"
+            android:text="@string/apply"
             android:background="@drawable/transparent_button" />
 
     </LinearLayout>

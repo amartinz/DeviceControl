@@ -1,7 +1,6 @@
 package org.namelessrom.devicecontrol.fragments.tools.tasker;
 
 import android.app.Activity;
-import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,13 +14,25 @@ import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.TaskerItem;
+import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+import org.namelessrom.devicecontrol.widgets.AttachListFragment;
 import org.namelessrom.devicecontrol.widgets.adapters.TaskerAdapter;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
-public class TaskListFragment extends ListFragment {
+public class TaskListFragment extends AttachListFragment implements DeviceConstants {
 
     private TaskerAdapter mAdapter;
+
+    @Override
+    public void onAttach(Activity activity) { super.onAttach(activity, ID_TOOLS_TASKER_LIST); }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
+    }
 
     @Override
     public void onResume() {
@@ -79,11 +90,9 @@ public class TaskListFragment extends ListFragment {
                 return true;
             }
             default: {
-                break;
+                return false;
             }
         }
-
-        return false;
     }
 
     @Subscribe

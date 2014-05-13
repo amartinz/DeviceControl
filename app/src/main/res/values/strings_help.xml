@@ -18,9 +18,6 @@
     <string name="msm_dcvs_help">Enable support for MSM DCVS to control all CPU and GPU core frequencies. The DCVS manager allows idle driver to feed the idle information to the algorithm and the algorithm returns a frequency for the core which is passed to the frequency change driver.</string>
     <string name="tasklist_help">MPDecision may override CPU/GPU actions and thus they may not work, if MPDecision is running!</string>
     <string name="fstrim_help">FStrim is used on a mounted filesystem to discard (or \"trim\") blocks which are not in use by the filesystem.\nThis can help reducing lags and keep performance of your device.</string>
-    <string name="vm_help">Manually tune the virtual machine properties of your device.</string>
-    <string name="sysctl_help">Manually tune the sysctl properties of your device.</string>
-    <string name="buildprop_help">Apply quick tweaks to your build.prop or manually edit it with the full editor.</string>
     <string name="reapply_on_boot_help">Restores the changes you did when the device is booting up.</string>
     <string name="extensive_logging_help">Should be used only for debugging purposes.\nLogs extra information to the logcat.</string>
 </resources>

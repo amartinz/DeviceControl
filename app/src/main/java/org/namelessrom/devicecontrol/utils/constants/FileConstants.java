@@ -66,7 +66,6 @@ public interface FileConstants {
     // Directories
     //==============================================================================================
     public static final String DC_LOG_DIR         = File.separator + "Logs";
-    public static final String DC_BACKUP_DIR      = File.separator + "Backup";
     //==============================================================================================
     public static final String DC_LOG_FILE_FSTRIM = DC_LOG_DIR + File.separator + "fstrim.log";
     //==============================================================================================
