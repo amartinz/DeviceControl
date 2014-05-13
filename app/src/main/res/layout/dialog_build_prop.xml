@@ -34,22 +34,21 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/lname">
+            android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/prop_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/name"
-                android:id="@+id/text1"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:labelFor="@+id/nprop" />
+                android:labelFor="@+id/prop_name" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/nprop"
+                android:id="@+id/prop_name"
                 android:inputType="text"
                 android:singleLine="true"
                 android:lines="1" />
@@ -59,46 +58,43 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lval"
             android:layout_marginTop="10dip">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/value"
-                android:id="@+id/text2"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:labelFor="@+id/vprop" />
+                android:labelFor="@+id/prop_value" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/vprop"
+                android:id="@+id/prop_value"
                 android:inputType="text"
                 android:singleLine="true"
                 android:lines="1" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/prop_presets"
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lpresets"
             android:layout_marginTop="10dip">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/presets"
-                android:id="@+id/text3"
                 android:textStyle="bold"
                 android:textSize="16sp" />
 
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinner" />
+                android:id="@+id/preset_spinner" />
         </LinearLayout>
     </LinearLayout>
 

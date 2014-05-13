@@ -16,6 +16,7 @@
     <string name="mpdecision">MPDecision</string>
     <string name="submit_confirm_button" translatable="false">@string/finish</string>
     <string name="lcd_density_default" translatable="false">480</string>
+    <string name="sysctl_vm">SysCtl / VM</string>
     <!-- Dalvik -->
     <string name="dirty_ratio_title">Dirty ratio</string>
     <string name="dirty_background_title">Dirty background ratio</string>

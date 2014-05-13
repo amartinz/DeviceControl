@@ -36,14 +36,14 @@ import android.widget.ListView;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.proprietary.Constants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -63,7 +63,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference mSobGpu;
     private CustomCheckBoxPreference mSobExtras;
     private CustomCheckBoxPreference mSobVoltage;
-    private CustomCheckBoxPreference mSobVm;
     private CustomCheckBoxPreference mSobSysCtl;
     //==============================================================================================
     // Debug
@@ -180,12 +179,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
             mSobVoltage.setOnPreferenceChangeListener(this);
         }
 
-        mSobVm = (CustomCheckBoxPreference) findPreference(SOB_VM);
-        if (mSobVm != null) {
-            mSobVm.setChecked(PreferenceHelper.getBoolean(SOB_VM));
-            mSobVm.setOnPreferenceChangeListener(this);
-        }
-
         mSobSysCtl = (CustomCheckBoxPreference) findPreference(SOB_SYSCTL);
         if (mSobSysCtl != null) {
             mSobSysCtl.setChecked(PreferenceHelper.getBoolean(SOB_SYSCTL));
@@ -252,11 +245,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(SOB_VOLTAGE, value);
             mSobVoltage.setChecked(value);
-            changed = true;
-        } else if (mSobVm == preference) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(SOB_VM, value);
-            mSobVm.setChecked(value);
             changed = true;
         } else if (mSobSysCtl == preference) {
             final boolean value = (Boolean) newValue;
