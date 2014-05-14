@@ -41,6 +41,7 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
@@ -49,7 +50,7 @@ import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class PreferencesFragment extends AttachPreferenceFragment
-        implements Preference.OnPreferenceChangeListener, DeviceConstants {
+        implements Preference.OnPreferenceChangeListener, DeviceConstants, PerformanceConstants {
 
     //==============================================================================================
     // App
@@ -150,40 +151,47 @@ public class PreferencesFragment extends AttachPreferenceFragment
             }
         }
 
-        mSobDevice = (CustomCheckBoxPreference) findPreference(SOB_DEVICE);
-        if (mSobDevice != null) {
-            mSobDevice.setChecked(PreferenceHelper.getBoolean(SOB_DEVICE));
-            mSobDevice.setOnPreferenceChangeListener(this);
-        }
+        category = (PreferenceCategory) findPreference("prefs_set_on_boot");
+        if (category != null) {
+            mSobDevice = (CustomCheckBoxPreference) findPreference(SOB_DEVICE);
+            if (mSobDevice != null) {
+                mSobDevice.setChecked(PreferenceHelper.getBoolean(SOB_DEVICE));
+                mSobDevice.setOnPreferenceChangeListener(this);
+            }
 
-        mSobCpu = (CustomCheckBoxPreference) findPreference(SOB_CPU);
-        if (mSobCpu != null) {
-            mSobCpu.setChecked(PreferenceHelper.getBoolean(SOB_CPU));
-            mSobCpu.setOnPreferenceChangeListener(this);
-        }
+            mSobCpu = (CustomCheckBoxPreference) findPreference(SOB_CPU);
+            if (mSobCpu != null) {
+                mSobCpu.setChecked(PreferenceHelper.getBoolean(SOB_CPU));
+                mSobCpu.setOnPreferenceChangeListener(this);
+            }
 
-        mSobGpu = (CustomCheckBoxPreference) findPreference(SOB_GPU);
-        if (mSobGpu != null) {
-            mSobGpu.setChecked(PreferenceHelper.getBoolean(SOB_GPU));
-            mSobGpu.setOnPreferenceChangeListener(this);
-        }
+            mSobGpu = (CustomCheckBoxPreference) findPreference(SOB_GPU);
+            if (mSobGpu != null) {
+                mSobGpu.setChecked(PreferenceHelper.getBoolean(SOB_GPU));
+                mSobGpu.setOnPreferenceChangeListener(this);
+            }
 
-        mSobExtras = (CustomCheckBoxPreference) findPreference(SOB_EXTRAS);
-        if (mSobExtras != null) {
-            mSobExtras.setChecked(PreferenceHelper.getBoolean(SOB_EXTRAS));
-            mSobExtras.setOnPreferenceChangeListener(this);
-        }
+            mSobExtras = (CustomCheckBoxPreference) findPreference(SOB_EXTRAS);
+            if (mSobExtras != null) {
+                mSobExtras.setChecked(PreferenceHelper.getBoolean(SOB_EXTRAS));
+                mSobExtras.setOnPreferenceChangeListener(this);
+            }
 
-        mSobVoltage = (CustomCheckBoxPreference) findPreference(SOB_VOLTAGE);
-        if (mSobVoltage != null) {
-            mSobVoltage.setChecked(PreferenceHelper.getBoolean(SOB_VOLTAGE));
-            mSobVoltage.setOnPreferenceChangeListener(this);
-        }
+            mSobVoltage = (CustomCheckBoxPreference) findPreference(SOB_VOLTAGE);
+            if (mSobVoltage != null) {
+                if (Utils.fileExists(VDD_TABLE_FILE) || Utils.fileExists(UV_TABLE_FILE)) {
+                    mSobVoltage.setChecked(PreferenceHelper.getBoolean(SOB_VOLTAGE));
+                    mSobVoltage.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mSobVoltage);
+                }
+            }
 
-        mSobSysCtl = (CustomCheckBoxPreference) findPreference(SOB_SYSCTL);
-        if (mSobSysCtl != null) {
-            mSobSysCtl.setChecked(PreferenceHelper.getBoolean(SOB_SYSCTL));
-            mSobSysCtl.setOnPreferenceChangeListener(this);
+            mSobSysCtl = (CustomCheckBoxPreference) findPreference(SOB_SYSCTL);
+            if (mSobSysCtl != null) {
+                mSobSysCtl.setChecked(PreferenceHelper.getBoolean(SOB_SYSCTL));
+                mSobSysCtl.setOnPreferenceChangeListener(this);
+            }
         }
     }
 

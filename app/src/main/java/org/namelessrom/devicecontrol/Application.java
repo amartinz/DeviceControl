@@ -96,7 +96,6 @@ public class Application extends android.app.Application implements DeviceConsta
                     .setClassInstanceLimit(AddTaskActivity.class, 100)
                     .setClassInstanceLimit(AppDetailActivity.class, 100)
                     .penaltyLog()
-                    .penaltyDeath()
                     .build());
 
             RootTools.debugMode = true;
