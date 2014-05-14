@@ -9,6 +9,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.echo.holographlibrary.Bar;
+import com.echo.holographlibrary.BarGraph;
 import com.squareup.otto.Subscribe;
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
@@ -28,6 +31,8 @@ import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+
+import java.util.ArrayList;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -39,6 +44,7 @@ public class AppDetailActivity extends Activity {
     private TextView     mStatus;
     private Button       mDisabler;
     private Button       mKillApp;
+    private BarGraph     mCacheGraph;
     private LinearLayout mCacheInfo;
     private Button       mClearData;
     private Button       mClearCache;
@@ -124,6 +130,7 @@ public class AppDetailActivity extends Activity {
             }
         });
 
+        mCacheGraph = (BarGraph) findViewById(R.id.app_cache_graph);
         mCacheInfo = (LinearLayout) findViewById(R.id.app_cache_info_container);
 
         mClearData = (Button) findViewById(R.id.app_data_clear);
@@ -229,7 +236,8 @@ public class AppDetailActivity extends Activity {
             mCacheInfo.addView(addCacheWidget(R.string.total,
                     AppHelper.convertSize(packageStats.codeSize + packageStats.dataSize
                             + packageStats.externalCodeSize + packageStats.externalDataSize
-                            + packageStats.externalMediaSize + packageStats.externalObbSize)
+                            + packageStats.externalMediaSize + packageStats.externalObbSize
+                            + packageStats.externalCacheSize)
             ));
             mCacheInfo.addView(addCacheWidget(R.string.app,
                     AppHelper.convertSize(packageStats.codeSize)));
@@ -245,7 +253,47 @@ public class AppDetailActivity extends Activity {
                     AppHelper.convertSize(packageStats.externalObbSize)));
             mCacheInfo.addView(addCacheWidget(R.string.cache,
                     AppHelper.convertSize(packageStats.cacheSize)));
+            mCacheInfo.addView(addCacheWidget(R.string.ext_cache,
+                    AppHelper.convertSize(packageStats.externalCacheSize)));
         }
+
+        if (mCacheGraph != null) {
+            final ArrayList<Bar> barList = new ArrayList<Bar>();
+            final Resources r = getResources();
+            // Total -------------------------------------------------------------------------------
+            String text = getString(R.string.total);
+            barList.add(createBar(packageStats.codeSize + packageStats.dataSize
+                            + packageStats.externalCodeSize + packageStats.externalDataSize
+                            + packageStats.externalMediaSize + packageStats.externalObbSize,
+                    text, r.getColor(R.color.greenish)
+            ));
+            // App ---------------------------------------------------------------------------------
+            text = getString(R.string.app);
+            barList.add(createBar(packageStats.codeSize + packageStats.externalCodeSize,
+                    text, r.getColor(R.color.red_middle)));
+            // Data --------------------------------------------------------------------------------
+            text = getString(R.string.data);
+            barList.add(createBar(packageStats.dataSize + packageStats.externalDataSize,
+                    text, r.getColor(R.color.orange)));
+            // External ------------------------------------------------------------------------
+            text = getString(R.string.ext);
+            barList.add(createBar(packageStats.externalMediaSize + packageStats.externalObbSize,
+                    text, r.getColor(R.color.blueish)));
+            // Cache -------------------------------------------------------------------------------
+            text = getString(R.string.cache);
+            barList.add(createBar(packageStats.cacheSize + packageStats.externalCacheSize,
+                    text, r.getColor(R.color.review_green)));
+            mCacheGraph.setBars(barList);
+        }
+    }
+
+    private Bar createBar(final long value, final String text, final int color) {
+        final Bar bar = new Bar();
+        bar.setName(text);
+        bar.setValue(value);
+        bar.setValueString(AppHelper.convertSize(value));
+        bar.setColor(color);
+        return bar;
     }
 
     private View addCacheWidget(final int txtId, final String text) {
