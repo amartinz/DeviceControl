@@ -36,19 +36,20 @@ import org.namelessrom.devicecontrol.wizard.model.SingleFixedChoicePage;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+
 public class SingleChoiceFragment extends ListFragment {
     private static final String ARG_KEY = "key";
 
     private PageFragmentCallbacks mCallbacks;
     private List<String>          mChoices;
-    private String                mKey;
     private Page                  mPage;
 
-    public static SingleChoiceFragment create(String key) {
-        Bundle args = new Bundle();
+    public static SingleChoiceFragment create(final String key) {
+        final Bundle args = new Bundle();
         args.putString(ARG_KEY, key);
 
-        SingleChoiceFragment fragment = new SingleChoiceFragment();
+        final SingleChoiceFragment fragment = new SingleChoiceFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,14 +58,13 @@ public class SingleChoiceFragment extends ListFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        mKey = args.getString(ARG_KEY);
-        mPage = mCallbacks.onGetPage(mKey);
+        final Bundle args = getArguments();
+        mPage = mCallbacks.onGetPage(args.getString(ARG_KEY));
 
-        SingleFixedChoicePage fixedChoicePage = (SingleFixedChoicePage) mPage;
+        final SingleFixedChoicePage fixedChoicePage = (SingleFixedChoicePage) mPage;
         mChoices = new ArrayList<String>();
         for (int i = 0; i < fixedChoicePage.getOptionCount(); i++) {
             mChoices.add(fixedChoicePage.getOptionAt(i));
@@ -74,10 +74,10 @@ public class SingleChoiceFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.wizard_fragment_page, container, false);
-        ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
+        final View rootView = inflater.inflate(R.layout.wizard_fragment_page, container, false);
+        ((TextView) ButterKnife.findById(rootView, android.R.id.title)).setText(mPage.getTitle());
 
-        final ListView listView = (ListView) rootView.findViewById(android.R.id.list);
+        final ListView listView = ButterKnife.findById(rootView, android.R.id.list);
         setListAdapter(new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_single_choice,
                 android.R.id.text1,
@@ -88,7 +88,7 @@ public class SingleChoiceFragment extends ListFragment {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                String selection = mPage.getData().getString(Page.SIMPLE_DATA_KEY);
+                final String selection = mPage.getData().getString(Page.SIMPLE_DATA_KEY);
                 for (int i = 0; i < mChoices.size(); i++) {
                     if (mChoices.get(i).equals(selection)) {
                         listView.setItemChecked(i, true);

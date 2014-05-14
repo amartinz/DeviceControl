@@ -45,6 +45,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import butterknife.ButterKnife;
+
 public class ReviewFragment extends ListFragment implements ModelCallbacks {
     private Callbacks           mCallbacks;
     private AbstractWizardModel mWizardModel;
@@ -63,15 +65,16 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.wizard_fragment_page, container, false);
+        final View rootView = inflater.inflate(R.layout.wizard_fragment_page, container, false);
 
-        TextView titleView = (TextView) rootView.findViewById(android.R.id.title);
+        final TextView titleView = ButterKnife.findById(rootView, android.R.id.title);
         titleView.setText(R.string.review);
         titleView.setTextColor(getResources().getColor(R.color.review_green));
 
-        ListView listView = (ListView) rootView.findViewById(android.R.id.list);
+        ((ListView) ButterKnife.findById(rootView, android.R.id.list))
+                .setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         setListAdapter(mReviewAdapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
         return rootView;
     }
 
@@ -214,8 +217,11 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
             if (TextUtils.isEmpty(value)) {
                 value = "(None)";
             }
-            ((TextView) rootView.findViewById(android.R.id.text1)).setText(reviewItem.getTitle());
-            ((TextView) rootView.findViewById(android.R.id.text2)).setText(value);
+            ((TextView) ButterKnife.findById(rootView, android.R.id.text1))
+                    .setText(reviewItem.getTitle());
+            ((TextView) ButterKnife.findById(rootView, android.R.id.text2))
+                    .setText(value);
+
             return rootView;
         }
 

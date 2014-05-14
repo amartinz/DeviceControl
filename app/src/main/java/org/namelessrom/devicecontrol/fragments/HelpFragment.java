@@ -11,6 +11,8 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.adapters.HelpArrayAdapter;
 
+import butterknife.ButterKnife;
+
 public class HelpFragment extends Fragment implements DeviceConstants {
 
     public static final String ARG_TYPE = "arg_type";
@@ -39,7 +41,7 @@ public class HelpFragment extends Fragment implements DeviceConstants {
         final int titleId = ids[0];
         final int contentId = ids[1];
 
-        final ListView list = (ListView) v.findViewById(R.id.navbarlist);
+        final ListView list = ButterKnife.findById(v, R.id.navbarlist);
         HelpArrayAdapter mAdapter = new HelpArrayAdapter(
                 getActivity(),
                 getResources().getStringArray(titleId),

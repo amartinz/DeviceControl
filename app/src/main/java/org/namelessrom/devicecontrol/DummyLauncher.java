@@ -20,11 +20,14 @@ package org.namelessrom.devicecontrol;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.stericson.roottools.RootTools;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Dummy Activity, used as Launcher.
@@ -34,43 +37,40 @@ import com.stericson.roottools.RootTools;
  */
 public class DummyLauncher extends Activity {
 
+    @InjectView(R.id.launcher_status) TextView mStatus;
+    @InjectView(R.id.btn_action)      Button   mAction;
+
+    private final boolean hasRoot    = RootTools.isRootAvailable() && RootTools.isAccessGiven();
+    private final boolean hasBusyBox = RootTools.isBusyboxAvailable();
+
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_launcher);
-
-        final boolean hasRoot = RootTools.isRootAvailable() && RootTools.isAccessGiven();
-        final boolean hasBusyBox = RootTools.isBusyboxAvailable();
-
-        final TextView status = (TextView) findViewById(R.id.launcher_status);
-        final Button action = (Button) findViewById(R.id.btn_action);
-        action.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!hasRoot) {
-                    RootTools.offerSuperUser(DummyLauncher.this);
-                } else if (!hasBusyBox) {
-                    RootTools.offerBusyBox(DummyLauncher.this);
-                }
-            }
-        });
-        final Button exit = (Button) findViewById(R.id.btn_exit);
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        ButterKnife.inject(this);
 
         if (hasRoot && hasBusyBox) {
             startActivity(new Intent(DummyLauncher.this, MainActivity.class));
             finish();
         } else if (hasRoot) {
-            status.setText(getString(R.string.app_warning_busybox, getString(R.string.app_name)));
-            action.setText(R.string.get_busybox);
+            mStatus.setText(getString(R.string.app_warning_busybox, getString(R.string.app_name)));
+            mAction.setText(R.string.get_busybox);
         } else {
-            status.setText(getString(R.string.app_warning_root, getString(R.string.app_name)));
-            action.setText(R.string.get_superuser);
+            mStatus.setText(getString(R.string.app_warning_root, getString(R.string.app_name)));
+            mAction.setText(R.string.get_superuser);
         }
     }
+
+    @OnClick(R.id.btn_action) void onAction() {
+        if (!hasRoot) {
+            RootTools.offerSuperUser(DummyLauncher.this);
+        } else if (!hasBusyBox) {
+            RootTools.offerBusyBox(DummyLauncher.this);
+        }
+    }
+
+    @OnClick(R.id.btn_exit) void onExit() {
+        finish();
+    }
+
 }

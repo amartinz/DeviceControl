@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 
+import static butterknife.ButterKnife.findById;
+
 public class HelpArrayAdapter extends BaseAdapter {
 
     private final Context  mContext;
@@ -38,10 +40,11 @@ public class HelpArrayAdapter extends BaseAdapter {
             final LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             v = inflater.inflate(R.layout.list_item, parent, false);
         }
-        final TextView text1 = (TextView) v.findViewById(android.R.id.text1);
+        final TextView text1 = findById(v, android.R.id.text1);
         text1.setTextColor(Color.WHITE);
         text1.setTextAppearance(mContext, android.R.attr.textAppearanceListItemSmall);
-        final TextView text2 = (TextView) v.findViewById(android.R.id.text2);
+
+        final TextView text2 = findById(v, android.R.id.text2);
         text1.setText(mTitles[position]);
         text2.setText(mContent[position]);
         return v;

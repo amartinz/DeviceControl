@@ -20,7 +20,6 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -49,6 +48,10 @@ import org.namelessrom.devicecontrol.wizard.ui.StepPagerStrip;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+
 public class AddTaskActivity extends FragmentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
@@ -56,7 +59,12 @@ public class AddTaskActivity extends FragmentActivity implements
 
     public static final String ARG_ITEM = "arg_item";
 
-    private ViewPager      mPager;
+    @InjectView(R.id.next_button) Button mNextButton;
+    @InjectView(R.id.prev_button) Button mPrevButton;
+
+    @InjectView(R.id.pager) ViewPager      mPager;
+    @InjectView(R.id.strip) StepPagerStrip mStepPagerStrip;
+
     private MyPagerAdapter mPagerAdapter;
 
     private boolean mEditingAfterReview;
@@ -65,11 +73,7 @@ public class AddTaskActivity extends FragmentActivity implements
 
     private boolean mConsumePageSelectedEvent;
 
-    private Button mNextButton;
-    private Button mPrevButton;
-
-    private List<Page>     mCurrentPageSequence;
-    private StepPagerStrip mStepPagerStrip;
+    private List<Page> mCurrentPageSequence;
 
     @Override
     protected void onResume() {
@@ -86,6 +90,7 @@ public class AddTaskActivity extends FragmentActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wizard_activity);
+        ButterKnife.inject(this);
 
         final ActionBar actionBar = getActionBar();
         if (actionBar != null) {
@@ -93,7 +98,7 @@ public class AddTaskActivity extends FragmentActivity implements
             actionBar.setHomeButtonEnabled(true);
         }
 
-        TaskerItem item = (TaskerItem) getIntent().getSerializableExtra(ARG_ITEM);
+        final TaskerItem item = (TaskerItem) getIntent().getSerializableExtra(ARG_ITEM);
         if (item != null) {
             if (actionBar != null) {
                 actionBar.setTitle(R.string.edit_task);
@@ -110,9 +115,7 @@ public class AddTaskActivity extends FragmentActivity implements
         mWizardModel.registerListener(this);
 
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
-        mStepPagerStrip = (StepPagerStrip) findViewById(R.id.strip);
         mStepPagerStrip.setOnPageSelectedListener(new StepPagerStrip.OnPageSelectedListener() {
             @Override
             public void onPageStripSelected(int position) {
@@ -122,9 +125,6 @@ public class AddTaskActivity extends FragmentActivity implements
                 }
             }
         });
-
-        mNextButton = (Button) findViewById(R.id.next_button);
-        mPrevButton = (Button) findViewById(R.id.prev_button);
 
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -141,40 +141,34 @@ public class AddTaskActivity extends FragmentActivity implements
             }
         });
 
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
-                    DialogFragment dg = new DialogFragment() {
-                        @Override
-                        public Dialog onCreateDialog(Bundle savedInstanceState) {
-                            return new AlertDialog.Builder(getActivity())
-                                    .setMessage(R.string.submit_confirm_message)
-                                    .setPositiveButton(R.string.submit_confirm_button, mSubListener)
-                                    .setNegativeButton(android.R.string.cancel, null)
-                                    .create();
-                        }
-                    };
-                    dg.show(getSupportFragmentManager(), "create_tasker_dialog");
-                } else {
-                    if (mEditingAfterReview) {
-                        mPager.setCurrentItem(mPagerAdapter.getCount() - 1);
-                    } else {
-                        mPager.setCurrentItem(mPager.getCurrentItem() + 1);
-                    }
-                }
-            }
-        });
-
-        mPrevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-            }
-        });
-
         onPageTreeChanged();
         updateBottomBar();
+    }
+
+    @OnClick(R.id.next_button) void onNextButton() {
+        if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
+            DialogFragment dg = new DialogFragment() {
+                @Override
+                public Dialog onCreateDialog(Bundle savedInstanceState) {
+                    return new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.submit_confirm_message)
+                            .setPositiveButton(R.string.submit_confirm_button, mSubListener)
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .create();
+                }
+            };
+            dg.show(getSupportFragmentManager(), "create_tasker_dialog");
+        } else {
+            if (mEditingAfterReview) {
+                mPager.setCurrentItem(mPagerAdapter.getCount() - 1);
+            } else {
+                mPager.setCurrentItem(mPager.getCurrentItem() + 1);
+            }
+        }
+    }
+
+    @OnClick(R.id.prev_button) void onPrevButton() {
+        mPager.setCurrentItem(mPager.getCurrentItem() - 1);
     }
 
     @Override
@@ -190,12 +184,7 @@ public class AddTaskActivity extends FragmentActivity implements
     @Subscribe
     public void onItemSelectedEvent(final ItemSelectedEvent event) {
         if (event == null) return;
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-            mNextButton.callOnClick();
-        } else {
-            mNextButton.performClick();
-        }
+        onNextButton();
     }
 
     private DialogInterface.OnClickListener mSubListener = new DialogInterface.OnClickListener() {

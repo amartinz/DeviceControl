@@ -17,6 +17,8 @@ import org.namelessrom.devicecontrol.objects.AppItem;
 
 import java.util.List;
 
+import static butterknife.ButterKnife.findById;
+
 public class AppListAdapter extends BaseAdapter {
 
     private final Context       mContext;
@@ -54,10 +56,12 @@ public class AppListAdapter extends BaseAdapter {
                     .inflate(R.layout.item_app, parent, false);
             viewHolder = new ViewHolder();
 
-            viewHolder.appIcon = (ImageView) convertView.findViewById(R.id.app_icon);
-            viewHolder.appLabel = (TextView) convertView.findViewById(R.id.app_label);
-            viewHolder.packageName = (TextView) convertView.findViewById(R.id.app_package);
-            viewHolder.layer = convertView.findViewById(R.id.app_layer);
+            viewHolder.appIcon = findById(convertView, R.id.app_icon);
+            viewHolder.appLabel = findById(convertView, R.id.app_label);
+            viewHolder.packageName = findById(convertView, R.id.app_package);
+            viewHolder.layer = findById(convertView, R.id.app_layer);
+
+            assert (convertView != null);
 
             convertView.setTag(viewHolder);
         } else {

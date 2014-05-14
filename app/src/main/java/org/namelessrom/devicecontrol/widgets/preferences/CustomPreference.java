@@ -1,31 +1,27 @@
 package org.namelessrom.devicecontrol.widgets.preferences;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 
+import static butterknife.ButterKnife.findById;
+
 /**
  * Created by alex on 21.03.14.
  */
 public class CustomPreference extends Preference {
 
-    TextView title;
-    TextView summary;
-    String color    = "#FFFFFF";
-    String sumColor = null;
-    Preference        pref;
-    boolean           checkBoxState;
-    boolean           areMilliVolts;
-    String            category;
-    SharedPreferences mPrefs;
+    private String color    = "#FFFFFF";
+    private String sumColor = null;
+
+    private boolean areMilliVolts;
+    private String  category;
 
     public CustomPreference(Context context) {
         super(context);
@@ -42,75 +38,58 @@ public class CustomPreference extends Preference {
         setLayoutResource(R.layout.preference);
     }
 
-    public void setCustomSummaryKeyPlus(int plus) {
-        String currValue = this.getKey();
-        int newValue = Integer.parseInt(currValue) + plus;
-        this.setKey(newValue + "");
+    public void setCustomSummaryKeyPlus(final int plus) {
+        final int newValue = Integer.parseInt(getKey()) + plus;
+        setKey(newValue + "");
         if (areMilliVolts) {
-            this.setSummary(newValue + " mV");
+            setSummary(newValue + " mV");
         } else {
-            this.setSummary(newValue + "");
+            setSummary(newValue + "");
         }
     }
 
-    public void setCustomSummaryKeyMinus(int minus) {
-        String currValue = this.getKey();
-        int newValue = Integer.parseInt(currValue) - minus;
-        this.setKey(newValue + "");
+    public void setCustomSummaryKeyMinus(final int minus) {
+        final int newValue = Integer.parseInt(getKey()) - minus;
+        setKey(newValue + "");
         if (areMilliVolts) {
-            this.setSummary(newValue + " mV");
+            setSummary(newValue + " mV");
         } else {
-            this.setSummary(newValue + "");
+            setSummary(newValue + "");
         }
     }
 
-    public void restoreSummaryKey(String summary, String key) {
-        this.setKey(key);
+    public void restoreSummaryKey(final String summary, final String key) {
+        setKey(key);
         if (areMilliVolts) {
-            this.setSummary(summary + " mV");
+            setSummary(summary + " mV");
         } else {
-            this.setSummary(summary + "");
+            setSummary(summary + "");
         }
     }
 
-    public void areMilliVolts(boolean areMillivolts) {
-        this.areMilliVolts = areMillivolts;
-    }
+    public void areMilliVolts(final boolean areMillivolts) { this.areMilliVolts = areMillivolts; }
 
-    public boolean getCheckBoxState() {
-        return checkBoxState;
-    }
+    public void setCategory(final String category) { this.category = category; }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+    public void setTitleColor(final String color) { this.color = color; }
 
-    public void setTitleColor(String color) {
-        this.color = color;
-    }
+    public void setSummaryColor(final String color) { this.sumColor = color; }
 
-    public void setSummaryColor(String color) {
-        this.sumColor = color;
-    }
-
-    public String getCategory() {
-        return this.category;
-    }
+    public String getCategory() { return this.category; }
 
     @Override
-    protected void onBindView(View view) {
+    protected void onBindView(final View view) {
         super.onBindView(view);
-        pref = this;
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        title = (TextView) view.findViewById(android.R.id.title);
+
+        final TextView title = findById(view, android.R.id.title);
+        title.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
         title.setTextColor(Color.parseColor(color));
-        summary = (TextView) view.findViewById(android.R.id.summary);
+
+        final TextView summary = findById(view, android.R.id.summary);
+        summary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
         if (sumColor != null) {
             summary.setTextColor(Color.parseColor(sumColor));
         }
-
-        title.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
-        summary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
     }
 
 }

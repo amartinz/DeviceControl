@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 
+import static butterknife.ButterKnife.findById;
+
 public class CustomEditTextPreference extends EditTextPreference {
 
     private String color = "#FFFFFF";
@@ -24,30 +26,24 @@ public class CustomEditTextPreference extends EditTextPreference {
         setLayoutResource(R.layout.preference);
     }
 
-    public void setTitleColor(String color) {
-        this.color = color;
-    }
+    public void setTitleColor(final String color) { this.color = color; }
 
     @Override
-    protected void onBindView(View view) {
+    protected void onBindView(final View view) {
         super.onBindView(view);
 
-        final TextView title = (TextView) view.findViewById(android.R.id.title);
+        final TextView title = findById(view, android.R.id.title);
         title.setTextColor(Color.parseColor(color));
         title.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
 
-        final TextView summary = (TextView) view.findViewById(android.R.id.summary);
+        final TextView summary = findById(view, android.R.id.summary);
         summary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
     }
 
     @Override
-    public boolean isPersistent() {
-        return false;
-    }
+    public boolean isPersistent() { return false; }
 
     @Override
-    protected boolean shouldPersist() {
-        return false;
-    }
+    protected boolean shouldPersist() { return false; }
 
 }

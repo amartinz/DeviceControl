@@ -18,6 +18,8 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.util.List;
 
+import static butterknife.ButterKnife.findById;
+
 public class TaskerAdapter extends BaseAdapter {
 
     private final Context          mContext;
@@ -41,30 +43,33 @@ public class TaskerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View v, ViewGroup parent) {
+        final ViewHolder viewHolder;
+
         if (v == null) {
             final LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             v = inflater.inflate(R.layout.list_item_tasker, parent, false);
-        }
+            viewHolder = new ViewHolder(v);
 
-        ViewHolder holder = (ViewHolder) v.getTag();
-        if (holder == null) {
-            holder = new ViewHolder(v);
-            v.setTag(holder);
+            assert (v != null);
+
+            v.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) v.getTag();
         }
 
         final TaskerItem item = mTaskerList.get(position);
 
-        holder.container.setOnClickListener(new View.OnClickListener() {
+        viewHolder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BusProvider.getBus().post(item);
             }
         });
-        holder.category.setText(item.getCategory());
-        holder.action.setText(item.getName());
-        holder.value.setText(item.getValue());
-        holder.enabled.setChecked(item.getEnabled());
-        holder.enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        viewHolder.category.setText(item.getCategory());
+        viewHolder.action.setText(item.getName());
+        viewHolder.value.setText(item.getValue());
+        viewHolder.enabled.setChecked(item.getEnabled());
+        viewHolder.enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 item.setEnabled(isChecked);
@@ -89,11 +94,11 @@ public class TaskerAdapter extends BaseAdapter {
         private final CheckBox     enabled;
 
         public ViewHolder(final View v) {
-            container = (LinearLayout) v.findViewById(R.id.item_container);
-            category = (TextView) v.findViewById(R.id.category);
-            action = (TextView) v.findViewById(R.id.action);
-            value = (TextView) v.findViewById(R.id.value);
-            enabled = (CheckBox) v.findViewById(R.id.enabled);
+            container = findById(v, R.id.item_container);
+            category = findById(v, R.id.category);
+            action = findById(v, R.id.action);
+            value = findById(v, R.id.value);
+            enabled = findById(v, R.id.enabled);
         }
     }
 

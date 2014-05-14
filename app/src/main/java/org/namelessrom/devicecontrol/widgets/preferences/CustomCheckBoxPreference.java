@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 
+import static butterknife.ButterKnife.findById;
+
 public class CustomCheckBoxPreference extends CheckBoxPreference {
 
     private String color = "#FFFFFF";
@@ -30,37 +32,27 @@ public class CustomCheckBoxPreference extends CheckBoxPreference {
         setLayoutResource(R.layout.preference);
     }
 
-    public void setTitleColor(String color) {
-        this.color = color;
-    }
+    public void setTitleColor(final String color) { this.color = color; }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+    public void setValue(final String value) { this.value = value; }
 
-    public String getValue() {
-        return this.value;
-    }
+    public String getValue() { return this.value; }
 
     @Override
-    protected void onBindView(View view) {
+    protected void onBindView(final View view) {
         super.onBindView(view);
 
-        final TextView mTitle = (TextView) view.findViewById(android.R.id.title);
+        final TextView mTitle = findById(view, android.R.id.title);
         mTitle.setTextColor(Color.parseColor(color));
         mTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
 
-        final TextView mSummary = (TextView) view.findViewById(android.R.id.summary);
+        final TextView mSummary = findById(view, android.R.id.summary);
         mSummary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
     }
 
     @Override
-    public boolean isPersistent() {
-        return false;
-    }
+    public boolean isPersistent() { return false; }
 
     @Override
-    protected boolean shouldPersist() {
-        return false;
-    }
+    protected boolean shouldPersist() { return false; }
 }

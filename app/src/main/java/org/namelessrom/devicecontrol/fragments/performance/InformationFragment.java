@@ -30,9 +30,7 @@ import org.namelessrom.devicecontrol.widgets.AttachFragment;
 public class InformationFragment extends AttachFragment implements DeviceConstants {
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity, ID_PERFORMANCE_INFO);
-    }
+    public void onAttach(Activity activity) { super.onAttach(activity, ID_PERFORMANCE_INFO); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

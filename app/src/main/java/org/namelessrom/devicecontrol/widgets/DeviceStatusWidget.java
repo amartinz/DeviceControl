@@ -20,6 +20,8 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import static butterknife.ButterKnife.findById;
+
 /**
  * Created by alex on 23.04.14.
  */
@@ -82,7 +84,7 @@ public class DeviceStatusWidget extends LinearLayout {
     private void createViews(final Context context) {
         final View view = inflate(context, R.layout.widget_device_stats, this);
 
-        mDeviceInfo = (LinearLayout) view.findViewById(R.id.ui_device_stats_view);
+        mDeviceInfo = findById(view, R.id.ui_device_stats_view);
 
         startRepeatingTask();
     }
@@ -98,17 +100,11 @@ public class DeviceStatusWidget extends LinearLayout {
 
         final LinearLayout view = (LinearLayout) inflate(context, R.layout.row_device, null);
 
-        final TextView deviceTitle = (TextView) view.findViewById(R.id.ui_device_title);
-        final TextView deviceValue = (TextView) view.findViewById(R.id.ui_device_value);
-        final TextView deviceBarLeft = (TextView) view.findViewById(R.id.ui_device_bar_left);
-        final TextView deviceBarRight = (TextView) view.findViewById(R.id.ui_device_bar_right);
-        final ProgressBar bar = (ProgressBar) view.findViewById(R.id.ui_device_bar);
-
-        deviceTitle.setText(title);
-        deviceValue.setText(value);
-        deviceBarLeft.setText(barLeft);
-        deviceBarRight.setText(barRight);
-        bar.setProgress(progress);
+        ((TextView) findById(view, R.id.ui_device_title)).setText(title);
+        ((TextView) findById(view, R.id.ui_device_value)).setText(value);
+        ((TextView) findById(view, R.id.ui_device_bar_left)).setText(barLeft);
+        ((TextView) findById(view, R.id.ui_device_bar_right)).setText(barRight);
+        ((ProgressBar) findById(view, R.id.ui_device_bar)).setProgress(progress);
 
         parent.addView(view);
         return view;

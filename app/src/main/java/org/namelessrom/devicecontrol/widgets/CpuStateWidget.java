@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static butterknife.ButterKnife.findById;
+
 /**
  * Created by alex on 23.04.14.
  */
@@ -69,13 +71,13 @@ public class CpuStateWidget extends LinearLayout {
     private void createViews(final Context context) {
         final View view = inflate(context, R.layout.widget_cpu_states, this);
 
-        mStatesView = (LinearLayout) view.findViewById(R.id.ui_states_view);
-        mAdditionalStates = (TextView) view.findViewById(R.id.ui_additional_states);
-        mHeaderAdditionalStates = (TextView) view.findViewById(R.id.ui_header_additional_states);
-        mHeaderTotalStateTime = (TextView) view.findViewById(R.id.ui_header_total_state_time);
-        mStatesWarning = (TextView) view.findViewById(R.id.ui_states_warning);
-        mTotalStateTime = (TextView) view.findViewById(R.id.ui_total_state_time);
-        final ImageView mRefresh = (ImageView) view.findViewById(R.id.ui_refresh);
+        mStatesView = findById(view, R.id.ui_states_view);
+        mAdditionalStates = findById(view, R.id.ui_additional_states);
+        mHeaderAdditionalStates = findById(view, R.id.ui_header_additional_states);
+        mHeaderTotalStateTime = findById(view, R.id.ui_header_total_state_time);
+        mStatesWarning = findById(view, R.id.ui_states_warning);
+        mTotalStateTime = findById(view, R.id.ui_total_state_time);
+        final ImageView mRefresh = findById(view, R.id.ui_refresh);
         mRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,10 +154,10 @@ public class CpuStateWidget extends LinearLayout {
         long tSec = state.duration / 100;
         final String sDur = toString(tSec);
 
-        final TextView freqText = (TextView) view.findViewById(R.id.ui_freq_text);
-        final TextView durText = (TextView) view.findViewById(R.id.ui_duration_text);
-        final TextView perText = (TextView) view.findViewById(R.id.ui_percentage_text);
-        final ProgressBar bar = (ProgressBar) view.findViewById(R.id.ui_bar);
+        final TextView freqText = findById(view, R.id.ui_freq_text);
+        final TextView durText = findById(view, R.id.ui_duration_text);
+        final TextView perText = findById(view, R.id.ui_percentage_text);
+        final ProgressBar bar = findById(view, R.id.ui_bar);
 
         freqText.setText(sFreq);
         perText.setText(sPer);

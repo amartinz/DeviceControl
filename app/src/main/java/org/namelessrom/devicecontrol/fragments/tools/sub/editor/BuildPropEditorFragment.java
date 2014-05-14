@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static butterknife.ButterKnife.findById;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class BuildPropEditorFragment extends AttachFragment
@@ -108,7 +109,7 @@ public class BuildPropEditorFragment extends AttachFragment
 
         final View view = inflater.inflate(R.layout.tools_prop_list, container, false);
 
-        mListView = (ListView) view.findViewById(R.id.proplist);
+        mListView = findById(view, R.id.proplist);
         mListView.setOnItemClickListener(this);
         mListView.setFastScrollEnabled(true);
         mListView.setFastScrollAlwaysVisible(true);
@@ -125,10 +126,10 @@ public class BuildPropEditorFragment extends AttachFragment
             }
         });
 
-        mLoadingView = (LinearLayout) view.findViewById(R.id.loading);
-        mEmptyView = (LinearLayout) view.findViewById(R.id.nofiles);
-        mTools = (RelativeLayout) view.findViewById(R.id.tools);
-        mFilter = (EditText) view.findViewById(R.id.filter);
+        mLoadingView = findById(view, R.id.loading);
+        mEmptyView = findById(view, R.id.nofiles);
+        mTools = findById(view, R.id.tools);
+        mFilter = findById(view, R.id.filter);
         mFilter.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(final Editable s) { }
@@ -149,8 +150,8 @@ public class BuildPropEditorFragment extends AttachFragment
 
         mTools.setVisibility(View.GONE);
 
-        mShadowTop = view.findViewById(R.id.tools_editor_shadow_top);
-        mShadowBottom = view.findViewById(R.id.tools_editor_shadow_bottom);
+        mShadowTop = findById(view, R.id.tools_editor_shadow_top);
+        mShadowBottom = findById(view, R.id.tools_editor_shadow_bottom);
 
         return view;
     }
@@ -269,15 +270,17 @@ public class BuildPropEditorFragment extends AttachFragment
 
     private void editBuildPropDialog(final Prop p) {
         final Activity activity = getActivity();
+        if (activity == null) return;
+
         String title;
 
         final View editDialog = Application.getLayoutInflater().inflate(
                 R.layout.dialog_build_prop, null, false);
-        final TextView tvName = (TextView) editDialog.findViewById(R.id.prop_name_tv);
-        final EditText etName = (EditText) editDialog.findViewById(R.id.prop_name);
-        final EditText etValue = (EditText) editDialog.findViewById(R.id.prop_value);
-        final Spinner sp = (Spinner) editDialog.findViewById(R.id.preset_spinner);
-        final LinearLayout lpresets = (LinearLayout) editDialog.findViewById(R.id.prop_presets);
+        final TextView tvName = findById(editDialog, R.id.prop_name_tv);
+        final EditText etName = findById(editDialog, R.id.prop_name);
+        final EditText etValue = findById(editDialog, R.id.prop_value);
+        final Spinner sp = findById(editDialog, R.id.preset_spinner);
+        final LinearLayout lpresets = findById(editDialog, R.id.prop_presets);
         final ArrayAdapter<CharSequence> vAdapter =
                 new ArrayAdapter<CharSequence>(activity, android.R.layout.simple_spinner_item);
         vAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
