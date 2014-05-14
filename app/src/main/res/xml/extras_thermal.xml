@@ -3,6 +3,28 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
+        android:key="msm_thermal"
+        android:title="@string/msm_thermal">
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference
+            android:key="msm_thermal_temp_limit"
+            android:title="@string/temp_limit" />
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference
+            android:key="msm_thermal_core_temp_limit"
+            android:title="@string/core_temp_limit" />
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference
+            android:key="msm_thermal_core_max"
+            android:title="@string/core_max" />
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference
+            android:key="msm_thermal_core_min"
+            android:title="@string/core_min" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="intelli_thermal"
         android:title="@string/intelli_thermal">
 

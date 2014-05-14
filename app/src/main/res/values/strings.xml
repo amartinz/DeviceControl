@@ -46,6 +46,10 @@
     <string name="thermal">Thermal Driver</string>
     <string name="core_control">Core Control</string>
     <string name="core_control_summary">Turns cpu cores off if temperature limit is reached</string>
+    <string name="temp_limit">Temperature limit</string>
+    <string name="core_temp_limit">Core temperature limit</string>
+    <string name="core_max">Maximum cores online</string>
+    <string name="core_min">Minimum cores online</string>
     <string name="intelli_thermal_enabled">Enable Intelli-Thermal</string>
     <string name="intelli_thermal_enabled_summary">If deactivated without valid replacement, your device may overheat!</string>
     <string name="voltage">Voltage</string>
