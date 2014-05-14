@@ -2,9 +2,6 @@ package org.namelessrom.devicecontrol.widgets.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,44 +14,17 @@ import org.namelessrom.devicecontrol.AppDetailActivity;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.objects.AppItem;
-import org.namelessrom.devicecontrol.utils.SortHelper;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class AppListAdapter extends BaseAdapter {
 
-    private final Context        mContext;
-    private final PackageManager mPm;
-    private final List<AppItem> mAppList = new ArrayList<AppItem>();
+    private final Context       mContext;
+    private final List<AppItem> mAppList;
 
-    public AppListAdapter(final Context context) {
+    public AppListAdapter(final Context context, final List<AppItem> appList) {
         mContext = context;
-        mPm = context.getPackageManager();
-        loadItems();
-    }
-
-    private void loadItems() {
-        mAppList.clear();
-        if (mPm != null) {
-            final List<PackageInfo> pkgInfos = mPm.getInstalledPackages(0);
-            ApplicationInfo appInfo;
-            for (final PackageInfo pkgInfo : pkgInfos) {
-                appInfo = pkgInfo.applicationInfo;
-                if (appInfo != null) {
-                    mAppList.add(new AppItem(pkgInfo, String.valueOf(appInfo.loadLabel(mPm)),
-                            appInfo.loadIcon(mPm)));
-                }
-            }
-        }
-        Collections.sort(mAppList, SortHelper.sAppcomparator);
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        loadItems();
-        super.notifyDataSetChanged();
+        mAppList = appList;
     }
 
     @Override

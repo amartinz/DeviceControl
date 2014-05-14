@@ -98,7 +98,7 @@ public class VoltageFragment extends AttachPreferenceFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        final View v = inflater.inflate(R.layout.layout_voltage, container, false);
+        final View v = inflater.inflate(R.layout.fragment_voltage, container, false);
 
         final ListView list = (ListView) v.findViewById(android.R.id.list);
 

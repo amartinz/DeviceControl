@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
@@ -32,23 +31,18 @@ import org.namelessrom.devicecontrol.widgets.AttachFragment;
 public class HomeFragment extends AttachFragment implements DeviceConstants {
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity, ID_HOME);
-    }
+    public void onAttach(final Activity activity) { super.onAttach(activity, ID_HOME); }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_help,
-                container, false);
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        final String appname = getString(R.string.app_name);
-
-        final TextView tvHelp = (TextView) view.findViewById(R.id.help_textview);
-        tvHelp.setText(getString(R.string.app_information_help, appname, appname));
-
-        final ImageView ivHelp = (ImageView) view.findViewById(R.id.help_imageview);
-        ivHelp.setImageResource(R.mipmap.ic_launcher);
+        if (view != null) {
+            final String appname = getString(R.string.app_name);
+            ((TextView) view.findViewById(R.id.help_textview))
+                    .setText(getString(R.string.app_information_help, appname, appname));
+        }
 
         return view;
     }

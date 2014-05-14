@@ -113,7 +113,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
             String title, summary;
             try {
                 if (activity == null) { throw new Exception("activity is null"); }
-                final PackageManager pm = activity.getPackageManager();
+                final PackageManager pm = Application.getPm();
                 if (pm != null) {
                     final PackageInfo pInfo = pm.getPackageInfo(
                             activity.getPackageName(), 0);

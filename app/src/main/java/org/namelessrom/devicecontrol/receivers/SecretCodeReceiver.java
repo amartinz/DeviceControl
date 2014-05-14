@@ -19,6 +19,7 @@ package org.namelessrom.devicecontrol.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 
 import org.namelessrom.devicecontrol.MainActivity;
 
@@ -26,9 +27,15 @@ public class SecretCodeReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
-        final String host = intent.getData().getHost().trim();
+        if (intent == null) return;
 
-        if (host != null && !host.isEmpty()) {
+        final Uri data = intent.getData();
+        if (data == null) return;
+
+        final String host = data.getHost();
+        if (host == null) return;
+
+        if (!host.isEmpty()) {
             if (host.equals("13372")) {
                 context.startActivity(new Intent(context, MainActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

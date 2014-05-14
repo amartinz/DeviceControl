@@ -105,11 +105,18 @@ public class Application extends android.app.Application implements DeviceConsta
         logDebug("Is Nameless: " + (IS_NAMELESS ? "true" : "false"));
 
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        packageManager = getPackageManager();
+        packageManager = getPm();
 
         final boolean showLauncher =
                 PreferenceHelper.getBoolean(SHOW_LAUNCHER, true) || !Application.IS_NAMELESS;
         toggleLauncherIcon(showLauncher);
+    }
+
+    public static PackageManager getPm() {
+        if (packageManager == null) {
+            packageManager = Application.applicationContext.getPackageManager();
+        }
+        return packageManager;
     }
 
     public static LayoutInflater getLayoutInflater() {
@@ -122,16 +129,15 @@ public class Application extends android.app.Application implements DeviceConsta
         if (tmp != null && tmp.exists()) {
             return tmp.getPath();
         } else {
-            return "/data/data/" + Application.applicationContext.getPackageName();
+            return "/data/data/" + Application.getPm();
         }
     }
 
     public static void toggleLauncherIcon(final boolean showLauncher) {
         try {
-            if (packageManager == null) { return; }
+            if (getPm() == null) { return; }
             if (Application.IS_NAMELESS) {
-                final Resources res =
-                        packageManager.getResourcesForApplication("com.android.settings");
+                final Resources res = getPm().getResourcesForApplication("com.android.settings");
                 if (res != null
                         && res.getIdentifier("device_control_settings", "string",
                         "com.android.settings") > 0

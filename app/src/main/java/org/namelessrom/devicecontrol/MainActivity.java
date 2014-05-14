@@ -78,8 +78,7 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class MainActivity extends Activity
         implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener,
-        SlidingMenu.OnClosedListener,
-        SlidingMenu.OnOpenedListener {
+        SlidingMenu.OnClosedListener, SlidingMenu.OnOpenedListener {
 
     //==============================================================================================
     // Fields
@@ -92,7 +91,7 @@ public class MainActivity extends Activity
 
     public static SlidingMenu mSlidingMenu;
 
-    private int mActionBarDrawable    = R.mipmap.ic_launcher;
+    private int mActionBarDrawable    = R.drawable.ic_launcher;
     private int mSubActionBarDrawable = -1;
     private int mTitle                = R.string.home;
     private int mFragmentTitle        = R.string.home;
@@ -205,8 +204,6 @@ public class MainActivity extends Activity
                     mSlidingMenu.toggle(true);
                 }
                 break;
-            //case R.id.action_settings:
-            //    break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -329,14 +326,14 @@ public class MainActivity extends Activity
                 mTitle = R.string.help;
                 break;
             default:
-                mActionBarDrawable = R.mipmap.ic_launcher;
+                mActionBarDrawable = R.drawable.ic_launcher;
                 mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.app_name;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_HOME:
-                mActionBarDrawable = R.mipmap.ic_launcher;
+                mActionBarDrawable = R.drawable.ic_launcher;
                 mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.home;
                 mSubFragmentTitle = -1;

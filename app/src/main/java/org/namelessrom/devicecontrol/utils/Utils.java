@@ -278,7 +278,7 @@ public class Utils implements DeviceConstants, FileConstants {
 
     public static boolean isPackageInstalled(final String packageName) {
         try {
-            final PackageManager pm = Application.applicationContext.getPackageManager();
+            final PackageManager pm = Application.getPm();
             if (pm != null) {
                 pm.getPackageInfo(packageName, 0);
                 return true;
@@ -301,7 +301,7 @@ public class Utils implements DeviceConstants, FileConstants {
             boolean disable) {
         final ComponentName component = new ComponentName(packageName,
                 packageName + componentName);
-        final PackageManager pm = Application.applicationContext.getPackageManager();
+        final PackageManager pm = Application.getPm();
         if (pm != null) {
             pm.setComponentEnabledSetting(component,
                     (disable

@@ -35,6 +35,7 @@ import android.util.Log;
 import com.android.vending.billing.IInAppBillingService;
 
 import org.json.JSONException;
+import org.namelessrom.devicecontrol.Application;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -271,7 +272,7 @@ public class IabHelper {
 
         Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
         serviceIntent.setPackage("com.android.vending");
-        final PackageManager pm = mContext.getPackageManager();
+        final PackageManager pm = Application.getPm();
         final List<ResolveInfo> list =
                 (pm != null ? pm.queryIntentServices(serviceIntent, 0) : null);
         if (list != null && !list.isEmpty()) {
@@ -294,7 +295,7 @@ public class IabHelper {
      * used by it such as service connections. Naturally, once the object is
      * disposed of, it can't be used again.
      */
-    public void dispose() throws Exception{
+    public void dispose() throws Exception {
         logDebug("Disposing.");
         mSetupDone = false;
         if (mServiceConn != null) {

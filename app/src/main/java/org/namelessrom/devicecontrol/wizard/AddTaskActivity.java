@@ -85,7 +85,7 @@ public class AddTaskActivity extends FragmentActivity implements
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wizard_activity_main);
+        setContentView(R.layout.wizard_activity);
 
         final ActionBar actionBar = getActionBar();
         if (actionBar != null) {

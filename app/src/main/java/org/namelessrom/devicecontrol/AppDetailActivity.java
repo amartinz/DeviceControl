@@ -33,7 +33,8 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class AppDetailActivity extends Activity {
 
-    private final Handler mHandler = new Handler();
+    private final Handler        mHandler = new Handler();
+    private final PackageManager mPm      = Application.getPm();
 
     private TextView     mStatus;
     private Button       mDisabler;
@@ -42,8 +43,7 @@ public class AppDetailActivity extends Activity {
     private Button       mClearData;
     private Button       mClearCache;
 
-    private AppItem        mAppItem;
-    private PackageManager mPm;
+    private AppItem mAppItem;
 
     @Override
     protected void onResume() {
@@ -61,8 +61,6 @@ public class AppDetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_details);
-
-        mPm = getPackageManager();
 
         String tmp;
         PackageInfo pkgInfo;
