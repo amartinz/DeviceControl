@@ -68,15 +68,24 @@ public class Utils implements DeviceConstants, FileConstants {
             throws Exception {
         final File f = new File(file);
         if (f.exists() && f.canRead()) {
-            final BufferedReader br =
-                    new BufferedReader(new InputStreamReader(new FileInputStream(f)));
+            FileInputStream fis = null;
+            InputStreamReader isr = null;
+            BufferedReader br = null;
 
-            String s;
-            while ((s = br.readLine()) != null) {
-                if (s.contains(prop)) return s.replace(prop + '=', "");
+            try {
+                fis = new FileInputStream(f);
+                isr = new InputStreamReader(fis);
+                br = new BufferedReader(isr);
+
+                String s;
+                while ((s = br.readLine()) != null) {
+                    if (s.contains(prop)) return s.replace(prop + '=', "");
+                }
+            } finally {
+                if (br != null) br.close();
+                if (isr != null) isr.close();
+                if (fis != null) fis.close();
             }
-
-            br.close();
         }
 
         return "";

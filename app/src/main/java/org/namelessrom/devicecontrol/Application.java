@@ -37,6 +37,7 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
 import java.io.File;
 
@@ -78,10 +79,22 @@ public class Application extends android.app.Application implements DeviceConsta
         if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.debug=1")) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectAll()
+                    .detectCustomSlowCalls()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()
                     .penaltyLog()
+                    .penaltyFlashScreen()
                     .build());
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                     .detectAll()
+                    .detectActivityLeaks()
+                    .detectFileUriExposure()
+                    .detectLeakedClosableObjects()
+                    .detectLeakedRegistrationObjects()
+                    .detectLeakedSqlLiteObjects()
+                    .setClassInstanceLimit(AddTaskActivity.class, 100)
+                    .setClassInstanceLimit(AppDetailActivity.class, 100)
                     .penaltyLog()
                     .penaltyDeath()
                     .build());

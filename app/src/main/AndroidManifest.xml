@@ -44,6 +44,7 @@
 
         <activity
             android:name="org.acra.CrashReportDialog"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Holo.Dialog"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"
@@ -51,6 +52,7 @@
 
         <activity
             android:name=".DummyLauncher"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:enabled="true"
             android:launchMode="singleTask">
             <intent-filter>
@@ -61,9 +63,9 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:clearTaskOnLaunch="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
+            android:clearTaskOnLaunch="true"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="org.namelessrom.devicecontrol.MainActivity" />
@@ -74,11 +76,15 @@
         </activity>
         <activity
             android:name="org.namelessrom.devicecontrol.wizard.AddTaskActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/add_task"
+            android:launchMode="singleInstance"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name="org.namelessrom.devicecontrol.AppDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_details"
+            android:launchMode="singleInstance"
             android:parentActivityName=".MainActivity" />
 
         <!-- Services -->

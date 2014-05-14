@@ -99,6 +99,10 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
             db.execSQL(CREATE_DEVICE_CONTROL_TABLE);
             currentVersion = 8;
         }
+
+        if (currentVersion != DATABASE_VERSION) {
+            wipeDb(db);
+        }
     }
 
     @Override
@@ -107,14 +111,17 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
                 + " | oldVersion: " + String.valueOf(oldVersion)
                 + " | newVersion: " + String.valueOf(newVersion));
         // TODO: a more grateful way?
+        wipeDb(db);
+        try {
+            new File(Application.getFilesDirectory() + DC_DOWNGRADE).createNewFile();
+        } catch (Exception ignored) { }
+    }
+
+    private void wipeDb(final SQLiteDatabase db) {
         db.execSQL(DROP_BOOTUP_TABLE);
         db.execSQL(DROP_DEVICE_CONTROL_TABLE);
         db.execSQL(DROP_TASKER_TABLE);
         onCreate(db);
-        try {
-            new File(Application.applicationContext.getFilesDir() + DC_DOWNGRADE)
-                    .createNewFile();
-        } catch (Exception ignored) { }
     }
 
 //==============================================================================================
@@ -132,7 +139,12 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         if (cursor != null) { cursor.moveToFirst(); }
         if (cursor == null) return null;
 
-        return cursor.getCount() <= 0 ? null : cursor.getString(cursor.getColumnIndex(KEY_VALUE));
+        final String result = ((cursor.getCount() <= 0)
+                ? null : cursor.getString(cursor.getColumnIndex(KEY_VALUE)));
+
+        cursor.close();
+        db.close();
+        return result;
     }
 
     public boolean insertOrUpdate(final String name, final String value, final String tableName) {
@@ -153,7 +165,6 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         if (!keepOpen) {
             db.close();
         }
-
         return true;
     }
 
@@ -170,8 +181,8 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
 
         db.delete(TABLE_BOOTUP, KEY_NAME + " = ?", new String[]{item.getName()});
         db.insert(TABLE_BOOTUP, null, values);
-        db.close();
 
+        db.close();
         return true;
     }
 
@@ -203,8 +214,12 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         if (cursor != null) { cursor.moveToFirst(); }
         if (cursor == null) return null;
 
-        return new DataItem(Integer.parseInt(cursor.getString(0)), cursor.getString(1),
-                cursor.getString(2), cursor.getString(3), cursor.getString(4));
+        final DataItem item = new DataItem(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+
+        cursor.close();
+        db.close();
+        return item;
     }
 
     public List<DataItem> getAllItems(final String tableName, final String category) {
@@ -232,6 +247,8 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
             } while (cursor.moveToNext());
         }
 
+        cursor.close();
+        db.close();
         return itemList;
     }
 
@@ -246,8 +263,11 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         values.put(KEY_VALUE, item.getValue());
         values.put(KEY_FILENAME, item.getFileName());
 
-        return db.update(tableName, values, KEY_ID + " = ?",
+        final int result = db.update(tableName, values, KEY_ID + " = ?",
                 new String[]{String.valueOf(item.getID())});
+
+        db.close();
+        return result;
     }
 
     public boolean deleteItem(final DataItem item, final String tableName) {
@@ -287,9 +307,10 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         if (db == null) return -1;
 
         final Cursor cursor = db.rawQuery(countQuery, null);
-        int count = cursor.getCount();
-        cursor.close();
+        final int count = cursor.getCount();
 
+        cursor.close();
+        db.close();
         return count;
     }
 
@@ -338,9 +359,14 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         if (cursor == null) return null;
 
         final String enabled = cursor.getString(5);
-        return new TaskerItem(Integer.parseInt(cursor.getString(0)), cursor.getString(1),
-                cursor.getString(2), cursor.getString(3), cursor.getString(4),
-                (enabled != null && enabled.equals("1")));
+        final TaskerItem item =
+                new TaskerItem(Integer.parseInt(cursor.getString(0)), cursor.getString(1),
+                        cursor.getString(2), cursor.getString(3), cursor.getString(4),
+                        (enabled != null && enabled.equals("1")));
+
+        cursor.close();
+        db.close();
+        return item;
     }
 
     public List<TaskerItem> getAllTaskerItems(final String category) {
@@ -370,6 +396,8 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
             } while (cursor.moveToNext());
         }
 
+        cursor.close();
+        db.close();
         return itemList;
     }
 
@@ -385,8 +413,11 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         values.put(KEY_FILENAME, item.getFileName());
         values.put(KEY_ENABLED, (item.getEnabled() ? "1" : "0"));
 
-        return db.update(TABLE_TASKER, values, KEY_ID + " = ?",
+        final int result = db.update(TABLE_TASKER, values, KEY_ID + " = ?",
                 new String[]{String.valueOf(item.getID())});
+
+        db.close();
+        return result;
     }
 
     public boolean deleteTaskerItem(final TaskerItem item) {
