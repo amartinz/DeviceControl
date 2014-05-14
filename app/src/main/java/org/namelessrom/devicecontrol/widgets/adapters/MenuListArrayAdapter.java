@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 
+import static butterknife.ButterKnife.findById;
+
 public class MenuListArrayAdapter extends BaseAdapter {
 
     private final Context  mContext;
@@ -28,19 +30,13 @@ public class MenuListArrayAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return mTitles.length;
-    }
+    public int getCount() { return mTitles.length; }
 
     @Override
-    public Object getItem(int position) {
-        return position;
-    }
+    public Object getItem(int position) { return position; }
 
     @Override
-    public long getItemId(int arg0) {
-        return 0;
-    }
+    public long getItemId(int arg0) { return 0; }
 
     @Override
     public int getViewTypeCount() { return 2; }
@@ -55,38 +51,55 @@ public class MenuListArrayAdapter extends BaseAdapter {
         return getItemViewType(position) != 1;
     }
 
+    private static class ViewHolder {
+        private TextView  header;
+        private TextView  text;
+        private ImageView image;
+    }
+
     @Override
     public View getView(int position, View v, ViewGroup parent) {
+        final ViewHolder viewHolder;
         final int type = getItemViewType(position);
         if (v == null) {
-            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
+            viewHolder = new ViewHolder();
+            final LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             if (type == 0) {
                 v = inflater.inflate(mLayoutResourceId, parent, false);
+
+                viewHolder.text = findById(v, android.R.id.text1);
+                viewHolder.image = findById(v, R.id.image);
             } else if (type == 1) {
                 v = inflater.inflate(R.layout.menu_header, parent, false);
+
+                viewHolder.header = findById(v, R.id.menu_header);
             }
+
+            assert (v != null);
+
+            v.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) v.getTag();
         }
 
         final int defaultColor = mContext.getResources().getColor(android.R.color.white);
         if (type == 0) {
-            final TextView text1 = (TextView) v.findViewById(android.R.id.text1);
-            text1.setTextColor(Color.WHITE);
-            text1.setText(mTitles[position]);
+            viewHolder.text.setTextColor(Color.WHITE);
+            viewHolder.text.setText(mTitles[position]);
 
-            final ImageView image = (ImageView) v.findViewById(R.id.image);
             final int imageRes = mIcons[position];
             if (imageRes == 0) {
-                image.setVisibility(View.INVISIBLE);
+                viewHolder.image.setVisibility(View.INVISIBLE);
             } else {
-                image.setImageDrawable(mContext.getResources().getDrawable(mIcons[position]));
-                image.setColorFilter(Color.parseColor("#FFFFFF"));
-                image.setColorFilter(defaultColor);
+                viewHolder.image.setImageDrawable(
+                        mContext.getResources().getDrawable(mIcons[position]));
+                viewHolder.image.setColorFilter(Color.parseColor("#FFFFFF"));
+                viewHolder.image.setColorFilter(defaultColor);
             }
         } else if (type == 1) {
-            final TextView header = (TextView) v.findViewById(R.id.menu_header);
-            header.setText(mTitles[position].replaceAll("--", ""));
-            header.setClickable(false);
-            header.setTextColor(defaultColor);
+            viewHolder.header.setText(mTitles[position].replaceAll("--", ""));
+            viewHolder.header.setClickable(false);
+            viewHolder.header.setTextColor(defaultColor);
         }
 
         return v;

@@ -59,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static butterknife.ButterKnife.findById;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class SysctlEditorFragment extends AttachFragment
@@ -120,15 +121,15 @@ public class SysctlEditorFragment extends AttachFragment
 
         final View view = inflater.inflate(R.layout.tools_prop_list, container, false);
 
-        mListView = (ListView) view.findViewById(R.id.proplist);
+        mListView = findById(view, R.id.proplist);
         mListView.setOnItemClickListener(this);
         mListView.setFastScrollEnabled(true);
         mListView.setFastScrollAlwaysVisible(true);
 
-        mLoadingView = (LinearLayout) view.findViewById(R.id.loading);
-        mEmptyView = (LinearLayout) view.findViewById(R.id.nofiles);
-        mTools = (RelativeLayout) view.findViewById(R.id.tools);
-        mFilter = (EditText) view.findViewById(R.id.filter);
+        mLoadingView = findById(view, R.id.loading);
+        mEmptyView = findById(view, R.id.nofiles);
+        mTools = findById(view, R.id.tools);
+        mFilter = findById(view, R.id.filter);
         mFilter.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(final Editable s) { }
@@ -149,8 +150,8 @@ public class SysctlEditorFragment extends AttachFragment
 
         mTools.setVisibility(View.GONE);
 
-        mShadowTop = view.findViewById(R.id.tools_editor_shadow_top);
-        mShadowBottom = view.findViewById(R.id.tools_editor_shadow_bottom);
+        mShadowTop = findById(view, R.id.tools_editor_shadow_top);
+        mShadowBottom = findById(view, R.id.tools_editor_shadow_bottom);
 
         return view;
     }
@@ -339,13 +340,15 @@ public class SysctlEditorFragment extends AttachFragment
 
     private void editPropDialog(final Prop p) {
         final Activity activity = getActivity();
+        if (activity == null) return;
+
         final String dn = Application.getFilesDirectory();
         String title;
 
-        final View editDialog = LayoutInflater.from(activity)
-                .inflate(R.layout.dialog_prop, null);
-        final EditText tv = (EditText) editDialog.findViewById(R.id.prop_value);
-        final TextView tn = (TextView) editDialog.findViewById(R.id.prop_name_tv);
+        final View editDialog = Application.getLayoutInflater().inflate(
+                R.layout.dialog_prop, null);
+        final EditText tv = findById(editDialog, R.id.prop_value);
+        final TextView tn = findById(editDialog, R.id.prop_name_tv);
 
         if (p != null) {
             tv.setText(p.getVal());

@@ -57,6 +57,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static butterknife.ButterKnife.findById;
+
 public class CpuSettingsFragment extends AttachFragment
         implements DeviceConstants, PerformanceConstants {
 
@@ -107,10 +109,10 @@ public class CpuSettingsFragment extends AttachFragment
         mInflater = inflater;
         final View view = mInflater.inflate(R.layout.fragment_cpu_settings, root, false);
 
-        mCpuInfo = (LinearLayout) view.findViewById(R.id.cpu_info);
+        mCpuInfo = findById(view, R.id.cpu_info);
 
-        final TextView mIntervalText = (TextView) view.findViewById(R.id.ui_device_value);
-        final SeekBar intervalBar = (SeekBar) view.findViewById(R.id.ui_device_bar);
+        final TextView mIntervalText = findById(view, R.id.ui_device_value);
+        final SeekBar intervalBar = findById(view, R.id.ui_device_bar);
         intervalBar.setMax(4000);
         intervalBar.setProgress(Integer.parseInt(
                 PreferenceHelper.getString(PREF_INTERVAL_CPU_INFO, "1000")) - 1000);
@@ -140,23 +142,23 @@ public class CpuSettingsFragment extends AttachFragment
             }
         });
 
-        ((TextView) view.findViewById(R.id.ui_device_title))
+        ((TextView) findById(view, R.id.ui_device_title))
                 .setText(R.string.refresh_interval);
         mInterval = intervalBar.getProgress() + 1000;
         mIntervalText.setText((mInterval == 5000
                 ? getString(R.string.off)
                 : (((double) mInterval) / 1000) + "s"));
 
-        mStatusHide = (CheckBox) view.findViewById(R.id.cpu_info_hide);
+        mStatusHide = findById(view, R.id.cpu_info_hide);
         mStatusHide.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(final CompoundButton compoundButton, final boolean b) {
-                view.findViewById(R.id.ui_interval).setVisibility(b ? View.GONE : View.VISIBLE);
+                findById(view, R.id.ui_interval).setVisibility(b ? View.GONE : View.VISIBLE);
                 if (b) {
                     CpuCoreMonitor.getInstance(getActivity()).stop();
-                    view.findViewById(R.id.speed).setVisibility(View.GONE);
+                    findById(view, R.id.speed).setVisibility(View.GONE);
                 } else {
-                    view.findViewById(R.id.speed).setVisibility(View.VISIBLE);
+                    findById(view, R.id.speed).setVisibility(View.VISIBLE);
                     mInterval = intervalBar.getProgress() + 1000;
                     CpuCoreMonitor.getInstance(getActivity()).start(mInterval);
                 }
@@ -175,16 +177,16 @@ public class CpuSettingsFragment extends AttachFragment
             generateRow(mCpuInfo, tmpCore);
         }
 
-        mMax = (Spinner) view.findViewById(R.id.pref_max);
+        mMax = findById(view, R.id.pref_max);
         mMax.setEnabled(false);
 
-        mMin = (Spinner) view.findViewById(R.id.pref_min);
+        mMin = findById(view, R.id.pref_min);
         mMin.setEnabled(false);
 
-        mGovernor = (Spinner) view.findViewById(R.id.pref_governor);
+        mGovernor = findById(view, R.id.pref_governor);
         mGovernor.setEnabled(false);
 
-        final Button govButton = (Button) view.findViewById(R.id.governor_tuning);
+        final Button govButton = findById(view, R.id.governor_tuning);
         govButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -304,15 +306,15 @@ public class CpuSettingsFragment extends AttachFragment
         public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
     }
 
+    // TODO: generate once, then update
     public View generateRow(final ViewGroup parent, final CpuCore cpuCore) {
-
         if (!isAdded()) { return null; }
 
         final View rowView = mInflater.inflate(R.layout.row_device, parent, false);
 
-        final TextView cpuInfoCore = (TextView) rowView.findViewById(R.id.ui_device_title);
-        final TextView cpuInfoFreq = (TextView) rowView.findViewById(R.id.ui_device_value);
-        final ProgressBar cpuBar = (ProgressBar) rowView.findViewById(R.id.ui_device_bar);
+        final TextView cpuInfoCore = findById(rowView, R.id.ui_device_title);
+        final TextView cpuInfoFreq = findById(rowView, R.id.ui_device_value);
+        final ProgressBar cpuBar = findById(rowView, R.id.ui_device_bar);
 
         final boolean isOffline = cpuCore.mCoreCurrent == 0;
 
@@ -324,6 +326,8 @@ public class CpuSettingsFragment extends AttachFragment
                         + " [" + cpuCore.mCoreGov + ']');
         cpuBar.setMax(cpuCore.mCoreMax);
         cpuBar.setProgress(cpuCore.mCoreCurrent);
+
+        assert (rowView != null);
 
         parent.addView(rowView);
         return rowView;

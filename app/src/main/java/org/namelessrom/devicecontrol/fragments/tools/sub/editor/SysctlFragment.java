@@ -29,6 +29,8 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
+import static butterknife.ButterKnife.findById;
+
 public class SysctlFragment extends AttachPreferenceFragment implements DeviceConstants {
 
     private CustomPreference mFullEditor;
@@ -173,18 +175,23 @@ public class SysctlFragment extends AttachPreferenceFragment implements DeviceCo
         final LayoutInflater factory = LayoutInflater.from(activity);
         final View alphaDialog = factory.inflate(R.layout.dialog_seekbar, null);
 
-        final SeekBar seekbar = (SeekBar) alphaDialog.findViewById(R.id.seek_bar);
+        final SeekBar seekbar = findById(alphaDialog, R.id.seek_bar);
 
         seekbar.setMax(max);
         seekbar.setProgress(currentProgress);
 
-        final EditText settingText = (EditText) alphaDialog.findViewById(R.id.setting_text);
+        final EditText settingText = findById(alphaDialog, R.id.setting_text);
         settingText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    int val = Integer.parseInt(settingText.getText().toString());
-                    seekbar.setProgress(val);
+                    final Editable text = settingText.getText();
+                    if (text != null) {
+                        try {
+                            final int val = Integer.parseInt(text.toString());
+                            seekbar.setProgress(val);
+                        } catch (Exception ignored) { /* ignored */ }
+                    }
                     return true;
                 }
                 return false;

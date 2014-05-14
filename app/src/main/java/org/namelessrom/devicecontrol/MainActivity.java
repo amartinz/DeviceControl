@@ -43,8 +43,8 @@ import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.fragments.HelpFragment;
 import org.namelessrom.devicecontrol.fragments.HomeFragment;
+import org.namelessrom.devicecontrol.fragments.LicenseFragment;
 import org.namelessrom.devicecontrol.fragments.PreferencesFragment;
-import org.namelessrom.devicecontrol.fragments.WebViewFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
 import org.namelessrom.devicecontrol.fragments.device.sub.FastChargeFragment;
@@ -73,6 +73,8 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.adapters.MenuListArrayAdapter;
 
 import java.io.File;
+
+import butterknife.ButterKnife;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -142,7 +144,7 @@ public class MainActivity extends Activity
         Utils.setupDirectories();
 
         final View v = getLayoutInflater().inflate(R.layout.menu_list, null, false);
-        final ListView mMenuList = (ListView) v.findViewById(R.id.navbarlist);
+        final ListView mMenuList = ButterKnife.findById(v, R.id.navbarlist);
 
         mSlidingMenu = new SlidingMenu(this);
         mSlidingMenu.setBackgroundResource(R.drawable.bg_menu_dark);
@@ -286,7 +288,7 @@ public class MainActivity extends Activity
                 main = new PreferencesFragment();
                 break;
             case ID_LICENSES:
-                main = WebViewFragment.newInstance(WebViewFragment.TYPE_LICENSES);
+                main = new LicenseFragment();
                 break;
         }
 

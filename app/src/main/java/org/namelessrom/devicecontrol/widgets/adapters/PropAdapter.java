@@ -32,6 +32,8 @@ import org.namelessrom.devicecontrol.objects.Prop;
 import java.util.ArrayList;
 import java.util.List;
 
+import static butterknife.ButterKnife.findById;
+
 public class PropAdapter extends ArrayAdapter<Prop> {
     private final  Context    mContext;
     private final  List<Prop> mProps;
@@ -43,38 +45,33 @@ public class PropAdapter extends ArrayAdapter<Prop> {
         mProps = objects;
     }
 
-    public Prop getItem(int i) {
-        return mProps.get(i);
-    }
+    public Prop getItem(final int i) { return mProps.get(i); }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
+        final ViewHolder viewHolder;
 
-        if (v == null) {
-            LayoutInflater vi =
+        if (convertView == null) {
+            final LayoutInflater vi =
                     (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.list_item_prop, parent, false);
-        }
-
-        ViewHolder holder = (ViewHolder) v.getTag();
-
-        if (holder == null) {
-            holder = new ViewHolder(v);
-            v.setTag(holder);
+            convertView = vi.inflate(R.layout.list_item_prop, parent, false);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
         final Prop p = mProps.get(position);
         if (p != null) {
-            if (holder.pp != null) {
-                holder.pp.setText(p.getName());
+            if (viewHolder.pp != null) {
+                viewHolder.pp.setText(p.getName());
             }
-            if (holder.pv != null) {
-                holder.pv.setText(p.getVal());
+            if (viewHolder.pv != null) {
+                viewHolder.pv.setText(p.getVal());
             }
 
         }
-        return v;
+        return convertView;
     }
 
     @Override
@@ -85,15 +82,14 @@ public class PropAdapter extends ArrayAdapter<Prop> {
         return mFilter;
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         private final TextView pp;
         private final TextView pv;
 
-        private ViewHolder(View rootView) {
-            pp = (TextView) rootView.findViewById(R.id.prop);
-            pv = (TextView) rootView.findViewById(R.id.pval);
+        private ViewHolder(final View rootView) {
+            pp = findById(rootView, R.id.prop);
+            pv = findById(rootView, R.id.pval);
         }
-
     }
 
     private class AppFilter extends Filter {

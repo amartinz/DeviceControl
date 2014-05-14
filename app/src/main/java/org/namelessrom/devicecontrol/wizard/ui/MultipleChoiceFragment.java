@@ -39,6 +39,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import butterknife.ButterKnife;
+
 public class MultipleChoiceFragment extends ListFragment {
     private static final String ARG_KEY = "key";
 
@@ -46,11 +48,11 @@ public class MultipleChoiceFragment extends ListFragment {
     private List<String>          mChoices;
     private Page                  mPage;
 
-    public static MultipleChoiceFragment create(String key) {
-        Bundle args = new Bundle();
+    public static MultipleChoiceFragment create(final String key) {
+        final Bundle args = new Bundle();
         args.putString(ARG_KEY, key);
 
-        MultipleChoiceFragment fragment = new MultipleChoiceFragment();
+        final MultipleChoiceFragment fragment = new MultipleChoiceFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,13 +61,13 @@ public class MultipleChoiceFragment extends ListFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
+        final Bundle args = getArguments();
         mPage = mCallbacks.onGetPage(args.getString(ARG_KEY));
 
-        MultipleFixedChoicePage fixedChoicePage = (MultipleFixedChoicePage) mPage;
+        final MultipleFixedChoicePage fixedChoicePage = (MultipleFixedChoicePage) mPage;
         mChoices = new ArrayList<String>();
         for (int i = 0; i < fixedChoicePage.getOptionCount(); i++) {
             mChoices.add(fixedChoicePage.getOptionAt(i));
@@ -75,10 +77,10 @@ public class MultipleChoiceFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.wizard_fragment_page, container, false);
-        ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
+        final View rootView = inflater.inflate(R.layout.wizard_fragment_page, container, false);
+        ((TextView) ButterKnife.findById(rootView, android.R.id.title)).setText(mPage.getTitle());
 
-        final ListView listView = (ListView) rootView.findViewById(android.R.id.list);
+        final ListView listView = ButterKnife.findById(rootView, android.R.id.list);
         setListAdapter(new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_multiple_choice,
                 android.R.id.text1,
@@ -89,14 +91,11 @@ public class MultipleChoiceFragment extends ListFragment {
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                ArrayList<String> selectedItems = mPage.getData().getStringArrayList(
+                final ArrayList<String> selectedItems = mPage.getData().getStringArrayList(
                         Page.SIMPLE_DATA_KEY);
-                if (selectedItems == null || selectedItems.size() == 0) {
-                    return;
-                }
+                if (selectedItems == null || selectedItems.size() == 0) { return; }
 
-                Set<String> selectedSet = new HashSet<String>(selectedItems);
-
+                final Set<String> selectedSet = new HashSet<String>(selectedItems);
                 for (int i = 0; i < mChoices.size(); i++) {
                     if (selectedSet.contains(mChoices.get(i))) {
                         listView.setItemChecked(i, true);
@@ -127,8 +126,10 @@ public class MultipleChoiceFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        SparseBooleanArray checkedPositions = getListView().getCheckedItemPositions();
-        ArrayList<String> selections = new ArrayList<String>();
+        final SparseBooleanArray checkedPositions = getListView().getCheckedItemPositions();
+        if (checkedPositions == null) return;
+
+        final ArrayList<String> selections = new ArrayList<String>();
         for (int i = 0; i < checkedPositions.size(); i++) {
             if (checkedPositions.valueAt(i)) {
                 selections.add(getListAdapter().getItem(checkedPositions.keyAt(i)).toString());

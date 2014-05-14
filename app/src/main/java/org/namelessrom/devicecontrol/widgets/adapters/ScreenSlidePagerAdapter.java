@@ -35,17 +35,11 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public CharSequence getPageTitle(final int position) {
-        return mTitles.get(position);
-    }
+    public CharSequence getPageTitle(final int position) { return mTitles.get(position); }
 
     @Override
-    public Fragment getItem(final int position) {
-        return mFragments.get(position);
-    }
+    public Fragment getItem(final int position) { return mFragments.get(position); }
 
     @Override
-    public int getCount() {
-        return mFragments.size();
-    }
+    public int getCount() { return mFragments.size(); }
 }

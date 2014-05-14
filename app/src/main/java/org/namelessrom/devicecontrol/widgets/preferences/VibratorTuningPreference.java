@@ -42,6 +42,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
+import static butterknife.ButterKnife.findById;
+
 /**
  * Special preference type that allows configuration of
  * vibrator intensity settings on Samsung devices
@@ -70,14 +72,14 @@ public class VibratorTuningPreference extends DialogPreference
     }
 
     @Override
-    protected void onBindView(View view) {
+    protected void onBindView(final View view) {
         super.onBindView(view);
 
-        final TextView mTitle = (TextView) view.findViewById(android.R.id.title);
+        final TextView mTitle = findById(view, android.R.id.title);
         mTitle.setTextColor(Color.parseColor(color));
         mTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
 
-        final TextView mSummary = (TextView) view.findViewById(android.R.id.summary);
+        final TextView mSummary = findById(view, android.R.id.summary);
         mSummary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
     }
 
@@ -94,9 +96,9 @@ public class VibratorTuningPreference extends DialogPreference
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
 
-        mSeekBar = (SeekBar) view.findViewById(R.id.vibrator_seekbar);
-        mValue = (TextView) view.findViewById(R.id.vibrator_value);
-        final TextView mWarning = (TextView) view.findViewById(R.id.textWarn);
+        mSeekBar = findById(view, R.id.vibrator_seekbar);
+        mValue = findById(view, R.id.vibrator_value);
+        final TextView mWarning = findById(view, R.id.textWarn);
 
         final String strWarnMsg = getContext().getResources().getString(
                 R.string.vibrator_warning
@@ -124,16 +126,17 @@ public class VibratorTuningPreference extends DialogPreference
         mSeekBar.setOnSeekBarChangeListener(this);
         mSeekBar.setProgress(percent);
 
-        final Button testVibration = (Button) view.findViewById(R.id.vibrator_test);
-        testVibration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (vib != null) {
-                    vib.cancel();
-                    vib.vibrate(250);
+        ((Button) findById(view, R.id.vibrator_test)).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (vib != null) {
+                            vib.cancel();
+                            vib.vibrate(250);
+                        }
+                    }
                 }
-            }
-        });
+        );
     }
 
     @Override

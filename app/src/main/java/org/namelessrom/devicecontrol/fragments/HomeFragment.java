@@ -28,6 +28,8 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
+import butterknife.ButterKnife;
+
 public class HomeFragment extends AttachFragment implements DeviceConstants {
 
     @Override
@@ -38,11 +40,9 @@ public class HomeFragment extends AttachFragment implements DeviceConstants {
             final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        if (view != null) {
-            final String appname = getString(R.string.app_name);
-            ((TextView) view.findViewById(R.id.help_textview))
-                    .setText(getString(R.string.app_information_help, appname, appname));
-        }
+        final String appname = getString(R.string.app_name);
+        ((TextView) ButterKnife.findById(view, R.id.help_textview))
+                .setText(getString(R.string.app_information_help, appname, appname));
 
         return view;
     }

@@ -28,52 +28,21 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
-public class WebViewFragment extends AttachFragment implements DeviceConstants {
+import butterknife.ButterKnife;
 
-    public static final String ARG_TYPE = "arg_type";
-
-    public static final int TYPE_ABOUT    = 0;
-    public static final int TYPE_LICENSES = 1;
-    public static final int TYPE_HELP     = 2;
-
-    public static WebViewFragment newInstance(int typeId) {
-        WebViewFragment f = new WebViewFragment();
-
-        Bundle b = new Bundle();
-        b.putInt(WebViewFragment.ARG_TYPE, typeId);
-        f.setArguments(b);
-
-        return f;
-    }
+public class LicenseFragment extends AttachFragment implements DeviceConstants {
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity, ID_DUMMY);
-    }
+    public void onAttach(Activity activity) { super.onAttach(activity, ID_DUMMY); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_webview, container, false);
 
-        final int typeId = getArguments().getInt(WebViewFragment.ARG_TYPE);
-        String url;
-        switch (typeId) {
-            default:
-            case TYPE_ABOUT: // About
-                url = "file:///android_asset/notice.html";
-                break;
-            case TYPE_LICENSES: // Licenses
-                url = "file:///android_asset/notice.html";
-                break;
-            case TYPE_HELP: // Help
-                url = "file:///android_asset/notice.html";
-                break;
-        }
-
-        final WebView wv = (WebView) view.findViewById(R.id.dialog_help_webview);
+        final WebView wv = ButterKnife.findById(view, R.id.dialog_help_webview);
         wv.getSettings().setTextSize(WebSettings.TextSize.SMALLER);
-        wv.loadUrl(url);
+        wv.loadUrl("file:///android_asset/license.html");
 
         return view;
     }

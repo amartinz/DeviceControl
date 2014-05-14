@@ -27,14 +27,16 @@ import android.widget.ListView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
+
+import butterknife.ButterKnife;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -100,11 +102,11 @@ public class VoltageFragment extends AttachPreferenceFragment
         super.onCreateView(inflater, container, savedInstanceState);
         final View v = inflater.inflate(R.layout.fragment_voltage, container, false);
 
-        final ListView list = (ListView) v.findViewById(android.R.id.list);
+        final ListView list = ButterKnife.findById(v, android.R.id.list);
 
-        mButtonLayout = (LinearLayout) v.findViewById(R.id.btn_layout);
-        final Button mButtonApply = (Button) v.findViewById(R.id.btn_apply);
-        final Button mButtonCancel = (Button) v.findViewById(R.id.btn_cancel);
+        mButtonLayout = ButterKnife.findById(v, R.id.btn_layout);
+        final Button mButtonApply = ButterKnife.findById(v, R.id.btn_apply);
+        final Button mButtonCancel = ButterKnife.findById(v, R.id.btn_cancel);
 
         mButtonCancel.setOnClickListener(new OnClickListener() {
 
