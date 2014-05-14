@@ -18,11 +18,11 @@
     <color name="red_middle">#dc3d24</color>
     <color name="darker_gray">#66666666</color>
     <color name="grey_dark">#232B2B</color>
-    <color name="orange">#E9633B</color>
     <color name="blueish">#63AA9C</color>
     <color name="blueish_strong">#4EB1BA</color>
     <color name="greenish">#50d07d</color>
     <color name="grey">#AA242424</color>
+    <color name="orange">#FFFFBB33</color>
     <!-- Wizard -->
     <color name="step_pager_previous_tab_color">#44ffffff</color>
     <color name="step_pager_selected_tab_color">#ffffffff</color>
