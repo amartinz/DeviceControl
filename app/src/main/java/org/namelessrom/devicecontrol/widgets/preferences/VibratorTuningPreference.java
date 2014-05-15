@@ -126,7 +126,7 @@ public class VibratorTuningPreference extends DialogPreference
         mSeekBar.setOnSeekBarChangeListener(this);
         mSeekBar.setProgress(percent);
 
-        ((Button) findById(view, R.id.vibrator_test)).setOnClickListener(
+        findById(view, R.id.vibrator_test).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

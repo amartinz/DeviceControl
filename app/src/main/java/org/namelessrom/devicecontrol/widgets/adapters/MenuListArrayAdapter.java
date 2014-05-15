@@ -51,7 +51,7 @@ public class MenuListArrayAdapter extends BaseAdapter {
         return getItemViewType(position) != 1;
     }
 
-    private static class ViewHolder {
+    private static final class ViewHolder {
         private TextView  header;
         private TextView  text;
         private ImageView image;
