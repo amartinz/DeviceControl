@@ -94,7 +94,6 @@ public class Application extends android.app.Application implements DeviceConsta
                     .detectLeakedRegistrationObjects()
                     .detectLeakedSqlLiteObjects()
                     .setClassInstanceLimit(AddTaskActivity.class, 100)
-                    .setClassInstanceLimit(AppDetailActivity.class, 100)
                     .penaltyLog()
                     .build());
 

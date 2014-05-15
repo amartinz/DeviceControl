@@ -41,6 +41,7 @@ import com.stericson.roottools.RootTools;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
+import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.fragments.HelpFragment;
 import org.namelessrom.devicecontrol.fragments.HomeFragment;
 import org.namelessrom.devicecontrol.fragments.LicenseFragment;
@@ -92,6 +93,8 @@ public class MainActivity extends Activity
     private IabHelper mHelper;
 
     public static SlidingMenu mSlidingMenu;
+
+    private Fragment mCurrentFragment;
 
     private int mActionBarDrawable    = R.drawable.ic_launcher;
     private int mSubActionBarDrawable = -1;
@@ -214,6 +217,9 @@ public class MainActivity extends Activity
     public void onBackPressed() {
         if (mSlidingMenu.isMenuShowing()) {
             mSlidingMenu.toggle(true);
+        } else if (mCurrentFragment instanceof OnBackPressedListener
+                && ((OnBackPressedListener) mCurrentFragment).onBackPressed()) {
+            logDebug("onBackPressed()");
         } else if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
@@ -251,44 +257,43 @@ public class MainActivity extends Activity
     //==============================================================================================
 
     private void loadFragment(final int i) {
-        Fragment main;
         Fragment right = HelpFragment.newInstance(i);
 
         switch (i) {
             default:
                 right = HelpFragment.newInstance(ID_DUMMY);
             case ID_HOME:
-                main = new HomeFragment();
+                mCurrentFragment = new HomeFragment();
                 break;
             case ID_DEVICE:
-                main = new DeviceFragment();
+                mCurrentFragment = new DeviceFragment();
                 break;
             case ID_FEATURES:
-                main = new FeaturesFragment();
+                mCurrentFragment = new FeaturesFragment();
                 break;
             case ID_PERFORMANCE_INFO:
-                main = new InformationFragment();
+                mCurrentFragment = new InformationFragment();
                 break;
             case ID_PERFORMANCE_CPU_SETTINGS:
-                main = new CpuSettingsFragment();
+                mCurrentFragment = new CpuSettingsFragment();
                 break;
             case ID_PERFORMANCE_GPU_SETTINGS:
-                main = new GpuSettingsFragment();
+                mCurrentFragment = new GpuSettingsFragment();
                 break;
             case ID_PERFORMANCE_EXTRA:
-                main = new ExtrasFragment();
+                mCurrentFragment = new ExtrasFragment();
                 break;
             case ID_TOOLS_TASKER:
-                main = new TaskerFragment();
+                mCurrentFragment = new TaskerFragment();
                 break;
             case ID_TOOLS_MORE:
-                main = new ToolsMoreFragment();
+                mCurrentFragment = new ToolsMoreFragment();
                 break;
             case ID_PREFERENCES:
-                main = new PreferencesFragment();
+                mCurrentFragment = new PreferencesFragment();
                 break;
             case ID_LICENSES:
-                main = new LicenseFragment();
+                mCurrentFragment = new LicenseFragment();
                 break;
         }
 
@@ -299,7 +304,7 @@ public class MainActivity extends Activity
 
         final FragmentTransaction ft = fragmentManager.beginTransaction();
 
-        ft.replace(R.id.container, main);
+        ft.replace(R.id.container, mCurrentFragment);
         ft.replace(R.id.menu_frame, right);
 
         ft.commit();
@@ -519,7 +524,6 @@ public class MainActivity extends Activity
     public void onSubFragmentEvent(final SubFragmentEvent event) {
         if (event == null) return;
 
-        Fragment main = null;
         final int id = event.getId();
 
         Fragment right = HelpFragment.newInstance(id);
@@ -527,53 +531,53 @@ public class MainActivity extends Activity
         switch (id) {
             //--------------------------------------------------------------------------------------
             case ID_FAST_CHARGE:
-                main = new FastChargeFragment();
+                mCurrentFragment = new FastChargeFragment();
                 break;
             //--------------------------------------------------------------------------------------
             case ID_GOVERNOR_TUNABLE:
-                main = new GovernorFragment();
+                mCurrentFragment = new GovernorFragment();
                 break;
             //--------------------------------------------------------------------------------------
             case ID_HOTPLUGGING:
-                main = new HotpluggingFragment();
+                mCurrentFragment = new HotpluggingFragment();
                 break;
             case ID_THERMAL:
-                main = new ThermalFragment();
+                mCurrentFragment = new ThermalFragment();
                 break;
             case ID_VOLTAGE:
-                main = new VoltageFragment();
+                mCurrentFragment = new VoltageFragment();
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_TASKER_LIST:
-                main = new TaskListFragment();
+                mCurrentFragment = new TaskListFragment();
                 break;
             case ID_TOOLS_VM:
-                main = new SysctlFragment();
+                mCurrentFragment = new SysctlFragment();
                 break;
             case ID_TOOLS_BUILD_PROP:
-                main = new BuildPropFragment();
+                mCurrentFragment = new BuildPropFragment();
                 break;
             case ID_TOOLS_EDITORS_VM:
-                main = new SysctlEditorFragment();
+                mCurrentFragment = new SysctlEditorFragment();
                 break;
             case ID_TOOLS_EDITORS_BUILD_PROP:
-                main = new BuildPropEditorFragment();
+                mCurrentFragment = new BuildPropEditorFragment();
                 break;
             case ID_TOOLS_APP_MANAGER:
-                main = new AppListFragment();
+                mCurrentFragment = new AppListFragment();
                 break;
             //--------------------------------------------------------------------------------------
             default:
                 break;
         }
 
-        if (main == null || right == null) return;
+        if (mCurrentFragment == null || right == null) return;
 
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_right,
                 R.animator.slide_in_left, R.animator.slide_out_left);
 
-        ft.replace(R.id.container, main);
+        ft.replace(R.id.container, mCurrentFragment);
         ft.replace(R.id.menu_frame, right);
         ft.addToBackStack(null);
 

@@ -15,6 +15,7 @@
 -->
 
 <resources>
+    <dimen name="app_margin">8dp</dimen>
     <dimen name="slidingmenu_offset">200dp</dimen>
     <dimen name="shadow_width">15dp</dimen>
 </resources>

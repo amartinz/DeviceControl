@@ -1,7 +1,6 @@
 package org.namelessrom.devicecontrol.widgets.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.AppDetailActivity;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.objects.AppItem;
@@ -21,11 +19,9 @@ import static butterknife.ButterKnife.findById;
 
 public class AppListAdapter extends BaseAdapter {
 
-    private final Context       mContext;
     private final List<AppItem> mAppList;
 
-    public AppListAdapter(final Context context, final List<AppItem> appList) {
-        mContext = context;
+    public AppListAdapter(final List<AppItem> appList) {
         mAppList = appList;
     }
 
@@ -85,15 +81,6 @@ public class AppListAdapter extends BaseAdapter {
         } else {
             viewHolder.layer.setVisibility(View.VISIBLE);
         }
-
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Intent i = new Intent(mContext, AppDetailActivity.class);
-                i.putExtra("app_item", appItem.getPackageName());
-                mContext.startActivity(i);
-            }
-        });
 
         return convertView;
     }
