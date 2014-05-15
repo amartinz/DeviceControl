@@ -78,13 +78,13 @@
             android:name="org.namelessrom.devicecontrol.wizard.AddTaskActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/add_task"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name="org.namelessrom.devicecontrol.AppDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_details"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:parentActivityName=".MainActivity" />
 
         <!-- Services -->
