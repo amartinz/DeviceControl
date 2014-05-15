@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.namelessrom.devicecontrol"
-    android:versionCode="60"
+    android:versionCode="61"
     android:versionName="0.5.3">
 
     <uses-sdk
@@ -78,12 +78,6 @@
             android:name="org.namelessrom.devicecontrol.wizard.AddTaskActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/add_task"
-            android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name="org.namelessrom.devicecontrol.AppDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_details"
             android:launchMode="singleTask"
             android:parentActivityName=".MainActivity" />
 

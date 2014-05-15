@@ -2,7 +2,7 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.0.3'
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
         minSdkVersion 14
@@ -25,6 +25,13 @@ android {
 
     buildTypes {
         release {
+            runProguard true
+            signingConfig signingConfigs.release
+            proguardFile 'src/main/proguard.flags'
+            zipAlign true
+        }
+
+        debug {
             runProguard true
             signingConfig signingConfigs.release
             proguardFile 'src/main/proguard.flags'

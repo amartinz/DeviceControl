@@ -82,7 +82,7 @@ public class PropAdapter extends ArrayAdapter<Prop> {
         return mFilter;
     }
 
-    private static class ViewHolder {
+    private static final class ViewHolder {
         private final TextView pp;
         private final TextView pv;
 
