@@ -106,7 +106,7 @@ public class AppDetailActivity extends Activity {
         }
         mStatus.setText(Html.fromHtml(tmp));
 
-        if (!AppHelper.isAppRunning(this, mAppItem.getPackageName())) {
+        if (!AppHelper.isAppRunning(mAppItem.getPackageName())) {
             mKillApp.setEnabled(false);
         }
 
@@ -116,7 +116,7 @@ public class AppDetailActivity extends Activity {
         mDisabler.setText(mAppItem.isEnabled() ? R.string.disable : R.string.enable);
 
         try {
-            AppHelper.getSize(mPm, mAppItem.getPackageName());
+            AppHelper.getSize(mAppItem.getPackageName());
         } catch (Exception e) { logDebug("AppHelper.getSize(): " + e); }
     }
 
@@ -303,11 +303,10 @@ public class AppDetailActivity extends Activity {
                 mClearData.setEnabled(true);
             }
             if (mKillApp != null) {
-                mKillApp.setEnabled(AppHelper.isAppRunning(AppDetailActivity.this,
-                        mAppItem.getPackageName()));
+                mKillApp.setEnabled(AppHelper.isAppRunning(mAppItem.getPackageName()));
             }
             try {
-                AppHelper.getSize(mPm, mAppItem.getPackageName());
+                AppHelper.getSize(mAppItem.getPackageName());
             } catch (Exception e) { logDebug("AppHelper.getSize(): " + e); }
         }
     };
@@ -316,8 +315,7 @@ public class AppDetailActivity extends Activity {
         @Override
         public void run() {
             if (mKillApp != null) {
-                mKillApp.setEnabled(AppHelper.isAppRunning(AppDetailActivity.this,
-                        mAppItem.getPackageName()));
+                mKillApp.setEnabled(AppHelper.isAppRunning(mAppItem.getPackageName()));
             }
         }
     };

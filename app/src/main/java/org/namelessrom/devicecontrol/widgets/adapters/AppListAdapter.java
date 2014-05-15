@@ -86,14 +86,14 @@ public class AppListAdapter extends BaseAdapter {
             viewHolder.layer.setVisibility(View.VISIBLE);
         }
 
-        convertView.setOnClickListener(new View.OnClickListener() {
+        /*convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Intent i = new Intent(mContext, AppDetailActivity.class);
                 i.putExtra("app_item", appItem.getPackageName());
                 mContext.startActivity(i);
             }
-        });
+        });*/
 
         return convertView;
     }

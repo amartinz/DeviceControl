@@ -3,8 +3,9 @@ package org.namelessrom.devicecontrol.utils;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.IPackageStatsObserver;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
+import android.os.IBinder;
+import android.os.Parcel;
 import android.os.RemoteException;
 
 import org.namelessrom.devicecontrol.Application;
@@ -21,44 +22,61 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
  */
 public class AppHelper {
 
-    public static void getSize(final PackageManager pm, final String pkg) throws Exception {
-        final Method getPackageSizeInfo = pm.getClass().getMethod(
+    private static final String DESCRIPTOR = "android.content.pm.IPackageStatsObserver";
+
+    /**
+     * Gets the package stats of the given application.
+     * The package stats are getting sent via OTTO
+     *
+     * @param pkg The package name of the application
+     * @throws Exception
+     */
+    public static void getSize(final String pkg) throws Exception {
+        final Method getPackageSizeInfo = Application.getPm().getClass().getMethod(
                 "getPackageSizeInfo", String.class, IPackageStatsObserver.class);
 
-        getPackageSizeInfo.invoke(pm, pkg, new IPackageStatsObserver.Stub() {
-                    @Override
-                    public void onGetStatsCompleted(final PackageStats pStats, boolean succeeded)
-                            throws RemoteException {
-                        logDebug("onGetStatsCompleted() " + (succeeded ? "succeeded" : "error"));
-                        Application.HANDLER.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                BusProvider.getBus().post(pStats);
-                            }
-                        });
-                    }
-                }
-        );
+        getPackageSizeInfo.invoke(Application.getPm(), pkg, mPkgObs);
     }
 
+    /**
+     * Clears cache via shell of the given package name
+     *
+     * @param pkg The package name of the application
+     */
     public static void clearCache(final String pkg) {
         final String base = "rm -rf /data/data/" + pkg;
         Utils.runRootCommand(base + "/app_*/*;" + base + "/cache/*;");
     }
 
+    /**
+     * Clears data via shell of the given package name
+     *
+     * @param pkg The package name of the application
+     */
     public static void clearData(final String pkg) {
         final String base = "rm -rf /data/data/" + pkg;
         Utils.runRootCommand("pkill -TERM " + pkg + ';' + base + "/app_*;" + base + "/cache/;"
                 + base + "/databases/;" + base + "/files/;" + base + "/shared_prefs/;");
     }
 
+    /**
+     * KILL IT!
+     *
+     * @param pkg The package name of the application to kill
+     */
     public static void killApp(final String pkg) {
         Utils.runRootCommand("pkill -TERM " + pkg);
     }
 
-    public static boolean isAppRunning(final Context context, final String pkg) {
-        final ActivityManager aM =
-                (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+    /**
+     * Checks if the given application is running
+     *
+     * @param pkg The package name of the application
+     * @return Whether the app is running
+     */
+    public static boolean isAppRunning(final String pkg) {
+        final ActivityManager aM = (ActivityManager) Application.applicationContext
+                .getSystemService(Context.ACTIVITY_SERVICE);
         final List<ActivityManager.RunningAppProcessInfo> procInfos = aM.getRunningAppProcesses();
         if (procInfos != null) {
             for (final ActivityManager.RunningAppProcessInfo procInfo : procInfos) {
@@ -70,6 +88,12 @@ public class AppHelper {
         return false;
     }
 
+    /**
+     * Converts a size, given as long, to a human readable representation
+     *
+     * @param size The size to convert
+     * @return A human readable data size
+     */
     public static String convertSize(final long size) {
         if (size <= 0) return "0 B";
         final String[] units = new String[]{"B", "KB", "MB", "GB", "TB"};
@@ -77,5 +101,53 @@ public class AppHelper {
         return new DecimalFormat("#,##0.##")
                 .format(size / Math.pow(1024, digitGroups)) + ' ' + units[digitGroups];
     }
+
+    /**
+     * Our Stub for the package stats observer.
+     * Usually we just have to override onGetStatsCompleted but my android studio instance is
+     * going crazy and produces apps, which crash at onTransact...
+     */
+    private static final IPackageStatsObserver.Stub mPkgObs = new IPackageStatsObserver.Stub() {
+        @Override
+        public IBinder asBinder() {
+            return super.asBinder();
+        }
+
+        @Override
+        public boolean onTransact(int code, Parcel data, Parcel reply, int flags)
+                throws RemoteException {
+            switch (code) {
+                case INTERFACE_TRANSACTION: {
+                    reply.writeString(DESCRIPTOR);
+                    return true;
+                }
+                case FIRST_CALL_TRANSACTION: {
+                    data.enforceInterface(DESCRIPTOR);
+                    final PackageStats _arg0;
+                    if ((0 != data.readInt())) {
+                        _arg0 = PackageStats.CREATOR.createFromParcel(data);
+                    } else {
+                        _arg0 = null;
+                    }
+                    final boolean _arg1 = (0 != data.readInt());
+                    this.onGetStatsCompleted(_arg0, _arg1);
+                    return true;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public void onGetStatsCompleted(final PackageStats pStats, boolean succeeded)
+                throws RemoteException {
+            logDebug("onGetStatsCompleted() " + (succeeded ? "succeeded" : "error"));
+            Application.HANDLER.post(new Runnable() {
+                @Override
+                public void run() {
+                    BusProvider.getBus().post(pStats);
+                }
+            });
+        }
+    };
 
 }
