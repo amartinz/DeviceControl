@@ -38,21 +38,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/grey"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="right">
 
                 <Button
+                    style="?android:attr/borderlessButtonStyle"
                     android:id="@+id/app_kill"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/kill_app" />
 
+                <View style="@style/ButtonBarDivider" />
+
                 <Button
+                    style="?android:attr/borderlessButtonStyle"
                     android:id="@+id/app_disabler"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -78,19 +85,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/grey"
                 android:orientation="horizontal"
                 android:gravity="right">
 
                 <Button
+                    style="?android:attr/borderlessButtonStyle"
                     android:id="@+id/app_data_clear"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/clear_data" />
 
+                <View style="@style/ButtonBarDivider" />
+
                 <Button
+                    style="?android:attr/borderlessButtonStyle"
                     android:id="@+id/app_cache_clear"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/clear_cache" />
 
             </LinearLayout>
