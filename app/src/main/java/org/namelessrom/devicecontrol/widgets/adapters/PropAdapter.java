@@ -50,12 +50,12 @@ public class PropAdapter extends ArrayAdapter<Prop> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
-
         if (convertView == null) {
-            final LayoutInflater vi =
-                    (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = vi.inflate(R.layout.list_item_prop, parent, false);
+            convertView = ((LayoutInflater)
+                    mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                    .inflate(R.layout.list_item_prop, parent, false);
             viewHolder = new ViewHolder(convertView);
+            assert (convertView != null);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

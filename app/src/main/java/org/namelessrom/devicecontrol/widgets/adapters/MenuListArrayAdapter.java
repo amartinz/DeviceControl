@@ -33,50 +33,55 @@ public class MenuListArrayAdapter extends BaseAdapter {
     public int getCount() { return mTitles.length; }
 
     @Override
-    public Object getItem(int position) { return position; }
+    public Object getItem(final int position) { return position; }
 
     @Override
-    public long getItemId(int arg0) { return 0; }
+    public long getItemId(final int arg0) { return 0; }
 
     @Override
     public int getViewTypeCount() { return 2; }
 
     @Override
-    public int getItemViewType(int position) {
-        return (mIcons[position] == -1) ? 1 : 0;
-    }
+    public int getItemViewType(final int position) { return (mIcons[position] == -1) ? 1 : 0; }
 
     @Override
-    public boolean isEnabled(int position) {
-        return getItemViewType(position) != 1;
-    }
+    public boolean isEnabled(final int position) { return getItemViewType(position) != 1; }
 
     private static final class ViewHolder {
-        private TextView  header;
-        private TextView  text;
-        private ImageView image;
+        private final TextView  header;
+        private final TextView  title;
+        private final ImageView image;
+
+        public ViewHolder(final View v, final int type) {
+            if (type == 0) {
+                header = null;
+                title = findById(v, android.R.id.text1);
+                image = findById(v, R.id.image);
+            } else if (type == 1) {
+                header = findById(v, R.id.menu_header);
+                title = null;
+                image = null;
+            } else {
+                header = null;
+                title = null;
+                image = null;
+            }
+        }
     }
 
     @Override
-    public View getView(int position, View v, ViewGroup parent) {
+    public View getView(final int position, View v, final ViewGroup parent) {
         final ViewHolder viewHolder;
         final int type = getItemViewType(position);
         if (v == null) {
-            viewHolder = new ViewHolder();
             final LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
             if (type == 0) {
                 v = inflater.inflate(mLayoutResourceId, parent, false);
-
-                viewHolder.text = findById(v, android.R.id.text1);
-                viewHolder.image = findById(v, R.id.image);
             } else if (type == 1) {
                 v = inflater.inflate(R.layout.menu_header, parent, false);
-
-                viewHolder.header = findById(v, R.id.menu_header);
             }
-
             assert (v != null);
-
+            viewHolder = new ViewHolder(v, type);
             v.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) v.getTag();
@@ -84,8 +89,8 @@ public class MenuListArrayAdapter extends BaseAdapter {
 
         final int defaultColor = mContext.getResources().getColor(android.R.color.white);
         if (type == 0) {
-            viewHolder.text.setTextColor(Color.WHITE);
-            viewHolder.text.setText(mTitles[position]);
+            viewHolder.title.setTextColor(Color.WHITE);
+            viewHolder.title.setText(mTitles[position]);
 
             final int imageRes = mIcons[position];
             if (imageRes == 0) {

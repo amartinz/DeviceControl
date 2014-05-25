@@ -2,7 +2,6 @@ package org.namelessrom.devicecontrol.widgets.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -36,22 +35,19 @@ public class TaskerAdapter extends BaseAdapter {
     public int getCount() { return mTaskerList.size(); }
 
     @Override
-    public TaskerItem getItem(int position) { return mTaskerList.get(position); }
+    public TaskerItem getItem(final int position) { return mTaskerList.get(position); }
 
     @Override
-    public long getItemId(int arg0) { return 0; }
+    public long getItemId(final int arg0) { return 0; }
 
     @Override
-    public View getView(int position, View v, ViewGroup parent) {
+    public View getView(final int position, View v, final ViewGroup parent) {
         final ViewHolder viewHolder;
-
         if (v == null) {
-            final LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-            v = inflater.inflate(R.layout.list_item_tasker, parent, false);
-            viewHolder = new ViewHolder(v);
-
+            v = ((Activity) mContext).getLayoutInflater()
+                    .inflate(R.layout.list_item_tasker, parent, false);
             assert (v != null);
-
+            viewHolder = new ViewHolder(v);
             v.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) v.getTag();

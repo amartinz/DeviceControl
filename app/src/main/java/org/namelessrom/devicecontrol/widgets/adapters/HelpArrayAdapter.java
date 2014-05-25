@@ -3,7 +3,6 @@ package org.namelessrom.devicecontrol.widgets.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -29,24 +28,38 @@ public class HelpArrayAdapter extends BaseAdapter {
     public int getCount() { return mTitles.length; }
 
     @Override
-    public Object getItem(int position) { return position; }
+    public Object getItem(final int position) { return position; }
 
     @Override
-    public long getItemId(int arg0) { return 0; }
+    public long getItemId(final int arg0) { return 0; }
 
-    @Override
-    public View getView(int position, View v, ViewGroup parent) {
-        if (v == null) {
-            final LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-            v = inflater.inflate(R.layout.list_item, parent, false);
+    private static class ViewHolder {
+        private final TextView title;
+        private final TextView summary;
+
+        public ViewHolder(final View v) {
+            title = findById(v, android.R.id.text1);
+            summary = findById(v, android.R.id.text2);
         }
-        final TextView text1 = findById(v, android.R.id.text1);
-        text1.setTextColor(Color.WHITE);
-        text1.setTextAppearance(mContext, android.R.attr.textAppearanceListItemSmall);
+    }
 
-        final TextView text2 = findById(v, android.R.id.text2);
-        text1.setText(mTitles[position]);
-        text2.setText(mContent[position]);
+    @Override
+    public View getView(final int position, View v, final ViewGroup parent) {
+        final ViewHolder viewHolder;
+        if (v == null) {
+            v = ((Activity) mContext).getLayoutInflater()
+                    .inflate(R.layout.list_item, parent, false);
+            assert (v != null);
+            viewHolder = new ViewHolder(v);
+            v.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) v.getTag();
+        }
+
+        viewHolder.title.setTextColor(Color.WHITE);
+        viewHolder.title.setTextAppearance(mContext, android.R.attr.textAppearanceListItemSmall);
+        viewHolder.title.setText(mTitles[position]);
+        viewHolder.summary.setText(mContent[position]);
         return v;
     }
 
