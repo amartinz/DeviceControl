@@ -47,6 +47,10 @@
   <string name="thermal">Thermal-Treiber</string>
   <string name="core_control">Kern-Steuerung</string>
   <string name="core_control_summary">Deaktiviert CPU-Kerne, wenn das Temperatur-Limit erreicht wird</string>
+  <string name="temp_limit">Temperatur-Begrenzung</string>
+  <string name="core_temp_limit">Kern-Temperatur-Begrenzung</string>
+  <string name="core_max">Maximale Kerne online</string>
+  <string name="core_min">Minimale Kerne online</string>
   <string name="intelli_thermal_enabled">Intelli-Thermal aktivieren</string>
   <string name="intelli_thermal_enabled_summary">Falls deaktiviert, ohne ausreichenden Ersatz, überhitzt das Gerät möglicherweise!</string>
   <string name="voltage">Spannung</string>
@@ -204,6 +208,8 @@
   <string name="ext_data">Externe Daten</string>
   <string name="ext_media">Externe Medien</string>
   <string name="ext_obb">Externe obb</string>
+  <string name="ext_cache">Externer Cache</string>
+  <string name="ext">Extern</string>
   <string name="cache">Cache</string>
   <string name="applying_wait">Anwenden der Werte, bitte warten&#8230;</string>
 </resources>

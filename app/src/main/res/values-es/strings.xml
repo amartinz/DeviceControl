@@ -3,7 +3,7 @@
 <resources>
   <string name="app_version_name">Nombre de la versión: %s</string>
   <string name="app_version_code">Código de la versión: %s</string>
-  <string name="app_information_help">¡Bienvenido a %1$s!\n\nPara comenzar, ¡deslice el menú de la izquierda!\n\n¡Cuando necesite ayuda o no entienda lo que está haciendo en una función específica, deslice la derecha y mire en la ayuda!\n\n¡Cuando una característica no es compatible con su dispositivo, automáticamente estará oculta!\n\n\n¡Por favor tenga en cuenta que esa %2$s necesita de root\npara que funcione correctamente!\n\n</string>
+  <string name="app_information_help">¡Bienvenido a %1$s!\n\nPara comenzar, ¡deslice el menú de la izquierda!\n\n¡Cuando necesite ayuda o no entienda lo que hace una función específica, deslice la derecha y mire en la ayuda!\n\n¡Cuando una característica no es compatible con su dispositivo, automáticamente estará oculta!\n\n\n¡Por favor tenga en cuenta que %2$s necesita ser root\npara que funcione correctamente!\n\n</string>
   <string name="app_warning_root">¡Tenga en cuenta que %s requiere ser ROOT para funcionar completamente!</string>
   <string name="app_warning_busybox">¡Por favor tenga en cuenta que %s necesita de BusyBox para poder trabajar correctamente!</string>
   <string name="get_busybox">Instalar BusyBox</string>
@@ -31,7 +31,7 @@
   <string name="extras">Extras</string>
   <string name="tools">Herramientas</string>
   <string name="editors">Editores</string>
-  <string name="app_manager">App manager</string>
+  <string name="app_manager">Gestor de Aplicaciones</string>
   <string name="licenses">Licencias</string>
   <string name="graphics">Gráficos</string>
   <string name="display">Pantalla</string>
@@ -47,6 +47,10 @@
   <string name="thermal">Conductor Térmico</string>
   <string name="core_control">Control del Núcleo</string>
   <string name="core_control_summary">Apaga los núcleos de la CPU si el límite de temperatura es alcanzado</string>
+  <string name="temp_limit">Límite de temperatura</string>
+  <string name="core_temp_limit">Límite de temperatura del núcleo</string>
+  <string name="core_max">Núcleos máximos en funcionamiento</string>
+  <string name="core_min">Núcleos mínimos en funcionamiento</string>
   <string name="intelli_thermal_enabled">Habilitar Inteligencia-Térmica</string>
   <string name="intelli_thermal_enabled_summary">¡Si desactiva sin un sustituto válido, su dispositivo podra recalentarse!</string>
   <string name="voltage">Voltaje</string>
@@ -167,7 +171,7 @@
   <string name="add_property">Añadir Propiedad</string>
   <string name="edit_property">Editar Propiedad</string>
   <string name="delete_property">Eliminar Propiedad</string>
-  <string name="delete_property_message">%s va a ser eliminado.\n\n¿Continuar?</string>
+  <string name="delete_property_message">%s será eliminado.\n\n¿Continuar?</string>
   <string name="name">Nombre</string>
   <string name="presets">Ajustes Predeterminados</string>
   <string name="knock_on_off_gestures">Llamar con gestos a On/Off</string>
@@ -188,8 +192,8 @@
   <string name="menu">Menú</string>
   <string name="preferences">Preferencias</string>
   <string name="become_a_monkey">Conviertete en un mono</string>
-  <string name="is_monkey">Espera, ¿en serio?\nEsto es bastante inteligente para un mono.\nNo lo son pero...\nBueno, podemos omitir esto.</string>
-  <string name="no_monkey">¿No es un mono? *Sigh* :(</string>
+  <string name="is_monkey">Espera, ¿en serio?\nEres muy inteligente para un mono.\nNo es que sean tontos pero...\nBueno, podemos omitir esto.</string>
+  <string name="no_monkey">¿No es un mono? *Suspiro* :(</string>
   <string name="downgraded">¡La base de datos será borrada debido al downgrade!</string>
   <string name="media_scan_trigger">Disparador del análisis de medios</string>
   <string name="media_scan_summary">Disparador manual desencadenara una exploración de los medios, en caso de tener el teléfono conectado vía MTP, los nuevos archivos no serán visibles.</string>
@@ -204,6 +208,8 @@
   <string name="ext_data">Datos externos</string>
   <string name="ext_media">Medios externos</string>
   <string name="ext_obb">Obb externo</string>
+  <string name="ext_cache">Cache externa</string>
+  <string name="ext">Externo</string>
   <string name="cache">Cache</string>
-  <string name="applying_wait">Applying values, please wait&#8230;</string>
+  <string name="applying_wait">Aplicando valores, por favor espere...</string>
 </resources>

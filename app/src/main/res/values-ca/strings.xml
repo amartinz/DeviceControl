@@ -31,7 +31,7 @@
   <string name="extras">Extres</string>
   <string name="tools">Ferramentes</string>
   <string name="editors">Redactors</string>
-  <string name="app_manager">App manager</string>
+  <string name="app_manager">Gestor d\'Aplicacions</string>
   <string name="licenses">Llicències</string>
   <string name="graphics">Gràfics</string>
   <string name="display">Exhibició</string>
@@ -39,7 +39,7 @@
   <string name="unused_cpu_states">Estats sense ús de la cpu</string>
   <string name="total_state_time">Temps total de l\'estat</string>
   <string name="no_states_file_found">No hi ha cap fitxer d\'estats trobat.</string>
-  <string name="deep_sleep">\"Somni Profund\"</string>
+  <string name="deep_sleep">\"Deep Sleep\"</string>
   <string name="device_information">Informació del dispositiu</string>
   <string name="hotplugging">Connexió en calent</string>
   <string name="mpdecision_summary_on">MPDecision s\'està executant.</string>
@@ -47,6 +47,10 @@
   <string name="thermal">Conductor Tèrmic</string>
   <string name="core_control">Control del Nucli</string>
   <string name="core_control_summary">Apaga els nuclis de la CPU si el límit de temperatura és arribat</string>
+  <string name="temp_limit">Límit de temperatura</string>
+  <string name="core_temp_limit">Límit de temperatura del nucli</string>
+  <string name="core_max">Nuclis màxims en funcionament</string>
+  <string name="core_min">Nuclis mínims en funcionament</string>
   <string name="intelli_thermal_enabled">Habilitar Intel·ligència-Tèrmica</string>
   <string name="intelli_thermal_enabled_summary">Si desactiveu sense un substitut vàlid, el dispositiu podrà reescalfar!</string>
   <string name="voltage">Tensió</string>
@@ -188,8 +192,8 @@
   <string name="menu">Menú</string>
   <string name="preferences">Preferències</string>
   <string name="become_a_monkey">Converteix-te en un mico</string>
-  <string name="is_monkey">Espera, de debò?\nAixò és bastant intel·ligent per a un mico.\nNo ho són però...\nBé, podem ometre això.</string>
-  <string name="no_monkey">No és un mico? *Sigh* :(</string>
+  <string name="is_monkey">Espera, de debò?\nEts molt intel·ligent per a un mico.\nNo és que siguin ximples però...\nBé, podem ometre això.</string>
+  <string name="no_monkey">No és un mico? *Sospir* :(</string>
   <string name="downgraded">La base de dades serà esborrada a causa del downgrade!</string>
   <string name="media_scan_trigger">Disparador de l\'anàlisi de mitjans</string>
   <string name="media_scan_summary">Disparador manual desencadenés una exploració dels mitjans, en cas de tenir el telèfon connectat via MTP, els nous arxius no seran visibles.</string>
@@ -204,6 +208,8 @@
   <string name="ext_data">Dades externes</string>
   <string name="ext_media">Mitjans externs</string>
   <string name="ext_obb">Obb extern</string>
+  <string name="ext_cache">Cache externa</string>
+  <string name="ext">Extern</string>
   <string name="cache">Cache</string>
-  <string name="applying_wait">Applying values, please wait&#8230;</string>
+  <string name="applying_wait">Aplicant valors, si us plau esperi...</string>
 </resources>
