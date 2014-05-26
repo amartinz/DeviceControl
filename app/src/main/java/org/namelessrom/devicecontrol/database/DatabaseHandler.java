@@ -36,6 +36,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     public static final String CATEGORY_CPU      = "cpu";
     public static final String CATEGORY_GPU      = "gpu";
     public static final String CATEGORY_EXTRAS   = "extras";
+    public static final String CATEGORY_SYSCTL   = "sysctl";
 
     private static final String CREATE_BOOTUP_TABLE = "CREATE TABLE " + TABLE_BOOTUP + '('
             + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_NAME + " TEXT,"
