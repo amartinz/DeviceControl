@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="ksm_info"
+        android:title="@string/information">
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+            android:key="ksm_full_scans"
+            android:title="@string/full_scans" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="ksm_settings"
+        android:title="@string/ksm">
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+            android:key="ksm_run"
+            android:title="@string/enable_ksm"
+            android:summary="@string/enable_ksm_summary" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

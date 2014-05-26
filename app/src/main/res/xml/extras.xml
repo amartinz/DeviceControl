@@ -23,6 +23,10 @@
         android:title="@string/io" />
 
     <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+        android:key="ksm"
+        android:title="@string/ksm" />
+
+    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="hotplugging"
         android:title="@string/hotplugging"
         android:icon="@drawable/ic_general_hotplug" />
