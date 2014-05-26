@@ -131,12 +131,11 @@ public class Remounter {
         return false;
     }
 
-    private Mount findMountPointRecursive(String file) {
+    private Mount findMountPointRecursive(final String file) {
         try {
-            ArrayList<Mount> mounts = RootTools.getMounts();
-
+            final ArrayList<Mount> mounts = RootTools.getMounts();
             for (final File path = new File(file); path != null; ) {
-                for (Mount mount : mounts) {
+                for (final Mount mount : mounts) {
                     if (mount.getMountPoint().equals(path)) {
                         return mount;
                     }
@@ -144,7 +143,6 @@ public class Remounter {
             }
 
             return null;
-
         } catch (IOException e) {
             if (RootTools.debugMode) {
                 e.printStackTrace();
@@ -158,7 +156,8 @@ public class Remounter {
         return null;
     }
 
-    private void commandWait(Command cmd) {
+    private void commandWait(final Command cmd) {
+        //noinspection SynchronizationOnLocalVariableOrMethodParameter
         synchronized (cmd) {
             try {
                 if (!cmd.isFinished()) {

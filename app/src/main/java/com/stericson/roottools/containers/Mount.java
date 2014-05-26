@@ -29,33 +29,25 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class Mount {
-    final File        mDevice;
-    final File        mMountPoint;
-    final String      mType;
-    final Set<String> mFlags;
+    private final File        mDevice;
+    private final File        mMountPoint;
+    private final String      mType;
+    private final Set<String> mFlags;
 
-    public Mount(File device, File path, String type, String flagsStr) {
+    public Mount(final File device, final File path, final String type, final String flagsStr) {
         mDevice = device;
         mMountPoint = path;
         mType = type;
         mFlags = new LinkedHashSet<String>(Arrays.asList(flagsStr.split(",")));
     }
 
-    public File getDevice() {
-        return mDevice;
-    }
+    public File getDevice() { return mDevice; }
 
-    public File getMountPoint() {
-        return mMountPoint;
-    }
+    public File getMountPoint() { return mMountPoint; }
 
-    public String getType() {
-        return mType;
-    }
+    public String getType() { return mType; }
 
-    public Set<String> getFlags() {
-        return mFlags;
-    }
+    public Set<String> getFlags() { return mFlags; }
 
     @Override
     public String toString() {

@@ -122,12 +122,16 @@ public class Application extends android.app.Application implements DeviceConsta
                 Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public static File getFiles() {
+        return Application.applicationContext.getFilesDir();
+    }
+
     public static String getFilesDirectory() {
-        final File tmp = Application.applicationContext.getFilesDir();
+        final File tmp = getFiles();
         if (tmp != null && tmp.exists()) {
             return tmp.getPath();
         } else {
-            return "/data/data/" + Application.getPm();
+            return "/data/data/" + Application.applicationContext.getPackageName();
         }
     }
 

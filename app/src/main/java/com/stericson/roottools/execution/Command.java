@@ -31,6 +31,8 @@ import android.os.Message;
 
 import com.stericson.roottools.RootTools;
 
+import org.namelessrom.devicecontrol.Application;
+
 public abstract class Command {
 
     ExecutionMonitor executionMonitor = null;
@@ -181,7 +183,7 @@ public abstract class Command {
         StringBuilder sb = new StringBuilder();
 
         if (javaCommand) {
-            String filePath = context.getFilesDir().getPath();
+            final String filePath = Application.getFilesDirectory();
             for (String aCommand : command) {
                 /*
                  * TODO Make withFramework optional for applications
@@ -196,31 +198,20 @@ public abstract class Command {
                         .append('\n');
             }
         } else {
-            for (String aCommand : command) {
-                sb.append(aCommand)
-                        .append('\n');
-            }
+            for (final String aCommand : command) { sb.append(aCommand).append('\n'); }
         }
         return sb.toString();
     }
 
-    public boolean isExecuting() {
-        return executing;
-    }
+    public boolean isExecuting() { return executing; }
 
-    public boolean isHandlerEnabled() {
-        return handlerEnabled;
-    }
+    public boolean isHandlerEnabled() { return handlerEnabled; }
 
-    public boolean isFinished() {
-        return finished;
-    }
+    public boolean isFinished() { return finished; }
 
-    public int getExitCode() {
-        return this.exitCode;
-    }
+    public int getExitCode() { return this.exitCode; }
 
-    protected void setExitCode(int code) {
+    protected void setExitCode(final int code) {
         synchronized (this) {
             exitCode = code;
         }
@@ -233,18 +224,17 @@ public abstract class Command {
         executing = true;
     }
 
-    public void terminate(String reason) {
+    public void terminate(final String reason) {
         Shell.closeAll();
         RootTools.log("Terminating all shells.");
         terminated(reason);
     }
 
-    protected void terminated(String reason) {
-        synchronized (Command.this) {
-
+    protected void terminated(final String reason) {
+        synchronized (this) {
             if (mHandler != null && handlerEnabled) {
-                Message msg = mHandler.obtainMessage();
-                Bundle bundle = new Bundle();
+                final Message msg = mHandler.obtainMessage();
+                final Bundle bundle = new Bundle();
                 bundle.putInt(CommandHandler.ACTION, CommandHandler.COMMAND_TERMINATED);
                 bundle.putString(CommandHandler.TEXT, reason);
                 msg.setData(bundle);
@@ -263,8 +253,8 @@ public abstract class Command {
 
     protected void output(int id, String line) {
         if (mHandler != null && handlerEnabled) {
-            Message msg = mHandler.obtainMessage();
-            Bundle bundle = new Bundle();
+            final Message msg = mHandler.obtainMessage();
+            final Bundle bundle = new Bundle();
             bundle.putInt(CommandHandler.ACTION, CommandHandler.COMMAND_OUTPUT);
             bundle.putString(CommandHandler.TEXT, line);
             msg.setData(bundle);
@@ -277,12 +267,10 @@ public abstract class Command {
     private class ExecutionMonitor extends Thread {
         public void run() {
             while (!finished) {
-
-                synchronized (Command.this) {
+                synchronized (this) {
                     try {
-                        Command.this.wait(timeout);
-                    } catch (InterruptedException e) {
-                    }
+                        this.wait(timeout);
+                    } catch (InterruptedException ignored) { }
                 }
 
                 if (!finished) {
@@ -301,9 +289,11 @@ public abstract class Command {
         static final public int COMMAND_COMPLETED  = 0x02;
         static final public int COMMAND_TERMINATED = 0x03;
 
-        public void handleMessage(Message msg) {
-            int action = msg.getData().getInt(ACTION);
-            String text = msg.getData().getString(TEXT);
+        public void handleMessage(final Message msg) {
+            if (msg == null || msg.getData() == null) return;
+
+            final int action = msg.getData().getInt(ACTION);
+            final String text = msg.getData().getString(TEXT);
 
             switch (action) {
                 case COMMAND_OUTPUT:

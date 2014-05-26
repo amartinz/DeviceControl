@@ -80,7 +80,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
         public String args[];
     }
 
-    static void displayError(Exception e) {
+    static void displayError(final Exception e) {
         // Not using system.err to make it easier to capture from
         // calling library.
         System.out.println("##ERR##" + e.getMessage() + "##");
@@ -104,27 +104,27 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
             File builtPath = getBuiltPath();
             if (null != builtPath) {
                 // Android! Y U no have com.google.common.base.Joiner class?
-                String rc1 = "com" + File.separator
+                final String rc1 = "com" + File.separator
                         + "stericson" + File.separator
                         + "RootTools" + File.separator
                         + "containers" + File.separator
                         + "RootClass.class";
-                String rc2 = "com" + File.separator
+                final String rc2 = "com" + File.separator
                         + "stericson" + File.separator
                         + "RootTools" + File.separator
                         + "containers" + File.separator
                         + "RootClass$RootArgs.class";
-                String rc3 = "com" + File.separator
+                final String rc3 = "com" + File.separator
                         + "stericson" + File.separator
                         + "RootTools" + File.separator
                         + "containers" + File.separator
                         + "RootClass$AnnotationsFinder.class";
-                String rc4 = "com" + File.separator
+                final String rc4 = "com" + File.separator
                         + "stericson" + File.separator
                         + "RootTools" + File.separator
                         + "containers" + File.separator
                         + "RootClass$AnnotationsFinder$1.class";
-                String rc5 = "com" + File.separator
+                final String rc5 = "com" + File.separator
                         + "stericson" + File.separator
                         + "RootTools" + File.separator
                         + "containers" + File.separator
@@ -145,7 +145,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                                     sb.toString()
                     };
                 } else {
-                    ArrayList<String> al = new ArrayList<String>();
+                    final ArrayList<String> al = new ArrayList<String>();
                     al.add("jar");
                     al.add("cf");
                     al.add("anbuild.jar");
@@ -154,7 +154,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                     al.add(rc3);
                     al.add(rc4);
                     al.add(rc5);
-                    for (File file : classFiles) {
+                    for (final File file : classFiles) {
                         al.add(file.getPath());
                     }
                     cmd = al.toArray(new String[al.size()]);
@@ -163,9 +163,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                 jarBuilder.directory(builtPath);
                 try {
                     jarBuilder.start().waitFor();
-                } catch (IOException e) {
-                } catch (InterruptedException e) {
-                }
+                } catch (Exception ignored) { }
 
                 System.out.println("Done building jar file. Creating dex file.");
                 if (onWindows) {
@@ -185,9 +183,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                 ProcessBuilder dexBuilder = new ProcessBuilder(cmd);
                 try {
                     dexBuilder.start().waitFor();
-                } catch (IOException e) {
-                } catch (InterruptedException e) {
-                }
+                } catch (Exception ignored) { }
             }
             System.out.println(
                     "All done. ::: anbuild.dex should now be in your project's res/raw/ folder " +
@@ -195,10 +191,11 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
             );
         }
 
-        protected void lookup(File path, List<File> fileList) {
-            String desourcedPath = path.toString().replace("src/", "");
-            File[] files = path.listFiles();
-            for (File file : files) {
+        protected void lookup(final File path, final List<File> fileList) {
+            final String desourcedPath = path.toString().replace("src/", "");
+            final File[] files = path.listFiles();
+            if (files == null) return;
+            for (final File file : files) {
                 if (file.isDirectory()) {
                     if (!file.getAbsolutePath().contains(AVOIDDIRPATH)) {
                         lookup(file, fileList);
@@ -229,9 +226,10 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
 
         protected boolean hasClassAnnotation(File file) {
             READ_STATE readState = READ_STATE.STARTING;
-            Pattern p = Pattern.compile(" class ([A-Za-z0-9_]+)");
+            final Pattern p = Pattern.compile(" class ([A-Za-z0-9_]+)");
+            BufferedReader reader = null;
             try {
-                BufferedReader reader = new BufferedReader(new FileReader(file));
+                reader = new BufferedReader(new FileReader(file));
                 String line;
                 while (null != (line = reader.readLine())) {
                     switch (readState) {
@@ -257,6 +255,10 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if (reader != null) reader.close();
+                } catch (Exception ignored) { }
             }
             return false;
         }
@@ -267,9 +269,10 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                 throw new IOException("Error: you need to set $ANDROID_HOME globally");
             }
             String dxPath = null;
-            File[] files = new File(androidHome + File.separator + "build-tools").listFiles();
+            final File[] files = new File(androidHome + File.separator + "build-tools").listFiles();
+            if (files == null) throw new IOException("Error: files do not exist");
             int recentSdkVersion = 0;
-            for (File file : files) {
+            for (final File file : files) {
                 int sdkVersion;
                 String[] sdkVersionBits = file.getName().split("[.]");
                 sdkVersion = Integer.parseInt(sdkVersionBits[0]) * 10000;
