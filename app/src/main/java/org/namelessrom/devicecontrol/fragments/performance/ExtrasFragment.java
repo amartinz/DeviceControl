@@ -68,6 +68,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
     private PreferenceScreen         mRoot;
     //----------------------------------------------------------------------------------------------
     private CustomListPreference     mIoScheduler;
+    private CustomPreference         mKsm;
     private CustomPreference         mHotplugging;
     private CustomPreference         mThermal;
     //----------------------------------------------------------------------------------------------
@@ -106,6 +107,11 @@ public class ExtrasFragment extends AttachPreferenceFragment
         if (mIoScheduler != null) {
             mIoScheduler.setEnabled(false);
             CpuUtils.getIoSchedulerEvent();
+        }
+
+        mKsm = (CustomPreference) findPreference("ksm");
+        if (mKsm != null) {
+            mKsm.setOnPreferenceClickListener(this);
         }
 
         mHotplugging = (CustomPreference) findPreference("hotplugging");
@@ -195,6 +201,9 @@ public class ExtrasFragment extends AttachPreferenceFragment
             return true;
         } else if (mThermal == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_THERMAL));
+            return true;
+        } else if (mKsm == preference) {
+            BusProvider.getBus().post(new SubFragmentEvent(ID_KSM));
             return true;
         }
 
