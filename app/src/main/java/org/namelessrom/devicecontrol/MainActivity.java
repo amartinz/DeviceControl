@@ -55,6 +55,7 @@ import org.namelessrom.devicecontrol.fragments.performance.GpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.InformationFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.GovernorFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.HotpluggingFragment;
+import org.namelessrom.devicecontrol.fragments.performance.sub.KsmFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.ThermalFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
@@ -394,6 +395,10 @@ public class MainActivity extends Activity
                 mTitle = mFragmentTitle = R.string.extras;
                 mSubFragmentTitle = -1;
                 break;
+            case ID_KSM:
+                mSubActionBarDrawable = R.drawable.ic_menu_perf_extras;
+                mTitle = mSubFragmentTitle = R.string.ksm;
+                break;
             case ID_HOTPLUGGING:
                 mSubActionBarDrawable = R.drawable.ic_general_hotplug;
                 mTitle = mSubFragmentTitle = R.string.hotplugging;
@@ -538,6 +543,9 @@ public class MainActivity extends Activity
                 mCurrentFragment = new GovernorFragment();
                 break;
             //--------------------------------------------------------------------------------------
+            case ID_KSM:
+                mCurrentFragment = new KsmFragment();
+                break;
             case ID_HOTPLUGGING:
                 mCurrentFragment = new HotpluggingFragment();
                 break;
