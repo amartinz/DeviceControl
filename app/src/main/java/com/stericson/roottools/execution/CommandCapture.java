@@ -30,15 +30,13 @@ import com.stericson.roottools.RootTools;
 public class CommandCapture extends Command {
     private final StringBuilder sb = new StringBuilder();
 
-    public CommandCapture(int id, String... command) {
-        super(id, command);
-    }
+    public CommandCapture(final int id, final String... command) { super(id, command); }
 
-    public CommandCapture(int id, boolean handlerEnabled, String... command) {
+    public CommandCapture(final int id, final boolean handlerEnabled, final String... command) {
         super(id, handlerEnabled, command);
     }
 
-    public CommandCapture(int id, int timeout, String... command) {
+    public CommandCapture(final int id, final int timeout, final String... command) {
         super(id, timeout, command);
     }
 
@@ -47,23 +45,21 @@ public class CommandCapture extends Command {
     }
 
     @Override
-    public void commandOutput(int id, String line) {
+    public void commandOutput(final int id, final String line) {
         sb.append(line).append('\n');
         RootTools.log("Command", "ID: " + id + ", " + line);
     }
 
     @Override
-    public void commandTerminated(int id, String reason) {
+    public void commandTerminated(final int id, final String reason) {
         //pass
     }
 
     @Override
-    public void commandCompleted(int id, int exitcode) {
+    public void commandCompleted(final int id, final int exitcode) {
         //pass
     }
 
     @Override
-    public String toString() {
-        return sb.toString();
-    }
+    public String toString() { return sb.toString(); }
 }

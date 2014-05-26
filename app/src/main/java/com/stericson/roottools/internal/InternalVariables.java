@@ -44,16 +44,17 @@ public class InternalVariables {
     protected static boolean found            = false;
     protected static boolean processRunning   = false;
 
-    protected static String[] space;
-    protected static String   getSpaceFor;
-    protected static String   busyboxVersion;
     protected static String pid_list = "";
+    protected static String inode    = "";
+
+    protected static String[]           space;
+    protected static String             getSpaceFor;
+    protected static String             busyboxVersion;
     protected static Set<String>        path;
     protected static ArrayList<Mount>   mounts;
     protected static ArrayList<Symlink> symlinks;
     protected static List<String>       results;
-    protected static String inode = "";
-    protected static Permissions permissions;
+    protected static Permissions        permissions;
 
     // regex to get pid out of ps line, example:
     // root 2611 0.0 0.0 19408 2104 pts/2 S 13:41 0:00 bash

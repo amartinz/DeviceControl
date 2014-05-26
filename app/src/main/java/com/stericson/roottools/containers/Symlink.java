@@ -29,16 +29,12 @@ public class Symlink {
     protected final File file;
     protected final File symlinkPath;
 
-    public Symlink(File file, File path) {
+    public Symlink(final File file, final File path) {
         this.file = file;
-        symlinkPath = path;
+        this.symlinkPath = path;
     }
 
-    public File getFile() {
-        return this.file;
-    }
+    public File getFile() { return this.file; }
 
-    public File getSymlinkPath() {
-        return symlinkPath;
-    }
+    public File getSymlinkPath() { return symlinkPath; }
 }

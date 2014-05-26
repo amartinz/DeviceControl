@@ -31,6 +31,8 @@ import com.stericson.roottools.execution.Command;
 import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
+import org.namelessrom.devicecontrol.Application;
+
 import java.io.IOException;
 
 public class Runner extends Thread {
@@ -50,7 +52,7 @@ public class Runner extends Thread {
     public void run() {
         String privateFilesPath = null;
         try {
-            privateFilesPath = context.getFilesDir().getCanonicalPath();
+            privateFilesPath = Application.getFiles().getCanonicalPath();
         } catch (IOException e) {
             if (RootTools.debugMode) {
                 Log.e(LOG_TAG, "Problem occured while trying to locate private files directory!");
@@ -59,17 +61,15 @@ public class Runner extends Thread {
         }
         if (privateFilesPath != null) {
             try {
-                CommandCapture command = new CommandCapture(0, false,
+                final CommandCapture command = new CommandCapture(0, false,
                         privateFilesPath + '/' + binaryName + ' ' + parameter);
                 Shell.startRootShell().add(command);
                 commandWait(command);
-
-            } catch (Exception e) {
-            }
+            } catch (Exception ignored) { }
         }
     }
 
-    private void commandWait(Command cmd) {
+    private void commandWait(final Command cmd) {
         synchronized (cmd) {
             try {
                 if (!cmd.isFinished()) {
