@@ -29,6 +29,9 @@ public class ActionProcessor implements PerformanceConstants {
     // Extras
     //----------------------------------------------------------------------------------------------
     public static final String ACTION_IO_SCHEDULER      = "io_scheduler";
+    public static final String ACTION_KSM_ENABLED       = "ksm_enabled";
+    public static final String ACTION_KSM_PAGES         = "ksm_pages";
+    public static final String ACTION_KSM_SLEEP         = "ksm_sleep";
 
     public static final String[] CATEGORIES =
             {TaskerItem.CATEGORY_SCREEN_ON, TaskerItem.CATEGORY_SCREEN_OFF};
@@ -37,20 +40,29 @@ public class ActionProcessor implements PerformanceConstants {
         final List<String> actions = new ArrayList<String>();
 
         //------------------------------------------------------------------------------------------
-        // General Actions
+        // CPU
         //------------------------------------------------------------------------------------------
         actions.add(ACTION_CPU_FREQUENCY_MAX);
         actions.add(ACTION_CPU_FREQUENCY_MIN);
         actions.add(ACTION_CPU_GOVERNOR);
+
+        //------------------------------------------------------------------------------------------
+        // General Actions
+        //------------------------------------------------------------------------------------------
         actions.add(ACTION_IO_SCHEDULER);
+        if (Utils.fileExists(KSM_PATH)) {
+            if (Utils.fileExists(KSM_RUN)) actions.add(ACTION_KSM_ENABLED);
+            if (Utils.fileExists(KSM_PAGES_TO_SCAN)) actions.add(ACTION_KSM_PAGES);
+            if (Utils.fileExists(KSM_SLEEP)) actions.add(ACTION_KSM_SLEEP);
+        }
 
         //------------------------------------------------------------------------------------------
         // GPU
         //------------------------------------------------------------------------------------------
         if (Utils.fileExists(GPU_FREQUENCIES_FILE)) {
-            if (Utils.fileExists(GPU_MAX_FREQ_FILE)) { actions.add(ACTION_GPU_FREQUENCY_MAX); }
-            if (Utils.fileExists(GPU_GOV_PATH)) { actions.add(ACTION_GPU_GOVERNOR); }
-            if (Utils.fileExists(FILE_3D_SCALING)) { actions.add(ACTION_3D_SCALING); }
+            if (Utils.fileExists(GPU_MAX_FREQ_FILE)) actions.add(ACTION_GPU_FREQUENCY_MAX);
+            if (Utils.fileExists(GPU_GOV_PATH)) actions.add(ACTION_GPU_GOVERNOR);
+            if (Utils.fileExists(FILE_3D_SCALING)) actions.add(ACTION_3D_SCALING);
         }
 
         return actions;
@@ -154,6 +166,30 @@ public class ActionProcessor implements PerformanceConstants {
                     PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
                             "io" + (c++), ioPath, value));
                 }
+            }
+        }
+        // KSM -------------------------------------------------------------------------------------
+        else if (ACTION_KSM_ENABLED.equals(action)) {
+            sb.append(Utils.getWriteCommand(KSM_RUN, value));
+            if (boot) {
+                PreferenceHelper.setBootup(
+                        new DataItem(DatabaseHandler.CATEGORY_EXTRAS, "ksm_run", KSM_RUN, value));
+            }
+        } else if (ACTION_KSM_PAGES.equals(action)) {
+            sb.append(Utils.getWriteCommand(KSM_PAGES_TO_SCAN, value));
+            if (boot) {
+                PreferenceHelper.setBootup(
+                        new DataItem(DatabaseHandler.CATEGORY_EXTRAS, "ksm_pages_to_scan",
+                                KSM_PAGES_TO_SCAN, value)
+                );
+            }
+        } else if (ACTION_KSM_SLEEP.equals(action)) {
+            sb.append(Utils.getWriteCommand(KSM_SLEEP, value));
+            if (boot) {
+                PreferenceHelper.setBootup(
+                        new DataItem(DatabaseHandler.CATEGORY_EXTRAS, "ksm_sleep",
+                                KSM_SLEEP, value)
+                );
             }
         }
 

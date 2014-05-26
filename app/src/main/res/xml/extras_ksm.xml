@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="ksm_info"
+        android:title="@string/information">
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+            android:key="ksm_full_scans"
+            android:title="@string/full_scans" />
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+            android:key="ksm_pages_shared"
+            android:title="@string/pages_shared" />
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+            android:key="ksm_pages_sharing"
+            android:title="@string/pages_sharing" />
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+            android:key="ksm_pages_unshared"
+            android:title="@string/pages_unshared" />
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+            android:key="ksm_pages_volatile"
+            android:title="@string/pages_volatile" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="ksm_settings"
+        android:title="@string/ksm">
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+            android:key="ksm_run"
+            android:title="@string/enable_ksm"
+            android:summary="@string/enable_ksm_summary" />
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+            android:key="ksm_pages_to_scan"
+            android:title="@string/pages_to_scan"
+            android:dependency="ksm_run" />
+
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+            android:key="ksm_sleep"
+            android:title="@string/ksm_sleep"
+            android:dependency="ksm_run" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

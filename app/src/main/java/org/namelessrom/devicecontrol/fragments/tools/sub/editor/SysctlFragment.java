@@ -1,35 +1,24 @@
 package org.namelessrom.devicecontrol.fragments.tools.sub.editor;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
+import org.namelessrom.devicecontrol.utils.DialogHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
-import static butterknife.ButterKnife.findById;
+import java.util.List;
 
 public class SysctlFragment extends AttachPreferenceFragment implements DeviceConstants {
 
@@ -104,167 +93,71 @@ public class SysctlFragment extends AttachPreferenceFragment implements DeviceCo
             return true;
         } else if (preference == mDirtyRatio) {
             final String title = getString(R.string.dirty_ratio_title);
-            final int currentProgress = Integer.parseInt(
-                    Utils.readOneLine(DIRTY_RATIO_PATH));
-            openDialog(currentProgress, title, 0, 100, preference,
-                    DIRTY_RATIO_PATH, PREF_DIRTY_RATIO);
+            final int currentProgress = Integer.parseInt(Utils.readOneLine(DIRTY_RATIO_PATH));
+            DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0,
+                    100, preference, DIRTY_RATIO_PATH, DatabaseHandler.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mDirtyBackground) {
             final String title = getString(R.string.dirty_background_title);
-            final int currentProgress = Integer.parseInt(
-                    Utils.readOneLine(DIRTY_BACKGROUND_PATH));
-            openDialog(currentProgress, title, 0, 100, preference,
-                    DIRTY_BACKGROUND_PATH, PREF_DIRTY_BACKGROUND);
+            final int currentProgress = Integer.parseInt(Utils.readOneLine(DIRTY_BACKGROUND_PATH));
+            DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 100,
+                    preference, DIRTY_BACKGROUND_PATH, DatabaseHandler.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mDirtyExpireCentisecs) {
             final String title = getString(R.string.dirty_expire_title);
-            final int currentProgress = Integer.parseInt(
-                    Utils.readOneLine(DIRTY_EXPIRE_PATH));
-            openDialog(currentProgress, title, 0, 5000, preference,
-                    DIRTY_EXPIRE_PATH, PREF_DIRTY_EXPIRE);
+            final int currentProgress = Integer.parseInt(Utils.readOneLine(DIRTY_EXPIRE_PATH));
+            DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 5000,
+                    preference, DIRTY_EXPIRE_PATH, DatabaseHandler.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mDirtyWriteback) {
             final String title = getString(R.string.dirty_writeback_title);
-            final int currentProgress = Integer.parseInt(
-                    Utils.readOneLine(DIRTY_WRITEBACK_PATH));
-            openDialog(currentProgress, title, 0, 5000, preference,
-                    DIRTY_WRITEBACK_PATH, PREF_DIRTY_WRITEBACK);
+            final int currentProgress = Integer.parseInt(Utils.readOneLine(DIRTY_WRITEBACK_PATH));
+            DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 5000,
+                    preference, DIRTY_WRITEBACK_PATH, DatabaseHandler.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mMinFreeK) {
             final String title = getString(R.string.min_free_title);
-            final int currentProgress = Integer.parseInt(
-                    Utils.readOneLine(MIN_FREE_PATH));
-            openDialog(currentProgress, title, 0, 8192, preference,
-                    MIN_FREE_PATH, PREF_MIN_FREE_KB);
+            final int currentProgress = Integer.parseInt(Utils.readOneLine(MIN_FREE_PATH));
+            DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 8192,
+                    preference, MIN_FREE_PATH, DatabaseHandler.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mOvercommit) {
             final String title = getString(R.string.overcommit_title);
-            final int currentProgress = Integer.parseInt(
-                    Utils.readOneLine(OVERCOMMIT_PATH));
-            openDialog(currentProgress, title, 0, 100, preference,
-                    OVERCOMMIT_PATH, PREF_OVERCOMMIT);
+            final int currentProgress = Integer.parseInt(Utils.readOneLine(OVERCOMMIT_PATH));
+            DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 100,
+                    preference, OVERCOMMIT_PATH, DatabaseHandler.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mSwappiness) {
             final String title = getString(R.string.swappiness_title);
-            final int currentProgress = Integer.parseInt(
-                    Utils.readOneLine(SWAPPINESS_PATH));
-            openDialog(currentProgress, title, 0, 100, preference,
-                    SWAPPINESS_PATH, PREF_SWAPPINESS);
+            final int currentProgress = Integer.parseInt(Utils.readOneLine(SWAPPINESS_PATH));
+            DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 100,
+                    preference, SWAPPINESS_PATH, DatabaseHandler.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mVfs) {
             final String title = getString(R.string.vfs_title);
-            final int currentProgress = Integer.parseInt(
-                    Utils.readOneLine(VFS_CACHE_PRESSURE_PATH));
-            openDialog(currentProgress, title, 0, 200, preference,
-                    VFS_CACHE_PRESSURE_PATH, PREF_VFS);
+            final int currentProgress =
+                    Integer.parseInt(Utils.readOneLine(VFS_CACHE_PRESSURE_PATH));
+            DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 200,
+                    preference, VFS_CACHE_PRESSURE_PATH, DatabaseHandler.CATEGORY_SYSCTL);
             return true;
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
-    private void openDialog(int currentProgress, String title, final int min, final int max,
-            final Preference pref, final String path, final String key) {
-        final Activity activity = getActivity();
+    public static String restore(final DatabaseHandler db) {
+        final StringBuilder sbCmd = new StringBuilder();
 
-        if (activity == null) return;
+        final List<DataItem> items = db.getAllItems(
+                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_SYSCTL);
+        String name, value;
+        for (final DataItem item : items) {
+            name = item.getFileName();
+            value = item.getValue();
+            sbCmd.append(Utils.getWriteCommand(name, value));
+        }
 
-        final Resources res = activity.getResources();
-        final String cancel = res.getString(android.R.string.cancel);
-        final String ok = res.getString(android.R.string.ok);
-        final LayoutInflater factory = LayoutInflater.from(activity);
-        final View alphaDialog = factory.inflate(R.layout.dialog_seekbar, null);
-
-        final SeekBar seekbar = findById(alphaDialog, R.id.seek_bar);
-
-        seekbar.setMax(max);
-        seekbar.setProgress(currentProgress);
-
-        final EditText settingText = findById(alphaDialog, R.id.setting_text);
-        settingText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    final Editable text = settingText.getText();
-                    if (text != null) {
-                        try {
-                            final int val = Integer.parseInt(text.toString());
-                            seekbar.setProgress(val);
-                        } catch (Exception ignored) { /* ignored */ }
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
-        settingText.setText(Integer.toString(currentProgress));
-        settingText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                try {
-                    int val = Integer.parseInt(s.toString());
-                    if (val > max) {
-                        s.replace(0, s.length(), Integer.toString(max));
-                        val = max;
-                    }
-                    seekbar.setProgress(val);
-                } catch (NumberFormatException ignored) { }
-            }
-        });
-
-        SeekBar.OnSeekBarChangeListener seekBarChangeListener =
-                new SeekBar.OnSeekBarChangeListener() {
-                    @Override
-                    public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) {
-                        final int mSeekbarProgress = seekbar.getProgress();
-                        if (fromUser) {
-                            settingText.setText(Integer.toString(mSeekbarProgress));
-                        }
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekbar) { }
-
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekbar) { }
-                };
-        seekbar.setOnSeekBarChangeListener(seekBarChangeListener);
-
-        new AlertDialog.Builder(activity)
-                .setTitle(title)
-                .setView(alphaDialog)
-                .setNegativeButton(cancel,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // nothing
-                            }
-                        }
-                )
-                .setPositiveButton(ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        int val = Integer.parseInt(settingText.getText().toString());
-                        if (val < min) {
-                            val = min;
-                        }
-                        seekbar.setProgress(val);
-                        int newProgress = seekbar.getProgress();
-                        pref.setSummary(Integer.toString(newProgress));
-                        Utils.writeValue(path, Integer.toString(newProgress));
-                        final SharedPreferences.Editor editor =
-                                PreferenceManager.getDefaultSharedPreferences(activity).edit();
-                        editor.putInt(key, newProgress);
-                        editor.commit();
-                    }
-                }).create().show();
+        return sbCmd.toString();
     }
+
 }

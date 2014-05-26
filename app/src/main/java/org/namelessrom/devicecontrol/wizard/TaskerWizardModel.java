@@ -54,9 +54,7 @@ public class TaskerWizardModel extends AbstractWizardModel implements Performanc
         setRootPageList(getRootPageList());
     }
 
-    public TaskerItem getItem() {
-        return mItem;
-    }
+    public TaskerItem getItem() { return mItem; }
 
     private Page getCategoryPage() {
         return new SingleFixedChoicePage(this,
@@ -82,15 +80,25 @@ public class TaskerWizardModel extends AbstractWizardModel implements Performanc
     private Page getValuePage(final String action) {
         final String[] choices;
         //------------------------------------------------------------------------------------------
-        // General Actions
+        // CPU
         //------------------------------------------------------------------------------------------
         if (ActionProcessor.ACTION_CPU_FREQUENCY_MAX.equals(action)
                 || ActionProcessor.ACTION_CPU_FREQUENCY_MIN.equals(action)) {
             choices = CpuUtils.getAvailableFrequencies();
         } else if (ActionProcessor.ACTION_CPU_GOVERNOR.equals(action)) {
             choices = CpuUtils.getAvailableGovernors();
-        } else if (ActionProcessor.ACTION_IO_SCHEDULER.equals(action)) {
+        }
+        //------------------------------------------------------------------------------------------
+        // General Actions
+        //------------------------------------------------------------------------------------------
+        else if (ActionProcessor.ACTION_IO_SCHEDULER.equals(action)) {
             choices = CpuUtils.getAvailableIOSchedulers();
+        } else if (ActionProcessor.ACTION_KSM_ENABLED.equals(action)) {
+            choices = getBooleanChoices();
+        } else if (ActionProcessor.ACTION_KSM_PAGES.equals(action)) {
+            choices = new String[]{"32", "64", "128", "256", "512", "1024"};
+        } else if (ActionProcessor.ACTION_KSM_SLEEP.equals(action)) {
+            choices = new String[]{"100", "250", "500", "1000", "2000", "3000", "4000", "5000"};
         }
         //------------------------------------------------------------------------------------------
         // GPU
