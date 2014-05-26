@@ -1,19 +1,19 @@
-/* 
+/*
  * This file is part of the RootTools Project: http://code.google.com/p/roottools/
- *  
+ *
  * Copyright (c) 2012 Stephen Erickson, Chris Ravenscroft, Dominik Schuermann, Adam Shanks
- *  
+ *
  * This code is dual-licensed under the terms of the Apache License Version 2.0 and
  * the terms of the General Public License (GPL) Version 2.
  * You may use this code according to either of these licenses as is most appropriate
  * for your project on a case-by-case basis.
- * 
+ *
  * The terms of each license can be found in the root directory of this project's repository as
  * well as at:
- * 
+ *
  * * http://www.apache.org/licenses/LICENSE-2.0
  * * http://www.gnu.org/licenses/gpl-2.0.txt
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under these Licenses is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,6 +30,8 @@ import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.Command;
 import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
+
+import org.namelessrom.devicecontrol.Application;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -61,7 +63,7 @@ class Installer {
             throws IOException {
 
         this.context = context;
-        this.filesPath = context.getFilesDir().getCanonicalPath();
+        this.filesPath = Application.getFiles().getCanonicalPath();
     }
 
     /**
@@ -77,7 +79,7 @@ class Installer {
      * able to create the new file.
      */
     protected boolean installBinary(int sourceId, String destName, String mode) {
-        File mf = new File(filesPath + File.separator + destName);
+        final File mf = new File(filesPath + File.separator + destName);
         if (!mf.exists() ||
                 !getFileSignature(mf).equals(
                         getStreamSignature(
@@ -101,12 +103,11 @@ class Installer {
                     }
                     return false;
                 } finally {
-                    if (null != fos) {
+                    if (fos != null) {
                         try {
                             fos.close();
                             context.deleteFile(BOGUS_FILE_NAME);
-                        } catch (IOException e1) {
-                        }
+                        } catch (IOException ignored) { }
                     }
                 }
             } catch (IOException ex) {
@@ -125,9 +126,10 @@ class Installer {
                 FileChannel ofc = oss.getChannel();
                 long pos = 0;
                 try {
-                    long size = iss.available();
-                    while ((pos += ofc.transferFrom(rfc, pos, size
-                            - pos)) < size) { /* Do nothing */ }
+                    final long size = iss.available();
+                    while ((pos += ofc.transferFrom(rfc, pos, size - pos)) < size) {
+                        /* Do nothing */
+                    }
                 } catch (IOException ex) {
                     if (RootTools.debugMode) {
                         Log.e(LOG_TAG, ex.toString());
@@ -145,8 +147,7 @@ class Installer {
                         oss.flush();
                         oss.getFD().sync();
                         oss.close();
-                    } catch (Exception e) {
-                    }
+                    } catch (Exception ignored) { }
                 }
             }
             try {
@@ -164,13 +165,12 @@ class Installer {
                 Shell.startRootShell().add(command);
                 commandWait(command);
 
-            } catch (Exception e) {
-            }
+            } catch (Exception ignored) { }
         }
         return true;
     }
 
-    protected boolean isBinaryInstalled(String destName) {
+    protected boolean isBinaryInstalled(final String destName) {
         boolean installed = false;
         File mf = new File(filesPath + File.separator + destName);
         if (mf.exists()) {
@@ -180,7 +180,7 @@ class Installer {
         return installed;
     }
 
-    protected String getFileSignature(File f) {
+    protected String getFileSignature(final File f) {
         String signature = "";
         try {
             signature = getStreamSignature(new FileInputStream(f));
@@ -213,13 +213,13 @@ class Installer {
         } finally {
             try {
                 is.close();
-            } catch (IOException e) {
-            }
+            } catch (IOException ignored) { }
         }
         return signature;
     }
 
-    private void commandWait(Command cmd) {
+    private void commandWait(final Command cmd) {
+        //noinspection SynchronizationOnLocalVariableOrMethodParameter
         synchronized (cmd) {
             try {
                 if (!cmd.isFinished()) {

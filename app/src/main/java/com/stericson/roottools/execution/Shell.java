@@ -1,19 +1,19 @@
-/* 
+/*
  * This file is part of the RootTools Project: http://code.google.com/p/roottools/
- *  
+ *
  * Copyright (c) 2012 Stephen Erickson, Chris Ravenscroft, Dominik Schuermann, Adam Shanks
- *  
+ *
  * This code is dual-licensed under the terms of the Apache License Version 2.0 and
  * the terms of the General Public License (GPL) Version 2.
  * You may use this code according to either of these licenses as is most appropriate
  * for your project on a case-by-case basis.
- * 
+ *
  * The terms of each license can be found in the root directory of this project's repository as
  * well as at:
- * 
+ *
  * * http://www.apache.org/licenses/LICENSE-2.0
  * * http://www.gnu.org/licenses/gpl-2.0.txt
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under these Licenses is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,10 +22,10 @@
  */
 package com.stericson.roottools.execution;
 
-import android.content.Context;
-
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.exceptions.RootDeniedException;
+
+import org.namelessrom.devicecontrol.Application;
 
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -67,7 +67,7 @@ public class Shell {
     private       boolean isCleaning    = false;
 
     //private constructor responsible for opening/constructing the shell
-    private Shell(String cmd) throws IOException, TimeoutException, RootDeniedException {
+    private Shell(final String cmd) throws IOException, TimeoutException, RootDeniedException {
 
         RootTools.log("Starting shell: " + cmd);
 
@@ -78,7 +78,7 @@ public class Shell {
         /**
          * Thread responsible for carrying out the requested operations
          */
-        Worker worker = new Worker(proc, in, out);
+        final Worker worker = new Worker(proc, in, out);
         worker.start();
 
         try {
@@ -99,8 +99,7 @@ public class Shell {
 
                 try {
                     proc.destroy();
-                } catch (Exception e) {
-                }
+                } catch (Exception ignored) { }
 
                 closeQuietly(in);
                 closeQuietly(out);
@@ -114,8 +113,7 @@ public class Shell {
 
                 try {
                     proc.destroy();
-                } catch (Exception e) {
-                }
+                } catch (Exception ignored) { }
 
                 closeQuietly(in);
                 closeQuietly(out);
@@ -133,11 +131,11 @@ public class Shell {
                  *
                  * input, and output are runnables that the threads execute.
                  */
-                Thread si = new Thread(input, "Shell Input");
+                final Thread si = new Thread(input, "Shell Input");
                 si.setPriority(Thread.NORM_PRIORITY);
                 si.start();
 
-                Thread so = new Thread(output, "Shell Output");
+                final Thread so = new Thread(output, "Shell Output");
                 so.setPriority(Thread.NORM_PRIORITY);
                 so.start();
             }
@@ -148,14 +146,11 @@ public class Shell {
         }
     }
 
-    public boolean isClosed() {
-        return close;
-    }
+    public boolean isClosed() { return close; }
 
-    public Command add(Command command) {
+    public Command add(final Command command) {
         if (close) {
-            throw new IllegalStateException(
-                    "Unable to add commands to a closed shell");
+            throw new IllegalStateException("Unable to add commands to a closed shell");
         }
 
         while (isCleaning) {
@@ -168,13 +163,8 @@ public class Shell {
         return command;
     }
 
-    public void useCWD(Context context) {
-        add(
-                new CommandCapture(
-                        -1,
-                        false,
-                        "cd " + context.getApplicationInfo().dataDir)
-        );
+    public void useCWD() {
+        add(new CommandCapture(-1, false, "cd " + Application.getFilesDirectory()));
     }
 
     private void cleanCommands() {
@@ -192,24 +182,20 @@ public class Shell {
 
     private void closeQuietly(final Reader input) {
         try {
-            if (input != null) {
-                input.close();
-            }
-        } catch (Exception ignore) {
-        }
+            if (input != null) { input.close(); }
+        } catch (Exception ignored) { }
     }
 
     private void closeQuietly(final Writer output) {
         try {
-            if (output != null) {
-                output.close();
-            }
-        } catch (Exception ignore) {
-        }
+            if (output != null) { output.close(); }
+        } catch (Exception ignored) { }
     }
 
     public void close() {
-        if (this == rootShell) { rootShell = null; } else if (this == shell) {
+        if (this == rootShell) {
+            rootShell = null;
+        } else if (this == shell) {
             shell = null;
         } else if (this == customShell) {
             customShell = null;
@@ -245,32 +231,26 @@ public class Shell {
         closeCustomShell();
     }
 
-    public int getCommandQueuePosition(Command cmd) {
-        return commands.indexOf(cmd);
-    }
+    public int getCommandQueuePosition(final Command cmd) { return commands.indexOf(cmd); }
 
-    public String getCommandQueuePositionString(Command cmd) {
-        return "Command is in position " + getCommandQueuePosition(
-                cmd) + " currently executing command at position " + write;
+    public String getCommandQueuePositionString(final Command cmd) {
+        return "Command is in position " + getCommandQueuePosition(cmd) +
+                " currently executing command at position " + write;
     }
 
     public static Shell getOpenShell() {
-        if (customShell != null) { return customShell; } else if (rootShell != null) {
+        if (customShell != null) {
+            return customShell;
+        } else if (rootShell != null) {
             return rootShell;
         } else { return shell; }
     }
 
-    public static boolean isShellOpen() {
-        return shell != null;
-    }
+    public static boolean isShellOpen() { return shell != null; }
 
-    public static boolean isCustomShellOpen() {
-        return customShell != null;
-    }
+    public static boolean isCustomShellOpen() { return customShell != null; }
 
-    public static boolean isRootShellOpen() {
-        return rootShell != null;
-    }
+    public static boolean isRootShellOpen() { return rootShell != null; }
 
     public static boolean isAnyShellOpen() {
         return shell != null || rootShell != null || customShell != null;
@@ -356,15 +336,13 @@ public class Shell {
     };
 
     protected void notifyThreads() {
-        Thread t = new Thread() {
+        new Thread() {
             public void run() {
                 synchronized (commands) {
                     commands.notifyAll();
                 }
             }
-        };
-
-        t.start();
+        }.start();
     }
 
     /**
@@ -423,15 +401,13 @@ public class Shell {
 
                             try {
                                 id = Integer.parseInt(fields[1]);
-                            } catch (NumberFormatException e) {
-                            }
+                            } catch (NumberFormatException ignored) { }
 
                             int exitCode = -1;
 
                             try {
                                 exitCode = Integer.parseInt(fields[2]);
-                            } catch (NumberFormatException e) {
-                            }
+                            } catch (NumberFormatException ignored) { }
 
                             if (id == totalRead) {
                                 command.setExitCode(exitCode);
@@ -449,8 +425,7 @@ public class Shell {
                 try {
                     proc.waitFor();
                     proc.destroy();
-                } catch (Exception e) {
-                }
+                } catch (Exception ignored) { }
 
                 closeQuietly(out);
                 closeQuietly(in);
@@ -473,12 +448,12 @@ public class Shell {
         }
     };
 
-    public static void runRootCommand(Command command)
+    public static void runRootCommand(final Command command)
             throws IOException, TimeoutException, RootDeniedException {
         startRootShell().add(command);
     }
 
-    public static void runCommand(Command command) throws IOException, TimeoutException {
+    public static void runCommand(final Command command) throws IOException, TimeoutException {
         startShell().add(command);
     }
 
@@ -486,12 +461,12 @@ public class Shell {
         return Shell.startRootShell(20000, 3);
     }
 
-    public static Shell startRootShell(int timeout)
+    public static Shell startRootShell(final int timeout)
             throws IOException, TimeoutException, RootDeniedException {
         return Shell.startRootShell(timeout, 3);
     }
 
-    public static Shell startRootShell(int timeout, int retry)
+    public static Shell startRootShell(final int timeout, final int retry)
             throws IOException, TimeoutException, RootDeniedException {
 
         Shell.shellTimeout = timeout;
@@ -518,12 +493,12 @@ public class Shell {
         return rootShell;
     }
 
-    public static Shell startCustomShell(String shellPath)
+    public static Shell startCustomShell(final String shellPath)
             throws IOException, TimeoutException, RootDeniedException {
         return Shell.startCustomShell(shellPath, 20000);
     }
 
-    public static Shell startCustomShell(String shellPath, int timeout)
+    public static Shell startCustomShell(final String shellPath, final int timeout)
             throws IOException, TimeoutException, RootDeniedException {
         Shell.shellTimeout = timeout;
 
@@ -539,7 +514,7 @@ public class Shell {
         return Shell.startShell(20000);
     }
 
-    public static Shell startShell(int timeout) throws IOException, TimeoutException {
+    public static Shell startShell(final int timeout) throws IOException, TimeoutException {
         Shell.shellTimeout = timeout;
 
         try {
@@ -583,12 +558,13 @@ public class Shell {
                 out.write("echo Started\n");
                 out.flush();
 
+                String line;
                 while (true) {
-                    String line = in.readLine();
+                    line = in.readLine();
                     if (line == null) {
                         throw new EOFException();
                     }
-                    if (line != null && line.isEmpty()) { continue; }
+                    if (line.isEmpty()) { continue; }
                     if ("Started".equals(line)) {
                         this.exit = 1;
                         setShellOom();
@@ -609,11 +585,11 @@ public class Shell {
         /*
          * setOom for shell processes (sh and su if root shell)
          * and discard outputs
-         * 
+         *
          */
         private void setShellOom() {
             try {
-                Class<?> processClass = proc.getClass();
+                final Class<?> processClass = proc.getClass();
                 Field field;
                 try {
                     field = processClass.getDeclaredField("pid");
@@ -621,12 +597,11 @@ public class Shell {
                     field = processClass.getDeclaredField("id");
                 }
                 field.setAccessible(true);
-                int pid = (Integer) field.get(proc);
+                final int pid = (Integer) field.get(proc);
                 out.write("(echo -17 > /proc/" + pid + "/oom_adj) &> /dev/null\n");
                 out.write("(echo -17 > /proc/$$/oom_adj) &> /dev/null\n");
                 out.flush();
-            } catch (Exception e) {
-            }
+            } catch (Exception ignored) { }
         }
     }
 }

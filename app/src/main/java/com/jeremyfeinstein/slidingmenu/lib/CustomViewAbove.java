@@ -86,20 +86,20 @@ public class CustomViewAbove extends ViewGroup {
     private   int             mFlingDistance;
 
     private CustomViewBehind mViewBehind;
-    //	private int mMode;
+    //    private int mMode;
     private boolean mEnabled = true;
 
     private OnPageChangeListener mOnPageChangeListener;
     private OnPageChangeListener mInternalPageChangeListener;
 
-    //	private OnCloseListener mCloseListener;
-    //	private OnOpenListener mOpenListener;
+    //    private OnCloseListener mCloseListener;
+    //    private OnOpenListener mOpenListener;
     private OnClosedListener mClosedListener;
     private OnOpenedListener mOpenedListener;
 
     private final List<View> mIgnoredViews = new ArrayList<View>();
 
-    //	private int mScrollState = SCROLL_STATE_IDLE;
+    //    private int mScrollState = SCROLL_STATE_IDLE;
 
     /**
      * Callback interface for responding to changing state of the selected page.
@@ -476,9 +476,9 @@ public class CustomViewAbove extends ViewGroup {
     }
 
     public void setAboveOffset(int i) {
-        //		RelativeLayout.LayoutParams params = ((RelativeLayout.LayoutParams)mContent
+        //        RelativeLayout.LayoutParams params = ((RelativeLayout.LayoutParams)mContent
         // .getLayoutParams());
-        //		params.setMargins(i, params.topMargin, params.rightMargin, params.bottomMargin);
+        //        params.setMargins(i, params.topMargin, params.rightMargin, params.bottomMargin);
         mContent.setPadding(i, mContent.getPaddingTop(),
                 mContent.getPaddingRight(), mContent.getPaddingBottom());
     }
@@ -666,8 +666,8 @@ public class CustomViewAbove extends ViewGroup {
 
         if (!mIsBeingDragged && !thisTouchAllowed(ev)) { return false; }
 
-        //		if (!mIsBeingDragged && !mQuickReturn)
-        //			return false;
+        //        if (!mIsBeingDragged && !mQuickReturn)
+        //            return false;
 
         final int action = ev.getAction();
 
@@ -680,8 +680,8 @@ public class CustomViewAbove extends ViewGroup {
             case MotionEvent.ACTION_DOWN:
             /*
              * If being flinged and user touches, stop the fling. isFinished
-			 * will be false if being flinged.
-			 */
+             * will be false if being flinged.
+             */
                 completeScroll();
 
                 // Remember where the motion event started

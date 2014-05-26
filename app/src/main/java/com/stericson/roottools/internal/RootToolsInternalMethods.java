@@ -1,19 +1,19 @@
-/* 
+/*
  * This file is part of the RootTools Project: http://code.google.com/p/roottools/
- *  
+ *
  * Copyright (c) 2012 Stephen Erickson, Chris Ravenscroft, Dominik Schuermann, Adam Shanks
- *  
+ *
  * This code is dual-licensed under the terms of the Apache License Version 2.0 and
  * the terms of the General Public License (GPL) Version 2.
  * You may use this code according to either of these licenses as is most appropriate
  * for your project on a case-by-case basis.
- * 
+ *
  * The terms of each license can be found in the root directory of this project's repository as
  * well as at:
- * 
+ *
  * * http://www.apache.org/licenses/LICENSE-2.0
  * * http://www.gnu.org/licenses/gpl-2.0.txt
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under these Licenses is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -58,8 +58,7 @@ public final class RootToolsInternalMethods {
     // # Internal methods #
     // --------------------
 
-    protected RootToolsInternalMethods() {
-    }
+    protected RootToolsInternalMethods() { }
 
     public static void getInstance() {
         //this will allow RootTools to be the only one to get an instance of this class.
@@ -72,33 +71,23 @@ public final class RootToolsInternalMethods {
         FileReader fr = null;
 
         try {
-
             fr = new FileReader("/data/local/symlinks.txt");
             lnr = new LineNumberReader(fr);
 
             String line;
-            ArrayList<Symlink> symlink = new ArrayList<Symlink>();
-
+            String[] fields;
+            final ArrayList<Symlink> symlink = new ArrayList<Symlink>();
             while ((line = lnr.readLine()) != null) {
-
                 RootTools.log(line);
-
-                String[] fields = line.split(" ");
+                fields = line.split(" ");
                 symlink.add(new Symlink(new File(fields[fields.length - 3]), // file
                         new File(fields[fields.length - 1]) // SymlinkPath
                 ));
             }
             return symlink;
         } finally {
-            try {
-                fr.close();
-            } catch (Exception e) {
-            }
-
-            try {
-                lnr.close();
-            } catch (Exception e) {
-            }
+            if (lnr != null) lnr.close();
+            if (fr != null) fr.close();
         }
     }
 
@@ -140,7 +129,6 @@ public final class RootToolsInternalMethods {
             finalPermissions += parsePermissions(permissions.getOtherPermissions());
 
             permissions.setPermissions(Integer.parseInt(finalPermissions));
-
             return permissions;
         }
 
@@ -301,7 +289,7 @@ public final class RootToolsInternalMethods {
     public boolean checkUtil(String util) {
         if (RootTools.findBinary(util)) {
 
-            List<String> binaryPaths = new ArrayList<String>();
+            final List<String> binaryPaths = new ArrayList<String>();
             binaryPaths.addAll(RootTools.lastFoundBinaryPaths);
 
             for (String path : binaryPaths) {
@@ -335,7 +323,7 @@ public final class RootToolsInternalMethods {
      * @param remountAsRw remounts the destination as read/write before writing to it
      * @return true if it was successfully deleted
      */
-    public boolean deleteFileOrDirectory(String target, boolean remountAsRw) {
+    public boolean deleteFileOrDirectory(final String target, final boolean remountAsRw) {
         boolean result = true;
 
         try {
@@ -376,7 +364,7 @@ public final class RootToolsInternalMethods {
                 RootTools.remount(target, "RO");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            RootTools.log(e.getMessage());
             result = false;
         }
 
@@ -415,34 +403,28 @@ public final class RootToolsInternalMethods {
             return false;
         }
 
-        for (String line : result) {
-            if (line.trim().equals(file)) {
-                return true;
-            }
+        for (final String line : result) {
+            if (line.trim().equals(file)) return true;
         }
 
         try {
             RootTools.closeShell(false);
-        } catch (Exception e) {
-        }
+        } catch (Exception ignored) { }
 
         result.clear();
         try {
             Shell.startRootShell().add(command);
             commandWait(command);
-
         } catch (Exception e) {
             return false;
         }
 
         //Avoid concurrent modification...
-        List<String> final_result = new ArrayList<String>();
+        final List<String> final_result = new ArrayList<String>();
         final_result.addAll(result);
 
-        for (String line : final_result) {
-            if (line.trim().equals(file)) {
-                return true;
-            }
+        for (final String line : final_result) {
+            if (line.trim().equals(file)) return true;
         }
 
         return false;
@@ -465,10 +447,10 @@ public final class RootToolsInternalMethods {
             RootTools.remount("/system", "rw");
 
             if (RootTools.findBinary(util)) {
-                List<String> paths = new ArrayList<String>();
+                final List<String> paths = new ArrayList<String>();
                 paths.addAll(RootTools.lastFoundBinaryPaths);
-                for (String path : paths) {
-                    CommandCapture command =
+                for (final String path : paths) {
+                    final CommandCapture command =
                             new CommandCapture(0, false, utilPath + " rm " + path + '/' + util);
                     Shell.startRootShell().add(command);
                     commandWait(command);
@@ -484,8 +466,7 @@ public final class RootToolsInternalMethods {
             }
 
             RootTools.remount("/system", "ro");
-        } catch (Exception e) {
-        }
+        } catch (Exception ignored) { }
     }
 
     /**
@@ -504,14 +485,10 @@ public final class RootToolsInternalMethods {
         for (String util : utils) {
             if (!checkUtil(util)) {
                 if (checkUtil("busybox")) {
-                    if (hasUtil(util, "busybox")) {
-                        fixUtil(util, RootTools.utilPath);
-                    }
+                    if (hasUtil(util, "busybox")) { fixUtil(util, RootTools.utilPath); }
                 } else {
                     if (checkUtil("toolbox")) {
-                        if (hasUtil(util, "toolbox")) {
-                            fixUtil(util, RootTools.utilPath);
-                        }
+                        if (hasUtil(util, "toolbox")) { fixUtil(util, RootTools.utilPath); }
                     } else {
                         return false;
                     }
@@ -533,7 +510,7 @@ public final class RootToolsInternalMethods {
         RootTools.lastFoundBinaryPaths.clear();
 
         final List<String> list = new ArrayList<String>();
-        String[] places = {
+        final String[] places = {
                 "/sbin/", "/system/bin/", "/system/xbin/", "/data/local/xbin/",
                 "/data/local/bin/", "/system/sd/xbin/", "/system/bin/failsafe/", "/data/local/"};
 
@@ -562,15 +539,14 @@ public final class RootToolsInternalMethods {
 
             found = !list.isEmpty();
         } catch (Exception e) {
-            RootTools
-                    .log(binaryName + " was not found, more information MAY be available with " +
-                            "Debugging on.");
+            RootTools.log(binaryName + " was not found, more information MAY be available with " +
+                    "Debugging on.");
         }
 
         if (!found) {
             RootTools.log("Trying second method");
 
-            for (String where : places) {
+            for (final String where : places) {
                 if (RootTools.exists(where + binaryName)) {
                     RootTools.log(binaryName + " was found here: " + where);
                     list.add(where);
@@ -585,10 +561,10 @@ public final class RootToolsInternalMethods {
             RootTools.log("Trying third method");
 
             try {
-                List<String> paths = RootTools.getPath();
+                final List<String> paths = RootTools.getPath();
 
                 if (paths != null) {
-                    for (String path : paths) {
+                    for (final String path : paths) {
                         if (RootTools.exists(path + '/' + binaryName)) {
                             RootTools.log(binaryName + " was found here: " + path);
                             list.add(path);
@@ -599,9 +575,8 @@ public final class RootToolsInternalMethods {
                     }
                 }
             } catch (Exception e) {
-                RootTools
-                        .log(binaryName + " was not found, more information MAY be available with" +
-                                " Debugging on.");
+                RootTools.log(binaryName + " was not found, more information MAY be available with"
+                        + " Debugging on.");
             }
         }
 
@@ -838,8 +813,7 @@ public final class RootToolsInternalMethods {
                                     RootTools.log("Symlink found.");
                                     symlink_final = symlink[symlink.length - 1];
                                 }
-                            } catch (Exception e) {
-                            }
+                            } catch (Exception ignored) { }
 
                             try {
                                 InternalVariables.permissions = getPermissions(line);
@@ -879,8 +853,7 @@ public final class RootToolsInternalMethods {
 
         Shell shell = RootTools.getShell(true);
 
-        CommandCapture cmd = new CommandCapture(0,
-                false,
+        CommandCapture cmd = new CommandCapture(0, false,
                 "cat /proc/mounts > /data/local/RootToolsMounts",
                 "chmod 0777 /data/local/RootToolsMounts");
         shell.add(cmd);
@@ -893,12 +866,11 @@ public final class RootToolsInternalMethods {
             fr = new FileReader("/data/local/RootToolsMounts");
             lnr = new LineNumberReader(fr);
             String line;
-            ArrayList<Mount> mounts = new ArrayList<Mount>();
+            String[] fields;
+            final ArrayList<Mount> mounts = new ArrayList<Mount>();
             while ((line = lnr.readLine()) != null) {
-
                 RootTools.log(line);
-
-                String[] fields = line.split(" ");
+                fields = line.split(" ");
                 mounts.add(new Mount(new File(fields[0]), // device
                         new File(fields[1]), // mountPoint
                         fields[2], // fstype
@@ -913,15 +885,8 @@ public final class RootToolsInternalMethods {
                 throw new Exception();
             }
         } finally {
-            try {
-                fr.close();
-            } catch (Exception e) {
-            }
-
-            try {
-                lnr.close();
-            } catch (Exception e) {
-            }
+            if (lnr != null) lnr.close();
+            if (fr != null) fr.close();
         }
     }
 
@@ -987,14 +952,12 @@ public final class RootToolsInternalMethods {
             };
             Shell.startRootShell().add(command);
             commandWait(command);
-
-        } catch (Exception e) {
-        }
+        } catch (Exception ignored) { }
 
         if (InternalVariables.space != null) {
             RootTools.log("First Method");
 
-            for (String spaceSearch : InternalVariables.space) {
+            for (final String spaceSearch : InternalVariables.space) {
 
                 RootTools.log(spaceSearch);
 
@@ -1014,7 +977,7 @@ public final class RootToolsInternalMethods {
                 targetCount = 2;
             }
 
-            for (String spaceSearch : InternalVariables.space) {
+            for (final String spaceSearch : InternalVariables.space) {
 
                 RootTools.log(spaceSearch);
                 if (spaceSearch.length() > 0) {
@@ -1058,7 +1021,7 @@ public final class RootToolsInternalMethods {
             Shell.startRootShell().add(command);
             commandWait(command);
 
-            String[] symlink = results.get(0).split(" ");
+            final String[] symlink = results.get(0).split(" ");
             if (symlink.length > 2 && symlink[symlink.length - 2].equals("->")) {
                 RootTools.log("Symlink found.");
 
@@ -1151,16 +1114,14 @@ public final class RootToolsInternalMethods {
      * space on SDCard. Will also return <code>false</code>, if the SDCard is not mounted as
      * read/write
      */
-    public boolean hasEnoughSpaceOnSdCard(long updateSize) {
+    public boolean hasEnoughSpaceOnSdCard(final long updateSize) {
         RootTools.log("Checking SDcard size and that it is mounted as RW");
-        String status = Environment.getExternalStorageState();
-        if (!status.equals(Environment.MEDIA_MOUNTED)) {
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             return false;
         }
-        File path = Environment.getExternalStorageDirectory();
-        StatFs stat = new StatFs(path.getPath());
-        long blockSize = stat.getBlockSize();
-        long availableBlocks = stat.getAvailableBlocks();
+        final StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
+        final long blockSize = stat.getBlockSizeLong();
+        final long availableBlocks = stat.getAvailableBlocksLong();
         return (updateSize < availableBlocks * blockSize);
     }
 
@@ -1181,8 +1142,7 @@ public final class RootToolsInternalMethods {
         }
 
         try {
-
-            CommandCapture command = new CommandCapture(0, false,
+            final CommandCapture command = new CommandCapture(0, false,
                     box.endsWith("toolbox") ? box + ' ' + util : box + " --list") {
 
                 @Override
@@ -1444,20 +1404,17 @@ public final class RootToolsInternalMethods {
         return i;
     }
 
-    private void commandWait(Command cmd) {
-
+    private void commandWait(final Command cmd) {
         while (!cmd.isFinished()) {
-
             RootTools.log(Constants.TAG, Shell.getOpenShell().getCommandQueuePositionString(cmd));
 
+            //noinspection SynchronizationOnLocalVariableOrMethodParameter
             synchronized (cmd) {
                 try {
                     if (!cmd.isFinished()) {
                         cmd.wait(2000);
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                } catch (InterruptedException ignored) { }
             }
 
             if (!cmd.isExecuting() && !cmd.isFinished()) {
@@ -1467,7 +1424,7 @@ public final class RootToolsInternalMethods {
                                     "executing and not reading! \n\n Command: " + cmd
                                     .getCommand()
                     );
-                    Exception e = new Exception();
+                    final Exception e = new Exception();
                     e.setStackTrace(Thread.currentThread().getStackTrace());
                     e.printStackTrace();
                 } else if (Shell.isExecuting && !Shell.isReading) {
@@ -1476,7 +1433,7 @@ public final class RootToolsInternalMethods {
                                     "but not reading! \n\n Command: " + cmd
                                     .getCommand()
                     );
-                    Exception e = new Exception();
+                    final Exception e = new Exception();
                     e.setStackTrace(Thread.currentThread().getStackTrace());
                     e.printStackTrace();
                 } else {
@@ -1485,7 +1442,7 @@ public final class RootToolsInternalMethods {
                                     " \n\n Command: " + cmd
                                     .getCommand()
                     );
-                    Exception e = new Exception();
+                    final Exception e = new Exception();
                     e.setStackTrace(Thread.currentThread().getStackTrace());
                     e.printStackTrace();
                 }

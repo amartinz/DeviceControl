@@ -426,7 +426,7 @@ public class SlidingMenu extends RelativeLayout {
      */
     public void setSecondaryMenu(View v) {
         mViewBehind.setSecondaryContent(v);
-        //		mViewBehind.invalidate();
+        //        mViewBehind.invalidate();
     }
 
     /**
@@ -489,10 +489,10 @@ public class SlidingMenu extends RelativeLayout {
             setSlidingEnabled(false);
             mViewAbove.setCustomViewBehind(null);
             mViewAbove.setCurrentItem(1);
-            //			mViewBehind.setCurrentItem(0);
+            //            mViewBehind.setCurrentItem(0);
         } else {
             mViewAbove.setCurrentItem(1);
-            //			mViewBehind.setCurrentItem(1);
+            //            mViewBehind.setCurrentItem(1);
             mViewAbove.setCustomViewBehind(mViewBehind);
             setSlidingEnabled(true);
         }
@@ -601,12 +601,12 @@ public class SlidingMenu extends RelativeLayout {
      * @param i The margin, in pixels, on the right of the screen that the behind view scrolls to.
      */
     public void setBehindOffset(int i) {
-        //		RelativeLayout.LayoutParams params = ((RelativeLayout.LayoutParams)mViewBehind
+        //        RelativeLayout.LayoutParams params = ((RelativeLayout.LayoutParams)mViewBehind
         // .getLayoutParams());
-        //		int bottom = params.bottomMargin;
-        //		int top = params.topMargin;
-        //		int left = params.leftMargin;
-        //		params.setMargins(left, top, i, bottom);
+        //        int bottom = params.bottomMargin;
+        //        int top = params.topMargin;
+        //        int left = params.leftMargin;
+        //        params.setMargins(left, top, i, bottom);
         mViewBehind.setWidthOffset(i);
     }
 
