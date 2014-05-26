@@ -45,7 +45,8 @@ public interface DeviceConstants {
     public static final int ID_PERFORMANCE_EXTRA        = 7;
     public static final int ID_HOTPLUGGING              = ID_PERFORMANCE_EXTRA + 1000;
     public static final int ID_THERMAL                  = ID_PERFORMANCE_EXTRA + 1100;
-    public static final int ID_VOLTAGE                  = ID_PERFORMANCE_EXTRA + 1200;
+    public static final int ID_KSM                      = ID_PERFORMANCE_EXTRA + 1200;
+    public static final int ID_VOLTAGE                  = ID_PERFORMANCE_EXTRA + 1300;
     public static final int ID_TOOLS_TASKER             = 9;
     public static final int ID_TOOLS_TASKER_LIST        = ID_TOOLS_TASKER + 1000;
     public static final int ID_TOOLS_MORE               = 10;

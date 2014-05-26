@@ -211,4 +211,9 @@
     <string name="ext">External</string>
     <string name="cache">Cache</string>
     <string name="applying_wait">Applying values, please wait&#8230;</string>
+    <string name="full_scans">Full scans</string>
+    <string name="enable_ksm">Enable KSM</string>
+    <string name="enable_ksm_summary">May reduce memory usage but also uses a bit more CPU power</string>
+    <string name="pages_to_scan">Pages to scan</string>
+    <string name="ksm_sleep">Sleep between scans (ms)</string>
 </resources>

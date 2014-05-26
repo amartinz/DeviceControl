@@ -7,6 +7,7 @@
     <string name="empty" translatable="false" />
     <string name="intelli_plug" translatable="false">Intelli-Plug</string>
     <string name="intelli_thermal" translatable="false">Intelli-Thermal</string>
+    <string name="ksm" translatable="false">Kernel SamePage Merging</string>
     <string name="msm_thermal" translatable="false">MSM-Thermal</string>
     <string name="menu_plus">+25mV</string>
     <string name="menu_minus">-25mV</string>
