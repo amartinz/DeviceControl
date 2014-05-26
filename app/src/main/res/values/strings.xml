@@ -97,6 +97,7 @@
     <string name="core_limits">Core Limits</string>
     <string name="other_settings">Other settings</string>
     <string name="settings">Settings</string>
+    <string name="refresh">Refresh</string>
     <string name="refresh_interval">Refresh interval</string>
     <string name="hide_status">Hide status</string>
     <string name="gpu">GPU</string>
@@ -211,4 +212,15 @@
     <string name="ext">External</string>
     <string name="cache">Cache</string>
     <string name="applying_wait">Applying values, please wait&#8230;</string>
+    <string name="full_scans">Full scans</string>
+    <string name="pages_shared">Pages shared</string>
+    <string name="pages_sharing">Pages sharing</string>
+    <string name="pages_unshared">Pages unshared</string>
+    <string name="pages_volatile">Pages volatile</string>
+    <string name="enable_ksm">Enable KSM</string>
+    <string name="enable_ksm_summary">May reduce memory usage but also uses a bit more CPU power</string>
+    <string name="pages_to_scan">Pages to scan</string>
+    <string name="ksm_sleep">Sleep between scans (ms)</string>
+    <string name="deferred_timer">Deferred timer</string>
+    <string name="deferred_timer_summary">Do not wake CPU for KSM activities to save battery</string>
 </resources>
