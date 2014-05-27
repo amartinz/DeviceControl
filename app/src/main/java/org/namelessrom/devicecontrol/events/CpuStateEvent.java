@@ -15,12 +15,8 @@ public class CpuStateEvent {
         mTotalStateTime = totalStateTime;
     }
 
-    public List<CpuStateMonitor.CpuState> getStates() {
-        return mStateList;
-    }
+    public List<CpuStateMonitor.CpuState> getStates() { return mStateList; }
 
-    public long getTotalStateTime() {
-        return mTotalStateTime;
-    }
+    public long getTotalStateTime() { return mTotalStateTime; }
 
 }

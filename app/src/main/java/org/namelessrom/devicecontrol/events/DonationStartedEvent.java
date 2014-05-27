@@ -31,15 +31,9 @@ public class DonationStartedEvent {
         mToken = token;
     }
 
-    public String getSku() {
-        return mSku;
-    }
+    public String getSku() { return mSku; }
 
-    public int getReqCode() {
-        return mReqCode;
-    }
+    public int getReqCode() { return mReqCode; }
 
-    public String getToken() {
-        return mToken;
-    }
+    public String getToken() { return mToken; }
 }

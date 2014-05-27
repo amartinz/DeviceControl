@@ -126,7 +126,7 @@ public class BuildPropFragment extends AttachPreferenceFragment
 
         final PreferenceScreen prefSet = getPreferenceScreen();
 
-        mFullEditor = (CustomPreference) prefSet.findPreference(PREF_FULL_EDITOR);
+        mFullEditor = (CustomPreference) prefSet.findPreference("pref_full_editor");
 
         mWifiScanPref = (ListPreference) prefSet.findPreference(WIFI_SCAN_PREF);
         if (mWifiScanPref != null) {

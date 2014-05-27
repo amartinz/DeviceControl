@@ -87,7 +87,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
                     mGpuFrequency.setSummary(tmp);
                 } else {
                     mGpuFrequency = new CustomListPreference(getActivity());
-                    mGpuFrequency.setKey(PREF_MAX_GPU);
+                    mGpuFrequency.setKey("pref_max_gpu");
                     mGpuFrequency.setTitle(R.string.gpu_freq_max);
                     mGpuFrequency.setEntries(gpuNames);
                     mGpuFrequency.setEntryValues(frequencies);
@@ -105,7 +105,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
                     mGpuGovernor.setValue(tmp);
                 } else {
                     mGpuGovernor = new CustomListPreference(getActivity());
-                    mGpuGovernor.setKey(PREF_GPU_GOV);
+                    mGpuGovernor.setKey("pref_gpu_gov");
                     mGpuGovernor.setTitle(R.string.gpu_governor);
                     mGpuGovernor.setEntries(GPU_GOVS);
                     mGpuGovernor.setEntryValues(GPU_GOVS);

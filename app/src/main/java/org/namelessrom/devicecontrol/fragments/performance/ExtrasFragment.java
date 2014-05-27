@@ -57,24 +57,32 @@ public class ExtrasFragment extends AttachPreferenceFragment
     //==============================================================================================
     // Files
     //==============================================================================================
+
     public static final String  sPowerEfficientWorkFile =
             Utils.checkPaths(FILES_POWER_EFFICIENT_WORK);
     public static final boolean sPowerEfficientWork     = !sPowerEfficientWorkFile.isEmpty();
     //----------------------------------------------------------------------------------------------
-    public static final String  sMcPowerSchedulerFile   =
-            Utils.checkPaths(FILES_MC_POWER_SCHEDULER);
-    public static final boolean sMcPowerScheduler       = !sMcPowerSchedulerFile.isEmpty();
+
+    public static final String  sMcPowerSchedulerFile = Utils.checkPaths(FILES_MC_POWER_SCHEDULER);
+    public static final boolean sMcPowerScheduler     = !sMcPowerSchedulerFile.isEmpty();
     //----------------------------------------------------------------------------------------------
-    private PreferenceScreen         mRoot;
+
+    private static final String CATEGORY_POWERSAVING = "powersaving";
     //----------------------------------------------------------------------------------------------
-    private CustomListPreference     mIoScheduler;
-    private CustomPreference         mKsm;
-    private CustomPreference         mHotplugging;
-    private CustomPreference         mThermal;
+
+    private PreferenceScreen mRoot;
     //----------------------------------------------------------------------------------------------
+
+    private CustomListPreference mIoScheduler;
+    private CustomPreference     mKsm;
+    private CustomPreference     mHotplugging;
+    private CustomPreference     mThermal;
+    //----------------------------------------------------------------------------------------------
+
     private CustomCheckBoxPreference mPowerEfficientWork;
     private CustomListPreference     mMcPowerScheduler;
     //----------------------------------------------------------------------------------------------
+
     private CustomCheckBoxPreference mMsmDcvs;
     private CustomPreference         mVoltageControl;
 
@@ -130,8 +138,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
 
         PreferenceCategory category = (PreferenceCategory) findPreference(CATEGORY_POWERSAVING);
         if (category != null) {
-            mPowerEfficientWork =
-                    (CustomCheckBoxPreference) findPreference(KEY_POWER_EFFICIENT_WORK);
+            mPowerEfficientWork = (CustomCheckBoxPreference) findPreference("power_efficient_work");
             if (mPowerEfficientWork != null) {
                 if (sPowerEfficientWork) {
                     Utils.getCommandResult(ID_WORK, Utils.getReadCommand(sPowerEfficientWorkFile));
@@ -139,7 +146,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
                     category.removePreference(mPowerEfficientWork);
                 }
             }
-            mMcPowerScheduler = (CustomListPreference) findPreference(KEY_MC_POWER_SCHEDULER);
+            mMcPowerScheduler = (CustomListPreference) findPreference("sched_mc_power_savings");
             if (mMcPowerScheduler != null) {
                 if (sMcPowerScheduler) {
                     final String value = Utils.readOneLine(sMcPowerSchedulerFile);

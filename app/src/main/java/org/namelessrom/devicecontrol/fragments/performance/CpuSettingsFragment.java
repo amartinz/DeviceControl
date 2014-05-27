@@ -115,7 +115,7 @@ public class CpuSettingsFragment extends AttachFragment
         final SeekBar intervalBar = findById(view, R.id.ui_device_bar);
         intervalBar.setMax(4000);
         intervalBar.setProgress(Integer.parseInt(
-                PreferenceHelper.getString(PREF_INTERVAL_CPU_INFO, "1000")) - 1000);
+                PreferenceHelper.getString("pref_interval_cpu_info", "1000")) - 1000);
         intervalBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -138,7 +138,7 @@ public class CpuSettingsFragment extends AttachFragment
                 mIntervalText.setText((mInterval == 5000
                         ? getString(R.string.off)
                         : (((double) mInterval) / 1000) + "s"));
-                updateSharedPrefs(PREF_INTERVAL_CPU_INFO, String.valueOf(mInterval));
+                updateSharedPrefs("pref_interval_cpu_info", String.valueOf(mInterval));
             }
         });
 
@@ -162,10 +162,10 @@ public class CpuSettingsFragment extends AttachFragment
                     mInterval = intervalBar.getProgress() + 1000;
                     CpuCoreMonitor.getInstance(getActivity()).start(mInterval);
                 }
-                updateSharedPrefs(PREF_HIDE_CPU_INFO, b ? "1" : "0");
+                updateSharedPrefs("pref_hide_cpu_info", b ? "1" : "0");
             }
         });
-        mStatusHide.setChecked(PreferenceHelper.getString(PREF_HIDE_CPU_INFO, "1").equals("1"));
+        mStatusHide.setChecked(PreferenceHelper.getString("pref_hide_cpu_info", "1").equals("1"));
 
         CpuCore tmpCore;
         final int mCpuNum = CpuUtils.getNumOfCpus();
