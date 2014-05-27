@@ -10,6 +10,9 @@
 
     <!-- ACRA -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Read / Write -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- In-App-Purchases -->
     <uses-permission android:name="com.android.vending.BILLING" />
     <!-- Boot Up -->
@@ -28,9 +31,9 @@
 
     <permission
         android:name="org.namelessrom.devicecontrol.API"
-        android:label="@string/permission_api_label"
         android:description="@string/permission_api_description"
-        android:protectionLevel="dangerous" />"
+        android:label="@string/permission_api_label"
+        android:protectionLevel="dangerous" />
 
     <application
         android:name="org.namelessrom.devicecontrol.Application"
@@ -41,17 +44,15 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-
         <activity
             android:name="org.acra.CrashReportDialog"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@android:style/Theme.Holo.Dialog"
-            android:launchMode="singleInstance"
             android:excludeFromRecents="true"
-            android:finishOnTaskLaunch="true" />
-
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Holo.Dialog" />
         <activity
-            android:name=".DummyLauncher"
+            android:name="org.namelessrom.devicecontrol.DummyLauncher"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:enabled="true"
             android:launchMode="singleTask">
@@ -62,10 +63,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="org.namelessrom.devicecontrol.MainActivity"
+            android:clearTaskOnLaunch="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:clearTaskOnLaunch="true"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="org.namelessrom.devicecontrol.MainActivity" />
@@ -79,23 +80,30 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/add_task"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName="org.namelessrom.devicecontrol.MainActivity" />
 
         <!-- Services -->
         <service
             android:name="org.namelessrom.devicecontrol.services.FstrimService"
-            android:enabled="true" />
+            android:enabled="true"
+            android:exported="false" />
         <service
             android:name="org.namelessrom.devicecontrol.services.BootUpService"
-            android:enabled="true" />
+            android:enabled="true"
+            android:exported="false" />
         <service
             android:name="org.namelessrom.devicecontrol.services.TaskerService"
-            android:enabled="true" />
+            android:enabled="true"
+            android:exported="false" />
         <service
-            android:name=".api.RemoteService"
-            android:permission="org.namelessrom.devicecontrol.API"
+            android:name="org.namelessrom.devicecontrol.services.WebServerService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name="org.namelessrom.devicecontrol.api.RemoteService"
             android:enabled="true"
             android:exported="true"
+            android:permission="org.namelessrom.devicecontrol.API"
             android:process=":remote">
             <intent-filter>
                 <action android:name="org.namelessrom.devicecontrol.api.IRemoteService" />
@@ -119,7 +127,6 @@
                     android:scheme="android_secret_code" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>
