@@ -60,6 +60,7 @@ import org.namelessrom.devicecontrol.fragments.performance.sub.ThermalFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsMoreFragment;
+import org.namelessrom.devicecontrol.fragments.tools.WirelessFileManagerFragment;
 import org.namelessrom.devicecontrol.fragments.tools.sub.editor.BuildPropEditorFragment;
 import org.namelessrom.devicecontrol.fragments.tools.sub.editor.BuildPropFragment;
 import org.namelessrom.devicecontrol.fragments.tools.sub.editor.SysctlEditorFragment;
@@ -443,6 +444,10 @@ public class MainActivity extends Activity
                 mSubActionBarDrawable = R.drawable.ic_general_app;
                 mTitle = mSubFragmentTitle = R.string.app_manager;
                 break;
+            case ID_TOOLS_WIRELESS_FM:
+                mSubActionBarDrawable = R.drawable.ic_general_wifi;
+                mTitle = mSubFragmentTitle = R.string.wireless_file_manager;
+                break;
             //--------------------------------------------------------------------------------------
         }
         restoreActionBar();
@@ -573,6 +578,9 @@ public class MainActivity extends Activity
                 break;
             case ID_TOOLS_APP_MANAGER:
                 mCurrentFragment = new AppListFragment();
+                break;
+            case ID_TOOLS_WIRELESS_FM:
+                mCurrentFragment = new WirelessFileManagerFragment();
                 break;
             //--------------------------------------------------------------------------------------
             default:
