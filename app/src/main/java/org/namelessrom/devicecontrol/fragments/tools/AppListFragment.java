@@ -488,7 +488,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
                 appList.add(new AppItem(
                         pkgInfo, String.valueOf(appInfo.loadLabel(pm)), appInfo.loadIcon(pm)));
             }
-            Collections.sort(appList, SortHelper.sAppcomparator);
+            Collections.sort(appList, SortHelper.sAppComparator);
 
             return appList;
         }
