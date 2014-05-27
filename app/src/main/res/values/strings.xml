@@ -31,6 +31,7 @@
     <string name="tools">Tools</string>
     <string name="editors">Editors</string>
     <string name="app_manager">App manager</string>
+    <string name="wireless_file_manager">Wireless file manager</string>
     <string name="licenses">Licenses</string>
     <string name="graphics">Graphics</string>
     <string name="display">Display</string>
@@ -223,4 +224,6 @@
     <string name="ksm_sleep">Sleep between scans (ms)</string>
     <string name="deferred_timer">Deferred timer</string>
     <string name="deferred_timer_summary">Do not wake CPU for KSM activities to save battery</string>
+    <string name="start_wireless_file_manager">Server is not running!\nPress to start server.</string>
+    <string name="stop_wireless_file_manager">Server is running at %s!\nPress to stop server.</string>
 </resources>

@@ -14,6 +14,10 @@
         android:title="@string/app_manager"
         android:icon="@drawable/ic_general_app" />
 
+    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+        android:key="wireless_file_manager"
+        android:title="@string/wireless_file_manager" />
+
     <PreferenceCategory android:title="@string/editors">
 
         <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference

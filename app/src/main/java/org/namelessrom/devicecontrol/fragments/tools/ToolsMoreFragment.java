@@ -1,6 +1,7 @@
 package org.namelessrom.devicecontrol.fragments.tools;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,9 @@ import android.preference.PreferenceScreen;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
+import org.namelessrom.devicecontrol.net.NetworkInfo;
+import org.namelessrom.devicecontrol.services.WebServerService;
+import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
@@ -26,11 +30,10 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
     private CustomPreference mBuildProp;
     private CustomPreference mSysctlVm;
     private CustomPreference mAppManager;
+    private CustomPreference mWirelessFileManager;
 
     @Override
-    public void onAttach(final Activity activity) {
-        super.onAttach(activity, ID_TOOLS_MORE);
-    }
+    public void onAttach(final Activity activity) { super.onAttach(activity, ID_TOOLS_MORE); }
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -43,6 +46,15 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
         mSysctlVm = (CustomPreference) findPreference("sysctl_vm");
 
         mAppManager = (CustomPreference) findPreference("app_manager");
+
+        mWirelessFileManager = (CustomPreference) findPreference("wireless_file_manager");
+        if (mWirelessFileManager != null) {
+            if (AppHelper.isServiceRunning(WebServerService.class.getName())) {
+                mWirelessFileManager.setSummary(R.string.stop_wireless_file_manager);
+            } else {
+                mWirelessFileManager.setSummary(R.string.start_wireless_file_manager);
+            }
+        }
     }
 
     @Override
@@ -55,6 +67,18 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
             startMediaScan();
         } else if (mAppManager == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_APP_MANAGER));
+        } else if (mWirelessFileManager == preference) {
+            final Intent i = new Intent(Application.applicationContext, WebServerService.class);
+            if (AppHelper.isServiceRunning(WebServerService.class.getName())) {
+                i.setAction(WebServerService.ACTION_STOP);
+                mWirelessFileManager.setSummary(R.string.start_wireless_file_manager);
+            } else {
+                i.setAction(WebServerService.ACTION_START);
+                mWirelessFileManager.setSummary(getString(
+                        R.string.stop_wireless_file_manager,
+                        "http://" + NetworkInfo.getAnyIpAddress() + ":8080"));
+            }
+            Application.applicationContext.startService(i);
         } else if (mBuildProp == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_BUILD_PROP));
         } else if (mSysctlVm == preference) {
