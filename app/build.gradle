@@ -48,7 +48,8 @@ android {
 
 dependencies {
     compile project(':proprietary')
-    compile 'com.android.support:support-v13:19.+'
     compile 'ch.acra:acra:4.+'
-    compile 'com.jakewharton:butterknife:5.0.1'
+    compile 'com.android.support:support-v13:19.+'
+    compile 'com.jakewharton:butterknife:5.+'
+    compile 'com.koushikdutta.ion:ion:1.2.+'
 }
