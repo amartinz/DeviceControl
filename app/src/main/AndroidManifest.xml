@@ -51,6 +51,18 @@
             android:finishOnTaskLaunch="true" />
 
         <activity
+            android:name=".TestActivity"
+            android:label="TestActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:enabled="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".DummyLauncher"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:enabled="true"
