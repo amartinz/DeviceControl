@@ -26,11 +26,10 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
     private CustomPreference mBuildProp;
     private CustomPreference mSysctlVm;
     private CustomPreference mAppManager;
+    private CustomPreference mWirelessFileManager;
 
     @Override
-    public void onAttach(final Activity activity) {
-        super.onAttach(activity, ID_TOOLS_MORE);
-    }
+    public void onAttach(final Activity activity) { super.onAttach(activity, ID_TOOLS_MORE); }
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -43,6 +42,7 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
         mSysctlVm = (CustomPreference) findPreference("sysctl_vm");
 
         mAppManager = (CustomPreference) findPreference("app_manager");
+        mWirelessFileManager = (CustomPreference) findPreference("wireless_file_manager");
     }
 
     @Override
@@ -55,6 +55,8 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
             startMediaScan();
         } else if (mAppManager == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_APP_MANAGER));
+        } else if (mWirelessFileManager == preference) {
+            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_WIRELESS_FM));
         } else if (mBuildProp == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_BUILD_PROP));
         } else if (mSysctlVm == preference) {
