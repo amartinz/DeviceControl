@@ -1,6 +1,7 @@
 package org.namelessrom.devicecontrol.fragments.tools.tasker;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,21 +10,29 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
+import org.namelessrom.devicecontrol.services.TaskerService;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachListFragment;
 import org.namelessrom.devicecontrol.widgets.adapters.TaskerAdapter;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
+import static butterknife.ButterKnife.findById;
+
 public class TaskListFragment extends AttachListFragment implements DeviceConstants {
 
     private TaskerAdapter mAdapter;
+    private Switch        mTaskerToggle;
 
     @Override
     public void onAttach(Activity activity) { super.onAttach(activity, ID_TOOLS_TASKER_LIST); }
@@ -69,6 +78,23 @@ public class TaskListFragment extends AttachListFragment implements DeviceConsta
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_tasker, menu);
+        final MenuItem toggle = menu.findItem(R.id.menu_action_toggle);
+        if (toggle != null) {
+            final View v = toggle.getActionView();
+            if (v != null) {
+                mTaskerToggle = findById(v, R.id.ab_switch);
+                mTaskerToggle.setOnCheckedChangeListener(new CompoundButton
+                        .OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(final CompoundButton b, final boolean isChecked) {
+                        PreferenceHelper.setBoolean(USE_TASKER, isChecked);
+                        final String clsName = TaskerService.class.getName();
+                        Utils.toggleComponent(new ComponentName(PACKAGE_NAME, clsName), !isChecked);
+                        if (isChecked) Utils.startTaskerService();
+                    }
+                });
+            }
+        }
     }
 
     @Override
