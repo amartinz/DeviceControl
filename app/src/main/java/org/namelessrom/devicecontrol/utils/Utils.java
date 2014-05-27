@@ -26,6 +26,7 @@ import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
@@ -40,6 +41,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -293,14 +295,24 @@ public class Utils implements DeviceConstants, FileConstants {
         toggleComponent(packageName, componentName, true);
     }
 
+    public static void disableComponent(final ComponentName componentName) {
+        toggleComponent(componentName, true);
+    }
+
     public static void enableComponent(final String packageName, final String componentName) {
         toggleComponent(packageName, componentName, false);
     }
 
-    private static void toggleComponent(final String packageName, final String componentName,
-            boolean disable) {
-        final ComponentName component = new ComponentName(packageName,
-                packageName + componentName);
+    public static void enableComponent(final ComponentName componentName) {
+        toggleComponent(componentName, false);
+    }
+
+    public static void toggleComponent(final String packageName, final String componentName,
+            final boolean disable) {
+        toggleComponent(new ComponentName(packageName, packageName + componentName), disable);
+    }
+
+    public static void toggleComponent(final ComponentName component, final boolean disable) {
         final PackageManager pm = Application.getPm();
         if (pm != null) {
             pm.setComponentEnabledSetting(component,
@@ -313,22 +325,27 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     public static void startTaskerService() {
-        final String packageName = Application.applicationContext.getPackageName();
-        final String componentName = TaskerService.class.getName().replace(packageName, "");
-        final DatabaseHandler db = DatabaseHandler.getInstance(Application.applicationContext);
-        if (db.getTableCount(DatabaseHandler.TABLE_TASKER) > 0) {
-            enableComponent(packageName, componentName);
-            final Intent tasker = new Intent(Application.applicationContext, TaskerService.class);
-            tasker.setAction(TaskerService.ACTION_START);
-            Application.applicationContext.startService(tasker);
-            logDebug("Service Started: " + componentName);
-        } else {
-            final Intent tasker = new Intent(Application.applicationContext, TaskerService.class);
-            tasker.setAction(TaskerService.ACTION_STOP);
-            Application.applicationContext.startService(tasker);
-            disableComponent(packageName, componentName);
-            logDebug("Service NOT Started: " + componentName);
+        if (!PreferenceHelper.getBoolean(USE_TASKER)) return;
+
+        boolean enabled = false;
+        final List<TaskerItem> taskerItemList = DatabaseHandler
+                .getInstance(Application.applicationContext).getAllTaskerItems("");
+        for (final TaskerItem item : taskerItemList) {
+            if (item.getEnabled()) {
+                enabled = true;
+                break;
+            }
         }
+
+        final Intent tasker = new Intent(Application.applicationContext, TaskerService.class);
+        if (enabled) {
+            tasker.setAction(TaskerService.ACTION_START);
+            logDebug("Starting TaskerService");
+        } else {
+            tasker.setAction(TaskerService.ACTION_STOP);
+            logDebug("Stopping TaskerService");
+        }
+        Application.applicationContext.startService(tasker);
     }
 
     public static boolean isEnabled(String s) {

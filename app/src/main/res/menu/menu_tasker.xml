@@ -8,4 +8,9 @@
         android:icon="@drawable/ic_action_add"
         android:showAsAction="ifRoom|withText" />
 
+    <item
+        android:id="@+id/menu_action_toggle"
+        android:actionLayout="@layout/ab_toggle"
+        android:showAsAction="always" />
+
 </menu>
