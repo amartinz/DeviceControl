@@ -119,7 +119,7 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         PreferenceCategory category = (PreferenceCategory) findPreference("input_navbar");
         if (category != null) {
-            mForceNavBar = (CustomCheckBoxPreference) findPreference(KEY_NAVBAR_FORCE);
+            mForceNavBar = (CustomCheckBoxPreference) findPreference("navbar_force");
             if (mForceNavBar != null) {
                 if (hasNavBar || Application.IS_NAMELESS) {
                     category.removePreference(mForceNavBar);
@@ -133,7 +133,7 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         category = (PreferenceCategory) findPreference("input_knockon");
         if (category != null) {
-            mKnockOn = (CustomCheckBoxPreference) findPreference(KEY_KNOCK_ON);
+            mKnockOn = (CustomCheckBoxPreference) findPreference("knockon_gesture_enable");
             if (mKnockOn != null) {
                 if (!Utils.fileExists(FILE_KNOCKON)) {
                     category.removePreference(mKnockOn);
@@ -156,19 +156,19 @@ public class DeviceFragment extends AttachPreferenceFragment
         category = (PreferenceCategory) findPreference("input_others");
         if (category != null) {
             final VibratorTuningPreference pref =
-                    (VibratorTuningPreference) findPreference(KEY_VIBRATOR_TUNING);
+                    (VibratorTuningPreference) findPreference("vibrator_tuning");
             if (pref != null && !VibratorTuningPreference.isSupported()) {
                 category.removePreference(pref);
             }
 
-            mGloveMode = (CustomCheckBoxPreference) findPreference(KEY_GLOVE_MODE);
+            mGloveMode = (CustomCheckBoxPreference) findPreference("input_glove_mode");
             if (mGloveMode != null) {
                 try {
                     if (!isHtsSupported()) {
                         category.removePreference(mGloveMode);
                     } else {
                         final String value = DatabaseHandler.getInstance(getActivity())
-                                .getValueByName(KEY_GLOVE_MODE, DatabaseHandler.TABLE_BOOTUP);
+                                .getValueByName(mGloveMode.getKey(), DatabaseHandler.TABLE_BOOTUP);
                         final boolean enableGlove = (value != null && value.equals("1"));
 
                         enableHts(enableGlove);
@@ -184,9 +184,9 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         // LIGHTS
 
-        category = (PreferenceCategory) findPreference(CATEGORY_TOUCHKEY);
+        category = (PreferenceCategory) findPreference("touchkey");
         if (category != null) {
-            mBacklightKey = (CustomCheckBoxPreference) findPreference(KEY_TOUCHKEY_LIGHT);
+            mBacklightKey = (CustomCheckBoxPreference) findPreference("touchkey_light");
             if (mBacklightKey != null) {
                 if (!Utils.fileExists(FILE_TOUCHKEY_TOGGLE)) {
                     category.removePreference(mBacklightKey);
@@ -196,7 +196,7 @@ public class DeviceFragment extends AttachPreferenceFragment
                 }
             }
 
-            mBacklightNotification = (CustomCheckBoxPreference) findPreference(KEY_TOUCHKEY_BLN);
+            mBacklightNotification = (CustomCheckBoxPreference) findPreference("touchkey_bln");
             if (mBacklightNotification != null) {
                 if (!Utils.fileExists(FILE_BLN_TOGGLE)) {
                     category.removePreference(mBacklightNotification);
@@ -208,7 +208,7 @@ public class DeviceFragment extends AttachPreferenceFragment
                 }
             }
 
-            mKeyboardBacklight = (CustomCheckBoxPreference) findPreference(KEY_KEYBOARD_LIGHT);
+            mKeyboardBacklight = (CustomCheckBoxPreference) findPreference("keyboard_light");
             if (mKeyboardBacklight != null) {
                 if (!Utils.fileExists(FILE_KEYBOARD_TOGGLE)) {
                     category.removePreference(mKeyboardBacklight);
@@ -227,9 +227,9 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         // Display
 
-        category = (PreferenceCategory) findPreference(CATEGORY_GRAPHICS);
+        category = (PreferenceCategory) findPreference("graphics");
         if (category != null) {
-            mPanelColor = (CustomListPreference) findPreference(KEY_PANEL_COLOR_TEMP);
+            mPanelColor = (CustomListPreference) findPreference("panel_color_temperature");
             if (mPanelColor != null) {
                 if (!sHasPanel) {
                     category.removePreference(mPanelColor);
@@ -239,7 +239,7 @@ public class DeviceFragment extends AttachPreferenceFragment
                 }
             }
 
-            mLcdPowerReduce = (CustomCheckBoxPreference) findPreference(KEY_LCD_POWER_REDUCE);
+            mLcdPowerReduce = (CustomCheckBoxPreference) findPreference("lcd_power_reduce");
             if (mLcdPowerReduce != null) {
                 if (sLcdPowerReduce) {
                     mLcdPowerReduce.setChecked(Utils.readOneLine(sLcdPowerReduceFile).equals("1"));
@@ -271,7 +271,7 @@ public class DeviceFragment extends AttachPreferenceFragment
             enableHts(value);
             PreferenceHelper.setBootup(
                     new DataItem(DatabaseHandler.CATEGORY_DEVICE, mGloveMode.getKey(),
-                            KEY_GLOVE_MODE, (value ? "1" : "0"))
+                            mGloveMode.getKey(), (value ? "1" : "0"))
             );
             changed = true;
         } else if (preference == mKnockOn) {
@@ -426,12 +426,9 @@ public class DeviceFragment extends AttachPreferenceFragment
         for (final DataItem item : items) {
             filename = item.getFileName();
             value = item.getValue();
-            if (KEY_GLOVE_MODE.equals(filename)) {
+            if ("input_glove_mode".equals(filename)) {
                 final String mode = (value.equals("1") ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
-                Utils.getCommandResult(SHELL_HTS,
-                        Utils.getWriteCommand(COMMAND_PATH, mode) +
-                                Utils.getReadCommand("/sys/class/sec/tsp/cmd_result")
-                );
+                sbCmd.append(Utils.getWriteCommand(COMMAND_PATH, mode));
             } else {
                 sbCmd.append(Utils.getWriteCommand(filename, value));
             }

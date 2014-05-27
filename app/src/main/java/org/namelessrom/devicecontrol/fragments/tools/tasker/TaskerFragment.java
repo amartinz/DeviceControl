@@ -25,7 +25,6 @@ import android.preference.PreferenceScreen;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
-import org.namelessrom.devicecontrol.utils.ParseUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -62,7 +61,7 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
 
         mFstrimInterval = (CustomListPreference) findPreference(FSTRIM_INTERVAL);
         if (mFstrimInterval != null) {
-            mFstrimInterval.setValueIndex(ParseUtils.getFstrim());
+            mFstrimInterval.setValueIndex(getFstrim());
             mFstrimInterval.setOnPreferenceChangeListener(this);
         }
 
@@ -87,7 +86,7 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
             PreferenceHelper.setBoolean(FSTRIM, value);
             if (value) {
                 AlarmHelper.setAlarmFstrim(getActivity(),
-                        ParseUtils.parseFstrim(mFstrimInterval.getValue()));
+                        parseFstrim(mFstrimInterval.getValue()));
             } else {
                 AlarmHelper.cancelAlarmFstrim(getActivity());
             }
@@ -96,7 +95,7 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
             return true;
         } else if (mFstrimInterval == preference) {
             final String value = String.valueOf(newValue);
-            final int realValue = ParseUtils.parseFstrim(value);
+            final int realValue = parseFstrim(value);
             PreferenceHelper.setInt(FSTRIM_INTERVAL, realValue);
             if (mFstrim.isChecked()) {
                 AlarmHelper.setAlarmFstrim(getActivity(), realValue);
@@ -106,5 +105,80 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
         }
 
         return false;
+    }
+
+    private int parseFstrim(final String position) {
+        try {
+            return parseFstrim(Integer.parseInt(position));
+        } catch (Exception exc) {
+            return 480;
+        }
+    }
+
+    private int parseFstrim(final int position) {
+        int value;
+        switch (position) {
+            case 0:
+                value = 5;
+                break;
+            case 1:
+                value = 10;
+                break;
+            case 2:
+                value = 20;
+                break;
+            case 3:
+                value = 30;
+                break;
+            case 4:
+                value = 60;
+                break;
+            case 5:
+                value = 120;
+                break;
+            case 6:
+                value = 240;
+                break;
+            default:
+            case 7:
+                value = 480;
+                break;
+        }
+        return value;
+    }
+
+    private int getFstrim() {
+        int position;
+
+        final int value = PreferenceHelper.getInt(FSTRIM_INTERVAL, 480);
+        switch (value) {
+            case 5:
+                position = 0;
+                break;
+            case 10:
+                position = 1;
+                break;
+            case 20:
+                position = 2;
+                break;
+            case 30:
+                position = 3;
+                break;
+            case 60:
+                position = 4;
+                break;
+            case 120:
+                position = 5;
+                break;
+            case 240:
+                position = 6;
+                break;
+            default:
+            case 480:
+                position = 7;
+                break;
+        }
+
+        return position;
     }
 }

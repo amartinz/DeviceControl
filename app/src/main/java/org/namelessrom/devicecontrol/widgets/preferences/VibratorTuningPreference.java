@@ -50,26 +50,31 @@ import static butterknife.ButterKnife.findById;
  */
 public class VibratorTuningPreference extends DialogPreference
         implements SeekBar.OnSeekBarChangeListener, DeviceConstants, FileConstants {
-    public final static String   FILE_VIBRATOR = Utils.checkPaths(FILES_VIBRATOR);
-    private final       Vibrator vib           =
-            (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
-    private SeekBar             mSeekBar;
-    private TextView            mValue;
-    private String              mOriginalValue;
-    private Drawable            mProgressDrawable;
-    private Drawable            mProgressThumb;
-    private LightingColorFilter mRedFilter;
+
+    private static final int VIBRATOR_INTENSITY_MAX               = 100;
+    private static final int VIBRATOR_INTENSITY_MIN               = 0;
+    private static final int VIBRATOR_INTENSITY_DEFAULT_VALUE     = 50;
+    private static final int VIBRATOR_INTENSITY_WARNING_THRESHOLD = 76;
+
+    //----------------------------------------------------------------------------------------------
+    private static final String FILE_VIBRATOR = Utils.checkPaths(FILES_VIBRATOR);
+    private final Vibrator            vib;
+    private       SeekBar             mSeekBar;
+    private       TextView            mValue;
+    private       String              mOriginalValue;
+    private       Drawable            mProgressDrawable;
+    private       Drawable            mProgressThumb;
+    private       LightingColorFilter mRedFilter;
 
     private String color = "#FFFFFF";
 
-    public VibratorTuningPreference(Context context, AttributeSet attrs) {
+    public VibratorTuningPreference(final Context context, final AttributeSet attrs) {
         super(context, attrs);
+        vib = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         setDialogLayoutResource(R.layout.preference_dialog_vibrator_tuning);
     }
 
-    public void setTitleColor(String color) {
-        this.color = color;
-    }
+    public void setTitleColor(final String color) { this.color = color; }
 
     @Override
     protected void onBindView(final View view) {
@@ -87,13 +92,12 @@ public class VibratorTuningPreference extends DialogPreference
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
         builder.setNeutralButton(R.string.defaults_button, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
+            public void onClick(final DialogInterface dialog, final int which) { }
         });
     }
 
     @Override
-    protected void onBindDialogView(View view) {
+    protected void onBindDialogView(final View view) {
         super.onBindDialogView(view);
 
         mSeekBar = findById(view, R.id.vibrator_seekbar);
@@ -118,7 +122,7 @@ public class VibratorTuningPreference extends DialogPreference
         mOriginalValue = Utils.readOneLine(FILE_VIBRATOR);
 
         // Restore percent value from SharedPreferences object
-        final String value = PreferenceHelper.getBootupValue(KEY_VIBRATOR_TUNING);
+        final String value = PreferenceHelper.getBootupValue("vibrator_tuning");
         final int percent = strengthToPercent(value != null
                 ? Integer.parseInt(value)
                 : VIBRATOR_INTENSITY_DEFAULT_VALUE);
@@ -169,12 +173,11 @@ public class VibratorTuningPreference extends DialogPreference
 
         if (positiveResult) {
             PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_DEVICE, KEY_VIBRATOR_TUNING,
+                    DatabaseHandler.CATEGORY_DEVICE, "vibrator_tuning",
                     FILE_VIBRATOR, String.valueOf(mSeekBar.getProgress())));
         } else {
             Utils.runRootCommand(
-                    Utils.getWriteCommand(FILE_VIBRATOR, String.valueOf(mOriginalValue))
-            );
+                    Utils.getWriteCommand(FILE_VIBRATOR, String.valueOf(mOriginalValue)));
         }
     }
 
@@ -230,8 +233,6 @@ public class VibratorTuningPreference extends DialogPreference
         return strength;
     }
 
-    public static boolean isSupported() {
-        return (!FILE_VIBRATOR.isEmpty());
-    }
+    public static boolean isSupported() { return (!FILE_VIBRATOR.isEmpty()); }
 
 }

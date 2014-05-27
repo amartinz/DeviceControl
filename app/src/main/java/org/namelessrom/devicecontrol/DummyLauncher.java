@@ -44,7 +44,7 @@ public class DummyLauncher extends Activity {
     private final boolean hasBusyBox = RootTools.isBusyboxAvailable();
 
     @Override
-    protected void onCreate(Bundle bundle) {
+    protected void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_launcher);
         ButterKnife.inject(this);

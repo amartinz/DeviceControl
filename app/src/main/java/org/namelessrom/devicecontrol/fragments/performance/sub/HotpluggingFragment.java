@@ -84,9 +84,9 @@ public class HotpluggingFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         // Intelli-Plug
         //------------------------------------------------------------------------------------------
-        PreferenceCategory category = (PreferenceCategory) findPreference(GROUP_INTELLI_PLUG);
+        PreferenceCategory category = (PreferenceCategory) findPreference("intelli_plug");
         if (category != null) {
-            mIntelliPlug = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG);
+            mIntelliPlug = (CustomCheckBoxPreference) findPreference("intelli_plug_active");
             if (mIntelliPlug != null) {
                 if (CpuUtils.hasIntelliPlug()) {
                     mIntelliPlug.setChecked(CpuUtils.getIntelliPlugActive());
@@ -96,7 +96,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
                 }
             }
 
-            mIntelliPlugEco = (CustomCheckBoxPreference) findPreference(KEY_INTELLI_PLUG_ECO);
+            mIntelliPlugEco = (CustomCheckBoxPreference) findPreference("intelli_plug_eco");
             if (mIntelliPlugEco != null) {
                 if (CpuUtils.hasIntelliPlug() && CpuUtils.hasIntelliPlugEcoMode()) {
                     mIntelliPlugEco.setChecked(CpuUtils.getIntelliPlugEcoMode());
