@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_AAPT_INCLUDE_ALL_RESOURCES := true
 
-LOCAL_STATIC_JAVA_LIBRARIES      := android-support-v13 acra butterknife
+LOCAL_STATIC_JAVA_LIBRARIES      := android-support-v13 acra butterknife ion
 
 LOCAL_ASSET_DIR     := $(LOCAL_PATH)/assets
 LOCAL_RESOURCE_DIR  := $(LOCAL_PATH)/res
