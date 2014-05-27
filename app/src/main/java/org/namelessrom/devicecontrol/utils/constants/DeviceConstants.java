@@ -74,9 +74,12 @@ public interface DeviceConstants {
     //==============================================================================================
     // Etc
     //==============================================================================================
+    public static final String USE_TASKER           = "use_tasker";
+    //----------------------------------------------------------------------------------------------
     public static final String EXTENSIVE_LOGGING    = "extensive_logging";
     public static final String DC_FIRST_START       = "dc_first_start";
     public static final String SHOW_LAUNCHER        = "show_launcher";
+    //----------------------------------------------------------------------------------------------
     public static final String CUSTOM_SHELL_COMMAND = "custom_shell_command";
     public static final String SOB_SYSCTL           = "sob_sysctl";
     public static final String SOB_CPU              = "sob_cpu";
