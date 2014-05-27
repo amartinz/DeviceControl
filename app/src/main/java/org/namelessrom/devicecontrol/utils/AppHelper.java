@@ -89,6 +89,32 @@ public class AppHelper {
     }
 
     /**
+     * Checks if a specific service is running.
+     *
+     * @param serviceName The name of the service
+     * @return Whether the service is running or not
+     */
+    public static boolean isServiceRunning(final String serviceName) {
+        final List<ActivityManager.RunningServiceInfo> services =
+                ((ActivityManager) Application.applicationContext
+                        .getSystemService(Context.ACTIVITY_SERVICE))
+                        .getRunningServices(Integer.MAX_VALUE);
+
+        if (services != null) {
+            for (final ActivityManager.RunningServiceInfo info : services) {
+                if (info.service != null) {
+                    if (info.service.getClassName() != null && info.service.getClassName()
+                            .equalsIgnoreCase(serviceName)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Converts a size, given as long, to a human readable representation
      *
      * @param size The size to convert
@@ -109,9 +135,7 @@ public class AppHelper {
      */
     private static final IPackageStatsObserver.Stub mPkgObs = new IPackageStatsObserver.Stub() {
         @Override
-        public IBinder asBinder() {
-            return super.asBinder();
-        }
+        public IBinder asBinder() { return super.asBinder(); }
 
         @Override
         public boolean onTransact(int code, Parcel data, Parcel reply, int flags)

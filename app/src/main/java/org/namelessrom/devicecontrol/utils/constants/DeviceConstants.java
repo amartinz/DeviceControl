@@ -55,6 +55,7 @@ public interface DeviceConstants {
     public static final int ID_TOOLS_BUILD_PROP         = ID_TOOLS_MORE + 1100;
     public static final int ID_TOOLS_EDITORS_BUILD_PROP = ID_TOOLS_MORE + 1110;
     public static final int ID_TOOLS_APP_MANAGER        = ID_TOOLS_MORE + 1200;
+    public static final int ID_TOOLS_WIRELESS_FM        = ID_TOOLS_MORE + 1300;
     public static final int ID_PREFERENCES              = 12;
     public static final int ID_LICENSES                 = 13;
     //----------------------------------------------------------------------------------------------
