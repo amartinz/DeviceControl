@@ -15,15 +15,15 @@ import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
 
 public class HotpluggingFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
@@ -39,9 +39,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference mIntelliPlugEco;
 
     @Override
-    public void onAttach(final Activity activity) {
-        super.onAttach(activity, ID_HOTPLUGGING);
-    }
+    public void onAttach(final Activity activity) { super.onAttach(activity, ID_HOTPLUGGING); }
 
     @Override
     public void onDestroy() {

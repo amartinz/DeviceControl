@@ -134,17 +134,30 @@ public class ExtrasFragment extends AttachPreferenceFragment
         if (category != null) {
             mKsm = (CustomPreference) findPreference("ksm");
             if (mKsm != null) {
-                mKsm.setOnPreferenceClickListener(this);
+                if (Utils.fileExists(KSM_PATH)) {
+                    mKsm.setOnPreferenceClickListener(this);
+                } else {
+                    category.removePreference(mKsm);
+                }
             }
 
             mHotplugging = (CustomPreference) findPreference("hotplugging");
             if (mHotplugging != null) {
-                mHotplugging.setOnPreferenceClickListener(this);
+                if (Utils.fileExists(INTELLI_PLUG_BASE) || Utils.fileExists(MPDECISION_PATH)) {
+                    mHotplugging.setOnPreferenceClickListener(this);
+                } else {
+                    category.removePreference(mHotplugging);
+                }
             }
 
             mThermal = (CustomPreference) findPreference("thermal");
             if (mThermal != null) {
-                mThermal.setOnPreferenceClickListener(this);
+                if (Utils.fileExists(MSM_THERMAL_PARAMS)
+                        || Utils.fileExists(INTELLI_THERMAL_BASE)) {
+                    mThermal.setOnPreferenceClickListener(this);
+                } else {
+                    category.removePreference(mThermal);
+                }
             }
         }
         removeIfEmpty(category);

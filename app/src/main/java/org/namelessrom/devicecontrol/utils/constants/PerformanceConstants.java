@@ -53,10 +53,11 @@ public interface PerformanceConstants {
             CPU_BASE + "cpu0/cpufreq/scaling_available_governors";
 
     //----------------------------------------------------------------------------------------------
+    public static final String INTELLI_PLUG_BASE          = "/sys/module/intelli_plug/";
     public static final String INTELLI_PLUG_PATH          =
-            "/sys/module/intelli_plug/parameters/intelli_plug_active";
+            INTELLI_PLUG_BASE + "parameters/intelli_plug_active";
     public static final String INTELLI_PLUG_ECO_MODE_PATH =
-            "/sys/module/intelli_plug/parameters/eco_mode_active";
+            INTELLI_PLUG_BASE + "parameters/eco_mode_active";
     public static final String INTELLI_PLUG_SUSPEND_PATH  =
             "/sys/kernel/intelliplug/sleep_active_status";
 
@@ -87,20 +88,18 @@ public interface PerformanceConstants {
     public static final String VDD_TABLE_FILE = CPU_BASE + "cpufreq/vdd_table/vdd_levels";
 
     //----------------------------------------------------------------------------------------------
-    public static final String MSM_THERMAL_TEMP_LIMIT      =
-            "/sys/module/msm_thermal/parameters/temp_threshold";
-    public static final String MSM_THERMAL_CORE_TEMP_LIMIT =
-            "/sys/module/msm_thermal/parameters/core_limit_temp";
-    public static final String MSM_THERMAL_MAX_CORE        =
-            "/sys/module/msm_thermal/parameters/max_cpus_online";
-    public static final String MSM_THERMAL_MIN_CORE        =
-            "/sys/module/msm_thermal/parameters/min_cpus_online";
+    public static final String MSM_THERMAL_PARAMS          = "/sys/module/msm_thermal/parameters/";
+    public static final String MSM_THERMAL_TEMP_LIMIT      = MSM_THERMAL_PARAMS + "temp_threshold";
+    public static final String MSM_THERMAL_CORE_TEMP_LIMIT = MSM_THERMAL_PARAMS + "core_limit_temp";
+    public static final String MSM_THERMAL_MAX_CORE        = MSM_THERMAL_PARAMS + "max_cpus_online";
+    public static final String MSM_THERMAL_MIN_CORE        = MSM_THERMAL_PARAMS + "min_cpus_online";
 
     //----------------------------------------------------------------------------------------------
+    public static final String INTELLI_THERMAL_BASE       = "/sys/module/msm_intelli_thermal/";
     public static final String INTELLI_THERMAL_CC_ENABLED =
-            "/sys/module/msm_intelli_thermal/core_control/enabled";
+            INTELLI_THERMAL_BASE + "core_control/enabled";
     public static final String INTELLI_THERMAL_ENABLED    =
-            "/sys/module/msm_intelli_thermal/parameters/enabled";
+            INTELLI_THERMAL_BASE + "parameters/enabled";
 
     //----------------------------------------------------------------------------------------------
     public static final String KSM_PATH           = "/sys/kernel/mm/ksm/";

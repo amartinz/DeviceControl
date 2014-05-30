@@ -213,9 +213,7 @@ public class CpuUtils implements PerformanceConstants {
         return Utils.readOneLine(INTELLI_PLUG_ECO_MODE_PATH).trim().equals("1");
     }
 
-    public static boolean hasIntelliPlug() {
-        return Utils.fileExists(INTELLI_PLUG_PATH);
-    }
+    public static boolean hasIntelliPlug() { return Utils.fileExists(INTELLI_PLUG_BASE); }
 
     public static boolean hasIntelliPlugEcoMode() {
         return Utils.fileExists(INTELLI_PLUG_ECO_MODE_PATH);
