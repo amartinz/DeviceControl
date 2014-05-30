@@ -115,6 +115,9 @@ public interface PerformanceConstants {
     public static final String KSM_SLEEP          = KSM_PATH + "sleep_millisecs";
 
     //----------------------------------------------------------------------------------------------
+    public static final String ENTROPY_AVAIL = "/proc/sys/kernel/random/entropy_avail";
+
+    //----------------------------------------------------------------------------------------------
     public static final String PREF_3D_SCALING = "3d_scaling";
     public static final String FILE_3D_SCALING = "/sys/devices/gr3d/enable_3d_scaling";
 }

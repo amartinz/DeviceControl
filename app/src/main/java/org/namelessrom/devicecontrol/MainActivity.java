@@ -61,6 +61,7 @@ import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.fragments.tools.WirelessFileManagerFragment;
+import org.namelessrom.devicecontrol.fragments.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.fragments.tools.sub.editor.BuildPropEditorFragment;
 import org.namelessrom.devicecontrol.fragments.tools.sub.editor.BuildPropFragment;
 import org.namelessrom.devicecontrol.fragments.tools.sub.editor.SysctlEditorFragment;
@@ -412,6 +413,10 @@ public class MainActivity extends Activity
                 mSubActionBarDrawable = R.drawable.ic_general_voltage;
                 mTitle = mSubFragmentTitle = R.string.voltage_control;
                 break;
+            case ID_ENTROPY:
+                mSubActionBarDrawable = R.drawable.ic_menu_perf_extras;
+                mTitle = mSubFragmentTitle = R.string.entropy;
+                break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_TASKER:
                 mActionBarDrawable = R.drawable.ic_menu_tasker;
@@ -559,6 +564,9 @@ public class MainActivity extends Activity
                 break;
             case ID_VOLTAGE:
                 mCurrentFragment = new VoltageFragment();
+                break;
+            case ID_ENTROPY:
+                mCurrentFragment = new EntropyFragment();
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_TASKER_LIST:

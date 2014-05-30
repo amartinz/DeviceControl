@@ -211,7 +211,6 @@ public final class RootToolsInternalMethods {
 
                     //ensure that the file was copied, an exitcode of zero means success
                     result = command.getExitCode() == 0;
-
                 }
             } else {
                 if (checkUtil("busybox") && hasUtil("cp", "busybox")) {

@@ -200,7 +200,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
 
     private void killApp() {
         mKillApp.setEnabled(false);
-        AppHelper.killApp(mAppItem.getPackageName());
+        AppHelper.killProcess(mAppItem.getPackageName());
         mHandler.postDelayed(mKillRunnable, 500);
     }
 
