@@ -17,6 +17,8 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+
 /**
  * Defines and runs Scripts.
  */
@@ -67,6 +69,11 @@ public class Scripts {
         } else {
             return String.format(APPEND_CMD, "qemu.hw.mainkeys", "0", BUILD_PROP);
         }
+    }
+
+    public static String getRngStartup() {
+        return String.format("#!/system/bin/sh\n" + "if [ -e %s ]; then\n" + "%s -P;\n" + "fi;\n",
+                FileConstants.RNG_PATH, FileConstants.RNG_PATH);
     }
 
 }

@@ -64,6 +64,7 @@ public interface FileConstants {
     //==============================================================================================
     public static final String   RNG_PATH                   = "/system/bin/rngd";
     public static final String   QRNG_PATH                  = "/system/bin/qrngd";
+    public static final String   RNG_STARTUP_PATH           = "/system/etc/init.d/90rng";
     //==============================================================================================
 
     public static final String URL_RNG =

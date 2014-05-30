@@ -10,4 +10,8 @@
         android:key="rng_active"
         android:title="@string/rng_active" />
 
+    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+        android:key="rng_startup"
+        android:title="@string/install_startup_script" />
+
 </PreferenceScreen>

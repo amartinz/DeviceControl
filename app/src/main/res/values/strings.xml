@@ -239,4 +239,8 @@
     <string name="install_rng">Download and install random number generator</string>
     <string name="error_download">Error downloading file!\nPlease try again later!</string>
     <string name="kernel_features">Kernel features</string>
+    <string name="install_startup_script">Install startup script</string>
+    <string name="remove_startup_script">Remove startup script</string>
+    <string name="startup_script_installed">Startup script is installed</string>
+    <string name="startup_script_not_installed">Startup script is not installed</string>
 </resources>

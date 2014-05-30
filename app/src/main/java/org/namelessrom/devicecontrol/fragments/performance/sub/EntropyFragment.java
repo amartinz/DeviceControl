@@ -19,6 +19,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.utils.AppHelper;
+import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
@@ -36,12 +37,12 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class EntropyFragment extends AttachPreferenceProgressFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
-        Preference.OnPreferenceChangeListener {
+        Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
     //----------------------------------------------------------------------------------------------
     private CustomPreference         mEntropyAvail;
-    //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mRngActive;
+    private CustomPreference         mRngStartup;
 
     @Override public void onAttach(final Activity activity) {
         super.onAttach(activity, ID_ENTROPY);
@@ -76,6 +77,12 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
             }
         }
 
+        mRngStartup = (CustomPreference) findPreference("rng_startup");
+        if (mRngStartup != null) {
+            checkRngStartup();
+            mRngStartup.setOnPreferenceClickListener(this);
+        }
+
         mRngActive = (CustomCheckBoxPreference) findPreference("rng_active");
         if (mRngActive != null) {
             AppHelper.getProcess(RNG_PATH);
@@ -85,6 +92,17 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         new RefreshTask().execute();
 
         isSupported(mRoot, getActivity());
+    }
+
+    private void checkRngStartup() {
+        if (mRngStartup == null) return;
+        if (!Utils.fileExists(RNG_STARTUP_PATH)) {
+            mRngStartup.setTitle(R.string.install_startup_script);
+            mRngStartup.setSummary(R.string.startup_script_not_installed);
+        } else {
+            mRngStartup.setTitle(R.string.remove_startup_script);
+            mRngStartup.setSummary(R.string.startup_script_installed);
+        }
     }
 
     @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
@@ -160,20 +178,41 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
     @Subscribe public void onShellOutputEvent(final ShellOutputEvent event) {
         if (event == null) return;
 
-        if (event.getId() == -1) {
+        final int id = event.getId();
+        if (id == -2) {
+            Utils.remount("/system", "ro");
+            checkRngStartup();
+        } else if (id == -1) {
             Utils.remount("/system", "ro");
             AppHelper.getProcess(RNG_PATH);
-        } else if (event.getId() == ID_PGREP) {
+        } else if (id == ID_PGREP) {
             if (mRngActive != null) {
                 final boolean isActive = event.getOutput() != null && !event.getOutput().isEmpty();
                 mRngActive.setChecked(isActive);
                 if (!Utils.fileExists(RNG_PATH)) {
                     mRngActive.setSummary(R.string.install_rng);
+                    mRngStartup.setEnabled(false);
                 } else {
                     mRngActive.setSummary("");
+                    mRngStartup.setEnabled(true);
                 }
             }
         }
+    }
+
+    @Override public boolean onPreferenceClick(final Preference preference) {
+        if (mRngStartup == preference) {
+            Utils.remount("/system", "rw");
+            if (Utils.fileExists(RNG_STARTUP_PATH)) {
+                Utils.getCommandResult(-2, String.format("rm -f %s;\n", RNG_STARTUP_PATH));
+            } else {
+                Utils.getCommandResult(-2, String.format("echo \'%s\' > %s;\nbusybox chmod +x %s",
+                        Scripts.getRngStartup(), RNG_STARTUP_PATH, RNG_STARTUP_PATH));
+            }
+            return true;
+        }
+
+        return false;
     }
 
     private class RefreshTask extends AsyncTask<Void, Void, List<String>> {
