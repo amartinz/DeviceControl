@@ -6,6 +6,13 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 19
+
+        ndk {
+            moduleName 'libjni_devicecontrol'
+            stl "gnustl_static"
+            abiFilters "armeabi", "armeabi-v7a"
+        }
+
     }
     signingConfigs {
         release {
@@ -52,9 +59,22 @@ android {
 }
 
 dependencies {
+    compile fileTree(dir: "$buildDir/native-libs", include: 'native-libs.jar')
     compile project(':proprietary')
     compile 'ch.acra:acra:4.+'
     compile 'com.android.support:support-v13:19.+'
     compile 'com.jakewharton:butterknife:5.+'
     compile 'com.koushikdutta.ion:ion:1.2.+'
+}
+
+task nativeLibsToJar(type: Zip, description: 'create a jar archive of the native libs') {
+    destinationDir file("$buildDir/native-libs")
+    baseName 'native-libs'
+    extension 'jar'
+    from fileTree(dir: 'libs', include: '**/*.so')
+    into 'lib/'
+}
+
+tasks.withType(JavaCompile) {
+    compileTask -> compileTask.dependsOn(nativeLibsToJar)
 }
