@@ -55,6 +55,13 @@ import java.io.File;
         resDialogOkToast = R.string.crash_dialog_ok_toast)
 public class Application extends android.app.Application implements DeviceConstants {
 
+    static {
+        System.loadLibrary("jni_devicecontrol");
+    }
+
+    public native String stringFromJNI();
+
+
     public static final boolean IS_NAMELESS = Utils.isNameless();
 
     public static boolean IS_LOG_DEBUG = false;
@@ -70,6 +77,8 @@ public class Application extends android.app.Application implements DeviceConsta
     public void onCreate() {
         super.onCreate();
         ACRA.init(this);
+
+        Log.e("JNI", stringFromJNI());
 
         applicationContext = getApplicationContext();
 
