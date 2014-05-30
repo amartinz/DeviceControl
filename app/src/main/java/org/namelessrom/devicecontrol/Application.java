@@ -33,6 +33,7 @@ import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 import org.acra.sender.HttpSender;
+import org.namelessrom.devicecontrol.utils.NativeWrapper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -101,6 +102,8 @@ public class Application extends android.app.Application implements DeviceConsta
         }
 
         logDebug("Is Nameless: " + (IS_NAMELESS ? "true" : "false"));
+
+        logDebug("Testing JNI: " + NativeWrapper.stringFromJNI());
 
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         packageManager = getPm();
