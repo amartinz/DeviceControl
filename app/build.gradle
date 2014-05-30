@@ -3,12 +3,10 @@ apply plugin: 'android'
 android {
     compileSdkVersion 19
     buildToolsVersion '19.1.0'
-
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 19
     }
-
     signingConfigs {
         release {
             def Properties localProps = new Properties()
@@ -22,15 +20,14 @@ android {
             keyPassword keyProps["pass"]
         }
     }
-
     buildTypes {
         release {
             runProguard true
             signingConfig signingConfigs.release
             proguardFile 'src/main/proguard.flags'
             zipAlign true
+            debuggable false
         }
-
         debug {
             runProguard true
             signingConfig signingConfigs.release
@@ -38,11 +35,19 @@ android {
             zipAlign true
         }
     }
-
     lintOptions {
         abortOnError true
         checkAllWarnings true
         disable 'HardcodedDebugMode', 'ValidFragment', 'MissingTranslation', 'ExtraTranslation'
+    }
+    dexOptions {
+        incremental true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
+    }
+    productFlavors {
     }
 }
 
