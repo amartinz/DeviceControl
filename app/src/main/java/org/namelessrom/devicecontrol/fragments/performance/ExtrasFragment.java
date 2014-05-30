@@ -74,6 +74,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
     //----------------------------------------------------------------------------------------------
 
     private CustomListPreference mIoScheduler;
+    private CustomPreference     mEntropy;
     private CustomPreference     mKsm;
     private CustomPreference     mHotplugging;
     private CustomPreference     mThermal;
@@ -120,6 +121,11 @@ public class ExtrasFragment extends AttachPreferenceFragment
         mKsm = (CustomPreference) findPreference("ksm");
         if (mKsm != null) {
             mKsm.setOnPreferenceClickListener(this);
+        }
+
+        mEntropy = (CustomPreference) findPreference("entropy");
+        if (mEntropy != null) {
+            mEntropy.setOnPreferenceClickListener(this);
         }
 
         mHotplugging = (CustomPreference) findPreference("hotplugging");
@@ -212,6 +218,8 @@ public class ExtrasFragment extends AttachPreferenceFragment
         } else if (mKsm == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_KSM));
             return true;
+        } else if (mEntropy == preference) {
+            BusProvider.getBus().post(new SubFragmentEvent(ID_ENTROPY));
         }
 
         return false;

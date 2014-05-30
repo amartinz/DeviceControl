@@ -62,6 +62,12 @@ public interface FileConstants {
     //==============================================================================================
     public static final String   LOGGER_MODE_PATH           = "/sys/kernel/logger_mode/logger_mode";
     //==============================================================================================
+    public static final String   RNG_PATH                   = "/system/bin/rngd";
+    public static final String   QRNG_PATH                  = "/system/bin/qrngd";
+    //==============================================================================================
+
+    public static final String URL_RNG =
+            "http://sourceforge.net/projects/namelessrom/files/romextras/binaries/rngd/download";
 
     //==============================================================================================
     // Directories
