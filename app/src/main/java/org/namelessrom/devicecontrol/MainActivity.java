@@ -85,7 +85,6 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 public class MainActivity extends Activity
         implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener,
         SlidingMenu.OnClosedListener, SlidingMenu.OnOpenedListener {
-
     //==============================================================================================
     // Fields
     //==============================================================================================
