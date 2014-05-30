@@ -23,6 +23,10 @@
         android:title="@string/io" />
 
     <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+        android:key="entropy"
+        android:title="@string/entropy" />
+
+    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="ksm"
         android:title="@string/ksm" />
 

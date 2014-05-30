@@ -16,6 +16,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
+import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.ID_PGREP;
 
 /**
  * Helper class for application interactions like cleaning the cache
@@ -62,10 +63,19 @@ public class AppHelper {
     /**
      * KILL IT!
      *
-     * @param pkg The package name of the application to kill
+     * @param pkg The package name of the application / process to kill
      */
-    public static void killApp(final String pkg) {
-        Utils.runRootCommand("pkill -TERM " + pkg);
+    public static void killProcess(final String process) {
+        Utils.runRootCommand("pkill -TERM " + process);
+    }
+
+    /**
+     * Search for a progress and return it via Otto's event bus.
+     *
+     * @param process The process name to search for
+     */
+    public static void getProcess(final String process) {
+        Utils.getCommandResult(ID_PGREP, String.format("pgrep %s", process), process);
     }
 
     /**
