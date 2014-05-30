@@ -115,7 +115,6 @@ public class KsmFragment extends AttachPreferenceFragment
 
             new RefreshTask().execute();
         }
-
         removeIfEmpty(category);
 
         //------------------------------------------------------------------------------------------
@@ -165,7 +164,6 @@ public class KsmFragment extends AttachPreferenceFragment
                 }
             }
         }
-
         removeIfEmpty(category);
 
         isSupported(mRoot, getActivity());
@@ -201,7 +199,7 @@ public class KsmFragment extends AttachPreferenceFragment
             ActionProcessor.processAction(ActionProcessor.ACTION_KSM_ENABLED,
                     (((Boolean) o) ? "1" : "0"));
             return true;
-        } else if (mDefer==preference) {
+        } else if (mDefer == preference) {
             ActionProcessor.processAction(ActionProcessor.ACTION_KSM_DEFERRED,
                     (((Boolean) o) ? "1" : "0"));
             return true;

@@ -67,9 +67,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
     public static final boolean sMcPowerScheduler     = !sMcPowerSchedulerFile.isEmpty();
     //----------------------------------------------------------------------------------------------
 
-    private static final String CATEGORY_POWERSAVING = "powersaving";
-    //----------------------------------------------------------------------------------------------
-
     private PreferenceScreen mRoot;
     //----------------------------------------------------------------------------------------------
 
@@ -112,37 +109,50 @@ public class ExtrasFragment extends AttachPreferenceFragment
         addPreferencesFromResource(R.xml.extras);
         mRoot = getPreferenceScreen();
 
-        mIoScheduler = (CustomListPreference) findPreference("io");
-        if (mIoScheduler != null) {
-            mIoScheduler.setEnabled(false);
-            CpuUtils.getIoSchedulerEvent();
-        }
+        //------------------------------------------------------------------------------------------
+        // General
+        //------------------------------------------------------------------------------------------
+        PreferenceCategory category = (PreferenceCategory) findPreference("general");
+        if (category != null) {
+            mIoScheduler = (CustomListPreference) findPreference("io");
+            if (mIoScheduler != null) {
+                mIoScheduler.setEnabled(false);
+                CpuUtils.getIoSchedulerEvent();
+            }
 
-        mKsm = (CustomPreference) findPreference("ksm");
-        if (mKsm != null) {
-            mKsm.setOnPreferenceClickListener(this);
+            mEntropy = (CustomPreference) findPreference("entropy");
+            if (mEntropy != null) {
+                mEntropy.setOnPreferenceClickListener(this);
+            }
         }
+        removeIfEmpty(category);
 
-        mEntropy = (CustomPreference) findPreference("entropy");
-        if (mEntropy != null) {
-            mEntropy.setOnPreferenceClickListener(this);
-        }
+        //------------------------------------------------------------------------------------------
+        // Kernel Features
+        //------------------------------------------------------------------------------------------
+        category = (PreferenceCategory) findPreference("kernel_features");
+        if (category != null) {
+            mKsm = (CustomPreference) findPreference("ksm");
+            if (mKsm != null) {
+                mKsm.setOnPreferenceClickListener(this);
+            }
 
-        mHotplugging = (CustomPreference) findPreference("hotplugging");
-        if (mHotplugging != null) {
-            mHotplugging.setOnPreferenceClickListener(this);
-        }
+            mHotplugging = (CustomPreference) findPreference("hotplugging");
+            if (mHotplugging != null) {
+                mHotplugging.setOnPreferenceClickListener(this);
+            }
 
-        mThermal = (CustomPreference) findPreference("thermal");
-        if (mThermal != null) {
-            mThermal.setOnPreferenceClickListener(this);
+            mThermal = (CustomPreference) findPreference("thermal");
+            if (mThermal != null) {
+                mThermal.setOnPreferenceClickListener(this);
+            }
         }
+        removeIfEmpty(category);
 
         //------------------------------------------------------------------------------------------
         // Power Saving
         //------------------------------------------------------------------------------------------
-
-        PreferenceCategory category = (PreferenceCategory) findPreference(CATEGORY_POWERSAVING);
+        category = (PreferenceCategory) findPreference("powersaving");
         if (category != null) {
             mPowerEfficientWork = (CustomCheckBoxPreference) findPreference("power_efficient_work");
             if (mPowerEfficientWork != null) {
@@ -164,12 +174,11 @@ public class ExtrasFragment extends AttachPreferenceFragment
                 }
             }
         }
-
         removeIfEmpty(category);
+
         //------------------------------------------------------------------------------------------
         // Voltage
         //------------------------------------------------------------------------------------------
-
         category = (PreferenceCategory) findPreference("voltage");
         if (category != null) {
             mMsmDcvs = (CustomCheckBoxPreference) findPreference("msm_dcvs");
@@ -191,7 +200,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
                 }
             }
         }
-
         removeIfEmpty(category);
 
         isSupported(mRoot, getActivity());
