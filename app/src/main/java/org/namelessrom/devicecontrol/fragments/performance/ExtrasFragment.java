@@ -31,7 +31,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
-import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
@@ -42,7 +41,7 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
@@ -51,17 +50,9 @@ import java.util.List;
 public class ExtrasFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
         Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
-
-    private static final int ID_WORK = 100;
-
     //==============================================================================================
     // Files
     //==============================================================================================
-
-    public static final String  sPowerEfficientWorkFile =
-            Utils.checkPaths(FILES_POWER_EFFICIENT_WORK);
-    public static final boolean sPowerEfficientWork     = !sPowerEfficientWorkFile.isEmpty();
-    //----------------------------------------------------------------------------------------------
 
     public static final String  sMcPowerSchedulerFile = Utils.checkPaths(FILES_MC_POWER_SCHEDULER);
     public static final boolean sMcPowerScheduler     = !sMcPowerSchedulerFile.isEmpty();
@@ -77,12 +68,12 @@ public class ExtrasFragment extends AttachPreferenceFragment
     private CustomPreference     mThermal;
     //----------------------------------------------------------------------------------------------
 
-    private CustomCheckBoxPreference mPowerEfficientWork;
-    private CustomListPreference     mMcPowerScheduler;
+    private AwesomeCheckBoxPreference mPowerEfficientWork;
+    private CustomListPreference      mMcPowerScheduler;
     //----------------------------------------------------------------------------------------------
 
-    private CustomCheckBoxPreference mMsmDcvs;
-    private CustomPreference         mVoltageControl;
+    private AwesomeCheckBoxPreference mMsmDcvs;
+    private CustomPreference          mVoltageControl;
 
     //==============================================================================================
     // Overridden Methods
@@ -143,7 +134,8 @@ public class ExtrasFragment extends AttachPreferenceFragment
 
             mHotplugging = (CustomPreference) findPreference("hotplugging");
             if (mHotplugging != null) {
-                if (Utils.fileExists(INTELLI_PLUG_BASE) || Utils.fileExists(MPDECISION_PATH)) {
+                if (Utils.fileExists(getString(R.string.file_intelli_plug_base))
+                        || Utils.fileExists(MPDECISION_PATH)) {
                     mHotplugging.setOnPreferenceClickListener(this);
                 } else {
                     category.removePreference(mHotplugging);
@@ -153,7 +145,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
             mThermal = (CustomPreference) findPreference("thermal");
             if (mThermal != null) {
                 if (Utils.fileExists(MSM_THERMAL_PARAMS)
-                        || Utils.fileExists(INTELLI_THERMAL_BASE)) {
+                        || Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
                     mThermal.setOnPreferenceClickListener(this);
                 } else {
                     category.removePreference(mThermal);
@@ -167,10 +159,12 @@ public class ExtrasFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         category = (PreferenceCategory) findPreference("powersaving");
         if (category != null) {
-            mPowerEfficientWork = (CustomCheckBoxPreference) findPreference("power_efficient_work");
+            mPowerEfficientWork =
+                    (AwesomeCheckBoxPreference) findPreference("power_efficient_work");
             if (mPowerEfficientWork != null) {
-                if (sPowerEfficientWork) {
-                    Utils.getCommandResult(ID_WORK, Utils.getReadCommand(sPowerEfficientWorkFile));
+                if (mPowerEfficientWork.isSupported()) {
+                    mPowerEfficientWork.initValue();
+                    mPowerEfficientWork.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mPowerEfficientWork);
                 }
@@ -194,10 +188,10 @@ public class ExtrasFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         category = (PreferenceCategory) findPreference("voltage");
         if (category != null) {
-            mMsmDcvs = (CustomCheckBoxPreference) findPreference("msm_dcvs");
+            mMsmDcvs = (AwesomeCheckBoxPreference) findPreference("msm_dcvs");
             if (mMsmDcvs != null) {
-                if (CpuUtils.hasMsmDcvs()) {
-                    mMsmDcvs.setChecked(CpuUtils.isMsmDcvs());
+                if (mMsmDcvs.isSupported()) {
+                    mMsmDcvs.initValue();
                     mMsmDcvs.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mMsmDcvs);
@@ -256,12 +250,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
             ActionProcessor.processAction(ActionProcessor.ACTION_IO_SCHEDULER, value, true);
             changed = true;
         } else if (preference == mPowerEfficientWork) {
-            final boolean rawValue = (Boolean) o;
-            final String value = rawValue ? "1" : "0";
-            Utils.runRootCommand(Utils.getWriteCommand(sPowerEfficientWorkFile, value));
-            PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_EXTRAS, mPowerEfficientWork.getKey(),
-                    sPowerEfficientWorkFile, value));
+            mPowerEfficientWork.writeValue((Boolean) o);
             changed = true;
         } else if (preference == mMcPowerScheduler) {
             final String value = String.valueOf(o);
@@ -276,33 +265,11 @@ public class ExtrasFragment extends AttachPreferenceFragment
             }
             changed = true;
         } else if (preference == mMsmDcvs) {
-            final boolean value = (Boolean) o;
-            CpuUtils.enableMsmDcvs(value);
-            PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_EXTRAS, mMsmDcvs.getKey(),
-                    MSM_DCVS_FILE, value ? "1" : "0"));
+            mMsmDcvs.writeValue((Boolean) o);
             changed = true;
         }
 
         return changed;
-    }
-
-    @Subscribe
-    public void onGetCommandResult(final ShellOutputEvent event) {
-        if (event != null) {
-            final int id = event.getId();
-            final String result = event.getOutput();
-            switch (id) {
-                case ID_WORK:
-                    if (mPowerEfficientWork != null) {
-                        mPowerEfficientWork.setChecked(result.equals("Y"));
-                        mPowerEfficientWork.setOnPreferenceChangeListener(this);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
     @Subscribe

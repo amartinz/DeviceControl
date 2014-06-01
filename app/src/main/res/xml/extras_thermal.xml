@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dc="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:key="msm_thermal"
@@ -28,15 +29,19 @@
         android:key="intelli_thermal"
         android:title="@string/intelli_thermal">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
             android:key="intelli_thermal_cc_enabled"
             android:title="@string/core_control"
-            android:summary="@string/core_control_summary" />
+            android:summary="@string/core_control_summary"
+            dc:filePath="@string/file_intelli_thermal_cc"
+            dc:category="extras" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
             android:key="intelli_thermal_enabled"
             android:title="@string/intelli_thermal_enabled"
-            android:summary="@string/intelli_thermal_enabled_summary" />
+            android:summary="@string/intelli_thermal_enabled_summary"
+            dc:filePath="@string/file_intelli_thermal"
+            dc:category="extras" />
 
     </PreferenceCategory>
 

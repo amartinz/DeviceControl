@@ -16,13 +16,16 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+    <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
         android:key="logger_mode"
         android:title="@string/logger_mode"
         android:summary="@string/logger_mode_summary"
-        android:defaultValue="false" />
+        android:defaultValue="false"
+        dc:filePath="@string/file_logger_mode"
+        dc:category="features" />
 
     <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="fast_charge"
