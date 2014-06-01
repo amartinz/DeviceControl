@@ -30,14 +30,6 @@ public interface FileConstants {
             "/sys/vibrator/pwm_val",
             "/sys/vibrator/pwmvalue"
     };
-    public static final String   FILE_TOUCHKEY_TOGGLE       =
-            "/sys/class/leds/button-backlight/max_brightness";
-    public static final String   FILE_TOUCHKEY_BRIGHTNESS   =
-            "/sys/class/leds/button-backlight/brightness";
-    public static final String   FILE_BLN_TOGGLE            =
-            "/sys/class/misc/backlightnotification/enabled";
-    public static final String   FILE_KEYBOARD_TOGGLE       =
-            "/sys/class/leds/keyboard-backlight/max_brightness";
     public static final String   FILE_USE_GYRO_CALIB        =
             "/sys/class/sec/gsensorcal/calibration";
     public static final String[] FILES_PANEL_COLOR_TEMP     = {
@@ -45,22 +37,14 @@ public interface FileConstants {
             "/sys/class/sec/tsp/panel_colors"
     };
     //==============================================================================================
-    public static final String   FILE_KNOCKON               =
-            "/sys/devices/virtual/input/lge_touch/touch_gesture";
-    //==============================================================================================
     public static final String   FILE_INFO_DISPLAY_LCD_TYPE = "/sys/class/lcd/panel/lcd_type";
     //==============================================================================================
     public static final String   FILE_FLASH_LIGHT           = "/sys/class/camera/flash/rear_flash";
     //==============================================================================================
-    public static final String[] FILES_LCD_POWER_REDUCE     = {"/sys/class/lcd/panel/power_reduce"};
-    public static final String[] FILES_POWER_EFFICIENT_WORK =
-            {"/sys/module/workqueue/parameters/power_efficient"};
     public static final String[] FILES_MC_POWER_SCHEDULER   =
             {"/sys/devices/system/cpu/sched_mc_power_savings"};
     //==============================================================================================
     public static final String   MPDECISION_PATH            = "/system/bin/mpdecision";
-    //==============================================================================================
-    public static final String   LOGGER_MODE_PATH           = "/sys/kernel/logger_mode/logger_mode";
     //==============================================================================================
     public static final String   RNG_PATH                   = "/system/bin/rngd";
     public static final String   QRNG_PATH                  = "/system/bin/qrngd";

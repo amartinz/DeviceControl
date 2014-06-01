@@ -21,20 +21,16 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
-import com.squareup.otto.Subscribe;
-
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
 import java.util.List;
@@ -42,32 +38,17 @@ import java.util.List;
 public class FeaturesFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener,
         Preference.OnPreferenceClickListener {
-
-    private static final int ID_LOGGER_MODE = 1001;
-
     private static final String FC_PATH = "/sys/kernel/fast_charge";
 
-    private CustomCheckBoxPreference mLoggerMode;
-    private CustomPreference         mFastCharge;
+    private AwesomeCheckBoxPreference mLoggerMode;
+    private CustomPreference          mFastCharge;
 
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
 
     @Override
-    public void onAttach(Activity activity) { super.onAttach(activity, ID_FEATURES); }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
+    public void onAttach(final Activity activity) { super.onAttach(activity, ID_FEATURES); }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,10 +57,11 @@ public class FeaturesFragment extends AttachPreferenceFragment
 
         final PreferenceScreen preferenceScreen = getPreferenceScreen();
 
-        mLoggerMode = (CustomCheckBoxPreference) findPreference("logger_mode");
+        mLoggerMode = (AwesomeCheckBoxPreference) findPreference("logger_mode");
         if (mLoggerMode != null) {
-            if (Utils.fileExists(LOGGER_MODE_PATH)) {
-                Utils.getCommandResult(ID_LOGGER_MODE, Utils.getReadCommand(LOGGER_MODE_PATH));
+            if (mLoggerMode.isSupported()) {
+                mLoggerMode.initValue(true);
+                mLoggerMode.setOnPreferenceChangeListener(this);
             } else {
                 preferenceScreen.removePreference(mLoggerMode);
             }
@@ -101,13 +83,8 @@ public class FeaturesFragment extends AttachPreferenceFragment
     public boolean onPreferenceChange(Preference preference, Object o) {
         boolean changed = false;
 
-        if (preference == mLoggerMode) {
-            final String value = ((Boolean) o) ? "1" : "0";
-            Utils.writeValue(LOGGER_MODE_PATH, value);
-            PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_FEATURES, mLoggerMode.getKey(),
-                            LOGGER_MODE_PATH, value)
-            );
+        if (mLoggerMode == preference) {
+            mLoggerMode.writeValue((Boolean) o);
             changed = true;
         }
 
@@ -128,25 +105,6 @@ public class FeaturesFragment extends AttachPreferenceFragment
         }
 
         return sbCmd.toString();
-    }
-
-    @Subscribe
-    public void onShellOutput(final ShellOutputEvent event) {
-        if (event == null) { return; }
-
-        final String result = event.getOutput();
-        final int id = event.getId();
-
-        switch (id) {
-            case ID_LOGGER_MODE:
-                if (mLoggerMode != null) {
-                    mLoggerMode.setChecked(result.contains("enabled"));
-                    mLoggerMode.setOnPreferenceChangeListener(this);
-                }
-                break;
-            default:
-                break;
-        }
     }
 
     @Override

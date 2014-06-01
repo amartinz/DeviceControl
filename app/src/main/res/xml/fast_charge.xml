@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dc="http://schemas.android.com/apk/res-auto">
 
     <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="version"
@@ -10,9 +11,11 @@
         android:key="force_fast_charge"
         android:title="@string/force_fast_charge" />
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+    <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
         android:key="failsafe"
-        android:title="@string/failsafe" />
+        android:title="@string/failsafe"
+        dc:filePath="@string/file_fc_failsafe"
+        dc:category="features" />
 
     <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
         android:key="ac_levels_valid"

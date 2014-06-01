@@ -94,25 +94,6 @@ public class CpuUtils implements PerformanceConstants {
         return valueList.toArray(new String[valueList.size() - 1]);
     }
 
-    public static boolean hasMsmDcvs() { return Utils.fileExists(MSM_DCVS_FILE); }
-
-    public static boolean isMsmDcvs() {
-        final String s = Utils.readOneLine(MSM_DCVS_FILE);
-        return (s != null && !s.isEmpty() && s.trim().equals("1"));
-    }
-
-    public static void enableMsmDcvs(final boolean enable) {
-        Utils.writeValue(MSM_DCVS_FILE, (enable ? "1" : "0"));
-    }
-
-    public static void enableIntelliPlug(final boolean enable) {
-        Utils.writeValue(INTELLI_PLUG_PATH, (enable ? "1" : "0"));
-    }
-
-    public static void enableIntelliPlugEcoMode(final boolean enable) {
-        Utils.writeValue(INTELLI_PLUG_ECO_MODE_PATH, (enable ? "1" : "0"));
-    }
-
     public static String getCpuFrequencyPath(final int cpu) {
         switch (cpu) {
             default:
@@ -203,20 +184,6 @@ public class CpuUtils implements PerformanceConstants {
         } else {
             return -1;
         }
-    }
-
-    public static boolean getIntelliPlugActive() {
-        return Utils.readOneLine(INTELLI_PLUG_PATH).trim().equals("1");
-    }
-
-    public static boolean getIntelliPlugEcoMode() {
-        return Utils.readOneLine(INTELLI_PLUG_ECO_MODE_PATH).trim().equals("1");
-    }
-
-    public static boolean hasIntelliPlug() { return Utils.fileExists(INTELLI_PLUG_BASE); }
-
-    public static boolean hasIntelliPlugEcoMode() {
-        return Utils.fileExists(INTELLI_PLUG_ECO_MODE_PATH);
     }
 
     /**
@@ -551,7 +518,7 @@ public class CpuUtils implements PerformanceConstants {
         }
     }
 
-    public static String enableMpDecision(boolean start) {
+    public static String enableMpDecision(final boolean start) {
         return (start ? "start mpdecision 2> /dev/null;\n" : "stop mpdecision 2> /dev/null;\n");
     }
 

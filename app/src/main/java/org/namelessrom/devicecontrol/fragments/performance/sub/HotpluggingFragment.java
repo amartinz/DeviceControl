@@ -23,6 +23,7 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
 
 public class HotpluggingFragment extends AttachPreferenceFragment
@@ -32,11 +33,11 @@ public class HotpluggingFragment extends AttachPreferenceFragment
     //----------------------------------------------------------------------------------------------
     private static final int ID_MPDECISION = 200;
     //----------------------------------------------------------------------------------------------
-    private PreferenceScreen         mRoot;
+    private PreferenceScreen          mRoot;
     //----------------------------------------------------------------------------------------------
-    private CustomCheckBoxPreference mMpDecision;
-    private CustomCheckBoxPreference mIntelliPlug;
-    private CustomCheckBoxPreference mIntelliPlugEco;
+    private CustomCheckBoxPreference  mMpDecision;
+    private AwesomeCheckBoxPreference mIntelliPlug;
+    private AwesomeCheckBoxPreference mIntelliPlugEco;
 
     @Override
     public void onAttach(final Activity activity) { super.onAttach(activity, ID_HOTPLUGGING); }
@@ -84,20 +85,20 @@ public class HotpluggingFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         PreferenceCategory category = (PreferenceCategory) findPreference("intelli_plug");
         if (category != null) {
-            mIntelliPlug = (CustomCheckBoxPreference) findPreference("intelli_plug_active");
+            mIntelliPlug = (AwesomeCheckBoxPreference) findPreference("intelli_plug_active");
             if (mIntelliPlug != null) {
-                if (CpuUtils.hasIntelliPlug()) {
-                    mIntelliPlug.setChecked(CpuUtils.getIntelliPlugActive());
+                if (mIntelliPlug.isSupported()) {
+                    mIntelliPlug.initValue();
                     mIntelliPlug.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mIntelliPlug);
                 }
             }
 
-            mIntelliPlugEco = (CustomCheckBoxPreference) findPreference("intelli_plug_eco");
+            mIntelliPlugEco = (AwesomeCheckBoxPreference) findPreference("intelli_plug_eco");
             if (mIntelliPlugEco != null) {
-                if (CpuUtils.hasIntelliPlug() && CpuUtils.hasIntelliPlugEcoMode()) {
-                    mIntelliPlugEco.setChecked(CpuUtils.getIntelliPlugEcoMode());
+                if (mIntelliPlugEco.isSupported()) {
+                    mIntelliPlugEco.initValue();
                     mIntelliPlugEco.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mIntelliPlugEco);
@@ -128,18 +129,10 @@ public class HotpluggingFragment extends AttachPreferenceFragment
                     MPDECISION_PATH, value ? "1" : "0"));
             changed = true;
         } else if (preference == mIntelliPlug) {
-            final boolean value = (Boolean) o;
-            CpuUtils.enableIntelliPlug(value);
-            PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_EXTRAS, mIntelliPlug.getKey(),
-                    INTELLI_PLUG_PATH, value ? "1" : "0"));
+            mIntelliPlug.writeValue((Boolean) o);
             changed = true;
         } else if (preference == mIntelliPlugEco) {
-            final boolean value = (Boolean) o;
-            CpuUtils.enableIntelliPlugEcoMode(value);
-            PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_EXTRAS, mIntelliPlugEco.getKey(),
-                    INTELLI_PLUG_ECO_MODE_PATH, value ? "1" : "0"));
+            mIntelliPlugEco.writeValue((Boolean) o);
             changed = true;
         }
 

@@ -16,7 +16,8 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dc="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:key="input_navbar"
@@ -33,12 +34,14 @@
         android:key="input_knockon"
         android:title="@string/knock_on_off_gestures">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
             android:key="knockon_gesture_enable"
             android:title="@string/knock_on"
             android:summaryOn="@string/knock_on_summary_on"
             android:summaryOff="@string/knock_on_summary_off"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            dc:filePath="@string/file_knock_on"
+            dc:category="device" />
 
     </PreferenceCategory>
 
@@ -64,32 +67,46 @@
         android:title="@string/touchkey">
 
         <!-- Touchkey backlight -->
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
             android:key="touchkey_light"
             android:title="@string/enable_keys_backlight"
             android:summary="@string/enable_keys_backlight_summary"
-            android:defaultValue="true" />
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+            android:defaultValue="true"
+            dc:filePathList="@array/files_touchkey_light"
+            dc:category="device"
+            dc:multifile="true"
+            dc:valueChecked="255" />
+
+        <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
             android:key="touchkey_bln"
             android:title="@string/enable_keys_notifications"
             android:summary="@string/enable_keys_notifications_summary"
-            android:defaultValue="true" />
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+            android:defaultValue="true"
+            dc:filePath="@string/file_touchkey_bln"
+            dc:category="device" />
+
+        <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
             android:key="keyboard_light"
             android:title="@string/enable_keyboard_backlight"
             android:summary="@string/enable_keyboard_backlight_summary"
-            android:defaultValue="true" />
+            android:defaultValue="true"
+            dc:filePath="@string/file_keyboard_light"
+            dc:category="device"
+            dc:valueChecked="255" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="graphics"
         android:title="@string/display">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
             android:key="lcd_power_reduce"
             android:title="@string/lcd_power_reduce"
             android:summary="@string/lcd_power_reduce_summary"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            dc:filePath="@string/file_lcd_power_reduce"
+            dc:category="device" />
 
         <org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference
             android:key="panel_color_temperature"

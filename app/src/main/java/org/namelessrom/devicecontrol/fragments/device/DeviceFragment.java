@@ -39,6 +39,7 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.VibratorTuningPreference;
@@ -57,25 +58,23 @@ public class DeviceFragment extends AttachPreferenceFragment
     //==============================================================================================
     // Input
     //==============================================================================================
-    private CustomCheckBoxPreference mForceNavBar;
-    private CustomCheckBoxPreference mGloveMode;
-    private CustomCheckBoxPreference mKnockOn;
+    private CustomCheckBoxPreference  mForceNavBar;
+    private CustomCheckBoxPreference  mGloveMode;
+    private AwesomeCheckBoxPreference mKnockOn;
 
     private boolean hasNavBar = false;
 
     //==============================================================================================
     // Lights
     //==============================================================================================
-    private CustomCheckBoxPreference mBacklightKey;
-    private CustomCheckBoxPreference mBacklightNotification;
-    private CustomCheckBoxPreference mKeyboardBacklight;
+    private AwesomeCheckBoxPreference mBacklightKey;
+    private AwesomeCheckBoxPreference mBacklightNotification;
+    private AwesomeCheckBoxPreference mKeyboardBacklight;
 
     //==============================================================================================
     // Display
     //==============================================================================================
-    public static final String  sLcdPowerReduceFile = Utils.checkPaths(FILES_LCD_POWER_REDUCE);
-    public static final boolean sLcdPowerReduce     = !sLcdPowerReduceFile.isEmpty();
-    private CustomCheckBoxPreference mLcdPowerReduce;
+    private AwesomeCheckBoxPreference mLcdPowerReduce;
     //----------------------------------------------------------------------------------------------
     public static final String  sHasPanelFile = Utils.checkPaths(FILES_PANEL_COLOR_TEMP);
     public static final boolean sHasPanel     = !sHasPanelFile.isEmpty();
@@ -133,18 +132,15 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         category = (PreferenceCategory) findPreference("input_knockon");
         if (category != null) {
-            mKnockOn = (CustomCheckBoxPreference) findPreference("knockon_gesture_enable");
+            mKnockOn = (AwesomeCheckBoxPreference) findPreference("knockon_gesture_enable");
             if (mKnockOn != null) {
-                if (!Utils.fileExists(FILE_KNOCKON)) {
-                    category.removePreference(mKnockOn);
-                } else {
+                if (mKnockOn.isSupported()) {
                     try {
-                        final String value = Utils.readOneLine(FILE_KNOCKON);
-                        if (value != null && !value.isEmpty()) {
-                            mKnockOn.setChecked("1".equals(value));
-                        }
-                    } catch (Exception ignored) { /* ignore it */ }
+                        mKnockOn.initValue();
+                    } catch (Exception ignored) { }
                     mKnockOn.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mKnockOn);
                 }
             }
 
@@ -186,37 +182,33 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         category = (PreferenceCategory) findPreference("touchkey");
         if (category != null) {
-            mBacklightKey = (CustomCheckBoxPreference) findPreference("touchkey_light");
+            mBacklightKey = (AwesomeCheckBoxPreference) findPreference("touchkey_light");
             if (mBacklightKey != null) {
-                if (!Utils.fileExists(FILE_TOUCHKEY_TOGGLE)) {
-                    category.removePreference(mBacklightKey);
-                } else {
-                    mBacklightKey.setChecked(!Utils.readOneLine(FILE_TOUCHKEY_TOGGLE).equals("0"));
+                if (mBacklightKey.isSupported()) {
+                    mBacklightKey.initValue();
                     mBacklightKey.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mBacklightKey);
                 }
             }
 
-            mBacklightNotification = (CustomCheckBoxPreference) findPreference("touchkey_bln");
+            mBacklightNotification = (AwesomeCheckBoxPreference) findPreference("touchkey_bln");
             if (mBacklightNotification != null) {
-                if (!Utils.fileExists(FILE_BLN_TOGGLE)) {
-                    category.removePreference(mBacklightNotification);
-                } else {
-                    mBacklightNotification.setChecked(
-                            Utils.readOneLine(FILE_BLN_TOGGLE).equals("1")
-                    );
+                if (mBacklightNotification.isSupported()) {
+                    mBacklightNotification.initValue();
                     mBacklightNotification.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mBacklightNotification);
                 }
             }
 
-            mKeyboardBacklight = (CustomCheckBoxPreference) findPreference("keyboard_light");
+            mKeyboardBacklight = (AwesomeCheckBoxPreference) findPreference("keyboard_light");
             if (mKeyboardBacklight != null) {
-                if (!Utils.fileExists(FILE_KEYBOARD_TOGGLE)) {
-                    category.removePreference(mKeyboardBacklight);
-                } else {
-                    mKeyboardBacklight.setChecked(
-                            Utils.readOneLine(FILE_KEYBOARD_TOGGLE).equals("1")
-                    );
+                if (mKeyboardBacklight.isSupported()) {
+                    mKeyboardBacklight.initValue();
                     mKeyboardBacklight.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mKeyboardBacklight);
                 }
             }
 
@@ -239,10 +231,10 @@ public class DeviceFragment extends AttachPreferenceFragment
                 }
             }
 
-            mLcdPowerReduce = (CustomCheckBoxPreference) findPreference("lcd_power_reduce");
+            mLcdPowerReduce = (AwesomeCheckBoxPreference) findPreference("lcd_power_reduce");
             if (mLcdPowerReduce != null) {
-                if (sLcdPowerReduce) {
-                    mLcdPowerReduce.setChecked(Utils.readOneLine(sLcdPowerReduceFile).equals("1"));
+                if (mLcdPowerReduce.isSupported()) {
+                    mLcdPowerReduce.initValue();
                     mLcdPowerReduce.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mLcdPowerReduce);
@@ -275,45 +267,16 @@ public class DeviceFragment extends AttachPreferenceFragment
             );
             changed = true;
         } else if (preference == mKnockOn) {
-            final boolean newValue = (Boolean) o;
-            final String value = (newValue) ? "1" : "0";
-            Utils.writeValue(FILE_KNOCKON, value);
-            PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mKnockOn.getKey(),
-                            FILE_KNOCKON, value)
-            );
+            mKnockOn.writeValue((Boolean) o);
             changed = true;
         } else if (preference == mBacklightKey) { // ======================================== LIGHTS
-            final boolean newValue = (Boolean) o;
-            final String value = newValue ? "255" : "0";
-            Utils.writeValue(FILE_TOUCHKEY_TOGGLE, value);
-            Utils.writeValue(FILE_TOUCHKEY_BRIGHTNESS, value);
-            PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mBacklightKey.getKey() + '0',
-                            FILE_TOUCHKEY_TOGGLE, value)
-            );
-            PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mBacklightKey.getKey() + '1',
-                            FILE_TOUCHKEY_BRIGHTNESS, value)
-            );
+            mBacklightKey.writeValue((Boolean) o);
             changed = true;
         } else if (preference == mBacklightNotification) {
-            final boolean newValue = (Boolean) o;
-            final String value = newValue ? "1" : "0";
-            Utils.writeValue(FILE_BLN_TOGGLE, value);
-            PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mBacklightNotification.getKey(),
-                            FILE_BLN_TOGGLE, value)
-            );
+            mBacklightNotification.writeValue((Boolean) o);
             changed = true;
         } else if (preference == mKeyboardBacklight) {
-            final boolean newValue = (Boolean) o;
-            final String value = newValue ? "255" : "0";
-            Utils.writeValue(FILE_KEYBOARD_TOGGLE, value);
-            PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mKeyboardBacklight.getKey(),
-                            FILE_KEYBOARD_TOGGLE, value)
-            );
+            mKeyboardBacklight.writeValue((Boolean) o);
             changed = true;
         } else if (preference == mPanelColor) { // ======================================== GRAPHICS
             final String value = String.valueOf(o);
@@ -324,13 +287,7 @@ public class DeviceFragment extends AttachPreferenceFragment
             );
             changed = true;
         } else if (preference == mLcdPowerReduce) {
-            final boolean newValue = (Boolean) o;
-            final String value = newValue ? "1" : "0";
-            Utils.writeValue(sLcdPowerReduceFile, value);
-            PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mLcdPowerReduce.getKey(),
-                            sLcdPowerReduceFile, value)
-            );
+            mLcdPowerReduce.writeValue((Boolean) o);
             changed = true;
         }
 
