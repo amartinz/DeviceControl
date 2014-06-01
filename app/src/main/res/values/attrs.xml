@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AwesomePreference">
+        <attr name="filePath" format="reference" />
+        <attr name="filePathList" format="reference" />
+        <attr name="category" format="string" />
+        <attr name="startup" format="boolean" />
+        <attr name="valueChecked" format="string" />
+        <attr name="valueNotChecked" format="string" />
+    </declare-styleable>
+</resources>

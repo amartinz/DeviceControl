@@ -53,15 +53,6 @@ public interface PerformanceConstants {
             CPU_BASE + "cpu0/cpufreq/scaling_available_governors";
 
     //----------------------------------------------------------------------------------------------
-    public static final String INTELLI_PLUG_BASE          = "/sys/module/intelli_plug/";
-    public static final String INTELLI_PLUG_PATH          =
-            INTELLI_PLUG_BASE + "parameters/intelli_plug_active";
-    public static final String INTELLI_PLUG_ECO_MODE_PATH =
-            INTELLI_PLUG_BASE + "parameters/eco_mode_active";
-    public static final String INTELLI_PLUG_SUSPEND_PATH  =
-            "/sys/kernel/intelliplug/sleep_active_status";
-
-    //----------------------------------------------------------------------------------------------
     public static final String CPU_TEMP_PATH = "/sys/class/thermal/thermal_zone0/temp";
 
     //----------------------------------------------------------------------------------------------
@@ -81,9 +72,6 @@ public interface PerformanceConstants {
     public static final String[] GPU_GOVS = {"performance", "simple", "ondemand", "interactive"};
 
     //----------------------------------------------------------------------------------------------
-    public static final String MSM_DCVS_FILE = "/sys/module/msm_dcvs/parameters/enable";
-
-    //----------------------------------------------------------------------------------------------
     public static final String UV_TABLE_FILE  = CPU_BASE + "cpu0/cpufreq/UV_mV_table";
     public static final String VDD_TABLE_FILE = CPU_BASE + "cpufreq/vdd_table/vdd_levels";
 
@@ -95,22 +83,13 @@ public interface PerformanceConstants {
     public static final String MSM_THERMAL_MIN_CORE        = MSM_THERMAL_PARAMS + "min_cpus_online";
 
     //----------------------------------------------------------------------------------------------
-    public static final String INTELLI_THERMAL_BASE       = "/sys/module/msm_intelli_thermal/";
-    public static final String INTELLI_THERMAL_CC_ENABLED =
-            INTELLI_THERMAL_BASE + "core_control/enabled";
-    public static final String INTELLI_THERMAL_ENABLED    =
-            INTELLI_THERMAL_BASE + "parameters/enabled";
-
-    //----------------------------------------------------------------------------------------------
     public static final String KSM_PATH           = "/sys/kernel/mm/ksm/";
-    public static final String KSM_DEFERRED       = KSM_PATH + "deferred_timer";
     public static final String KSM_FULL_SCANS     = KSM_PATH + "full_scans";
     public static final String KSM_PAGES_SHARED   = KSM_PATH + "pages_shared";
     public static final String KSM_PAGES_SHARING  = KSM_PATH + "pages_sharing";
     public static final String KSM_PAGES_TO_SCAN  = KSM_PATH + "pages_to_scan";
     public static final String KSM_PAGES_UNSHARED = KSM_PATH + "pages_unshared";
     public static final String KSM_PAGES_VOLATILE = KSM_PATH + "pages_volatile";
-    public static final String KSM_RUN            = KSM_PATH + "run";
     public static final String KSM_SLEEP          = KSM_PATH + "sleep_millisecs";
 
     //----------------------------------------------------------------------------------------------

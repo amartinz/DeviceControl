@@ -15,7 +15,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
@@ -25,10 +25,8 @@ import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
  */
 public class FastChargeFragment extends AttachPreferenceFragment implements DeviceConstants,
         Preference.OnPreferenceChangeListener {
-
     private static final String FC_BASE       = "/sys/kernel/fast_charge";
     private static final String FC_FORCE      = FC_BASE + "/force_fast_charge";
-    private static final String FC_FAILSAFE   = FC_BASE + "/failsafe";
     private static final String FC_AC_LEVELS  = FC_BASE + "/ac_levels";
     private static final String FC_AC_LEVEL   = FC_BASE + "/ac_charge_level";
     private static final String FC_USB_LEVELS = FC_BASE + "/usb_levels";
@@ -38,14 +36,12 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
 
     private boolean isNewVersion = false;
 
-    private PreferenceScreen mRoot;
-
-    private CustomListPreference     mForceFastCharge;
-    private CustomCheckBoxPreference mFailsafe;
-    private CustomPreference         mAcLevelsValid;
-    private CustomEditTextPreference mAcLevel;
-    private CustomPreference         mUsbLevelsValid;
-    private CustomEditTextPreference mUsbLevel;
+    private CustomListPreference      mForceFastCharge;
+    private AwesomeCheckBoxPreference mFailsafe;
+    private CustomPreference          mAcLevelsValid;
+    private CustomEditTextPreference  mAcLevel;
+    private CustomPreference          mUsbLevelsValid;
+    private CustomEditTextPreference  mUsbLevel;
 
     @Override
     public void onAttach(final Activity activity) {
@@ -77,7 +73,7 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
 
         setHasOptionsMenu(true);
 
-        mRoot = getPreferenceScreen();
+        final PreferenceScreen mRoot = getPreferenceScreen();
         String tmp;
 
         final CustomPreference mVersion = (CustomPreference) findPreference("version");
@@ -107,11 +103,10 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
             }
         }
 
-        mFailsafe = (CustomCheckBoxPreference) findPreference("failsafe");
+        mFailsafe = (AwesomeCheckBoxPreference) findPreference("failsafe");
         if (mFailsafe != null) {
-            if (isNewVersion && Utils.fileExists(FC_FAILSAFE)) {
-                tmp = Utils.readOneLine(FC_FAILSAFE);
-                mFailsafe.setChecked(tmp != null && tmp.equals("1"));
+            if (isNewVersion && mFailsafe.isSupported()) {
+                mFailsafe.initValue();
                 mFailsafe.setOnPreferenceChangeListener(this);
             } else {
                 mRoot.removePreference(mFailsafe);
@@ -184,8 +179,7 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
             return true;
         } else if (mFailsafe == preference) {
             final boolean value = (Boolean) newValue;
-            Utils.writeValue(FC_FAILSAFE, (value ? "1" : "0"));
-            mFailsafe.setChecked(value);
+            mFailsafe.writeValue(value);
             if (mAcLevelsValid != null) {
                 if (!value) {
                     mAcLevelsValid.setSummary(R.string.any_level_valid);
@@ -211,8 +205,6 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
                 mUsbLevel.setText(tmp);
                 mUsbLevel.setSummary(tmp);
             }
-            PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_FEATURES, "failsafe", FC_FAILSAFE, value ? "1" : "0"));
             return true;
         } else if (mAcLevel == preference) {
             final String value = String.valueOf(newValue);

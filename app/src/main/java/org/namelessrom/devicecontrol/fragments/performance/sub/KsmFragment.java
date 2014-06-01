@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
-import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.DialogHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -21,7 +20,7 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
 
 import java.util.ArrayList;
@@ -34,18 +33,18 @@ public class KsmFragment extends AttachPreferenceFragment
         Preference.OnPreferenceChangeListener {
 
     //----------------------------------------------------------------------------------------------
-    private PreferenceScreen         mRoot;
+    private PreferenceScreen          mRoot;
     //----------------------------------------------------------------------------------------------
-    private CustomPreference         mFullScans;
-    private CustomPreference         mPagesShared;
-    private CustomPreference         mPagesSharing;
-    private CustomPreference         mPagesUnshared;
-    private CustomPreference         mPagesVolatile;
+    private CustomPreference          mFullScans;
+    private CustomPreference          mPagesShared;
+    private CustomPreference          mPagesSharing;
+    private CustomPreference          mPagesUnshared;
+    private CustomPreference          mPagesVolatile;
     //----------------------------------------------------------------------------------------------
-    private CustomCheckBoxPreference mEnable;
-    private CustomCheckBoxPreference mDefer;
-    private CustomPreference         mPagesToScan;
-    private CustomPreference         mSleep;
+    private AwesomeCheckBoxPreference mEnable;
+    private AwesomeCheckBoxPreference mDefer;
+    private CustomPreference          mPagesToScan;
+    private CustomPreference          mSleep;
 
     @Override public void onAttach(final Activity activity) { super.onAttach(activity, ID_KSM); }
 
@@ -122,22 +121,20 @@ public class KsmFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         category = (PreferenceCategory) findPreference("ksm_settings");
         if (category != null) {
-            mEnable = (CustomCheckBoxPreference) findPreference("ksm_run");
+            mEnable = (AwesomeCheckBoxPreference) findPreference("ksm_run");
             if (mEnable != null) {
-                if (Utils.fileExists(KSM_RUN)) {
-                    tmpString = Utils.readOneLine(KSM_RUN);
-                    mEnable.setChecked(Utils.isEnabled(tmpString));
+                if (mEnable.isSupported()) {
+                    mEnable.initValue();
                     mEnable.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mEnable);
                 }
             }
 
-            mDefer = (CustomCheckBoxPreference) findPreference("ksm_deferred");
+            mDefer = (AwesomeCheckBoxPreference) findPreference("ksm_deferred");
             if (mDefer != null) {
-                if (Utils.fileExists(KSM_DEFERRED)) {
-                    tmpString = Utils.readOneLine(KSM_DEFERRED);
-                    mDefer.setChecked(Utils.isEnabled(tmpString));
+                if (mDefer.isSupported()) {
+                    mDefer.initValue();
                     mDefer.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mDefer);
@@ -196,12 +193,10 @@ public class KsmFragment extends AttachPreferenceFragment
 
     @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
         if (mEnable == preference) {
-            ActionProcessor.processAction(ActionProcessor.ACTION_KSM_ENABLED,
-                    (((Boolean) o) ? "1" : "0"));
+            mEnable.writeValue((Boolean) o);
             return true;
         } else if (mDefer == preference) {
-            ActionProcessor.processAction(ActionProcessor.ACTION_KSM_DEFERRED,
-                    (((Boolean) o) ? "1" : "0"));
+            mDefer.writeValue((Boolean) o);
             return true;
         }
 
