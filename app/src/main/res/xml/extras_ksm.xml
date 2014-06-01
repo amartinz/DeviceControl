@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dc="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:key="ksm_info"
@@ -32,16 +33,20 @@
         android:key="ksm_settings"
         android:title="@string/ksm">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
             android:key="ksm_run"
             android:title="@string/enable_ksm"
-            android:summary="@string/enable_ksm_summary" />
+            android:summary="@string/enable_ksm_summary"
+            dc:filePath="@string/file_ksm_run"
+            dc:category="extras" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
             android:key="ksm_deferred"
             android:title="@string/deferred_timer"
             android:summary="@string/deferred_timer_summary"
-            android:dependency="ksm_run" />
+            android:dependency="ksm_run"
+            dc:filePath="@string/file_ksm_deferred"
+            dc:category="extras" />
 
         <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
             android:key="ksm_pages_to_scan"

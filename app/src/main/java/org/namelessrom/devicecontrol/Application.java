@@ -158,6 +158,10 @@ public class Application extends android.app.Application implements DeviceConsta
         }
     }
 
+    public static String getStr(final int resId) {
+        return applicationContext.getString(resId);
+    }
+
     /**
      * Logs a message to logcat if boolean param is true.<br />
      * This is very useful for debugging, just set debug to false on a release build<br />
@@ -165,10 +169,18 @@ public class Application extends android.app.Application implements DeviceConsta
      *
      * @param msg The message to log
      */
-    public static void logDebug(final String msg) {
-        if (IS_LOG_DEBUG) {
-            Log.e("DeviceControl", msg);
-        }
+    public static void logDebug(final String msg) { logDebug("DeviceControl", msg); }
+
+    /**
+     * Logs a message to logcat if boolean param is true.<br />
+     * This is very useful for debugging, just set debug to false on a release build<br />
+     * and it wont show any debug messages.
+     *
+     * @param tag The tag for the log
+     * @param msg The message to log
+     */
+    public static void logDebug(final String tag, final String msg) {
+        if (IS_LOG_DEBUG) Log.e(tag, msg);
     }
 
 }

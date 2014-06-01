@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Intelli-Plug -->
+    <string name="file_intelli_plug_base" translatable="false">/sys/module/intelli_plug/</string>
+    <string name="file_intelli_plug_active" translatable="false">/sys/module/intelli_plug/parameters/intelli_plug_active</string>
+    <string name="file_eco_mode_active" translatable="false">/sys/module/intelli_plug/parameters/eco_mode_active</string>
+    <string name="file_intelli_plug_suspend" translatable="false">/sys/kernel/intelliplug/sleep_active_status</string>
+    <!-- Intelli-Thermal -->
+    <string name="file_intelli_thermal_base" translatable="false">/sys/module/msm_intelli_thermal/</string>
+    <string name="file_intelli_thermal" translatable="false">/sys/module/msm_intelli_thermal/parameters/enabled</string>
+    <string name="file_intelli_thermal_cc" translatable="false">/sys/module/msm_intelli_thermal/core_control/enabled</string>
+    <!-- KSM -->
+    <string name="file_ksm_deferred" translatable="false">/sys/kernel/mm/ksm/deferred_timer</string>
+    <string name="file_ksm_run" translatable="false">/sys/kernel/mm/ksm/run</string>
+    <!-- Misc -->
+    <string name="file_fc_failsafe" translatable="false">/sys/kernel/fast_charge/failsafe</string>
+    <string name="file_keyboard_light" translatable="false">/sys/class/leds/keyboard-backlight/max_brightness</string>
+    <string name="file_knock_on" translatable="false">/sys/devices/virtual/input/lge_touch/touch_gesture</string>
+    <string name="file_lcd_power_reduce" translatable="false">/sys/class/lcd/panel/power_reduce</string>
+    <string name="file_logger_mode" translatable="false">/sys/kernel/logger_mode/logger_mode</string>
+    <string name="file_msm_dcvs" translatable="false">/sys/module/msm_dcvs/parameters/enable</string>
+    <string name="file_power_efficient_workqueue" translatable="false">/sys/module/workqueue/parameters/power_efficient</string>
+    <string name="file_touchkey_bln" translatable="false">/sys/class/misc/backlightnotification/enabled</string>
+    <string name="file_touchkey_light" translatable="false">/sys/class/leds/button-backlight/max_brightness</string>
+
+    <!-- ARRAYS -->
+    <string-array name="files_touchkey_light" translatable="false">
+        <item>/sys/class/leds/button-backlight/max_brightness</item>
+        <item>/sys/class/leds/button-backlight/brightness</item>
+    </string-array>
+</resources>

@@ -186,6 +186,17 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     /**
+     * Checks if the given path is existing and returns the existing path.
+     *
+     * @param paths The file path
+     * @return The path or an empty string if not existant
+     */
+    public static String checkPath(final String path) {
+        if (fileExists(path)) { return path; }
+        return "";
+    }
+
+    /**
      * Setup the directories for Device Control
      */
     public static void setupDirectories() {
@@ -349,9 +360,17 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     public static boolean isEnabled(String s) {
+        return isEnabled(s, false);
+    }
+
+    public static boolean isEnabled(String s, final boolean contains) {
         if (s != null) {
             s = s.trim().toUpperCase();
-            return s.equals("Y") || s.equals("1");
+            if (contains) {
+                return s.contains("Y") || s.contains("1") || s.contains("enabled");
+            } else {
+                return s.equals("Y") || s.equals("1") || s.equals("enabled");
+            }
         } else { return false; }
     }
 

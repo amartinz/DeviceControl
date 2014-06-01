@@ -16,7 +16,8 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dc="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:key="general"
@@ -56,10 +57,12 @@
         android:key="powersaving"
         android:title="@string/powersaving">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
             android:key="power_efficient_work"
             android:title="@string/power_efficient_work"
-            android:summary="@string/power_efficient_work_summary" />
+            android:summary="@string/power_efficient_work_summary"
+            dc:filePath="@string/file_power_efficient_workqueue"
+            dc:category="extras" />
 
         <org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference
             android:key="sched_mc_power_savings"
@@ -73,11 +76,13 @@
         android:key="voltage"
         android:title="@string/voltage">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
             android:key="msm_dcvs"
             android:title="@string/msm_dcvs"
             android:summary="@string/msm_dcvs_summary"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            dc:filePath="@string/file_msm_dcvs"
+            dc:category="extras" />
 
         <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
             android:key="voltage_control"
