@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dc="http://schemas.android.com/apk/res-auto">
 
     <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
         android:key="mpdecision"
@@ -13,19 +14,23 @@
         android:key="intelli_plug"
         android:title="@string/intelli_plug">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
             android:key="intelli_plug_active"
             android:title="@string/intelli_plug"
             android:summaryOn="@string/intelli_plug_summary_on"
             android:summaryOff="@string/intelli_plug_summary_off"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            dc:filePath="@string/file_intelli_plug_active"
+            dc:category="extras" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference
             android:key="intelli_plug_eco"
             android:title="@string/intelli_plug_eco"
             android:summaryOn="@string/intelli_plug_eco_summary_on"
             android:summaryOff="@string/intelli_plug_eco_summary_off"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            dc:filePath="@string/file_eco_mode_active"
+            dc:category="extras" />
 
     </PreferenceCategory>
 
