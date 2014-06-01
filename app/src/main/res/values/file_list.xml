@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="intelli_plug_active" translatable="false">/sys/module/intelli_plug/parameters/intelli_plug_active</string>
+    <string name="eco_mode_active" translatable="false">/sys/module/intelli_plug/parameters/eco_mode_active</string>
+</resources>
