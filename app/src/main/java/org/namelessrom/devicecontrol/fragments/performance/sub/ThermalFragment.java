@@ -18,7 +18,7 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference;
 
 public class ThermalFragment extends AttachPreferenceFragment
@@ -26,15 +26,15 @@ public class ThermalFragment extends AttachPreferenceFragment
         Preference.OnPreferenceChangeListener {
 
     //----------------------------------------------------------------------------------------------
-    private PreferenceScreen         mRoot;
+    private PreferenceScreen          mRoot;
     //----------------------------------------------------------------------------------------------
-    private CustomEditTextPreference mMsmThermalLimit;
-    private CustomEditTextPreference mMsmThermalCoreLimit;
-    private CustomEditTextPreference mMsmThermalCoreMax;
-    private CustomEditTextPreference mMsmThermalCoreMin;
+    private CustomEditTextPreference  mMsmThermalLimit;
+    private CustomEditTextPreference  mMsmThermalCoreLimit;
+    private CustomEditTextPreference  mMsmThermalCoreMax;
+    private CustomEditTextPreference  mMsmThermalCoreMin;
     //----------------------------------------------------------------------------------------------
-    private CustomCheckBoxPreference mIntelliThermalCcEnabled;
-    private CustomCheckBoxPreference mIntelliThermalEnabled;
+    private AwesomeCheckBoxPreference mIntelliThermalCcEnabled;
+    private AwesomeCheckBoxPreference mIntelliThermalEnabled;
 
     @Override
     public void onAttach(final Activity activity) { super.onAttach(activity, ID_THERMAL); }
@@ -129,24 +129,22 @@ public class ThermalFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         category = (PreferenceCategory) findPreference("intelli_thermal");
         if (category != null) {
-            mIntelliThermalCcEnabled = (CustomCheckBoxPreference)
+            mIntelliThermalCcEnabled = (AwesomeCheckBoxPreference)
                     findPreference("intelli_thermal_cc_enabled");
             if (mIntelliThermalCcEnabled != null) {
-                if (Utils.fileExists(INTELLI_THERMAL_CC_ENABLED)) {
-                    tmpString = Utils.readOneLine(INTELLI_THERMAL_CC_ENABLED);
-                    mIntelliThermalCcEnabled.setChecked(Utils.isEnabled(tmpString));
+                if (mIntelliThermalCcEnabled.isSupported()) {
+                    mIntelliThermalCcEnabled.initValue();
                     mIntelliThermalCcEnabled.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mIntelliThermalCcEnabled);
                 }
             }
 
-            mIntelliThermalEnabled = (CustomCheckBoxPreference)
+            mIntelliThermalEnabled = (AwesomeCheckBoxPreference)
                     findPreference("intelli_thermal_enabled");
             if (mIntelliThermalEnabled != null) {
-                if (Utils.fileExists(INTELLI_THERMAL_ENABLED)) {
-                    tmpString = Utils.readOneLine(INTELLI_THERMAL_ENABLED);
-                    mIntelliThermalEnabled.setChecked(Utils.isEnabled(tmpString));
+                if (mIntelliThermalEnabled.isSupported()) {
+                    mIntelliThermalEnabled.initValue();
                     mIntelliThermalEnabled.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mIntelliThermalEnabled);
@@ -168,10 +166,10 @@ public class ThermalFragment extends AttachPreferenceFragment
     @Override
     public boolean onPreferenceChange(final Preference preference, final Object o) {
         if (mIntelliThermalCcEnabled == preference) {
-            preferenceChange(mIntelliThermalCcEnabled, (Boolean) o, INTELLI_THERMAL_CC_ENABLED);
+            mIntelliThermalCcEnabled.writeValue((Boolean) o);
             return true;
         } else if (mIntelliThermalEnabled == preference) {
-            preferenceChange(mIntelliThermalEnabled, (Boolean) o, INTELLI_THERMAL_ENABLED);
+            mIntelliThermalEnabled.writeValue((Boolean) o);
             return true;
         } else if (mMsmThermalLimit == preference) {
             final String value = validateValue(String.valueOf(o), 0);
@@ -196,14 +194,6 @@ public class ThermalFragment extends AttachPreferenceFragment
         }
 
         return false;
-    }
-
-    private void preferenceChange(final CustomCheckBoxPreference pref, final boolean rawValue,
-            final String file) {
-        final String value = rawValue ? "1" : "0";
-        Utils.writeValue(file, value);
-        PreferenceHelper.setBootup(
-                new DataItem(DatabaseHandler.CATEGORY_EXTRAS, pref.getKey(), file, value));
     }
 
     private void preferenceChange(final CustomEditTextPreference pref, final String value,
