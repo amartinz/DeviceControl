@@ -33,6 +33,7 @@ import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.activities.AppDetailsActivity;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
@@ -55,8 +56,9 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 public class AppListFragment extends AttachListFragment implements DeviceConstants,
         View.OnClickListener, OnBackPressedListener {
 
-    private final Handler mHandler        = new Handler();
-    private       boolean mDetailsShowing = false;
+    private final Handler mHandler            = new Handler();
+    private       boolean mDetailsShowing     = false;
+    private       boolean startedFromActivity = false;
 
     private AppItem        mAppItem;
     private AppListAdapter mAdapter;
@@ -121,14 +123,26 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_app_list, container, false);
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
+        final Bundle bundle = getArguments();
+        if (bundle != null) {
+            final String packageName = bundle.getString(AppDetailsActivity.ARG_PACKAGE_NAME);
+            startedFromActivity = (packageName != null && !packageName.isEmpty());
+            if (startedFromActivity) {
+                PackageInfo info = null;
+                try {
+                    info = Application.getPm().getPackageInfo(packageName, 0);
+                } catch (Exception ignored) { }
+                if (info != null && info.applicationInfo != null) {
+                    mAppItem = new AppItem(info,
+                            String.valueOf(info.applicationInfo.loadLabel(Application.getPm())),
+                            info.applicationInfo.loadIcon(Application.getPm()));
+                }
+            }
+        }
 
-        mAppDetails = findById(rootView, R.id.app_details);
-        mProgressContainer = findById(rootView, R.id.progressContainer);
-
-        final View appDetails = inflater.inflate(R.layout.activity_app_details, container, false);
+        final View appDetails = inflater.inflate(R.layout.fragment_app_details, container, false);
 
         assert (appDetails != null);
 
@@ -148,6 +162,14 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
         mClearCache.setOnClickListener(this);
         mClearData.setOnClickListener(this);
 
+        if (!startedFromActivity) {
+            findById(appDetails, R.id.app_space).setVisibility(View.VISIBLE);
+        }
+
+        final View rootView = inflater.inflate(R.layout.fragment_app_list, container, false);
+        mAppDetails = findById(rootView, R.id.app_details);
+        mProgressContainer = findById(rootView, R.id.progressContainer);
+        if (startedFromActivity) mProgressContainer.setVisibility(View.GONE);
         mAppDetails.addView(appDetails);
         return rootView;
     }
@@ -173,7 +195,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
 
     @Override
     public boolean onBackPressed() {
-        if (mDetailsShowing) {
+        if (!startedFromActivity && mDetailsShowing) {
             AnimationHelper.animateX(mAppDetails, 500, mAppIcon.getWidth() +
                     AnimationHelper.getDp(R.dimen.app_margin), mAppDetails.getWidth());
             mDetailsShowing = false;
@@ -187,12 +209,16 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
-        new LoadApps().execute();
+        if (startedFromActivity) {
+            refreshAppDetails();
+        } else {
+            new LoadApps().execute();
+        }
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        if (getListAdapter() == null) return;
+        if (startedFromActivity || getListAdapter() == null) return;
         mAppItem = (AppItem) getListAdapter().getItem(position);
 
         refreshAppDetails();
@@ -257,7 +283,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
             AppHelper.getSize(mAppItem.getPackageName());
         } catch (Exception e) { logDebug("AppHelper.getSize(): " + e); }
 
-        if (!mDetailsShowing) {
+        if (!startedFromActivity && !mDetailsShowing) {
             mAppDetails.bringToFront();
             AnimationHelper.animateX(mAppDetails, 500, mAppDetails.getWidth(), mAppIcon.getWidth() +
                     2 * AnimationHelper.getDp(R.dimen.app_margin));
@@ -477,6 +503,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
     private class LoadApps extends AsyncTask<Void, Void, List<AppItem>> {
         @Override
         protected List<AppItem> doInBackground(Void... params) {
+            if (startedFromActivity) return null;
             final PackageManager pm = Application.getPm();
             final List<AppItem> appList = new ArrayList<AppItem>();
             final List<PackageInfo> pkgInfos = pm.getInstalledPackages(0);

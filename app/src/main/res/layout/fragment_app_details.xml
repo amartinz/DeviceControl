@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_background"
-    tools:context="org.namelessrom.devicecontrol.MainActivity">
+    tools:context="org.namelessrom.devicecontrol.activities.AppDetailsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -112,8 +112,10 @@
         </LinearLayout>
 
         <View
+            android:id="@+id/app_space"
             android:layout_width="64dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
     </LinearLayout>
 

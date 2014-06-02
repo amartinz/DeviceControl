@@ -9,13 +9,13 @@
     <string name="get_superuser">Install Superuser</string>
     <string name="exit">Exit</string>
     <string name="close">Close</string>
-    <string name="message_loading">Loading, please stand by&#8230;</string>
+    <string name="message_loading">Loading, please stand by…</string>
     <string name="action_press_again">Press once again to exit!</string>
     <string name="defaults_button">Reset to default</string>
     <string name="general">General</string>
     <string name="others">Others</string>
     <string name="help">Help</string>
-    <string name="more">More&#8230;</string>
+    <string name="more">More…</string>
     <string name="dialog_warning">Warning!</string>
     <string name="dialog_warning_apply">Are you sure that you want to apply your settings?</string>
     <string name="toast_settings_applied">Successfully applied!</string>
@@ -193,7 +193,7 @@
     <string name="menu">Menu</string>
     <string name="preferences">Preferences</string>
     <string name="become_a_monkey">Become a monkey</string>
-    <string name="is_monkey">Wait, are you serious?\nYou are pretty smart for a monkey.\nNot that they are stupid but&#8230;\nWell, lets skip this.</string>
+    <string name="is_monkey">Wait, are you serious?\nYou are pretty smart for a monkey.\nNot that they are stupid but…\nWell, lets skip this.</string>
     <string name="no_monkey">Not a monkey? *Sigh* :(</string>
     <string name="downgraded">Database got wiped due a downgrade!</string>
     <string name="media_scan_trigger">Trigger media scan</string>
@@ -212,7 +212,7 @@
     <string name="ext_cache">External cache</string>
     <string name="ext">External</string>
     <string name="cache">Cache</string>
-    <string name="applying_wait">Applying values, please wait&#8230;</string>
+    <string name="applying_wait">Applying values, please wait…</string>
     <string name="full_scans">Full scans</string>
     <string name="pages_shared">Pages shared</string>
     <string name="pages_sharing">Pages sharing</string>

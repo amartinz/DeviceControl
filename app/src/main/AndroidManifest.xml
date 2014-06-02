@@ -38,7 +38,7 @@
         android:protectionLevel="dangerous" />
 
     <application
-        android:name="org.namelessrom.devicecontrol.Application"
+        android:name=".Application"
         android:allowBackup="true"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:hardwareAccelerated="true"
@@ -53,7 +53,7 @@
             android:launchMode="singleInstance"
             android:theme="@android:style/Theme.Holo.Dialog" />
         <activity
-            android:name="org.namelessrom.devicecontrol.DummyLauncher"
+            android:name=".DummyLauncher"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:enabled="true"
             android:launchMode="singleTask">
@@ -64,7 +64,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.namelessrom.devicecontrol.MainActivity"
+            android:name=".MainActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
@@ -77,31 +77,46 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.namelessrom.devicecontrol.wizard.AddTaskActivity"
+            android:name=".activities.AppDetailsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_details"
+            android:launchMode="singleTask"
+            android:clearTaskOnLaunch="true"
+            android:excludeFromRecents="true"
+            android:finishOnTaskLaunch="true"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.settings.APPLICATION_DETAILS_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".wizard.AddTaskActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/add_task"
             android:launchMode="singleTask"
-            android:parentActivityName="org.namelessrom.devicecontrol.MainActivity" />
+            android:parentActivityName=".MainActivity" />
 
         <!-- Services -->
         <service
-            android:name="org.namelessrom.devicecontrol.services.FstrimService"
+            android:name=".services.FstrimService"
             android:enabled="true"
             android:exported="false" />
         <service
-            android:name="org.namelessrom.devicecontrol.services.BootUpService"
+            android:name=".services.BootUpService"
             android:enabled="true"
             android:exported="false" />
         <service
-            android:name="org.namelessrom.devicecontrol.services.TaskerService"
+            android:name=".services.TaskerService"
             android:enabled="true"
             android:exported="false" />
         <service
-            android:name="org.namelessrom.devicecontrol.services.WebServerService"
+            android:name=".services.WebServerService"
             android:enabled="true"
             android:exported="false" />
         <service
-            android:name="org.namelessrom.devicecontrol.api.RemoteService"
+            android:name=".api.RemoteService"
             android:enabled="true"
             android:exported="true"
             android:permission="org.namelessrom.devicecontrol.API"
@@ -114,12 +129,12 @@
         </service>
 
         <!-- Broadcast Receivers -->
-        <receiver android:name="org.namelessrom.devicecontrol.receivers.BootUpReceiver">
+        <receiver android:name=".receivers.BootUpReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name="org.namelessrom.devicecontrol.receivers.SecretCodeReceiver">
+        <receiver android:name=".receivers.SecretCodeReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SECRET_CODE" />
 
