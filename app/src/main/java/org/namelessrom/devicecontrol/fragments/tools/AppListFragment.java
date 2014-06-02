@@ -3,18 +3,22 @@ package org.namelessrom.devicecontrol.fragments.tools;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,6 +107,13 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
         BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
     }
 
+    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        if (mDetailsShowing || startedFromActivity) {
+            inflater.inflate(R.menu.menu_app_details, menu);
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
@@ -112,6 +123,13 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
                 if (activity != null) {
                     activity.onBackPressed();
                 }
+                return true;
+            }
+            case R.id.menu_action_play_store: {
+                final Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=" + mAppItem.getPackageName()));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Application.applicationContext.startActivity(intent);
                 return true;
             }
             default: {
@@ -199,6 +217,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
             AnimationHelper.animateX(mAppDetails, 500, mAppIcon.getWidth() +
                     AnimationHelper.getDp(R.dimen.app_margin), mAppDetails.getWidth());
             mDetailsShowing = false;
+            if (getActivity() != null) getActivity().invalidateOptionsMenu();
             return true;
         }
         return false;
@@ -289,6 +308,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
             AnimationHelper.animateX(mAppDetails, 500, mAppDetails.getWidth(), mAppIcon.getWidth() +
                     2 * AnimationHelper.getDp(R.dimen.app_margin));
             mDetailsShowing = true;
+            if (getActivity() != null) getActivity().invalidateOptionsMenu();
         }
     }
 

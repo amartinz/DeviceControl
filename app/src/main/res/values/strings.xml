@@ -243,4 +243,5 @@
     <string name="remove_startup_script">Remove startup script</string>
     <string name="startup_script_installed">Startup script is installed</string>
     <string name="startup_script_not_installed">Startup script is not installed</string>
+    <string name="open_play_store">View application at Google Play\u2122</string>
 </resources>
