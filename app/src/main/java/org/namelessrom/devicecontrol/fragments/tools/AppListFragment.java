@@ -255,7 +255,8 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
 
         mAppIcon.setImageDrawable(mAppItem.getIcon());
         mAppLabel.setText(mAppItem.getLabel());
-        mAppPackage.setText(mAppItem.getPackageName());
+        tmp = mAppItem.getPackageName() + " | " + mAppItem.getPackageInfo().versionName;
+        mAppPackage.setText(tmp);
 
         if (mAppItem.isSystemApp()) {
             tmp = getString(R.string.app_system, mAppItem.getLabel());
