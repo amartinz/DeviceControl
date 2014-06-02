@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.squareup.otto.Subscribe;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
@@ -25,6 +26,7 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
 
 public class HotpluggingFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
@@ -38,6 +40,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference  mMpDecision;
     private AwesomeCheckBoxPreference mIntelliPlug;
     private AwesomeCheckBoxPreference mIntelliPlugEco;
+    private CustomListPreference      mCpuQuietGov;
 
     @Override
     public void onAttach(final Activity activity) { super.onAttach(activity, ID_HOTPLUGGING); }
@@ -105,7 +108,32 @@ public class HotpluggingFragment extends AttachPreferenceFragment
                 }
             }
         }
+        removeIfEmpty(category);
 
+        //------------------------------------------------------------------------------------------
+        // CPUquiet
+        //------------------------------------------------------------------------------------------
+        category = (PreferenceCategory) findPreference("cpu_quiet");
+        if (category != null) {
+            if (Utils.fileExists(Application.getStr(R.string.file_cpu_quiet_base))) {
+                if (Utils.fileExists(Application.getStr(R.string.file_cpu_quiet_avail_gov))
+                        && Utils.fileExists(Application.getStr(R.string.file_cpu_quiet_cur_gov))) {
+                    final String[] govs = Utils.readOneLine(
+                            Application.getStr(R.string.file_cpu_quiet_avail_gov)).split(" ");
+                    final String gov = Utils.readOneLine(
+                            Application.getStr(R.string.file_cpu_quiet_cur_gov));
+                    mCpuQuietGov = new CustomListPreference(getActivity());
+                    mCpuQuietGov.setKey("pref_cpu_quiet_governor");
+                    mCpuQuietGov.setTitle(R.string.governor);
+                    mCpuQuietGov.setEntries(govs);
+                    mCpuQuietGov.setEntryValues(govs);
+                    mCpuQuietGov.setValue(gov);
+                    mCpuQuietGov.setSummary(gov);
+                    mCpuQuietGov.setOnPreferenceChangeListener(this);
+                    category.addPreference(mCpuQuietGov);
+                }
+            }
+        }
         removeIfEmpty(category);
 
         isSupported(mRoot, getActivity());
@@ -133,6 +161,15 @@ public class HotpluggingFragment extends AttachPreferenceFragment
             changed = true;
         } else if (preference == mIntelliPlugEco) {
             mIntelliPlugEco.writeValue((Boolean) o);
+            changed = true;
+        } else if (preference == mCpuQuietGov) {
+            final String path = Application.getStr(R.string.file_cpu_quiet_cur_gov);
+            final String value = String.valueOf(o);
+            Utils.runRootCommand(Utils.getWriteCommand(path, value));
+            PreferenceHelper.setBootup(new DataItem(
+                    DatabaseHandler.CATEGORY_EXTRAS, mCpuQuietGov.getKey(),
+                    path, value));
+            mCpuQuietGov.setSummary(value);
             changed = true;
         }
 

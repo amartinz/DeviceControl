@@ -135,6 +135,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
             mHotplugging = (CustomPreference) findPreference("hotplugging");
             if (mHotplugging != null) {
                 if (Utils.fileExists(getString(R.string.file_intelli_plug_base))
+                        || Utils.fileExists(getString(R.string.file_cpu_quiet_base))
                         || Utils.fileExists(MPDECISION_PATH)) {
                     mHotplugging.setOnPreferenceClickListener(this);
                 } else {

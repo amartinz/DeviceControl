@@ -3,6 +3,7 @@
     <!-- Strings -->
     <string name="app_name" translatable="false">Device Control</string>
     <string name="buildprop" translatable="false">Build.Prop</string>
+    <string name="cpu_quiet" translatable="false">CPUquiet</string>
     <string name="msm_dcvs" translatable="false">MSM DCVS</string>
     <string name="empty" translatable="false" />
     <string name="intelli_plug" translatable="false">Intelli-Plug</string>
