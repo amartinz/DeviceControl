@@ -69,6 +69,7 @@ import org.namelessrom.devicecontrol.fragments.tools.sub.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.proprietary.Constants;
+import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -489,7 +490,7 @@ public class MainActivity extends Activity
     //==============================================================================================
     private void setUpIab() {
         final String key = Constants.Iab.getKey();
-        if (!key.equals("---") && Utils.isGmsInstalled()) {
+        if (!key.equals("---") && AppHelper.isPlayStoreInstalled()) {
             mHelper = new IabHelper(this, key);
             if (Application.IS_LOG_DEBUG) {
                 mHelper.enableDebugLogging(true, "IABDEVICECONTROL");

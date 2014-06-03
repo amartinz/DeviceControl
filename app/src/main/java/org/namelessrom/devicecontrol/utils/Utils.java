@@ -51,8 +51,6 @@ public class Utils implements DeviceConstants, FileConstants {
         return existsInFile(Scripts.BUILD_PROP, "ro.nameless.version");
     }
 
-    public static boolean isGmsInstalled() { return isPackageInstalled("com.android.vending"); }
-
     public static boolean existsInFile(final String file, final String prop) {
         return !findPropValue(file, prop).isEmpty();
     }
@@ -287,19 +285,6 @@ public class Utils implements DeviceConstants, FileConstants {
     public static String getWriteCommand(final String path, final String value) {
         return String.format("chmod 644 %s;\n", path) +
                 String.format("busybox echo \"%s\" > %s;\n", value, path);
-    }
-
-    public static boolean isPackageInstalled(final String packageName) {
-        try {
-            final PackageManager pm = Application.getPm();
-            if (pm != null) {
-                pm.getPackageInfo(packageName, 0);
-                return true;
-            }
-        } catch (Exception e) {
-            return false;
-        }
-        return false;
     }
 
     public static void disableComponent(final String packageName, final String componentName) {

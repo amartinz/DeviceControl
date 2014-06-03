@@ -109,7 +109,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (mDetailsShowing || startedFromActivity) {
+        if ((mDetailsShowing || startedFromActivity) && AppHelper.isPlayStoreInstalled()) {
             inflater.inflate(R.menu.menu_app_details, menu);
         }
     }
@@ -129,7 +129,9 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
                 final Intent intent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse("market://details?id=" + mAppItem.getPackageName()));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Application.applicationContext.startActivity(intent);
+                try {
+                    Application.applicationContext.startActivity(intent);
+                } catch (Exception ignored) { }
                 return true;
             }
             default: {

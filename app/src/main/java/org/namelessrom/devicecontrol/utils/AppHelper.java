@@ -138,6 +138,31 @@ public class AppHelper {
                 .format(size / Math.pow(1024, digitGroups)) + ' ' + units[digitGroups];
     }
 
+
+    /**
+     * Check if a specific package is installed.
+     *
+     * @param packageName The package name
+     * @return true if package is installed, false otherwise
+     */
+    public static boolean isPackageInstalled(final String packageName) {
+        try {
+            Application.getPm().getPackageInfo(packageName, 0);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Check if Google Play Store is installed
+     *
+     * @return true if installed
+     */
+    public static boolean isPlayStoreInstalled() {
+        return isPackageInstalled("com.android.vending");
+    }
+
     /**
      * Our Stub for the package stats observer.
      * Usually we just have to override onGetStatsCompleted but my android studio instance is
