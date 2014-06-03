@@ -4,7 +4,7 @@
   <string name="permission_api_label">Accéder a l\'API Device Control</string>
   <string name="permission_api_description">Permettre à l\'application d’accéder et d\'utiliser l\'API Device Control.\nCela signifie que l\'application peut contrôler votre periphérique.</string>
   <string name="crash_toast_text">Device Control a planté&#8230;</string>
-  <string name="crash_dialog_text">Une erreur inattendue s\'est produite forçant l\'application à s\'arrêter. \nAidez nous en envoyant un rapport d\'erreur \nCliquer sur OK.</string>
+  <string name="crash_dialog_text">Une erreur inattendue s\'est produite forçant l\'application à s\'arrêter.\nAidez nous en envoyant un rapport d\'erreur\n\nCliquer sur OK.</string>
   <string name="crash_dialog_ok_toast">Merci !</string>
   <string name="donate">Faire un don \u2665</string>
   <string name="donate_summary">S\'il vous plaît envisagez d\'effectuer un don si vous aimez cette application et désirez contribuer à son développement ultérieur.\nMerci! -Alex</string>
@@ -43,7 +43,7 @@
   <string name="g_speed_title">Hack en vitesse 3G</string>
   <string name="g_speed_summary">Déboucher la vitesse 3g</string>
   <string name="gpu_acceleration">Accélération GPU</string>
-  <string name="gpu_acceleration_summary">Activer l\'accélératión par hardware où le GPU contrôle l\'IU au lieu de la CPU</string>
+  <string name="gpu_acceleration_summary">Activer l\'accélératión par hardware où le GPU contrôle l\'UI au lieu de la CPU</string>
   <string name="lcd_density">Modifier la densité de pixel</string>
   <string name="lcd_density_summary">Établir la densité souhaitée du LCD</string>
   <string name="lcd_density_alt_summary">Densité de l\'écran : %s</string>

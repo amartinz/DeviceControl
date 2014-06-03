@@ -43,7 +43,7 @@
   <string name="g_speed_title">Hack en velocitat 3G</string>
   <string name="g_speed_summary">Destapar la velocitat 3g</string>
   <string name="gpu_acceleration">Acceleració de la GPU</string>
-  <string name="gpu_acceleration_summary">Activar l\'acceleració per hardware en què la GPU controla la IU en lloc de la CPU</string>
+  <string name="gpu_acceleration_summary">Activar l\'acceleració per hardware en què la GPU controla la UI en lloc de la CPU</string>
   <string name="lcd_density">Canviar la densitat de la pantalla LCD</string>
   <string name="lcd_density_summary">Establir la densitat desitjada del LCD</string>
   <string name="lcd_density_alt_summary">Densitat de la pantalla: %s</string>
