@@ -19,8 +19,12 @@ package org.namelessrom.devicecontrol;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.stericson.roottools.RootTools;
@@ -37,27 +41,51 @@ import butterknife.OnClick;
  */
 public class DummyLauncher extends Activity {
 
-    @InjectView(R.id.launcher_status) TextView mStatus;
-    @InjectView(R.id.btn_action)      Button   mAction;
+    @InjectView(R.id.launcher_progressbar) ProgressBar mProgressBar;
 
-    private final boolean hasRoot    = RootTools.isRootAvailable() && RootTools.isAccessGiven();
-    private final boolean hasBusyBox = RootTools.isBusyboxAvailable();
+    @InjectView(R.id.launcher_layout) LinearLayout mLauncher;
+    @InjectView(R.id.launcher_status) TextView     mStatus;
+    @InjectView(R.id.btn_action)      Button       mAction;
 
-    @Override
-    protected void onCreate(final Bundle bundle) {
+    private boolean hasRoot    = false;
+    private boolean hasBusyBox = false;
+
+    @Override protected void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_launcher);
         ButterKnife.inject(this);
 
-        if (hasRoot && hasBusyBox) {
-            startActivity(new Intent(DummyLauncher.this, MainActivity.class));
-            finish();
-        } else if (hasRoot) {
-            mStatus.setText(getString(R.string.app_warning_busybox, getString(R.string.app_name)));
-            mAction.setText(R.string.get_busybox);
-        } else {
-            mStatus.setText(getString(R.string.app_warning_root, getString(R.string.app_name)));
-            mAction.setText(R.string.get_superuser);
+        new CheckTools().execute();
+    }
+
+    private class CheckTools extends AsyncTask<Void, Void, Void> {
+
+        @Override protected Void doInBackground(Void... params) {
+            hasRoot = RootTools.isRootAvailable() && RootTools.isAccessGiven();
+            hasBusyBox = RootTools.isBusyboxAvailable();
+            return null;
+        }
+
+        @Override protected void onPostExecute(Void aVoid) {
+            if (hasRoot && hasBusyBox) {
+                startActivity(new Intent(DummyLauncher.this, MainActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+                finish();
+                return;
+            }
+
+            mProgressBar.setVisibility(View.GONE);
+            mLauncher.setVisibility(View.VISIBLE);
+
+            if (hasRoot) {
+                mStatus.setText(getString(R.string.app_warning_busybox,
+                        getString(R.string.app_name)));
+                mAction.setText(R.string.get_busybox);
+            } else {
+                mStatus.setText(getString(R.string.app_warning_root,
+                        getString(R.string.app_name)));
+                mAction.setText(R.string.get_superuser);
+            }
         }
     }
 
@@ -69,8 +97,10 @@ public class DummyLauncher extends Activity {
         }
     }
 
-    @OnClick(R.id.btn_exit) void onExit() {
+    @OnClick(R.id.btn_exit) void onExit() { finish(); }
+
+    @Override protected void onPause() {
+        super.onPause();
         finish();
     }
-
 }
