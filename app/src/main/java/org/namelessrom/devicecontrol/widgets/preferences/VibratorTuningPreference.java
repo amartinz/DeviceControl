@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2013 The CyanogenMod Project
- * Modifications Copyright (C) 2013-2014 Alexander "Evisceration" Martinz
+ * Modifications Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.namelessrom.devicecontrol.widgets.preferences;
 
 import android.app.AlertDialog;
