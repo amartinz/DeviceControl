@@ -6,8 +6,7 @@ import android.view.View;
 
 public interface MenuInterface {
 
-    public abstract void scrollBehindTo(int x, int y,
-            CustomViewBehind cvb, float scrollScale);
+    public abstract void scrollBehindTo(int x, int y, CustomViewBehind cvb, float scrollScale);
 
     public abstract int getMenuLeft(CustomViewBehind cvb, View content);
 
@@ -27,8 +26,7 @@ public interface MenuInterface {
 
     public abstract void drawShadow(Canvas canvas, Drawable shadow, int width);
 
-    public abstract void drawFade(Canvas canvas, int alpha,
-            CustomViewBehind cvb, View content);
+    public abstract void drawFade(Canvas canvas, int alpha, CustomViewBehind cvb, View content);
 
     public abstract void drawSelector(View content, Canvas canvas, float percentOpen);
 

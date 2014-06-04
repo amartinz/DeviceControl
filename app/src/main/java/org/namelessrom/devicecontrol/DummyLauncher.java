@@ -21,10 +21,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.stericson.roottools.RootTools;
@@ -41,14 +42,16 @@ import butterknife.OnClick;
  */
 public class DummyLauncher extends Activity {
 
-    @InjectView(R.id.launcher_progressbar) ProgressBar mProgressBar;
+    @InjectView(R.id.launcher_progress)        RelativeLayout mProgressLayout;
+    @InjectView(R.id.launcher_progress_status) TextView       mProgressStatus;
 
     @InjectView(R.id.launcher_layout) LinearLayout mLauncher;
     @InjectView(R.id.launcher_status) TextView     mStatus;
     @InjectView(R.id.btn_action)      Button       mAction;
 
-    private boolean hasRoot    = false;
-    private boolean hasBusyBox = false;
+    private final Handler mHandler   = new Handler();
+    private       boolean hasRoot    = false;
+    private       boolean hasBusyBox = false;
 
     @Override protected void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
@@ -58,10 +61,21 @@ public class DummyLauncher extends Activity {
         new CheckTools().execute();
     }
 
+    private void updateStatus(final String text) {
+        mHandler.post(new Runnable() {
+            @Override public void run() {
+                if (mProgressStatus == null) return;
+                mProgressStatus.setText(text);
+            }
+        });
+    }
+
     private class CheckTools extends AsyncTask<Void, Void, Void> {
 
         @Override protected Void doInBackground(Void... params) {
+            updateStatus(getString(R.string.checking_root));
             hasRoot = RootTools.isRootAvailable() && RootTools.isAccessGiven();
+            updateStatus(getString(R.string.checking_busybox));
             hasBusyBox = RootTools.isBusyboxAvailable();
             return null;
         }
@@ -74,7 +88,7 @@ public class DummyLauncher extends Activity {
                 return;
             }
 
-            mProgressBar.setVisibility(View.GONE);
+            mProgressLayout.setVisibility(View.GONE);
             mLauncher.setVisibility(View.VISIBLE);
 
             if (hasRoot) {

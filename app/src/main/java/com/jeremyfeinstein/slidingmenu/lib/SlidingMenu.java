@@ -1,7 +1,6 @@
 package com.jeremyfeinstein.slidingmenu.lib;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,7 +10,6 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -1022,27 +1020,26 @@ public class SlidingMenu extends RelativeLayout {
         int rightPadding = insets.right;
         int topPadding = insets.top;
         int bottomPadding = insets.bottom;
-        if (!mActionbarOverlay) {
+        if (CustomViewAbove.DEBUG && !mActionbarOverlay) {
             Log.v(TAG, "setting padding!");
             setPadding(leftPadding, topPadding, rightPadding, bottomPadding);
         }
         return true;
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void manageLayers(float percentOpen) {
-        if (Build.VERSION.SDK_INT < 11) return;
-
-        boolean layer = percentOpen > 0.0f && percentOpen < 1.0f;
+        final boolean layer = percentOpen > 0.0f && percentOpen < 1.0f;
         final int layerType = layer ? View.LAYER_TYPE_HARDWARE : View.LAYER_TYPE_NONE;
 
-        if (layerType != getContent().getLayerType()) {
+        if (layerType != getContent().getLayerType() && getHandler() != null) {
             getHandler().post(new Runnable() {
                 public void run() {
-                    Log.v(TAG,
-                            "changing layerType. hardware? " + (layerType == View
-                                    .LAYER_TYPE_HARDWARE)
-                    );
+                    if (CustomViewAbove.DEBUG) {
+                        Log.v(TAG,
+                                "changing layerType. hardware? " + (layerType == View
+                                        .LAYER_TYPE_HARDWARE)
+                        );
+                    }
                     getContent().setLayerType(layerType, null);
                     getMenu().setLayerType(layerType, null);
                     if (getSecondaryMenu() != null) {

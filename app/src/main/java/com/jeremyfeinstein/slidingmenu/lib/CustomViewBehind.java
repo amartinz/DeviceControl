@@ -230,7 +230,7 @@ public class CustomViewBehind extends ViewGroup {
                         (x - getBehindWidth()) * mScrollScale), y);
             }
         }
-        if (vis == View.INVISIBLE) { Log.v(TAG, "behind INVISIBLE"); }
+        if (CustomViewAbove.DEBUG && vis == View.INVISIBLE) { Log.v(TAG, "behind INVISIBLE"); }
         setVisibility(vis);
     }
 

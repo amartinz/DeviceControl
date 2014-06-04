@@ -36,7 +36,7 @@ public class CanvasTransformerBuilder {
         mTrans = new CanvasTransformer() {
             public void transformCanvas(Canvas canvas, float percentOpen) {
                 mTrans.transformCanvas(canvas, percentOpen);
-                float f = interp.getInterpolation(percentOpen);
+                final float f = interp.getInterpolation(percentOpen);
                 canvas.scale((openedX - closedX) * f + closedX,
                         (openedY - closedY) * f + closedY, px, py);
             }

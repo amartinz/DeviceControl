@@ -7,6 +7,8 @@
     <string name="app_warning_busybox">Please note that %s requires a BusyBox to fully work!</string>
     <string name="get_busybox">Install BusyBox</string>
     <string name="get_superuser">Install Superuser</string>
+    <string name="checking_root">Checking for root…</string>
+    <string name="checking_busybox">Checking for busybox…</string>
     <string name="exit">Exit</string>
     <string name="close">Close</string>
     <string name="message_loading">Loading, please stand by…</string>

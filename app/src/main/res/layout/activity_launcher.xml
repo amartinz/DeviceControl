@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/main_background"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="org.namelessrom.devicecontrol.DummyLauncher">
 
-    <ProgressBar
-        android:id="@+id/launcher_progressbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+    <RelativeLayout
+        android:id="@+id/launcher_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/launcher_progress_status"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/launcher_progress_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/launcher_layout"

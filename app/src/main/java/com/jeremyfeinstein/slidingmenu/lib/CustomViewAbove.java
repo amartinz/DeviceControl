@@ -33,8 +33,8 @@ import java.util.List;
 
 public class CustomViewAbove extends ViewGroup {
 
+    /* package */ static final boolean DEBUG = false;
     private static final String  TAG   = "CustomViewAbove";
-    private static final boolean DEBUG = false;
 
     private static final boolean USE_CACHE = false;
 
@@ -588,7 +588,7 @@ public class CustomViewAbove extends ViewGroup {
     }
 
     private boolean thisSlideAllowed(float dx) {
-        boolean allowed = false;
+        final boolean allowed;
         if (isMenuOpen()) {
             allowed = mViewBehind.menuOpenSlideAllowed(dx);
         } else {
@@ -613,9 +613,7 @@ public class CustomViewAbove extends ViewGroup {
 
         final int action = ev.getAction() & MotionEventCompat.ACTION_MASK;
 
-        if (DEBUG) {
-            if (action == MotionEvent.ACTION_DOWN) { Log.v(TAG, "Received ACTION_DOWN"); }
-        }
+        if (DEBUG && action == MotionEvent.ACTION_DOWN) { Log.v(TAG, "Received ACTION_DOWN"); }
 
         if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP
                 || (action != MotionEvent.ACTION_DOWN && mIsUnableToDrag)) {

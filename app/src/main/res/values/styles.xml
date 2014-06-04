@@ -23,10 +23,8 @@
         <item name="textAppearanceFinish">@style/TextAppearanceFinish</item>
     </style>
 
-    <style name="NoActionBar" parent="android:Theme.Holo.NoActionBar.TranslucentDecor">
-        <item name="android:background">@drawable/main_background</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+    <style name="NoActionBar" parent="@android:Theme.Holo.NoActionBar.TranslucentDecor">
+        <!-- Customize ads aag kjasdgjkb asdf weu here -->
     </style>
 
     <style name="StandardDivider">
