@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
 Performance Control - An Android CPU Control application
 Copyright (C) Brandon Valosek, 2011 <bvalosek@gmail.com>
@@ -18,7 +17,6 @@ Copyright (C) 2012  James Roberts
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"

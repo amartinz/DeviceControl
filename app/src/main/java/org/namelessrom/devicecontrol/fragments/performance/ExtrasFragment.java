@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
 package org.namelessrom.devicecontrol.fragments.performance;
 
 import android.app.Activity;
