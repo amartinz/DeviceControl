@@ -113,8 +113,4 @@ public class DummyLauncher extends Activity {
 
     @OnClick(R.id.btn_exit) void onExit() { finish(); }
 
-    @Override protected void onPause() {
-        super.onPause();
-        finish();
-    }
 }

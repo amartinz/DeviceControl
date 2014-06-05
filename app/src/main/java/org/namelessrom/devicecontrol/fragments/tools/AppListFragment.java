@@ -94,6 +94,8 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
     private TextView       mStatus;
     private Button         mKillApp;
     private Button         mDisabler;
+    private TextView       mAppCode;
+    private TextView       mAppVersion;
     private BarGraph       mCacheGraph;
     private LinearLayout   mCacheInfo;
     private Button         mClearData;
@@ -126,7 +128,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if ((mDetailsShowing || startedFromActivity) && AppHelper.isPlayStoreInstalled()) {
+        if (!startedFromActivity && mDetailsShowing && AppHelper.isPlayStoreInstalled()) {
             inflater.inflate(R.menu.menu_app_details, menu);
         }
     }
@@ -189,6 +191,8 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
         mStatus = findById(appDetails, R.id.app_status);
         mKillApp = findById(appDetails, R.id.app_kill);
         mDisabler = findById(appDetails, R.id.app_disabler);
+        mAppCode = findById(appDetails, R.id.app_version_code);
+        mAppVersion = findById(appDetails, R.id.app_version_name);
         mCacheGraph = findById(appDetails, R.id.app_cache_graph);
         mCacheInfo = findById(appDetails, R.id.app_cache_info_container);
         mClearData = findById(appDetails, R.id.app_data_clear);
@@ -293,8 +297,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
 
         mAppIcon.setImageDrawable(mAppItem.getIcon());
         mAppLabel.setText(mAppItem.getLabel());
-        tmp = mAppItem.getPackageName() + " | " + mAppItem.getPackageInfo().versionName;
-        mAppPackage.setText(tmp);
+        mAppPackage.setText(mAppItem.getPackageName());
 
         if (mAppItem.isSystemApp()) {
             tmp = getString(R.string.app_system, mAppItem.getLabel());
@@ -317,6 +320,12 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
             mDisabler.setEnabled(true);
         }
         mDisabler.setText(mAppItem.isEnabled() ? R.string.disable : R.string.enable);
+
+        mAppCode.setText(
+                getString(R.string.app_version_code, mAppItem.getPackageInfo().versionCode));
+
+        mAppVersion.setText(
+                getString(R.string.app_version_name, mAppItem.getPackageInfo().versionName));
 
         try {
             AppHelper.getSize(mAppItem.getPackageName());

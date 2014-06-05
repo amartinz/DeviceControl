@@ -39,15 +39,40 @@
                 android:id="@+id/item_app"
                 layout="@layout/item_app" />
 
+            <View style="@style/StandardDivider" />
+
             <TextView
                 android:id="@+id/app_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:textSize="16sp"
                 android:textAlignment="center"
                 android:gravity="center" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:id="@+id/app_version_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_version_code" />
+
+                <TextView
+                    android:id="@+id/app_version_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_version_name" />
+
+            </LinearLayout>
+
+            <View style="@style/StandardDivider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -77,6 +102,8 @@
 
             </LinearLayout>
 
+            <View style="@style/StandardDivider" />
+
             <com.echo.holographlibrary.BarGraph
                 android:id="@+id/app_cache_graph"
                 android:layout_width="match_parent"
@@ -95,6 +122,8 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:animateLayoutChanges="true" />
+
+            <View style="@style/StandardDivider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -122,6 +151,8 @@
                     android:text="@string/clear_cache" />
 
             </LinearLayout>
+
+            <View style="@style/StandardDivider" />
 
         </LinearLayout>
 

@@ -97,9 +97,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_details"
             android:launchMode="singleTask"
-            android:clearTaskOnLaunch="true"
             android:excludeFromRecents="true"
-            android:finishOnTaskLaunch="true"
             android:taskAffinity="">
             <intent-filter>
                 <action android:name="android.settings.APPLICATION_DETAILS_SETTINGS" />

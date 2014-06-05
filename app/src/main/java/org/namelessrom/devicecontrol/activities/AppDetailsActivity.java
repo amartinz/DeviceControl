@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
@@ -31,16 +32,40 @@ public class AppDetailsActivity extends Activity {
 
     public static final String ARG_PACKAGE_NAME = "package";
 
+    @Override protected void onNewIntent(final Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
     @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
-        // Retrieve package name
-        final Bundle args = getIntent().getExtras();
-        String packageName = (args != null) ? args.getString(ARG_PACKAGE_NAME) : null;
+    @Override protected void onResume() {
+        super.onResume();
+        getFragmentManager().beginTransaction()
+                .add(R.id.container, buildFragment(getIntent()))
+                .commit();
+    }
+
+    @Override public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_app_details, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private Fragment buildFragment(Intent intent) {
+        String packageName = null;
+        final Bundle args;
+        if (intent != null) {
+            args = intent.getExtras();
+            packageName = (args != null) ? args.getString(ARG_PACKAGE_NAME) : null;
+        } else {
+            args = null;
+        }
+
         if (packageName == null) {
-            final Intent intent =
-                    (args == null) ? getIntent() : (Intent) args.getParcelable("intent");
+            intent = (args == null) ? getIntent() : (Intent) args.getParcelable("intent");
             if (intent != null && intent.getData() != null) {
                 packageName = intent.getData().getSchemeSpecificPart();
             }
@@ -55,14 +80,7 @@ public class AppDetailsActivity extends Activity {
         final Fragment f = new AppListFragment();
         f.setArguments(bundle);
 
-        // Show fragment
-        getFragmentManager().beginTransaction()
-                .add(R.id.container, f)
-                .commit();
+        return f;
     }
 
-    @Override protected void onPause() {
-        super.onPause();
-        finish();
-    }
 }
