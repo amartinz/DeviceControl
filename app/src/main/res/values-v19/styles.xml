@@ -16,7 +16,7 @@
 -->
 <resources>
 
-    <style name="NoActionBar" parent="@android:Theme.Holo.NoActionBar.TranslucentDecor">
+    <style name="NoActionBar" parent="@android:style/Theme.Holo.NoActionBar.TranslucentDecor">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>

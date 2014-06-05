@@ -23,7 +23,7 @@
         <item name="textAppearanceFinish">@style/TextAppearanceFinish</item>
     </style>
 
-    <style name="NoActionBar" parent="@android:Theme.Holo.NoActionBar.TranslucentDecor">
+    <style name="NoActionBar" parent="@android:style/Theme.Holo.NoActionBar">
         <!-- Customize ads aag kjasdgjkb asdf weu here -->
     </style>
 
