@@ -40,7 +40,7 @@
   <string name="unused_cpu_states">Estados sin uso de la cpu</string>
   <string name="total_state_time">Tiempo total del estado</string>
   <string name="no_states_file_found">No hay archivo de estados encontrado.</string>
-  <string name="deep_sleep">\"Sueño profundo\"</string>
+  <string name="deep_sleep">\"Deep Sleep\"</string>
   <string name="device_information">Información del dispositivo</string>
   <string name="hotplugging">Conexión en caliente</string>
   <string name="mpdecision_summary_on">MPDecision se está ejecutando.</string>
@@ -52,6 +52,8 @@
   <string name="core_temp_limit">Límite de temperatura del núcleo</string>
   <string name="core_max">Núcleos máximos en funcionamiento</string>
   <string name="core_min">Núcleos mínimos en funcionamiento</string>
+  <string name="intelli_thermal_enabled">Habilitar Intelli-Therma</string>
+  <string name="intelli_thermal_enabled_summary">¡Si desactiva sin un sustituto válido, su dispositivo podrá recalentarse!</string>
   <string name="voltage">Voltaje</string>
   <string name="msm_dcvs_summary">Usar MSM DCVS para controlar la frecuencia de la CPU/GPU</string>
   <string name="voltage_control">Control de voltaje</string>
@@ -134,7 +136,7 @@
   <string name="logger_mode">Habilitar Logcat</string>
   <string name="logger_mode_summary">Desmarque para eliminar cualquier registro del logcat</string>
   <string name="show_launcher">Mostrar icono del launcher</string>
-  <string name="show_launcher_summary">Oculta/mostrar el icono del launcher</string>
+  <string name="show_launcher_summary">Ocultar/mostrar el icono del launcher</string>
   <string name="debugging">Depuración</string>
   <string name="extensive_logging">Activación del registro Extensivo</string>
   <string name="extensive_logging_summary_on">Activación del registro en el LogCat habilitado.</string>
