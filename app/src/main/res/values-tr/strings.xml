@@ -157,8 +157,8 @@
   <string name="fstrim_summary">FStrim (veya \"trim\") dosya sistemi tarafından kullanılmakta olmayan bloklar atmak için kullanılır.\ nBu performansını artırabilir ve gecikme sürelerini azaltabilir.</string>
   <string name="fstrim_interval_title">FStrim aralığı</string>
   <string name="fstrim_interval_summary">Otomatik FStrimming için aralığı seçin.</string>
-  <string name="app_system"><![CDATA [uyarı! < br / > <b>%s</b> sistem uygulaması var!]]></string>
-  <string name="app_user"><! [CDATA [<b>%s</b> kullanıcı uygulaması olduğunu.]]></string>
+  <string name="app_system"><![CDATA[uyarı! < br / > <b>%s</b> sistem uygulaması var!]]></string>
+  <string name="app_user"><![CDATA[<b>%s</b> kullanıcı uygulaması olduğunu.]]></string>
   <string name="enable">Etkinleştir</string>
   <string name="enable_msg">%s-etkin olacak.\n\nDevam mı?</string>
   <string name="disable">Pasif</string>
