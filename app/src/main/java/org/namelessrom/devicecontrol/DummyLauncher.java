@@ -30,6 +30,9 @@ import android.widget.TextView;
 
 import com.stericson.roottools.RootTools;
 
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -58,7 +61,11 @@ public class DummyLauncher extends Activity {
         setContentView(R.layout.activity_launcher);
         ButterKnife.inject(this);
 
-        new CheckTools().execute();
+        if (PreferenceHelper.getBoolean(DeviceConstants.SKIP_CHECKS, false)) {
+            startActivity();
+        } else {
+            new CheckTools().execute();
+        }
     }
 
     private void updateStatus(final String text) {
@@ -68,6 +75,12 @@ public class DummyLauncher extends Activity {
                 mProgressStatus.setText(text);
             }
         });
+    }
+
+    private void startActivity() {
+        startActivity(new Intent(DummyLauncher.this, MainActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+        finish();
     }
 
     private class CheckTools extends AsyncTask<Void, Void, Void> {
@@ -82,9 +95,7 @@ public class DummyLauncher extends Activity {
 
         @Override protected void onPostExecute(Void aVoid) {
             if (hasRoot && hasBusyBox) {
-                startActivity(new Intent(DummyLauncher.this, MainActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
-                finish();
+                startActivity();
                 return;
             }
 

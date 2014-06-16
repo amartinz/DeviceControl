@@ -66,6 +66,11 @@
             android:title="@string/show_launcher"
             android:summary="@string/show_launcher_summary" />
 
+        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+            android:key="skip_checks"
+            android:title="@string/skip_checks"
+            android:summary="@string/skip_checks_summary" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

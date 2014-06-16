@@ -262,4 +262,6 @@
     <string name="startup_script_not_installed">Startup script is not installed</string>
     <string name="open_play_store">View application at Google Play\u2122</string>
     <string name="governor">Governor</string>
+    <string name="skip_checks">Skip checks at startup</string>
+    <string name="skip_checks_summary">Do not check for root and busybox on startup\nProceed on your own risk!</string>
 </resources>
