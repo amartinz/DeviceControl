@@ -33,7 +33,10 @@ public class HtmlHelper {
                 "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, " +
                 "maximum-scale=1, user-scalable=no\">" +
                 "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">" +
-                "<title>${title}</title><style>${css}</style>" +
+                "<title>${title}</title>" +
+                "<link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\">" +
+                "<link rel=\"stylesheet\" href=\"/css/font-awesome.min.css\">" +
+                "<link rel=\"stylesheet\" href=\"/css/main.css\">" +
                 "</head>" +
                 "<body role=\"document\" style=\"overflow-y:scroll;\">" +
                 "${navigationbar}" +
@@ -41,42 +44,15 @@ public class HtmlHelper {
                 "${body}" +
                 "</div>" +
                 loadFooter() +
-                loadScripts() +
+                "<script src=\"/js/jquery.min.js\"></script>" +
+                "<script src=\"/js/bootstrap.min.js\"></script>" +
                 "</body>" +
                 "</html>";
 
         return html
-                .replace("${css}", loadCss())
                 .replace("${title}", title)
                 .replace("${navigationbar}", loadNavigationBar())
                 .replace("${body}", body);
-    }
-
-    public static String loadCss() {
-        String css = "";
-        try {
-            css += Utils.loadFromAssets("css/bootstrap.min.css");
-        } catch (Exception ignored) { }
-
-        try {
-            css += Utils.loadFromAssets("css/main.css");
-        } catch (Exception ignored) { }
-
-        return css;
-    }
-
-    public static String loadScripts() {
-        String scripts = "";
-
-        try {
-            scripts += "<script>" + Utils.loadFromAssets("js/jquery.min.js") + "</script>";
-        } catch (Exception ignored) { }
-
-        try {
-            scripts += "<script>" + Utils.loadFromAssets("js/bootstrap.min.js") + "</script>";
-        } catch (Exception ignored) { }
-
-        return scripts;
     }
 
     public static String loadNavigationBar() {
@@ -106,11 +82,13 @@ public class HtmlHelper {
     }
 
     public static String getDirectoryLine(final String path, final String name) {
-        return String.format("<li>Directory: <a href=\"/files%s\">%s</a></li>", path, name);
+        return String.format("<li><i class=\"fa fa-folder-o fa-fw\"></i>&nbsp; " +
+                "<a href=\"/files%s\">%s</a></li>", path, name);
     }
 
     public static String getFileLine(final String path, final String name) {
-        return String.format("<li>File: <a href=\"/files%s\">%s</a></li>", path, name);
+        return String.format("<li><i class=\"fa fa-file-o fa-fw\"></i>&nbsp; " +
+                "<a href=\"/files%s\">%s</a></li>", path, name);
     }
 
 }

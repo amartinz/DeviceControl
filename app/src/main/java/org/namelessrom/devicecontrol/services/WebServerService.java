@@ -101,6 +101,9 @@ public class WebServerService extends Service {
         mServer = new AsyncHttpServer();
         mStringBuilder.append("[!] Server created!\n");
 
+        setupStaticFiles(mServer);
+        mStringBuilder.append("[!] Setup static files\n");
+
         mServer.directory(this, "/license", "license.html");
         mStringBuilder.append("[!] Setup route: /license\n");
 
@@ -246,6 +249,19 @@ public class WebServerService extends Service {
             port = 8080;
         }
         mServerSocket = mServer.listen(port);
+    }
+
+    private void setupStaticFiles(final AsyncHttpServer server) {
+        server.directory(this, "/css/bootstrap.min.css", "css/bootstrap.min.css");
+        server.directory(this, "/css/font-awesome.min.css", "css/font-awesome.min.css");
+        server.directory(this, "/css/main.css", "css/main.css");
+        server.directory(this, "/fonts/FontAwesome.otf", "fonts/FontAwesome.otf");
+        server.directory(this, "/fonts/fontawesome-webfont.eot", "fonts/fontawesome-webfont.eot");
+        server.directory(this, "/fonts/fontawesome-webfont.svg", "fonts/fontawesome-webfont.svg");
+        server.directory(this, "/fonts/fontawesome-webfont.ttf", "fonts/fontawesome-webfont.ttf");
+        server.directory(this, "/fonts/fontawesome-webfont.woff", "fonts/fontawesome-webfont.woff");
+        server.directory(this, "/js/bootstrap.min.js", "js/bootstrap.min.js");
+        server.directory(this, "/js/jquery.min.js", "js/jquery.min.js");
     }
 
     private boolean isAuthenticated(final AsyncHttpServerRequest req) {
