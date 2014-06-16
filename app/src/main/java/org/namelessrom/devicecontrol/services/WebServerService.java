@@ -158,7 +158,6 @@ public class WebServerService extends Service {
                         return;
                     }
                     final StringBuilder sb = new StringBuilder();
-                    sb.append("<a href=\"/files/\">Back to root</a><br /><br />");
                     final List<File> directories = new ArrayList<File>();
                     final List<File> files = new ArrayList<File>();
                     for (final File f : fs) {
@@ -171,6 +170,7 @@ public class WebServerService extends Service {
                         }
                     }
 
+                    sb.append(HtmlHelper.getBreadcrumbs(filePath));
                     final boolean isEmpty = (directories.size() == 0 && files.size() == 0);
                     if (!isEmpty) {
                         sb.append("<ul>");

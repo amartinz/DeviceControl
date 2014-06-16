@@ -6,6 +6,10 @@ body {
   padding-top: 70px;
   margin-bottom: 30px;
 }
+ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
 #footer {
   position: fixed;
   bottom: 0;

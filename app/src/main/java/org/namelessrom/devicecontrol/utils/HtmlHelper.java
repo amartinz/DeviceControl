@@ -21,6 +21,11 @@ import android.os.Build;
 import android.text.Html;
 import android.text.TextUtils;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static org.namelessrom.devicecontrol.Application.logDebug;
+
 /**
  * Easier formatting of HTML pages
  */
@@ -53,6 +58,25 @@ public class HtmlHelper {
                 .replace("${title}", title)
                 .replace("${navigationbar}", loadNavigationBar())
                 .replace("${body}", body);
+    }
+
+    public static String getBreadcrumbs(final String path) {
+        logDebug("getBreadcrumbs(): " + path);
+        return getBreadcrumbs(Arrays.asList(path.replaceFirst("/", "").split("/")));
+    }
+
+    public static String getBreadcrumbs(final List<String> breadcrumbs) {
+        final StringBuilder sb = new StringBuilder();
+        String paths = "/files/";
+        sb.append("<ol class=\"breadcrumb\">");
+        sb.append(String.format("<li><a href=\"%s\">%s</a></li>", paths, "Home"));
+        for (final String s : breadcrumbs) {
+            paths += (s + '/');
+            sb.append(String.format("<li><a href=\"%s\">%s</a></li>", paths, s));
+            logDebug("s: " + s + " | paths: " + paths);
+        }
+        sb.append("</ol>");
+        return sb.toString();
     }
 
     public static String loadNavigationBar() {
