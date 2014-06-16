@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
-import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
 
@@ -169,29 +168,32 @@ public class WebServerService extends Service {
                         }
                     }
 
+                    final boolean isEmpty = (directories.size() == 0 && files.size() == 0);
+                    if (!isEmpty) {
+                        sb.append("<ul>");
+                    } else {
+                        sb.append("Empty :(<br />");
+                    }
+
                     if (directories.size() > 0) {
                         Collections.sort(directories, SortHelper.sFileComparator);
                         for (final File f : directories) {
-                            sb.append("Directory: <a href=\"/files")
-                                    .append(Html.escapeHtml(
-                                            f.getAbsolutePath().replace(sdRoot, "")))
-                                    .append("\">")
-                                    .append(f.getName()).append("</a><br />");
+                            sb.append(HtmlHelper.getDirectoryLine(
+                                    HtmlHelper.escapeHtml(f.getAbsolutePath().replace(sdRoot, "")),
+                                    f.getName()));
                         }
                     }
                     if (files.size() > 0) {
                         Collections.sort(files, SortHelper.sFileComparator);
                         for (final File f : files) {
-                            sb.append("File: <a href=\"/files")
-                                    .append(Html
-                                            .escapeHtml(f.getAbsolutePath().replace(sdRoot, "")))
-                                    .append("\">")
-                                    .append(f.getName()).append("</a><br />");
+                            sb.append(HtmlHelper.getFileLine(
+                                    HtmlHelper.escapeHtml(f.getAbsolutePath().replace(sdRoot, "")),
+                                    f.getName()));
                         }
                     }
 
-                    if (directories.size() == 0 && files.size() == 0) {
-                        sb.append("Empty :(<br />");
+                    if (!isEmpty) {
+                        sb.append("</ul>");
                     }
 
                     res.send(HtmlHelper.getHtmlContainer("File Manager", sb.toString()));
