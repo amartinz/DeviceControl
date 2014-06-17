@@ -21,6 +21,7 @@ import android.os.Build;
 import android.text.Html;
 import android.text.TextUtils;
 
+import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +31,24 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
  * Easier formatting of HTML pages
  */
 public class HtmlHelper {
+
+    public static String escapeHtml(final String html) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            return Html.escapeHtml(html);
+        } else {
+            return TextUtils.htmlEncode(html);
+        }
+    }
+
+    public static String urlDecode(final String s) {
+        String decoded;
+        try {
+            decoded = URLDecoder.decode(s, "UTF-8");
+        } catch (Exception ignored) {
+            decoded = URLDecoder.decode(s);
+        }
+        return decoded;
+    }
 
     public static String getHtmlContainer(final String title, final String body) {
         String html = "<!DOCTYPE html><html lang=\"en\">" +
@@ -45,12 +64,13 @@ public class HtmlHelper {
                 "</head>" +
                 "<body role=\"document\" style=\"overflow-y:scroll;\">" +
                 "${navigationbar}" +
-                "<div class=\"container\" role=\"main\">" +
+                "<div id=\"maincontent\" class=\"container\" role=\"main\">" +
                 "${body}" +
                 "</div>" +
                 loadFooter() +
                 "<script src=\"/js/jquery.min.js\"></script>" +
                 "<script src=\"/js/bootstrap.min.js\"></script>" +
+                "<script src=\"/js/websocket.js\"></script>" +
                 "</body>" +
                 "</html>";
 
@@ -95,14 +115,6 @@ public class HtmlHelper {
         } catch (Exception ignored) { }
 
         return footer;
-    }
-
-    public static String escapeHtml(final String html) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            return Html.escapeHtml(html);
-        } else {
-            return TextUtils.htmlEncode(html);
-        }
     }
 
     public static String getDirectoryLine(final String path, final String name) {

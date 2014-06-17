@@ -222,8 +222,8 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
             webServerService = ((WebServerService.WebServerBinder) binder).getService();
             if (mWirelessFileManager != null) {
                 final String port = ((webServerService != null
-                        && webServerService.getSocket() != null)
-                        ? String.valueOf(webServerService.getSocket().getLocalPort())
+                        && webServerService.getServerSocket() != null)
+                        ? String.valueOf(webServerService.getServerSocket().getLocalPort())
                         : PreferenceHelper.getString(mPort.getKey(), "8080"));
                 mWirelessFileManager.setSummary(getString(R.string.stop_wfm,
                         "http://" + NetworkInfo.getAnyIpAddress() + ":" + port));
