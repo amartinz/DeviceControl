@@ -150,11 +150,8 @@ public class ServerWrapper {
 
                     sb.append(HtmlHelper.getBreadcrumbs(filePath));
                     final boolean isEmpty = (directories.size() == 0 && files.size() == 0);
-                    if (!isEmpty) {
-                        sb.append("<ul>");
-                    } else {
-                        sb.append("Empty :(<br />");
-                    }
+                    sb.append("<ul>");
+                    if (isEmpty) sb.append("<li>Empty :(</li>");
 
                     if (directories.size() > 0) {
                         Collections.sort(directories, SortHelper.sFileComparator);
@@ -173,9 +170,7 @@ public class ServerWrapper {
                         }
                     }
 
-                    if (!isEmpty) {
-                        sb.append("</ul>");
-                    }
+                    sb.append("</ul>");
 
                     res.send(HtmlHelper.getHtmlContainer("File Manager", sb.toString()));
                 } else {
