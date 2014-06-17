@@ -211,8 +211,6 @@ public class ServerWrapper {
                         "Welcome to Device Control's web server!<br /><br />" +
                                 "This feature is highly experimental at the current stage, " +
                                 "you are warned!<br />" +
-                                "Sdcard file manager: " +
-                                "<a href=\"/files\">CLICK HERE</a><br /><br />" +
                                 "More to come soon!"
                 ));
             }
