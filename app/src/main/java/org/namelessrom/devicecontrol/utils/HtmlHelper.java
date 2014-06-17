@@ -22,6 +22,7 @@ import android.text.Html;
 import android.text.TextUtils;
 
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,6 +51,16 @@ public class HtmlHelper {
         return decoded;
     }
 
+    public static String urlEncode(final String s) {
+        String encoded;
+        try {
+            encoded = URLEncoder.encode(s, "UTF-8");
+        } catch (Exception ignored) {
+            encoded = URLEncoder.encode(s);
+        }
+        return encoded;
+    }
+
     public static String getHtmlContainer(final String title, final String body) {
         String html = "<!DOCTYPE html><html lang=\"en\">" +
                 "<head>" +
@@ -70,6 +81,7 @@ public class HtmlHelper {
                 loadFooter() +
                 "<script src=\"/js/jquery.min.js\"></script>" +
                 "<script src=\"/js/bootstrap.min.js\"></script>" +
+                "<script src=\"/js/navigation.js\"></script>" +
                 "<script src=\"/js/websocket.js\"></script>" +
                 "</body>" +
                 "</html>";
@@ -89,10 +101,12 @@ public class HtmlHelper {
         final StringBuilder sb = new StringBuilder();
         String paths = "/files/";
         sb.append("<ol class=\"breadcrumb\">");
-        sb.append(String.format("<li><a href=\"%s\">%s</a></li>", paths, "Home"));
+        sb.append(
+                String.format("<li><a class=\"loadAsync\" href=\"%s\">%s</a></li>", paths, "Home"));
         for (final String s : breadcrumbs) {
             paths += (s + '/');
-            sb.append(String.format("<li><a href=\"%s\">%s</a></li>", paths, s));
+            sb.append(
+                    String.format("<li><a class=\"loadAsync\" href=\"%s\">%s</a></li>", paths, s));
             logDebug("s: " + s + " | paths: " + paths);
         }
         sb.append("</ol>");
@@ -119,12 +133,12 @@ public class HtmlHelper {
 
     public static String getDirectoryLine(final String path, final String name) {
         return String.format("<li><i class=\"fa fa-folder-o fa-fw\"></i>&nbsp; " +
-                "<a href=\"/files%s\">%s</a></li>", path, name);
+                "<a class=\"loadAsync\" href=\"/files%s\">%s</a></li>", path, name);
     }
 
     public static String getFileLine(final String path, final String name) {
         return String.format("<li><i class=\"fa fa-file-o fa-fw\"></i>&nbsp; " +
-                "<a href=\"/files%s\">%s</a></li>", path, name);
+                "<a href=\"/files%s\" download=\"%s\">%s</a></li>", path, name, name);
     }
 
 }

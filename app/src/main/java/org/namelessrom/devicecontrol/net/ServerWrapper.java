@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Environment;
 import android.util.Base64;
-import android.util.Log;
 
 import com.koushikdutta.async.AsyncServerSocket;
 import com.koushikdutta.async.callback.CompletedCallback;
@@ -109,8 +108,9 @@ public class ServerWrapper {
                     return;
                 }
                 boolean isDirectory = true;
-                final String filePath = HtmlHelper.urlDecode(req.getPath().replace("/files", ""));
-                Log.e("SERVER", filePath);
+                final String filePath = HtmlHelper.urlDecode(req.getPath()).replace("/files", "");
+                logDebug("SERVER", "req.getPath(): " + req.getPath());
+                logDebug("SERVER", "filePath: " + filePath);
                 File file;
                 String sdRoot;
                 if (PreferenceHelper.getBoolean("wfm_root", false)) {
@@ -250,6 +250,8 @@ public class ServerWrapper {
                 "js/bootstrap.min.js");
         mServer.directory(Application.applicationContext, "/js/jquery.min.js",
                 "js/jquery.min.js");
+        mServer.directory(Application.applicationContext, "/js/navigation.js",
+                "js/navigation.js");
         mServer.directory(Application.applicationContext, "/js/websocket.js",
                 "js/websocket.js");
     }
