@@ -18,6 +18,7 @@ import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.services.WebServerService;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.HtmlHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -44,6 +45,12 @@ public class ServerWrapper {
 
     private AsyncHttpServer   mServer;
     private AsyncServerSocket mServerSocket;
+
+    private final WebServerService mService;
+
+    public ServerWrapper(final WebServerService service) {
+        mService = service;
+    }
 
     public void stopServer() {
         unregisterReceivers();
@@ -220,6 +227,8 @@ public class ServerWrapper {
             port = 8080;
         }
         mServerSocket = mServer.listen(port);
+
+        mService.setNotification(null);
     }
 
     private void setupStaticFiles() {
@@ -325,4 +334,5 @@ public class ServerWrapper {
     public AsyncHttpServer getServer() { return mServer; }
 
     public AsyncServerSocket getServerSocket() { return mServerSocket; }
+
 }

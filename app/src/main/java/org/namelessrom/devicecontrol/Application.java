@@ -65,8 +65,7 @@ public class Application extends android.app.Application implements DeviceConsta
 
     private static PackageManager packageManager;
 
-    @Override
-    public void onCreate() {
+    @Override public void onCreate() {
         super.onCreate();
         ACRA.init(this);
 
@@ -159,6 +158,10 @@ public class Application extends android.app.Application implements DeviceConsta
 
     public static String getStr(final int resId) {
         return applicationContext.getString(resId);
+    }
+
+    public static String getStr(final int resId, final String... extras) {
+        return applicationContext.getString(resId, (String[]) extras);
     }
 
     /**
