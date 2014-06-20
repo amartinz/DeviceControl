@@ -14,7 +14,7 @@
   <string name="switches">Commutateurs</string>
   <string name="buildprop_title">Modification du build.prop (redémarrage requis)</string>
   <string name="buildprop_settings_warning">Ces ajustages sont pour expérimentation et les changements réalisés en ils ont le potentiel de causer instabilité, accidents, fautes d\'hardware ou perte de données.</string>
-  <string name="nonprop_cat_title">Modifications que impliquent à script init.d</string>
+  <string name="nonprop_cat_title">Modifications impliquants l\'usage de scripts init.d</string>
   <string name="wifi_scan_interval_title">Intervalle de balayage du WiFi</string>
   <string name="wifi_scan_interval_summary">Le temps entre les balayages wifi quand aucun point d\'accès stocké cest disponible</string>
   <string name="wifi_scan_alt_summary">Temps entre les balayages wifi: %s</string>
