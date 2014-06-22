@@ -49,10 +49,12 @@ import org.namelessrom.devicecontrol.fragments.PreferencesFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
 import org.namelessrom.devicecontrol.fragments.device.sub.FastChargeFragment;
+import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
 import org.namelessrom.devicecontrol.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.GpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.InformationFragment;
+import org.namelessrom.devicecontrol.fragments.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.GovernorFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.HotpluggingFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.KsmFragment;
@@ -61,11 +63,10 @@ import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.fragments.tools.WirelessFileManagerFragment;
-import org.namelessrom.devicecontrol.fragments.performance.sub.EntropyFragment;
-import org.namelessrom.devicecontrol.fragments.tools.sub.editor.BuildPropEditorFragment;
-import org.namelessrom.devicecontrol.fragments.tools.sub.editor.BuildPropFragment;
-import org.namelessrom.devicecontrol.fragments.tools.sub.editor.SysctlEditorFragment;
-import org.namelessrom.devicecontrol.fragments.tools.sub.editor.SysctlFragment;
+import org.namelessrom.devicecontrol.fragments.tools.editor.BuildPropEditorFragment;
+import org.namelessrom.devicecontrol.fragments.tools.editor.BuildPropFragment;
+import org.namelessrom.devicecontrol.fragments.tools.editor.SysctlEditorFragment;
+import org.namelessrom.devicecontrol.fragments.tools.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.proprietary.Constants;
@@ -117,6 +118,7 @@ public class MainActivity extends Activity
             R.drawable.ic_menu_perf_extras,
             -1, // Tools
             R.drawable.ic_menu_tasker,
+            R.drawable.ic_menu_flash,
             R.drawable.ic_menu_code,
             -1, // Information
             R.drawable.ic_menu_preferences,
@@ -290,6 +292,9 @@ public class MainActivity extends Activity
             case ID_TOOLS_TASKER:
                 mCurrentFragment = new TaskerFragment();
                 break;
+            case ID_TOOLS_FLASHER:
+                mCurrentFragment = new FilePickerFragment(); //new FlasherFragment();
+                break;
             case ID_TOOLS_MORE:
                 mCurrentFragment = new ToolsMoreFragment();
                 break;
@@ -430,6 +435,12 @@ public class MainActivity extends Activity
                 mTitle = mSubFragmentTitle = R.string.tasker;
                 break;
             //--------------------------------------------------------------------------------------
+            case ID_TOOLS_FLASHER:
+                mActionBarDrawable = R.drawable.ic_menu_flash;
+                mSubActionBarDrawable = -1;
+                mTitle = mFragmentTitle = R.string.flasher;
+                mSubFragmentTitle = -1;
+                break;
             case ID_TOOLS_MORE:
                 mActionBarDrawable = R.drawable.ic_menu_code;
                 mSubActionBarDrawable = -1;
