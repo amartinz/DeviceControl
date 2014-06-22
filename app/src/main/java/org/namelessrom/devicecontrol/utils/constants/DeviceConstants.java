@@ -55,15 +55,16 @@ public interface DeviceConstants {
     public static final int ID_ENTROPY                  = ID_PERFORMANCE_EXTRA + 1400;
     public static final int ID_TOOLS_TASKER             = 9;
     public static final int ID_TOOLS_TASKER_LIST        = ID_TOOLS_TASKER + 1000;
-    public static final int ID_TOOLS_MORE               = 10;
+    public static final int ID_TOOLS_FLASHER            = 10;
+    public static final int ID_TOOLS_MORE               = 11;
     public static final int ID_TOOLS_VM                 = ID_TOOLS_MORE + 1000;
     public static final int ID_TOOLS_EDITORS_VM         = ID_TOOLS_MORE + 1010;
     public static final int ID_TOOLS_BUILD_PROP         = ID_TOOLS_MORE + 1100;
     public static final int ID_TOOLS_EDITORS_BUILD_PROP = ID_TOOLS_MORE + 1110;
     public static final int ID_TOOLS_APP_MANAGER        = ID_TOOLS_MORE + 1200;
     public static final int ID_TOOLS_WIRELESS_FM        = ID_TOOLS_MORE + 1300;
-    public static final int ID_PREFERENCES              = 12;
-    public static final int ID_LICENSES                 = 13;
+    public static final int ID_PREFERENCES              = 13;
+    public static final int ID_LICENSES                 = 14;
     //----------------------------------------------------------------------------------------------
 
     //==============================================================================================
