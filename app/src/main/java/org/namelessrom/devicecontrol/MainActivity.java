@@ -53,6 +53,7 @@ import org.namelessrom.devicecontrol.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.GpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.InformationFragment;
+import org.namelessrom.devicecontrol.fragments.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.GovernorFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.HotpluggingFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.KsmFragment;
@@ -61,11 +62,12 @@ import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.fragments.tools.WirelessFileManagerFragment;
-import org.namelessrom.devicecontrol.fragments.performance.sub.EntropyFragment;
-import org.namelessrom.devicecontrol.fragments.tools.sub.editor.BuildPropEditorFragment;
-import org.namelessrom.devicecontrol.fragments.tools.sub.editor.BuildPropFragment;
-import org.namelessrom.devicecontrol.fragments.tools.sub.editor.SysctlEditorFragment;
-import org.namelessrom.devicecontrol.fragments.tools.sub.editor.SysctlFragment;
+import org.namelessrom.devicecontrol.fragments.tools.editor.BuildPropEditorFragment;
+import org.namelessrom.devicecontrol.fragments.tools.editor.BuildPropFragment;
+import org.namelessrom.devicecontrol.fragments.tools.editor.SysctlEditorFragment;
+import org.namelessrom.devicecontrol.fragments.tools.editor.SysctlFragment;
+import org.namelessrom.devicecontrol.fragments.tools.flasher.FlasherFragment;
+import org.namelessrom.devicecontrol.fragments.tools.flasher.FlasherPreferencesFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.proprietary.Constants;
@@ -117,6 +119,7 @@ public class MainActivity extends Activity
             R.drawable.ic_menu_perf_extras,
             -1, // Tools
             R.drawable.ic_menu_tasker,
+            R.drawable.ic_menu_flash,
             R.drawable.ic_menu_code,
             -1, // Information
             R.drawable.ic_menu_preferences,
@@ -266,6 +269,7 @@ public class MainActivity extends Activity
         switch (i) {
             default:
                 right = HelpFragment.newInstance(ID_DUMMY);
+                // slip through...
             case ID_HOME:
                 mCurrentFragment = new HomeFragment();
                 break;
@@ -289,6 +293,10 @@ public class MainActivity extends Activity
                 break;
             case ID_TOOLS_TASKER:
                 mCurrentFragment = new TaskerFragment();
+                break;
+            case ID_TOOLS_FLASHER:
+                mCurrentFragment = new FlasherFragment();
+                right = new FlasherPreferencesFragment();
                 break;
             case ID_TOOLS_MORE:
                 mCurrentFragment = new ToolsMoreFragment();
@@ -317,6 +325,7 @@ public class MainActivity extends Activity
     @Subscribe
     public void onSectionAttached(final SectionAttachedEvent event) {
         final int id = event.getId();
+        logDebug("onSectionAttached(%s)", id);
         switch (id) {
             case ID_RESTORE:
                 if (mSubFragmentTitle != -1) {
@@ -430,6 +439,12 @@ public class MainActivity extends Activity
                 mTitle = mSubFragmentTitle = R.string.tasker;
                 break;
             //--------------------------------------------------------------------------------------
+            case ID_TOOLS_FLASHER:
+                mActionBarDrawable = R.drawable.ic_menu_flash;
+                mSubActionBarDrawable = -1;
+                mTitle = mFragmentTitle = R.string.flasher;
+                mSubFragmentTitle = -1;
+                break;
             case ID_TOOLS_MORE:
                 mActionBarDrawable = R.drawable.ic_menu_code;
                 mSubActionBarDrawable = -1;

@@ -55,15 +55,16 @@ public interface DeviceConstants {
     public static final int ID_ENTROPY                  = ID_PERFORMANCE_EXTRA + 1400;
     public static final int ID_TOOLS_TASKER             = 9;
     public static final int ID_TOOLS_TASKER_LIST        = ID_TOOLS_TASKER + 1000;
-    public static final int ID_TOOLS_MORE               = 10;
+    public static final int ID_TOOLS_FLASHER            = 10;
+    public static final int ID_TOOLS_MORE               = 11;
     public static final int ID_TOOLS_VM                 = ID_TOOLS_MORE + 1000;
     public static final int ID_TOOLS_EDITORS_VM         = ID_TOOLS_MORE + 1010;
     public static final int ID_TOOLS_BUILD_PROP         = ID_TOOLS_MORE + 1100;
     public static final int ID_TOOLS_EDITORS_BUILD_PROP = ID_TOOLS_MORE + 1110;
     public static final int ID_TOOLS_APP_MANAGER        = ID_TOOLS_MORE + 1200;
     public static final int ID_TOOLS_WIRELESS_FM        = ID_TOOLS_MORE + 1300;
-    public static final int ID_PREFERENCES              = 12;
-    public static final int ID_LICENSES                 = 13;
+    public static final int ID_PREFERENCES              = 13;
+    public static final int ID_LICENSES                 = 14;
     //----------------------------------------------------------------------------------------------
 
     //==============================================================================================
@@ -86,6 +87,11 @@ public interface DeviceConstants {
     public static final String DC_FIRST_START       = "dc_first_start";
     public static final String SHOW_LAUNCHER        = "show_launcher";
     public static final String SKIP_CHECKS          = "skip_checks";
+    //----------------------------------------------------------------------------------------------
+    public static final String PREF_RECOVERY_TYPE   = "pref_recovery_type";
+    public static final int    RECOVERY_TYPE_BOTH   = 0;
+    public static final int    RECOVERY_TYPE_CWM    = 1;
+    public static final int    RECOVERY_TYPE_OPEN   = 2;
     //----------------------------------------------------------------------------------------------
     public static final String CUSTOM_SHELL_COMMAND = "custom_shell_command";
     public static final String SOB_SYSCTL           = "sob_sysctl";
