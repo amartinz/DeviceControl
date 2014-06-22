@@ -106,6 +106,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.FilePickerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/add_item"
+            android:launchMode="singleTask"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".wizard.AddTaskActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/add_task"
