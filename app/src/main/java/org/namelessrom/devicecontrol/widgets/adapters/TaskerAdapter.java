@@ -17,8 +17,6 @@
  */
 package org.namelessrom.devicecontrol.widgets.adapters;
 
-import android.app.Activity;
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -27,6 +25,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
@@ -38,13 +37,11 @@ import static butterknife.ButterKnife.findById;
 
 public class TaskerAdapter extends BaseAdapter {
 
-    private final Context          mContext;
     private final DatabaseHandler  mDatabase;
     private       List<TaskerItem> mTaskerList;
 
-    public TaskerAdapter(final Context context) {
-        mContext = context;
-        mDatabase = DatabaseHandler.getInstance(context);
+    public TaskerAdapter() {
+        mDatabase = DatabaseHandler.getInstance(Application.applicationContext);
         mTaskerList = mDatabase.getAllTaskerItems("");
     }
 
@@ -61,8 +58,7 @@ public class TaskerAdapter extends BaseAdapter {
     public View getView(final int position, View v, final ViewGroup parent) {
         final ViewHolder viewHolder;
         if (v == null) {
-            v = ((Activity) mContext).getLayoutInflater()
-                    .inflate(R.layout.list_item_tasker, parent, false);
+            v = Application.getLayoutInflater().inflate(R.layout.list_item_tasker, parent, false);
             assert (v != null);
             viewHolder = new ViewHolder(v);
             v.setTag(viewHolder);
