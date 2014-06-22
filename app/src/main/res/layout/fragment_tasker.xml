@@ -23,8 +23,7 @@
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="1dp">
-    </ListView>
+        android:dividerHeight="1dp" />
 
     <TextView
         android:id="@android:id/empty"
@@ -33,6 +32,6 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/tasklist_empty" />
+        android:text="@string/list_empty" />
 
 </LinearLayout>
