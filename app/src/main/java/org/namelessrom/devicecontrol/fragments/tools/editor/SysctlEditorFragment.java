@@ -15,13 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.fragments.tools.sub.editor;
+package org.namelessrom.devicecontrol.fragments.tools.editor;
 
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -31,13 +33,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 
@@ -53,6 +54,7 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 import org.namelessrom.devicecontrol.widgets.adapters.PropAdapter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -60,14 +62,16 @@ import java.util.List;
 import static butterknife.ButterKnife.findById;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-public class BuildPropEditorFragment extends AttachFragment
+public class SysctlEditorFragment extends AttachFragment
         implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener {
 
     //==============================================================================================
     // Fields
     //==============================================================================================
-    private static final int REMOVE = 100;
-    private static final int SAVE   = 200;
+    private static final int HANDLER_DELAY = 200;
+
+    private static final int APPLY = 200;
+    private static final int SAVE  = 201;
 
     private ListView       mListView;
     private LinearLayout   mLoadingView;
@@ -79,20 +83,28 @@ public class BuildPropEditorFragment extends AttachFragment
     private       EditText    mFilter  = null;
     private final List<Prop>  mProps   = new ArrayList<Prop>();
 
+    private boolean mLoadFull = false;
+
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
 
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity, ID_TOOLS_EDITORS_BUILD_PROP);
+        super.onAttach(activity, ID_TOOLS_EDITORS_VM);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         BusProvider.getBus().register(this);
-        Utils.getCommandResult(-1, "cat /system/build.prop", null, true);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                new GetPropOperation().execute();
+            }
+        }, HANDLER_DELAY);
     }
 
     @Override
@@ -113,18 +125,6 @@ public class BuildPropEditorFragment extends AttachFragment
         mListView.setOnItemClickListener(this);
         mListView.setFastScrollEnabled(true);
         mListView.setFastScrollAlwaysVisible(true);
-        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(final AdapterView<?> adapterView, final View view
-                    , final int i, final long l) {
-                final Prop p = (Prop) adapterView.getItemAtPosition(i);
-                if (p != null && !p.getName().contains("fingerprint")) {
-                    makeDialog(R.string.delete_property,
-                            getString(R.string.delete_property_message, p.getName()), p);
-                }
-                return true;
-            }
-        });
 
         mLoadingView = findById(view, R.id.loading);
         mEmptyView = findById(view, R.id.nofiles);
@@ -160,8 +160,7 @@ public class BuildPropEditorFragment extends AttachFragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_editor, menu);
 
-        menu.removeItem(R.id.menu_action_apply);
-        menu.removeItem(R.id.menu_action_toggle);
+        menu.removeItem(R.id.menu_action_add);
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -177,8 +176,13 @@ public class BuildPropEditorFragment extends AttachFragment
                 }
                 return true;
             }
-            case R.id.menu_action_add: {
-                editBuildPropDialog(null);
+            case R.id.menu_action_apply: {
+                makeApplyDialog();
+                break;
+            }
+            case R.id.menu_action_toggle: {
+                mLoadFull = !mLoadFull;
+                new GetPropOperation().execute();
                 break;
             }
             default: {
@@ -192,13 +196,81 @@ public class BuildPropEditorFragment extends AttachFragment
     @Override
     public void onItemClick(final AdapterView<?> parent, final View view,
             final int position, final long row) {
-        if (mAdapter == null) return;
-
         final Prop p = mAdapter.getItem(position);
         if (p != null) {
-            if (!p.getName().contains("fingerprint")) {
-                editBuildPropDialog(p);
+            editPropDialog(p);
+        }
+    }
+
+    private void makeApplyDialog() {
+        final Activity activity = getActivity();
+        if (activity == null) return;
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+        dialog.setTitle(getString(R.string.dialog_warning))
+                .setMessage(getString(R.string.dialog_warning_apply));
+        dialog.setNegativeButton(getString(android.R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }
+        );
+        dialog.setPositiveButton(getString(android.R.string.yes),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Utils.remount("/system", "rw");
+                        Utils.getCommandResult(APPLY, Scripts.copyFile(
+                                        Application.getFilesDirectory() + "/sysctl.conf",
+                                        Scripts.SYSCTL)
+                        );
+                        dialogInterface.dismiss();
+                        Toast.makeText(activity,
+                                getString(R.string.toast_settings_applied),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        dialog.show();
+    }
+
+    //==============================================================================================
+    // Async Tasks
+    //==============================================================================================
+
+    private class GetPropOperation extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(final String... params) {
+            final StringBuilder sb = new StringBuilder();
+            final String dn = Application.getFilesDirectory();
+
+            if (new File("/system/etc/sysctl.conf").exists()) {
+                sb.append(Scripts.copyFile("/system/etc/sysctl.conf", dn + "/sysctl.conf"));
+            } else {
+                sb.append("busybox echo \"# created by Device Control\n\" > ")
+                        .append(dn).append("/sysctl.conf;\n");
             }
+
+            if (mLoadFull) {
+                sb.append("busybox echo `busybox find /proc/sys/* -type f -perm -644 |")
+                        .append(" grep -v \"vm.\"`;\n");
+            } else {
+                sb.append("busybox echo `busybox find /proc/sys/vm/* -type f ")
+                        .append("-prune -perm -644`;\n");
+            }
+
+            Utils.getCommandResult(-1, sb.toString());
+
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            mLoadingView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+            mTools.setVisibility(View.GONE);
         }
     }
 
@@ -208,16 +280,15 @@ public class BuildPropEditorFragment extends AttachFragment
         final String result = event.getOutput();
         switch (id) {
             case SAVE:
-                Utils.remount("/system", "ro");
-                break;
-            case REMOVE:
-                Utils.remount("/system", "ro");
-                if (mAdapter != null) mAdapter.notifyDataSetChanged();
+                Utils.remount("/system", "ro"); // slip through to APPLY
+            case APPLY:
+                Utils.runRootCommand("busybox chmod 644 /system/etc/sysctl.conf;"
+                        + "busybox sysctl -p /system/etc/sysctl.conf;");
                 break;
             default:
                 logDebug("onReadPropsCompleted: " + result);
                 if (isAdded()) {
-                    loadBuildProp(result);
+                    loadProp(result);
                 } else {
                     logDebug("Not attached!");
                 }
@@ -229,38 +300,37 @@ public class BuildPropEditorFragment extends AttachFragment
     // Methods
     //==============================================================================================
 
-    void loadBuildProp(final String s) {
+    void loadProp(final String result) {
         final Activity activity = getActivity();
-
-        mProps.clear();
-        final String p[] = s.split("\n");
-        for (String aP : p) {
-            if (!aP.contains("#") && aP.trim().length() > 0 && aP.contains("=")) {
-                aP = aP.replace("[", "").replace("]", "");
-                String pp[] = aP.split("=");
-                if (pp.length >= 2) {
-                    final StringBuilder sb = new StringBuilder();
-                    for (int i = 2; i < pp.length; i++) {
-                        sb.append('=').append(pp[i]);
+        if ((activity != null) && (result != null) && (!result.isEmpty())) {
+            mProps.clear();
+            final String[] p = result.split(" ");
+            for (String aP : p) {
+                if (aP != null && !aP.isEmpty()) {
+                    aP = aP.trim();
+                    final int length = aP.length();
+                    if (length > 0) {
+                        String pv = Utils.readOneLine(aP);
+                        if (pv != null && !pv.isEmpty()) {
+                            pv = pv.trim();
+                        }
+                        final String pn = aP.replace("/", ".").substring(10, length);
+                        mProps.add(new Prop(pn, pv));
                     }
-                    mProps.add(new Prop(pp[0].trim(), pp[1].trim() + sb.toString()));
-                } else {
-                    mProps.add(new Prop(pp[0].trim(), ""));
                 }
             }
-        }
-        Collections.sort(mProps);
-
-        mLoadingView.setVisibility(View.GONE);
-        if (mProps.isEmpty()) {
-            mEmptyView.setVisibility(View.VISIBLE);
-        } else {
-            mEmptyView.setVisibility(View.GONE);
-            mTools.setVisibility(View.VISIBLE);
-            mShadowTop.setVisibility(View.VISIBLE);
-            mShadowBottom.setVisibility(View.VISIBLE);
-            mAdapter = new PropAdapter(activity, mProps);
-            mListView.setAdapter(mAdapter);
+            Collections.sort(mProps);
+            mLoadingView.setVisibility(View.GONE);
+            if (mProps.isEmpty()) {
+                mEmptyView.setVisibility(View.VISIBLE);
+            } else {
+                mEmptyView.setVisibility(View.GONE);
+                mTools.setVisibility(View.VISIBLE);
+                mShadowTop.setVisibility(View.VISIBLE);
+                mShadowBottom.setVisibility(View.VISIBLE);
+                mAdapter = new PropAdapter(activity, mProps);
+                mListView.setAdapter(mAdapter);
+            }
         }
     }
 
@@ -268,142 +338,62 @@ public class BuildPropEditorFragment extends AttachFragment
     // Dialogs
     //==============================================================================================
 
-    private void editBuildPropDialog(final Prop p) {
+    private void editPropDialog(final Prop p) {
         final Activity activity = getActivity();
         if (activity == null) return;
 
+        final String dn = Application.getFilesDirectory();
         String title;
 
         final View editDialog = Application.getLayoutInflater().inflate(
-                R.layout.dialog_build_prop, null, false);
-        final TextView tvName = findById(editDialog, R.id.prop_name_tv);
-        final EditText etName = findById(editDialog, R.id.prop_name);
-        final EditText etValue = findById(editDialog, R.id.prop_value);
-        final Spinner sp = findById(editDialog, R.id.preset_spinner);
-        final LinearLayout lpresets = findById(editDialog, R.id.prop_presets);
-        final ArrayAdapter<CharSequence> vAdapter =
-                new ArrayAdapter<CharSequence>(activity, android.R.layout.simple_spinner_item);
-        vAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        vAdapter.clear();
+                R.layout.dialog_prop, null);
+        final EditText tv = findById(editDialog, R.id.prop_value);
+        final TextView tn = findById(editDialog, R.id.prop_name_tv);
 
         if (p != null) {
+            tv.setText(p.getVal());
+            tn.setText(p.getName());
             title = getString(R.string.edit_property);
-            final String v = p.getVal();
-
-            lpresets.setVisibility(View.GONE);
-            if (v.equals("0")) {
-                vAdapter.add("0");
-                vAdapter.add("1");
-                lpresets.setVisibility(View.VISIBLE);
-                sp.setAdapter(vAdapter);
-            } else if (v.equals("1")) {
-                vAdapter.add("1");
-                vAdapter.add("0");
-                lpresets.setVisibility(View.VISIBLE);
-                sp.setAdapter(vAdapter);
-            } else if (v.equalsIgnoreCase("true")) {
-                vAdapter.add("true");
-                vAdapter.add("false");
-                lpresets.setVisibility(View.VISIBLE);
-                sp.setAdapter(vAdapter);
-            } else if (v.equalsIgnoreCase("false")) {
-                vAdapter.add("false");
-                vAdapter.add("true");
-                lpresets.setVisibility(View.VISIBLE);
-                sp.setAdapter(vAdapter);
-            }
-            tvName.setText(p.getName());
-            etName.setText(p.getName());
-            etName.setVisibility(EditText.GONE);
-            etValue.setText(p.getVal());
         } else {
             title = getString(R.string.add_property);
-            vAdapter.add("");
-            vAdapter.add("0");
-            vAdapter.add("1");
-            vAdapter.add("true");
-            vAdapter.add("false");
-            sp.setAdapter(vAdapter);
-            lpresets.setVisibility(View.VISIBLE);
-            etName.setVisibility(View.VISIBLE);
         }
-        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
-                    int position, long id) {
-                if (sp.getSelectedItem() != null) {
-                    etValue.setText(sp.getSelectedItem().toString().trim());
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) { }
-        });
         new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setView(editDialog)
                 .setNegativeButton(getString(android.R.string.cancel),
                         new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
+                            public void onClick(final DialogInterface dialog, final int which) { }
                         }
                 )
                 .setPositiveButton(getString(R.string.save)
                         , new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(final DialogInterface dialog, final int which) {
                         if (p != null) {
-                            if (etValue.getText() != null) {
+                            if (tv.getText() != null) {
                                 final String name = p.getName();
-                                final String value = etValue.getText().toString().trim();
+                                final String value = tv.getText().toString().trim();
                                 p.setVal(value);
-                                Utils.remount("/system", "rw");
-                                Utils.getCommandResult(SAVE, Scripts.addOrUpdate(name, value));
+                                Utils.getCommandResult(SAVE,
+                                        Scripts.addOrUpdate(name, value, dn + "/sysctl.conf"));
                             }
                         } else {
-                            if (etValue.getText() != null && etName.getText() != null) {
-                                final String name = etName.getText().toString().trim();
+                            if (tv.getText() != null && tn.getText() != null) {
+                                final String name = tn.getText().toString().trim();
+                                final String value = tv.getText().toString().trim();
                                 if (name.length() > 0) {
-                                    final String value = etValue.getText().toString().trim();
                                     mProps.add(new Prop(name, value));
-                                    Utils.remount("/system", "rw");
-                                    Utils.getCommandResult(SAVE, Scripts.addOrUpdate(name, value));
+                                    Utils.getCommandResult(SAVE,
+                                            Scripts.addOrUpdate(name, value, dn + "/sysctl.conf"));
                                 }
                             }
                         }
-
                         Collections.sort(mProps);
-                        if (mAdapter != null) mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();
                     }
-                }).show();
-    }
-
-    private void makeDialog(final int title, final String msg, final Prop prop) {
-        final Activity activity = getActivity();
-        if (activity == null) return;
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle(title)
-                .setMessage(msg)
-                .setNegativeButton(getString(android.R.string.cancel),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        }
-                )
-                .setPositiveButton(getString(android.R.string.yes), new DialogInterface
-                        .OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Utils.remount("/system", "rw");
-                        Utils.getCommandResult(REMOVE, Scripts.removeProperty(prop.getName()));
-                        if (mAdapter != null) mAdapter.remove(prop);
-                    }
-                });
-        builder.show();
+                }).create().show();
     }
 
 }
