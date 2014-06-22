@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import java.io.File;
 import java.util.Hashtable;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
@@ -105,6 +106,17 @@ public class ContentTypes {
             if (ct != null) {return ct; }
         }
         return null;
+    }
+
+    public static boolean isFiletypeMatching(final File file, final String fileType) {
+        return isFiletypeMatching(file.getName(), fileType);
+    }
+
+    public static boolean isFiletypeMatching(final String name, final String fileType) {
+        if (fileType.isEmpty()) return false;
+        final String[] tmpString = name.split("\\.");
+        final String tmp = tmpString[tmpString.length - 1];
+        return (tmp != null && tmp.equals(fileType));
     }
 
 }

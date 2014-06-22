@@ -29,7 +29,7 @@ import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
-import org.namelessrom.devicecontrol.fragments.tools.sub.editor.SysctlFragment;
+import org.namelessrom.devicecontrol.fragments.tools.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.GpuUtils;
