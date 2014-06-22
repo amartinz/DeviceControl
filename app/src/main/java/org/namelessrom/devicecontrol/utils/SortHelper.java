@@ -36,6 +36,11 @@ public class SortHelper {
     public static final Comparator<File> sFileComparator = new Comparator<File>() {
         @Override
         public int compare(final File lhs, final File rhs) {
+            // if we have a directory and a file, we want the directory to win
+            if (lhs.isDirectory() && !rhs.isDirectory()) return -1;
+            // same for a file and a directory
+            if (!lhs.isDirectory() && rhs.isDirectory()) return 1;
+            // if we have two files or two directories, we let the filename decide
             return lhs.getName().toLowerCase().compareTo(rhs.getName().toLowerCase());
         }
     };

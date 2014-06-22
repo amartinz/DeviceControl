@@ -191,9 +191,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param filename The filename
      * @return Whether the file exists or not
      */
-    public static boolean fileExists(final String filename) {
-        return new File(filename).exists();
-    }
+    public static boolean fileExists(final String filename) { return new File(filename).exists(); }
 
     /**
      * Checks if the given paths in a string array are existing and returns the existing path.
@@ -422,4 +420,9 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
+    public static String setPermissions(final String path, final String mask, final int user,
+            final int group) {
+        return String.format("busybox chown %s.%s %s;busybox chmod %s %s;", user, group, path,
+                mask, path);
+    }
 }
