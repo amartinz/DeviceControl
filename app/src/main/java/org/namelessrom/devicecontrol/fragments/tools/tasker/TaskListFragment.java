@@ -53,14 +53,12 @@ public class TaskListFragment extends AttachListFragment implements DeviceConsta
     @Override
     public void onAttach(Activity activity) { super.onAttach(activity, ID_TOOLS_TASKER_LIST); }
 
-    @Override
-    public void onDestroy() {
+    @Override public void onDestroy() {
         super.onDestroy();
         BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
         BusProvider.getBus().register(this);
 
@@ -69,29 +67,25 @@ public class TaskListFragment extends AttachListFragment implements DeviceConsta
         }
     }
 
-    @Override
-    public void onPause() {
+    @Override public void onPause() {
         super.onPause();
         BusProvider.getBus().unregister(this);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_tasker, container, false);
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAdapter = new TaskerAdapter(getActivity());
+        mAdapter = new TaskerAdapter();
         setListAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_tasker, menu);
 
@@ -112,8 +106,7 @@ public class TaskListFragment extends AttachListFragment implements DeviceConsta
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
         switch (id) {
             case android.R.id.home: {
@@ -136,8 +129,7 @@ public class TaskListFragment extends AttachListFragment implements DeviceConsta
         }
     }
 
-    @Subscribe
-    public void onTaskerItem(final TaskerItem item) {
+    @Subscribe public void onTaskerItem(final TaskerItem item) {
         final Intent intent = new Intent(getActivity(), AddTaskActivity.class);
         intent.putExtra(AddTaskActivity.ARG_ITEM, item);
         startActivity(intent);
