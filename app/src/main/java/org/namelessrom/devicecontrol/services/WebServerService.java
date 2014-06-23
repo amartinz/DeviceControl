@@ -17,50 +17,116 @@
  */
 package org.namelessrom.devicecontrol.services;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
-import android.os.Environment;
+import android.os.Build;
 import android.os.IBinder;
-import android.text.Html;
-import android.util.Base64;
-import android.util.Log;
+import android.support.v4.app.NotificationCompat;
 
 import com.koushikdutta.async.AsyncServerSocket;
 import com.koushikdutta.async.http.server.AsyncHttpServer;
-import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
-import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
-import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 
-import org.namelessrom.devicecontrol.utils.ContentTypes;
-import org.namelessrom.devicecontrol.utils.HtmlHelper;
+import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.events.server.ServerStoppedEvent;
+import org.namelessrom.devicecontrol.events.server.ServerStoppingEvent;
+import org.namelessrom.devicecontrol.net.NetworkInfo;
+import org.namelessrom.devicecontrol.net.ServerWrapper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.SortHelper;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
-import java.io.File;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import static org.namelessrom.devicecontrol.Application.getStr;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class WebServerService extends Service {
 
+    public static final int NOTIFICATION_ONGOING = 7861;
+
     public static final String ACTION_START = "action_start";
     public static final String ACTION_STOP  = "action_stop";
 
-    private AsyncHttpServer   mServer;
-    private AsyncServerSocket mServerSocket;
-    private StringBuilder     mStringBuilder;
-
-    private boolean isStopped = false;
+    private ServerWrapper mServerWrapper;
 
     @Override public IBinder onBind(final Intent intent) { return new WebServerBinder(); }
 
     @Override public void onDestroy() {
-        super.onDestroy();
+        BusProvider.getBus().post(new ServerStoppedEvent());
         stopServer();
+        super.onDestroy();
+    }
+
+    @Override public void onCreate() {
+        super.onCreate();
+        startForeground(NOTIFICATION_ONGOING, getNotification());
+    }
+
+    private Notification getNotification() {
+        final String title = getString(R.string.wireless_file_manager);
+        final String text;
+        if (mServerWrapper != null) {
+            final String port = ((getServerSocket() != null)
+                    ? String.valueOf(getServerSocket().getLocalPort())
+                    : PreferenceHelper.getString("wfn_port", "8080"));
+            text = getString(R.string.stop_wfm,
+                    "http://" + NetworkInfo.getAnyIpAddress() + ":" + port);
+        } else {
+            text = getStr(R.string.starting_wfm);
+        }
+
+        final Intent intent = new Intent(this, WebServerService.class);
+        intent.setAction(ACTION_STOP);
+        final PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            final Notification.Builder builder = new Notification.Builder(this);
+            final Notification.InboxStyle inboxStyle = new Notification.InboxStyle(builder);
+            inboxStyle.setBigContentTitle(title);
+            final String[] split = text.split("\n");
+            for (final String s : split) inboxStyle.addLine(s);
+            return builder
+                    .setContentTitle(title)
+                    .setContentText(text)
+                    .setOngoing(true)
+                    .setSmallIcon(R.drawable.ic_general_wifi)
+                    .setStyle(inboxStyle)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
+                    .build();
+        } else {
+            final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            final NotificationCompat.InboxStyle inboxStyle =
+                    new NotificationCompat.InboxStyle(builder);
+            inboxStyle.setBigContentTitle(title);
+            final String[] split = text.split("\n");
+            for (final String s : split) inboxStyle.addLine(s);
+            return builder
+                    .setContentTitle(title)
+                    .setContentText(text)
+                    .setOngoing(true)
+                    .setSmallIcon(R.drawable.ic_general_wifi)
+                    .setStyle(inboxStyle)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
+                    .build();
+        }
+    }
+
+    public void setNotification(Notification notification) {
+        final NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notification == null) notification = getNotification();
+        notificationManager.notify(NOTIFICATION_ONGOING, notification);
+    }
+
+    public void cancelNotification(final int notificationId) {
+        final NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(notificationId);
     }
 
     @Override public int onStartCommand(final Intent intent, final int flags, final int startId) {
@@ -74,204 +140,47 @@ public class WebServerService extends Service {
 
         if (ACTION_START.equals(action)) {
             logDebug("creating server!");
-            createServer();
+            mServerWrapper = new ServerWrapper(this);
+            mServerWrapper.createServer();
         } else {
             logDebug("stopping service!");
+            BusProvider.getBus().post(new ServerStoppingEvent());
             stopServer();
         }
         return START_NOT_STICKY;
     }
 
     private void stopServer() {
-        if (mServer != null) {
-            mServer.stop();
-            mServer = null;
+        if (mServerWrapper != null) {
+            mServerWrapper.stopServer();
+            mServerWrapper = null;
         }
-        if (mServerSocket != null) {
-            mServerSocket.stop();
-            mServerSocket = null;
-        }
-        isStopped = true;
+        stopForeground(true);
         stopSelf();
     }
 
-    private void createServer() {
-        if (mServer != null) return;
-
-        mStringBuilder = new StringBuilder();
-        mServer = new AsyncHttpServer();
-        mStringBuilder.append("[!] Server created!\n");
-
-        mServer.directory(this, "/license", "license.html");
-        mStringBuilder.append("[!] Setup route: /license\n");
-
-        mServer.get("/files", new HttpServerRequestCallback() {
-            @Override public void onRequest(final AsyncHttpServerRequest req,
-                    final AsyncHttpServerResponse res) { res.redirect("/files/"); }
-        });
-        mServer.get("/files/(?s).*", new HttpServerRequestCallback() {
-            @Override public void onRequest(final AsyncHttpServerRequest req,
-                    final AsyncHttpServerResponse res) {
-                if (isStopped) {
-                    res.responseCode(404);
-                    res.end();
-                    return;
-                }
-                if (!isAuthenticated(req)) {
-                    res.getHeaders().getHeaders().add("WWW-Authenticate",
-                            "Basic realm=\"DeviceControl\"");
-                    res.responseCode(401);
-                    res.end();
-                    return;
-                }
-                if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                    res.send("SDCARD not mounted!");
-                    return;
-                }
-                boolean isDirectory = true;
-                final String filePath = URLDecoder.decode(req.getPath().replace("/files", ""));
-                Log.e("SERVER", filePath);
-                File file;
-                String sdRoot;
-                if (PreferenceHelper.getBoolean("wfm_root", false)) {
-                    file = new File("/");
-                    sdRoot = "";
-                } else {
-                    file = Environment.getExternalStorageDirectory();
-                    sdRoot = file.getAbsolutePath();
-                }
-                if (filePath != null && !filePath.isEmpty()) {
-                    file = new File(file, filePath);
-                    if (file.exists()) {
-                        isDirectory = file.isDirectory();
-                    } else {
-                        res.send("File or directory does not exist!");
-                        return;
-                    }
-                }
-                if (isDirectory) {
-                    final File[] fs = file.listFiles();
-                    if (fs == null) {
-                        res.send("An error occured!");
-                        return;
-                    }
-                    final StringBuilder sb = new StringBuilder();
-                    sb.append("<a href=\"/files/\">Back to root</a><br /><br />");
-                    final List<File> directories = new ArrayList<File>();
-                    final List<File> files = new ArrayList<File>();
-                    for (final File f : fs) {
-                        if (f.exists()) {
-                            if (f.isDirectory()) {
-                                directories.add(f);
-                            } else {
-                                files.add(f);
-                            }
-                        }
-                    }
-
-                    if (directories.size() > 0) {
-                        Collections.sort(directories, SortHelper.sFileComparator);
-                        for (final File f : directories) {
-                            sb.append("Directory: <a href=\"/files")
-                                    .append(Html.escapeHtml(
-                                            f.getAbsolutePath().replace(sdRoot, "")))
-                                    .append("\">")
-                                    .append(f.getName()).append("</a><br />");
-                        }
-                    }
-                    if (files.size() > 0) {
-                        Collections.sort(files, SortHelper.sFileComparator);
-                        for (final File f : files) {
-                            sb.append("File: <a href=\"/files")
-                                    .append(Html
-                                            .escapeHtml(f.getAbsolutePath().replace(sdRoot, "")))
-                                    .append("\">")
-                                    .append(f.getName()).append("</a><br />");
-                        }
-                    }
-
-                    if (directories.size() == 0 && files.size() == 0) {
-                        sb.append("Empty :(<br />");
-                    }
-
-                    res.send(HtmlHelper.getHtmlContainer("File Manager", sb.toString()));
-                } else {
-                    final String contentType = ContentTypes.getInstance()
-                            .getContentType(file.getAbsolutePath());
-                    mStringBuilder.append("Requested file: ").append(file.getName()).append('\n');
-                    mStringBuilder.append("Content-Type: ").append(contentType).append('\n');
-                    res.setContentType(contentType);
-                    res.sendFile(file);
-                }
-            }
-        });
-        mStringBuilder.append("[!] Setup route: /files/(?s).*\n");
-
-        mServer.get("/(?s).*", new HttpServerRequestCallback() {
-            @Override public void onRequest(final AsyncHttpServerRequest req,
-                    final AsyncHttpServerResponse res) {
-                if (isStopped) {
-                    res.responseCode(404);
-                    res.end();
-                }
-                if (!isAuthenticated(req)) {
-                    res.getHeaders().getHeaders().add("WWW-Authenticate",
-                            "Basic realm=\"DeviceControl\"");
-                    res.responseCode(401);
-                    res.end();
-                    return;
-                }
-                mStringBuilder.append("[+] Received connection from: ")
-                        .append(req.getHeaders().getUserAgent())
-                        .append('\n');
-                res.send(HtmlHelper.getHtmlContainer("Device Control Web Server",
-                        "Welcome to Device Control's web server!<br /><br />" +
-                                "This feature is highly experimental at the current stage, " +
-                                "you are warned!<br />" +
-                                "Sdcard file manager: " +
-                                "<a href=\"/files\">CLICK HERE</a><br /><br />" +
-                                "More to come soon!"
-                ));
-            }
-        });
-        mStringBuilder.append("[!] Setup route: /\n");
-
-        final String portString = PreferenceHelper.getString("wfm_port", "8080");
-        int port;
-        try {
-            port = Integer.parseInt(portString);
-        } catch (Exception e) {
-            port = 8080;
-        }
-        mServerSocket = mServer.listen(port);
-    }
-
-    private boolean isAuthenticated(final AsyncHttpServerRequest req) {
-        final boolean isAuth = !PreferenceHelper.getBoolean("wfm_auth", true);
-        if (req.getHeaders().hasAuthorization() && !isAuth) {
-            final String auth = req.getHeaders().getHeaders().get("Authorization");
-            if (auth != null && !auth.isEmpty()) {
-                final String[] parts = new String(Base64.decode(auth.replace("Basic", "").trim(),
-                        Base64.DEFAULT)).split(":");
-                return parts[0] != null
-                        && parts[0].equals(PreferenceHelper.getString("wfm_username", "root"))
-                        && parts[1] != null
-                        && parts[1].equals(PreferenceHelper.getString("wfm_password", "toor"));
-            }
-        }
-        return isAuth;
-    }
-
     public String getWebServerLog() {
-        if (mStringBuilder == null) return "";
-        final String log = mStringBuilder.toString();              // save
-        if (!log.isEmpty()) mStringBuilder = new StringBuilder();  // clear
-        return log;                                                // return
+        if (mServerWrapper == null || mServerWrapper.mStringBuilder == null) return "";
+        final String log = mServerWrapper.mStringBuilder.toString();              // save
+        if (!log.isEmpty()) mServerWrapper.mStringBuilder = new StringBuilder();  // clear
+        return log;                                                               // return
     }
 
-    public AsyncHttpServer getServer() { return mServer; }
+    public AsyncHttpServer getServer() {
+        if (mServerWrapper != null) {
+            return mServerWrapper.getServer();
+        } else {
+            return null;
+        }
+    }
 
-    public AsyncServerSocket getSocket() { return mServerSocket; }
+    public AsyncServerSocket getServerSocket() {
+        if (mServerWrapper != null) {
+            return mServerWrapper.getServerSocket();
+        } else {
+            return null;
+        }
+    }
 
     public class WebServerBinder extends Binder {
         public WebServerService getService() { return WebServerService.this; }

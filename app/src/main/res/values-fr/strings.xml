@@ -37,7 +37,7 @@
   <string name="graphics">Graphiques</string>
   <string name="display">Affichage</string>
   <string name="time_in_state">DURÉE DANS L\'ÉTAT</string>
-  <string name="unused_cpu_states">ÉTATS DES CPU NON UTILISÉS</string>
+  <string name="unused_cpu_states">États sans usage de la cpu</string>
   <string name="total_state_time">DURÉE TOTAL ÉTAT</string>
   <string name="no_states_file_found">Aucun fichier États n\'a été trouvé.</string>
   <string name="deep_sleep">\"Deep Sleep\"</string>
@@ -52,6 +52,7 @@
   <string name="core_temp_limit">Limite de température du noyau</string>
   <string name="core_max">Noyaus maximaux en fonctionnement</string>
   <string name="core_min">Noyaus minimes en fonctionnement</string>
+  <string name="intelli_thermal_enabled">Habiliter Intelli-Therma</string>
   <string name="intelli_thermal_enabled_summary">Si désactivé sans remplacement valable, votre appareil pourrait surchauffer!</string>
   <string name="voltage">Tension</string>
   <string name="msm_dcvs_summary">User MSM DCVS pour contrôler la fréquence de la CPU/GPU</string>

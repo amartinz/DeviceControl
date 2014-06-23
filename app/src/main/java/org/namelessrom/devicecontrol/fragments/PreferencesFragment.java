@@ -71,6 +71,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
     //==============================================================================================
     private CustomCheckBoxPreference mExtensiveLogging;
     private CustomCheckBoxPreference mShowLauncher;
+    private CustomCheckBoxPreference mSkipChecks;
 
     @Override
     public void onAttach(Activity activity) {
@@ -103,8 +104,10 @@ public class PreferencesFragment extends AttachPreferenceFragment
                 }
             }
 
-            if (category.getPreferenceCount() == 0) {
-                getPreferenceScreen().removePreference(category);
+            mSkipChecks = (CustomCheckBoxPreference) findPreference(SKIP_CHECKS);
+            if (mSkipChecks != null) {
+                mSkipChecks.setChecked(PreferenceHelper.getBoolean(SKIP_CHECKS));
+                mSkipChecks.setOnPreferenceChangeListener(this);
             }
         }
 
@@ -223,6 +226,11 @@ public class PreferencesFragment extends AttachPreferenceFragment
             PreferenceHelper.setBoolean(SHOW_LAUNCHER, value);
             Application.toggleLauncherIcon(value);
             mShowLauncher.setChecked(value);
+            changed = true;
+        } else if (mSkipChecks == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(SKIP_CHECKS, value);
+            mSkipChecks.setChecked(value);
             changed = true;
         } else if (mMonkeyPref == preference) {
             final boolean value = (Boolean) newValue;

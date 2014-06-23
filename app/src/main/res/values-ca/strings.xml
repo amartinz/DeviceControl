@@ -52,6 +52,7 @@
   <string name="core_temp_limit">Límit de temperatura del nucli</string>
   <string name="core_max">Nuclis màxims en funcionament</string>
   <string name="core_min">Nuclis mínims en funcionament</string>
+  <string name="intelli_thermal_enabled">Habilitar Intelli-Therma</string>
   <string name="intelli_thermal_enabled_summary">Si desactiveu sense un substitut vàlid, el dispositiu podrà reescalfar!</string>
   <string name="voltage">Tensió</string>
   <string name="msm_dcvs_summary">Utilitzar MSM DCVS per controlar la freqüència de la CPU/GPU</string>

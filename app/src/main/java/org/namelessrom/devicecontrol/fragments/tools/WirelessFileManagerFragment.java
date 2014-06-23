@@ -27,9 +27,13 @@ import android.os.IBinder;
 import android.preference.Preference;
 import android.view.MenuItem;
 
+import com.squareup.otto.Subscribe;
+
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
+import org.namelessrom.devicecontrol.events.server.ServerStoppedEvent;
+import org.namelessrom.devicecontrol.events.server.ServerStoppingEvent;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
 import org.namelessrom.devicecontrol.services.WebServerService;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -40,6 +44,8 @@ import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference;
 import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
+
+import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class WirelessFileManagerFragment extends AttachPreferenceFragment
         implements DeviceConstants, Preference.OnPreferenceChangeListener,
@@ -65,11 +71,13 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
 
     @Override public void onPause() {
         super.onPause();
+        BusProvider.getBus().unregister(this);
         unbindService();
     }
 
     @Override public void onResume() {
         super.onResume();
+        BusProvider.getBus().register(this);
         bindService();
     }
 
@@ -80,7 +88,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
         }
     }
 
-    private void unbindService() {
+    public void unbindService() {
         try {
             Application.applicationContext.unbindService(mConnection);
             webServerService = null;
@@ -169,8 +177,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
         return false;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
         switch (id) {
             case android.R.id.home: {
@@ -216,25 +223,44 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
         return false;
     }
 
+    public void updateSummary() {
+        updateSummary(webServerService != null && webServerService.getServerSocket() != null);
+    }
+
+    public void updateSummary(final boolean started) {
+        if (mWirelessFileManager == null) return;
+        final String summary;
+        if (started) {
+            summary = getString(R.string.stop_wfm, "http://" + NetworkInfo.getAnyIpAddress() + ":"
+                    + String.valueOf(webServerService.getServerSocket().getLocalPort()));
+        } else {
+            summary = getString(R.string.start_wfm);
+        }
+        mWirelessFileManager.setSummary(summary);
+    }
+
+    @Subscribe public void onServerStoppedEvent(final ServerStoppedEvent event) {
+        if (event == null) return;
+        logDebug("WirelessFileManagerFragment", "onServerStoppedEvent");
+        updateSummary(false);
+    }
+
+    @Subscribe public void onServerStoppingEvent(final ServerStoppingEvent event) {
+        if (event == null) return;
+        logDebug("WirelessFileManagerFragment", "onServerStoppingEvent");
+        unbindService();
+    }
+
     private final ServiceConnection mConnection = new ServiceConnection() {
 
         public void onServiceConnected(final ComponentName className, final IBinder binder) {
             webServerService = ((WebServerService.WebServerBinder) binder).getService();
-            if (mWirelessFileManager != null) {
-                final String port = ((webServerService != null
-                        && webServerService.getSocket() != null)
-                        ? String.valueOf(webServerService.getSocket().getLocalPort())
-                        : PreferenceHelper.getString(mPort.getKey(), "8080"));
-                mWirelessFileManager.setSummary(getString(R.string.stop_wfm,
-                        "http://" + NetworkInfo.getAnyIpAddress() + ":" + port));
-            }
+            updateSummary();
         }
 
         public void onServiceDisconnected(final ComponentName className) {
             webServerService = null;
-            if (mWirelessFileManager != null) {
-                mWirelessFileManager.setSummary(R.string.start_wfm);
-            }
+            updateSummary(false);
         }
     };
 

@@ -244,4 +244,6 @@
   <string name="remove_startup_script">Remover o script de inicialização</string>
   <string name="startup_script_installed">Script de inicialização está instalado</string>
   <string name="startup_script_not_installed">Script de inicialização não está instalado</string>
+  <string name="open_play_store">Ver aplicação em Google Play\u2122</string>
+  <string name="governor">Governor</string>
 </resources>

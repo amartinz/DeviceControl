@@ -244,6 +244,7 @@
     <string name="wfm_root">Browse in root mode</string>
     <string name="wfm_port">Web server port</string>
     <string name="start_wfm">Server is not running\nPress to start server.</string>
+    <string name="starting_wfm">Server is starting up…</string>
     <string name="stop_wfm">Server is running at %s\nPress to stop server.</string>
     <string name="authentication">Authentication</string>
     <string name="wfm_auth">Use authentication</string>
@@ -262,4 +263,6 @@
     <string name="startup_script_not_installed">Startup script is not installed</string>
     <string name="open_play_store">View application at Google Play\u2122</string>
     <string name="governor">Governor</string>
+    <string name="skip_checks">Skip checks at startup</string>
+    <string name="skip_checks_summary">Do not check for root and busybox on startup\nProceed on your own risk!</string>
 </resources>

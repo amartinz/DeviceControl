@@ -41,6 +41,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
@@ -90,6 +91,29 @@ public class Utils implements DeviceConstants, FileConstants {
         }
 
         return "";
+    }
+
+    public static String loadFromAssets(final String path) throws Exception {
+        final StringBuilder sb = new StringBuilder();
+
+        InputStream htmlStream = null;
+        InputStreamReader reader = null;
+        BufferedReader br = null;
+        try {
+            htmlStream = Application.applicationContext.getAssets().open(path);
+            reader = new InputStreamReader(htmlStream);
+            br = new BufferedReader(reader);
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        } finally {
+            if (br != null) br.close();
+            if (reader != null) reader.close();
+            if (htmlStream != null) htmlStream.close();
+        }
+
+        return sb.toString();
     }
 
     /**
