@@ -29,7 +29,7 @@
   <string name="vm_heapsize_alt_summary">Dalvik VM önbellek boyutu: %s</string>
   <string name="fast_up_title">HSUPA upload hızı kesmek</string>
   <string name="fast_up_summary">* UYARI * Bu değeri değiştirirseniz zaten mevcut değilse sizin build.prop için gerekli değerleri ekleyecektir</string>
-  <string name="fast_up_alt_summary">Hızlı yükleme aktif bulundu: %s</string>
+  <string name="fast_up_alt_summary">Hızlı yükleme şimdi aktif: %s</string>
   <string name="prox_delay_title">Yakınlık sensörü gecikmesi</string>
   <string name="prox_delay_summary">Ekran size çağrı yaparken geri çevirmek ve kafanızdan uzak telefonunuzu hareket edecek gecikme kontrolleri</string>
   <string name="prox_delay_alt_summary">Yakınlık sensörü ayarı: %s</string>
