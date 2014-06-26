@@ -171,8 +171,8 @@
   <string name="fstrim_summary">Fstrim sert à écarter (ou \"trim\") les blocs qui ne sont pas utilisés par le système de fichiers.\nCeci peut améliorer les performances et réduire les latences.</string>
   <string name="fstrim_interval_title">Intervalle de FStrim</string>
   <string name="fstrim_interval_summary">Choisissez l\'intervalle pour le FStrimming automatique.</string>
-  <string name="app_system"><![CDATA [AVERTISSEMENT!<br /> <b>%s</b> est une application système!]]></string>
-  <string name="app_user"><! [CDATA [<b>%s</b> est une application utilisateur.]]></string>
+  <string name="app_system"><![CDATA[AVERTISSEMENT!<br /> <b>%s</b> est une application système!]]></string>
+  <string name="app_user"><![CDATA[<b>%s</b> est une application utilisateur.]]></string>
   <string name="enable">Activer</string>
   <string name="enable_msg">%s sera activé.\n\nContinuer?</string>
   <string name="disable">Désactiver</string>
