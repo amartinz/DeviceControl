@@ -24,7 +24,7 @@ import android.widget.RelativeLayout;
 
 import com.jeremyfeinstein.slidingmenu.lib.CustomViewAbove.OnPageChangeListener;
 
-import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.resources.R;
 
 import java.lang.reflect.Method;
 

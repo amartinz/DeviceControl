@@ -16,9 +16,9 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.preferences.CustomEditTextPreference;
+import org.namelessrom.devicecontrol.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
 
 /**
  * Created by alex on 08.05.14.
