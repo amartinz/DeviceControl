@@ -17,7 +17,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+    <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
         android:key="mpdecision"
         android:title="@string/mpdecision"
         android:summaryOn="@string/mpdecision_summary_on"

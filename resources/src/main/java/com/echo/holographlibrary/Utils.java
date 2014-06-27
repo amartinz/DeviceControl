@@ -2,9 +2,6 @@ package com.echo.holographlibrary;
 
 import android.graphics.Color;
 
-/**
- * Created by sbaiget on 11/04/2014.
- */
 public class Utils {
 
     public static int darkenColor(int color) {

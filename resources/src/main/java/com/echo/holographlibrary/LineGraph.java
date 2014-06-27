@@ -40,7 +40,7 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.resources.R;
 
 import java.util.ArrayList;
 

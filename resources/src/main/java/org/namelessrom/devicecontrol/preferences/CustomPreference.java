@@ -1,4 +1,4 @@
-package org.namelessrom.devicecontrol.widgets.preferences;
+package org.namelessrom.devicecontrol.preferences;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,13 +8,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.resources.R;
 
-import static butterknife.ButterKnife.findById;
+import butterknife.ButterKnife;
 
-/**
- * Created by alex on 21.03.14.
- */
 public class CustomPreference extends Preference {
 
     private String color    = "#FFFFFF";
@@ -81,11 +78,11 @@ public class CustomPreference extends Preference {
     protected void onBindView(final View view) {
         super.onBindView(view);
 
-        final TextView title = findById(view, android.R.id.title);
+        final TextView title = ButterKnife.findById(view, android.R.id.title);
         title.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
         title.setTextColor(Color.parseColor(color));
 
-        final TextView summary = findById(view, android.R.id.summary);
+        final TextView summary = ButterKnife.findById(view, android.R.id.summary);
         summary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
         if (sumColor != null) {
             summary.setTextColor(Color.parseColor(sumColor));
