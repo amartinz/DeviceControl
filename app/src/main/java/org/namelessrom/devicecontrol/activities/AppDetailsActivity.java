@@ -45,7 +45,7 @@ public class AppDetailsActivity extends Activity {
     @Override protected void onResume() {
         super.onResume();
         getFragmentManager().beginTransaction()
-                .add(R.id.container, buildFragment(getIntent()))
+                .replace(R.id.container, buildFragment(getIntent()))
                 .commit();
     }
 

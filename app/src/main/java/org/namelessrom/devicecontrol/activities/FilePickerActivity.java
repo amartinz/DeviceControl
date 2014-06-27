@@ -45,15 +45,16 @@ public class FilePickerActivity extends Activity {
     @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mCurrentFragment = buildFragment(getIntent());
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, mCurrentFragment)
+                .commit();
     }
 
     @Override protected void onResume() {
         super.onResume();
         BusProvider.getBus().register(this);
-        mCurrentFragment = buildFragment(getIntent());
-        getFragmentManager().beginTransaction()
-                .add(R.id.container, mCurrentFragment)
-                .commit();
     }
 
     @Override protected void onPause() {
