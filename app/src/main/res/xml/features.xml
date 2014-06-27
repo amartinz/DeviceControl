@@ -25,7 +25,7 @@
         dc:filePath="@string/file_logger_mode"
         dc:category="features" />
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.resources.preferences.CustomPreference
         android:key="fast_charge"
         android:title="@string/fast_charge"
         android:summary="@string/fast_charge_summary"

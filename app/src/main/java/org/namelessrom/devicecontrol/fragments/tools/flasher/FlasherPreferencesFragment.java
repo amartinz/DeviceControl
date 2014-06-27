@@ -29,7 +29,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.resources.preferences.CustomListPreference;
 
 public class FlasherPreferencesFragment extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants, PerformanceConstants {

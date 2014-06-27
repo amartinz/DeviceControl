@@ -20,7 +20,7 @@
         android:key="prefs_app"
         android:title="@string/app_name">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomPreference
             android:key="pref_donate"
             android:title="@string/donate"
             android:summary="@string/donate_summary" />
@@ -31,27 +31,27 @@
         android:key="prefs_set_on_boot"
         android:title="@string/reapply_on_boot">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomCheckBoxPreference
             android:key="sob_device"
             android:title="@string/device" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomCheckBoxPreference
             android:key="sob_cpu"
             android:title="@string/cpusettings" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomCheckBoxPreference
             android:key="sob_gpu"
             android:title="@string/gpusettings" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomCheckBoxPreference
             android:key="sob_extras"
             android:title="@string/extras" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomCheckBoxPreference
             android:key="sob_voltage"
             android:title="@string/voltage_control" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomCheckBoxPreference
             android:key="sob_sysctl"
             android:title="@string/sysctl_vm" />
 
@@ -61,12 +61,12 @@
         android:key="prefs_general"
         android:title="@string/general">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomCheckBoxPreference
             android:key="show_launcher"
             android:title="@string/show_launcher"
             android:summary="@string/show_launcher_summary" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomCheckBoxPreference
             android:key="skip_checks"
             android:title="@string/skip_checks"
             android:summary="@string/skip_checks_summary" />
@@ -77,7 +77,7 @@
         android:key="prefs_debug"
         android:title="@string/debugging">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomCheckBoxPreference
             android:key="extensive_logging"
             android:title="@string/extensive_logging"
             android:summaryOn="@string/extensive_logging_summary_on"
@@ -89,7 +89,7 @@
         android:key="prefs_version_cat"
         android:title="@string/version">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomPreference
             android:key="prefs_version"
             android:title="@string/empty"
             android:summary="@string/empty" />

@@ -1,27 +1,27 @@
-package org.namelessrom.devicecontrol.widgets.preferences;
+package org.namelessrom.devicecontrol.resources.preferences;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.preference.ListPreference;
+import android.preference.EditTextPreference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.resources.R;
 
-import static butterknife.ButterKnife.findById;
+import butterknife.ButterKnife;
 
-public class CustomListPreference extends ListPreference {
+public class CustomEditTextPreference extends EditTextPreference {
 
     private String color = "#FFFFFF";
 
-    public CustomListPreference(Context context) {
+    public CustomEditTextPreference(Context context) {
         super(context);
         setLayoutResource(R.layout.preference);
     }
 
-    public CustomListPreference(Context context, AttributeSet attrs) {
+    public CustomEditTextPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setLayoutResource(R.layout.preference);
     }
@@ -32,11 +32,11 @@ public class CustomListPreference extends ListPreference {
     protected void onBindView(final View view) {
         super.onBindView(view);
 
-        final TextView title = findById(view, android.R.id.title);
+        final TextView title = ButterKnife.findById(view, android.R.id.title);
         title.setTextColor(Color.parseColor(color));
         title.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
 
-        final TextView summary = findById(view, android.R.id.summary);
+        final TextView summary = ButterKnife.findById(view, android.R.id.summary);
         summary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
     }
 

@@ -17,11 +17,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.resources.preferences.CustomPreference
         android:key="version"
         android:title="@string/version" />
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference
+    <org.namelessrom.devicecontrol.resources.preferences.CustomListPreference
         android:key="force_fast_charge"
         android:title="@string/force_fast_charge" />
 
@@ -31,19 +31,19 @@
         dc:filePath="@string/file_fc_failsafe"
         dc:category="features" />
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.resources.preferences.CustomPreference
         android:key="ac_levels_valid"
         android:title="@string/ac_levels_valid" />
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference
+    <org.namelessrom.devicecontrol.resources.preferences.CustomEditTextPreference
         android:key="ac_level"
         android:title="@string/ac_level" />
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.resources.preferences.CustomPreference
         android:key="usb_levels_valid"
         android:title="@string/usb_levels_valid" />
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference
+    <org.namelessrom.devicecontrol.resources.preferences.CustomEditTextPreference
         android:key="usb_level"
         android:title="@string/usb_level" />
 

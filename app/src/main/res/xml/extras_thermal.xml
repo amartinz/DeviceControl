@@ -21,19 +21,19 @@
         android:key="msm_thermal"
         android:title="@string/msm_thermal">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomEditTextPreference
             android:key="msm_thermal_temp_limit"
             android:title="@string/temp_limit" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomEditTextPreference
             android:key="msm_thermal_core_temp_limit"
             android:title="@string/core_temp_limit" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomEditTextPreference
             android:key="msm_thermal_core_max"
             android:title="@string/core_max" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference
+        <org.namelessrom.devicecontrol.resources.preferences.CustomEditTextPreference
             android:key="msm_thermal_core_min"
             android:title="@string/core_min" />
 
