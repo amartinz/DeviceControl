@@ -33,8 +33,8 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 
 public class GpuSettingsFragment extends AttachPreferenceFragment
         implements DeviceConstants, PerformanceConstants, Preference.OnPreferenceChangeListener {

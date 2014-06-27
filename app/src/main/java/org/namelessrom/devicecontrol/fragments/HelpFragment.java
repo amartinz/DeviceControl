@@ -26,7 +26,7 @@ import android.widget.ListView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.widgets.adapters.HelpArrayAdapter;
+import org.namelessrom.devicecontrol.adapters.HelpArrayAdapter;
 
 import butterknife.ButterKnife;
 

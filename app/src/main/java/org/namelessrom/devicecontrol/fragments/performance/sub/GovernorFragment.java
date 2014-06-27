@@ -47,7 +47,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
 
 import java.io.File;
 
