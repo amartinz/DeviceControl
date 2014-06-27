@@ -68,4 +68,10 @@
         <attr name="selectorEnabled" format="boolean" />
         <attr name="selectorDrawable" format="reference" />
     </declare-styleable>
+    <!-- Flat Toggle Button -->
+    <declare-styleable name="FlatToggleButton">
+        <attr name="theme" />
+        <attr name="cornerRadius" />
+        <attr name="space" format="dimension" />
+    </declare-styleable>
 </resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="AppTheme" parent="@android:style/Theme.Holo">
+
+    <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_dark</item>
+
+    <item name="android:textColorHighlight">#992ab081</item>
+    <item name="android:textSelectHandleLeft">@drawable/apptheme_text_select_handle_left</item>
+    <item name="android:textSelectHandleRight">@drawable/apptheme_text_select_handle_right</item>
+    <item name="android:textSelectHandle">@drawable/apptheme_text_select_handle_middle</item>
+
+    <item name="android:listChoiceIndicatorMultiple">@drawable/apptheme_btn_check_holo_dark</item>
+
+    <item name="android:listChoiceIndicatorSingle">@drawable/apptheme_btn_radio_holo_dark</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerAppTheme</item>
+
+    <item name="android:progressBarStyleHorizontal">@style/ProgressBarAppTheme</item>
+
+    <item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/apptheme_list_selector_holo_dark</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/apptheme_activated_background_holo_dark</item>
+
+    <item name="android:fastScrollThumbDrawable">@drawable/apptheme_fastscroll_thumb_holo</item>
+
+  </style>
+
+</resources>
