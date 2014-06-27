@@ -37,8 +37,8 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
 
 import java.util.ArrayList;
 import java.util.List;

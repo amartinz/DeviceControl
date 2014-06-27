@@ -41,7 +41,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachListFragment;
-import org.namelessrom.devicecontrol.widgets.adapters.TaskerAdapter;
+import org.namelessrom.devicecontrol.adapters.TaskerAdapter;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
 import static butterknife.ButterKnife.findById;

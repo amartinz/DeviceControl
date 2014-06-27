@@ -16,11 +16,11 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
         android:key="wireless_file_manager"
         android:title="@string/wireless_file_manager" />
 
-    <org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference
+    <org.namelessrom.devicecontrol.preferences.CustomEditTextPreference
         android:key="wfm_port"
         android:title="@string/wfm_port"
         android:defaultValue="8080"
@@ -28,20 +28,20 @@
 
     <PreferenceCategory android:title="@string/authentication">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="wfm_auth"
             android:title="@string/wfm_auth"
             android:summary="@string/wfm_auth_summary"
             android:defaultValue="true" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference
+        <org.namelessrom.devicecontrol.preferences.CustomEditTextPreference
             android:key="wfm_username"
             android:title="@string/username"
             android:defaultValue="root"
             android:inputType="text"
             android:dependency="wfm_auth" />
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference
+        <org.namelessrom.devicecontrol.preferences.CustomEditTextPreference
             android:key="wfm_password"
             android:title="@string/password"
             android:defaultValue="toor"
@@ -52,7 +52,7 @@
 
     <PreferenceCategory android:title="@string/extras">
 
-        <org.namelessrom.devicecontrol.widgets.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="wfm_root"
             android:title="@string/wfm_root"
             android:defaultValue="false" />

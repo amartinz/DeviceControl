@@ -35,8 +35,8 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.widgets.preferences.AwesomeCheckBoxPreference;
-import org.namelessrom.devicecontrol.widgets.preferences.CustomEditTextPreference;
+import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.CustomEditTextPreference;
 
 public class ThermalFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
