@@ -46,7 +46,7 @@ import org.namelessrom.devicecontrol.utils.FlashUtils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
-import org.namelessrom.devicecontrol.widgets.adapters.FlashListAdapter;
+import org.namelessrom.devicecontrol.adapters.FlashListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
