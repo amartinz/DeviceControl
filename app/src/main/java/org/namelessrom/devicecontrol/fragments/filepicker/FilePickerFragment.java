@@ -48,7 +48,6 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
     private String root        = "/";
     private String currentPath = "/";
 
-    private FileAdapter fileAdapter;
     private ArrayList<String> breadcrumbs = new ArrayList<String>();
 
     private String fileType = "";
@@ -118,7 +117,7 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
                     if (s.isEmpty()) continue;
                     fileList.add(new File(currentPath + File.separator + s));
                 }
-                fileAdapter = new FileAdapter(fileList);
+                final FileAdapter fileAdapter = new FileAdapter(fileList);
                 fileAdapter.setFileType(fileType);
                 setListAdapter(fileAdapter);
                 break;
