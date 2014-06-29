@@ -90,7 +90,7 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
         final View v = inflater.inflate(R.layout.fragment_flasher, container, false);
 
         mContainer = findById(v, R.id.container);
-        mFlashList = findById(v, R.id.flash_list);
+        mFlashList = findById(v, android.R.id.list);
         mEmptyView = findById(v, android.R.id.empty);
 
         final Button mCancel = findById(v, R.id.btn_cancel);
