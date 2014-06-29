@@ -75,14 +75,12 @@ public class AddTaskActivity extends FragmentActivity implements
 
     private List<Page> mCurrentPageSequence;
 
-    @Override
-    protected void onResume() {
+    @Override protected void onResume() {
         super.onResume();
         BusProvider.getBus().register(this);
     }
 
-    @Override
-    protected void onPause() {
+    @Override protected void onPause() {
         super.onPause();
         BusProvider.getBus().unregister(this);
     }
@@ -171,8 +169,7 @@ public class AddTaskActivity extends FragmentActivity implements
         mPager.setCurrentItem(mPager.getCurrentItem() - 1);
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         final int item = mPager.getCurrentItem();
         if (item > 0) {
             mPager.setCurrentItem(item - 1);
@@ -181,8 +178,7 @@ public class AddTaskActivity extends FragmentActivity implements
         }
     }
 
-    @Subscribe
-    public void onItemSelectedEvent(final ItemSelectedEvent event) {
+    @Subscribe public void onItemSelectedEvent(final ItemSelectedEvent event) {
         if (event == null) return;
         onNextButton();
     }
@@ -194,8 +190,7 @@ public class AddTaskActivity extends FragmentActivity implements
         }
     };
 
-    @Override
-    public void onPageTreeChanged() {
+    @Override public void onPageTreeChanged() {
         mCurrentPageSequence = mWizardModel.getCurrentPageSequence();
         recalculateCutOffPage();
         mStepPagerStrip.setPageCount(mCurrentPageSequence.size() + 1); // + 1 = review step
@@ -223,25 +218,19 @@ public class AddTaskActivity extends FragmentActivity implements
         mPrevButton.setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         super.onDestroy();
         mWizardModel.unregisterListener(this);
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    @Override protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBundle("model", mWizardModel.save());
     }
 
-    @Override
-    public AbstractWizardModel onGetModel() {
-        return mWizardModel;
-    }
+    @Override public AbstractWizardModel onGetModel() { return mWizardModel; }
 
-    @Override
-    public void onEditScreenAfterReview(String key) {
+    @Override public void onEditScreenAfterReview(final String key) {
         for (int i = mCurrentPageSequence.size() - 1; i >= 0; i--) {
             if (mCurrentPageSequence.get(i).getKey().equals(key)) {
                 mConsumePageSelectedEvent = true;
@@ -253,8 +242,7 @@ public class AddTaskActivity extends FragmentActivity implements
         }
     }
 
-    @Override
-    public void onPageDataChanged(Page page) {
+    @Override public void onPageDataChanged(final Page page) {
         if (page.isRequired()) {
             if (recalculateCutOffPage()) {
                 mPagerAdapter.notifyDataSetChanged();
@@ -263,16 +251,14 @@ public class AddTaskActivity extends FragmentActivity implements
         }
     }
 
-    @Override
-    public Page onGetPage(String key) {
-        return mWizardModel.findByKey(key);
-    }
+    @Override public Page onGetPage(final String key) { return mWizardModel.findByKey(key); }
 
     private boolean recalculateCutOffPage() {
         // Cut off the pager adapter at first required page that isn't completed
         int cutOffPage = mCurrentPageSequence.size() + 1;
+        Page page;
         for (int i = 0; i < mCurrentPageSequence.size(); i++) {
-            Page page = mCurrentPageSequence.get(i);
+            page = mCurrentPageSequence.get(i);
             if (page.isRequired() && !page.isCompleted()) {
                 cutOffPage = i;
                 break;
@@ -291,21 +277,16 @@ public class AddTaskActivity extends FragmentActivity implements
         private int      mCutOffPage;
         private Fragment mPrimaryItem;
 
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+        public MyPagerAdapter(final FragmentManager fm) { super(fm); }
 
         @Override
-        public Fragment getItem(int i) {
-            if (i >= mCurrentPageSequence.size()) {
-                return new ReviewFragment();
-            }
+        public Fragment getItem(final int i) {
+            if (i >= mCurrentPageSequence.size()) return new ReviewFragment();
 
             return mCurrentPageSequence.get(i).createFragment();
         }
 
-        @Override
-        public int getItemPosition(Object object) {
+        @Override public int getItemPosition(final Object object) {
             // TODO: be smarter about this
             if (object == mPrimaryItem) {
                 // Re-use the current fragment (its position never changes)
@@ -315,14 +296,12 @@ public class AddTaskActivity extends FragmentActivity implements
             return POSITION_NONE;
         }
 
-        @Override
-        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        @Override public void setPrimaryItem(ViewGroup container, int position, Object object) {
             super.setPrimaryItem(container, position, object);
             mPrimaryItem = (Fragment) object;
         }
 
-        @Override
-        public int getCount() {
+        @Override public int getCount() {
             if (mCurrentPageSequence == null) {
                 return 0;
             }
@@ -336,8 +315,6 @@ public class AddTaskActivity extends FragmentActivity implements
             mCutOffPage = cutOffPage;
         }
 
-        public int getCutOffPage() {
-            return mCutOffPage;
-        }
+        public int getCutOffPage() { return mCutOffPage; }
     }
 }

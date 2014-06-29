@@ -39,6 +39,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import hugo.weaving.DebugLog;
+
 import static butterknife.ButterKnife.findById;
 
 public class CpuStateWidget extends LinearLayout {
@@ -68,15 +70,13 @@ public class CpuStateWidget extends LinearLayout {
         createViews(context);
     }
 
-    @Override
-    protected void onAttachedToWindow() {
+    @Override @DebugLog protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mIsAttached = true;
         BusProvider.getBus().register(this);
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
+    @Override @DebugLog protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mIsAttached = false;
         BusProvider.getBus().unregister(this);
@@ -102,14 +102,11 @@ public class CpuStateWidget extends LinearLayout {
         refreshData();
     }
 
-    private void refreshData() {
-        new CpuStateUpdater().execute();
-    }
+    private void refreshData() { new CpuStateUpdater().execute(); }
 
     private class CpuStateUpdater extends AsyncTask<Void, Void, Void> {
 
-        @Override
-        protected Void doInBackground(Void... params) {
+        @Override protected Void doInBackground(Void... params) {
             if (!mUpdatingData) {
                 mUpdatingData = true;
                 try {
@@ -119,10 +116,7 @@ public class CpuStateWidget extends LinearLayout {
             return null;
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            mUpdatingData = false;
-        }
+        @Override protected void onPostExecute(Void aVoid) { mUpdatingData = false; }
     }
 
     private static String toString(final long tSec) {
@@ -144,8 +138,8 @@ public class CpuStateWidget extends LinearLayout {
         return sDur.toString();
     }
 
-    private View generateStateRow(final CpuStateMonitor.CpuState state, final ViewGroup parent,
-            final long totalStateTime) {
+    @DebugLog private View generateStateRow(final CpuStateMonitor.CpuState state,
+            final ViewGroup parent, final long totalStateTime) {
 
         if (!isAttached()) { return null; }
 
@@ -182,8 +176,7 @@ public class CpuStateWidget extends LinearLayout {
         return view;
     }
 
-    @Subscribe
-    public void onCpuStateEvent(final CpuStateEvent event) {
+    @Subscribe public void onCpuStateEvent(final CpuStateEvent event) {
         if (event == null) { return; }
         if (!isAttached() || getContext() == null) { return; }
 

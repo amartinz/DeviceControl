@@ -37,6 +37,8 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import hugo.weaving.DebugLog;
+
 import static butterknife.ButterKnife.findById;
 
 public class DeviceStatusWidget extends LinearLayout {
@@ -68,16 +70,14 @@ public class DeviceStatusWidget extends LinearLayout {
         createViews(context);
     }
 
-    @Override
-    protected void onAttachedToWindow() {
+    @Override @DebugLog protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mIsAttached = true;
         Application.applicationContext.registerReceiver(mBatteryReceiver,
                 new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
+    @Override @DebugLog protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mIsAttached = false;
         try {
@@ -103,8 +103,8 @@ public class DeviceStatusWidget extends LinearLayout {
         startRepeatingTask();
     }
 
-    private View generateRow(final ViewGroup parent, final String title, final String value,
-            final String barLeft, final String barRight, final int progress) {
+    @DebugLog private View generateRow(final ViewGroup parent, final String title,
+            final String value, final String barLeft, final String barRight, final int progress) {
 
         if (!isAttached()) { return null; }
 
@@ -128,14 +128,12 @@ public class DeviceStatusWidget extends LinearLayout {
 
         private int cpuTemp;
 
-        @Override
-        protected Void doInBackground(Void... voids) {
+        @Override protected Void doInBackground(Void... voids) {
             cpuTemp = CpuUtils.getCpuTemperature();
             return null;
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
+        @Override protected void onPostExecute(Void aVoid) {
             if (isAttached() && getContext() != null) {
                 mDeviceInfo.removeAllViews();
                 if (cpuTemp != -1) {
@@ -174,8 +172,6 @@ public class DeviceStatusWidget extends LinearLayout {
         mDeviceUpdater.run();
     }
 
-    void stopRepeatingTask() {
-        mHandler.removeCallbacks(mDeviceUpdater);
-    }
+    void stopRepeatingTask() { mHandler.removeCallbacks(mDeviceUpdater); }
 
 }

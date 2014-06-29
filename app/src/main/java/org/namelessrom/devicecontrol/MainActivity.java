@@ -82,6 +82,7 @@ import org.namelessrom.devicecontrol.widgets.adapters.MenuListArrayAdapter;
 import java.io.File;
 
 import butterknife.ButterKnife;
+import hugo.weaving.DebugLog;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -129,20 +130,17 @@ public class MainActivity extends Activity
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
-    @Override
-    protected void onResume() {
+    @Override protected void onResume() {
         super.onResume();
         BusProvider.getBus().register(this);
     }
 
-    @Override
-    protected void onPause() {
+    @Override protected void onPause() {
         super.onPause();
         BusProvider.getBus().unregister(this);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -197,19 +195,16 @@ public class MainActivity extends Activity
         }
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         loadFragment(i);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         restoreActionBar();
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (mSubFragmentTitle == -1) {
@@ -220,8 +215,7 @@ public class MainActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
         if (mSlidingMenu.isMenuShowing()) {
             mSlidingMenu.toggle(true);
         } else if (mCurrentFragment instanceof OnBackPressedListener
@@ -242,8 +236,7 @@ public class MainActivity extends Activity
         }
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onDestroy() {
         super.onDestroy();
         synchronized (lockObject) {
             logDebug("closing shells");
@@ -322,10 +315,8 @@ public class MainActivity extends Activity
         ft.commit();
     }
 
-    @Subscribe
-    public void onSectionAttached(final SectionAttachedEvent event) {
+    @Subscribe @DebugLog public int onSectionAttached(final SectionAttachedEvent event) {
         final int id = event.getId();
-        logDebug("onSectionAttached(%s)", id);
         switch (id) {
             case ID_RESTORE:
                 if (mSubFragmentTitle != -1) {
@@ -472,6 +463,8 @@ public class MainActivity extends Activity
             //--------------------------------------------------------------------------------------
         }
         restoreActionBar();
+
+        return id;
     }
 
     public void restoreActionBar() {
@@ -486,8 +479,7 @@ public class MainActivity extends Activity
         }
     }
 
-    @Override
-    public void onOpened() {
+    @Override public void onOpened() {
         int id;
         if (mSlidingMenu.isMenuShowing() && !mSlidingMenu.isSecondaryMenuShowing()) {
             id = ID_FIRST_MENU;
@@ -497,8 +489,7 @@ public class MainActivity extends Activity
         onSectionAttached(new SectionAttachedEvent(id));
     }
 
-    @Override
-    public void onClosed() { onSectionAttached(new SectionAttachedEvent(ID_RESTORE)); }
+    @Override public void onClosed() { onSectionAttached(new SectionAttachedEvent(ID_RESTORE)); }
 
     //==============================================================================================
     // In App Purchase
@@ -522,8 +513,7 @@ public class MainActivity extends Activity
         }
     }
 
-    @Subscribe
-    public void onDonationStartedEvent(final DonationStartedEvent event) {
+    @Subscribe public void onDonationStartedEvent(final DonationStartedEvent event) {
         if (event == null) { return; }
 
         final String sku = event.getSku();
@@ -544,15 +534,13 @@ public class MainActivity extends Activity
         }
     };
 
-    @Override
-    protected void onActivityResult(final int req, final int res, final Intent data) {
+    @Override protected void onActivityResult(final int req, final int res, final Intent data) {
         if (!mHelper.handleActivityResult(req, res, data)) {
             super.onActivityResult(req, res, data);
         }
     }
 
-    @Subscribe
-    public void onSubFragmentEvent(final SubFragmentEvent event) {
+    @Subscribe public void onSubFragmentEvent(final SubFragmentEvent event) {
         if (event == null) return;
 
         final int id = event.getId();
