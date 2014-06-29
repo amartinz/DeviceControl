@@ -17,6 +17,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/item_container"
     android:background="?android:attr/activatedBackgroundIndicator"
+    android:paddingEnd="?android:attr/scrollbarSize"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
