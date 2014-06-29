@@ -16,14 +16,9 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.namelessrom.devicecontrol"
-    android:versionCode="69"
-    android:versionName="0.5.7">
+    package="org.namelessrom.devicecontrol">
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="19"
-        tools:node="replace" />
+    <uses-sdk tools:node="replace" />
 
     <!-- ACRA -->
     <uses-permission android:name="android.permission.INTERNET" />

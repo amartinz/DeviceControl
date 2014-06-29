@@ -4,8 +4,11 @@ android {
     compileSdkVersion 21
     buildToolsVersion '20.0.0'
     defaultConfig {
+        applicationId 'org.namelessrom.devicecontrol'
         minSdkVersion 14
         targetSdkVersion 21
+        versionCode 69
+        versionName '0.5.7'
     }
     signingConfigs {
         release {
@@ -48,8 +51,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_6
         targetCompatibility JavaVersion.VERSION_1_6
     }
-    productFlavors {
-    }
+    productFlavors {}
 }
 
 dependencies {
