@@ -1,4 +1,4 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
@@ -16,10 +16,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_6
         targetCompatibility JavaVersion.VERSION_1_6
     }
-    productFlavors {
-    }
-    buildTypes {
-    }
+    productFlavors {}
+    buildTypes {}
 }
 
 dependencies {
