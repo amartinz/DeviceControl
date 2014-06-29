@@ -32,6 +32,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import hugo.weaving.DebugLog;
+
 public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants, FileConstants {
 
     private static final int    DATABASE_VERSION = 8;
@@ -146,7 +148,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     // All CRUD(Create, Read, Update, Delete) Operations
     //==============================================================================================
 
-    public String getValueByName(final String name, final String tableName) {
+    @DebugLog public String getValueByName(final String name, final String tableName) {
         final SQLiteDatabase db = getReadableDatabase();
 
         if (db == null) return null;
@@ -165,12 +167,13 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return result;
     }
 
-    public boolean insertOrUpdate(final String name, final String value, final String tableName) {
+    @DebugLog public boolean insertOrUpdate(final String name, final String value,
+            final String tableName) {
         return insertOrUpdate(name, value, tableName, getWritableDatabase(), false);
     }
 
-    public boolean insertOrUpdate(final String name, final String value, final String tableName,
-            final SQLiteDatabase db, final boolean keepOpen) {
+    @DebugLog public boolean insertOrUpdate(final String name, final String value,
+            final String tableName, final SQLiteDatabase db, final boolean keepOpen) {
         if (db == null) return false;
 
         final ContentValues values = new ContentValues();
@@ -186,7 +189,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return true;
     }
 
-    public boolean updateBootup(final DataItem item) {
+    @DebugLog public boolean updateBootup(final DataItem item) {
         final SQLiteDatabase db = getWritableDatabase();
 
         if (db == null) return false;
@@ -204,23 +207,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return true;
     }
 
-    public boolean addItem(final DataItem item, final String tableName) {
-        final SQLiteDatabase db = getWritableDatabase();
-
-        if (db == null) return false;
-
-        final ContentValues values = new ContentValues();
-        values.put(KEY_CATEGORY, item.getCategory());
-        values.put(KEY_NAME, item.getName());
-        values.put(KEY_FILENAME, item.getFileName());
-        values.put(KEY_VALUE, item.getValue());
-
-        db.insert(tableName, null, values);
-        db.close();
-        return true;
-    }
-
-    public DataItem getItem(final int id, final String tableName) {
+    @DebugLog public DataItem getItem(final int id, final String tableName) {
         final SQLiteDatabase db = getReadableDatabase();
 
         if (db == null) return null;
@@ -240,7 +227,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return item;
     }
 
-    public List<DataItem> getAllItems(final String tableName, final String category) {
+    @DebugLog public List<DataItem> getAllItems(final String tableName, final String category) {
         final List<DataItem> itemList = new ArrayList<DataItem>();
         final String selectQuery = "SELECT * FROM " + tableName + (category.isEmpty()
                 ? ""
@@ -270,35 +257,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return itemList;
     }
 
-    public int updateItem(final DataItem item, final String tableName) {
-        final SQLiteDatabase db = this.getWritableDatabase();
-
-        if (db == null) return -1;
-
-        final ContentValues values = new ContentValues();
-        values.put(KEY_CATEGORY, item.getCategory());
-        values.put(KEY_NAME, item.getName());
-        values.put(KEY_VALUE, item.getValue());
-        values.put(KEY_FILENAME, item.getFileName());
-
-        final int result = db.update(tableName, values, KEY_ID + " = ?",
-                new String[]{String.valueOf(item.getID())});
-
-        db.close();
-        return result;
-    }
-
-    public boolean deleteItem(final DataItem item, final String tableName) {
-        final SQLiteDatabase db = this.getWritableDatabase();
-
-        if (db == null) return false;
-
-        db.delete(tableName, KEY_ID + " = ?", new String[]{String.valueOf(item.getID())});
-        db.close();
-        return true;
-    }
-
-    public boolean deleteItemByName(final String name, final String tableName) {
+    @DebugLog public boolean deleteItemByName(final String name, final String tableName) {
         final SQLiteDatabase db = this.getWritableDatabase();
 
         if (db == null) return false;
@@ -308,45 +267,11 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return true;
     }
 
-    public boolean deleteItemById(final int ID, final String tableName) {
-        final SQLiteDatabase db = this.getWritableDatabase();
-
-        if (db == null) return false;
-
-        db.delete(tableName, KEY_ID + " = ?", new String[]{String.valueOf(ID)});
-        db.close();
-        return true;
-    }
-
-    public int getTableCount(final String tableName) {
-        final String countQuery = "SELECT  * FROM " + tableName;
-        final SQLiteDatabase db = this.getReadableDatabase();
-
-        if (db == null) return -1;
-
-        final Cursor cursor = db.rawQuery(countQuery, null);
-        final int count = cursor.getCount();
-
-        cursor.close();
-        db.close();
-        return count;
-    }
-
-    public boolean deleteAllItems(final String tableName) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        if (db == null) return false;
-
-        db.delete(tableName, null, null);
-        db.close();
-        return true;
-    }
-
     //----------------------------------------------------------------------------------------------
     // Tasker
     //----------------------------------------------------------------------------------------------
 
-    public boolean addTaskerItem(final TaskerItem item) {
+    @DebugLog public boolean addTaskerItem(final TaskerItem item) {
         final SQLiteDatabase db = getWritableDatabase();
 
         if (db == null) return false;
@@ -363,31 +288,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return true;
     }
 
-    public TaskerItem getTaskerItem(final int id, final String tableName) {
-        final SQLiteDatabase db = getReadableDatabase();
-
-        if (db == null) return null;
-
-        final Cursor cursor = db.query(tableName, new String[]{
-                        KEY_ID, KEY_CATEGORY, KEY_NAME, KEY_FILENAME, KEY_VALUE, KEY_ENABLED
-                }, KEY_ID + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null
-        );
-        if (cursor != null) { cursor.moveToFirst(); }
-        if (cursor == null) return null;
-
-        final String enabled = cursor.getString(5);
-        final TaskerItem item =
-                new TaskerItem(Integer.parseInt(cursor.getString(0)), cursor.getString(1),
-                        cursor.getString(2), cursor.getString(3), cursor.getString(4),
-                        (enabled != null && enabled.equals("1")));
-
-        cursor.close();
-        db.close();
-        return item;
-    }
-
-    public List<TaskerItem> getAllTaskerItems(final String category) {
+    @DebugLog public List<TaskerItem> getAllTaskerItems(final String category) {
         final List<TaskerItem> itemList = new ArrayList<TaskerItem>();
         final String selectQuery = "SELECT * FROM " + TABLE_TASKER + (category.isEmpty()
                 ? ""
@@ -419,7 +320,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return itemList;
     }
 
-    public int updateTaskerItem(final TaskerItem item) {
+    @DebugLog public int updateTaskerItem(final TaskerItem item) {
         final SQLiteDatabase db = this.getWritableDatabase();
 
         if (db == null) return -1;
@@ -438,7 +339,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return result;
     }
 
-    public boolean deleteTaskerItem(final TaskerItem item) {
+    @DebugLog public boolean deleteTaskerItem(final TaskerItem item) {
         final SQLiteDatabase db = this.getWritableDatabase();
 
         if (db == null) return false;
@@ -447,4 +348,5 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         db.close();
         return true;
     }
+
 }

@@ -45,15 +45,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import hugo.weaving.DebugLog;
+
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class Utils implements DeviceConstants, FileConstants {
 
-    public static boolean isNameless() {
+    private static final String[] ENABLED_STATES = {"Y", "TRUE", "1", "255"};
+
+    @DebugLog public static boolean isNameless() {
         return existsInFile(Scripts.BUILD_PROP, "ro.nameless.version");
     }
 
-    public static boolean existsInFile(final String file, final String prop) {
+    @DebugLog public static boolean existsInFile(final String file, final String prop) {
         return !findPropValue(file, prop).isEmpty();
     }
 
@@ -66,7 +70,7 @@ public class Utils implements DeviceConstants, FileConstants {
         return value;
     }
 
-    private static String findPropValueOf(final String file, final String prop)
+    @DebugLog private static String findPropValueOf(final String file, final String prop)
             throws Exception {
         final File f = new File(file);
         if (f.exists() && f.canRead()) {
@@ -93,7 +97,7 @@ public class Utils implements DeviceConstants, FileConstants {
         return "";
     }
 
-    public static String loadFromAssets(final String path) throws Exception {
+    @DebugLog public static String loadFromAssets(final String path) throws Exception {
         final StringBuilder sb = new StringBuilder();
 
         InputStream htmlStream = null;
@@ -122,7 +126,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param sFile The files to read from.
      * @return The read string OR null if not existing.
      */
-    public static String readOneLine(String sFile) {
+    @DebugLog public static String readOneLine(final String sFile) {
         String sLine = null;
         if (fileExists(sFile)) {
             BufferedReader brBuffer;
@@ -146,11 +150,11 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param filePath The file to read
      * @return The file's content
      */
-    public static String readFileViaShell(String filePath) {
+    public static String readFileViaShell(final String filePath) {
         return readFileViaShell(filePath, true);
     }
 
-    public static String readFileViaShell(String filePath, boolean useSu) {
+    @DebugLog public static String readFileViaShell(final String filePath, boolean useSu) {
         final String command = "cat " + filePath;
         return useSu ? CMDProcessor.runSuCommand(command).getStdout()
                 : CMDProcessor.runShellCommand(command).getStdout();
@@ -162,7 +166,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param filename The filename
      * @param value    The value
      */
-    public static void writeValue(final String filename, final String value) {
+    public static boolean writeValue(final String filename, final String value) {
         if (fileExists(filename)) {
             try {
                 final FileWriter fw = new FileWriter(filename);
@@ -171,8 +175,12 @@ public class Utils implements DeviceConstants, FileConstants {
                 } finally {
                     fw.close();
                 }
-            } catch (IOException ignored) { writeValueViaShell(filename, value); }
+            } catch (IOException ignored) {
+                writeValueViaShell(filename, value);
+                return false;
+            }
         }
+        return true;
     }
 
     /**
@@ -181,7 +189,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param filename The file to write
      * @param value    The value to write
      */
-    private static void writeValueViaShell(final String filename, final String value) {
+    @DebugLog private static void writeValueViaShell(final String filename, final String value) {
         runRootCommand(Utils.getWriteCommand(filename, value));
     }
 
@@ -191,7 +199,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param filename The filename
      * @return Whether the file exists or not
      */
-    public static boolean fileExists(final String filename) { return new File(filename).exists(); }
+    @DebugLog public static boolean fileExists(final String f) { return new File(f).exists(); }
 
     /**
      * Checks if the given paths in a string array are existing and returns the existing path.
@@ -199,7 +207,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param paths The string array, containing the file paths
      * @return The path of the existing file as string
      */
-    public static String checkPaths(final String[] paths) {
+    @DebugLog public static String checkPaths(final String[] paths) {
         for (final String s : paths) {
             if (fileExists(s)) { return s; }
         }
@@ -212,7 +220,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param paths The file path
      * @return The path or an empty string if not existant
      */
-    public static String checkPath(final String path) {
+    @DebugLog public static String checkPath(final String path) {
         if (fileExists(path)) { return path; }
         return "";
     }
@@ -241,7 +249,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param path File to read from
      * @return string array
      */
-    public static String[] readStringArray(final String path) {
+    @DebugLog public static String[] readStringArray(final String path) {
         final String line = readOneLine(path);
         if (line != null) {
             return line.split(" ");
@@ -249,11 +257,11 @@ public class Utils implements DeviceConstants, FileConstants {
         return null;
     }
 
-    public static boolean getCommandResult(final String command) {
+    @DebugLog public static boolean getCommandResult(final String command) {
         return new CMDProcessor().su.runWaitFor(command).success();
     }
 
-    public static void runRootCommand(final String command) {
+    @DebugLog public static void runRootCommand(final String command) {
         final CommandCapture comm = new CommandCapture(0, false, command);
         try {
             RootTools.getShell(true).add(comm);
@@ -270,8 +278,8 @@ public class Utils implements DeviceConstants, FileConstants {
         getCommandResult(ID, COMMAND, EXTRAS, false);
     }
 
-    public static void getCommandResult(final int ID, final String COMMAND, final String EXTRAS,
-            final boolean NEWLINE) {
+    @DebugLog public static void getCommandResult(final int ID, final String COMMAND,
+            final String EXTRAS, final boolean NEWLINE) {
         final StringBuilder sb = new StringBuilder();
         final CommandCapture comm = new CommandCapture(0, false, COMMAND) {
             @Override
@@ -301,11 +309,11 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
-    public static String getReadCommand(final String path) {
+    @DebugLog public static String getReadCommand(final String path) {
         return String.format("cat %s 2> /dev/null", path);
     }
 
-    public static String getWriteCommand(final String path, final String value) {
+    @DebugLog public static String getWriteCommand(final String path, final String value) {
         return String.format("chmod 644 %s;\n", path) +
                 String.format("busybox echo \"%s\" > %s;\n", value, path);
     }
@@ -314,16 +322,8 @@ public class Utils implements DeviceConstants, FileConstants {
         toggleComponent(packageName, componentName, true);
     }
 
-    public static void disableComponent(final ComponentName componentName) {
-        toggleComponent(componentName, true);
-    }
-
     public static void enableComponent(final String packageName, final String componentName) {
         toggleComponent(packageName, componentName, false);
-    }
-
-    public static void enableComponent(final ComponentName componentName) {
-        toggleComponent(componentName, false);
     }
 
     public static void toggleComponent(final String packageName, final String componentName,
@@ -343,12 +343,12 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
-    public static void startTaskerService() {
-        if (!PreferenceHelper.getBoolean(USE_TASKER)) return;
+    @DebugLog public static boolean startTaskerService() {
+        if (!PreferenceHelper.getBoolean(USE_TASKER)) return false;
 
         boolean enabled = false;
-        final List<TaskerItem> taskerItemList = DatabaseHandler
-                .getInstance(Application.applicationContext).getAllTaskerItems("");
+        final List<TaskerItem> taskerItemList = DatabaseHandler.getInstance(
+                Application.applicationContext).getAllTaskerItems("");
         for (final TaskerItem item : taskerItemList) {
             if (item.getEnabled()) {
                 enabled = true;
@@ -365,24 +365,25 @@ public class Utils implements DeviceConstants, FileConstants {
             logDebug("Stopping TaskerService");
         }
         Application.applicationContext.startService(tasker);
+
+        return enabled;
     }
 
-    public static boolean isEnabled(String s) {
-        return isEnabled(s, false);
-    }
-
-    public static boolean isEnabled(String s, final boolean contains) {
+    @DebugLog public static boolean isEnabled(String s, final boolean contains) {
         if (s != null) {
             s = s.trim().toUpperCase();
-            if (contains) {
-                return s.contains("Y") || s.contains("1") || s.contains("enabled");
-            } else {
-                return s.equals("Y") || s.equals("1") || s.equals("enabled");
+            for (final String state : ENABLED_STATES) {
+                if (contains) {
+                    if (s.contains(state)) return true;
+                } else {
+                    if (s.equals(state)) return true;
+                }
             }
-        } else { return false; }
+        }
+        return false;
     }
 
-    public static String getBatteryHealth(final int healthInt) {
+    @DebugLog public static String getBatteryHealth(final int healthInt) {
         String health;
 
         switch (healthInt) {
@@ -411,17 +412,19 @@ public class Utils implements DeviceConstants, FileConstants {
         return health;
     }
 
-    public static void remount(final String path, final String mode) {
+    @DebugLog public static boolean remount(final String path, final String mode) {
         try {
             RootTools.remount(path, mode);
         } catch (Exception e) {
             logDebug(String.format("Could not remount %s with options \"%s\", error: %s",
                     path, mode, e));
+            return false;
         }
+        return true;
     }
 
-    public static String setPermissions(final String path, final String mask, final int user,
-            final int group) {
+    @DebugLog public static String setPermissions(final String path, final String mask,
+            final int user, final int group) {
         return String.format("busybox chown %s.%s %s;busybox chmod %s %s;", user, group, path,
                 mask, path);
     }

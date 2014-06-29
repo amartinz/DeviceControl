@@ -19,6 +19,8 @@ package org.namelessrom.devicecontrol.database;
 
 import java.io.Serializable;
 
+import hugo.weaving.DebugLog;
+
 public class TaskerItem implements Serializable {
 
     public static final String CATEGORY_SCREEN_ON  = "screen_on";
@@ -33,19 +35,9 @@ public class TaskerItem implements Serializable {
 
     public TaskerItem() { }
 
-    public TaskerItem(final String category, final String name, final String filename,
+    @DebugLog public TaskerItem(final String category, final String name, final String filename,
             final String value, final boolean enabled) {
         this._id = -1;
-        this._category = category;
-        this._name = name;
-        this._value = value;
-        this._filename = filename;
-        this._enabled = (enabled ? "1" : "0");
-    }
-
-    public TaskerItem(final int id, final String category, final String name, final String filename,
-            final String value, final boolean enabled) {
-        this._id = id;
         this._category = category;
         this._name = name;
         this._value = value;
