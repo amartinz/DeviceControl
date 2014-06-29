@@ -103,7 +103,7 @@ public class TaskerAdapter extends BaseAdapter {
         private final CheckBox     enabled;
 
         public ViewHolder(final View v) {
-            container = findById(v, R.id.item_container);
+            container = findById(v, R.id.list_item_container);
             category = findById(v, R.id.category);
             action = findById(v, R.id.action);
             value = findById(v, R.id.value);

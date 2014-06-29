@@ -36,10 +36,12 @@
         android:layout_margin="5dp">
 
         <LinearLayout
+            android:id="@id/list_item_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp">
 
             <TextView
                 android:id="@+id/flash_name"
