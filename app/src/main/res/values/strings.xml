@@ -17,7 +17,7 @@
 <resources>
     <string name="app_version_name">Versionname: %s</string>
     <string name="app_version_code">Versioncode: %s</string>
-    <string name="app_information_help">Welcome to %1$s!\n\nTo get started, swipe out the menu from the left!\n\nIf you need help or don\'t understand what a specific funtion is doing, swipe right and look at the help!\n\nIf a feature is not supported by your device, it gets automatically hidden!\n\n\nPlease note, that %2$s needs root\nto function properly!\n\n</string>
+    <string name="app_information_help">Welcome to %1$s!\n\nTo get started, swipe out the menu from the left!\n\nIf you need help or don\'t understand what a specific function is doing, swipe right and look at the help!\n\nIf a feature is not supported by your device, it gets automatically hidden!\n\n\nPlease note, that %2$s needs root\nto function properly!\n\n</string>
     <string name="app_warning_root">Please note that %s requires ROOT to fully work!</string>
     <string name="app_warning_busybox">Please note that %s requires a BusyBox to fully work!</string>
     <string name="get_busybox">Install BusyBox</string>
@@ -271,4 +271,5 @@
     <string name="recovery_type_title">Recovery script type</string>
     <string name="flash_warning">You are about to flash!\nWhen continuing, your device will reboot to recovery and flash the selected items.\n\nDo you want to proceed?</string>
     <string name="both">Both</string>
+    <string name="pick_file">Pick a file</string>
 </resources>

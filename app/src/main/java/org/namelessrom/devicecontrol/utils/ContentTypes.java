@@ -113,7 +113,7 @@ public class ContentTypes {
     }
 
     public static boolean isFiletypeMatching(final String name, final String fileType) {
-        if (fileType.isEmpty()) return false;
+        if (fileType.isEmpty()) return true;
         final String[] tmpString = name.split("\\.");
         final String tmp = tmpString.length > 0 ? tmpString[tmpString.length - 1] : null;
         return (tmp != null && tmp.equals(fileType));

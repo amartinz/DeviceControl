@@ -105,8 +105,13 @@
         <activity
             android:name=".activities.FilePickerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/add_item"
-            android:parentActivityName=".MainActivity" />
+            android:label="@string/pick_file"
+            android:parentActivityName=".MainActivity">
+            <intent-filter>
+                <action android:name="org.namelessrom.devicecontrol.api.FILE_PICKER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".wizard.AddTaskActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

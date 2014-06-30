@@ -29,6 +29,7 @@ import org.namelessrom.devicecontrol.events.FlashItemEvent;
 import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
 import org.namelessrom.devicecontrol.fragments.tools.flasher.FlasherFragment;
+import org.namelessrom.devicecontrol.objects.FlashItem;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
@@ -78,7 +79,9 @@ public class FilePickerActivity extends Activity {
     @Subscribe public void onFlashItemEvent(final FlashItemEvent event) {
         if (event == null) return;
         final Bundle b = new Bundle(1);
-        b.putSerializable(FlasherFragment.EXTRA_FLASHITEM, event.getItem());
+        final FlashItem item = event.getItem();
+        b.putString("name", item.getName());
+        b.putString("path", item.getPath());
         final Intent i = new Intent();
         i.putExtras(b);
         setResult(Activity.RESULT_OK, i);
