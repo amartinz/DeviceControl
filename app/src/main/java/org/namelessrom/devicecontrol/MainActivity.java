@@ -23,11 +23,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,9 +37,11 @@ import com.android.vending.billing.util.IabHelper;
 import com.android.vending.billing.util.IabResult;
 import com.android.vending.billing.util.Purchase;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.squareup.otto.Subscribe;
 import com.stericson.roottools.RootTools;
 
+import org.namelessrom.devicecontrol.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
@@ -77,7 +81,6 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.adapters.MenuListArrayAdapter;
 
 import java.io.File;
 
@@ -173,7 +176,7 @@ public class MainActivity extends Activity
         final ListView mMenuList = ButterKnife.findById(v, R.id.navbarlist);
 
         mSlidingMenu = new SlidingMenu(this);
-        mSlidingMenu.setBackgroundResource(R.drawable.bg_menu_dark);
+        mSlidingMenu.setBackgroundColor(getResources().getColor(R.color.material_grey_300));
         mSlidingMenu.setMode(SlidingMenu.LEFT_RIGHT);
         mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
@@ -183,7 +186,8 @@ public class MainActivity extends Activity
         mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         mSlidingMenu.setMenu(v);
 
-        final View vv = getLayoutInflater().inflate(R.layout.menu_prefs, null, false);
+        final LinearLayout vv =
+                (LinearLayout) getLayoutInflater().inflate(R.layout.menu_prefs, null, false);
         mSlidingMenu.setSecondaryMenu(vv);
         mSlidingMenu.setSecondaryShadowDrawable(R.drawable.shadow_right);
 
@@ -211,6 +215,32 @@ public class MainActivity extends Activity
             }
             Toast.makeText(this, R.string.downgraded, Toast.LENGTH_LONG).show();
         }
+
+        // jump out, do not tint below kitkat
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+
+        final SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintColor(getResources().getColor(R.color.grass));
+
+        final SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
+        // Main content
+        final LinearLayout root = ButterKnife.findById(this, R.id.root);
+        root.setClipToPadding(false);
+        root.setClipChildren(false);
+        root.setPadding(0, config.getPixelInsetTop(true),
+                config.getPixelInsetRight(), config.getPixelInsetBottom());
+        // Menu list
+        mMenuList.setClipToPadding(false);
+        mMenuList.setClipChildren(false);
+        mMenuList.setPadding(0, config.getPixelInsetTop(true),
+                config.getPixelInsetRight(), config.getPixelInsetBottom());
+        // Extra list
+        vv.setClipToPadding(false);
+        vv.setClipChildren(false);
+        vv.setPadding(0, config.getPixelInsetTop(true),
+                config.getPixelInsetRight(), config.getPixelInsetBottom());
     }
 
     @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

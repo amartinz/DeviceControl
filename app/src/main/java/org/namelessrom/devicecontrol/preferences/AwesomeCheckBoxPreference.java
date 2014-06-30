@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.preferences;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.preference.CheckBoxPreference;
 import android.util.AttributeSet;
@@ -41,9 +40,6 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
  * handling bootup restoration.
  */
 public class AwesomeCheckBoxPreference extends CheckBoxPreference {
-
-    protected static final String color = "#FFFFFF";
-
     private String category;
     private String valueChecked;
     private String valueNotChecked;
@@ -111,7 +107,6 @@ public class AwesomeCheckBoxPreference extends CheckBoxPreference {
         super.onBindView(view);
 
         final TextView mTitle = findById(view, android.R.id.title);
-        mTitle.setTextColor(Color.parseColor(color));
         mTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
 
         final TextView mSummary = findById(view, android.R.id.summary);

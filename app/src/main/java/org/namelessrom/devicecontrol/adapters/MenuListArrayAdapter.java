@@ -97,9 +97,9 @@ public class MenuListArrayAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) v.getTag();
         }
 
-        final int defaultColor = mContext.getResources().getColor(android.R.color.white);
+        final int defaultColor = mContext.getResources().getColor(R.color.background_material_dark);
         if (type == 0) {
-            viewHolder.title.setTextColor(Color.WHITE);
+            viewHolder.title.setTextColor(defaultColor);
             viewHolder.title.setText(mTitles[position]);
 
             final int imageRes = mIcons[position];

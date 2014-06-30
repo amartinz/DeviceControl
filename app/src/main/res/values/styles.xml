@@ -18,14 +18,46 @@
 
     <style name="AppTheme" parent="@style/BaseTheme">
         <!-- I want to thank all xml tags, which had to die for this project. -->
-        <item name="android:actionBarStyle">@android:style/Widget.Holo.ActionBar.Solid</item>
         <item name="textAppearanceFinish">@style/TextAppearanceFinish</item>
+        <item name="android:windowBackground">@color/background_material_light</item>
+        <item name="android:state_pressed">@color/ripple_material_light</item>
+        <item name="android:textColorPrimary">@color/primary_text_default_material_light</item>
+        <item name="android:textColorSecondary">@color/secondary_text_material_light</item>
+        <item name="android:textColorHint">@color/hint_foreground_material_light</item>
+        <!-- Actionbar -->
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_apptheme</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Apptheme</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Apptheme</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Apptheme</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav.Apptheme</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Solid.Apptheme</item>
+        <item name="android:actionModeBackground">@drawable/cab_background_top_apptheme</item>
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_apptheme</item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Apptheme</item>
+        <!-- Other stuff -->
+        <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_light</item>
+        <item name="android:textColorHighlight">#992ab081</item>
+        <item name="android:textSelectHandleLeft">@drawable/apptheme_text_select_handle_left</item>
+        <item name="android:textSelectHandleRight">@drawable/apptheme_text_select_handle_right</item>
+        <item name="android:textSelectHandle">@drawable/apptheme_text_select_handle_middle</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewAppTheme</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/apptheme_btn_check_holo_light</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/apptheme_btn_radio_holo_light</item>
+        <item name="android:buttonStyle">@style/ButtonAppTheme</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonAppTheme</item>
+        <item name="android:dropDownSpinnerStyle">@style/SpinnerAppTheme</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarAppTheme</item>
+        <item name="android:seekBarStyle">@style/SeekBarAppTheme</item>
+        <item name="android:buttonStyleToggle">@style/ToggleAppTheme</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/apptheme_list_selector_holo_light</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/apptheme_activated_background_holo_light</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/apptheme_fastscroll_thumb_holo</item>
     </style>
 
     <!-- Base application theme. -->
-    <style name="BaseTheme" parent="@android:style/Theme.Holo" />
+    <style name="BaseTheme" parent="@android:style/Theme.Holo.Light" />
 
-    <style name="NoActionBar" parent="@android:style/Theme.Holo.NoActionBar">
+    <style name="NoActionBar" parent="@android:style/Theme.Holo.Light.NoActionBar">
         <!-- Customize ads aag kjasdgjkb asdf weu here -->
     </style>
 

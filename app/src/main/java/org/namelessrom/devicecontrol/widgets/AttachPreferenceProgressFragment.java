@@ -31,8 +31,8 @@ import android.widget.ProgressBar;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import static butterknife.ButterKnife.findById;
 
@@ -90,8 +90,6 @@ public class AttachPreferenceProgressFragment extends PreferenceFragment {
         final CustomPreference pref = new CustomPreference(context);
         pref.setTitle(R.string.no_tweaks_available);
         pref.setSummary(sId);
-        pref.setTitleColor("#ffffff");
-        pref.setSummaryColor("#ffffff");
         return pref;
     }
 }

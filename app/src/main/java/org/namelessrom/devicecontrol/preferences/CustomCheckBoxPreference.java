@@ -1,7 +1,6 @@
 package org.namelessrom.devicecontrol.preferences;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.preference.CheckBoxPreference;
 import android.util.AttributeSet;
@@ -13,8 +12,6 @@ import org.namelessrom.devicecontrol.R;
 import butterknife.ButterKnife;
 
 public class CustomCheckBoxPreference extends CheckBoxPreference {
-
-    private String color = "#FFFFFF";
     private String value;
 
     public CustomCheckBoxPreference(Context context) {
@@ -32,8 +29,6 @@ public class CustomCheckBoxPreference extends CheckBoxPreference {
         setLayoutResource(R.layout.preference);
     }
 
-    public void setTitleColor(final String color) { this.color = color; }
-
     public void setValue(final String value) { this.value = value; }
 
     public String getValue() { return this.value; }
@@ -43,7 +38,6 @@ public class CustomCheckBoxPreference extends CheckBoxPreference {
         super.onBindView(view);
 
         final TextView mTitle = ButterKnife.findById(view, android.R.id.title);
-        mTitle.setTextColor(Color.parseColor(color));
         mTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
 
         final TextView mSummary = ButterKnife.findById(view, android.R.id.summary);

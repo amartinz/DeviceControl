@@ -17,14 +17,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_menu_dark"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false">
 
     <TextView
         style="?android:attr/listSeparatorTextViewStyle"
         android:fontFamily="sans-serif-condensed"
-        android:text="@string/extras"
-        android:textColor="@android:color/white" />
+        android:text="@string/extras" />
 
     <FrameLayout
         android:id="@+id/menu_frame"

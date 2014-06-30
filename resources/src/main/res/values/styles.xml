@@ -44,7 +44,7 @@
         <item name="android:id">@id/divider</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">1dp</item>
-        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:background">@color/material_blue_grey_950</item>
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_marginTop">10dp</item>
     </style>

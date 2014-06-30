@@ -65,22 +65,17 @@ public class VibratorTuningPreference extends DialogPreference
     private       Drawable            mProgressThumb;
     private       LightingColorFilter mRedFilter;
 
-    private String color = "#FFFFFF";
-
     public VibratorTuningPreference(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         vib = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         setDialogLayoutResource(R.layout.preference_dialog_vibrator_tuning);
     }
 
-    public void setTitleColor(final String color) { this.color = color; }
-
     @Override
     protected void onBindView(final View view) {
         super.onBindView(view);
 
         final TextView mTitle = findById(view, android.R.id.title);
-        mTitle.setTextColor(Color.parseColor(color));
         mTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
 
         final TextView mSummary = findById(view, android.R.id.summary);

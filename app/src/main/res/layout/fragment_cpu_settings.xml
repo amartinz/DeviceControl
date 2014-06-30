@@ -30,8 +30,7 @@ Copyright (C) 2012  James Roberts
 
         <TextView
             android:text="@string/settings"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:textColor="@android:color/white" />
+            style="?android:attr/listSeparatorTextViewStyle" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,8 +68,7 @@ Copyright (C) 2012  James Roberts
 
             <TextView
                 android:text="@string/core_status"
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:textColor="@android:color/white" />
+                style="?android:attr/listSeparatorTextViewStyle" />
 
             <LinearLayout
                 android:id="@+id/cpu_info"
@@ -92,8 +90,7 @@ Copyright (C) 2012  James Roberts
 
             <TextView
                 android:text="@string/core_limits"
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:textColor="@android:color/white" />
+                style="?android:attr/listSeparatorTextViewStyle" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -148,8 +145,7 @@ Copyright (C) 2012  James Roberts
 
             <TextView
                 android:text="@string/cpu_governor"
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:textColor="@android:color/white" />
+                style="?android:attr/listSeparatorTextViewStyle" />
 
         </LinearLayout>
 
@@ -173,7 +169,7 @@ Copyright (C) 2012  James Roberts
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/grey"
+                android:background="@color/button_material_light"
                 android:text="@string/cpu_governor_tuning" />
 
         </LinearLayout>

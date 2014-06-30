@@ -73,7 +73,6 @@ public class HelpArrayAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) v.getTag();
         }
 
-        viewHolder.title.setTextColor(Color.WHITE);
         viewHolder.title.setTextAppearance(mContext, android.R.attr.textAppearanceListItemSmall);
         viewHolder.title.setText(mTitles[position]);
         viewHolder.summary.setText(mContent[position]);
