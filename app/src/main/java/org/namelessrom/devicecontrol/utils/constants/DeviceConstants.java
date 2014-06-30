@@ -17,6 +17,8 @@
  */
 package org.namelessrom.devicecontrol.utils.constants;
 
+import org.namelessrom.devicecontrol.R;
+
 public interface DeviceConstants {
 
     //==============================================================================================
@@ -40,31 +42,31 @@ public interface DeviceConstants {
     public static final int ID_RESTORE                  = -2;
     public static final int ID_RESTORE_FROM_SUB         = -1;
     //----------------------------------------------------------------------------------------------
-    public static final int ID_DEVICE                   = 1;
-    public static final int ID_FEATURES                 = 2;
+    public static final int ID_DEVICE                   = R.string.device;
+    public static final int ID_FEATURES                 = R.string.features;
     public static final int ID_FAST_CHARGE              = ID_FEATURES + 1000;
-    public static final int ID_PERFORMANCE_INFO         = 4;
-    public static final int ID_PERFORMANCE_CPU_SETTINGS = 5;
+    public static final int ID_PERFORMANCE_INFO         = R.string.information;
+    public static final int ID_PERFORMANCE_CPU_SETTINGS = R.string.cpusettings;
     public static final int ID_GOVERNOR_TUNABLE         = ID_PERFORMANCE_CPU_SETTINGS + 1000;
-    public static final int ID_PERFORMANCE_GPU_SETTINGS = 6;
-    public static final int ID_PERFORMANCE_EXTRA        = 7;
+    public static final int ID_PERFORMANCE_GPU_SETTINGS = R.string.gpusettings;
+    public static final int ID_PERFORMANCE_EXTRA        = R.string.extras;
     public static final int ID_HOTPLUGGING              = ID_PERFORMANCE_EXTRA + 1000;
     public static final int ID_THERMAL                  = ID_PERFORMANCE_EXTRA + 1100;
     public static final int ID_KSM                      = ID_PERFORMANCE_EXTRA + 1200;
     public static final int ID_VOLTAGE                  = ID_PERFORMANCE_EXTRA + 1300;
     public static final int ID_ENTROPY                  = ID_PERFORMANCE_EXTRA + 1400;
-    public static final int ID_TOOLS_TASKER             = 9;
+    public static final int ID_TOOLS_TASKER             = R.string.tasker;
     public static final int ID_TOOLS_TASKER_LIST        = ID_TOOLS_TASKER + 1000;
-    public static final int ID_TOOLS_FLASHER            = 10;
-    public static final int ID_TOOLS_MORE               = 11;
+    public static final int ID_TOOLS_FLASHER            = R.string.flasher;
+    public static final int ID_TOOLS_MORE               = R.string.more;
     public static final int ID_TOOLS_VM                 = ID_TOOLS_MORE + 1000;
     public static final int ID_TOOLS_EDITORS_VM         = ID_TOOLS_MORE + 1010;
     public static final int ID_TOOLS_BUILD_PROP         = ID_TOOLS_MORE + 1100;
     public static final int ID_TOOLS_EDITORS_BUILD_PROP = ID_TOOLS_MORE + 1110;
     public static final int ID_TOOLS_APP_MANAGER        = ID_TOOLS_MORE + 1200;
     public static final int ID_TOOLS_WIRELESS_FM        = ID_TOOLS_MORE + 1300;
-    public static final int ID_PREFERENCES              = 13;
-    public static final int ID_LICENSES                 = 14;
+    public static final int ID_PREFERENCES              = R.string.preferences;
+    public static final int ID_LICENSES                 = R.string.licenses;
     //----------------------------------------------------------------------------------------------
 
     //==============================================================================================

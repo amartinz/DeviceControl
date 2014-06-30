@@ -16,25 +16,6 @@
 -->
 <resources>
 
-    <!-- Menu -->
-    <string-array name="menu_entries">
-        <item>@string/device</item>
-        <item>@string/device</item>
-        <item>@string/features</item>
-        <item>@string/performance</item>
-        <item>@string/information</item>
-        <item>@string/cpusettings</item>
-        <item>@string/gpusettings</item>
-        <item>@string/extras</item>
-        <item>@string/tools</item>
-        <item>@string/tasker</item>
-        <item>@string/flasher</item>
-        <item>@string/more</item>
-        <item>@string/app_name</item>
-        <item>@string/preferences</item>
-        <item>@string/licenses</item>
-    </string-array>
-
     <!-- Panel Color -->
     <string-array name="panel_color_temp_entries">
         <item>@string/cold</item>

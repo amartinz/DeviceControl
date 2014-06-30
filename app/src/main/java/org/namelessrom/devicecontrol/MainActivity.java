@@ -109,6 +109,24 @@ public class MainActivity extends Activity
     private int mFragmentTitle        = R.string.home;
     private int mSubFragmentTitle     = -1;
 
+    private static final int[] MENU_ENTRIES = {
+            R.string.device,        // Device
+            ID_DEVICE,
+            ID_FEATURES,
+            R.string.performance,   // Performance
+            ID_PERFORMANCE_INFO,
+            ID_PERFORMANCE_CPU_SETTINGS,
+            ID_PERFORMANCE_GPU_SETTINGS,
+            ID_PERFORMANCE_EXTRA,
+            R.string.tools,         // Tools
+            ID_TOOLS_TASKER,
+            ID_TOOLS_FLASHER,
+            ID_TOOLS_MORE,
+            R.string.information,   // Information
+            ID_PREFERENCES,
+            ID_LICENSES
+    };
+
     private static final int[] MENU_ICONS = {
             -1, // Device
             R.drawable.ic_menu_device,
@@ -172,7 +190,7 @@ public class MainActivity extends Activity
         final MenuListArrayAdapter mAdapter = new MenuListArrayAdapter(
                 this,
                 R.layout.menu_main_list_item,
-                getResources().getStringArray(R.array.menu_entries),
+                MENU_ENTRIES,
                 MENU_ICONS);
         mMenuList.setAdapter(mAdapter);
         mMenuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -196,7 +214,7 @@ public class MainActivity extends Activity
     }
 
     @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        loadFragment(i);
+        loadFragment((Integer) adapterView.getItemAtPosition(i));
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
