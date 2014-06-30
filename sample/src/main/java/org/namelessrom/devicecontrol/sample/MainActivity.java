@@ -47,11 +47,12 @@ public class MainActivity extends Activity {
 
     private static final String TAG = "ApiSample";
 
+    private static final int REQUEST_FILE_PICKER = 100;
+
     private IRemoteService mIRemoteService;
     private TextView       mTextView;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // registering the bus
@@ -74,14 +75,12 @@ public class MainActivity extends Activity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(final Menu menu) {
+    @Override public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.mainactivity, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
 
         // if we press refresh, just refresh and return...
@@ -90,6 +89,17 @@ public class MainActivity extends Activity {
                 mTextView.setText("Refreshing!\n\n");
             }
             new DeviceTask().execute();
+            return true;
+        } else if (id == R.id.menu_pick_file) {
+            final Intent i = new Intent();
+            i.setAction("org.namelessrom.devicecontrol.api.FILE_PICKER");
+            try {
+                startActivityForResult(i, REQUEST_FILE_PICKER);
+            } catch (Exception e) {
+                final String error = String.format("Error picking file: %s", e.getMessage());
+                Log.e(TAG, error);
+                appendText(error);
+            }
             return true;
         }
 
@@ -148,8 +158,18 @@ public class MainActivity extends Activity {
         return false;
     }
 
-    @Override
-    protected void onDestroy() {
+    @Override protected void onActivityResult(final int req, final int res, final Intent data) {
+        if (req == REQUEST_FILE_PICKER && res == Activity.RESULT_OK && data != null) {
+            final String name = data.getStringExtra("name");
+            final String path = data.getStringExtra("path");
+            final String msg = String.format("Picked a file!\nName: %s\nPath: %s\n\n", name, path);
+            appendText(msg);
+        } else {
+            super.onActivityResult(req, res, data);
+        }
+    }
+
+    @Override protected void onDestroy() {
         super.onDestroy();
         // unregistering the bus
         BusProvider.getBus().unregister(this);
@@ -186,8 +206,7 @@ public class MainActivity extends Activity {
      *
      * @param event The posted event
      */
-    @Subscribe
-    public void onServiceConnectedEvent(final ServiceConnectedEvent event) {
+    @Subscribe public void onServiceConnectedEvent(final ServiceConnectedEvent event) {
         if (event == null) return;
 
         if (mTextView != null) {
@@ -201,8 +220,7 @@ public class MainActivity extends Activity {
      *
      * @param event The posted event
      */
-    @Subscribe
-    public void onServiceDisconnectedEvent(final ServiceDisconnectedEvent event) {
+    @Subscribe public void onServiceDisconnectedEvent(final ServiceDisconnectedEvent event) {
         if (event == null) return;
 
         if (mTextView != null) {
@@ -216,8 +234,7 @@ public class MainActivity extends Activity {
     private class DeviceTask extends AsyncTask<Void, Void, Void> {
         private StringBuilder sb;
 
-        @Override
-        protected void onPreExecute() {
+        @Override protected void onPreExecute() {
             // check if service is null and cancel
             if (mIRemoteService == null) {
                 cancel(true);
@@ -236,8 +253,7 @@ public class MainActivity extends Activity {
             appendText(sb.toString());
         }
 
-        @Override
-        protected Void doInBackground(Void... params) {
+        @Override protected Void doInBackground(Void... params) {
             try {
                 // ... and wait until it is available, else we may end up with some NULL's
                 //     oh, also check if mIRemoteService is null as in case we wait for it and the

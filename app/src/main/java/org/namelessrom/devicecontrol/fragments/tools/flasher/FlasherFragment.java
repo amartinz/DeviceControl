@@ -157,9 +157,9 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
     @Override public void onActivityResult(final int req, final int res, final Intent data) {
         logDebug("onActivityResult(%s, %s, %s)", req, res, data);
         if (req == REQUEST_CODE_FILE && res == Activity.RESULT_OK) {
-            final FlashItem item = (FlashItem) data.getExtras().getSerializable(EXTRA_FLASHITEM);
-            logDebug("onActivityResult(): item is " + (item == null ? "null" : "not null"));
-            if (item == null) return;
+            final String name = data.getStringExtra("name");
+            final String path = data.getStringExtra("path");
+            final FlashItem item = new FlashItem(name, path);
 
             logDebug(String.format("onActivityResult(%s)", item.getPath()));
             final List<FlashItem> flashItemList = new ArrayList<FlashItem>();

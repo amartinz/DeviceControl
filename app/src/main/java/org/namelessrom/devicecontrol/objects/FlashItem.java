@@ -25,6 +25,11 @@ public class FlashItem implements Serializable {
     private String path;
     private String name;
 
+    public FlashItem(final String name, final String path) {
+        this.path = path;
+        this.name = name;
+    }
+
     public FlashItem(final String path) {
         this.path = path;
         String[] tmp = path.split(File.separator);

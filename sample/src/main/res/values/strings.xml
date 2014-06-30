@@ -26,4 +26,6 @@
     <string name="random_gpu_max_freq">Set random GPU max freq</string>
     <string name="random_gpu_governor">Set random GPU governor</string>
 
+    <string name="pick_file">Pick a file</string>
+
 </resources>
