@@ -62,4 +62,5 @@ dependencies {
     compile 'com.android.support:support-v13:19.+'
     compile 'com.jakewharton:butterknife:5.+'
     compile 'com.koushikdutta.ion:ion:1.2.+'
+    compile 'com.squareup:otto:1.3.+'
 }
