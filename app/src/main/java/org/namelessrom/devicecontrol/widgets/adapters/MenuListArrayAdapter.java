@@ -33,36 +33,30 @@ import static butterknife.ButterKnife.findById;
 
 public class MenuListArrayAdapter extends BaseAdapter {
 
-    private final Context  mContext;
-    private final int      mLayoutResourceId;
-    private final String[] mTitles;
-    private final int[]    mIcons;
+    private final Context mContext;
+    private final int     mLayoutResourceId;
+    private final int[]   mTitles;
+    private final int[]   mIcons;
 
     public MenuListArrayAdapter(final Context context, final int layoutResourceId,
-            final String[] titles, final int[] icons) {
+            final int[] titles, final int[] icons) {
         mContext = context;
         mLayoutResourceId = layoutResourceId;
         mTitles = titles;
         mIcons = icons;
     }
 
-    @Override
-    public int getCount() { return mTitles.length; }
+    @Override public int getCount() { return mTitles.length; }
 
-    @Override
-    public Object getItem(final int position) { return position; }
+    @Override public Object getItem(final int position) { return mTitles[position]; }
 
-    @Override
-    public long getItemId(final int arg0) { return 0; }
+    @Override public long getItemId(final int arg0) { return 0; }
 
-    @Override
-    public int getViewTypeCount() { return 2; }
+    @Override public int getViewTypeCount() { return 2; }
 
-    @Override
-    public int getItemViewType(final int position) { return (mIcons[position] == -1) ? 1 : 0; }
+    @Override public int getItemViewType(final int pos) { return (mIcons[pos] == -1) ? 1 : 0; }
 
-    @Override
-    public boolean isEnabled(final int position) { return getItemViewType(position) != 1; }
+    @Override public boolean isEnabled(final int pos) { return getItemViewType(pos) != 1; }
 
     private static final class ViewHolder {
         private final TextView  header;
@@ -86,8 +80,7 @@ public class MenuListArrayAdapter extends BaseAdapter {
         }
     }
 
-    @Override
-    public View getView(final int position, View v, final ViewGroup parent) {
+    @Override public View getView(final int position, View v, final ViewGroup parent) {
         final ViewHolder viewHolder;
         final int type = getItemViewType(position);
         if (v == null) {
@@ -119,7 +112,7 @@ public class MenuListArrayAdapter extends BaseAdapter {
                 viewHolder.image.setColorFilter(defaultColor);
             }
         } else if (type == 1) {
-            viewHolder.header.setText(mTitles[position].replaceAll("--", ""));
+            viewHolder.header.setText(mContext.getString(mTitles[position]).replaceAll("--", ""));
             viewHolder.header.setClickable(false);
             viewHolder.header.setTextColor(defaultColor);
         }
