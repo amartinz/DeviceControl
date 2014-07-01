@@ -23,6 +23,8 @@
   <string name="app_warning_busybox">Vezměte prosím na vědomí, že %s vyžaduje BusyBox pro svou správnou činnost!</string>
   <string name="get_busybox">Instalovat BusyBox</string>
   <string name="get_superuser">Instalovat Superuser</string>
+  <string name="checking_root">Kontroluji oprávnění root&#8230;</string>
+  <string name="checking_busybox">Kontroluji přítomnost busybox&#8230;</string>
   <string name="exit">Konec</string>
   <string name="close">Zavřít</string>
   <string name="message_loading">Načítání, počkejte prosím...</string>
@@ -161,6 +163,7 @@
   <string name="tasker">Tasker</string>
   <string name="tasklist">Seznam úloh</string>
   <string name="tasklist_summary">Nastavit, modifikovat, povolit nebo zakázat úlohy.</string>
+  <string name="list_empty">Doposud jste nevybrali žádné položky!\nCo takhle nějaké přidat? :)\n\n(Stiskněte \"+\" v pravém horním rohu)</string>
   <string name="add_task">Přidat úlohu</string>
   <string name="edit_task">Upravit úlohu</string>
   <string name="delete_task">Odstranit úlohu</string>
@@ -227,6 +230,7 @@
   <string name="ext_cache">Externí cache</string>
   <string name="ext">Externí</string>
   <string name="cache">Cache</string>
+  <string name="applying_wait">Provádím, vyčkejte prosím&#8230;</string>
   <string name="full_scans">Úplné skenování</string>
   <string name="pages_shared">Sdílené stránky</string>
   <string name="pages_sharing">Sdílení stránek</string>
@@ -241,6 +245,7 @@
   <string name="wfm_root">Prohlížení v módu root</string>
   <string name="wfm_port">Port web serveru</string>
   <string name="start_wfm">Server není spuštěn\nStiskněte pro spuštění serveru.</string>
+  <string name="starting_wfm">Server se spouští&#8230;</string>
   <string name="stop_wfm">Server je spuštěn na %s\nStiskněte pro zastavení serveru.</string>
   <string name="authentication">Ověření</string>
   <string name="wfm_auth">Použít ověření</string>
@@ -259,6 +264,12 @@
   <string name="startup_script_not_installed">Startovací skript není nainstalován</string>
   <string name="open_play_store">Zobrazit aplikaci na Google Play\u2122</string>
   <string name="governor">Governor</string>
+  <string name="skip_checks">Přeskočit kontroly při spuštění</string>
+  <string name="skip_checks_summary">Nekontrolovat oprávnění root a busybox při spouštění\nPostupujte na vlastní nebezpečí!</string>
+  <string name="flasher">Flasher</string>
+  <string name="flash_list">Seznam flashování</string>
+  <string name="add_item">Přidat položku</string>
   <string name="recovery_type_title">Typ Recovery skriptu</string>
+  <string name="flash_warning">Chystáte se flashovat!\nPokud budete pokračovat, bude vaše zařízení restartováno do recovery pro flashnutí zvolených položek.\n\nChcete pokračovat?</string>
   <string name="both">Obojí</string>
 </resources>

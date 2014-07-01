@@ -272,4 +272,5 @@
   <string name="recovery_type_title">Recovery-Typ</string>
   <string name="flash_warning">Wenn du fortfährst, wird das Gerät in die Recovery booten und die ausgewählten Elemente flashen.\n\nMöchtest du wirklich fortfahren?</string>
   <string name="both">Beide</string>
+  <string name="pick_file">Datei wählen</string>
 </resources>

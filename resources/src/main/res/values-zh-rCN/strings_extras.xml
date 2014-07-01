@@ -33,10 +33,25 @@
   <string name="wifi_scan_interval_title">Wifi 扫描间隔</string>
   <string name="wifi_scan_interval_summary">当没有已储存的可用接入点时WiFi扫描时间间隔</string>
   <string name="wifi_scan_alt_summary">Wifi 扫描间隔: %s</string>
+  <string name="vm_heapsize_title">Dalvik 缓存 大小</string>
+  <string name="vm_heapsize_alt_summary">Dalvik 虚拟机缓存大小: %s</string>
+  <string name="fast_up_summary">* 警告 * 如果您更改此值，它会在当这些值不存在时向您的 build.prop 添加所需的值</string>
+  <string name="prox_delay_title">距离传感器延迟</string>
+  <string name="prox_delay_alt_summary">设置距离传感器为: %s</string>
+  <string name="sleep_title">夜间睡眠模式</string>
+  <string name="sleep_summary">修改夜间睡眠策略</string>
+  <string name="jit_title">JIT编译器</string>
+  <string name="jit_summary">启用/禁用 JIT 编译器</string>
+  <string name="tcp_stack_title">优化TCP协议栈</string>
+  <string name="tcp_stack_summary">修改缓冲区大小来获得更好的性能</string>
+  <string name="gpu_acceleration">GPU 加速</string>
   <string name="lcd_density">改变LCD密度</string>
   <string name="lcd_density_summary">设置您所需的LCD密度</string>
   <string name="lcd_density_alt_summary">屏幕密度： %s</string>
   <string name="task_type">任务类型</string>
   <string name="next">下一步</string>
   <string name="prev">上一步</string>
+  <string name="finish">完成</string>
+  <string name="submit_confirm_message">你想要继续吗？</string>
+  <string name="edit">编辑</string>
 </resources>

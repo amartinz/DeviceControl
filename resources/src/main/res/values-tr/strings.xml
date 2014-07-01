@@ -23,6 +23,8 @@
   <string name="app_warning_busybox">Unutmayın %s çalışması için BusyBox gerektirir!</string>
   <string name="get_busybox">BusyBox\'ı Yükle</string>
   <string name="get_superuser">Superuser\'ı Yükle</string>
+  <string name="checking_root">Root kontrol ediliyor...</string>
+  <string name="checking_busybox">Busybox kontrol ediliyor...</string>
   <string name="exit">Çıkış</string>
   <string name="close">Kapat</string>
   <string name="message_loading">Yükleniyor, lütfen bekleyin&#8230;</string>
@@ -161,6 +163,7 @@
   <string name="tasker">Görevlendirici</string>
   <string name="tasklist">Görev listesi</string>
   <string name="tasklist_summary">Görevleri oluşturma,değiştirme,etkinleştirme veya devre dışı bırakma.</string>
+  <string name="list_empty">Henüz bir ürün kurmadınız!\nNasıl mı eklenecek? :)\n\n(Sağ üstteki \"+\" tuşuna basın)</string>
   <string name="add_task">Görev Ekle</string>
   <string name="edit_task">Görevi Düzenle</string>
   <string name="delete_task">Görevi sil</string>
@@ -227,6 +230,7 @@
   <string name="ext_cache">Harici Önbellek</string>
   <string name="ext">Harici</string>
   <string name="cache">Önbellek</string>
+  <string name="applying_wait">Uygulanıyor, Lütfen bekleyin...</string>
   <string name="full_scans">Tam tarama</string>
   <string name="pages_shared">Paylaşılan Sayfalar</string>
   <string name="pages_sharing">Paylaşım Sayfaları</string>
@@ -241,6 +245,7 @@
   <string name="wfm_root">Kök moduna gözat</string>
   <string name="wfm_port">Web sunucusu bağlantı noktası</string>
   <string name="start_wfm">Sunucu çalışmıyor\nSunucuyu başlatmak için başlangıç tuşuna basın.</string>
+  <string name="starting_wfm">Sunucu başlatılıyor...</string>
   <string name="stop_wfm">Sunucu % s çalışıyor\nSunucuyu durdurmak için basın.</string>
   <string name="authentication">Kimlik Doğrulama</string>
   <string name="wfm_auth">Kimlik doğrulaması kullanın</string>
@@ -259,6 +264,12 @@
   <string name="startup_script_not_installed">Başlangıç ​​komut dosyası yüklenemedi</string>
   <string name="open_play_store">Google Play da uygulama görünümü\u2122</string>
   <string name="governor">Yönetici</string>
+  <string name="skip_checks">Başlangıç denetimlerini atla</string>
+  <string name="skip_checks_summary">Başlangıçta root ve BusyBox kontrol edilmedi\nDevam riski size aittir!</string>
+  <string name="flasher">Flaşör</string>
+  <string name="flash_list">Flaş listesi</string>
+  <string name="add_item">Öğe ekle</string>
   <string name="recovery_type_title">Kurtarma komut dosyası türü</string>
+  <string name="flash_warning">Flaş atmak üzeresiniz!\nDevam ederseniz, seçili öğeleri flashlamak için cihazınız yeniden başlayacaktır.\n\nDevam etmek istiyor musunuz?</string>
   <string name="both">Her ikisi de</string>
 </resources>

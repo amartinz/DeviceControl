@@ -23,6 +23,8 @@
   <string name="app_warning_busybox">Nota che %s richiede una BusyBox per funzionare completamente!</string>
   <string name="get_busybox">Installa BusyBox</string>
   <string name="get_superuser">Installa Superuser</string>
+  <string name="checking_root">Controllo di root...</string>
+  <string name="checking_busybox">Controllo di busybox&#8230;</string>
   <string name="exit">Esci</string>
   <string name="close">Chiudi</string>
   <string name="message_loading">Caricamento, attendere prego&#8230;</string>
@@ -161,6 +163,7 @@
   <string name="tasker">Tasker</string>
   <string name="tasklist">Elenco attività</string>
   <string name="tasklist_summary">Impostare, modificare, attivare o disattivare compiti.</string>
+  <string name="list_empty">Ancora non è stato impostato alcuna lavoro!\nCome aggiungere alcuni di essi? :)\n\n(Premere \"+\" in lo alto a destra)</string>
   <string name="add_task">Aggiungi attività</string>
   <string name="edit_task">Modifica attività</string>
   <string name="delete_task">Elimina attività</string>
@@ -227,6 +230,7 @@
   <string name="ext_cache">Cache esterna</string>
   <string name="ext">Esterno</string>
   <string name="cache">Cache</string>
+  <string name="applying_wait">Applicare, attendere prego...</string>
   <string name="full_scans">Scansioni complete</string>
   <string name="pages_shared">Pagine condivise</string>
   <string name="pages_sharing">Pagine di condivisione</string>
@@ -241,6 +245,7 @@
   <string name="wfm_root">Naviga in modalità root</string>
   <string name="wfm_port">Porta del web server</string>
   <string name="start_wfm">Il server non è in funzione\nPremi per avviare il server.</string>
+  <string name="starting_wfm">Il server è in fase di avvio...</string>
   <string name="stop_wfm">Server in esecuzione a %s\nPremi per fermare il server.</string>
   <string name="authentication">Autenticazione</string>
   <string name="wfm_auth">Usa autenticazione</string>
@@ -259,6 +264,12 @@
   <string name="startup_script_not_installed">Script di avvio non installato</string>
   <string name="open_play_store">Visualizza l\'applicazione su Google Play\u2122</string>
   <string name="governor">Governor</string>
+  <string name="skip_checks">Salta le controllo nel corso l\'avvio</string>
+  <string name="skip_checks_summary">Non controllare li root e busybux all\'avvio\nProcedete basso a vostro proprio rischio!</string>
+  <string name="flasher">Lampeggiare</string>
+  <string name="flash_list">List di lampeggiares</string>
+  <string name="add_item">Aggiungi oggetto</string>
   <string name="recovery_type_title">Tipo di script della recovery</string>
+  <string name="flash_warning">Siete in procinto di lampeggiare!\nQuando si continua, il dispositivo si riavvierà in recovery e lampeggiano gli oggetti selezionati.\n\nVuoi procedere?</string>
   <string name="both">Entrambi</string>
 </resources>

@@ -23,6 +23,8 @@
   <string name="app_warning_busybox">¡Por favor tenga en cuenta que %s necesita de BusyBox para poder trabajar correctamente!</string>
   <string name="get_busybox">Instalar BusyBox</string>
   <string name="get_superuser">Instalar Superuser</string>
+  <string name="checking_root">Comprobación de root...</string>
+  <string name="checking_busybox">Comprobación de busybox...</string>
   <string name="exit">Salir</string>
   <string name="close">Cerrar</string>
   <string name="message_loading">Cargando, por favor espere&#8230;</string>
@@ -161,6 +163,7 @@
   <string name="tasker">Tareas en</string>
   <string name="tasklist">Lista de tareas</string>
   <string name="tasklist_summary">Configurar, modificar, habilitar o deshabilitar las tareas.</string>
+  <string name="list_empty">¡Aún no ha configurado ninguna tarea!\n¿Como agregar algunas de ellas? :)\n\n(Presione \"+\" en la parte superior derecha)</string>
   <string name="add_task">Añadir tarea</string>
   <string name="edit_task">Editar tarea</string>
   <string name="delete_task">Eliminar tarea</string>
@@ -227,6 +230,7 @@
   <string name="ext_cache">Cache externa</string>
   <string name="ext">Externo</string>
   <string name="cache">Cache</string>
+  <string name="applying_wait">Aplicando, por favor espere...</string>
   <string name="full_scans">Análisis completo</string>
   <string name="pages_shared">Páginas compartidas</string>
   <string name="pages_sharing">Páginas de intercambio</string>
@@ -241,6 +245,7 @@
   <string name="wfm_root">Buscador en modo root</string>
   <string name="wfm_port">Puerto del servidor Web</string>
   <string name="start_wfm">El servidor no está funcionando\nPulse para conectar el servidor.</string>
+  <string name="starting_wfm">El servidor se esta iniciando...</string>
   <string name="stop_wfm">El servidor está funcionando en la %s\nPulse para detener el servidor.</string>
   <string name="authentication">Autentificación</string>
   <string name="wfm_auth">Usar la autentificación</string>
@@ -259,6 +264,13 @@
   <string name="startup_script_not_installed">El script de arranque no está instalado</string>
   <string name="open_play_store">Ver aplicación en Google Play\u2122</string>
   <string name="governor">Governor</string>
+  <string name="skip_checks">Saltar las comprobaciones durante el arranque</string>
+  <string name="skip_checks_summary">No comprobar el root y busybux en el arranque\n¡Proceda bajo su propio riesgo!</string>
+  <string name="flasher">Flashear</string>
+  <string name="flash_list">Lista de flasheables</string>
+  <string name="add_item">Añadir objeto</string>
   <string name="recovery_type_title">Tipo de script para Recovery</string>
+  <string name="flash_warning">¡Estas a punto de flashear!\nCuando continúe, su dispositivo se reiniciara en el recovery y flasheara los objetos seleccionados.\n\n¿Quieres proceder?</string>
   <string name="both">Ambos</string>
+  <string name="pick_file">Elija un archivo</string>
 </resources>
