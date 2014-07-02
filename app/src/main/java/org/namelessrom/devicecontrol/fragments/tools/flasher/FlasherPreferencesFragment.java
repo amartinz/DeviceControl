@@ -26,15 +26,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 
 public class FlasherPreferencesFragment extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants, PerformanceConstants {
 
     private CustomListPreference mRecoveryType;
+
+    private CustomCheckBoxPreference mMultiUserMode;
 
     @Override public void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
@@ -52,6 +55,13 @@ public class FlasherPreferencesFragment extends PreferenceFragment
             setSummary(mRecoveryType, tmp);
             mRecoveryType.setOnPreferenceChangeListener(this);
         }
+
+        mMultiUserMode = (CustomCheckBoxPreference) findPreference(PREF_FLASHER_MULTI_USER);
+        if (mMultiUserMode != null) {
+            mMultiUserMode.setChecked(PreferenceHelper.getBoolean(PREF_FLASHER_MULTI_USER, false));
+            mMultiUserMode.setOnPreferenceChangeListener(this);
+        }
+
     }
 
     private void setSummary(final Preference preference, final int value) {
@@ -91,6 +101,10 @@ public class FlasherPreferencesFragment extends PreferenceFragment
             final int value = Integer.parseInt(String.valueOf(newValue));
             PreferenceHelper.setInt(PREF_RECOVERY_TYPE, value);
             setSummary(preference, value);
+            return true;
+        } else if (mMultiUserMode==preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(PREF_FLASHER_MULTI_USER, value);
             return true;
         }
 

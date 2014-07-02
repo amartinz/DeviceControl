@@ -19,8 +19,9 @@ package org.namelessrom.devicecontrol.utils;
 
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-import java.util.Collections;
 import java.util.List;
+
+import hugo.weaving.DebugLog;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -32,13 +33,13 @@ public class FlashUtils implements DeviceConstants {
     private static final String CWM_PATH = "/cache/recovery/extendedcommand";
     private static final String OR_PATH  = "/cache/recovery/openrecoveryscript";
 
-    private static String createOpenRecoveryScript(final List<String> files) {
+    @DebugLog private static String createOpenRecoveryScript(final List<String> files) {
         final StringBuilder sb = new StringBuilder();
 
         sb.append(String.format("echo \"set tw_signed_zip_verify 0\" > %s;\n", OR_PATH));
 
         for (String file : files) {
-            if (file.startsWith("/sdcard")) file = file.replaceFirst("/sdcard", "/sdcard/0");
+            if (file.startsWith("/sdcard")) file = getSdCardPath(file);
             sb.append(String.format("echo \"install %s\" >> %s;\n", file, OR_PATH));
         }
         sb.append(String.format("echo \"wipe cache\" >> %s;\n", OR_PATH));
@@ -47,11 +48,11 @@ public class FlashUtils implements DeviceConstants {
         return sb.toString();
     }
 
-    private static String createCwmScript(final List<String> files) {
+    @DebugLog private static String createCwmScript(final List<String> files) {
         final StringBuilder sb = new StringBuilder();
 
         for (String file : files) {
-            if (file.startsWith("/sdcard")) file = file.replaceFirst("/sdcard", "/sdcard/0");
+            if (file.startsWith("/sdcard")) file = getSdCardPath(file);
             sb.append(String.format("echo 'install_zip(\"%s\");' >> %s;\n", file, CWM_PATH));
         }
         sb.append(String.format("echo 'run_program(\"/sbin/busybox\", " +
@@ -61,7 +62,14 @@ public class FlashUtils implements DeviceConstants {
         return sb.toString();
     }
 
-    public static void triggerFlash(final List<String> files) {
+    @DebugLog private static String getSdCardPath(String file) {
+        if (!PreferenceHelper.getBoolean(PREF_FLASHER_MULTI_USER, false)) {
+            file = file.replaceFirst("/sdcard", "/sdcard/0");
+        }
+        return file;
+    }
+
+    @DebugLog public static String triggerFlash(final List<String> files) {
         final StringBuilder sb = new StringBuilder();
 
         sb.append("mkdir -p /cache/recovery/;\n");
@@ -81,6 +89,8 @@ public class FlashUtils implements DeviceConstants {
         final String cmd = sb.toString();
         logDebug("triggerUpdate():\n" + cmd + "\n--------");
         Utils.runRootCommand(cmd);
+
+        return cmd;
     }
 
 }

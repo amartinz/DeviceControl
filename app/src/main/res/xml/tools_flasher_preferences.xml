@@ -11,4 +11,10 @@
         android:entryValues="@array/recovery_type_values"
         android:defaultValue="0" />
 
+    <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        android:key="flasher_multi_user"
+        android:title="@string/multi_user_do_not_use"
+        android:summary="@string/multi_user_do_not_use_summary"
+        android:defaultValue="false" />
+
 </PreferenceScreen>
