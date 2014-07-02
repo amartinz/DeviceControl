@@ -123,7 +123,7 @@ public class Utils implements DeviceConstants, FileConstants {
     /**
      * Reads a single line from a file.
      *
-     * @param sFile The files to read from.
+     * @param sFile The file to read from.
      * @return The read string OR null if not existing.
      */
     @DebugLog public static String readOneLine(final String sFile) {
@@ -142,6 +142,35 @@ public class Utils implements DeviceConstants, FileConstants {
             }
         }
         return sLine;
+    }
+
+    /**
+     * Reads a file.
+     *
+     * @param sFile The file to read from.
+     * @return The read string OR null if not existing.
+     */
+    @DebugLog public static String readFile(final String sFile) {
+        String sInput = null;
+        if (fileExists(sFile)) {
+            final StringBuilder sb = new StringBuilder();
+            BufferedReader brBuffer;
+            try {
+                brBuffer = new BufferedReader(new FileReader(sFile), 512);
+                try {
+                    String s;
+                    while ((s = brBuffer.readLine()) != null) {
+                        sb.append(s).append('\n');
+                    }
+                } finally {
+                    brBuffer.close();
+                }
+            } catch (Exception e) {
+                return readFileViaShell(sFile);
+            }
+            sInput = sb.toString();
+        }
+        return sInput;
     }
 
     /**

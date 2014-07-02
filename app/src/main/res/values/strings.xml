@@ -273,5 +273,5 @@
     <string name="both">Both</string>
     <string name="pick_file">Pick a file</string>
     <string name="multi_user_do_not_use">Do not use multiuser mode</string>
-    <string name="multi_user_do_not_use_summary">Check this if you are experiencing problems when flashing zip files from sdcard</string>
+    <string name="multi_user_do_not_use_summary">Check this if you have problems with flashing zip files from sdcard</string>
 </resources>

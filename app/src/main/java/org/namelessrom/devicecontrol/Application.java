@@ -176,6 +176,17 @@ public class Application extends android.app.Application implements DeviceConsta
      * This is very useful for debugging, just set debug to false on a release build<br />
      * and it wont show any debug messages.
      *
+     * @param msg The message to log
+     */
+    public static void logDebug(final Object object, final String msg) {
+        logDebug("DeviceControl", object.getClass().getSimpleName() + " --> " + msg);
+    }
+
+    /**
+     * Logs a message to logcat if boolean param is true.<br />
+     * This is very useful for debugging, just set debug to false on a release build<br />
+     * and it wont show any debug messages.
+     *
      * @param tag The tag for the log
      * @param msg The message to log
      */
