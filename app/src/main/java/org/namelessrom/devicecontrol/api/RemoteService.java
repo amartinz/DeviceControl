@@ -30,6 +30,7 @@ import org.namelessrom.devicecontrol.events.GpuEvent;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.GpuUtils;
+import org.namelessrom.devicecontrol.utils.monitors.MemoryInfo;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.util.Arrays;
@@ -166,6 +167,15 @@ public class RemoteService extends Service {
 
         @Override public void setGpuGovernor(final String value) throws RemoteException {
             ActionProcessor.processAction(ActionProcessor.ACTION_GPU_GOVERNOR, value);
+        }
+
+        //------------------------------------------------------------------------------------------
+        // Memory
+        //------------------------------------------------------------------------------------------
+        @Override public long[] readMemory() { return MemoryInfo.getInstance().readMemory(); }
+
+        @Override public long[] readMemoryByType(final int type) {
+            return MemoryInfo.getInstance().readMemory(type);
         }
     };
 }

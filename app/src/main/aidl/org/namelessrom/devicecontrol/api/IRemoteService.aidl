@@ -50,5 +50,9 @@ interface IRemoteService {
     String getCurrentGpuGovernor();
     void setMaxGpuFrequency(in String value);
     void setGpuGovernor(in String value);
-
+//--------------------------------------------------------------------------------------------------
+// Memory
+//--------------------------------------------------------------------------------------------------
+    long[] readMemory();
+    long[] readMemoryByType(in int type);
 }

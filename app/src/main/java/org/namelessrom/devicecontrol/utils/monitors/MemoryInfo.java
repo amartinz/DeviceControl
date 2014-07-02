@@ -9,6 +9,10 @@ import hugo.weaving.DebugLog;
  */
 public class MemoryInfo {
 
+    private static final int TYPE_B  = 0;
+    private static final int TYPE_KB = 1;
+    private static final int TYPE_MB = 2;
+
     private static MemoryInfo sInstance;
 
     private static long memoryTotal;
@@ -25,6 +29,10 @@ public class MemoryInfo {
     }
 
     @DebugLog public long[] readMemory() {
+        return readMemory(TYPE_B);
+    }
+
+    @DebugLog public long[] readMemory(final int type) {
         final String input = Utils.readFile("/proc/meminfo");
         if (input != null && !input.isEmpty()) {
             final String[] parts = input.split("\n");
@@ -39,6 +47,23 @@ public class MemoryInfo {
         if (memoryTotal < 0) memoryTotal = 0;
         if (memoryFree < 0) memoryFree = 0;
         if (memoryCached < 0) memoryCached = 0;
+
+        // default is kb
+        switch (type) {
+            default:
+            case TYPE_KB:
+                break;
+            case TYPE_B:
+                memoryTotal = memoryTotal * 1024;
+                memoryFree = memoryFree * 1024;
+                memoryCached = memoryCached * 1024;
+                break;
+            case TYPE_MB:
+                memoryTotal = memoryTotal / 1024;
+                memoryFree = memoryFree / 1024;
+                memoryCached = memoryCached / 1024;
+                break;
+        }
 
         return new long[]{memoryTotal, memoryFree, memoryCached};
     }
