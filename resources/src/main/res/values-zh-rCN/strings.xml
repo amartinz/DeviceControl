@@ -24,7 +24,7 @@
   <string name="get_busybox">安装 BusyBox</string>
   <string name="get_superuser">安装超级用户</string>
   <string name="checking_root">正在检查root...</string>
-  <string name="checking_busybox">正在检查 busbox...</string>
+  <string name="checking_busybox">正在检查 BusyBox...</string>
   <string name="exit">退出</string>
   <string name="close">关闭</string>
   <string name="message_loading">加载中，请稍后&#8230;&#8230;</string>

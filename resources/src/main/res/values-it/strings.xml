@@ -18,7 +18,7 @@
 <resources>
   <string name="app_version_name">Nome Versione: %s</string>
   <string name="app_version_code">Codice Versione: %s</string>
-  <string name="app_information_help">Benvenuti a %1$s!\n\nPer iniziare, scorri il menu da sinistra! \n\nSe hai bisogno di aiuto o non capisci una funzione specifica, scorri a destra e da un\'occhiata all\'aiuto!\n\nSe una funzione non è supportata dal tuo dispositivo, verrà nascosta automaticamente!\n\n\nNota che %2$s necessita di root\nper funzionare correttamente! \n\n</string>
+  <string name="app_information_help">Benvenuti a %1$s!\n\nPer iniziare, scorri il menu da sinistra! \n\nSe hai bisogno di aiuto o non capisci una funzione specifica, scorri a destra e da\' un\'occhiata all\'aiuto!\n\nSe una funzione non è supportata dal tuo dispositivo, verrà nascosta automaticamente!\n\n\nNota che %2$s necessita di root\nper funzionare correttamente! \n\n</string>
   <string name="app_warning_root">Nota che %s richiede ROOT per funzionare completamente!</string>
   <string name="app_warning_busybox">Nota che %s richiede una BusyBox per funzionare completamente!</string>
   <string name="get_busybox">Installa BusyBox</string>
@@ -75,9 +75,9 @@
   <string name="msm_dcvs_summary">Utilizzare MSM DCVS per il controllo Frequenza CPU/GPU</string>
   <string name="voltage_control">Controllo di tensione</string>
   <string name="voltage_control_summary">Modificare le tensioni utilizzate per ogni frequenza</string>
-  <string name="fast_charge">Carica rapida</string>
+  <string name="fast_charge">Ricarica rapida</string>
   <string name="fast_charge_summary">Consente di modificare il livello di carica</string>
-  <string name="force_fast_charge">Forza la carica rapida</string>
+  <string name="force_fast_charge">Forza la ricarica rapida</string>
   <string name="fast_charge_0">0 - Disabilitato</string>
   <string name="fast_charge_1_new">1 - Utilizzare il livello stock AC su USB</string>
   <string name="fast_charge_1_old">1 - Abilitato</string>
@@ -123,14 +123,14 @@
   <string name="gpu_governor">Governor GPU</string>
   <string name="gpusettings">Impostazioni GPU</string>
   <string name="gpu_freq_max">Velocità massima della GPU</string>
-  <string name="gpu_3d_scaling">Gradini della GPU 3D</string>
+  <string name="gpu_3d_scaling">Scaling della GPU 3D</string>
   <string name="gpu_3d_scaling_summary">I gradini della GPU 3D regolano in modo intelligente la frequenza della GPU</string>
   <string name="touchkey">Tasto touch</string>
   <string name="enable_keys_backlight">Attiva la retroilluminazione dei tasti</string>
   <string name="enable_keys_backlight_summary">Accendi i tasti touch quando lo schermo è accesso</string>
-  <string name="enable_keys_notifications">Abilita le notifiche delle chiavi</string>
+  <string name="enable_keys_notifications">Abilita le notifiche sui tasti</string>
   <string name="enable_keys_notifications_summary">Illumina i tasti touch quando lo schermo è spento e si riceve una notifica</string>
-  <string name="enable_keyboard_backlight">Attivare la retroilluminazione della tastiera</string>
+  <string name="enable_keyboard_backlight">Attiva la retroilluminazione della tastiera</string>
   <string name="enable_keyboard_backlight_summary">Accende la retroilluminazione della tastiera quando lo schermo è acceso</string>
   <string name="vibrator_strength">Intensità vibrazione</string>
   <string name="vibrator_strength_summary">Regola l\'intensità della vibrazione di feedback</string>
@@ -146,7 +146,7 @@
   <string name="screen_color_temperature">Temperatura di colore dello schermo</string>
   <string name="screen_color_temperature_summary">Spegnere lo schermo e torna indietro per attivare</string>
   <string name="cold">Freddo</string>
-  <string name="cool">Gelido</string>
+  <string name="cool">Fresco</string>
   <string name="normal">Normale</string>
   <string name="warm">Caldo</string>
   <string name="hot">Bollente</string>
@@ -163,7 +163,7 @@
   <string name="tasker">Tasker</string>
   <string name="tasklist">Elenco attività</string>
   <string name="tasklist_summary">Impostare, modificare, attivare o disattivare compiti.</string>
-  <string name="list_empty">Ancora non è stato impostato alcuna lavoro!\nCome aggiungere alcuni di essi? :)\n\n(Premere \"+\" in lo alto a destra)</string>
+  <string name="list_empty">Non hai ancora impostato nessun elemento!\nChe ne dici di aggiungerne qualcuno? :)\n\n(Premi \"+\" in alto a destra)</string>
   <string name="add_task">Aggiungi attività</string>
   <string name="edit_task">Modifica attività</string>
   <string name="delete_task">Elimina attività</string>
@@ -171,7 +171,7 @@
   <string name="action">Azione</string>
   <string name="value">Valore</string>
   <string name="fstrim_title">FStrimming automatico</string>
-  <string name="fstrim_summary">FStrim viene utilizzato per eliminare (o \"tagliare\") blocchi isolati che non sono in uso dal filesystem.\nIn questo modo possono migliorare le prestazioni e ridurre i rallentamenti.</string>
+  <string name="fstrim_summary">FStrim viene utilizzato per eliminare (o \"tagliare\") blocchi isolati che non sono in uso dal filesystem.\nCiò può migliorare le prestazioni e ridurre i rallentamenti.</string>
   <string name="fstrim_interval_title">Intervallo di FStrim</string>
   <string name="fstrim_interval_summary">Scegliere l\'intervallo per FStrimming automatico.</string>
   <string name="app_system"><![CDATA[ATTENZIONE!<br /><b>%s</b> è un\'applicazione di sistema!]]></string>
@@ -189,7 +189,7 @@
   <string name="save">Salva</string>
   <string name="add_property">Aggiungi proprietà</string>
   <string name="edit_property">Modifica proprietà</string>
-  <string name="delete_property">Elimina la proprietà</string>
+  <string name="delete_property">Elimina proprietà</string>
   <string name="delete_property_message">%s sarà eliminata.\n\nContinuare?</string>
   <string name="name">Nome</string>
   <string name="presets">Preset</string>
@@ -230,7 +230,7 @@
   <string name="ext_cache">Cache esterna</string>
   <string name="ext">Esterno</string>
   <string name="cache">Cache</string>
-  <string name="applying_wait">Applicare, attendere prego...</string>
+  <string name="applying_wait">Applicazione in corso, attendere prego...</string>
   <string name="full_scans">Scansioni complete</string>
   <string name="pages_shared">Pagine condivise</string>
   <string name="pages_sharing">Pagine di condivisione</string>
@@ -249,7 +249,7 @@
   <string name="stop_wfm">Server in esecuzione a %s\nPremi per fermare il server.</string>
   <string name="authentication">Autenticazione</string>
   <string name="wfm_auth">Usa autenticazione</string>
-  <string name="wfm_auth_summary">Nome utente predefinito è \"root\" e la password è \"toor\"</string>
+  <string name="wfm_auth_summary">Il nome utente predefinito è \"root\" e la password è \"toor\"</string>
   <string name="username">Nome utente</string>
   <string name="password">Password</string>
   <string name="entropy">Entropia</string>
@@ -264,12 +264,13 @@
   <string name="startup_script_not_installed">Script di avvio non installato</string>
   <string name="open_play_store">Visualizza l\'applicazione su Google Play\u2122</string>
   <string name="governor">Governor</string>
-  <string name="skip_checks">Salta le controllo nel corso l\'avvio</string>
-  <string name="skip_checks_summary">Non controllare li root e busybux all\'avvio\nProcedete basso a vostro proprio rischio!</string>
-  <string name="flasher">Lampeggiare</string>
-  <string name="flash_list">List di lampeggiares</string>
-  <string name="add_item">Aggiungi oggetto</string>
+  <string name="skip_checks">Salta i controlli all\'avvio</string>
+  <string name="skip_checks_summary">Non controllare root e busybox all\'avvio\nProcedi a tuo rischio!</string>
+  <string name="flasher">Flasher</string>
+  <string name="flash_list">Lista di flashabili</string>
+  <string name="add_item">Aggiungi elemento</string>
   <string name="recovery_type_title">Tipo di script della recovery</string>
-  <string name="flash_warning">Siete in procinto di lampeggiare!\nQuando si continua, il dispositivo si riavvierà in recovery e lampeggiano gli oggetti selezionati.\n\nVuoi procedere?</string>
+  <string name="flash_warning">Siete in procinto di eseguire l\'installazione!\nSe continui, il dispositivo si riavvierà in recovery e installerà gli elementi selezionati.\n\nVuoi procedere?</string>
   <string name="both">Entrambi</string>
+  <string name="pick_file">Seleziona un file</string>
 </resources>
