@@ -357,9 +357,10 @@ public class Utils implements DeviceConstants, FileConstants {
 
     public static void toggleComponent(final String packageName, final String componentName,
             final boolean disable) {
-        toggleComponent(new ComponentName(packageName, packageName + componentName), disable);
+        toggleComponent(new ComponentName(packageName, componentName), disable);
     }
 
+    @DebugLog
     public static void toggleComponent(final ComponentName component, final boolean disable) {
         final PackageManager pm = Application.getPm();
         if (pm != null) {

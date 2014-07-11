@@ -136,23 +136,21 @@ public class Application extends android.app.Application implements DeviceConsta
             if (getPm() == null) { return; }
             if (Application.IS_NAMELESS) {
                 final Resources res = getPm().getResourcesForApplication("com.android.settings");
-                if (res != null
-                        && res.getIdentifier("device_control_settings", "string",
-                        "com.android.settings") > 0
-                        && !showLauncher) {
+                if (!showLauncher && res != null && res.getIdentifier(
+                        "device_control", "string", "com.android.settings") > 0) {
                     logDebug("Implemented into system and showLauncher is not set!");
-                    Utils.disableComponent(PACKAGE_NAME, ".DummyLauncher");
+                    Utils.disableComponent(PACKAGE_NAME, DummyLauncher.class.getName());
                 } else {
                     logDebug("Implemented into system and showLauncher is set!");
-                    Utils.enableComponent(PACKAGE_NAME, ".DummyLauncher");
+                    Utils.enableComponent(PACKAGE_NAME, DummyLauncher.class.getName());
                 }
             } else {
                 logDebug("Not implemented into system!");
-                Utils.enableComponent(PACKAGE_NAME, ".DummyLauncher");
+                Utils.enableComponent(PACKAGE_NAME, DummyLauncher.class.getName());
             }
         } catch (PackageManager.NameNotFoundException exc) {
             logDebug("You dont have settings? That's weird.");
-            Utils.enableComponent(PACKAGE_NAME, ".DummyLauncher");
+            Utils.enableComponent(PACKAGE_NAME, DummyLauncher.class.getName());
         }
     }
 

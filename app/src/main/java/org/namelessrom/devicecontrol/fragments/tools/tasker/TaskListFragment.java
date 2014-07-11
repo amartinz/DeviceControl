@@ -36,6 +36,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.services.TaskerService;
+import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -92,7 +93,9 @@ public class TaskListFragment extends AttachListFragment implements DeviceConsta
         final MenuItem toggle = menu.findItem(R.id.menu_action_toggle);
         final View v;
         if (toggle != null && (v = toggle.getActionView()) != null) {
-            ((Switch) findById(v, R.id.ab_switch)).setOnCheckedChangeListener(
+            final Switch sw = findById(v, R.id.ab_switch);
+            sw.setChecked(PreferenceHelper.getBoolean(USE_TASKER, false));
+            sw.setOnCheckedChangeListener(
                     new CompoundButton.OnCheckedChangeListener() {
                         @Override public void onCheckedChanged(final CompoundButton b,
                                 final boolean isChecked) {

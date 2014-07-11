@@ -97,7 +97,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
             mShowLauncher = (CustomCheckBoxPreference) findPreference(SHOW_LAUNCHER);
             if (mShowLauncher != null) {
                 if (Application.IS_NAMELESS) {
-                    mShowLauncher.setChecked(PreferenceHelper.getBoolean(SHOW_LAUNCHER));
+                    mShowLauncher.setChecked(PreferenceHelper.getBoolean(SHOW_LAUNCHER, true));
                     mShowLauncher.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mShowLauncher);
