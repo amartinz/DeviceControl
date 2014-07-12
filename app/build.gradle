@@ -8,8 +8,8 @@ android {
         applicationId 'org.namelessrom.devicecontrol'
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 69
-        versionName '0.5.7'
+        versionCode 70
+        versionName '0.6.0'
     }
     signingConfigs {
         release {
