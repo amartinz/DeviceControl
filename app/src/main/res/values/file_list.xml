@@ -28,6 +28,11 @@
     <string name="file_intelli_thermal_base" translatable="false">/sys/module/msm_intelli_thermal/</string>
     <string name="file_intelli_thermal" translatable="false">/sys/module/msm_intelli_thermal/parameters/enabled</string>
     <string name="file_intelli_thermal_cc" translatable="false">/sys/module/msm_intelli_thermal/core_control/enabled</string>
+    <!-- MSM Thermal -->
+    <string name="file_msm_thermal_base" translatable="false">/sys/module/msm_thermal/</string>
+    <string name="file_msm_thermal" translatable="false">/sys/module/msm_thermal/parameters/enabled</string>
+    <string name="file_msm_thermal_cc" translatable="false">/sys/module/msm_thermal/core_control/enabled</string>
+    <string name="file_msm_thermal_cc_offlined" translatable="false">/sys/module/msm_thermal/core_control/cpus_offlined</string>
     <!-- KSM -->
     <string name="file_ksm_deferred" translatable="false">/sys/kernel/mm/ksm/deferred_timer</string>
     <string name="file_ksm_run" translatable="false">/sys/kernel/mm/ksm/run</string>
@@ -46,5 +51,9 @@
     <string-array name="files_touchkey_light" translatable="false">
         <item>/sys/class/leds/button-backlight/max_brightness</item>
         <item>/sys/class/leds/button-backlight/brightness</item>
+    </string-array>
+    <string-array name="files_core_control" translatable="false">
+        <item>@string/file_intelli_thermal_cc</item>
+        <item>@string/file_msm_thermal_cc</item>
     </string-array>
 </resources>

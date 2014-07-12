@@ -69,7 +69,8 @@
     <string name="core_max">Maximum cores online</string>
     <string name="core_min">Minimum cores online</string>
     <string name="intelli_thermal_enabled">Enable Intelli-Thermal</string>
-    <string name="intelli_thermal_enabled_summary">If deactivated without valid replacement, your device may overheat!</string>
+    <string name="msm_thermal_enabled">Enable MSM-Thermal</string>
+    <string name="thermal_warning">If deactivated without valid replacement, your device may overheat!</string>
     <string name="voltage">Voltage</string>
     <string name="msm_dcvs_summary">Use MSM DCVS for CPU/GPU Frequency control</string>
     <string name="voltage_control">Voltage Control</string>

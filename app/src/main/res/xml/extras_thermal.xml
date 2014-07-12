@@ -17,9 +17,23 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
+    <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        android:key="core_control"
+        android:title="@string/core_control"
+        android:summary="@string/core_control_summary"
+        dc:filePathList="@array/files_core_control"
+        dc:category="extras" />
+
     <PreferenceCategory
         android:key="msm_thermal"
         android:title="@string/msm_thermal">
+
+        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+            android:key="msm_thermal_enabled"
+            android:title="@string/msm_thermal_enabled"
+            android:summary="@string/thermal_warning"
+            dc:filePath="@string/file_msm_thermal"
+            dc:category="extras" />
 
         <org.namelessrom.devicecontrol.preferences.CustomEditTextPreference
             android:key="msm_thermal_temp_limit"
@@ -44,16 +58,9 @@
         android:title="@string/intelli_thermal">
 
         <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
-            android:key="intelli_thermal_cc_enabled"
-            android:title="@string/core_control"
-            android:summary="@string/core_control_summary"
-            dc:filePath="@string/file_intelli_thermal_cc"
-            dc:category="extras" />
-
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
             android:key="intelli_thermal_enabled"
             android:title="@string/intelli_thermal_enabled"
-            android:summary="@string/intelli_thermal_enabled_summary"
+            android:summary="@string/thermal_warning"
             dc:filePath="@string/file_intelli_thermal"
             dc:category="extras" />
 
