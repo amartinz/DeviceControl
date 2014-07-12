@@ -32,6 +32,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,7 +45,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.echo.holographlibrary.Bar;
@@ -55,8 +56,10 @@ import com.stericson.roottools.execution.CommandCapture;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.AppDetailsActivity;
+import org.namelessrom.devicecontrol.adapters.AppListAdapter;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.events.listeners.OnAppChoosenListener;
 import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.utils.AnimationHelper;
@@ -64,8 +67,7 @@ import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.SortHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.widgets.AttachListFragment;
-import org.namelessrom.devicecontrol.adapters.AppListAdapter;
+import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -74,54 +76,52 @@ import java.util.List;
 import static butterknife.ButterKnife.findById;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-public class AppListFragment extends AttachListFragment implements DeviceConstants,
-        View.OnClickListener, OnBackPressedListener {
+public class AppListFragment extends AttachFragment implements DeviceConstants,
+        View.OnClickListener, OnAppChoosenListener, OnBackPressedListener {
 
     private final Handler mHandler            = new Handler();
     private       boolean mDetailsShowing     = false;
     private       boolean startedFromActivity = false;
 
-    private AppItem        mAppItem;
-    private AppListAdapter mAdapter;
+    private AppItem             mAppItem;
+    private RecyclerView        mRecyclerView;
+    private LinearLayoutManager mLinearLayoutManager;
+    private AppListAdapter      mAdapter;
     //==============================================================================================
-    private FrameLayout    mAppDetails;
-    private LinearLayout   mProgressContainer;
+    private FrameLayout         mAppDetails;
+    private LinearLayout        mProgressContainer;
     //==============================================================================================
-    private ImageView      mAppIcon;
-    private TextView       mAppLabel;
-    private TextView       mAppPackage;
+    private ImageView           mAppIcon;
+    private TextView            mAppLabel;
+    private TextView            mAppPackage;
     //----------------------------------------------------------------------------------------------
-    private TextView       mStatus;
-    private Button         mKillApp;
-    private Button         mDisabler;
-    private TextView       mAppCode;
-    private TextView       mAppVersion;
-    private BarGraph       mCacheGraph;
-    private LinearLayout   mCacheInfo;
-    private Button         mClearData;
-    private Button         mClearCache;
+    private TextView            mStatus;
+    private Button              mKillApp;
+    private Button              mDisabler;
+    private TextView            mAppCode;
+    private TextView            mAppVersion;
+    private BarGraph            mCacheGraph;
+    private LinearLayout        mCacheInfo;
+    private Button              mClearData;
+    private Button              mClearCache;
     //==============================================================================================
 
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
         BusProvider.getBus().register(this);
     }
 
-    @Override
-    public void onPause() {
+    @Override public void onPause() {
         super.onPause();
         BusProvider.getBus().unregister(this);
     }
 
-    @Override
-    public void onAttach(final Activity activity) {
+    @Override public void onAttach(final Activity activity) {
         super.onAttach(activity, ID_TOOLS_APP_MANAGER);
     }
 
-    @Override
-    public void onDestroy() {
+    @Override public void onDestroy() {
         super.onDestroy();
         BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
     }
@@ -133,8 +133,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
         switch (id) {
             case android.R.id.home: {
@@ -161,8 +160,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
         return false;
     }
 
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+    @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         final Bundle bundle = getArguments();
         if (bundle != null) {
@@ -203,11 +201,14 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
         mClearCache.setOnClickListener(this);
         mClearData.setOnClickListener(this);
 
-        if (!startedFromActivity) {
+        if (startedFromActivity) {
+            return appDetails;
+        } else {
             findById(appDetails, R.id.app_space).setVisibility(View.VISIBLE);
         }
 
         final View rootView = inflater.inflate(R.layout.fragment_app_list, container, false);
+        mRecyclerView = findById(rootView, android.R.id.list);
         mAppDetails = findById(rootView, R.id.app_details);
         mProgressContainer = findById(rootView, R.id.progressContainer);
         if (startedFromActivity) mProgressContainer.setVisibility(View.GONE);
@@ -215,8 +216,21 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
         return rootView;
     }
 
-    @Override
-    public void onClick(View v) {
+    @Override public void onViewCreated(final View view, final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
+
+        if (startedFromActivity) {
+            refreshAppDetails();
+        } else {
+            mRecyclerView.setHasFixedSize(true);
+            mLinearLayoutManager = new LinearLayoutManager(getActivity());
+            mRecyclerView.setLayoutManager(mLinearLayoutManager);
+            new LoadApps().execute();
+        }
+    }
+
+    @Override public void onClick(View v) {
         final int id = v.getId();
         switch (id) {
             case R.id.app_kill:
@@ -234,8 +248,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
         }
     }
 
-    @Override
-    public boolean onBackPressed() {
+    @Override public boolean onBackPressed() {
         if (!startedFromActivity && mDetailsShowing) {
             AnimationHelper.animateX(mAppDetails, 500, mAppIcon.getWidth() +
                     AnimationHelper.getDp(R.dimen.app_margin), mAppDetails.getWidth());
@@ -246,23 +259,8 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
         return false;
     }
 
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setHasOptionsMenu(true);
-
-        if (startedFromActivity) {
-            refreshAppDetails();
-        } else {
-            new LoadApps().execute();
-        }
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        if (startedFromActivity || getListAdapter() == null) return;
-        mAppItem = (AppItem) getListAdapter().getItem(position);
-
+    @Override public void onAppChoosen(final AppItem appItem) {
+        mAppItem = appItem;
         refreshAppDetails();
     }
 
@@ -397,8 +395,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
         } catch (Exception ignored) { /* ignored */ }
     }
 
-    @Subscribe
-    public void onPackageStats(final PackageStats packageStats) {
+    @Subscribe public void onPackageStats(final PackageStats packageStats) {
         logDebug("onAppSizeEvent()");
 
         if (packageStats == null) return;
@@ -550,8 +547,7 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
     }
 
     private class LoadApps extends AsyncTask<Void, Void, List<AppItem>> {
-        @Override
-        protected List<AppItem> doInBackground(Void... params) {
+        @Override protected List<AppItem> doInBackground(Void... params) {
             if (startedFromActivity) return null;
             final PackageManager pm = Application.getPm();
             final List<AppItem> appList = new ArrayList<AppItem>();
@@ -569,14 +565,13 @@ public class AppListFragment extends AttachListFragment implements DeviceConstan
             return appList;
         }
 
-        @Override
-        protected void onPostExecute(final List<AppItem> appItems) {
+        @Override protected void onPostExecute(final List<AppItem> appItems) {
             if (appItems != null && isAdded()) {
                 if (mProgressContainer != null) {
                     mProgressContainer.setVisibility(View.GONE);
                 }
-                mAdapter = new AppListAdapter(appItems);
-                setListAdapter(mAdapter);
+                mAdapter = new AppListAdapter(AppListFragment.this, appItems);
+                mRecyclerView.setAdapter(mAdapter);
                 AnimationHelper.animateX(mAppDetails, 0, 0, mAppDetails.getWidth());
             }
         }

@@ -17,77 +17,72 @@
  */
 package org.namelessrom.devicecontrol.adapters;
 
-import android.content.Context;
 import android.content.res.Resources;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.events.listeners.OnAppChoosenListener;
 import org.namelessrom.devicecontrol.objects.AppItem;
 
 import java.util.List;
 
 import static butterknife.ButterKnife.findById;
 
-public class AppListAdapter extends BaseAdapter {
+public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
 
-    private final List<AppItem> mAppList;
+    private final Resources res = Application.applicationContext.getResources();
+    private final List<AppItem>        mAppList;
+    private final OnAppChoosenListener mAppChoosenListener;
 
-    public AppListAdapter(final List<AppItem> appList) { mAppList = appList; }
+    public AppListAdapter(final OnAppChoosenListener listener, final List<AppItem> appList) {
+        this.mAppChoosenListener = listener;
+        this.mAppList = appList;
+    }
 
-    @Override
-    public int getCount() { return mAppList.size(); }
-
-    @Override
-    public Object getItem(final int position) { return mAppList.get(position); }
-
-    @Override
-    public long getItemId(final int position) { return 0; }
-
-    private static final class ViewHolder {
+    public static final class ViewHolder extends RecyclerView.ViewHolder {
+        private View      rootView;
         private ImageView appIcon;
         private TextView  appLabel;
         private TextView  packageName;
         private View      layer;
 
         public ViewHolder(final View v) {
+            super(v);
+            rootView = v;
+            layer = findById(v, R.id.app_layer);
             appIcon = findById(v, R.id.app_icon);
             appLabel = findById(v, R.id.app_label);
             packageName = findById(v, R.id.app_package);
-            layer = findById(v, R.id.app_layer);
         }
     }
 
-    @Override
-    public View getView(final int position, View convertView, final ViewGroup parent) {
-        final ViewHolder viewHolder;
-        if (convertView == null) {
-            convertView = ((LayoutInflater) Application.applicationContext
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                    .inflate(R.layout.item_app, parent, false);
-            assert (convertView != null);
-            viewHolder = new ViewHolder(convertView);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
+    @Override public int getItemCount() { return mAppList.size(); }
 
+    @Override public ViewHolder onCreateViewHolder(final ViewGroup parent, final int type) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_app, parent, false));
+    }
+
+    @Override public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         final AppItem appItem = mAppList.get(position);
+        viewHolder.rootView.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                mAppChoosenListener.onAppChoosen(appItem);
+            }
+        });
         viewHolder.appIcon.setImageDrawable(appItem.getIcon());
         viewHolder.appLabel.setText(appItem.getLabel());
         viewHolder.packageName.setText(appItem.getPackageName());
 
-        final Resources res = Application.applicationContext.getResources();
         viewHolder.appLabel.setTextColor(appItem.isSystemApp() ? res.getColor(R.color.red_middle)
                 : res.getColor(android.R.color.white));
         viewHolder.layer.setVisibility(appItem.isEnabled() ? View.INVISIBLE : View.VISIBLE);
-
-        return convertView;
     }
 
 }
