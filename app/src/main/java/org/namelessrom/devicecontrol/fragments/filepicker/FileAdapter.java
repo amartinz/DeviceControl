@@ -19,11 +19,10 @@ package org.namelessrom.devicecontrol.fragments.filepicker;
 
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
 import android.text.format.Formatter;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,35 +43,27 @@ import static butterknife.ButterKnife.findById;
 /**
  * Created by alex on 22.06.14.
  */
-public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
+public class FileAdapter extends BaseAdapter {
 
     private final Resources resources = Application.applicationContext.getResources();
+
     private ArrayList<File> files;
 
     private String fileType   = "";
     private int    colorResId = -1;
 
-    public static final class ViewHolder extends RecyclerView.ViewHolder {
-        private final View      rootView;
-        private final ImageView icon;
-        private final TextView  name;
-        private final TextView  info;
+    public FileAdapter() { }
 
-        private ViewHolder(final View rootView) {
-            super(rootView);
-            this.rootView = rootView;
-            this.icon = findById(rootView, R.id.file_icon);
-            this.name = findById(rootView, R.id.file_name);
-            this.info = findById(rootView, R.id.file_info);
-        }
-    }
-
-    public FileAdapter(final ArrayList<File> files) {
+    public void setFiles(final ArrayList<File> files) {
         this.files = files;
         Collections.sort(this.files, SortHelper.sFileComparator);
     }
 
-    @Override public int getItemCount() { return files.size(); }
+    @Override public int getCount() { return files.size(); }
+
+    @Override public Object getItem(final int position) { return files.get(position); }
+
+    @Override public long getItemId(final int position) { return 0; /* unused */ }
 
     public FileAdapter setFileType(final String fileType) {
         this.fileType = fileType;
@@ -84,12 +75,31 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
         return this;
     }
 
-    @Override public ViewHolder onCreateViewHolder(final ViewGroup parent, final int type) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_file, parent, false));
+    private static final class ViewHolder {
+        private final View      rootView;
+        private final ImageView icon;
+        private final TextView  name;
+        private final TextView  info;
+
+        private ViewHolder(final View rootView) {
+            this.rootView = rootView;
+            this.icon = findById(rootView, R.id.file_icon);
+            this.name = findById(rootView, R.id.file_name);
+            this.info = findById(rootView, R.id.file_info);
+        }
     }
 
-    @Override public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
+    @Override public View getView(final int position, View v, final ViewGroup parent) {
+        final ViewHolder viewHolder;
+        if (v == null) {
+            v = Application.getLayoutInflater().inflate(R.layout.list_item_file, parent, false);
+            assert (v != null);
+            viewHolder = new ViewHolder(v);
+            v.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) v.getTag();
+        }
+
         final File file = files.get(position);
 
         // we need to hack here as sometimes ../ is not properly recognized as directory
@@ -129,6 +139,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHolder> {
         viewHolder.name.setTextColor(color);
         viewHolder.icon.setColorFilter(Color.parseColor("#FFFFFF"));
         viewHolder.icon.setColorFilter(color);
-    }
 
+        return v;
+    }
 }

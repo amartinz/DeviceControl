@@ -17,17 +17,12 @@
  */
 package org.namelessrom.devicecontrol.fragments.filepicker;
 
-import android.app.Fragment;
+import android.app.ListFragment;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.squareup.otto.Subscribe;
 
-import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.FlashItemEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
@@ -39,13 +34,12 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import java.io.File;
 import java.util.ArrayList;
 
-import static butterknife.ButterKnife.findById;
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 /**
  * A class for picking a file
  */
-public class FilePickerFragment extends Fragment implements OnBackPressedListener {
+public class FilePickerFragment extends ListFragment implements OnBackPressedListener {
 
     public static final String ARG_FILE_TYPE = "arg_file_type";
 
@@ -58,8 +52,7 @@ public class FilePickerFragment extends Fragment implements OnBackPressedListene
 
     private String fileType = "";
 
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLinearLayoutManager;
+    private FileAdapter mFileAdapter;
 
     @Override public void onResume() {
         super.onResume();
@@ -80,22 +73,11 @@ public class FilePickerFragment extends Fragment implements OnBackPressedListene
         }
     }
 
-    @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_recycler, container, false);
-
-        mRecyclerView = findById(rootView, android.R.id.list);
-        mRecyclerView.setHasFixedSize(true);
-
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-        return rootView;
-    }
-
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // TODO: restore instance state
+        mFileAdapter = new FileAdapter();
+        mFileAdapter.setFileType(fileType);
         loadFiles(root, true);
     }
 
@@ -139,9 +121,13 @@ public class FilePickerFragment extends Fragment implements OnBackPressedListene
                     if (s.isEmpty()) continue;
                     fileList.add(new File(currentPath + File.separator + s));
                 }
-                final FileAdapter fileAdapter = new FileAdapter(fileList);
-                fileAdapter.setFileType(fileType);
-                mRecyclerView.setAdapter(fileAdapter);
+                mFileAdapter.setFiles(fileList);
+                if (getListAdapter() == null) {
+                    setListAdapter(mFileAdapter);
+                } else {
+                    mFileAdapter.notifyDataSetChanged();
+                    getListView().setSelectionAfterHeaderView();
+                }
                 break;
         }
     }
