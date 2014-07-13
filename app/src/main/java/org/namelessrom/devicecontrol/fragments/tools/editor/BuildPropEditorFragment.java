@@ -19,7 +19,6 @@ package org.namelessrom.devicecontrol.fragments.tools.editor;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -39,10 +38,12 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.objects.Prop;
 import org.namelessrom.devicecontrol.utils.Scripts;
@@ -51,7 +52,6 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
-import org.namelessrom.devicecontrol.adapters.PropAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -339,7 +339,7 @@ public class BuildPropEditorFragment extends AttachFragment
             @Override
             public void onNothingSelected(AdapterView<?> parentView) { }
         });
-        new AlertDialog.Builder(activity)
+        new AccentAlertDialog.Builder(activity)
                 .setTitle(title)
                 .setView(editDialog)
                 .setNegativeButton(getString(android.R.string.cancel),
@@ -384,8 +384,8 @@ public class BuildPropEditorFragment extends AttachFragment
         final Activity activity = getActivity();
         if (activity == null) return;
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle(title)
+        new AccentAlertDialog.Builder(activity)
+                .setTitle(title)
                 .setMessage(msg)
                 .setNegativeButton(getString(android.R.string.cancel),
                         new DialogInterface.OnClickListener() {
@@ -402,8 +402,8 @@ public class BuildPropEditorFragment extends AttachFragment
                         Utils.getCommandResult(REMOVE, Scripts.removeProperty(prop.getName()));
                         if (mAdapter != null) mAdapter.remove(prop);
                     }
-                });
-        builder.show();
+                })
+                .show();
     }
 
 }

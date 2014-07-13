@@ -18,7 +18,6 @@
 package org.namelessrom.devicecontrol.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -33,9 +32,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.negusoft.holoaccent.dialog.AccentAlertDialog;
+
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
+import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.proprietary.Constants;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
@@ -44,8 +47,6 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.preferences.CustomPreference;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -279,7 +280,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
         if (mDonatePreference == preference) {
             final Activity activity = getActivity();
             if (activity == null) { return false; }
-            final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            final AccentAlertDialog.Builder builder = new AccentAlertDialog.Builder(activity);
             builder.setTitle(R.string.donate)
                     .setNegativeButton(android.R.string.cancel,
                             new DialogInterface.OnClickListener() {
@@ -307,9 +308,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
                 }
             });
             builder.setView(listView);
-
-            final AlertDialog alert = builder.create();
-            alert.show();
+            builder.show();
 
             return true;
         }

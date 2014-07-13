@@ -34,6 +34,7 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.negusoft.holoaccent.dialog.DividerPainter;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
@@ -41,13 +42,13 @@ import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.GovernorEvent;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.preferences.CustomPreference;
 
 import java.io.File;
 
@@ -183,10 +184,11 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
                                         }
                                     }
                             );
-                            AlertDialog dialog = builder.create();
+                            final AlertDialog dialog = builder.create();
                             dialog.show();
-                            Window window = dialog.getWindow();
+                            final Window window = dialog.getWindow();
                             window.setLayout(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                            new DividerPainter(mContext).paint(window);
                             return true;
                         }
 

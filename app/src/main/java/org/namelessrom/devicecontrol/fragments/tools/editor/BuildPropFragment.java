@@ -31,15 +31,17 @@ import android.text.InputFilter.LengthFilter;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import com.negusoft.holoaccent.dialog.DividerPainter;
+
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.preferences.CustomPreference;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
@@ -296,6 +298,7 @@ public class BuildPropFragment extends AttachPreferenceFragment
                     pd.setMessage(getString(R.string.applying_wait));
                     pd.setCancelable(false);
                     pd.show();
+                    new DividerPainter(getActivity()).paint(pd.getWindow());
                 }
             }
 

@@ -33,6 +33,9 @@ import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -41,9 +44,6 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
-import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 
 public class HotpluggingFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,

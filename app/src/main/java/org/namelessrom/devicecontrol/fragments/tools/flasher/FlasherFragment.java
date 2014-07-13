@@ -18,7 +18,6 @@
 package org.namelessrom.devicecontrol.fragments.tools.flasher;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,11 +33,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.negusoft.holoaccent.dialog.AccentAlertDialog;
+import com.negusoft.holoaccent.dialog.DividerPainter;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.FilePickerActivity;
+import org.namelessrom.devicecontrol.adapters.FlashListAdapter;
 import org.namelessrom.devicecontrol.events.RefreshEvent;
 import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
 import org.namelessrom.devicecontrol.objects.FlashItem;
@@ -46,7 +48,6 @@ import org.namelessrom.devicecontrol.utils.FlashUtils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
-import org.namelessrom.devicecontrol.adapters.FlashListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -178,7 +179,7 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
         switch (id) {
             case R.id.btn_apply: {
                 final Activity activity = getActivity();
-                new AlertDialog.Builder(activity)
+                new AccentAlertDialog.Builder(activity)
                         .setTitle(R.string.dialog_warning)
                         .setMessage(R.string.flash_warning)
                         .setPositiveButton(android.R.string.ok, new DialogInterface
@@ -191,6 +192,7 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
                                 pd.setCancelable(false);
                                 pd.setIndeterminate(true);
                                 pd.show();
+                                new DividerPainter(getActivity()).paint(pd.getWindow());
 
                                 // finally flash it
                                 final List<FlashItem> flashItemList = mAdapter.getFlashItemList();

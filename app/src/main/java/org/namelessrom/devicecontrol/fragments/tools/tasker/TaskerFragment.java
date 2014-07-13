@@ -24,15 +24,15 @@ import android.preference.PreferenceScreen;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
+import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.preferences.CustomListPreference;
-import org.namelessrom.devicecontrol.preferences.CustomPreference;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 

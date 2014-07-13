@@ -24,9 +24,9 @@ import android.util.SparseArray;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.events.CpuStateEvent;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

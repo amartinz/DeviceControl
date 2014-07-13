@@ -28,21 +28,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 
+import com.negusoft.holoaccent.widget.AccentSwitch;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.adapters.TaskerAdapter;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.services.TaskerService;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachListFragment;
-import org.namelessrom.devicecontrol.adapters.TaskerAdapter;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
 import static butterknife.ButterKnife.findById;
@@ -93,7 +92,7 @@ public class TaskListFragment extends AttachListFragment implements DeviceConsta
         final MenuItem toggle = menu.findItem(R.id.menu_action_toggle);
         final View v;
         if (toggle != null && (v = toggle.getActionView()) != null) {
-            final Switch sw = findById(v, R.id.ab_switch);
+            final AccentSwitch sw = findById(v, R.id.ab_switch);
             sw.setChecked(PreferenceHelper.getBoolean(USE_TASKER, false));
             sw.setOnCheckedChangeListener(
                     new CompoundButton.OnCheckedChangeListener() {

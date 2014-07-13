@@ -17,9 +17,9 @@
 package org.namelessrom.devicecontrol.wizard.ui;
 
 import android.app.Activity;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

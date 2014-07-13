@@ -3,10 +3,11 @@ package org.namelessrom.devicecontrol.preferences;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.preference.ListPreference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
+
+import com.negusoft.holoaccent.preference.ListPreference;
 
 import org.namelessrom.devicecontrol.R;
 

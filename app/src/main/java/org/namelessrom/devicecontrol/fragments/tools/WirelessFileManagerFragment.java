@@ -35,15 +35,15 @@ import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.server.ServerStoppedEvent;
 import org.namelessrom.devicecontrol.events.server.ServerStoppingEvent;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
+import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.CustomEditTextPreference;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.services.WebServerService;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.preferences.CustomEditTextPreference;
-import org.namelessrom.devicecontrol.preferences.CustomPreference;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 

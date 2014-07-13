@@ -19,7 +19,6 @@ package org.namelessrom.devicecontrol.fragments.tools.editor;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,10 +39,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.objects.Prop;
 import org.namelessrom.devicecontrol.utils.Scripts;
@@ -52,7 +53,6 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
-import org.namelessrom.devicecontrol.adapters.PropAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -206,34 +206,34 @@ public class SysctlEditorFragment extends AttachFragment
         final Activity activity = getActivity();
         if (activity == null) return;
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
-        dialog.setTitle(getString(R.string.dialog_warning))
-                .setMessage(getString(R.string.dialog_warning_apply));
-        dialog.setNegativeButton(getString(android.R.string.cancel),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                }
-        );
-        dialog.setPositiveButton(getString(android.R.string.yes),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Utils.remount("/system", "rw");
-                        Utils.getCommandResult(APPLY, Scripts.copyFile(
-                                        Application.getFilesDirectory() + "/sysctl.conf",
-                                        Scripts.SYSCTL)
-                        );
-                        dialogInterface.dismiss();
-                        Toast.makeText(activity,
-                                getString(R.string.toast_settings_applied),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-        dialog.show();
+        new AccentAlertDialog.Builder(activity)
+                .setTitle(getString(R.string.dialog_warning))
+                .setMessage(getString(R.string.dialog_warning_apply))
+                .setNegativeButton(getString(android.R.string.cancel),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        }
+                )
+                .setPositiveButton(getString(android.R.string.yes),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Utils.remount("/system", "rw");
+                                Utils.getCommandResult(APPLY, Scripts.copyFile(
+                                                Application.getFilesDirectory() + "/sysctl.conf",
+                                                Scripts.SYSCTL)
+                                );
+                                dialogInterface.dismiss();
+                                Toast.makeText(activity,
+                                        getString(R.string.toast_settings_applied),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                )
+                .show();
     }
 
     //==============================================================================================
@@ -358,7 +358,7 @@ public class SysctlEditorFragment extends AttachFragment
             title = getString(R.string.add_property);
         }
 
-        new AlertDialog.Builder(activity)
+        new AccentAlertDialog.Builder(activity)
                 .setTitle(title)
                 .setView(editDialog)
                 .setNegativeButton(getString(android.R.string.cancel),
@@ -393,7 +393,7 @@ public class SysctlEditorFragment extends AttachFragment
                         Collections.sort(mProps);
                         mAdapter.notifyDataSetChanged();
                     }
-                }).create().show();
+                }).show();
     }
 
 }

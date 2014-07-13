@@ -17,21 +17,21 @@
 package org.namelessrom.devicecontrol.wizard;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.negusoft.holoaccent.activity.AccentActivity;
+import com.negusoft.holoaccent.dialog.AccentAlertDialog;
+import com.negusoft.holoaccent.dialog.AccentDialogFragment;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
@@ -52,7 +52,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class AddTaskActivity extends FragmentActivity implements
+public class AddTaskActivity extends AccentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -112,7 +112,7 @@ public class AddTaskActivity extends FragmentActivity implements
 
         mWizardModel.registerListener(this);
 
-        mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        mPagerAdapter = new MyPagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mStepPagerStrip.setOnPageSelectedListener(new StepPagerStrip.OnPageSelectedListener() {
             @Override
@@ -145,17 +145,17 @@ public class AddTaskActivity extends FragmentActivity implements
 
     @OnClick(R.id.next_button) void onNextButton() {
         if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
-            DialogFragment dg = new DialogFragment() {
+            AccentDialogFragment dg = new AccentDialogFragment() {
                 @Override
                 public Dialog onCreateDialog(Bundle savedInstanceState) {
-                    return new AlertDialog.Builder(getActivity())
+                    return new AccentAlertDialog.Builder(getActivity())
                             .setMessage(R.string.submit_confirm_message)
                             .setPositiveButton(R.string.submit_confirm_button, mSubListener)
                             .setNegativeButton(android.R.string.cancel, null)
                             .create();
                 }
             };
-            dg.show(getSupportFragmentManager(), "create_tasker_dialog");
+            dg.show(getFragmentManager(), "create_tasker_dialog");
         } else {
             if (mEditingAfterReview) {
                 mPager.setCurrentItem(mPagerAdapter.getCount() - 1);

@@ -18,9 +18,7 @@
 package org.namelessrom.devicecontrol.utils;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.preference.Preference;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,6 +30,9 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.negusoft.holoaccent.dialog.AccentAlertDialog;
+
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 
@@ -47,11 +48,10 @@ public class DialogHelper {
             final String path, final String category) {
         if (activity == null) return;
 
-        final Resources res = activity.getResources();
-        final String cancel = res.getString(android.R.string.cancel);
-        final String ok = res.getString(android.R.string.ok);
-        final LayoutInflater factory = LayoutInflater.from(activity);
-        final View alphaDialog = factory.inflate(R.layout.dialog_seekbar, null);
+        final String cancel = Application.getStr(android.R.string.cancel);
+        final String ok = Application.getStr(android.R.string.ok);
+        final View alphaDialog = LayoutInflater.from(activity)
+                .inflate(R.layout.dialog_seekbar, null, false);
 
         final SeekBar seekbar = findById(alphaDialog, R.id.seek_bar);
 
@@ -98,25 +98,23 @@ public class DialogHelper {
             }
         });
 
-        SeekBar.OnSeekBarChangeListener seekBarChangeListener =
-                new SeekBar.OnSeekBarChangeListener() {
-                    @Override
-                    public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) {
-                        final int mSeekbarProgress = seekbar.getProgress();
-                        if (fromUser) {
-                            settingText.setText(Integer.toString(mSeekbarProgress));
-                        }
-                    }
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser) {
+                final int mSeekbarProgress = seekbar.getProgress();
+                if (fromUser) {
+                    settingText.setText(Integer.toString(mSeekbarProgress));
+                }
+            }
 
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekbar) { }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekbar) { }
 
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekbar) { }
-                };
-        seekbar.setOnSeekBarChangeListener(seekBarChangeListener);
+            @Override
+            public void onStartTrackingTouch(SeekBar seekbar) { }
+        });
 
-        new AlertDialog.Builder(activity)
+        new AccentAlertDialog.Builder(activity)
                 .setTitle(title)
                 .setView(alphaDialog)
                 .setNegativeButton(cancel,
@@ -144,7 +142,7 @@ public class DialogHelper {
                         PreferenceHelper.setBootup(
                                 new DataItem(category, pref.getKey(), path, newProgress));
                     }
-                }).create().show();
+                }).show();
     }
 
 }

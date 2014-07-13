@@ -22,19 +22,19 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.negusoft.holoaccent.activity.AccentActivity;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.FlashItemEvent;
 import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
-import org.namelessrom.devicecontrol.fragments.tools.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.objects.FlashItem;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-public class FilePickerActivity extends Activity {
+public class FilePickerActivity extends AccentActivity {
 
     private Fragment mCurrentFragment;
 

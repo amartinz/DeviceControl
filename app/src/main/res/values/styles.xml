@@ -18,12 +18,13 @@
 
     <style name="AppTheme" parent="@style/BaseTheme">
         <!-- I want to thank all xml tags, which had to die for this project. -->
-        <item name="android:actionBarStyle">@android:style/Widget.Holo.ActionBar.Solid</item>
+        <item name="android:actionBarStyle">@style/HoloAccent.ActionBar.Solid</item>
+        <item name="accentColor">@color/accent</item>
         <item name="textAppearanceFinish">@style/TextAppearanceFinish</item>
     </style>
 
     <!-- Base application theme. -->
-    <style name="BaseTheme" parent="@android:style/Theme.Holo" />
+    <style name="BaseTheme" parent="Theme.HoloAccent" />
 
     <style name="NoActionBar" parent="@android:style/Theme.Holo.NoActionBar">
         <!-- Customize ads aag kjasdgjkb asdf weu here -->

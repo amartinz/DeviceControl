@@ -42,8 +42,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.negusoft.holoaccent.dialog.DividerPainter;
+
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -51,7 +54,6 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.preferences.CustomPreference;
 
 import butterknife.ButterKnife;
 
@@ -338,6 +340,7 @@ public class VoltageFragment extends AttachPreferenceFragment
 
                             final Window window = dialog.getWindow();
                             window.setLayout(800, LayoutParams.WRAP_CONTENT);
+                            new DividerPainter(mContext).paint(window);
 
                             return true;
                         }
