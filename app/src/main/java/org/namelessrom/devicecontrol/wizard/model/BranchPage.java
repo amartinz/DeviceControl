@@ -16,7 +16,7 @@
 
 package org.namelessrom.devicecontrol.wizard.model;
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.wizard.ui.SingleChoiceFragment;

@@ -17,18 +17,19 @@
  */
 package org.namelessrom.devicecontrol.activities;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+
+import com.negusoft.holoaccent.activity.AccentActivity;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-public class AppDetailsActivity extends Activity {
+public class AppDetailsActivity extends AccentActivity {
 
     public static final String ARG_PACKAGE_NAME = "package";
 

@@ -33,6 +33,8 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.negusoft.holoaccent.dialog.DividerPainter;
+
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
@@ -163,6 +165,7 @@ public class VibratorTuningPreference extends DialogPreference
                     }
                 });
             }
+            new DividerPainter(getContext()).paint(d.getWindow());
         }
     }
 

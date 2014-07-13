@@ -16,6 +16,6 @@
 -->
 <resources>
 
-    <style name="BaseTheme" parent="@android:style/Theme.Holo" />
+    <style name="BaseTheme" parent="Theme.HoloAccent" />
 
 </resources>

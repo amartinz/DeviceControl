@@ -24,7 +24,7 @@
 
     <item
         android:id="@+id/menu_action_toggle"
-        android:actionLayout="@layout/ab_toggle"
+        android:actionLayout="@layout/ab_switch"
         android:showAsAction="always" />
 
 </menu>

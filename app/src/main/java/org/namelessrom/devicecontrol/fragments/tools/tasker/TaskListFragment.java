@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.negusoft.holoaccent.widget.AccentSwitch;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
@@ -93,7 +94,7 @@ public class TaskListFragment extends AttachListFragment implements DeviceConsta
         final MenuItem toggle = menu.findItem(R.id.menu_action_toggle);
         final View v;
         if (toggle != null && (v = toggle.getActionView()) != null) {
-            final Switch sw = findById(v, R.id.ab_switch);
+            final AccentSwitch sw = findById(v, R.id.ab_switch);
             sw.setChecked(PreferenceHelper.getBoolean(USE_TASKER, false));
             sw.setOnCheckedChangeListener(
                     new CompoundButton.OnCheckedChangeListener() {
