@@ -399,6 +399,12 @@ public class Utils implements DeviceConstants, FileConstants {
         return enabled;
     }
 
+    @DebugLog public static void stopTaskerService() {
+        final Intent tasker = new Intent(Application.applicationContext, TaskerService.class);
+        tasker.setAction(TaskerService.ACTION_STOP);
+        Application.applicationContext.startService(tasker);
+    }
+
     @DebugLog public static boolean isEnabled(String s, final boolean contains) {
         if (s != null) {
             s = s.trim().toUpperCase();

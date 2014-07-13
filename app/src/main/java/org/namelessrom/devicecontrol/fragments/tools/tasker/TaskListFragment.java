@@ -101,7 +101,11 @@ public class TaskListFragment extends AttachListFragment implements DeviceConsta
                             PreferenceHelper.setBoolean(USE_TASKER, isChecked);
                             Utils.toggleComponent(new ComponentName(PACKAGE_NAME,
                                     TaskerService.class.getName()), !isChecked);
-                            if (isChecked) Utils.startTaskerService();
+                            if (isChecked) {
+                                Utils.startTaskerService();
+                            } else {
+                                Utils.stopTaskerService();
+                            }
                         }
                     }
             );
