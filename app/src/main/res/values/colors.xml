@@ -15,6 +15,10 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <!-- Accents -->
+    <color name="accent">@color/grass</color>
+    <color name="grass">#2ab081</color>
+    <!-- Misc -->
     <color name="red_middle">#dc3d24</color>
     <color name="darker_gray">#66666666</color>
     <color name="grey_dark">#232B2B</color>
