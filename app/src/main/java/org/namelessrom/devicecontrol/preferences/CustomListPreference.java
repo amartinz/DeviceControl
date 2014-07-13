@@ -3,10 +3,13 @@ package org.namelessrom.devicecontrol.preferences;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.preference.ListPreference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
+
+import com.negusoft.holoaccent.dialog.DividerPainter;
 
 import org.namelessrom.devicecontrol.R;
 
@@ -27,6 +30,11 @@ public class CustomListPreference extends ListPreference {
     }
 
     public void setTitleColor(final String color) { this.color = color; }
+
+    @Override protected void showDialog(Bundle state) {
+        super.showDialog(state);
+        new DividerPainter(getContext()).paint(getDialog().getWindow());
+    }
 
     @Override
     protected void onBindView(final View view) {

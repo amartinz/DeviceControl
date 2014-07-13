@@ -18,7 +18,6 @@
 package org.namelessrom.devicecontrol;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -35,9 +34,11 @@ import com.android.vending.billing.util.IabHelper;
 import com.android.vending.billing.util.IabResult;
 import com.android.vending.billing.util.Purchase;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.negusoft.holoaccent.activity.AccentActivity;
 import com.squareup.otto.Subscribe;
 import com.stericson.roottools.RootTools;
 
+import org.namelessrom.devicecontrol.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
@@ -77,7 +78,6 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.adapters.MenuListArrayAdapter;
 
 import java.io.File;
 
@@ -86,7 +86,7 @@ import hugo.weaving.DebugLog;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
-public class MainActivity extends Activity
+public class MainActivity extends AccentActivity
         implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener,
         SlidingMenu.OnClosedListener, SlidingMenu.OnOpenedListener {
 
