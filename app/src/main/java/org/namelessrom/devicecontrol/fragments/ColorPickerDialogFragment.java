@@ -14,6 +14,7 @@ import com.negusoft.holoaccent.dialog.AccentDialogFragment;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 import butterknife.ButterKnife;
 
@@ -65,7 +66,7 @@ public class ColorPickerDialogFragment extends AccentDialogFragment {
             @Override public void onClick(View view) {
                 PreferenceHelper.setInt("pref_color", colorPicker.getColor());
                 onColorPickedListener.onColorPicked(colorPicker.getColor());
-                if (getDialog() != null) getDialog().dismiss();
+                Utils.restartActivity(getActivity());
             }
         });
 

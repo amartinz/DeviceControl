@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -465,7 +466,11 @@ public class Utils implements DeviceConstants, FileConstants {
                 mask, path);
     }
 
-    public static String colorToString(final int color) {
-        return String.format("#%06X", 0xFFFFFF & color);
+    public static void restartActivity(final Activity activity) {
+        if (activity == null) return;
+        activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        activity.finish();
+        activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        activity.startActivity(activity.getIntent());
     }
 }
