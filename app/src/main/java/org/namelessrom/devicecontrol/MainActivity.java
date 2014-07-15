@@ -148,6 +148,11 @@ public class MainActivity extends AccentActivity
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
+
+    @Override public int getOverrideAccentColor() {
+        return PreferenceHelper.getInt("color_pref", getResources().getColor(R.color.accent));
+    }
+
     @Override protected void onResume() {
         super.onResume();
         BusProvider.getBus().register(this);

@@ -26,12 +26,17 @@ import com.negusoft.holoaccent.activity.AccentActivity;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class AppDetailsActivity extends AccentActivity {
 
     public static final String ARG_PACKAGE_NAME = "package";
+
+    @Override public int getOverrideAccentColor() {
+        return PreferenceHelper.getInt("color_pref", getResources().getColor(R.color.accent));
+    }
 
     @Override protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);

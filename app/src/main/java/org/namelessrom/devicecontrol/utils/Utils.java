@@ -464,4 +464,8 @@ public class Utils implements DeviceConstants, FileConstants {
         return String.format("busybox chown %s.%s %s;busybox chmod %s %s;", user, group, path,
                 mask, path);
     }
+
+    public static String colorToString(final int color) {
+        return String.format("#%06X", 0xFFFFFF & color);
+    }
 }

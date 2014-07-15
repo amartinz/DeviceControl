@@ -275,4 +275,8 @@
     <string name="pick_file">Pick a file</string>
     <string name="multi_user_do_not_use">Do not use multiuser mode</string>
     <string name="multi_user_do_not_use_summary">Check this if you have problems with flashing zip files from sdcard</string>
+    <string name="accent">Accent color</string>
+    <string name="accent_summary">Use your favourite color!</string>
+    <string name="color_reset">Reset color</string>
+    <string name="color_pick">Pick color</string>
 </resources>
