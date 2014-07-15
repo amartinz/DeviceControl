@@ -34,8 +34,10 @@ import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 import com.negusoft.holoaccent.dialog.AccentDialogFragment;
 import com.squareup.otto.Subscribe;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.TaskerItem;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.wizard.events.ItemSelectedEvent;
 import org.namelessrom.devicecontrol.wizard.events.SaveTaskEvent;
@@ -74,6 +76,10 @@ public class AddTaskActivity extends AccentActivity implements
     private boolean mConsumePageSelectedEvent;
 
     private List<Page> mCurrentPageSequence;
+
+    @Override public int getOverrideAccentColor() {
+        return PreferenceHelper.getInt("pref_color", Application.getColor(R.color.accent));
+    }
 
     @Override protected void onResume() {
         super.onResume();

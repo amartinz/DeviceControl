@@ -15,10 +15,13 @@ import butterknife.ButterKnife;
 public class CustomPreference extends Preference {
 
     private String color    = "#FFFFFF";
-    private String sumColor = null;
+    private int    sumColor = -1;
 
     private boolean areMilliVolts;
     private String  category;
+
+    private TextView title;
+    private TextView summary;
 
     public CustomPreference(Context context) {
         super(context);
@@ -68,9 +71,23 @@ public class CustomPreference extends Preference {
 
     public void setCategory(final String category) { this.category = category; }
 
-    public void setTitleColor(final String color) { this.color = color; }
+    public void setTitleColor(final String color) {
+        this.color = color;
+        if (title != null) {
+            title.setTextColor(Color.parseColor(this.color));
+        }
+    }
 
-    public void setSummaryColor(final String color) { this.sumColor = color; }
+    public void setSummaryColor(final int color) {
+        this.sumColor = color;
+        if (summary != null) {
+            summary.setTextColor(this.sumColor);
+        }
+    }
+
+    public void setSummaryColor(final String color) {
+        setSummaryColor(Color.parseColor(color));
+    }
 
     public String getCategory() { return this.category; }
 
@@ -78,14 +95,14 @@ public class CustomPreference extends Preference {
     protected void onBindView(final View view) {
         super.onBindView(view);
 
-        final TextView title = ButterKnife.findById(view, android.R.id.title);
+        title = ButterKnife.findById(view, android.R.id.title);
         title.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
         title.setTextColor(Color.parseColor(color));
 
-        final TextView summary = ButterKnife.findById(view, android.R.id.summary);
+        summary = ButterKnife.findById(view, android.R.id.summary);
         summary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-        if (sumColor != null) {
-            summary.setTextColor(Color.parseColor(sumColor));
+        if (sumColor != -1) {
+            summary.setTextColor(sumColor);
         }
     }
 

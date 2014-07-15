@@ -196,4 +196,7 @@ public class Application extends android.app.Application implements DeviceConsta
         if (IS_LOG_DEBUG) logDebug(String.format(msg, formats));
     }
 
+    public static int getColor(final int color) {
+        return Application.applicationContext.getResources().getColor(color);
+    }
 }

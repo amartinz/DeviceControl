@@ -57,6 +57,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
     // App
     //==============================================================================================
     private CustomPreference         mDonatePreference;
+    private CustomPreference         mColorPreference;
     private CustomCheckBoxPreference mMonkeyPref;
     //==============================================================================================
     // Set On Boot
@@ -141,6 +142,12 @@ public class PreferencesFragment extends AttachPreferenceFragment
             if (mDonatePreference != null) {
                 mDonatePreference
                         .setEnabled(PreferenceHelper.getBoolean(Constants.Iab.getPref(), false));
+            }
+
+            mColorPreference = (CustomPreference) findPreference("pref_color");
+            if (mColorPreference != null) {
+                mColorPreference.setSummaryColor(PreferenceHelper.getInt("pref_color",
+                        getResources().getColor(R.color.accent)));
             }
 
             if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.secret=1")) {
@@ -277,7 +284,14 @@ public class PreferencesFragment extends AttachPreferenceFragment
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
 
-        if (mDonatePreference == preference) {
+        if (mColorPreference == preference) {
+            new ColorPickerDialogFragment(new OnColorPickedListener() {
+                @Override public void onColorPicked(final int color) {
+                    if (mColorPreference != null) mColorPreference.setSummaryColor(color);
+                }
+            }).show(getFragmentManager(), "color_picker");
+            return true;
+        } else if (mDonatePreference == preference) {
             final Activity activity = getActivity();
             if (activity == null) { return false; }
             final AccentAlertDialog.Builder builder = new AccentAlertDialog.Builder(activity);
@@ -316,5 +330,8 @@ public class PreferencesFragment extends AttachPreferenceFragment
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
+    public static interface OnColorPickedListener {
+        public void onColorPicked(final int color);
+    }
 
 }
