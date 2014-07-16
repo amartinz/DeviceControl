@@ -53,7 +53,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
     private WebServerService webServerService;
 
     private CustomPreference         mWirelessFileManager;
-    private CustomCheckBoxPreference mBrowseRoot;
+    private CustomEditTextPreference mFileRoot;
     private CustomEditTextPreference mPort;
 
     private CustomCheckBoxPreference mUseAuth;
@@ -110,10 +110,13 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
             mWirelessFileManager.setOnPreferenceClickListener(this);
         }
 
-        mBrowseRoot = (CustomCheckBoxPreference) findPreference("wfm_root");
-        if (mBrowseRoot != null) {
-            mBrowseRoot.setChecked(PreferenceHelper.getBoolean(mBrowseRoot.getKey(), false));
-            mBrowseRoot.setOnPreferenceChangeListener(this);
+        mFileRoot = (CustomEditTextPreference) findPreference("wfm_root");
+        if (mFileRoot != null) {
+            tmp = PreferenceHelper.getString(mFileRoot.getKey(), "/");
+            mFileRoot.setSummary(tmp);
+            mFileRoot.setText(tmp);
+            mFileRoot.getEditText().setText(tmp);
+            mFileRoot.setOnPreferenceChangeListener(this);
         }
 
         mPort = (CustomEditTextPreference) findPreference("wfm_port");
@@ -148,8 +151,12 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
     }
 
     @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
-        if (mBrowseRoot == preference) {
-            PreferenceHelper.setBoolean(mBrowseRoot.getKey(), (Boolean) o);
+        if (mFileRoot == preference) {
+            final String tmp = String.valueOf(o);
+            PreferenceHelper.setString(mFileRoot.getKey(), tmp);
+            mFileRoot.setText(tmp);
+            mFileRoot.setSummary(tmp);
+            mFileRoot.getEditText().setText(tmp);
             return true;
         } else if (mPort == preference) {
             final String value = String.valueOf(o);

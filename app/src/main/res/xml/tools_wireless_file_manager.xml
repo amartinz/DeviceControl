@@ -52,10 +52,10 @@
 
     <PreferenceCategory android:title="@string/extras">
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.preferences.CustomEditTextPreference
             android:key="wfm_root"
-            android:title="@string/wfm_root"
-            android:defaultValue="false" />
+            android:title="@string/wfm_root_path"
+            android:defaultValue="/" />
 
     </PreferenceCategory>
 

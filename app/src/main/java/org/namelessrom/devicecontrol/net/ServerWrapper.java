@@ -110,25 +110,33 @@ public class ServerWrapper {
                     res.end();
                     return;
                 }
-                if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                    res.send("SDCARD not mounted!");
-                    return;
-                }
                 boolean isDirectory = true;
                 final String filePath = HtmlHelper.urlDecode(req.getPath()).replace("/files/", "");
                 logDebug("SERVER", "req.getPath(): " + req.getPath());
                 logDebug("SERVER", "filePath: " + filePath);
-                File file;
-                String sdRoot;
-                if (PreferenceHelper.getBoolean("wfm_root", false)) {
-                    file = new File("/");
-                    sdRoot = "";
-                } else {
+
+                File file = null;
+                String sdRoot = PreferenceHelper.getString("wfm_root", "/");
+                logDebug("SERVER", "sdRoot: " + sdRoot);
+                if (sdRoot != null && !sdRoot.isEmpty()) {
+                    file = new File(sdRoot);
+                    sdRoot = file.getAbsolutePath();
+                    logDebug("SERVER", "sdRoot: " + sdRoot);
+                }
+
+                if (file == null || !file.exists()) {
+                    if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                        logDebug("SERVER", "SDCARD not mounted!");
+                        res.send("SDCARD not mounted!");
+                        return;
+                    }
                     file = Environment.getExternalStorageDirectory();
                     sdRoot = file.getAbsolutePath();
+                    logDebug("SERVER", "sdRoot: " + sdRoot);
                 }
                 if (filePath != null && !filePath.isEmpty()) {
                     file = new File(file, filePath);
+                    logDebug("SERVER", "file: " + file.getAbsolutePath());
                     if (file.exists()) {
                         isDirectory = file.isDirectory();
                     } else {
