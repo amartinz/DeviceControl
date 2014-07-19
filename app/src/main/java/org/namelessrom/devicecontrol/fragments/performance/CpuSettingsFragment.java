@@ -45,6 +45,7 @@ import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.monitors.CpuCoreMonitor;
@@ -170,8 +171,8 @@ public class CpuSettingsFragment extends AttachFragment
         final int mCpuNum = CpuUtils.getNumOfCpus();
         for (int i = 0; i < mCpuNum; i++) {
             tmpCore = new CpuCore(getString(R.string.core) + ' ' + String.valueOf(i) + ": ",
-                    0,
-                    0,
+                    "0",
+                    "0",
                     "0");
             generateRow(mCpuInfo, tmpCore);
         }
@@ -215,7 +216,7 @@ public class CpuSettingsFragment extends AttachFragment
             Arrays.sort(mAvailableFrequencies, new Comparator<String>() {
                 @Override
                 public int compare(String object1, String object2) {
-                    return Integer.valueOf(object1).compareTo(Integer.valueOf(object2));
+                    return Utils.tryValueOf(object1, 0).compareTo(Utils.tryValueOf(object2, 0));
                 }
             });
             Collections.reverse(Arrays.asList(mAvailableFrequencies));
@@ -321,8 +322,8 @@ public class CpuSettingsFragment extends AttachFragment
         cpuInfoFreq.setText(isOffline
                 ? getString(R.string.core_offline)
                 : CpuUtils.toMHz(String.valueOf(cpuCore.mCoreCurrent))
-                        + " / " + CpuUtils.toMHz(String.valueOf(cpuCore.mCoreMax))
-                        + " [" + cpuCore.mCoreGov + ']');
+                + " / " + CpuUtils.toMHz(String.valueOf(cpuCore.mCoreMax))
+                + " [" + cpuCore.mCoreGov + ']');
         cpuBar.setMax(cpuCore.mCoreMax);
         cpuBar.setProgress(cpuCore.mCoreCurrent);
 

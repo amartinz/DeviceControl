@@ -145,11 +145,11 @@ public class CpuCoreMonitor implements DeviceConstants {
                     final List<CpuCore> mCoreList = new ArrayList<CpuCore>(CPU_COUNT);
                     int mult = 0;
                     CpuCore tmp;
-                    int max, current;
+                    String max, current;
                     for (int i = 0; i < CPU_COUNT; i++) {
                         try {
-                            max = Integer.parseInt(parts[i + mult + 0]);
-                            current = Integer.parseInt(parts[i + mult + 1]);
+                            max = parts[i + mult + 0];
+                            current = parts[i + mult + 1];
                             tmp = new CpuCore(
                                     mActivity.getString(
                                             R.string.core) + ' ' + String.valueOf(i) + ':',
@@ -160,8 +160,8 @@ public class CpuCoreMonitor implements DeviceConstants {
                         } catch (IndexOutOfBoundsException iob) {
                             tmp = new CpuCore(mActivity.getString(
                                     R.string.core) + ' ' + String.valueOf(i) + ':',
-                                    0,
-                                    0,
+                                    "0",
+                                    "0",
                                     "0"
                             );
                         }

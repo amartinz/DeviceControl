@@ -17,7 +17,7 @@
  */
 package org.namelessrom.devicecontrol.objects;
 
-import static org.namelessrom.devicecontrol.Application.logDebug;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 public class CpuCore {
 
@@ -26,16 +26,12 @@ public class CpuCore {
     public final int    mCoreCurrent;
     public final String mCoreGov;
 
-    public CpuCore(final String core, final int coreCurrent,
-            final int coreMax, final String coreGov) {
+    public CpuCore(final String core, final String coreCurrent,
+            final String coreMax, final String coreGov) {
         mCore = ((core != null && !core.isEmpty()) ? core : "0");
-        mCoreMax = coreMax;
-        mCoreCurrent = coreCurrent;
+        mCoreMax = Utils.tryParse(coreMax, 0);
+        mCoreCurrent = Utils.tryParse(coreCurrent, 0);
         mCoreGov = ((coreGov != null && !coreGov.isEmpty()) ? coreGov : "0");
-        logDebug("mCore: [" + mCore + ']');
-        logDebug("mCoreMax: [" + mCoreMax + ']');
-        logDebug("mCoreCurrent: [" + mCoreCurrent + ']');
-        logDebug("mCoreGov: [" + mCoreGov + ']');
     }
 
 }

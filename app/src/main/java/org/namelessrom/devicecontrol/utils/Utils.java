@@ -473,4 +473,20 @@ public class Utils implements DeviceConstants, FileConstants {
         activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         activity.startActivity(activity.getIntent());
     }
+
+    public static int tryParse(final String parse, final int def) {
+        try {
+            return Integer.parseInt(parse);
+        } catch (Exception exc) {
+            return def;
+        }
+    }
+
+    public static Integer tryValueOf(final String value, final int def) {
+        try {
+            return Integer.valueOf(value);
+        } catch (Exception exc) {
+            return def;
+        }
+    }
 }
