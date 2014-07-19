@@ -86,7 +86,8 @@ public interface PerformanceConstants {
             GPU_FOLDER + "/kgsl-3d0/pwrscale/trustzone/governor";
 
     //----------------------------------------------------------------------------------------------
-    public static final String[] GPU_GOVS = {"performance", "simple", "ondemand", "interactive"};
+    public static final String[] GPU_GOVS =
+            {"performance", "ondemand", "simple", "conservative", "interactive"};
 
     //----------------------------------------------------------------------------------------------
     public static final String UV_TABLE_FILE  = CPU_BASE + "cpu0/cpufreq/UV_mV_table";
