@@ -149,10 +149,11 @@ public class CpuStateWidget extends LinearLayout {
 
         final LinearLayout view = (LinearLayout) inflate(context, R.layout.row_state, null);
 
-        float per = (float) state.duration * 100 / totalStateTime;
-        final String sPer = (int) per + "%";
+        int per = ((int) ((float) state.duration * 100 / totalStateTime));
+        if (per > 100) { per = 100; } else if (per < 0) { per = 0; }
+        final String sPer = per + "%";
 
-        String sFreq;
+        final String sFreq;
         if (state.freq == 0) {
             sFreq = context.getString(R.string.deep_sleep);
         } else {
@@ -170,7 +171,7 @@ public class CpuStateWidget extends LinearLayout {
         freqText.setText(sFreq);
         perText.setText(sPer);
         durText.setText(sDur);
-        bar.setProgress((int) per);
+        bar.setProgress(per);
 
         parent.addView(view);
         return view;
