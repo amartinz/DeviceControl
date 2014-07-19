@@ -89,6 +89,8 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     private AppListAdapter      mAdapter;
     //==============================================================================================
     private FrameLayout         mAppDetails;
+    private View                mAppDetailsContainer;
+    private View                mAppDetailsError;
     private LinearLayout        mProgressContainer;
     //==============================================================================================
     private ImageView           mAppIcon;
@@ -128,7 +130,8 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (!startedFromActivity && mDetailsShowing && AppHelper.isPlayStoreInstalled()) {
+        if (!startedFromActivity && mDetailsShowing && AppHelper.isPlayStoreInstalled()
+                && mAppItem != null) {
             inflater.inflate(R.menu.menu_app_details, menu);
         }
     }
@@ -183,6 +186,9 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
         assert (appDetails != null);
 
+        mAppDetailsContainer = findById(appDetails, R.id.app_details_container);
+        mAppDetailsError = findById(appDetails, R.id.app_details_error);
+
         mAppIcon = findById(appDetails, R.id.app_icon);
         mAppLabel = findById(appDetails, R.id.app_label);
         mAppPackage = findById(appDetails, R.id.app_package);
@@ -204,7 +210,8 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         if (startedFromActivity) {
             return appDetails;
         } else {
-            findById(appDetails, R.id.app_space).setVisibility(View.VISIBLE);
+            final View space = findById(appDetails, R.id.app_space);
+            if (space != null) space.setVisibility(View.VISIBLE);
         }
 
         final View rootView = inflater.inflate(R.layout.fragment_app_list, container, false);
@@ -291,43 +298,50 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     }
 
     private void refreshAppDetails() {
-        String tmp;
-
-        mAppIcon.setImageDrawable(mAppItem.getIcon());
-        mAppLabel.setText(mAppItem.getLabel());
-        mAppPackage.setText(mAppItem.getPackageName());
-
-        if (mAppItem.isSystemApp()) {
-            tmp = getString(R.string.app_system, mAppItem.getLabel());
-            mStatus.setTextColor(getResources().getColor(R.color.red_middle));
+        if (mAppItem == null) {
+            mAppDetailsContainer.setVisibility(View.GONE);
+            mAppDetailsError.setVisibility(View.VISIBLE);
         } else {
-            tmp = getString(R.string.app_user, mAppItem.getLabel());
-            mStatus.setTextColor(Color.parseColor("#ffffff"));
+            mAppDetailsContainer.setVisibility(View.VISIBLE);
+            mAppDetailsError.setVisibility(View.GONE);
+            String tmp;
+
+            mAppIcon.setImageDrawable(mAppItem.getIcon());
+            mAppLabel.setText(mAppItem.getLabel());
+            mAppPackage.setText(mAppItem.getPackageName());
+
+            if (mAppItem.isSystemApp()) {
+                tmp = getString(R.string.app_system, mAppItem.getLabel());
+                mStatus.setTextColor(getResources().getColor(R.color.red_middle));
+            } else {
+                tmp = getString(R.string.app_user, mAppItem.getLabel());
+                mStatus.setTextColor(Color.parseColor("#ffffff"));
+            }
+            mStatus.setText(Html.fromHtml(tmp));
+
+            if (!AppHelper.isAppRunning(mAppItem.getPackageName())) {
+                mKillApp.setEnabled(false);
+            } else {
+                mKillApp.setEnabled(true);
+            }
+
+            if (mAppItem.getPackageName().contains("org.namelessrom")) {
+                mDisabler.setEnabled(false);
+            } else {
+                mDisabler.setEnabled(true);
+            }
+            mDisabler.setText(mAppItem.isEnabled() ? R.string.disable : R.string.enable);
+
+            mAppCode.setText(
+                    getString(R.string.app_version_code, mAppItem.getPackageInfo().versionCode));
+
+            mAppVersion.setText(
+                    getString(R.string.app_version_name, mAppItem.getPackageInfo().versionName));
+
+            try {
+                AppHelper.getSize(mAppItem.getPackageName());
+            } catch (Exception e) { logDebug("AppHelper.getSize(): " + e); }
         }
-        mStatus.setText(Html.fromHtml(tmp));
-
-        if (!AppHelper.isAppRunning(mAppItem.getPackageName())) {
-            mKillApp.setEnabled(false);
-        } else {
-            mKillApp.setEnabled(true);
-        }
-
-        if (mAppItem.getPackageName().contains("org.namelessrom")) {
-            mDisabler.setEnabled(false);
-        } else {
-            mDisabler.setEnabled(true);
-        }
-        mDisabler.setText(mAppItem.isEnabled() ? R.string.disable : R.string.enable);
-
-        mAppCode.setText(
-                getString(R.string.app_version_code, mAppItem.getPackageInfo().versionCode));
-
-        mAppVersion.setText(
-                getString(R.string.app_version_name, mAppItem.getPackageInfo().versionName));
-
-        try {
-            AppHelper.getSize(mAppItem.getPackageName());
-        } catch (Exception e) { logDebug("AppHelper.getSize(): " + e); }
 
         if (!startedFromActivity && !mDetailsShowing) {
             mAppDetails.bringToFront();

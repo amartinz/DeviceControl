@@ -279,4 +279,5 @@
     <string name="accent_summary">Use your favourite color!</string>
     <string name="color_reset">Reset color</string>
     <string name="color_pick">Pick color</string>
+    <string name="something_went_wrong">Sorry but something went wrong!\nPlease try again!</string>
 </resources>
