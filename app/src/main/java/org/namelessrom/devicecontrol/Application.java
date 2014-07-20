@@ -31,6 +31,7 @@ import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 import org.acra.sender.HttpSender;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -67,6 +68,8 @@ public class Application extends android.app.Application implements DeviceConsta
         ACRA.init(this);
 
         applicationContext = getApplicationContext();
+
+        DatabaseHandler.getInstance();
         Logger.setEnabled(PreferenceHelper.getBoolean(EXTENSIVE_LOGGING, false));
 
         if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.debug=1")) {
@@ -101,6 +104,14 @@ public class Application extends android.app.Application implements DeviceConsta
         final boolean showLauncher =
                 PreferenceHelper.getBoolean(SHOW_LAUNCHER, true) || !Application.IS_NAMELESS;
         toggleLauncherIcon(showLauncher);
+    }
+
+
+
+    @Override public void onTerminate() {
+        // do some placebo :P
+        DatabaseHandler.tearDown();
+        super.onTerminate();
     }
 
     public static PackageManager getPm() {

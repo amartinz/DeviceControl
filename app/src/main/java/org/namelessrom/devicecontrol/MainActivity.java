@@ -39,6 +39,7 @@ import com.squareup.otto.Subscribe;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.adapters.MenuListArrayAdapter;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
@@ -257,7 +258,7 @@ public class MainActivity extends AccentActivity
     }
 
     @Override protected void onDestroy() {
-        super.onDestroy();
+        DatabaseHandler.tearDown();
         synchronized (lockObject) {
             Logger.i(this, "closing shells");
             try {
@@ -270,6 +271,7 @@ public class MainActivity extends AccentActivity
                 Logger.e(this, String.format("onDestroy(): %s", e));
             }
         }
+        super.onDestroy();
     }
 
     //==============================================================================================
