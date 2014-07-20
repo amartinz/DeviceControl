@@ -23,7 +23,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.stericson.roottools.RootTools;
@@ -56,8 +55,6 @@ public class Application extends android.app.Application implements DeviceConsta
 
     public static final boolean IS_NAMELESS = Utils.isNameless();
 
-    public static boolean IS_LOG_DEBUG = false;
-
     public static AlarmManager alarmManager;
     public static Context      applicationContext;
 
@@ -70,7 +67,7 @@ public class Application extends android.app.Application implements DeviceConsta
         ACRA.init(this);
 
         applicationContext = getApplicationContext();
-        IS_LOG_DEBUG = PreferenceHelper.getBoolean(EXTENSIVE_LOGGING, false);
+        Logger.setEnabled(PreferenceHelper.getBoolean(EXTENSIVE_LOGGING, false));
 
         if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.debug=1")) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -96,7 +93,7 @@ public class Application extends android.app.Application implements DeviceConsta
             RootTools.debugMode = true;
         }
 
-        logDebug("Is Nameless: " + (IS_NAMELESS ? "true" : "false"));
+        Logger.v(this, String.format("is nameless: %s", IS_NAMELESS));
 
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         packageManager = getPm();
@@ -136,18 +133,19 @@ public class Application extends android.app.Application implements DeviceConsta
                 final Resources res = getPm().getResourcesForApplication("com.android.settings");
                 if (!showLauncher && res != null && res.getIdentifier(
                         "device_control", "string", "com.android.settings") > 0) {
-                    logDebug("Implemented into system and showLauncher is not set!");
+                    Logger.v(Application.class,
+                            "Implemented into system and showLauncher is not set!");
                     Utils.disableComponent(PACKAGE_NAME, DummyLauncher.class.getName());
                 } else {
-                    logDebug("Implemented into system and showLauncher is set!");
+                    Logger.v(Application.class, "Implemented into system and showLauncher is set!");
                     Utils.enableComponent(PACKAGE_NAME, DummyLauncher.class.getName());
                 }
             } else {
-                logDebug("Not implemented into system!");
+                Logger.v(Application.class, "Not implemented into system!");
                 Utils.enableComponent(PACKAGE_NAME, DummyLauncher.class.getName());
             }
         } catch (PackageManager.NameNotFoundException exc) {
-            logDebug("You dont have settings? That's weird.");
+            Logger.e(Application.class, "You dont have settings? That's weird.");
             Utils.enableComponent(PACKAGE_NAME, DummyLauncher.class.getName());
         }
     }
@@ -156,42 +154,6 @@ public class Application extends android.app.Application implements DeviceConsta
 
     public static String getStr(final int resId, final String... extras) {
         return applicationContext.getString(resId, (Object[]) extras);
-    }
-
-    /**
-     * Logs a message to logcat if boolean param is true.<br />
-     * This is very useful for debugging, just set debug to false on a release build<br />
-     * and it wont show any debug messages.
-     *
-     * @param msg The message to log
-     */
-    public static void logDebug(final String msg) { logDebug("DeviceControl", msg); }
-
-    /**
-     * Logs a message to logcat if boolean param is true.<br />
-     * This is very useful for debugging, just set debug to false on a release build<br />
-     * and it wont show any debug messages.
-     *
-     * @param msg The message to log
-     */
-    public static void logDebug(final Object object, final String msg) {
-        logDebug("DeviceControl", object.getClass().getSimpleName() + " --> " + msg);
-    }
-
-    /**
-     * Logs a message to logcat if boolean param is true.<br />
-     * This is very useful for debugging, just set debug to false on a release build<br />
-     * and it wont show any debug messages.
-     *
-     * @param tag The tag for the log
-     * @param msg The message to log
-     */
-    public static void logDebug(final String tag, final String msg) {
-        if (IS_LOG_DEBUG) Log.e(tag, msg);
-    }
-
-    public static void logDebug(final String msg, final Object... formats) {
-        if (IS_LOG_DEBUG) logDebug(String.format(msg, formats));
     }
 
     public static int getColor(final int color) {

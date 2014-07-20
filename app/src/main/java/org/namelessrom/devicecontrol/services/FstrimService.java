@@ -24,13 +24,12 @@ import android.os.AsyncTask;
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.File;
 import java.io.FileOutputStream;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class FstrimService extends IntentService implements DeviceConstants, FileConstants {
 
@@ -62,7 +61,7 @@ public class FstrimService extends IntentService implements DeviceConstants, Fil
 
         @Override
         protected Void doInBackground(Void... params) {
-            logDebug("FSTRIM RUNNING");
+            Logger.i(this, "FSTRIM RUNNING");
             try {
                 final File filesDir = getFilesDir();
                 String path;
@@ -82,7 +81,7 @@ public class FstrimService extends IntentService implements DeviceConstants, Fil
 
                     @Override
                     public void commandOutput(int id, String line) {
-                        logDebug("Result: " + line);
+                        Logger.v(this, "Result: " + line);
                         try {
                             fos.write((line + '\n').getBytes());
                         } catch (Exception ignored) { }
@@ -100,9 +99,9 @@ public class FstrimService extends IntentService implements DeviceConstants, Fil
 
                 RootTools.getShell(true).add(comm);
             } catch (Exception exc) {
-                logDebug("Fstrim error: " + exc.getLocalizedMessage());
+                Logger.e(this, "Fstrim error: " + exc.getLocalizedMessage());
             }
-            logDebug("FSTRIM RAN");
+            Logger.i(this, "FSTRIM RAN");
 
             return null;
         }

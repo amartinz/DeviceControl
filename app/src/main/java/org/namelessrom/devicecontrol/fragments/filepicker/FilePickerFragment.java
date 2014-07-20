@@ -23,6 +23,7 @@ import android.view.View;
 
 import com.squareup.otto.Subscribe;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.events.FlashItemEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
@@ -33,8 +34,6 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 /**
  * A class for picking a file
@@ -96,14 +95,14 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
             return;
         }
 
-        logDebug(String.format("onFile(%s)", currentPath));
+        Logger.v(this, String.format("onFile(%s)", currentPath));
         loadFiles(currentPath, true);
     }
 
     @Subscribe public void onFlashItem(final FlashItem item) {
         if (!ContentTypes.isFiletypeMatching(item.getName(), fileType)) return;
 
-        logDebug(String.format("filePicked(%s)", item.getPath()));
+        Logger.v(this, String.format("filePicked(%s)", item.getPath()));
         BusProvider.getBus().post(new FlashItemEvent(item));
     }
 

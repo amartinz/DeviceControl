@@ -25,6 +25,7 @@ import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
 import org.namelessrom.devicecontrol.objects.CpuCore;
@@ -34,8 +35,6 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class CpuCoreMonitor implements DeviceConstants {
 
@@ -71,16 +70,16 @@ public class CpuCoreMonitor implements DeviceConstants {
         if (!isStarted) {
             mHandler.post(mUpdater);
             isStarted = true;
-            logDebug("Started CpuCoreMonitor! Interval: " + String.valueOf(mInterval));
+            Logger.i(this, "started, interval: " + String.valueOf(mInterval));
         } else {
-            logDebug("Updated interval: " + String.valueOf(mInterval));
+            Logger.i(this, "updated interval: " + String.valueOf(mInterval));
         }
     }
 
     public void stop() {
         isStarted = false;
         mHandler.removeCallbacks(mUpdater);
-        logDebug("Stopped CpuCoreMonitor!");
+        Logger.v(this, "stopped!");
     }
 
     private final Runnable mUpdater = new Runnable() {
@@ -97,7 +96,7 @@ public class CpuCoreMonitor implements DeviceConstants {
             try {
                 mShell = RootTools.getShell(true);
             } catch (Exception exc) {
-                logDebug("CpuCoreMonitor: " + exc.getMessage());
+                Logger.e(this, "CpuCoreMonitor: " + exc.getMessage());
             }
         }
     }
@@ -126,7 +125,7 @@ public class CpuCoreMonitor implements DeviceConstants {
         sb.append(");").append("echo $command | tr -d \"\\n\"");
         // example output: 0 162000 1890000 interactive
         final String cmd = sb.toString();
-        logDebug("cmd: " + cmd);
+        Logger.v(this, "cmd: " + cmd);
 
         final StringBuilder outputCollector = new StringBuilder();
         final CommandCapture commandCapture = new CommandCapture(0, false, cmd) {
@@ -138,7 +137,7 @@ public class CpuCoreMonitor implements DeviceConstants {
             @Override
             public void commandCompleted(int id, int exitcode) {
                 final String output = outputCollector.toString();
-                logDebug("output: " + output);
+                Logger.v(this, "output: " + output);
 
                 if (mActivity != null) {
                     final String[] parts = output.split(" ");

@@ -54,6 +54,7 @@ import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.AppDetailsActivity;
 import org.namelessrom.devicecontrol.adapters.AppListAdapter;
@@ -74,7 +75,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static butterknife.ButterKnife.findById;
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class AppListFragment extends AttachFragment implements DeviceConstants,
         View.OnClickListener, OnAppChoosenListener, OnBackPressedListener {
@@ -340,7 +340,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
             try {
                 AppHelper.getSize(mAppItem.getPackageName());
-            } catch (Exception e) { logDebug("AppHelper.getSize(): " + e); }
+            } catch (Exception e) { Logger.e(this, "AppHelper.getSize(): " + e); }
         }
 
         if (!startedFromActivity && !mDetailsShowing) {
@@ -410,7 +410,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     }
 
     @Subscribe public void onPackageStats(final PackageStats packageStats) {
-        logDebug("onAppSizeEvent()");
+        Logger.i(this, "onAppSizeEvent()");
 
         if (packageStats == null) return;
 
@@ -507,7 +507,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             }
             try {
                 AppHelper.getSize(mAppItem.getPackageName());
-            } catch (Exception e) { logDebug("AppHelper.getSize(): " + e); }
+            } catch (Exception e) { Logger.e(this, "AppHelper.getSize(): " + e); }
         }
     };
 

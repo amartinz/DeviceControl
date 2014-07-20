@@ -35,6 +35,7 @@ import android.widget.ListView;
 import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
@@ -47,8 +48,6 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class PreferencesFragment extends AttachPreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants, PerformanceConstants {
@@ -225,7 +224,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
         if (mExtensiveLogging == preference) {
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(EXTENSIVE_LOGGING, value);
-            Application.IS_LOG_DEBUG = value;
+            Logger.setEnabled(value);
             mExtensiveLogging.setChecked(value);
             changed = true;
         } else if (mShowLauncher == preference) {
@@ -316,7 +315,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
                     if (i > 5) i = 5;
                     if (i < 0) i = 0;
                     final String sku = DonationStartedEvent.SKU_DONATION_BASE + String.valueOf(i);
-                    logDebug("SKU: " + sku);
+                    Logger.v(this, "SKU: " + sku);
                     BusProvider.getBus().post(new DonationStartedEvent(sku));
                 }
             });

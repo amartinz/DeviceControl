@@ -33,6 +33,7 @@ import android.widget.EditText;
 
 import com.negusoft.holoaccent.dialog.DividerPainter;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
@@ -42,8 +43,6 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class BuildPropFragment extends AttachPreferenceFragment
         implements DeviceConstants, Preference.OnPreferenceChangeListener {
@@ -305,22 +304,21 @@ public class BuildPropFragment extends AttachPreferenceFragment
             @Override
             protected Boolean doInBackground(Void... params) {
 
-                logDebug(String.format("Calling script with args '%s' and '%s'", key, value));
+                Logger.v(this, String.format("Calling script with args '%s' and '%s'", key, value));
                 backupBuildProp();
                 Utils.remount("/system", "rw");
                 boolean success = false;
                 try {
                     if (value.equals(DISABLE)) {
-                        logDebug(String.format("value == %s", DISABLE));
+                        Logger.v(this, String.format("value == %s", DISABLE));
                         final String cmd = Scripts.removeProperty(key);
                         success = cmd.isEmpty() || Utils.getCommandResult(cmd);
                     } else {
-                        logDebug("append command starting");
                         success = Utils.getCommandResult(Scripts.addOrUpdate(key, value));
                     }
 
                 } catch (Exception exc) {
-                    logDebug(exc.getMessage());
+                    Logger.e(this, exc.getMessage());
                 }
 
                 return success;
@@ -345,12 +343,12 @@ public class BuildPropFragment extends AttachPreferenceFragment
     }
 
     private boolean backupBuildProp() {
-        logDebug("Backing up build.prop to /data/local/tmp/pm_build.prop");
+        Logger.v(this, "Backing up build.prop to /data/local/tmp/pm_build.prop");
         return Utils.getCommandResult("cp /system/build.prop /data/local/tmp/pm_build.prop");
     }
 
     private boolean restoreBuildProp() {
-        logDebug("Restoring build.prop from /data/local/tmp/pm_build.prop");
+        Logger.v(this, "Restoring build.prop from /data/local/tmp/pm_build.prop");
         return Utils.getCommandResult("cp /data/local/tmp/pm_build.prop /system/build.prop");
     }
 

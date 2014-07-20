@@ -84,8 +84,6 @@ import java.io.File;
 import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
 
-import static org.namelessrom.devicecontrol.Application.logDebug;
-
 public class MainActivity extends AccentActivity
         implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener,
         SlidingMenu.OnClosedListener, SlidingMenu.OnOpenedListener {
@@ -211,7 +209,7 @@ public class MainActivity extends AccentActivity
         final String downgradePath = getFilesDir() + DC_DOWNGRADE;
         if (Utils.fileExists(downgradePath)) {
             if (!new File(downgradePath).delete()) {
-                logDebug("Could not delete downgrade indicator file!");
+                Logger.wtf(this, "Could not delete downgrade indicator file!");
             }
             Toast.makeText(this, R.string.downgraded, Toast.LENGTH_LONG).show();
         }
@@ -242,7 +240,7 @@ public class MainActivity extends AccentActivity
             mSlidingMenu.toggle(true);
         } else if (mCurrentFragment instanceof OnBackPressedListener
                 && ((OnBackPressedListener) mCurrentFragment).onBackPressed()) {
-            logDebug("onBackPressed()");
+            Logger.v(this, "onBackPressed()");
         } else if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {
@@ -261,7 +259,7 @@ public class MainActivity extends AccentActivity
     @Override protected void onDestroy() {
         super.onDestroy();
         synchronized (lockObject) {
-            logDebug("closing shells");
+            Logger.i(this, "closing shells");
             try {
                 RootTools.closeAllShells();
                 if (mHelper != null) {
@@ -269,7 +267,7 @@ public class MainActivity extends AccentActivity
                     mHelper = null;
                 }
             } catch (Exception e) {
-                logDebug("onDestroy(): " + e);
+                Logger.e(this, String.format("onDestroy(): %s", e));
             }
         }
     }
@@ -520,13 +518,13 @@ public class MainActivity extends AccentActivity
         final String key = Constants.Iab.getKey();
         if (!key.equals("---") && AppHelper.isPlayStoreInstalled()) {
             mHelper = new IabHelper(this, key);
-            if (Application.IS_LOG_DEBUG) {
+            if (Logger.getEnabled()) {
                 mHelper.enableDebugLogging(true, "IABDEVICECONTROL");
             }
             mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
                 @Override
                 public void onIabSetupFinished(IabResult result) {
-                    logDebug("IAB: " + result);
+                    Logger.i(this, "IAB: " + result);
                     PreferenceHelper.setBoolean(Constants.Iab.getPref(), result.isSuccess());
                 }
             });
@@ -541,9 +539,8 @@ public class MainActivity extends AccentActivity
         final String sku = event.getSku();
         final int reqCode = event.getReqCode();
         final String token = event.getToken();
-        logDebug("IAB: sku: " + sku
-                + " | reqCode: " + String.valueOf(reqCode)
-                + " | token: " + token);
+        Logger.v(this, String.format("IAB: sku: %s | reqCode: %s | token: %s",
+                sku, String.valueOf(reqCode), token));
         mHelper.launchPurchaseFlow(this, sku, reqCode, mPurchaseFinishedListener, token);
     }
 

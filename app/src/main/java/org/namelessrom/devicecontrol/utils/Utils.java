@@ -27,6 +27,7 @@ import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
@@ -47,8 +48,6 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import hugo.weaving.DebugLog;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class Utils implements DeviceConstants, FileConstants {
 
@@ -266,9 +265,9 @@ public class Utils implements DeviceConstants, FileConstants {
         for (String s : dirList) {
             dir = new File(s);
             if (!dir.exists()) {
-                logDebug("setupDirectories: creating " + s);
+                Logger.v(Utils.class, String.format("setupDirectories: creating %s", s));
                 final boolean isSuccess = dir.mkdirs();
-                logDebug("setupDirectories: " + (isSuccess ? "true" : "false"));
+                Logger.v(Utils.class, String.format("setupDirectories: %s", isSuccess));
             }
         }
     }
@@ -296,7 +295,7 @@ public class Utils implements DeviceConstants, FileConstants {
         try {
             RootTools.getShell(true).add(comm);
         } catch (Exception e) {
-            logDebug("runRootCommand: " + e.getMessage());
+            Logger.v(Utils.class, "runRootCommand: " + e.getMessage());
         }
     }
 
@@ -323,7 +322,8 @@ public class Utils implements DeviceConstants, FileConstants {
             @Override
             public void commandCompleted(int id, int exitcode) {
                 final String result = sb.toString();
-                logDebug(String.format("Generic Output for %s: %s", String.valueOf(ID), result));
+                Logger.v(Utils.class,
+                        String.format("Generic Output for %s: %s", String.valueOf(ID), result));
                 Application.HANDLER.post(new Runnable() {
                     @Override
                     public void run() {
@@ -335,7 +335,7 @@ public class Utils implements DeviceConstants, FileConstants {
         try {
             RootTools.getShell(true).add(comm);
         } catch (Exception e) {
-            logDebug("runRootCommand: " + e.getMessage());
+            Logger.v(Utils.class, "runRootCommand: " + e.getMessage());
         }
     }
 
@@ -389,10 +389,10 @@ public class Utils implements DeviceConstants, FileConstants {
         final Intent tasker = new Intent(Application.applicationContext, TaskerService.class);
         if (enabled) {
             tasker.setAction(TaskerService.ACTION_START);
-            logDebug("Starting TaskerService");
+            Logger.v(Utils.class, "Starting TaskerService");
         } else {
             tasker.setAction(TaskerService.ACTION_STOP);
-            logDebug("Stopping TaskerService");
+            Logger.v(Utils.class, "Stopping TaskerService");
         }
         Application.applicationContext.startService(tasker);
 
@@ -452,8 +452,8 @@ public class Utils implements DeviceConstants, FileConstants {
         try {
             RootTools.remount(path, mode);
         } catch (Exception e) {
-            logDebug(String.format("Could not remount %s with options \"%s\", error: %s",
-                    path, mode, e));
+            Logger.v(Utils.class,
+                    String.format("Could not remount %s with \"%s\", error: %s", path, mode, e));
             return false;
         }
         return true;

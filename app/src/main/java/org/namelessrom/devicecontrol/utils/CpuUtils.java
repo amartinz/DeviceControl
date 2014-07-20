@@ -22,6 +22,7 @@ import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
@@ -40,8 +41,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 /**
  * Generic CPU Tasks.
@@ -355,14 +354,14 @@ public class CpuUtils implements PerformanceConstants {
             cmd.append("echo -n \"]\";");
             cmd.append("cat ").append(FREQ0_MIN_PATH).append(" 2> /dev/null;");
             cmd.append(");").append("echo $command | tr -d \"\\n\"");
-            logDebug(cmd.toString());
+            Logger.v(CpuUtils.class, cmd.toString());
 
             final StringBuilder outputCollector = new StringBuilder();
             final CommandCapture cmdCapture = new CommandCapture(0, false, cmd.toString()) {
                 @Override
                 public void commandOutput(int id, String line) {
                     outputCollector.append(line);
-                    logDebug(line);
+                    Logger.v(CpuUtils.class, line);
                 }
 
                 @Override
@@ -401,7 +400,7 @@ public class CpuUtils implements PerformanceConstants {
             if (mShell.isClosed()) { throw new Exception("Shell is closed"); }
             mShell.add(cmdCapture);
         } catch (Exception exc) {
-            logDebug("Error: " + exc.getMessage());
+            Logger.e(CpuUtils.class, "Error: " + exc.getMessage());
         }
     }
 
@@ -416,14 +415,14 @@ public class CpuUtils implements PerformanceConstants {
             cmd.append("echo -n \"[\";");
             cmd.append("cat ").append(GOV0_CURRENT_PATH).append(" 2> /dev/null;");
             cmd.append(");").append("echo $command | tr -d \"\\n\"");
-            logDebug(cmd.toString());
+            Logger.v(CpuUtils.class, cmd.toString());
 
             final StringBuilder outputCollector = new StringBuilder();
             final CommandCapture cmdCapture = new CommandCapture(0, false, cmd.toString()) {
                 @Override
                 public void commandOutput(int id, String line) {
                     outputCollector.append(line);
-                    logDebug(line);
+                    Logger.v(CpuUtils.class, line);
                 }
 
                 @Override
@@ -459,7 +458,7 @@ public class CpuUtils implements PerformanceConstants {
             if (mShell.isClosed()) { throw new Exception("Shell is closed"); }
             mShell.add(cmdCapture);
         } catch (Exception exc) {
-            logDebug("Error: " + exc.getMessage());
+            Logger.v(CpuUtils.class, "Error: " + exc.getMessage());
         }
     }
 
@@ -514,7 +513,7 @@ public class CpuUtils implements PerformanceConstants {
             if (mShell.isClosed()) { throw new Exception("Shell is closed"); }
             mShell.add(cmdCapture);
         } catch (Exception exc) {
-            logDebug("Error: " + exc.getMessage());
+            Logger.e(CpuUtils.class, "Error: " + exc.getMessage());
         }
     }
 

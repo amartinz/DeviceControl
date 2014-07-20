@@ -44,6 +44,7 @@ import android.widget.ListView;
 
 import com.negusoft.holoaccent.dialog.DividerPainter;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
@@ -56,8 +57,6 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
 import butterknife.ButterKnife;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class VoltageFragment extends AttachPreferenceFragment
         implements DeviceConstants, PerformanceConstants {
@@ -258,10 +257,10 @@ public class VoltageFragment extends AttachPreferenceFragment
                     mNames = CpuUtils.getUvValues(true);
                     mValues = CpuUtils.getUvValues(false);
                 } catch (Exception exc) {
-                    logDebug("UV ERROR: " + exc.getMessage());
+                    Logger.e(this, "UV ERROR: " + exc.getMessage());
                     return "ERROR";
                 }
-                logDebug("UV TABLE: " + buildTable(mValues));
+                Logger.v(this, "UV TABLE: " + buildTable(mValues));
 
                 String name;
                 CustomPreference pref;
@@ -371,7 +370,7 @@ public class VoltageFragment extends AttachPreferenceFragment
 
         if (Utils.fileExists(VDD_TABLE_FILE)) {
             final String value = PreferenceHelper.getString(PREF_VDD, "");
-            logDebug("VDD Table: " + value);
+            Logger.v(VoltageFragment.class, "VDD Table: " + value);
 
             if (!value.isEmpty()) {
                 final String[] values = value.split("XXX");
@@ -381,7 +380,7 @@ public class VoltageFragment extends AttachPreferenceFragment
             }
         } else if (Utils.fileExists(UV_TABLE_FILE)) {
             final String value = PreferenceHelper.getString(PREF_UV, "");
-            logDebug("UV Table: " + value);
+            Logger.v(VoltageFragment.class, "UV Table: " + value);
 
             if (!value.isEmpty()) {
                 restore.append(Utils.getWriteCommand(UV_TABLE_FILE, value));

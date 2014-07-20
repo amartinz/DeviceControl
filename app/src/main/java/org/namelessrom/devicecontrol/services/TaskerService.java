@@ -22,11 +22,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.receivers.ScreenReceiver;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class TaskerService extends Service {
 
@@ -53,12 +52,12 @@ public class TaskerService extends Service {
             action = intent.getAction();
         }
         if (action == null || action.isEmpty() || action.equals(ACTION_STOP)) {
-            logDebug("Stopping TaskerService");
+            Logger.v(this, "Stopping TaskerService");
             stopSelf();
             return START_NOT_STICKY;
         }
 
-        logDebug("TaskerService: Action: " + action);
+        Logger.v(this, "TaskerService: Action: " + action);
 
         if (action.equals(ACTION_START)) {
             final IntentFilter filter = new IntentFilter();
@@ -67,7 +66,7 @@ public class TaskerService extends Service {
             if (mScreenReceiver == null) {
                 mScreenReceiver = new ScreenReceiver();
                 registerReceiver(mScreenReceiver, filter);
-                logDebug("TaskerService: Starting Service");
+                Logger.v(this, "Starting Taskerservice");
             }
             return START_STICKY;
         } else {

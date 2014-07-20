@@ -22,13 +22,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
 
 import java.util.List;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class ScreenReceiver extends BroadcastReceiver {
 
@@ -36,7 +35,7 @@ public class ScreenReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         final String action = intent.getAction();
         if (action != null && !action.isEmpty()) {
-            logDebug("ScreenReceiver: Action: " + action);
+            Logger.i(this, String.format("action: %s", action));
             if (Intent.ACTION_SCREEN_ON.equals(action)) {
                 new Worker().execute(TaskerItem.CATEGORY_SCREEN_ON);
             } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
@@ -49,7 +48,7 @@ public class ScreenReceiver extends BroadcastReceiver {
         @Override
         protected Void doInBackground(String... params) {
             final String category = params[0];
-            logDebug("ScreenReceiver: " + category);
+            Logger.v(this, "ScreenReceiver: " + category);
 
             final List<TaskerItem> itemList = DatabaseHandler.getInstance()
                     .getAllTaskerItems(category);
@@ -61,7 +60,7 @@ public class ScreenReceiver extends BroadcastReceiver {
                 name = item.getName();
                 value = item.getValue();
                 enabled = item.getEnabled();
-                logDebug("Processing: " + name + " | " + value + " | " + (enabled ? "1" : "0"));
+                Logger.v(this, String.format("Processing: %s | %s | %s", name, value, enabled));
                 if (enabled) {
                     sb.append(ActionProcessor.getProcessAction(name, value, false));
                 }

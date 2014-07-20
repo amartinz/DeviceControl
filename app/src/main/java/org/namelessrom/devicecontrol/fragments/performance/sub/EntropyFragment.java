@@ -32,6 +32,7 @@ import com.koushikdutta.ion.Ion;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
@@ -49,8 +50,6 @@ import org.namelessrom.devicecontrol.widgets.AttachPreferenceProgressFragment;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class EntropyFragment extends AttachPreferenceProgressFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
@@ -125,7 +124,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
     @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
         if (mRngActive == preference) {
             if (!Utils.fileExists(RNG_PATH)) {
-                logDebug(String.format("%s does not exist, downloading...", RNG_PATH));
+                Logger.i(this, String.format("%s does not exist, downloading...", RNG_PATH));
                 mRngActive.setEnabled(false);
                 mProgressBar.setVisibility(View.VISIBLE);
                 Ion.with(this)
@@ -135,7 +134,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
                         .setCallback(new FutureCallback<File>() {
                             @Override public void onCompleted(Exception e, File result) {
                                 if (e != null) {
-                                    logDebug("Error downloading rngd!");
+                                    Logger.e(this, "Error downloading rngd!");
                                     if (mRngActive != null) {
                                         mRngActive.setSummary(R.string.error_download);
                                     }
@@ -155,10 +154,10 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
                 return false;
             }
             if ((Boolean) o) {
-                logDebug("Starting rngd");
+                Logger.v(this, "Starting rngd");
                 Utils.runRootCommand(String.format("%s -P", RNG_PATH));
             } else {
-                logDebug("Stopping rngd");
+                Logger.v(this, "Stopping rngd");
                 AppHelper.killProcess(RNG_PATH);
             }
             AppHelper.getProcess(RNG_PATH);
@@ -247,7 +246,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
                 String tmp;
                 if (mEntropyAvail != null) {
                     tmp = strings.get(0);
-                    logDebug("strings.get(0): " + tmp);
+                    Logger.v(this, "strings.get(0): " + tmp);
                     mEntropyAvail.setSummary(tmp);
                 }
             }

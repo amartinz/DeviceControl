@@ -25,11 +25,10 @@ import android.view.Menu;
 import com.negusoft.holoaccent.activity.AccentActivity;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class AppDetailsActivity extends AccentActivity {
 
@@ -77,7 +76,7 @@ public class AppDetailsActivity extends AccentActivity {
                 packageName = intent.getData().getSchemeSpecificPart();
             }
         }
-        logDebug("AppDetailsActivity", "packageName:" + String.valueOf(packageName));
+        Logger.i(this, "packageName:" + String.valueOf(packageName));
 
         // Prepare bundle, containing the package name
         final Bundle bundle = new Bundle(1);

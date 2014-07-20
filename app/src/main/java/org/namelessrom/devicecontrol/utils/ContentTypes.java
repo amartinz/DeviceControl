@@ -17,10 +17,10 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import org.namelessrom.devicecontrol.Logger;
+
 import java.io.File;
 import java.util.Hashtable;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 /**
  * Helper class to get the content type of files via checking their extension
@@ -101,7 +101,7 @@ public class ContentTypes {
         final int index = path.lastIndexOf(".");
         if (index != -1) {
             final String fileExtension = path.substring(index + 1);
-            logDebug("fileExtension: " + fileExtension);
+            Logger.v(this, String.format("fileExtension: %s", fileExtension));
             final String ct = mContentTypes.get(fileExtension);
             if (ct != null) {return ct; }
         }

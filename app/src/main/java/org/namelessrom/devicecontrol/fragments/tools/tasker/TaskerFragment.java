@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
@@ -33,8 +34,6 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class TaskerFragment extends AttachPreferenceFragment implements DeviceConstants,
         Preference.OnPreferenceChangeListener {
@@ -91,7 +90,7 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
                 AlarmHelper.cancelAlarmFstrim(getActivity());
             }
             mFstrim.setChecked(value);
-            logDebug("mFstrim: " + (value ? "true" : "false"));
+            Logger.v(this, String.format("mFstrim: %s", value));
             return true;
         } else if (mFstrimInterval == preference) {
             final String value = String.valueOf(newValue);
@@ -100,7 +99,7 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
             if (mFstrim.isChecked()) {
                 AlarmHelper.setAlarmFstrim(getActivity(), realValue);
             }
-            logDebug("mFstrimInterval: " + value);
+            Logger.v(this, "mFstrimInterval: " + value);
             return true;
         }
 

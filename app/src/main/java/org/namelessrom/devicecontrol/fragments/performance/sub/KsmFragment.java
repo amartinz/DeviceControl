@@ -27,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
@@ -42,8 +43,6 @@ import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class KsmFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
@@ -262,27 +261,27 @@ public class KsmFragment extends AttachPreferenceFragment
                 String tmp;
                 if (mFullScans != null) {
                     tmp = strings.get(0);
-                    logDebug("strings.get(0): " + tmp);
+                    Logger.v(this, "strings.get(0): " + tmp);
                     mFullScans.setSummary(tmp);
                 }
                 if (mPagesShared != null) {
                     tmp = strings.get(1);
-                    logDebug("strings.get(1): " + tmp);
+                    Logger.v(this, "strings.get(1): " + tmp);
                     mPagesShared.setSummary(tmp);
                 }
                 if (mPagesSharing != null) {
                     tmp = strings.get(2);
-                    logDebug("strings.get(2): " + tmp);
+                    Logger.v(this, "strings.get(2): " + tmp);
                     mPagesSharing.setSummary(tmp);
                 }
                 if (mPagesUnshared != null) {
                     tmp = strings.get(3);
-                    logDebug("strings.get(3): " + tmp);
+                    Logger.v(this, "strings.get(3): " + tmp);
                     mPagesUnshared.setSummary(tmp);
                 }
                 if (mPagesVolatile != null) {
                     tmp = strings.get(4);
-                    logDebug("strings.get(4): " + tmp);
+                    Logger.v(this, "strings.get(4): " + tmp);
                     mPagesVolatile.setSummary(tmp);
                 }
             }

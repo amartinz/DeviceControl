@@ -24,6 +24,7 @@ import android.os.AsyncTask;
 
 import com.stericson.roottools.RootTools;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
@@ -39,8 +40,6 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.io.File;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class BootUpService extends IntentService
         implements DeviceConstants, FileConstants, PerformanceConstants {
@@ -74,7 +73,7 @@ public class BootUpService extends IntentService
                 // No Root, No Friends, That's Life ...
                 //==================================================================================
                 if (!RootTools.isRootAvailable() || !RootTools.isAccessGiven()) {
-                    logDebug("No Root, No Friends, That's Life ...");
+                    Logger.e(this, "No Root, No Friends, That's Life ...");
                     return null;
                 }
 
@@ -82,7 +81,7 @@ public class BootUpService extends IntentService
                 // Tasker
                 //==================================================================================
                 if (PreferenceHelper.getBoolean(FSTRIM, false)) {
-                    logDebug("Scheduling Tasker - FSTRIM");
+                    Logger.v(this, "Scheduling Tasker - FSTRIM");
                     AlarmHelper.setAlarmFstrim(mContext,
                             PreferenceHelper.getInt(FSTRIM_INTERVAL, 480));
                 }
@@ -103,48 +102,48 @@ public class BootUpService extends IntentService
                 //==================================================================================
                 // Device
                 //==================================================================================
-                logDebug("----- DEVICE START -----");
+                Logger.i(this, "----- DEVICE START -----");
                 if (PreferenceHelper.getBoolean(SOB_DEVICE, false)) {
                     cmd = DeviceFragment.restore();
-                    logDebug(cmd);
+                    Logger.v(this, cmd);
                     sbCmd.append(cmd);
                     cmd = FeaturesFragment.restore();
-                    logDebug(cmd);
+                    Logger.v(this, cmd);
                     sbCmd.append(cmd);
                 }
-                logDebug("----- DEVICE END -----");
+                Logger.i(this, "----- DEVICE END -----");
 
                 //==================================================================================
                 // Performance
                 //==================================================================================
-                logDebug("----- CPU START -----");
+                Logger.i(this, "----- CPU START -----");
                 if (PreferenceHelper.getBoolean(SOB_CPU, false)) {
                     cmd = CpuUtils.restore();
-                    logDebug(cmd);
+                    Logger.v(this, cmd);
                     sbCmd.append(cmd);
                 }
-                logDebug("----- CPU END -----");
-                logDebug("----- GPU START -----");
+                Logger.i(this, "----- CPU END -----");
+                Logger.i(this, "----- GPU START -----");
                 if (PreferenceHelper.getBoolean(SOB_GPU, false)) {
                     cmd = GpuUtils.restore();
-                    logDebug(cmd);
+                    Logger.v(this, cmd);
                     sbCmd.append(cmd);
                 }
-                logDebug("----- GPU END -----");
-                logDebug("----- EXTRAS START -----");
+                Logger.i(this, "----- GPU END -----");
+                Logger.i(this, "----- EXTRAS START -----");
                 if (PreferenceHelper.getBoolean(SOB_EXTRAS, false)) {
                     cmd = ExtrasFragment.restore();
-                    logDebug(cmd);
+                    Logger.v(this, cmd);
                     sbCmd.append(cmd);
                 }
-                logDebug("----- EXTRAS END -----");
-                logDebug("----- VOLTAGE START -----");
+                Logger.i(this, "----- EXTRAS END -----");
+                Logger.i(this, "----- VOLTAGE START -----");
                 if (PreferenceHelper.getBoolean(SOB_VOLTAGE, false)) {
                     cmd = VoltageFragment.restore();
-                    logDebug(cmd);
+                    Logger.v(this, cmd);
                     sbCmd.append(cmd);
                 }
-                logDebug("----- VOLTAGE END -----");
+                Logger.i(this, "----- VOLTAGE END -----");
 
                 //==================================================================================
                 // Tools
@@ -152,7 +151,7 @@ public class BootUpService extends IntentService
                 if (PreferenceHelper.getBoolean(SOB_SYSCTL, false)) {
                     if (new File("/system/etc/sysctl.conf").exists()) {
                         cmd = SysctlFragment.restore();
-                        logDebug(cmd);
+                        Logger.v(this, cmd);
                         sbCmd.append(cmd);
                         sbCmd.append("busybox sysctl -p;\n");
                     }
@@ -165,7 +164,7 @@ public class BootUpService extends IntentService
                 if (!cmd.isEmpty()) {
                     Utils.runRootCommand(cmd);
                 }
-                logDebug("BootUp Done!");
+                Logger.i(this, "BootUp Done!");
             }
 
             return null;

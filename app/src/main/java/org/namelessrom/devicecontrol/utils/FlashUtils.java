@@ -17,16 +17,15 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.List;
 
 import hugo.weaving.DebugLog;
 
-import static org.namelessrom.devicecontrol.Application.logDebug;
-
 /**
- * Created by alex on 26.06.14.
+ * Utilities for flashing shiny things
  */
 public class FlashUtils implements DeviceConstants {
 
@@ -87,7 +86,7 @@ public class FlashUtils implements DeviceConstants {
         sb.append("reboot recovery;");
 
         final String cmd = sb.toString();
-        logDebug("triggerUpdate():\n" + cmd + "\n--------");
+        Logger.v(FlashUtils.class, String.format("triggerUpdate():\n%s\n--------", cmd));
         Utils.runRootCommand(cmd);
 
         return cmd;

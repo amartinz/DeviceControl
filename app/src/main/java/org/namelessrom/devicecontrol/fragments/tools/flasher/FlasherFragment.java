@@ -38,6 +38,7 @@ import com.negusoft.holoaccent.dialog.DividerPainter;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.FilePickerActivity;
 import org.namelessrom.devicecontrol.adapters.FlashListAdapter;
@@ -53,11 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static butterknife.ButterKnife.findById;
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
-/**
- * Created by alex on 22.06.14.
- */
 public class FlasherFragment extends AttachFragment implements DeviceConstants,
         View.OnClickListener {
 
@@ -156,13 +153,13 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
     }
 
     @Override public void onActivityResult(final int req, final int res, final Intent data) {
-        logDebug("onActivityResult(%s, %s, %s)", req, res, data);
+        Logger.v(this, String.format("onActivityResult(%s, %s, %s)", req, res, data));
         if (req == REQUEST_CODE_FILE && res == Activity.RESULT_OK) {
             final String name = data.getStringExtra("name");
             final String path = data.getStringExtra("path");
             final FlashItem item = new FlashItem(name, path);
 
-            logDebug(String.format("onActivityResult(%s)", item.getPath()));
+            Logger.v(this, String.format("onActivityResult(%s)", item.getPath()));
             final List<FlashItem> flashItemList = new ArrayList<FlashItem>();
             flashItemList.addAll(((FlashListAdapter) mFlashList.getAdapter()).getFlashItemList());
             flashItemList.add(item);

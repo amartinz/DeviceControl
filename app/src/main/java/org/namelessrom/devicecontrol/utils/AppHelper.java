@@ -26,13 +26,13 @@ import android.os.Parcel;
 import android.os.RemoteException;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import static org.namelessrom.devicecontrol.Application.logDebug;
 import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.ID_PGREP;
 
 /**
@@ -216,7 +216,7 @@ public class AppHelper {
         @Override
         public void onGetStatsCompleted(final PackageStats pStats, final boolean succeeded)
                 throws RemoteException {
-            logDebug("onGetStatsCompleted() " + (succeeded ? "succeeded" : "error"));
+            Logger.v(this, String.format("onGetStatsCompleted(): %s", succeeded));
             Application.HANDLER.post(new Runnable() {
                 @Override
                 public void run() {

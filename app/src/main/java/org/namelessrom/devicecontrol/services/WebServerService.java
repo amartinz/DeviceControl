@@ -31,6 +31,7 @@ import android.support.v4.app.NotificationCompat;
 import com.koushikdutta.async.AsyncServerSocket;
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.server.ServerStoppedEvent;
 import org.namelessrom.devicecontrol.events.server.ServerStoppingEvent;
@@ -40,7 +41,6 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import static org.namelessrom.devicecontrol.Application.getStr;
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class WebServerService extends Service {
 
@@ -131,19 +131,19 @@ public class WebServerService extends Service {
 
     @Override public int onStartCommand(final Intent intent, final int flags, final int startId) {
         if (intent == null || intent.getAction() == null || intent.getAction().isEmpty()) {
-            logDebug("intent or action is null or empty!");
+            Logger.w(this, "intent or action is null or empty!");
             stopServer();
             return START_NOT_STICKY;
         }
         final String action = intent.getAction();
-        logDebug("action: " + action);
+        Logger.v(this, "action: " + action);
 
         if (ACTION_START.equals(action)) {
-            logDebug("creating server!");
+            Logger.i(this, "creating server!");
             mServerWrapper = new ServerWrapper(this);
             mServerWrapper.createServer();
         } else {
-            logDebug("stopping service!");
+            Logger.i(this, "stopping service!");
             BusProvider.getBus().post(new ServerStoppingEvent());
             stopServer();
         }

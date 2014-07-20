@@ -21,12 +21,12 @@ import android.os.Build;
 import android.text.Html;
 import android.text.TextUtils;
 
+import org.namelessrom.devicecontrol.Logger;
+
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 /**
  * Easier formatting of HTML pages
@@ -93,7 +93,7 @@ public class HtmlHelper {
     }
 
     public static String getBreadcrumbs(final String path) {
-        logDebug("getBreadcrumbs(): " + path);
+        Logger.v(HtmlHelper.class, String.format("getBreadcrumbs(): %s", path));
         return getBreadcrumbs(Arrays.asList(path.split("/")));
     }
 
@@ -107,7 +107,7 @@ public class HtmlHelper {
             paths += (s + '/');
             sb.append(
                     String.format("<li><a class=\"loadAsync\" href=\"%s\">%s</a></li>", paths, s));
-            logDebug("s: " + s + " | paths: " + paths);
+            Logger.v(HtmlHelper.class, String.format("s: %s | paths: %s", s, paths));
         }
         sb.append("</ol>");
         return sb.toString();
@@ -138,8 +138,10 @@ public class HtmlHelper {
 
     public static String getFileLine(final String path, final String name) {
         return String.format("<li><i class=\"fa fa-file-o fa-fw\"></i>&nbsp; " +
-                "<a href=\"/files%s\" download=\"%s\" target=\"_blank\">%s</a></li>", path, name,
-                name);
+                        "<a href=\"/files%s\" download=\"%s\" target=\"_blank\">%s</a></li>", path,
+                name,
+                name
+        );
     }
 
 }

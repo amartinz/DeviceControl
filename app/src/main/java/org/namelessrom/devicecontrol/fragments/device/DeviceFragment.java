@@ -28,6 +28,7 @@ import android.view.ViewConfiguration;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
@@ -50,8 +51,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class DeviceFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
@@ -367,9 +366,9 @@ public class DeviceFragment extends AttachPreferenceFragment
         }
 
         if (supported) {
-            logDebug("Glove mode / high touch sensitivity is supported");
+            Logger.v(DeviceFragment.class, "Glove mode / high touch sensitivity is supported");
         } else {
-            logDebug("Glove mode / high touch sensitivity is NOT supported");
+            Logger.v(DeviceFragment.class, "Glove mode / high touch sensitivity is NOT supported");
         }
 
         return supported;

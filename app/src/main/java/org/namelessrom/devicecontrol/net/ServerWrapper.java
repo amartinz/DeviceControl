@@ -18,6 +18,7 @@ import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.services.WebServerService;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.HtmlHelper;
@@ -28,8 +29,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 /**
  * A wrapper for the AsyncHttpServer
@@ -116,8 +115,8 @@ public class ServerWrapper {
                 }
                 boolean isDirectory = true;
                 final String filePath = HtmlHelper.urlDecode(req.getPath()).replace("/files/", "");
-                logDebug("SERVER", "req.getPath(): " + req.getPath());
-                logDebug("SERVER", "filePath: " + filePath);
+                Logger.v(this, "req.getPath(): " + req.getPath());
+                Logger.v(this, "filePath: " + filePath);
                 File file;
                 String sdRoot;
                 if (PreferenceHelper.getBoolean("wfm_root", false)) {
@@ -279,7 +278,7 @@ public class ServerWrapper {
 
                 webSocket.setStringCallback(new WebSocket.StringCallback() {
                     @Override public void onStringAvailable(final String s) {
-                        logDebug("ServerWrapper", s);
+                        Logger.v(this, s);
                         if (ACTION_CONNECTED.equals(s)) {
                             //TODO: initializing
                         }

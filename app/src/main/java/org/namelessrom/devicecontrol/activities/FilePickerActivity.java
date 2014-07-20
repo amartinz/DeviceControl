@@ -26,6 +26,7 @@ import com.negusoft.holoaccent.activity.AccentActivity;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.FlashItemEvent;
 import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
@@ -33,8 +34,6 @@ import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
 import org.namelessrom.devicecontrol.objects.FlashItem;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class FilePickerActivity extends AccentActivity {
 
@@ -97,7 +96,7 @@ public class FilePickerActivity extends AccentActivity {
     @Override public void onBackPressed() {
         if (mCurrentFragment instanceof OnBackPressedListener
                 && ((OnBackPressedListener) mCurrentFragment).onBackPressed()) {
-            logDebug("onBackPressed()");
+            Logger.v(this, "onBackPressed()");
         } else if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {

@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol.utils;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
@@ -26,8 +27,6 @@ import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class ActionProcessor implements PerformanceConstants {
 
@@ -95,11 +94,11 @@ public class ActionProcessor implements PerformanceConstants {
 
     public static void processAction(final String cmd) {
         if (cmd == null || cmd.isEmpty()) {
-            logDebug("Can not perform action, command is empty!");
+            Logger.w(ActionProcessor.class, "Can not perform action, command is empty!");
             return;
         }
 
-        logDebug("Performing Action: " + cmd);
+        Logger.i(ActionProcessor.class, String.format("Performing Action: %s", cmd));
         Utils.runRootCommand(cmd);
     }
 

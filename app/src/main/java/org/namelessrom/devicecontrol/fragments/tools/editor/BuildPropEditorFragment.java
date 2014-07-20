@@ -42,6 +42,7 @@ import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
@@ -58,7 +59,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static butterknife.ButterKnife.findById;
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class BuildPropEditorFragment extends AttachFragment
         implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener {
@@ -215,11 +215,11 @@ public class BuildPropEditorFragment extends AttachFragment
                 if (mAdapter != null) mAdapter.notifyDataSetChanged();
                 break;
             default:
-                logDebug("onReadPropsCompleted: " + result);
+                Logger.v(this, "onReadPropsCompleted: " + result);
                 if (isAdded()) {
                     loadBuildProp(result);
                 } else {
-                    logDebug("Not attached!");
+                    Logger.w(this, "Not attached!");
                 }
                 break;
         }

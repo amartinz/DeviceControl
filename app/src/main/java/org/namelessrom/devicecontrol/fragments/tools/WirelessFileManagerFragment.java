@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.server.ServerStoppedEvent;
@@ -44,8 +45,6 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
-
-import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class WirelessFileManagerFragment extends AttachPreferenceFragment
         implements DeviceConstants, Preference.OnPreferenceChangeListener,
@@ -241,13 +240,13 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
 
     @Subscribe public void onServerStoppedEvent(final ServerStoppedEvent event) {
         if (event == null) return;
-        logDebug("WirelessFileManagerFragment", "onServerStoppedEvent");
+        Logger.i(this, "onServerStoppedEvent");
         updateSummary(false);
     }
 
     @Subscribe public void onServerStoppingEvent(final ServerStoppingEvent event) {
         if (event == null) return;
-        logDebug("WirelessFileManagerFragment", "onServerStoppingEvent");
+        Logger.i(this, "onServerStoppingEvent");
         unbindService();
     }
 
