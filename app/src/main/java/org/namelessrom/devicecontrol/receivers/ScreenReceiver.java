@@ -32,12 +32,8 @@ import static org.namelessrom.devicecontrol.Application.logDebug;
 
 public class ScreenReceiver extends BroadcastReceiver {
 
-    private Context mContext;
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        mContext = context;
-
         final String action = intent.getAction();
         if (action != null && !action.isEmpty()) {
             logDebug("ScreenReceiver: Action: " + action);
@@ -55,8 +51,8 @@ public class ScreenReceiver extends BroadcastReceiver {
             final String category = params[0];
             logDebug("ScreenReceiver: " + category);
 
-            final DatabaseHandler db = DatabaseHandler.getInstance(mContext);
-            final List<TaskerItem> itemList = db.getAllTaskerItems(category);
+            final List<TaskerItem> itemList = DatabaseHandler.getInstance()
+                    .getAllTaskerItems(category);
 
             final StringBuilder sb = new StringBuilder();
             String name, value;

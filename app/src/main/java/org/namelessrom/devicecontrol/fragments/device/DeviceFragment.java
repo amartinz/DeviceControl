@@ -164,7 +164,7 @@ public class DeviceFragment extends AttachPreferenceFragment
                     if (!isHtsSupported()) {
                         category.removePreference(mGloveMode);
                     } else {
-                        final String value = DatabaseHandler.getInstance(getActivity())
+                        final String value = DatabaseHandler.getInstance()
                                 .getValueByName(mGloveMode.getKey(), DatabaseHandler.TABLE_BOOTUP);
                         final boolean enableGlove = (value != null && value.equals("1"));
 
@@ -375,11 +375,12 @@ public class DeviceFragment extends AttachPreferenceFragment
         return supported;
     }
 
-    public static String restore(final DatabaseHandler db) {
+    public static String restore() {
         final StringBuilder sbCmd = new StringBuilder();
 
         final List<DataItem> items =
-                db.getAllItems(DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_DEVICE);
+                DatabaseHandler.getInstance()
+                        .getAllItems(DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_DEVICE);
         String filename, value;
         for (final DataItem item : items) {
             filename = item.getFileName();

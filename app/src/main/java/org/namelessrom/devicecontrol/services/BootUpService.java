@@ -24,7 +24,6 @@ import android.os.AsyncTask;
 
 import com.stericson.roottools.RootTools;
 
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
@@ -69,10 +68,6 @@ public class BootUpService extends IntentService
 
         @Override
         protected Void doInBackground(Void... voids) {
-
-            final DatabaseHandler db = DatabaseHandler.getInstance(mContext);
-            PreferenceHelper.getInstance(mContext);
-
             if (!PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
 
                 //==================================================================================
@@ -110,10 +105,10 @@ public class BootUpService extends IntentService
                 //==================================================================================
                 logDebug("----- DEVICE START -----");
                 if (PreferenceHelper.getBoolean(SOB_DEVICE, false)) {
-                    cmd = DeviceFragment.restore(db);
+                    cmd = DeviceFragment.restore();
                     logDebug(cmd);
                     sbCmd.append(cmd);
-                    cmd = FeaturesFragment.restore(db);
+                    cmd = FeaturesFragment.restore();
                     logDebug(cmd);
                     sbCmd.append(cmd);
                 }
@@ -124,21 +119,21 @@ public class BootUpService extends IntentService
                 //==================================================================================
                 logDebug("----- CPU START -----");
                 if (PreferenceHelper.getBoolean(SOB_CPU, false)) {
-                    cmd = CpuUtils.restore(db);
+                    cmd = CpuUtils.restore();
                     logDebug(cmd);
                     sbCmd.append(cmd);
                 }
                 logDebug("----- CPU END -----");
                 logDebug("----- GPU START -----");
                 if (PreferenceHelper.getBoolean(SOB_GPU, false)) {
-                    cmd = GpuUtils.restore(db);
+                    cmd = GpuUtils.restore();
                     logDebug(cmd);
                     sbCmd.append(cmd);
                 }
                 logDebug("----- GPU END -----");
                 logDebug("----- EXTRAS START -----");
                 if (PreferenceHelper.getBoolean(SOB_EXTRAS, false)) {
-                    cmd = ExtrasFragment.restore(db);
+                    cmd = ExtrasFragment.restore();
                     logDebug(cmd);
                     sbCmd.append(cmd);
                 }
@@ -156,7 +151,7 @@ public class BootUpService extends IntentService
                 //==================================================================================
                 if (PreferenceHelper.getBoolean(SOB_SYSCTL, false)) {
                     if (new File("/system/etc/sysctl.conf").exists()) {
-                        cmd = SysctlFragment.restore(db);
+                        cmd = SysctlFragment.restore();
                         logDebug(cmd);
                         sbCmd.append(cmd);
                         sbCmd.append("busybox sysctl -p;\n");

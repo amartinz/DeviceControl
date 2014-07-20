@@ -73,10 +73,10 @@ public class GpuUtils implements PerformanceConstants {
         } else { return "0"; }
     }
 
-    public static String restore(final DatabaseHandler db) {
+    public static String restore() {
         final StringBuilder sbCmd = new StringBuilder();
 
-        final List<DataItem> items = db.getAllItems(
+        final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
                 DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_GPU);
         for (final DataItem item : items) {
             sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));

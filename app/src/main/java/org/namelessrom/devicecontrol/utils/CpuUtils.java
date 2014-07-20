@@ -281,7 +281,7 @@ public class CpuUtils implements PerformanceConstants {
             return String.valueOf(value) + " MHz";
         } else {
             if (Application.applicationContext != null) {
-                return Application.applicationContext.getString(R.string.core_offline);
+                return Application.getStr(R.string.core_offline);
             } else {
                 return "Offline";
             }
@@ -300,10 +300,10 @@ public class CpuUtils implements PerformanceConstants {
         } else { return "0"; }
     }
 
-    public static String restore(final DatabaseHandler db) {
+    public static String restore() {
         final StringBuilder sbCmd = new StringBuilder();
 
-        final List<DataItem> items = db.getAllItems(
+        final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
                 DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_CPU);
         String tmpString;
         int tmpInt;

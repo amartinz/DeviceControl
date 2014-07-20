@@ -86,7 +86,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
         addPreferencesFromResource(R.xml._device_control);
 
         final Activity activity = getActivity();
-        PreferenceHelper.getInstance(activity);
 
         mExtensiveLogging = (CustomCheckBoxPreference) findPreference(EXTENSIVE_LOGGING);
         if (mExtensiveLogging != null) {

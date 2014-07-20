@@ -180,10 +180,10 @@ public class SysctlFragment extends AttachPreferenceFragment implements DeviceCo
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
-    public static String restore(final DatabaseHandler db) {
+    public static String restore() {
         final StringBuilder sbCmd = new StringBuilder();
 
-        final List<DataItem> items = db.getAllItems(
+        final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
                 DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_SYSCTL);
         String name, value;
         for (final DataItem item : items) {

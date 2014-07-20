@@ -77,9 +77,9 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public static DatabaseHandler getInstance(final Context context) {
+    public static DatabaseHandler getInstance() {
         if (sDatabaseHandler == null) {
-            sDatabaseHandler = new DatabaseHandler(context);
+            sDatabaseHandler = new DatabaseHandler(Application.applicationContext);
         }
         return sDatabaseHandler;
     }

@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments.tools.flasher;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -42,9 +41,6 @@ public class FlasherPreferencesFragment extends PreferenceFragment
     @Override public void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml.tools_flasher_preferences);
-
-        final Activity activity = getActivity();
-        PreferenceHelper.getInstance(activity);
 
         int tmp;
 
@@ -102,7 +98,7 @@ public class FlasherPreferencesFragment extends PreferenceFragment
             PreferenceHelper.setInt(PREF_RECOVERY_TYPE, value);
             setSummary(preference, value);
             return true;
-        } else if (mMultiUserMode==preference) {
+        } else if (mMultiUserMode == preference) {
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(PREF_FLASHER_MULTI_USER, value);
             return true;

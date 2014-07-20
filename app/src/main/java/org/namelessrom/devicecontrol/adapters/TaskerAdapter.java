@@ -37,12 +37,10 @@ import static butterknife.ButterKnife.findById;
 
 public class TaskerAdapter extends BaseAdapter {
 
-    private final DatabaseHandler  mDatabase;
-    private       List<TaskerItem> mTaskerList;
+    private List<TaskerItem> mTaskerList;
 
     public TaskerAdapter() {
-        mDatabase = DatabaseHandler.getInstance(Application.applicationContext);
-        mTaskerList = mDatabase.getAllTaskerItems("");
+        mTaskerList = DatabaseHandler.getInstance().getAllTaskerItems("");
     }
 
     @Override
@@ -82,7 +80,7 @@ public class TaskerAdapter extends BaseAdapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 item.setEnabled(isChecked);
-                mDatabase.updateTaskerItem(item);
+                DatabaseHandler.getInstance().updateTaskerItem(item);
             }
         });
 
@@ -91,7 +89,7 @@ public class TaskerAdapter extends BaseAdapter {
 
     @Override
     public void notifyDataSetChanged() {
-        mTaskerList = mDatabase.getAllTaskerItems("");
+        mTaskerList = DatabaseHandler.getInstance().getAllTaskerItems("");
         super.notifyDataSetChanged();
     }
 

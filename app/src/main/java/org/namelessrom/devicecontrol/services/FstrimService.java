@@ -24,7 +24,6 @@ import android.os.AsyncTask;
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
@@ -44,8 +43,6 @@ public class FstrimService extends IntentService implements DeviceConstants, Fil
     @Override
     protected void onHandleIntent(final Intent intent) {
         if (intent != null) {
-            PreferenceHelper.getInstance(this);
-
             final String action = intent.getAction();
 
             if (action != null) {

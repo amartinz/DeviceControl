@@ -70,8 +70,6 @@ public class Application extends android.app.Application implements DeviceConsta
         ACRA.init(this);
 
         applicationContext = getApplicationContext();
-
-        PreferenceHelper.getInstance(this);
         IS_LOG_DEBUG = PreferenceHelper.getBoolean(EXTENSIVE_LOGGING, false);
 
         if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.debug=1")) {

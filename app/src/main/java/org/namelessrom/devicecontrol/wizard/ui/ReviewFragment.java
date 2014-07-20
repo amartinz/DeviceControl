@@ -151,15 +151,15 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
         }
         if (item == null) {
             item = new TaskerItem(category, action, "NONE", value, true);
-            DatabaseHandler.getInstance(getActivity()).addTaskerItem(item);
+            DatabaseHandler.getInstance().addTaskerItem(item);
         } else {
             if (category.isEmpty() || action.isEmpty() || value.isEmpty()) {
-                DatabaseHandler.getInstance(getActivity()).deleteTaskerItem(item);
+                DatabaseHandler.getInstance().deleteTaskerItem(item);
             }
             item.setCategory(category);
             item.setName(action);
             item.setValue(value);
-            DatabaseHandler.getInstance(getActivity()).updateTaskerItem(item);
+            DatabaseHandler.getInstance().updateTaskerItem(item);
         }
 
         getActivity().finish();

@@ -167,7 +167,6 @@ public class MainActivity extends AccentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        PreferenceHelper.getInstance(this);
         if (PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
             PreferenceHelper.setBoolean(DC_FIRST_START, false);
         }
