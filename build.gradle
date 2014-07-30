@@ -5,7 +5,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.12.+'
-        classpath 'com.jakewharton.hugo:hugo-plugin:1.1.+'
+        // for cardslib
+        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.+'
     }
 }
 
@@ -13,4 +14,9 @@ allprojects {
     repositories {
         jcenter()
     }
+}
+
+ext {
+    compileSdkVersion = 21
+    buildToolsVersion = "20.0.0"
 }

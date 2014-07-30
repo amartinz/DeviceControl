@@ -37,8 +37,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import hugo.weaving.DebugLog;
-
 import static butterknife.ButterKnife.findById;
 
 public class DeviceStatusWidget extends LinearLayout {
@@ -70,14 +68,14 @@ public class DeviceStatusWidget extends LinearLayout {
         createViews(context);
     }
 
-    @Override @DebugLog protected void onAttachedToWindow() {
+    @Override protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mIsAttached = true;
         Application.applicationContext.registerReceiver(mBatteryReceiver,
                 new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
-    @Override @DebugLog protected void onDetachedFromWindow() {
+    @Override protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mIsAttached = false;
         try {
@@ -103,7 +101,7 @@ public class DeviceStatusWidget extends LinearLayout {
         startRepeatingTask();
     }
 
-    @DebugLog private View generateRow(final ViewGroup parent, final String title,
+    private View generateRow(final ViewGroup parent, final String title,
             final String value, final String barLeft, final String barRight, final int progress) {
 
         if (!isAttached()) { return null; }

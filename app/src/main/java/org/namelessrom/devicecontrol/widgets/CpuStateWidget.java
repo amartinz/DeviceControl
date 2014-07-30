@@ -39,8 +39,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import hugo.weaving.DebugLog;
-
 import static butterknife.ButterKnife.findById;
 
 public class CpuStateWidget extends LinearLayout {
@@ -70,13 +68,13 @@ public class CpuStateWidget extends LinearLayout {
         createViews(context);
     }
 
-    @Override @DebugLog protected void onAttachedToWindow() {
+    @Override protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mIsAttached = true;
         BusProvider.getBus().register(this);
     }
 
-    @Override @DebugLog protected void onDetachedFromWindow() {
+    @Override protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mIsAttached = false;
         BusProvider.getBus().unregister(this);
@@ -138,7 +136,7 @@ public class CpuStateWidget extends LinearLayout {
         return sDur.toString();
     }
 
-    @DebugLog private View generateStateRow(final CpuStateMonitor.CpuState state,
+    private View generateStateRow(final CpuStateMonitor.CpuState state,
             final ViewGroup parent, final long totalStateTime) {
 
         if (!isAttached()) { return null; }

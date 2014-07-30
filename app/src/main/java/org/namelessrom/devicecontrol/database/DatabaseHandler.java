@@ -33,8 +33,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import hugo.weaving.DebugLog;
-
 public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants, FileConstants {
 
     private static final int    DATABASE_VERSION = 8;
@@ -160,7 +158,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     // All CRUD(Create, Read, Update, Delete) Operations
     //==============================================================================================
 
-    @DebugLog public String getValueByName(final String name, final String tableName) {
+    public String getValueByName(final String name, final String tableName) {
         if (sDb == null) return null;
 
         final Cursor cursor = sDb.query(tableName, new String[]{KEY_VALUE}, KEY_NAME + "=?",
@@ -176,7 +174,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return result;
     }
 
-    @DebugLog public boolean insertOrUpdate(final String name, final String value,
+    public boolean insertOrUpdate(final String name, final String value,
             final String tableName) {
         if (sDb == null) return false;
 
@@ -189,7 +187,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return true;
     }
 
-    @DebugLog public boolean updateBootup(final DataItem item) {
+    public boolean updateBootup(final DataItem item) {
         if (sDb == null) return false;
 
         final ContentValues values = new ContentValues(5);
@@ -203,7 +201,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return true;
     }
 
-    @DebugLog public DataItem getItem(final int id, final String tableName) {
+    public DataItem getItem(final int id, final String tableName) {
         if (sDb == null) return null;
 
         final Cursor cursor = sDb.query(tableName, new String[]{
@@ -220,7 +218,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return item;
     }
 
-    @DebugLog public List<DataItem> getAllItems(final String tableName, final String category) {
+    public List<DataItem> getAllItems(final String tableName, final String category) {
         if (sDb == null) return null;
 
         final List<DataItem> itemList = new ArrayList<DataItem>();
@@ -247,7 +245,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return itemList;
     }
 
-    @DebugLog public boolean deleteItemByName(final String name, final String tableName) {
+    public boolean deleteItemByName(final String name, final String tableName) {
         if (sDb == null) return false;
 
         sDb.delete(tableName, KEY_NAME + " = ?", new String[]{name});
@@ -258,7 +256,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     // Tasker
     //----------------------------------------------------------------------------------------------
 
-    @DebugLog public boolean addTaskerItem(final TaskerItem item) {
+    public boolean addTaskerItem(final TaskerItem item) {
         if (sDb == null) return false;
 
         final ContentValues values = new ContentValues();
@@ -272,7 +270,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return true;
     }
 
-    @DebugLog public List<TaskerItem> getAllTaskerItems(final String category) {
+    public List<TaskerItem> getAllTaskerItems(final String category) {
         if (sDb == null) return null;
 
         final List<TaskerItem> itemList = new ArrayList<TaskerItem>();
@@ -301,7 +299,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return itemList;
     }
 
-    @DebugLog public int updateTaskerItem(final TaskerItem item) {
+    public int updateTaskerItem(final TaskerItem item) {
         if (sDb == null) return -1;
 
         final ContentValues values = new ContentValues();
@@ -315,7 +313,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
                 new String[]{String.valueOf(item.getID())});
     }
 
-    @DebugLog public boolean deleteTaskerItem(final TaskerItem item) {
+    public boolean deleteTaskerItem(final TaskerItem item) {
         if (sDb == null) return false;
 
         sDb.delete(TABLE_TASKER, KEY_ID + " = ?", new String[]{String.valueOf(item.getID())});

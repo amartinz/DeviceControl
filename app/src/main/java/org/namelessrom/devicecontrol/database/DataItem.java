@@ -17,8 +17,6 @@
  */
 package org.namelessrom.devicecontrol.database;
 
-import hugo.weaving.DebugLog;
-
 public class DataItem {
 
     private int    _id;
@@ -29,7 +27,7 @@ public class DataItem {
 
     public DataItem() { }
 
-    @DebugLog public DataItem(final String category, final String name, final String filename,
+    public DataItem(final String category, final String name, final String filename,
             final String value) {
         this._id = -1;
         this._category = category;
@@ -38,7 +36,7 @@ public class DataItem {
         this._filename = filename;
     }
 
-    @DebugLog public DataItem(final int id, final String category, final String name,
+    public DataItem(final int id, final String category, final String name,
             final String filename, final String value) {
         this._id = id;
         this._category = category;

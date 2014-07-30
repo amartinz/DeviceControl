@@ -22,8 +22,6 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.List;
 
-import hugo.weaving.DebugLog;
-
 /**
  * Utilities for flashing shiny things
  */
@@ -32,7 +30,7 @@ public class FlashUtils implements DeviceConstants {
     private static final String CWM_PATH = "/cache/recovery/extendedcommand";
     private static final String OR_PATH  = "/cache/recovery/openrecoveryscript";
 
-    @DebugLog private static String createOpenRecoveryScript(final List<String> files) {
+    private static String createOpenRecoveryScript(final List<String> files) {
         final StringBuilder sb = new StringBuilder();
 
         sb.append(String.format("echo \"set tw_signed_zip_verify 0\" > %s;\n", OR_PATH));
@@ -47,7 +45,7 @@ public class FlashUtils implements DeviceConstants {
         return sb.toString();
     }
 
-    @DebugLog private static String createCwmScript(final List<String> files) {
+    private static String createCwmScript(final List<String> files) {
         final StringBuilder sb = new StringBuilder();
 
         for (String file : files) {
@@ -61,14 +59,14 @@ public class FlashUtils implements DeviceConstants {
         return sb.toString();
     }
 
-    @DebugLog private static String getSdCardPath(String file) {
+    private static String getSdCardPath(String file) {
         if (!PreferenceHelper.getBoolean(PREF_FLASHER_MULTI_USER, false)) {
             file = file.replaceFirst("/sdcard", "/sdcard/0");
         }
         return file;
     }
 
-    @DebugLog public static String triggerFlash(final List<String> files) {
+    public static String triggerFlash(final List<String> files) {
         final StringBuilder sb = new StringBuilder();
 
         sb.append("mkdir -p /cache/recovery/;\n");

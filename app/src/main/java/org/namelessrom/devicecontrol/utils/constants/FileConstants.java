@@ -29,7 +29,8 @@ public interface FileConstants {
             "/sys/class/timed_output/vibrator/pwm_value",
             "/sys/devices/platform/tspdrv/nforce_timed",
             "/sys/vibrator/pwm_val",
-            "/sys/vibrator/pwmvalue"
+            "/sys/vibrator/pwmvalue",
+            "/sys/class/timed_output/vibrator/vtg_level"
     };
     public static final String   FILE_USE_GYRO_CALIB        =
             "/sys/class/sec/gsensorcal/calibration";

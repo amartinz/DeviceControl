@@ -83,7 +83,6 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import java.io.File;
 
 import butterknife.ButterKnife;
-import hugo.weaving.DebugLog;
 
 public class MainActivity extends AccentActivity
         implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener,
@@ -337,7 +336,7 @@ public class MainActivity extends AccentActivity
         ft.commit();
     }
 
-    @Subscribe @DebugLog public int onSectionAttached(final SectionAttachedEvent event) {
+    @Subscribe public int onSectionAttached(final SectionAttachedEvent event) {
         final int id = event.getId();
         switch (id) {
             case ID_RESTORE:
