@@ -63,13 +63,25 @@ public class GpuUtils implements PerformanceConstants {
     }
 
     public static String toMhz(final String mhz) {
-        return (String.valueOf(Integer.parseInt(mhz) / 1000000) + " MHz");
+        int mhzInt;
+        try {
+            mhzInt = Integer.parseInt(mhz);
+        } catch (Exception exc) {
+            Logger.e(GpuUtils.class, exc.getMessage());
+            mhzInt = 0;
+        }
+        return (String.valueOf(mhzInt / 1000000) + " MHz");
     }
 
     public static String fromMHz(final String mhzString) {
         if (mhzString != null && !mhzString.isEmpty()) {
-            return String.valueOf(Integer.parseInt(mhzString.replace(" MHz", "")) * 1000000);
-        } else { return "0"; }
+            try {
+                return String.valueOf(Integer.parseInt(mhzString.replace(" MHz", "")) * 1000000);
+            } catch (Exception exc) {
+                Logger.e(GpuUtils.class, exc.getMessage());
+            }
+        }
+        return "0";
     }
 
     public static String restore() {

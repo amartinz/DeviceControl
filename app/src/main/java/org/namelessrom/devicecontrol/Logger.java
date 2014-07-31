@@ -57,9 +57,7 @@ public class Logger {
     }
 
     public static String getTag(final Object object) {
-        if (object instanceof Class) {
-            return ((Class) object).getSimpleName();
-        } else if (object instanceof String) {
+        if (object instanceof String) {
             return ((String) object);
         } else {
             return object.getClass().getSimpleName();
