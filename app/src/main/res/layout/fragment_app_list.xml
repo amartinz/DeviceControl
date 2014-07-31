@@ -56,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:background="@drawable/main_background">
+        android:background="@color/grey_dark">
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"

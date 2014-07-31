@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
 
 public class CustomCheckBoxPreference extends CheckBoxPreference {
 
-    private String color = "#FFFFFF";
     private String value;
 
     public CustomCheckBoxPreference(Context context) {
@@ -32,8 +31,6 @@ public class CustomCheckBoxPreference extends CheckBoxPreference {
         setLayoutResource(R.layout.preference);
     }
 
-    public void setTitleColor(final String color) { this.color = color; }
-
     public void setValue(final String value) { this.value = value; }
 
     public String getValue() { return this.value; }
@@ -41,9 +38,10 @@ public class CustomCheckBoxPreference extends CheckBoxPreference {
     @Override
     protected void onBindView(final View view) {
         super.onBindView(view);
+        final int color = getContext().getResources().getColor(R.color.default_color);
 
         final TextView mTitle = ButterKnife.findById(view, android.R.id.title);
-        mTitle.setTextColor(Color.parseColor(color));
+        mTitle.setTextColor(color);
         mTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
 
         final TextView mSummary = ButterKnife.findById(view, android.R.id.summary);

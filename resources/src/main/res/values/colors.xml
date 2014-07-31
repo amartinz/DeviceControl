@@ -15,5 +15,25 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <color name="grass">#ff2ab081</color>
+    <!-- Accents -->
+    <color name="accent">@color/grass</color>
+    <color name="grass">#2ab081</color>
+    <color name="default_color">@android:color/black</color>
+    <color name="menu_color">@color/default_color</color>
+    <color name="grey_bright">#f5f5f5</color>
+    <color name="grey_dark">#e7e7e7</color>
+    <!-- Misc -->
+    <color name="red_middle">#dc3d24</color>
+    <color name="darker_gray">#66666666</color>
+    <color name="blueish">#63AA9C</color>
+    <color name="blueish_strong">#4EB1BA</color>
+    <color name="greenish">#50d07d</color>
+    <color name="grey">#AA242424</color>
+    <color name="orange">#FFFFBB33</color>
+    <!-- Wizard -->
+    <color name="step_pager_previous_tab_color">#44ffffff</color>
+    <color name="step_pager_selected_tab_color">#ffffffff</color>
+    <color name="step_pager_selected_last_tab_color">#ff669900</color>
+    <color name="step_pager_next_tab_color">#10ffffff</color>
+    <color name="review_green">#ff669900</color>
 </resources>
