@@ -7,9 +7,7 @@ android {
     defaultConfig {
         applicationId 'org.namelessrom.devicecontrol'
         minSdkVersion 14
-        targetSdkVersion 21
-        versionCode 74
-        versionName '0.6.1'
+        targetSdkVersion 19
     }
 
     signingConfigs {
@@ -66,5 +64,4 @@ dependencies {
     compile project(':resources')
     compile 'ch.acra:acra:4.+'
     compile 'com.koushikdutta.ion:ion:1.+'
-    compile 'com.squareup:otto:1.3.+'
 }
