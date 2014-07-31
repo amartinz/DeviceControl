@@ -28,7 +28,6 @@
   <string name="message_loading">Se încarcă, va rugăm așteptați&#8230;</string>
   <string name="action_press_again">Apăsaţi din nou pentru a ieşi!</string>
   <string name="defaults_button">Restaurează setările implicite</string>
-  <string name="general">General</string>
   <string name="others">Altele</string>
   <string name="help">ajutor</string>
   <string name="more">Mai mult&#8230;</string>
@@ -170,6 +169,4 @@
   <string name="off">Off</string>
   <string name="menu">Meniu</string>
   <string name="preferences">Preferinţe</string>
-  <string name="recovery_type_title">Tipul script-ului de recuperare</string>
-  <string name="both">Ambele</string>
 </resources>

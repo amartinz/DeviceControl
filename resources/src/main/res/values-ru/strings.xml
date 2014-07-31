@@ -23,6 +23,8 @@
   <string name="app_warning_busybox">Учтите, что %s требует BusyBox для полноценной работы!</string>
   <string name="get_busybox">Установить BusyBox</string>
   <string name="get_superuser">Установить Superuser</string>
+  <string name="checking_root">Запрос прав суперпользователя&#8230;</string>
+  <string name="checking_busybox">Проверка busybox&#8230;</string>
   <string name="exit">Выход</string>
   <string name="close">Закрыть</string>
   <string name="message_loading">Загрузка, пожалуйста, подождите&#8230;</string>
@@ -161,6 +163,7 @@
   <string name="tasker">Планировщик</string>
   <string name="tasklist">Список задач</string>
   <string name="tasklist_summary">Установите, измените, включите или отключите задачи.</string>
+  <string name="list_empty">Вы ещё не создали ни одной задачи!\nНе хотите ли добавить что-нибудь? :)\n\n(Нажмите \"+\" вверху справа)</string>
   <string name="add_task">Добавить задачу</string>
   <string name="edit_task">Изменить задачу</string>
   <string name="delete_task">Удалить задачу</string>
@@ -227,6 +230,7 @@
   <string name="ext_cache">Внешний кэш</string>
   <string name="ext">Внешний</string>
   <string name="cache">Кэш</string>
+  <string name="applying_wait">Применение изменений, пожалуйста, подождите...</string>
   <string name="full_scans">Полных сканирований</string>
   <string name="pages_shared">Объединённых страниц</string>
   <string name="pages_sharing">Объединяющихся страниц</string>
@@ -241,6 +245,7 @@
   <string name="wfm_root">Просмотр в режиме суперпользователя</string>
   <string name="wfm_port">Порт веб-сервера</string>
   <string name="start_wfm">Сервер не запущен\nНажмите для запуска сервера.</string>
+  <string name="starting_wfm">Сервер запускается&#8230;</string>
   <string name="stop_wfm">Сервер запущен на %s\nНажмите для остановки сервера.</string>
   <string name="authentication">Авторизация</string>
   <string name="wfm_auth">Использовать авторизацию</string>
@@ -259,6 +264,13 @@
   <string name="startup_script_not_installed">Сценарий запуска не установлен</string>
   <string name="open_play_store">Открыть приложение в Google Play\u2122</string>
   <string name="governor">Схема питания</string>
+  <string name="skip_checks">Пропустить проверку при запуске</string>
+  <string name="skip_checks_summary">Не запускать Root и BusyBox при старте.\nЭто может привести к нестабильности системы!</string>
+  <string name="flasher">Программа обновления</string>
+  <string name="flash_list">Список обновлений</string>
+  <string name="add_item">Добавить элемент</string>
   <string name="recovery_type_title">Тип скрипта восстановления</string>
+  <string name="flash_warning">Вы собираетесь обновить ПО!\nВ случае согласия, устройство перезагрузится в режим восстановления и обновит выбранные элементы\n\nЖелаете продолжить?</string>
   <string name="both">Оба</string>
+  <string name="pick_file">Выбрать файл</string>
 </resources>

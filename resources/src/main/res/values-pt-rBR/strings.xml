@@ -272,4 +272,5 @@
   <string name="recovery_type_title">Tipo de recuperação</string>
   <string name="flash_warning">Estas a ponto de flashear!\nCuando continue, seu dispositivo reiniciasse-se no recovery e flasheara os objectos seleccionados.\n\nQueres proceder?</string>
   <string name="both">Ambos</string>
+  <string name="pick_file">Escolha um arquivo</string>
 </resources>

@@ -272,4 +272,5 @@
   <string name="recovery_type_title">Type de script recovery</string>
   <string name="flash_warning">Vous êtes sur le point de flash!\nPour continuer, votre appareil va redémarrer en mode recovery et flash le zip.\n\nVoulez-vous continuer?</string>
   <string name="both">Tous les deux</string>
+  <string name="pick_file">Choisissez un fichier</string>
 </resources>
