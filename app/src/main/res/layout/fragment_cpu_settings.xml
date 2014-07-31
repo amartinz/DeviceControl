@@ -40,8 +40,9 @@ Copyright (C) 2012  James Roberts
             android:id="@+id/settings">
 
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:id="@+id/cpu_info_hide"
                 android:text="@string/hide_status"
                 android:gravity="center_vertical|left"
