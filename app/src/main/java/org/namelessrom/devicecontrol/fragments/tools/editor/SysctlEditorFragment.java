@@ -345,8 +345,8 @@ public class SysctlEditorFragment extends AttachFragment
         final String dn = Application.getFilesDirectory();
         String title;
 
-        final View editDialog = Application.getLayoutInflater().inflate(
-                R.layout.dialog_prop, null);
+        final View editDialog = LayoutInflater.from(getActivity())
+                .inflate(R.layout.dialog_prop, null);
         final EditText tv = findById(editDialog, R.id.prop_value);
         final TextView tn = findById(editDialog, R.id.prop_name_tv);
 

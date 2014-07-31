@@ -19,19 +19,19 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="10dip"
-    android:paddingRight="10dip"
-    android:paddingTop="10dip">
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp">
 
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
@@ -39,8 +39,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/name"
+                android:textColor="@color/default_color"
                 android:textStyle="bold"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:labelFor="@+id/prop_name" />
 
             <EditText
@@ -54,9 +55,9 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip">
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -78,9 +79,9 @@
         <LinearLayout
             android:id="@+id/prop_presets"
             android:orientation="vertical"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip">
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"

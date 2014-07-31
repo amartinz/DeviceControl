@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/prop_name_tv"
         android:layout_gravity="left|center_vertical"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:layout_margin="10dp"
         android:labelFor="@+id/prop_value" />

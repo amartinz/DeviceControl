@@ -17,29 +17,43 @@
  */
 package org.namelessrom.devicecontrol.fragments.tools.flasher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
+import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
 
-public class FlasherPreferencesFragment extends PreferenceFragment
+public class FlasherPreferencesFragment extends AttachPreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants, PerformanceConstants {
 
     private CustomListPreference mRecoveryType;
 
     private CustomCheckBoxPreference mMultiUserMode;
 
+    @Override public void onAttach(final Activity activity) {
+        super.onAttach(activity, ID_TOOLS_FLASHER_PREFS);
+    }
+
+    @Override public void onDestroy() {
+        super.onDestroy();
+        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
+    }
+
     @Override public void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
+        setHasOptionsMenu(true);
         addPreferencesFromResource(R.xml.tools_flasher_preferences);
 
         int tmp;
@@ -85,9 +99,10 @@ public class FlasherPreferencesFragment extends PreferenceFragment
             Bundle savedInstanceState) {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        if (view != null) {
+        //TODO: bg
+        /*if (view != null) {
             view.setBackgroundResource(R.drawable.preference_drawer_background);
-        }
+        }*/
 
         return view;
     }
@@ -105,6 +120,22 @@ public class FlasherPreferencesFragment extends PreferenceFragment
         }
 
         return false;
+    }
+
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
+        final int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home: {
+                final Activity activity = getActivity();
+                if (activity != null) {
+                    activity.onBackPressed();
+                }
+                return true;
+            }
+            default: {
+                return false;
+            }
+        }
     }
 
 }

@@ -121,11 +121,6 @@ public class Application extends android.app.Application implements DeviceConsta
         return packageManager;
     }
 
-    public static LayoutInflater getLayoutInflater() {
-        return (LayoutInflater) Application.applicationContext.getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE);
-    }
-
     public static File getFiles() { return Application.applicationContext.getFilesDir(); }
 
     public static String getFilesDirectory() {

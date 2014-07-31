@@ -44,7 +44,6 @@ import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
-import org.namelessrom.devicecontrol.fragments.HelpFragment;
 import org.namelessrom.devicecontrol.fragments.HomeFragment;
 import org.namelessrom.devicecontrol.fragments.LicenseFragment;
 import org.namelessrom.devicecontrol.fragments.PreferencesFragment;
@@ -175,19 +174,14 @@ public class MainActivity extends AccentActivity
         final ListView mMenuList = ButterKnife.findById(v, R.id.navbarlist);
 
         mSlidingMenu = new SlidingMenu(this);
-        mSlidingMenu.setBackgroundResource(R.drawable.bg_menu_dark);
-        mSlidingMenu.setMode(SlidingMenu.LEFT_RIGHT);
-        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        mSlidingMenu.setMode(SlidingMenu.LEFT);
+        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
         mSlidingMenu.setShadowDrawable(R.drawable.shadow);
         mSlidingMenu.setBehindWidthRes(R.dimen.slidingmenu_offset);
         mSlidingMenu.setFadeDegree(0.35f);
         mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         mSlidingMenu.setMenu(v);
-
-        final View vv = getLayoutInflater().inflate(R.layout.menu_prefs, null, false);
-        mSlidingMenu.setSecondaryMenu(vv);
-        mSlidingMenu.setSecondaryShadowDrawable(R.drawable.shadow_right);
 
         final MenuListArrayAdapter mAdapter = new MenuListArrayAdapter(
                 this,
@@ -278,12 +272,8 @@ public class MainActivity extends AccentActivity
     //==============================================================================================
 
     private void loadFragment(final int i) {
-        Fragment right = HelpFragment.newInstance(i);
-
         switch (i) {
-            default:
-                right = HelpFragment.newInstance(ID_DUMMY);
-                // slip through...
+            default: // slip through...
             case ID_HOME:
                 mCurrentFragment = new HomeFragment();
                 break;
@@ -310,7 +300,8 @@ public class MainActivity extends AccentActivity
                 break;
             case ID_TOOLS_FLASHER:
                 mCurrentFragment = new FlasherFragment();
-                right = new FlasherPreferencesFragment();
+                // TODO: replace
+                //right = new FlasherPreferencesFragment();
                 break;
             case ID_TOOLS_MORE:
                 mCurrentFragment = new ToolsMoreFragment();
@@ -331,7 +322,6 @@ public class MainActivity extends AccentActivity
         final FragmentTransaction ft = fragmentManager.beginTransaction();
 
         ft.replace(R.id.container, mCurrentFragment);
-        ft.replace(R.id.menu_frame, right);
 
         ft.commit();
     }
@@ -457,6 +447,11 @@ public class MainActivity extends AccentActivity
                 mTitle = mFragmentTitle = R.string.flasher;
                 mSubFragmentTitle = -1;
                 break;
+            case ID_TOOLS_FLASHER_PREFS:
+                mSubActionBarDrawable = R.drawable.ic_menu_flash;
+                mTitle = mSubFragmentTitle = R.string.flasher;
+                break;
+            //--------------------------------------------------------------------------------------
             case ID_TOOLS_MORE:
                 mActionBarDrawable = R.drawable.ic_menu_code;
                 mSubActionBarDrawable = -1;
@@ -565,8 +560,6 @@ public class MainActivity extends AccentActivity
 
         final int id = event.getId();
 
-        Fragment right = HelpFragment.newInstance(id);
-
         switch (id) {
             //--------------------------------------------------------------------------------------
             case ID_FAST_CHARGE:
@@ -614,19 +607,21 @@ public class MainActivity extends AccentActivity
             case ID_TOOLS_WIRELESS_FM:
                 mCurrentFragment = new WirelessFileManagerFragment();
                 break;
+            case ID_TOOLS_FLASHER_PREFS:
+                mCurrentFragment = new FlasherPreferencesFragment();
+                break;
             //--------------------------------------------------------------------------------------
             default:
                 break;
         }
 
-        if (mCurrentFragment == null || right == null) return;
+        if (mCurrentFragment == null) return;
 
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_right,
                 R.animator.slide_in_left, R.animator.slide_out_left);
 
         ft.replace(R.id.container, mCurrentFragment);
-        ft.replace(R.id.menu_frame, right);
         ft.addToBackStack(null);
 
         ft.commit();

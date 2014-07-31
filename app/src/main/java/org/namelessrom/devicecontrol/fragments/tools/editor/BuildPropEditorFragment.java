@@ -274,8 +274,8 @@ public class BuildPropEditorFragment extends AttachFragment
 
         String title;
 
-        final View editDialog = Application.getLayoutInflater().inflate(
-                R.layout.dialog_build_prop, null, false);
+        final View editDialog = LayoutInflater.from(getActivity())
+                .inflate(R.layout.dialog_build_prop, null, false);
         final TextView tvName = findById(editDialog, R.id.prop_name_tv);
         final EditText etName = findById(editDialog, R.id.prop_name);
         final EditText etValue = findById(editDialog, R.id.prop_value);

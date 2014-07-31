@@ -15,6 +15,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -26,26 +27,18 @@
         android:orientation="vertical"
         android:visibility="invisible">
 
-        <TextView
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/flash_list" />
-
-        <ListView
+        <it.gmariotti.cardslib.library.view.CardListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"
-            android:layout_margin="5dp" />
+            android:animateLayoutChanges="true"
+            card:list_card_layout_resourceID="@layout/card_list_image_layout" />
 
         <LinearLayout
             android:id="@+id/btn_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/grey"
             android:visibility="visible">
 
             <Button

@@ -70,7 +70,6 @@ Copyright (C) 2012  James Roberts
         android:id="@+id/ui_states_warning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#551111"
         android:padding="15dp"
         android:text="@string/no_states_file_found"
         android:textSize="20sp"

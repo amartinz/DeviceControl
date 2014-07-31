@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.fragments.tools;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -26,7 +27,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,6 +41,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -257,8 +259,13 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
     @Override public boolean onBackPressed() {
         if (!startedFromActivity && mDetailsShowing) {
-            AnimationHelper.animateX(mAppDetails, 500, mAppIcon.getWidth() +
-                    AnimationHelper.getDp(R.dimen.app_margin), mAppDetails.getWidth());
+            // animate the details out
+            final ObjectAnimator outAnim = ObjectAnimator.ofFloat(mAppDetails, "x",
+                    mAppIcon.getWidth() + 2 * AnimationHelper.getDp(R.dimen.app_margin),
+                    mAppDetails.getWidth());
+            outAnim.setDuration(500);
+            outAnim.setInterpolator(new DecelerateInterpolator());
+            outAnim.start();
             mDetailsShowing = false;
             if (getActivity() != null) getActivity().invalidateOptionsMenu();
             return true;
@@ -315,7 +322,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                 mStatus.setTextColor(getResources().getColor(R.color.red_middle));
             } else {
                 tmp = getString(R.string.app_user, mAppItem.getLabel());
-                mStatus.setTextColor(Color.parseColor("#ffffff"));
+                mStatus.setTextColor(getResources().getColor(R.color.default_color));
             }
             mStatus.setText(Html.fromHtml(tmp));
 
@@ -345,8 +352,13 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
         if (!startedFromActivity && !mDetailsShowing) {
             mAppDetails.bringToFront();
-            AnimationHelper.animateX(mAppDetails, 500, mAppDetails.getWidth(), mAppIcon.getWidth() +
-                    2 * AnimationHelper.getDp(R.dimen.app_margin));
+            // animate the details in
+            final ObjectAnimator outAnim = ObjectAnimator.ofFloat(mAppDetails, "x",
+                    mAppDetails.getWidth(),
+                    mAppIcon.getWidth() + 2 * AnimationHelper.getDp(R.dimen.app_margin));
+            outAnim.setDuration(500);
+            outAnim.setInterpolator(new AccelerateInterpolator());
+            outAnim.start();
             mDetailsShowing = true;
             if (getActivity() != null) getActivity().invalidateOptionsMenu();
         }
@@ -476,16 +488,19 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         bar.setName(text);
         bar.setValue(value);
         bar.setValueString(AppHelper.convertSize(value));
+        bar.setValueColor(Application.getColor(R.color.default_color));
         bar.setColor(color);
         return bar;
     }
 
     private View addCacheWidget(final int txtId, final String text) {
-        final View v = Application.getLayoutInflater()
+        final View v = LayoutInflater.from(getActivity())
                 .inflate(R.layout.widget_app_cache, mCacheInfo, false);
 
         final TextView tvLeft = findById(v, R.id.widget_app_cache_left);
+        tvLeft.setTextColor(getResources().getColor(R.color.default_color));
         final TextView tvRight = findById(v, R.id.widget_app_cache_right);
+        tvRight.setTextColor(getResources().getColor(R.color.default_color));
 
         tvLeft.setText(getString(txtId) + ':');
         tvRight.setText(text);

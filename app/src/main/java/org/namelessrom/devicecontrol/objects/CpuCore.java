@@ -34,4 +34,8 @@ public class CpuCore {
         mCoreGov = ((coreGov != null && !coreGov.isEmpty()) ? coreGov : "0");
     }
 
+    @Override public String toString() {
+        return String.format("core: %s | max: %s | current: %s | gov: %s",
+                mCore, mCoreMax, mCoreCurrent, mCoreGov);
+    }
 }

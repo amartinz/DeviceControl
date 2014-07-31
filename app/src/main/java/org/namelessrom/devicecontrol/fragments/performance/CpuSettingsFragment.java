@@ -20,12 +20,14 @@ package org.namelessrom.devicecontrol.fragments.performance;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -36,6 +38,7 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
 import org.namelessrom.devicecontrol.events.CpuFreqEvent;
@@ -51,6 +54,7 @@ import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
+import org.namelessrom.devicecontrol.widgets.CpuCoreWidget;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -67,18 +71,15 @@ public class CpuSettingsFragment extends AttachFragment
     private Spinner  mMin;
     private Spinner  mGovernor;
 
-    LinearLayout mCpuInfo;
-    private LayoutInflater mInflater;
+    private LinearLayout mCpuInfo;
 
     private static int mInterval = 2000;
 
-    @Override
-    public void onAttach(Activity activity) {
+    @Override public void onAttach(Activity activity) {
         super.onAttach(activity, ID_PERFORMANCE_CPU_SETTINGS);
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
         BusProvider.getBus().register(this);
         if (mStatusHide != null && !mStatusHide.isChecked()) {
@@ -86,28 +87,46 @@ public class CpuSettingsFragment extends AttachFragment
         }
     }
 
-    @Override
-    public void onPause() {
+    @Override public void onPause() {
         super.onPause();
         BusProvider.getBus().unregister(this);
         CpuCoreMonitor.getInstance(getActivity()).stop();
     }
 
-    @Subscribe
-    public void onCoresUpdated(final CpuCoreEvent event) {
+    @Subscribe public void onCoresUpdated(final CpuCoreEvent event) {
         final List<CpuCore> coreList = event.getStates();
         if (coreList != null && !coreList.isEmpty()) {
-            mCpuInfo.removeAllViews();
-            for (final CpuCore c : coreList) {
-                generateRow(mCpuInfo, c);
+            final int count = coreList.size();
+            for (int i = 0; i < count; i++) {
+                generateRow(i, coreList.get(i));
             }
         }
     }
 
+    @Override public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        // add cpu governor settings entry
+        menu.add(0, 0, Menu.NONE, R.string.cpu_governor_tuning)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+    }
+
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
+        final int id = item.getItemId();
+
+        switch (id) {
+            case 0: // cpu governor
+                BusProvider.getBus().post(new SubFragmentEvent(ID_GOVERNOR_TUNABLE));
+                return true;
+        }
+
+        return false;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup root, Bundle savedInstanceState) {
-        mInflater = inflater;
-        final View view = mInflater.inflate(R.layout.fragment_cpu_settings, root, false);
+        setHasOptionsMenu(true);
+        final View view = inflater.inflate(R.layout.fragment_cpu_settings, root, false);
 
         mCpuInfo = findById(view, R.id.cpu_info);
 
@@ -124,11 +143,9 @@ public class CpuSettingsFragment extends AttachFragment
                         : (((double) progress + 1000) / 1000) + "s"));
             }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) { }
+            @Override public void onStartTrackingTouch(SeekBar seekBar) { }
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {
                 mInterval = seekBar.getProgress() + 1000;
                 if (mInterval >= 5000) {
                     CpuCoreMonitor.getInstance(getActivity()).stop();
@@ -151,8 +168,7 @@ public class CpuSettingsFragment extends AttachFragment
 
         mStatusHide = findById(view, R.id.cpu_info_hide);
         mStatusHide.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(final CompoundButton compoundButton, final boolean b) {
+            @Override public void onCheckedChanged(final CompoundButton button, final boolean b) {
                 findById(view, R.id.ui_interval).setVisibility(b ? View.GONE : View.VISIBLE);
                 if (b) {
                     CpuCoreMonitor.getInstance(getActivity()).stop();
@@ -174,7 +190,7 @@ public class CpuSettingsFragment extends AttachFragment
                     "0",
                     "0",
                     "0");
-            generateRow(mCpuInfo, tmpCore);
+            generateRow(i, tmpCore);
         }
 
         mMax = findById(view, R.id.pref_max);
@@ -186,27 +202,17 @@ public class CpuSettingsFragment extends AttachFragment
         mGovernor = findById(view, R.id.pref_governor);
         mGovernor.setEnabled(false);
 
-        final Button govButton = findById(view, R.id.governor_tuning);
-        govButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BusProvider.getBus().post(new SubFragmentEvent(ID_GOVERNOR_TUNABLE));
-            }
-        });
-
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         CpuUtils.getCpuFreqEvent();
         CpuUtils.getGovernorEvent();
     }
 
-    @Subscribe
-    public void onCpuFreq(final CpuFreqEvent event) {
+    @Subscribe public void onCpuFreq(final CpuFreqEvent event) {
         final Activity activity = getActivity();
         if (activity != null && event != null) {
             final String mCurMaxSpeed = event.getCpuFreqMax();
@@ -248,8 +254,7 @@ public class CpuSettingsFragment extends AttachFragment
         }
     }
 
-    @Subscribe
-    public void onGovernor(final GovernorEvent event) {
+    @Subscribe public void onGovernor(final GovernorEvent event) {
         final Activity activity = getActivity();
         if (activity != null && event != null) {
             final String[] availableGovernors = event.getAvailableGovernors();
@@ -306,30 +311,29 @@ public class CpuSettingsFragment extends AttachFragment
         public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
     }
 
-    // TODO: generate once, then update
-    public View generateRow(final ViewGroup parent, final CpuCore cpuCore) {
-        if (!isAdded()) { return null; }
+    public View generateRow(final int core, final CpuCore cpuCore) {
+        if (!isAdded() || mCpuInfo == null) { return null; }
+        Logger.d(this, String.format("generateRow(%s);", cpuCore.toString()));
 
-        final View rowView = mInflater.inflate(R.layout.row_device, parent, false);
+        View rowView = mCpuInfo.getChildAt(core);
+        if (rowView == null) {
+            rowView = new CpuCoreWidget(getActivity());
+            mCpuInfo.addView(rowView);
+        }
 
-        final TextView cpuInfoCore = findById(rowView, R.id.ui_device_title);
-        final TextView cpuInfoFreq = findById(rowView, R.id.ui_device_value);
-        final ProgressBar cpuBar = findById(rowView, R.id.ui_device_bar);
+        if (rowView instanceof CpuCoreWidget) {
+            final boolean isOffline = cpuCore.mCoreCurrent == 0;
 
-        final boolean isOffline = cpuCore.mCoreCurrent == 0;
+            ((CpuCoreWidget) rowView).core.setText(cpuCore.mCore);
+            ((CpuCoreWidget) rowView).freq.setText(isOffline
+                    ? getString(R.string.core_offline)
+                    : CpuUtils.toMHz(String.valueOf(cpuCore.mCoreCurrent))
+                    + " / " + CpuUtils.toMHz(String.valueOf(cpuCore.mCoreMax))
+                    + " [" + cpuCore.mCoreGov + ']');
+            ((CpuCoreWidget) rowView).bar.setMax(cpuCore.mCoreMax);
+            ((CpuCoreWidget) rowView).bar.setProgress(cpuCore.mCoreCurrent);
+        }
 
-        cpuInfoCore.setText(cpuCore.mCore);
-        cpuInfoFreq.setText(isOffline
-                ? getString(R.string.core_offline)
-                : CpuUtils.toMHz(String.valueOf(cpuCore.mCoreCurrent))
-                + " / " + CpuUtils.toMHz(String.valueOf(cpuCore.mCoreMax))
-                + " [" + cpuCore.mCoreGov + ']');
-        cpuBar.setMax(cpuCore.mCoreMax);
-        cpuBar.setProgress(cpuCore.mCoreCurrent);
-
-        assert (rowView != null);
-
-        parent.addView(rowView);
         return rowView;
     }
 

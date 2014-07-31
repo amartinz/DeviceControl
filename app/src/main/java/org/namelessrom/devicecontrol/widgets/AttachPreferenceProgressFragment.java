@@ -90,8 +90,6 @@ public class AttachPreferenceProgressFragment extends PreferenceFragment {
         final CustomPreference pref = new CustomPreference(context);
         pref.setTitle(R.string.no_tweaks_available);
         pref.setSummary(sId);
-        pref.setTitleColor("#ffffff");
-        pref.setSummaryColor("#ffffff");
         return pref;
     }
 }

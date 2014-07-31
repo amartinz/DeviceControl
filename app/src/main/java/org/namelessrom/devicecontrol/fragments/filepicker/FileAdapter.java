@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol.fragments.filepicker;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.text.format.Formatter;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -92,7 +93,8 @@ public class FileAdapter extends BaseAdapter {
     @Override public View getView(final int position, View v, final ViewGroup parent) {
         final ViewHolder viewHolder;
         if (v == null) {
-            v = Application.getLayoutInflater().inflate(R.layout.list_item_file, parent, false);
+            v = LayoutInflater.from(Application.applicationContext)
+                    .inflate(R.layout.list_item_file, parent, false);
             assert (v != null);
             viewHolder = new ViewHolder(v);
             v.setTag(viewHolder);
@@ -117,7 +119,7 @@ public class FileAdapter extends BaseAdapter {
             }
         });
 
-        int color = resources.getColor(android.R.color.white);
+        int color = resources.getColor(R.color.default_color);
 
         viewHolder.name.setText(file.getName());
 
@@ -137,6 +139,7 @@ public class FileAdapter extends BaseAdapter {
         }
 
         viewHolder.name.setTextColor(color);
+        viewHolder.info.setTextColor(resources.getColor(R.color.grass));
         viewHolder.icon.setColorFilter(Color.parseColor("#FFFFFF"));
         viewHolder.icon.setColorFilter(color);
 

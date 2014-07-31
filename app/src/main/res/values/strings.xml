@@ -267,7 +267,6 @@
     <string name="skip_checks">Skip checks at startup</string>
     <string name="skip_checks_summary">Do not check for root and busybox on startup\nProceed on your own risk!</string>
     <string name="flasher">Flasher</string>
-    <string name="flash_list">Flash list</string>
     <string name="add_item">Add item</string>
     <string name="recovery_type_title">Recovery script type</string>
     <string name="flash_warning">You are about to flash!\nWhen continuing, your device will reboot to recovery and flash the selected items.\n\nDo you want to proceed?</string>
