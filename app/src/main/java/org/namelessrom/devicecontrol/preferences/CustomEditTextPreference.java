@@ -1,7 +1,6 @@
 package org.namelessrom.devicecontrol.preferences;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
@@ -15,8 +14,6 @@ import butterknife.ButterKnife;
 
 public class CustomEditTextPreference extends EditTextPreference {
 
-    private String color = "#FFFFFF";
-
     public CustomEditTextPreference(Context context) {
         super(context);
         setLayoutResource(R.layout.preference);
@@ -27,14 +24,13 @@ public class CustomEditTextPreference extends EditTextPreference {
         setLayoutResource(R.layout.preference);
     }
 
-    public void setTitleColor(final String color) { this.color = color; }
-
     @Override
     protected void onBindView(final View view) {
         super.onBindView(view);
+        final int color = getContext().getResources().getColor(R.color.default_color);
 
         final TextView title = ButterKnife.findById(view, android.R.id.title);
-        title.setTextColor(Color.parseColor(color));
+        title.setTextColor(color);
         title.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
 
         final TextView summary = ButterKnife.findById(view, android.R.id.summary);

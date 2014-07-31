@@ -24,6 +24,7 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.AttributeSet;
@@ -58,15 +59,14 @@ public class VibratorTuningPreference extends DialogPreference
 
     //----------------------------------------------------------------------------------------------
     private static final String FILE_VIBRATOR = Utils.checkPaths(FILES_VIBRATOR);
-    private final Vibrator            vib;
-    private       SeekBar             mSeekBar;
-    private       TextView            mValue;
-    private       String              mOriginalValue;
-    private       Drawable            mProgressDrawable;
-    private       Drawable            mProgressThumb;
-    private       LightingColorFilter mRedFilter;
+    private final Vibrator vib;
+    private       SeekBar  mSeekBar;
+    private       TextView mValue;
+    private       String   mOriginalValue;
+    private       Drawable mProgressDrawable;
 
-    private String color = "#FFFFFF";
+    private Drawable            mProgressThumb = null;
+    private LightingColorFilter mRedFilter     = null;
 
     public VibratorTuningPreference(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -74,14 +74,13 @@ public class VibratorTuningPreference extends DialogPreference
         setDialogLayoutResource(R.layout.preference_dialog_vibrator_tuning);
     }
 
-    public void setTitleColor(final String color) { this.color = color; }
-
     @Override
     protected void onBindView(final View view) {
         super.onBindView(view);
+        final int color = getContext().getResources().getColor(R.color.default_color);
 
         final TextView mTitle = findById(view, android.R.id.title);
-        mTitle.setTextColor(Color.parseColor(color));
+        mTitle.setTextColor(color);
         mTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
 
         final TextView mSummary = findById(view, android.R.id.summary);
@@ -114,7 +113,9 @@ public class VibratorTuningPreference extends DialogPreference
             LayerDrawable ld = (LayerDrawable) progressDrawable;
             mProgressDrawable = ld.findDrawableByLayerId(android.R.id.progress);
         }
-        mProgressThumb = mSeekBar.getThumb();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mProgressThumb = mSeekBar.getThumb();
+        }
         mRedFilter = new LightingColorFilter(Color.BLACK,
                 getContext().getResources().getColor(android.R.color.holo_red_light));
 

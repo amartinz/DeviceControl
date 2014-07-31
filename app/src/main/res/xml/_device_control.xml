@@ -33,6 +33,17 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="prefs_tools"
+        android:title="@string/tools">
+
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
+            android:key="flasher_prefs"
+            android:title="@string/flasher"
+            android:icon="@drawable/ic_menu_flash" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="prefs_set_on_boot"
         android:title="@string/reapply_on_boot">
 
