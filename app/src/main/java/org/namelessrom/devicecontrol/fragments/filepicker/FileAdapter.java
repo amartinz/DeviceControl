@@ -117,7 +117,7 @@ public class FileAdapter extends BaseAdapter {
             }
         });
 
-        int color = resources.getColor(android.R.color.white);
+        int color = resources.getColor(R.color.default_color);
 
         viewHolder.name.setText(file.getName());
 
@@ -137,6 +137,7 @@ public class FileAdapter extends BaseAdapter {
         }
 
         viewHolder.name.setTextColor(color);
+        viewHolder.info.setTextColor(resources.getColor(R.color.grass));
         viewHolder.icon.setColorFilter(Color.parseColor("#FFFFFF"));
         viewHolder.icon.setColorFilter(color);
 

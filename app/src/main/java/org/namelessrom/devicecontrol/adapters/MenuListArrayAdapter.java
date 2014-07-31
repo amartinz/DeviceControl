@@ -19,7 +19,7 @@ package org.namelessrom.devicecontrol.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import static butterknife.ButterKnife.findById;
 
@@ -97,19 +98,20 @@ public class MenuListArrayAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) v.getTag();
         }
 
-        final int defaultColor = mContext.getResources().getColor(android.R.color.white);
+        final int defaultColor = mContext.getResources().getColor(R.color.menu_color);
         if (type == 0) {
-            viewHolder.title.setTextColor(Color.WHITE);
+            viewHolder.title.setTextColor(defaultColor);
             viewHolder.title.setText(mTitles[position]);
 
             final int imageRes = mIcons[position];
             if (imageRes == 0) {
                 viewHolder.image.setVisibility(View.INVISIBLE);
             } else {
-                viewHolder.image.setImageDrawable(
-                        mContext.getResources().getDrawable(mIcons[position]));
-                viewHolder.image.setColorFilter(Color.parseColor("#FFFFFF"));
-                viewHolder.image.setColorFilter(defaultColor);
+                final Drawable icon = mContext.getResources().getDrawable(mIcons[position]);
+                if (icon != null) {
+                    DrawableHelper.applyAccentColorFilter(icon);
+                    viewHolder.image.setImageDrawable(icon);
+                }
             }
         } else if (type == 1) {
             viewHolder.header.setText(mTitles[position]);

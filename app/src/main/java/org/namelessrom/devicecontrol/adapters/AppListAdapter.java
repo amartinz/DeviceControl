@@ -81,7 +81,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         viewHolder.packageName.setText(appItem.getPackageName());
 
         viewHolder.appLabel.setTextColor(appItem.isSystemApp() ? res.getColor(R.color.red_middle)
-                : res.getColor(android.R.color.white));
+                : res.getColor(R.color.default_color));
         viewHolder.layer.setVisibility(appItem.isEnabled() ? View.INVISIBLE : View.VISIBLE);
     }
 
