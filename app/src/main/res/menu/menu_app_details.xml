@@ -18,7 +18,7 @@
 
     <item
         android:id="@+id/menu_action_play_store"
-        android:icon="@drawable/ic_general_play_store"
+        android:icon="@drawable/ic_action_play_store"
         android:title="@string/open_play_store"
         android:showAsAction="ifRoom" />
 

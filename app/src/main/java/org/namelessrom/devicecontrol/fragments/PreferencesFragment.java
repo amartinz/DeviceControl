@@ -38,6 +38,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
+import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.proprietary.Constants;
@@ -58,6 +59,10 @@ public class PreferencesFragment extends AttachPreferenceFragment
     private CustomPreference         mDonatePreference;
     private CustomPreference         mColorPreference;
     private CustomCheckBoxPreference mMonkeyPref;
+    //==============================================================================================
+    // Tools
+    //==============================================================================================
+    private CustomPreference         mFlasherConfig;
     //==============================================================================================
     // Set On Boot
     //==============================================================================================
@@ -160,6 +165,11 @@ public class PreferencesFragment extends AttachPreferenceFragment
             }
         }
 
+        category = (PreferenceCategory) findPreference("prefs_tools");
+        if (category != null) {
+            mFlasherConfig = (CustomPreference) findPreference("flasher_prefs");
+        }
+
         category = (PreferenceCategory) findPreference("prefs_set_on_boot");
         if (category != null) {
             mSobDevice = (CustomCheckBoxPreference) findPreference(SOB_DEVICE);
@@ -210,9 +220,10 @@ public class PreferencesFragment extends AttachPreferenceFragment
             Bundle savedInstanceState) {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        if (view != null) {
+        // TODO: preferences layout
+        /*if (view != null) {
             view.setBackgroundResource(R.drawable.preference_drawer_background);
-        }
+        }*/
 
         return view;
     }
@@ -322,6 +333,9 @@ public class PreferencesFragment extends AttachPreferenceFragment
             builder.setView(listView);
             builder.show();
 
+            return true;
+        } else if (mFlasherConfig == preference) {
+            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_FLASHER_PREFS));
             return true;
         }
 
