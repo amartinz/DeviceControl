@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    style="@style/card"
+    android:layout_margin="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:paddingEnd="?android:attr/scrollbarSize"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:baselineAligned="false">
+
+    <TextView
+        tools:text="nameless-4.4.4-20140101-bacon-NIGHTLY.zip"
+        android:id="@+id/flash_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:fadingEdge="horizontal"
+        android:singleLine="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:ellipsize="marquee"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        tools:text="/sdcard/Nameless/NamelessCenter/nameless-4.4.4-20140101-bacon-NIGHTLY.zip"
+        android:id="@+id/flash_path"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="sans-serif-light"
+        android:singleLine="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:ellipsize="marquee"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="?android:attr/textColorSecondary" />
+
+</LinearLayout>

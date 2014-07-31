@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol.fragments.tools.tasker;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,10 +31,11 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.negusoft.holoaccent.widget.AccentSwitch;
-import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.adapters.TaskerAdapter;
+import org.namelessrom.devicecontrol.cards.TaskerCard;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.services.TaskerService;
@@ -41,14 +43,21 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.widgets.AttachListFragment;
+import org.namelessrom.devicecontrol.widgets.AttachFragment;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import it.gmariotti.cardslib.library.view.CardListView;
 
 import static butterknife.ButterKnife.findById;
 
-public class TaskListFragment extends AttachListFragment implements DeviceConstants {
+public class TaskListFragment extends AttachFragment implements DeviceConstants {
 
+    private CardListView  mListView;
     private TaskerAdapter mAdapter;
+    private View          mEmptyView;
 
     @Override
     public void onAttach(Activity activity) { super.onAttach(activity, ID_TOOLS_TASKER_LIST); }
@@ -63,7 +72,7 @@ public class TaskListFragment extends AttachListFragment implements DeviceConsta
         BusProvider.getBus().register(this);
 
         if (mAdapter != null) {
-            mAdapter.notifyDataSetChanged();
+            refreshListView();
         }
     }
 
@@ -75,14 +84,25 @@ public class TaskListFragment extends AttachListFragment implements DeviceConsta
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragment_tasker, container, false);
+        final View v = inflater.inflate(R.layout.fragment_tasker, container, false);
+
+        mListView = findById(v, android.R.id.list);
+        mEmptyView = findById(v, android.R.id.empty);
+
+        mAdapter = new TaskerAdapter(getActivity());
+
+        return v;
     }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAdapter = new TaskerAdapter();
-        setListAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+        mListView.setAdapter(mAdapter);
+
+        refreshListView();
+    }
+
+    private void refreshListView() {
+        new UpdateTaskerCardList().execute();
     }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -135,10 +155,36 @@ public class TaskListFragment extends AttachListFragment implements DeviceConsta
         }
     }
 
-    @Subscribe public void onTaskerItem(final TaskerItem item) {
-        final Intent intent = new Intent(getActivity(), AddTaskActivity.class);
-        intent.putExtra(AddTaskActivity.ARG_ITEM, item);
-        startActivity(intent);
+    private class UpdateTaskerCardList extends AsyncTask<Void, Void, ArrayList<TaskerCard>> {
+        @Override protected void onPreExecute() {
+            // TODO: animations and progress view
+            mEmptyView.setVisibility(View.INVISIBLE);
+            mListView.setVisibility(View.INVISIBLE);
+        }
+
+        @Override protected ArrayList<TaskerCard> doInBackground(final Void... voids) {
+            final List<TaskerItem> items = DatabaseHandler.getInstance().getAllTaskerItems("");
+            final ArrayList<TaskerCard> cards = new ArrayList<TaskerCard>(items.size());
+
+            for (final TaskerItem item : items) {
+                cards.add(new TaskerCard(getActivity(), item));
+            }
+
+            return cards;
+        }
+
+        @Override protected void onPostExecute(final ArrayList<TaskerCard> result) {
+            // if the adapter exists and we have items, clear it and add the results
+            if (mAdapter != null && result != null && result.size() != 0) {
+                mAdapter.clear();
+                mAdapter.addAll(result);
+                mEmptyView.setVisibility(View.INVISIBLE);
+                mListView.setVisibility(View.VISIBLE);
+            } else {
+                mEmptyView.setVisibility(View.VISIBLE);
+                mListView.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
 }

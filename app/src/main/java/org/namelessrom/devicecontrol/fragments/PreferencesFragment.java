@@ -210,9 +210,10 @@ public class PreferencesFragment extends AttachPreferenceFragment
             Bundle savedInstanceState) {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        if (view != null) {
+        // TODO: preferences layout
+        /*if (view != null) {
             view.setBackgroundResource(R.drawable.preference_drawer_background);
-        }
+        }*/
 
         return view;
     }
