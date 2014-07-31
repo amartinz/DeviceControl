@@ -16,10 +16,9 @@
 -->
 <resources>
 
-    <dimen name="app_margin">8dp</dimen>
-    <dimen name="slidingmenu_offset">200dp</dimen>
-    <dimen name="shadow_width">6dp</dimen>
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <style name="NoActionBar" parent="@android:style/Theme.Holo.Light.NoActionBar.TranslucentDecor">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
 
 </resources>

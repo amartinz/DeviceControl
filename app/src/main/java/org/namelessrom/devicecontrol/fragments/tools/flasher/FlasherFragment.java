@@ -30,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.negusoft.holoaccent.dialog.AccentAlertDialog;
@@ -42,6 +41,7 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.FilePickerActivity;
 import org.namelessrom.devicecontrol.adapters.FlashListAdapter;
+import org.namelessrom.devicecontrol.cards.FlasherCard;
 import org.namelessrom.devicecontrol.events.RefreshEvent;
 import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
 import org.namelessrom.devicecontrol.objects.FlashItem;
@@ -51,7 +51,9 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.widgets.AttachFragment;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.view.CardListView;
 
 import static butterknife.ButterKnife.findById;
 
@@ -64,7 +66,7 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
     private FlashListAdapter mAdapter;
 
     private LinearLayout mContainer;
-    private ListView     mFlashList;
+    private CardListView mFlashList;
 
     private TextView mEmptyView;
 
@@ -96,7 +98,7 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
         final Button mApply = findById(v, R.id.btn_apply);
         mApply.setOnClickListener(this);
 
-        mAdapter = new FlashListAdapter();
+        mAdapter = new FlashListAdapter(getActivity());
 
         return v;
     }
@@ -160,11 +162,8 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
             final FlashItem item = new FlashItem(name, path);
 
             Logger.v(this, String.format("onActivityResult(%s)", item.getPath()));
-            final List<FlashItem> flashItemList = new ArrayList<FlashItem>();
-            flashItemList.addAll(((FlashListAdapter) mFlashList.getAdapter()).getFlashItemList());
-            flashItemList.add(item);
-            mAdapter = new FlashListAdapter(flashItemList);
-            mFlashList.setAdapter(mAdapter);
+
+            mAdapter.add(new FlasherCard(getActivity(), item));
             checkAdapter();
         } else {
             super.onActivityResult(req, res, data);
@@ -192,11 +191,14 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
                                 new DividerPainter(getActivity()).paint(pd.getWindow());
 
                                 // finally flash it
-                                final List<FlashItem> flashItemList = mAdapter.getFlashItemList();
-                                final List<String> fileList =
-                                        new ArrayList<String>(flashItemList.size());
-                                for (final FlashItem item : flashItemList) {
-                                    fileList.add(item.getPath());
+                                final int count = mAdapter.getCount();
+                                final ArrayList<String> fileList = new ArrayList<String>(count);
+                                Card card;
+                                for (int i = 0; i < count; i++) {
+                                    card = mAdapter.getItem(i);
+                                    if (card != null && card instanceof FlasherCard) {
+                                        fileList.add(((FlasherCard) card).getItem().getPath());
+                                    }
                                 }
                                 FlashUtils.triggerFlash(fileList);
                             }
@@ -211,8 +213,7 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
             }
             case R.id.btn_cancel: {
                 // TODO: allow to revert action?
-                mAdapter = new FlashListAdapter();
-                mFlashList.setAdapter(mAdapter);
+                mAdapter.clear();
                 checkAdapter();
                 break;
             }
