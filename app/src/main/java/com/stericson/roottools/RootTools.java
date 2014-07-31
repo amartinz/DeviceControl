@@ -552,11 +552,9 @@ public final class RootTools {
 
     /**
      * This will launch the Android market looking for BusyBox
-     *
-     * @param activity pass in your Activity
      */
-    public static void offerBusyBox(final Activity activity) {
-        getInternals().offerBusyBox(activity);
+    public static void offerBusyBox() {
+        getInternals().offerBusyBox();
     }
 
     /**
@@ -573,11 +571,9 @@ public final class RootTools {
 
     /**
      * This will launch the Android market looking for SuperUser
-     *
-     * @param activity pass in your Activity
      */
-    public static void offerSuperUser(final Activity activity) {
-        getInternals().offerSuperUser(activity);
+    public static void offerSuperUser() {
+        getInternals().offerSuperUser();
     }
 
     /**

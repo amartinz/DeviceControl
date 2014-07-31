@@ -116,9 +116,9 @@ public class DummyLauncher extends Activity {
 
     @OnClick(R.id.btn_action) void onAction() {
         if (!hasRoot) {
-            RootTools.offerSuperUser(DummyLauncher.this);
+            RootTools.offerSuperUser();
         } else if (!hasBusyBox) {
-            RootTools.offerBusyBox(DummyLauncher.this);
+            RootTools.offerBusyBox();
         }
     }
 

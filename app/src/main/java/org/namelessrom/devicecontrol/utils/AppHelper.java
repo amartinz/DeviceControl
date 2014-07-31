@@ -17,10 +17,13 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageStats;
+import android.net.Uri;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
@@ -178,6 +181,36 @@ public class AppHelper {
      */
     public static boolean isPlayStoreInstalled() {
         return isPackageInstalled("com.android.vending");
+    }
+
+    /**
+     * Shows the app in Google's Play Store if Play Store is installed
+     */
+    public static boolean showInPlaystore(final String uri) {
+        try {
+            final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Application.applicationContext.startActivity(i);
+            return true;
+        } catch (Exception exc) {
+            Logger.e(AppHelper.class, exc.getMessage());
+        }
+        return false;
+    }
+
+    /**
+     * Shows the app in Google's Play Store if Play Store is installed
+     */
+    public static Intent showInPlaystore(final Activity activity, final String uri, final int req) {
+        try {
+            final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivityForResult(i, req);
+            return i;
+        } catch (Exception exc) {
+            Logger.e(AppHelper.class, exc.getMessage());
+            return null;
+        }
     }
 
     /**

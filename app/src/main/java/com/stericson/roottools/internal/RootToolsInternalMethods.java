@@ -26,7 +26,6 @@ package com.stericson.roottools.internal;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
@@ -39,6 +38,8 @@ import com.stericson.roottools.containers.Symlink;
 import com.stericson.roottools.execution.Command;
 import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
+
+import org.namelessrom.devicecontrol.utils.AppHelper;
 
 import java.io.File;
 import java.io.FileReader;
@@ -1352,11 +1353,9 @@ public final class RootToolsInternalMethods {
      *
      * @param activity pass in your Activity
      */
-    public void offerBusyBox(Activity activity) {
+    public void offerBusyBox() {
         RootTools.log("Launching Market for BusyBox");
-        final Intent i = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("market://details?id=stericson.busybox"));
-        activity.startActivity(i);
+        AppHelper.showInPlaystore("market://details?id=stericson.busybox");
     }
 
     /**
@@ -1367,12 +1366,10 @@ public final class RootToolsInternalMethods {
      * @param requestCode pass in the request code
      * @return intent fired
      */
-    public Intent offerBusyBox(Activity activity, int requestCode) {
+    public Intent offerBusyBox(final Activity activity, final int requestCode) {
         RootTools.log("Launching Market for BusyBox");
-        final Intent i = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("market://details?id=stericson.busybox"));
-        activity.startActivityForResult(i, requestCode);
-        return i;
+        return AppHelper.showInPlaystore(
+                activity, "market://details?id=stericson.busybox", requestCode);
     }
 
     /**
@@ -1380,11 +1377,9 @@ public final class RootToolsInternalMethods {
      *
      * @param activity pass in your Activity
      */
-    public void offerSuperUser(Activity activity) {
+    public void offerSuperUser() {
         RootTools.log("Launching Market for SuperUser");
-        final Intent i = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("market://details?id=eu.chainfire.supersu"));
-        activity.startActivity(i);
+        AppHelper.showInPlaystore("market://details?id=eu.chainfire.supersu");
     }
 
     /**
@@ -1395,12 +1390,10 @@ public final class RootToolsInternalMethods {
      * @param requestCode pass in the request code
      * @return intent fired
      */
-    public Intent offerSuperUser(Activity activity, int requestCode) {
+    public Intent offerSuperUser(final Activity activity, final int requestCode) {
         RootTools.log("Launching Market for SuperUser");
-        final Intent i = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("market://details?id=eu.chainfire.supersu"));
-        activity.startActivityForResult(i, requestCode);
-        return i;
+        return AppHelper.showInPlaystore(
+                activity, "market://details?id=eu.chainfire.supersu", requestCode);
     }
 
     private void commandWait(final Command cmd) {

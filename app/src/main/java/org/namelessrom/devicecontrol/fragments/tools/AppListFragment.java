@@ -21,13 +21,11 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -149,12 +147,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                 return true;
             }
             case R.id.menu_action_play_store: {
-                final Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=" + mAppItem.getPackageName()));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                try {
-                    Application.applicationContext.startActivity(intent);
-                } catch (Exception ignored) { }
+                AppHelper.showInPlaystore("market://details?id=" + mAppItem.getPackageName());
                 return true;
             }
             default: {

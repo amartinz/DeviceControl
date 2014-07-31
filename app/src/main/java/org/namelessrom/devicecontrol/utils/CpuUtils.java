@@ -176,13 +176,13 @@ public class CpuUtils implements PerformanceConstants {
     public static int getCpuTemperature() {
         String tmpString = Utils.readOneLine(CPU_TEMP_PATH);
         if (tmpString != null && !tmpString.trim().isEmpty()) {
-            int temp = Integer.parseInt(tmpString);
+            int temp;
+            try { temp = Integer.parseInt(tmpString);} catch (Exception e) { return -1; }
             temp = (temp < 0 ? 0 : temp);
             temp = (temp > 100 ? 100 : temp);
             return temp;
-        } else {
-            return -1;
         }
+        return -1;
     }
 
     /**
@@ -295,8 +295,13 @@ public class CpuUtils implements PerformanceConstants {
      */
     public static String fromMHz(final String mhzString) {
         if (mhzString != null && !mhzString.isEmpty()) {
-            return String.valueOf(Integer.parseInt(mhzString.replace(" MHz", "")) * 1000);
-        } else { return "0"; }
+            try {
+                return String.valueOf(Integer.parseInt(mhzString.replace(" MHz", "")) * 1000);
+            } catch (Exception exc) {
+                Logger.e(CpuUtils.class, exc.getMessage());
+            }
+        }
+        return "0";
     }
 
     public static String restore() {
