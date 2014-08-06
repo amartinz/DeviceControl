@@ -42,7 +42,7 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import java.util.List;
 

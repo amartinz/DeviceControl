@@ -31,7 +31,7 @@ import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 public class ToolsMoreFragment extends AttachPreferenceFragment implements DeviceConstants,
         MediaScannerConnection.MediaScannerConnectionClient {

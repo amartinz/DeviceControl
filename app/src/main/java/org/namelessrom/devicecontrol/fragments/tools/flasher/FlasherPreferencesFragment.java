@@ -33,7 +33,7 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.widgets.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 public class FlasherPreferencesFragment extends AttachPreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants, PerformanceConstants {

@@ -65,7 +65,7 @@
             android:excludeFromRecents="true"
             android:finishOnTaskLaunch="true"
             android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.Holo.Dialog" />
+            android:theme="@android:style/Theme.Holo.Light.Dialog" />
         <activity
             android:name=".DummyLauncher"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -94,9 +94,9 @@
         <activity
             android:name=".activities.AppDetailsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true"
             android:label="@string/app_details"
             android:launchMode="singleTask"
-            android:excludeFromRecents="true"
             android:taskAffinity="">
             <intent-filter>
                 <action android:name="android.settings.APPLICATION_DETAILS_SETTINGS" />
@@ -166,6 +166,27 @@
                     android:scheme="android_secret_code" />
             </intent-filter>
         </receiver>
+
+        <!-- Widgets -->
+        <receiver
+            android:name=".widgets.RebootWidget"
+            android:icon="@drawable/ic_power"
+            android:label="@string/reboot">
+            <intent-filter>
+                <action android:name="org.namelessrom.devicecontrol.widgets.showrebootdialog" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider_reboot" />
+        </receiver>
+
+        <activity
+            android:name=".widgets.RebootWidget$RebootDialogActivity"
+            android:label="@string/reboot"
+            android:theme="@style/CustomDialog"
+            android:launchMode="singleInstance"/>
     </application>
 
 </manifest>

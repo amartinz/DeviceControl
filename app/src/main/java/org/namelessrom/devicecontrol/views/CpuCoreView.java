@@ -1,9 +1,8 @@
-package org.namelessrom.devicecontrol.widgets;
+package org.namelessrom.devicecontrol.views;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,13 +14,13 @@ import static butterknife.ButterKnife.findById;
 /**
  * Created by alex on 7/31/14.
  */
-public class CpuCoreWidget extends LinearLayout {
+public class CpuCoreView extends LinearLayout {
 
     public TextView    core;
     public TextView    freq;
     public ProgressBar bar;
 
-    public CpuCoreWidget(final Context context) {
+    public CpuCoreView(final Context context) {
         super(context);
         init(context);
     }

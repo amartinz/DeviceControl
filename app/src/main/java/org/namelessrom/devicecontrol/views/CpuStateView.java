@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.widgets;
+package org.namelessrom.devicecontrol.views;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -41,7 +41,7 @@ import java.util.List;
 
 import static butterknife.ButterKnife.findById;
 
-public class CpuStateWidget extends LinearLayout {
+public class CpuStateView extends LinearLayout {
 
     private LinearLayout mStatesView;
     private TextView     mAdditionalStates;
@@ -53,17 +53,17 @@ public class CpuStateWidget extends LinearLayout {
     private boolean mUpdatingData = false;
     private boolean mIsAttached   = false;
 
-    public CpuStateWidget(Context context) {
+    public CpuStateView(Context context) {
         super(context);
         createViews(context);
     }
 
-    public CpuStateWidget(Context context, AttributeSet attrs) {
+    public CpuStateView(Context context, AttributeSet attrs) {
         super(context, attrs);
         createViews(context);
     }
 
-    public CpuStateWidget(Context context, AttributeSet attrs, int defStyle) {
+    public CpuStateView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         createViews(context);
     }

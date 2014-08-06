@@ -53,7 +53,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.widgets.AttachFragment;
+import org.namelessrom.devicecontrol.views.AttachFragment;
 
 import java.io.File;
 import java.util.ArrayList;

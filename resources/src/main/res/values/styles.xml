@@ -49,4 +49,13 @@
         <item name="android:layout_marginTop">10dp</item>
     </style>
 
+    <style name="CustomDialog" parent="Theme.HoloAccent.Light">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>
