@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.widgets;
+package org.namelessrom.devicecontrol.views;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -39,7 +39,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import static butterknife.ButterKnife.findById;
 
-public class DeviceStatusWidget extends LinearLayout {
+public class DeviceStatusView extends LinearLayout {
 
     private LinearLayout mDeviceInfo;
 
@@ -53,17 +53,17 @@ public class DeviceStatusWidget extends LinearLayout {
 
     private static final Object mLockObject = new Object();
 
-    public DeviceStatusWidget(Context context) {
+    public DeviceStatusView(Context context) {
         super(context);
         createViews(context);
     }
 
-    public DeviceStatusWidget(Context context, AttributeSet attrs) {
+    public DeviceStatusView(Context context, AttributeSet attrs) {
         super(context, attrs);
         createViews(context);
     }
 
-    public DeviceStatusWidget(Context context, AttributeSet attrs, int defStyle) {
+    public DeviceStatusView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         createViews(context);
     }

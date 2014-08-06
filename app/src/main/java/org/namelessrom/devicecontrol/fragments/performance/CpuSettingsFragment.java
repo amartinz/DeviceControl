@@ -31,7 +31,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -53,8 +52,8 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.widgets.AttachFragment;
-import org.namelessrom.devicecontrol.widgets.CpuCoreWidget;
+import org.namelessrom.devicecontrol.views.AttachFragment;
+import org.namelessrom.devicecontrol.views.CpuCoreView;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -317,21 +316,21 @@ public class CpuSettingsFragment extends AttachFragment
 
         View rowView = mCpuInfo.getChildAt(core);
         if (rowView == null) {
-            rowView = new CpuCoreWidget(getActivity());
+            rowView = new CpuCoreView(getActivity());
             mCpuInfo.addView(rowView);
         }
 
-        if (rowView instanceof CpuCoreWidget) {
+        if (rowView instanceof CpuCoreView) {
             final boolean isOffline = cpuCore.mCoreCurrent == 0;
 
-            ((CpuCoreWidget) rowView).core.setText(cpuCore.mCore);
-            ((CpuCoreWidget) rowView).freq.setText(isOffline
+            ((CpuCoreView) rowView).core.setText(cpuCore.mCore);
+            ((CpuCoreView) rowView).freq.setText(isOffline
                     ? getString(R.string.core_offline)
                     : CpuUtils.toMHz(String.valueOf(cpuCore.mCoreCurrent))
                     + " / " + CpuUtils.toMHz(String.valueOf(cpuCore.mCoreMax))
                     + " [" + cpuCore.mCoreGov + ']');
-            ((CpuCoreWidget) rowView).bar.setMax(cpuCore.mCoreMax);
-            ((CpuCoreWidget) rowView).bar.setProgress(cpuCore.mCoreCurrent);
+            ((CpuCoreView) rowView).bar.setMax(cpuCore.mCoreMax);
+            ((CpuCoreView) rowView).bar.setProgress(cpuCore.mCoreCurrent);
         }
 
         return rowView;

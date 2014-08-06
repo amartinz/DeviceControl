@@ -26,7 +26,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.widgets.AttachFragment;
+import org.namelessrom.devicecontrol.views.AttachFragment;
 
 import butterknife.ButterKnife;
 

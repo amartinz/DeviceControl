@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.widgets.AttachFragment;
+import org.namelessrom.devicecontrol.views.AttachFragment;
 
 public class InformationFragment extends AttachFragment implements DeviceConstants {
 

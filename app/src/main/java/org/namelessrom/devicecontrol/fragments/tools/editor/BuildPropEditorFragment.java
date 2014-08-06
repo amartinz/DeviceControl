@@ -41,7 +41,6 @@ import android.widget.TextView;
 import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 import com.squareup.otto.Subscribe;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.adapters.PropAdapter;
@@ -52,7 +51,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.widgets.AttachFragment;
+import org.namelessrom.devicecontrol.views.AttachFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;

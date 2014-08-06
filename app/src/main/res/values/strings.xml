@@ -279,4 +279,9 @@
     <string name="color_reset">Reset color</string>
     <string name="color_pick">Pick color</string>
     <string name="something_went_wrong">Sorry but something went wrong!\nPlease try again!</string>
+    <string name="recovery">Recovery</string>
+    <string name="bootloader">Bootloader</string>
+    <string name="reboot">Reboot</string>
+    <string name="hot_reboot">Hot reboot</string>
+    <string name="shutdown">Shutdown</string>
 </resources>
