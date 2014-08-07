@@ -120,7 +120,7 @@
   <string name="refresh_interval">Interval de reîmprospătare</string>
   <string name="hide_status">Ascunde starea</string>
   <string name="gpu">GPU</string>
-  <string name="gpu_governor">Guvernator CPU</string>
+  <string name="gpu_governor">Guvernator GPU</string>
   <string name="gpusettings">Setările GPU-ului</string>
   <string name="gpu_freq_max">Viteză maxima GPU</string>
   <string name="gpu_3d_scaling">Scalare 3D GPU</string>
@@ -161,7 +161,7 @@
   <string name="reapply_on_boot">Aplicaţi din nou la pornire</string>
   <string name="version">Versiunea</string>
   <string name="tasker">Manager sarcini</string>
-  <string name="tasklist">Lista de activități</string>
+  <string name="tasklist">Listă de activități</string>
   <string name="tasklist_summary">Configurare, modificare, activare sau dezactivare sarcini.</string>
   <string name="list_empty">Nu ați setat încă nici un element!\nCe ar fi să adaugi câteva? :)\n\n(Apasă \"+\" din dreapta sus)</string>
   <string name="add_task">Adauga sarcina</string>
@@ -188,8 +188,8 @@
   <string name="filter">Filtru</string>
   <string name="save">Salvaţi</string>
   <string name="add_property">Adăugaţi proprietatea</string>
-  <string name="edit_property">Editare proprietăţi</string>
-  <string name="delete_property">Ştergeţi proprietăți</string>
+  <string name="edit_property">Editează propietatea</string>
+  <string name="delete_property">Ştergeţi proprietatea</string>
   <string name="delete_property_message">%s va fi șters.\n\nContinuați?</string>
   <string name="name">nume</string>
   <string name="presets">Presetări</string>
@@ -252,8 +252,8 @@
   <string name="wfm_auth_summary">Nume utilizator implicit este \"root\" si parola este \"toor\"</string>
   <string name="username">Nume de utilizator</string>
   <string name="password">Parolă</string>
-  <string name="entropy">Entropia</string>
-  <string name="entropy_avail">Entropia disponibilă</string>
+  <string name="entropy">Entropie</string>
+  <string name="entropy_avail">Entropie disponibilă</string>
   <string name="rng_active">Folosește generator de numere aleatorii</string>
   <string name="install_rng">Descarcă şi instalează generatorul de numere aleatorii</string>
   <string name="error_download">Eroare descărcare fișier!\nÎncercați mai târziu!</string>
@@ -270,7 +270,7 @@
   <string name="flash_list">Listă de flash</string>
   <string name="add_item">Adaugă element</string>
   <string name="recovery_type_title">Tipul script-ului de recuperare</string>
-  <string name="flash_warning">Ești pe cale să flash-uiești!\nÎn continuare, aparatul tău va reporni în modul de recuperare și va flash-ui elementele selectate.\n\nDoriți să continuați?</string>
+  <string name="flash_warning">Ești pe cale să flash-uiești!\nÎn continuare, dispozitivul tău va reporni în modul de recuperare și va flash-ui elementele selectate.\n\nDoriți să continuați?</string>
   <string name="both">Ambele</string>
-  <string name="pick_file">Alegeţi un fişier</string>
+  <string name="pick_file">Alege un fişier</string>
 </resources>
