@@ -70,7 +70,6 @@
   <string name="core_max">Núcleos máximos on-line</string>
   <string name="core_min">Núcleos mínimos on-line</string>
   <string name="intelli_thermal_enabled">Habilitar Inteligéncia-Térmica</string>
-  <string name="intelli_thermal_enabled_summary">Se desativado sem substituição válida, seu dispositivo pode superaquecer!</string>
   <string name="voltage">Tensão</string>
   <string name="msm_dcvs_summary">Usar o MSM DCVS para controle de freqüência da CPU/GPU</string>
   <string name="voltage_control">Controle de tensão</string>
@@ -267,7 +266,6 @@
   <string name="skip_checks">Pular verificações na inicialização</string>
   <string name="skip_checks_summary">Não verifique o root e o busybox na inicialização\nProceda por sua própria conta e risco!</string>
   <string name="flasher">Flashear</string>
-  <string name="flash_list">Lista de flasheables</string>
   <string name="add_item">Adicionar item</string>
   <string name="recovery_type_title">Tipo de recuperação</string>
   <string name="flash_warning">Estas a ponto de flashear!\nCuando continue, seu dispositivo reiniciasse-se no recovery e flasheara os objectos seleccionados.\n\nQueres proceder?</string>

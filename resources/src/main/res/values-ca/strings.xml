@@ -70,7 +70,6 @@
   <string name="core_max">Nuclis màxims en funcionament</string>
   <string name="core_min">Nuclis mínims en funcionament</string>
   <string name="intelli_thermal_enabled">Habilitar Intelli-Therma</string>
-  <string name="intelli_thermal_enabled_summary">Si desactiveu sense un substitut vàlid, el dispositiu podrà reescalfar!</string>
   <string name="voltage">Tensió</string>
   <string name="msm_dcvs_summary">Utilitzar MSM DCVS per controlar la freqüència de la CPU/GPU</string>
   <string name="voltage_control">Control de tensió</string>
@@ -267,7 +266,6 @@
   <string name="skip_checks">Saltar les comprovacions durant l\'arrencada</string>
   <string name="skip_checks_summary">No comprovar el root i busybux en l\'arrencada\n¡Procedeixi sota el seu propi risc!</string>
   <string name="flasher">Flashear</string>
-  <string name="flash_list">Llista de flasheables</string>
   <string name="add_item">Afegir objecte</string>
   <string name="recovery_type_title">Tipus d\'script per\'l Recovery</string>
   <string name="flash_warning">¡Estés a punt de flashear!\nCuand continuï, el seu dispositiu es reiniciéra en el recovery i flasheara els objectes seleccionats.\n\n¿Vols procedir?</string>

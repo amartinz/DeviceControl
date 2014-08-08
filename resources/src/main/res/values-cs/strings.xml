@@ -70,7 +70,6 @@
   <string name="core_max">Maximální počet jader online</string>
   <string name="core_min">Minimální počet jader online</string>
   <string name="intelli_thermal_enabled">Povolit Intelli-Thermal</string>
-  <string name="intelli_thermal_enabled_summary">Pokud je deaktivováno bez adekvátní náhrady, může způsobit přehřátí vašeho zařízení!</string>
   <string name="voltage">Napětí</string>
   <string name="msm_dcvs_summary">Použít MSM DCVS pro řízení CPU/GPU Frekvence</string>
   <string name="voltage_control">Řízení Napětí</string>
@@ -267,7 +266,6 @@
   <string name="skip_checks">Přeskočit kontroly při spuštění</string>
   <string name="skip_checks_summary">Nekontrolovat oprávnění root a busybox při spouštění\nPostupujte na vlastní nebezpečí!</string>
   <string name="flasher">Flasher</string>
-  <string name="flash_list">Seznam flashování</string>
   <string name="add_item">Přidat položku</string>
   <string name="recovery_type_title">Typ Recovery skriptu</string>
   <string name="flash_warning">Chystáte se flashovat!\nPokud budete pokračovat, bude vaše zařízení restartováno do recovery pro flashnutí zvolených položek.\n\nChcete pokračovat?</string>

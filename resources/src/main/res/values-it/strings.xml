@@ -70,7 +70,6 @@
   <string name="core_max">Numero massimo di core online</string>
   <string name="core_min">Numero minimo di core online</string>
   <string name="intelli_thermal_enabled">Abilita Intelli-Thermal</string>
-  <string name="intelli_thermal_enabled_summary">Se disattivato senza un valido sostituto, il dispositivo potrebbe surriscaldarsi!</string>
   <string name="voltage">Tensione</string>
   <string name="msm_dcvs_summary">Utilizzare MSM DCVS per il controllo Frequenza CPU/GPU</string>
   <string name="voltage_control">Controllo di tensione</string>
@@ -267,7 +266,6 @@
   <string name="skip_checks">Salta i controlli all\'avvio</string>
   <string name="skip_checks_summary">Non controllare root e busybox all\'avvio\nProcedi a tuo rischio!</string>
   <string name="flasher">Flasher</string>
-  <string name="flash_list">Lista di flashabili</string>
   <string name="add_item">Aggiungi elemento</string>
   <string name="recovery_type_title">Tipo di script della recovery</string>
   <string name="flash_warning">Siete in procinto di eseguire l\'installazione!\nSe continui, il dispositivo si riavvierà in recovery e installerà gli elementi selezionati.\n\nVuoi procedere?</string>

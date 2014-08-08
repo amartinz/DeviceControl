@@ -70,7 +70,8 @@
   <string name="core_max">Maximale Kerne online</string>
   <string name="core_min">Minimale Kerne online</string>
   <string name="intelli_thermal_enabled">Intelli-Thermal aktivieren</string>
-  <string name="intelli_thermal_enabled_summary">Falls deaktiviert, ohne ausreichenden Ersatz, überhitzt das Gerät möglicherweise!</string>
+  <string name="msm_thermal_enabled">Aktiviere MSM-Thermal</string>
+  <string name="thermal_warning">Falls deaktiviert, ohne ausreichenden Ersatz, überhitzt das Gerät möglicherweise!</string>
   <string name="voltage">Spannung</string>
   <string name="msm_dcvs_summary">Verwnde MSM DCVS für CPU/GPU Frequenz-Verwaltung</string>
   <string name="voltage_control">Spannungs-Steuerung</string>
@@ -267,10 +268,21 @@
   <string name="skip_checks">Überspringe Überprüfungen beim Start</string>
   <string name="skip_checks_summary">Überspringe das Überprüfen der Root-Rechte und BusyBox beim Starten der Anwendung\nFortfahren auf eigene Gefahr!</string>
   <string name="flasher">Flasher</string>
-  <string name="flash_list">Flash Liste</string>
   <string name="add_item">Element hinzufügen</string>
   <string name="recovery_type_title">Recovery-Typ</string>
   <string name="flash_warning">Wenn du fortfährst, wird das Gerät in die Recovery booten und die ausgewählten Elemente flashen.\n\nMöchtest du wirklich fortfahren?</string>
   <string name="both">Beide</string>
   <string name="pick_file">Datei wählen</string>
+  <string name="multi_user_do_not_use">Mehrbenutzer-Modus deaktivieren</string>
+  <string name="multi_user_do_not_use_summary">Aktivieren, falls du Probleme mit dem Flashen hast</string>
+  <string name="accent">Akzentfarbe</string>
+  <string name="accent_summary">Verwende deine Lieblingsfarbe!</string>
+  <string name="color_reset">Farbe zurücksetzen</string>
+  <string name="color_pick">Farbe auswählen</string>
+  <string name="something_went_wrong">Entschuldigung, aber etwas ging schief!\nBitte versuche es erneut!</string>
+  <string name="recovery">Recovery</string>
+  <string name="bootloader">Bootloader</string>
+  <string name="reboot">Neu starten</string>
+  <string name="hot_reboot">Schneller Neustart</string>
+  <string name="shutdown">Herunterfahren</string>
 </resources>

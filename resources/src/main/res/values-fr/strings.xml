@@ -70,7 +70,6 @@
   <string name="core_max">Noyaux maximum en fonctionnement</string>
   <string name="core_min">Noyaux minimum en fonctionnement</string>
   <string name="intelli_thermal_enabled">Activer Intelli-Thermal</string>
-  <string name="intelli_thermal_enabled_summary">Si désactivé sans remplacement valable, votre appareil pourrait surchauffer!</string>
   <string name="voltage">Tension</string>
   <string name="msm_dcvs_summary">Utiliser MSM DCVS pour contrôler la fréquence CPU/GPU</string>
   <string name="voltage_control">Contrôle de la tension</string>
@@ -267,7 +266,6 @@
   <string name="skip_checks">Sauter les vérifications pendant l\'arraché</string>
   <string name="skip_checks_summary">Ne pas vérifier le root et busybox au démarrage\nProcédez à vos propres risques!</string>
   <string name="flasher">Flasher</string>
-  <string name="flash_list">Liste de flasheables</string>
   <string name="add_item">Ajouter objet</string>
   <string name="recovery_type_title">Type de script recovery</string>
   <string name="flash_warning">Vous êtes sur le point de flash!\nPour continuer, votre appareil va redémarrer en mode recovery et flash le zip.\n\nVoulez-vous continuer?</string>

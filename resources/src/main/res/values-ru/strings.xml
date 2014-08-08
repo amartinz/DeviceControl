@@ -70,7 +70,6 @@
   <string name="core_max">Максимум включенных ядер</string>
   <string name="core_min">Минимум включенных ядер</string>
   <string name="intelli_thermal_enabled">Включить Intelli-Thermal</string>
-  <string name="intelli_thermal_enabled_summary">Если отключено без работающей замены, ваше устройство может перегреться!</string>
   <string name="voltage">Напряжение</string>
   <string name="msm_dcvs_summary">Использовать MSM DCVS для управления частотой процессора/видеочипа</string>
   <string name="voltage_control">Управление напряжением</string>
@@ -267,7 +266,6 @@
   <string name="skip_checks">Пропустить проверку при запуске</string>
   <string name="skip_checks_summary">Не запускать Root и BusyBox при старте.\nЭто может привести к нестабильности системы!</string>
   <string name="flasher">Программа обновления</string>
-  <string name="flash_list">Список обновлений</string>
   <string name="add_item">Добавить элемент</string>
   <string name="recovery_type_title">Тип скрипта восстановления</string>
   <string name="flash_warning">Вы собираетесь обновить ПО!\nВ случае согласия, устройство перезагрузится в режим восстановления и обновит выбранные элементы\n\nЖелаете продолжить?</string>

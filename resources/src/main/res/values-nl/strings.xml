@@ -70,7 +70,6 @@
   <string name="core_max">Maximaal aantal cores in gebruik</string>
   <string name="core_min">Minimaal aantal cores in gebruik</string>
   <string name="intelli_thermal_enabled">Intelli-Thermal inschakelen</string>
-  <string name="intelli_thermal_enabled_summary">Indien gedeactiveerd zonder goede vervanging, kan uw apparaat oververhit raken!</string>
   <string name="voltage">Voltage</string>
   <string name="msm_dcvs_summary">Gebruik MSM DCVS voor regeling van de frequentie van de CPU/GPU</string>
   <string name="voltage_control">Voltageregeling</string>
@@ -266,7 +265,6 @@
   <string name="skip_checks">Checks overslaan tijdens het opstarten</string>
   <string name="skip_checks_summary">Niet checken voor root en busybox tijdens het opstarten\nGa door op uw eigen risico!</string>
   <string name="flasher">Flasher</string>
-  <string name="flash_list">Flash lijst</string>
   <string name="add_item">Voeg item toe</string>
   <string name="recovery_type_title">Type recovery script</string>
   <string name="flash_warning">Je gaat zo flashen!\nAls je doorgaat, zal uw apparaat opnieuw opstarten naar de recovery en zal de geselecteerde items worden geflashed.\n\nWilt u doorgaan?</string>

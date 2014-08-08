@@ -68,7 +68,6 @@
   <string name="core_max">Maksymalna liczba rdzeni online</string>
   <string name="core_min">Minimalna liczba rdzeni online</string>
   <string name="intelli_thermal_enabled">Włącz Intelli-Thermal</string>
-  <string name="intelli_thermal_enabled_summary">Jeśli wyłączone bez odpowiedniego zastępstwa, może powodować przegrzanie urządzenia!</string>
   <string name="voltage">Napięcie</string>
   <string name="msm_dcvs_summary">Użyj MSM DCVS do kontroli częstotliwości CPU/GPU</string>
   <string name="voltage_control">Kontrola napięcia</string>

@@ -70,7 +70,8 @@
   <string name="core_max">Numărul maxim de nuclee în funcționare</string>
   <string name="core_min">Numărul minim de nuclee în funcționare</string>
   <string name="intelli_thermal_enabled">Activează Intelli-Thermal</string>
-  <string name="intelli_thermal_enabled_summary">Dezactivarea fără înlocuitor adecvat poate duce la supraîncalzirea dispozitivului!</string>
+  <string name="msm_thermal_enabled">Activare MSM-Thermal</string>
+  <string name="thermal_warning">Dezactivarea fără înlocuitor adecvat poate duce la supraîncalzirea dispozitivului!</string>
   <string name="voltage">Voltaj</string>
   <string name="msm_dcvs_summary">Folosește MSM DCVS pentru controlul frecvenței CPU/GPU</string>
   <string name="voltage_control">Controlul Tensiunii</string>
@@ -267,10 +268,21 @@
   <string name="skip_checks">Sări peste verificări la pornire</string>
   <string name="skip_checks_summary">Nu verifica la pornire root-ul și busybox-ul\nContinuă pe riscul tău!</string>
   <string name="flasher">Flasher</string>
-  <string name="flash_list">Listă de flash</string>
   <string name="add_item">Adaugă element</string>
   <string name="recovery_type_title">Tipul script-ului de recuperare</string>
   <string name="flash_warning">Ești pe cale să flash-uiești!\nÎn continuare, dispozitivul tău va reporni în modul de recuperare și va flash-ui elementele selectate.\n\nDoriți să continuați?</string>
   <string name="both">Ambele</string>
   <string name="pick_file">Alege un fişier</string>
+  <string name="multi_user_do_not_use">Nu utilizaţi modul multiutilizator</string>
+  <string name="multi_user_do_not_use_summary">Bifează aici dacă sunt probleme cu flash-uirea fișierelor de pe cardul SD</string>
+  <string name="accent">Nuanță culoare</string>
+  <string name="accent_summary">Folosește culoarea ta preferată!</string>
+  <string name="color_reset">Resetare culoare</string>
+  <string name="color_pick">Alege culoare</string>
+  <string name="something_went_wrong">Ne pare rău dar ceva nu a funcționat!\nVă rugăm să încercaţi din nou!</string>
+  <string name="recovery">Mod Recuperare</string>
+  <string name="bootloader">Bootloader</string>
+  <string name="reboot">Repornire</string>
+  <string name="hot_reboot">Repornire la Cald</string>
+  <string name="shutdown">Închidere</string>
 </resources>
