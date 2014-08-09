@@ -44,42 +44,13 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="prefs_set_on_boot"
-        android:title="@string/reapply_on_boot">
-
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
-            android:key="sob_device"
-            android:title="@string/device" />
-
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
-            android:key="sob_cpu"
-            android:title="@string/cpusettings" />
-
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
-            android:key="sob_gpu"
-            android:title="@string/gpusettings" />
-
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
-            android:key="sob_extras"
-            android:title="@string/extras" />
-
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
-            android:key="sob_voltage"
-            android:title="@string/voltage_control" />
-
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
-            android:key="sob_sysctl"
-            android:title="@string/sysctl_vm" />
-
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
-            android:key="sob_lmk"
-            android:title="@string/low_memory_killer" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="prefs_general"
         android:title="@string/general">
+
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
+            android:key="prefs_set_on_boot"
+            android:title="@string/reapply_on_boot"
+            android:summary="@string/reapply_on_boot_summary"/>
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="show_launcher"

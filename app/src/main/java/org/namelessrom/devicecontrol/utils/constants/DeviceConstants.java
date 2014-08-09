@@ -100,11 +100,5 @@ public interface DeviceConstants {
     public static final String PREF_FLASHER_MULTI_USER = "flasher_multi_user";
     //----------------------------------------------------------------------------------------------
     public static final String CUSTOM_SHELL_COMMAND    = "custom_shell_command";
-    public static final String SOB_SYSCTL              = "sob_sysctl";
-    public static final String SOB_CPU                 = "sob_cpu";
-    public static final String SOB_GPU                 = "sob_gpu";
-    public static final String SOB_EXTRAS              = "sob_extras";
-    public static final String SOB_DEVICE              = "sob_device";
-    public static final String SOB_VOLTAGE             = "sob_voltage";
 
 }

@@ -18,6 +18,8 @@
 package org.namelessrom.devicecontrol.fragments;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -25,9 +27,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -42,6 +42,7 @@ import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.proprietary.Constants;
+import org.namelessrom.devicecontrol.services.BootUpService;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -49,6 +50,8 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
+
+import java.util.ArrayList;
 
 public class PreferencesFragment extends AttachPreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants, PerformanceConstants {
@@ -59,26 +62,23 @@ public class PreferencesFragment extends AttachPreferenceFragment
     private CustomPreference         mDonatePreference;
     private CustomPreference         mColorPreference;
     private CustomCheckBoxPreference mMonkeyPref;
+
     //==============================================================================================
     // Tools
     //==============================================================================================
-    private CustomPreference         mFlasherConfig;
+    private CustomPreference mFlasherConfig;
+
     //==============================================================================================
-    // Set On Boot
+    // General
     //==============================================================================================
-    private CustomCheckBoxPreference mSobDevice;
-    private CustomCheckBoxPreference mSobCpu;
-    private CustomCheckBoxPreference mSobGpu;
-    private CustomCheckBoxPreference mSobExtras;
-    private CustomCheckBoxPreference mSobVoltage;
-    private CustomCheckBoxPreference mSobSysCtl;
-    private CustomCheckBoxPreference mSobLmk;
+    private CustomPreference         mSetOnBoot;
+    private CustomCheckBoxPreference mShowLauncher;
+    private CustomCheckBoxPreference mSkipChecks;
+
     //==============================================================================================
     // Debug
     //==============================================================================================
     private CustomCheckBoxPreference mExtensiveLogging;
-    private CustomCheckBoxPreference mShowLauncher;
-    private CustomCheckBoxPreference mSkipChecks;
 
     @Override
     public void onAttach(Activity activity) {
@@ -100,6 +100,8 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
         PreferenceCategory category = (PreferenceCategory) findPreference("prefs_general");
         if (category != null) {
+            mSetOnBoot = (CustomPreference) findPreference("prefs_set_on_boot");
+
             mShowLauncher = (CustomCheckBoxPreference) findPreference(SHOW_LAUNCHER);
             if (mShowLauncher != null) {
                 if (Application.IS_NAMELESS) {
@@ -171,140 +173,38 @@ public class PreferencesFragment extends AttachPreferenceFragment
             mFlasherConfig = (CustomPreference) findPreference("flasher_prefs");
         }
 
-        category = (PreferenceCategory) findPreference("prefs_set_on_boot");
-        if (category != null) {
-            mSobDevice = (CustomCheckBoxPreference) findPreference(SOB_DEVICE);
-            if (mSobDevice != null) {
-                mSobDevice.setChecked(PreferenceHelper.getBoolean(SOB_DEVICE));
-                mSobDevice.setOnPreferenceChangeListener(this);
-            }
-
-            mSobCpu = (CustomCheckBoxPreference) findPreference(SOB_CPU);
-            if (mSobCpu != null) {
-                mSobCpu.setChecked(PreferenceHelper.getBoolean(SOB_CPU));
-                mSobCpu.setOnPreferenceChangeListener(this);
-            }
-
-            mSobGpu = (CustomCheckBoxPreference) findPreference(SOB_GPU);
-            if (mSobGpu != null) {
-                mSobGpu.setChecked(PreferenceHelper.getBoolean(SOB_GPU));
-                mSobGpu.setOnPreferenceChangeListener(this);
-            }
-
-            mSobExtras = (CustomCheckBoxPreference) findPreference(SOB_EXTRAS);
-            if (mSobExtras != null) {
-                mSobExtras.setChecked(PreferenceHelper.getBoolean(SOB_EXTRAS));
-                mSobExtras.setOnPreferenceChangeListener(this);
-            }
-
-            mSobVoltage = (CustomCheckBoxPreference) findPreference(SOB_VOLTAGE);
-            if (mSobVoltage != null) {
-                if (Utils.fileExists(VDD_TABLE_FILE) || Utils.fileExists(UV_TABLE_FILE)) {
-                    mSobVoltage.setChecked(PreferenceHelper.getBoolean(SOB_VOLTAGE));
-                    mSobVoltage.setOnPreferenceChangeListener(this);
-                } else {
-                    category.removePreference(mSobVoltage);
-                }
-            }
-
-            mSobSysCtl = (CustomCheckBoxPreference) findPreference(SOB_SYSCTL);
-            if (mSobSysCtl != null) {
-                mSobSysCtl.setChecked(PreferenceHelper.getBoolean(SOB_SYSCTL));
-                mSobSysCtl.setOnPreferenceChangeListener(this);
-            }
-
-            mSobLmk = (CustomCheckBoxPreference) findPreference("sob_lmk");
-            if (mSobLmk != null) {
-                mSobLmk.setChecked(PreferenceHelper.getBoolean(mSobLmk.getKey()));
-                mSobLmk.setOnPreferenceChangeListener(this);
-            }
-        }
     }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        final View view = super.onCreateView(inflater, container, savedInstanceState);
-
-        // TODO: preferences layout
-        /*if (view != null) {
-            view.setBackgroundResource(R.drawable.preference_drawer_background);
-        }*/
-
-        return view;
-    }
-
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        boolean changed = false;
-
+    @Override public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (mExtensiveLogging == preference) {
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(EXTENSIVE_LOGGING, value);
             Logger.setEnabled(value);
             mExtensiveLogging.setChecked(value);
-            changed = true;
+            return true;
         } else if (mShowLauncher == preference) {
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(SHOW_LAUNCHER, value);
             Application.toggleLauncherIcon(value);
             mShowLauncher.setChecked(value);
-            changed = true;
+            return true;
         } else if (mSkipChecks == preference) {
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(SKIP_CHECKS, value);
             mSkipChecks.setChecked(value);
-            changed = true;
+            return true;
         } else if (mMonkeyPref == preference) {
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean("monkey", value);
-            // TODO: add some more easter eggs?
             mMonkeyPref.setChecked(value);
-            changed = true;
-        } else if (mSobDevice == preference) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(SOB_DEVICE, value);
-            mSobDevice.setChecked(value);
-            changed = true;
-        } else if (mSobCpu == preference) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(SOB_CPU, value);
-            mSobCpu.setChecked(value);
-            changed = true;
-        } else if (mSobGpu == preference) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(SOB_GPU, value);
-            mSobGpu.setChecked(value);
-            changed = true;
-        } else if (mSobExtras == preference) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(SOB_EXTRAS, value);
-            mSobExtras.setChecked(value);
-            changed = true;
-        } else if (mSobVoltage == preference) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(SOB_VOLTAGE, value);
-            mSobVoltage.setChecked(value);
-            changed = true;
-        } else if (mSobSysCtl == preference) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(SOB_SYSCTL, value);
-            mSobSysCtl.setChecked(value);
-            changed = true;
-        } else if (mSobLmk == preference) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(mSobLmk.getKey(), value);
-            mSobLmk.setChecked(value);
-            changed = true;
+            return true;
         }
 
-        return changed;
+        return false;
     }
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-
         if (mColorPreference == preference) {
             new ColorPickerDialogFragment(new OnColorPickedListener() {
                 @Override public void onColorPicked(final int color) {
@@ -349,6 +249,9 @@ public class PreferencesFragment extends AttachPreferenceFragment
         } else if (mFlasherConfig == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_FLASHER_PREFS));
             return true;
+        } else if (mSetOnBoot == preference) {
+            new SobDialogFragment().show(getActivity().getFragmentManager(), "sob_dialog_fragment");
+            return true;
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -356,6 +259,77 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
     public static interface OnColorPickedListener {
         public void onColorPicked(final int color);
+    }
+
+    private class SobDialogFragment extends DialogFragment {
+        final ArrayList<Integer> entries = new ArrayList<Integer>();
+
+        public SobDialogFragment() {
+            super();
+            entries.add(R.string.device);
+            entries.add(R.string.cpusettings);
+            entries.add(R.string.gpusettings);
+            entries.add(R.string.extras);
+            entries.add(R.string.sysctl_vm);
+            entries.add(R.string.low_memory_killer);
+
+            if (Utils.fileExists(VDD_TABLE_FILE) || Utils.fileExists(UV_TABLE_FILE)) {
+                entries.add(R.string.voltage_control);
+            }
+        }
+
+        @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final int length = entries.size();
+            final String[] items = new String[length];
+            final boolean[] checked = new boolean[length];
+
+            for (int i = 0; i < length; i++) {
+                items[i] = Application.getStr(entries.get(i));
+                checked[i] = isChecked(entries.get(i));
+            }
+
+            final AccentAlertDialog.Builder builder = new AccentAlertDialog.Builder(getActivity());
+
+            builder.setTitle(R.string.reapply_on_boot);
+            builder.setMultiChoiceItems(items, checked,
+                    new DialogInterface.OnMultiChoiceClickListener() {
+                        @Override public void onClick(final DialogInterface dialogInterface,
+                                final int item, final boolean isChecked) {
+                            PreferenceHelper.setBoolean(getKey(entries.get(item)), isChecked);
+                        }
+                    });
+            builder.setCancelable(true);
+            builder.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                @Override public void onClick(DialogInterface dialogInterface, int i) { }
+            });
+
+            return builder.create();
+        }
+
+        private boolean isChecked(final int entry) {
+            return PreferenceHelper.getBoolean(getKey(entry), false);
+        }
+
+        private String getKey(final int entry) {
+            switch (entry) {
+                case R.string.device:
+                    return BootUpService.SOB_DEVICE;
+                case R.string.cpusettings:
+                    return BootUpService.SOB_CPU;
+                case R.string.gpusettings:
+                    return BootUpService.SOB_GPU;
+                case R.string.extras:
+                    return BootUpService.SOB_EXTRAS;
+                case R.string.sysctl_vm:
+                    return BootUpService.SOB_SYSCTL;
+                case R.string.low_memory_killer:
+                    return BootUpService.SOB_LMK;
+                case R.string.voltage_control:
+                    return BootUpService.SOB_VOLTAGE;
+                default:
+                    return "-";
+            }
+        }
     }
 
 }

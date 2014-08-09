@@ -25,6 +25,7 @@ import android.os.AsyncTask;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
@@ -41,9 +42,18 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class BootUpService extends IntentService
         implements DeviceConstants, FileConstants, PerformanceConstants {
+
+    public static final String SOB_SYSCTL  = "sob_sysctl";
+    public static final String SOB_CPU     = "sob_cpu";
+    public static final String SOB_GPU     = "sob_gpu";
+    public static final String SOB_EXTRAS  = "sob_extras";
+    public static final String SOB_DEVICE  = "sob_device";
+    public static final String SOB_VOLTAGE = "sob_voltage";
+    public static final String SOB_LMK     = "sob_lmk";
 
     public BootUpService() { super("BootUpService"); }
 

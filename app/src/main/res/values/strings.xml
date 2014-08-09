@@ -159,6 +159,7 @@
     <string name="extensive_logging_summary_on">Logging to LogCat enabled.</string>
     <string name="extensive_logging_summary_off">Logging to LogCat disabled.</string>
     <string name="reapply_on_boot">Reapply on boot</string>
+    <string name="reapply_on_boot_summary">Choose the settings you want to restore when the device boots up</string>
     <string name="version">Version</string>
     <string name="tasker">Tasker</string>
     <string name="tasklist">Task list</string>
