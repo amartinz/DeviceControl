@@ -177,13 +177,15 @@ public class MainActivity extends AccentActivity
 
         mSlidingMenu = new SlidingMenu(this);
         mSlidingMenu.setMode(SlidingMenu.LEFT);
-        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
         mSlidingMenu.setShadowDrawable(R.drawable.shadow);
         mSlidingMenu.setBehindWidthRes(R.dimen.slidingmenu_offset);
         mSlidingMenu.setFadeDegree(0.35f);
         mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         mSlidingMenu.setMenu(v);
+
+        // setup touch mode
+        MainActivity.setSwipeOnContent(PreferenceHelper.getBoolean("swipe_on_content", false));
 
         final MenuListArrayAdapter mAdapter = new MenuListArrayAdapter(
                 this,
@@ -641,4 +643,10 @@ public class MainActivity extends AccentActivity
         ft.commit();
     }
 
+    public static void setSwipeOnContent(final boolean swipeOnContent) {
+        if (mSlidingMenu == null) return;
+
+        mSlidingMenu.setTouchModeAbove(
+                swipeOnContent ? SlidingMenu.TOUCHMODE_FULLSCREEN : SlidingMenu.TOUCHMODE_MARGIN);
+    }
 }

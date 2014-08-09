@@ -36,6 +36,7 @@ import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
@@ -76,6 +77,11 @@ public class PreferencesFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference mSkipChecks;
 
     //==============================================================================================
+    // Interface
+    //==============================================================================================
+    private CustomCheckBoxPreference mSwipeOnContent;
+
+    //==============================================================================================
     // Debug
     //==============================================================================================
     private CustomCheckBoxPreference mExtensiveLogging;
@@ -89,8 +95,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml._device_control);
-
-        final Activity activity = getActivity();
 
         mExtensiveLogging = (CustomCheckBoxPreference) findPreference(EXTENSIVE_LOGGING);
         if (mExtensiveLogging != null) {
@@ -117,29 +121,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
                 mSkipChecks.setChecked(PreferenceHelper.getBoolean(SKIP_CHECKS));
                 mSkipChecks.setOnPreferenceChangeListener(this);
             }
-        }
-
-        final CustomPreference mVersion = (CustomPreference) findPreference("prefs_version");
-        if (mVersion != null) {
-            mVersion.setEnabled(false);
-            String title, summary;
-            try {
-                if (activity == null) { throw new Exception("activity is null"); }
-                final PackageManager pm = Application.getPm();
-                if (pm != null) {
-                    final PackageInfo pInfo = pm.getPackageInfo(
-                            activity.getPackageName(), 0);
-                    title = getString(R.string.app_version_name, pInfo.versionName);
-                    summary = getString(R.string.app_version_code, pInfo.versionCode);
-                } else {
-                    throw new Exception("pm not null");
-                }
-            } catch (Exception ignored) {
-                title = getString(R.string.app_version_name, getString(R.string.unknown));
-                summary = getString(R.string.app_version_code, getString(R.string.unknown));
-            }
-            mVersion.setTitle(title);
-            mVersion.setSummary(summary);
         }
 
         category = (PreferenceCategory) findPreference("prefs_app");
@@ -173,6 +154,38 @@ public class PreferencesFragment extends AttachPreferenceFragment
             mFlasherConfig = (CustomPreference) findPreference("flasher_prefs");
         }
 
+        category = (PreferenceCategory) findPreference("prefs_interface");
+        if (category != null) {
+            mSwipeOnContent = (CustomCheckBoxPreference) findPreference("swipe_on_content");
+            mSwipeOnContent.setChecked(PreferenceHelper.getBoolean(mSwipeOnContent.getKey()));
+            mSwipeOnContent.setOnPreferenceChangeListener(this);
+        }
+
+        setupVersionPreference();
+    }
+
+    private void setupVersionPreference() {
+        final CustomPreference mVersion = (CustomPreference) findPreference("prefs_version");
+        if (mVersion != null) {
+            mVersion.setEnabled(false);
+            String title, summary;
+            try {
+                final PackageManager pm = Application.getPm();
+                if (pm != null) {
+                    final PackageInfo pInfo = pm.getPackageInfo(
+                            Application.applicationContext.getPackageName(), 0);
+                    title = getString(R.string.app_version_name, pInfo.versionName);
+                    summary = getString(R.string.app_version_code, pInfo.versionCode);
+                } else {
+                    throw new Exception("pm not null");
+                }
+            } catch (Exception ignored) {
+                title = getString(R.string.app_version_name, getString(R.string.unknown));
+                summary = getString(R.string.app_version_code, getString(R.string.unknown));
+            }
+            mVersion.setTitle(title);
+            mVersion.setSummary(summary);
+        }
     }
 
     @Override public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -197,6 +210,14 @@ public class PreferencesFragment extends AttachPreferenceFragment
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean("monkey", value);
             mMonkeyPref.setChecked(value);
+            return true;
+        } else if (mSwipeOnContent == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(mSwipeOnContent.getKey(), value);
+            mSwipeOnContent.setChecked(value);
+
+            // update the menu
+            MainActivity.setSwipeOnContent(value);
             return true;
         }
 

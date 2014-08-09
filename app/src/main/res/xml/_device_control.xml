@@ -25,11 +25,6 @@
             android:summary="@string/donate_summary"
             android:title="@string/donate" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
-            android:key="pref_color"
-            android:summary="@string/accent_summary"
-            android:title="@string/accent" />
-
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -49,8 +44,8 @@
 
         <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="prefs_set_on_boot"
-            android:title="@string/reapply_on_boot"
-            android:summary="@string/reapply_on_boot_summary"/>
+            android:summary="@string/reapply_on_boot_summary"
+            android:title="@string/reapply_on_boot" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="show_launcher"
@@ -61,6 +56,22 @@
             android:key="skip_checks"
             android:summary="@string/skip_checks_summary"
             android:title="@string/skip_checks" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="prefs_interface"
+        android:title="@string/user_interface">
+
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
+            android:key="pref_color"
+            android:summary="@string/accent_summary"
+            android:title="@string/accent" />
+
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+            android:key="swipe_on_content"
+            android:summary="@string/swipe_on_content_summary"
+            android:title="@string/swipe_on_content" />
 
     </PreferenceCategory>
 
