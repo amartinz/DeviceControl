@@ -226,7 +226,7 @@ public class Utils implements DeviceConstants, FileConstants {
      * @param filename The filename
      * @return Whether the file exists or not
      */
-    public static boolean fileExists(final String f) { return new File(f).exists(); }
+    public static boolean fileExists(final String filename) { return new File(filename).exists(); }
 
     /**
      * Checks if the given paths in a string array are existing and returns the existing path.
@@ -244,8 +244,8 @@ public class Utils implements DeviceConstants, FileConstants {
     /**
      * Checks if the given path is existing and returns the existing path.
      *
-     * @param paths The file path
-     * @return The path or an empty string if not existant
+     * @param path The file path
+     * @return The path or an empty string if not existent
      */
     public static String checkPath(final String path) {
         if (fileExists(path)) { return path; }
@@ -481,6 +481,21 @@ public class Utils implements DeviceConstants, FileConstants {
             return Integer.valueOf(value);
         } catch (Exception exc) {
             return def;
+        }
+    }
+
+    public static String humanReadableKiloByteCount(final long kilobytes) {
+        if (kilobytes < 1024) return kilobytes + " kB";
+        final int exp = (int) (Math.log(kilobytes) / Math.log(1024));
+        return String.format("%.0f %sB", kilobytes / Math.pow(1024, exp),
+                String.valueOf("MGTPE".charAt(exp - 1)));
+    }
+
+    public static String tryParseKiloByte(final String value) {
+        try {
+            return humanReadableKiloByteCount(Long.parseLong(value));
+        } catch (Exception exc) {
+            return value;
         }
     }
 }

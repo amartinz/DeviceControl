@@ -39,7 +39,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
-import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -224,7 +223,8 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
                 viewHolder.pp.setText(TYPES[position]);
             }
             if (viewHolder.pv != null) {
-                viewHolder.pv.setText(values[position]);
+                viewHolder.pv.setText(String.format("%s - [%s]",
+                        values[position], Utils.tryParseKiloByte(values[position])));
             }
 
             return convertView;
