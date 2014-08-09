@@ -107,7 +107,6 @@ public class Application extends android.app.Application implements DeviceConsta
     }
 
 
-
     @Override public void onTerminate() {
         // do some placebo :P
         DatabaseHandler.tearDown();
@@ -160,6 +159,10 @@ public class Application extends android.app.Application implements DeviceConsta
 
     public static String getStr(final int resId, final String... extras) {
         return applicationContext.getString(resId, (Object[]) extras);
+    }
+
+    public static String[] getStringArray(final int resId) {
+        return applicationContext.getResources().getStringArray(resId);
     }
 
     public static int getColor(final int color) {

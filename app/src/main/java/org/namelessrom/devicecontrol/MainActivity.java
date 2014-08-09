@@ -55,9 +55,11 @@ import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.GpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.InformationFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.EntropyFragment;
+import org.namelessrom.devicecontrol.fragments.performance.sub.FilesystemFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.GovernorFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.HotpluggingFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.KsmFragment;
+import org.namelessrom.devicecontrol.fragments.performance.sub.LowMemoryKillerFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.ThermalFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
@@ -300,8 +302,6 @@ public class MainActivity extends AccentActivity
                 break;
             case ID_TOOLS_FLASHER:
                 mCurrentFragment = new FlasherFragment();
-                // TODO: replace
-                //right = new FlasherPreferencesFragment();
                 break;
             case ID_TOOLS_MORE:
                 mCurrentFragment = new ToolsMoreFragment();
@@ -428,6 +428,14 @@ public class MainActivity extends AccentActivity
             case ID_ENTROPY:
                 mSubActionBarDrawable = R.drawable.ic_menu_perf_extras;
                 mTitle = mSubFragmentTitle = R.string.entropy;
+                break;
+            case ID_FILESYSTEM:
+                mSubActionBarDrawable = R.drawable.ic_menu_perf_extras;
+                mTitle = mSubFragmentTitle = R.string.filesystem;
+                break;
+            case ID_LOWMEMORYKILLER:
+                mSubActionBarDrawable = R.drawable.ic_menu_perf_extras;
+                mTitle = mSubFragmentTitle = R.string.low_memory_killer;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_TASKER:
@@ -584,6 +592,12 @@ public class MainActivity extends AccentActivity
                 break;
             case ID_ENTROPY:
                 mCurrentFragment = new EntropyFragment();
+                break;
+            case ID_FILESYSTEM:
+                mCurrentFragment = new FilesystemFragment();
+                break;
+            case ID_LOWMEMORYKILLER:
+                mCurrentFragment = new LowMemoryKillerFragment();
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_TASKER_LIST:

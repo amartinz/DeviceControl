@@ -34,6 +34,7 @@
     <string name="sysctl_vm" translatable="false">SysCtl / VM</string>
     <string name="open_recovery" translatable="false">OpenRecovery</string>
     <string name="clockworkmod" translatable="false">ClockWorkMod</string>
+    <string name="dyn_fsync" translatable="false">Dynamic FSync</string>
     <!-- Dalvik -->
     <string name="dirty_ratio_title">Dirty ratio</string>
     <string name="dirty_background_title">Dirty background ratio</string>
@@ -55,4 +56,19 @@
         <item>€ 19,99</item>
         <item>€ 49,99</item>
     </string-array>
+    <!-- Sizes -->
+    <!-- KB -->
+    <string name="size_128_kb">128 kB</string>
+    <string name="size_256_kb">256 kB</string>
+    <string name="size_512_kb">512 kB</string>
+    <string name="size_1024_kb">1024 kB</string>
+    <string name="size_2048_kb">2048 kB</string>
+    <string name="size_3072_kb">3072 kB</string>
+    <string name="size_4096_kb">4096 kB</string>
+    <!-- MB -->
+    <string name="size_25_mb">25 MB</string>
+    <string name="size_50_mb">50 MB</string>
+    <string name="size_75_mb">75 MB</string>
+    <string name="size_80_mb">80 MB</string>
+    <string name="size_100_mb">100 MB</string>
 </resources>

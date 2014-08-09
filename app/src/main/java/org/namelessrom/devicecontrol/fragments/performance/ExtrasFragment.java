@@ -24,17 +24,13 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 
-import com.squareup.otto.Subscribe;
-
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
 import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -60,11 +56,12 @@ public class ExtrasFragment extends AttachPreferenceFragment
     private PreferenceScreen mRoot;
     //----------------------------------------------------------------------------------------------
 
-    private CustomListPreference mIoScheduler;
-    private CustomPreference     mEntropy;
-    private CustomPreference     mKsm;
-    private CustomPreference     mHotplugging;
-    private CustomPreference     mThermal;
+    private CustomPreference mEntropy;
+    private CustomPreference mFilesystem;
+    private CustomPreference mLowMemoryKiller;
+    private CustomPreference mKsm;
+    private CustomPreference mHotplugging;
+    private CustomPreference mThermal;
     //----------------------------------------------------------------------------------------------
 
     private AwesomeCheckBoxPreference mPowerEfficientWork;
@@ -81,20 +78,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
     @Override
     public void onAttach(Activity activity) { super.onAttach(activity, ID_PERFORMANCE_EXTRA); }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.extras);
         mRoot = getPreferenceScreen();
@@ -104,15 +88,19 @@ public class ExtrasFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         PreferenceCategory category = (PreferenceCategory) findPreference("general");
         if (category != null) {
-            mIoScheduler = (CustomListPreference) findPreference("io");
-            if (mIoScheduler != null) {
-                mIoScheduler.setEnabled(false);
-                CpuUtils.getIoSchedulerEvent();
+            mFilesystem = (CustomPreference) findPreference("filesystem");
+            if (mFilesystem != null) {
+                mFilesystem.setOnPreferenceClickListener(this);
             }
 
             mEntropy = (CustomPreference) findPreference("entropy");
             if (mEntropy != null) {
                 mEntropy.setOnPreferenceClickListener(this);
+            }
+
+            mLowMemoryKiller = (CustomPreference) findPreference("low_memory_killer");
+            if (mLowMemoryKiller != null) {
+                mLowMemoryKiller.setOnPreferenceClickListener(this);
             }
         }
         removeIfEmpty(category);
@@ -169,6 +157,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
                     category.removePreference(mPowerEfficientWork);
                 }
             }
+
             mMcPowerScheduler = (CustomListPreference) findPreference("sched_mc_power_savings");
             if (mMcPowerScheduler != null) {
                 if (sMcPowerScheduler) {
@@ -218,9 +207,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
         }
     }
 
-    @Override
-    public boolean onPreferenceClick(final Preference preference) {
-
+    @Override public boolean onPreferenceClick(final Preference preference) {
         if (mVoltageControl == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_VOLTAGE));
             return true;
@@ -235,23 +222,22 @@ public class ExtrasFragment extends AttachPreferenceFragment
             return true;
         } else if (mEntropy == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_ENTROPY));
+            return true;
+        } else if (mFilesystem == preference) {
+            BusProvider.getBus().post(new SubFragmentEvent(ID_FILESYSTEM));
+            return true;
+        } else if (mLowMemoryKiller == preference) {
+            BusProvider.getBus().post(new SubFragmentEvent(ID_LOWMEMORYKILLER));
+            return true;
         }
 
         return false;
     }
 
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object o) {
-        boolean changed = false;
-
-        if (preference == mIoScheduler) {
-            final String value = String.valueOf(o);
-            mIoScheduler.setSummary(value);
-            ActionProcessor.processAction(ActionProcessor.ACTION_IO_SCHEDULER, value, true);
-            changed = true;
-        } else if (preference == mPowerEfficientWork) {
+    @Override public boolean onPreferenceChange(Preference preference, Object o) {
+        if (preference == mPowerEfficientWork) {
             mPowerEfficientWork.writeValue((Boolean) o);
-            changed = true;
+            return true;
         } else if (preference == mMcPowerScheduler) {
             final String value = String.valueOf(o);
             Utils.writeValue(sMcPowerSchedulerFile, value);
@@ -263,31 +249,13 @@ public class ExtrasFragment extends AttachPreferenceFragment
                         mMcPowerScheduler.getEntries()[Integer.parseInt(value)]);
                 mMcPowerScheduler.setSummary(summary);
             }
-            changed = true;
+            return true;
         } else if (preference == mMsmDcvs) {
             mMsmDcvs.writeValue((Boolean) o);
-            changed = true;
+            return true;
         }
 
-        return changed;
-    }
-
-    @Subscribe
-    public void onIoScheduler(final IoSchedulerEvent event) {
-        final Activity activity = getActivity();
-        if (activity != null && event != null) {
-            final String[] mAvailableIo = event.getAvailableIoScheduler();
-            final String mCurrentIo = event.getCurrentIoScheduler();
-            if (mAvailableIo != null && mAvailableIo.length > 0
-                    && mCurrentIo != null && !mCurrentIo.isEmpty()) {
-                mIoScheduler.setEntries(mAvailableIo);
-                mIoScheduler.setEntryValues(mAvailableIo);
-                mIoScheduler.setValue(mCurrentIo);
-                mIoScheduler.setSummary(mCurrentIo);
-                mIoScheduler.setOnPreferenceChangeListener(this);
-                mIoScheduler.setEnabled(true);
-            }
-        }
+        return false;
     }
 
     //==============================================================================================

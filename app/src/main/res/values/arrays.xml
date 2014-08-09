@@ -297,4 +297,40 @@
         <item>2</item>
     </string-array>
 
+    <string-array name="minfree_entries" translatable="false">
+        <item>@string/select_preset</item>
+        <item>@string/very_light</item>
+        <item>@string/light</item>
+        <item>@string/medium</item>
+        <item>@string/aggressive</item>
+        <item>@string/very_aggressive</item>
+    </string-array>
+    <string-array name="minfree_values" translatable="false">
+        <item />
+        <item>512,1024,1280,2048,3072,4096</item>
+        <item>1024,2048,2560,4096,6144,8192</item>
+        <item>1024,2048,4096,8192,12288,16384</item>
+        <item>2048,4096,8192,16384,24576,32768</item>
+        <item>4096,8192,16384,32768,49152,65536</item>
+    </string-array>
+
+    <string-array name="read_ahead_entries" translatable="false">
+        <item>@string/size_128_kb</item>
+        <item>@string/size_256_kb</item>
+        <item>@string/size_512_kb</item>
+        <item>@string/size_1024_kb</item>
+        <item>@string/size_2048_kb</item>
+        <item>@string/size_3072_kb</item>
+        <item>@string/size_4096_kb</item>
+    </string-array>
+    <string-array name="read_ahead_values" translatable="false">
+        <item>128</item>
+        <item>256</item>
+        <item>512</item>
+        <item>1024</item>
+        <item>2048</item>
+        <item>3072</item>
+        <item>4096</item>
+    </string-array>
+
 </resources>

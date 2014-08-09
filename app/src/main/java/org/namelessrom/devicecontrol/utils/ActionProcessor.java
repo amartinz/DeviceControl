@@ -47,6 +47,7 @@ public class ActionProcessor implements PerformanceConstants {
     // Extras
     //----------------------------------------------------------------------------------------------
     public static final String ACTION_IO_SCHEDULER      = "io_scheduler";
+    public static final String ACTION_READ_AHEAD        = "read_ahead";
     public static final String ACTION_KSM_ENABLED       = "ksm_enabled";
     public static final String ACTION_KSM_DEFERRED      = "ksm_deferred";
     public static final String ACTION_KSM_PAGES         = "ksm_pages";
@@ -187,8 +188,19 @@ public class ActionProcessor implements PerformanceConstants {
             for (final String ioPath : IO_SCHEDULER_PATH) {
                 sb.append(Utils.getWriteCommand(ioPath, value));
                 if (boot) {
-                    PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
+                    PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS,
                             "io" + (c++), ioPath, value));
+                }
+            }
+        }
+        // Read Ahead ------------------------------------------------------------------------------
+        else if (ACTION_READ_AHEAD.equals(action)) {
+            int c = 0;
+            for (final String readAheadPath : READ_AHEAD_PATH) {
+                sb.append(Utils.getWriteCommand(readAheadPath, value));
+                if (boot) {
+                    PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS,
+                            "readahead" + (c++), readAheadPath, value));
                 }
             }
         }

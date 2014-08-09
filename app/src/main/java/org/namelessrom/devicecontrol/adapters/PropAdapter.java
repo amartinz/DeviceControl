@@ -103,10 +103,10 @@ public class PropAdapter extends ArrayAdapter<Prop> {
         }
 
         @Override
-        protected FilterResults performFiltering(CharSequence chars) {
+        protected FilterResults performFiltering(final CharSequence chars) {
             final String filterSeq = chars.toString().toLowerCase();
             final FilterResults result = new FilterResults();
-            if (filterSeq != null && filterSeq.length() > 0) {
+            if (filterSeq.length() > 0) {
                 final List<Prop> filter = new ArrayList<Prop>();
                 for (final Prop o : mProps) {
                     if (o.getName().toLowerCase().contains(filterSeq)) { filter.add(o); }

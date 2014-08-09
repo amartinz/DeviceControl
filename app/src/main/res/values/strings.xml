@@ -284,4 +284,20 @@
     <string name="reboot">Reboot</string>
     <string name="hot_reboot">Hot reboot</string>
     <string name="shutdown">Shutdown</string>
+    <string name="warning_data_corruption">May cause data corruption if enabled</string>
+    <string name="read_ahead">Read ahead</string>
+    <string name="filesystem">Filesystem</string>
+    <string name="low_memory_killer">Low memory killer</string>
+    <string name="select_preset">Select preset…</string>
+    <string name="very_light">Very light</string>
+    <string name="light">Light</string>
+    <string name="medium">Medium</string>
+    <string name="very_aggressive">Very aggressive</string>
+    <string name="aggressive">Aggressive</string>
+    <string name="foreground_applications">Foreground applications</string>
+    <string name="visible_applications">Visible applications</string>
+    <string name="secondary_server">Secondary server</string>
+    <string name="hidden_applications">Hidden applications</string>
+    <string name="content_providers">Content providers</string>
+    <string name="empty_applications">Empty applications</string>
 </resources>

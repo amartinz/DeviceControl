@@ -22,13 +22,13 @@
 
         <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="pref_donate"
-            android:title="@string/donate"
-            android:summary="@string/donate_summary" />
+            android:summary="@string/donate_summary"
+            android:title="@string/donate" />
 
         <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="pref_color"
-            android:title="@string/accent"
-            android:summary="@string/accent_summary" />
+            android:summary="@string/accent_summary"
+            android:title="@string/accent" />
 
     </PreferenceCategory>
 
@@ -37,9 +37,9 @@
         android:title="@string/tools">
 
         <org.namelessrom.devicecontrol.preferences.CustomPreference
+            android:icon="@drawable/ic_menu_flash"
             android:key="flasher_prefs"
-            android:title="@string/flasher"
-            android:icon="@drawable/ic_menu_flash" />
+            android:title="@string/flasher" />
 
     </PreferenceCategory>
 
@@ -71,6 +71,10 @@
             android:key="sob_sysctl"
             android:title="@string/sysctl_vm" />
 
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+            android:key="sob_lmk"
+            android:title="@string/low_memory_killer" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -79,13 +83,13 @@
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="show_launcher"
-            android:title="@string/show_launcher"
-            android:summary="@string/show_launcher_summary" />
+            android:summary="@string/show_launcher_summary"
+            android:title="@string/show_launcher" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="skip_checks"
-            android:title="@string/skip_checks"
-            android:summary="@string/skip_checks_summary" />
+            android:summary="@string/skip_checks_summary"
+            android:title="@string/skip_checks" />
 
     </PreferenceCategory>
 
@@ -95,9 +99,9 @@
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="extensive_logging"
-            android:title="@string/extensive_logging"
+            android:summaryOff="@string/extensive_logging_summary_off"
             android:summaryOn="@string/extensive_logging_summary_on"
-            android:summaryOff="@string/extensive_logging_summary_off" />
+            android:title="@string/extensive_logging" />
 
     </PreferenceCategory>
 
@@ -107,8 +111,8 @@
 
         <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="prefs_version"
-            android:title="@string/empty"
-            android:summary="@string/empty" />
+            android:summary="@string/empty"
+            android:title="@string/empty" />
 
     </PreferenceCategory>
 
