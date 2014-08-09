@@ -50,7 +50,7 @@ public class DummyLauncher extends Activity {
 
     @InjectView(R.id.launcher_layout) LinearLayout mLauncher;
     @InjectView(R.id.launcher_status) TextView     mStatus;
-    @InjectView(R.id.btn_action)      Button       mAction;
+    @InjectView(R.id.btn_left)        Button       mAction;
 
     private final Handler mHandler   = new Handler();
     private       boolean hasRoot    = false;
@@ -114,7 +114,7 @@ public class DummyLauncher extends Activity {
         }
     }
 
-    @OnClick(R.id.btn_action) void onAction() {
+    @OnClick(R.id.btn_left) void onAction() {
         if (!hasRoot) {
             RootTools.offerSuperUser();
         } else if (!hasBusyBox) {
@@ -122,6 +122,6 @@ public class DummyLauncher extends Activity {
         }
     }
 
-    @OnClick(R.id.btn_exit) void onExit() { finish(); }
+    @OnClick(R.id.btn_right) void onExit() { finish(); }
 
 }

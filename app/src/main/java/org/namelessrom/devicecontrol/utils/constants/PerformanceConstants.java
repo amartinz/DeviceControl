@@ -76,6 +76,9 @@ public interface PerformanceConstants {
     public static final String[] IO_SCHEDULER_PATH = {
             "/sys/block/mmcblk0/queue/scheduler",
             "/sys/block/mmcblk1/queue/scheduler"};
+    public static final String[] READ_AHEAD_PATH   = {
+            "/sys/block/mmcblk0/queue/read_ahead_kb",
+            "/sys/block/mmcblk1/queue/read_ahead_kb"};
 
     //----------------------------------------------------------------------------------------------
     public static final String GPU_FOLDER           = "/sys/class/kgsl";
@@ -109,6 +112,9 @@ public interface PerformanceConstants {
     public static final String KSM_PAGES_UNSHARED = KSM_PATH + "pages_unshared";
     public static final String KSM_PAGES_VOLATILE = KSM_PATH + "pages_volatile";
     public static final String KSM_SLEEP          = KSM_PATH + "sleep_millisecs";
+
+    //----------------------------------------------------------------------------------------------
+    public static final String FILE_MINFREE = "/sys/module/lowmemorykiller/parameters/minfree";
 
     //----------------------------------------------------------------------------------------------
     public static final String ENTROPY_AVAIL = "/proc/sys/kernel/random/entropy_avail";

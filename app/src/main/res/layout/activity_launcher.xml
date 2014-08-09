@@ -42,17 +42,17 @@
 
     <LinearLayout
         android:id="@+id/launcher_layout"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -70,34 +70,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/btn_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible">
-
-            <Button
-                style="?android:borderlessButtonStyle"
-                android:id="@+id/btn_action"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/default_color" />
-
-            <View style="@style/ButtonBarDivider" />
-
-            <Button
-                style="?android:borderlessButtonStyle"
-                android:id="@+id/btn_exit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/exit"
-                android:textColor="@color/default_color" />
-
-        </LinearLayout>
+        <include layout="@layout/include_button_bar" />
 
     </LinearLayout>
 

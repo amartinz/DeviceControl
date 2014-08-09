@@ -46,6 +46,7 @@
     <string name="file_power_efficient_workqueue" translatable="false">/sys/module/workqueue/parameters/power_efficient</string>
     <string name="file_touchkey_bln" translatable="false">/sys/class/misc/backlightnotification/enabled</string>
     <string name="file_touchkey_light" translatable="false">/sys/class/leds/button-backlight/max_brightness</string>
+    <string name="file_dyn_fsync" translatable="false">/sys/kernel/dyn_fsync/Dyn_fsync_active"</string>
 
     <!-- ARRAYS -->
     <string-array name="files_touchkey_light" translatable="false">

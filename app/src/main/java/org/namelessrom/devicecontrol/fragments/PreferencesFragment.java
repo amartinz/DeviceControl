@@ -72,6 +72,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference mSobExtras;
     private CustomCheckBoxPreference mSobVoltage;
     private CustomCheckBoxPreference mSobSysCtl;
+    private CustomCheckBoxPreference mSobLmk;
     //==============================================================================================
     // Debug
     //==============================================================================================
@@ -211,6 +212,12 @@ public class PreferencesFragment extends AttachPreferenceFragment
                 mSobSysCtl.setChecked(PreferenceHelper.getBoolean(SOB_SYSCTL));
                 mSobSysCtl.setOnPreferenceChangeListener(this);
             }
+
+            mSobLmk = (CustomCheckBoxPreference) findPreference("sob_lmk");
+            if (mSobLmk != null) {
+                mSobLmk.setChecked(PreferenceHelper.getBoolean(mSobLmk.getKey()));
+                mSobLmk.setOnPreferenceChangeListener(this);
+            }
         }
     }
 
@@ -284,6 +291,11 @@ public class PreferencesFragment extends AttachPreferenceFragment
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(SOB_SYSCTL, value);
             mSobSysCtl.setChecked(value);
+            changed = true;
+        } else if (mSobLmk == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(mSobLmk.getKey(), value);
+            mSobLmk.setChecked(value);
             changed = true;
         }
 
