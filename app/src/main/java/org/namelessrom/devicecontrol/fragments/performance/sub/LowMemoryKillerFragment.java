@@ -224,7 +224,7 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
             }
             if (viewHolder.pv != null) {
                 viewHolder.pv.setText(String.format("%s - [%s]",
-                        values[position], Utils.tryParseKiloByte(values[position])));
+                        values[position], Utils.tryParseKiloByte(values[position], 4)));
             }
 
             return convertView;

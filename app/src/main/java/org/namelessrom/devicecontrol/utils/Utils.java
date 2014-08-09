@@ -491,9 +491,9 @@ public class Utils implements DeviceConstants, FileConstants {
                 String.valueOf("MGTPE".charAt(exp - 1)));
     }
 
-    public static String tryParseKiloByte(final String value) {
+    public static String tryParseKiloByte(final String value, final int mult) {
         try {
-            return humanReadableKiloByteCount(Long.parseLong(value));
+            return humanReadableKiloByteCount(Long.parseLong(value) * mult);
         } catch (Exception exc) {
             return value;
         }
