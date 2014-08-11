@@ -1,7 +1,6 @@
 package org.namelessrom.devicecontrol.preferences;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.preference.CheckBoxPreference;
 import android.util.AttributeSet;

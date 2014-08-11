@@ -17,8 +17,6 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import android.content.Context;
-
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 

@@ -59,7 +59,6 @@ import org.namelessrom.devicecontrol.fragments.performance.sub.FilesystemFragmen
 import org.namelessrom.devicecontrol.fragments.performance.sub.GovernorFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.HotpluggingFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.KsmFragment;
-import org.namelessrom.devicecontrol.fragments.tools.editor.LowMemoryKillerFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.ThermalFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
@@ -67,6 +66,7 @@ import org.namelessrom.devicecontrol.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.fragments.tools.WirelessFileManagerFragment;
 import org.namelessrom.devicecontrol.fragments.tools.editor.BuildPropEditorFragment;
 import org.namelessrom.devicecontrol.fragments.tools.editor.BuildPropFragment;
+import org.namelessrom.devicecontrol.fragments.tools.editor.LowMemoryKillerFragment;
 import org.namelessrom.devicecontrol.fragments.tools.editor.SysctlEditorFragment;
 import org.namelessrom.devicecontrol.fragments.tools.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.fragments.tools.flasher.FlasherFragment;

@@ -18,25 +18,11 @@
 package org.namelessrom.devicecontrol.adapters;
 
 import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.RefreshEvent;
-import org.namelessrom.devicecontrol.objects.FlashItem;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardArrayAdapter;
-
-import static butterknife.ButterKnife.findById;
 
 public class FlashListAdapter extends CardArrayAdapter {
 

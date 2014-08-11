@@ -1,7 +1,6 @@
 package org.namelessrom.devicecontrol.cards;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -10,7 +9,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.RefreshEvent;
 import org.namelessrom.devicecontrol.objects.FlashItem;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
 import it.gmariotti.cardslib.library.internal.Card;
 

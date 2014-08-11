@@ -23,7 +23,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.view.LayoutInflater;
 
 import com.stericson.roottools.RootTools;
 
