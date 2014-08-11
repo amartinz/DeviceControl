@@ -29,10 +29,6 @@
             android:key="filesystem"
             android:title="@string/filesystem" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
-            android:key="low_memory_killer"
-            android:title="@string/low_memory_killer" />
-
     </PreferenceCategory>
 
     <PreferenceCategory

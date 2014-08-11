@@ -42,14 +42,14 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
 
     private CustomPreference mBuildProp;
     private CustomPreference mSysctlVm;
+    private CustomPreference mLowMemoryKiller;
     private CustomPreference mAppManager;
     private CustomPreference mWirelessFileManager;
 
     @Override
     public void onAttach(final Activity activity) { super.onAttach(activity, ID_TOOLS_MORE); }
 
-    @Override
-    public void onCreate(final Bundle savedInstanceState) {
+    @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.tools_more);
 
@@ -57,13 +57,14 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
 
         mBuildProp = (CustomPreference) findPreference("build_prop");
         mSysctlVm = (CustomPreference) findPreference("sysctl_vm");
+        mLowMemoryKiller = (CustomPreference) findPreference("low_memory_killer");
 
         mAppManager = (CustomPreference) findPreference("app_manager");
         mWirelessFileManager = (CustomPreference) findPreference("wireless_file_manager");
     }
 
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
+            final Preference preference) {
         final String key = preference.getKey();
 
         if (key == null || key.isEmpty()) return false;
@@ -78,6 +79,8 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
             BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_BUILD_PROP));
         } else if (mSysctlVm == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_VM));
+        } else if (mLowMemoryKiller == preference) {
+            BusProvider.getBus().post(new SubFragmentEvent(ID_LOWMEMORYKILLER));
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -91,8 +94,7 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
         mMediaScannerConnection.connect();
     }
 
-    @Override
-    public void onMediaScannerConnected() {
+    @Override public void onMediaScannerConnected() {
         try {
             if (mMediaScanPath == null || mMediaScanPath.isEmpty()) {
                 mMediaScanPath = Environment.getExternalStorageDirectory().getPath();
@@ -110,8 +112,7 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
         } catch (Exception ignored) { /* ignored */ }
     }
 
-    @Override
-    public void onScanCompleted(final String path, final Uri uri) {
+    @Override public void onScanCompleted(final String path, final Uri uri) {
         Application.HANDLER.post(new Runnable() {
             @Override
             public void run() {

@@ -58,7 +58,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
 
     private CustomPreference mEntropy;
     private CustomPreference mFilesystem;
-    private CustomPreference mLowMemoryKiller;
     private CustomPreference mKsm;
     private CustomPreference mHotplugging;
     private CustomPreference mThermal;
@@ -96,11 +95,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
             mEntropy = (CustomPreference) findPreference("entropy");
             if (mEntropy != null) {
                 mEntropy.setOnPreferenceClickListener(this);
-            }
-
-            mLowMemoryKiller = (CustomPreference) findPreference("low_memory_killer");
-            if (mLowMemoryKiller != null) {
-                mLowMemoryKiller.setOnPreferenceClickListener(this);
             }
         }
         removeIfEmpty(category);
@@ -225,9 +219,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
             return true;
         } else if (mFilesystem == preference) {
             BusProvider.getBus().post(new SubFragmentEvent(ID_FILESYSTEM));
-            return true;
-        } else if (mLowMemoryKiller == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_LOWMEMORYKILLER));
             return true;
         }
 
