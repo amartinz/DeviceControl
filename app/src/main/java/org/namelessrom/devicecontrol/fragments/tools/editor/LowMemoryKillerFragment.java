@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.fragments.performance.sub;
+package org.namelessrom.devicecontrol.fragments.tools.editor;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,6 +24,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -65,6 +66,7 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
 
         final Spinner spinner = new Spinner(getActivity());
         final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(
@@ -111,6 +113,22 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
         });
 
         new LmkTask().execute();
+    }
+
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
+        final int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                final Activity activity = getActivity();
+                if (activity != null) {
+                    activity.onBackPressed();
+                }
+                return true;
+            default:
+                break;
+        }
+
+        return false;
     }
 
     private void applyMinFree() {

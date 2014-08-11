@@ -25,11 +25,10 @@ import android.os.AsyncTask;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
-import org.namelessrom.devicecontrol.fragments.performance.sub.LowMemoryKillerFragment;
+import org.namelessrom.devicecontrol.fragments.tools.editor.LowMemoryKillerFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tools.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
@@ -42,7 +41,6 @@ import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class BootUpService extends IntentService
         implements DeviceConstants, FileConstants, PerformanceConstants {
