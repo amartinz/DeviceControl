@@ -17,6 +17,8 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import android.text.TextUtils;
+
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
@@ -156,6 +158,10 @@ public class GpuUtils implements PerformanceConstants {
                     String tmpMax = "", tmpGov = "";
 
                     for (final String s : result) {
+                        if (TextUtils.isEmpty(s)) {
+                            Logger.w(GpuUtils.class, "empty");
+                            continue;
+                        }
                         if (s.charAt(0) == '[') {
                             tmpMax = s.substring(1, s.length());
                         } else if (s.charAt(0) == ']') {

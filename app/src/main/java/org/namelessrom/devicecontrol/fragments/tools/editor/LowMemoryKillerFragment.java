@@ -237,6 +237,11 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
+            // just in case we are out of bounds..
+            if (position > TYPES.length) {
+                position = TYPES.length;
+            }
+
             if (viewHolder.pp != null) {
                 viewHolder.pp.setText(TYPES[position]);
             }

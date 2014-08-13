@@ -60,16 +60,12 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     public static String findPropValue(final String file, final String prop) {
-        String value;
         try {
-            value = findPropValueOf(file, prop);
-        } catch (Exception e) { value = ""; }
-
-        return value;
+            return findPropValueOf(file, prop);
+        } catch (Exception e) { return ""; }
     }
 
-    private static String findPropValueOf(final String file, final String prop)
-            throws Exception {
+    private static String findPropValueOf(final String file, final String prop) throws Exception {
         final File f = new File(file);
         if (f.exists() && f.canRead()) {
             FileInputStream fis = null;
@@ -125,13 +121,12 @@ public class Utils implements DeviceConstants, FileConstants {
      * @return The read string OR null if not existing.
      */
     public static String readOneLine(final String sFile) {
-        String sLine = null;
         if (fileExists(sFile)) {
             BufferedReader brBuffer;
             try {
                 brBuffer = new BufferedReader(new FileReader(sFile), 512);
                 try {
-                    sLine = brBuffer.readLine();
+                    return brBuffer.readLine();
                 } finally {
                     brBuffer.close();
                 }
@@ -139,7 +134,7 @@ public class Utils implements DeviceConstants, FileConstants {
                 return readFileViaShell(sFile);
             }
         }
-        return sLine;
+        return null;
     }
 
     /**
@@ -149,7 +144,6 @@ public class Utils implements DeviceConstants, FileConstants {
      * @return The read string OR null if not existing.
      */
     public static String readFile(final String sFile) {
-        String sInput = null;
         if (fileExists(sFile)) {
             final StringBuilder sb = new StringBuilder();
             BufferedReader brBuffer;
@@ -166,9 +160,9 @@ public class Utils implements DeviceConstants, FileConstants {
             } catch (Exception e) {
                 return readFileViaShell(sFile);
             }
-            sInput = sb.toString();
+            return sb.toString();
         }
-        return sInput;
+        return null;
     }
 
     /**
@@ -181,8 +175,8 @@ public class Utils implements DeviceConstants, FileConstants {
         return readFileViaShell(filePath, true);
     }
 
-    public static String readFileViaShell(final String filePath, boolean useSu) {
-        final String command = "cat " + filePath;
+    public static String readFileViaShell(final String filePath, final boolean useSu) {
+        final String command = String.format("cat %s;", filePath);
         return useSu ? CMDProcessor.runSuCommand(command).getStdout()
                 : CMDProcessor.runShellCommand(command).getStdout();
     }
@@ -257,15 +251,13 @@ public class Utils implements DeviceConstants, FileConstants {
      */
     public static void setupDirectories() {
         final String basePath = Application.getFilesDirectory();
-        final String logDir = basePath + DC_LOG_DIR;
-        final String[] dirList = new String[]{logDir};
+        final String[] dirList = new String[]{basePath + DC_LOG_DIR};
         File dir;
-        for (String s : dirList) {
+        for (final String s : dirList) {
             dir = new File(s);
             if (!dir.exists()) {
-                Logger.v(Utils.class, String.format("setupDirectories: creating %s", s));
-                final boolean isSuccess = dir.mkdirs();
-                Logger.v(Utils.class, String.format("setupDirectories: %s", isSuccess));
+                Logger.v(Utils.class, String.format(
+                        "setupDirectories: creating %s -> %s", s, dir.mkdirs()));
             }
         }
     }
@@ -305,8 +297,8 @@ public class Utils implements DeviceConstants, FileConstants {
         getCommandResult(ID, COMMAND, EXTRAS, false);
     }
 
-    public static void getCommandResult(final int ID, final String COMMAND,
-            final String EXTRAS, final boolean NEWLINE) {
+    public static void getCommandResult(final int ID, final String COMMAND, final String EXTRAS,
+            final boolean NEWLINE) {
         final StringBuilder sb = new StringBuilder();
         final CommandCapture comm = new CommandCapture(0, false, COMMAND) {
             @Override public void commandOutput(int id, String line) {
@@ -447,8 +439,8 @@ public class Utils implements DeviceConstants, FileConstants {
         try {
             RootTools.remount(path, mode);
         } catch (Exception e) {
-            Logger.v(Utils.class,
-                    String.format("Could not remount %s with \"%s\", error: %s", path, mode, e));
+            Logger.v(Utils.class, String.format(
+                    "Could not remount %s with \"%s\", error: %s", path, mode, e));
             return false;
         }
         return true;
@@ -456,8 +448,8 @@ public class Utils implements DeviceConstants, FileConstants {
 
     public static String setPermissions(final String path, final String mask,
             final int user, final int group) {
-        return String.format("busybox chown %s.%s %s;busybox chmod %s %s;", user, group, path,
-                mask, path);
+        return String.format(
+                "busybox chown %s.%s %s;busybox chmod %s %s;", user, group, path, mask, path);
     }
 
     public static void restartActivity(final Activity activity) {
@@ -469,19 +461,11 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     public static int tryParse(final String parse, final int def) {
-        try {
-            return Integer.parseInt(parse);
-        } catch (Exception exc) {
-            return def;
-        }
+        try { return Integer.parseInt(parse); } catch (Exception exc) { return def; }
     }
 
     public static Integer tryValueOf(final String value, final int def) {
-        try {
-            return Integer.valueOf(value);
-        } catch (Exception exc) {
-            return def;
-        }
+        try { return Integer.valueOf(value); } catch (Exception exc) { return def; }
     }
 
     public static String humanReadableKiloByteCount(final long kilobytes) {
@@ -494,8 +478,6 @@ public class Utils implements DeviceConstants, FileConstants {
     public static String tryParseKiloByte(final String value, final int mult) {
         try {
             return humanReadableKiloByteCount(Long.parseLong(value) * mult);
-        } catch (Exception exc) {
-            return value;
-        }
+        } catch (Exception exc) { return value; }
     }
 }

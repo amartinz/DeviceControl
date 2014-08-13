@@ -147,7 +147,9 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                 return true;
             }
             case R.id.menu_action_play_store: {
-                AppHelper.showInPlaystore("market://details?id=" + mAppItem.getPackageName());
+                if (mAppItem != null) {
+                    AppHelper.showInPlaystore("market://details?id=" + mAppItem.getPackageName());
+                }
                 return true;
             }
             default: {
