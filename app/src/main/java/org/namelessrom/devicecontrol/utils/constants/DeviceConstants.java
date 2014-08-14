@@ -25,7 +25,6 @@ public interface DeviceConstants {
     // Fields
     //==============================================================================================
     public static final String TAG          = "DeviceControl";
-    public static final String PACKAGE_NAME = "org.namelessrom.devicecontrol";
 
     //==============================================================================================
     // IDs
