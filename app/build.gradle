@@ -33,11 +33,13 @@ android {
             debuggable false
         }
         debug {
-            runProguard true
+            runProguard false
             signingConfig signingConfigs.release
             proguardFile 'src/main/proguard.flags'
-            zipAlign true
+            zipAlign false
             debuggable true
+            applicationIdSuffix '.dev'
+            versionNameSuffix '-dev'
         }
     }
 

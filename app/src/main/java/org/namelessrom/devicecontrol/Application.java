@@ -139,19 +139,24 @@ public class Application extends android.app.Application implements DeviceConsta
                         "device_control", "string", "com.android.settings") > 0) {
                     Logger.v(Application.class,
                             "Implemented into system and showLauncher is not set!");
-                    Utils.disableComponent(PACKAGE_NAME, DummyLauncher.class.getName());
+                    Utils.disableComponent(getPkgName(), DummyLauncher.class.getName());
                 } else {
                     Logger.v(Application.class, "Implemented into system and showLauncher is set!");
-                    Utils.enableComponent(PACKAGE_NAME, DummyLauncher.class.getName());
+                    Utils.enableComponent(getPkgName(), DummyLauncher.class.getName());
                 }
             } else {
                 Logger.v(Application.class, "Not implemented into system!");
-                Utils.enableComponent(PACKAGE_NAME, DummyLauncher.class.getName());
+                Utils.enableComponent(getPkgName(), DummyLauncher.class.getName());
             }
         } catch (PackageManager.NameNotFoundException exc) {
             Logger.e(Application.class, "You dont have settings? That's weird.");
-            Utils.enableComponent(PACKAGE_NAME, DummyLauncher.class.getName());
+            Utils.enableComponent(getPkgName(), DummyLauncher.class.getName());
         }
+    }
+
+    public static String getPkgName() {
+        if (applicationContext != null) return applicationContext.getPackageName();
+        return "org.namelessrom.devicecontrol";
     }
 
     public static String getStr(final int resId) { return applicationContext.getString(resId); }
