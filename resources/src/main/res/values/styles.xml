@@ -16,6 +16,13 @@
 -->
 <resources>
 
+    <!-- Base application theme. -->
+    <style name="BaseTheme" parent="Theme.HoloAccent.Light" />
+
+    <style name="NoActionBar" parent="@android:style/Theme.Holo.Light.NoActionBar">
+        <!-- Customize ads aag kjasdgjkb asdf weu here -->
+    </style>
+
     <style name="StandardDivider">
         <item name="android:id">@id/divider</item>
         <item name="android:layout_width">match_parent</item>

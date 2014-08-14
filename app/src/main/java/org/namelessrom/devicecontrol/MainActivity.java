@@ -22,11 +22,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -83,7 +85,7 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.io.File;
 
-import butterknife.ButterKnife;
+import static butterknife.ButterKnife.findById;
 
 public class MainActivity extends AccentActivity
         implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener,
@@ -172,8 +174,15 @@ public class MainActivity extends AccentActivity
 
         Utils.setupDirectories();
 
-        final View v = getLayoutInflater().inflate(R.layout.menu_list, null, false);
-        final ListView mMenuList = ButterKnife.findById(v, R.id.navbarlist);
+        final FrameLayout container = findById(this, R.id.container);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            container.setBackground(null);
+        } else {
+            container.setBackgroundDrawable(null);
+        }
+
+        final View v = getLayoutInflater().inflate(R.layout.menu_list, container, false);
+        final ListView mMenuList = findById(v, R.id.navbarlist);
 
         mSlidingMenu = new SlidingMenu(this);
         mSlidingMenu.setMode(SlidingMenu.LEFT);
