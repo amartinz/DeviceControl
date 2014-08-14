@@ -33,9 +33,13 @@ public class SlidingMenu extends RelativeLayout {
 
     private static final String TAG = SlidingMenu.class.getSimpleName();
 
-    public static final int     SLIDING_WINDOW    = 0;
-    public static final int     SLIDING_CONTENT   = 1;
-    private             boolean mActionbarOverlay = false;
+    public static final int SLIDING_WINDOW  = 0;
+    public static final int SLIDING_CONTENT = 1;
+
+    private final Rect windowInsets = new Rect();
+    private final Rect tempInsets   = new Rect();
+
+    private boolean mActionbarOverlay = false;
 
     /**
      * Constant value for use with setTouchModeAbove(). Allows the SlidingMenu to be opened with
@@ -1022,7 +1026,7 @@ public class SlidingMenu extends RelativeLayout {
         int rightPadding = insets.right;
         int topPadding = insets.top;
         int bottomPadding = insets.bottom;
-        if (CustomViewAbove.DEBUG && !mActionbarOverlay) {
+        if (!mActionbarOverlay) {
             Log.v(TAG, "setting padding!");
             setPadding(leftPadding, topPadding, rightPadding, bottomPadding);
         }

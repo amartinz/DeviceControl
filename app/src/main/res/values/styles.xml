@@ -18,17 +18,9 @@
 
     <style name="AppTheme" parent="@style/BaseTheme">
         <!-- I want to thank all xml tags, which had to die for this project. -->
-        <item name="android:actionBarStyle">@style/HoloAccent.ActionBar.Light.Solid</item>
         <item name="accentColor">@color/accent</item>
         <item name="textAppearanceFinish">@style/TextAppearanceFinish</item>
         <item name="android:windowBackground">@color/grey_dark</item>
-    </style>
-
-    <!-- Base application theme. -->
-    <style name="BaseTheme" parent="Theme.HoloAccent.Light" />
-
-    <style name="NoActionBar" parent="@android:style/Theme.Holo.Light.NoActionBar">
-        <!-- Customize ads aag kjasdgjkb asdf weu here -->
     </style>
 
 </resources>
