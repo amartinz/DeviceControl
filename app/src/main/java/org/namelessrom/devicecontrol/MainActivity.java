@@ -76,6 +76,7 @@ import org.namelessrom.devicecontrol.fragments.tools.flasher.FlasherPreferencesF
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.proprietary.Constants;
+import org.namelessrom.devicecontrol.sound.soundcontrol.SoundControlFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -389,6 +390,10 @@ public class MainActivity extends AccentActivity
                 mSubActionBarDrawable = R.drawable.ic_general_battery;
                 mTitle = mSubFragmentTitle = R.string.fast_charge;
                 break;
+            case ID_SOUND_CONTROL:
+                mSubActionBarDrawable = R.drawable.ic_general_sound;
+                mTitle = mSubFragmentTitle = R.string.sound_control;
+                break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_INFO:
                 mActionBarDrawable = R.drawable.ic_menu_perf_info;
@@ -583,6 +588,9 @@ public class MainActivity extends AccentActivity
             //--------------------------------------------------------------------------------------
             case ID_FAST_CHARGE:
                 mCurrentFragment = new FastChargeFragment();
+                break;
+            case ID_SOUND_CONTROL:
+                mCurrentFragment = new SoundControlFragment();
                 break;
             //--------------------------------------------------------------------------------------
             case ID_GOVERNOR_TUNABLE:

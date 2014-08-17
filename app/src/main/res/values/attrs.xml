@@ -24,6 +24,12 @@
         <attr name="valueChecked" format="string" />
         <attr name="valueNotChecked" format="string" />
     </declare-styleable>
+    <!-- seekbar preference -->
+    <declare-styleable name="SeekBarPreference">
+        <attr name="min" format="integer" />
+        <attr name="unitsLeft" format="string" />
+        <attr name="unitsRight" format="string" />
+    </declare-styleable>
     <!-- Wizard -->
     <declare-styleable name="AppTheme">
         <attr name="textAppearanceFinish" format="reference" />
