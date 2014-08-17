@@ -26,16 +26,46 @@ import android.view.ViewGroup;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.views.AttachFragment;
+import org.namelessrom.devicecontrol.views.CpuStateView;
+import org.namelessrom.devicecontrol.views.DeviceStatusView;
+
+import static butterknife.ButterKnife.findById;
 
 public class InformationFragment extends AttachFragment implements DeviceConstants {
 
-    @Override
-    public void onAttach(Activity activity) { super.onAttach(activity, ID_PERFORMANCE_INFO); }
+    private DeviceStatusView mDeviceStats;
+    private CpuStateView     mCpuStates;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_performance, container, false);
+    public void onAttach(final Activity activity) { super.onAttach(activity, ID_PERFORMANCE_INFO); }
+
+    @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
+        final View v = inflater.inflate(R.layout.fragment_performance, container, false);
+
+        mDeviceStats = findById(v, R.id.device_stats);
+        mCpuStates = findById(v, R.id.cpu_states);
+
+        return v;
     }
 
+    @Override public void onResume() {
+        super.onResume();
+        if (mDeviceStats != null) {
+            mDeviceStats.onResume();
+        }
+        if (mCpuStates != null) {
+            mCpuStates.onResume();
+        }
+    }
+
+    @Override public void onPause() {
+        super.onPause();
+        if (mDeviceStats != null) {
+            mDeviceStats.onPause();
+        }
+        if (mCpuStates != null) {
+            mCpuStates.onPause();
+        }
+    }
 }

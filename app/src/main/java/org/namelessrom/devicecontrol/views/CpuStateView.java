@@ -44,38 +44,33 @@ import static butterknife.ButterKnife.findById;
 public class CpuStateView extends LinearLayout {
 
     private LinearLayout mStatesView;
-    private TextView     mAdditionalStates;
-    private TextView     mTotalStateTime;
-    private TextView     mHeaderAdditionalStates;
-    private TextView     mHeaderTotalStateTime;
-    private TextView     mStatesWarning;
+
+    private TextView mAdditionalStates;
+    private TextView mTotalStateTime;
+    private TextView mHeaderAdditionalStates;
+    private TextView mHeaderTotalStateTime;
+    private TextView mStatesWarning;
 
     private boolean mUpdatingData = false;
     private boolean mIsAttached   = false;
 
-    public CpuStateView(Context context) {
-        super(context);
-        createViews(context);
+    public CpuStateView(final Context context) { this(context, null); }
+
+    public CpuStateView(final Context context, final AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    public CpuStateView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        createViews(context);
-    }
-
-    public CpuStateView(Context context, AttributeSet attrs, int defStyle) {
+    public CpuStateView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         createViews(context);
     }
 
-    @Override protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
+    public void onResume() {
         mIsAttached = true;
         BusProvider.getBus().register(this);
     }
 
-    @Override protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
+    public void onPause() {
         mIsAttached = false;
         BusProvider.getBus().unregister(this);
     }
@@ -136,9 +131,8 @@ public class CpuStateView extends LinearLayout {
         return sDur.toString();
     }
 
-    private View generateStateRow(final CpuStateMonitor.CpuState state,
-            final ViewGroup parent, final long totalStateTime) {
-
+    private View generateStateRow(final CpuStateMonitor.CpuState state, final ViewGroup parent,
+            final long totalStateTime) {
         if (!isAttached()) { return null; }
 
         final Context context = getContext();

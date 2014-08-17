@@ -44,7 +44,8 @@ public class DeviceStatusView extends LinearLayout {
     private LinearLayout mDeviceInfo;
 
     private int    mBatteryTemperature = 0;
-    private String mBatteryExtra       = " - Getting information...";
+    private String mBatteryExtra       =
+            String.format(" - %s...", Application.getStr(R.string.getting_information));
 
     private boolean mIsAttached = false;
 
@@ -53,30 +54,24 @@ public class DeviceStatusView extends LinearLayout {
 
     private static final Object mLockObject = new Object();
 
-    public DeviceStatusView(Context context) {
-        super(context);
-        createViews(context);
+    public DeviceStatusView(final Context context) { this(context, null); }
+
+    public DeviceStatusView(final Context context, final AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    public DeviceStatusView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        createViews(context);
-    }
-
-    public DeviceStatusView(Context context, AttributeSet attrs, int defStyle) {
+    public DeviceStatusView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         createViews(context);
     }
 
-    @Override protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
+    public void onResume() {
         mIsAttached = true;
-        Application.applicationContext.registerReceiver(mBatteryReceiver,
-                new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        Application.applicationContext.registerReceiver(
+                mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
-    @Override protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
+    public void onPause() {
         mIsAttached = false;
         try {
             Application.applicationContext.unregisterReceiver(mBatteryReceiver);
@@ -88,8 +83,9 @@ public class DeviceStatusView extends LinearLayout {
         @Override
         public void onReceive(Context arg0, Intent intent) {
             mBatteryTemperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0);
-            mBatteryExtra = " - Health: " + Utils.getBatteryHealth(
-                    intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0));
+            mBatteryExtra = String.format(" - %s: %s",
+                    Application.getStr(R.string.health),
+                    Utils.getBatteryHealth(intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0)));
         }
     };
 

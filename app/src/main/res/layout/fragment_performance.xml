@@ -24,15 +24,14 @@
         android:orientation="vertical">
 
         <org.namelessrom.devicecontrol.views.DeviceStatusView
+            android:id="@+id/device_stats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <View
-            style="@style/StandardDivider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <View style="@style/StandardDivider" />
 
         <org.namelessrom.devicecontrol.views.CpuStateView
+            android:id="@+id/cpu_states"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />

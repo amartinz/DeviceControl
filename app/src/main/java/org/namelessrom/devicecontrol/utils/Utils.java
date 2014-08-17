@@ -28,6 +28,7 @@ import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
@@ -407,32 +408,32 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     public static String getBatteryHealth(final int healthInt) {
-        String health;
+        int health;
 
         switch (healthInt) {
             case BatteryManager.BATTERY_HEALTH_COLD:
-                health = "cold";
+                health = R.string.cold;
                 break;
             case BatteryManager.BATTERY_HEALTH_GOOD:
-                health = "good";
+                health = R.string.good;
                 break;
             case BatteryManager.BATTERY_HEALTH_DEAD:
-                health = "dead";
+                health = R.string.dead;
                 break;
             case BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE:
-                health = "overvoltage";
+                health = R.string.over_voltage;
                 break;
             case BatteryManager.BATTERY_HEALTH_OVERHEAT:
-                health = "overheat";
+                health = R.string.overheat;
                 break;
             default:
             case BatteryManager.BATTERY_HEALTH_UNKNOWN:
             case BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE:
-                health = "unknown";
+                health = R.string.unknown;
                 break;
         }
 
-        return health;
+        return Application.getStr(health);
     }
 
     public static boolean remount(final String path, final String mode) {

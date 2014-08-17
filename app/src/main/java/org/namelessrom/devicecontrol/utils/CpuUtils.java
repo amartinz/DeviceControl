@@ -163,16 +163,6 @@ public class CpuUtils implements PerformanceConstants {
         }
     }
 
-    public static String getCpuFrequency(final int cpu) {
-        final String path = getCpuFrequencyPath(cpu);
-
-        if (Utils.fileExists(path)) {
-            return Utils.readOneLine(path);
-        } else {
-            return "0";
-        }
-    }
-
     public static int getCpuTemperature() {
         String tmpString = Utils.readOneLine(CPU_TEMP_PATH);
         if (tmpString != null && !tmpString.trim().isEmpty()) {
@@ -228,25 +218,6 @@ public class CpuUtils implements PerformanceConstants {
             }
         }
         return schedulers;
-    }
-
-    /**
-     * Get current IO Scheduler
-     *
-     * @return current io scheduler
-     */
-    public static String getIOScheduler(final int id) {
-        String scheduler = null;
-        final String[] schedulers = Utils.readStringArray(IO_SCHEDULER_PATH[id]);
-        if (schedulers != null) {
-            for (final String s : schedulers) {
-                if (s.charAt(0) == '[') {
-                    scheduler = s.substring(1, s.length() - 1);
-                    break;
-                }
-            }
-        }
-        return scheduler;
     }
 
     public static String[] getAvailableGovernors() {
