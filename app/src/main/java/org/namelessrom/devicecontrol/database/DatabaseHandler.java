@@ -56,6 +56,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     public static final String CATEGORY_EXTRAS   = "extras";
     public static final String CATEGORY_SYSCTL   = "sysctl";
     public static final String CATEGORY_LMK      = "lmk";
+    public static final String CATEGORY_SOUND    = "sound";
 
     private static final String CREATE_BOOTUP_TABLE = "CREATE TABLE " + TABLE_BOOTUP + '('
             + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_NAME + " TEXT,"

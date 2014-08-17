@@ -44,6 +44,7 @@ import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.proprietary.Constants;
 import org.namelessrom.devicecontrol.services.BootUpService;
+import org.namelessrom.devicecontrol.sound.soundcontrol.SoundControlHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -297,6 +298,9 @@ public class PreferencesFragment extends AttachPreferenceFragment
             if (Utils.fileExists(VDD_TABLE_FILE) || Utils.fileExists(UV_TABLE_FILE)) {
                 entries.add(R.string.voltage_control);
             }
+            if (true || SoundControlHelper.isSupported()) { // TODO: remote true ||
+                entries.add(R.string.sound_control);
+            }
         }
 
         @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -347,6 +351,8 @@ public class PreferencesFragment extends AttachPreferenceFragment
                     return BootUpService.SOB_LMK;
                 case R.string.voltage_control:
                     return BootUpService.SOB_VOLTAGE;
+                case R.string.sound_control:
+                    return BootUpService.SOB_SC;
                 default:
                     return "-";
             }

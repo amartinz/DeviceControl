@@ -316,4 +316,18 @@
     <string name="over_voltage">Over voltage</string>
     <string name="overheat">Overheat</string>
     <string name="tcp_congestion_control">TCP congestion control</string>
+    <string name="sound_control">Sound control</string>
+    <string name="custom">Custom</string>
+    <string name="quality">Quality</string>
+    <string name="loudness">Loudness</string>
+    <string name="quiet">Quiet</string>
+    <string name="stock">Stock</string>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
+    <string name="headphone_gain">Headphone gain</string>
+    <string name="poweramp_gain">PowerAmp gain</string>
+    <string name="microphone_gain">Microphone gain</string>
+    <string name="handset">Handset</string>
+    <string name="camcorder">Camcorder</string>
+    <string name="speaker">Speaker</string>
 </resources>

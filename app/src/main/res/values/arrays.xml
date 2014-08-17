@@ -333,4 +333,19 @@
         <item>4096</item>
     </string-array>
 
+    <string-array name="sc_presets_entries" translatable="false">
+        <item>@string/custom</item>
+        <item>@string/quality</item>
+        <item>@string/loudness</item>
+        <item>@string/quiet</item>
+        <item>@string/stock</item>
+    </string-array>
+    <string-array name="sc_presets_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
 </resources>

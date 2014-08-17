@@ -31,6 +31,7 @@ import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tools.editor.LowMemoryKillerFragment;
 import org.namelessrom.devicecontrol.fragments.tools.editor.SysctlFragment;
+import org.namelessrom.devicecontrol.sound.soundcontrol.SoundControlHelper;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.GpuUtils;
@@ -52,6 +53,7 @@ public class BootUpService extends IntentService
     public static final String SOB_DEVICE  = "sob_device";
     public static final String SOB_VOLTAGE = "sob_voltage";
     public static final String SOB_LMK     = "sob_lmk";
+    public static final String SOB_SC      = "sob_sound_control";
 
     public BootUpService() { super("BootUpService"); }
 
@@ -170,6 +172,11 @@ public class BootUpService extends IntentService
                         Logger.v(this, cmd);
                         sbCmd.append(cmd);
                         sbCmd.append("busybox sysctl -p;\n");
+                    }
+                }
+                if (PreferenceHelper.getBoolean(SOB_SC, false)) {
+                    if (SoundControlHelper.isSupported()) {
+                        SoundControlHelper.getSoundControlHelper().restore();
                     }
                 }
 

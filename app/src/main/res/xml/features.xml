@@ -18,17 +18,22 @@
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
     <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
-        android:key="logger_mode"
-        android:title="@string/logger_mode"
-        android:summary="@string/logger_mode_summary"
         android:defaultValue="false"
-        dc:filePath="@string/file_logger_mode"
-        dc:category="features" />
+        android:key="logger_mode"
+        android:summary="@string/logger_mode_summary"
+        android:title="@string/logger_mode"
+        dc:category="features"
+        dc:filePath="@string/file_logger_mode" />
 
     <org.namelessrom.devicecontrol.preferences.CustomPreference
+        android:icon="@drawable/ic_general_battery"
         android:key="fast_charge"
-        android:title="@string/fast_charge"
         android:summary="@string/fast_charge_summary"
-        android:icon="@drawable/ic_general_battery" />
+        android:title="@string/fast_charge" />
+
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
+        android:icon="@drawable/ic_general_sound"
+        android:key="sound_control"
+        android:title="@string/sound_control" />
 
 </PreferenceScreen>

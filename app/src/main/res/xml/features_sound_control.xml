@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dc="http://schemas.android.com/apk/lib/org.namelessrom.devicecontrol">
+
+    <PreferenceCategory
+        android:key="sc_presets_cat"
+        android:title="@string/presets">
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/sc_presets_entries"
+            android:entryValues="@array/sc_presets_values"
+            android:key="sc_presets"
+            android:title="@string/presets" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/headphone_gain">
+
+        <org.namelessrom.devicecontrol.preferences.SeekBarPreference
+            android:defaultValue="40"
+            android:key="sc_headphone_left"
+            android:max="60"
+            android:persistent="false"
+            android:summary="@string/empty"
+            android:title="@string/left"
+            dc:min="20"
+            dc:unitsLeft=""
+            dc:unitsRight="" />
+
+        <org.namelessrom.devicecontrol.preferences.SeekBarPreference
+            android:defaultValue="40"
+            android:key="sc_headphone_right"
+            android:max="60"
+            android:persistent="false"
+            android:summary="@string/empty"
+            android:title="@string/right"
+            dc:min="20"
+            dc:unitsLeft=""
+            dc:unitsRight="" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/poweramp_gain">
+
+        <org.namelessrom.devicecontrol.preferences.SeekBarPreference
+            android:defaultValue="0"
+            android:key="sc_headphone_pa_left"
+            android:max="30"
+            android:persistent="false"
+            android:summary="@string/empty"
+            android:title="@string/left"
+            dc:min="10"
+            dc:unitsLeft=""
+            dc:unitsRight="" />
+
+        <org.namelessrom.devicecontrol.preferences.SeekBarPreference
+            android:defaultValue="0"
+            android:key="sc_headphone_pa_right"
+            android:max="30"
+            android:persistent="false"
+            android:summary="@string/empty"
+            android:title="@string/right"
+            dc:min="10"
+            dc:unitsLeft=""
+            dc:unitsRight="" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/microphone_gain">
+
+        <org.namelessrom.devicecontrol.preferences.SeekBarPreference
+            android:defaultValue="40"
+            android:key="sc_microphone_handset"
+            android:max="60"
+            android:persistent="false"
+            android:summary="@string/empty"
+            android:title="@string/handset"
+            dc:min="20"
+            dc:unitsLeft=""
+            dc:unitsRight="" />
+
+        <org.namelessrom.devicecontrol.preferences.SeekBarPreference
+            android:defaultValue="40"
+            android:key="sc_microphone_camcorder"
+            android:max="60"
+            android:persistent="false"
+            android:summary="@string/empty"
+            android:title="@string/camcorder"
+            dc:min="20"
+            dc:unitsLeft=""
+            dc:unitsRight="" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/speaker">
+
+        <org.namelessrom.devicecontrol.preferences.SeekBarPreference
+            android:defaultValue="40"
+            android:key="sc_speaker"
+            android:max="60"
+            android:persistent="false"
+            android:summary="@string/empty"
+            android:title="@string/speaker"
+            dc:min="20"
+            dc:unitsLeft=""
+            dc:unitsRight="" />
+
+    </PreferenceCategory>
+
+    <Preference
+        android:key="sc_version"
+        android:selectable="false"
+        android:summary="@string/empty"
+        android:title="@string/empty" />
+
+</PreferenceScreen>
