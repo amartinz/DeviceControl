@@ -43,6 +43,9 @@ import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.ID_P
  */
 public class AppHelper {
 
+    // TODO: change to true before pushing to Play Store to prevent external donations
+    private static final boolean IS_RELEASE = false;
+
     private static final String DESCRIPTOR = "android.content.pm.IPackageStatsObserver";
 
     /**
@@ -259,4 +262,7 @@ public class AppHelper {
         }
     };
 
+    public static boolean isExternalAllowed() {
+        return !IS_RELEASE;
+    }
 }

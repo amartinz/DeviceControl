@@ -44,6 +44,7 @@ import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.proprietary.Constants;
 import org.namelessrom.devicecontrol.services.BootUpService;
+import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -126,10 +127,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
         category = (PreferenceCategory) findPreference("prefs_app");
         if (category != null) {
             mDonatePreference = (CustomPreference) findPreference("pref_donate");
-            if (mDonatePreference != null) {
-                mDonatePreference
-                        .setEnabled(PreferenceHelper.getBoolean(Constants.Iab.getPref(), false));
-            }
 
             mColorPreference = (CustomPreference) findPreference("pref_color");
             if (mColorPreference != null) {
@@ -236,6 +233,17 @@ public class PreferencesFragment extends AttachPreferenceFragment
         } else if (mDonatePreference == preference) {
             final Activity activity = getActivity();
             if (activity == null) { return false; }
+
+            // if external is allowed OR play store is not installed...
+            if (AppHelper.isExternalAllowed() || !AppHelper.isPlayStoreInstalled()) {
+                // try to allow to donate externally
+                if (Constants.startExternalDonation(getActivity())
+                        // if it fails and the play store is not installed, end here
+                        && !AppHelper.isPlayStoreInstalled()) {
+                    return true;
+                }
+            }
+
             final AccentAlertDialog.Builder builder = new AccentAlertDialog.Builder(activity);
             builder.setTitle(R.string.donate)
                     .setNegativeButton(android.R.string.cancel,
