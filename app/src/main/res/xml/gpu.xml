@@ -18,6 +18,10 @@
     android:title="@string/gpusettings">
 
     <PreferenceCategory
+        android:key="gpu_opengl"
+        android:title="@string/gpu_opengl" />
+
+    <PreferenceCategory
         android:key="gpu"
         android:title="@string/gpu" />
 

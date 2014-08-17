@@ -17,6 +17,9 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.pm.ConfigurationInfo;
 import android.text.TextUtils;
 
 import com.stericson.roottools.RootTools;
@@ -31,38 +34,11 @@ import org.namelessrom.devicecontrol.events.GpuEvent;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class GpuUtils implements PerformanceConstants {
-
-    public static String[] getFreqToMhz(final String file) throws IOException {
-        final ArrayList<String> names = new ArrayList<String>();
-        Utils.runRootCommand(String.format("chmod 644 %s", file));
-
-        final File freqfile = new File(file);
-        FileInputStream fin1 = null;
-        String s1 = null;
-        try {
-            fin1 = new FileInputStream(freqfile);
-            byte fileContent[] = new byte[(int) freqfile.length()];
-            fin1.read(fileContent);
-            s1 = new String(fileContent);
-        } finally {
-            if (fin1 != null) {
-                fin1.close();
-            }
-        }
-        final String[] frequencies = s1.trim().split(" ");
-        for (final String s : frequencies) {
-            names.add(toMhz(s));
-        }
-        return names.toArray(new String[names.size()]);
-    }
 
     public static String toMhz(final String mhz) {
         int mhzInt;
@@ -189,6 +165,13 @@ public class GpuUtils implements PerformanceConstants {
         } catch (Exception exc) {
             Logger.e(GpuUtils.class, String.format("Error: %s", exc.getMessage()));
         }
+    }
+
+    public static boolean isOpenGLES20Supported() {
+        final ActivityManager am = (ActivityManager)
+                Application.applicationContext.getSystemService(Context.ACTIVITY_SERVICE);
+        final ConfigurationInfo info = am.getDeviceConfigurationInfo();
+        return (info != null && info.reqGlEsVersion >= 0x20000);
     }
 
 }

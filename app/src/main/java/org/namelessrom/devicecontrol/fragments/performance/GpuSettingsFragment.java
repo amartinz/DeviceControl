@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
+import android.text.TextUtils;
 
 import com.squareup.otto.Subscribe;
 
@@ -36,37 +37,79 @@ import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
+import static android.opengl.GLES20.GL_EXTENSIONS;
+import static android.opengl.GLES20.GL_RENDERER;
+import static android.opengl.GLES20.GL_SHADING_LANGUAGE_VERSION;
+import static android.opengl.GLES20.GL_VENDOR;
+import static android.opengl.GLES20.GL_VERSION;
+import static android.opengl.GLES20.glGetString;
+
 public class GpuSettingsFragment extends AttachPreferenceFragment
         implements DeviceConstants, PerformanceConstants, Preference.OnPreferenceChangeListener {
 
     private PreferenceCategory mRoot;
+
     private CustomListPreference     mGpuFrequency = null;
     private CustomListPreference     mGpuGovernor  = null;
     private CustomCheckBoxPreference m3dScaling    = null;
 
-    @Override
-    public void onAttach(final Activity activity) {
+    private static final int[] GL_INFO = new int[]{
+            GL_VENDOR,                  // gpu vendor
+            GL_RENDERER,                // gpu renderer
+            GL_VERSION,                 // opengl version
+            GL_EXTENSIONS,              // opengl extensions
+            GL_SHADING_LANGUAGE_VERSION // shader language version
+    };
+
+    private static final int[] GL_STRINGS = new int[]{
+            R.string.gpu_vendor,        // gpu vendor
+            R.string.gpu_renderer,      // gpu renderer
+            R.string.opengl_version,    // opengl version
+            R.string.opengl_extensions, // opengl extensions
+            R.string.shader_version     // shader language version
+    };
+
+    @Override public void onAttach(final Activity activity) {
         super.onAttach(activity, ID_PERFORMANCE_GPU_SETTINGS);
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
         BusProvider.getBus().register(this);
     }
 
-    @Override
-    public void onPause() {
+    @Override public void onPause() {
         super.onPause();
         BusProvider.getBus().unregister(this);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.gpu);
-
         mRoot = (PreferenceCategory) getPreferenceScreen().findPreference("gpu");
+
+        PreferenceCategory category = (PreferenceCategory) findPreference("gpu_opengl");
+        if (GpuUtils.isOpenGLES20Supported()) {
+            // our preference and string for storing gpu / opengl information
+            Preference infoPref;
+            String tmp;
+
+            final int length = GL_INFO.length;
+            for (int i = 0; i < length; i++) {
+                tmp = glGetString(GL_INFO[i]);
+                if (!TextUtils.isEmpty(tmp)) {
+                    infoPref = new Preference(getActivity());
+                    infoPref.setTitle(GL_STRINGS[i]);
+                    infoPref.setSummary(tmp);
+                    category.addPreference(infoPref);
+                }
+            }
+        }
+
+        // if we are not supported or we could not add any preferences, remove it
+        if (category.getPreferenceCount() <= 0) {
+            getPreferenceScreen().removePreference(category);
+        }
 
         GpuUtils.getOnGpuEvent();
     }
@@ -77,8 +120,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
         }
     }
 
-    @Subscribe
-    public void onGpuEvent(final GpuEvent event) {
+    @Subscribe public void onGpuEvent(final GpuEvent event) {
         if (event == null) { return; }
 
         String tmp;
@@ -150,24 +192,23 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
         isSupported(mRoot, getActivity());
     }
 
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
+    @Override public boolean onPreferenceChange(final Preference preference, final Object objVal) {
         boolean changed = false;
 
         if (mGpuFrequency == preference) {
-            final String value = String.valueOf(newValue);
+            final String value = String.valueOf(objVal);
             mGpuFrequency.setValue(value);
             mGpuFrequency.setSummary(GpuUtils.toMhz(value));
             ActionProcessor.processAction(ActionProcessor.ACTION_GPU_FREQUENCY_MAX, value, true);
             changed = true;
         } else if (mGpuGovernor == preference) {
-            final String value = String.valueOf(newValue);
+            final String value = String.valueOf(objVal);
             mGpuGovernor.setValue(value);
             mGpuGovernor.setSummary(value);
             ActionProcessor.processAction(ActionProcessor.ACTION_GPU_GOVERNOR, value, true);
             changed = true;
         } else if (m3dScaling == preference) {
-            final boolean value = (Boolean) newValue;
+            final boolean value = (Boolean) objVal;
             m3dScaling.setChecked(value);
             ActionProcessor
                     .processAction(ActionProcessor.ACTION_3D_SCALING, value ? "1" : "0", true);

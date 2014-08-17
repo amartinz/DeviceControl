@@ -273,7 +273,7 @@
     <string name="flash_warning">You are about to flash!\nWhen continuing, your device will reboot to recovery and flash the selected items.\n\nDo you want to proceed?</string>
     <string name="both">Both</string>
     <string name="pick_file">Pick a file</string>
-    <string name="multi_user_do_not_use">Do not use multiuser mode</string>
+    <string name="multi_user_do_not_use">Do not use multi user mode</string>
     <string name="multi_user_do_not_use_summary">Check this if you have problems with flashing zip files from sdcard</string>
     <string name="accent">Accent color</string>
     <string name="accent_summary">Use your favourite color!</string>
@@ -304,4 +304,9 @@
     <string name="user_interface">Interface</string>
     <string name="swipe_on_content">Swipe on content</string>
     <string name="swipe_on_content_summary">Toggle the menu when swiping on the whole content</string>
+    <string name="gpu_vendor">GPU vendor</string>
+    <string name="gpu_renderer">GPU renderer</string>
+    <string name="opengl_version">OpenGL version</string>
+    <string name="opengl_extensions">OpenGL extensions</string>
+    <string name="shader_version">Shader version</string>
 </resources>
