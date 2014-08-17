@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -242,6 +243,11 @@ public class PreferencesFragment extends AttachPreferenceFragment
                         && !AppHelper.isPlayStoreInstalled()) {
                     return true;
                 }
+            }
+
+            // failsafe, do NOT go below here
+            if (TextUtils.equals(Constants.Iab.getKey(), "---")) {
+                return true;
             }
 
             final AccentAlertDialog.Builder builder = new AccentAlertDialog.Builder(activity);
