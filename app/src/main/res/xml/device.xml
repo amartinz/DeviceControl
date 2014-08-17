@@ -23,8 +23,8 @@
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="navbar_force"
-            android:title="@string/force_navbar"
-            android:summary="@string/force_navbar_summary" />
+            android:summary="@string/force_navbar_summary"
+            android:title="@string/force_navbar" />
 
     </PreferenceCategory>
 
@@ -33,13 +33,13 @@
         android:title="@string/knock_on_off_gestures">
 
         <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
-            android:key="knockon_gesture_enable"
-            android:title="@string/knock_on"
-            android:summaryOn="@string/knock_on_summary_on"
-            android:summaryOff="@string/knock_on_summary_off"
             android:defaultValue="false"
-            dc:filePath="@string/file_knock_on"
-            dc:category="device" />
+            android:key="knockon_gesture_enable"
+            android:summaryOff="@string/knock_on_summary_off"
+            android:summaryOn="@string/knock_on_summary_on"
+            android:title="@string/knock_on"
+            dc:category="device"
+            dc:filePathList="@array/files_knock_on" />
 
     </PreferenceCategory>
 
@@ -49,14 +49,14 @@
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="input_glove_mode"
-            android:title="@string/glove_mode"
-            android:summary="@string/glove_mode_summary" />
+            android:summary="@string/glove_mode_summary"
+            android:title="@string/glove_mode" />
 
         <org.namelessrom.devicecontrol.preferences.VibratorTuningPreference
+            android:dialogTitle="@string/vibrator_strength"
             android:key="vibrator_tuning"
-            android:title="@string/vibrator_strength"
             android:summary="@string/vibrator_strength_summary"
-            android:dialogTitle="@string/vibrator_strength" />
+            android:title="@string/vibrator_strength" />
 
     </PreferenceCategory>
 
@@ -66,30 +66,30 @@
 
         <!-- Touchkey backlight -->
         <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
-            android:key="touchkey_light"
-            android:title="@string/enable_keys_backlight"
-            android:summary="@string/enable_keys_backlight_summary"
             android:defaultValue="true"
-            dc:filePathList="@array/files_touchkey_light"
+            android:key="touchkey_light"
+            android:summary="@string/enable_keys_backlight_summary"
+            android:title="@string/enable_keys_backlight"
             dc:category="device"
+            dc:filePathList="@array/files_touchkey_light"
             dc:multifile="true"
             dc:valueChecked="255" />
 
         <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
-            android:key="touchkey_bln"
-            android:title="@string/enable_keys_notifications"
-            android:summary="@string/enable_keys_notifications_summary"
             android:defaultValue="true"
-            dc:filePath="@string/file_touchkey_bln"
-            dc:category="device" />
+            android:key="touchkey_bln"
+            android:summary="@string/enable_keys_notifications_summary"
+            android:title="@string/enable_keys_notifications"
+            dc:category="device"
+            dc:filePath="@string/file_touchkey_bln" />
 
         <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
-            android:key="keyboard_light"
-            android:title="@string/enable_keyboard_backlight"
-            android:summary="@string/enable_keyboard_backlight_summary"
             android:defaultValue="true"
-            dc:filePath="@string/file_keyboard_light"
+            android:key="keyboard_light"
+            android:summary="@string/enable_keyboard_backlight_summary"
+            android:title="@string/enable_keyboard_backlight"
             dc:category="device"
+            dc:filePath="@string/file_keyboard_light"
             dc:valueChecked="255" />
 
     </PreferenceCategory>
@@ -99,20 +99,20 @@
         android:title="@string/display">
 
         <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
-            android:key="lcd_power_reduce"
-            android:title="@string/lcd_power_reduce"
-            android:summary="@string/lcd_power_reduce_summary"
             android:defaultValue="false"
-            dc:filePath="@string/file_lcd_power_reduce"
-            dc:category="device" />
+            android:key="lcd_power_reduce"
+            android:summary="@string/lcd_power_reduce_summary"
+            android:title="@string/lcd_power_reduce"
+            dc:category="device"
+            dc:filePath="@string/file_lcd_power_reduce" />
 
         <org.namelessrom.devicecontrol.preferences.CustomListPreference
-            android:key="panel_color_temperature"
-            android:title="@string/screen_color_temperature"
-            android:summary="@string/screen_color_temperature"
+            android:defaultValue="2"
             android:entries="@array/panel_color_temp_entries"
             android:entryValues="@array/panel_color_temp_entries_values"
-            android:defaultValue="2" />
+            android:key="panel_color_temperature"
+            android:summary="@string/screen_color_temperature"
+            android:title="@string/screen_color_temperature" />
 
     </PreferenceCategory>
 
