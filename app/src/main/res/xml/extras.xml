@@ -89,5 +89,15 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="extras"
+        android:title="@string/extras">
+
+        <org.namelessrom.devicecontrol.preferences.CustomListPreference
+            android:key="tcp_congestion_control"
+            android:title="@string/tcp_congestion_control" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>
 

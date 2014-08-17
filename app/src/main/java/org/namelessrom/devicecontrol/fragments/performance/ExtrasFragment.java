@@ -23,6 +23,7 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
+import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
@@ -48,27 +49,34 @@ public class ExtrasFragment extends AttachPreferenceFragment
     //==============================================================================================
     // Files
     //==============================================================================================
+    private static final String  sMcPowerSchedulerFile = Utils.checkPaths(FILES_MC_POWER_SCHEDULER);
+    private static final boolean sMcPowerScheduler     = !sMcPowerSchedulerFile.isEmpty();
 
-    public static final String  sMcPowerSchedulerFile = Utils.checkPaths(FILES_MC_POWER_SCHEDULER);
-    public static final boolean sMcPowerScheduler     = !sMcPowerSchedulerFile.isEmpty();
+    private static final String TCP_CONGESTION_AVAILABLE =
+            "/proc/sys/net/ipv4/tcp_available_congestion_control";
+    private static final String TCP_CONGESTION_CONTROL   =
+            "/proc/sys/net/ipv4/tcp_congestion_control";
+
     //----------------------------------------------------------------------------------------------
-
     private PreferenceScreen mRoot;
-    //----------------------------------------------------------------------------------------------
 
+    //----------------------------------------------------------------------------------------------
     private CustomPreference mEntropy;
     private CustomPreference mFilesystem;
     private CustomPreference mKsm;
     private CustomPreference mHotplugging;
     private CustomPreference mThermal;
-    //----------------------------------------------------------------------------------------------
 
+    //----------------------------------------------------------------------------------------------
     private AwesomeCheckBoxPreference mPowerEfficientWork;
     private CustomListPreference      mMcPowerScheduler;
-    //----------------------------------------------------------------------------------------------
 
+    //----------------------------------------------------------------------------------------------
     private AwesomeCheckBoxPreference mMsmDcvs;
     private CustomPreference          mVoltageControl;
+
+    //----------------------------------------------------------------------------------------------
+    private CustomListPreference mTcpCongestion;
 
     //==============================================================================================
     // Overridden Methods
@@ -192,7 +200,36 @@ public class ExtrasFragment extends AttachPreferenceFragment
         }
         removeIfEmpty(category);
 
+        //------------------------------------------------------------------------------------------
+        // Extras
+        //------------------------------------------------------------------------------------------
+        category = (PreferenceCategory) findPreference("extras");
+        buildExtraCategory(category);
+        removeIfEmpty(category);
+
         isSupported(mRoot, getActivity());
+    }
+
+    private void buildExtraCategory(final PreferenceCategory category) {
+        mTcpCongestion = (CustomListPreference) findPreference("tcp_congestion_control");
+        // read the available tcp congestion controls
+        String tmp = Utils.readFile(TCP_CONGESTION_AVAILABLE);
+        if (!TextUtils.isEmpty(tmp)) {
+            // split them
+            final String[] tcp_avail = tmp.trim().split(" ");
+            // read the current congestion control
+            tmp = Utils.readFile(TCP_CONGESTION_CONTROL);
+            if (!TextUtils.isEmpty(tmp)) {
+                tmp = tmp.trim();
+                mTcpCongestion.setEntries(tcp_avail);
+                mTcpCongestion.setEntryValues(tcp_avail);
+                mTcpCongestion.setSummary(tmp);
+                mTcpCongestion.setValue(tmp);
+                mTcpCongestion.setOnPreferenceChangeListener(this);
+            }
+        } else {
+            category.removePreference(mTcpCongestion);
+        }
     }
 
     private void removeIfEmpty(final PreferenceGroup preferenceGroup) {
@@ -243,6 +280,14 @@ public class ExtrasFragment extends AttachPreferenceFragment
             return true;
         } else if (preference == mMsmDcvs) {
             mMsmDcvs.writeValue((Boolean) o);
+            return true;
+        } else if (preference == mTcpCongestion) {
+            final String value = String.valueOf(o);
+            Utils.writeValue(TCP_CONGESTION_CONTROL, value);
+            PreferenceHelper.setBootup(new DataItem(
+                    DatabaseHandler.CATEGORY_EXTRAS,
+                    mTcpCongestion.getKey(), TCP_CONGESTION_CONTROL, value));
+            preference.setSummary(value);
             return true;
         }
 

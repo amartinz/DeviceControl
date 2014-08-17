@@ -315,4 +315,5 @@
     <string name="dead">Dead</string>
     <string name="over_voltage">Over voltage</string>
     <string name="overheat">Overheat</string>
+    <string name="tcp_congestion_control">TCP congestion control</string>
 </resources>
