@@ -174,7 +174,7 @@
   <string name="fstrim_interval_title">Interval de FStrim</string>
   <string name="fstrim_interval_summary">Tria un interval automàtic de FStrimming.</string>
   <string name="app_system"><![CDATA[PERILL!<br /><b>%s</b> és una aplicació del sistema!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> és una aplicació d'usuari.]]></string>
+  <string name="app_user"><![CDATA[<b>%s</b> és una aplicació d\'usuari.]]></string>
   <string name="enable">Habilitar</string>
   <string name="enable_msg">%s serà habilitat.\n\nContinuar?</string>
   <string name="disable">Deshabilitar</string>

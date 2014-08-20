@@ -175,7 +175,7 @@
   <string name="fstrim_summary">FStrim viene utilizzato per eliminare (o \"tagliare\") blocchi isolati che non sono in uso dal filesystem.\nCiò può migliorare le prestazioni e ridurre i rallentamenti.</string>
   <string name="fstrim_interval_title">Intervallo di FStrim</string>
   <string name="fstrim_interval_summary">Scegliere l\'intervallo per FStrimming automatico.</string>
-  <string name="app_system"><![CDATA[ATTENZIONE!<br /><b>%s</b> è un'applicazione di sistema!]]></string>
+  <string name="app_system"><![CDATA[ATTENZIONE!<br /><b>%s</b> è un\'applicazione di sistema!]]></string>
   <string name="app_user"><![CDATA[<b>%s</b> è un'applicazione utente.]]></string>
   <string name="enable">Abilita</string>
   <string name="enable_msg">%s sarà abilitato.\n\nContinuare?</string>
