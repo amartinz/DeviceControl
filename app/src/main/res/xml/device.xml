@@ -103,7 +103,7 @@
             android:summary="@string/lcd_power_reduce_summary"
             android:title="@string/lcd_power_reduce"
             dc:category="device"
-            dc:filePath="@string/file_lcd_power_reduce" />
+            dc:filePathList="@array/files_lcd_power_reduce" />
 
         <org.namelessrom.devicecontrol.preferences.CustomListPreference
             android:defaultValue="2"

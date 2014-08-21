@@ -39,7 +39,6 @@
     <!-- Misc -->
     <string name="file_fc_failsafe" translatable="false">/sys/kernel/fast_charge/failsafe</string>
     <string name="file_keyboard_light" translatable="false">/sys/class/leds/keyboard-backlight/max_brightness</string>
-    <string name="file_lcd_power_reduce" translatable="false">/sys/class/lcd/panel/power_reduce</string>
     <string name="file_logger_mode" translatable="false">/sys/kernel/logger_mode/logger_mode</string>
     <string name="file_msm_dcvs" translatable="false">/sys/module/msm_dcvs/parameters/enable</string>
     <string name="file_power_efficient_workqueue" translatable="false">/sys/module/workqueue/parameters/power_efficient</string>
@@ -59,5 +58,9 @@
     <string-array name="files_knock_on" translatable="false">
         <item>/sys/devices/virtual/input/lge_touch/touch_gesture</item>
         <item>/proc/touchpanel/double_tap_enable</item>
+    </string-array>
+    <string-array name="files_lcd_power_reduce" translatable="false">
+        <item>/sys/class/lcd/panel/power_reduce</item>
+        <item>/sys/class/graphics/fb0/cabc</item>
     </string-array>
 </resources>
