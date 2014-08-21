@@ -118,23 +118,14 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
     @Override public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
         switch (id) {
-            case android.R.id.home: {
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
-            }
             case R.id.action_task_add: {
                 final Intent i = new Intent(getActivity(), FilePickerActivity.class);
                 i.putExtra(FilePickerFragment.ARG_FILE_TYPE, "zip");
                 startActivityForResult(i, REQUEST_CODE_FILE);
                 return true;
             }
-            default: {
-                return false;
-            }
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void checkAdapter() {
