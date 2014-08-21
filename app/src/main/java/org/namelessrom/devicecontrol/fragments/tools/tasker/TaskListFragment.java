@@ -159,8 +159,8 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
     private class UpdateTaskerCardList extends AsyncTask<Void, Void, ArrayList<TaskerCard>> {
         @Override protected void onPreExecute() {
             // TODO: animations and progress view
-            mEmptyView.setVisibility(View.INVISIBLE);
-            mListView.setVisibility(View.INVISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+            mListView.setVisibility(View.GONE);
         }
 
         @Override protected ArrayList<TaskerCard> doInBackground(final Void... voids) {
@@ -176,14 +176,14 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
 
         @Override protected void onPostExecute(final ArrayList<TaskerCard> result) {
             // if the adapter exists and we have items, clear it and add the results
-            if (mAdapter != null && result != null && result.size() != 0) {
+            if (mAdapter != null && result != null && result.size() > 0) {
                 mAdapter.clear();
                 mAdapter.addAll(result);
-                mEmptyView.setVisibility(View.INVISIBLE);
+                mEmptyView.setVisibility(View.GONE);
                 mListView.setVisibility(View.VISIBLE);
             } else {
                 mEmptyView.setVisibility(View.VISIBLE);
-                mListView.setVisibility(View.INVISIBLE);
+                mListView.setVisibility(View.GONE);
             }
         }
     }
