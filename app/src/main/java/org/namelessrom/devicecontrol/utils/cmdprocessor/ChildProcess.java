@@ -132,11 +132,15 @@ public class ChildProcess {
         if (!isFinished()) {
             throw new IllegalThreadStateException("Child process running");
         }
+
+        final String childStdOut = mChildStdout != null ? mChildStdout.toString() : "";
+        final String childStdErr = mChildStderr != null ? mChildStderr.toString() : "";
+
         return new CommandResult(
                 mStartTime,
                 mExitValue,
-                mChildStdout.toString(),
-                mChildStderr.toString(),
+                childStdOut,
+                childStdErr,
                 mEndTime);
     }
 }

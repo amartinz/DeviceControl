@@ -433,10 +433,6 @@ public class BuildPropFragment extends AttachPreferenceFragment
             m3gSpeedPref.setChecked(false);
         }
         final String gpu = Utils.findPropValue(Scripts.BUILD_PROP, GPU_PROP);
-        if (!gpu.equals(DISABLE) && !gpu.equals("0")) {
-            mGpuPref.setChecked(true);
-        } else {
-            mGpuPref.setChecked(false);
-        }
+        mGpuPref.setChecked(Utils.isEnabled(gpu, false));
     }
 }

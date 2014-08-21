@@ -90,7 +90,9 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
         mCallbacks = (Callbacks) activity;
 
         mWizardModel = mCallbacks.onGetModel();
-        mWizardModel.registerListener(this);
+        if (mWizardModel != null) {
+            mWizardModel.registerListener(this);
+        }
         onPageTreeChanged();
     }
 

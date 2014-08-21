@@ -146,7 +146,9 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
         PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_LMK, "lmk",
                 PerformanceConstants.FILE_MINFREE, value));
 
-        adapter = new LmkAdapter(getActivity(), value.trim().split(","));
+        final Context context = (getActivity() != null)
+                ? getActivity() : Application.applicationContext;
+        adapter = new LmkAdapter(context, value.trim().split(","));
         setListAdapter(adapter);
     }
 
@@ -238,8 +240,8 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
             }
 
             // just in case we are out of bounds..
-            if (position > TYPES.length) {
-                position = TYPES.length;
+            if (position > TYPES.length - 1) {
+                position = TYPES.length - 1;
             }
 
             if (viewHolder.pp != null) {
