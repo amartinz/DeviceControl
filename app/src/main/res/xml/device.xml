@@ -29,14 +29,13 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="input_knockon"
-        android:title="@string/knock_on_off_gestures">
+        android:key="input_gestures"
+        android:title="@string/gestures">
 
         <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
             android:defaultValue="false"
             android:key="knockon_gesture_enable"
-            android:summaryOff="@string/knock_on_summary_off"
-            android:summaryOn="@string/knock_on_summary_on"
+            android:summary="@string/knock_on_summary"
             android:title="@string/knock_on"
             dc:category="device"
             dc:filePathList="@array/files_knock_on" />

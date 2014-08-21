@@ -130,7 +130,7 @@ public class DeviceFragment extends AttachPreferenceFragment
             }
         }
 
-        category = (PreferenceCategory) findPreference("input_knockon");
+        category = (PreferenceCategory) findPreference("input_gestures");
         if (category != null) {
             mKnockOn = (AwesomeCheckBoxPreference) findPreference("knockon_gesture_enable");
             if (mKnockOn != null) {

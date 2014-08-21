@@ -194,10 +194,9 @@
     <string name="delete_property_message">%s will be deleted.\n\nContinue?</string>
     <string name="name">Name</string>
     <string name="presets">Presets</string>
-    <string name="knock_on_off_gestures">Knock On/Off Gestures</string>
-    <string name="knock_on">Knock On</string>
-    <string name="knock_on_summary_off">Knock On gesture disabled</string>
-    <string name="knock_on_summary_on">Knock On gesture enabled</string>
+    <string name="gestures">Gestures</string>
+    <string name="knock_on">Knock on</string>
+    <string name="knock_on_summary">Double tap on the screen to turn it on</string>
     <string name="five_minutes">5 Minutes</string>
     <string name="ten_minutes">10 Minutes</string>
     <string name="twenty_minutes">20 Minutes</string>
