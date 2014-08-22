@@ -61,15 +61,6 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/app_settings"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_margin="@dimen/app_margin"
-            android:alpha="0"
-            android:src="@drawable/ic_general_setup"
-            tools:alpha="1" />
-
     </LinearLayout>
 
     <View

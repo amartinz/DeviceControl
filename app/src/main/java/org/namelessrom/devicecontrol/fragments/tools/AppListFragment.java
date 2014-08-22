@@ -46,6 +46,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
@@ -70,6 +71,7 @@ import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.utils.AnimationHelper;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.SortHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachFragment;
@@ -82,6 +84,9 @@ import static butterknife.ButterKnife.findById;
 
 public class AppListFragment extends AttachFragment implements DeviceConstants,
         OnAppChoosenListener, OnBackPressedListener {
+
+    private static final int DIALOG_TYPE_DISABLE   = 0;
+    private static final int DIALOG_TYPE_UNINSTALL = 1;
 
     private final Handler mHandler            = new Handler();
     private       boolean mDetailsShowing     = false;
@@ -131,15 +136,23 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_app_details, menu);
+
         if (mAppItem == null || (!startedFromActivity && !mDetailsShowing)) {
             menu.removeItem(R.id.menu_app_kill);
-            menu.removeItem(R.id.menu_app_disable);
             menu.removeItem(R.id.menu_app_clear_cache);
             menu.removeItem(R.id.menu_app_clear_data);
             menu.removeItem(R.id.menu_action_play_store);
+            menu.removeItem(R.id.menu_app_disable);
+            menu.removeItem(R.id.menu_app_uninstall);
             return;
-        } else if (!AppHelper.isPlayStoreInstalled()) {
-            menu.removeItem(R.id.menu_action_play_store);
+        } else {
+            if (!AppHelper.isPlayStoreInstalled()) {
+                menu.removeItem(R.id.menu_action_play_store);
+            }
+            // prevent uninstalling lovely packages
+            if (mAppItem.getPackageName().contains("org.namelessrom")) {
+                menu.removeItem(R.id.menu_app_uninstall);
+            }
         }
 
         final MenuItem appKill = menu.findItem(R.id.menu_app_kill);
@@ -154,6 +167,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     }
 
     @Override public boolean onOptionsItemSelected(final MenuItem item) {
+        if (mAppItem == null) { return false; }
         final int id = item.getItemId();
         switch (id) {
             case android.R.id.home: {
@@ -164,26 +178,28 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                 return true;
             }
             case R.id.menu_action_play_store: {
-                if (mAppItem != null) {
-                    AppHelper.showInPlaystore("market://details?id=" + mAppItem.getPackageName());
-                }
+                AppHelper.showInPlaystore("market://details?id=" + mAppItem.getPackageName());
                 return true;
             }
             case R.id.menu_app_kill: {
                 killApp();
-                break;
-            }
-            case R.id.menu_app_disable: {
-                disableApp();
-                break;
+                return true;
             }
             case R.id.menu_app_clear_cache: {
                 clearAppCache();
-                break;
+                return true;
             }
             case R.id.menu_app_clear_data: {
                 clearAppData();
-                break;
+                return true;
+            }
+            case R.id.menu_app_disable: {
+                disableApp();
+                return true;
+            }
+            case R.id.menu_app_uninstall: {
+                uninstallApp();
+                return true;
             }
             default: {
                 break;
@@ -320,9 +336,11 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     }
 
     private void disableApp() {
-        final Activity activity = getActivity();
-        if (activity == null) return;
-        showConfirmationDialog(activity);
+        showConfirmationDialog(DIALOG_TYPE_DISABLE);
+    }
+
+    private void uninstallApp() {
+        showConfirmationDialog(DIALOG_TYPE_UNINSTALL);
     }
 
     private void clearAppData() {
@@ -407,18 +425,48 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         invalidateOptionsMenu();
     }
 
-    private void showConfirmationDialog(final Activity activity) {
-        if (mAppItem == null) return;
+    private void showConfirmationDialog(final int type) {
+        if (mAppItem == null || getActivity() == null) return;
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setMessage(getString(mAppItem.isEnabled()
-                ? R.string.disable_msg : R.string.enable_msg, mAppItem.getLabel()))
-                .setPositiveButton(mAppItem.isEnabled() ? R.string.disable : R.string.enable,
-                        new DialogInterface.OnClickListener() {
+        final String message;
+        final int positiveButton;
+        switch (type) {
+            case DIALOG_TYPE_DISABLE: {
+                message = getString(mAppItem.isEnabled()
+                        ? R.string.disable_msg : R.string.enable_msg, mAppItem.getLabel());
+                positiveButton = mAppItem.isEnabled() ? R.string.disable : R.string.enable;
+                break;
+            }
+            case DIALOG_TYPE_UNINSTALL: {
+                message = getString(R.string.uninstall_msg, mAppItem.getLabel());
+                positiveButton = android.R.string.yes;
+                break;
+            }
+            default: {
+                return;
+            }
+        }
+
+        builder.setMessage(message)
+                .setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                disable();
+                                switch (type) {
+                                    case DIALOG_TYPE_DISABLE: {
+                                        disable();
+                                        break;
+                                    }
+                                    case DIALOG_TYPE_UNINSTALL: {
+                                        uninstall();
+                                        break;
+                                    }
+                                    default: {
+                                        dialog.dismiss();
+                                        return;
+                                    }
+                                }
                             }
                         }
                 )
@@ -458,6 +506,33 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         try {
             RootTools.getShell(true).add(commandCapture);
         } catch (Exception ignored) { /* ignored */ }
+    }
+
+    private void uninstall() {
+        final StringBuilder sb = new StringBuilder();
+        if (mAppItem.isSystemApp()) {
+            sb.append("busybox mount -o rw,remount /system;");
+        }
+        sb.append(String.format("rm -rf %s;", mAppItem.getApplicationInfo().sourceDir));
+        sb.append(String.format("rm -rf %s;", mAppItem.getApplicationInfo().dataDir));
+        sb.append(String.format("pm uninstall %s", mAppItem.getPackageName()));
+        if (mAppItem.isSystemApp()) {
+            sb.append("busybox mount -o ro,remount /system;");
+        }
+        final String cmd = sb.toString();
+        Logger.v(this, cmd);
+        Utils.runRootCommand(cmd);
+        if (getActivity() != null) {
+            Toast.makeText(getActivity(),
+                    getString(R.string.uninstall_success, mAppItem.getLabel()), Toast.LENGTH_SHORT)
+                    .show();
+        }
+        mAppItem = null;
+        if (startedFromActivity) {
+            refreshAppDetails();
+        } else {
+            new LoadApps().execute();
+        }
     }
 
     @Subscribe public void onPackageStats(final PackageStats packageStats) {
@@ -627,6 +702,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                 mRecyclerView.setAdapter(mAdapter);
                 AnimationHelper.animateX(mAppDetails, 0, 0, mAppDetails.getWidth());
             }
+            invalidateOptionsMenu();
         }
     }
 

@@ -55,11 +55,6 @@ public class AppDetailsActivity extends AccentActivity {
                 .commit();
     }
 
-    @Override public boolean onCreateOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_app_details, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
     private Fragment buildFragment(Intent intent) {
         String packageName = null;
         final Bundle args;
