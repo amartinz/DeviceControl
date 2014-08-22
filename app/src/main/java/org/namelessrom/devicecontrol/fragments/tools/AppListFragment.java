@@ -42,7 +42,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -82,7 +81,7 @@ import java.util.List;
 import static butterknife.ButterKnife.findById;
 
 public class AppListFragment extends AttachFragment implements DeviceConstants,
-        View.OnClickListener, OnAppChoosenListener, OnBackPressedListener {
+        OnAppChoosenListener, OnBackPressedListener {
 
     private final Handler mHandler            = new Handler();
     private       boolean mDetailsShowing     = false;
@@ -103,14 +102,10 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     private TextView            mAppPackage;
     //----------------------------------------------------------------------------------------------
     private TextView            mStatus;
-    private Button              mKillApp;
-    private Button              mDisabler;
     private TextView            mAppCode;
     private TextView            mAppVersion;
     private PieChart            mCacheGraph;
     private LinearLayout        mCacheInfo;
-    private Button              mClearData;
-    private Button              mClearCache;
     //==============================================================================================
 
 
@@ -135,9 +130,26 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (!startedFromActivity && mDetailsShowing && AppHelper.isPlayStoreInstalled()
-                && mAppItem != null) {
-            inflater.inflate(R.menu.menu_app_details, menu);
+        inflater.inflate(R.menu.menu_app_details, menu);
+        if (mAppItem == null || (!startedFromActivity && !mDetailsShowing)) {
+            menu.removeItem(R.id.menu_app_kill);
+            menu.removeItem(R.id.menu_app_disable);
+            menu.removeItem(R.id.menu_app_clear_cache);
+            menu.removeItem(R.id.menu_app_clear_data);
+            menu.removeItem(R.id.menu_action_play_store);
+            return;
+        } else if (!AppHelper.isPlayStoreInstalled()) {
+            menu.removeItem(R.id.menu_action_play_store);
+        }
+
+        final MenuItem appKill = menu.findItem(R.id.menu_app_kill);
+        if (appKill != null) {
+            appKill.setEnabled(AppHelper.isAppRunning(mAppItem.getPackageName()));
+        }
+
+        final MenuItem disable = menu.findItem(R.id.menu_app_disable);
+        if (disable != null) {
+            disable.setTitle(mAppItem.isEnabled() ? R.string.disable : R.string.enable);
         }
     }
 
@@ -156,6 +168,22 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                     AppHelper.showInPlaystore("market://details?id=" + mAppItem.getPackageName());
                 }
                 return true;
+            }
+            case R.id.menu_app_kill: {
+                killApp();
+                break;
+            }
+            case R.id.menu_app_disable: {
+                disableApp();
+                break;
+            }
+            case R.id.menu_app_clear_cache: {
+                clearAppCache();
+                break;
+            }
+            case R.id.menu_app_clear_data: {
+                clearAppData();
+                break;
             }
             default: {
                 break;
@@ -195,19 +223,10 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         mAppLabel = findById(appDetails, R.id.app_label);
         mAppPackage = findById(appDetails, R.id.app_package);
         mStatus = findById(appDetails, R.id.app_status);
-        mKillApp = findById(appDetails, R.id.app_kill);
-        mDisabler = findById(appDetails, R.id.app_disabler);
         mAppCode = findById(appDetails, R.id.app_version_code);
         mAppVersion = findById(appDetails, R.id.app_version_name);
         mCacheGraph = findById(appDetails, R.id.app_cache_graph);
         mCacheInfo = findById(appDetails, R.id.app_cache_info_container);
-        mClearData = findById(appDetails, R.id.app_data_clear);
-        mClearCache = findById(appDetails, R.id.app_cache_clear);
-
-        mKillApp.setOnClickListener(this);
-        mDisabler.setOnClickListener(this);
-        mClearCache.setOnClickListener(this);
-        mClearData.setOnClickListener(this);
 
         if (startedFromActivity) {
             return appDetails;
@@ -263,36 +282,21 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         }
     }
 
-    @Override public void onClick(View v) {
-        final int id = v.getId();
-        switch (id) {
-            case R.id.app_kill:
-                killApp();
-                break;
-            case R.id.app_disabler:
-                disableApp();
-                break;
-            case R.id.app_cache_clear:
-                clearAppCache();
-                break;
-            case R.id.app_data_clear:
-                clearAppData();
-                break;
-        }
-    }
-
     @Override public boolean onBackPressed() {
         if (!startedFromActivity && mDetailsShowing) {
             // animate the details out
+            final ArrayList<ObjectAnimator> animators = new ArrayList<ObjectAnimator>();
             final AnimatorSet animatorSet = new AnimatorSet();
             final ObjectAnimator outAnim = ObjectAnimator.ofFloat(mAppDetails, "x",
                     mAppIcon.getWidth() + 2 * AnimationHelper.getDp(R.dimen.app_margin),
                     mAppDetails.getWidth());
             outAnim.setDuration(500);
+            animators.add(outAnim);
             final ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(mAppDetails, "alpha", 1f, 0f);
             alphaAnim.setDuration(500);
+            animators.add(alphaAnim);
             animatorSet.setInterpolator(new AccelerateInterpolator());
-            animatorSet.playTogether(outAnim, alphaAnim);
+            animatorSet.playTogether(animators.toArray(new ObjectAnimator[animators.size()]));
             animatorSet.start();
             mDetailsShowing = false;
             if (getActivity() != null) getActivity().invalidateOptionsMenu();
@@ -307,9 +311,12 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     }
 
     private void killApp() {
-        mKillApp.setEnabled(false);
         AppHelper.killProcess(mAppItem.getPackageName());
-        mHandler.postDelayed(mKillRunnable, 500);
+        mHandler.postDelayed(new Runnable() {
+            @Override public void run() {
+                invalidateOptionsMenu();
+            }
+        }, 500);
     }
 
     private void disableApp() {
@@ -319,15 +326,11 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     }
 
     private void clearAppData() {
-        mClearCache.setEnabled(false);
-        mClearData.setEnabled(false);
         AppHelper.clearData(mAppItem.getPackageName());
         mHandler.postDelayed(mClearRunnable, 500);
     }
 
     private void clearAppCache() {
-        mClearCache.setEnabled(false);
-        mClearData.setEnabled(false);
         AppHelper.clearCache(mAppItem.getPackageName());
         mHandler.postDelayed(mClearRunnable, 500);
     }
@@ -354,19 +357,6 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             }
             mStatus.setText(Html.fromHtml(tmp));
 
-            if (!AppHelper.isAppRunning(mAppItem.getPackageName())) {
-                mKillApp.setEnabled(false);
-            } else {
-                mKillApp.setEnabled(true);
-            }
-
-            if (mAppItem.getPackageName().contains("org.namelessrom")) {
-                mDisabler.setEnabled(false);
-            } else {
-                mDisabler.setEnabled(true);
-            }
-            mDisabler.setText(mAppItem.isEnabled() ? R.string.disable : R.string.enable);
-
             mAppCode.setText(
                     getString(R.string.app_version_code, mAppItem.getPackageInfo().versionCode));
 
@@ -381,15 +371,18 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         if (!startedFromActivity && !mDetailsShowing) {
             mAppDetails.bringToFront();
             // animate the details in
+            final ArrayList<ObjectAnimator> animators = new ArrayList<ObjectAnimator>();
             final AnimatorSet animatorSet = new AnimatorSet();
             final ObjectAnimator outAnim = ObjectAnimator.ofFloat(mAppDetails, "x",
                     mAppDetails.getWidth(),
                     mAppIcon.getWidth() + 2 * AnimationHelper.getDp(R.dimen.app_margin));
             outAnim.setDuration(500);
+            animators.add(outAnim);
             final ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(mAppDetails, "alpha", 0f, 1f);
             alphaAnim.setDuration(500);
+            animators.add(alphaAnim);
             animatorSet.setInterpolator(new DecelerateInterpolator());
-            animatorSet.playTogether(outAnim, alphaAnim);
+            animatorSet.playTogether(animators.toArray(new ObjectAnimator[animators.size()]));
             animatorSet.addListener(new Animator.AnimatorListener() {
                 @Override public void onAnimationStart(Animator animator) {
                     mCacheGraph.setVisibility(View.INVISIBLE);
@@ -410,6 +403,8 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         } else {
             mCacheGraph.animateXY(700, 700);
         }
+
+        invalidateOptionsMenu();
     }
 
     private void showConfirmationDialog(final Activity activity) {
@@ -440,10 +435,6 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     private void disable() {
         if (mAppItem == null) return;
 
-        if (mDisabler != null) {
-            mDisabler.setEnabled(false);
-        }
-
         String cmd;
         if (mAppItem.isEnabled()) {
             cmd = "pm disable " + mAppItem.getPackageName() + " 2> /dev/null";
@@ -471,7 +462,6 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
     @Subscribe public void onPackageStats(final PackageStats packageStats) {
         Logger.i(this, "onAppSizeEvent()");
-
         if (packageStats == null) return;
 
         final long totalSize = packageStats.codeSize + packageStats.dataSize
@@ -561,29 +551,17 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     private final Runnable mClearRunnable = new Runnable() {
         @Override
         public void run() {
-            if (mClearCache != null) {
-                mClearCache.setEnabled(true);
-            }
-            if (mClearData != null) {
-                mClearData.setEnabled(true);
-            }
-            if (mKillApp != null) {
-                mKillApp.setEnabled(AppHelper.isAppRunning(mAppItem.getPackageName()));
-            }
             try {
                 AppHelper.getSize(mAppItem.getPackageName());
             } catch (Exception e) { Logger.e(this, "AppHelper.getSize(): " + e); }
         }
     };
 
-    private final Runnable mKillRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (mKillApp != null) {
-                mKillApp.setEnabled(AppHelper.isAppRunning(mAppItem.getPackageName()));
-            }
+    private void invalidateOptionsMenu() {
+        if (getActivity() != null) {
+            getActivity().invalidateOptionsMenu();
         }
-    };
+    }
 
     private class DisableHandler extends Handler {
         private static final int COMMAND_OUTPUT     = 0x01;
@@ -608,15 +586,11 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             switch (action) {
                 case COMMAND_COMPLETED:
                 case COMMAND_TERMINATED:
-                    if (mDisabler != null) {
-                        appItem.setEnabled(!appItem.isEnabled());
-                        mDisabler.setEnabled(true);
-                        mDisabler.setText(appItem.isEnabled()
-                                ? R.string.disable : R.string.enable);
-                    }
+                    appItem.setEnabled(!appItem.isEnabled());
                     if (mAdapter != null) {
                         mAdapter.notifyDataSetChanged();
                     }
+                    invalidateOptionsMenu();
                     break;
                 default:
                 case COMMAND_OUTPUT:
