@@ -34,6 +34,7 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -152,6 +153,11 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             // prevent uninstalling lovely packages
             if (mAppItem.getPackageName().contains("org.namelessrom")) {
                 menu.removeItem(R.id.menu_app_uninstall);
+                // do not allow to disable our own app
+                if (TextUtils.equals(mAppItem.getPackageName(),
+                        Application.applicationContext.getPackageName())) {
+                    menu.removeItem(R.id.menu_app_disable);
+                }
             }
         }
 
