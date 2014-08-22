@@ -39,6 +39,13 @@ LOCAL_SRC_FILES   += $(call all-java-files-under, $(library_src_files))
 
 LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/holocolorpicker/res
 
+## MPAndroidChart
+
+library_src_files := ../../../../../../external/mpandroidchart/MPChartLib/src
+LOCAL_SRC_FILES   += $(call all-java-files-under, $(library_src_files))
+
+LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/mpandroidchart/MPChartLib/res
+
 ######
 
 LOCAL_AAPT_FLAGS := \
@@ -47,6 +54,7 @@ LOCAL_AAPT_FLAGS := \
     --extra-packages org.namelessrom.devicecontrol.resources \
     --extra-packages com.negusoft.holoaccent \
     --extra-packages com.larswerkman.holocolorpicker \
+    --extra-packages com.github.mikephil.charting \
 
 ######
 

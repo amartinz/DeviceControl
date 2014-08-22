@@ -17,6 +17,8 @@
  */
 package org.namelessrom.devicecontrol.fragments.tools;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,7 +27,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,8 +48,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.echo.holographlibrary.Bar;
-import com.echo.holographlibrary.BarGraph;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.Legend;
 import com.squareup.otto.Subscribe;
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
@@ -102,7 +107,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     private Button              mDisabler;
     private TextView            mAppCode;
     private TextView            mAppVersion;
-    private BarGraph            mCacheGraph;
+    private PieChart            mCacheGraph;
     private LinearLayout        mCacheInfo;
     private Button              mClearData;
     private Button              mClearCache;
@@ -220,9 +225,33 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         return rootView;
     }
 
+    private void setupCacheGraph() {
+        mCacheGraph.setDescription("");
+
+        mCacheGraph.setHoleRadius(60f);
+        mCacheGraph.setDrawHoleEnabled(true);
+        mCacheGraph.setTransparentCircleRadius(65f);
+
+        mCacheGraph.setDrawXValues(false);
+        mCacheGraph.setDrawYValues(false);
+        mCacheGraph.setDrawCenterText(true);
+
+        mCacheGraph.setTouchEnabled(false);
+
+        final int grey = Application.getColor(R.color.grey_dark);
+        mCacheGraph.setBackgroundColor(grey);
+        mCacheGraph.setDrawPaintColor(grey);
+        mCacheGraph.setHolePaintColor(grey);
+        mCacheGraph.setValuePaintColor(grey);
+
+        mCacheGraph.invalidate();
+    }
+
     @Override public void onViewCreated(final View view, final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+
+        setupCacheGraph();
 
         if (startedFromActivity) {
             refreshAppDetails();
@@ -255,12 +284,16 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     @Override public boolean onBackPressed() {
         if (!startedFromActivity && mDetailsShowing) {
             // animate the details out
+            final AnimatorSet animatorSet = new AnimatorSet();
             final ObjectAnimator outAnim = ObjectAnimator.ofFloat(mAppDetails, "x",
                     mAppIcon.getWidth() + 2 * AnimationHelper.getDp(R.dimen.app_margin),
                     mAppDetails.getWidth());
             outAnim.setDuration(500);
-            outAnim.setInterpolator(new DecelerateInterpolator());
-            outAnim.start();
+            final ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(mAppDetails, "alpha", 1f, 0f);
+            alphaAnim.setDuration(500);
+            animatorSet.setInterpolator(new AccelerateInterpolator());
+            animatorSet.playTogether(outAnim, alphaAnim);
+            animatorSet.start();
             mDetailsShowing = false;
             if (getActivity() != null) getActivity().invalidateOptionsMenu();
             return true;
@@ -348,14 +381,34 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         if (!startedFromActivity && !mDetailsShowing) {
             mAppDetails.bringToFront();
             // animate the details in
+            final AnimatorSet animatorSet = new AnimatorSet();
             final ObjectAnimator outAnim = ObjectAnimator.ofFloat(mAppDetails, "x",
                     mAppDetails.getWidth(),
                     mAppIcon.getWidth() + 2 * AnimationHelper.getDp(R.dimen.app_margin));
             outAnim.setDuration(500);
-            outAnim.setInterpolator(new AccelerateInterpolator());
-            outAnim.start();
+            final ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(mAppDetails, "alpha", 0f, 1f);
+            alphaAnim.setDuration(500);
+            animatorSet.setInterpolator(new DecelerateInterpolator());
+            animatorSet.playTogether(outAnim, alphaAnim);
+            animatorSet.addListener(new Animator.AnimatorListener() {
+                @Override public void onAnimationStart(Animator animator) {
+                    mCacheGraph.setVisibility(View.INVISIBLE);
+                }
+
+                @Override public void onAnimationEnd(Animator animator) {
+                    mCacheGraph.setVisibility(View.VISIBLE);
+                    mCacheGraph.animateXY(700, 700);
+                }
+
+                @Override public void onAnimationCancel(Animator animator) { }
+
+                @Override public void onAnimationRepeat(Animator animator) { }
+            });
+            animatorSet.start();
             mDetailsShowing = true;
             if (getActivity() != null) getActivity().invalidateOptionsMenu();
+        } else {
+            mCacheGraph.animateXY(700, 700);
         }
     }
 
@@ -421,15 +474,16 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
         if (packageStats == null) return;
 
+        final long totalSize = packageStats.codeSize + packageStats.dataSize
+                + packageStats.externalCodeSize + packageStats.externalDataSize
+                + packageStats.externalMediaSize + packageStats.externalObbSize
+                + packageStats.cacheSize + packageStats.externalCacheSize;
+
         if (mCacheInfo != null) {
             mCacheInfo.removeAllViews();
 
             mCacheInfo.addView(addCacheWidget(R.string.total,
-                    AppHelper.convertSize(packageStats.codeSize + packageStats.dataSize
-                            + packageStats.externalCodeSize + packageStats.externalDataSize
-                            + packageStats.externalMediaSize + packageStats.externalObbSize
-                            + packageStats.externalCacheSize)
-            ));
+                    AppHelper.convertSize(totalSize)));
             mCacheInfo.addView(addCacheWidget(R.string.app,
                     AppHelper.convertSize(packageStats.codeSize)));
             mCacheInfo.addView(addCacheWidget(R.string.ext_app,
@@ -449,43 +503,44 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         }
 
         if (mCacheGraph != null) {
-            final ArrayList<Bar> barList = new ArrayList<Bar>();
-            final Resources r = getResources();
-            // Total -------------------------------------------------------------------------------
-            String text = getString(R.string.total);
-            barList.add(createBar(packageStats.codeSize + packageStats.dataSize
-                            + packageStats.externalCodeSize + packageStats.externalDataSize
-                            + packageStats.externalMediaSize + packageStats.externalObbSize,
-                    text, r.getColor(R.color.greenish)
-            ));
+            final ArrayList<Entry> sliceList = new ArrayList<Entry>();
+            final ArrayList<String> textList = new ArrayList<String>();
             // App ---------------------------------------------------------------------------------
-            text = getString(R.string.app);
-            barList.add(createBar(packageStats.codeSize + packageStats.externalCodeSize,
-                    text, r.getColor(R.color.red_middle)));
+            textList.add(getString(R.string.app));
+            sliceList.add(new Entry(packageStats.codeSize + packageStats.externalCodeSize, 0));
             // Data --------------------------------------------------------------------------------
-            text = getString(R.string.data);
-            barList.add(createBar(packageStats.dataSize + packageStats.externalDataSize,
-                    text, r.getColor(R.color.orange)));
+            textList.add(getString(R.string.data));
+            sliceList.add(new Entry(packageStats.dataSize + packageStats.externalDataSize, 1));
             // External ------------------------------------------------------------------------
-            text = getString(R.string.ext);
-            barList.add(createBar(packageStats.externalMediaSize + packageStats.externalObbSize,
-                    text, r.getColor(R.color.blueish)));
+            textList.add(getString(R.string.ext));
+            sliceList.add(new Entry(
+                    packageStats.externalMediaSize + packageStats.externalObbSize, 2));
             // Cache -------------------------------------------------------------------------------
-            text = getString(R.string.cache);
-            barList.add(createBar(packageStats.cacheSize + packageStats.externalCacheSize,
-                    text, r.getColor(R.color.review_green)));
-            mCacheGraph.setBars(barList);
-        }
-    }
+            textList.add(getString(R.string.cache));
+            sliceList.add(new Entry(packageStats.cacheSize + packageStats.externalCacheSize, 3));
 
-    private Bar createBar(final long value, final String text, final int color) {
-        final Bar bar = new Bar();
-        bar.setName(text);
-        bar.setValue(value);
-        bar.setValueString(AppHelper.convertSize(value));
-        bar.setValueColor(Application.getColor(R.color.default_color));
-        bar.setColor(color);
-        return bar;
+            final PieDataSet dataSet = new PieDataSet(sliceList, getString(R.string.app_size));
+            dataSet.setSliceSpace(5f);
+            dataSet.setColors(ColorTemplate.createColors(Application.applicationContext,
+                    ColorTemplate.VORDIPLOM_COLORS));
+
+            final PieData data = new PieData(textList, dataSet);
+            mCacheGraph.setData(data);
+
+            mCacheGraph.highlightValues(null);
+
+            mCacheGraph.setCenterText(String.format("%s\n%s", getString(R.string.total),
+                    AppHelper.convertSize(totalSize)));
+
+            // we are ready
+            mCacheGraph.invalidate();
+
+            // setup legend
+            final Legend l = mCacheGraph.getLegend();
+            l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+            l.setXEntrySpace(7f);
+            l.setYEntrySpace(5f);
+        }
     }
 
     private View addCacheWidget(final int txtId, final String text) {
