@@ -18,12 +18,12 @@
 package org.namelessrom.devicecontrol.fragments.device;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
-import android.view.ViewConfiguration;
 
 import com.squareup.otto.Subscribe;
 
@@ -106,15 +106,16 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         final PreferenceScreen preferenceScreen = getPreferenceScreen();
 
-        try {
-            hasNavBar = getResources().getBoolean(
-                    (Integer) Class.forName("com.android.internal.R$bool")
-                            .getDeclaredField("config_showNavigationBar").get(null)
-            );
-        } catch (Exception exc) { // fallback
-            hasNavBar = getActivity() != null
-                    && !ViewConfiguration.get(getActivity()).hasPermanentMenuKey();
+        if (!Application.IS_NAMELESS) { // we have our own way to force the navigation bar
+            try {
+                hasNavBar = Resources.getSystem().getBoolean(Resources.getSystem()
+                        .getIdentifier("config_showNavigationBar", "bool", "android"));
+            } catch (Exception exc) { // fallback
+                Logger.e(this, "Failed to get hasNavBar, showing it to do not lock someone out");
+                hasNavBar = true;
+            }
         }
+        Logger.i(this, String.format("hasNavBar: %s", hasNavBar));
 
         PreferenceCategory category = (PreferenceCategory) findPreference("input_navbar");
         if (category != null) {
@@ -256,7 +257,9 @@ public class DeviceFragment extends AttachPreferenceFragment
         boolean changed = false;
 
         if (preference == mForceNavBar) { // ================================================= INPUT
-            Utils.runRootCommand(Scripts.toggleForceNavBar());
+            final String cmd = Scripts.toggleForceNavBar();
+            Logger.v(this, String.format("mForceNavBar: %s", cmd));
+            Utils.runRootCommand(cmd);
             changed = true;
         } else if (preference == mGloveMode && mGloveMode.isEnabled()) {
             final boolean value = (Boolean) o;

@@ -64,11 +64,14 @@ public class Scripts {
     }
 
     public static String toggleForceNavBar() {
+        final String cmd;
         if (getForceNavBar()) {
-            return String.format(KILL_PROP_CMD, "qemu.hw.mainkeys", BUILD_PROP);
+            cmd = String.format(KILL_PROP_CMD, "qemu.hw.mainkeys", BUILD_PROP);
         } else {
-            return String.format(APPEND_CMD, "qemu.hw.mainkeys", "0", BUILD_PROP);
+            cmd = String.format(APPEND_CMD, "qemu.hw.mainkeys", "0", BUILD_PROP);
         }
+        return String.format(
+                "busybox mount -o rw,remount /system;%sbusybox mount -o ro,remount /system;", cmd);
     }
 
     public static String getRngStartup() {
