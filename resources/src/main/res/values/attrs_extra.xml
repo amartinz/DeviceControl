@@ -15,31 +15,6 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <!-- Holo graph -->
-    <declare-styleable name="PieGraph">
-        <attr name="pieInnerCircleRatio" format="integer" />
-        <attr name="pieSlicePadding" format="dimension" />
-    </declare-styleable>
-
-    <declare-styleable name="LineGraph">
-        <attr name="lineStrokeColor" format="color" />
-        <attr name="lineAxisColor" format="color" />
-        <attr name="lineStrokeWidth" format="dimension" />
-        <attr name="lineStrokeSpacing" format="dimension" />
-        <attr name="lineUseDip" format="boolean" />
-    </declare-styleable>
-
-    <declare-styleable name="BarGraph">
-        <attr name="barAxisColor" format="color" />
-        <attr name="orientation" format="enum">
-            <enum name="horizontal" value="0" />
-            <enum name="vertical" value="1" />
-        </attr>
-        <attr name="barShowAxis" format="boolean" />
-        <attr name="barShowAxisLabel" format="boolean" />
-        <attr name="barShowText" format="boolean" />
-        <attr name="barShowPopup" format="boolean" />
-    </declare-styleable>
     <!-- Sliding Menu -->
     <declare-styleable name="SlidingMenu">
         <attr name="mode">
