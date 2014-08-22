@@ -192,10 +192,7 @@
   <string name="delete_property_message">%s bude odstraněn.\n\nPokračovat?</string>
   <string name="name">Název</string>
   <string name="presets">Předvolby</string>
-  <string name="knock_on_off_gestures">Gesto zaklepání pro Zapnutí/Vypnutí obrazovky</string>
   <string name="knock_on">Zaklepání pro Zapnutí obrazovky</string>
-  <string name="knock_on_summary_off">Gesto zaklepání pro Zapnutí zakázáno</string>
-  <string name="knock_on_summary_on">Gesto zaklepání pro Zapnutí povoleno</string>
   <string name="five_minutes">5 Minut</string>
   <string name="ten_minutes">10 Minut</string>
   <string name="twenty_minutes">20 Minut</string>

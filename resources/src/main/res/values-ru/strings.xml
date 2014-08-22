@@ -194,10 +194,7 @@
   <string name="delete_property_message">%s будет удалено.\n\nПродолжить?</string>
   <string name="name">Имя</string>
   <string name="presets">Шаблоны</string>
-  <string name="knock_on_off_gestures">Жесты включения/выключения постукиванием</string>
   <string name="knock_on">Включение постукиванием</string>
-  <string name="knock_on_summary_off">Жест включения постукиванием отключен</string>
-  <string name="knock_on_summary_on">Жест включения постукиванием включен</string>
   <string name="five_minutes">5 минут</string>
   <string name="ten_minutes">10 минут</string>
   <string name="twenty_minutes">20 минут</string>

@@ -195,10 +195,7 @@
   <string name="delete_property_message">%s va fi șters.\n\nContinuați?</string>
   <string name="name">nume</string>
   <string name="presets">Presetări</string>
-  <string name="knock_on_off_gestures">Gesturi de ciocănire Pornit/Oprit</string>
   <string name="knock_on">Ciocănire Pornită</string>
-  <string name="knock_on_summary_off">Gestul de Ciocănire Pornit dezactivat</string>
-  <string name="knock_on_summary_on">Gestul de Ciocănire Pornit activat</string>
   <string name="five_minutes">5 minute</string>
   <string name="ten_minutes">10 minute</string>
   <string name="twenty_minutes">20 de minute</string>

@@ -192,10 +192,7 @@
   <string name="delete_property_message">%s serà eliminat.\n\nContinuar?</string>
   <string name="name">Nom</string>
   <string name="presets">Ajustaments Predefinits</string>
-  <string name="knock_on_off_gestures">Trucar amb gestos On/Off</string>
   <string name="knock_on">Trucar a</string>
-  <string name="knock_on_summary_off">Trucar amb gestos deshabilitat</string>
-  <string name="knock_on_summary_on">Trucar amb gestos habilitat</string>
   <string name="five_minutes">5 Minuts</string>
   <string name="ten_minutes">10 Minuts</string>
   <string name="twenty_minutes">20 Minuts</string>

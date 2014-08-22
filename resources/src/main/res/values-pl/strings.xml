@@ -195,10 +195,7 @@
   <string name="delete_property_message">%s będzie usunięte.\n\nKontynuować?</string>
   <string name="name">Nazwa</string>
   <string name="presets">Ustawienia domyślne</string>
-  <string name="knock_on_off_gestures">Knock On/Off</string>
   <string name="knock_on">Knock On</string>
-  <string name="knock_on_summary_off">Wybudzenie urządzenia przez stuknięcie w wyświetlacz wyłączone</string>
-  <string name="knock_on_summary_on">Wybudzenie urządzenia przez stuknięcie w wyświetlacz włączone</string>
   <string name="five_minutes">5 minut</string>
   <string name="ten_minutes">10 minut</string>
   <string name="twenty_minutes">20 minut</string>

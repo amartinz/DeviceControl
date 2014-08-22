@@ -192,10 +192,7 @@
   <string name="delete_property_message">%s zal worden verwijderd.\n\nDoorgaan?</string>
   <string name="name">Naam</string>
   <string name="presets">Voorinstellingen</string>
-  <string name="knock_on_off_gestures">Knock On/Off gebaren</string>
   <string name="knock_on">Knock on</string>
-  <string name="knock_on_summary_off">Knock on gebaar uitgeschakeld</string>
-  <string name="knock_on_summary_on">Knock on gebaar ingeschakeld</string>
   <string name="five_minutes">5 minuten</string>
   <string name="ten_minutes">10 minuten</string>
   <string name="twenty_minutes">20 minuten</string>

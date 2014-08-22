@@ -192,10 +192,7 @@
   <string name="delete_property_message">%s sera supprimé.\n\nContinuer ?</string>
   <string name="name">Nom</string>
   <string name="presets">Préréglages</string>
-  <string name="knock_on_off_gestures">Gestes Knock On/Off</string>
   <string name="knock_on">Knock On</string>
-  <string name="knock_on_summary_off">Geste Knock on désactivé</string>
-  <string name="knock_on_summary_on">Geste Knock on activé</string>
   <string name="five_minutes">5 Minutes</string>
   <string name="ten_minutes">10 Minutes</string>
   <string name="twenty_minutes">20 Minutes</string>

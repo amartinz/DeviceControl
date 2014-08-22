@@ -195,10 +195,9 @@
   <string name="delete_property_message">%s wird gelöscht.\n\nFortfahren?</string>
   <string name="name">Name</string>
   <string name="presets">Voreinstellungen</string>
-  <string name="knock_on_off_gestures">Knock On/Off Gesten</string>
+  <string name="gestures">Gesten</string>
   <string name="knock_on">Knock On</string>
-  <string name="knock_on_summary_off">Knock On Geste deaktiviert</string>
-  <string name="knock_on_summary_on">Knock On Geste aktiviert</string>
+  <string name="knock_on_summary">Aufwecken durch doppeltes Tippen auf den Bildschirm</string>
   <string name="five_minutes">5 Minuten</string>
   <string name="ten_minutes">10 Minuten</string>
   <string name="twenty_minutes">20 Minuten</string>
@@ -305,4 +304,16 @@
   <string name="user_interface">Benutzeroberfläche</string>
   <string name="swipe_on_content">Vollbild-Wischen</string>
   <string name="swipe_on_content_summary">Erlaube auf dem gesamten Bildschirm zu wischen, um zum Menü zu wechseln</string>
+  <string name="gpu_vendor">GPU-Hersteller</string>
+  <string name="gpu_renderer">GPU-Renderer</string>
+  <string name="opengl_version">OpenGL-Version</string>
+  <string name="opengl_extensions">OpenGL-Erweiterungen</string>
+  <string name="shader_version">Shader-Version</string>
+  <string name="getting_information">Abrufen von Informationen</string>
+  <string name="health">Gesundheit</string>
+  <string name="good">Gut</string>
+  <string name="dead">Tot</string>
+  <string name="over_voltage">Überspannung</string>
+  <string name="overheat">Überhitzung</string>
+  <string name="tcp_congestion_control">TCP Überlastungsalgorithmus</string>
 </resources>

@@ -192,10 +192,7 @@
   <string name="delete_property_message">%s será excluído.\n\nContinuar?</string>
   <string name="name">Nome</string>
   <string name="presets">Préconfigurações</string>
-  <string name="knock_on_off_gestures">Toque On/Off Gestos</string>
   <string name="knock_on">Toque On</string>
-  <string name="knock_on_summary_off">Toque On Gesto desabilitado</string>
-  <string name="knock_on_summary_on">Toque On gestos habilitado</string>
   <string name="five_minutes">5 Minutos</string>
   <string name="ten_minutes">10 Minutos</string>
   <string name="twenty_minutes">20 Minutos</string>
