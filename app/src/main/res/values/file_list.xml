@@ -63,4 +63,7 @@
         <item>/sys/class/lcd/panel/power_reduce</item>
         <item>/sys/class/graphics/fb0/cabc</item>
     </string-array>
+    <string-array name="files_lcd_sunlight_enhancement" translatable="false">
+        <item>/sys/class/graphics/fb0/sre</item>
+    </string-array>
 </resources>

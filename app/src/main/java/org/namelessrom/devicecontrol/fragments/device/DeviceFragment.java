@@ -75,6 +75,7 @@ public class DeviceFragment extends AttachPreferenceFragment
     // Display
     //==============================================================================================
     private AwesomeCheckBoxPreference mLcdPowerReduce;
+    private AwesomeCheckBoxPreference mLcdSunlightEnhancement;
     //----------------------------------------------------------------------------------------------
     public static final String  sHasPanelFile = Utils.checkPaths(FILES_PANEL_COLOR_TEMP);
     public static final boolean sHasPanel     = !sHasPanelFile.isEmpty();
@@ -242,6 +243,16 @@ public class DeviceFragment extends AttachPreferenceFragment
                 }
             }
 
+            mLcdSunlightEnhancement = (AwesomeCheckBoxPreference) findPreference("lcd_sunlight_enhancement");
+            if (mLcdSunlightEnhancement != null) {
+                if (mLcdSunlightEnhancement.isSupported()) {
+                    mLcdSunlightEnhancement.initValue();
+                    mLcdSunlightEnhancement.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mLcdSunlightEnhancement)
+                }
+            }
+
             if (category.getPreferenceCount() == 0) {
                 preferenceScreen.removePreference(category);
             }
@@ -291,6 +302,9 @@ public class DeviceFragment extends AttachPreferenceFragment
             changed = true;
         } else if (preference == mLcdPowerReduce) {
             mLcdPowerReduce.writeValue((Boolean) o);
+            changed = true;
+        } else if (preference == mLcdSunlightEnhancement) {
+            mLcdSunlightEnhancement.writeValue((Boolean) o);
             changed = true;
         }
 
