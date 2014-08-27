@@ -16,4 +16,5 @@
 -->
 <resources>
     <integer name="animation_time">500</integer>
+    <integer name="material_menu_scale">6</integer>
 </resources>

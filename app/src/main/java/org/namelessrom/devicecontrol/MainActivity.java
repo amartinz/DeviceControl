@@ -22,8 +22,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +37,8 @@ import android.widget.Toast;
 import com.android.vending.billing.util.IabHelper;
 import com.android.vending.billing.util.IabResult;
 import com.android.vending.billing.util.Purchase;
+import com.balysv.materialmenu.MaterialMenuDrawable;
+import com.balysv.materialmenu.MaterialMenuIcon;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.negusoft.holoaccent.activity.AccentActivity;
 import com.squareup.otto.Subscribe;
@@ -104,11 +108,11 @@ public class MainActivity extends AccentActivity
 
     private Fragment mCurrentFragment;
 
-    private int mActionBarDrawable    = R.drawable.ic_launcher;
-    private int mSubActionBarDrawable = -1;
-    private int mTitle                = R.string.home;
-    private int mFragmentTitle        = R.string.home;
-    private int mSubFragmentTitle     = -1;
+    private int mTitle            = R.string.home;
+    private int mFragmentTitle    = R.string.home;
+    private int mSubFragmentTitle = -1;
+
+    private MaterialMenuIcon mMaterialMenuIcon;
 
     private static final int[] MENU_ENTRIES = {
             R.string.device,        // Device
@@ -172,12 +176,18 @@ public class MainActivity extends AccentActivity
             PreferenceHelper.setBoolean(DC_FIRST_START, false);
         }
 
+        // setup action bar / material menu icon
+        mMaterialMenuIcon = new MaterialMenuIcon(this, Color.WHITE);
+
         Utils.setupDirectories();
+
+        setUpIab();
 
         final FrameLayout container = findById(this, R.id.container);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             container.setBackground(null);
         } else {
+            //noinspection deprecation
             container.setBackgroundDrawable(null);
         }
 
@@ -208,8 +218,6 @@ public class MainActivity extends AccentActivity
         mSlidingMenu.setOnClosedListener(this);
         mSlidingMenu.setOnOpenedListener(this);
 
-        setUpIab();
-
         loadFragment(ID_HOME);
         Utils.startTaskerService();
 
@@ -231,14 +239,26 @@ public class MainActivity extends AccentActivity
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override protected void onPostCreate(final Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mMaterialMenuIcon.syncState(savedInstanceState);
+    }
+
+    @Override protected void onSaveInstanceState(@NonNull final Bundle outState) {
+        mMaterialMenuIcon.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (mSubFragmentTitle == -1) {
+                    mMaterialMenuIcon.animatePressedState(MaterialMenuDrawable.IconState.BURGER);
                     mSlidingMenu.toggle(true);
                 }
                 break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -340,6 +360,7 @@ public class MainActivity extends AccentActivity
     @Subscribe public int onSectionAttached(final SectionAttachedEvent event) {
         final int id = event.getId();
         switch (id) {
+            // do not animate on restore and menus
             case ID_RESTORE:
                 if (mSubFragmentTitle != -1) {
                     mTitle = mSubFragmentTitle;
@@ -349,7 +370,6 @@ public class MainActivity extends AccentActivity
                 break;
             case ID_RESTORE_FROM_SUB:
                 mSubFragmentTitle = -1;
-                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle;
                 break;
             case ID_FIRST_MENU:
@@ -359,47 +379,34 @@ public class MainActivity extends AccentActivity
                 mTitle = R.string.help;
                 break;
             default:
-                mActionBarDrawable = R.drawable.ic_launcher;
-                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.app_name;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_HOME:
-                mActionBarDrawable = R.drawable.ic_launcher;
-                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.home;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_DEVICE:
-                mActionBarDrawable = R.drawable.ic_menu_device;
-                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.device;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_FEATURES:
-                mActionBarDrawable = R.drawable.ic_menu_features;
-                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.features;
                 mSubFragmentTitle = -1;
                 break;
             case ID_FAST_CHARGE:
-                mSubActionBarDrawable = R.drawable.ic_general_battery;
                 mTitle = mSubFragmentTitle = R.string.fast_charge;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_INFO:
-                mActionBarDrawable = R.drawable.ic_menu_perf_info;
-                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.information;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_CPU_SETTINGS:
-                mActionBarDrawable = R.drawable.ic_menu_perf_cpu;
-                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.cpusettings;
                 mSubFragmentTitle = -1;
                 break;
@@ -408,95 +415,83 @@ public class MainActivity extends AccentActivity
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_GPU_SETTINGS:
-                mActionBarDrawable = R.drawable.ic_menu_perf_gpu;
-                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.gpusettings;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_EXTRA:
-                mActionBarDrawable = R.drawable.ic_menu_perf_extras;
-                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.extras;
                 mSubFragmentTitle = -1;
                 break;
             case ID_KSM:
-                mSubActionBarDrawable = R.drawable.ic_menu_perf_extras;
                 mTitle = mSubFragmentTitle = R.string.ksm;
                 break;
             case ID_HOTPLUGGING:
-                mSubActionBarDrawable = R.drawable.ic_general_hotplug;
                 mTitle = mSubFragmentTitle = R.string.hotplugging;
                 break;
             case ID_THERMAL:
-                mSubActionBarDrawable = R.drawable.ic_general_heat;
                 mTitle = mSubFragmentTitle = R.string.thermal;
                 break;
             case ID_VOLTAGE:
-                mSubActionBarDrawable = R.drawable.ic_general_voltage;
                 mTitle = mSubFragmentTitle = R.string.voltage_control;
                 break;
             case ID_ENTROPY:
-                mSubActionBarDrawable = R.drawable.ic_menu_perf_extras;
                 mTitle = mSubFragmentTitle = R.string.entropy;
                 break;
             case ID_FILESYSTEM:
-                mSubActionBarDrawable = R.drawable.ic_menu_perf_extras;
                 mTitle = mSubFragmentTitle = R.string.filesystem;
                 break;
             case ID_LOWMEMORYKILLER:
-                mSubActionBarDrawable = R.drawable.ic_menu_perf_extras;
                 mTitle = mSubFragmentTitle = R.string.low_memory_killer;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_TASKER:
-                mActionBarDrawable = R.drawable.ic_menu_tasker;
-                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.tasker;
                 mSubFragmentTitle = -1;
                 break;
             case ID_TOOLS_TASKER_LIST:
-                mSubActionBarDrawable = R.drawable.ic_menu_tasker;
                 mTitle = mSubFragmentTitle = R.string.tasker;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_FLASHER:
-                mActionBarDrawable = R.drawable.ic_menu_flash;
-                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.flasher;
                 mSubFragmentTitle = -1;
                 break;
             case ID_TOOLS_FLASHER_PREFS:
-                mSubActionBarDrawable = R.drawable.ic_menu_flash;
                 mTitle = mSubFragmentTitle = R.string.flasher;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_MORE:
-                mActionBarDrawable = R.drawable.ic_menu_code;
-                mSubActionBarDrawable = -1;
                 mTitle = mFragmentTitle = R.string.more;
                 mSubFragmentTitle = -1;
                 break;
             case ID_TOOLS_VM:
             case ID_TOOLS_EDITORS_VM:
-                mSubActionBarDrawable = R.drawable.ic_general_editor;
                 mTitle = mSubFragmentTitle = R.string.sysctl_vm;
                 break;
             case ID_TOOLS_BUILD_PROP:
             case ID_TOOLS_EDITORS_BUILD_PROP:
-                mSubActionBarDrawable = R.drawable.ic_general_editor;
                 mTitle = mSubFragmentTitle = R.string.buildprop;
                 break;
             case ID_TOOLS_APP_MANAGER:
-                mSubActionBarDrawable = R.drawable.ic_general_app;
                 mTitle = mSubFragmentTitle = R.string.app_manager;
                 break;
             case ID_TOOLS_WIRELESS_FM:
-                mSubActionBarDrawable = R.drawable.ic_general_wifi;
                 mTitle = mSubFragmentTitle = R.string.wireless_file_manager;
                 break;
             //--------------------------------------------------------------------------------------
         }
+
+        final MaterialMenuDrawable.IconState iconState;
+        if (mSubFragmentTitle != -1) {
+            iconState = MaterialMenuDrawable.IconState.ARROW;
+        } else {
+            iconState = MaterialMenuDrawable.IconState.BURGER;
+        }
+
+        // TODO: detect actionbar
+        mMaterialMenuIcon.animateState(iconState);
+
         restoreActionBar();
 
         return id;
@@ -505,11 +500,6 @@ public class MainActivity extends AccentActivity
     public void restoreActionBar() {
         final ActionBar actionBar = getActionBar();
         if (actionBar != null) {
-            final int drawableId = ((mSubActionBarDrawable != -1)
-                    ? mSubActionBarDrawable : mActionBarDrawable);
-            actionBar.setIcon(drawableId);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
             actionBar.setTitle(mTitle);
         }
     }

@@ -17,7 +17,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="BaseTheme" parent="Theme.HoloAccent.Light" />
+    <style name="BaseTheme" parent="Theme.HoloAccent.Light.DarkActionBar" />
 
     <style name="NoActionBar" parent="@android:style/Theme.Holo.Light.NoActionBar">
         <!-- Customize ads aag kjasdgjkb asdf weu here -->
@@ -64,5 +64,12 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
+    <declare-styleable name="MaterialMenuView">
+        <attr name="color" format="color" />
+        <attr name="scale" format="integer" />
+        <attr name="transformDuration" format="integer" />
+        <attr name="pressedDuration" format="integer" />
+    </declare-styleable>
 
 </resources>
