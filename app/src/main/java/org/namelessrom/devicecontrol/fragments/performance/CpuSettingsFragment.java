@@ -158,8 +158,7 @@ public class CpuSettingsFragment extends AttachFragment
             }
         });
 
-        ((TextView) findById(view, R.id.ui_device_title))
-                .setText(R.string.refresh_interval);
+        ((TextView) findById(view, R.id.ui_device_title)).setText(R.string.refresh_interval);
         mInterval = intervalBar.getProgress() + 1000;
         mIntervalText.setText((mInterval == 5000
                 ? getString(R.string.off)
