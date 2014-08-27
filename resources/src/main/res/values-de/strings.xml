@@ -316,4 +316,8 @@
   <string name="over_voltage">Überspannung</string>
   <string name="overheat">Überhitzung</string>
   <string name="tcp_congestion_control">TCP Überlastungsalgorithmus</string>
+  <string name="app_size">Anwendungsgröße</string>
+  <string name="uninstall">Deinstallieren</string>
+  <string name="uninstall_msg">Soll \"%s\" wirklich deinstalliert werden?\nDiese Aktion kann nicht rückgängig gemacht werden!</string>
+  <string name="uninstall_success">\"%s\" erfolgreich deinstalliert</string>
 </resources>
