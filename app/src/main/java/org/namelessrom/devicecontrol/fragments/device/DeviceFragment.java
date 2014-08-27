@@ -76,6 +76,7 @@ public class DeviceFragment extends AttachPreferenceFragment
     //==============================================================================================
     private AwesomeCheckBoxPreference mLcdPowerReduce;
     private AwesomeCheckBoxPreference mLcdSunlightEnhancement;
+    private AwesomeCheckBoxPreference mLcdColorEnhancement;
     //----------------------------------------------------------------------------------------------
     public static final String  sHasPanelFile = Utils.checkPaths(FILES_PANEL_COLOR_TEMP);
     public static final boolean sHasPanel     = !sHasPanelFile.isEmpty();
@@ -243,13 +244,25 @@ public class DeviceFragment extends AttachPreferenceFragment
                 }
             }
 
-            mLcdSunlightEnhancement = (AwesomeCheckBoxPreference) findPreference("lcd_sunlight_enhancement");
+            mLcdSunlightEnhancement =
+                    (AwesomeCheckBoxPreference) findPreference("lcd_sunlight_enhancement");
             if (mLcdSunlightEnhancement != null) {
                 if (mLcdSunlightEnhancement.isSupported()) {
                     mLcdSunlightEnhancement.initValue();
                     mLcdSunlightEnhancement.setOnPreferenceChangeListener(this);
                 } else {
                     category.removePreference(mLcdSunlightEnhancement);
+                }
+            }
+
+            mLcdColorEnhancement =
+                    (AwesomeCheckBoxPreference) findPreference("lcd_color_enhancement");
+            if (mLcdColorEnhancement != null) {
+                if (mLcdColorEnhancement.isSupported()) {
+                    mLcdColorEnhancement.initValue();
+                    mLcdColorEnhancement.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mLcdColorEnhancement);
                 }
             }
 
@@ -305,6 +318,9 @@ public class DeviceFragment extends AttachPreferenceFragment
             changed = true;
         } else if (preference == mLcdSunlightEnhancement) {
             mLcdSunlightEnhancement.writeValue((Boolean) o);
+            changed = true;
+        } else if (preference == mLcdColorEnhancement) {
+            mLcdColorEnhancement.writeValue((Boolean) o);
             changed = true;
         }
 

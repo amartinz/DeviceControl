@@ -321,4 +321,5 @@
     <string name="uninstall_success">Successfully uninstalled \"%s\"</string>
     <string name="sunlight_enhancement">Sunlight enhancement</string>
     <string name="sunlight_enhancement_summary">Enhance display brightness and readability under bright sunlight</string>
+    <string name="color_enhancement">Color enhancement</string>
 </resources>

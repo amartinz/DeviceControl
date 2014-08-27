@@ -113,6 +113,13 @@
             dc:category="device"
             dc:filePathList="@array/files_lcd_sunlight_enhancement" />
 
+        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+            android:defaultValue="false"
+            android:key="lcd_color_enhancement"
+            android:title="@string/color_enhancement"
+            dc:category="device"
+            dc:filePathList="@array/files_lcd_color_enhancement" />
+
         <org.namelessrom.devicecontrol.preferences.CustomListPreference
             android:defaultValue="2"
             android:entries="@array/panel_color_temp_entries"
