@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments.performance.sub;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -46,14 +45,12 @@ import com.negusoft.holoaccent.dialog.DividerPainter;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import butterknife.ButterKnife;
@@ -71,16 +68,7 @@ public class VoltageFragment extends AttachPreferenceFragment
     private LinearLayout       mButtonLayout;
     private boolean isVdd = false;
 
-    @Override
-    public void onAttach(final Activity activity) {
-        super.onAttach(activity, ID_VOLTAGE);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
-    }
+    @Override protected int getFragmentId() { return ID_VOLTAGE; }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

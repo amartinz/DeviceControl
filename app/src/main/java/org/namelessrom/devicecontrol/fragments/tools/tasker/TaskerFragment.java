@@ -17,14 +17,13 @@
  */
 package org.namelessrom.devicecontrol.fragments.tools.tasker;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
@@ -32,7 +31,6 @@ import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 public class TaskerFragment extends AttachPreferenceFragment implements DeviceConstants,
@@ -43,8 +41,7 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
 
     private CustomPreference mTasker;
 
-    @Override
-    public void onAttach(Activity activity) { super.onAttach(activity, ID_TOOLS_TASKER); }
+    @Override protected int getFragmentId() { return ID_TOOLS_TASKER; }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,7 +67,7 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (mTasker == preference) {
             Utils.startTaskerService();
-            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_TASKER_LIST));
+            MainActivity.loadFragment(getActivity(), ID_TOOLS_TASKER_LIST);
             return true;
         }
 

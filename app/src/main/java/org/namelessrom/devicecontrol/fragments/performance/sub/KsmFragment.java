@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments.performance.sub;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -30,7 +29,6 @@ import android.view.MenuItem;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.DialogHelper;
@@ -62,12 +60,7 @@ public class KsmFragment extends AttachPreferenceFragment
     private CustomPreference          mPagesToScan;
     private CustomPreference          mSleep;
 
-    @Override public void onAttach(final Activity activity) { super.onAttach(activity, ID_KSM); }
-
-    @Override public void onDestroy() {
-        super.onDestroy();
-        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
-    }
+    @Override protected int getFragmentId() { return ID_KSM; }
 
     @Override public void onResume() {
         super.onResume();

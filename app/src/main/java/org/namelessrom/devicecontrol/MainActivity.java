@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -47,8 +48,6 @@ import com.stericson.roottools.RootTools;
 import org.namelessrom.devicecontrol.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
-import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.fragments.HomeFragment;
 import org.namelessrom.devicecontrol.fragments.LicenseFragment;
@@ -218,7 +217,7 @@ public class MainActivity extends AccentActivity
         sSlidingMenu.setOnClosedListener(this);
         sSlidingMenu.setOnOpenedListener(this);
 
-        loadFragment(ID_HOME);
+        loadFragmentPrivate(ID_HOME, false);
         Utils.startTaskerService();
 
         final String downgradePath = getFilesDir() + DC_DOWNGRADE;
@@ -231,7 +230,7 @@ public class MainActivity extends AccentActivity
     }
 
     @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        loadFragment((Integer) adapterView.getItemAtPosition(i));
+        loadFragmentPrivate((Integer) adapterView.getItemAtPosition(i), false);
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -265,6 +264,8 @@ public class MainActivity extends AccentActivity
     }
 
     private void onCustomBackPressed(final boolean animatePressed) {
+        Logger.v(this, "onCustomBackPressed(%s)", animatePressed);
+
         // toggle menu if it is showing and return
         if (sSlidingMenu.isMenuShowing()) {
             sSlidingMenu.toggle(true);
@@ -290,6 +291,8 @@ public class MainActivity extends AccentActivity
                 iconState = MaterialMenuDrawable.IconState.ARROW;
             }
 
+            Logger.v(this, "iconState: %s", iconState);
+
             // we can separate actionbar back actions and back key presses
             if (animatePressed) {
                 sMaterialMenuIcon.animatePressedState(iconState);
@@ -303,6 +306,15 @@ public class MainActivity extends AccentActivity
         // we we have at least one fragment in the BackStack, pop it and return
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
+
+            // restore title / actionbar
+            if (mSubFragmentTitle != -1) {
+                mTitle = mSubFragmentTitle;
+            } else {
+                mTitle = mFragmentTitle;
+            }
+            restoreActionBar();
+
             return;
         }
 
@@ -344,198 +356,196 @@ public class MainActivity extends AccentActivity
     // Methods
     //==============================================================================================
 
-    private void loadFragment(final int i) {
-        switch (i) {
-            default: // slip through...
-            case ID_HOME:
-                mCurrentFragment = new HomeFragment();
-                break;
-            case ID_DEVICE:
-                mCurrentFragment = new DeviceFragment();
-                break;
-            case ID_FEATURES:
-                mCurrentFragment = new FeaturesFragment();
-                break;
-            case ID_PERFORMANCE_INFO:
-                mCurrentFragment = new InformationFragment();
-                break;
-            case ID_PERFORMANCE_CPU_SETTINGS:
-                mCurrentFragment = new CpuSettingsFragment();
-                break;
-            case ID_PERFORMANCE_GPU_SETTINGS:
-                mCurrentFragment = new GpuSettingsFragment();
-                break;
-            case ID_PERFORMANCE_EXTRA:
-                mCurrentFragment = new ExtrasFragment();
-                break;
-            case ID_TOOLS_TASKER:
-                mCurrentFragment = new TaskerFragment();
-                break;
-            case ID_TOOLS_FLASHER:
-                mCurrentFragment = new FlasherFragment();
-                break;
-            case ID_TOOLS_MORE:
-                mCurrentFragment = new ToolsMoreFragment();
-                break;
-            case ID_PREFERENCES:
-                mCurrentFragment = new PreferencesFragment();
-                break;
-            case ID_LICENSES:
-                mCurrentFragment = new LicenseFragment();
-                break;
-        }
-
-        final FragmentManager fragmentManager = getFragmentManager();
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        }
-
-        final FragmentTransaction ft = fragmentManager.beginTransaction();
-
-        ft.replace(R.id.container, mCurrentFragment);
-
-        ft.commit();
+    public void setFragment(final Fragment fragment) {
+        mCurrentFragment = fragment;
     }
 
-    @Subscribe public int onSectionAttached(final SectionAttachedEvent event) {
-        final int id = event.getId();
-        switch (id) {
-            case ID_RESTORE:
-                if (mSubFragmentTitle != -1) {
-                    mTitle = mSubFragmentTitle;
-                } else {
-                    mTitle = mFragmentTitle;
-                }
-                break;
-            case ID_RESTORE_FROM_SUB:
-                mSubFragmentTitle = -1;
-                mTitle = mFragmentTitle;
-                break;
-            case ID_FIRST_MENU:
-                mTitle = R.string.menu;
-                break;
-            case ID_SECOND_MENU:
-                mTitle = R.string.help;
-                break;
-            default:
-                mTitle = mFragmentTitle = R.string.app_name;
-                mSubFragmentTitle = -1;
-                break;
-            //--------------------------------------------------------------------------------------
+    public static void loadFragment(final Activity activity, final int id) {
+        loadFragment(activity, id, false);
+    }
+
+    public static void loadFragment(final Activity activity, final int id, final boolean onResume) {
+        if (activity instanceof MainActivity) {
+            ((MainActivity) activity).loadFragmentPrivate(id, onResume);
+        }
+    }
+
+    private void loadFragmentPrivate(final int i, final boolean onResume) {
+        switch (i) {
+            default: // slip through...
+                //--------------------------------------------------------------------------------------
             case ID_HOME:
+                if (!onResume) mCurrentFragment = new HomeFragment();
                 mTitle = mFragmentTitle = R.string.home;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_DEVICE:
+                if (!onResume) mCurrentFragment = new DeviceFragment();
                 mTitle = mFragmentTitle = R.string.device;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_FEATURES:
+                if (!onResume) mCurrentFragment = new FeaturesFragment();
                 mTitle = mFragmentTitle = R.string.features;
                 mSubFragmentTitle = -1;
                 break;
             case ID_FAST_CHARGE:
+                if (!onResume) mCurrentFragment = new FastChargeFragment();
                 mTitle = mSubFragmentTitle = R.string.fast_charge;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_INFO:
+                if (!onResume) mCurrentFragment = new InformationFragment();
                 mTitle = mFragmentTitle = R.string.information;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_CPU_SETTINGS:
+                if (!onResume) mCurrentFragment = new CpuSettingsFragment();
                 mTitle = mFragmentTitle = R.string.cpusettings;
                 mSubFragmentTitle = -1;
                 break;
             case ID_GOVERNOR_TUNABLE:
+                if (!onResume) mCurrentFragment = new GovernorFragment();
                 mTitle = mSubFragmentTitle = R.string.cpu_governor_tuning;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_GPU_SETTINGS:
+                if (!onResume) mCurrentFragment = new GpuSettingsFragment();
                 mTitle = mFragmentTitle = R.string.gpusettings;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_EXTRA:
+                if (!onResume) mCurrentFragment = new ExtrasFragment();
                 mTitle = mFragmentTitle = R.string.extras;
                 mSubFragmentTitle = -1;
                 break;
             case ID_KSM:
+                if (!onResume) mCurrentFragment = new KsmFragment();
                 mTitle = mSubFragmentTitle = R.string.ksm;
                 break;
             case ID_HOTPLUGGING:
+                if (!onResume) mCurrentFragment = new HotpluggingFragment();
                 mTitle = mSubFragmentTitle = R.string.hotplugging;
                 break;
             case ID_THERMAL:
+                if (!onResume) mCurrentFragment = new ThermalFragment();
                 mTitle = mSubFragmentTitle = R.string.thermal;
                 break;
             case ID_VOLTAGE:
+                if (!onResume) mCurrentFragment = new VoltageFragment();
                 mTitle = mSubFragmentTitle = R.string.voltage_control;
                 break;
             case ID_ENTROPY:
+                if (!onResume) mCurrentFragment = new EntropyFragment();
                 mTitle = mSubFragmentTitle = R.string.entropy;
                 break;
             case ID_FILESYSTEM:
+                if (!onResume) mCurrentFragment = new FilesystemFragment();
                 mTitle = mSubFragmentTitle = R.string.filesystem;
                 break;
             case ID_LOWMEMORYKILLER:
+                if (!onResume) mCurrentFragment = new LowMemoryKillerFragment();
                 mTitle = mSubFragmentTitle = R.string.low_memory_killer;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_TASKER:
+                if (!onResume) mCurrentFragment = new TaskerFragment();
                 mTitle = mFragmentTitle = R.string.tasker;
                 mSubFragmentTitle = -1;
                 break;
             case ID_TOOLS_TASKER_LIST:
+                if (!onResume) mCurrentFragment = new TaskListFragment();
                 mTitle = mSubFragmentTitle = R.string.tasker;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_FLASHER:
+                if (!onResume) mCurrentFragment = new FlasherFragment();
                 mTitle = mFragmentTitle = R.string.flasher;
                 mSubFragmentTitle = -1;
                 break;
             case ID_TOOLS_FLASHER_PREFS:
+                if (!onResume) mCurrentFragment = new FlasherPreferencesFragment();
                 mTitle = mSubFragmentTitle = R.string.flasher;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_MORE:
+                if (!onResume) mCurrentFragment = new ToolsMoreFragment();
                 mTitle = mFragmentTitle = R.string.more;
                 mSubFragmentTitle = -1;
                 break;
             case ID_TOOLS_VM:
+                if (!onResume) mCurrentFragment = new SysctlFragment();
+                mTitle = mSubFragmentTitle = R.string.sysctl_vm;
+                break;
             case ID_TOOLS_EDITORS_VM:
+                if (!onResume) mCurrentFragment = new SysctlEditorFragment();
                 mTitle = mSubFragmentTitle = R.string.sysctl_vm;
                 break;
             case ID_TOOLS_BUILD_PROP:
+                if (!onResume) mCurrentFragment = new BuildPropFragment();
+                mTitle = mSubFragmentTitle = R.string.buildprop;
+                break;
             case ID_TOOLS_EDITORS_BUILD_PROP:
+                if (!onResume) mCurrentFragment = new BuildPropEditorFragment();
                 mTitle = mSubFragmentTitle = R.string.buildprop;
                 break;
             case ID_TOOLS_APP_MANAGER:
+                if (!onResume) mCurrentFragment = new AppListFragment();
                 mTitle = mSubFragmentTitle = R.string.app_manager;
                 break;
             case ID_TOOLS_WIRELESS_FM:
+                if (!onResume) mCurrentFragment = new WirelessFileManagerFragment();
                 mTitle = mSubFragmentTitle = R.string.wireless_file_manager;
                 break;
             //--------------------------------------------------------------------------------------
+            case ID_PREFERENCES:
+                if (!onResume) mCurrentFragment = new PreferencesFragment();
+                break;
+            //--------------------------------------------------------------------------------------
+            case ID_LICENSES:
+                if (!onResume) mCurrentFragment = new LicenseFragment();
+                break;
         }
 
+        restoreActionBar();
+
+        if (onResume) {
+            return;
+        }
+
+        final boolean isSubFragment = mSubFragmentTitle != -1;
+
+        final FragmentManager fragmentManager = getFragmentManager();
+        if (!isSubFragment && fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+
+        final FragmentTransaction ft = fragmentManager.beginTransaction();
+
+        if (isSubFragment) {
+            ft.setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_right,
+                    R.animator.slide_in_left, R.animator.slide_out_left);
+            ft.addToBackStack(null);
+        }
+
+        ft.replace(R.id.container, mCurrentFragment);
+        ft.commit();
+
         final MaterialMenuDrawable.IconState iconState;
-        if (mSubFragmentTitle != -1) {
+        if (isSubFragment) {
             iconState = MaterialMenuDrawable.IconState.ARROW;
         } else {
             iconState = MaterialMenuDrawable.IconState.BURGER;
         }
 
         sMaterialMenuIcon.animateState(iconState);
-
-        restoreActionBar();
-
-        return id;
     }
 
-    public void restoreActionBar() {
+    private void restoreActionBar() {
         final ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setTitle(mTitle);
@@ -543,16 +553,22 @@ public class MainActivity extends AccentActivity
     }
 
     @Override public void onOpened() {
-        int id;
         if (sSlidingMenu.isMenuShowing() && !sSlidingMenu.isSecondaryMenuShowing()) {
-            id = ID_FIRST_MENU;
+            mTitle = R.string.menu;
         } else {
-            id = ID_SECOND_MENU;
+            mTitle = R.string.help;
         }
-        onSectionAttached(new SectionAttachedEvent(id));
+        restoreActionBar();
     }
 
-    @Override public void onClosed() { onSectionAttached(new SectionAttachedEvent(ID_RESTORE)); }
+    @Override public void onClosed() {
+        if (mSubFragmentTitle != -1) {
+            mTitle = mSubFragmentTitle;
+        } else {
+            mTitle = mFragmentTitle;
+        }
+        restoreActionBar();
+    }
 
     //==============================================================================================
     // In App Purchase
@@ -600,84 +616,6 @@ public class MainActivity extends AccentActivity
         if (!mHelper.handleActivityResult(req, res, data)) {
             super.onActivityResult(req, res, data);
         }
-    }
-
-    @Subscribe public void onSubFragmentEvent(final SubFragmentEvent event) {
-        if (event == null) return;
-
-        final int id = event.getId();
-
-        switch (id) {
-            //--------------------------------------------------------------------------------------
-            case ID_FAST_CHARGE:
-                mCurrentFragment = new FastChargeFragment();
-                break;
-            //--------------------------------------------------------------------------------------
-            case ID_GOVERNOR_TUNABLE:
-                mCurrentFragment = new GovernorFragment();
-                break;
-            //--------------------------------------------------------------------------------------
-            case ID_KSM:
-                mCurrentFragment = new KsmFragment();
-                break;
-            case ID_HOTPLUGGING:
-                mCurrentFragment = new HotpluggingFragment();
-                break;
-            case ID_THERMAL:
-                mCurrentFragment = new ThermalFragment();
-                break;
-            case ID_VOLTAGE:
-                mCurrentFragment = new VoltageFragment();
-                break;
-            case ID_ENTROPY:
-                mCurrentFragment = new EntropyFragment();
-                break;
-            case ID_FILESYSTEM:
-                mCurrentFragment = new FilesystemFragment();
-                break;
-            case ID_LOWMEMORYKILLER:
-                mCurrentFragment = new LowMemoryKillerFragment();
-                break;
-            //--------------------------------------------------------------------------------------
-            case ID_TOOLS_TASKER_LIST:
-                mCurrentFragment = new TaskListFragment();
-                break;
-            case ID_TOOLS_VM:
-                mCurrentFragment = new SysctlFragment();
-                break;
-            case ID_TOOLS_BUILD_PROP:
-                mCurrentFragment = new BuildPropFragment();
-                break;
-            case ID_TOOLS_EDITORS_VM:
-                mCurrentFragment = new SysctlEditorFragment();
-                break;
-            case ID_TOOLS_EDITORS_BUILD_PROP:
-                mCurrentFragment = new BuildPropEditorFragment();
-                break;
-            case ID_TOOLS_APP_MANAGER:
-                mCurrentFragment = new AppListFragment();
-                break;
-            case ID_TOOLS_WIRELESS_FM:
-                mCurrentFragment = new WirelessFileManagerFragment();
-                break;
-            case ID_TOOLS_FLASHER_PREFS:
-                mCurrentFragment = new FlasherPreferencesFragment();
-                break;
-            //--------------------------------------------------------------------------------------
-            default:
-                break;
-        }
-
-        if (mCurrentFragment == null) return;
-
-        final FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_right,
-                R.animator.slide_in_left, R.animator.slide_out_left);
-
-        ft.replace(R.id.container, mCurrentFragment);
-        ft.addToBackStack(null);
-
-        ft.commit();
     }
 
     public static void setSwipeOnContent(final boolean swipeOnContent) {

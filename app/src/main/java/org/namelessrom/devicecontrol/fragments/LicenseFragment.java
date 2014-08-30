@@ -17,12 +17,10 @@
  */
 package org.namelessrom.devicecontrol.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import org.namelessrom.devicecontrol.R;
@@ -33,8 +31,7 @@ import butterknife.ButterKnife;
 
 public class LicenseFragment extends AttachFragment implements DeviceConstants {
 
-    @Override
-    public void onAttach(Activity activity) { super.onAttach(activity, ID_DUMMY); }
+    @Override protected int getFragmentId() { return ID_DUMMY; }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

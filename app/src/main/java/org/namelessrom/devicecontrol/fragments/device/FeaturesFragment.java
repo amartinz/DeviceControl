@@ -17,21 +17,19 @@
  */
 package org.namelessrom.devicecontrol.fragments.device;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
+import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import java.util.List;
@@ -48,8 +46,7 @@ public class FeaturesFragment extends AttachPreferenceFragment
     // Overridden Methods
     //==============================================================================================
 
-    @Override
-    public void onAttach(final Activity activity) { super.onAttach(activity, ID_FEATURES); }
+    @Override protected int getFragmentId() { return ID_FEATURES; }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,7 +108,7 @@ public class FeaturesFragment extends AttachPreferenceFragment
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if (mFastCharge == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_FAST_CHARGE));
+            MainActivity.loadFragment(getActivity(), ID_FAST_CHARGE);
             return true;
         }
 

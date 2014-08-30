@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments.device;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -86,8 +85,7 @@ public class DeviceFragment extends AttachPreferenceFragment
     // Overridden Methods
     //==============================================================================================
 
-    @Override
-    public void onAttach(final Activity activity) { super.onAttach(activity, ID_DEVICE); }
+    @Override protected int getFragmentId() { return ID_DEVICE; }
 
     @Override
     public void onResume() {

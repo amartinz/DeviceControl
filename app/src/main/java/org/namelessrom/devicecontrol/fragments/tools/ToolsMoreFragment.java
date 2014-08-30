@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments.tools;
 
-import android.app.Activity;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,11 +25,10 @@ import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 public class ToolsMoreFragment extends AttachPreferenceFragment implements DeviceConstants,
@@ -46,8 +44,7 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
     private CustomPreference mAppManager;
     private CustomPreference mWirelessFileManager;
 
-    @Override
-    public void onAttach(final Activity activity) { super.onAttach(activity, ID_TOOLS_MORE); }
+    @Override protected int getFragmentId() { return ID_TOOLS_MORE; }
 
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,15 +69,15 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
         if (mMediaScan == preference) {
             startMediaScan();
         } else if (mAppManager == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_APP_MANAGER));
+            MainActivity.loadFragment(getActivity(), ID_TOOLS_APP_MANAGER);
         } else if (mWirelessFileManager == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_WIRELESS_FM));
+            MainActivity.loadFragment(getActivity(), ID_TOOLS_WIRELESS_FM);
         } else if (mBuildProp == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_BUILD_PROP));
+            MainActivity.loadFragment(getActivity(), ID_TOOLS_BUILD_PROP);
         } else if (mSysctlVm == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_VM));
+            MainActivity.loadFragment(getActivity(), ID_TOOLS_VM);
         } else if (mLowMemoryKiller == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_LOWMEMORYKILLER));
+            MainActivity.loadFragment(getActivity(), ID_LOWMEMORYKILLER);
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);

@@ -82,10 +82,7 @@ public class BuildPropEditorFragment extends AttachFragment
     // Overridden Methods
     //==============================================================================================
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity, ID_TOOLS_EDITORS_BUILD_PROP);
-    }
+    @Override protected int getFragmentId() { return ID_TOOLS_EDITORS_BUILD_PROP; }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

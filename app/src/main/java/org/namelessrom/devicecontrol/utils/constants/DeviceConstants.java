@@ -36,10 +36,6 @@ public interface DeviceConstants {
     //==============================================================================================
     public static final int ID_HOME                     = -100;
     public static final int ID_DUMMY                    = -5;
-    public static final int ID_FIRST_MENU               = -4;
-    public static final int ID_SECOND_MENU              = -3;
-    public static final int ID_RESTORE                  = -2;
-    public static final int ID_RESTORE_FROM_SUB         = -1;
     //----------------------------------------------------------------------------------------------
     public static final int ID_DEVICE                   = R.string.device;
     public static final int ID_FEATURES                 = R.string.features;

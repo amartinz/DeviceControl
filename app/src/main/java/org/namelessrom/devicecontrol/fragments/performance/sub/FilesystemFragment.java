@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.fragments.performance.sub;
 import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.view.MenuItem;
 
 import com.squareup.otto.Subscribe;
 
@@ -28,7 +27,6 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.IoSchedulerEvent;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
@@ -47,14 +45,7 @@ public class FilesystemFragment extends AttachPreferenceFragment
     private AwesomeCheckBoxPreference mDynFsync;
     //----------------------------------------------------------------------------------------------
 
-    @Override public void onAttach(final Activity activity) {
-        super.onAttach(activity, ID_FILESYSTEM);
-    }
-
-    @Override public void onDestroy() {
-        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
-        super.onDestroy();
-    }
+    @Override protected int getFragmentId() { return ID_FILESYSTEM; }
 
     @Override public void onResume() {
         super.onResume();

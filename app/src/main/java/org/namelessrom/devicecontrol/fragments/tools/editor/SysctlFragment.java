@@ -17,22 +17,18 @@
  */
 package org.namelessrom.devicecontrol.fragments.tools.editor;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
-import android.view.MenuItem;
 
+import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
-import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.DialogHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import java.util.List;
@@ -67,14 +63,7 @@ public class SysctlFragment extends AttachPreferenceFragment implements DeviceCo
     private CustomPreference mSwappiness;
     private CustomPreference mVfs;
 
-    @Override
-    public void onAttach(final Activity activity) { super.onAttach(activity, ID_TOOLS_VM); }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
-    }
+    @Override protected int getFragmentId() { return ID_TOOLS_VM; }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,7 +93,7 @@ public class SysctlFragment extends AttachPreferenceFragment implements DeviceCo
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mFullEditor) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_EDITORS_VM));
+            MainActivity.loadFragment(getActivity(), ID_TOOLS_EDITORS_VM);
             return true;
         } else if (preference == mDirtyRatio) {
             final String title = getString(R.string.dirty_ratio_title);

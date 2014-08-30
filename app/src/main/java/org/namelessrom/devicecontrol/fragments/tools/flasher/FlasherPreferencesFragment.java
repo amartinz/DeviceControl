@@ -17,22 +17,15 @@
  */
 package org.namelessrom.devicecontrol.fragments.tools.flasher;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 public class FlasherPreferencesFragment extends AttachPreferenceFragment
@@ -42,14 +35,7 @@ public class FlasherPreferencesFragment extends AttachPreferenceFragment
 
     private CustomCheckBoxPreference mMultiUserMode;
 
-    @Override public void onAttach(final Activity activity) {
-        super.onAttach(activity, ID_TOOLS_FLASHER_PREFS);
-    }
-
-    @Override public void onDestroy() {
-        super.onDestroy();
-        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
-    }
+    @Override protected int getFragmentId() { return ID_TOOLS_FLASHER_PREFS; }
 
     @Override public void onCreate(final Bundle bundle) {
         super.onCreate(bundle);

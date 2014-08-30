@@ -17,13 +17,11 @@
  */
 package org.namelessrom.devicecontrol.fragments.performance.sub;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
-import android.view.MenuItem;
 
 import com.squareup.otto.Subscribe;
 
@@ -31,7 +29,6 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
@@ -59,14 +56,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
     private AwesomeCheckBoxPreference mIntelliPlugEco;
     private CustomListPreference      mCpuQuietGov;
 
-    @Override
-    public void onAttach(final Activity activity) { super.onAttach(activity, ID_HOTPLUGGING); }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
-    }
+    @Override protected int getFragmentId() { return ID_HOTPLUGGING; }
 
     @Override
     public void onResume() {

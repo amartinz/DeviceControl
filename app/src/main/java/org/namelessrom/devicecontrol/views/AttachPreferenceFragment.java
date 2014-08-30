@@ -27,12 +27,23 @@ import android.view.View;
 
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
+import org.namelessrom.devicecontrol.events.listeners.OnSectionAttachedListener;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
-public class AttachPreferenceFragment extends PreferenceFragment implements OnBackPressedListener {
+public abstract class AttachPreferenceFragment extends PreferenceFragment implements OnBackPressedListener {
+
+    /**
+     * @return The fragment id
+     */
+    protected abstract int getFragmentId();
+
+    @Override public void onAttach(final Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof OnSectionAttachedListener) {
+            ((OnSectionAttachedListener) activity).onSectionAttached(getFragmentId());
+        }
+    }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -42,9 +53,13 @@ public class AttachPreferenceFragment extends PreferenceFragment implements OnBa
         }
     }
 
-    protected void onAttach(final Activity activity, final int number) {
-        super.onAttach(activity);
-        BusProvider.getBus().post(new SectionAttachedEvent(number));
+    @Override public void onResume() {
+        super.onResume();
+        final Activity activity = getActivity();
+        if (activity instanceof MainActivity) {
+            ((MainActivity) activity).setFragment(this);
+        }
+        MainActivity.loadFragment(activity, getFragmentId(), true);
     }
 
     protected void isSupported(final PreferenceScreen preferenceScreen, final Context context) {

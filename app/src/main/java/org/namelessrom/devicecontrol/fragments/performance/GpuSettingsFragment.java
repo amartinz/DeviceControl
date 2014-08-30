@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments.performance;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -69,9 +68,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
             R.string.shader_version     // shader language version
     };
 
-    @Override public void onAttach(final Activity activity) {
-        super.onAttach(activity, ID_PERFORMANCE_GPU_SETTINGS);
-    }
+    @Override protected int getFragmentId() { return ID_PERFORMANCE_GPU_SETTINGS; }
 
     @Override public void onResume() {
         super.onResume();

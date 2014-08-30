@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments.performance;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -25,10 +24,10 @@ import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 
+import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
@@ -38,7 +37,6 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import java.util.List;
@@ -82,8 +80,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
     // Overridden Methods
     //==============================================================================================
 
-    @Override
-    public void onAttach(Activity activity) { super.onAttach(activity, ID_PERFORMANCE_EXTRA); }
+    @Override protected int getFragmentId() { return ID_PERFORMANCE_EXTRA; }
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -240,22 +237,22 @@ public class ExtrasFragment extends AttachPreferenceFragment
 
     @Override public boolean onPreferenceClick(final Preference preference) {
         if (mVoltageControl == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_VOLTAGE));
+            MainActivity.loadFragment(getActivity(), ID_VOLTAGE);
             return true;
         } else if (mHotplugging == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_HOTPLUGGING));
+            MainActivity.loadFragment(getActivity(), ID_HOTPLUGGING);
             return true;
         } else if (mThermal == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_THERMAL));
+            MainActivity.loadFragment(getActivity(), ID_THERMAL);
             return true;
         } else if (mKsm == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_KSM));
+            MainActivity.loadFragment(getActivity(), ID_KSM);
             return true;
         } else if (mEntropy == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_ENTROPY));
+            MainActivity.loadFragment(getActivity(), ID_ENTROPY);
             return true;
         } else if (mFilesystem == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_FILESYSTEM));
+            MainActivity.loadFragment(getActivity(), ID_FILESYSTEM);
             return true;
         }
 

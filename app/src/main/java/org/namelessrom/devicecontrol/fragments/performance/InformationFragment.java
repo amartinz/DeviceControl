@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments.performance;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,8 +35,7 @@ public class InformationFragment extends AttachFragment implements DeviceConstan
     private DeviceStatusView mDeviceStats;
     private CpuStateView     mCpuStates;
 
-    @Override
-    public void onAttach(final Activity activity) { super.onAttach(activity, ID_PERFORMANCE_INFO); }
+    @Override protected int getFragmentId() { return ID_PERFORMANCE_INFO; }
 
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {

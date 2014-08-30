@@ -70,8 +70,7 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
 
     private TextView mEmptyView;
 
-    @Override
-    public void onAttach(final Activity activity) { super.onAttach(activity, ID_TOOLS_FLASHER); }
+    @Override protected int getFragmentId() { return ID_TOOLS_FLASHER; }
 
     @Override public void onResume() {
         super.onResume();

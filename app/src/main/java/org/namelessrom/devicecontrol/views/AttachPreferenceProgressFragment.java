@@ -28,7 +28,7 @@ import org.namelessrom.devicecontrol.R;
 
 import static butterknife.ButterKnife.findById;
 
-public class AttachPreferenceProgressFragment extends AttachPreferenceFragment {
+public abstract class AttachPreferenceProgressFragment extends AttachPreferenceFragment {
 
     protected ProgressBar mProgressBar;
 

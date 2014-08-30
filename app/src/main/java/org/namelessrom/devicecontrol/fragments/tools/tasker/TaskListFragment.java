@@ -38,7 +38,6 @@ import org.namelessrom.devicecontrol.adapters.TaskerAdapter;
 import org.namelessrom.devicecontrol.cards.TaskerCard;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -60,13 +59,7 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
     private TaskerAdapter mAdapter;
     private View          mEmptyView;
 
-    @Override
-    public void onAttach(Activity activity) { super.onAttach(activity, ID_TOOLS_TASKER_LIST); }
-
-    @Override public void onDestroy() {
-        super.onDestroy();
-        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
-    }
+    @Override protected int getFragmentId() { return ID_TOOLS_TASKER_LIST; }
 
     @Override public void onResume() {
         super.onResume();

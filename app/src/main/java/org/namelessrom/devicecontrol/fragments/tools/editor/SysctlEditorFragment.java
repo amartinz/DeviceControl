@@ -89,10 +89,7 @@ public class SysctlEditorFragment extends AttachFragment
     // Overridden Methods
     //==============================================================================================
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity, ID_TOOLS_EDITORS_VM);
-    }
+    @Override protected int getFragmentId() { return ID_TOOLS_EDITORS_VM; }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

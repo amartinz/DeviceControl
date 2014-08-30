@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.fragments.tools;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
@@ -64,7 +63,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.AppDetailsActivity;
 import org.namelessrom.devicecontrol.adapters.AppListAdapter;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.events.listeners.OnAppChoosenListener;
 import org.namelessrom.devicecontrol.objects.AppItem;
@@ -113,6 +111,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     private LinearLayout        mCacheInfo;
     //==============================================================================================
 
+    @Override protected int getFragmentId() { return ID_TOOLS_APP_MANAGER; }
 
     @Override public void onResume() {
         super.onResume();
@@ -122,15 +121,6 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     @Override public void onPause() {
         super.onPause();
         BusProvider.getBus().unregister(this);
-    }
-
-    @Override public void onAttach(final Activity activity) {
-        super.onAttach(activity, ID_TOOLS_APP_MANAGER);
-    }
-
-    @Override public void onDestroy() {
-        super.onDestroy();
-        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
     }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

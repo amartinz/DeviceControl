@@ -23,15 +23,21 @@ import android.os.Bundle;
 import android.view.View;
 
 import org.namelessrom.devicecontrol.MainActivity;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+import org.namelessrom.devicecontrol.events.listeners.OnSectionAttachedListener;
 
-public class AttachListFragment extends ListFragment implements OnBackPressedListener {
+public abstract class AttachListFragment extends ListFragment implements OnBackPressedListener {
 
-    protected void onAttach(final Activity activity, final int number) {
+    /**
+     * @return The fragment id
+     */
+    protected abstract int getFragmentId();
+
+    @Override public void onAttach(final Activity activity) {
         super.onAttach(activity);
-        BusProvider.getBus().post(new SectionAttachedEvent(number));
+        if (activity instanceof OnSectionAttachedListener) {
+            ((OnSectionAttachedListener) activity).onSectionAttached(getFragmentId());
+        }
     }
 
     @Override
@@ -41,6 +47,15 @@ public class AttachListFragment extends ListFragment implements OnBackPressedLis
         if (MainActivity.sSlidingMenu != null && MainActivity.sSlidingMenu.isMenuShowing()) {
             MainActivity.sSlidingMenu.toggle(true);
         }
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+        final Activity activity = getActivity();
+        if (activity instanceof MainActivity) {
+            ((MainActivity) activity).setFragment(this);
+        }
+        MainActivity.loadFragment(activity, getFragmentId(), true);
     }
 
     /*

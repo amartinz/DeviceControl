@@ -28,20 +28,17 @@ import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.text.InputFilter;
 import android.text.InputFilter.LengthFilter;
-import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.negusoft.holoaccent.dialog.DividerPainter;
 
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
-import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 public class BuildPropFragment extends AttachPreferenceFragment
@@ -108,14 +105,7 @@ public class BuildPropFragment extends AttachPreferenceFragment
 
     private boolean result = false;
 
-    @Override
-    public void onAttach(final Activity activity) { super.onAttach(activity, ID_TOOLS_BUILD_PROP); }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
-    }
+    @Override protected int getFragmentId() { return ID_TOOLS_BUILD_PROP; }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -190,7 +180,7 @@ public class BuildPropFragment extends AttachPreferenceFragment
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
         if (preference == mFullEditor) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_EDITORS_BUILD_PROP));
+            MainActivity.loadFragment(getActivity(), ID_TOOLS_EDITORS_BUILD_PROP);
             return true;
         } else if (preference == mTcpStackPref) {
             value = mTcpStackPref.isChecked();

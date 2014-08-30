@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.activities;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 
 import com.negusoft.holoaccent.activity.AccentActivity;
 

@@ -41,7 +41,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.GovernorEvent;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -57,8 +56,7 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
     private PreferenceCategory mCategory;
     private Context            mContext;
 
-    @Override
-    public void onAttach(final Activity activity) { super.onAttach(activity, ID_GOVERNOR_TUNABLE); }
+    @Override protected int getFragmentId() { return ID_GOVERNOR_TUNABLE; }
 
     @Override
     public void onResume() {
@@ -70,12 +68,6 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
     public void onPause() {
         super.onPause();
         BusProvider.getBus().unregister(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
     }
 
     @Override

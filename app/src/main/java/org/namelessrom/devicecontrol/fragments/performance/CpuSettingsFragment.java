@@ -38,11 +38,11 @@ import android.widget.TextView;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.CpuCoreEvent;
 import org.namelessrom.devicecontrol.events.CpuFreqEvent;
 import org.namelessrom.devicecontrol.events.GovernorEvent;
-import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
@@ -74,9 +74,7 @@ public class CpuSettingsFragment extends AttachFragment
 
     private static int mInterval = 2000;
 
-    @Override public void onAttach(Activity activity) {
-        super.onAttach(activity, ID_PERFORMANCE_CPU_SETTINGS);
-    }
+    @Override protected int getFragmentId() { return ID_PERFORMANCE_CPU_SETTINGS; }
 
     @Override public void onResume() {
         super.onResume();
@@ -115,7 +113,7 @@ public class CpuSettingsFragment extends AttachFragment
 
         switch (id) {
             case 0: // cpu governor
-                BusProvider.getBus().post(new SubFragmentEvent(ID_GOVERNOR_TUNABLE));
+                MainActivity.loadFragment(getActivity(), ID_GOVERNOR_TUNABLE);
                 return true;
         }
 

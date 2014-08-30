@@ -1,15 +1,12 @@
 package org.namelessrom.devicecontrol.fragments.device.sub;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
-import android.view.MenuItem;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomEditTextPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
@@ -43,10 +40,7 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
     private CustomPreference          mUsbLevelsValid;
     private CustomEditTextPreference  mUsbLevel;
 
-    @Override
-    public void onAttach(final Activity activity) {
-        super.onAttach(activity, ID_FAST_CHARGE);
-    }
+    @Override protected int getFragmentId() { return ID_FAST_CHARGE; }
 
     @Override
     public void onResume() {
@@ -58,12 +52,6 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
     public void onPause() {
         super.onPause();
         BusProvider.getBus().unregister(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
     }
 
     @Override

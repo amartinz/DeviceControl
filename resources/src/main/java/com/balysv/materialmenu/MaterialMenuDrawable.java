@@ -511,6 +511,11 @@ public class MaterialMenuDrawable extends Drawable implements Animatable {
     }
 
     public synchronized void setIconState(IconState iconState) {
+        if (transformationRunning) {
+            transformation.cancel();
+            transformationRunning = false;
+        }
+
         if (currentIconState == iconState) return;
 
         switch (iconState) {
@@ -535,11 +540,13 @@ public class MaterialMenuDrawable extends Drawable implements Animatable {
     }
 
     public synchronized void animateIconState(IconState state, boolean drawTouch) {
-        if (!transformationRunning) {
-            drawTouchCircle = drawTouch;
-            animatingIconState = state;
-            start();
+        if (transformationRunning) {
+            transformation.end();
+            pressedCircle.end();
         }
+        drawTouchCircle = drawTouch;
+        animatingIconState = state;
+        start();
     }
 
     /*
@@ -682,7 +689,7 @@ public class MaterialMenuDrawable extends Drawable implements Animatable {
             pressedCircle.cancel();
         }
         if (drawTouchCircle && !neverDrawTouch) {
-            pressedCircle.setFloatValues(pressedProgressValue, circleRadius * 1.22f);
+            pressedCircle.setFloatValues(0, circleRadius * 1.22f);
             pressedCircle.start();
         }
 

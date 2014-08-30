@@ -40,7 +40,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
-import org.namelessrom.devicecontrol.events.SubFragmentEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.proprietary.Constants;
@@ -88,10 +87,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
     //==============================================================================================
     private CustomCheckBoxPreference mExtensiveLogging;
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity, ID_DUMMY);
-    }
+    @Override protected int getFragmentId() { return ID_DUMMY; }
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -282,7 +278,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
             return true;
         } else if (mFlasherConfig == preference) {
-            BusProvider.getBus().post(new SubFragmentEvent(ID_TOOLS_FLASHER_PREFS));
+            MainActivity.loadFragment(getActivity(), ID_TOOLS_FLASHER_PREFS);
             return true;
         } else if (mSetOnBoot == preference) {
             new SobDialogFragment().show(getActivity().getFragmentManager(), "sob_dialog_fragment");

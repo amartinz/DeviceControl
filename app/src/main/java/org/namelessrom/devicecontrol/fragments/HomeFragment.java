@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +31,7 @@ import butterknife.ButterKnife;
 
 public class HomeFragment extends AttachFragment implements DeviceConstants {
 
-    @Override
-    public void onAttach(final Activity activity) { super.onAttach(activity, ID_HOME); }
+    @Override protected int getFragmentId() { return ID_HOME; }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,

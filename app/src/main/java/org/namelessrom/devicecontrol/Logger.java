@@ -33,27 +33,51 @@ public class Logger {
     public static boolean getEnabled() { return DEBUG; }
 
     public static void d(final Object object, final String msg) {
-        if (DEBUG) Log.d(getTag(object), "--> " + msg);
+        if (DEBUG) Log.d(getTag(object), String.format("--> %s", msg));
+    }
+
+    public static void d(final Object object, final String msg, final Object... objects) {
+        if (DEBUG) Log.d(getTag(object), String.format("--> %s", String.format(msg, objects)));
     }
 
     public static void e(final Object object, final String msg) {
-        if (DEBUG) Log.e(getTag(object), "--> " + msg);
+        if (DEBUG) Log.e(getTag(object), String.format("--> %s", msg));
+    }
+
+    public static void e(final Object object, final String msg, final Object... objects) {
+        if (DEBUG) Log.e(getTag(object), String.format("--> %s", String.format(msg, objects)));
     }
 
     public static void i(final Object object, final String msg) {
-        if (DEBUG) Log.i(getTag(object), "--> " + msg);
+        if (DEBUG) Log.i(getTag(object), String.format("--> %s", msg));
+    }
+
+    public static void i(final Object object, final String msg, final Object... objects) {
+        if (DEBUG) Log.i(getTag(object), String.format("--> %s", String.format(msg, objects)));
     }
 
     public static void v(final Object object, final String msg) {
-        if (DEBUG) Log.v(getTag(object), "--> " + msg);
+        if (DEBUG) Log.v(getTag(object), String.format("--> %s", msg));
+    }
+
+    public static void v(final Object object, final String msg, final Object... objects) {
+        if (DEBUG) Log.v(getTag(object), String.format("--> %s", String.format(msg, objects)));
     }
 
     public static void w(final Object object, final String msg) {
-        if (DEBUG) Log.w(getTag(object), "--> " + msg);
+        if (DEBUG) Log.w(getTag(object), String.format("--> %s", msg));
+    }
+
+    public static void w(final Object object, final String msg, final Object... objects) {
+        if (DEBUG) Log.w(getTag(object), String.format("--> %s", String.format(msg, objects)));
     }
 
     public static void wtf(final Object object, final String msg) {
-        if (DEBUG) Log.wtf(getTag(object), "--> " + msg);
+        if (DEBUG) Log.wtf(getTag(object), String.format("--> %s", msg));
+    }
+
+    public static void wtf(final Object object, final String msg, final Object... objects) {
+        if (DEBUG) Log.wtf(getTag(object), String.format("--> %s", String.format(msg, objects)));
     }
 
     public static String getTag(final Object object) {

@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments.performance.sub;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -34,7 +33,6 @@ import com.squareup.otto.Subscribe;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
@@ -60,14 +58,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
     private CustomCheckBoxPreference mRngActive;
     private CustomPreference         mRngStartup;
 
-    @Override public void onAttach(final Activity activity) {
-        super.onAttach(activity, ID_ENTROPY);
-    }
-
-    @Override public void onDestroy() {
-        super.onDestroy();
-        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
-    }
+    @Override protected int getFragmentId() { return ID_ENTROPY; }
 
     @Override public void onResume() {
         super.onResume();

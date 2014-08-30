@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments.tools;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -25,14 +24,12 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.Preference;
-import android.view.MenuItem;
 
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.server.ServerStoppedEvent;
 import org.namelessrom.devicecontrol.events.server.ServerStoppingEvent;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
@@ -59,14 +56,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
     private CustomEditTextPreference mUsername;
     private CustomEditTextPreference mPassword;
 
-    @Override public void onAttach(final Activity activity) {
-        super.onAttach(activity, ID_TOOLS_WIRELESS_FM);
-    }
-
-    @Override public void onDestroy() {
-        super.onDestroy();
-        BusProvider.getBus().post(new SectionAttachedEvent(ID_RESTORE_FROM_SUB));
-    }
+    @Override protected int getFragmentId() { return ID_TOOLS_WIRELESS_FM; }
 
     @Override public void onPause() {
         super.onPause();
