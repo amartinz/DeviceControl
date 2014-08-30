@@ -69,6 +69,11 @@
             android:title="@string/accent" />
 
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+            android:key="dark_theme"
+            android:summary="@string/dark_theme_summary"
+            android:title="@string/dark_theme" />
+
+        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="swipe_on_content"
             android:summary="@string/swipe_on_content_summary"
             android:title="@string/swipe_on_content" />

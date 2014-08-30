@@ -30,6 +30,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.events.listeners.OnSectionAttachedListener;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.utils.AppHelper;
 
 public abstract class AttachPreferenceFragment extends PreferenceFragment implements OnBackPressedListener {
 
@@ -56,7 +57,7 @@ public abstract class AttachPreferenceFragment extends PreferenceFragment implem
     @Override public void onResume() {
         super.onResume();
         final Activity activity = getActivity();
-        if (activity instanceof MainActivity) {
+        if (!AppHelper.preventOnResume && activity instanceof MainActivity) {
             ((MainActivity) activity).setFragment(this);
         }
         MainActivity.loadFragment(activity, getFragmentId(), true);

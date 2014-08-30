@@ -16,10 +16,6 @@
 -->
 <resources>
     <!-- Wizard -->
-    <style name="TextAppearanceFinish" parent="android:TextAppearance.Holo.Medium">
-        <item name="android:textColor">#fff</item>
-    </style>
-
     <style name="WizardPageContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

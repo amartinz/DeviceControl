@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
+<LinearLayout
     style="@style/card"
-    android:layout_margin="15dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingEnd="?android:attr/scrollbarSize"
+    android:layout_margin="15dp"
+    android:baselineAligned="false"
     android:foreground="?android:attr/selectableItemBackground"
-    android:baselineAligned="false">
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:paddingEnd="?android:attr/scrollbarSize"
+    tools:background="@drawable/card_background">
 
     <LinearLayout
         android:id="@id/list_item_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_marginLeft="10dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
             android:fadingEdge="horizontal"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:fontFamily="sans-serif-condensed"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/primary_text_light"
+            tools:text="screen_off" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -40,7 +44,8 @@
                 android:layout_marginRight="10dp"
                 android:fontFamily="sans-serif-light"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textColor="@android:color/secondary_text_light"
+                tools:text="cpu_frequency_max" />
 
             <TextView
                 android:id="@+id/value"
@@ -50,7 +55,8 @@
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-light"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="?android:attr/textColorSecondary" />
+                android:textColor="@android:color/secondary_text_light"
+                tools:text="2457600" />
 
         </LinearLayout>
 
@@ -61,6 +67,7 @@
     <CheckBox
         android:id="@+id/enabled"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:checked="true" />
 
 </LinearLayout>

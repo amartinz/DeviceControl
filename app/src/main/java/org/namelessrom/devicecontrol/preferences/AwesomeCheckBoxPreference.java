@@ -20,20 +20,14 @@ package org.namelessrom.devicecontrol.preferences;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Typeface;
 import android.preference.CheckBoxPreference;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-
-import static butterknife.ButterKnife.findById;
 
 /**
  * Automatically handles reading to files to automatically set the value,
@@ -103,18 +97,6 @@ public class AwesomeCheckBoxPreference extends CheckBoxPreference {
         if (valueNotChecked == null || valueNotChecked.isEmpty()) valueNotChecked = "0";
 
         setLayoutResource(R.layout.preference);
-    }
-
-    @Override protected void onBindView(@NonNull final View view) {
-        super.onBindView(view);
-        final int color = getContext().getResources().getColor(R.color.default_color);
-
-        final TextView mTitle = findById(view, android.R.id.title);
-        mTitle.setTextColor(color);
-        mTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
-
-        final TextView mSummary = findById(view, android.R.id.summary);
-        mSummary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
     }
 
     public void initValue() { initValue(false); }

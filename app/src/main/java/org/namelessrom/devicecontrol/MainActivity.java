@@ -169,6 +169,10 @@ public class MainActivity extends AccentActivity
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final boolean isDarkTheme = PreferenceHelper.getBoolean("dark_theme", true);
+        setTheme(isDarkTheme ? R.style.BaseThemeDark : R.style.BaseThemeLight);
+
         setContentView(R.layout.activity_main);
 
         if (PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
@@ -357,6 +361,8 @@ public class MainActivity extends AccentActivity
     //==============================================================================================
 
     public void setFragment(final Fragment fragment) {
+        if (fragment == null) return;
+        Logger.v(this, "setFragment: %s", fragment.getId());
         mCurrentFragment = fragment;
     }
 
@@ -504,10 +510,14 @@ public class MainActivity extends AccentActivity
             //--------------------------------------------------------------------------------------
             case ID_PREFERENCES:
                 if (!onResume) mCurrentFragment = new PreferencesFragment();
+                mTitle = mFragmentTitle = R.string.preferences;
+                mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_LICENSES:
                 if (!onResume) mCurrentFragment = new LicenseFragment();
+                mTitle = mFragmentTitle = R.string.licenses;
+                mSubFragmentTitle = -1;
                 break;
         }
 
@@ -521,7 +531,11 @@ public class MainActivity extends AccentActivity
 
         final FragmentManager fragmentManager = getFragmentManager();
         if (!isSubFragment && fragmentManager.getBackStackEntryCount() > 0) {
+            // set a lock to prevent calling setFragment as onResume gets called
+            AppHelper.preventOnResume = true;
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            // release the lock
+            AppHelper.preventOnResume = false;
         }
 
         final FragmentTransaction ft = fragmentManager.beginTransaction();

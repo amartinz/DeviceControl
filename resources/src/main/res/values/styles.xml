@@ -17,10 +17,36 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="BaseTheme" parent="Theme.HoloAccent.Light.DarkActionBar" />
+    <style name="BaseTheme" parent="BaseThemeDark" />
+
+    <style name="BaseThemeDark" parent="Theme.HoloAccent">
+        <item name="android:actionBarStyle">@style/ActionBarStyleDark</item>
+        </style>
+
+    <style name="BaseThemeLight" parent="Theme.HoloAccent.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/ActionBarStyleLight</item>
+        <item name="android:windowBackground">@color/grey_dark</item>
+    </style>
 
     <style name="NoActionBar" parent="@android:style/Theme.Holo.Light.NoActionBar">
         <!-- Customize ads aag kjasdgjkb asdf weu here -->
+    </style>
+
+    <style name="ActionBarStyleDark" parent="android:Widget.Holo.ActionBar.Solid">
+        <item name="android:displayOptions">showTitle</item>
+    </style>
+
+    <style name="ActionBarStyleLight" parent="android:Widget.Holo.ActionBar.Solid">
+        <item name="android:displayOptions">showTitle</item>
+        <item name="android:titleTextStyle">@android:style/TextAppearance.Holo.Widget.ActionBar.Title.Inverse</item>
+    </style>
+
+    <style name="ActionButtonStyle" parent="android:Widget.Holo.ActionButton">
+        <item name="android:background">@drawable/action_bar_item_background</item>
+    </style>
+
+    <style name="OverflowButtonStyle" parent="android:Widget.Holo.ActionButton.Overflow">
+        <item name="android:background">@drawable/action_bar_item_background</item>
     </style>
 
     <style name="StandardDivider">
@@ -64,12 +90,5 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-
-    <declare-styleable name="MaterialMenuView">
-        <attr name="color" format="color" />
-        <attr name="scale" format="integer" />
-        <attr name="transformDuration" format="integer" />
-        <attr name="pressedDuration" format="integer" />
-    </declare-styleable>
 
 </resources>

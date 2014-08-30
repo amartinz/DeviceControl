@@ -16,12 +16,6 @@
 -->
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="BaseTheme" parent="Theme.HoloAccent.Light.DarkActionBar">
-        <!--item name="android:windowTranslucentStatus">true</item-->
-        <!--item name="android:windowTranslucentNavigation">true</item-->
-    </style>
-
     <style name="NoActionBar" parent="@android:style/Theme.Holo.Light.NoActionBar.TranslucentDecor">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>

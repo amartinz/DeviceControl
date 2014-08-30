@@ -31,6 +31,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.objects.FlashItem;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.SortHelper;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
@@ -119,7 +120,8 @@ public class FileAdapter extends BaseAdapter {
             }
         });
 
-        int color = resources.getColor(R.color.default_color);
+        int color = PreferenceHelper.getBoolean("dark_theme", true)
+                ? Color.WHITE : Color.BLACK;
 
         viewHolder.name.setText(file.getName());
 
