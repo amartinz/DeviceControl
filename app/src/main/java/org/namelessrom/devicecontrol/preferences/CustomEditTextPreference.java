@@ -25,19 +25,6 @@ public class CustomEditTextPreference extends EditTextPreference {
     }
 
     @Override
-    protected void onBindView(final View view) {
-        super.onBindView(view);
-        final int color = getContext().getResources().getColor(R.color.default_color);
-
-        final TextView title = ButterKnife.findById(view, android.R.id.title);
-        title.setTextColor(color);
-        title.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
-
-        final TextView summary = ButterKnife.findById(view, android.R.id.summary);
-        summary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-    }
-
-    @Override
     public boolean isPersistent() { return false; }
 
     @Override

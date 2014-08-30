@@ -24,7 +24,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -93,6 +92,10 @@ public class AddTaskActivity extends AccentActivity implements
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final boolean isDarkTheme = PreferenceHelper.getBoolean("dark_theme", true);
+        setTheme(isDarkTheme ? R.style.BaseThemeDark : R.style.BaseThemeLight);
+
         setContentView(R.layout.wizard_activity);
         ButterKnife.inject(this);
 
@@ -209,15 +212,11 @@ public class AddTaskActivity extends AccentActivity implements
         if (position == mCurrentPageSequence.size()) {
             mNextButton.setText(R.string.finish);
             mNextButton.setBackgroundResource(R.drawable.finish_background);
-            mNextButton.setTextAppearance(this, R.style.TextAppearanceFinish);
         } else {
             mNextButton.setText(mEditingAfterReview
                     ? R.string.review
                     : R.string.next);
             mNextButton.setBackgroundResource(R.drawable.selectable_item_background);
-            TypedValue v = new TypedValue();
-            getTheme().resolveAttribute(android.R.attr.textAppearanceMedium, v, true);
-            mNextButton.setTextAppearance(this, v.resourceId);
             mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
         }
 

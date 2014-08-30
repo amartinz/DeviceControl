@@ -22,6 +22,7 @@
      type in the "widget_frame" layout.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
@@ -46,8 +47,10 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
+            android:fontFamily="sans-serif-condensed"
             android:singleLine="true"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            tools:text="I am a title" />
 
         <TextView
             android:id="@android:id/summary"
@@ -56,9 +59,11 @@
             android:layout_alignLeft="@android:id/title"
             android:layout_alignStart="@android:id/title"
             android:layout_below="@android:id/title"
+            android:fontFamily="sans-serif-light"
             android:maxLines="4"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?android:attr/textColorSecondary" />
+            android:textColor="?android:attr/textColorSecondary"
+            tools:text="Well, i am the summary, douche!" />
     </RelativeLayout>
 
     <!-- Preference should place its actual preference widget here. -->

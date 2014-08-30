@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 
 public class LicenseFragment extends AttachFragment implements DeviceConstants {
 
-    @Override protected int getFragmentId() { return ID_DUMMY; }
+    @Override protected int getFragmentId() { return ID_LICENSES; }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

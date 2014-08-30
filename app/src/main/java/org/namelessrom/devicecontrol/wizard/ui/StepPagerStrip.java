@@ -28,6 +28,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 public class StepPagerStrip extends View {
     private static final int[] ATTRS = new int[]{
@@ -72,17 +73,32 @@ public class StepPagerStrip extends View {
         mTabHeight = res.getDimensionPixelSize(R.dimen.step_pager_tab_height);
         mTabSpacing = res.getDimensionPixelSize(R.dimen.step_pager_tab_spacing);
 
+        final boolean isDarkTheme = PreferenceHelper.getBoolean("dark_theme", true);
+        int color;
+
+        color = isDarkTheme
+                ? res.getColor(R.color.step_pager_previous_tab_color)
+                : res.getColor(R.color.step_pager_previous_tab_color_light);
         mPrevTabPaint = new Paint();
-        mPrevTabPaint.setColor(res.getColor(R.color.step_pager_previous_tab_color));
+        mPrevTabPaint.setColor(color);
 
+        color = isDarkTheme
+                ? res.getColor(R.color.step_pager_selected_tab_color)
+                : res.getColor(R.color.step_pager_selected_tab_color_light);
         mSelectedTabPaint = new Paint();
-        mSelectedTabPaint.setColor(res.getColor(R.color.step_pager_selected_tab_color));
+        mSelectedTabPaint.setColor(color);
 
+        color = isDarkTheme
+                ? res.getColor(R.color.step_pager_selected_last_tab_color)
+                : res.getColor(R.color.step_pager_selected_last_tab_color_light);
         mSelectedLastTabPaint = new Paint();
-        mSelectedLastTabPaint.setColor(res.getColor(R.color.step_pager_selected_last_tab_color));
+        mSelectedLastTabPaint.setColor(color);
 
+        color = isDarkTheme
+                ? res.getColor(R.color.step_pager_next_tab_color)
+                : res.getColor(R.color.step_pager_next_tab_color_light);
         mNextTabPaint = new Paint();
-        mNextTabPaint.setColor(res.getColor(R.color.step_pager_next_tab_color));
+        mNextTabPaint.setColor(color);
     }
 
     public void setOnPageSelectedListener(OnPageSelectedListener onPageSelectedListener) {

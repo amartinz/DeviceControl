@@ -81,13 +81,14 @@ public class PreferencesFragment extends AttachPreferenceFragment
     // Interface
     //==============================================================================================
     private CustomCheckBoxPreference mSwipeOnContent;
+    private CustomCheckBoxPreference mDarkTheme;
 
     //==============================================================================================
     // Debug
     //==============================================================================================
     private CustomCheckBoxPreference mExtensiveLogging;
 
-    @Override protected int getFragmentId() { return ID_DUMMY; }
+    @Override protected int getFragmentId() { return ID_PREFERENCES; }
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -153,6 +154,10 @@ public class PreferencesFragment extends AttachPreferenceFragment
             mSwipeOnContent = (CustomCheckBoxPreference) findPreference("swipe_on_content");
             mSwipeOnContent.setChecked(PreferenceHelper.getBoolean(mSwipeOnContent.getKey()));
             mSwipeOnContent.setOnPreferenceChangeListener(this);
+
+            mDarkTheme = (CustomCheckBoxPreference) findPreference("dark_theme");
+            mDarkTheme.setChecked(PreferenceHelper.getBoolean(mDarkTheme.getKey(), true));
+            mDarkTheme.setOnPreferenceChangeListener(this);
         }
 
         setupVersionPreference();
@@ -212,6 +217,14 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
             // update the menu
             MainActivity.setSwipeOnContent(value);
+            return true;
+        } else if (mDarkTheme == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(mDarkTheme.getKey(), value);
+            mDarkTheme.setChecked(value);
+
+            // restart the activity to apply new theme
+            Utils.restartActivity(getActivity());
             return true;
         }
 

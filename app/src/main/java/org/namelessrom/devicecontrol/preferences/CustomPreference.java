@@ -2,7 +2,6 @@ package org.namelessrom.devicecontrol.preferences;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.preference.Preference;
 import android.support.annotation.NonNull;
@@ -87,14 +86,8 @@ public class CustomPreference extends Preference {
 
     @Override protected void onBindView(@NonNull final View view) {
         super.onBindView(view);
-        final int color = getContext().getResources().getColor(R.color.default_color);
-
-        final TextView title = ButterKnife.findById(view, android.R.id.title);
-        title.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
-        title.setTextColor(color);
 
         summary = ButterKnife.findById(view, android.R.id.summary);
-        summary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
         if (sumColor != -1) {
             summary.setTextColor(sumColor);
         }

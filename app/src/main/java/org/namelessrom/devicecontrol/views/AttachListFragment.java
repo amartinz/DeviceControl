@@ -25,6 +25,7 @@ import android.view.View;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.events.listeners.OnSectionAttachedListener;
+import org.namelessrom.devicecontrol.utils.AppHelper;
 
 public abstract class AttachListFragment extends ListFragment implements OnBackPressedListener {
 
@@ -52,7 +53,7 @@ public abstract class AttachListFragment extends ListFragment implements OnBackP
     @Override public void onResume() {
         super.onResume();
         final Activity activity = getActivity();
-        if (activity instanceof MainActivity) {
+        if (!AppHelper.preventOnResume && activity instanceof MainActivity) {
             ((MainActivity) activity).setFragment(this);
         }
         MainActivity.loadFragment(activity, getFragmentId(), true);
