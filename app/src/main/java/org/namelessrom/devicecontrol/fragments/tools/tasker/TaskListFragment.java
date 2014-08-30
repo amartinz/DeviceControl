@@ -136,13 +136,6 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
     @Override public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
         switch (id) {
-            case android.R.id.home: {
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
-            }
             case R.id.action_task_add: {
                 final Activity activity = getActivity();
                 if (activity != null) {
@@ -150,10 +143,8 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
                 }
                 return true;
             }
-            default: {
-                return false;
-            }
         }
+        return false;
     }
 
     private class UpdateTaskerCardList extends AsyncTask<Void, Void, ArrayList<TaskerCard>> {

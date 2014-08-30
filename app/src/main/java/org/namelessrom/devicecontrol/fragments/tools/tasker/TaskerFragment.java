@@ -50,7 +50,6 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.tasker);
-        setHasOptionsMenu(true);
 
         mFstrim = (CustomCheckBoxPreference) findPreference(FSTRIM);
         if (mFstrim != null) {

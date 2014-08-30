@@ -66,7 +66,6 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setHasOptionsMenu(true);
 
         final Spinner spinner = new Spinner(getActivity());
         final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(
@@ -113,22 +112,6 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
         });
 
         new LmkTask().execute();
-    }
-
-    @Override public boolean onOptionsItemSelected(final MenuItem item) {
-        final int id = item.getItemId();
-        switch (id) {
-            case android.R.id.home:
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
-            default:
-                break;
-        }
-
-        return false;
     }
 
     private void applyMinFree() {

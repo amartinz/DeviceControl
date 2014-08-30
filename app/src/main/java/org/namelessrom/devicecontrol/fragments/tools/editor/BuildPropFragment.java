@@ -118,29 +118,9 @@ public class BuildPropFragment extends AttachPreferenceFragment
     }
 
     @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        final int id = item.getItemId();
-        switch (id) {
-            case android.R.id.home: {
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
-            }
-            default: {
-                break;
-            }
-        }
-
-        return false;
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prop_modder);
-        setHasOptionsMenu(true);
 
         final PreferenceScreen prefSet = getPreferenceScreen();
 

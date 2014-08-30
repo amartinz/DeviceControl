@@ -80,7 +80,6 @@ public class ThermalFragment extends AttachPreferenceFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.extras_thermal);
-        setHasOptionsMenu(true);
 
         mRoot = getPreferenceScreen();
         PreferenceCategory category;
@@ -276,23 +275,6 @@ public class ThermalFragment extends AttachPreferenceFragment
             default:
                 return "";
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        final int id = item.getItemId();
-        switch (id) {
-            case android.R.id.home:
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
-            default:
-                break;
-        }
-
-        return false;
     }
 
 }

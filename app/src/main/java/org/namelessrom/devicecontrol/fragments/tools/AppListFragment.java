@@ -67,7 +67,6 @@ import org.namelessrom.devicecontrol.adapters.AppListAdapter;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.events.listeners.OnAppChoosenListener;
-import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.utils.AnimationHelper;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -84,7 +83,7 @@ import java.util.List;
 import static butterknife.ButterKnife.findById;
 
 public class AppListFragment extends AttachFragment implements DeviceConstants,
-        OnAppChoosenListener, OnBackPressedListener {
+        OnAppChoosenListener {
 
     private static final int DIALOG_TYPE_DISABLE   = 0;
     private static final int DIALOG_TYPE_UNINSTALL = 1;
@@ -176,13 +175,6 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         if (mAppItem == null) { return false; }
         final int id = item.getItemId();
         switch (id) {
-            case android.R.id.home: {
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
-            }
             case R.id.menu_action_play_store: {
                 AppHelper.showInPlaystore("market://details?id=" + mAppItem.getPackageName());
                 return true;
@@ -206,9 +198,6 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             case R.id.menu_app_uninstall: {
                 uninstallApp();
                 return true;
-            }
-            default: {
-                break;
             }
         }
 
@@ -324,7 +313,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             if (getActivity() != null) getActivity().invalidateOptionsMenu();
             return true;
         }
-        return false;
+        return super.onBackPressed();
     }
 
     @Override public void onAppChoosen(final AppItem appItem) {

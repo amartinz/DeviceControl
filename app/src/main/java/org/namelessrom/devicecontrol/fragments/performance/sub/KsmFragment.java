@@ -227,15 +227,8 @@ public class KsmFragment extends AttachPreferenceFragment
     @Override public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
         switch (id) {
-            case android.R.id.home:
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
             case R.id.menu_action_refresh:
                 new RefreshTask().execute();
-            default:
                 break;
         }
 

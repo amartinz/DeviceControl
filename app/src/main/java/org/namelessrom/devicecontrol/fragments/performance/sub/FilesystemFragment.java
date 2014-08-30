@@ -69,7 +69,6 @@ public class FilesystemFragment extends AttachPreferenceFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         addPreferencesFromResource(R.xml.extras_filesystem);
 
         String value;
@@ -114,22 +113,6 @@ public class FilesystemFragment extends AttachPreferenceFragment
             mReadAhead.setSummary(mapReadAhead(value));
             ActionProcessor.processAction(ActionProcessor.ACTION_READ_AHEAD, value, true);
             return true;
-        }
-
-        return false;
-    }
-
-    @Override public boolean onOptionsItemSelected(final MenuItem item) {
-        final int id = item.getItemId();
-        switch (id) {
-            case android.R.id.home:
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
-            default:
-                break;
         }
 
         return false;

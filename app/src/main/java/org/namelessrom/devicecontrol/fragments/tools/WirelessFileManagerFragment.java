@@ -96,7 +96,6 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         addPreferencesFromResource(R.xml.tools_wireless_file_manager);
 
         String tmp;
@@ -174,22 +173,6 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
         }
 
         return false;
-    }
-
-    @Override public boolean onOptionsItemSelected(final MenuItem item) {
-        final int id = item.getItemId();
-        switch (id) {
-            case android.R.id.home: {
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
-            }
-            default: {
-                return false;
-            }
-        }
     }
 
     @Override public boolean onPreferenceClick(final Preference preference) {

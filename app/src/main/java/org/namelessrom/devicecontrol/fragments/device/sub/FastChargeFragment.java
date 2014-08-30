@@ -71,8 +71,6 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.fast_charge);
 
-        setHasOptionsMenu(true);
-
         final PreferenceScreen mRoot = getPreferenceScreen();
         String tmp;
 
@@ -247,20 +245,4 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        final int id = item.getItemId();
-        switch (id) {
-            case android.R.id.home:
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
-            default:
-                break;
-        }
-
-        return false;
-    }
 }

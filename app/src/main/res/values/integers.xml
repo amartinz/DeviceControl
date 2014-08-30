@@ -15,6 +15,6 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <integer name="animation_time">500</integer>
+    <integer name="animation_time">300</integer>
     <integer name="material_menu_scale">6</integer>
 </resources>

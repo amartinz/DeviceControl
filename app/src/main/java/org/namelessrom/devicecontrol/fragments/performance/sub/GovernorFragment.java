@@ -54,8 +54,8 @@ import java.io.File;
 
 public class GovernorFragment extends AttachPreferenceFragment implements DeviceConstants {
 
-    private static PreferenceCategory mCategory;
-    private static Context            mContext;
+    private PreferenceCategory mCategory;
+    private Context            mContext;
 
     @Override
     public void onAttach(final Activity activity) { super.onAttach(activity, ID_GOVERNOR_TUNABLE); }
@@ -82,8 +82,6 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.governor);
-
-        setHasOptionsMenu(true);
 
         mCategory = (PreferenceCategory) findPreference("key_gov_category");
         mContext = getActivity();

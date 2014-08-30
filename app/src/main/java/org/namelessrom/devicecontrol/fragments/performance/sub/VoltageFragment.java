@@ -193,20 +193,12 @@ public class VoltageFragment extends AttachPreferenceFragment
     public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
         switch (id) {
-            case android.R.id.home:
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
             case R.id.action_plus:
                 changeVoltage(true);
                 return true;
             case R.id.action_minus:
                 changeVoltage(false);
                 return true;
-            default:
-                break;
         }
 
         return false;

@@ -77,29 +77,9 @@ public class SysctlFragment extends AttachPreferenceFragment implements DeviceCo
     }
 
     @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        final int id = item.getItemId();
-        switch (id) {
-            case android.R.id.home: {
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
-            }
-            default: {
-                break;
-            }
-        }
-
-        return false;
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.vm);
-        setHasOptionsMenu(true);
 
         mFullEditor = (CustomPreference) findPreference("pref_full_editor");
         mDirtyRatio = (CustomPreference) findPreference(PREF_DIRTY_RATIO);

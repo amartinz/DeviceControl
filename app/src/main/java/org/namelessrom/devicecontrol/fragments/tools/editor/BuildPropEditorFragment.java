@@ -169,24 +169,16 @@ public class BuildPropEditorFragment extends AttachFragment
     public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
         switch (id) {
-            case android.R.id.home: {
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
-            }
             case R.id.menu_action_add: {
                 editBuildPropDialog(null);
-                break;
-            }
-            default: {
-                break;
+                return true;
             }
         }
 
         return false;
     }
+
+    @Override public boolean showBurger() { return false; }
 
     @Override
     public void onItemClick(final AdapterView<?> parent, final View view,

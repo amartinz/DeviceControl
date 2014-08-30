@@ -24,9 +24,10 @@ import android.view.View;
 
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.events.SectionAttachedEvent;
+import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
-public class AttachListFragment extends ListFragment {
+public class AttachListFragment extends ListFragment implements OnBackPressedListener {
 
     protected void onAttach(final Activity activity, final int number) {
         super.onAttach(activity);
@@ -37,8 +38,18 @@ public class AttachListFragment extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (MainActivity.mSlidingMenu != null && MainActivity.mSlidingMenu.isMenuShowing()) {
-            MainActivity.mSlidingMenu.toggle(true);
+        if (MainActivity.sSlidingMenu != null && MainActivity.sSlidingMenu.isMenuShowing()) {
+            MainActivity.sSlidingMenu.toggle(true);
         }
     }
+
+    /*
+     * whether we should show the burger on a back action.
+     * defaults to true, set to false to show an arrow
+     * possible use case when to set it to false: sub fragment navigation
+     */
+    @Override public boolean showBurger() { return true; }
+
+    @Override public boolean onBackPressed() { return false; }
+
 }

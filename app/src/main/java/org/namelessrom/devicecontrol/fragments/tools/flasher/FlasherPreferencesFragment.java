@@ -53,7 +53,6 @@ public class FlasherPreferencesFragment extends AttachPreferenceFragment
 
     @Override public void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
-        setHasOptionsMenu(true);
         addPreferencesFromResource(R.xml.tools_flasher_preferences);
 
         int tmp;
@@ -94,19 +93,6 @@ public class FlasherPreferencesFragment extends AttachPreferenceFragment
         preference.setSummary(resId);
     }
 
-
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        final View view = super.onCreateView(inflater, container, savedInstanceState);
-
-        //TODO: bg
-        /*if (view != null) {
-            view.setBackgroundResource(R.drawable.preference_drawer_background);
-        }*/
-
-        return view;
-    }
-
     @Override public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (mRecoveryType == preference) {
             final int value = Integer.parseInt(String.valueOf(newValue));
@@ -120,22 +106,6 @@ public class FlasherPreferencesFragment extends AttachPreferenceFragment
         }
 
         return false;
-    }
-
-    @Override public boolean onOptionsItemSelected(final MenuItem item) {
-        final int id = item.getItemId();
-        switch (id) {
-            case android.R.id.home: {
-                final Activity activity = getActivity();
-                if (activity != null) {
-                    activity.onBackPressed();
-                }
-                return true;
-            }
-            default: {
-                return false;
-            }
-        }
     }
 
 }

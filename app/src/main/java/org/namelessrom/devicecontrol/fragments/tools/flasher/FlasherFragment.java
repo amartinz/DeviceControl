@@ -125,7 +125,7 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
                 return true;
             }
         }
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     private void checkAdapter() {

@@ -99,20 +99,20 @@ public class MainActivity extends AccentActivity
     // Fields
     //==============================================================================================
     private static final Object lockObject = new Object();
+
     private static long  back_pressed;
     private        Toast mToast;
 
     private IabHelper mHelper;
 
-    public static SlidingMenu mSlidingMenu;
+    public static SlidingMenu      sSlidingMenu;
+    public static MaterialMenuIcon sMaterialMenuIcon;
 
     private Fragment mCurrentFragment;
 
     private int mTitle            = R.string.home;
     private int mFragmentTitle    = R.string.home;
     private int mSubFragmentTitle = -1;
-
-    private MaterialMenuIcon mMaterialMenuIcon;
 
     private static final int[] MENU_ENTRIES = {
             R.string.device,        // Device
@@ -177,7 +177,7 @@ public class MainActivity extends AccentActivity
         }
 
         // setup action bar / material menu icon
-        mMaterialMenuIcon = new MaterialMenuIcon(this, Color.WHITE);
+        sMaterialMenuIcon = new MaterialMenuIcon(this, Color.WHITE);
 
         Utils.setupDirectories();
 
@@ -194,14 +194,14 @@ public class MainActivity extends AccentActivity
         final View v = getLayoutInflater().inflate(R.layout.menu_list, container, false);
         final ListView mMenuList = findById(v, R.id.navbarlist);
 
-        mSlidingMenu = new SlidingMenu(this);
-        mSlidingMenu.setMode(SlidingMenu.LEFT);
-        mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
-        mSlidingMenu.setShadowDrawable(R.drawable.shadow);
-        mSlidingMenu.setBehindWidthRes(R.dimen.slidingmenu_offset);
-        mSlidingMenu.setFadeDegree(0.35f);
-        mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        mSlidingMenu.setMenu(v);
+        sSlidingMenu = new SlidingMenu(this);
+        sSlidingMenu.setMode(SlidingMenu.LEFT);
+        sSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
+        sSlidingMenu.setShadowDrawable(R.drawable.shadow);
+        sSlidingMenu.setBehindWidthRes(R.dimen.slidingmenu_offset);
+        sSlidingMenu.setFadeDegree(0.35f);
+        sSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        sSlidingMenu.setMenu(v);
 
         // setup touch mode
         MainActivity.setSwipeOnContent(PreferenceHelper.getBoolean("swipe_on_content", false));
@@ -215,8 +215,8 @@ public class MainActivity extends AccentActivity
         mMenuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         mMenuList.setOnItemClickListener(this);
 
-        mSlidingMenu.setOnClosedListener(this);
-        mSlidingMenu.setOnOpenedListener(this);
+        sSlidingMenu.setOnClosedListener(this);
+        sSlidingMenu.setOnOpenedListener(this);
 
         loadFragment(ID_HOME);
         Utils.startTaskerService();
@@ -241,11 +241,11 @@ public class MainActivity extends AccentActivity
 
     @Override protected void onPostCreate(final Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mMaterialMenuIcon.syncState(savedInstanceState);
+        sMaterialMenuIcon.syncState(savedInstanceState);
     }
 
     @Override protected void onSaveInstanceState(@NonNull final Bundle outState) {
-        mMaterialMenuIcon.onSaveInstanceState(outState);
+        sMaterialMenuIcon.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
 
@@ -253,8 +253,10 @@ public class MainActivity extends AccentActivity
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (mSubFragmentTitle == -1) {
-                    mMaterialMenuIcon.animatePressedState(MaterialMenuDrawable.IconState.BURGER);
-                    mSlidingMenu.toggle(true);
+                    sMaterialMenuIcon.animatePressedState(MaterialMenuDrawable.IconState.BURGER);
+                    sSlidingMenu.toggle(true);
+                } else {
+                    onCustomBackPressed(true);
                 }
                 break;
         }
@@ -262,25 +264,63 @@ public class MainActivity extends AccentActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override public void onBackPressed() {
-        if (mSlidingMenu.isMenuShowing()) {
-            mSlidingMenu.toggle(true);
-        } else if (mCurrentFragment instanceof OnBackPressedListener
-                && ((OnBackPressedListener) mCurrentFragment).onBackPressed()) {
-            Logger.v(this, "onBackPressed()");
-        } else if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
-        } else {
-            if (back_pressed + 2000 > System.currentTimeMillis()) {
-                if (mToast != null) { mToast.cancel(); }
-                finish();
-            } else {
-                mToast = Toast.makeText(getBaseContext(),
-                        getString(R.string.action_press_again), Toast.LENGTH_SHORT);
-                mToast.show();
-            }
-            back_pressed = System.currentTimeMillis();
+    private void onCustomBackPressed(final boolean animatePressed) {
+        // toggle menu if it is showing and return
+        if (sSlidingMenu.isMenuShowing()) {
+            sSlidingMenu.toggle(true);
+            return;
         }
+
+        // if we have a OnBackPressedListener at the fragment, go in
+        if (mCurrentFragment instanceof OnBackPressedListener) {
+            final OnBackPressedListener listener = ((OnBackPressedListener) mCurrentFragment);
+
+            // if our listener handles onBackPressed(), return
+            if (listener.onBackPressed()) {
+                Logger.v(this, "onBackPressed()");
+                return;
+            }
+
+            // else we will have to go back or exit.
+            // in this case, lets get the correct icons
+            final MaterialMenuDrawable.IconState iconState;
+            if (listener.showBurger()) {
+                iconState = MaterialMenuDrawable.IconState.BURGER;
+            } else {
+                iconState = MaterialMenuDrawable.IconState.ARROW;
+            }
+
+            // we can separate actionbar back actions and back key presses
+            if (animatePressed) {
+                sMaterialMenuIcon.animatePressedState(iconState);
+            } else {
+                sMaterialMenuIcon.animateState(iconState);
+            }
+
+            // after animating, go further
+        }
+
+        // we we have at least one fragment in the BackStack, pop it and return
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+            return;
+        }
+
+        // if nothing matched by now, we do not have any fragments in the BackStack, nor we have
+        // the menu open. in that case lets detect a double back press and exit the activity
+        if (back_pressed + 2000 > System.currentTimeMillis()) {
+            if (mToast != null) { mToast.cancel(); }
+            finish();
+        } else {
+            mToast = Toast.makeText(getBaseContext(),
+                    getString(R.string.action_press_again), Toast.LENGTH_SHORT);
+            mToast.show();
+        }
+        back_pressed = System.currentTimeMillis();
+    }
+
+    @Override public void onBackPressed() {
+        onCustomBackPressed(false);
     }
 
     @Override protected void onDestroy() {
@@ -360,7 +400,6 @@ public class MainActivity extends AccentActivity
     @Subscribe public int onSectionAttached(final SectionAttachedEvent event) {
         final int id = event.getId();
         switch (id) {
-            // do not animate on restore and menus
             case ID_RESTORE:
                 if (mSubFragmentTitle != -1) {
                     mTitle = mSubFragmentTitle;
@@ -489,8 +528,7 @@ public class MainActivity extends AccentActivity
             iconState = MaterialMenuDrawable.IconState.BURGER;
         }
 
-        // TODO: detect actionbar
-        mMaterialMenuIcon.animateState(iconState);
+        sMaterialMenuIcon.animateState(iconState);
 
         restoreActionBar();
 
@@ -506,7 +544,7 @@ public class MainActivity extends AccentActivity
 
     @Override public void onOpened() {
         int id;
-        if (mSlidingMenu.isMenuShowing() && !mSlidingMenu.isSecondaryMenuShowing()) {
+        if (sSlidingMenu.isMenuShowing() && !sSlidingMenu.isSecondaryMenuShowing()) {
             id = ID_FIRST_MENU;
         } else {
             id = ID_SECOND_MENU;
@@ -643,9 +681,9 @@ public class MainActivity extends AccentActivity
     }
 
     public static void setSwipeOnContent(final boolean swipeOnContent) {
-        if (mSlidingMenu == null) return;
+        if (sSlidingMenu == null) return;
 
-        mSlidingMenu.setTouchModeAbove(
+        sSlidingMenu.setTouchModeAbove(
                 swipeOnContent ? SlidingMenu.TOUCHMODE_FULLSCREEN : SlidingMenu.TOUCHMODE_MARGIN);
     }
 }

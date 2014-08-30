@@ -141,4 +141,6 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
         }
         return false;
     }
+
+    @Override public boolean showBurger() { return false; }
 }
