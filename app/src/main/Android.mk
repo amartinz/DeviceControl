@@ -10,7 +10,6 @@ LOCAL_ASSET_DIR     := $(LOCAL_PATH)/assets
 
 LOCAL_SRC_FILES     := \
         $(call all-java-files-under,java) \
-        $(call all-java-files-under,../../../proprietary/src/main/java) \
         $(call all-java-files-under,../../../resources/src/main/java) \
         aidl/com/android/vending/billing/IInAppBillingService.aidl \
         aidl/org/namelessrom/devicecontrol/api/IRemoteService.aidl
