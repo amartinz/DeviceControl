@@ -16,8 +16,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':libs:cardslib:library')
     compile project(':libs:mpandroidchart:MPChartLib')
-    compile 'com.android.support:support-v13:20.+'
-    compile 'com.jakewharton:butterknife:5.+'
+    compile 'com.android.support:support-v13:20.0.0'
+    compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.larswerkman:HoloColorPicker:1.4'
-    compile 'com.negusoft.holoaccent:library:1.+'
+    compile 'com.negusoft.holoaccent:library:1.0'
 }
