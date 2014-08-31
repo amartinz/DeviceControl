@@ -21,6 +21,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -164,8 +165,22 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     }
 
     @Override public boolean onOptionsItemSelected(final MenuItem item) {
-        if (mAppItem == null) { return false; }
+        // get the id of our item
         final int id = item.getItemId();
+
+        // if the user hit refresh
+        if (id == R.id.menu_action_refresh) {
+            if (mDetailsShowing || startedFromActivity) {
+                refreshAppDetails();
+            } else {
+                new LoadApps().execute();
+            }
+            return true;
+        }
+
+        // the below code requires mAppItem to be NOT NULL, so return early if it is null
+        if (mAppItem == null) { return false; }
+
         switch (id) {
             case R.id.menu_action_play_store: {
                 AppHelper.showInPlaystore("market://details?id=" + mAppItem.getPackageName());
@@ -290,24 +305,31 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     @Override public boolean onBackPressed() {
         if (!startedFromActivity && mDetailsShowing) {
             // animate the details out
-            final ArrayList<ObjectAnimator> animators = new ArrayList<ObjectAnimator>();
-            final AnimatorSet animatorSet = new AnimatorSet();
-            final ObjectAnimator outAnim = ObjectAnimator.ofFloat(mAppDetails, "x",
-                    mAppIcon.getWidth() + 2 * AnimationHelper.getDp(R.dimen.app_margin),
-                    mAppDetails.getWidth());
-            outAnim.setDuration(500);
-            animators.add(outAnim);
-            final ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(mAppDetails, "alpha", 1f, 0f);
-            alphaAnim.setDuration(500);
-            animators.add(alphaAnim);
-            animatorSet.setInterpolator(new AccelerateInterpolator());
-            animatorSet.playTogether(animators.toArray(new ObjectAnimator[animators.size()]));
-            animatorSet.start();
-            mDetailsShowing = false;
-            if (getActivity() != null) getActivity().invalidateOptionsMenu();
+            hideAppDetails(null);
             return true;
         }
         return super.onBackPressed();
+    }
+
+    private void hideAppDetails(final Animator.AnimatorListener animationListener) {
+        final ArrayList<ObjectAnimator> animators = new ArrayList<ObjectAnimator>();
+        final AnimatorSet animatorSet = new AnimatorSet();
+        final ObjectAnimator outAnim = ObjectAnimator.ofFloat(mAppDetails, "x",
+                mAppIcon.getWidth() + 2 * AnimationHelper.getDp(R.dimen.app_margin),
+                mAppDetails.getWidth());
+        outAnim.setDuration(500);
+        animators.add(outAnim);
+        final ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(mAppDetails, "alpha", 1f, 0f);
+        alphaAnim.setDuration(500);
+        animators.add(alphaAnim);
+        animatorSet.setInterpolator(new AccelerateInterpolator());
+        animatorSet.playTogether(animators.toArray(new ObjectAnimator[animators.size()]));
+        if (animationListener != null) {
+            animatorSet.addListener(animationListener);
+        }
+        animatorSet.start();
+        mDetailsShowing = false;
+        if (getActivity() != null) getActivity().invalidateOptionsMenu();
     }
 
     @Override public void onAppChoosen(final AppItem appItem) {
@@ -500,30 +522,73 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     }
 
     private void uninstall() {
+        // build our command
         final StringBuilder sb = new StringBuilder();
         if (mAppItem.isSystemApp()) {
             sb.append("busybox mount -o rw,remount /system;");
+        } else {
+            sb.append(String.format("pm uninstall %s", mAppItem.getPackageName()));
         }
+
         sb.append(String.format("rm -rf %s;", mAppItem.getApplicationInfo().sourceDir));
         sb.append(String.format("rm -rf %s;", mAppItem.getApplicationInfo().dataDir));
-        sb.append(String.format("pm uninstall %s", mAppItem.getPackageName()));
+
         if (mAppItem.isSystemApp()) {
+            sb.append(String.format("pm uninstall %s", mAppItem.getPackageName()));
             sb.append("busybox mount -o ro,remount /system;");
         }
+
         final String cmd = sb.toString();
         Logger.v(this, cmd);
-        Utils.runRootCommand(cmd);
-        if (getActivity() != null) {
-            Toast.makeText(getActivity(),
-                    getString(R.string.uninstall_success, mAppItem.getLabel()), Toast.LENGTH_SHORT)
-                    .show();
-        }
-        mAppItem = null;
-        if (startedFromActivity) {
-            refreshAppDetails();
-        } else {
-            new LoadApps().execute();
-        }
+
+        // create the dialog (will not be shown for a long amount of time though)
+        final ProgressDialog dialog = new ProgressDialog(getActivity());
+        dialog.setTitle(R.string.uninstalling);
+        dialog.setMessage(getString(R.string.applying_wait));
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setCancelable(false);
+
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override protected void onPreExecute() {
+                dialog.show();
+            }
+
+            @Override protected Void doInBackground(Void... voids) {
+                Utils.runRootCommand(cmd, true);
+                return null;
+            }
+
+            @Override protected void onPostExecute(Void aVoid) {
+                dialog.dismiss();
+
+                if (getActivity() != null) {
+                    Toast.makeText(getActivity(),
+                            getString(R.string.uninstall_success, mAppItem.getLabel()),
+                            Toast.LENGTH_SHORT).show();
+                }
+                // uninstalled, so lets tell it our app item is null
+                mAppItem = null;
+
+                // if we are started by the activity, refresh app details
+                if (startedFromActivity) {
+                    refreshAppDetails();
+                } else {
+                    // else hide the app details and refresh once hidden
+                    hideAppDetails(new Animator.AnimatorListener() {
+                        @Override public void onAnimationStart(Animator animator) { }
+
+                        @Override public void onAnimationEnd(Animator animator) {
+                            new LoadApps().execute();
+                        }
+
+                        @Override public void onAnimationCancel(Animator animator) { }
+
+                        @Override public void onAnimationRepeat(Animator animator) { }
+                    });
+                }
+            }
+        }.execute();
     }
 
     @Subscribe public void onPackageStats(final PackageStats packageStats) {

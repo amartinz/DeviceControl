@@ -317,6 +317,7 @@
     <string name="tcp_congestion_control">TCP congestion control</string>
     <string name="app_size">Application size</string>
     <string name="uninstall">Uninstall</string>
+    <string name="uninstalling">Uninstalling…</string>
     <string name="uninstall_msg">Do you really want to uninstall \"%s\"?\nThis action can not be undone!</string>
     <string name="uninstall_success">Successfully uninstalled \"%s\"</string>
     <string name="sunlight_enhancement">Sunlight enhancement</string>

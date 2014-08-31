@@ -282,9 +282,23 @@ public class Utils implements DeviceConstants, FileConstants {
     }
 
     public static void runRootCommand(final String command) {
+        runRootCommand(command, false);
+    }
+
+    /**
+     * Runs a shell command with root (super user) rights
+     * @param command The command to run
+     * @param wait If true, this command is blocking until execution finished
+     */
+    public static void runRootCommand(final String command, final boolean wait) {
         final CommandCapture comm = new CommandCapture(0, false, command);
         try {
             RootTools.getShell(true).add(comm);
+            if (wait) {
+                while (comm.isExecuting()) {
+                    // wait for it
+                }
+            }
         } catch (Exception e) {
             Logger.v(Utils.class, "runRootCommand: " + e.getMessage());
         }
