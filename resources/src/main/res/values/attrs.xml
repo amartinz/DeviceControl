@@ -24,8 +24,6 @@
         <attr name="valueChecked" format="string" />
         <attr name="valueNotChecked" format="string" />
     </declare-styleable>
-    <!-- Wizard -->
-    <declare-styleable name="AppTheme">
-        <attr name="textAppearanceFinish" format="reference" />
-    </declare-styleable>
+
+    <attr name="themeColor" format="reference|color" />
 </resources>

@@ -26,6 +26,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -68,6 +69,7 @@ import org.namelessrom.devicecontrol.events.listeners.OnAppChoosenListener;
 import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.utils.AnimationHelper;
 import org.namelessrom.devicecontrol.utils.AppHelper;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.SortHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -258,11 +260,13 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
         mCacheGraph.setTouchEnabled(false);
 
-        final int grey = Application.getColor(R.color.grey_dark);
-        mCacheGraph.setBackgroundColor(grey);
-        mCacheGraph.setDrawPaintColor(grey);
-        mCacheGraph.setHolePaintColor(grey);
-        mCacheGraph.setValuePaintColor(grey);
+        final int color = PreferenceHelper.getBoolean("dark_theme", false)
+                ? Application.getColor(android.R.color.background_dark)
+                : Application.getColor(R.color.grey_dark);
+        mCacheGraph.setBackgroundColor(color);
+        mCacheGraph.setDrawPaintColor(color);
+        mCacheGraph.setHolePaintColor(color);
+        mCacheGraph.setValuePaintColor(color);
 
         mCacheGraph.invalidate();
     }
@@ -356,7 +360,9 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                 mStatus.setTextColor(getResources().getColor(R.color.red_middle));
             } else {
                 tmp = getString(R.string.app_user, mAppItem.getLabel());
-                mStatus.setTextColor(getResources().getColor(R.color.default_color));
+                final int color = PreferenceHelper.getBoolean("dark_theme", false)
+                        ? Color.WHITE : Color.BLACK;
+                mStatus.setTextColor(color);
             }
             mStatus.setText(Html.fromHtml(tmp));
 
@@ -449,7 +455,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                                     }
                                     default: {
                                         dialog.dismiss();
-                                        return;
+                                        break;
                                     }
                                 }
                             }
@@ -582,14 +588,18 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             mCacheGraph.setCenterText(String.format("%s\n%s", getString(R.string.total),
                     AppHelper.convertSize(totalSize)));
 
-            // we are ready
-            mCacheGraph.invalidate();
-
             // setup legend
             final Legend l = mCacheGraph.getLegend();
             l.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
             l.setXEntrySpace(7f);
             l.setYEntrySpace(5f);
+
+            final int color = PreferenceHelper.getBoolean("dark_theme", false)
+                    ? Color.WHITE : Color.BLACK;
+            l.setTextColor(color);
+
+            // we are ready
+            mCacheGraph.invalidate();
         }
     }
 
@@ -597,10 +607,13 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         final View v = LayoutInflater.from(getActivity())
                 .inflate(R.layout.widget_app_cache, mCacheInfo, false);
 
+        final int color = PreferenceHelper.getBoolean("dark_theme", false)
+                ? Color.WHITE : Color.BLACK;
+
         final TextView tvLeft = findById(v, R.id.widget_app_cache_left);
-        tvLeft.setTextColor(getResources().getColor(R.color.default_color));
+        tvLeft.setTextColor(color);
         final TextView tvRight = findById(v, R.id.widget_app_cache_right);
-        tvRight.setTextColor(getResources().getColor(R.color.default_color));
+        tvRight.setTextColor(color);
 
         tvLeft.setText(getString(txtId) + ':');
         tvRight.setText(text);

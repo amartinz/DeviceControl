@@ -59,7 +59,7 @@ public class DummyLauncher extends Activity {
     @Override protected void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
 
-        final boolean isDarkTheme = PreferenceHelper.getBoolean("dark_theme", true);
+        final boolean isDarkTheme = PreferenceHelper.getBoolean("dark_theme", false);
         setTheme(isDarkTheme ? R.style.BaseThemeDark : R.style.BaseThemeLight);
 
         setContentView(R.layout.activity_launcher);

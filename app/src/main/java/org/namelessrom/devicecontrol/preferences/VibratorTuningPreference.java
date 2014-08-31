@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
@@ -72,19 +71,6 @@ public class VibratorTuningPreference extends DialogPreference
         super(context, attrs);
         vib = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         setDialogLayoutResource(R.layout.preference_dialog_vibrator_tuning);
-    }
-
-    @Override
-    protected void onBindView(final View view) {
-        super.onBindView(view);
-        final int color = getContext().getResources().getColor(R.color.default_color);
-
-        final TextView mTitle = findById(view, android.R.id.title);
-        mTitle.setTextColor(color);
-        mTitle.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
-
-        final TextView mSummary = findById(view, android.R.id.summary);
-        mSummary.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
     }
 
     @Override

@@ -18,7 +18,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_dark"
+    android:background="?themeColor"
     tools:context="org.namelessrom.devicecontrol.activities.AppDetailsActivity">
 
     <LinearLayout
@@ -102,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:layout_gravity="center"
-                    android:background="@color/grey_dark" />
+                    android:background="?themeColor" />
 
                 <LinearLayout
                     android:id="@+id/app_cache_info_container"

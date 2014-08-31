@@ -73,7 +73,7 @@ public class StepPagerStrip extends View {
         mTabHeight = res.getDimensionPixelSize(R.dimen.step_pager_tab_height);
         mTabSpacing = res.getDimensionPixelSize(R.dimen.step_pager_tab_spacing);
 
-        final boolean isDarkTheme = PreferenceHelper.getBoolean("dark_theme", true);
+        final boolean isDarkTheme = PreferenceHelper.getBoolean("dark_theme", false);
         int color;
 
         color = isDarkTheme

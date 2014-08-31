@@ -32,6 +32,7 @@ import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.CpuStateEvent;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.monitors.CpuStateMonitor;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
@@ -91,6 +92,8 @@ public class CpuStateView extends LinearLayout {
                 refreshData();
             }
         });
+        mRefresh.setImageResource(PreferenceHelper.getBoolean("dark_theme", false)
+                ? R.drawable.ic_action_refresh : R.drawable.ic_action_refresh_dark);
 
         refreshData();
     }

@@ -51,7 +51,7 @@ public class FilePickerActivity extends AccentActivity {
     @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final boolean isDarkTheme = PreferenceHelper.getBoolean("dark_theme", true);
+        final boolean isDarkTheme = PreferenceHelper.getBoolean("dark_theme", false);
         setTheme(isDarkTheme ? R.style.BaseThemeDark : R.style.BaseThemeLight);
 
         setContentView(R.layout.activity_main);

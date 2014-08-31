@@ -126,12 +126,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
         if (category != null) {
             mDonatePreference = (CustomPreference) findPreference("pref_donate");
 
-            mColorPreference = (CustomPreference) findPreference("pref_color");
-            if (mColorPreference != null) {
-                mColorPreference.setSummaryColor(PreferenceHelper.getInt("pref_color",
-                        getResources().getColor(R.color.accent)));
-            }
-
             if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.secret=1")) {
                 mMonkeyPref = new CustomCheckBoxPreference(getActivity());
                 mMonkeyPref.setKey("monkey");
@@ -151,13 +145,17 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
         category = (PreferenceCategory) findPreference("prefs_interface");
         if (category != null) {
+            mColorPreference = (CustomPreference) findPreference("pref_color");
+            mColorPreference.setSummaryColor(PreferenceHelper.getInt("pref_color",
+                    getResources().getColor(R.color.accent)));
+
+            mDarkTheme = (CustomCheckBoxPreference) findPreference("dark_theme");
+            mDarkTheme.setChecked(PreferenceHelper.getBoolean(mDarkTheme.getKey(), false));
+            mDarkTheme.setOnPreferenceChangeListener(this);
+
             mSwipeOnContent = (CustomCheckBoxPreference) findPreference("swipe_on_content");
             mSwipeOnContent.setChecked(PreferenceHelper.getBoolean(mSwipeOnContent.getKey()));
             mSwipeOnContent.setOnPreferenceChangeListener(this);
-
-            mDarkTheme = (CustomCheckBoxPreference) findPreference("dark_theme");
-            mDarkTheme.setChecked(PreferenceHelper.getBoolean(mDarkTheme.getKey(), true));
-            mDarkTheme.setOnPreferenceChangeListener(this);
         }
 
         setupVersionPreference();

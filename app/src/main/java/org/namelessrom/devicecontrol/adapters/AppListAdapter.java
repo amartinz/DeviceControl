@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol.adapters;
 
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.listeners.OnAppChoosenListener;
 import org.namelessrom.devicecontrol.objects.AppItem;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 import java.util.List;
 
@@ -39,10 +41,12 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     private final Resources res = Application.applicationContext.getResources();
     private final List<AppItem>        mAppList;
     private final OnAppChoosenListener mAppChoosenListener;
+    private final boolean              isDarkTheme;
 
     public AppListAdapter(final OnAppChoosenListener listener, final List<AppItem> appList) {
         this.mAppChoosenListener = listener;
         this.mAppList = appList;
+        this.isDarkTheme = PreferenceHelper.getBoolean("dark_theme", false);
     }
 
     public static final class ViewHolder extends RecyclerView.ViewHolder {
@@ -80,8 +84,9 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         viewHolder.appLabel.setText(appItem.getLabel());
         viewHolder.packageName.setText(appItem.getPackageName());
 
+        final int color = isDarkTheme ? Color.WHITE : Color.BLACK;
         viewHolder.appLabel.setTextColor(appItem.isSystemApp() ? res.getColor(R.color.red_middle)
-                : res.getColor(R.color.default_color));
+                : color);
         viewHolder.layer.setVisibility(appItem.isEnabled() ? View.INVISIBLE : View.VISIBLE);
     }
 

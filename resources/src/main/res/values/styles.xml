@@ -17,15 +17,17 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="BaseTheme" parent="BaseThemeDark" />
+    <style name="BaseTheme" parent="BaseThemeLight" />
 
     <style name="BaseThemeDark" parent="Theme.HoloAccent">
         <item name="android:actionBarStyle">@style/ActionBarStyleDark</item>
-        </style>
+        <item name="themeColor">@android:color/background_dark</item>
+    </style>
 
     <style name="BaseThemeLight" parent="Theme.HoloAccent.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/ActionBarStyleLight</item>
         <item name="android:windowBackground">@color/grey_dark</item>
+        <item name="themeColor">@color/grey_dark</item>
     </style>
 
     <style name="NoActionBar" parent="@android:style/Theme.Holo.Light.NoActionBar">
@@ -38,7 +40,9 @@
 
     <style name="ActionBarStyleLight" parent="android:Widget.Holo.ActionBar.Solid">
         <item name="android:displayOptions">showTitle</item>
-        <item name="android:titleTextStyle">@android:style/TextAppearance.Holo.Widget.ActionBar.Title.Inverse</item>
+        <item name="android:titleTextStyle">
+            @android:style/TextAppearance.Holo.Widget.ActionBar.Title.Inverse
+        </item>
     </style>
 
     <style name="ActionButtonStyle" parent="android:Widget.Holo.ActionButton">

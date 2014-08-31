@@ -1,16 +1,11 @@
 package org.namelessrom.devicecontrol.preferences;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.TextView;
 
 import com.negusoft.holoaccent.preference.EditTextPreference;
 
 import org.namelessrom.devicecontrol.R;
-
-import butterknife.ButterKnife;
 
 public class CustomEditTextPreference extends EditTextPreference {
 
