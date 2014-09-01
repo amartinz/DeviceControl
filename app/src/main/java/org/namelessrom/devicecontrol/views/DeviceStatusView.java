@@ -67,8 +67,12 @@ public class DeviceStatusView extends LinearLayout {
 
     public void onResume() {
         mIsAttached = true;
-        Application.applicationContext.registerReceiver(
+        final Intent sticky = Application.applicationContext.registerReceiver(
                 mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        // try to preload battery level
+        if (sticky != null) {
+            mBatteryReceiver.onReceive(Application.applicationContext, sticky);
+        }
     }
 
     public void onPause() {

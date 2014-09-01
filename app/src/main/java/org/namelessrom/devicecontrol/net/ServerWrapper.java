@@ -307,13 +307,25 @@ public class ServerWrapper {
     }
 
     private void registerReceivers() {
-        Application.applicationContext.registerReceiver(mBatteryReceiver,
+        if (mService == null) {
+            Logger.wtf(this, "mService is null!");
+            return;
+        }
+        final Intent sticky = mService.registerReceiver(mBatteryReceiver,
                 new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        // try to preload battery level
+        if (sticky != null) {
+            mBatteryReceiver.onReceive(mService, sticky);
+        }
     }
 
     private void unregisterReceivers() {
+        if (mService == null) {
+            Logger.wtf(this, "mService is null!");
+            return;
+        }
         try {
-            Application.applicationContext.unregisterReceiver(mBatteryReceiver);
+            mService.unregisterReceiver(mBatteryReceiver);
         } catch (Exception ignored) { }
     }
 
