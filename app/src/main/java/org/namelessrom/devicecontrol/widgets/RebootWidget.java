@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 
@@ -61,8 +62,8 @@ public class RebootWidget extends AppWidgetProvider {
         super.onUpdate(context, appWidgetManager, ids);
     }
 
-    @Override public void onReceive(final Context context, final Intent intent) {
-        if (intent == null || TextUtils.isEmpty(intent.getAction())) return;
+    @Override public void onReceive(@NonNull final Context context, @NonNull final Intent intent) {
+        if (TextUtils.isEmpty(intent.getAction())) return;
 
         if (intent.getAction().equals(SHOW_POPUP_DIALOG_REBOOT_ACTION)) {
             final Intent popUpIntent = new Intent(context, RebootDialogActivity.class);

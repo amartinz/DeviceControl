@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -181,8 +182,8 @@ public class KsmFragment extends AttachPreferenceFragment
         }
     }
 
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
+            @NonNull final Preference preference) {
         if (mPagesToScan == preference) {
             final String title = String.valueOf(mPagesToScan.getTitle());
             final int currentProgress = Integer.parseInt(Utils.readOneLine(KSM_PAGES_TO_SCAN));

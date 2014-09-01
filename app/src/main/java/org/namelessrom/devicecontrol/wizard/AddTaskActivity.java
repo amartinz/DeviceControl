@@ -22,6 +22,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -228,7 +229,7 @@ public class AddTaskActivity extends AccentActivity implements
         mWizardModel.unregisterListener(this);
     }
 
-    @Override protected void onSaveInstanceState(Bundle outState) {
+    @Override protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBundle("model", mWizardModel.save());
     }

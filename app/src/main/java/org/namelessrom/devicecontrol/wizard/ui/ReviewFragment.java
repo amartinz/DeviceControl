@@ -19,6 +19,7 @@ package org.namelessrom.devicecontrol.wizard.ui;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,8 +64,8 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.wizard_fragment_page, container, false);
 
         final TextView titleView = ButterKnife.findById(rootView, android.R.id.title);
@@ -134,7 +135,7 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
         if (event == null) return;
 
         String category = "", action = "", value = "";
-        String title = "", displayValue = "";
+        String title, displayValue;
         for (final ReviewItem item : mCurrentReviewItems) {
             title = item.getTitle();
             displayValue = item.getDisplayValue();

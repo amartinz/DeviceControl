@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
+import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.MainActivity;
@@ -61,7 +62,7 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
     }
 
     @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
-            final Preference preference) {
+            @NonNull final Preference preference) {
         final String key = preference.getKey();
 
         if (key == null || key.isEmpty()) return false;

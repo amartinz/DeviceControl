@@ -26,6 +26,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -82,7 +83,7 @@ public class VibratorTuningPreference extends DialogPreference
     }
 
     @Override
-    protected void onBindDialogView(final View view) {
+    protected void onBindDialogView(@NonNull final View view) {
         super.onBindDialogView(view);
 
         mSeekBar = findById(view, R.id.vibrator_seekbar);

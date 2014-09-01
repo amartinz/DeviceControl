@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -229,8 +230,8 @@ public class PreferencesFragment extends AttachPreferenceFragment
         return false;
     }
 
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
+            @NonNull final Preference preference) {
         if (mColorPreference == preference) {
             new ColorPickerDialogFragment(new OnColorPickedListener() {
                 @Override public void onColorPicked(final int color) {
@@ -250,11 +251,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
                         && !AppHelper.isPlayStoreInstalled()) {
                     return true;
                 }
-            }
-
-            // failsafe, do NOT go below here
-            if (TextUtils.equals(Constants.Iab.getKey(), "---")) {
-                return true;
             }
 
             final AccentAlertDialog.Builder builder = new AccentAlertDialog.Builder(activity);

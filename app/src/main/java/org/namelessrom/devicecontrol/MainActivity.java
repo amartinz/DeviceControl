@@ -589,7 +589,7 @@ public class MainActivity extends AccentActivity
     //==============================================================================================
     private void setUpIab() {
         final String key = Constants.Iab.getKey();
-        if (!key.equals("---") && AppHelper.isPlayStoreInstalled()) {
+        if (AppHelper.isPlayStoreInstalled()) {
             mHelper = new IabHelper(this, key);
             if (Logger.getEnabled()) {
                 mHelper.enableDebugLogging(true, "IABDEVICECONTROL");

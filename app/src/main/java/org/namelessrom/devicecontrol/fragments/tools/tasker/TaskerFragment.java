@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol.fragments.tools.tasker;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
+import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
@@ -63,8 +64,8 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
         mTasker = (CustomPreference) findPreference("tasker");
     }
 
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
+            @NonNull Preference preference) {
         if (mTasker == preference) {
             Utils.startTaskerService();
             MainActivity.loadFragment(getActivity(), ID_TOOLS_TASKER_LIST);

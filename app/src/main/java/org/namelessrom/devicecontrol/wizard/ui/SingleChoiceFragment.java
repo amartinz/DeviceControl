@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,8 +73,8 @@ public class SingleChoiceFragment extends ListFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.wizard_fragment_page, container, false);
         ((TextView) ButterKnife.findById(rootView, android.R.id.title)).setText(mPage.getTitle());
 

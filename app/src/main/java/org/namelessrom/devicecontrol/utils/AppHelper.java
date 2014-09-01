@@ -29,6 +29,7 @@ import android.os.Parcel;
 import android.os.RemoteException;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.BuildConfig;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
@@ -44,9 +45,6 @@ import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.ID_P
 public class AppHelper {
 
     public static boolean preventOnResume = false;
-
-    // TODO: change to true before pushing to Play Store to prevent external donations
-    private static final boolean IS_RELEASE = false;
 
     private static final String DESCRIPTOR = "android.content.pm.IPackageStatsObserver";
 
@@ -88,7 +86,7 @@ public class AppHelper {
     /**
      * KILL IT!
      *
-     * @param pkg The package name of the application / process to kill
+     * @param process The name of the application / process to kill
      */
     public static void killProcess(final String process) {
         Utils.runRootCommand("pkill -TERM " + process);
@@ -265,6 +263,7 @@ public class AppHelper {
     };
 
     public static boolean isExternalAllowed() {
-        return !IS_RELEASE;
+        // if we are not a release, we allow to donate externally
+        return !BuildConfig.IS_RELEASE;
     }
 }

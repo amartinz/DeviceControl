@@ -22,6 +22,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -37,7 +38,7 @@ public class StepPagerStrip extends View {
     private int mPageCount;
     private int mCurrentPage;
 
-    private int mGravity = Gravity.LEFT | Gravity.TOP;
+    private int mGravity = Gravity.START | Gravity.TOP;
     private float mTabWidth;
     private float mTabHeight;
     private float mTabSpacing;
@@ -121,7 +122,7 @@ public class StepPagerStrip extends View {
             case Gravity.CENTER_HORIZONTAL:
                 totalLeft = (getWidth() - totalWidth) / 2;
                 break;
-            case Gravity.RIGHT:
+            case Gravity.END:
                 totalLeft = getWidth() - getPaddingRight() - totalWidth;
                 break;
             case Gravity.FILL_HORIZONTAL:
@@ -187,7 +188,7 @@ public class StepPagerStrip extends View {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(@NonNull final MotionEvent event) {
         if (mOnPageSelectedListener != null) {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
@@ -215,7 +216,7 @@ public class StepPagerStrip extends View {
             case Gravity.CENTER_HORIZONTAL:
                 totalLeft = (getWidth() - totalWidth) / 2;
                 break;
-            case Gravity.RIGHT:
+            case Gravity.END:
                 totalLeft = getWidth() - getPaddingRight() - totalWidth;
                 break;
             case Gravity.FILL_HORIZONTAL:
