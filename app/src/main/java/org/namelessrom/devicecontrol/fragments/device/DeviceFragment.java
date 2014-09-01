@@ -17,8 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments.device;
 
-import android.content.res.Resources;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -26,19 +24,16 @@ import android.preference.PreferenceScreen;
 
 import com.squareup.otto.Subscribe;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.events.DeviceFragmentEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
@@ -57,12 +52,9 @@ public class DeviceFragment extends AttachPreferenceFragment
     //==============================================================================================
     // Input
     //==============================================================================================
-    private CustomCheckBoxPreference  mForceNavBar;
     private CustomCheckBoxPreference  mGloveMode;
     private AwesomeCheckBoxPreference mAwesomeGloveMode;
     private AwesomeCheckBoxPreference mKnockOn;
-
-    private boolean hasNavBar = false;
 
     //==============================================================================================
     // Lights
@@ -107,32 +99,7 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         final PreferenceScreen preferenceScreen = getPreferenceScreen();
 
-        if (!Application.IS_NAMELESS) { // we have our own way to force the navigation bar
-            try {
-                hasNavBar = Resources.getSystem().getBoolean(Resources.getSystem()
-                        .getIdentifier("config_showNavigationBar", "bool", "android"));
-            } catch (Exception exc) { // fallback
-                Logger.e(this, "Failed to get hasNavBar, showing it to do not lock someone out");
-                hasNavBar = true;
-            }
-        }
-        Logger.i(this, String.format("hasNavBar: %s", hasNavBar));
-
-        PreferenceCategory category = (PreferenceCategory) findPreference("input_navbar");
-        if (category != null) {
-            mForceNavBar = (CustomCheckBoxPreference) findPreference("navbar_force");
-            if (mForceNavBar != null) {
-                if (hasNavBar || Application.IS_NAMELESS) {
-                    category.removePreference(mForceNavBar);
-                }
-            }
-
-            if (category.getPreferenceCount() == 0) {
-                preferenceScreen.removePreference(category);
-            }
-        }
-
-        category = (PreferenceCategory) findPreference("input_gestures");
+        PreferenceCategory category = (PreferenceCategory) findPreference("input_gestures");
         if (category != null) {
             mKnockOn = (AwesomeCheckBoxPreference) findPreference("knockon_gesture_enable");
             if (mKnockOn != null) {
@@ -281,20 +248,13 @@ public class DeviceFragment extends AttachPreferenceFragment
         }
 
         isSupported(preferenceScreen, getActivity());
-
-        new DeviceTask().execute();
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object o) {
         boolean changed = false;
 
-        if (preference == mForceNavBar) { // ================================================= INPUT
-            final String cmd = Scripts.toggleForceNavBar();
-            Logger.v(this, String.format("mForceNavBar: %s", cmd));
-            Utils.runRootCommand(cmd);
-            changed = true;
-        } else if (preference == mGloveMode && mGloveMode.isEnabled()) {
+        if (preference == mGloveMode && mGloveMode.isEnabled()) {
             final boolean value = (Boolean) o;
             enableHts(value);
             PreferenceHelper.setBootup(
@@ -308,7 +268,7 @@ public class DeviceFragment extends AttachPreferenceFragment
         } else if (preference == mKnockOn) {
             mKnockOn.writeValue((Boolean) o);
             changed = true;
-        } else if (preference == mBacklightKey) { // ======================================== LIGHTS
+        } else if (preference == mBacklightKey) {
             mBacklightKey.writeValue((Boolean) o);
             changed = true;
         } else if (preference == mBacklightNotification) {
@@ -317,7 +277,7 @@ public class DeviceFragment extends AttachPreferenceFragment
         } else if (preference == mKeyboardBacklight) {
             mKeyboardBacklight.writeValue((Boolean) o);
             changed = true;
-        } else if (preference == mPanelColor) { // ======================================== GRAPHICS
+        } else if (preference == mPanelColor) {
             final String value = String.valueOf(o);
             Utils.writeValue(sHasPanelFile, value);
             PreferenceHelper.setBootup(
@@ -359,8 +319,7 @@ public class DeviceFragment extends AttachPreferenceFragment
         );
     }
 
-    @Subscribe
-    public void onShellOutputEvent(final ShellOutputEvent event) {
+    @Subscribe public void onShellOutputEvent(final ShellOutputEvent event) {
         if (event == null) return;
 
         final int id = event.getId();
@@ -440,40 +399,4 @@ public class DeviceFragment extends AttachPreferenceFragment
         return sbCmd.toString();
     }
 
-    @Subscribe
-    public void onDeviceFragment(final DeviceFragmentEvent event) {
-        if (event == null) { return; }
-        final boolean isForceNavBar = event.isForceNavBar();
-
-        if (mForceNavBar != null) {
-            mForceNavBar.setChecked(isForceNavBar);
-            mForceNavBar.setEnabled(true);
-            mForceNavBar.setOnPreferenceChangeListener(this);
-        }
-    }
-
-//==============================================================================================
-// Internal Classes
-//==============================================================================================
-
-    class DeviceTask extends AsyncTask<Void, Void, DeviceFragmentEvent> {
-
-        @Override
-        protected DeviceFragmentEvent doInBackground(Void... voids) {
-            boolean isForceNavBar = false;
-
-            if (!hasNavBar && !Application.IS_NAMELESS) {
-                isForceNavBar = Scripts.getForceNavBar();
-            }
-
-            return new DeviceFragmentEvent(isForceNavBar);
-        }
-
-        @Override
-        protected void onPostExecute(final DeviceFragmentEvent event) {
-            if (event != null) {
-                BusProvider.getBus().post(event);
-            }
-        }
-    }
 }

@@ -59,21 +59,6 @@ public class Scripts {
         return "";
     }
 
-    public static boolean getForceNavBar() {
-        return Utils.existsInFile(BUILD_PROP, "qemu.hw.mainkeys");
-    }
-
-    public static String toggleForceNavBar() {
-        final String cmd;
-        if (getForceNavBar()) {
-            cmd = String.format(KILL_PROP_CMD, "qemu.hw.mainkeys", BUILD_PROP);
-        } else {
-            cmd = String.format(APPEND_CMD, "qemu.hw.mainkeys", "0", BUILD_PROP);
-        }
-        return String.format(
-                "busybox mount -o rw,remount /system;%sbusybox mount -o ro,remount /system;", cmd);
-    }
-
     public static String getRngStartup() {
         return String.format("#!/system/bin/sh\n" + "if [ -e %s ]; then\n" + "%s -P;\n" + "fi;\n",
                 FileConstants.RNG_PATH, FileConstants.RNG_PATH);

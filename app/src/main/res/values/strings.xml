@@ -136,9 +136,6 @@
     <string name="vibrator_strength_summary">Adjust the strength of the vibration feedback</string>
     <string name="vibrator_warning">Values higher than %s are not recommended</string>
     <string name="test">Test</string>
-    <string name="navbar">Navigation Bar</string>
-    <string name="force_navbar">Force navigation bar</string>
-    <string name="force_navbar_summary">Requires a reboot!</string>
     <string name="glove_mode">Glove Mode</string>
     <string name="glove_mode_summary">Makes the touchscreen more sensitive, eg for using it with gloves.</string>
     <string name="screen_gamma">Screen gamma</string>

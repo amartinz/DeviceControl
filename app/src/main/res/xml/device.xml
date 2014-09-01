@@ -18,17 +18,6 @@
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:key="input_navbar"
-        android:title="@string/navbar">
-
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
-            android:key="navbar_force"
-            android:summary="@string/force_navbar_summary"
-            android:title="@string/force_navbar" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
         android:key="input_gestures"
         android:title="@string/gestures">
 
