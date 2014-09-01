@@ -59,6 +59,7 @@ public class DeviceFragment extends AttachPreferenceFragment
     //==============================================================================================
     private CustomCheckBoxPreference  mForceNavBar;
     private CustomCheckBoxPreference  mGloveMode;
+    private AwesomeCheckBoxPreference mAwesomeGloveMode;
     private AwesomeCheckBoxPreference mKnockOn;
 
     private boolean hasNavBar = false;
@@ -158,10 +159,20 @@ public class DeviceFragment extends AttachPreferenceFragment
                 category.removePreference(pref);
             }
 
+            mAwesomeGloveMode = (AwesomeCheckBoxPreference) findPreference("input_glove_mode_aw");
+            if (mAwesomeGloveMode.isSupported()) {
+                mAwesomeGloveMode.initValue();
+                mAwesomeGloveMode.setOnPreferenceChangeListener(this);
+            } else {
+                category.removePreference(mAwesomeGloveMode);
+                mAwesomeGloveMode = null;
+            }
+
             mGloveMode = (CustomCheckBoxPreference) findPreference("input_glove_mode");
             if (mGloveMode != null) {
                 try {
-                    if (!isHtsSupported()) {
+                    // if we have already added a glove mode preference, remove it too
+                    if (mAwesomeGloveMode == null || !isHtsSupported()) {
                         category.removePreference(mGloveMode);
                     } else {
                         final String value = DatabaseHandler.getInstance()
@@ -290,6 +301,9 @@ public class DeviceFragment extends AttachPreferenceFragment
                     new DataItem(DatabaseHandler.CATEGORY_DEVICE, mGloveMode.getKey(),
                             mGloveMode.getKey(), (value ? "1" : "0"))
             );
+            changed = true;
+        } else if (preference == mAwesomeGloveMode) {
+            mAwesomeGloveMode.writeValue((Boolean) o);
             changed = true;
         } else if (preference == mKnockOn) {
             mKnockOn.writeValue((Boolean) o);

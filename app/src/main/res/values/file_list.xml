@@ -69,4 +69,7 @@
     <string-array name="files_lcd_color_enhancement" translatable="false">
         <item>/sys/class/graphics/fb0/color_enhance</item>
     </string-array>
+    <string-array name="files_glove_mode" translatable="false">
+        <item>/proc/touchpanel/glove_mode_enable</item>
+    </string-array>
 </resources>

@@ -46,6 +46,14 @@
         android:key="input_others"
         android:title="@string/others">
 
+        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+            android:defaultValue="false"
+            android:key="input_glove_mode_aw"
+            android:summary="@string/glove_mode_summary"
+            android:title="@string/glove_mode"
+            dc:category="device"
+            dc:filePathList="@array/files_glove_mode" />
+
         <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
             android:key="input_glove_mode"
             android:summary="@string/glove_mode_summary"
