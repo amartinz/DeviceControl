@@ -31,7 +31,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.events.DeviceFragmentEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
 import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
@@ -440,7 +439,6 @@ public class DeviceFragment extends AttachPreferenceFragment
         return sbCmd.toString();
     }
 
-    @Subscribe
     public void onDeviceFragment(final DeviceFragmentEvent event) {
         if (event == null) { return; }
         final boolean isForceNavBar = event.isForceNavBar();
@@ -455,6 +453,16 @@ public class DeviceFragment extends AttachPreferenceFragment
 //==============================================================================================
 // Internal Classes
 //==============================================================================================
+
+    class DeviceFragmentEvent {
+
+        private final boolean mIsForceNavBar;
+
+        public DeviceFragmentEvent(final boolean isForceNavBar) { mIsForceNavBar = isForceNavBar; }
+
+        public boolean isForceNavBar() { return mIsForceNavBar; }
+
+    }
 
     class DeviceTask extends AsyncTask<Void, Void, DeviceFragmentEvent> {
 
@@ -472,7 +480,7 @@ public class DeviceFragment extends AttachPreferenceFragment
         @Override
         protected void onPostExecute(final DeviceFragmentEvent event) {
             if (event != null) {
-                BusProvider.getBus().post(event);
+                onDeviceFragment(event);
             }
         }
     }
