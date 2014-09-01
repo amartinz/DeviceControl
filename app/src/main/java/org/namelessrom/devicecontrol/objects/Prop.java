@@ -18,34 +18,27 @@
  */
 package org.namelessrom.devicecontrol.objects;
 
+import android.support.annotation.NonNull;
+
 public class Prop implements Comparable<Prop> {
 
     private String mName;
     private String mData;
 
-    public Prop(String n, String d) {
+    public Prop(final String n, final String d) {
         mName = n;
         mData = d;
     }
 
-    public String getName() {
-        return mName;
-    }
+    public String getName() { return mName; }
 
-    public void setName(String d) {
-        mName = d;
+    public void setName(final String d) { mName = d; }
 
-    }
+    public String getVal() { return mData; }
 
-    public String getVal() {
-        return mData;
-    }
+    public void setVal(final String d) { mData = d; }
 
-    public void setVal(final String d) {
-        mData = d;
-    }
-
-    public int compareTo(final Prop o) {
+    public int compareTo(@NonNull final Prop o) {
         if (mName != null) {
             return mName.toLowerCase().compareTo(o.getName().toLowerCase());
         } else {

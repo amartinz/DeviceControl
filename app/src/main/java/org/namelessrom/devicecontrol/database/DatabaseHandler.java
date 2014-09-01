@@ -144,6 +144,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         // TODO: a more grateful way?
         wipeDb(db);
         try {
+            //noinspection ResultOfMethodCallIgnored
             new File(Application.getFilesDirectory() + DC_DOWNGRADE).createNewFile();
         } catch (Exception ignored) { }
     }

@@ -17,10 +17,12 @@
  */
 package org.namelessrom.devicecontrol;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Handler;
 import android.os.StrictMode;
 
@@ -72,6 +74,7 @@ public class Application extends android.app.Application implements DeviceConsta
         Logger.setEnabled(PreferenceHelper.getBoolean(EXTENSIVE_LOGGING, false));
 
         if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.debug=1")) {
+            // setup thread policy
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectAll()
                     .detectCustomSlowCalls()
@@ -81,17 +84,25 @@ public class Application extends android.app.Application implements DeviceConsta
                     .penaltyLog()
                     .penaltyFlashScreen()
                     .build());
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+
+            // setup vm policy
+            final StrictMode.VmPolicy.Builder vmpolicy = new StrictMode.VmPolicy.Builder();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                vmpolicy.detectLeakedRegistrationObjects();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                    vmpolicy.detectFileUriExposure();
+                }
+            }
+            vmpolicy
                     .detectAll()
                     .detectActivityLeaks()
-                    .detectFileUriExposure()
                     .detectLeakedClosableObjects()
-                    .detectLeakedRegistrationObjects()
                     .detectLeakedSqlLiteObjects()
                     .setClassInstanceLimit(AddTaskActivity.class, 100)
-                    .penaltyLog()
-                    .build());
+                    .penaltyLog();
+            StrictMode.setVmPolicy(vmpolicy.build());
 
+            // enable debug mode at root tools
             RootTools.debugMode = true;
         }
 
@@ -121,7 +132,7 @@ public class Application extends android.app.Application implements DeviceConsta
 
     public static File getFiles() { return Application.applicationContext.getFilesDir(); }
 
-    public static String getFilesDirectory() {
+    @SuppressLint("SdCardPath") public static String getFilesDirectory() {
         final File tmp = getFiles();
         if (tmp != null && tmp.exists()) {
             return tmp.getPath();

@@ -31,6 +31,7 @@ public class Constants {
 
         public static String getKey() {
             String key = "<<";
+            @SuppressWarnings("StringBufferReplaceableByString")
             final StringBuilder sb = new StringBuilder(a + b);
             sb.append(c).append(d);
             sb.append(f).append(e);

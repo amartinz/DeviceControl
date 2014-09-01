@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
+import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -103,8 +104,8 @@ public class VoltageFragment extends AttachPreferenceFragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View v = inflater.inflate(R.layout.fragment_voltage, container, false);
 

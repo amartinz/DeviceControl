@@ -88,6 +88,7 @@ public class CommandResult implements Parcelable {
                                 + "/aokp/error.txt"
                 );
                 if (!errorLogFile.exists()) {
+                    //noinspection ResultOfMethodCallIgnored
                     errorLogFile.createNewFile();
                 }
                 errorWriter = new FileWriter(errorLogFile, true);

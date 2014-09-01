@@ -279,6 +279,7 @@ public class ServerWrapper {
                 webSocket.setStringCallback(new WebSocket.StringCallback() {
                     @Override public void onStringAvailable(final String s) {
                         Logger.v(this, s);
+                        //noinspection StatementWithEmptyBody
                         if (ACTION_CONNECTED.equals(s)) {
                             //TODO: initializing
                         }

@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol.fragments.tools.editor;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
+import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
@@ -90,8 +91,8 @@ public class SysctlFragment extends AttachPreferenceFragment implements DeviceCo
         mVfs.setSummary(Utils.readOneLine(VFS_CACHE_PRESSURE_PATH));
     }
 
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
+            @NonNull final Preference preference) {
         if (preference == mFullEditor) {
             MainActivity.loadFragment(getActivity(), ID_TOOLS_EDITORS_VM);
             return true;

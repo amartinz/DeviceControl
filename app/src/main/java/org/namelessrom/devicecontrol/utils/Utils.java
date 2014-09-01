@@ -295,6 +295,7 @@ public class Utils implements DeviceConstants, FileConstants {
         try {
             RootTools.getShell(true).add(comm);
             if (wait) {
+                //noinspection StatementWithEmptyBody
                 while (comm.isExecuting()) {
                     // wait for it
                 }

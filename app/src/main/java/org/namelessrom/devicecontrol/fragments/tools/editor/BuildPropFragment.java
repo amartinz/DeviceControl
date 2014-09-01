@@ -26,6 +26,7 @@ import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
+import android.support.annotation.NonNull;
 import android.text.InputFilter;
 import android.text.InputFilter.LengthFilter;
 import android.widget.EditText;
@@ -176,8 +177,8 @@ public class BuildPropFragment extends AttachPreferenceFragment
         updateScreen();
     }
 
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
+            @NonNull final Preference preference) {
         boolean value;
         if (preference == mFullEditor) {
             MainActivity.loadFragment(getActivity(), ID_TOOLS_EDITORS_BUILD_PROP);

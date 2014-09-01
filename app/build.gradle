@@ -31,6 +31,7 @@ android {
             proguardFile 'src/main/proguard.flags'
             zipAlign true
             debuggable false
+            buildConfigField "boolean", "IS_RELEASE", "true"
         }
         debug {
             runProguard false
@@ -38,6 +39,7 @@ android {
             proguardFile 'src/main/proguard.flags'
             zipAlign false
             debuggable true
+            buildConfigField "boolean", "IS_RELEASE", "false"
             applicationIdSuffix '.dev'
             versionNameSuffix '-dev'
         }
