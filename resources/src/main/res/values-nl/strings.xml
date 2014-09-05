@@ -135,9 +135,6 @@
   <string name="vibrator_strength_summary">Aanpassen van de sterkte van de trilfeedback</string>
   <string name="vibrator_warning">Waarden hoger dan %1$d worden niet aangeraden</string>
   <string name="test">Test</string>
-  <string name="navbar">Navigatiebalk</string>
-  <string name="force_navbar">Navigatiebalk forceren</string>
-  <string name="force_navbar_summary">Vereist een herstart!</string>
   <string name="glove_mode">Handschoenmodus</string>
   <string name="glove_mode_summary">Maakt de touchscreen gevoeliger, bijvoorbeeld voor het gebruik ervan met handschoenen.</string>
   <string name="screen_gamma">Schermgamma</string>

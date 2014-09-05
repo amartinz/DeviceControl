@@ -136,9 +136,6 @@
   <string name="vibrator_strength_summary">Регулирует силу ответной вибрации</string>
   <string name="vibrator_warning">Значения выше %1$d не рекомендуются</string>
   <string name="test">Проверка</string>
-  <string name="navbar">Панель навигации</string>
-  <string name="force_navbar">Принудительно показывать панель навигации</string>
-  <string name="force_navbar_summary">Требуется перезагрузка!</string>
   <string name="glove_mode">Режим перчаток</string>
   <string name="glove_mode_summary">Делает сенсорный экран более чувствительным, например, для использования его с перчатками.</string>
   <string name="screen_gamma">Цветовая гамма экрана</string>

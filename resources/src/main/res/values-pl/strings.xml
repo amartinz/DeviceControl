@@ -137,9 +137,6 @@
   <string name="vibrator_strength_summary">Dostosuj siłę wibracji</string>
   <string name="vibrator_warning">Wartości wyższe niż %s nie są zalecane</string>
   <string name="test">Testuj</string>
-  <string name="navbar">Pasek nawigacyjny</string>
-  <string name="force_navbar">Wymuś pasek nawigacji</string>
-  <string name="force_navbar_summary">Wymaga ponownego uruchomienia!</string>
   <string name="glove_mode">Glove Mode</string>
   <string name="glove_mode_summary">Sprawia, że ekran jest bardziej wrażliwy na dotyk i reaguje nawet wtedy, gdy doykasz go w rękawiczkach.</string>
   <string name="screen_gamma">Gamma ekranu</string>
@@ -195,7 +192,9 @@
   <string name="delete_property_message">%s będzie usunięte.\n\nKontynuować?</string>
   <string name="name">Nazwa</string>
   <string name="presets">Ustawienia domyślne</string>
+  <string name="gestures">Gesty</string>
   <string name="knock_on">Knock On</string>
+  <string name="knock_on_summary">Dotknij dwukrotnie na ekranie, aby go włączyć</string>
   <string name="five_minutes">5 minut</string>
   <string name="ten_minutes">10 minut</string>
   <string name="twenty_minutes">20 minut</string>
@@ -302,4 +301,26 @@
   <string name="user_interface">Interfejs</string>
   <string name="swipe_on_content">Przesuń na zawartości</string>
   <string name="swipe_on_content_summary">Przełącz menu, podczas przesuwania nad całą zawartością</string>
+  <string name="gpu_vendor">Producent GPU</string>
+  <string name="gpu_renderer">GPU Renderer</string>
+  <string name="opengl_version">Wersja OpenGL</string>
+  <string name="opengl_extensions">Rozszerzenia OpenGL</string>
+  <string name="shader_version">Wersja modułu cieniującego</string>
+  <string name="getting_information">Pobieram informacje</string>
+  <string name="health">Zdrowie</string>
+  <string name="good">Dobry</string>
+  <string name="dead">Wyczerpany</string>
+  <string name="over_voltage">Zbyt wysokie napięcie</string>
+  <string name="overheat">Przegrzanie</string>
+  <string name="tcp_congestion_control">Kontrola przeciążenia TCP</string>
+  <string name="app_size">Rozmiar aplikacji</string>
+  <string name="uninstall">Odinstaluj</string>
+  <string name="uninstalling">Odinstalowywanie&#8230;</string>
+  <string name="uninstall_msg">Czy na pewno chcesz odinstalować \"%s\"?\nTej akcji nie można cofnąć!</string>
+  <string name="uninstall_success">Pomyślnie odinstalowano \"%s\"</string>
+  <string name="sunlight_enhancement">Poprawa jasności w świetle słonecznym</string>
+  <string name="sunlight_enhancement_summary">Zwiększanie jasności ekranu i czytelności w jasnym świetle słonecznym</string>
+  <string name="color_enhancement">Poprawa koloru</string>
+  <string name="dark_theme">Ciemny motyw</string>
+  <string name="dark_theme_summary">Przełącz pomiędzy ciemnym / jasnym motywem</string>
 </resources>

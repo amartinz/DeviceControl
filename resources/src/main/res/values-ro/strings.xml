@@ -137,9 +137,6 @@
   <string name="vibrator_strength_summary">Ajusteaza puterea vibratiei</string>
   <string name="vibrator_warning">Valorile peste %s nu sunt recomandate</string>
   <string name="test">Test</string>
-  <string name="navbar">Bara de navigare</string>
-  <string name="force_navbar">Forţeaza bara de navigaţie</string>
-  <string name="force_navbar_summary">Necesită repornire!</string>
   <string name="glove_mode">Mod \'Mânuşă\'</string>
   <string name="glove_mode_summary">Face touchscreen-ul mai sensibil, ex: pentru a-l utiliza cu mânuşi.</string>
   <string name="screen_gamma">Gamma ecran</string>
@@ -318,6 +315,12 @@
   <string name="tcp_congestion_control">Controlul congestiei TCP</string>
   <string name="app_size">Dimensiunea aplicației</string>
   <string name="uninstall">Dezinstalare</string>
+  <string name="uninstalling">Dezinstalare...</string>
   <string name="uninstall_msg">Doriţi să dezinstalaţi \"%s\"?\nAceastă acţiune nu poate fi anulată!</string>
   <string name="uninstall_success">Dezinstalat cu succes \"%s\"</string>
+  <string name="sunlight_enhancement">Intensificator lumină solară</string>
+  <string name="sunlight_enhancement_summary">Sporește luminozitatea afişajului şi lizibilitatea sub lumina strălucitoare a soarelui</string>
+  <string name="color_enhancement">Intensificator culoare</string>
+  <string name="dark_theme">Temă întunecată</string>
+  <string name="dark_theme_summary">Comută între tema întunecată / luminoasă</string>
 </resources>

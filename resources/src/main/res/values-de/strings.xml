@@ -137,9 +137,6 @@
   <string name="vibrator_strength_summary">Verändere die Stärke der Vibration</string>
   <string name="vibrator_warning">Höhere Werte als %1$d werden nicht empfohlen</string>
   <string name="test">Testen</string>
-  <string name="navbar">Navigationsleiste</string>
-  <string name="force_navbar">Erzwinge Navigationsleiste</string>
-  <string name="force_navbar_summary">Erfordert einen Neustart!</string>
   <string name="glove_mode">Handschuh-Modus</string>
   <string name="glove_mode_summary">Macht den Touchscreen empfindlicher, z.B. für die Verwendung mit Handschuhen.</string>
   <string name="screen_gamma">Bildschirm-Gamma</string>
@@ -318,6 +315,12 @@
   <string name="tcp_congestion_control">TCP Überlastungsalgorithmus</string>
   <string name="app_size">Anwendungsgröße</string>
   <string name="uninstall">Deinstallieren</string>
+  <string name="uninstalling">Deinstallieren&#8230;</string>
   <string name="uninstall_msg">Soll \"%s\" wirklich deinstalliert werden?\nDiese Aktion kann nicht rückgängig gemacht werden!</string>
   <string name="uninstall_success">\"%s\" erfolgreich deinstalliert</string>
+  <string name="sunlight_enhancement">Verbesserung bei Sonnenlicht</string>
+  <string name="sunlight_enhancement_summary">Lesbarkeit des Displays bei grellem Sonnenlicht verbessern</string>
+  <string name="color_enhancement">Farbverbesserung</string>
+  <string name="dark_theme">Dunkles Design</string>
+  <string name="dark_theme_summary">Wechseln zwischen dem hellen und dunklen Design</string>
 </resources>

@@ -135,9 +135,6 @@
   <string name="vibrator_strength_summary">Ajuster la puissance du retour de la vibration</string>
   <string name="vibrator_warning">Des valeurs supérieures à %s ne sont pas recommandées</string>
   <string name="test">Test</string>
-  <string name="navbar">Barre de navigation</string>
-  <string name="force_navbar">Forcer la barre de navigation</string>
-  <string name="force_navbar_summary">Nécessite un redémarrage!</string>
   <string name="glove_mode">Mode gants</string>
   <string name="glove_mode_summary">Rends l\'écran tactile plus sensible, par exemple pour l\'utilisation avec des gants.</string>
   <string name="screen_gamma">Gamma de l\'écran</string>

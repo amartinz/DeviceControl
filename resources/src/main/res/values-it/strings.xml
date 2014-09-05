@@ -137,9 +137,6 @@
   <string name="vibrator_strength_summary">Regola l\'intensità della vibrazione di feedback</string>
   <string name="vibrator_warning">Valori superiori di %s non sono raccomandati</string>
   <string name="test">Prova</string>
-  <string name="navbar">Barra di navigazione</string>
-  <string name="force_navbar">Forza Barra di navigazione</string>
-  <string name="force_navbar_summary">Richiede riavvio!</string>
   <string name="glove_mode">Modalità guanto</string>
   <string name="glove_mode_summary">Rende il touchscreen più sensibile, ad esempio per l\'utilizzo con guanti.</string>
   <string name="screen_gamma">Gamma schermo</string>

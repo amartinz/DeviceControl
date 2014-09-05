@@ -135,9 +135,6 @@
   <string name="vibrator_strength_summary">Nastavuje sílu vibrací zpětné vazby</string>
   <string name="vibrator_warning">Hodnoty vyšší než %s nejsou doporučeny</string>
   <string name="test">Test</string>
-  <string name="navbar">Navigační Lišta</string>
-  <string name="force_navbar">Vynutit navigační lištu</string>
-  <string name="force_navbar_summary">Vyžaduje restart!</string>
   <string name="glove_mode">Režim v rukavicích</string>
   <string name="glove_mode_summary">Činí dotykový displej citlivější, např. pro použití s rukavicemi.</string>
   <string name="screen_gamma">Gamma obrazovky</string>

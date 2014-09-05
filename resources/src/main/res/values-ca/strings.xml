@@ -135,9 +135,6 @@
   <string name="vibrator_strength_summary">Ajustar la força de reacció de la vibració</string>
   <string name="vibrator_warning">No són recomanables valors superiors a %s</string>
   <string name="test">Prova</string>
-  <string name="navbar">Barra de navegació</string>
-  <string name="force_navbar">Forçar la barra de navegació</string>
-  <string name="force_navbar_summary">Requereix ser reiniciat!</string>
   <string name="glove_mode">Mode de Guants</string>
   <string name="glove_mode_summary">La pantalla tàctil es fa més sensible, per exemple per a l\'ús amb guants.</string>
   <string name="screen_gamma">Gamma en pantalla</string>
