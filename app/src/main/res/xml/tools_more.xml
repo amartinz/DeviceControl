@@ -33,6 +33,10 @@
         android:key="wireless_file_manager"
         android:title="@string/wireless_file_manager" />
 
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
+        android:key="log_collector"
+        android:title="@string/log_collector" />
+
     <PreferenceCategory android:title="@string/editors">
 
         <org.namelessrom.devicecontrol.preferences.CustomPreference

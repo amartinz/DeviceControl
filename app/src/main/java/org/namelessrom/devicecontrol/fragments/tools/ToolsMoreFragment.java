@@ -24,6 +24,7 @@ import android.os.Environment;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.MainActivity;
@@ -36,14 +37,8 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
         MediaScannerConnection.MediaScannerConnectionClient {
 
     private MediaScannerConnection mMediaScannerConnection;
-    private CustomPreference       mMediaScan;
     private String                 mMediaScanPath;
-
-    private CustomPreference mBuildProp;
-    private CustomPreference mSysctlVm;
-    private CustomPreference mLowMemoryKiller;
-    private CustomPreference mAppManager;
-    private CustomPreference mWirelessFileManager;
+    private CustomPreference       mMediaScan;
 
     @Override protected int getFragmentId() { return ID_TOOLS_MORE; }
 
@@ -52,33 +47,28 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
         addPreferencesFromResource(R.xml.tools_more);
 
         mMediaScan = (CustomPreference) findPreference("media_scan");
-
-        mBuildProp = (CustomPreference) findPreference("build_prop");
-        mSysctlVm = (CustomPreference) findPreference("sysctl_vm");
-        mLowMemoryKiller = (CustomPreference) findPreference("low_memory_killer");
-
-        mAppManager = (CustomPreference) findPreference("app_manager");
-        mWirelessFileManager = (CustomPreference) findPreference("wireless_file_manager");
     }
 
     @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
             @NonNull final Preference preference) {
         final String key = preference.getKey();
 
-        if (key == null || key.isEmpty()) return false;
+        if (TextUtils.isEmpty(key)) return false;
 
         if (mMediaScan == preference) {
             startMediaScan();
-        } else if (mAppManager == preference) {
+        } else if (TextUtils.equals(key, "app_manager")) {
             MainActivity.loadFragment(getActivity(), ID_TOOLS_APP_MANAGER);
-        } else if (mWirelessFileManager == preference) {
+        } else if (TextUtils.equals(key, "wireless_file_manager")) {
             MainActivity.loadFragment(getActivity(), ID_TOOLS_WIRELESS_FM);
-        } else if (mBuildProp == preference) {
+        } else if (TextUtils.equals(key, "build_prop")) {
             MainActivity.loadFragment(getActivity(), ID_TOOLS_BUILD_PROP);
-        } else if (mSysctlVm == preference) {
+        } else if (TextUtils.equals(key, "sysctl_vm")) {
             MainActivity.loadFragment(getActivity(), ID_TOOLS_VM);
-        } else if (mLowMemoryKiller == preference) {
+        } else if (TextUtils.equals(key, "low_memory_killer")) {
             MainActivity.loadFragment(getActivity(), ID_LOWMEMORYKILLER);
+        } else if (TextUtils.equals(key, "log_collector")) {
+            MainActivity.loadFragment(getActivity(), ID_TOOLS_LOG_COLLECTOR);
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);

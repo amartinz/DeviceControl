@@ -333,4 +333,15 @@
         <item>4096</item>
     </string-array>
 
+    <string-array name="log_kernel_entries" translatable="false">
+        <item>@string/none</item>
+        <item>@string/kmsg</item>
+        <item>@string/last_kmsg</item>
+        <item>@string/both</item>
+    </string-array>
+    <string-array name="log_compression_entries" translatable="false">
+        <item>@string/tar</item>
+        <item>@string/tar_gz</item>
+    </string-array>
+
 </resources>
