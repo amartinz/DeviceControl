@@ -26,12 +26,11 @@ import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.File;
 import java.io.FileOutputStream;
 
-public class FstrimService extends IntentService implements DeviceConstants, FileConstants {
+public class FstrimService extends IntentService implements DeviceConstants {
 
     //==============================================================================================
     // Overridden Methods

@@ -51,7 +51,6 @@ import org.namelessrom.devicecontrol.objects.Prop;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.views.AttachFragment;
 
 import java.io.File;
@@ -61,7 +60,7 @@ import java.util.List;
 
 import static butterknife.ButterKnife.findById;
 
-public class SysctlEditorFragment extends AttachFragment implements DeviceConstants, FileConstants,
+public class SysctlEditorFragment extends AttachFragment implements DeviceConstants,
         AdapterView.OnItemClickListener, OnShellOutputListener {
 
     //==============================================================================================

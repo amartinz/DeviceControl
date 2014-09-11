@@ -17,7 +17,7 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
+import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 /**
  * Defines and runs Scripts.
@@ -61,7 +61,7 @@ public class Scripts {
 
     public static String getRngStartup() {
         return String.format("#!/system/bin/sh\n" + "if [ -e %s ]; then\n" + "%s -P;\n" + "fi;\n",
-                FileConstants.RNG_PATH, FileConstants.RNG_PATH);
+                PerformanceConstants.RNG_PATH, PerformanceConstants.RNG_PATH);
     }
 
 }

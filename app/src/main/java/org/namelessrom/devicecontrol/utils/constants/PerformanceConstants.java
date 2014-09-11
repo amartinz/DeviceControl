@@ -122,5 +122,16 @@ public interface PerformanceConstants {
     //----------------------------------------------------------------------------------------------
     public static final String PREF_3D_SCALING = "3d_scaling";
     public static final String FILE_3D_SCALING = "/sys/devices/gr3d/enable_3d_scaling";
+
+    //==============================================================================================
+    // Files
+    //==============================================================================================
+    public static final String MPDECISION_PATH  = "/system/bin/mpdecision";
+    //==============================================================================================
+    public static final String RNG_PATH         = "/system/bin/rngd";
+    public static final String QRNG_PATH        = "/system/bin/qrngd";
+    public static final String RNG_STARTUP_PATH = "/system/etc/init.d/90rng";
+    public static final String URL_RNG          =
+            "http://sourceforge.net/projects/namelessrom/files/romextras/binaries/rngd/download";
 }
 

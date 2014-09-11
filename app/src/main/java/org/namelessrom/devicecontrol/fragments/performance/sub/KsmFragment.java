@@ -35,7 +35,6 @@ import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.DialogHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
@@ -44,7 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KsmFragment extends AttachPreferenceFragment
-        implements DeviceConstants, FileConstants, PerformanceConstants,
+        implements DeviceConstants, PerformanceConstants,
         Preference.OnPreferenceChangeListener {
 
     //----------------------------------------------------------------------------------------------

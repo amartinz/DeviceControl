@@ -19,6 +19,8 @@ package org.namelessrom.devicecontrol.utils.constants;
 
 import org.namelessrom.devicecontrol.R;
 
+import java.io.File;
+
 public interface DeviceConstants {
 
     //==============================================================================================
@@ -34,8 +36,9 @@ public interface DeviceConstants {
     //==============================================================================================
     // Fragments
     //==============================================================================================
-    public static final int ID_HOME                     = -100;
-    public static final int ID_DUMMY                    = -5;
+    public static final int ID_HOME  = -100;
+    public static final int ID_DUMMY = -5;
+
     //----------------------------------------------------------------------------------------------
     public static final int ID_DEVICE                   = R.string.device;
     public static final int ID_FEATURES                 = R.string.features;
@@ -81,19 +84,30 @@ public interface DeviceConstants {
     //==============================================================================================
     // Etc
     //==============================================================================================
-    public static final String USE_TASKER              = "use_tasker";
+    public static final String USE_TASKER = "use_tasker";
+
     //----------------------------------------------------------------------------------------------
-    public static final String EXTENSIVE_LOGGING       = "extensive_logging";
-    public static final String DC_FIRST_START          = "dc_first_start";
-    public static final String SHOW_LAUNCHER           = "show_launcher";
-    public static final String SKIP_CHECKS             = "skip_checks";
+    public static final String EXTENSIVE_LOGGING = "extensive_logging";
+    public static final String DC_FIRST_START    = "dc_first_start";
+    public static final String SHOW_LAUNCHER     = "show_launcher";
+    public static final String SKIP_CHECKS       = "skip_checks";
+
     //----------------------------------------------------------------------------------------------
     public static final String PREF_RECOVERY_TYPE      = "pref_recovery_type";
     public static final int    RECOVERY_TYPE_BOTH      = 0;
     public static final int    RECOVERY_TYPE_CWM       = 1;
     public static final int    RECOVERY_TYPE_OPEN      = 2;
     public static final String PREF_FLASHER_MULTI_USER = "flasher_multi_user";
-    //----------------------------------------------------------------------------------------------
-    public static final String CUSTOM_SHELL_COMMAND    = "custom_shell_command";
 
+    //----------------------------------------------------------------------------------------------
+    public static final String CUSTOM_SHELL_COMMAND = "custom_shell_command";
+
+    //==============================================================================================
+    // Directories
+    //==============================================================================================
+    public static final String DC_LOG_DIR         = File.separator + "Logs";
+    //==============================================================================================
+    public static final String DC_LOG_FILE_FSTRIM = DC_LOG_DIR + File.separator + "fstrim.log";
+    //==============================================================================================
+    public static final String DC_DOWNGRADE       = File.separator + ".downgraded";
 }

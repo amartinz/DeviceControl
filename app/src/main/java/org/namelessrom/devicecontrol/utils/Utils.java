@@ -38,7 +38,6 @@ import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -50,7 +49,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-public class Utils implements DeviceConstants, FileConstants {
+public class Utils implements DeviceConstants {
 
     private static final String[] ENABLED_STATES = {"Y", "TRUE", "1", "255"};
 
