@@ -15,20 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.events;
+package org.namelessrom.devicecontrol.listeners;
 
-public class ShellOutputEvent {
+import org.namelessrom.devicecontrol.objects.AppItem;
 
-    private final int    mId;
-    private final String mOutput;
-
-    public ShellOutputEvent(final int id, final String output, final String extras) {
-        mId = id;
-        mOutput = output;
-    }
-
-    public int getId() { return mId; }
-
-    public String getOutput() { return mOutput; }
-
+public interface OnAppChoosenListener {
+    public void onAppChoosen(final AppItem appItem);
 }

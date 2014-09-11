@@ -322,4 +322,11 @@
     <string name="color_enhancement">Color enhancement</string>
     <string name="dark_theme">Dark theme</string>
     <string name="dark_theme_summary">Switch between the dark / light theme</string>
+    <string name="platform_information">Platform information</string>
+    <string name="build_id">Build id</string>
+    <string name="android_id">Android id</string>
+    <string name="runtime">Runtime</string>
+    <string name="type">Type</string>
+    <string name="tags">Tags</string>
+    <string name="sensors">Sensors</string>
 </resources>
