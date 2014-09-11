@@ -66,7 +66,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.AppDetailsActivity;
 import org.namelessrom.devicecontrol.adapters.AppListAdapter;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
-import org.namelessrom.devicecontrol.events.listeners.OnAppChoosenListener;
+import org.namelessrom.devicecontrol.listeners.OnAppChoosenListener;
 import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.utils.AnimationHelper;
 import org.namelessrom.devicecontrol.utils.AppHelper;

@@ -26,7 +26,8 @@ import com.squareup.otto.Subscribe;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.events.FlashItemEvent;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
-import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
+import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
+import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.objects.FlashItem;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -38,7 +39,8 @@ import java.util.ArrayList;
 /**
  * A class for picking a file
  */
-public class FilePickerFragment extends ListFragment implements OnBackPressedListener {
+public class FilePickerFragment extends ListFragment implements OnBackPressedListener,
+        OnShellOutputListener {
 
     public static final String ARG_FILE_TYPE = "arg_file_type";
 
@@ -85,7 +87,7 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
         if (isBreadcrumb) {
             breadcrumbs.add(path);
         }
-        Utils.getCommandResult(ID_GET_FILES, String.format("ls %s", path), "", true);
+        Utils.getCommandResult(this, ID_GET_FILES, String.format("ls %s", path), true);
     }
 
     @Subscribe public void onFile(final File f) {
@@ -106,7 +108,7 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
         BusProvider.getBus().post(new FlashItemEvent(item));
     }
 
-    @Subscribe public void onShellOutputEvent(final ShellOutputEvent event) {
+    public void onShellOutput(final ShellOutputEvent event) {
         if (event == null) return;
         final int id = event.getId();
         switch (id) {

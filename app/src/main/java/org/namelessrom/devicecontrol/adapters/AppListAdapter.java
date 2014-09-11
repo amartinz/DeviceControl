@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.listeners.OnAppChoosenListener;
+import org.namelessrom.devicecontrol.listeners.OnAppChoosenListener;
 import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 

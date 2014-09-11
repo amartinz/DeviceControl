@@ -1,4 +1,4 @@
-package org.namelessrom.devicecontrol.events.listeners;
+package org.namelessrom.devicecontrol.listeners;
 
 import org.namelessrom.devicecontrol.objects.AppItem;
 

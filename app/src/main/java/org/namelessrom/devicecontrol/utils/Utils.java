@@ -32,6 +32,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -287,8 +288,9 @@ public class Utils implements DeviceConstants, FileConstants {
 
     /**
      * Runs a shell command with root (super user) rights
+     *
      * @param command The command to run
-     * @param wait If true, this command is blocking until execution finished
+     * @param wait    If true, this command is blocking until execution finished
      */
     public static void runRootCommand(final String command, final boolean wait) {
         final CommandCapture comm = new CommandCapture(0, false, command);
@@ -305,16 +307,17 @@ public class Utils implements DeviceConstants, FileConstants {
         }
     }
 
-    public static void getCommandResult(final int ID, final String COMMAND) {
-        getCommandResult(ID, COMMAND, null, false);
+    public static void getCommandResult(final OnShellOutputListener listener, final String cmd) {
+        getCommandResult(listener, -1, cmd);
     }
 
-    public static void getCommandResult(final int ID, final String COMMAND, final String EXTRAS) {
-        getCommandResult(ID, COMMAND, EXTRAS, false);
+    public static void getCommandResult(final OnShellOutputListener listener, final int id,
+            final String cmd) {
+        getCommandResult(listener, id, cmd, false);
     }
 
-    public static void getCommandResult(final int ID, final String COMMAND, final String EXTRAS,
-            final boolean NEWLINE) {
+    public static void getCommandResult(final OnShellOutputListener listener, final int ID,
+            final String COMMAND, final boolean NEWLINE) {
         final StringBuilder sb = new StringBuilder();
         final CommandCapture comm = new CommandCapture(0, false, COMMAND) {
             @Override public void commandOutput(int id, String line) {
@@ -328,10 +331,10 @@ public class Utils implements DeviceConstants, FileConstants {
             public void commandCompleted(int id, int exitcode) {
                 final String result = sb.toString();
                 Logger.v(Utils.class,
-                        String.format("Generic Output for %s: %s", String.valueOf(ID), result));
+                        String.format("Shell output: %s", result));
                 Application.HANDLER.post(new Runnable() {
                     @Override public void run() {
-                        BusProvider.getBus().post(new ShellOutputEvent(ID, result, EXTRAS));
+                        listener.onShellOutput(new ShellOutputEvent(ID, sb.toString(), ""));
                     }
                 });
             }

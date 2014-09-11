@@ -50,7 +50,6 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     public static final String TABLE_TASKER = "tasker";
 
     public static final String CATEGORY_DEVICE   = "device";
-    public static final String CATEGORY_FEATURES = "features";
     public static final String CATEGORY_CPU      = "cpu";
     public static final String CATEGORY_GPU      = "gpu";
     public static final String CATEGORY_EXTRAS   = "extras";

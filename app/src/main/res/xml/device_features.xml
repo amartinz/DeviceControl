@@ -17,6 +17,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
+        android:icon="@drawable/ic_general_battery"
+        android:key="fast_charge"
+        android:summary="@string/fast_charge_summary"
+        android:title="@string/fast_charge" />
+
     <PreferenceCategory
         android:key="input_gestures"
         android:title="@string/gestures">
@@ -117,13 +123,29 @@
             dc:category="device"
             dc:filePathList="@array/files_lcd_color_enhancement" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeListPreference
             android:defaultValue="2"
             android:entries="@array/panel_color_temp_entries"
             android:entryValues="@array/panel_color_temp_entries_values"
             android:key="panel_color_temperature"
             android:summary="@string/screen_color_temperature"
-            android:title="@string/screen_color_temperature" />
+            android:title="@string/screen_color_temperature"
+            dc:category="device"
+            dc:filePathList="@array/files_panel_color_temp" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="extras"
+        android:title="@string/extras">
+
+        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+            android:defaultValue="false"
+            android:key="logger_mode"
+            android:summary="@string/logger_mode_summary"
+            android:title="@string/logger_mode"
+            dc:category="device"
+            dc:filePath="@string/file_logger_mode" />
 
     </PreferenceCategory>
 
