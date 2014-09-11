@@ -1,5 +1,7 @@
 package org.namelessrom.devicecontrol.utils.cmdprocessor;
 
+import org.namelessrom.devicecontrol.Logger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -10,10 +12,10 @@ public class ChildProcess {
     private static final int PIPE_SIZE = 1024;
 
     private class ChildReader extends Thread {
-        final InputStream  mStream;
-        final StringBuffer mBuffer;
+        final InputStream   mStream;
+        final StringBuilder mBuffer;
 
-        ChildReader(InputStream is, StringBuffer buf) {
+        ChildReader(final InputStream is, final StringBuilder buf) {
             mStream = is;
             mBuffer = buf;
         }
@@ -22,17 +24,19 @@ public class ChildProcess {
             byte[] buf = new byte[PIPE_SIZE];
             try {
                 int len;
+                String s;
                 while ((len = mStream.read(buf)) != -1) {
-                    String s = new String(buf, 0, len);
+                    s = new String(buf, 0, len);
                     mBuffer.append(s);
                 }
             } catch (IOException e) {
                 // Ignore
-            }
-            try {
-                mStream.close();
-            } catch (IOException e) {
-                // Ignore
+            } finally {
+                try {
+                    if (mStream != null) mStream.close();
+                } catch (IOException e) {
+                    // Ignore
+                }
             }
         }
     }
@@ -41,7 +45,7 @@ public class ChildProcess {
         final OutputStream mStream;
         final String       mBuffer;
 
-        ChildWriter(OutputStream os, String buf) {
+        ChildWriter(final OutputStream os, final String buf) {
             mStream = os;
             mBuffer = buf;
         }
@@ -57,26 +61,28 @@ public class ChildProcess {
                 }
             } catch (IOException e) {
                 // Ignore
-            }
-            try {
-                mStream.close();
-            } catch (IOException e) {
-                // Ignore
+            } finally {
+                try {
+                    if (mStream != null) mStream.close();
+                } catch (IOException e) {
+                    // Ignore
+                }
             }
         }
     }
 
-    private final long         mStartTime;
-    private       Process      mChildProc;
-    private       ChildWriter  mChildStdinWriter;
-    private       ChildReader  mChildStdoutReader;
-    private       ChildReader  mChildStderrReader;
-    private       StringBuffer mChildStdout;
-    private       StringBuffer mChildStderr;
-    private       int          mExitValue;
-    private       long         mEndTime;
+    private final long mStartTime;
 
-    public ChildProcess(String[] cmdarray, String childStdin) {
+    private Process       mChildProc;
+    private ChildWriter   mChildStdinWriter;
+    private ChildReader   mChildStdoutReader;
+    private ChildReader   mChildStderrReader;
+    private StringBuilder mChildStdout;
+    private StringBuilder mChildStderr;
+    private int           mExitValue;
+    private long          mEndTime;
+
+    public ChildProcess(final String[] cmdarray, final String childStdin) {
         mStartTime = nanoTime();
         try {
             mChildProc = Runtime.getRuntime().exec(cmdarray);
@@ -84,14 +90,14 @@ public class ChildProcess {
                 mChildStdinWriter = new ChildWriter(mChildProc.getOutputStream(), childStdin);
                 mChildStdinWriter.start();
             }
-            mChildStdout = new StringBuffer();
+            mChildStdout = new StringBuilder();
             mChildStdoutReader = new ChildReader(mChildProc.getInputStream(), mChildStdout);
             mChildStdoutReader.start();
-            mChildStderr = new StringBuffer();
+            mChildStderr = new StringBuilder();
             mChildStderrReader = new ChildReader(mChildProc.getErrorStream(), mChildStderr);
             mChildStderrReader.start();
         } catch (IOException e) {
-            // XXX: log
+            Logger.e(this, e.getMessage());
         }
     }
 
@@ -100,7 +106,7 @@ public class ChildProcess {
         if (mChildProc != null) {
             try {
                 mChildProc.exitValue();
-            } catch (IllegalStateException e) {
+            } catch (final IllegalStateException e) {
                 finished = false;
             }
         }
@@ -111,19 +117,30 @@ public class ChildProcess {
         while (mChildProc != null) {
             try {
                 mExitValue = mChildProc.waitFor();
-                mEndTime = nanoTime();
-                mChildProc = null;
+            } catch (InterruptedException ignored) { }
+            mChildProc = null;
+
+            try {
                 mChildStderrReader.join();
+            } catch (InterruptedException ignored) { } finally {
                 mChildStderrReader = null;
+            }
+
+            try {
                 mChildStdoutReader.join();
+            } catch (InterruptedException ignored) { } finally {
                 mChildStdoutReader = null;
-                if (mChildStdinWriter != null) {
+            }
+
+            if (mChildStdinWriter != null) {
+                try {
                     mChildStdinWriter.join();
+                } catch (InterruptedException ignored) { } finally {
                     mChildStdinWriter = null;
                 }
-            } catch (InterruptedException e) {
-                // Ignore
             }
+
+            mEndTime = nanoTime();
         }
         return mExitValue;
     }

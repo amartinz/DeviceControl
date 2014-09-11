@@ -1,13 +1,9 @@
 package org.namelessrom.devicecontrol.utils.cmdprocessor;
 
-import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import org.namelessrom.devicecontrol.Logger;
 
 @SuppressWarnings("AccessOfSystemProperties")
 public class CommandResult implements Parcelable {
@@ -18,26 +14,21 @@ public class CommandResult implements Parcelable {
     private final String mStderr;
     private final long   mEndTime;
 
-    public CommandResult(long startTime,
-            int exitValue,
-            String stdout,
-            String stderr,
-            long endTime) {
+    public CommandResult(final long startTime, final int exitValue, final String stdout,
+            final String stderr, final long endTime) {
         mStartTime = startTime;
         mExitValue = exitValue;
         mStdout = stdout;
         mStderr = stderr;
         mEndTime = endTime;
 
-        Log.d(TAG, "Time to execute: " + (mEndTime - mStartTime) + " ns (nanoseconds)");
-        // this is set last so log from here
-        checkForErrors();
+        Logger.d(TAG, "Time to execute: " + (mEndTime - mStartTime) + " ns (nanoseconds)");
     }
 
     // pretty much just forward the constructor from parcelable to our main
     // loading constructor
     @SuppressWarnings("CastToConcreteClass")
-    public CommandResult(Parcel inParcel) {
+    public CommandResult(final Parcel inParcel) {
         this(inParcel.readLong(),
                 inParcel.readInt(),
                 inParcel.readString(),
@@ -69,62 +60,12 @@ public class CommandResult implements Parcelable {
         return mStartTime;
     }
 
-    @SuppressWarnings("UnnecessaryExplicitNumericCast")
-    private void checkForErrors() {
-        if (mExitValue != 0
-                || mStderr.trim() != null && !mStderr.trim().isEmpty()) {
-            // don't log the commands that failed
-            // because the cpu was offline
-            boolean skipOfflineCpu =
-                    // if core is off locking fails
-                    mStderr.contains("chmod: /sys/devices/system/cpu/cpu")
-                            // if core is off applying cpu freqs fails
-                            || mStderr.contains(": can't create /sys/devices/system/cpu/cpu");
-            String lineEnding = System.getProperty("line.separator");
-            FileWriter errorWriter = null;
-            try {
-                File errorLogFile = new File(
-                        Environment.getExternalStorageDirectory()
-                                + "/aokp/error.txt"
-                );
-                if (!errorLogFile.exists()) {
-                    //noinspection ResultOfMethodCallIgnored
-                    errorLogFile.createNewFile();
-                }
-                errorWriter = new FileWriter(errorLogFile, true);
-                // only log the cpu state as offline while writing
-                if (skipOfflineCpu) {
-                    errorWriter.write(lineEnding);
-                    errorWriter.write("Attempted to write to an offline cpu core (ignore me).");
-                } else {
-                    errorWriter.write(TAG + " shell error detected!");
-                    errorWriter.write(lineEnding);
-                    errorWriter.write("CommandResult {" + this.toString() + '}');
-                    errorWriter.write(lineEnding);
-                }
-                errorWriter.write(lineEnding);
-            } catch (IOException e) {
-                Log.e(TAG, "Failed to write command result to error file", e);
-            } finally {
-                if (errorWriter != null) {
-                    try {
-                        errorWriter.close();
-                    } catch (IOException ignored) {
-                        // let it go
-                    }
-                }
-            }
-        }
-    }
-
     // implement parcelable
-    @Override
-    public int describeContents() {
+    @Override public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
+    @Override public void writeToParcel(final Parcel parcel, final int i) {
         parcel.writeLong(mStartTime);
         parcel.writeInt(mExitValue);
         parcel.writeString(mStdout);
@@ -132,8 +73,7 @@ public class CommandResult implements Parcelable {
         parcel.writeLong(mEndTime);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "CommandResult{" +
                 ", mStartTime=" + mStartTime +
                 ", mExitValue=" + mExitValue +
@@ -143,8 +83,7 @@ public class CommandResult implements Parcelable {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (!(o instanceof CommandResult)) return false;
 
@@ -157,8 +96,7 @@ public class CommandResult implements Parcelable {
                 mEndTime == that.mEndTime);
     }
 
-    @Override
-    public int hashCode() {
+    @Override public int hashCode() {
         int result = 0;
         result = 31 * result + (int) (mStartTime ^ (mStartTime >>> 32));
         result = 31 * result + mExitValue;

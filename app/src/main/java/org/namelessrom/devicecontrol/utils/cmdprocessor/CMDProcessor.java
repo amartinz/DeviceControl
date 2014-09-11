@@ -2,6 +2,8 @@ package org.namelessrom.devicecontrol.utils.cmdprocessor;
 
 import android.util.Log;
 
+import org.namelessrom.devicecontrol.Logger;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -11,8 +13,6 @@ import java.io.InputStream;
 public final class CMDProcessor {
     private static final String TAG = "aCMDProcessor";
 
-    private Boolean can_su;
-    public final sh sh = new sh("sh");
     public final sh su = new sh("su");
 
     public CMDProcessor() { }
@@ -20,12 +20,6 @@ public final class CMDProcessor {
     /* Run a system command with full redirection */
     public static ChildProcess startSysCmd(String[] cmdarray, String childStdin) {
         return new ChildProcess(cmdarray, childStdin);
-    }
-
-    public static CommandResult runSysCmd(String[] cmdarray, String childStdin) {
-        ChildProcess proc = startSysCmd(cmdarray, childStdin);
-        proc.waitFinished();
-        return proc.getResult();
     }
 
     public static ChildProcess startShellCommand(String cmd) {
@@ -56,24 +50,10 @@ public final class CMDProcessor {
         return proc.getResult();
     }
 
-    public static boolean canSU() {
-        CommandResult r = runShellCommand("id");
-        StringBuilder out = new StringBuilder(0);
-        out.append(r.getStdout());
-        out.append(" ; ");
-        out.append(r.getStderr());
-        Log.d(TAG, "canSU() su[" + r.getExitValue() + "]: " + out);
-        return r.success();
-    }
-
     public class CommandResult2 {
         public final String  stdout;
         public final String  stderr;
         public final Integer exit_value;
-
-        CommandResult2(final Integer exit_value_in) {
-            this(exit_value_in, null, null);
-        }
 
         CommandResult2(final Integer exit_value_in, final String stdout_in,
                 final String stderr_in) {
@@ -124,15 +104,11 @@ public final class CMDProcessor {
             Process process;
             try {
                 process = Runtime.getRuntime().exec(SHELL);
-                final DataOutputStream toProcess = new DataOutputStream(
-                        process.getOutputStream());
+                final DataOutputStream toProcess = new DataOutputStream(process.getOutputStream());
                 toProcess.writeBytes("exec " + s + '\n');
                 toProcess.flush();
             } catch (final Exception e) {
-                Log.e(TAG,
-                        "Exception while trying to run: '" + s + "' "
-                                + e.getMessage()
-                );
+                Logger.e(TAG, "Exception while trying to run: '" + s + "' " + e.getMessage());
                 process = null;
             }
             return process;
@@ -149,9 +125,8 @@ public final class CMDProcessor {
 
                     stdout = getStreamLines(process.getInputStream());
                     stderr = getStreamLines(process.getErrorStream());
-
                 } catch (final Exception e) {
-                    Log.e(TAG, "runWaitFor " + e.toString());
+                    Logger.e(TAG, "runWaitFor " + e.toString());
                 }
             }
             return new CommandResult2(exit_value, stdout, stderr);
