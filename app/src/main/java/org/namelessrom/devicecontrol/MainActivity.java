@@ -79,6 +79,7 @@ import org.namelessrom.devicecontrol.fragments.tools.flasher.FlasherPreferencesF
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
+import org.namelessrom.devicecontrol.log.LogCollectorFragment;
 import org.namelessrom.devicecontrol.proprietary.Constants;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -510,6 +511,10 @@ public class MainActivity extends AccentActivity
             case ID_TOOLS_WIRELESS_FM:
                 if (!onResume) mCurrentFragment = new WirelessFileManagerFragment();
                 mTitle = mSubFragmentTitle = R.string.wireless_file_manager;
+                break;
+            case ID_TOOLS_LOG_COLLECTOR:
+                if (!onResume) mCurrentFragment = new LogCollectorFragment();
+                mTitle = mSubFragmentTitle = R.string.log_collector;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PREFERENCES:
