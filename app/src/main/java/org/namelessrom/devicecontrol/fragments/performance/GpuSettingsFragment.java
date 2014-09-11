@@ -98,6 +98,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
                     infoPref = new Preference(getActivity());
                     infoPref.setTitle(GL_STRINGS[i]);
                     infoPref.setSummary(tmp);
+                    infoPref.setSelectable(false);
                     category.addPreference(infoPref);
                 }
             }
