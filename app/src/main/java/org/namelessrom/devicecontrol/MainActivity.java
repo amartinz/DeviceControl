@@ -48,12 +48,11 @@ import com.stericson.roottools.RootTools;
 import org.namelessrom.devicecontrol.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
-import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
-import org.namelessrom.devicecontrol.fragments.device.DeviceInformationFragment;
-import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.fragments.HomeFragment;
 import org.namelessrom.devicecontrol.fragments.LicenseFragment;
 import org.namelessrom.devicecontrol.fragments.PreferencesFragment;
+import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
+import org.namelessrom.devicecontrol.fragments.device.DeviceInformationFragment;
 import org.namelessrom.devicecontrol.fragments.device.sub.FastChargeFragment;
 import org.namelessrom.devicecontrol.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
@@ -78,12 +77,12 @@ import org.namelessrom.devicecontrol.fragments.tools.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.fragments.tools.flasher.FlasherPreferencesFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskerFragment;
+import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.proprietary.Constants;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.io.File;
@@ -91,7 +90,7 @@ import java.io.File;
 import static butterknife.ButterKnife.findById;
 
 public class MainActivity extends AccentActivity
-        implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener,
+        implements DeviceConstants, AdapterView.OnItemClickListener,
         SlidingMenu.OnClosedListener, SlidingMenu.OnOpenedListener {
 
     //==============================================================================================

@@ -41,7 +41,6 @@ import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import static butterknife.ButterKnife.findById;
 
@@ -50,7 +49,7 @@ import static butterknife.ButterKnife.findById;
  * vibrator intensity settings on Samsung devices
  */
 public class VibratorTuningPreference extends DialogPreference
-        implements SeekBar.OnSeekBarChangeListener, DeviceConstants, FileConstants {
+        implements SeekBar.OnSeekBarChangeListener, DeviceConstants {
 
     private static final String[] FILES_VIBRATOR = {
             "/sys/class/timed_output/vibrator/pwm_value",

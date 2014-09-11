@@ -37,7 +37,6 @@ import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import java.io.BufferedReader;
@@ -47,7 +46,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class DeviceFragment extends AttachPreferenceFragment
-        implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener,
+        implements DeviceConstants, Preference.OnPreferenceChangeListener,
         Preference.OnPreferenceClickListener, OnShellOutputListener {
 
     private static final String FC_PATH = "/sys/kernel/fast_charge";
@@ -73,7 +72,7 @@ public class DeviceFragment extends AttachPreferenceFragment
     private AwesomeCheckBoxPreference mLcdSunlightEnhancement;
     private AwesomeCheckBoxPreference mLcdColorEnhancement;
     //----------------------------------------------------------------------------------------------
-    private AwesomeListPreference mPanelColor;
+    private AwesomeListPreference     mPanelColor;
 
     //==============================================================================================
     // Extras

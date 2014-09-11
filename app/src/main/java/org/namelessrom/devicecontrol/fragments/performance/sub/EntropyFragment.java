@@ -40,7 +40,6 @@ import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.views.AttachPreferenceProgressFragment;
 
@@ -49,7 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntropyFragment extends AttachPreferenceProgressFragment
-        implements DeviceConstants, FileConstants, PerformanceConstants,
+        implements DeviceConstants, PerformanceConstants,
         Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener,
         OnShellOutputListener {
 

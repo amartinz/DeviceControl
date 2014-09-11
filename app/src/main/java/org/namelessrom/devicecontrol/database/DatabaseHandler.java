@@ -27,13 +27,12 @@ import android.util.Log;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants, FileConstants {
+public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants {
 
     private static final int    DATABASE_VERSION = 8;
     private static final String DATABASE_NAME    = "DeviceControl.db";
@@ -49,12 +48,12 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     public static final String TABLE_DC     = "devicecontrol";
     public static final String TABLE_TASKER = "tasker";
 
-    public static final String CATEGORY_DEVICE   = "device";
-    public static final String CATEGORY_CPU      = "cpu";
-    public static final String CATEGORY_GPU      = "gpu";
-    public static final String CATEGORY_EXTRAS   = "extras";
-    public static final String CATEGORY_SYSCTL   = "sysctl";
-    public static final String CATEGORY_LMK      = "lmk";
+    public static final String CATEGORY_DEVICE = "device";
+    public static final String CATEGORY_CPU    = "cpu";
+    public static final String CATEGORY_GPU    = "gpu";
+    public static final String CATEGORY_EXTRAS = "extras";
+    public static final String CATEGORY_SYSCTL = "sysctl";
+    public static final String CATEGORY_LMK    = "lmk";
 
     private static final String CREATE_BOOTUP_TABLE = "CREATE TABLE " + TABLE_BOOTUP + '('
             + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_NAME + " TEXT,"

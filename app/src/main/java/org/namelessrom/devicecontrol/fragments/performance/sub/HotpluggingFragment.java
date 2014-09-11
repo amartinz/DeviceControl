@@ -36,12 +36,11 @@ import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 public class HotpluggingFragment extends AttachPreferenceFragment
-        implements DeviceConstants, FileConstants, PerformanceConstants,
+        implements DeviceConstants, PerformanceConstants,
         Preference.OnPreferenceChangeListener, OnShellOutputListener {
 
     //----------------------------------------------------------------------------------------------

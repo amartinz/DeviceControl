@@ -36,13 +36,12 @@ import org.namelessrom.devicecontrol.utils.GpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.io.File;
 
 public class BootUpService extends IntentService
-        implements DeviceConstants, FileConstants, PerformanceConstants {
+        implements DeviceConstants, PerformanceConstants {
 
     public static final String SOB_SYSCTL  = "sob_sysctl";
     public static final String SOB_CPU     = "sob_cpu";
