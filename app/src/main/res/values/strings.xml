@@ -329,4 +329,18 @@
     <string name="type">Type</string>
     <string name="tags">Tags</string>
     <string name="sensors">Sensors</string>
+    <string name="log_collect">Collect logs</string>
+    <string name="log_collector">Log collector</string>
+    <string name="log_creating_working_folder">Creating working folder</string>
+    <string name="saving">Saving</string>
+    <string name="compressing">Compressing</string>
+    <string name="log_collecting_wait">Collecting logs, please wait…</string>
+    <string name="log_ignoring_kernel">Ignoring kernel logs</string>
+    <string name="fixing_permissions">Fixing permissions</string>
+    <string name="none">None</string>
+    <string name="kernel_log">Kernel log</string>
+    <string name="compression_type">Compression type</string>
+    <string name="log_collected">Logs collected!</string>
+    <string name="log_collected_msg">Logs are got successfully collected!\nDo you want to send them now?</string>
+    <string name="log_send">Send logs</string>
 </resources>
