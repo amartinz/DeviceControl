@@ -28,12 +28,12 @@ import android.view.View;
 
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -42,7 +42,6 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceProgressFragment;
 
 import java.io.File;
@@ -51,7 +50,8 @@ import java.util.List;
 
 public class EntropyFragment extends AttachPreferenceProgressFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
-        Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
+        Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener,
+        OnShellOutputListener {
 
     //----------------------------------------------------------------------------------------------
     private CustomPreference         mEntropyAvail;
@@ -59,16 +59,6 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
     private CustomPreference         mRngStartup;
 
     @Override protected int getFragmentId() { return ID_ENTROPY; }
-
-    @Override public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
 
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +82,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
 
         mRngActive = (CustomCheckBoxPreference) findPreference("rng_active");
         if (mRngActive != null) {
-            AppHelper.getProcess(RNG_PATH);
+            AppHelper.getProcess(this, RNG_PATH);
             mRngActive.setOnPreferenceChangeListener(this);
         }
 
@@ -135,10 +125,9 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
                                     mRngActive.setEnabled(true);
                                 }
                                 Utils.remount("/system", "rw");
-                                Utils.getCommandResult(-1, String.format("cp -f %s %s;\n" +
-                                                "chmod 755 %s;\n",
-                                        result.getAbsolutePath(), RNG_PATH, RNG_PATH
-                                ));
+                                Utils.getCommandResult(EntropyFragment.this, -1,
+                                        String.format("cp -f %s %s;\nchmod 755 %s;\n",
+                                                result.getAbsolutePath(), RNG_PATH, RNG_PATH));
                                 mProgressBar.setVisibility(View.GONE);
                             }
                         });
@@ -151,7 +140,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
                 Logger.v(this, "Stopping rngd");
                 AppHelper.killProcess(RNG_PATH);
             }
-            AppHelper.getProcess(RNG_PATH);
+            AppHelper.getProcess(this, RNG_PATH);
             return true;
         }
 
@@ -168,7 +157,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         switch (id) {
             case R.id.menu_action_refresh:
                 new RefreshTask().execute();
-                AppHelper.getProcess(RNG_PATH);
+                AppHelper.getProcess(this, RNG_PATH);
             default:
                 break;
         }
@@ -176,7 +165,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         return false;
     }
 
-    @Subscribe public void onShellOutputEvent(final ShellOutputEvent event) {
+    public void onShellOutput(final ShellOutputEvent event) {
         if (event == null) return;
 
         final int id = event.getId();
@@ -185,7 +174,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
             checkRngStartup();
         } else if (id == -1) {
             Utils.remount("/system", "ro");
-            AppHelper.getProcess(RNG_PATH);
+            AppHelper.getProcess(this, RNG_PATH);
         } else if (id == ID_PGREP) {
             if (mRngActive != null) {
                 final boolean isActive = event.getOutput() != null && !event.getOutput().isEmpty();
@@ -205,10 +194,12 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         if (mRngStartup == preference) {
             Utils.remount("/system", "rw");
             if (Utils.fileExists(RNG_STARTUP_PATH)) {
-                Utils.getCommandResult(-2, String.format("rm -f %s;\n", RNG_STARTUP_PATH));
+                Utils.getCommandResult(EntropyFragment.this, -2,
+                        String.format("rm -f %s;\n", RNG_STARTUP_PATH));
             } else {
-                Utils.getCommandResult(-2, String.format("echo \'%s\' > %s;\nbusybox chmod +x %s",
-                        Scripts.getRngStartup(), RNG_STARTUP_PATH, RNG_STARTUP_PATH));
+                Utils.getCommandResult(EntropyFragment.this, -2,
+                        String.format("echo \'%s\' > %s;\nbusybox chmod +x %s",
+                                Scripts.getRngStartup(), RNG_STARTUP_PATH, RNG_STARTUP_PATH));
             }
             return true;
         }

@@ -40,19 +40,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.negusoft.holoaccent.dialog.AccentAlertDialog;
-import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.objects.Prop;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachFragment;
 
 import java.io.File;
@@ -62,8 +61,8 @@ import java.util.List;
 
 import static butterknife.ButterKnife.findById;
 
-public class SysctlEditorFragment extends AttachFragment
-        implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener {
+public class SysctlEditorFragment extends AttachFragment implements DeviceConstants, FileConstants,
+        AdapterView.OnItemClickListener, OnShellOutputListener {
 
     //==============================================================================================
     // Fields
@@ -91,10 +90,8 @@ public class SysctlEditorFragment extends AttachFragment
 
     @Override protected int getFragmentId() { return ID_TOOLS_EDITORS_VM; }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        BusProvider.getBus().register(this);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -104,14 +101,7 @@ public class SysctlEditorFragment extends AttachFragment
         }, HANDLER_DELAY);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        BusProvider.getBus().unregister(this);
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+    @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
@@ -128,15 +118,12 @@ public class SysctlEditorFragment extends AttachFragment
         mTools = findById(view, R.id.tools);
         mFilter = findById(view, R.id.filter);
         mFilter.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(final Editable s) { }
+            @Override public void afterTextChanged(final Editable s) { }
 
-            @Override
-            public void beforeTextChanged(final CharSequence s, final int start,
+            @Override public void beforeTextChanged(final CharSequence s, final int start,
                     final int count, final int after) { }
 
-            @Override
-            public void onTextChanged(final CharSequence s, final int start,
+            @Override public void onTextChanged(final CharSequence s, final int start,
                     final int before, final int count) {
                 if (mAdapter != null) {
                     final Editable filter = mFilter.getText();
@@ -153,8 +140,7 @@ public class SysctlEditorFragment extends AttachFragment
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_editor, menu);
 
         menu.removeItem(R.id.menu_action_add);
@@ -162,8 +148,7 @@ public class SysctlEditorFragment extends AttachFragment
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
         switch (id) {
             case R.id.menu_action_apply: {
@@ -182,8 +167,7 @@ public class SysctlEditorFragment extends AttachFragment
 
     @Override public boolean showBurger() { return false; }
 
-    @Override
-    public void onItemClick(final AdapterView<?> parent, final View view,
+    @Override public void onItemClick(final AdapterView<?> parent, final View view,
             final int position, final long row) {
         final Prop p = mAdapter.getItem(position);
         if (p != null) {
@@ -211,7 +195,8 @@ public class SysctlEditorFragment extends AttachFragment
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Utils.remount("/system", "rw");
-                                Utils.getCommandResult(APPLY, Scripts.copyFile(
+                                Utils.getCommandResult(SysctlEditorFragment.this, APPLY,
+                                        Scripts.copyFile(
                                                 Application.getFilesDirectory() + "/sysctl.conf",
                                                 Scripts.SYSCTL)
                                 );
@@ -229,9 +214,15 @@ public class SysctlEditorFragment extends AttachFragment
     // Async Tasks
     //==============================================================================================
 
+    // TODO: animation
     private class GetPropOperation extends AsyncTask<String, Void, Void> {
-        @Override
-        protected Void doInBackground(final String... params) {
+        @Override protected void onPreExecute() {
+            mLoadingView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+            mTools.setVisibility(View.GONE);
+        }
+
+        @Override protected Void doInBackground(final String... params) {
             final StringBuilder sb = new StringBuilder();
             final String dn = Application.getFilesDirectory();
 
@@ -250,20 +241,12 @@ public class SysctlEditorFragment extends AttachFragment
                         .append("-prune -perm -644`;\n");
             }
 
-            Utils.getCommandResult(-1, sb.toString());
+            Utils.getCommandResult(SysctlEditorFragment.this, -1, sb.toString());
 
             return null;
         }
-
-        @Override
-        protected void onPreExecute() {
-            mLoadingView.setVisibility(View.VISIBLE);
-            mEmptyView.setVisibility(View.GONE);
-            mTools.setVisibility(View.GONE);
-        }
     }
 
-    @Subscribe
     public void onShellOutput(final ShellOutputEvent event) {
         final int id = event.getId();
         final String result = event.getOutput();
@@ -289,7 +272,7 @@ public class SysctlEditorFragment extends AttachFragment
     // Methods
     //==============================================================================================
 
-    void loadProp(final String result) {
+    private void loadProp(final String result) {
         final Activity activity = getActivity();
         if ((activity != null) && (result != null) && (!result.isEmpty())) {
             mProps.clear();
@@ -365,7 +348,7 @@ public class SysctlEditorFragment extends AttachFragment
                                 final String name = p.getName();
                                 final String value = tv.getText().toString().trim();
                                 p.setVal(value);
-                                Utils.getCommandResult(SAVE,
+                                Utils.getCommandResult(SysctlEditorFragment.this, SAVE,
                                         Scripts.addOrUpdate(name, value, dn + "/sysctl.conf"));
                             }
                         } else {
@@ -374,7 +357,7 @@ public class SysctlEditorFragment extends AttachFragment
                                 final String value = tv.getText().toString().trim();
                                 if (name.length() > 0) {
                                     mProps.add(new Prop(name, value));
-                                    Utils.getCommandResult(SAVE,
+                                    Utils.getCommandResult(SysctlEditorFragment.this, SAVE,
                                             Scripts.addOrUpdate(name, value, dn + "/sysctl.conf"));
                                 }
                             }

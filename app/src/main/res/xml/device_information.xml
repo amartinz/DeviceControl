@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/platform_information">
+
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
+            android:key="platform_version"
+            android:summary="@string/empty"
+            android:title="@string/version" />
+
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
+            android:key="platform_id"
+            android:selectable="false"
+            android:summary="@string/empty"
+            android:title="@string/build_id" />
+
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
+            android:key="platform_type"
+            android:selectable="false"
+            android:summary="@string/empty"
+            android:title="@string/type" />
+
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
+            android:key="platform_tags"
+            android:selectable="false"
+            android:summary="@string/empty"
+            android:title="@string/tags" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="runtime"
+        android:title="@string/runtime">
+
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
+            android:key="vm_library"
+            android:selectable="false"
+            android:summary="@string/empty"
+            android:title="@string/type" />
+
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
+            android:key="vm_version"
+            android:selectable="false"
+            android:summary="@string/empty"
+            android:title="@string/version" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/device_information">
+
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
+            android:key="android_id"
+            android:selectable="false"
+            android:summary="@string/empty"
+            android:title="@string/android_id" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="sensors"
+        android:title="@string/sensors" />
+
+</PreferenceScreen>

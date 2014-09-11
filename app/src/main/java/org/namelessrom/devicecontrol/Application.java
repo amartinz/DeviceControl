@@ -123,6 +123,8 @@ public class Application extends android.app.Application implements DeviceConsta
         super.onTerminate();
     }
 
+    public static Context get() { return Application.applicationContext; }
+
     public static PackageManager getPm() {
         if (packageManager == null) {
             packageManager = Application.applicationContext.getPackageManager();

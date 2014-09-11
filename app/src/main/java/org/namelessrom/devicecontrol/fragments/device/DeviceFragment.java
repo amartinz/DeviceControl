@@ -22,22 +22,22 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 
-import com.squareup.otto.Subscribe;
-
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.preferences.AwesomeListPreference;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.preferences.VibratorTuningPreference;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import java.io.BufferedReader;
@@ -47,7 +47,10 @@ import java.io.IOException;
 import java.util.List;
 
 public class DeviceFragment extends AttachPreferenceFragment
-        implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener {
+        implements DeviceConstants, FileConstants, Preference.OnPreferenceChangeListener,
+        Preference.OnPreferenceClickListener, OnShellOutputListener {
+
+    private static final String FC_PATH = "/sys/kernel/fast_charge";
 
     //==============================================================================================
     // Input
@@ -70,32 +73,24 @@ public class DeviceFragment extends AttachPreferenceFragment
     private AwesomeCheckBoxPreference mLcdSunlightEnhancement;
     private AwesomeCheckBoxPreference mLcdColorEnhancement;
     //----------------------------------------------------------------------------------------------
-    public static final String  sHasPanelFile = Utils.checkPaths(FILES_PANEL_COLOR_TEMP);
-    public static final boolean sHasPanel     = !sHasPanelFile.isEmpty();
-    private CustomListPreference mPanelColor;
+    private AwesomeListPreference mPanelColor;
+
+    //==============================================================================================
+    // Extras
+    //==============================================================================================
+    private AwesomeCheckBoxPreference mLoggerMode;
+    private CustomPreference          mFastCharge;
 
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
 
-    @Override protected int getFragmentId() { return ID_DEVICE; }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
+    @Override protected int getFragmentId() { return ID_FEATURES; }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.device);
+        addPreferencesFromResource(R.xml.device_features);
 
         final PreferenceScreen preferenceScreen = getPreferenceScreen();
 
@@ -200,13 +195,13 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         category = (PreferenceCategory) findPreference("graphics");
         if (category != null) {
-            mPanelColor = (CustomListPreference) findPreference("panel_color_temperature");
+            mPanelColor = (AwesomeListPreference) findPreference("panel_color_temperature");
             if (mPanelColor != null) {
-                if (!sHasPanel) {
-                    category.removePreference(mPanelColor);
-                } else {
-                    mPanelColor.setValue(Utils.readOneLine(sHasPanelFile));
+                if (mPanelColor.isSupported()) {
+                    mPanelColor.initValue();
                     mPanelColor.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mPanelColor);
                 }
             }
 
@@ -247,13 +242,37 @@ public class DeviceFragment extends AttachPreferenceFragment
             }
         }
 
+        category = (PreferenceCategory) findPreference("extras");
+        if (category != null) {
+            mLoggerMode = (AwesomeCheckBoxPreference) findPreference("logger_mode");
+            if (mLoggerMode != null) {
+                if (mLoggerMode.isSupported()) {
+                    mLoggerMode.initValue(true);
+                    mLoggerMode.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mLoggerMode);
+                }
+            }
+
+            if (category.getPreferenceCount() == 0) {
+                preferenceScreen.removePreference(category);
+            }
+        }
+
+        mFastCharge = (CustomPreference) findPreference("fast_charge");
+        if (mFastCharge != null) {
+            if (Utils.fileExists(FC_PATH)) {
+                mFastCharge.setOnPreferenceClickListener(this);
+            } else {
+                preferenceScreen.removePreference(mFastCharge);
+            }
+        }
+
         isSupported(preferenceScreen, getActivity());
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object o) {
-        boolean changed = false;
-
         if (preference == mGloveMode && mGloveMode.isEnabled()) {
             final boolean value = (Boolean) o;
             enableHts(value);
@@ -261,78 +280,98 @@ public class DeviceFragment extends AttachPreferenceFragment
                     new DataItem(DatabaseHandler.CATEGORY_DEVICE, mGloveMode.getKey(),
                             mGloveMode.getKey(), (value ? "1" : "0"))
             );
-            changed = true;
+            return true;
         } else if (preference == mAwesomeGloveMode) {
             mAwesomeGloveMode.writeValue((Boolean) o);
-            changed = true;
+            return true;
         } else if (preference == mKnockOn) {
             mKnockOn.writeValue((Boolean) o);
-            changed = true;
+            return true;
         } else if (preference == mBacklightKey) {
             mBacklightKey.writeValue((Boolean) o);
-            changed = true;
+            return true;
         } else if (preference == mBacklightNotification) {
             mBacklightNotification.writeValue((Boolean) o);
-            changed = true;
+            return true;
         } else if (preference == mKeyboardBacklight) {
             mKeyboardBacklight.writeValue((Boolean) o);
-            changed = true;
+            return true;
         } else if (preference == mPanelColor) {
-            final String value = String.valueOf(o);
-            Utils.writeValue(sHasPanelFile, value);
-            PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mPanelColor.getKey(),
-                            sHasPanelFile, value)
-            );
-            changed = true;
+            mPanelColor.writeValue(String.valueOf(o));
+            return true;
         } else if (preference == mLcdPowerReduce) {
             mLcdPowerReduce.writeValue((Boolean) o);
-            changed = true;
+            return true;
         } else if (preference == mLcdSunlightEnhancement) {
             mLcdSunlightEnhancement.writeValue((Boolean) o);
-            changed = true;
+            return true;
         } else if (preference == mLcdColorEnhancement) {
             mLcdColorEnhancement.writeValue((Boolean) o);
-            changed = true;
+            return true;
+        } else if (mLoggerMode == preference) {
+            mLoggerMode.writeValue((Boolean) o);
+            return true;
         }
 
-        return changed;
+        return false;
+    }
+
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+        if (mFastCharge == preference) {
+            MainActivity.loadFragment(getActivity(), ID_FAST_CHARGE);
+            return true;
+        }
+
+        return false;
     }
 
     //==============================================================================================
     // Methods
     //==============================================================================================
 
-    private static final int SHELL_HTS = 1000;
+    public static String restore() {
+        final StringBuilder sbCmd = new StringBuilder();
 
-    private static String COMMAND_PATH       = "/sys/class/sec/tsp/cmd";
-    private static String GLOVE_MODE         = "glove_mode";
-    private static String GLOVE_MODE_ENABLE  = GLOVE_MODE + ",1";
-    private static String GLOVE_MODE_DISABLE = GLOVE_MODE + ",0";
+        final List<DataItem> items = DatabaseHandler.getInstance()
+                .getAllItems(DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_DEVICE);
 
-    private void enableHts(final boolean enable) {
-        if (mGloveMode != null) mGloveMode.setEnabled(false);
-        final String mode = (enable ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
-        Utils.getCommandResult(SHELL_HTS,
-                Utils.getWriteCommand(COMMAND_PATH, mode) +
-                        Utils.getReadCommand("/sys/class/sec/tsp/cmd_result")
-        );
+        String filename, value;
+        for (final DataItem item : items) {
+            filename = item.getFileName();
+            value = item.getValue();
+            if ("input_glove_mode".equals(filename)) {
+                final String mode = ("1".equals(value) ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
+                sbCmd.append(Utils.getWriteCommand(COMMAND_PATH, mode));
+            } else {
+                sbCmd.append(Utils.getWriteCommand(filename, value));
+            }
+        }
+
+        return sbCmd.toString();
     }
 
-    @Subscribe public void onShellOutputEvent(final ShellOutputEvent event) {
+    private static final String COMMAND_PATH       = "/sys/class/sec/tsp/cmd";
+    private static final String GLOVE_MODE         = "glove_mode";
+    private static final String GLOVE_MODE_ENABLE  = GLOVE_MODE + ",1";
+    private static final String GLOVE_MODE_DISABLE = GLOVE_MODE + ",0";
+
+    public void enableHts(final boolean enable) {
+        if (mGloveMode != null) mGloveMode.setEnabled(false);
+        final String mode = (enable ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
+        Utils.getCommandResult(this, Utils.getWriteCommand(COMMAND_PATH, mode) +
+                Utils.getReadCommand("/sys/class/sec/tsp/cmd_result"));
+    }
+
+    public void onShellOutput(final ShellOutputEvent event) {
         if (event == null) return;
 
-        final int id = event.getId();
         final String output = event.getOutput();
-        switch (id) {
-            case SHELL_HTS:
-                if (output == null || mGloveMode == null) break;
-                mGloveMode.setChecked(output.contains(GLOVE_MODE_ENABLE));
-                mGloveMode.setEnabled(true);
-                break;
-            default:
-                break;
-        }
+
+        if (output == null || mGloveMode == null) return;
+
+        mGloveMode.setChecked(output.contains(GLOVE_MODE_ENABLE));
+        mGloveMode.setEnabled(true);
     }
 
     /**
@@ -340,9 +379,8 @@ public class DeviceFragment extends AttachPreferenceFragment
      *
      * @return boolean Supported devices must return always true
      */
-    private static boolean isHtsSupported() {
-        boolean supported = false;
-        File f = new File(COMMAND_PATH);
+    private boolean isHtsSupported() {
+        final File f = new File(COMMAND_PATH);
 
         // Check to make sure that the kernel supports glove mode
         if (f.exists()) {
@@ -352,8 +390,9 @@ public class DeviceFragment extends AttachPreferenceFragment
                 String currentLine;
                 while ((currentLine = reader.readLine()) != null) {
                     if (currentLine.equals(GLOVE_MODE)) {
-                        supported = true;
-                        break;
+                        Logger.v(DeviceInformationFragment.class,
+                                "Glove mode / high touch sensitivity supported");
+                        return true;
                     }
                 }
             } catch (IOException ignored) {
@@ -369,34 +408,10 @@ public class DeviceFragment extends AttachPreferenceFragment
             }
         }
 
-        if (supported) {
-            Logger.v(DeviceFragment.class, "Glove mode / high touch sensitivity is supported");
-        } else {
-            Logger.v(DeviceFragment.class, "Glove mode / high touch sensitivity is NOT supported");
-        }
+        Logger.v(DeviceInformationFragment.class,
+                "Glove mode / high touch sensitivity NOT supported");
 
-        return supported;
-    }
-
-    public static String restore() {
-        final StringBuilder sbCmd = new StringBuilder();
-
-        final List<DataItem> items =
-                DatabaseHandler.getInstance()
-                        .getAllItems(DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_DEVICE);
-        String filename, value;
-        for (final DataItem item : items) {
-            filename = item.getFileName();
-            value = item.getValue();
-            if ("input_glove_mode".equals(filename)) {
-                final String mode = (value.equals("1") ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
-                sbCmd.append(Utils.getWriteCommand(COMMAND_PATH, mode));
-            } else {
-                sbCmd.append(Utils.getWriteCommand(filename, value));
-            }
-        }
-
-        return sbCmd.toString();
+        return false;
     }
 
 }

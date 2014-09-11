@@ -39,18 +39,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.negusoft.holoaccent.dialog.AccentAlertDialog;
-import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.objects.Prop;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachFragment;
 
 import java.util.ArrayList;
@@ -59,8 +58,8 @@ import java.util.List;
 
 import static butterknife.ButterKnife.findById;
 
-public class BuildPropEditorFragment extends AttachFragment
-        implements DeviceConstants, FileConstants, AdapterView.OnItemClickListener {
+public class BuildPropEditorFragment extends AttachFragment implements DeviceConstants, FileConstants,
+        AdapterView.OnItemClickListener, OnShellOutputListener {
 
     //==============================================================================================
     // Fields
@@ -84,21 +83,12 @@ public class BuildPropEditorFragment extends AttachFragment
 
     @Override protected int getFragmentId() { return ID_TOOLS_EDITORS_BUILD_PROP; }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        BusProvider.getBus().register(this);
-        Utils.getCommandResult(-1, "cat /system/build.prop", null, true);
+        Utils.getCommandResult(BuildPropEditorFragment.this, -1, "cat /system/build.prop", true);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        BusProvider.getBus().unregister(this);
-    }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+    @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
@@ -127,15 +117,12 @@ public class BuildPropEditorFragment extends AttachFragment
         mTools = findById(view, R.id.tools);
         mFilter = findById(view, R.id.filter);
         mFilter.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(final Editable s) { }
+            @Override public void afterTextChanged(final Editable s) { }
 
-            @Override
-            public void beforeTextChanged(final CharSequence s, final int start,
+            @Override public void beforeTextChanged(final CharSequence s, final int start,
                     final int count, final int after) { }
 
-            @Override
-            public void onTextChanged(final CharSequence s, final int start,
+            @Override public void onTextChanged(final CharSequence s, final int start,
                     final int before, final int count) {
                 if (mAdapter != null) {
                     final Editable filter = mFilter.getText();
@@ -152,8 +139,7 @@ public class BuildPropEditorFragment extends AttachFragment
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_editor, menu);
 
         menu.removeItem(R.id.menu_action_apply);
@@ -162,8 +148,7 @@ public class BuildPropEditorFragment extends AttachFragment
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
         switch (id) {
             case R.id.menu_action_add: {
@@ -177,8 +162,7 @@ public class BuildPropEditorFragment extends AttachFragment
 
     @Override public boolean showBurger() { return false; }
 
-    @Override
-    public void onItemClick(final AdapterView<?> parent, final View view,
+    @Override public void onItemClick(final AdapterView<?> parent, final View view,
             final int position, final long row) {
         if (mAdapter == null) return;
 
@@ -190,7 +174,6 @@ public class BuildPropEditorFragment extends AttachFragment
         }
     }
 
-    @Subscribe
     public void onShellOutput(final ShellOutputEvent event) {
         final int id = event.getId();
         final String result = event.getOutput();
@@ -217,7 +200,7 @@ public class BuildPropEditorFragment extends AttachFragment
     // Methods
     //==============================================================================================
 
-    void loadBuildProp(final String s) {
+    private void loadBuildProp(final String s) {
         final Activity activity = getActivity();
 
         mProps.clear();
@@ -316,16 +299,14 @@ public class BuildPropEditorFragment extends AttachFragment
             etName.setVisibility(View.VISIBLE);
         }
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
+            @Override public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
                     int position, long id) {
                 if (sp.getSelectedItem() != null) {
                     etValue.setText(sp.getSelectedItem().toString().trim());
                 }
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) { }
+            @Override public void onNothingSelected(AdapterView<?> parentView) { }
         });
         new AccentAlertDialog.Builder(activity)
                 .setTitle(title)
@@ -348,7 +329,8 @@ public class BuildPropEditorFragment extends AttachFragment
                                 final String value = etValue.getText().toString().trim();
                                 p.setVal(value);
                                 Utils.remount("/system", "rw");
-                                Utils.getCommandResult(SAVE, Scripts.addOrUpdate(name, value));
+                                Utils.getCommandResult(BuildPropEditorFragment.this, SAVE,
+                                        Scripts.addOrUpdate(name, value));
                             }
                         } else {
                             if (etValue.getText() != null && etName.getText() != null) {
@@ -357,7 +339,8 @@ public class BuildPropEditorFragment extends AttachFragment
                                     final String value = etValue.getText().toString().trim();
                                     mProps.add(new Prop(name, value));
                                     Utils.remount("/system", "rw");
-                                    Utils.getCommandResult(SAVE, Scripts.addOrUpdate(name, value));
+                                    Utils.getCommandResult(BuildPropEditorFragment.this, SAVE,
+                                            Scripts.addOrUpdate(name, value));
                                 }
                             }
                         }
@@ -387,7 +370,8 @@ public class BuildPropEditorFragment extends AttachFragment
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Utils.remount("/system", "rw");
-                        Utils.getCommandResult(REMOVE, Scripts.removeProperty(prop.getName()));
+                        Utils.getCommandResult(BuildPropEditorFragment.this, REMOVE,
+                                Scripts.removeProperty(prop.getName()));
                         if (mAdapter != null) mAdapter.remove(prop);
                     }
                 })

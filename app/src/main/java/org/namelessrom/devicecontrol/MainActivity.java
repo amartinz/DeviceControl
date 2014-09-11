@@ -48,12 +48,12 @@ import com.stericson.roottools.RootTools;
 import org.namelessrom.devicecontrol.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.DonationStartedEvent;
-import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
+import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
+import org.namelessrom.devicecontrol.fragments.device.DeviceInformationFragment;
+import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.fragments.HomeFragment;
 import org.namelessrom.devicecontrol.fragments.LicenseFragment;
 import org.namelessrom.devicecontrol.fragments.PreferencesFragment;
-import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
-import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
 import org.namelessrom.devicecontrol.fragments.device.sub.FastChargeFragment;
 import org.namelessrom.devicecontrol.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
@@ -387,13 +387,13 @@ public class MainActivity extends AccentActivity
                 break;
             //--------------------------------------------------------------------------------------
             case ID_DEVICE:
-                if (!onResume) mCurrentFragment = new DeviceFragment();
+                if (!onResume) mCurrentFragment = new DeviceInformationFragment();
                 mTitle = mFragmentTitle = R.string.device;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_FEATURES:
-                if (!onResume) mCurrentFragment = new FeaturesFragment();
+                if (!onResume) mCurrentFragment = new DeviceFragment();
                 mTitle = mFragmentTitle = R.string.features;
                 mSubFragmentTitle = -1;
                 break;

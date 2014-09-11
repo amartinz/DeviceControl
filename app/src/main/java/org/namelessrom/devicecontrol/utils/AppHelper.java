@@ -31,6 +31,7 @@ import android.os.RemoteException;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.BuildConfig;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.lang.reflect.Method;
@@ -97,8 +98,8 @@ public class AppHelper {
      *
      * @param process The process name to search for
      */
-    public static void getProcess(final String process) {
-        Utils.getCommandResult(ID_PGREP, String.format("pgrep %s", process), process);
+    public static void getProcess(final OnShellOutputListener listener, final String process) {
+        Utils.getCommandResult(listener, ID_PGREP, String.format("pgrep %s", process));
     }
 
     /**

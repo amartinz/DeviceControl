@@ -23,13 +23,12 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 
-import com.squareup.otto.Subscribe;
-
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
@@ -39,12 +38,11 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.FileConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 public class HotpluggingFragment extends AttachPreferenceFragment
         implements DeviceConstants, FileConstants, PerformanceConstants,
-        Preference.OnPreferenceChangeListener {
+        Preference.OnPreferenceChangeListener, OnShellOutputListener {
 
     //----------------------------------------------------------------------------------------------
     private static final int ID_MPDECISION = 200;
@@ -58,20 +56,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
 
     @Override protected int getFragmentId() { return ID_HOTPLUGGING; }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.extras_hotplugging);
 
@@ -83,7 +68,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
         mMpDecision = (CustomCheckBoxPreference) findPreference("mpdecision");
         if (mMpDecision != null) {
             if (Utils.fileExists(MPDECISION_PATH)) {
-                Utils.getCommandResult(ID_MPDECISION, "pgrep mpdecision 2> /dev/null;");
+                Utils.getCommandResult(this, ID_MPDECISION, "pgrep mpdecision 2> /dev/null;");
             } else {
                 mRoot.removePreference(mMpDecision);
             }
@@ -151,8 +136,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
         }
     }
 
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object o) {
+    @Override public boolean onPreferenceChange(Preference preference, Object o) {
         boolean changed = false;
 
         if (preference == mMpDecision) {
@@ -182,8 +166,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
         return changed;
     }
 
-    @Subscribe
-    public void onGetCommandResult(final ShellOutputEvent event) {
+    public void onShellOutput(final ShellOutputEvent event) {
         if (event != null) {
             final int id = event.getId();
             final String result = event.getOutput();

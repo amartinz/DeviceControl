@@ -26,7 +26,6 @@ import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
-import org.namelessrom.devicecontrol.fragments.device.FeaturesFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tools.editor.LowMemoryKillerFragment;
@@ -114,9 +113,6 @@ public class BootUpService extends IntentService
                 Logger.i(this, "----- DEVICE START -----");
                 if (PreferenceHelper.getBoolean(SOB_DEVICE, false)) {
                     cmd = DeviceFragment.restore();
-                    Logger.v(this, cmd);
-                    sbCmd.append(cmd);
-                    cmd = FeaturesFragment.restore();
                     Logger.v(this, cmd);
                     sbCmd.append(cmd);
                 }

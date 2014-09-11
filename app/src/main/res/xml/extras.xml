@@ -62,11 +62,13 @@
             dc:category="extras"
             dc:filePath="@string/file_power_efficient_workqueue" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeListPreference
             android:entries="@array/mc_power_savings_entries"
             android:entryValues="@array/mc_power_savings_values"
             android:key="sched_mc_power_savings"
-            android:title="@string/powersaving_sched_mc_title" />
+            android:title="@string/powersaving_sched_mc_title"
+            dc:category="extras"
+            dc:filePath="@string/file_mc_power_sched" />
 
     </PreferenceCategory>
 

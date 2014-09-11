@@ -23,8 +23,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import org.namelessrom.devicecontrol.MainActivity;
-import org.namelessrom.devicecontrol.events.listeners.OnBackPressedListener;
-import org.namelessrom.devicecontrol.events.listeners.OnSectionAttachedListener;
+import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
+import org.namelessrom.devicecontrol.listeners.OnSectionAttachedListener;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
 public abstract class AttachListFragment extends ListFragment implements OnBackPressedListener {

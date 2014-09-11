@@ -52,6 +52,13 @@ import static butterknife.ButterKnife.findById;
 public class VibratorTuningPreference extends DialogPreference
         implements SeekBar.OnSeekBarChangeListener, DeviceConstants, FileConstants {
 
+    private static final String[] FILES_VIBRATOR = {
+            "/sys/class/timed_output/vibrator/pwm_value",
+            "/sys/devices/platform/tspdrv/nforce_timed",
+            "/sys/vibrator/pwm_val",
+            "/sys/vibrator/pwmvalue"
+    };
+
     private static final int VIBRATOR_INTENSITY_MAX               = 100;
     private static final int VIBRATOR_INTENSITY_MIN               = 0;
     private static final int VIBRATOR_INTENSITY_DEFAULT_VALUE     = 50;

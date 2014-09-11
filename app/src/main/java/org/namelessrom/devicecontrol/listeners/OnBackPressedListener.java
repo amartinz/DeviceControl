@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.events.listeners;
+package org.namelessrom.devicecontrol.listeners;
 
 public interface OnBackPressedListener {
 

@@ -44,7 +44,8 @@
     <string name="file_power_efficient_workqueue" translatable="false">/sys/module/workqueue/parameters/power_efficient</string>
     <string name="file_touchkey_bln" translatable="false">/sys/class/misc/backlightnotification/enabled</string>
     <string name="file_touchkey_light" translatable="false">/sys/class/leds/button-backlight/max_brightness</string>
-    <string name="file_dyn_fsync" translatable="false">/sys/kernel/dyn_fsync/Dyn_fsync_active"</string>
+    <string name="file_dyn_fsync" translatable="false">/sys/kernel/dyn_fsync/Dyn_fsync_active</string>
+    <string name="file_mc_power_sched" translatable="false">/sys/devices/system/cpu/sched_mc_power_savings</string>
 
     <!-- ARRAYS -->
     <string-array name="files_touchkey_light" translatable="false">
@@ -71,5 +72,9 @@
     </string-array>
     <string-array name="files_glove_mode" translatable="false">
         <item>/proc/touchpanel/glove_mode_enable</item>
+    </string-array>
+    <string-array name="files_panel_color_temp" translatable="false">
+        <item>/sys/class/lcd/panel/panel_colors</item>
+        <item>/sys/class/sec/tsp/panel_colors</item>
     </string-array>
 </resources>

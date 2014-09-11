@@ -25,25 +25,9 @@ public interface FileConstants {
     //==============================================================================================
     // Files
     //==============================================================================================
-    public static final String[] FILES_VIBRATOR             = {
-            "/sys/class/timed_output/vibrator/pwm_value",
-            "/sys/devices/platform/tspdrv/nforce_timed",
-            "/sys/vibrator/pwm_val",
-            "/sys/vibrator/pwmvalue"
-    };
-    public static final String   FILE_USE_GYRO_CALIB        =
-            "/sys/class/sec/gsensorcal/calibration";
-    public static final String[] FILES_PANEL_COLOR_TEMP     = {
-            "/sys/class/lcd/panel/panel_colors",
-            "/sys/class/sec/tsp/panel_colors"
-    };
-    //==============================================================================================
     public static final String   FILE_INFO_DISPLAY_LCD_TYPE = "/sys/class/lcd/panel/lcd_type";
     //==============================================================================================
     public static final String   FILE_FLASH_LIGHT           = "/sys/class/camera/flash/rear_flash";
-    //==============================================================================================
-    public static final String[] FILES_MC_POWER_SCHEDULER   =
-            {"/sys/devices/system/cpu/sched_mc_power_savings"};
     //==============================================================================================
     public static final String   MPDECISION_PATH            = "/system/bin/mpdecision";
     //==============================================================================================
