@@ -14,9 +14,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<manifest
     package="org.namelessrom.devicecontrol"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:versionCode="82"
     android:versionName="0.6.6">
 
@@ -185,8 +186,8 @@
         <activity
             android:name=".widgets.RebootWidget$RebootDialogActivity"
             android:label="@string/reboot"
-            android:theme="@style/CustomDialog"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance"
+            android:theme="@style/CustomDialog" />
     </application>
 
 </manifest>

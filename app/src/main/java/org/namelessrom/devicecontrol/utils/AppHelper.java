@@ -267,4 +267,14 @@ public class AppHelper {
         // if we are not a release, we allow to donate externally
         return !BuildConfig.IS_RELEASE;
     }
+
+    public static int getUid() {
+        try {
+            return Application.get().getPackageManager()
+                    .getApplicationInfo(Application.getPkgName(), 0).uid;
+        } catch (Exception e) {
+            Logger.e(AppHelper.class, "Error obtaining uid. %s", e.getMessage());
+            return -1;
+        }
+    }
 }

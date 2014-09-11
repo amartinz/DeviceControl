@@ -35,6 +35,9 @@
     <string name="open_recovery" translatable="false">OpenRecovery</string>
     <string name="clockworkmod" translatable="false">ClockWorkMod</string>
     <string name="dyn_fsync" translatable="false">Dynamic FSync</string>
+    <string name="logcat" translatable="false">Logcat</string>
+    <string name="kmsg" translatable="false">kmsg</string>
+    <string name="last_kmsg" translatable="false">last_kmsg</string>
     <!-- Dalvik -->
     <string name="dirty_ratio_title" translatable="false">Dirty ratio</string>
     <string name="dirty_background_title" translatable="false">Dirty background ratio</string>
@@ -73,4 +76,8 @@
     <string name="size_100_mb" translatable="false">100 MB</string>
     <!-- GPU / OpenGL -->
     <string name="gpu_opengl" translatable="false">GPU / OpenGL</string>
+    <!-- Filetypes -->
+    <string name="zip" translatable="false">Zip</string>
+    <string name="tar" translatable="false">Tar</string>
+    <string name="tar_gz" translatable="false">Gzip</string>
 </resources>
