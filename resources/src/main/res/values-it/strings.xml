@@ -315,6 +315,19 @@
   <string name="tcp_congestion_control">Controllo di congestione TCP</string>
   <string name="app_size">Dimensione dell\'applicazione</string>
   <string name="uninstall">Disinstalla</string>
+  <string name="uninstalling">Disinstallazione&#8230;</string>
   <string name="uninstall_msg">Voi veramente disinstallare \"%s\"?\nQuesta azione non può essere annullata!</string>
   <string name="uninstall_success">\"%s\" disinstallata con successo</string>
+  <string name="sunlight_enhancement">Migliora alla luce</string>
+  <string name="sunlight_enhancement_summary">Migliora la luminosità del display e la leggibilità sotto la luce del sole</string>
+  <string name="color_enhancement">Miglioramento colore</string>
+  <string name="dark_theme">Tema Scuro</string>
+  <string name="dark_theme_summary">Alterna tra il tema scuro e quello chiaro</string>
+  <string name="platform_information">Informazioni sulla piattaforma</string>
+  <string name="build_id">Build id</string>
+  <string name="android_id">Android id</string>
+  <string name="runtime">Autonomia</string>
+  <string name="type">Tipo</string>
+  <string name="tags">Tags</string>
+  <string name="sensors">Sensori</string>
 </resources>

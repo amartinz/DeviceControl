@@ -323,4 +323,9 @@
   <string name="color_enhancement">Intensificator culoare</string>
   <string name="dark_theme">Temă întunecată</string>
   <string name="dark_theme_summary">Comută între tema întunecată / luminoasă</string>
+  <string name="platform_information">Platformă de informare</string>
+  <string name="runtime">Durată</string>
+  <string name="type">Tip</string>
+  <string name="tags">Tag-uri</string>
+  <string name="sensors">Senzori</string>
 </resources>
