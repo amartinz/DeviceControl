@@ -36,6 +36,11 @@
     <!-- KSM -->
     <string name="file_ksm_deferred" translatable="false">/sys/kernel/mm/ksm/deferred_timer</string>
     <string name="file_ksm_run" translatable="false">/sys/kernel/mm/ksm/run</string>
+    <!-- Sound control -->
+    <!-- francisco franco -->
+    <string name="file_sc_ff_microphone_gain">/sys/devices/virtual/misc/soundcontrol/mic_boost</string>
+    <string name="file_sc_ff_speaker_gain">/sys/devices/virtual/misc/soundcontrol/speaker_boost</string>
+    <string name="file_sc_ff_volume_gain">/sys/devices/virtual/misc/soundcontrol/volume_boost</string>
     <!-- Misc -->
     <string name="file_fc_failsafe" translatable="false">/sys/kernel/fast_charge/failsafe</string>
     <string name="file_keyboard_light" translatable="false">/sys/class/leds/keyboard-backlight/max_brightness</string>

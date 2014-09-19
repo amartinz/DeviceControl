@@ -23,6 +23,11 @@
         android:summary="@string/fast_charge_summary"
         android:title="@string/fast_charge" />
 
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
+        android:icon="@drawable/ic_general_sound"
+        android:key="sound_control"
+        android:title="@string/sound_control" />
+
     <PreferenceCategory
         android:key="input_gestures"
         android:title="@string/gestures">
