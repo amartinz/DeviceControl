@@ -123,12 +123,17 @@ public class Utils implements DeviceConstants {
      * @return The read string OR null if not existing.
      */
     public static String readOneLine(final String sFile) {
+        return readOneLine(sFile, false);
+    }
+
+    public static String readOneLine(final String sFile, final boolean trim) {
         if (fileExists(sFile)) {
             BufferedReader brBuffer;
             try {
                 brBuffer = new BufferedReader(new FileReader(sFile), 512);
                 try {
-                    return brBuffer.readLine();
+                    final String value = brBuffer.readLine();
+                    return ((trim && value != null) ? value.trim() : value);
                 } finally {
                     brBuffer.close();
                 }
@@ -178,9 +183,15 @@ public class Utils implements DeviceConstants {
     }
 
     public static String readFileViaShell(final String filePath, final boolean useSu) {
+        return readFileViaShell(filePath, useSu, false);
+    }
+
+    public static String readFileViaShell(final String filePath, final boolean useSu,
+            final boolean trim) {
         final String command = String.format("cat %s;", filePath);
-        return useSu ? CMDProcessor.runSuCommand(command).getStdout()
+        final String result = useSu ? CMDProcessor.runSuCommand(command).getStdout()
                 : CMDProcessor.runShellCommand(command).getStdout();
+        return ((trim && result != null) ? result.trim() : result);
     }
 
     /**
@@ -223,6 +234,17 @@ public class Utils implements DeviceConstants {
      * @return Whether the file exists or not
      */
     public static boolean fileExists(final String filename) { return new File(filename).exists(); }
+
+    /**
+     * Check if one of the specified files exists.
+     *
+     * @param files The list of filenames
+     * @return Whether one of the files exists or not
+     */
+    public static boolean fileExists(final String[] files) {
+        for (final String s : files) { if (new File(s).exists()) return true; }
+        return false;
+    }
 
     /**
      * Checks if the given paths in a string array are existing and returns the existing path.

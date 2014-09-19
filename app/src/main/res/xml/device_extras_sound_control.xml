@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dc="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/microphone" />
+
+    <org.namelessrom.devicecontrol.preferences.AwesomeSeekBarPreference
+        android:defaultValue="0"
+        android:key="microphone_gain"
+        android:max="20"
+        android:persistent="false"
+        android:summary="@string/empty"
+        android:title="@string/empty"
+        dc:category="features"
+        dc:filePath="@string/file_sc_ff_microphone_gain"
+        dc:min="0"
+        dc:unitsLeft=""
+        dc:unitsRight="" />
+
+    <PreferenceCategory android:title="@string/speaker" />
+
+    <org.namelessrom.devicecontrol.preferences.AwesomeSeekBarPreference
+        android:defaultValue="0"
+        android:key="speaker_gain"
+        android:max="20"
+        android:persistent="false"
+        android:summary="@string/empty"
+        android:title="@string/empty"
+        dc:category="features"
+        dc:filePath="@string/file_sc_ff_speaker_gain"
+        dc:min="0"
+        dc:unitsLeft=""
+        dc:unitsRight="" />
+
+    <PreferenceCategory android:title="@string/headphones" />
+
+    <org.namelessrom.devicecontrol.preferences.AwesomeSeekBarPreference
+        android:defaultValue="0"
+        android:key="volume_gain"
+        android:max="20"
+        android:persistent="false"
+        android:summary="@string/empty"
+        android:title="@string/empty"
+        dc:category="features"
+        dc:filePath="@string/file_sc_ff_volume_gain"
+        dc:min="0"
+        dc:unitsLeft=""
+        dc:unitsRight="" />
+
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
+        android:key="sc_version"
+        android:selectable="false"
+        android:summary="@string/empty"
+        android:title="@string/version" />
+
+</PreferenceScreen>

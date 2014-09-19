@@ -43,18 +43,6 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
     @Override protected int getFragmentId() { return ID_FAST_CHARGE; }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.device_extras_fast_charge);

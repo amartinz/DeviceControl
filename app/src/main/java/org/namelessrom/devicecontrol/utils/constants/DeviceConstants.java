@@ -43,6 +43,7 @@ public interface DeviceConstants {
     public static final int ID_DEVICE                   = R.string.device;
     public static final int ID_FEATURES                 = R.string.features;
     public static final int ID_FAST_CHARGE              = ID_FEATURES + 1000;
+    public static final int ID_SOUND_CONTROL            = ID_FEATURES + 1100;
     public static final int ID_PERFORMANCE_INFO         = R.string.information;
     public static final int ID_PERFORMANCE_CPU_SETTINGS = R.string.cpusettings;
     public static final int ID_GOVERNOR_TUNABLE         = ID_PERFORMANCE_CPU_SETTINGS + 1000;
