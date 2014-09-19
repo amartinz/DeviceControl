@@ -54,6 +54,7 @@ import org.namelessrom.devicecontrol.fragments.PreferencesFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.device.DeviceInformationFragment;
 import org.namelessrom.devicecontrol.fragments.device.sub.FastChargeFragment;
+import org.namelessrom.devicecontrol.fragments.device.sub.SoundControlFragment;
 import org.namelessrom.devicecontrol.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.fragments.performance.GpuSettingsFragment;
@@ -399,6 +400,10 @@ public class MainActivity extends AccentActivity
             case ID_FAST_CHARGE:
                 if (!onResume) mCurrentFragment = new FastChargeFragment();
                 mTitle = mSubFragmentTitle = R.string.fast_charge;
+                break;
+            case ID_SOUND_CONTROL:
+                if (!onResume) mCurrentFragment = new SoundControlFragment();
+                mTitle = mSubFragmentTitle = R.string.sound_control;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_INFO:

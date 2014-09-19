@@ -51,6 +51,10 @@ public class DeviceFragment extends AttachPreferenceFragment
 
     private static final String FC_PATH = "/sys/kernel/fast_charge";
 
+    private static final String[] SOUND_CONTROL_PATHS = new String[]{
+            "/sys/devices/virtual/misc/soundcontrol"
+    };
+
     //==============================================================================================
     // Input
     //==============================================================================================
@@ -79,6 +83,7 @@ public class DeviceFragment extends AttachPreferenceFragment
     //==============================================================================================
     private AwesomeCheckBoxPreference mLoggerMode;
     private CustomPreference          mFastCharge;
+    private CustomPreference          mSoundControl;
 
     //==============================================================================================
     // Overridden Methods
@@ -267,6 +272,13 @@ public class DeviceFragment extends AttachPreferenceFragment
             }
         }
 
+        mSoundControl = (CustomPreference) findPreference("sound_control");
+        if (Utils.fileExists(SOUND_CONTROL_PATHS)) {
+            mSoundControl.setOnPreferenceClickListener(this);
+        } else {
+            preferenceScreen.removePreference(mSoundControl);
+        }
+
         isSupported(preferenceScreen, getActivity());
     }
 
@@ -319,6 +331,9 @@ public class DeviceFragment extends AttachPreferenceFragment
     public boolean onPreferenceClick(Preference preference) {
         if (mFastCharge == preference) {
             MainActivity.loadFragment(getActivity(), ID_FAST_CHARGE);
+            return true;
+        } else if (mSoundControl == preference) {
+            MainActivity.loadFragment(getActivity(), ID_SOUND_CONTROL);
             return true;
         }
 

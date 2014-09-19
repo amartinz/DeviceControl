@@ -1,3 +1,20 @@
+/*
+ *  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 package org.namelessrom.devicecontrol.fragments.device.sub;
 
 import android.os.Bundle;
@@ -14,12 +31,8 @@ import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
-/**
- * Created by alex on 08.05.14.
- */
 public class FastChargeFragment extends AttachPreferenceFragment implements DeviceConstants,
         Preference.OnPreferenceChangeListener {
     private static final String FC_BASE       = "/sys/kernel/fast_charge";
@@ -41,18 +54,6 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
     private CustomEditTextPreference  mUsbLevel;
 
     @Override protected int getFragmentId() { return ID_FAST_CHARGE; }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

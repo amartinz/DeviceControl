@@ -22,7 +22,7 @@ public class ShellOutputEvent {
     private final int    mId;
     private final String mOutput;
 
-    public ShellOutputEvent(final int id, final String output, final String extras) {
+    public ShellOutputEvent(final int id, final String output) {
         mId = id;
         mOutput = output;
     }

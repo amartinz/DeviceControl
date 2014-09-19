@@ -329,4 +329,8 @@
     <string name="type">Type</string>
     <string name="tags">Tags</string>
     <string name="sensors">Sensors</string>
+    <string name="microphone">Microphone</string>
+    <string name="speaker">Speaker</string>
+    <string name="headphones">Headphones</string>
+    <string name="sound_control">Sound control</string>
 </resources>

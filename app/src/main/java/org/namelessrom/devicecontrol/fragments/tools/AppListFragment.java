@@ -512,7 +512,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
                     @Override
                     public void commandTerminated(int id, String reason) {
-                        BusProvider.getBus().post(new ShellOutputEvent(-1, "", ""));
+                        BusProvider.getBus().post(new ShellOutputEvent(-1, ""));
                     }
                 };
 
