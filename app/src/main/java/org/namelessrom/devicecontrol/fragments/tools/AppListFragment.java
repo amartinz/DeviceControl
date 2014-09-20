@@ -89,30 +89,35 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     private static final int DIALOG_TYPE_DISABLE   = 0;
     private static final int DIALOG_TYPE_UNINSTALL = 1;
 
-    private final Handler mHandler            = new Handler();
-    private       boolean mDetailsShowing     = false;
-    private       boolean startedFromActivity = false;
+    private final Handler mHandler = new Handler();
 
+    private boolean mDetailsShowing     = false;
+    private boolean startedFromActivity = false;
+
+    //==============================================================================================
     private AppItem             mAppItem;
     private RecyclerView        mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private AppListAdapter      mAdapter;
+
     //==============================================================================================
-    private FrameLayout         mAppDetails;
-    private View                mAppDetailsContainer;
-    private View                mAppDetailsError;
-    private LinearLayout        mProgressContainer;
+    private FrameLayout  mAppDetails;
+    private View         mAppDetailsContainer;
+    private View         mAppDetailsError;
+    private LinearLayout mProgressContainer;
+
     //==============================================================================================
-    private ImageView           mAppIcon;
-    private TextView            mAppLabel;
-    private TextView            mAppPackage;
+    private ImageView mAppIcon;
+    private TextView  mAppLabel;
+    private TextView  mAppPackage;
+    private View      mAppLayer;
+
     //----------------------------------------------------------------------------------------------
-    private TextView            mStatus;
-    private TextView            mAppCode;
-    private TextView            mAppVersion;
-    private PieChart            mCacheGraph;
-    private LinearLayout        mCacheInfo;
-    //==============================================================================================
+    private TextView     mStatus;
+    private TextView     mAppCode;
+    private TextView     mAppVersion;
+    private PieChart     mCacheGraph;
+    private LinearLayout mCacheInfo;
 
     @Override protected int getFragmentId() { return ID_TOOLS_APP_MANAGER; }
 
@@ -240,6 +245,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         mAppIcon = findById(appDetails, R.id.app_icon);
         mAppLabel = findById(appDetails, R.id.app_label);
         mAppPackage = findById(appDetails, R.id.app_package);
+        mAppLayer = findById(appDetails, R.id.app_layer);
         mStatus = findById(appDetails, R.id.app_status);
         mAppCode = findById(appDetails, R.id.app_version_code);
         mAppVersion = findById(appDetails, R.id.app_version_name);
@@ -376,6 +382,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             mAppIcon.setImageDrawable(mAppItem.getIcon());
             mAppLabel.setText(mAppItem.getLabel());
             mAppPackage.setText(mAppItem.getPackageName());
+            mAppLayer.setVisibility(mAppItem.isEnabled() ? View.INVISIBLE : View.VISIBLE);
 
             if (mAppItem.isSystemApp()) {
                 tmp = getString(R.string.app_system, mAppItem.getLabel());
@@ -706,14 +713,13 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         private static final int COMMAND_COMPLETED  = 0x02;
         private static final int COMMAND_TERMINATED = 0x03;
 
-        private final AppItem appItem;
+        private final AppItem item;
 
         public DisableHandler(final AppItem appItem) {
-            this.appItem = appItem;
+            this.item = appItem;
         }
 
-        @Override
-        public void handleMessage(final Message msg) {
+        @Override public void handleMessage(final Message msg) {
             final Bundle data = msg.getData();
             final int action;
             if (data != null) {
@@ -724,9 +730,12 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             switch (action) {
                 case COMMAND_COMPLETED:
                 case COMMAND_TERMINATED:
-                    appItem.setEnabled(!appItem.isEnabled());
+                    item.setEnabled(!item.isEnabled());
                     if (mAdapter != null) {
                         mAdapter.notifyDataSetChanged();
+                    }
+                    if (mAppLayer != null) {
+                        mAppLayer.setVisibility(item.isEnabled() ? View.INVISIBLE : View.VISIBLE);
                     }
                     invalidateOptionsMenu();
                     break;
