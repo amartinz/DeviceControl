@@ -27,7 +27,6 @@ import android.preference.Preference;
 
 import com.squareup.otto.Subscribe;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.server.ServerStoppedEvent;
@@ -71,15 +70,15 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
     }
 
     private void bindService() {
-        final Intent i = new Intent(Application.applicationContext, WebServerService.class);
+        final Intent i = new Intent(getActivity(), WebServerService.class);
         if (AppHelper.isServiceRunning(WebServerService.class.getName())) {
-            Application.applicationContext.bindService(i, mConnection, Context.BIND_AUTO_CREATE);
+            getActivity().bindService(i, mConnection, Context.BIND_AUTO_CREATE);
         }
     }
 
     public void unbindService() {
         try {
-            Application.applicationContext.unbindService(mConnection);
+            getActivity().unbindService(mConnection);
             webServerService = null;
         } catch (Exception ignored) { }
     }
@@ -168,7 +167,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
     @Override public boolean onPreferenceClick(final Preference preference) {
         if (mWirelessFileManager == preference) {
             int callBind;
-            final Intent i = new Intent(Application.applicationContext, WebServerService.class);
+            final Intent i = new Intent(getActivity(), WebServerService.class);
             if (AppHelper.isServiceRunning(WebServerService.class.getName())) {
                 i.setAction(WebServerService.ACTION_STOP);
                 mWirelessFileManager.setSummary(R.string.start_wfm);
@@ -178,7 +177,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 callBind = 2;
             }
-            Application.applicationContext.startService(i);
+            getActivity().startService(i);
             switch (callBind) {
                 default:
                     break;

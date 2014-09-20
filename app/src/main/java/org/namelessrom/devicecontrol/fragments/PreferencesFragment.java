@@ -167,10 +167,9 @@ public class PreferencesFragment extends AttachPreferenceFragment
             mVersion.setEnabled(false);
             String title, summary;
             try {
-                final PackageManager pm = Application.getPm();
+                final PackageManager pm = Application.get().getPackageManager();
                 if (pm != null) {
-                    final PackageInfo pInfo = pm.getPackageInfo(
-                            Application.applicationContext.getPackageName(), 0);
+                    final PackageInfo pInfo = pm.getPackageInfo(getActivity().getPackageName(), 0);
                     title = getString(R.string.app_version_name, pInfo.versionName);
                     summary = getString(R.string.app_version_code, pInfo.versionCode);
                 } else {
@@ -195,7 +194,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
         } else if (mShowLauncher == preference) {
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(SHOW_LAUNCHER, value);
-            Application.toggleLauncherIcon(value);
+            Application.get().toggleLauncherIcon(value);
             mShowLauncher.setChecked(value);
             return true;
         } else if (mSkipChecks == preference) {
@@ -321,7 +320,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
             final boolean[] checked = new boolean[length];
 
             for (int i = 0; i < length; i++) {
-                items[i] = Application.getStr(entries.get(i));
+                items[i] = getString(entries.get(i));
                 checked[i] = isChecked(entries.get(i));
             }
 

@@ -71,10 +71,10 @@ public class ActionProcessor implements PerformanceConstants {
         //------------------------------------------------------------------------------------------
         actions.add(ACTION_IO_SCHEDULER);
         if (Utils.fileExists(KSM_PATH)) {
-            if (Utils.fileExists(Application.getStr(R.string.file_ksm_run))) {
+            if (Utils.fileExists(Application.get().getString(R.string.file_ksm_run))) {
                 actions.add(ACTION_KSM_ENABLED);
             }
-            if (Utils.fileExists(Application.getStr(R.string.file_ksm_deferred))) {
+            if (Utils.fileExists(Application.get().getString(R.string.file_ksm_deferred))) {
                 actions.add(ACTION_KSM_DEFERRED);
             }
             if (Utils.fileExists(KSM_PAGES_TO_SCAN)) actions.add(ACTION_KSM_PAGES);
@@ -206,14 +206,14 @@ public class ActionProcessor implements PerformanceConstants {
         }
         // KSM -------------------------------------------------------------------------------------
         else if (ACTION_KSM_ENABLED.equals(action)) {
-            path = Application.getStr(R.string.file_ksm_run);
+            path = Application.get().getString(R.string.file_ksm_run);
             sb.append(Utils.getWriteCommand(path, value));
             if (boot) {
                 PreferenceHelper.setBootup(
                         new DataItem(DatabaseHandler.CATEGORY_EXTRAS, "ksm_run", path, value));
             }
         } else if (ACTION_KSM_DEFERRED.equals(action)) {
-            path = Application.getStr(R.string.file_ksm_deferred);
+            path = Application.get().getString(R.string.file_ksm_deferred);
             sb.append(Utils.getWriteCommand(path, value));
             if (boot) {
                 PreferenceHelper.setBootup(

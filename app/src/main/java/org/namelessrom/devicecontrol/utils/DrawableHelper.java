@@ -30,7 +30,7 @@ import org.namelessrom.devicecontrol.R;
 public class DrawableHelper {
 
     public static void applyColorFilter(final Drawable d, final int color, final boolean isRes) {
-        applyColorFilter(d, isRes ? Application.getColor(color) : color);
+        applyColorFilter(d, isRes ? Application.get().getColor(color) : color);
     }
 
     public static void applyColorFilter(final Drawable drawable, final int color) {
@@ -40,7 +40,7 @@ public class DrawableHelper {
 
     public static void applyAccentColorFilter(final Drawable drawable) {
         applyColorFilter(drawable,
-                PreferenceHelper.getInt("pref_color", Application.getColor(R.color.accent)));
+                PreferenceHelper.getInt("pref_color", Application.get().getColor(R.color.accent)));
     }
 
 }

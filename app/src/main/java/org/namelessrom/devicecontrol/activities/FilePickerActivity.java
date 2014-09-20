@@ -40,7 +40,7 @@ public class FilePickerActivity extends AccentActivity {
     private Fragment mCurrentFragment;
 
     @Override public int getOverrideAccentColor() {
-        return PreferenceHelper.getInt("pref_color", Application.getColor(R.color.accent));
+        return PreferenceHelper.getInt("pref_color", Application.get().getColor(R.color.accent));
     }
 
     @Override protected void onNewIntent(final Intent intent) {

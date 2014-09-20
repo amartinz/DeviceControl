@@ -147,7 +147,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                 menu.removeItem(R.id.menu_app_uninstall);
                 // do not allow to disable our own app
                 if (TextUtils.equals(mAppItem.getPackageName(),
-                        Application.applicationContext.getPackageName())) {
+                        Application.get().getPackageName())) {
                     menu.removeItem(R.id.menu_app_disable);
                 }
             }
@@ -218,14 +218,14 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             final String packageName = bundle.getString(AppDetailsActivity.ARG_PACKAGE_NAME);
             startedFromActivity = (packageName != null && !packageName.isEmpty());
             if (startedFromActivity) {
+                final PackageManager pm = getActivity().getPackageManager();
                 PackageInfo info = null;
                 try {
-                    info = Application.getPm().getPackageInfo(packageName, 0);
+                    info = pm.getPackageInfo(packageName, 0);
                 } catch (Exception ignored) { }
                 if (info != null && info.applicationInfo != null) {
-                    mAppItem = new AppItem(info,
-                            String.valueOf(info.applicationInfo.loadLabel(Application.getPm())),
-                            info.applicationInfo.loadIcon(Application.getPm()));
+                    mAppItem = new AppItem(info, String.valueOf(info.applicationInfo.loadLabel(pm)),
+                            info.applicationInfo.loadIcon(pm));
                 }
             }
         }
@@ -276,8 +276,8 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         mCacheGraph.setTouchEnabled(false);
 
         final int color = PreferenceHelper.getBoolean("dark_theme", false)
-                ? Application.getColor(android.R.color.background_dark)
-                : Application.getColor(R.color.grey_dark);
+                ? Application.get().getColor(android.R.color.background_dark)
+                : Application.get().getColor(R.color.grey_dark);
         mCacheGraph.setBackgroundColor(color);
         mCacheGraph.setDrawPaintColor(color);
         mCacheGraph.setHolePaintColor(color);
@@ -642,7 +642,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
             final PieDataSet dataSet = new PieDataSet(sliceList, getString(R.string.app_size));
             dataSet.setSliceSpace(5f);
-            dataSet.setColors(ColorTemplate.createColors(Application.applicationContext,
+            dataSet.setColors(ColorTemplate.createColors(getActivity(),
                     ColorTemplate.VORDIPLOM_COLORS));
 
             final PieData data = new PieData(textList, dataSet);
@@ -740,7 +740,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     private class LoadApps extends AsyncTask<Void, Void, List<AppItem>> {
         @Override protected List<AppItem> doInBackground(Void... params) {
             if (startedFromActivity) return null;
-            final PackageManager pm = Application.getPm();
+            final PackageManager pm = getActivity().getPackageManager();
             final List<AppItem> appList = new ArrayList<AppItem>();
             final List<PackageInfo> pkgInfos = pm.getInstalledPackages(0);
 

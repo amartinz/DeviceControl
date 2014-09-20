@@ -34,7 +34,7 @@ public class AppDetailsActivity extends AccentActivity {
     public static final String ARG_PACKAGE_NAME = "package";
 
     @Override public int getOverrideAccentColor() {
-        return PreferenceHelper.getInt("pref_color", Application.getColor(R.color.accent));
+        return PreferenceHelper.getInt("pref_color", Application.get().getColor(R.color.accent));
     }
 
     @Override protected void onNewIntent(final Intent intent) {

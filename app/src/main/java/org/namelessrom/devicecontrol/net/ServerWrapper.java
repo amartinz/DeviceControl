@@ -87,7 +87,7 @@ public class ServerWrapper {
         setupWebSockets();
         mStringBuilder.append("[!] Setup websockets\n");
 
-        mServer.directory(Application.applicationContext, "/license", "license.html");
+        mServer.directory(Application.get(), "/license", "license.html");
         mStringBuilder.append("[!] Setup route: /license\n");
 
         mServer.get("/files", new HttpServerRequestCallback() {
@@ -231,29 +231,29 @@ public class ServerWrapper {
     }
 
     private void setupStaticFiles() {
-        mServer.directory(Application.applicationContext, "/css/bootstrap.min.css",
+        mServer.directory(Application.get(), "/css/bootstrap.min.css",
                 "css/bootstrap.min.css");
-        mServer.directory(Application.applicationContext, "/css/font-awesome.min.css",
+        mServer.directory(Application.get(), "/css/font-awesome.min.css",
                 "css/font-awesome.min.css");
-        mServer.directory(Application.applicationContext, "/css/main.css",
+        mServer.directory(Application.get(), "/css/main.css",
                 "css/main.css");
-        mServer.directory(Application.applicationContext, "/fonts/FontAwesome.otf",
+        mServer.directory(Application.get(), "/fonts/FontAwesome.otf",
                 "fonts/FontAwesome.otf");
-        mServer.directory(Application.applicationContext, "/fonts/fontawesome-webfont.eot",
+        mServer.directory(Application.get(), "/fonts/fontawesome-webfont.eot",
                 "fonts/fontawesome-webfont.eot");
-        mServer.directory(Application.applicationContext, "/fonts/fontawesome-webfont.svg",
+        mServer.directory(Application.get(), "/fonts/fontawesome-webfont.svg",
                 "fonts/fontawesome-webfont.svg");
-        mServer.directory(Application.applicationContext, "/fonts/fontawesome-webfont.ttf",
+        mServer.directory(Application.get(), "/fonts/fontawesome-webfont.ttf",
                 "fonts/fontawesome-webfont.ttf");
-        mServer.directory(Application.applicationContext, "/fonts/fontawesome-webfont.woff",
+        mServer.directory(Application.get(), "/fonts/fontawesome-webfont.woff",
                 "fonts/fontawesome-webfont.woff");
-        mServer.directory(Application.applicationContext, "/js/bootstrap.min.js",
+        mServer.directory(Application.get(), "/js/bootstrap.min.js",
                 "js/bootstrap.min.js");
-        mServer.directory(Application.applicationContext, "/js/jquery.min.js",
+        mServer.directory(Application.get(), "/js/jquery.min.js",
                 "js/jquery.min.js");
-        mServer.directory(Application.applicationContext, "/js/navigation.js",
+        mServer.directory(Application.get(), "/js/navigation.js",
                 "js/navigation.js");
-        mServer.directory(Application.applicationContext, "/js/websocket.js",
+        mServer.directory(Application.get(), "/js/websocket.js",
                 "js/websocket.js");
     }
 

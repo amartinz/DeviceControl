@@ -183,7 +183,7 @@ public abstract class Command {
         StringBuilder sb = new StringBuilder();
 
         if (javaCommand) {
-            final String filePath = Application.getFilesDirectory();
+            final String filePath = Application.get().getFilesDirectory();
             for (String aCommand : command) {
                 /*
                  * TODO Make withFramework optional for applications

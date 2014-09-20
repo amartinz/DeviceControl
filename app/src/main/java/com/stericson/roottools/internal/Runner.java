@@ -52,7 +52,7 @@ public class Runner extends Thread {
     public void run() {
         String privateFilesPath = null;
         try {
-            privateFilesPath = Application.getFiles().getCanonicalPath();
+            privateFilesPath = Application.get().getFilesDir().getCanonicalPath();
         } catch (IOException e) {
             if (RootTools.debugMode) {
                 Log.e(LOG_TAG, "Problem occured while trying to locate private files directory!");

@@ -38,9 +38,6 @@ import org.namelessrom.devicecontrol.database.DataItem;
 
 import static butterknife.ButterKnife.findById;
 
-/**
- * Created by alex on 26.05.14.
- */
 public class DialogHelper {
 
     public static void openSeekbarDialog(final Activity activity, final int currentProgress,
@@ -48,8 +45,8 @@ public class DialogHelper {
             final String path, final String category) {
         if (activity == null) return;
 
-        final String cancel = Application.getStr(android.R.string.cancel);
-        final String ok = Application.getStr(android.R.string.ok);
+        final String cancel = Application.get().getString(android.R.string.cancel);
+        final String ok = Application.get().getString(android.R.string.ok);
         final View alphaDialog = LayoutInflater.from(activity)
                 .inflate(R.layout.dialog_seekbar, null, false);
 

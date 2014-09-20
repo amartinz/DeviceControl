@@ -164,7 +164,7 @@ public class Shell {
     }
 
     public void useCWD() {
-        add(new CommandCapture(-1, false, "cd " + Application.getFilesDirectory()));
+        add(new CommandCapture(-1, false, "cd " + Application.get().getFilesDirectory()));
     }
 
     private void cleanCommands() {

@@ -54,7 +54,7 @@ public class Utils implements DeviceConstants {
     private static final String[] ENABLED_STATES = {"Y", "TRUE", "1", "255"};
 
     public static boolean isNameless() {
-        return Application.getPm().hasSystemFeature("org.namelessrom.android")
+        return Application.get().getPackageManager().hasSystemFeature("org.namelessrom.android")
                 || existsInFile(Scripts.BUILD_PROP, "ro.nameless.version");
     }
 
@@ -101,7 +101,7 @@ public class Utils implements DeviceConstants {
         InputStreamReader reader = null;
         BufferedReader br = null;
         try {
-            htmlStream = Application.applicationContext.getAssets().open(path);
+            htmlStream = Application.get().getAssets().open(path);
             reader = new InputStreamReader(htmlStream);
             br = new BufferedReader(reader);
             String line;
@@ -277,7 +277,7 @@ public class Utils implements DeviceConstants {
      * Setup the directories for Device Control
      */
     public static void setupDirectories() {
-        final String basePath = Application.getFilesDirectory();
+        final String basePath = Application.get().getFilesDirectory();
         final String[] dirList = new String[]{basePath + DC_LOG_DIR};
         File dir;
         for (final String s : dirList) {
@@ -399,7 +399,7 @@ public class Utils implements DeviceConstants {
     }
 
     public static void toggleComponent(final ComponentName component, final boolean disable) {
-        final PackageManager pm = Application.getPm();
+        final PackageManager pm = Application.get().getPackageManager();
         if (pm != null) {
             pm.setComponentEnabledSetting(component,
                     (disable
@@ -422,7 +422,7 @@ public class Utils implements DeviceConstants {
             }
         }
 
-        final Intent tasker = new Intent(Application.applicationContext, TaskerService.class);
+        final Intent tasker = new Intent(Application.get(), TaskerService.class);
         if (enabled) {
             tasker.setAction(TaskerService.ACTION_START);
             Logger.v(Utils.class, "Starting TaskerService");
@@ -430,15 +430,15 @@ public class Utils implements DeviceConstants {
             tasker.setAction(TaskerService.ACTION_STOP);
             Logger.v(Utils.class, "Stopping TaskerService");
         }
-        Application.applicationContext.startService(tasker);
+        Application.get().startService(tasker);
 
         return enabled;
     }
 
     public static void stopTaskerService() {
-        final Intent tasker = new Intent(Application.applicationContext, TaskerService.class);
+        final Intent tasker = new Intent(Application.get(), TaskerService.class);
         tasker.setAction(TaskerService.ACTION_STOP);
-        Application.applicationContext.startService(tasker);
+        Application.get().startService(tasker);
     }
 
     public static boolean isEnabled(String s, final boolean contains) {
@@ -481,7 +481,7 @@ public class Utils implements DeviceConstants {
                 break;
         }
 
-        return Application.getStr(health);
+        return Application.get().getString(health);
     }
 
     public static boolean remount(final String path, final String mode) {
@@ -532,7 +532,7 @@ public class Utils implements DeviceConstants {
 
     public static String getAndroidId() {
         return Settings.Secure.getString(
-                Application.applicationContext.getContentResolver(), Settings.Secure.ANDROID_ID);
+                Application.get().getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
 }

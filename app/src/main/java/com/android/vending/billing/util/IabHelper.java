@@ -272,7 +272,7 @@ public class IabHelper {
 
         Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
         serviceIntent.setPackage("com.android.vending");
-        final PackageManager pm = Application.getPm();
+        final PackageManager pm = Application.get().getPackageManager();
         final List<ResolveInfo> list =
                 (pm != null ? pm.queryIntentServices(serviceIntent, 0) : null);
         if (list != null && !list.isEmpty()) {

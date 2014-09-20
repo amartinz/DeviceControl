@@ -48,7 +48,7 @@ public class AnimationHelper {
      * @return The dimension in pixels
      */
     public static int getDp(final int resId) {
-        return Application.applicationContext.getResources().getDimensionPixelSize(resId);
+        return Application.get().getResources().getDimensionPixelSize(resId);
     }
 
 }

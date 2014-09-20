@@ -250,11 +250,7 @@ public class CpuUtils implements PerformanceConstants {
         if (value != -1) {
             return String.valueOf(value) + " MHz";
         } else {
-            if (Application.applicationContext != null) {
-                return Application.getStr(R.string.core_offline);
-            } else {
-                return "Offline";
-            }
+            return Application.get().getString(R.string.core_offline);
         }
     }
 

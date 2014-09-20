@@ -36,7 +36,6 @@ import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 import com.negusoft.holoaccent.dialog.DividerPainter;
 import com.squareup.otto.Subscribe;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.FilePickerActivity;
@@ -173,7 +172,7 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
                             @Override public void onClick(DialogInterface dialog, int which) {
                                 // start the progress dialog
                                 final ProgressDialog pd = new ProgressDialog(activity);
-                                pd.setMessage(Application.getStr(R.string.applying_wait));
+                                pd.setMessage(activity.getString(R.string.applying_wait));
                                 pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                 pd.setCancelable(false);
                                 pd.setIndeterminate(true);

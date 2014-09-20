@@ -57,10 +57,10 @@ public class AppHelper {
      * @throws Exception
      */
     public static void getSize(final String pkg) throws Exception {
-        final Method getPackageSizeInfo = Application.getPm().getClass().getMethod(
-                "getPackageSizeInfo", String.class, IPackageStatsObserver.class);
+        final Method getPackageSizeInfo = Application.get().getPackageManager().getClass()
+                .getMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
 
-        getPackageSizeInfo.invoke(Application.getPm(), pkg, mPkgObs);
+        getPackageSizeInfo.invoke(Application.get().getPackageManager(), pkg, mPkgObs);
     }
 
     /**
@@ -109,7 +109,7 @@ public class AppHelper {
      * @return Whether the app is running
      */
     public static boolean isAppRunning(final String pkg) {
-        final ActivityManager aM = (ActivityManager) Application.applicationContext
+        final ActivityManager aM = (ActivityManager) Application.get()
                 .getSystemService(Context.ACTIVITY_SERVICE);
         final List<ActivityManager.RunningAppProcessInfo> procInfos = aM.getRunningAppProcesses();
         if (procInfos != null) {
@@ -130,8 +130,7 @@ public class AppHelper {
      */
     public static boolean isServiceRunning(final String serviceName) {
         final List<ActivityManager.RunningServiceInfo> services =
-                ((ActivityManager) Application.applicationContext
-                        .getSystemService(Context.ACTIVITY_SERVICE))
+                ((ActivityManager) Application.get().getSystemService(Context.ACTIVITY_SERVICE))
                         .getRunningServices(Integer.MAX_VALUE);
 
         if (services != null) {
@@ -171,7 +170,7 @@ public class AppHelper {
      */
     public static boolean isPackageInstalled(final String packageName) {
         try {
-            Application.getPm().getPackageInfo(packageName, 0);
+            Application.get().getPackageManager().getPackageInfo(packageName, 0);
             return true;
         } catch (Exception e) {
             return false;
@@ -194,7 +193,7 @@ public class AppHelper {
         try {
             final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            Application.applicationContext.startActivity(i);
+            Application.get().startActivity(i);
             return true;
         } catch (Exception exc) {
             Logger.e(AppHelper.class, exc.getMessage());

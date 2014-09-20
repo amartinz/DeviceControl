@@ -43,7 +43,7 @@ public class NetworkInfo {
     }
 
     public static String getWifiIp() {
-        final WifiManager wifiManager = (WifiManager) Application.applicationContext
+        final WifiManager wifiManager = (WifiManager) Application.get()
                 .getSystemService(Context.WIFI_SERVICE);
         int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
         if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {

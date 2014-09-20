@@ -45,7 +45,7 @@ public class DeviceStatusView extends LinearLayout {
 
     private int    mBatteryTemperature = 0;
     private String mBatteryExtra       =
-            String.format(" - %s...", Application.getStr(R.string.getting_information));
+            String.format(" - %s…", Application.get().getString(R.string.getting_information));
 
     private boolean mIsAttached = false;
 
@@ -67,18 +67,18 @@ public class DeviceStatusView extends LinearLayout {
 
     public void onResume() {
         mIsAttached = true;
-        final Intent sticky = Application.applicationContext.registerReceiver(
+        final Intent sticky = getContext().registerReceiver(
                 mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         // try to preload battery level
         if (sticky != null) {
-            mBatteryReceiver.onReceive(Application.applicationContext, sticky);
+            mBatteryReceiver.onReceive(getContext(), sticky);
         }
     }
 
     public void onPause() {
         mIsAttached = false;
         try {
-            Application.applicationContext.unregisterReceiver(mBatteryReceiver);
+            getContext().unregisterReceiver(mBatteryReceiver);
         } catch (Exception ignored) { }
         stopRepeatingTask();
     }
@@ -88,7 +88,7 @@ public class DeviceStatusView extends LinearLayout {
         public void onReceive(Context arg0, Intent intent) {
             mBatteryTemperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0);
             mBatteryExtra = String.format(" - %s: %s",
-                    Application.getStr(R.string.health),
+                    getContext().getString(R.string.health),
                     Utils.getBatteryHealth(intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0)));
         }
     };

@@ -22,7 +22,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.services.FstrimService;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
@@ -40,15 +39,15 @@ public class AlarmHelper implements DeviceConstants {
      * @param interval The interval in minutes
      */
     public static void setAlarmFstrim(Context context, int interval) {
-        Intent i = new Intent(context, FstrimService.class);
+        final Intent i = new Intent(context, FstrimService.class);
         i.setAction(ACTION_TASKER_FSTRIM);
-        PendingIntent pi = PendingIntent.getService(
-                context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-        if (Application.alarmManager == null) {
-            Application.alarmManager = (AlarmManager)
-                    context.getSystemService(Context.ALARM_SERVICE);
-        }
-        Application.alarmManager.setInexactRepeating(
+
+        final PendingIntent pi =
+                PendingIntent.getService(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        final AlarmManager alarmManager =
+                (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis(),
                 60000 * interval, pi);
     }
@@ -58,12 +57,16 @@ public class AlarmHelper implements DeviceConstants {
      *
      * @param context The context
      */
-    public static void cancelAlarmFstrim(Context context) {
-        Intent i = new Intent(context, FstrimService.class);
+    public static void cancelAlarmFstrim(final Context context) {
+        final Intent i = new Intent(context, FstrimService.class);
         i.setAction(ACTION_TASKER_FSTRIM);
-        PendingIntent pi = PendingIntent.getService(
-                context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-        Application.alarmManager.cancel(pi);
+
+        final PendingIntent pi =
+                PendingIntent.getService(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        final AlarmManager alarmManager =
+                (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pi);
     }
 
 }

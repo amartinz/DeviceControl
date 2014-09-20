@@ -120,7 +120,7 @@ public class TaskerWizardModel extends AbstractWizardModel implements Performanc
 
     private String[] getBooleanChoices() { return new String[]{"0", "1"}; }
 
-    private String getString(final int id) { return Application.applicationContext.getString(id); }
+    private String getString(final int id) { return Application.get().getString(id); }
 
     private PageList getRootPageList() {
         PageList pageList;

@@ -195,9 +195,8 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Utils.remount("/system", "rw");
                                 Utils.getCommandResult(SysctlEditorFragment.this, APPLY,
-                                        Scripts.copyFile(
-                                                Application.getFilesDirectory() + "/sysctl.conf",
-                                                Scripts.SYSCTL)
+                                        Scripts.copyFile(Application.get().getFilesDirectory() +
+                                                "/sysctl.conf", Scripts.SYSCTL)
                                 );
                                 dialogInterface.dismiss();
                                 Toast.makeText(activity,
@@ -223,7 +222,7 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
 
         @Override protected Void doInBackground(final String... params) {
             final StringBuilder sb = new StringBuilder();
-            final String dn = Application.getFilesDirectory();
+            final String dn = Application.get().getFilesDirectory();
 
             if (new File("/system/etc/sysctl.conf").exists()) {
                 sb.append(Scripts.copyFile("/system/etc/sysctl.conf", dn + "/sysctl.conf"));
@@ -313,7 +312,7 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
         final Activity activity = getActivity();
         if (activity == null) return;
 
-        final String dn = Application.getFilesDirectory();
+        final String dn = Application.get().getFilesDirectory();
         String title;
 
         final View editDialog = LayoutInflater.from(getActivity())

@@ -107,12 +107,21 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
                 Logger.i(this, String.format("%s does not exist, downloading...", RNG_PATH));
                 mRngActive.setEnabled(false);
                 mProgressBar.setVisibility(View.VISIBLE);
+
+                // check if file is already downloaded, and if, move it and return
+                final File downloaded = new File(Application.get().getFilesDirectory() + "/rngd");
+                if (downloaded.exists()) {
+                    moveFile(downloaded);
+                    return false;
+                }
+
+                // else download it
                 Ion.with(this)
                         .load(URL_RNG)
                         .progressBar(mProgressBar)
-                        .write(new File(Application.getFilesDirectory() + "/rngd"))
+                        .write(downloaded)
                         .setCallback(new FutureCallback<File>() {
-                            @Override public void onCompleted(Exception e, File result) {
+                            @Override public void onCompleted(final Exception e, final File res) {
                                 if (e != null) {
                                     Logger.e(this, "Error downloading rngd!");
                                     if (mRngActive != null) {
@@ -120,14 +129,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
                                     }
                                     return;
                                 }
-                                if (mRngActive != null) {
-                                    mRngActive.setEnabled(true);
-                                }
-                                Utils.remount("/system", "rw");
-                                Utils.getCommandResult(EntropyFragment.this, -1,
-                                        String.format("cp -f %s %s;\nchmod 755 %s;\n",
-                                                result.getAbsolutePath(), RNG_PATH, RNG_PATH));
-                                mProgressBar.setVisibility(View.GONE);
+                                moveFile(res);
                             }
                         });
                 return false;
@@ -144,6 +146,17 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         }
 
         return false;
+    }
+
+    private void moveFile(final File file) {
+        if (mRngActive != null) {
+            mRngActive.setEnabled(true);
+        }
+        Utils.remount("/system", "rw");
+        Utils.getCommandResult(EntropyFragment.this, -1,
+                String.format("cp -f %s %s;\nchmod 755 %s;\n",
+                        file.getAbsolutePath(), RNG_PATH, RNG_PATH));
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

@@ -62,8 +62,8 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
                 getActivity(), android.R.layout.simple_spinner_dropdown_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        final String[] presets = Application.getStringArray(R.array.minfree_entries);
-        final String[] values = Application.getStringArray(R.array.minfree_values);
+        final String[] presets = Application.get().getStringArray(R.array.minfree_entries);
+        final String[] values = Application.get().getStringArray(R.array.minfree_values);
         spinnerAdapter.addAll(presets);
 
         spinner.setAdapter(spinnerAdapter);
@@ -119,8 +119,7 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
         PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_LMK, "lmk",
                 PerformanceConstants.FILE_MINFREE, value));
 
-        final Context context = (getActivity() != null)
-                ? getActivity() : Application.applicationContext;
+        final Context context = (getActivity() != null) ? getActivity() : Application.get();
         adapter = new LmkAdapter(context, value.trim().split(","));
         setListAdapter(adapter);
     }
@@ -175,12 +174,12 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
         public final  String[] values;
 
         private static final String[] TYPES = {
-                Application.getStr(R.string.foreground_applications),
-                Application.getStr(R.string.visible_applications),
-                Application.getStr(R.string.secondary_server),
-                Application.getStr(R.string.hidden_applications),
-                Application.getStr(R.string.content_providers),
-                Application.getStr(R.string.empty_applications)
+                Application.get().getString(R.string.foreground_applications),
+                Application.get().getString(R.string.visible_applications),
+                Application.get().getString(R.string.secondary_server),
+                Application.get().getString(R.string.hidden_applications),
+                Application.get().getString(R.string.content_providers),
+                Application.get().getString(R.string.empty_applications)
         };
 
         public LmkAdapter(final Context context, final String[] values) {

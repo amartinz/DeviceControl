@@ -18,8 +18,6 @@
 package org.namelessrom.devicecontrol;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Build;
@@ -55,20 +53,17 @@ import java.io.File;
         resDialogOkToast = R.string.crash_dialog_ok_toast)
 public class Application extends android.app.Application implements DeviceConstants {
 
-    public static final boolean IS_NAMELESS = Utils.isNameless();
-
-    public static AlarmManager alarmManager;
-    public static Context      applicationContext;
-
     public static final Handler HANDLER = new Handler();
 
-    private static PackageManager packageManager;
+    public static boolean IS_NAMELESS = false;
+
+    private static Application sInstance;
 
     @Override public void onCreate() {
         super.onCreate();
         ACRA.init(this);
 
-        applicationContext = getApplicationContext();
+        Application.sInstance = this;
 
         DatabaseHandler.getInstance();
         Logger.setEnabled(PreferenceHelper.getBoolean(EXTENSIVE_LOGGING, false));
@@ -106,10 +101,8 @@ public class Application extends android.app.Application implements DeviceConsta
             RootTools.debugMode = true;
         }
 
+        IS_NAMELESS = Utils.isNameless();
         Logger.v(this, String.format("is nameless: %s", IS_NAMELESS));
-
-        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        packageManager = getPm();
 
         final boolean showLauncher =
                 PreferenceHelper.getBoolean(SHOW_LAUNCHER, true) || !Application.IS_NAMELESS;
@@ -123,66 +116,48 @@ public class Application extends android.app.Application implements DeviceConsta
         super.onTerminate();
     }
 
-    public static Context get() { return Application.applicationContext; }
+    public static Application get() { return Application.sInstance; }
 
-    public static PackageManager getPm() {
-        if (packageManager == null) {
-            packageManager = Application.applicationContext.getPackageManager();
-        }
-        return packageManager;
-    }
-
-    public static File getFiles() { return Application.applicationContext.getFilesDir(); }
-
-    @SuppressLint("SdCardPath") public static String getFilesDirectory() {
-        final File tmp = getFiles();
-        if (tmp != null && tmp.exists()) {
+    @SuppressLint("SdCardPath") public String getFilesDirectory() {
+        final File tmp = getFilesDir();
+        if (tmp != null && tmp.isDirectory()) {
             return tmp.getPath();
         } else {
-            return "/data/data/" + Application.applicationContext.getPackageName();
+            return "/data/data/" + Application.get().getPackageName();
         }
     }
 
-    public static void toggleLauncherIcon(final boolean showLauncher) {
-        try {
-            if (getPm() == null) { return; }
-            if (Application.IS_NAMELESS) {
-                final Resources res = getPm().getResourcesForApplication("com.android.settings");
-                if (!showLauncher && res != null && res.getIdentifier(
-                        "device_control", "string", "com.android.settings") > 0) {
-                    Logger.v(Application.class,
-                            "Implemented into system and showLauncher is not set!");
-                    Utils.disableComponent(getPkgName(), DummyLauncher.class.getName());
-                } else {
-                    Logger.v(Application.class, "Implemented into system and showLauncher is set!");
-                    Utils.enableComponent(getPkgName(), DummyLauncher.class.getName());
-                }
-            } else {
-                Logger.v(Application.class, "Not implemented into system!");
-                Utils.enableComponent(getPkgName(), DummyLauncher.class.getName());
+    public void toggleLauncherIcon(final boolean showLauncher) {
+        if (Application.IS_NAMELESS) {
+            final String pkg = "com.android.settings";
+            final Resources res;
+            try {
+                res = getPackageManager().getResourcesForApplication(pkg);
+            } catch (PackageManager.NameNotFoundException exc) {
+                Logger.e(this, "You dont have settings? That's weird.", exc);
+                Utils.enableComponent(getPackageName(), DummyLauncher.class.getName());
+                return;
             }
-        } catch (PackageManager.NameNotFoundException exc) {
-            Logger.e(Application.class, "You dont have settings? That's weird.");
-            Utils.enableComponent(getPkgName(), DummyLauncher.class.getName());
+
+            if (!showLauncher && res != null
+                    && res.getIdentifier("device_control", "string", pkg) > 0) {
+                Logger.v(this, "Implemented into system and showLauncher is not set!");
+                Utils.disableComponent(getPackageName(), DummyLauncher.class.getName());
+            } else {
+                Logger.v(this, "Implemented into system and showLauncher is set!");
+                Utils.enableComponent(getPackageName(), DummyLauncher.class.getName());
+            }
+        } else {
+            Logger.v(this, "Not implemented into system!");
+            Utils.enableComponent(getPackageName(), DummyLauncher.class.getName());
         }
     }
 
-    public static String getPkgName() {
-        if (applicationContext != null) return applicationContext.getPackageName();
-        return "org.namelessrom.devicecontrol";
+    public int getColor(final int resId) {
+        return getResources().getColor(resId);
     }
 
-    public static String getStr(final int resId) { return applicationContext.getString(resId); }
-
-    public static String getStr(final int resId, final String... extras) {
-        return applicationContext.getString(resId, (Object[]) extras);
-    }
-
-    public static String[] getStringArray(final int resId) {
-        return applicationContext.getResources().getStringArray(resId);
-    }
-
-    public static int getColor(final int color) {
-        return Application.applicationContext.getResources().getColor(color);
+    public String[] getStringArray(final int resId) {
+        return getResources().getStringArray(resId);
     }
 }

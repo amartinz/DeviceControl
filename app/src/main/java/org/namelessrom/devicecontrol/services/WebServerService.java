@@ -40,8 +40,6 @@ import org.namelessrom.devicecontrol.net.ServerWrapper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
-import static org.namelessrom.devicecontrol.Application.getStr;
-
 public class WebServerService extends Service {
 
     public static final int NOTIFICATION_ONGOING = 7861;
@@ -74,7 +72,7 @@ public class WebServerService extends Service {
             text = getString(R.string.stop_wfm,
                     "http://" + NetworkInfo.getAnyIpAddress() + ":" + port);
         } else {
-            text = getStr(R.string.starting_wfm);
+            text = getString(R.string.starting_wfm);
         }
 
         final Intent intent = new Intent(this, WebServerService.class);

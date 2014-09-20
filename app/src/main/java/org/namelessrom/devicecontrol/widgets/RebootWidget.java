@@ -81,11 +81,11 @@ public class RebootWidget extends AppWidgetProvider {
             super.onCreate(savedInstanceState);
 
             final String[] rebootOptions = new String[]{
-                    Application.getStr(R.string.shutdown),
-                    Application.getStr(R.string.reboot),
-                    Application.getStr(R.string.hot_reboot),
-                    Application.getStr(R.string.recovery),
-                    Application.getStr(R.string.bootloader),
+                    Application.get().getString(R.string.shutdown),
+                    Application.get().getString(R.string.reboot),
+                    Application.get().getString(R.string.hot_reboot),
+                    Application.get().getString(R.string.recovery),
+                    Application.get().getString(R.string.bootloader),
             };
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);

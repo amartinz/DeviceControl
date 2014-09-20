@@ -154,7 +154,7 @@ public class MainActivity extends AccentActivity
     //==============================================================================================
 
     @Override public int getOverrideAccentColor() {
-        return PreferenceHelper.getInt("pref_color", Application.getColor(R.color.accent));
+        return PreferenceHelper.getInt("pref_color", Application.get().getColor(R.color.accent));
     }
 
     @Override protected void onResume() {

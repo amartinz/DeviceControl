@@ -79,7 +79,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
 
     public static synchronized DatabaseHandler getInstance() {
         if (sDatabaseHandler == null) {
-            sDatabaseHandler = new DatabaseHandler(Application.applicationContext);
+            sDatabaseHandler = new DatabaseHandler(Application.get());
         }
         return sDatabaseHandler;
     }
@@ -143,7 +143,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         wipeDb(db);
         try {
             //noinspection ResultOfMethodCallIgnored
-            new File(Application.getFilesDirectory() + DC_DOWNGRADE).createNewFile();
+            new File(Application.get().getFilesDirectory() + DC_DOWNGRADE).createNewFile();
         } catch (Exception ignored) { }
     }
 

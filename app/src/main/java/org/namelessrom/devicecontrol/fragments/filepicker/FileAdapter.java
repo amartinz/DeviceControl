@@ -42,12 +42,9 @@ import java.util.Date;
 
 import static butterknife.ButterKnife.findById;
 
-/**
- * Created by alex on 22.06.14.
- */
 public class FileAdapter extends BaseAdapter {
 
-    private final Resources resources = Application.applicationContext.getResources();
+    private final Resources resources = Application.get().getResources();
 
     private ArrayList<File> files;
 
@@ -94,7 +91,7 @@ public class FileAdapter extends BaseAdapter {
     @Override public View getView(final int position, View v, final ViewGroup parent) {
         final ViewHolder viewHolder;
         if (v == null) {
-            v = LayoutInflater.from(Application.applicationContext)
+            v = LayoutInflater.from(Application.get())
                     .inflate(R.layout.list_item_file, parent, false);
             assert (v != null);
             viewHolder = new ViewHolder(v);
@@ -132,7 +129,7 @@ public class FileAdapter extends BaseAdapter {
         } else {
             viewHolder.icon.setImageDrawable(resources.getDrawable(R.drawable.ic_general_file));
             viewHolder.info.setText(String.valueOf(new Date(file.lastModified())) + " | "
-                    + Formatter.formatFileSize(Application.applicationContext, file.length()));
+                    + Formatter.formatFileSize(Application.get(), file.length()));
 
             // Color the list entry if a filetype is set, to make searching easier
             color = ContentTypes.isFiletypeMatching(file, fileType)

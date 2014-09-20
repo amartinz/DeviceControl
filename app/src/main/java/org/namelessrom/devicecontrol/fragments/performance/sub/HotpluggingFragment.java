@@ -105,13 +105,15 @@ public class HotpluggingFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         category = (PreferenceCategory) findPreference("cpu_quiet");
         if (category != null) {
-            if (Utils.fileExists(Application.getStr(R.string.file_cpu_quiet_base))) {
-                if (Utils.fileExists(Application.getStr(R.string.file_cpu_quiet_avail_gov))
-                        && Utils.fileExists(Application.getStr(R.string.file_cpu_quiet_cur_gov))) {
+            if (Utils.fileExists(Application.get().getString(R.string.file_cpu_quiet_base))) {
+                if (Utils.fileExists(Application.get().getString(R.string.file_cpu_quiet_avail_gov))
+                        && Utils.fileExists(Application.get().getString(
+                        R.string.file_cpu_quiet_cur_gov))) {
                     final String[] govs = Utils.readOneLine(
-                            Application.getStr(R.string.file_cpu_quiet_avail_gov)).split(" ");
+                            Application.get().getString(R.string.file_cpu_quiet_avail_gov))
+                            .split(" ");
                     final String gov = Utils.readOneLine(
-                            Application.getStr(R.string.file_cpu_quiet_cur_gov));
+                            Application.get().getString(R.string.file_cpu_quiet_cur_gov));
                     mCpuQuietGov = new CustomListPreference(getActivity());
                     mCpuQuietGov.setKey("pref_cpu_quiet_governor");
                     mCpuQuietGov.setTitle(R.string.governor);
@@ -152,7 +154,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
             mIntelliPlugEco.writeValue((Boolean) o);
             changed = true;
         } else if (preference == mCpuQuietGov) {
-            final String path = Application.getStr(R.string.file_cpu_quiet_cur_gov);
+            final String path = Application.get().getString(R.string.file_cpu_quiet_cur_gov);
             final String value = String.valueOf(o);
             Utils.runRootCommand(Utils.getWriteCommand(path, value));
             PreferenceHelper.setBootup(new DataItem(

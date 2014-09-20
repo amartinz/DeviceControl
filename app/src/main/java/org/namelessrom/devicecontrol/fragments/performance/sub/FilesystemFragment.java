@@ -123,19 +123,19 @@ public class FilesystemFragment extends AttachPreferenceFragment
         // check the value and return the corresponding string
         switch (val) {
             case 128:
-                return Application.getStr(R.string.size_128_kb);
+                return Application.get().getString(R.string.size_128_kb);
             case 256:
-                return Application.getStr(R.string.size_256_kb);
+                return Application.get().getString(R.string.size_256_kb);
             case 512:
-                return Application.getStr(R.string.size_512_kb);
+                return Application.get().getString(R.string.size_512_kb);
             case 1024:
-                return Application.getStr(R.string.size_1024_kb);
+                return Application.get().getString(R.string.size_1024_kb);
             case 2048:
-                return Application.getStr(R.string.size_2048_kb);
+                return Application.get().getString(R.string.size_2048_kb);
             case 3072:
-                return Application.getStr(R.string.size_3072_kb);
+                return Application.get().getString(R.string.size_3072_kb);
             case 4096:
-                return Application.getStr(R.string.size_4096_kb);
+                return Application.get().getString(R.string.size_4096_kb);
             // if all fails, we return the value we got at the beginning
             default:
             case -1:

@@ -169,7 +169,7 @@ public class GpuUtils implements PerformanceConstants {
 
     public static boolean isOpenGLES20Supported() {
         final ActivityManager am = (ActivityManager)
-                Application.applicationContext.getSystemService(Context.ACTIVITY_SERVICE);
+                Application.get().getSystemService(Context.ACTIVITY_SERVICE);
         final ConfigurationInfo info = am.getDeviceConfigurationInfo();
         return (info != null && info.reqGlEsVersion >= 0x20000);
     }

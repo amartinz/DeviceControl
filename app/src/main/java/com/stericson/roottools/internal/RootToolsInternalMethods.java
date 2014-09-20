@@ -758,25 +758,6 @@ public final class RootToolsInternalMethods {
         }
     }
 
-    public boolean isNativeToolsReady(int nativeToolsId, Context context) {
-        RootTools.log("Preparing Native Tools");
-        InternalVariables.nativeToolsReady = false;
-
-        Installer installer;
-        try {
-            installer = new Installer(context);
-        } catch (IOException ex) {
-            if (RootTools.debugMode) {
-                ex.printStackTrace();
-            }
-            return false;
-        }
-
-        InternalVariables.nativeToolsReady = installer.isBinaryInstalled("nativetools")
-                || installer.installBinary(nativeToolsId, "nativetools", "700");
-        return InternalVariables.nativeToolsReady;
-    }
-
     /**
      * @param file String that represent the file, including the full path to the
      *             file and its name.
@@ -1174,56 +1155,6 @@ public final class RootToolsInternalMethods {
             RootTools.log(e.getMessage());
             return false;
         }
-    }
-
-    /**
-     * This method can be used to unpack a binary from the raw resources folder and store it in
-     * /data/data/app.package/files/ This is typically useful if you provide your own C- or
-     * C++-based binary. This binary can then be executed using sendShell() and its full path.
-     *
-     * @param context  the current activity's <code>Context</code>
-     * @param sourceId resource id; typically <code>R.raw.id</code>
-     * @param destName destination file name; appended to /data/data/app.package/files/
-     * @param mode     chmod value for this file
-     * @return a <code>boolean</code> which indicates whether or not we were able to create the new
-     * file.
-     */
-    public boolean installBinary(Context context, int sourceId, String destName, String mode) {
-        Installer installer;
-
-        try {
-            installer = new Installer(context);
-        } catch (IOException ex) {
-            if (RootTools.debugMode) {
-                ex.printStackTrace();
-            }
-            return false;
-        }
-
-        return (installer.installBinary(sourceId, destName, mode));
-    }
-
-    /**
-     * This method checks whether a binary is installed.
-     *
-     * @param context    the current activity's <code>Context</code>
-     * @param binaryName binary file name; appended to /data/data/app.package/files/
-     * @return a <code>boolean</code> which indicates whether or not
-     * the binary already exists.
-     */
-    public boolean isBinaryAvailable(Context context, String binaryName) {
-        Installer installer;
-
-        try {
-            installer = new Installer(context);
-        } catch (IOException ex) {
-            if (RootTools.debugMode) {
-                ex.printStackTrace();
-            }
-            return false;
-        }
-
-        return (installer.isBinaryInstalled(binaryName));
     }
 
     /**

@@ -38,7 +38,7 @@ import static butterknife.ButterKnife.findById;
 
 public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
 
-    private final Resources res = Application.applicationContext.getResources();
+    private final Resources res = Application.get().getResources();
     private final List<AppItem>        mAppList;
     private final OnAppChoosenListener mAppChoosenListener;
     private final boolean              isDarkTheme;

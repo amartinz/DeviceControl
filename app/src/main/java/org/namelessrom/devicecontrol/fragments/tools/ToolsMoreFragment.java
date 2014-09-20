@@ -88,7 +88,7 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
         if (mMediaScannerConnection != null) {
             mMediaScannerConnection.disconnect();
         }
-        mMediaScannerConnection = new MediaScannerConnection(Application.applicationContext, this);
+        mMediaScannerConnection = new MediaScannerConnection(getActivity(), this);
         mMediaScannerConnection.connect();
     }
 

@@ -32,7 +32,6 @@ import android.widget.CompoundButton;
 
 import com.negusoft.holoaccent.widget.AccentSwitch;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.adapters.TaskerAdapter;
 import org.namelessrom.devicecontrol.cards.TaskerCard;
@@ -113,7 +112,7 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
                         @Override public void onCheckedChanged(final CompoundButton b,
                                 final boolean isChecked) {
                             PreferenceHelper.setBoolean(USE_TASKER, isChecked);
-                            Utils.toggleComponent(new ComponentName(Application.getPkgName(),
+                            Utils.toggleComponent(new ComponentName(getActivity().getPackageName(),
                                     TaskerService.class.getName()), !isChecked);
                             if (isChecked) {
                                 Utils.startTaskerService();
