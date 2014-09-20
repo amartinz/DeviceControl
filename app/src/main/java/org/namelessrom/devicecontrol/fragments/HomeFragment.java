@@ -40,7 +40,7 @@ public class HomeFragment extends AttachFragment implements DeviceConstants {
 
         final String appname = getString(R.string.app_name);
         ((TextView) ButterKnife.findById(view, R.id.help_textview))
-                .setText(getString(R.string.app_information_help, appname, appname));
+                .setText(getString(R.string.app_information_message, appname, appname));
 
         return view;
     }
