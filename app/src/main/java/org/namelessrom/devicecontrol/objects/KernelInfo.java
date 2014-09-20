@@ -20,11 +20,8 @@ package org.namelessrom.devicecontrol.objects;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.utils.Utils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,41 +52,11 @@ public class KernelInfo {
     }
 
     public boolean feedWithInformation() {
-        final File kernelInfoFile = new File("/proc/version");
-        if (!kernelInfoFile.exists()) {
-            return false;
-        }
-
-        final StringBuilder sb = new StringBuilder();
-        FileReader fr = null;
-        BufferedReader br = null;
-        try {
-            fr = new FileReader(kernelInfoFile);
-            br = new BufferedReader(fr);
-
-            String aLine;
-            while ((aLine = br.readLine()) != null) {
-                aLine = aLine.trim();
-                if (!TextUtils.isEmpty(aLine)) sb.append(aLine);
-            }
-        } catch (IOException e) {
-            Logger.e(this, "could not get cpu information", e);
-            return false;
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (Exception ignored) { }
-            }
-            if (fr != null) {
-                try {
-                    fr.close();
-                } catch (Exception ignored) { }
-            }
-        }
-
-        final String rawKernelVersion = sb.toString();
+        String rawKernelVersion = Utils.readFile("/proc/version");
         if (TextUtils.isEmpty(rawKernelVersion)) return false;
+
+        // replace new lines as the readFile method appends a new line
+        rawKernelVersion = rawKernelVersion.replace("\n", "");
 
         // Example (see tests for more):
         // Linux version 3.0.31-g6fb96c9 (android-build@xxx.xxx.xxx.xxx.com) \

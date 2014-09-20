@@ -152,22 +152,24 @@ public class Utils implements DeviceConstants {
      */
     public static String readFile(final String sFile) {
         if (fileExists(sFile)) {
-            final StringBuilder sb = new StringBuilder();
-            BufferedReader brBuffer;
+            FileReader reader = null;
+            BufferedReader brBuffer = null;
             try {
-                brBuffer = new BufferedReader(new FileReader(sFile), 512);
-                try {
-                    String s;
-                    while ((s = brBuffer.readLine()) != null) {
-                        sb.append(s).append('\n');
-                    }
-                } finally {
-                    brBuffer.close();
+                reader = new FileReader(sFile);
+                brBuffer = new BufferedReader(reader, 512);
+
+                final StringBuilder sb = new StringBuilder();
+                String s;
+                while ((s = brBuffer.readLine()) != null) {
+                    sb.append(s).append('\n');
                 }
+                return sb.toString();
             } catch (Exception e) {
                 return readFileViaShell(sFile);
+            } finally {
+                if (brBuffer != null) try { brBuffer.close(); } catch (Exception ignored) { }
+                if (reader != null) try { reader.close(); } catch (Exception ignored) { }
             }
-            return sb.toString();
         }
         return null;
     }

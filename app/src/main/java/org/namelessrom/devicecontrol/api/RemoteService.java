@@ -30,7 +30,7 @@ import org.namelessrom.devicecontrol.events.GpuEvent;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.GpuUtils;
-import org.namelessrom.devicecontrol.utils.monitors.MemoryInfo;
+import org.namelessrom.devicecontrol.objects.MemoryInfo;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.util.Arrays;

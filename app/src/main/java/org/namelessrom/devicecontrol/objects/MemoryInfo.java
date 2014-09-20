@@ -15,7 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.utils.monitors;
+package org.namelessrom.devicecontrol.objects;
+
+import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -49,7 +51,7 @@ public class MemoryInfo {
 
     public long[] readMemory(final int type) {
         final String input = Utils.readFile("/proc/meminfo");
-        if (input != null && !input.isEmpty()) {
+        if (!TextUtils.isEmpty(input)) {
             final String[] parts = input.split("\n");
             for (final String s : parts) checkMemory(s);
         } else {
