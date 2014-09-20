@@ -344,4 +344,7 @@
     <string name="hardware">Hardware</string>
     <string name="toolchain">Toolchain</string>
     <string name="host">Host</string>
+    <string name="memory">Memory</string>
+    <string name="free">Free</string>
+    <string name="cached">Cached</string>
 </resources>

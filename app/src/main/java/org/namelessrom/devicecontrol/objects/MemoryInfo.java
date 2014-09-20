@@ -26,15 +26,15 @@ import org.namelessrom.devicecontrol.utils.Utils;
  */
 public class MemoryInfo {
 
-    private static final int TYPE_B  = 0;
-    private static final int TYPE_KB = 1;
-    private static final int TYPE_MB = 2;
+    public static final int TYPE_B  = 0;
+    public static final int TYPE_KB = 1;
+    public static final int TYPE_MB = 2;
 
     private static MemoryInfo sInstance;
 
-    private static long memoryTotal;
-    private static long memoryFree;
-    private static long memoryCached;
+    public static long memoryTotal;
+    public static long memoryFree;
+    public static long memoryCached;
 
     private MemoryInfo() { }
 
@@ -43,6 +43,11 @@ public class MemoryInfo {
             sInstance = new MemoryInfo();
         }
         return sInstance;
+    }
+
+    @Override public String toString() {
+        return String.format("memoryTotal: %s, memoryFree: %s, memoryCached: %s",
+                memoryTotal, memoryFree, memoryCached);
     }
 
     public long[] readMemory() {

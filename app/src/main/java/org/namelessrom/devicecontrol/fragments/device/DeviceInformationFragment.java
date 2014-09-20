@@ -36,6 +36,7 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.objects.CpuInfo;
 import org.namelessrom.devicecontrol.objects.KernelInfo;
+import org.namelessrom.devicecontrol.objects.MemoryInfo;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -114,6 +115,10 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
         // Kernel
         category = (PreferenceCategory) findPreference("kernel");
         new KernelInfoTask(category).execute();
+
+        // Memory
+        category = (PreferenceCategory) findPreference("memory");
+        new MemoryInfoTask(category).execute();
 
         // Sensors
         category = (PreferenceCategory) findPreference("sensors");
@@ -226,6 +231,32 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
                 addPreference(category, "kernel_date", R.string.build_date, kernelInfo.date);
                 addPreference(category, "kernel_host", R.string.host, kernelInfo.host);
             }
+        }
+    }
+
+    private class MemoryInfoTask extends AsyncTask<Void, Void, long[]> {
+        private final PreferenceCategory category;
+
+        public MemoryInfoTask(final PreferenceCategory category) {
+            this.category = category;
+        }
+
+        @Override protected long[] doInBackground(Void... voids) {
+            // TODO: configurable?
+            return MemoryInfo.getInstance().readMemory(MemoryInfo.TYPE_MB);
+        }
+
+        @Override protected void onPostExecute(final long[] result) {
+            if (result.length == 3 && category != null) {
+                Logger.i(this, MemoryInfo.getInstance().toString());
+                addPreference(category, "memory_total", R.string.total, get(result[0]));
+                addPreference(category, "memory_free", R.string.free, get(result[1]));
+                addPreference(category, "memory_cached", R.string.cached, get(result[2]));
+            }
+        }
+
+        private String get(final long data) {
+            return String.format("%s MB", data);
         }
     }
 

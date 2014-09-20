@@ -37,6 +37,10 @@
         android:title="@string/kernel" />
 
     <PreferenceCategory
+        android:key="memory"
+        android:title="@string/memory" />
+
+    <PreferenceCategory
         android:key="sensors"
         android:title="@string/sensors" />
 
