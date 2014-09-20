@@ -54,7 +54,8 @@ public class Utils implements DeviceConstants {
     private static final String[] ENABLED_STATES = {"Y", "TRUE", "1", "255"};
 
     public static boolean isNameless() {
-        return existsInFile(Scripts.BUILD_PROP, "ro.nameless.version");
+        return Application.getPm().hasSystemFeature("org.namelessrom.android")
+                || existsInFile(Scripts.BUILD_PROP, "ro.nameless.version");
     }
 
     public static boolean existsInFile(final String file, final String prop) {
