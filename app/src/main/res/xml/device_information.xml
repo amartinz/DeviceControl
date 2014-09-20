@@ -16,60 +16,25 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/platform_information">
-
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
-            android:key="platform_version"
-            android:summary="@string/empty"
-            android:title="@string/version" />
-
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
-            android:key="platform_id"
-            android:selectable="false"
-            android:summary="@string/empty"
-            android:title="@string/build_id" />
-
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
-            android:key="platform_type"
-            android:selectable="false"
-            android:summary="@string/empty"
-            android:title="@string/type" />
-
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
-            android:key="platform_tags"
-            android:selectable="false"
-            android:summary="@string/empty"
-            android:title="@string/tags" />
-
-    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="platform"
+        android:title="@string/platform_information" />
 
     <PreferenceCategory
         android:key="runtime"
-        android:title="@string/runtime">
+        android:title="@string/runtime" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
-            android:key="vm_library"
-            android:selectable="false"
-            android:summary="@string/empty"
-            android:title="@string/type" />
+    <PreferenceCategory
+        android:key="device_information"
+        android:title="@string/device_information" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
-            android:key="vm_version"
-            android:selectable="false"
-            android:summary="@string/empty"
-            android:title="@string/version" />
+    <PreferenceCategory
+        android:key="processor"
+        android:title="@string/processor" />
 
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/device_information">
-
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
-            android:key="android_id"
-            android:selectable="false"
-            android:summary="@string/empty"
-            android:title="@string/android_id" />
-
-    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="kernel"
+        android:title="@string/kernel" />
 
     <PreferenceCategory
         android:key="sensors"

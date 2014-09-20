@@ -333,4 +333,15 @@
     <string name="speaker">Speaker</string>
     <string name="headphones">Headphones</string>
     <string name="sound_control">Sound control</string>
+    <string name="model">Model</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="product">Product</string>
+    <string name="board">Board</string>
+    <string name="radio_version">Radio version</string>
+    <string name="build_date">Build date</string>
+    <string name="processor">Processor</string>
+    <string name="kernel">Kernel</string>
+    <string name="hardware">Hardware</string>
+    <string name="toolchain">Toolchain</string>
+    <string name="host">Host</string>
 </resources>

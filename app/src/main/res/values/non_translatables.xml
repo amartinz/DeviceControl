@@ -35,6 +35,9 @@
     <string name="open_recovery" translatable="false">OpenRecovery</string>
     <string name="clockworkmod" translatable="false">ClockWorkMod</string>
     <string name="dyn_fsync" translatable="false">Dynamic FSync</string>
+    <string name="cpu_abi" translatable="false">CPU ABI</string>
+    <string name="cpu_abi2" translatable="false">CPU ABI2</string>
+    <string name="bogomips" translatable="false">BogoMIPS</string>
     <!-- Dalvik -->
     <string name="dirty_ratio_title" translatable="false">Dirty ratio</string>
     <string name="dirty_background_title" translatable="false">Dirty background ratio</string>
