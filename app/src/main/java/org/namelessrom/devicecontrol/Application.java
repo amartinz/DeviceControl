@@ -24,6 +24,9 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.StrictMode;
 
+import com.snappydb.DB;
+import com.snappydb.DBFactory;
+import com.snappydb.SnappydbException;
 import com.stericson.roottools.RootTools;
 
 import org.acra.ACRA;
@@ -107,6 +110,30 @@ public class Application extends android.app.Application implements DeviceConsta
         final boolean showLauncher =
                 PreferenceHelper.getBoolean(SHOW_LAUNCHER, true) || !Application.IS_NAMELESS;
         toggleLauncherIcon(showLauncher);
+
+        try {
+            DB snappydb = DBFactory
+                    .open(this); //create or open an existing databse using the default name
+
+            snappydb.put("name", "Jack Reacher");
+            snappydb.putInt("age", 42);
+            snappydb.putBoolean("single", true);
+            snappydb.put("books", new String[]{"One Shot", "Tripwire", "61 Hours"});
+
+            String name = snappydb.get("name");
+            int age = snappydb.getInt("age");
+            boolean single = snappydb.getBoolean("single");
+            String[] books = snappydb.getArray("books", String.class);// get array of string
+
+            Logger.i(this, String.format("name: %s, age: %s, single: %s", name, age, single));
+            for (final String s : books) {
+                Logger.i(this, s);
+            }
+
+            snappydb.close();
+        } catch (SnappydbException snappyExc) {
+            Logger.e(this, "snappyExc", snappyExc);
+        }
     }
 
 

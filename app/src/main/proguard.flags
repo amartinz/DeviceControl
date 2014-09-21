@@ -106,7 +106,7 @@
 -keep class com.android.vending.billing.**
 
 -keep class * extends java.util.ListResourceBundle {
-    protected Object[][] getContents();
+    protected java.lang.Object[][] getContents();
 }
 
 -keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
@@ -128,3 +128,14 @@
 -dontwarn butterknife.internal.**
 -keep class **$$ViewInjector { *; }
 -keepnames class * { @butterknife.InjectView *;}
+
+# Kryo
+-dontwarn com.esotericsoftware.**
+-keep class com.esotericsoftware.kryo.**
+-keepclassmembers class com.esotericsoftware.kryo.** {
+        *;
+}
+-keep class com.esotericsoftware.reflectasm.**
+-keepclassmembers class com.esotericsoftware.reflectasm.** {
+        *;
+}

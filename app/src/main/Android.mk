@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_STATIC_JAVA_LIBRARIES      := acra android-support-v13-r20 android-support-v7-recyclerview-r21 butterknife ion otto
+LOCAL_STATIC_JAVA_LIBRARIES      := acra android-support-v13-r20 android-support-v7-recyclerview-r21 butterknife ion otto snappydb
 
 LOCAL_AAPT_INCLUDE_ALL_RESOURCES := true
 
@@ -64,6 +64,8 @@ LOCAL_PACKAGE_NAME      := DeviceControl
 LOCAL_CERTIFICATE       := platform
 LOCAL_PRIVILEGED_MODULE := true
 LOCAL_MODULE_TAGS       := optional
+
+LOCAL_REQUIRED_MODULES  := libsnappydb-native
 
 include $(BUILD_PACKAGE)
 
