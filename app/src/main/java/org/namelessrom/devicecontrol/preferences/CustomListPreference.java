@@ -1,11 +1,16 @@
 package org.namelessrom.devicecontrol.preferences;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.negusoft.holoaccent.preference.ListPreference;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+
+import dreamers.graphics.RippleDrawable;
 
 public class CustomListPreference extends ListPreference {
 
@@ -19,10 +24,15 @@ public class CustomListPreference extends ListPreference {
         setLayoutResource(R.layout.preference);
     }
 
-    @Override
-    public boolean isPersistent() { return false; }
+    @Override protected void onBindView(@NonNull View view) {
+        super.onBindView(view);
+        if (isSelectable()) {
+            RippleDrawable.createRipple(view, Application.sAccentColor);
+        }
+    }
 
-    @Override
-    protected boolean shouldPersist() { return false; }
+    @Override public boolean isPersistent() { return false; }
+
+    @Override protected boolean shouldPersist() { return false; }
 
 }

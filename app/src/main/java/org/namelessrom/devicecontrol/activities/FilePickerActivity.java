@@ -29,8 +29,8 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.events.FlashItemEvent;
-import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
+import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.objects.FlashItem;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
@@ -39,9 +39,7 @@ public class FilePickerActivity extends AccentActivity {
 
     private Fragment mCurrentFragment;
 
-    @Override public int getOverrideAccentColor() {
-        return PreferenceHelper.getInt("pref_color", Application.get().getColor(R.color.accent));
-    }
+    @Override public int getOverrideAccentColor() { return Application.sAccentColor; }
 
     @Override protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);

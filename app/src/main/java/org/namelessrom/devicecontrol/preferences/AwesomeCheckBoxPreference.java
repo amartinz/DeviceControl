@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.preferences;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.preference.CheckBoxPreference;
 import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.Logger;
@@ -34,7 +33,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
  * writing to files on preference change, even with multiple files,
  * handling bootup restoration.
  */
-public class AwesomeCheckBoxPreference extends CheckBoxPreference {
+public class AwesomeCheckBoxPreference extends CustomCheckBoxPreference {
 
     private String category;
     private String valueChecked;
@@ -133,7 +132,4 @@ public class AwesomeCheckBoxPreference extends CheckBoxPreference {
         }
     }
 
-    @Override public boolean isPersistent() { return false; }
-
-    @Override protected boolean shouldPersist() { return false; }
 }

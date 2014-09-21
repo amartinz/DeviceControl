@@ -77,9 +77,7 @@ public class AddTaskActivity extends AccentActivity implements
 
     private List<Page> mCurrentPageSequence;
 
-    @Override public int getOverrideAccentColor() {
-        return PreferenceHelper.getInt("pref_color", Application.get().getColor(R.color.accent));
-    }
+    @Override public int getOverrideAccentColor() { return Application.sAccentColor; }
 
     @Override protected void onResume() {
         super.onResume();

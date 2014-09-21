@@ -57,6 +57,8 @@ public class Application extends android.app.Application implements DeviceConsta
 
     public static boolean IS_NAMELESS = false;
 
+    public static int sAccentColor;
+
     private static Application sInstance;
 
     @Override public void onCreate() {
@@ -107,6 +109,8 @@ public class Application extends android.app.Application implements DeviceConsta
         final boolean showLauncher =
                 PreferenceHelper.getBoolean(SHOW_LAUNCHER, true) || !Application.IS_NAMELESS;
         toggleLauncherIcon(showLauncher);
+
+        sAccentColor = PreferenceHelper.getInt("pref_color", getColor(R.color.accent));
     }
 
 

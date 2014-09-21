@@ -39,8 +39,7 @@ public class DrawableHelper {
     }
 
     public static void applyAccentColorFilter(final Drawable drawable) {
-        applyColorFilter(drawable,
-                PreferenceHelper.getInt("pref_color", Application.get().getColor(R.color.accent)));
+        applyColorFilter(drawable, Application.sAccentColor);
     }
 
 }

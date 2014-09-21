@@ -2,13 +2,16 @@ package org.namelessrom.devicecontrol.preferences;
 
 import android.content.Context;
 import android.preference.CheckBoxPreference;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.View;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 
-public class CustomCheckBoxPreference extends CheckBoxPreference {
+import dreamers.graphics.RippleDrawable;
 
-    private String value;
+public class CustomCheckBoxPreference extends CheckBoxPreference {
 
     public CustomCheckBoxPreference(Context context) {
         super(context);
@@ -25,13 +28,14 @@ public class CustomCheckBoxPreference extends CheckBoxPreference {
         setLayoutResource(R.layout.preference);
     }
 
-    public void setValue(final String value) { this.value = value; }
+    @Override protected void onBindView(@NonNull View view) {
+        super.onBindView(view);
+        if (isSelectable()) {
+            RippleDrawable.createRipple(view, Application.sAccentColor);
+        }
+    }
 
-    public String getValue() { return this.value; }
+    @Override public boolean isPersistent() { return false; }
 
-    @Override
-    public boolean isPersistent() { return false; }
-
-    @Override
-    protected boolean shouldPersist() { return false; }
+    @Override protected boolean shouldPersist() { return false; }
 }

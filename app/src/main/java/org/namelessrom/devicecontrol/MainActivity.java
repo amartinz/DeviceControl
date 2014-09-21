@@ -100,7 +100,7 @@ public class MainActivity extends AccentActivity
     private static final Object lockObject = new Object();
 
     private static long  back_pressed;
-    private        Toast mToast;
+    private static Toast mToast;
 
     private IabHelper mHelper;
 
@@ -153,9 +153,7 @@ public class MainActivity extends AccentActivity
     // Overridden Methods
     //==============================================================================================
 
-    @Override public int getOverrideAccentColor() {
-        return PreferenceHelper.getInt("pref_color", Application.get().getColor(R.color.accent));
-    }
+    @Override public int getOverrideAccentColor() { return Application.sAccentColor; }
 
     @Override protected void onResume() {
         super.onResume();

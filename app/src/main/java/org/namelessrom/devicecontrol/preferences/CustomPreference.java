@@ -10,10 +10,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import butterknife.ButterKnife;
+import dreamers.graphics.RippleDrawable;
 
 public class CustomPreference extends Preference {
     private int sumColor = -1;
@@ -99,6 +101,10 @@ public class CustomPreference extends Preference {
                 DrawableHelper.applyAccentColorFilter(d);
                 icon.setImageDrawable(d);
             }
+        }
+
+        if (isSelectable()) {
+            RippleDrawable.createRipple(view, Application.sAccentColor);
         }
     }
 
