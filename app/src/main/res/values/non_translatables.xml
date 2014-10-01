@@ -34,6 +34,7 @@
     <string name="sysctl_vm" translatable="false">SysCtl / VM</string>
     <string name="open_recovery" translatable="false">OpenRecovery</string>
     <string name="clockworkmod" translatable="false">ClockWorkMod</string>
+    <string name="fsync" translatable="false">FSync</string>
     <string name="dyn_fsync" translatable="false">Dynamic FSync</string>
     <string name="cpu_abi" translatable="false">CPU ABI</string>
     <string name="cpu_abi2" translatable="false">CPU ABI2</string>

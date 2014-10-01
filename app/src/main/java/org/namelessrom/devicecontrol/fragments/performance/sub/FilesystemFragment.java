@@ -40,8 +40,10 @@ import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 public class FilesystemFragment extends AttachPreferenceFragment
         implements DeviceConstants, Preference.OnPreferenceChangeListener {
 
-    private CustomListPreference      mIoScheduler;
-    private CustomListPreference      mReadAhead;
+    private CustomListPreference mIoScheduler;
+    private CustomListPreference mReadAhead;
+
+    private AwesomeCheckBoxPreference mFsync;
     private AwesomeCheckBoxPreference mDynFsync;
     //----------------------------------------------------------------------------------------------
 
@@ -57,44 +59,48 @@ public class FilesystemFragment extends AttachPreferenceFragment
         BusProvider.getBus().unregister(this);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.extras_filesystem);
 
         String value;
 
         mIoScheduler = (CustomListPreference) findPreference("io");
-        if (mIoScheduler != null) {
-            mIoScheduler.setEnabled(false);
-            CpuUtils.getIoSchedulerEvent();
-            // setting listener when "onIoScheduler" arrives
-        }
+        mIoScheduler.setEnabled(false);
+        CpuUtils.getIoSchedulerEvent();
+        // setting listener when "onIoScheduler" arrives
 
         mReadAhead = (CustomListPreference) findPreference("read_ahead");
-        if (mReadAhead != null) {
-            value = Utils.readOneLine(PerformanceConstants.READ_AHEAD_PATH[0]);
-            mReadAhead.setValue(value);
-            mReadAhead.setSummary(mapReadAhead(value));
-            mReadAhead.setOnPreferenceChangeListener(this);
+        value = Utils.readOneLine(PerformanceConstants.READ_AHEAD_PATH[0]);
+        mReadAhead.setValue(value);
+        mReadAhead.setSummary(mapReadAhead(value));
+        mReadAhead.setOnPreferenceChangeListener(this);
+
+        mFsync = (AwesomeCheckBoxPreference) findPreference("fsync");
+        if (mFsync.isSupported()) {
+            mFsync.initValue();
+            mFsync.setOnPreferenceChangeListener(this);
+        } else {
+            getPreferenceScreen().removePreference(mFsync);
         }
 
         mDynFsync = (AwesomeCheckBoxPreference) findPreference("dyn_fsync");
-        if (mDynFsync != null) {
-            if (mDynFsync.isSupported()) {
-                mDynFsync.initValue();
-                mDynFsync.setOnPreferenceChangeListener(this);
-            } else {
-                getPreferenceScreen().removePreference(mDynFsync);
-            }
+        if (mDynFsync.isSupported()) {
+            mDynFsync.initValue();
+            mDynFsync.setOnPreferenceChangeListener(this);
+        } else {
+            getPreferenceScreen().removePreference(mDynFsync);
         }
     }
 
-    @Override public boolean onPreferenceChange(Preference preference, Object o) {
+    @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
         if (preference == mIoScheduler) {
             final String value = String.valueOf(o);
             mIoScheduler.setSummary(value);
             ActionProcessor.processAction(ActionProcessor.ACTION_IO_SCHEDULER, value, true);
+            return true;
+        } else if (preference == mFsync) {
+            mFsync.writeValue((Boolean) o);
             return true;
         } else if (preference == mDynFsync) {
             mDynFsync.writeValue((Boolean) o);
