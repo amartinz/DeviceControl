@@ -24,8 +24,8 @@
         android:key="rng_active"
         android:title="@string/rng_active" />
 
-    <org.namelessrom.devicecontrol.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
         android:key="rng_startup"
-        android:title="@string/install_startup_script" />
+        android:title="@string/reapply_on_boot" />
 
 </PreferenceScreen>

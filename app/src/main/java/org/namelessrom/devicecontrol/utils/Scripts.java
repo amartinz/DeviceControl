@@ -59,9 +59,4 @@ public class Scripts {
         return "";
     }
 
-    public static String getRngStartup() {
-        return String.format("#!/system/bin/sh\n" + "if [ -e %s ]; then\n" + "%s -P;\n" + "fi;\n",
-                PerformanceConstants.RNG_PATH, PerformanceConstants.RNG_PATH);
-    }
-
 }

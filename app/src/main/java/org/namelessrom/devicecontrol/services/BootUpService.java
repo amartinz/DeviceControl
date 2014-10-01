@@ -21,12 +21,14 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
+import org.namelessrom.devicecontrol.fragments.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tools.editor.LowMemoryKillerFragment;
 import org.namelessrom.devicecontrol.fragments.tools.editor.SysctlFragment;
@@ -159,6 +161,7 @@ public class BootUpService extends IntentService
                 //==================================================================================
                 // Tools
                 //==================================================================================
+                Logger.i(this, "----- TOOLS START -----");
                 if (PreferenceHelper.getBoolean(SOB_SYSCTL, false)) {
                     if (new File("/system/etc/sysctl.conf").exists()) {
                         cmd = SysctlFragment.restore();
@@ -167,6 +170,13 @@ public class BootUpService extends IntentService
                         sbCmd.append("busybox sysctl -p;\n");
                     }
                 }
+
+                cmd = EntropyFragment.restore();
+                if (!TextUtils.isEmpty(cmd)) {
+                    Logger.v(this, cmd);
+                    sbCmd.append(cmd);
+                }
+                Logger.i(this, "----- TOOLS END -----");
 
                 //==================================================================================
                 // Execute

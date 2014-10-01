@@ -37,7 +37,7 @@ import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.AppHelper;
-import org.namelessrom.devicecontrol.utils.Scripts;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
@@ -49,13 +49,12 @@ import java.util.List;
 
 public class EntropyFragment extends AttachPreferenceProgressFragment
         implements DeviceConstants, PerformanceConstants,
-        Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener,
-        OnShellOutputListener {
+        Preference.OnPreferenceChangeListener, OnShellOutputListener {
 
     //----------------------------------------------------------------------------------------------
     private CustomPreference         mEntropyAvail;
     private CustomCheckBoxPreference mRngActive;
-    private CustomPreference         mRngStartup;
+    private CustomCheckBoxPreference mRngStartup;
 
     @Override protected int getFragmentId() { return ID_ENTROPY; }
 
@@ -73,10 +72,10 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
             }
         }
 
-        mRngStartup = (CustomPreference) findPreference("rng_startup");
+        mRngStartup = (CustomCheckBoxPreference) findPreference("rng_startup");
         if (mRngStartup != null) {
-            checkRngStartup();
-            mRngStartup.setOnPreferenceClickListener(this);
+            mRngStartup.setChecked(PreferenceHelper.getBoolean("rng_startup", false));
+            mRngStartup.setOnPreferenceChangeListener(this);
         }
 
         mRngActive = (CustomCheckBoxPreference) findPreference("rng_active");
@@ -102,7 +101,11 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
     }
 
     @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
-        if (mRngActive == preference) {
+        if (mRngStartup == preference) {
+            final boolean value = (Boolean) o;
+            PreferenceHelper.setBoolean("rng_startup", value);
+            return true;
+        } else if (mRngActive == preference) {
             if (!Utils.fileExists(RNG_PATH)) {
                 Logger.i(this, String.format("%s does not exist, downloading...", RNG_PATH));
                 mRngActive.setEnabled(false);
@@ -202,21 +205,11 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         }
     }
 
-    @Override public boolean onPreferenceClick(final Preference preference) {
-        if (mRngStartup == preference) {
-            Utils.remount("/system", "rw");
-            if (Utils.fileExists(RNG_STARTUP_PATH)) {
-                Utils.getCommandResult(EntropyFragment.this, -2,
-                        String.format("rm -f %s;\n", RNG_STARTUP_PATH));
-            } else {
-                Utils.getCommandResult(EntropyFragment.this, -2,
-                        String.format("echo \'%s\' > %s;\nbusybox chmod +x %s",
-                                Scripts.getRngStartup(), RNG_STARTUP_PATH, RNG_STARTUP_PATH));
-            }
-            return true;
+    public static String restore() {
+        if (PreferenceHelper.getBoolean("rng_startup", false)) {
+            return "/system/bin/rngd -P;\n";
         }
-
-        return false;
+        return "";
     }
 
     private class RefreshTask extends AsyncTask<Void, Void, List<String>> {
