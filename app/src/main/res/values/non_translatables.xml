@@ -52,14 +52,6 @@
     <string name="copyright_help" translatable="false">Copyright \u00A9 2013–2014 Alexander \"Evisceration\" Martinz.</string>
     <string name="google_play_notice" translatable="false">Google Play is a trademark of Google Inc.</string>
     <!-- Arrays -->
-    <string-array name="donation_items" translatable="false">
-        <item>€ 0,99</item>
-        <item>€ 1,99</item>
-        <item>€ 4,99</item>
-        <item>€ 9,99</item>
-        <item>€ 19,99</item>
-        <item>€ 49,99</item>
-    </string-array>
     <!-- Sizes -->
     <!-- KB -->
     <string name="size_128_kb" translatable="false">128 kB</string>

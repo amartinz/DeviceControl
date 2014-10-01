@@ -11,9 +11,7 @@ LOCAL_ASSET_DIR     := $(LOCAL_PATH)/assets
 LOCAL_SRC_FILES     := \
         $(call all-java-files-under,java) \
         $(call all-java-files-under,../../../resources/src/main/java) \
-        aidl/com/android/vending/billing/IInAppBillingService.aidl \
         aidl/org/namelessrom/devicecontrol/api/IRemoteService.aidl \
-        dummy/BuildConfig.java \
 
 res_dirs := res ../../../resources/src/main/res
 LOCAL_RESOURCE_DIR := $(addprefix $(LOCAL_PATH)/, $(res_dirs))

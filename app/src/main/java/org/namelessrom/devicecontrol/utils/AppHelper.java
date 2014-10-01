@@ -29,7 +29,6 @@ import android.os.Parcel;
 import android.os.RemoteException;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.BuildConfig;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.utils.providers.BusProvider;
@@ -262,8 +261,4 @@ public class AppHelper {
         }
     };
 
-    public static boolean isExternalAllowed() {
-        // if we are not a release, we allow to donate externally
-        return !BuildConfig.IS_RELEASE;
-    }
 }

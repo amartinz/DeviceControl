@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,19 +34,14 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.vending.billing.util.IabHelper;
-import com.android.vending.billing.util.IabResult;
-import com.android.vending.billing.util.Purchase;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.MaterialMenuIcon;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.negusoft.holoaccent.activity.AccentActivity;
-import com.squareup.otto.Subscribe;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.fragments.HomeFragment;
 import org.namelessrom.devicecontrol.fragments.LicenseFragment;
 import org.namelessrom.devicecontrol.fragments.PreferencesFragment;
@@ -79,12 +73,10 @@ import org.namelessrom.devicecontrol.fragments.tools.flasher.FlasherPreferencesF
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
-import org.namelessrom.devicecontrol.proprietary.Constants;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.io.File;
 
@@ -101,8 +93,6 @@ public class MainActivity extends AccentActivity
 
     private static long  back_pressed;
     private        Toast mToast;
-
-    private IabHelper mHelper;
 
     public static SlidingMenu      sSlidingMenu;
     public static MaterialMenuIcon sMaterialMenuIcon;
@@ -157,16 +147,6 @@ public class MainActivity extends AccentActivity
         return PreferenceHelper.getInt("pref_color", Application.get().getColor(R.color.accent));
     }
 
-    @Override protected void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override protected void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
-
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -183,8 +163,6 @@ public class MainActivity extends AccentActivity
         sMaterialMenuIcon = new MaterialMenuIcon(this, Color.WHITE);
 
         Utils.setupDirectories();
-
-        setUpIab();
 
         final FrameLayout container = findById(this, R.id.container);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -345,10 +323,6 @@ public class MainActivity extends AccentActivity
             Logger.i(this, "closing shells");
             try {
                 RootTools.closeAllShells();
-                if (mHelper != null) {
-                    mHelper.dispose();
-                    mHelper = null;
-                }
             } catch (Exception e) {
                 Logger.e(this, String.format("onDestroy(): %s", e));
             }
@@ -586,54 +560,6 @@ public class MainActivity extends AccentActivity
             mTitle = mFragmentTitle;
         }
         restoreActionBar();
-    }
-
-    //==============================================================================================
-    // In App Purchase
-    //==============================================================================================
-    private void setUpIab() {
-        final String key = Constants.Iab.getKey();
-        if (AppHelper.isPlayStoreInstalled()) {
-            mHelper = new IabHelper(this, key);
-            if (Logger.getEnabled()) {
-                mHelper.enableDebugLogging(true, "IABDEVICECONTROL");
-            }
-            mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-                @Override
-                public void onIabSetupFinished(IabResult result) {
-                    Logger.i(this, "IAB: " + result);
-                    PreferenceHelper.setBoolean(Constants.Iab.getPref(), result.isSuccess());
-                }
-            });
-        } else {
-            PreferenceHelper.setBoolean(Constants.Iab.getPref(), false);
-        }
-    }
-
-    @Subscribe public void onDonationStartedEvent(final DonationStartedEvent event) {
-        if (event == null) { return; }
-
-        final String sku = event.getSku();
-        final int reqCode = event.getReqCode();
-        final String token = event.getToken();
-        Logger.v(this, String.format("IAB: sku: %s | reqCode: %s | token: %s",
-                sku, String.valueOf(reqCode), token));
-        mHelper.launchPurchaseFlow(this, sku, reqCode, mPurchaseFinishedListener, token);
-    }
-
-    private final IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener
-            = new IabHelper.OnIabPurchaseFinishedListener() {
-        public void onIabPurchaseFinished(final IabResult result, final Purchase purchase) {
-            if (result.isSuccess()) {
-                mHelper.consumeAsync(purchase, null);
-            }
-        }
-    };
-
-    @Override protected void onActivityResult(final int req, final int res, final Intent data) {
-        if (!mHelper.handleActivityResult(req, res, data)) {
-            super.onActivityResult(req, res, data);
-        }
     }
 
     public static void setSwipeOnContent(final boolean swipeOnContent) {

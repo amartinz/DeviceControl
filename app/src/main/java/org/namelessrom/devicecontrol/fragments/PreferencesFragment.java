@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.fragments;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
@@ -28,10 +27,7 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.text.TextUtils;
 
 import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 
@@ -39,18 +35,15 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.DonationStartedEvent;
 import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.proprietary.Constants;
 import org.namelessrom.devicecontrol.services.BootUpService;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import java.util.ArrayList;
@@ -61,7 +54,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
     //==============================================================================================
     // App
     //==============================================================================================
-    private CustomPreference         mDonatePreference;
     private CustomPreference         mColorPreference;
     private CustomCheckBoxPreference mMonkeyPref;
 
@@ -90,8 +82,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
     @Override protected int getFragmentId() { return ID_PREFERENCES; }
 
-    @Override
-    public void onCreate(Bundle bundle) {
+    @Override public void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml._device_control);
 
@@ -102,61 +93,52 @@ public class PreferencesFragment extends AttachPreferenceFragment
         }
 
         PreferenceCategory category = (PreferenceCategory) findPreference("prefs_general");
-        if (category != null) {
-            mSetOnBoot = (CustomPreference) findPreference("prefs_set_on_boot");
+        mSetOnBoot = (CustomPreference) findPreference("prefs_set_on_boot");
 
-            mShowLauncher = (CustomCheckBoxPreference) findPreference(SHOW_LAUNCHER);
-            if (mShowLauncher != null) {
-                if (Application.IS_NAMELESS) {
-                    mShowLauncher.setChecked(PreferenceHelper.getBoolean(SHOW_LAUNCHER, true));
-                    mShowLauncher.setOnPreferenceChangeListener(this);
-                } else {
-                    category.removePreference(mShowLauncher);
-                }
+        mShowLauncher = (CustomCheckBoxPreference) findPreference(SHOW_LAUNCHER);
+        if (mShowLauncher != null) {
+            if (Application.IS_NAMELESS) {
+                mShowLauncher.setChecked(PreferenceHelper.getBoolean(SHOW_LAUNCHER, true));
+                mShowLauncher.setOnPreferenceChangeListener(this);
+            } else {
+                category.removePreference(mShowLauncher);
             }
+        }
 
-            mSkipChecks = (CustomCheckBoxPreference) findPreference(SKIP_CHECKS);
-            if (mSkipChecks != null) {
-                mSkipChecks.setChecked(PreferenceHelper.getBoolean(SKIP_CHECKS));
-                mSkipChecks.setOnPreferenceChangeListener(this);
-            }
+        mSkipChecks = (CustomCheckBoxPreference) findPreference(SKIP_CHECKS);
+        if (mSkipChecks != null) {
+            mSkipChecks.setChecked(PreferenceHelper.getBoolean(SKIP_CHECKS));
+            mSkipChecks.setOnPreferenceChangeListener(this);
         }
 
         category = (PreferenceCategory) findPreference("prefs_app");
-        if (category != null) {
-            mDonatePreference = (CustomPreference) findPreference("pref_donate");
 
-            if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.secret=1")) {
-                mMonkeyPref = new CustomCheckBoxPreference(getActivity());
-                mMonkeyPref.setKey("monkey");
-                mMonkeyPref.setTitle(R.string.become_a_monkey);
-                mMonkeyPref.setSummaryOn(R.string.is_monkey);
-                mMonkeyPref.setSummaryOff(R.string.no_monkey);
-                mMonkeyPref.setChecked(PreferenceHelper.getBoolean("monkey", false));
-                mMonkeyPref.setOnPreferenceChangeListener(this);
-                category.addPreference(mMonkeyPref);
-            }
+        if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.secret=1")) {
+            mMonkeyPref = new CustomCheckBoxPreference(getActivity());
+            mMonkeyPref.setKey("monkey");
+            mMonkeyPref.setTitle(R.string.become_a_monkey);
+            mMonkeyPref.setSummaryOn(R.string.is_monkey);
+            mMonkeyPref.setSummaryOff(R.string.no_monkey);
+            mMonkeyPref.setChecked(PreferenceHelper.getBoolean("monkey", false));
+            mMonkeyPref.setOnPreferenceChangeListener(this);
+            category.addPreference(mMonkeyPref);
         }
 
-        category = (PreferenceCategory) findPreference("prefs_tools");
-        if (category != null) {
-            mFlasherConfig = (CustomPreference) findPreference("flasher_prefs");
-        }
+        //category = (PreferenceCategory) findPreference("prefs_tools");
+        mFlasherConfig = (CustomPreference) findPreference("flasher_prefs");
 
-        category = (PreferenceCategory) findPreference("prefs_interface");
-        if (category != null) {
-            mColorPreference = (CustomPreference) findPreference("pref_color");
-            mColorPreference.setSummaryColor(PreferenceHelper.getInt("pref_color",
-                    getResources().getColor(R.color.accent)));
+        //category = (PreferenceCategory) findPreference("prefs_interface");
+        mColorPreference = (CustomPreference) findPreference("pref_color");
+        mColorPreference.setSummaryColor(PreferenceHelper.getInt("pref_color",
+                getResources().getColor(R.color.accent)));
 
-            mDarkTheme = (CustomCheckBoxPreference) findPreference("dark_theme");
-            mDarkTheme.setChecked(PreferenceHelper.getBoolean(mDarkTheme.getKey(), false));
-            mDarkTheme.setOnPreferenceChangeListener(this);
+        mDarkTheme = (CustomCheckBoxPreference) findPreference("dark_theme");
+        mDarkTheme.setChecked(PreferenceHelper.getBoolean(mDarkTheme.getKey(), false));
+        mDarkTheme.setOnPreferenceChangeListener(this);
 
-            mSwipeOnContent = (CustomCheckBoxPreference) findPreference("swipe_on_content");
-            mSwipeOnContent.setChecked(PreferenceHelper.getBoolean(mSwipeOnContent.getKey()));
-            mSwipeOnContent.setOnPreferenceChangeListener(this);
-        }
+        mSwipeOnContent = (CustomCheckBoxPreference) findPreference("swipe_on_content");
+        mSwipeOnContent.setChecked(PreferenceHelper.getBoolean(mSwipeOnContent.getKey()));
+        mSwipeOnContent.setOnPreferenceChangeListener(this);
 
         setupVersionPreference();
     }
@@ -237,51 +219,8 @@ public class PreferencesFragment extends AttachPreferenceFragment
                 }
             }).show(getFragmentManager(), "color_picker");
             return true;
-        } else if (mDonatePreference == preference) {
-            final Activity activity = getActivity();
-            if (activity == null) { return false; }
-
-            // if external is allowed OR play store is not installed...
-            if (AppHelper.isExternalAllowed() || !AppHelper.isPlayStoreInstalled()) {
-                // try to allow to donate externally
-                if (Constants.startExternalDonation(getActivity())
-                        // if it fails and the play store is not installed, end here
-                        && !AppHelper.isPlayStoreInstalled()) {
-                    return true;
-                }
-            }
-
-            final AccentAlertDialog.Builder builder = new AccentAlertDialog.Builder(activity);
-            builder.setTitle(R.string.donate)
-                    .setNegativeButton(android.R.string.cancel,
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.dismiss();
-                                }
-                            }
-                    );
-            final ListView listView = new ListView(activity);
-            final String[] items = getResources().getStringArray(R.array.donation_items);
-            listView.setAdapter(new ArrayAdapter<String>(
-                    activity,
-                    android.R.layout.simple_list_item_1,
-                    items));
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    int i = position;
-                    if (i > 5) i = 5;
-                    if (i < 0) i = 0;
-                    final String sku = DonationStartedEvent.SKU_DONATION_BASE + String.valueOf(i);
-                    Logger.v(this, "SKU: " + sku);
-                    BusProvider.getBus().post(new DonationStartedEvent(sku));
-                }
-            });
-            builder.setView(listView);
-            builder.show();
-
-            return true;
+        } else if (TextUtils.equals("pref_donate", preference.getKey())) {
+            return Constants.startExternalDonation(getActivity());
         } else if (mFlasherConfig == preference) {
             MainActivity.loadFragment(getActivity(), ID_TOOLS_FLASHER_PREFS);
             return true;

@@ -5,9 +5,9 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <com.larswerkman.holocolorpicker.ColorPicker
             android:id="@+id/color_picker"
@@ -44,17 +44,19 @@
 
             <Button
                 android:id="@+id/color_reset"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/color_reset"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="@string/color_reset" />
 
             <Button
                 android:id="@+id/color_pick"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/color_pick"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="@string/color_pick" />
 
         </LinearLayout>
 
