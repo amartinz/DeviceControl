@@ -58,11 +58,11 @@ public class CpuUtils implements PerformanceConstants {
         try {
             File f = new File(VDD_TABLE_FILE);
             if (f.exists()) {
-                fstream = new FileInputStream(VDD_TABLE_FILE);
+                fstream = new FileInputStream(f);
             } else {
                 f = new File(UV_TABLE_FILE);
                 if (f.exists()) {
-                    fstream = new FileInputStream(UV_TABLE_FILE);
+                    fstream = new FileInputStream(f);
                 }
             }
 

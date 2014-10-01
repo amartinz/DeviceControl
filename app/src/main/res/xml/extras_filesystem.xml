@@ -28,6 +28,13 @@
         android:title="@string/read_ahead" />
 
     <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        android:key="fsync"
+        android:summary="@string/warning_data_corruption"
+        android:title="@string/fsync"
+        dc:category="extras"
+        dc:filePath="@string/file_fsync" />
+
+    <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
         android:key="dyn_fsync"
         android:summary="@string/warning_data_corruption"
         android:title="@string/dyn_fsync"
