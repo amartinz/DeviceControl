@@ -127,6 +127,7 @@ public class AwesomeEditTextPreference extends EditTextPreference {
                     PreferenceHelper.setBootup(new DataItem(category, getKey(), mPath, value));
                 }
             }
+            initValue();
         }
     }
 

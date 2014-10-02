@@ -108,12 +108,10 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         if (mReadWakeupThreshold == preference) {
             final String value = String.valueOf(o);
             mReadWakeupThreshold.writeValue(value);
-            mReadWakeupThreshold.setValue(value);
             return true;
         } else if (mWriteWakeupThreshold == preference) {
             final String value = String.valueOf(o);
             mWriteWakeupThreshold.writeValue(value);
-            mWriteWakeupThreshold.setValue(value);
             return true;
         } else if (mRngStartup == preference) {
             final boolean value = (Boolean) o;
