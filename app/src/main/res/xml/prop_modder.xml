@@ -113,12 +113,6 @@
         android:title="@string/switches">
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
-            android:key="pref_g_speed"
-            android:title="@string/g_speed_title"
-            android:summary="@string/g_speed_summary"
-            android:persistent="false" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="pref_tcp_stack"
             android:title="@string/tcp_stack_title"
             android:summary="@string/tcp_stack_summary"

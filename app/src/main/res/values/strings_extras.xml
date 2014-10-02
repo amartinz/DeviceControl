@@ -53,8 +53,6 @@
     <string name="jit_summary">Enables/Disables JIT compiler</string>
     <string name="tcp_stack_title">Optimize TCP Stack</string>
     <string name="tcp_stack_summary">Modify the buffer-size for better performance</string>
-    <string name="g_speed_title">3G Speed Hack</string>
-    <string name="g_speed_summary">Uncap 3g speed</string>
     <string name="gpu_acceleration">GPU Acceleration</string>
     <string name="gpu_acceleration_summary">Enable hardware acceleration where the GPU controls the UI instead of the CPU</string>
     <string name="lcd_density">Change LCD density</string>

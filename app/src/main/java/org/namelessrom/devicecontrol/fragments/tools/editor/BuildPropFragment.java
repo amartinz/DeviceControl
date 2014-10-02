@@ -21,9 +21,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
@@ -36,6 +33,9 @@ import com.negusoft.holoaccent.dialog.DividerPainter;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Scripts;
@@ -78,31 +78,21 @@ public class BuildPropFragment extends AttachPreferenceFragment
     private static final String TCP_STACK_BUFFER    = "4096,87380,256960,4096,16384,256960";
     private static final String JIT_PREF            = "pref_jit";
     private static final String JIT_PROP            = "dalvik.vm.execution-mode";
-    private static final String THREE_G_PREF        = "pref_g_speed";
-    private static final String THREE_G_PROP_0      = "ro.ril.enable.3g.prefix";
-    private static final String THREE_G_PROP_1      = "ro.ril.hep";
-    private static final String THREE_G_PROP_2      = FAST_UP_PROP;
-    private static final String THREE_G_PROP_3      = "ro.ril.enable.dtm";
-    private static final String THREE_G_PROP_4      = "ro.ril.gprsclass";
-    private static final String THREE_G_PROP_5      = "ro.ril.hsdpa.category";
-    private static final String THREE_G_PROP_6      = "ro.ril.enable.a53";
-    private static final String THREE_G_PROP_7      = "ro.ril.hsupa.category";
     private static final String GPU_PREF            = "pref_gpu";
     private static final String GPU_PROP            = "debug.sf.hw";
 
-    private CustomPreference   mFullEditor;
-    private ListPreference     mWifiScanPref;
-    private ListPreference     mMaxEventsPref;
-    private ListPreference     mRingDelayPref;
-    private ListPreference     mVmHeapsizePref;
-    private ListPreference     mFastUpPref;
-    private ListPreference     mProxDelayPref;
-    private EditTextPreference mLcdPref;
-    private ListPreference     mSleepPref;
-    private CheckBoxPreference mTcpStackPref;
-    private CheckBoxPreference mJitPref;
-    private CheckBoxPreference m3gSpeedPref;
-    private CheckBoxPreference mGpuPref;
+    private CustomPreference         mFullEditor;
+    private CustomListPreference     mWifiScanPref;
+    private CustomListPreference     mMaxEventsPref;
+    private CustomListPreference     mRingDelayPref;
+    private CustomListPreference     mVmHeapsizePref;
+    private CustomListPreference     mFastUpPref;
+    private CustomListPreference     mProxDelayPref;
+    private CustomEditTextPreference mLcdPref;
+    private CustomListPreference     mSleepPref;
+    private CustomCheckBoxPreference mTcpStackPref;
+    private CustomCheckBoxPreference mJitPref;
+    private CustomCheckBoxPreference mGpuPref;
 
     private boolean result = false;
 
@@ -117,46 +107,46 @@ public class BuildPropFragment extends AttachPreferenceFragment
 
         mFullEditor = (CustomPreference) prefSet.findPreference("pref_full_editor");
 
-        mWifiScanPref = (ListPreference) prefSet.findPreference(WIFI_SCAN_PREF);
+        mWifiScanPref = (CustomListPreference) prefSet.findPreference(WIFI_SCAN_PREF);
         if (mWifiScanPref != null) {
             mWifiScanPref.setOnPreferenceChangeListener(this);
         }
 
-        mMaxEventsPref = (ListPreference) prefSet.findPreference(MAX_EVENTS_PREF);
+        mMaxEventsPref = (CustomListPreference) prefSet.findPreference(MAX_EVENTS_PREF);
         if (mMaxEventsPref != null) {
             mMaxEventsPref.setOnPreferenceChangeListener(this);
         }
 
-        mRingDelayPref = (ListPreference) prefSet.findPreference(RING_DELAY_PREF);
+        mRingDelayPref = (CustomListPreference) prefSet.findPreference(RING_DELAY_PREF);
         if (mRingDelayPref != null) {
             mRingDelayPref.setOnPreferenceChangeListener(this);
         }
 
-        mVmHeapsizePref = (ListPreference) prefSet.findPreference(VM_HEAPSIZE_PREF);
+        mVmHeapsizePref = (CustomListPreference) prefSet.findPreference(VM_HEAPSIZE_PREF);
         if (mVmHeapsizePref != null) {
             mVmHeapsizePref.setOnPreferenceChangeListener(this);
         }
 
-        mFastUpPref = (ListPreference) prefSet.findPreference(FAST_UP_PREF);
+        mFastUpPref = (CustomListPreference) prefSet.findPreference(FAST_UP_PREF);
         if (mFastUpPref != null) {
             mFastUpPref.setOnPreferenceChangeListener(this);
         }
 
-        mProxDelayPref = (ListPreference) prefSet.findPreference(PROX_DELAY_PREF);
+        mProxDelayPref = (CustomListPreference) prefSet.findPreference(PROX_DELAY_PREF);
         if (mProxDelayPref != null) {
             mProxDelayPref.setOnPreferenceChangeListener(this);
         }
 
-        mSleepPref = (ListPreference) prefSet.findPreference(SLEEP_PREF);
+        mSleepPref = (CustomListPreference) prefSet.findPreference(SLEEP_PREF);
         if (mSleepPref != null) {
             mSleepPref.setOnPreferenceChangeListener(this);
         }
 
-        mTcpStackPref = (CheckBoxPreference) prefSet.findPreference(TCP_STACK_PREF);
+        mTcpStackPref = (CustomCheckBoxPreference) prefSet.findPreference(TCP_STACK_PREF);
 
-        mJitPref = (CheckBoxPreference) prefSet.findPreference(JIT_PREF);
+        mJitPref = (CustomCheckBoxPreference) prefSet.findPreference(JIT_PREF);
 
-        mLcdPref = (EditTextPreference) prefSet.findPreference(MOD_LCD_PREF);
+        mLcdPref = (CustomEditTextPreference) prefSet.findPreference(MOD_LCD_PREF);
         final String lcd = Utils.findPropValue(Scripts.BUILD_PROP, MOD_LCD_PROP);
         if (mLcdPref != null) {
             final EditText lcdET = mLcdPref.getEditText();
@@ -170,9 +160,7 @@ public class BuildPropFragment extends AttachPreferenceFragment
             mLcdPref.setOnPreferenceChangeListener(this);
         }
 
-        m3gSpeedPref = (CheckBoxPreference) prefSet.findPreference(THREE_G_PREF);
-
-        mGpuPref = (CheckBoxPreference) prefSet.findPreference(GPU_PREF);
+        mGpuPref = (CustomCheckBoxPreference) prefSet.findPreference(GPU_PREF);
 
         updateScreen();
     }
@@ -201,23 +189,6 @@ public class BuildPropFragment extends AttachPreferenceFragment
             } else {
                 return doMod(JIT_PROP, "int:fast");
             }
-        } else if (preference == m3gSpeedPref) {
-            value = m3gSpeedPref.isChecked();
-            return doMod(THREE_G_PROP_0, String.valueOf(value ? 1 : DISABLE))
-                    && doMod(THREE_G_PROP_1,
-                    String.valueOf(value ? 1 : DISABLE))
-                    && doMod(THREE_G_PROP_2,
-                    String.valueOf(value ? 2 : DISABLE))
-                    && doMod(THREE_G_PROP_3,
-                    String.valueOf(value ? 1 : DISABLE))
-                    && doMod(THREE_G_PROP_4,
-                    String.valueOf(value ? 12 : DISABLE))
-                    && doMod(THREE_G_PROP_5,
-                    String.valueOf(value ? 8 : DISABLE))
-                    && doMod(THREE_G_PROP_6,
-                    String.valueOf(value ? 1 : DISABLE))
-                    && doMod(THREE_G_PROP_7,
-                    String.valueOf(value ? 5 : DISABLE));
         } else if (preference == mGpuPref) {
             value = mGpuPref.isChecked();
             return doMod(GPU_PROP, String.valueOf(value ? 1 : DISABLE));
@@ -256,11 +227,9 @@ public class BuildPropFragment extends AttachPreferenceFragment
         result = false;
 
         class AsyncDoModTask extends AsyncTask<Void, Void, Boolean> {
-
             private ProgressDialog pd = null;
 
-            @Override
-            protected void onPreExecute() {
+            @Override protected void onPreExecute() {
                 final Activity activity = getActivity();
                 if (activity != null) {
                     pd = new ProgressDialog(activity);
@@ -268,7 +237,7 @@ public class BuildPropFragment extends AttachPreferenceFragment
                     pd.setMessage(getString(R.string.applying_wait));
                     pd.setCancelable(false);
                     pd.show();
-                    new DividerPainter(getActivity()).paint(pd.getWindow());
+                    new DividerPainter(activity).paint(pd.getWindow());
                 }
             }
 
@@ -395,14 +364,6 @@ public class BuildPropFragment extends AttachPreferenceFragment
         final String lcd = Utils.findPropValue(Scripts.BUILD_PROP, MOD_LCD_PROP);
         mLcdPref.setSummary(String.format(getString(R.string.lcd_density_alt_summary), lcd));
 
-        final String g0 = Utils.findPropValue(Scripts.BUILD_PROP, THREE_G_PROP_0);
-        final String g3 = Utils.findPropValue(Scripts.BUILD_PROP, THREE_G_PROP_3);
-        final String g6 = Utils.findPropValue(Scripts.BUILD_PROP, THREE_G_PROP_6);
-        if (g0.equals("1") && g3.equals("1") && g6.equals("1")) {
-            m3gSpeedPref.setChecked(true);
-        } else {
-            m3gSpeedPref.setChecked(false);
-        }
         final String gpu = Utils.findPropValue(Scripts.BUILD_PROP, GPU_PROP);
         mGpuPref.setChecked(Utils.isEnabled(gpu, false));
     }
