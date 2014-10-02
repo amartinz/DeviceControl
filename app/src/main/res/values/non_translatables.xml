@@ -39,6 +39,8 @@
     <string name="cpu_abi" translatable="false">CPU ABI</string>
     <string name="cpu_abi2" translatable="false">CPU ABI2</string>
     <string name="bogomips" translatable="false">BogoMIPS</string>
+    <string name="entropy_read_wakeup_threshold" translatable="false">read_wakeup_threshold</string>
+    <string name="entropy_write_wakeup_threshold" translatable="false">write_wakeup_threshold</string>
     <!-- Dalvik -->
     <string name="dirty_ratio_title" translatable="false">Dirty ratio</string>
     <string name="dirty_background_title" translatable="false">Dirty background ratio</string>

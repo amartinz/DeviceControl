@@ -14,18 +14,46 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-        android:key="entropy_avail"
-        android:title="@string/entropy_avail" />
+    <PreferenceCategory
+        android:key="entropy"
+        android:title="@string/entropy">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
-        android:key="rng_active"
-        android:title="@string/rng_active" />
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+            android:key="entropy_avail"
+            android:title="@string/entropy_avail"
+            android:selectable="false" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
-        android:key="rng_startup"
-        android:title="@string/reapply_on_boot" />
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference
+            android:title="@string/entropy_read_wakeup_threshold"
+            android:key="entropy_read_wakeup_threshold"
+            android:inputType="number"
+            dc:category="extras"
+            dc:filePath="@string/file_entropy_read_wakeup_threshold" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference
+            android:title="@string/entropy_write_wakeup_threshold"
+            android:key="entropy_write_wakeup_threshold"
+            android:inputType="number"
+            dc:category="extras"
+            dc:filePath="@string/file_entropy_write_wakeup_threshold" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="rng"
+        android:title="@string/rng">
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+            android:key="rng_active"
+            android:title="@string/rng_active" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+            android:key="rng_startup"
+            android:title="@string/reapply_on_boot" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

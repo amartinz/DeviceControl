@@ -251,6 +251,7 @@
     <string name="password">Password</string>
     <string name="entropy">Entropy</string>
     <string name="entropy_avail">Entropy available</string>
+    <string name="rng">Random number generator</string>
     <string name="rng_active">Use random number generator</string>
     <string name="install_rng">Download and install random number generator</string>
     <string name="error_download">Error downloading file!\nPlease try again later!</string>

@@ -20,7 +20,7 @@ package org.namelessrom.devicecontrol.fragments.performance.sub;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceScreen;
+import android.preference.PreferenceCategory;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,6 +34,7 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.bus.ShellOutputEvent;
 import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceProgressFragment;
@@ -52,7 +53,10 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         Preference.OnPreferenceChangeListener, OnShellOutputListener {
 
     //----------------------------------------------------------------------------------------------
-    private CustomPreference         mEntropyAvail;
+    private CustomPreference          mEntropyAvail;
+    private AwesomeEditTextPreference mReadWakeupThreshold;
+    private AwesomeEditTextPreference mWriteWakeupThreshold;
+
     private CustomCheckBoxPreference mRngActive;
     private CustomCheckBoxPreference mRngStartup;
 
@@ -63,34 +67,55 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         addPreferencesFromResource(R.xml.extras_entropy);
         setHasOptionsMenu(true);
 
-        final PreferenceScreen mRoot = getPreferenceScreen();
-
+        PreferenceCategory category = (PreferenceCategory) findPreference("entropy");
         mEntropyAvail = (CustomPreference) findPreference("entropy_avail");
-        if (mEntropyAvail != null) {
-            if (!Utils.fileExists(ENTROPY_AVAIL)) {
-                mRoot.removePreference(mEntropyAvail);
-            }
+        if (!Utils.fileExists(ENTROPY_AVAIL)) {
+            category.removePreference(mEntropyAvail);
+        }
+        mReadWakeupThreshold =
+                (AwesomeEditTextPreference) findPreference("entropy_read_wakeup_threshold");
+        if (mReadWakeupThreshold.isSupported()) {
+            mReadWakeupThreshold.initValue();
+            mReadWakeupThreshold.setOnPreferenceChangeListener(this);
+        } else {
+            category.removePreference(mReadWakeupThreshold);
+        }
+        mWriteWakeupThreshold =
+                (AwesomeEditTextPreference) findPreference("entropy_write_wakeup_threshold");
+        if (mWriteWakeupThreshold.isSupported()) {
+            mWriteWakeupThreshold.initValue();
+            mWriteWakeupThreshold.setOnPreferenceChangeListener(this);
+        } else {
+            category.removePreference(mWriteWakeupThreshold);
         }
 
+        // category = (PreferenceCategory) findPreference("rng");
         mRngStartup = (CustomCheckBoxPreference) findPreference("rng_startup");
-        if (mRngStartup != null) {
-            mRngStartup.setChecked(PreferenceHelper.getBoolean("rng_startup", false));
-            mRngStartup.setOnPreferenceChangeListener(this);
-        }
+        mRngStartup.setChecked(PreferenceHelper.getBoolean("rng_startup", false));
+        mRngStartup.setOnPreferenceChangeListener(this);
+
 
         mRngActive = (CustomCheckBoxPreference) findPreference("rng_active");
-        if (mRngActive != null) {
-            AppHelper.getProcess(this, RNG_PATH);
-            mRngActive.setOnPreferenceChangeListener(this);
-        }
+        AppHelper.getProcess(this, RNG_PATH);
+        mRngActive.setOnPreferenceChangeListener(this);
 
         new RefreshTask().execute();
 
-        isSupported(mRoot, getActivity());
+        isSupported(getPreferenceScreen(), getActivity());
     }
 
     @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
-        if (mRngStartup == preference) {
+        if (mReadWakeupThreshold == preference) {
+            final String value = String.valueOf(o);
+            mReadWakeupThreshold.writeValue(value);
+            mReadWakeupThreshold.setValue(value);
+            return true;
+        } else if (mWriteWakeupThreshold == preference) {
+            final String value = String.valueOf(o);
+            mWriteWakeupThreshold.writeValue(value);
+            mWriteWakeupThreshold.setValue(value);
+            return true;
+        } else if (mRngStartup == preference) {
             final boolean value = (Boolean) o;
             PreferenceHelper.setBoolean("rng_startup", value);
             return true;
