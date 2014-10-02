@@ -281,7 +281,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         mCacheGraph.setTouchEnabled(false);
 
         final int color = PreferenceHelper.getBoolean("dark_theme", true)
-                ? Application.get().getColor(android.R.color.background_dark)
+                ? Application.get().getColor(R.color.dark_background)
                 : Application.get().getColor(R.color.light_background);
         mCacheGraph.setBackgroundColor(color);
         mCacheGraph.setDrawPaintColor(color);
