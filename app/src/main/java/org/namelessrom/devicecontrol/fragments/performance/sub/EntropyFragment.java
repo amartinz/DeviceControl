@@ -138,14 +138,24 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
                                     }
                                     return;
                                 }
-                                setRngdExecutable(res);
+
+                                if (mRngActive != null) {
+                                    mRngActive.setEnabled(true);
+                                }
+
+                                setRngdPermissions();
+
+                                mProgressBar.setVisibility(View.GONE);
                             }
                         });
                 return false;
             }
+
+            setRngdPermissions();
+
             if ((Boolean) o) {
                 Logger.v(this, "Starting rngd");
-                Utils.runRootCommand(String.format("%s -P", RNGD.getAbsolutePath()));
+                Utils.runRootCommand(String.format("%s -P;\n", RNGD.getAbsolutePath()));
             } else {
                 Logger.v(this, "Stopping rngd");
                 AppHelper.killProcess(RNGD.getAbsolutePath());
@@ -157,14 +167,10 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
         return false;
     }
 
-    private void setRngdExecutable(final File file) {
-        if (mRngActive != null) {
-            mRngActive.setEnabled(true);
-        }
-
-        Logger.v(this, "Setting file to executable: %s", file.setExecutable(true));
-
-        mProgressBar.setVisibility(View.GONE);
+    public void setRngdPermissions() {
+        Logger.v(this, "RNGD --> setReadable: %s, setExectuable: %s",
+                RNGD.setReadable(true, false),
+                RNGD.setExecutable(true, false));
     }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
