@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
@@ -144,7 +145,6 @@ public class CpuStateView extends LinearLayout {
 
         int per = ((int) ((float) state.duration * 100 / totalStateTime));
         if (per > 100) { per = 100; } else if (per < 0) { per = 0; }
-        final String sPer = per + "%";
 
         final String sFreq;
         if (state.freq == 0) {
@@ -158,11 +158,9 @@ public class CpuStateView extends LinearLayout {
 
         final TextView freqText = (TextView) view.findViewById(R.id.ui_freq_text);
         final TextView durText = (TextView) view.findViewById(R.id.ui_duration_text);
-        final TextView perText = (TextView) view.findViewById(R.id.ui_percentage_text);
-        final ProgressBar bar = (ProgressBar) view.findViewById(R.id.ui_bar);
+        final NumberProgressBar bar = (NumberProgressBar) view.findViewById(R.id.ui_bar);
 
         freqText.setText(sFreq);
-        perText.setText(sPer);
         durText.setText(sDur);
         bar.setProgress(per);
 

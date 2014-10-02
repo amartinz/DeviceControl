@@ -20,6 +20,7 @@ Copyright (C) 2012  James Roberts
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ui_state_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -36,7 +37,8 @@ Copyright (C) 2012  James Roberts
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="2457 MHz" />
 
         <TextView
             android:id="@+id/ui_duration_text"
@@ -45,21 +47,13 @@ Copyright (C) 2012  James Roberts
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:gravity="right"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="5:41:37" />
 
-        <TextView
-            android:id="@+id/ui_percentage_text"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="0"
-            android:gravity="right"
-            android:textSize="12sp" />
     </LinearLayout>
 
-    <ProgressBar
+    <com.daimajia.numberprogressbar.NumberProgressBar
         android:id="@+id/ui_bar"
-        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:max="100" />

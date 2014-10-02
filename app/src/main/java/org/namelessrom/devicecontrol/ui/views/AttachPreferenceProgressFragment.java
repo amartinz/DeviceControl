@@ -24,18 +24,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
+
 import org.namelessrom.devicecontrol.R;
 
 public abstract class AttachPreferenceProgressFragment extends AttachPreferenceFragment {
 
-    protected ProgressBar mProgressBar;
+    protected NumberProgressBar mProgressBar;
 
     @Override public View onCreateView(@NonNull final LayoutInflater inflater,
             final ViewGroup container, final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View v = inflater.inflate(R.layout.preference_progress, container, false);
 
-        mProgressBar = (ProgressBar) v.findViewById(R.id.preference_progress);
+        mProgressBar = (NumberProgressBar) v.findViewById(R.id.preference_progress);
 
         return v;
     }

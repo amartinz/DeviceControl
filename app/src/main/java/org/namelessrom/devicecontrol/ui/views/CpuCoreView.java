@@ -7,13 +7,15 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
+
 import org.namelessrom.devicecontrol.R;
 
 public class CpuCoreView extends LinearLayout {
 
     public TextView    core;
     public TextView    freq;
-    public ProgressBar bar;
+    public NumberProgressBar bar;
 
     public CpuCoreView(final Context context) {
         super(context);
@@ -26,7 +28,7 @@ public class CpuCoreView extends LinearLayout {
 
         core = (TextView) v.findViewById(R.id.ui_device_title);
         freq = (TextView) v.findViewById(R.id.ui_device_value);
-        bar = (ProgressBar) v.findViewById(R.id.ui_device_bar);
+        bar = (NumberProgressBar) v.findViewById(R.id.ui_device_bar);
     }
 
 

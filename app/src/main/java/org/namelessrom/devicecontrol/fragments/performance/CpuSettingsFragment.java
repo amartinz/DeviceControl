@@ -126,7 +126,7 @@ public class CpuSettingsFragment extends AttachFragment
         mCpuInfo = (LinearLayout) view.findViewById(R.id.cpu_info);
 
         final TextView mIntervalText = (TextView) view.findViewById(R.id.ui_device_value);
-        final SeekBar intervalBar = (SeekBar) view.findViewById(R.id.ui_device_bar);
+        final SeekBar intervalBar = (SeekBar) view.findViewById(R.id.ui_device_seekbar);
         intervalBar.setMax(4000);
         intervalBar.setProgress(Integer.parseInt(
                 PreferenceHelper.getString("pref_interval_cpu_info", "1000")) - 1000);
