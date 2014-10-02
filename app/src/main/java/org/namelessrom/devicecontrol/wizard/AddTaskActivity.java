@@ -50,10 +50,6 @@ import org.namelessrom.devicecontrol.wizard.ui.StepPagerStrip;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
-
 public class AddTaskActivity extends AccentActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
@@ -61,12 +57,11 @@ public class AddTaskActivity extends AccentActivity implements
 
     public static final String ARG_ITEM = "arg_item";
 
-    @InjectView(R.id.next_button) Button mNextButton;
-    @InjectView(R.id.prev_button) Button mPrevButton;
+    private Button mNextButton;
+    private Button mPrevButton;
 
-    @InjectView(R.id.pager) ViewPager      mPager;
-    @InjectView(R.id.strip) StepPagerStrip mStepPagerStrip;
-
+    private ViewPager      mPager;
+    private StepPagerStrip mStepPagerStrip;
     private MyPagerAdapter mPagerAdapter;
 
     private boolean mEditingAfterReview;
@@ -98,7 +93,23 @@ public class AddTaskActivity extends AccentActivity implements
         setTheme(isDarkTheme ? R.style.BaseThemeDark : R.style.BaseThemeLight);
 
         setContentView(R.layout.wizard_activity);
-        ButterKnife.inject(this);
+
+        mNextButton = (Button) findViewById(R.id.next_button);
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                onNextButton();
+            }
+        });
+
+        mPrevButton = (Button) findViewById(R.id.prev_button);
+        mPrevButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+            }
+        });
+
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mStepPagerStrip = (StepPagerStrip) findViewById(R.id.strip);
 
         final ActionBar actionBar = getActionBar();
         if (actionBar != null) {
@@ -153,7 +164,7 @@ public class AddTaskActivity extends AccentActivity implements
         updateBottomBar();
     }
 
-    @OnClick(R.id.next_button) void onNextButton() {
+    private void onNextButton() {
         if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
             AccentDialogFragment dg = new AccentDialogFragment() {
                 @Override
@@ -173,10 +184,6 @@ public class AddTaskActivity extends AccentActivity implements
                 mPager.setCurrentItem(mPager.getCurrentItem() + 1);
             }
         }
-    }
-
-    @OnClick(R.id.prev_button) void onPrevButton() {
-        mPager.setCurrentItem(mPager.getCurrentItem() - 1);
     }
 
     @Override public void onBackPressed() {

@@ -27,8 +27,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.views.AttachFragment;
 
-import butterknife.ButterKnife;
-
 public class HomeFragment extends AttachFragment implements DeviceConstants {
 
     @Override protected int getFragmentId() { return ID_HOME; }
@@ -39,7 +37,7 @@ public class HomeFragment extends AttachFragment implements DeviceConstants {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         final String appname = getString(R.string.app_name);
-        ((TextView) ButterKnife.findById(view, R.id.help_textview))
+        ((TextView) view.findViewById(R.id.help_textview))
                 .setText(getString(R.string.app_information_message, appname, appname));
 
         return view;

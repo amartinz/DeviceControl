@@ -9,11 +9,6 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 
-import static butterknife.ButterKnife.findById;
-
-/**
- * Created by alex on 7/31/14.
- */
 public class CpuCoreView extends LinearLayout {
 
     public TextView    core;
@@ -29,9 +24,9 @@ public class CpuCoreView extends LinearLayout {
         final View v = LayoutInflater.from(context).inflate(R.layout.row_device, this, false);
         addView(v);
 
-        core = findById(v, R.id.ui_device_title);
-        freq = findById(v, R.id.ui_device_value);
-        bar = findById(v, R.id.ui_device_bar);
+        core = (TextView) v.findViewById(R.id.ui_device_title);
+        freq = (TextView) v.findViewById(R.id.ui_device_value);
+        bar = (ProgressBar) v.findViewById(R.id.ui_device_bar);
     }
 
 

@@ -58,8 +58,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static butterknife.ButterKnife.findById;
-
 public class SysctlEditorFragment extends AttachFragment implements DeviceConstants,
         AdapterView.OnItemClickListener, OnShellOutputListener {
 
@@ -107,15 +105,15 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
 
         final View view = inflater.inflate(R.layout.tools_prop_list, container, false);
 
-        mListView = findById(view, R.id.proplist);
+        mListView = (ListView) view.findViewById(R.id.proplist);
         mListView.setOnItemClickListener(this);
         mListView.setFastScrollEnabled(true);
         mListView.setFastScrollAlwaysVisible(true);
 
-        mLoadingView = findById(view, R.id.loading);
-        mEmptyView = findById(view, R.id.nofiles);
-        mTools = findById(view, R.id.tools);
-        mFilter = findById(view, R.id.filter);
+        mLoadingView = (LinearLayout) view.findViewById(R.id.loading);
+        mEmptyView = (LinearLayout) view.findViewById(R.id.nofiles);
+        mTools = (RelativeLayout) view.findViewById(R.id.tools);
+        mFilter = (EditText) view.findViewById(R.id.filter);
         mFilter.addTextChangedListener(new TextWatcher() {
             @Override public void afterTextChanged(final Editable s) { }
 
@@ -133,8 +131,8 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
 
         mTools.setVisibility(View.GONE);
 
-        mShadowTop = findById(view, R.id.tools_editor_shadow_top);
-        mShadowBottom = findById(view, R.id.tools_editor_shadow_bottom);
+        mShadowTop = view.findViewById(R.id.tools_editor_shadow_top);
+        mShadowBottom = view.findViewById(R.id.tools_editor_shadow_bottom);
 
         return view;
     }
@@ -317,8 +315,8 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
 
         final View editDialog = LayoutInflater.from(getActivity())
                 .inflate(R.layout.dialog_prop, null);
-        final EditText tv = findById(editDialog, R.id.prop_value);
-        final TextView tn = findById(editDialog, R.id.prop_name_tv);
+        final EditText tv = (EditText) editDialog.findViewById(R.id.prop_value);
+        final TextView tn = (TextView) editDialog.findViewById(R.id.prop_name_tv);
 
         if (p != null) {
             tv.setText(p.getVal());

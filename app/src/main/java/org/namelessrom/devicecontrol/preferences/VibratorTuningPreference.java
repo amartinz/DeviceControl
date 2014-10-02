@@ -42,8 +42,6 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-import static butterknife.ButterKnife.findById;
-
 /**
  * Special preference type that allows configuration of
  * vibrator intensity settings on Samsung devices
@@ -92,9 +90,9 @@ public class VibratorTuningPreference extends DialogPreference
     protected void onBindDialogView(@NonNull final View view) {
         super.onBindDialogView(view);
 
-        mSeekBar = findById(view, R.id.vibrator_seekbar);
-        mValue = findById(view, R.id.vibrator_value);
-        final TextView mWarning = findById(view, R.id.textWarn);
+        mSeekBar = (SeekBar) view.findViewById(R.id.vibrator_seekbar);
+        mValue = (TextView) view.findViewById(R.id.vibrator_value);
+        final TextView mWarning = (TextView) view.findViewById(R.id.textWarn);
 
         final String strWarnMsg = getContext().getResources().getString(
                 R.string.vibrator_warning
@@ -124,7 +122,7 @@ public class VibratorTuningPreference extends DialogPreference
         mSeekBar.setOnSeekBarChangeListener(this);
         mSeekBar.setProgress(percent);
 
-        findById(view, R.id.vibrator_test).setOnClickListener(
+        view.findViewById(R.id.vibrator_test).setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

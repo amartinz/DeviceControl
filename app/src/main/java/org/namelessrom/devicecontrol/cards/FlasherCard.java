@@ -12,8 +12,6 @@ import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import it.gmariotti.cardslib.library.internal.Card;
 
-import static butterknife.ButterKnife.findById;
-
 /**
  * A simple card for displaying informations
  */
@@ -39,8 +37,8 @@ public class FlasherCard extends Card {
     }
 
     @Override public void setupInnerViewElements(final ViewGroup parent, final View view) {
-        final TextView name = findById(view, R.id.flash_name);
-        final TextView path = findById(view, R.id.flash_path);
+        final TextView name = (TextView) view.findViewById(R.id.flash_name);
+        final TextView path = (TextView) view.findViewById(R.id.flash_path);
 
         name.setText(item.getName());
         path.setText(item.getPath());

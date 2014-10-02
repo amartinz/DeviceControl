@@ -27,8 +27,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.views.AttachFragment;
 
-import butterknife.ButterKnife;
-
 public class LicenseFragment extends AttachFragment implements DeviceConstants {
 
     @Override protected int getFragmentId() { return ID_LICENSES; }
@@ -38,7 +36,7 @@ public class LicenseFragment extends AttachFragment implements DeviceConstants {
             Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_webview, container, false);
 
-        final WebView wv = ButterKnife.findById(view, R.id.dialog_help_webview);
+        final WebView wv = (WebView) view.findViewById(R.id.dialog_help_webview);
         wv.getSettings().setTextZoom(90);
         wv.loadUrl("file:///android_asset/license.html");
 

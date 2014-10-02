@@ -36,8 +36,6 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 
-import static butterknife.ButterKnife.findById;
-
 public class DialogHelper {
 
     public static void openSeekbarDialog(final Activity activity, final int currentProgress,
@@ -50,12 +48,12 @@ public class DialogHelper {
         final View alphaDialog = LayoutInflater.from(activity)
                 .inflate(R.layout.dialog_seekbar, null, false);
 
-        final SeekBar seekbar = findById(alphaDialog, R.id.seek_bar);
+        final SeekBar seekbar = (SeekBar) alphaDialog.findViewById(R.id.seek_bar);
 
         seekbar.setMax(max);
         seekbar.setProgress(currentProgress);
 
-        final EditText settingText = findById(alphaDialog, R.id.setting_text);
+        final EditText settingText = (EditText) alphaDialog.findViewById(R.id.setting_text);
         settingText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

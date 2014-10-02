@@ -46,8 +46,6 @@ import org.namelessrom.devicecontrol.views.AttachListFragment;
 
 import java.util.List;
 
-import static butterknife.ButterKnife.findById;
-
 public class LowMemoryKillerFragment extends AttachListFragment implements DeviceConstants {
 
     private LmkAdapter adapter;
@@ -130,8 +128,8 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
 
         final View editDialog = LayoutInflater.from(getActivity())
                 .inflate(R.layout.dialog_prop, null);
-        final EditText tv = findById(editDialog, R.id.prop_value);
-        final TextView tn = findById(editDialog, R.id.prop_name_tv);
+        final EditText tv = (EditText) editDialog.findViewById(R.id.prop_value);
+        final TextView tn = (TextView) editDialog.findViewById(R.id.prop_name_tv);
 
         tv.setText(adapter.values[position]);
         tn.setText(LmkAdapter.TYPES[position]);
@@ -193,8 +191,8 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
             private final TextView pv;
 
             private ViewHolder(final View rootView) {
-                pp = findById(rootView, R.id.prop);
-                pv = findById(rootView, R.id.pval);
+                pp = (TextView) rootView.findViewById(R.id.prop);
+                pv = (TextView) rootView.findViewById(R.id.pval);
             }
         }
 

@@ -16,8 +16,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import butterknife.ButterKnife;
-
 /**
  * Created by alex on 15.07.14.
  */
@@ -39,11 +37,11 @@ public class ColorPickerDialogFragment extends AccentDialogFragment {
         final int defaultColor = getResources().getColor(R.color.accent);
         final int color = PreferenceHelper.getInt("pref_color", defaultColor);
 
-        final SaturationBar saturationBar = ButterKnife.findById(v, R.id.saturation);
-        final ValueBar valueBar = ButterKnife.findById(v, R.id.value);
-        final OpacityBar opacityBar = ButterKnife.findById(v, R.id.opacity);
+        final SaturationBar saturationBar = (SaturationBar) v.findViewById(R.id.saturation);
+        final ValueBar valueBar = (ValueBar) v.findViewById(R.id.value);
+        final OpacityBar opacityBar = (OpacityBar) v.findViewById(R.id.opacity);
 
-        colorPicker = ButterKnife.findById(v, R.id.color_picker);
+        colorPicker = (ColorPicker) v.findViewById(R.id.color_picker);
 
         colorPicker.addSaturationBar(saturationBar);
         colorPicker.addValueBar(valueBar);
@@ -52,7 +50,7 @@ public class ColorPickerDialogFragment extends AccentDialogFragment {
         colorPicker.setColor(color);
         colorPicker.setOldCenterColor(color);
 
-        final Button resetColor = ButterKnife.findById(v, R.id.color_reset);
+        final Button resetColor = (Button) v.findViewById(R.id.color_reset);
         resetColor.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 colorPicker.setColor(defaultColor);
@@ -61,7 +59,7 @@ public class ColorPickerDialogFragment extends AccentDialogFragment {
             }
         });
 
-        final Button pickColor = ButterKnife.findById(v, R.id.color_pick);
+        final Button pickColor = (Button) v.findViewById(R.id.color_pick);
         pickColor.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 PreferenceHelper.setInt("pref_color", colorPicker.getColor());

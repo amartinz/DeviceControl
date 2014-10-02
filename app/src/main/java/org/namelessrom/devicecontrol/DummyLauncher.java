@@ -33,10 +33,6 @@ import com.stericson.roottools.RootTools;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
-
 /**
  * Dummy Activity, used as Launcher.
  * The AddTaskActivity still stays fully functional even if we deactivate this class component.
@@ -45,12 +41,12 @@ import butterknife.OnClick;
  */
 public class DummyLauncher extends Activity {
 
-    @InjectView(R.id.launcher_progress)        RelativeLayout mProgressLayout;
-    @InjectView(R.id.launcher_progress_status) TextView       mProgressStatus;
+    private RelativeLayout mProgressLayout;
+    private TextView       mProgressStatus;
 
-    @InjectView(R.id.launcher_layout) LinearLayout mLauncher;
-    @InjectView(R.id.launcher_status) TextView     mStatus;
-    @InjectView(R.id.btn_left)        Button       mAction;
+    private LinearLayout mLauncher;
+    private TextView     mStatus;
+    private Button       mAction;
 
     private final Handler mHandler   = new Handler();
     private       boolean hasRoot    = false;
@@ -63,7 +59,27 @@ public class DummyLauncher extends Activity {
         setTheme(isDarkTheme ? R.style.BaseThemeDark : R.style.BaseThemeLight);
 
         setContentView(R.layout.activity_launcher);
-        ButterKnife.inject(this);
+
+        mProgressLayout = (RelativeLayout) findViewById(R.id.launcher_progress);
+        mProgressStatus = (TextView) findViewById(R.id.launcher_progress_status);
+
+        mLauncher = (LinearLayout) findViewById(R.id.launcher_layout);
+        mStatus = (TextView) findViewById(R.id.launcher_status);
+        mAction = (Button) findViewById(R.id.btn_left);
+        mAction.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                if (!hasRoot) {
+                    RootTools.offerSuperUser();
+                } else if (!hasBusyBox) {
+                    RootTools.offerBusyBox();
+                }
+            }
+        });
+        findViewById(R.id.btn_right).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                finish();
+            }
+        });
 
         if (PreferenceHelper.getBoolean(DeviceConstants.SKIP_CHECKS, false)) {
             startActivity();
@@ -117,15 +133,5 @@ public class DummyLauncher extends Activity {
             }
         }
     }
-
-    @OnClick(R.id.btn_left) void onAction() {
-        if (!hasRoot) {
-            RootTools.offerSuperUser();
-        } else if (!hasBusyBox) {
-            RootTools.offerBusyBox();
-        }
-    }
-
-    @OnClick(R.id.btn_right) void onExit() { finish(); }
 
 }

@@ -13,8 +13,6 @@ import android.widget.TextView;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
-import butterknife.ButterKnife;
-
 public class CustomPreference extends Preference {
     private int sumColor = -1;
 
@@ -87,12 +85,12 @@ public class CustomPreference extends Preference {
     @Override protected void onBindView(@NonNull final View view) {
         super.onBindView(view);
 
-        summary = ButterKnife.findById(view, android.R.id.summary);
+        summary = (TextView) view.findViewById(android.R.id.summary);
         if (sumColor != -1) {
             summary.setTextColor(sumColor);
         }
 
-        final ImageView icon = ButterKnife.findById(view, android.R.id.icon);
+        final ImageView icon = (ImageView) view.findViewById(android.R.id.icon);
         if (icon != null) {
             final Drawable d = icon.getDrawable();
             if (d != null) {

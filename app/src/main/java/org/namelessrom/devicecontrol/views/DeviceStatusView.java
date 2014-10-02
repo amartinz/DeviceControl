@@ -37,8 +37,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import static butterknife.ButterKnife.findById;
-
 public class DeviceStatusView extends LinearLayout {
 
     private LinearLayout mDeviceInfo;
@@ -96,27 +94,22 @@ public class DeviceStatusView extends LinearLayout {
     private void createViews(final Context context) {
         final View view = inflate(context, R.layout.widget_device_stats, this);
 
-        mDeviceInfo = findById(view, R.id.ui_device_stats_view);
+        mDeviceInfo = (LinearLayout) view.findViewById(R.id.ui_device_stats_view);
 
         startRepeatingTask();
     }
 
     private View generateRow(final ViewGroup parent, final String title,
             final String value, final String barLeft, final String barRight, final int progress) {
-
         if (!isAttached()) { return null; }
 
-        final Context context = getContext();
+        final LinearLayout view = (LinearLayout) inflate(getContext(), R.layout.row_device, null);
 
-        if (context == null) { return null; }
-
-        final LinearLayout view = (LinearLayout) inflate(context, R.layout.row_device, null);
-
-        ((TextView) findById(view, R.id.ui_device_title)).setText(title);
-        ((TextView) findById(view, R.id.ui_device_value)).setText(value);
-        ((TextView) findById(view, R.id.ui_device_bar_left)).setText(barLeft);
-        ((TextView) findById(view, R.id.ui_device_bar_right)).setText(barRight);
-        ((ProgressBar) findById(view, R.id.ui_device_bar)).setProgress(progress);
+        ((TextView) view.findViewById(R.id.ui_device_title)).setText(title);
+        ((TextView) view.findViewById(R.id.ui_device_value)).setText(value);
+        ((TextView) view.findViewById(R.id.ui_device_bar_left)).setText(barLeft);
+        ((TextView) view.findViewById(R.id.ui_device_bar_right)).setText(barRight);
+        ((ProgressBar) view.findViewById(R.id.ui_device_bar)).setProgress(progress);
 
         parent.addView(view);
         return view;

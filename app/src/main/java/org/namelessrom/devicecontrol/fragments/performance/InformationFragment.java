@@ -28,8 +28,6 @@ import org.namelessrom.devicecontrol.views.AttachFragment;
 import org.namelessrom.devicecontrol.views.CpuStateView;
 import org.namelessrom.devicecontrol.views.DeviceStatusView;
 
-import static butterknife.ButterKnife.findById;
-
 public class InformationFragment extends AttachFragment implements DeviceConstants {
 
     private DeviceStatusView mDeviceStats;
@@ -41,8 +39,8 @@ public class InformationFragment extends AttachFragment implements DeviceConstan
             final Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_performance, container, false);
 
-        mDeviceStats = findById(v, R.id.device_stats);
-        mCpuStates = findById(v, R.id.cpu_states);
+        mDeviceStats = (DeviceStatusView) v.findViewById(R.id.device_stats);
+        mCpuStates = (CpuStateView) v.findViewById(R.id.cpu_states);
 
         return v;
     }

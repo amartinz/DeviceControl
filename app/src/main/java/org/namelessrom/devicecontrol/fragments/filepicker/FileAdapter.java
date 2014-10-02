@@ -40,8 +40,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-import static butterknife.ButterKnife.findById;
-
 public class FileAdapter extends BaseAdapter {
 
     private final Resources resources = Application.get().getResources();
@@ -82,9 +80,9 @@ public class FileAdapter extends BaseAdapter {
 
         private ViewHolder(final View rootView) {
             this.rootView = rootView;
-            this.icon = findById(rootView, R.id.file_icon);
-            this.name = findById(rootView, R.id.file_name);
-            this.info = findById(rootView, R.id.file_info);
+            this.icon = (ImageView) rootView.findViewById(R.id.file_icon);
+            this.name = (TextView) rootView.findViewById(R.id.file_name);
+            this.info = (TextView) rootView.findViewById(R.id.file_info);
         }
     }
 

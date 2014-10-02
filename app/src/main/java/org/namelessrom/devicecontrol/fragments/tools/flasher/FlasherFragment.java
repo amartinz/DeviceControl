@@ -54,8 +54,6 @@ import java.util.ArrayList;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.view.CardListView;
 
-import static butterknife.ButterKnife.findById;
-
 public class FlasherFragment extends AttachFragment implements DeviceConstants,
         View.OnClickListener {
 
@@ -87,13 +85,13 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
 
         final View v = inflater.inflate(R.layout.fragment_flasher, container, false);
 
-        mContainer = findById(v, R.id.container);
-        mFlashList = findById(v, android.R.id.list);
-        mEmptyView = findById(v, android.R.id.empty);
+        mContainer = (LinearLayout) v.findViewById(R.id.container);
+        mFlashList = (CardListView) v.findViewById(android.R.id.list);
+        mEmptyView = (TextView) v.findViewById(android.R.id.empty);
 
-        final Button mCancel = findById(v, R.id.btn_cancel);
+        final Button mCancel = (Button) v.findViewById(R.id.btn_cancel);
         mCancel.setOnClickListener(this);
-        final Button mApply = findById(v, R.id.btn_apply);
+        final Button mApply = (Button) v.findViewById(R.id.btn_apply);
         mApply.setOnClickListener(this);
 
         mAdapter = new FlashListAdapter(getActivity());

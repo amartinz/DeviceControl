@@ -37,8 +37,6 @@ import org.namelessrom.devicecontrol.wizard.model.SingleFixedChoicePage;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-
 public class SingleChoiceFragment extends ListFragment {
     private static final String ARG_KEY = "key";
 
@@ -76,9 +74,9 @@ public class SingleChoiceFragment extends ListFragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.wizard_fragment_page, container, false);
-        ((TextView) ButterKnife.findById(rootView, android.R.id.title)).setText(mPage.getTitle());
+        ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
 
-        final ListView listView = ButterKnife.findById(rootView, android.R.id.list);
+        final ListView listView = (ListView) rootView.findViewById(android.R.id.list);
         setListAdapter(new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_single_choice,
                 android.R.id.text1,

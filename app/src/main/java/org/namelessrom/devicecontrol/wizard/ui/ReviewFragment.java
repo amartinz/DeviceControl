@@ -46,8 +46,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import butterknife.ButterKnife;
-
 public class ReviewFragment extends ListFragment implements ModelCallbacks {
     private Callbacks           mCallbacks;
     private AbstractWizardModel mWizardModel;
@@ -68,11 +66,11 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
             final Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.wizard_fragment_page, container, false);
 
-        final TextView titleView = ButterKnife.findById(rootView, android.R.id.title);
+        final TextView titleView = (TextView) rootView.findViewById(android.R.id.title);
         titleView.setText(R.string.review);
         titleView.setTextColor(getResources().getColor(R.color.review_green));
 
-        ((ListView) ButterKnife.findById(rootView, android.R.id.list))
+        ((ListView) rootView.findViewById(android.R.id.list))
                 .setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         setListAdapter(mReviewAdapter);
 

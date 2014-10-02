@@ -15,8 +15,6 @@ import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
 import it.gmariotti.cardslib.library.internal.Card;
 
-import static butterknife.ButterKnife.findById;
-
 /**
  * A simple card for displaying informations
  */
@@ -44,10 +42,10 @@ public class TaskerCard extends Card {
     }
 
     @Override public void setupInnerViewElements(final ViewGroup parent, final View view) {
-        final TextView category = findById(view, R.id.category);
-        final TextView action = findById(view, R.id.action);
-        final TextView value = findById(view, R.id.value);
-        final CheckBox enabled = findById(view, R.id.enabled);
+        final TextView category = (TextView) view.findViewById(R.id.category);
+        final TextView action = (TextView) view.findViewById(R.id.action);
+        final TextView value = (TextView) view.findViewById(R.id.value);
+        final CheckBox enabled = (CheckBox) view.findViewById(R.id.enabled);
 
         category.setText(item.getCategory());
         action.setText(item.getName());

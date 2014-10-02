@@ -40,8 +40,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import butterknife.ButterKnife;
-
 public class MultipleChoiceFragment extends ListFragment {
     private static final String ARG_KEY = "key";
 
@@ -79,9 +77,9 @@ public class MultipleChoiceFragment extends ListFragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.wizard_fragment_page, container, false);
-        ((TextView) ButterKnife.findById(rootView, android.R.id.title)).setText(mPage.getTitle());
+        ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
 
-        final ListView listView = ButterKnife.findById(rootView, android.R.id.list);
+        final ListView listView = (ListView) rootView.findViewById(android.R.id.list);
         setListAdapter(new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_multiple_choice,
                 android.R.id.text1,

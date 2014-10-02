@@ -26,8 +26,6 @@ import android.widget.ProgressBar;
 
 import org.namelessrom.devicecontrol.R;
 
-import static butterknife.ButterKnife.findById;
-
 public abstract class AttachPreferenceProgressFragment extends AttachPreferenceFragment {
 
     protected ProgressBar mProgressBar;
@@ -37,7 +35,7 @@ public abstract class AttachPreferenceProgressFragment extends AttachPreferenceF
         super.onCreateView(inflater, container, savedInstanceState);
         final View v = inflater.inflate(R.layout.preference_progress, container, false);
 
-        mProgressBar = findById(v, R.id.preference_progress);
+        mProgressBar = (ProgressBar) v.findViewById(R.id.preference_progress);
 
         return v;
     }

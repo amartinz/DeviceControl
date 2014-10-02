@@ -80,8 +80,6 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.File;
 
-import static butterknife.ButterKnife.findById;
-
 public class MainActivity extends AccentActivity
         implements DeviceConstants, AdapterView.OnItemClickListener,
         SlidingMenu.OnClosedListener, SlidingMenu.OnOpenedListener {
@@ -164,7 +162,7 @@ public class MainActivity extends AccentActivity
 
         Utils.setupDirectories();
 
-        final FrameLayout container = findById(this, R.id.container);
+        final FrameLayout container = (FrameLayout) findViewById(R.id.container);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             container.setBackground(null);
         } else {
@@ -173,7 +171,7 @@ public class MainActivity extends AccentActivity
         }
 
         final View v = getLayoutInflater().inflate(R.layout.menu_list, container, false);
-        final ListView mMenuList = findById(v, R.id.navbarlist);
+        final ListView mMenuList = (ListView) v.findViewById(R.id.navbarlist);
 
         sSlidingMenu = new SlidingMenu(this);
         sSlidingMenu.setMode(SlidingMenu.LEFT);

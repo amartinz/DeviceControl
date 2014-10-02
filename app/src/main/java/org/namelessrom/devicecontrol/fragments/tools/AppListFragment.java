@@ -81,8 +81,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static butterknife.ButterKnife.findById;
-
 public class AppListFragment extends AttachFragment implements DeviceConstants,
         OnAppChoosenListener {
 
@@ -240,30 +238,30 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
         assert (appDetails != null);
 
-        mAppDetailsContainer = findById(appDetails, R.id.app_details_container);
-        mAppDetailsError = findById(appDetails, R.id.app_details_error);
+        mAppDetailsContainer = appDetails.findViewById(R.id.app_details_container);
+        mAppDetailsError = appDetails.findViewById(R.id.app_details_error);
 
-        mAppIcon = findById(appDetails, R.id.app_icon);
-        mAppLabel = findById(appDetails, R.id.app_label);
-        mAppPackage = findById(appDetails, R.id.app_package);
-        mAppLayer = findById(appDetails, R.id.app_layer);
-        mStatus = findById(appDetails, R.id.app_status);
-        mAppCode = findById(appDetails, R.id.app_version_code);
-        mAppVersion = findById(appDetails, R.id.app_version_name);
-        mCacheGraph = findById(appDetails, R.id.app_cache_graph);
-        mCacheInfo = findById(appDetails, R.id.app_cache_info_container);
+        mAppIcon = (ImageView) appDetails.findViewById(R.id.app_icon);
+        mAppLabel = (TextView) appDetails.findViewById(R.id.app_label);
+        mAppPackage = (TextView) appDetails.findViewById(R.id.app_package);
+        mAppLayer = appDetails.findViewById(R.id.app_layer);
+        mStatus = (TextView) appDetails.findViewById(R.id.app_status);
+        mAppCode = (TextView) appDetails.findViewById(R.id.app_version_code);
+        mAppVersion = (TextView) appDetails.findViewById(R.id.app_version_name);
+        mCacheGraph = (PieChart) appDetails.findViewById(R.id.app_cache_graph);
+        mCacheInfo = (LinearLayout) appDetails.findViewById(R.id.app_cache_info_container);
 
         if (startedFromActivity) {
             return appDetails;
         } else {
-            final View space = findById(appDetails, R.id.app_space);
+            final View space = appDetails.findViewById(R.id.app_space);
             if (space != null) space.setVisibility(View.VISIBLE);
         }
 
         final View rootView = inflater.inflate(R.layout.fragment_app_list, container, false);
-        mRecyclerView = findById(rootView, android.R.id.list);
-        mAppDetails = findById(rootView, R.id.app_details);
-        mProgressContainer = findById(rootView, R.id.progressContainer);
+        mRecyclerView = (RecyclerView) rootView.findViewById(android.R.id.list);
+        mAppDetails = (FrameLayout) rootView.findViewById(R.id.app_details);
+        mProgressContainer = (LinearLayout) rootView.findViewById(R.id.progressContainer);
         if (startedFromActivity) mProgressContainer.setVisibility(View.GONE);
         mAppDetails.addView(appDetails);
         return rootView;
@@ -681,9 +679,9 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         final int color = PreferenceHelper.getBoolean("dark_theme", false)
                 ? Color.WHITE : Color.BLACK;
 
-        final TextView tvLeft = findById(v, R.id.widget_app_cache_left);
+        final TextView tvLeft = (TextView) v.findViewById(R.id.widget_app_cache_left);
         tvLeft.setTextColor(color);
-        final TextView tvRight = findById(v, R.id.widget_app_cache_right);
+        final TextView tvRight = (TextView) v.findViewById(R.id.widget_app_cache_right);
         tvRight.setTextColor(color);
 
         tvLeft.setText(getString(txtId) + ':');

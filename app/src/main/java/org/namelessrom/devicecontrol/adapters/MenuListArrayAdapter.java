@@ -30,8 +30,6 @@ import android.widget.TextView;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
-import static butterknife.ButterKnife.findById;
-
 public class MenuListArrayAdapter extends BaseAdapter {
 
     private final Context mContext;
@@ -67,10 +65,10 @@ public class MenuListArrayAdapter extends BaseAdapter {
         public ViewHolder(final View v, final int type) {
             if (type == 0) {
                 header = null;
-                title = findById(v, android.R.id.text1);
-                image = findById(v, R.id.image);
+                title = (TextView) v.findViewById(android.R.id.text1);
+                image = (ImageView) v.findViewById(R.id.image);
             } else if (type == 1) {
-                header = findById(v, R.id.menu_header);
+                header = (TextView) v.findViewById(R.id.menu_header);
                 title = null;
                 image = null;
             } else {

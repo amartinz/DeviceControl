@@ -50,8 +50,6 @@ import java.util.List;
 
 import it.gmariotti.cardslib.library.view.CardListView;
 
-import static butterknife.ButterKnife.findById;
-
 public class TaskListFragment extends AttachFragment implements DeviceConstants {
 
     private CardListView  mListView;
@@ -79,8 +77,8 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
         setHasOptionsMenu(true);
         final View v = inflater.inflate(R.layout.fragment_tasker, container, false);
 
-        mListView = findById(v, android.R.id.list);
-        mEmptyView = findById(v, android.R.id.empty);
+        mListView = (CardListView) v.findViewById(android.R.id.list);
+        mEmptyView = v.findViewById(android.R.id.empty);
 
         mAdapter = new TaskerAdapter(getActivity());
 
@@ -105,7 +103,7 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
         final MenuItem toggle = menu.findItem(R.id.menu_action_toggle);
         final View v;
         if (toggle != null && (v = toggle.getActionView()) != null) {
-            final AccentSwitch sw = findById(v, R.id.ab_switch);
+            final AccentSwitch sw = (AccentSwitch) v.findViewById(R.id.ab_switch);
             sw.setChecked(PreferenceHelper.getBoolean(USE_TASKER, false));
             sw.setOnCheckedChangeListener(
                     new CompoundButton.OnCheckedChangeListener() {

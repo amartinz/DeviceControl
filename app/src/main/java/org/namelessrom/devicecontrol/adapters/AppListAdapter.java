@@ -34,8 +34,6 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 import java.util.List;
 
-import static butterknife.ButterKnife.findById;
-
 public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
 
     private final Resources res = Application.get().getResources();
@@ -59,10 +57,10 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         public ViewHolder(final View v) {
             super(v);
             rootView = v;
-            layer = findById(v, R.id.app_layer);
-            appIcon = findById(v, R.id.app_icon);
-            appLabel = findById(v, R.id.app_label);
-            packageName = findById(v, R.id.app_package);
+            layer = v.findViewById(R.id.app_layer);
+            appIcon = (ImageView) v.findViewById(R.id.app_icon);
+            appLabel = (TextView) v.findViewById(R.id.app_label);
+            packageName = (TextView) v.findViewById(R.id.app_package);
         }
     }
 

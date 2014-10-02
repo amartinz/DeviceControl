@@ -32,8 +32,6 @@ import org.namelessrom.devicecontrol.objects.Prop;
 import java.util.ArrayList;
 import java.util.List;
 
-import static butterknife.ButterKnife.findById;
-
 public class PropAdapter extends ArrayAdapter<Prop> {
     private final  Context    mContext;
     private final  List<Prop> mProps;
@@ -87,8 +85,8 @@ public class PropAdapter extends ArrayAdapter<Prop> {
         private final TextView pv;
 
         private ViewHolder(final View rootView) {
-            pp = findById(rootView, R.id.prop);
-            pv = findById(rootView, R.id.pval);
+            pp = (TextView) rootView.findViewById(R.id.prop);
+            pv = (TextView) rootView.findViewById(R.id.pval);
         }
     }
 

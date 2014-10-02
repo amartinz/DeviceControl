@@ -60,8 +60,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static butterknife.ButterKnife.findById;
-
 public class CpuSettingsFragment extends AttachFragment
         implements DeviceConstants, PerformanceConstants {
 
@@ -125,10 +123,10 @@ public class CpuSettingsFragment extends AttachFragment
         setHasOptionsMenu(true);
         final View view = inflater.inflate(R.layout.fragment_cpu_settings, root, false);
 
-        mCpuInfo = findById(view, R.id.cpu_info);
+        mCpuInfo = (LinearLayout) view.findViewById(R.id.cpu_info);
 
-        final TextView mIntervalText = findById(view, R.id.ui_device_value);
-        final SeekBar intervalBar = findById(view, R.id.ui_device_bar);
+        final TextView mIntervalText = (TextView) view.findViewById(R.id.ui_device_value);
+        final SeekBar intervalBar = (SeekBar) view.findViewById(R.id.ui_device_bar);
         intervalBar.setMax(4000);
         intervalBar.setProgress(Integer.parseInt(
                 PreferenceHelper.getString("pref_interval_cpu_info", "1000")) - 1000);
@@ -156,21 +154,22 @@ public class CpuSettingsFragment extends AttachFragment
             }
         });
 
-        ((TextView) findById(view, R.id.ui_device_title)).setText(R.string.refresh_interval);
+        ((TextView) view.findViewById(R.id.ui_device_title)).setText(R.string.refresh_interval);
         mInterval = intervalBar.getProgress() + 1000;
         mIntervalText.setText((mInterval == 5000
                 ? getString(R.string.off)
                 : (((double) mInterval) / 1000) + "s"));
 
-        mStatusHide = findById(view, R.id.cpu_info_hide);
+        final LinearLayout speed = (LinearLayout) view.findViewById(R.id.speed);
+        mStatusHide = (CheckBox) view.findViewById(R.id.cpu_info_hide);
         mStatusHide.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(final CompoundButton button, final boolean b) {
-                findById(view, R.id.ui_interval).setVisibility(b ? View.GONE : View.VISIBLE);
+                view.findViewById(R.id.ui_interval).setVisibility(b ? View.GONE : View.VISIBLE);
                 if (b) {
                     CpuCoreMonitor.getInstance(getActivity()).stop();
-                    findById(view, R.id.speed).setVisibility(View.GONE);
+                    speed.setVisibility(View.GONE);
                 } else {
-                    findById(view, R.id.speed).setVisibility(View.VISIBLE);
+                    speed.setVisibility(View.VISIBLE);
                     mInterval = intervalBar.getProgress() + 1000;
                     CpuCoreMonitor.getInstance(getActivity()).start(mInterval);
                 }
@@ -189,13 +188,13 @@ public class CpuSettingsFragment extends AttachFragment
             generateRow(i, tmpCore);
         }
 
-        mMax = findById(view, R.id.pref_max);
+        mMax = (Spinner) view.findViewById(R.id.pref_max);
         mMax.setEnabled(false);
 
-        mMin = findById(view, R.id.pref_min);
+        mMin = (Spinner) view.findViewById(R.id.pref_min);
         mMin.setEnabled(false);
 
-        mGovernor = findById(view, R.id.pref_governor);
+        mGovernor = (Spinner) view.findViewById(R.id.pref_governor);
         mGovernor.setEnabled(false);
 
         return view;
