@@ -128,11 +128,5 @@ public interface PerformanceConstants {
     //==============================================================================================
     public static final String MPDECISION_PATH = "/system/bin/mpdecision";
 
-    //==============================================================================================
-    public static final String RNG_PATH         = "/system/bin/rngd";
-    public static final String QRNG_PATH        = "/system/bin/qrngd";
-    public static final String RNG_STARTUP_PATH = "/system/etc/init.d/90rng";
-    public static final String URL_RNG          =
-            "http://sourceforge.net/projects/namelessrom/files/romextras/binaries/rngd/download";
 }
 

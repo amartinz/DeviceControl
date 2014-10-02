@@ -48,11 +48,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntropyFragment extends AttachPreferenceProgressFragment
-        implements DeviceConstants, PerformanceConstants,
-        Preference.OnPreferenceChangeListener, OnShellOutputListener {
+public class EntropyFragment extends AttachPreferenceProgressFragment implements DeviceConstants,
+        PerformanceConstants, Preference.OnPreferenceChangeListener, OnShellOutputListener {
+    private static final String URL_RNG =
+            "http://sourceforge.net/projects/namelessrom/files/romextras/binaries/rngd/download";
+    private static final File   RNGD    = new File(Application.get().getFilesDirectory(), "rngd");
 
-    //----------------------------------------------------------------------------------------------
     private CustomPreference          mEntropyAvail;
     private AwesomeEditTextPreference mReadWakeupThreshold;
     private AwesomeEditTextPreference mWriteWakeupThreshold;
@@ -96,7 +97,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
 
 
         mRngActive = (CustomCheckBoxPreference) findPreference("rng_active");
-        AppHelper.getProcess(this, RNG_PATH);
+        AppHelper.getProcess(this, RNGD.getAbsolutePath());
         mRngActive.setOnPreferenceChangeListener(this);
 
         new RefreshTask().execute();
@@ -118,23 +119,16 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
             PreferenceHelper.setBoolean("rng_startup", value);
             return true;
         } else if (mRngActive == preference) {
-            if (!Utils.fileExists(RNG_PATH)) {
-                Logger.i(this, String.format("%s does not exist, downloading...", RNG_PATH));
+            if (!RNGD.exists()) {
+                Logger.i(this, "%s does not exist, downloading...", RNGD.getAbsolutePath());
                 mRngActive.setEnabled(false);
                 mProgressBar.setVisibility(View.VISIBLE);
-
-                // check if file is already downloaded, and if, move it and return
-                final File downloaded = new File(Application.get().getFilesDirectory() + "/rngd");
-                if (downloaded.exists()) {
-                    moveFile(downloaded);
-                    return false;
-                }
 
                 // else download it
                 Ion.with(this)
                         .load(URL_RNG)
                         .progress(mProgressBar)
-                        .write(downloaded)
+                        .write(RNGD)
                         .setCallback(new FutureCallback<File>() {
                             @Override public void onCompleted(final Exception e, final File res) {
                                 if (e != null) {
@@ -144,35 +138,31 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
                                     }
                                     return;
                                 }
-                                moveFile(res);
+                                setRngdExecutable(res);
                             }
                         });
                 return false;
             }
             if ((Boolean) o) {
                 Logger.v(this, "Starting rngd");
-                Utils.runRootCommand(String.format("%s -P", RNG_PATH));
+                Utils.runRootCommand(String.format("%s -P", RNGD.getAbsolutePath()));
             } else {
                 Logger.v(this, "Stopping rngd");
-                AppHelper.killProcess(RNG_PATH);
+                AppHelper.killProcess(RNGD.getAbsolutePath());
             }
-            AppHelper.getProcess(this, RNG_PATH);
+            AppHelper.getProcess(this, RNGD.getAbsolutePath());
             return true;
         }
 
         return false;
     }
 
-    private void moveFile(final File file) {
+    private void setRngdExecutable(final File file) {
         if (mRngActive != null) {
             mRngActive.setEnabled(true);
         }
 
-        Utils.remount("/system", "rw");
-        Utils.getCommandResult(EntropyFragment.this, -1,
-                String.format("cp -f %s %s;\nchmod 755 %s;\n",
-                        file.getAbsolutePath(), RNG_PATH, RNG_PATH));
-        // remounting system ro at onShellOutput
+        Logger.v(this, "Setting file to executable: %s", file.setExecutable(true));
 
         mProgressBar.setVisibility(View.GONE);
     }
@@ -187,7 +177,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         switch (id) {
             case R.id.menu_action_refresh:
                 new RefreshTask().execute();
-                AppHelper.getProcess(this, RNG_PATH);
+                AppHelper.getProcess(this, RNGD.getAbsolutePath());
             default:
                 break;
         }
@@ -199,14 +189,11 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         if (event == null) return;
 
         final int id = event.getId();
-        if (id == -1) {
-            Utils.remount("/system", "ro");
-            AppHelper.getProcess(this, RNG_PATH);
-        } else if (id == ID_PGREP) {
+        if (id == ID_PGREP) {
             if (mRngActive != null) {
                 final boolean isActive = event.getOutput() != null && !event.getOutput().isEmpty();
                 mRngActive.setChecked(isActive);
-                if (!Utils.fileExists(RNG_PATH)) {
+                if (!RNGD.exists()) {
                     mRngActive.setSummary(R.string.install_rng);
                     mRngStartup.setEnabled(false);
                 } else {
@@ -219,7 +206,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
 
     public static String restore() {
         if (PreferenceHelper.getBoolean("rng_startup", false)) {
-            return "/system/bin/rngd -P;\n";
+            return String.format("%s -P;\n", RNGD.getAbsolutePath());
         }
         return "";
     }
