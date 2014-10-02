@@ -221,11 +221,9 @@ public class AppHelper {
      * going crazy and produces apps, which crash at onTransact...
      */
     private static final IPackageStatsObserver.Stub mPkgObs = new IPackageStatsObserver.Stub() {
-        @Override
-        public IBinder asBinder() { return super.asBinder(); }
+        @Override public IBinder asBinder() { return super.asBinder(); }
 
-        @Override
-        public boolean onTransact(int code, Parcel data, Parcel reply, int flags)
+        @Override public boolean onTransact(int code, Parcel data, Parcel reply, int flags)
                 throws RemoteException {
             switch (code) {
                 case INTERFACE_TRANSACTION: {

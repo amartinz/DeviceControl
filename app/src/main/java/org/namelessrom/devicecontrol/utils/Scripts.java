@@ -17,8 +17,6 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-
 /**
  * Defines and runs Scripts.
  */

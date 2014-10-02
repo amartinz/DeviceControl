@@ -24,8 +24,8 @@
 package com.stericson.roottools.internal;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
@@ -1101,8 +1101,15 @@ public final class RootToolsInternalMethods {
             return false;
         }
         final StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
-        final long blockSize = stat.getBlockSizeLong();
-        final long availableBlocks = stat.getAvailableBlocksLong();
+        final long blockSize;
+        final long availableBlocks;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            blockSize = stat.getBlockSizeLong();
+            availableBlocks = stat.getAvailableBlocksLong();
+        } else {
+            blockSize = stat.getBlockSize();
+            availableBlocks = stat.getAvailableBlocks();
+        }
         return (updateSize < availableBlocks * blockSize);
     }
 
