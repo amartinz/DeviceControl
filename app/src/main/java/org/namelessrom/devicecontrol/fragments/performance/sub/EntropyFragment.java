@@ -89,17 +89,6 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         isSupported(mRoot, getActivity());
     }
 
-    private void checkRngStartup() {
-        if (mRngStartup == null) return;
-        if (!Utils.fileExists(RNG_STARTUP_PATH)) {
-            mRngStartup.setTitle(R.string.install_startup_script);
-            mRngStartup.setSummary(R.string.startup_script_not_installed);
-        } else {
-            mRngStartup.setTitle(R.string.remove_startup_script);
-            mRngStartup.setSummary(R.string.startup_script_installed);
-        }
-    }
-
     @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
         if (mRngStartup == preference) {
             final boolean value = (Boolean) o;
@@ -155,10 +144,13 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         if (mRngActive != null) {
             mRngActive.setEnabled(true);
         }
+
         Utils.remount("/system", "rw");
         Utils.getCommandResult(EntropyFragment.this, -1,
                 String.format("cp -f %s %s;\nchmod 755 %s;\n",
                         file.getAbsolutePath(), RNG_PATH, RNG_PATH));
+        // remounting system ro at onShellOutput
+
         mProgressBar.setVisibility(View.GONE);
     }
 
@@ -184,10 +176,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
         if (event == null) return;
 
         final int id = event.getId();
-        if (id == -2) {
-            Utils.remount("/system", "ro");
-            checkRngStartup();
-        } else if (id == -1) {
+        if (id == -1) {
             Utils.remount("/system", "ro");
             AppHelper.getProcess(this, RNG_PATH);
         } else if (id == ID_PGREP) {

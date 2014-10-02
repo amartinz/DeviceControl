@@ -18,7 +18,7 @@
 <resources>
   <string name="app_version_name">Versions-Name: %s</string>
   <string name="app_version_code">Versions-Code: %s</string>
-  <string name="app_information_message">Willkommen zu %1$s!\n\nUm zu starten, wische das Menü aus der linken Seite heraus oder drücke auf die linke obere Ecke!\n\nFalls eine Funktion von deinemGerät nicht unterstützt wird, wird sie automatisch ausgeblendet!\nUnterstützte Funktionen sind abhängig von dem Gerät, der ROM und dem Kernel, den du benutzt.\n\nFalls du keine unterstützten Funktionen hast, versuche einen Custom-Kernel zu benutzen!\n\nBitte beachte, dass Root-Rechte benötigt werden, damit du %2$s in vollen Zügen genießen kannst!</string>
+  <string name="app_information_message">Willkommen zu %1$s!\n\nUm zu starten, wische das Menü aus der linken Seite heraus oder drücke auf die linke obere Ecke!\n\nFalls eine Funktion von deinem Gerät nicht unterstützt wird, wird sie automatisch ausgeblendet!\nUnterstützte Funktionen sind abhängig von dem Gerät, der ROM und dem Kernel, den du benutzt.\n\nFalls du keine unterstützten Funktionen hast, versuche einen Custom-Kernel zu benutzen!\n\nBitte beachte, dass Root-Rechte benötigt werden, damit du %2$s in vollen Zügen genießen kannst!</string>
   <string name="app_warning_root">Bitte beachte, dass %s ein Gerät mit Root-Rechten benötigt, um richtig zu funktionieren!</string>
   <string name="app_warning_busybox">Bitte beachte, dass %s eine BusyBox erfordert, um vollständig zu funktionieren!</string>
   <string name="get_busybox">BusyBox installieren</string>
