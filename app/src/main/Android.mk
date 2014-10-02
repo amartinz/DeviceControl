@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_STATIC_JAVA_LIBRARIES      := acra android-support-v13-r20 android-support-v7-recyclerview-r21 ion otto
+LOCAL_STATIC_JAVA_LIBRARIES      := android-support-v13-r20 android-support-v7-recyclerview-r21 ion otto
 
 LOCAL_ASSET_DIR    := $(LOCAL_PATH)/assets
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res

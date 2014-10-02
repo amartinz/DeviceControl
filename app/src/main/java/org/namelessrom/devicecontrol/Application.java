@@ -26,10 +26,6 @@ import android.os.StrictMode;
 
 import com.stericson.roottools.RootTools;
 
-import org.acra.ACRA;
-import org.acra.ReportingInteractionMode;
-import org.acra.annotation.ReportsCrashes;
-import org.acra.sender.HttpSender;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
@@ -39,18 +35,6 @@ import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
 import java.io.File;
 
-@ReportsCrashes(
-        httpMethod = HttpSender.Method.PUT,
-        reportType = HttpSender.Type.JSON,
-        formKey = "",
-        formUri = "https://reports.nameless-rom.org" +
-                "/acra-devicecontrol/_design/acra-storage/_update/report",
-        formUriBasicAuthLogin = "namelessreporter",
-        formUriBasicAuthPassword = "weareopentoeveryone",
-        mode = ReportingInteractionMode.DIALOG,
-        resToastText = R.string.crash_toast_text,
-        resDialogText = R.string.crash_dialog_text,
-        resDialogOkToast = R.string.crash_dialog_ok_toast)
 public class Application extends android.app.Application implements DeviceConstants {
 
     public static final Handler HANDLER = new Handler();
@@ -61,7 +45,6 @@ public class Application extends android.app.Application implements DeviceConsta
 
     @Override public void onCreate() {
         super.onCreate();
-        ACRA.init(this);
 
         Application.sInstance = this;
 

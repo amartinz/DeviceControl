@@ -14,16 +14,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<manifest
-    package="org.namelessrom.devicecontrol"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    package="org.namelessrom.devicecontrol"
     android:versionCode="84"
     android:versionName="0.6.7">
 
     <uses-sdk tools:node="replace" />
 
-    <!-- ACRA -->
+    <!-- Internet / Networking -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
