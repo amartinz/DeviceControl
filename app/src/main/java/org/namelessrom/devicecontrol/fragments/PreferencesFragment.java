@@ -35,16 +35,16 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.proprietary.Constants;
 import org.namelessrom.devicecontrol.services.BootUpService;
+import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import java.util.ArrayList;
 
@@ -220,7 +220,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
             }).show(getFragmentManager(), "color_picker");
             return true;
         } else if (TextUtils.equals("pref_donate", preference.getKey())) {
-            return Constants.startExternalDonation(getActivity());
+            return AppHelper.startExternalDonation(getActivity());
         } else if (mFlasherConfig == preference) {
             MainActivity.loadFragment(getActivity(), ID_TOOLS_FLASHER_PREFS);
             return true;

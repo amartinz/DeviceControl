@@ -40,7 +40,6 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.negusoft.holoaccent.activity.AccentActivity;
 import com.stericson.roottools.RootTools;
 
-import org.namelessrom.devicecontrol.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.fragments.HomeFragment;
 import org.namelessrom.devicecontrol.fragments.LicenseFragment;
@@ -73,6 +72,7 @@ import org.namelessrom.devicecontrol.fragments.tools.flasher.FlasherPreferencesF
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskListFragment;
 import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
+import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;

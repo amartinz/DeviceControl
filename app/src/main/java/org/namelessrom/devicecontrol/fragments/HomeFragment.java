@@ -24,8 +24,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.views.AttachFragment;
 
 public class HomeFragment extends AttachFragment implements DeviceConstants {
 

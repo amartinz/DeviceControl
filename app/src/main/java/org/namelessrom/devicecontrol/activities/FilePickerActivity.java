@@ -28,12 +28,12 @@ import com.squareup.otto.Subscribe;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.FlashItemEvent;
-import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
+import org.namelessrom.devicecontrol.bus.BusProvider;
+import org.namelessrom.devicecontrol.bus.FlashItemEvent;
 import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
+import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.objects.FlashItem;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 public class FilePickerActivity extends AccentActivity {
 

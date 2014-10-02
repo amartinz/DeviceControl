@@ -25,16 +25,16 @@ import android.text.TextUtils;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.GpuEvent;
-import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.bus.BusProvider;
+import org.namelessrom.devicecontrol.bus.GpuEvent;
+import org.namelessrom.devicecontrol.hardware.GpuUtils;
+import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
-import org.namelessrom.devicecontrol.utils.GpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import static android.opengl.GLES20.GL_EXTENSIONS;
 import static android.opengl.GLES20.GL_RENDERER;

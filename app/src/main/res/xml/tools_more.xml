@@ -16,36 +16,36 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <org.namelessrom.devicecontrol.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
         android:icon="@drawable/ic_general_media_scan"
         android:key="media_scan"
         android:summary="@string/media_scan_summary"
         android:title="@string/media_scan_trigger" />
 
 
-    <org.namelessrom.devicecontrol.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
         android:icon="@drawable/ic_general_app"
         android:key="app_manager"
         android:title="@string/app_manager" />
 
-    <org.namelessrom.devicecontrol.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
         android:icon="@drawable/ic_general_wifi"
         android:key="wireless_file_manager"
         android:title="@string/wireless_file_manager" />
 
     <PreferenceCategory android:title="@string/editors">
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:icon="@drawable/ic_general_editor"
             android:key="build_prop"
             android:title="@string/buildprop" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:icon="@drawable/ic_general_editor"
             android:key="sysctl_vm"
             android:title="@string/sysctl_vm" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="low_memory_killer"
             android:title="@string/low_memory_killer" />
 

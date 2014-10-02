@@ -30,7 +30,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+import org.namelessrom.devicecontrol.bus.BusProvider;
 import org.namelessrom.devicecontrol.wizard.events.ItemSelectedEvent;
 import org.namelessrom.devicecontrol.wizard.model.MultipleFixedChoicePage;
 import org.namelessrom.devicecontrol.wizard.model.Page;

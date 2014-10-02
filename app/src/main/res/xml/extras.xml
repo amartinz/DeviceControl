@@ -21,11 +21,11 @@
         android:key="general"
         android:title="@string/general">
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="entropy"
             android:title="@string/entropy" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="filesystem"
             android:title="@string/filesystem" />
 
@@ -35,16 +35,16 @@
         android:key="kernel_features"
         android:title="@string/kernel_features">
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="ksm"
             android:title="@string/ksm" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:icon="@drawable/ic_general_hotplug"
             android:key="hotplugging"
             android:title="@string/hotplugging" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:icon="@drawable/ic_general_heat"
             android:key="thermal"
             android:title="@string/thermal" />
@@ -55,14 +55,14 @@
         android:key="powersaving"
         android:title="@string/powersaving">
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:key="power_efficient_work"
             android:summary="@string/power_efficient_work_summary"
             android:title="@string/power_efficient_work"
             dc:category="extras"
             dc:filePath="@string/file_power_efficient_workqueue" />
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeListPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference
             android:entries="@array/mc_power_savings_entries"
             android:entryValues="@array/mc_power_savings_values"
             android:key="sched_mc_power_savings"
@@ -76,14 +76,14 @@
         android:key="voltage"
         android:title="@string/voltage">
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:key="msm_dcvs"
             android:summary="@string/msm_dcvs_summary"
             android:title="@string/msm_dcvs"
             dc:category="extras"
             dc:filePath="@string/file_msm_dcvs" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:icon="@drawable/ic_general_voltage"
             android:key="voltage_control"
             android:summary="@string/voltage_control_summary"
@@ -95,7 +95,7 @@
         android:key="extras"
         android:title="@string/extras">
 
-        <org.namelessrom.devicecontrol.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
             android:key="tcp_congestion_control"
             android:title="@string/tcp_congestion_control" />
 

@@ -17,24 +17,24 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <org.namelessrom.devicecontrol.preferences.CustomListPreference
+    <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
         android:key="io"
         android:title="@string/io" />
 
-    <org.namelessrom.devicecontrol.preferences.CustomListPreference
+    <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
         android:entries="@array/read_ahead_entries"
         android:entryValues="@array/read_ahead_values"
         android:key="read_ahead"
         android:title="@string/read_ahead" />
 
-    <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+    <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
         android:key="fsync"
         android:summary="@string/warning_data_corruption_invert"
         android:title="@string/fsync"
         dc:category="extras"
         dc:filePath="@string/file_fsync" />
 
-    <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+    <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
         android:key="dyn_fsync"
         android:summary="@string/warning_data_corruption"
         android:title="@string/dyn_fsync"

@@ -30,8 +30,8 @@ import android.os.RemoteException;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.bus.BusProvider;
 import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
@@ -43,6 +43,9 @@ import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.ID_P
  * Helper class for application interactions like cleaning the cache
  */
 public class AppHelper {
+
+    private static final String DONATE_URL =
+            "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZSN2SW53JJQJY";
 
     public static boolean preventOnResume = false;
 
@@ -259,4 +262,16 @@ public class AppHelper {
         }
     };
 
+    public static boolean startExternalDonation(final Context context) {
+        final Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(DONATE_URL));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            context.startActivity(intent);
+            return true;
+        } catch (Exception exc) {
+            return false;
+        }
+    }
 }

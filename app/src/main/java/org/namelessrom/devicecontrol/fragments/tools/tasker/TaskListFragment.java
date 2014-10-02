@@ -33,16 +33,16 @@ import android.widget.CompoundButton;
 import com.negusoft.holoaccent.widget.AccentSwitch;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.adapters.TaskerAdapter;
-import org.namelessrom.devicecontrol.cards.TaskerCard;
+import org.namelessrom.devicecontrol.bus.BusProvider;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.services.TaskerService;
+import org.namelessrom.devicecontrol.ui.adapters.TaskerAdapter;
+import org.namelessrom.devicecontrol.ui.cards.TaskerCard;
+import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.views.AttachFragment;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
 import java.util.ArrayList;

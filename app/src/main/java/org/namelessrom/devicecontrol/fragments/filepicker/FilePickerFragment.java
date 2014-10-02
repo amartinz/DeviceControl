@@ -24,14 +24,14 @@ import android.view.View;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.events.FlashItemEvent;
-import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.bus.BusProvider;
+import org.namelessrom.devicecontrol.bus.FlashItemEvent;
+import org.namelessrom.devicecontrol.bus.ShellOutputEvent;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.objects.FlashItem;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 import java.io.File;
 import java.util.ArrayList;

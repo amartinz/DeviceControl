@@ -31,9 +31,9 @@ import android.widget.TextView;
 import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.bus.BusProvider;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 import org.namelessrom.devicecontrol.wizard.TaskerWizardModel;
 import org.namelessrom.devicecontrol.wizard.events.SaveTaskEvent;
 import org.namelessrom.devicecontrol.wizard.model.AbstractWizardModel;

@@ -39,15 +39,15 @@ import com.squareup.otto.Subscribe;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.FilePickerActivity;
-import org.namelessrom.devicecontrol.adapters.FlashListAdapter;
-import org.namelessrom.devicecontrol.cards.FlasherCard;
-import org.namelessrom.devicecontrol.events.RefreshEvent;
+import org.namelessrom.devicecontrol.bus.BusProvider;
+import org.namelessrom.devicecontrol.bus.RefreshEvent;
 import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
 import org.namelessrom.devicecontrol.objects.FlashItem;
+import org.namelessrom.devicecontrol.ui.adapters.FlashListAdapter;
+import org.namelessrom.devicecontrol.ui.cards.FlasherCard;
+import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.FlashUtils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.views.AttachFragment;
 
 import java.util.ArrayList;
 

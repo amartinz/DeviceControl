@@ -17,13 +17,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <org.namelessrom.devicecontrol.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
         android:icon="@drawable/ic_general_battery"
         android:key="fast_charge"
         android:summary="@string/fast_charge_summary"
         android:title="@string/fast_charge" />
 
-    <org.namelessrom.devicecontrol.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
         android:icon="@drawable/ic_general_sound"
         android:key="sound_control"
         android:title="@string/sound_control" />
@@ -32,7 +32,7 @@
         android:key="input_gestures"
         android:title="@string/gestures">
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:defaultValue="false"
             android:key="knockon_gesture_enable"
             android:summary="@string/knock_on_summary"
@@ -46,7 +46,7 @@
         android:key="input_others"
         android:title="@string/others">
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:defaultValue="false"
             android:key="input_glove_mode_aw"
             android:summary="@string/glove_mode_summary"
@@ -54,12 +54,12 @@
             dc:category="device"
             dc:filePathList="@array/files_glove_mode" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="input_glove_mode"
             android:summary="@string/glove_mode_summary"
             android:title="@string/glove_mode" />
 
-        <org.namelessrom.devicecontrol.preferences.VibratorTuningPreference
+        <org.namelessrom.devicecontrol.ui.preferences.VibratorTuningPreference
             android:dialogTitle="@string/vibrator_strength"
             android:key="vibrator_tuning"
             android:summary="@string/vibrator_strength_summary"
@@ -72,7 +72,7 @@
         android:title="@string/touchkey">
 
         <!-- Touchkey backlight -->
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:defaultValue="true"
             android:key="touchkey_light"
             android:summary="@string/enable_keys_backlight_summary"
@@ -82,7 +82,7 @@
             dc:multifile="true"
             dc:valueChecked="255" />
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:defaultValue="true"
             android:key="touchkey_bln"
             android:summary="@string/enable_keys_notifications_summary"
@@ -90,7 +90,7 @@
             dc:category="device"
             dc:filePath="@string/file_touchkey_bln" />
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:defaultValue="true"
             android:key="keyboard_light"
             android:summary="@string/enable_keyboard_backlight_summary"
@@ -105,7 +105,7 @@
         android:key="graphics"
         android:title="@string/display">
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:defaultValue="false"
             android:key="lcd_power_reduce"
             android:summary="@string/lcd_power_reduce_summary"
@@ -113,7 +113,7 @@
             dc:category="device"
             dc:filePathList="@array/files_lcd_power_reduce" />
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:defaultValue="false"
             android:key="lcd_sunlight_enhancement"
             android:summary="@string/sunlight_enhancement_summary"
@@ -121,14 +121,14 @@
             dc:category="device"
             dc:filePathList="@array/files_lcd_sunlight_enhancement" />
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:defaultValue="false"
             android:key="lcd_color_enhancement"
             android:title="@string/color_enhancement"
             dc:category="device"
             dc:filePathList="@array/files_lcd_color_enhancement" />
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeListPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference
             android:defaultValue="2"
             android:entries="@array/panel_color_temp_entries"
             android:entryValues="@array/panel_color_temp_entries_values"
@@ -144,7 +144,7 @@
         android:key="extras"
         android:title="@string/extras">
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:defaultValue="false"
             android:key="logger_mode"
             android:summary="@string/logger_mode_summary"

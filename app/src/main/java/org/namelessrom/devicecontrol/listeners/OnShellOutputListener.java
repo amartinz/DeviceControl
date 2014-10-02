@@ -17,7 +17,7 @@
  */
 package org.namelessrom.devicecontrol.listeners;
 
-import org.namelessrom.devicecontrol.events.ShellOutputEvent;
+import org.namelessrom.devicecontrol.bus.ShellOutputEvent;
 
 public interface OnShellOutputListener {
     public void onShellOutput(final ShellOutputEvent shellOutput);

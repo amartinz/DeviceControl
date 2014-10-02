@@ -21,23 +21,23 @@
         android:key="ksm_info"
         android:title="@string/information">
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="ksm_full_scans"
             android:title="@string/full_scans" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="ksm_pages_shared"
             android:title="@string/pages_shared" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="ksm_pages_sharing"
             android:title="@string/pages_sharing" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="ksm_pages_unshared"
             android:title="@string/pages_unshared" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="ksm_pages_volatile"
             android:title="@string/pages_volatile" />
 
@@ -47,14 +47,14 @@
         android:key="ksm_settings"
         android:title="@string/ksm">
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:key="ksm_run"
             android:title="@string/enable_ksm"
             android:summary="@string/enable_ksm_summary"
             dc:filePath="@string/file_ksm_run"
             dc:category="extras" />
 
-        <org.namelessrom.devicecontrol.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:key="ksm_deferred"
             android:title="@string/deferred_timer"
             android:summary="@string/deferred_timer_summary"
@@ -62,12 +62,12 @@
             dc:filePath="@string/file_ksm_deferred"
             dc:category="extras" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="ksm_pages_to_scan"
             android:title="@string/pages_to_scan"
             android:dependency="ksm_run" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="ksm_sleep"
             android:title="@string/ksm_sleep"
             android:dependency="ksm_run" />

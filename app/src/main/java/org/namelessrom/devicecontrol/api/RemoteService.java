@@ -24,14 +24,14 @@ import android.os.RemoteException;
 
 import com.squareup.otto.Subscribe;
 
-import org.namelessrom.devicecontrol.events.CpuFreqEvent;
-import org.namelessrom.devicecontrol.events.GovernorEvent;
-import org.namelessrom.devicecontrol.events.GpuEvent;
-import org.namelessrom.devicecontrol.utils.ActionProcessor;
-import org.namelessrom.devicecontrol.utils.CpuUtils;
-import org.namelessrom.devicecontrol.utils.GpuUtils;
+import org.namelessrom.devicecontrol.bus.BusProvider;
+import org.namelessrom.devicecontrol.bus.CpuFreqEvent;
+import org.namelessrom.devicecontrol.bus.GovernorEvent;
+import org.namelessrom.devicecontrol.bus.GpuEvent;
+import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.objects.MemoryInfo;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
+import org.namelessrom.devicecontrol.utils.ActionProcessor;
 
 import java.util.Arrays;
 import java.util.List;

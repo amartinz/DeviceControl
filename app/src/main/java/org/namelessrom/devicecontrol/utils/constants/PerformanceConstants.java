@@ -126,7 +126,7 @@ public interface PerformanceConstants {
     //==============================================================================================
     // Files
     //==============================================================================================
-    public static final String MPDECISION_PATH  = "/system/bin/mpdecision";
+    public static final String MPDECISION_PATH = "/system/bin/mpdecision";
 
     //==============================================================================================
     public static final String RNG_PATH         = "/system/bin/rngd";

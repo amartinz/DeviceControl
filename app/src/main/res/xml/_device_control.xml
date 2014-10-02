@@ -20,7 +20,7 @@
         android:key="prefs_app"
         android:title="@string/app_name">
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="pref_donate"
             android:summary="@string/donate_summary"
             android:title="@string/donate" />
@@ -31,7 +31,7 @@
         android:key="prefs_tools"
         android:title="@string/tools">
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:icon="@drawable/ic_menu_flash"
             android:key="flasher_prefs"
             android:title="@string/flasher" />
@@ -42,17 +42,17 @@
         android:key="prefs_general"
         android:title="@string/general">
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="prefs_set_on_boot"
             android:summary="@string/reapply_on_boot_summary"
             android:title="@string/reapply_on_boot" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="show_launcher"
             android:summary="@string/show_launcher_summary"
             android:title="@string/show_launcher" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="skip_checks"
             android:summary="@string/skip_checks_summary"
             android:title="@string/skip_checks" />
@@ -63,17 +63,17 @@
         android:key="prefs_interface"
         android:title="@string/user_interface">
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="pref_color"
             android:summary="@string/accent_summary"
             android:title="@string/accent" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="dark_theme"
             android:summary="@string/dark_theme_summary"
             android:title="@string/dark_theme" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="swipe_on_content"
             android:summary="@string/swipe_on_content_summary"
             android:title="@string/swipe_on_content" />
@@ -84,7 +84,7 @@
         android:key="prefs_debug"
         android:title="@string/debugging">
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="extensive_logging"
             android:summaryOff="@string/extensive_logging_summary_off"
             android:summaryOn="@string/extensive_logging_summary_on"
@@ -96,7 +96,7 @@
         android:key="prefs_version_cat"
         android:title="@string/version">
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="prefs_version"
             android:summary="@string/empty"
             android:title="@string/empty" />

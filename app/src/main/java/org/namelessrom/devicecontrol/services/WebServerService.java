@@ -33,12 +33,12 @@ import com.koushikdutta.async.http.server.AsyncHttpServer;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.server.ServerStoppedEvent;
-import org.namelessrom.devicecontrol.events.server.ServerStoppingEvent;
+import org.namelessrom.devicecontrol.bus.BusProvider;
+import org.namelessrom.devicecontrol.bus.server.ServerStoppedEvent;
+import org.namelessrom.devicecontrol.bus.server.ServerStoppingEvent;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
 import org.namelessrom.devicecontrol.net.ServerWrapper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
 
 public class WebServerService extends Service {
 

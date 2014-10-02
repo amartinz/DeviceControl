@@ -29,18 +29,18 @@ import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.events.server.ServerStoppedEvent;
-import org.namelessrom.devicecontrol.events.server.ServerStoppingEvent;
+import org.namelessrom.devicecontrol.bus.BusProvider;
+import org.namelessrom.devicecontrol.bus.server.ServerStoppedEvent;
+import org.namelessrom.devicecontrol.bus.server.ServerStoppingEvent;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
-import org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference;
-import org.namelessrom.devicecontrol.preferences.CustomEditTextPreference;
-import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.services.WebServerService;
+import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.providers.BusProvider;
-import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 public class WirelessFileManagerFragment extends AttachPreferenceFragment
         implements DeviceConstants, Preference.OnPreferenceChangeListener,

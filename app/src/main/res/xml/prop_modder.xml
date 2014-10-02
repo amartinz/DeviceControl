@@ -17,14 +17,14 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <org.namelessrom.devicecontrol.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
         android:key="pref_full_editor"
         android:title="@string/full_editor" />
 
     <PreferenceCategory
         android:title="@string/performance_settings_warning_header">
 
-        <org.namelessrom.devicecontrol.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:title="@string/performance_settings_warning_title"
             android:summary="@string/buildprop_settings_warning" />
 
@@ -34,7 +34,7 @@
         android:key="general_category"
         android:title="@string/buildprop_title">
 
-        <org.namelessrom.devicecontrol.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
             android:key="pref_wifi_scan_interval"
             android:dialogTitle="@string/wifi_scan_interval_title"
             android:title="@string/wifi_scan_interval_title"
@@ -43,7 +43,7 @@
             android:entryValues="@array/entries_wifi_scan"
             android:persistent="false" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
             android:key="pref_sleep"
             android:dialogTitle="@string/sleep_title"
             android:title="@string/sleep_title"
@@ -52,7 +52,7 @@
             android:entryValues="@array/entries_sleep"
             android:persistent="false" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
             android:key="pref_vm_heapsize"
             android:dialogTitle="@string/vm_heapsize_title"
             android:title="@string/vm_heapsize_title"
@@ -61,7 +61,7 @@
             android:entryValues="@array/entries_vm_heapsize"
             android:persistent="false" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
             android:key="pref_max_events"
             android:dialogTitle="@string/max_events_title"
             android:title="@string/max_events_title"
@@ -70,7 +70,7 @@
             android:entryValues="@array/entries_max_events"
             android:persistent="false" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
             android:key="pref_ring_delay"
             android:dialogTitle="@string/ring_delay_title"
             android:title="@string/ring_delay_title"
@@ -79,7 +79,7 @@
             android:entryValues="@array/entries_ring_delay"
             android:persistent="false" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
             android:key="pref_fast_up"
             android:dialogTitle="@string/fast_up_title"
             android:title="@string/fast_up_title"
@@ -88,7 +88,7 @@
             android:entryValues="@array/entries_fast_up"
             android:persistent="false" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
             android:key="pref_prox_delay"
             android:dialogTitle="@string/prox_delay_title"
             android:title="@string/prox_delay_title"
@@ -97,7 +97,7 @@
             android:entryValues="@array/entries_prox_delay"
             android:persistent="false" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomEditTextPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
             android:key="pref_lcd_density"
             android:dialogTitle="@string/lcd_density"
             android:title="@string/lcd_density"
@@ -111,25 +111,25 @@
     <PreferenceCategory
         android:title="@string/switches">
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="pref_g_speed"
             android:title="@string/g_speed_title"
             android:summary="@string/g_speed_summary"
             android:persistent="false" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="pref_tcp_stack"
             android:title="@string/tcp_stack_title"
             android:summary="@string/tcp_stack_summary"
             android:persistent="false" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="pref_jit"
             android:title="@string/jit_title"
             android:summary="@string/jit_summary"
             android:persistent="false" />
 
-        <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="pref_gpu"
             android:title="@string/gpu_acceleration"
             android:summary="@string/gpu_acceleration_summary"

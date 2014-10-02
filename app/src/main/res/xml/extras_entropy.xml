@@ -16,15 +16,15 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <org.namelessrom.devicecontrol.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
         android:key="entropy_avail"
         android:title="@string/entropy_avail" />
 
-    <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+    <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
         android:key="rng_active"
         android:title="@string/rng_active" />
 
-    <org.namelessrom.devicecontrol.preferences.CustomCheckBoxPreference
+    <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
         android:key="rng_startup"
         android:title="@string/reapply_on_boot" />
 
