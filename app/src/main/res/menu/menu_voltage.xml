@@ -18,12 +18,12 @@
 
     <item
         android:id="@+id/action_plus"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/menu_plus">
     </item>
     <item
         android:id="@+id/action_minus"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/menu_minus">
     </item>
 

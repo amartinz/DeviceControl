@@ -180,6 +180,14 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
     }
 
     private class ReviewAdapter extends BaseAdapter {
+
+        private final LayoutInflater inflater;
+
+        public ReviewAdapter() {
+            super();
+            inflater = LayoutInflater.from(getActivity());
+        }
+
         @Override
         public boolean hasStableIds() {
             return true;
@@ -212,25 +220,42 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
 
         @Override
         public View getView(int position, View view, ViewGroup container) {
-            LayoutInflater inflater = LayoutInflater.from(getActivity());
-            View rootView = inflater.inflate(R.layout.wizard_list_item_review, container, false);
+            final ViewHolder viewHolder;
+            if (view == null) {
+                view = inflater.inflate(R.layout.wizard_list_item_review, container, false);
 
-            ReviewItem reviewItem = mCurrentReviewItems.get(position);
+                viewHolder = new ViewHolder(view);
+                view.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) view.getTag();
+            }
+
+            final ReviewItem reviewItem = mCurrentReviewItems.get(position);
+
             String value = reviewItem.getDisplayValue();
             if (TextUtils.isEmpty(value)) {
                 value = "(None)";
             }
-            ((TextView) ButterKnife.findById(rootView, android.R.id.text1))
-                    .setText(reviewItem.getTitle());
-            ((TextView) ButterKnife.findById(rootView, android.R.id.text2))
-                    .setText(value);
 
-            return rootView;
+            viewHolder.title.setText(reviewItem.getTitle());
+            viewHolder.value.setText(value);
+
+            return view;
         }
 
         @Override
         public int getCount() {
             return mCurrentReviewItems.size();
+        }
+
+        private class ViewHolder {
+            private final TextView title;
+            private final TextView value;
+
+            public ViewHolder(final View v) {
+                title = (TextView) v.findViewById(android.R.id.text1);
+                value = (TextView) v.findViewById(android.R.id.text2);
+            }
         }
     }
 }

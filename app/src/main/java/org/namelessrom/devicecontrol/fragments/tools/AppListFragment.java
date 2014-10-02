@@ -175,6 +175,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
         // if the user hit refresh
         if (id == R.id.menu_action_refresh) {
+            // TODO: animate?
             if (mDetailsShowing || startedFromActivity) {
                 refreshAppDetails();
             } else {
@@ -512,13 +513,11 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
         final CommandCapture commandCapture =
                 new CommandCapture(new DisableHandler(mAppItem), cmd) {
-                    @Override
-                    public void commandCompleted(int id, int exitcode) {
+                    @Override public void commandCompleted(int id, int exitcode) {
                         super.commandCompleted(id, exitcode);
                     }
 
-                    @Override
-                    public void commandTerminated(int id, String reason) {
+                    @Override public void commandTerminated(int id, String reason) {
                         BusProvider.getBus().post(new ShellOutputEvent(-1, ""));
                     }
                 };

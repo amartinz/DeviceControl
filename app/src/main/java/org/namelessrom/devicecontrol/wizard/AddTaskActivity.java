@@ -217,7 +217,7 @@ public class AddTaskActivity extends AccentActivity implements
             mNextButton.setText(mEditingAfterReview
                     ? R.string.review
                     : R.string.next);
-            mNextButton.setBackgroundResource(R.drawable.selectable_item_background);
+            mNextButton.setBackgroundResource(0);
             mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
         }
 

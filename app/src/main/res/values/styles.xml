@@ -24,4 +24,83 @@
         <item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
     </style>
 
+    <!-- Base application theme. -->
+    <style name="BaseTheme" parent="BaseThemeLight" />
+
+    <style name="BaseThemeDark" parent="Theme.HoloAccent">
+        <item name="android:actionBarStyle">@style/ActionBarStyleDark</item>
+        <item name="themeColor">@android:color/background_dark</item>
+    </style>
+
+    <style name="BaseThemeLight" parent="Theme.HoloAccent.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/ActionBarStyleLight</item>
+        <item name="android:windowBackground">@color/grey_dark</item>
+        <item name="themeColor">@color/grey_dark</item>
+    </style>
+
+    <style name="NoActionBar" parent="@android:style/Theme.Holo.Light.NoActionBar">
+        <!-- Customize ads aag kjasdgjkb asdf weu here -->
+    </style>
+
+    <style name="ActionBarStyleDark" parent="android:Widget.Holo.ActionBar.Solid">
+        <item name="android:displayOptions">showTitle</item>
+    </style>
+
+    <style name="ActionBarStyleLight" parent="android:Widget.Holo.ActionBar.Solid">
+        <item name="android:displayOptions">showTitle</item>
+        <item name="android:titleTextStyle">
+            @android:style/TextAppearance.Holo.Widget.ActionBar.Title.Inverse
+        </item>
+    </style>
+
+    <style name="ActionButtonStyle" parent="android:Widget.Holo.ActionButton">
+        <item name="android:background">@drawable/action_bar_item_background</item>
+    </style>
+
+    <style name="OverflowButtonStyle" parent="android:Widget.Holo.ActionButton.Overflow">
+        <item name="android:background">@drawable/action_bar_item_background</item>
+    </style>
+
+    <style name="StandardDivider">
+        <item name="android:id">@id/divider</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">2dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:background">?android:attr/dividerHorizontal</item>
+    </style>
+
+    <style name="BigDivider" parent="StandardDivider">
+        <item name="android:layout_height">4dp</item>
+    </style>
+
+    <style name="VerticalDivider">
+        <item name="android:id">@id/divider</item>
+        <item name="android:layout_width">2dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:background">?android:attr/dividerVertical</item>
+    </style>
+
+    <style name="ButtonBarDivider">
+        <item name="android:id">@id/divider</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">1dp</item>
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="CustomDialog" parent="Theme.HoloAccent.Light">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

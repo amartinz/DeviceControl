@@ -51,7 +51,6 @@
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:background="@drawable/selectable_item_background"
             android:id="@+id/prev_button"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -60,7 +59,6 @@
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:background="@drawable/selectable_item_background"
             android:id="@+id/next_button"
             android:layout_width="0dp"
             android:layout_weight="1"
