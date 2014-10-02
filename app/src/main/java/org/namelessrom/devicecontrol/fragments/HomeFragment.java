@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -37,8 +38,13 @@ public class HomeFragment extends AttachFragment implements DeviceConstants {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         final String appname = getString(R.string.app_name);
-        ((TextView) view.findViewById(R.id.help_textview))
-                .setText(getString(R.string.app_information_message, appname, appname));
+
+        final TextView welcome = (TextView) view.findViewById(R.id.welcomeTxtView);
+        welcome.setText(getString(R.string.app_welcome, appname));
+        welcome.setTextColor(Application.get().getAccentColor());
+
+        final TextView details = (TextView) view.findViewById(R.id.detailsTxtView);
+        details.setText(getString(R.string.app_welcome_message, appname));
 
         return view;
     }

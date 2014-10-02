@@ -26,7 +26,7 @@
         android:defaultValue="8080"
         android:inputType="number" />
 
-    <PreferenceCategory android:title="@string/authentication">
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/authentication">
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="wfm_auth"
@@ -48,15 +48,15 @@
             android:inputType="textPassword"
             android:dependency="wfm_auth" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory android:title="@string/extras">
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/extras">
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="wfm_root"
             android:title="@string/wfm_root"
             android:defaultValue="false" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

@@ -129,11 +129,10 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
         //category = (PreferenceCategory) findPreference("prefs_interface");
         mColorPreference = (CustomPreference) findPreference("pref_color");
-        mColorPreference.setSummaryColor(PreferenceHelper.getInt("pref_color",
-                getResources().getColor(R.color.accent)));
+        mColorPreference.setSummaryColor(Application.get().getAccentColor());
 
         mDarkTheme = (CustomCheckBoxPreference) findPreference("dark_theme");
-        mDarkTheme.setChecked(PreferenceHelper.getBoolean(mDarkTheme.getKey(), false));
+        mDarkTheme.setChecked(PreferenceHelper.getBoolean(mDarkTheme.getKey(), true));
         mDarkTheme.setOnPreferenceChangeListener(this);
 
         mSwipeOnContent = (CustomCheckBoxPreference) findPreference("swipe_on_content");
@@ -198,9 +197,17 @@ public class PreferencesFragment extends AttachPreferenceFragment
             MainActivity.setSwipeOnContent(value);
             return true;
         } else if (mDarkTheme == preference) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(mDarkTheme.getKey(), value);
-            mDarkTheme.setChecked(value);
+            final boolean isDark = (Boolean) newValue;
+            Application.get().setDarkTheme(isDark);
+            PreferenceHelper.setBoolean(mDarkTheme.getKey(), isDark);
+            mDarkTheme.setChecked(isDark);
+
+            if (isDark) {
+                Application.get().setAccentColor(getResources().getColor(R.color.accent));
+            } else {
+                Application.get().setAccentColor(getResources().getColor(R.color.accent_light));
+            }
+            PreferenceHelper.setInt("pref_color", Application.get().getAccentColor());
 
             // restart the activity to apply new theme
             Utils.restartActivity(getActivity());

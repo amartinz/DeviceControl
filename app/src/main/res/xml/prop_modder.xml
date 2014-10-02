@@ -21,16 +21,16 @@
         android:key="pref_full_editor"
         android:title="@string/full_editor" />
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:title="@string/performance_settings_warning_header">
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:title="@string/performance_settings_warning_title"
             android:summary="@string/buildprop_settings_warning" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="general_category"
         android:title="@string/buildprop_title">
 
@@ -107,9 +107,9 @@
             android:persistent="false"
             android:inputType="number" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:title="@string/switches">
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
@@ -130,6 +130,6 @@
             android:summary="@string/gpu_acceleration_summary"
             android:persistent="false" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

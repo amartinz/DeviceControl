@@ -68,6 +68,8 @@
     </declare-styleable>
     <!-- theme color -->
     <attr name="themeColor" format="reference|color" />
+    <attr name="themeColorInvert" format="reference|color" />
+    <attr name="themeMenu" format="reference|color" />
     <!-- NumberProgressBar -->
     <attr name="numberProgressBarStyle" format="reference" />
     <declare-styleable name="NumberProgressBar">

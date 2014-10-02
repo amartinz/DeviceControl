@@ -22,7 +22,6 @@ import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.R;
 
 /**
  * Helps with ddddddrawwabllessr5hhwr5hbwb
@@ -39,8 +38,7 @@ public class DrawableHelper {
     }
 
     public static void applyAccentColorFilter(final Drawable drawable) {
-        applyColorFilter(drawable,
-                PreferenceHelper.getInt("pref_color", Application.get().getColor(R.color.accent)));
+        applyColorFilter(drawable, Application.get().getAccentColor());
     }
 
 }

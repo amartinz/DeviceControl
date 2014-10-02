@@ -59,7 +59,7 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
     // Overridden Methods
     //==============================================================================================
 
-    @Override protected int getFragmentId() { return ID_DEVICE; }
+    @Override protected int getFragmentId() { return ID_DEVICE_INFORMATION; }
 
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

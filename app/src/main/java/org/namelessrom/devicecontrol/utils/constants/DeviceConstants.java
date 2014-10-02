@@ -40,7 +40,7 @@ public interface DeviceConstants {
     public static final int ID_DUMMY = -5;
 
     //----------------------------------------------------------------------------------------------
-    public static final int ID_DEVICE                   = R.string.device;
+    public static final int ID_DEVICE_INFORMATION       = R.string.device_information;
     public static final int ID_FEATURES                 = R.string.features;
     public static final int ID_FAST_CHARGE              = ID_FEATURES + 1000;
     public static final int ID_SOUND_CONTROL            = ID_FEATURES + 1100;

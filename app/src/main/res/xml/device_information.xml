@@ -16,31 +16,31 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="platform"
         android:title="@string/platform_information" />
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="runtime"
         android:title="@string/runtime" />
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="device_information"
         android:title="@string/device_information" />
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="processor"
         android:title="@string/processor" />
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="kernel"
         android:title="@string/kernel" />
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="memory"
         android:title="@string/memory" />
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="sensors"
         android:title="@string/sensors" />
 

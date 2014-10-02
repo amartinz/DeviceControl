@@ -24,7 +24,7 @@
         dc:filePathList="@array/files_core_control"
         dc:category="extras" />
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="msm_thermal"
         android:title="@string/msm_thermal">
 
@@ -55,9 +55,9 @@
             android:title="@string/core_min"
             android:inputType="number" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="intelli_thermal"
         android:title="@string/intelli_thermal">
 
@@ -68,6 +68,6 @@
             dc:filePath="@string/file_intelli_thermal"
             dc:category="extras" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

@@ -16,7 +16,7 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="prefs_app"
         android:title="@string/app_name">
 
@@ -25,9 +25,9 @@
             android:summary="@string/donate_summary"
             android:title="@string/donate" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="prefs_tools"
         android:title="@string/tools">
 
@@ -36,9 +36,9 @@
             android:key="flasher_prefs"
             android:title="@string/flasher" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="prefs_general"
         android:title="@string/general">
 
@@ -57,9 +57,9 @@
             android:summary="@string/skip_checks_summary"
             android:title="@string/skip_checks" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="prefs_interface"
         android:title="@string/user_interface">
 
@@ -78,9 +78,9 @@
             android:summary="@string/swipe_on_content_summary"
             android:title="@string/swipe_on_content" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="prefs_debug"
         android:title="@string/debugging">
 
@@ -90,9 +90,9 @@
             android:summaryOn="@string/extensive_logging_summary_on"
             android:title="@string/extensive_logging" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="prefs_version_cat"
         android:title="@string/version">
 
@@ -101,7 +101,7 @@
             android:summary="@string/empty"
             android:title="@string/empty" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>
 

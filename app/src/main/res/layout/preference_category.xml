@@ -16,34 +16,28 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_container"
-    android:background="?android:attr/activatedBackgroundIndicator"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    tools:background="@android:color/black">
-
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:scaleType="fitCenter"
-        tools:src="@drawable/ic_menu_perf_cpu" />
+    android:orientation="vertical">
 
     <TextView
-        android:id="@android:id/text1"
-        android:layout_width="wrap_content"
+        android:id="@android:id/title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
         android:fontFamily="@string/font_light"
-        android:textSize="16sp"
-        android:textColor="?themeColorInvert"
-        tools:text="@string/cpusettings"
-        tools:textColor="@android:color/white" />
+        android:layout_marginTop="4dp"
+        android:paddingStart="0dp"
+        android:paddingLeft="0dp"
+        android:paddingEnd="0dp"
+        android:paddingRight="0dp"
+        android:textSize="20sp"
+        tools:text="Performance"
+        tools:textColor="@color/accent" />
+
+    <View
+        android:id="@+id/category_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        tools:background="@color/accent" />
 
 </LinearLayout>

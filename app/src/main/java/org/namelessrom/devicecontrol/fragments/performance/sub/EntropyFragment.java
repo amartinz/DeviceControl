@@ -144,6 +144,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
                                 }
 
                                 setRngdPermissions();
+                                AppHelper.getProcess(EntropyFragment.this, RNGD.getAbsolutePath());
 
                                 mProgressBar.setVisibility(View.GONE);
                             }

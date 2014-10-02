@@ -24,7 +24,7 @@
         android:summaryOff="@string/mpdecision_summary_off"
         android:defaultValue="false" />
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="intelli_plug"
         android:title="@string/intelli_plug">
 
@@ -46,9 +46,9 @@
             dc:filePath="@string/file_eco_mode_active"
             dc:category="extras" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="cpu_quiet"
         android:title="@string/cpu_quiet" />
 

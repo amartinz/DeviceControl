@@ -28,7 +28,7 @@
         android:key="sound_control"
         android:title="@string/sound_control" />
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="input_gestures"
         android:title="@string/gestures">
 
@@ -40,9 +40,9 @@
             dc:category="device"
             dc:filePathList="@array/files_knock_on" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="input_others"
         android:title="@string/others">
 
@@ -65,9 +65,9 @@
             android:summary="@string/vibrator_strength_summary"
             android:title="@string/vibrator_strength" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="touchkey"
         android:title="@string/touchkey">
 
@@ -99,9 +99,9 @@
             dc:filePath="@string/file_keyboard_light"
             dc:valueChecked="255" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="graphics"
         android:title="@string/display">
 
@@ -138,9 +138,9 @@
             dc:category="device"
             dc:filePathList="@array/files_panel_color_temp" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="extras"
         android:title="@string/extras">
 
@@ -152,6 +152,6 @@
             dc:category="device"
             dc:filePath="@string/file_logger_mode" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

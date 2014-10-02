@@ -27,6 +27,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
@@ -96,9 +97,7 @@ public class MenuListArrayAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) v.getTag();
         }
 
-        final int defaultColor = mContext.getResources().getColor(R.color.menu_color);
         if (type == 0) {
-            viewHolder.title.setTextColor(defaultColor);
             viewHolder.title.setText(mTitles[position]);
 
             final int imageRes = mIcons[position];
@@ -114,7 +113,7 @@ public class MenuListArrayAdapter extends BaseAdapter {
         } else if (type == 1) {
             viewHolder.header.setText(mTitles[position]);
             viewHolder.header.setClickable(false);
-            viewHolder.header.setTextColor(defaultColor);
+            viewHolder.header.setTextColor(Application.get().getAccentColor());
         }
 
         return v;

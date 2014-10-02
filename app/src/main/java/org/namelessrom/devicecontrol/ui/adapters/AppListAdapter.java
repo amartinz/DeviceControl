@@ -30,21 +30,18 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.listeners.OnAppChoosenListener;
 import org.namelessrom.devicecontrol.objects.AppItem;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 import java.util.List;
 
 public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
-
     private final Resources res = Application.get().getResources();
+
     private final List<AppItem>        mAppList;
     private final OnAppChoosenListener mAppChoosenListener;
-    private final boolean              isDarkTheme;
 
     public AppListAdapter(final OnAppChoosenListener listener, final List<AppItem> appList) {
         this.mAppChoosenListener = listener;
         this.mAppList = appList;
-        this.isDarkTheme = PreferenceHelper.getBoolean("dark_theme", false);
     }
 
     public static final class ViewHolder extends RecyclerView.ViewHolder {
@@ -82,7 +79,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         viewHolder.appLabel.setText(appItem.getLabel());
         viewHolder.packageName.setText(appItem.getPackageName());
 
-        final int color = isDarkTheme ? Color.WHITE : Color.BLACK;
+        final int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
         viewHolder.appLabel.setTextColor(appItem.isSystemApp() ? res.getColor(R.color.red_middle)
                 : color);
         viewHolder.layer.setVisibility(appItem.isEnabled() ? View.INVISIBLE : View.VISIBLE);

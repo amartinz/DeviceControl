@@ -103,7 +103,7 @@ public class MainActivity extends AccentActivity
 
     private static final int[] MENU_ENTRIES = {
             R.string.device,        // Device
-            ID_DEVICE,
+            ID_DEVICE_INFORMATION,
             ID_FEATURES,
             R.string.performance,   // Performance
             ID_PERFORMANCE_INFO,
@@ -148,8 +148,7 @@ public class MainActivity extends AccentActivity
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final boolean isDarkTheme = PreferenceHelper.getBoolean("dark_theme", false);
-        setTheme(isDarkTheme ? R.style.BaseThemeDark : R.style.BaseThemeLight);
+        setTheme(Application.get().isDarkTheme() ? R.style.BaseThemeDark : R.style.BaseThemeLight);
 
         setContentView(R.layout.activity_main);
 
@@ -178,7 +177,8 @@ public class MainActivity extends AccentActivity
         sSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
         sSlidingMenu.setShadowDrawable(R.drawable.shadow);
         sSlidingMenu.setBehindWidthRes(R.dimen.slidingmenu_offset);
-        sSlidingMenu.setFadeDegree(0.35f);
+        sSlidingMenu.setFadeEnabled(true);
+        sSlidingMenu.setFadeDegree(0.45f);
         sSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         sSlidingMenu.setMenu(v);
 
@@ -358,7 +358,7 @@ public class MainActivity extends AccentActivity
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_DEVICE:
+            case ID_DEVICE_INFORMATION:
                 if (!onResume) mCurrentFragment = new DeviceInformationFragment();
                 mTitle = mFragmentTitle = R.string.device;
                 mSubFragmentTitle = -1;

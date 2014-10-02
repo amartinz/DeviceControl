@@ -20,7 +20,7 @@
         android:key="pref_full_editor"
         android:title="@string/full_editor" />
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="vm_settings"
         android:title="@string/vm_settings">
 
@@ -55,6 +55,6 @@
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="pref_vfs"
             android:title="@string/vfs_title" />
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

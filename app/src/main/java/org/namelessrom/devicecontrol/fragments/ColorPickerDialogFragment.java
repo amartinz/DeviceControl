@@ -12,6 +12,7 @@ import com.larswerkman.holocolorpicker.SaturationBar;
 import com.larswerkman.holocolorpicker.ValueBar;
 import com.negusoft.holoaccent.dialog.AccentDialogFragment;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -35,7 +36,7 @@ public class ColorPickerDialogFragment extends AccentDialogFragment {
         final View v = inflater.inflate(R.layout.dialog_color_picker, container, false);
 
         final int defaultColor = getResources().getColor(R.color.accent);
-        final int color = PreferenceHelper.getInt("pref_color", defaultColor);
+        final int color = Application.get().getAccentColor();
 
         final SaturationBar saturationBar = (SaturationBar) v.findViewById(R.id.saturation);
         final ValueBar valueBar = (ValueBar) v.findViewById(R.id.value);
@@ -54,16 +55,17 @@ public class ColorPickerDialogFragment extends AccentDialogFragment {
         resetColor.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 colorPicker.setColor(defaultColor);
-                PreferenceHelper.setInt("pref_color", colorPicker.getColor());
-                onColorPickedListener.onColorPicked(colorPicker.getColor());
+                PreferenceHelper.setInt("pref_color", defaultColor);
+                onColorPickedListener.onColorPicked(defaultColor);
             }
         });
 
         final Button pickColor = (Button) v.findViewById(R.id.color_pick);
         pickColor.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                PreferenceHelper.setInt("pref_color", colorPicker.getColor());
-                onColorPickedListener.onColorPicked(colorPicker.getColor());
+                Application.get().setAccentColor(colorPicker.getColor());
+                PreferenceHelper.setInt("pref_color", Application.get().getAccentColor());
+                onColorPickedListener.onColorPicked(Application.get().getAccentColor());
                 Utils.restartActivity(getActivity());
             }
         });

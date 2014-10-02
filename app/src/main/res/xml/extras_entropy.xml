@@ -17,7 +17,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="entropy"
         android:title="@string/entropy">
 
@@ -40,9 +40,9 @@
             dc:category="extras"
             dc:filePath="@string/file_entropy_write_wakeup_threshold" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="rng"
         android:title="@string/rng">
 
@@ -54,6 +54,6 @@
             android:key="rng_startup"
             android:title="@string/reapply_on_boot" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

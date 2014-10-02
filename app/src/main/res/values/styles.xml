@@ -19,23 +19,33 @@
     <style name="AppTheme" parent="@style/BaseTheme">
         <!-- I want to thank all xml tags, which had to die for this project. -->
         <item name="accentColor">@color/accent</item>
-        <item name="android:actionBarItemBackground">@null</item>
-        <item name="android:actionButtonStyle">@style/ActionButtonStyle</item>
-        <item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
     </style>
 
     <!-- Base application theme. -->
     <style name="BaseTheme" parent="BaseThemeLight" />
 
     <style name="BaseThemeDark" parent="Theme.HoloAccent">
+        <item name="android:actionBarItemBackground">@null</item>
+        <item name="android:actionButtonStyle">@style/ActionButtonStyle</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
+        <item name="android:listDivider">@drawable/transparent</item>
         <item name="android:actionBarStyle">@style/ActionBarStyleDark</item>
-        <item name="themeColor">@android:color/background_dark</item>
+        <item name="android:windowBackground">@color/dark_background</item>
+        <item name="themeColor">@color/dark_background</item>
+        <item name="themeColorInvert">@color/light_background</item>
+        <item name="themeMenu">@color/dark_menu</item>
     </style>
 
     <style name="BaseThemeLight" parent="Theme.HoloAccent.Light.DarkActionBar">
+        <item name="android:actionBarItemBackground">@null</item>
+        <item name="android:actionButtonStyle">@style/ActionButtonStyle</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
+        <item name="android:listDivider">@drawable/transparent</item>
         <item name="android:actionBarStyle">@style/ActionBarStyleLight</item>
-        <item name="android:windowBackground">@color/grey_dark</item>
-        <item name="themeColor">@color/grey_dark</item>
+        <item name="android:windowBackground">@color/light_background</item>
+        <item name="themeColor">@color/light_background</item>
+        <item name="themeColorInvert">@color/dark_background</item>
+        <item name="themeMenu">@color/light_menu</item>
     </style>
 
     <style name="NoActionBar" parent="@android:style/Theme.Holo.Light.NoActionBar">

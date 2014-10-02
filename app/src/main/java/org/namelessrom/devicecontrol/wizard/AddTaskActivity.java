@@ -38,7 +38,6 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.bus.BusProvider;
 import org.namelessrom.devicecontrol.database.TaskerItem;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.wizard.events.ItemSelectedEvent;
 import org.namelessrom.devicecontrol.wizard.events.SaveTaskEvent;
 import org.namelessrom.devicecontrol.wizard.model.AbstractWizardModel;
@@ -73,7 +72,7 @@ public class AddTaskActivity extends AccentActivity implements
     private List<Page> mCurrentPageSequence;
 
     @Override public int getOverrideAccentColor() {
-        return PreferenceHelper.getInt("pref_color", Application.get().getColor(R.color.accent));
+        return Application.get().getAccentColor();
     }
 
     @Override protected void onResume() {
@@ -89,8 +88,7 @@ public class AddTaskActivity extends AccentActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final boolean isDarkTheme = PreferenceHelper.getBoolean("dark_theme", false);
-        setTheme(isDarkTheme ? R.style.BaseThemeDark : R.style.BaseThemeLight);
+        setTheme(Application.get().isDarkTheme() ? R.style.BaseThemeDark : R.style.BaseThemeLight);
 
         setContentView(R.layout.wizard_activity);
 

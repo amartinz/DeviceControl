@@ -28,6 +28,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
@@ -74,7 +75,7 @@ public class StepPagerStrip extends View {
         mTabHeight = res.getDimensionPixelSize(R.dimen.step_pager_tab_height);
         mTabSpacing = res.getDimensionPixelSize(R.dimen.step_pager_tab_spacing);
 
-        final boolean isDarkTheme = PreferenceHelper.getBoolean("dark_theme", false);
+        final boolean isDarkTheme = Application.get().isDarkTheme();
         int color;
 
         color = isDarkTheme

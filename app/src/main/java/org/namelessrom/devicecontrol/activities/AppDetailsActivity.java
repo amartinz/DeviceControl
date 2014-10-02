@@ -34,7 +34,7 @@ public class AppDetailsActivity extends AccentActivity {
     public static final String ARG_PACKAGE_NAME = "package";
 
     @Override public int getOverrideAccentColor() {
-        return PreferenceHelper.getInt("pref_color", Application.get().getColor(R.color.accent));
+        return Application.get().getAccentColor();
     }
 
     @Override protected void onNewIntent(final Intent intent) {
@@ -45,8 +45,7 @@ public class AppDetailsActivity extends AccentActivity {
     @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final boolean isDarkTheme = PreferenceHelper.getBoolean("dark_theme", false);
-        setTheme(isDarkTheme ? R.style.BaseThemeDark : R.style.BaseThemeLight);
+        setTheme(Application.get().isDarkTheme() ? R.style.BaseThemeDark : R.style.BaseThemeLight);
 
         setContentView(R.layout.activity_main);
     }

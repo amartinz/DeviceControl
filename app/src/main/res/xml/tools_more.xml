@@ -33,7 +33,7 @@
         android:key="wireless_file_manager"
         android:title="@string/wireless_file_manager" />
 
-    <PreferenceCategory android:title="@string/editors">
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/editors">
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:icon="@drawable/ic_general_editor"
@@ -49,6 +49,6 @@
             android:key="low_memory_killer"
             android:title="@string/low_memory_killer" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

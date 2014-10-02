@@ -17,7 +17,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="general"
         android:title="@string/general">
 
@@ -29,9 +29,9 @@
             android:key="filesystem"
             android:title="@string/filesystem" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="kernel_features"
         android:title="@string/kernel_features">
 
@@ -49,9 +49,9 @@
             android:key="thermal"
             android:title="@string/thermal" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="powersaving"
         android:title="@string/powersaving">
 
@@ -70,9 +70,9 @@
             dc:category="extras"
             dc:filePath="@string/file_mc_power_sched" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="voltage"
         android:title="@string/voltage">
 
@@ -89,9 +89,9 @@
             android:summary="@string/voltage_control_summary"
             android:title="@string/voltage_control" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="extras"
         android:title="@string/extras">
 
@@ -99,7 +99,7 @@
             android:key="tcp_congestion_control"
             android:title="@string/tcp_congestion_control" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>
 

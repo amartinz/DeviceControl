@@ -43,6 +43,9 @@ public class Application extends android.app.Application implements DeviceConsta
 
     private static Application sInstance;
 
+    private static int sAccentColor = -1;
+    private static int sIsDarkTheme = -1;
+
     @Override public void onCreate() {
         super.onCreate();
 
@@ -145,6 +148,26 @@ public class Application extends android.app.Application implements DeviceConsta
     }
 
     public int getAccentColor() {
-        return PreferenceHelper.getInt("pref_color", getColor(R.color.accent));
+        if (sAccentColor == -1) {
+            sAccentColor = PreferenceHelper.getInt("pref_color", getColor(R.color.accent));
+        }
+        return sAccentColor;
+    }
+
+    public Application setAccentColor(final int color) {
+        sAccentColor = color;
+        return this;
+    }
+
+    public boolean isDarkTheme() {
+        if (sIsDarkTheme == -1) {
+            sIsDarkTheme = PreferenceHelper.getBoolean("dark_theme", true) ? 1 : 0;
+        }
+        return (sIsDarkTheme == 1);
+    }
+
+    public Application setDarkTheme(final boolean isDark) {
+        sIsDarkTheme = isDark ? 1 : 0;
+        return this;
     }
 }

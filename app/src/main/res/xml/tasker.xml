@@ -21,7 +21,7 @@
         android:title="@string/tasklist"
         android:summary="@string/tasklist_summary" />
 
-    <PreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="fstrim_cat"
         android:title="@string/fstrim_title">
 
@@ -39,7 +39,7 @@
             android:entryValues="@array/fstrim_values"
             android:defaultValue="7" />
 
-    </PreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>
 

@@ -91,7 +91,7 @@ public class CpuStateView extends LinearLayout {
                 refreshData();
             }
         });
-        mRefresh.setImageResource(PreferenceHelper.getBoolean("dark_theme", false)
+        mRefresh.setImageResource(PreferenceHelper.getBoolean("dark_theme", true)
                 ? R.drawable.ic_action_refresh : R.drawable.ic_action_refresh_dark);
 
         refreshData();

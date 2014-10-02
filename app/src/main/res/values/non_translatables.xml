@@ -15,6 +15,12 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <!-- Fonts -->
+    <string name="font_bold" translatable="false">sans-serif-bold</string>
+    <string name="font_condensed" translatable="false">sans-serif-condensed</string>
+    <string name="font_light" translatable="false">sans-serif-light</string>
+    <string name="font_normal" translatable="false">sans-serif</string>
+    <string name="font_thin" translatable="false">sans-serif-thin</string>
     <!-- Strings -->
     <string name="app_name" translatable="false">Device Control</string>
     <string name="buildprop" translatable="false">Build.Prop</string>

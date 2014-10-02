@@ -17,7 +17,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/microphone" />
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/microphone" />
 
     <org.namelessrom.devicecontrol.ui.preferences.AwesomeSeekBarPreference
         android:defaultValue="0"
@@ -32,7 +32,7 @@
         dc:unitsLeft=""
         dc:unitsRight="" />
 
-    <PreferenceCategory android:title="@string/speaker" />
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/speaker" />
 
     <org.namelessrom.devicecontrol.ui.preferences.AwesomeSeekBarPreference
         android:defaultValue="0"
@@ -47,7 +47,7 @@
         dc:unitsLeft=""
         dc:unitsRight="" />
 
-    <PreferenceCategory android:title="@string/headphones" />
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/headphones" />
 
     <org.namelessrom.devicecontrol.ui.preferences.AwesomeSeekBarPreference
         android:defaultValue="0"
