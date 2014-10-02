@@ -16,11 +16,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="permission_api_label">Toegang tot Device Control API</string>
   <string name="permission_api_description">Geeft de app toegang tot en gebruik van de Device Control API.\nDit betekend dat de app functies van het apparaat, met inbegrip van uw apparaat hardware, kan manipuleren.</string>
-  <string name="crash_toast_text">Device Control is gecrasht&#8230;</string>
-  <string name="crash_dialog_text">Er is een onverwachte fout opgetreden die de toepassing liet stoppen.\nHelp ons a.u.b. door het sturen van de foutgegevens! \n\nJe hoeft daarvoor alleen op OK te drukken.</string>
-  <string name="crash_dialog_ok_toast">Bedankt!</string>
   <string name="donate">Doneer \u2665</string>
   <string name="donate_summary">Gelieve een donatie te overwegen als deze app u bevalt en u zou willen bijdragen aan de verdere ontwikkeling ervan. \nDank u! -Alex</string>
   <string name="performance_settings_warning_title">Ga voorzichtig te werk</string>

@@ -18,8 +18,8 @@
 <resources>
   <string name="app_version_name">Versions-Name: %s</string>
   <string name="app_version_code">Versions-Code: %s</string>
-  <string name="app_information_help">Willkommen bei %1$s!\n\nUm zu starten, wische das Menü auf der linken Seite heraus!\n\nFalls du Hilfe benötigst oder eine bestimmte Funktion nicht verstehst, wische die Hilfe aus der rechten Seite heraus!\n\nFalls eine Funktion von deinem Gerät nicht unterstützt wird, wird sie automatisch ausgeblendet!\n\n\nBitte beachte, dass %2$s Root-Rechte benötigt,\num richtig zu funktionieren!\n\n</string>
-  <string name="app_warning_root">Bitte beachte, dass %s Root-Rechte benötigt, um richtig zu funktionieren!</string>
+  <string name="app_information_message">Willkommen zu %1$s!\n\nUm zu starten, wische das Menü aus der linken Seite heraus oder drücke auf die linke obere Ecke!\n\nFalls eine Funktion von deinemGerät nicht unterstützt wird, wird sie automatisch ausgeblendet!\nUnterstützte Funktionen sind abhängig von dem Gerät, der ROM und dem Kernel, den du benutzt.\n\nFalls du keine unterstützten Funktionen hast, versuche einen Custom-Kernel zu benutzen!\n\nBitte beachte, dass Root-Rechte benötigt werden, damit du %2$s in vollen Zügen genießen kannst!</string>
+  <string name="app_warning_root">Bitte beachte, dass %s ein Gerät mit Root-Rechten benötigt, um richtig zu funktionieren!</string>
   <string name="app_warning_busybox">Bitte beachte, dass %s eine BusyBox erfordert, um vollständig zu funktionieren!</string>
   <string name="get_busybox">BusyBox installieren</string>
   <string name="get_superuser">Superuser installieren</string>
@@ -209,7 +209,7 @@
   <string name="menu">Menü</string>
   <string name="preferences">Einstellungen</string>
   <string name="become_a_monkey">Werde ein Affe</string>
-  <string name="is_monkey">Warte, ist das dein Ernst?\nDu bist ziemlich clever für einen Affen.\nNicht dass sie dumm wären, aber…\nWie auch immer, lass uns das Thema wechseln.</string>
+  <string name="is_monkey">Warte, ist das dein Ernst?\nDu bist ziemlich clever für einen Affen.\nNicht dass sie dumm wären, aber...\nWie auch immer, lass uns das Thema wechseln.</string>
   <string name="no_monkey">Kein Affe? *seufz* :(</string>
   <string name="downgraded">Datenbank wurde aufgrund eines Downgrades gelöscht!</string>
   <string name="media_scan_trigger">Media-Scanner auslösen</string>
@@ -256,10 +256,6 @@
   <string name="install_rng">Herunterladen und Installieren des Zufallszahlen-Generators</string>
   <string name="error_download">Fehler beim Herunterladen der Datei!\nBitte versuche es später erneut!</string>
   <string name="kernel_features">Kernel-Funktionen</string>
-  <string name="install_startup_script">Startup-Skript installieren</string>
-  <string name="remove_startup_script">Startup-Skript entfernen</string>
-  <string name="startup_script_installed">Startup-Skript ist installiert</string>
-  <string name="startup_script_not_installed">Startup-Skript ist nicht installiert</string>
   <string name="open_play_store">Anwendung auf Google Play\u2122 anzeigen</string>
   <string name="governor">Governor</string>
   <string name="skip_checks">Überspringe Überprüfungen beim Start</string>
@@ -282,7 +278,8 @@
   <string name="reboot">Neu starten</string>
   <string name="hot_reboot">Schneller Neustart</string>
   <string name="shutdown">Herunterfahren</string>
-  <string name="warning_data_corruption">Kann Dateien beschädigen falls aktiviert</string>
+  <string name="warning_data_corruption">Kann zu Datenverlusten führen falls aktiviert</string>
+  <string name="warning_data_corruption_invert">Kann zu Datenverlusten führen falls deaktiviert</string>
   <string name="read_ahead">Read-Ahead</string>
   <string name="filesystem">Dateisystem</string>
   <string name="low_memory_killer">Low-Memory-Killer</string>
@@ -330,4 +327,22 @@
   <string name="type">Typ</string>
   <string name="tags">Tags</string>
   <string name="sensors">Sensoren</string>
+  <string name="microphone">Mikrofon</string>
+  <string name="speaker">Lautsprecher</string>
+  <string name="headphones">Kopfhörer</string>
+  <string name="sound_control">Lautstärken-Kontrolle</string>
+  <string name="model">Modell</string>
+  <string name="manufacturer">Hersteller</string>
+  <string name="product">Produkt</string>
+  <string name="board">Board</string>
+  <string name="radio_version">Baseband-Version</string>
+  <string name="build_date">Build-Datum</string>
+  <string name="processor">Prozessor</string>
+  <string name="kernel">Kernel</string>
+  <string name="hardware">Hardware</string>
+  <string name="toolchain">Toolchain</string>
+  <string name="host">Host</string>
+  <string name="memory">Arbeitsspeicher</string>
+  <string name="free">Verfügbar</string>
+  <string name="cached">Zwischengespeichert</string>
 </resources>

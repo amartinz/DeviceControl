@@ -16,11 +16,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="permission_api_label">Uygulama arayüzü (API) cihaz denetimi (Device Control) erişimi</string>
   <string name="permission_api_description">Uygulama arayüzü (API) cihaz denetimi (Device Control) için erişim izni verir.\nBu cihaz özellikleri kontrol anlamına gelir,Cihazınızın donanımını manipüle etmekte dahil.</string>
-  <string name="crash_toast_text">Device Control çöktü&#8230;</string>
-  <string name="crash_dialog_text">Beklenmeyen bir hata oluştuğu için uygulama durdu.\nBize hata verilerini göndererek bu sorunu gidermek için yardımcı olun!\n\nYapmanız gereken Tamam\'ı tıklamak.</string>
-  <string name="crash_dialog_ok_toast">Teşekkürler!</string>
   <string name="donate">Bağış \u2665</string>
   <string name="donate_summary">Bu uygulama ve bunun daha da geliştirilmesi için katkıda bulunmak istiyorsanız bir bağış düşünün lütfen.\nTeşekkürler! - Alex</string>
   <string name="performance_settings_warning_title">Dikkatli ilerleyin</string>

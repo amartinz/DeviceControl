@@ -18,8 +18,6 @@
 <resources>
   <string name="app_version_name">Версия: %s</string>
   <string name="app_version_code">Номер версии: %s</string>
-  <string name="app_information_help">Добро пожаловать в %1$s!\n\nЧтобы начать, вытащите меню слева!\n\nЕсли вам нужна помощь или вы не понимаете, что делает определённая функция, вытащите и взгляните на справку справа!\n\nЕсли возможность не поддерживается вашим устройством, она автоматически скрывается!\n\n\nОбратите внимание, что %2$s требует права суперпользователя,\nчтобы нормально функционировать!\n\n</string>
-  <string name="app_warning_root">Учтите, что %s требует права суперпользователя для полноценной работы!</string>
   <string name="app_warning_busybox">Учтите, что %s требует BusyBox для полноценной работы!</string>
   <string name="get_busybox">Установить BusyBox</string>
   <string name="get_superuser">Установить Superuser</string>
@@ -209,7 +207,7 @@
   <string name="menu">Меню</string>
   <string name="preferences">Настройки</string>
   <string name="become_a_monkey">Стать обезьяной</string>
-  <string name="is_monkey">Подождите, вы серьезно?\nВы очень умны для обезьяны.\nНе то, чтобы они глупы, но…\nЛадно, давайте пропустим это.</string>
+  <string name="is_monkey">Подождите, вы серьезно?\nВы очень умны для обезьяны.\nНе то, чтобы они глупы, но...\nЛадно, давайте пропустим это.</string>
   <string name="no_monkey">Не обезьяна? *вздохнул* :(</string>
   <string name="downgraded">База данных стёрта из-за понижения версии!</string>
   <string name="media_scan_trigger">Запустить сканирование медиафайлов</string>
@@ -228,7 +226,7 @@
   <string name="ext_cache">Внешний кэш</string>
   <string name="ext">Внешний</string>
   <string name="cache">Кэш</string>
-  <string name="applying_wait">Применение изменений, пожалуйста, подождите…</string>
+  <string name="applying_wait">Применение изменений, пожалуйста, подождите...</string>
   <string name="full_scans">Полных сканирований</string>
   <string name="pages_shared">Объединённых страниц</string>
   <string name="pages_sharing">Объединяющихся страниц</string>
@@ -256,10 +254,6 @@
   <string name="install_rng">Скачать и установить генератор случайных чисел</string>
   <string name="error_download">Ошибка скачивания файла!\nПожалуйста, попробуйте снова позже!</string>
   <string name="kernel_features">Особенности ядра</string>
-  <string name="install_startup_script">Установить скрипта запуска</string>
-  <string name="remove_startup_script">Удалить скрипта запуска</string>
-  <string name="startup_script_installed">Скрипт запуска установлен</string>
-  <string name="startup_script_not_installed">Сценарий запуска не установлен</string>
   <string name="open_play_store">Открыть приложение в Google Play\u2122</string>
   <string name="governor">Схема питания</string>
   <string name="skip_checks">Пропустить проверку при запуске</string>

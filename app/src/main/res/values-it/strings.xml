@@ -18,12 +18,10 @@
 <resources>
   <string name="app_version_name">Nome Versione: %s</string>
   <string name="app_version_code">Codice Versione: %s</string>
-  <string name="app_information_help">Benvenuti a %1$s!\n\nPer iniziare, scorri il menu da sinistra! \n\nSe hai bisogno di aiuto o non capisci una funzione specifica, scorri a destra e da\' un\'occhiata all\'aiuto!\n\nSe una funzione non è supportata dal tuo dispositivo, verrà nascosta automaticamente!\n\n\nNota che %2$s necessita di root\nper funzionare correttamente! \n\n</string>
-  <string name="app_warning_root">Nota che %s richiede ROOT per funzionare completamente!</string>
   <string name="app_warning_busybox">Nota che %s richiede una BusyBox per funzionare completamente!</string>
   <string name="get_busybox">Installa BusyBox</string>
   <string name="get_superuser">Installa Superuser</string>
-  <string name="checking_root">Controllo di root…</string>
+  <string name="checking_root">Controllo di root...</string>
   <string name="checking_busybox">Controllo di busybox&#8230;</string>
   <string name="exit">Esci</string>
   <string name="close">Chiudi</string>
@@ -209,7 +207,7 @@
   <string name="menu">Menu</string>
   <string name="preferences">Impostazioni</string>
   <string name="become_a_monkey">Diventa una scimmia</string>
-  <string name="is_monkey">Aspetta, fai sul serio? \nSei piuttosto intelligente per essere una scimmia. \nNon che siano stupide ma…\nBeh, saltiamo questo passaggio.</string>
+  <string name="is_monkey">Aspetta, fai sul serio? \nSei piuttosto intelligente per essere una scimmia. \nNon che siano stupide ma...\nBeh, saltiamo questo passaggio.</string>
   <string name="no_monkey">Non sei una scimmia? * Sigh * :(</string>
   <string name="downgraded">Il Database è stato cancellato a causa di un downgrade!</string>
   <string name="media_scan_trigger">Avvia scansione media</string>
@@ -228,7 +226,7 @@
   <string name="ext_cache">Cache esterna</string>
   <string name="ext">Esterno</string>
   <string name="cache">Cache</string>
-  <string name="applying_wait">Applicazione in corso, attendere prego…</string>
+  <string name="applying_wait">Applicazione in corso, attendere prego...</string>
   <string name="full_scans">Scansioni complete</string>
   <string name="pages_shared">Pagine condivise</string>
   <string name="pages_sharing">Pagine di condivisione</string>
@@ -243,7 +241,7 @@
   <string name="wfm_root">Naviga in modalità root</string>
   <string name="wfm_port">Porta del web server</string>
   <string name="start_wfm">Il server non è in funzione\nPremi per avviare il server.</string>
-  <string name="starting_wfm">Il server è in fase di avvio…</string>
+  <string name="starting_wfm">Il server è in fase di avvio...</string>
   <string name="stop_wfm">Server in esecuzione a %s\nPremi per fermare il server.</string>
   <string name="authentication">Autenticazione</string>
   <string name="wfm_auth">Usa autenticazione</string>
@@ -256,10 +254,6 @@
   <string name="install_rng">Scarica e installa il generatore di numeri casuali</string>
   <string name="error_download">Errore nel download del file! \nRiprova più tardi!</string>
   <string name="kernel_features">Caratteristiche del kernel</string>
-  <string name="install_startup_script">Installa lo script di avvio</string>
-  <string name="remove_startup_script">Rimuovi lo script di avvio</string>
-  <string name="startup_script_installed">Script di avvio installato</string>
-  <string name="startup_script_not_installed">Script di avvio non installato</string>
   <string name="open_play_store">Visualizza l\'applicazione su Google Play\u2122</string>
   <string name="governor">Governor</string>
   <string name="skip_checks">Salta i controlli all\'avvio</string>

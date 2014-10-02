@@ -16,11 +16,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="permission_api_label">Dostęp do Device Control API</string>
   <string name="permission_api_description">Umożliwia aplikacji dostęp i korzystanie z Device Control API.\nOznacza to, że aplikacja może kontrolować różne funkcje urządzenia, a także hardware.</string>
-  <string name="crash_toast_text">Wystąpił błąd Device Control&#8230;</string>
-  <string name="crash_dialog_text">Wystąpił nieoczekiwany błąd i aplikacja musi zostać zamknięta.\nPomóż nam go naprawić, przesyłając dane dotyczące błędu!\n\nJedyne co musisz zrobić, to wciśnięcie przycisku \"OK\".</string>
-  <string name="crash_dialog_ok_toast">Dziękujemy!</string>
   <string name="donate">Wspomóż nas \u2665</string>
   <string name="donate_summary">Rozważ darowiznę, jeśli lubisz tą aplikację i chciałbyś przyczynić się do dalszego jej rozwóju.\nDziękuję! -Alex</string>
   <string name="performance_settings_warning_title">Postępuj ostrożnie</string>

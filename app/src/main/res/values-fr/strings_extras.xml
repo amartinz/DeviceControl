@@ -16,11 +16,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="permission_api_label">Accéder à l\'API Device Control</string>
   <string name="permission_api_description">Autorise l\'application à accéder et utiliser l\'API Device Control.\nCeci signifie que l\'application peut contrôler les fonctionnalités du périphérique, y compris la manipulation du matériel de votre appareil.</string>
-  <string name="crash_toast_text">Device Control a planté&#8230;</string>
-  <string name="crash_dialog_text">Une erreur inattendue s\'est produite forçant l\'application à s\'arrêter.\nAidez nous en envoyant un rapport d\'erreur\n\nTout ce que vous avez à faire est de cliquer sur OK.</string>
-  <string name="crash_dialog_ok_toast">Merci!</string>
   <string name="donate">Faire un don \u2665</string>
   <string name="donate_summary">S\'il vous plaît envisager d\'effectuer un don si vous aimez cette application et désirez contribuer au développement ultérieur de celle-ci.\nMerci! - Alex</string>
   <string name="performance_settings_warning_title">Procéder avec prudence</string>

@@ -18,8 +18,6 @@
 <resources>
   <string name="app_version_name">Nom de version: %s</string>
   <string name="app_version_code">Code version: %s</string>
-  <string name="app_information_help">Bienvenue dans %1$s!\n\nPour commencer, faites glisser le menu depuis votre gauche!\n\nSi vous avez besoin d\'aide ou ne comprenez pas ce que fait une fonction spécifique, glisser vers la droite et consultez l\'aide!\n\nSi une fonctionnalité n\'est pas supportée par votre appareil, elle sera automatiquement masquée.!\n\n\nVeuillez noter que %2$s a besoin des accès root\npour fonctionner correctement!\n\n</string>
-  <string name="app_warning_root">Veuillez noter que %s nécessite les accès ROOT pour fonctionner complètement!</string>
   <string name="app_warning_busybox">Veuillez noter que %s exige BusyBox pour fonctionner pleinement !</string>
   <string name="get_busybox">Installer BusyBox</string>
   <string name="get_superuser">Installer Superuser</string>
@@ -204,7 +202,7 @@
   <string name="menu">Menu</string>
   <string name="preferences">Préférences</string>
   <string name="become_a_monkey">Devenir un singe</string>
-  <string name="is_monkey">Attendez, vous êtes sérieux? \nVous êtes assez intelligent pour un singe. \nNon pas qu\'ils soient stupides mais…\nBien, passons ceci.</string>
+  <string name="is_monkey">Attendez, vous êtes sérieux? \nVous êtes assez intelligent pour un singe. \nNon pas qu\'ils soient stupides mais...\nBien, passons ceci.</string>
   <string name="no_monkey">Pas un singe? *Soupir*:(</string>
   <string name="downgraded">La base de données a été effacée en raison du downgrade!</string>
   <string name="media_scan_trigger">Déclencher le scan média</string>
@@ -223,7 +221,7 @@
   <string name="ext_cache">Mémoire cache externe</string>
   <string name="ext">Externe</string>
   <string name="cache">Cache</string>
-  <string name="applying_wait">En appliquant, par faveur attendez…</string>
+  <string name="applying_wait">En appliquant, par faveur attendez...</string>
   <string name="full_scans">Scans complets</string>
   <string name="pages_shared">Pages partagées</string>
   <string name="pages_sharing">Pages en partage</string>
@@ -238,7 +236,7 @@
   <string name="wfm_root">Naviguer en mode root</string>
   <string name="wfm_port">Port du serveur Web</string>
   <string name="start_wfm">Le serveur n\'est pas en cours d\'exécution\nAppuyer pour démarrer le serveur.</string>
-  <string name="starting_wfm">Le serveur se celle-ci en entamant…</string>
+  <string name="starting_wfm">Le serveur se celle-ci en entamant...</string>
   <string name="stop_wfm">Serveur tourne à %s\nAppuyer pour arrêter le serveur.</string>
   <string name="authentication">Authentification</string>
   <string name="wfm_auth">Utiliser l\'authentification</string>
@@ -251,10 +249,6 @@
   <string name="install_rng">Télécharger et installer le générateur de nombres aléatoires</string>
   <string name="error_download">Erreur lors du téléchargement du fichier! \nVeuillez réessayer plus tard!</string>
   <string name="kernel_features">Caractéristiques du kernel</string>
-  <string name="install_startup_script">Installer le script de démarrage</string>
-  <string name="remove_startup_script">Supprimer le script de démarrage</string>
-  <string name="startup_script_installed">Le script de démarrage est installé</string>
-  <string name="startup_script_not_installed">Le script de démarrage n\'est pas installé</string>
   <string name="open_play_store">Voir application sur Google Play\u2122</string>
   <string name="governor">Gouverneur</string>
   <string name="skip_checks">Sauter les vérifications pendant l\'arraché</string>

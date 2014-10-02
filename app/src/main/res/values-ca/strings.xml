@@ -18,13 +18,11 @@
 <resources>
   <string name="app_version_name">Nom de la versió: %s</string>
   <string name="app_version_code">Codi de la versió: %s</string>
-  <string name="app_information_help">Benvingut a %1$s!\n\nPer començar, llisqueu el menú de l\'esquerra!\n\nQuan necessiti ajuda o no entenga el que està fent en una funció específica, feu lliscar la dreta i miri a l\'ajuda!\n\nQuan una funció no és compatible amb el dispositiu, automàticament estarà oculta!\n\n\nPer favor tingui en compte que aquesta %2$s necessita de root\nperquè funcioni correctament!\n\n</string>
-  <string name="app_warning_root">Tinga en compte que %s requereix ser ROOT per a funcionar completament!</string>
   <string name="app_warning_busybox">Tinga en compte que %s requereix de BusyBox per a funcionar completament!</string>
   <string name="get_busybox">Instal·lar BusyBox</string>
   <string name="get_superuser">Instal·lar Superuser</string>
-  <string name="checking_root">Comprovació de root…</string>
-  <string name="checking_busybox">Comprovació de busybox…</string>
+  <string name="checking_root">Comprovació de root...</string>
+  <string name="checking_busybox">Comprovació de busybox...</string>
   <string name="exit">Sortir</string>
   <string name="close">Tancar</string>
   <string name="message_loading">Carregant, sisplau esperi&#8230;</string>
@@ -33,7 +31,7 @@
   <string name="general">General</string>
   <string name="others">Altres</string>
   <string name="help">Ajuda</string>
-  <string name="more">Més…</string>
+  <string name="more">Més...</string>
   <string name="dialog_warning">Perill!</string>
   <string name="dialog_warning_apply">Està segur que voleu aplicar aquesta configuració?</string>
   <string name="toast_settings_applied">Aplicat amb èxit!</string>
@@ -204,7 +202,7 @@
   <string name="menu">Menú</string>
   <string name="preferences">Preferències</string>
   <string name="become_a_monkey">Converteix-te en un mico</string>
-  <string name="is_monkey">Espera, de debò?\nEts molt intel·ligent per a un mico.\nNo és que siguin ximples però…\nBé, podem ometre això.</string>
+  <string name="is_monkey">Espera, de debò?\nEts molt intel·ligent per a un mico.\nNo és que siguin ximples però...\nBé, podem ometre això.</string>
   <string name="no_monkey">No és un mico? *Sospir* :(</string>
   <string name="downgraded">La base de dades serà esborrada a causa del downgrade!</string>
   <string name="media_scan_trigger">Disparador de l\'anàlisi de mitjans</string>
@@ -223,7 +221,7 @@
   <string name="ext_cache">Cache externa</string>
   <string name="ext">Extern</string>
   <string name="cache">Cache</string>
-  <string name="applying_wait">Aplicant, per favor esperi…</string>
+  <string name="applying_wait">Aplicant, per favor esperi...</string>
   <string name="full_scans">Anàlisi completa</string>
   <string name="pages_shared">Pàgines compartides</string>
   <string name="pages_sharing">Pàgines d\'intercanvi</string>
@@ -238,7 +236,7 @@
   <string name="wfm_root">Cercador en manera root</string>
   <string name="wfm_port">Port del servidor Web</string>
   <string name="start_wfm">El servidor no està funcionant\nPremi per connectar el servidor.</string>
-  <string name="starting_wfm">El servidor s\'aquesta iniciant…</string>
+  <string name="starting_wfm">El servidor s\'aquesta iniciant...</string>
   <string name="stop_wfm">El servidor està funcionant en la %s\nPremi per detenir el servidor.</string>
   <string name="authentication">Autenticació</string>
   <string name="wfm_auth">Usar l\'autenticació</string>
@@ -251,10 +249,6 @@
   <string name="install_rng">Descarregar i instal·lar el generador de nombres aleatoris</string>
   <string name="error_download">¡Error en la descàrrega de l\'arxiu!\n¡Per favor intentelo més tard!</string>
   <string name="kernel_features">Característiques del kernel</string>
-  <string name="install_startup_script">Instal·lar script d\'arrencada</string>
-  <string name="remove_startup_script">Eliminar script d\'arrencada</string>
-  <string name="startup_script_installed">El script d\'arrencada està instal·lat</string>
-  <string name="startup_script_not_installed">El script d\'arrencada no està instal·lat</string>
   <string name="open_play_store">Veure aplicació en Google Play\u2122</string>
   <string name="governor">Governor</string>
   <string name="skip_checks">Saltar les comprovacions durant l\'arrencada</string>

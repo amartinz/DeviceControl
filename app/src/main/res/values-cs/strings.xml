@@ -18,8 +18,6 @@
 <resources>
   <string name="app_version_name">Název verze: %s</string>
   <string name="app_version_code">Číslo verze: %s</string>
-  <string name="app_information_help">Vítejte v %1$s\n\nChcete-li začít, vysuňte menu z levé strany!\n\nPokud potřebujete pomoc nebo nerozumíte, co která funkce dělá, posuňte obrazovku vpravo a nahlédněte do nápovědy!\n\nPokud daná funkce není podporovaná vaším zařízením, je automaticky skryta!\n\n\nVezměte prosím na vědomí, že %2$s  vyžaduje root\n pro svou správnou činnost!\n\n</string>
-  <string name="app_warning_root">Vezměte prosím na vědomí, že %s vyžaduje root pro svou správnou činnost!</string>
   <string name="app_warning_busybox">Vezměte prosím na vědomí, že %s vyžaduje BusyBox pro svou správnou činnost!</string>
   <string name="get_busybox">Instalovat BusyBox</string>
   <string name="get_superuser">Instalovat Superuser</string>
@@ -27,13 +25,13 @@
   <string name="checking_busybox">Kontroluji přítomnost busybox&#8230;</string>
   <string name="exit">Konec</string>
   <string name="close">Zavřít</string>
-  <string name="message_loading">Načítání, počkejte prosím…</string>
+  <string name="message_loading">Načítání, počkejte prosím...</string>
   <string name="action_press_again">Stiskněte znovu pro ukončení!</string>
   <string name="defaults_button">Obnovit výchozí nastavení</string>
   <string name="general">Obecné</string>
   <string name="others">Ostatní</string>
   <string name="help">Nápověda</string>
-  <string name="more">Více…</string>
+  <string name="more">Více...</string>
   <string name="dialog_warning">Varování!</string>
   <string name="dialog_warning_apply">Jste si jisti, že chcete potvrdit toto nastavení?</string>
   <string name="toast_settings_applied">Úspěšně potvrzeno!</string>
@@ -251,10 +249,6 @@
   <string name="install_rng">Stáhnout a nainstalovat generátor náhodných čísel</string>
   <string name="error_download">Chyba při stahování souboru!\nZkuste to prosím znovu později!</string>
   <string name="kernel_features">Funkce Kernelu</string>
-  <string name="install_startup_script">Nainstalovat startovací skript</string>
-  <string name="remove_startup_script">Odstranit startovací skript</string>
-  <string name="startup_script_installed">Startovací skript je nainstalován</string>
-  <string name="startup_script_not_installed">Startovací skript není nainstalován</string>
   <string name="open_play_store">Zobrazit aplikaci na Google Play\u2122</string>
   <string name="governor">Governor</string>
   <string name="skip_checks">Přeskočit kontroly při spuštění</string>

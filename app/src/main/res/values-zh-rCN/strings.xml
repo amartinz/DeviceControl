@@ -18,12 +18,10 @@
 <resources>
   <string name="app_version_name">版本名称：%s</string>
   <string name="app_version_code">版本号: %s</string>
-  <string name="app_information_help">欢迎使用%1$s\n\n，向右滑动打开菜单！\n\n如果您需要帮助或者不知道某个功能的用途，向左滑动获取帮助！\n\n您的设备不支持的功能会自动隐藏！\n\n\n请注意，%2$s需要root权限\n才能正常工作！\n\n</string>
-  <string name="app_warning_root">请注意，%s需要root权限才能完整工作！</string>
   <string name="app_warning_busybox">请注意，%s需要BusyBox才能完整工作！</string>
   <string name="get_busybox">安装 BusyBox</string>
   <string name="get_superuser">安装超级用户</string>
-  <string name="checking_busybox">正在检查 BusyBox…</string>
+  <string name="checking_busybox">正在检查 BusyBox...</string>
   <string name="exit">退出</string>
   <string name="close">关闭</string>
   <string name="message_loading">加载中，请稍后&#8230;&#8230;</string>
@@ -32,7 +30,7 @@
   <string name="general">常规</string>
   <string name="others">其它</string>
   <string name="help">帮助</string>
-  <string name="more">更多…</string>
+  <string name="more">更多...</string>
   <string name="dialog_warning">警告！</string>
   <string name="dialog_warning_apply">您确定要应用您的设置吗？</string>
   <string name="toast_settings_applied">应用成功！</string>
