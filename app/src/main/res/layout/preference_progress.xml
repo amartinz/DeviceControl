@@ -15,6 +15,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,12 +29,12 @@
         android:scrollbarStyle="outsideOverlay"
         android:smoothScrollbar="true" />
 
-    <ProgressBar
-        style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+    <com.daimajia.numberprogressbar.NumberProgressBar
         android:id="@+id/preference_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:visibility="gone" />
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 </RelativeLayout>

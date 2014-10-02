@@ -58,7 +58,7 @@
             android:textSize="12sp" />
 
         <SeekBar
-            android:id="@+id/ui_device_bar"
+            android:id="@+id/ui_device_seekbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/ui_device_bar_right"

@@ -143,4 +143,8 @@ public class Application extends android.app.Application implements DeviceConsta
     public String[] getStringArray(final int resId) {
         return getResources().getStringArray(resId);
     }
+
+    public int getAccentColor() {
+        return PreferenceHelper.getInt("pref_color", getColor(R.color.accent));
+    }
 }

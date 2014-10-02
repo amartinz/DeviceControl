@@ -29,8 +29,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.daimajia.numberprogressbar.NumberProgressBar;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
@@ -109,7 +110,7 @@ public class DeviceStatusView extends LinearLayout {
         ((TextView) view.findViewById(R.id.ui_device_value)).setText(value);
         ((TextView) view.findViewById(R.id.ui_device_bar_left)).setText(barLeft);
         ((TextView) view.findViewById(R.id.ui_device_bar_right)).setText(barRight);
-        ((ProgressBar) view.findViewById(R.id.ui_device_bar)).setProgress(progress);
+        ((NumberProgressBar) view.findViewById(R.id.ui_device_bar)).setProgress(progress);
 
         parent.addView(view);
         return view;

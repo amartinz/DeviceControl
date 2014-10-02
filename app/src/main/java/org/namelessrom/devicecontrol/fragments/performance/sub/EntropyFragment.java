@@ -133,7 +133,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment
                 // else download it
                 Ion.with(this)
                         .load(URL_RNG)
-                        .progressBar(mProgressBar)
+                        .progress(mProgressBar)
                         .write(downloaded)
                         .setCallback(new FutureCallback<File>() {
                             @Override public void onCompleted(final Exception e, final File res) {

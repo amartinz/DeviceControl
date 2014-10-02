@@ -57,9 +57,8 @@ Copyright (C) 2012  James Roberts
             android:textSize="12sp" />
     </LinearLayout>
 
-    <ProgressBar
+    <com.daimajia.numberprogressbar.NumberProgressBar
         android:id="@+id/ui_bar"
-        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:max="100" />
