@@ -37,7 +37,8 @@
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
         android:key="ac_level"
-        android:title="@string/ac_level" />
+        android:title="@string/ac_level"
+        android:inputType="number" />
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
         android:key="usb_levels_valid"
@@ -45,6 +46,7 @@
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
         android:key="usb_level"
-        android:title="@string/usb_level" />
+        android:title="@string/usb_level"
+        android:inputType="number" />
 
 </PreferenceScreen>

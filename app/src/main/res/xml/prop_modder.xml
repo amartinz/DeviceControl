@@ -104,7 +104,8 @@
             android:summary="@string/lcd_density_summary"
             android:singleLine="true"
             android:hint="@string/lcd_density_default"
-            android:persistent="false" />
+            android:persistent="false"
+            android:inputType="number" />
 
     </PreferenceCategory>
 

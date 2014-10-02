@@ -37,19 +37,23 @@
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
             android:key="msm_thermal_temp_limit"
-            android:title="@string/temp_limit" />
+            android:title="@string/temp_limit"
+            android:inputType="number" />
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
             android:key="msm_thermal_core_temp_limit"
-            android:title="@string/core_temp_limit" />
+            android:title="@string/core_temp_limit"
+            android:inputType="number" />
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
             android:key="msm_thermal_core_max"
-            android:title="@string/core_max" />
+            android:title="@string/core_max"
+            android:inputType="number" />
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
             android:key="msm_thermal_core_min"
-            android:title="@string/core_min" />
+            android:title="@string/core_min"
+            android:inputType="number" />
 
     </PreferenceCategory>
 
