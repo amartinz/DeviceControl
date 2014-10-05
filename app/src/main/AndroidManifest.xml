@@ -59,13 +59,6 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity
-            android:name="org.acra.CrashReportDialog"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:excludeFromRecents="true"
-            android:finishOnTaskLaunch="true"
-            android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.Holo.Light.Dialog" />
-        <activity
             android:name=".DummyLauncher"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:enabled="true"

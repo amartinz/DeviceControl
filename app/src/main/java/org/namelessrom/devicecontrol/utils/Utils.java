@@ -323,6 +323,7 @@ public class Utils implements DeviceConstants {
      * @param wait    If true, this command is blocking until execution finished
      */
     public static void runRootCommand(final String command, final boolean wait) {
+        Logger.v("runRootCommand", "executing -> %s", command);
         final CommandCapture comm = new CommandCapture(0, false, command);
         try {
             RootTools.getShell(true).add(comm);

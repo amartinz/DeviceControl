@@ -209,7 +209,7 @@
   <string name="menu">Menü</string>
   <string name="preferences">Einstellungen</string>
   <string name="become_a_monkey">Werde ein Affe</string>
-  <string name="is_monkey">Warte, ist das dein Ernst?\nDu bist ziemlich clever für einen Affen.\nNicht dass sie dumm wären, aber...\nWie auch immer, lass uns das Thema wechseln.</string>
+  <string name="is_monkey">Warte, ist das dein Ernst?\nDu bist ziemlich clever für einen Affen.\nNicht dass sie dumm wären, aber…\nWie auch immer, lass uns das Thema wechseln.</string>
   <string name="no_monkey">Kein Affe? *seufz* :(</string>
   <string name="downgraded">Datenbank wurde aufgrund eines Downgrades gelöscht!</string>
   <string name="media_scan_trigger">Media-Scanner auslösen</string>

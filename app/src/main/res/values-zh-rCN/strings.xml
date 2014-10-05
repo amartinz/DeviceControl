@@ -21,7 +21,7 @@
   <string name="app_warning_busybox">请注意，%s需要BusyBox才能完整工作！</string>
   <string name="get_busybox">安装 BusyBox</string>
   <string name="get_superuser">安装超级用户</string>
-  <string name="checking_busybox">正在检查 BusyBox...</string>
+  <string name="checking_busybox">正在检查 BusyBox…</string>
   <string name="exit">退出</string>
   <string name="close">关闭</string>
   <string name="message_loading">加载中，请稍后&#8230;&#8230;</string>
@@ -30,7 +30,7 @@
   <string name="general">常规</string>
   <string name="others">其它</string>
   <string name="help">帮助</string>
-  <string name="more">更多...</string>
+  <string name="more">更多…</string>
   <string name="dialog_warning">警告！</string>
   <string name="dialog_warning_apply">您确定要应用您的设置吗？</string>
   <string name="toast_settings_applied">应用成功！</string>

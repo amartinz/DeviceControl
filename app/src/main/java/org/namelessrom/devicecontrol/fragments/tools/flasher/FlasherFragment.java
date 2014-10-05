@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.fragments.tools.flasher;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -79,6 +80,7 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
         BusProvider.getBus().unregister(this);
     }
 
+    @SuppressLint("WrongViewCast") // R.id.container in our flash layout is a LinearLayout
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         setHasOptionsMenu(true);

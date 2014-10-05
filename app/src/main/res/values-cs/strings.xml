@@ -25,13 +25,13 @@
   <string name="checking_busybox">Kontroluji přítomnost busybox&#8230;</string>
   <string name="exit">Konec</string>
   <string name="close">Zavřít</string>
-  <string name="message_loading">Načítání, počkejte prosím...</string>
+  <string name="message_loading">Načítání, počkejte prosím…</string>
   <string name="action_press_again">Stiskněte znovu pro ukončení!</string>
   <string name="defaults_button">Obnovit výchozí nastavení</string>
   <string name="general">Obecné</string>
   <string name="others">Ostatní</string>
   <string name="help">Nápověda</string>
-  <string name="more">Více...</string>
+  <string name="more">Více…</string>
   <string name="dialog_warning">Varování!</string>
   <string name="dialog_warning_apply">Jste si jisti, že chcete potvrdit toto nastavení?</string>
   <string name="toast_settings_applied">Úspěšně potvrzeno!</string>

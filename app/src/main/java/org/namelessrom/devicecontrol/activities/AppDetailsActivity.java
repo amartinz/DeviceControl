@@ -27,7 +27,6 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 public class AppDetailsActivity extends AccentActivity {
 

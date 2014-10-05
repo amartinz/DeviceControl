@@ -145,8 +145,8 @@ public class PreferencesFragment extends AttachPreferenceFragment
     private void setupVersionPreference() {
         final CustomPreference mVersion = (CustomPreference) findPreference("prefs_version");
         if (mVersion != null) {
-            mVersion.setEnabled(false);
-            String title, summary;
+            String title;
+            String summary;
             try {
                 final PackageManager pm = Application.get().getPackageManager();
                 if (pm != null) {

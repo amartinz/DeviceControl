@@ -30,7 +30,6 @@ import android.view.View;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 public class StepPagerStrip extends View {
     private static final int[] ATTRS = new int[]{

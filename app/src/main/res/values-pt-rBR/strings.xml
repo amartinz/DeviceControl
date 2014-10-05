@@ -25,7 +25,7 @@
   <string name="checking_busybox">Verificando do busybox&#8230;</string>
   <string name="exit">Sair</string>
   <string name="close">Fechar</string>
-  <string name="message_loading">Carregando, por favor, aguarde...</string>
+  <string name="message_loading">Carregando, por favor, aguarde…</string>
   <string name="action_press_again">Pressione novamente para sair!</string>
   <string name="defaults_button">Restaurar</string>
   <string name="general">Geral</string>
@@ -202,7 +202,7 @@
   <string name="menu">Menu</string>
   <string name="preferences">Preferências</string>
   <string name="become_a_monkey">Tornar-se um macaco</string>
-  <string name="is_monkey">Espera, você está falando sério? \nVocê é muito inteligente para ser um macaco. \nNão que eles sejam estúpidos, but...\nBem, podemos ignorar isto.</string>
+  <string name="is_monkey">Espera, você está falando sério? \nVocê é muito inteligente para ser um macaco. \nNão que eles sejam estúpidos, but…\nBem, podemos ignorar isto.</string>
   <string name="no_monkey">Não é um macaco? * Suspiro * :(</string>
   <string name="downgraded">Base de dados tem apagado devido um downgrade!</string>
   <string name="media_scan_trigger">Iniciar scan media</string>

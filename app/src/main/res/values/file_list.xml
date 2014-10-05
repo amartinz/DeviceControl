@@ -86,4 +86,55 @@
         <item>/sys/class/lcd/panel/panel_colors</item>
         <item>/sys/class/sec/tsp/panel_colors</item>
     </string-array>
+
+    <!-- Vibrator -->
+    <string-array name="hardware_vibrator_paths" translatable="false">
+        <item>/sys/class/timed_output/vibrator/pwm_value</item>
+        <item>/sys/devices/platform/tspdrv/nforce_timed</item>
+        <item>/sys/vibrator/pwm_val</item>
+        <item>/sys/vibrator/pwmvalue</item>
+        <item>/sys/class/timed_output/vibrator/vtg_level</item>
+    </string-array>
+    <string-array name="hardware_vibrator_maximum_path" translatable="false">
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>/sys/class/timed_output/vibrator/vtg_max</item>
+    </string-array>
+    <string-array name="hardware_vibrator_maximum" translatable="false">
+        <item>100</item>
+        <item>100</item>
+        <item>100</item>
+        <item>100</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="hardware_vibrator_minimum_path" translatable="false">
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>/sys/class/timed_output/vibrator/vtg_min</item>
+    </string-array>
+    <string-array name="hardware_vibrator_minimum" translatable="false">
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="hardware_vibrator_default" translatable="false">
+        <item>50</item>
+        <item>50</item>
+        <item>50</item>
+        <item>50</item>
+        <item>max</item>
+    </string-array>
+    <string-array name="hardware_vibrator_threshold" translatable="false">
+        <item>76</item>
+        <item>76</item>
+        <item>76</item>
+        <item>76</item>
+        <item>-1</item>
+    </string-array>
 </resources>

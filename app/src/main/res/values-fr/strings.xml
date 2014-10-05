@@ -202,7 +202,7 @@
   <string name="menu">Menu</string>
   <string name="preferences">Préférences</string>
   <string name="become_a_monkey">Devenir un singe</string>
-  <string name="is_monkey">Attendez, vous êtes sérieux? \nVous êtes assez intelligent pour un singe. \nNon pas qu\'ils soient stupides mais...\nBien, passons ceci.</string>
+  <string name="is_monkey">Attendez, vous êtes sérieux? \nVous êtes assez intelligent pour un singe. \nNon pas qu\'ils soient stupides mais…\nBien, passons ceci.</string>
   <string name="no_monkey">Pas un singe? *Soupir*:(</string>
   <string name="downgraded">La base de données a été effacée en raison du downgrade!</string>
   <string name="media_scan_trigger">Déclencher le scan média</string>
@@ -221,7 +221,7 @@
   <string name="ext_cache">Mémoire cache externe</string>
   <string name="ext">Externe</string>
   <string name="cache">Cache</string>
-  <string name="applying_wait">En appliquant, par faveur attendez...</string>
+  <string name="applying_wait">En appliquant, par faveur attendez…</string>
   <string name="full_scans">Scans complets</string>
   <string name="pages_shared">Pages partagées</string>
   <string name="pages_sharing">Pages en partage</string>
@@ -236,7 +236,7 @@
   <string name="wfm_root">Naviguer en mode root</string>
   <string name="wfm_port">Port du serveur Web</string>
   <string name="start_wfm">Le serveur n\'est pas en cours d\'exécution\nAppuyer pour démarrer le serveur.</string>
-  <string name="starting_wfm">Le serveur se celle-ci en entamant...</string>
+  <string name="starting_wfm">Le serveur se celle-ci en entamant…</string>
   <string name="stop_wfm">Serveur tourne à %s\nAppuyer pour arrêter le serveur.</string>
   <string name="authentication">Authentification</string>
   <string name="wfm_auth">Utiliser l\'authentification</string>

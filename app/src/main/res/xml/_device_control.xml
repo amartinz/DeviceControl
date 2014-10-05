@@ -99,7 +99,8 @@
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="prefs_version"
             android:summary="@string/empty"
-            android:title="@string/empty" />
+            android:title="@string/empty"
+            android:selectable="false" />
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
