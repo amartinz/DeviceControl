@@ -352,4 +352,12 @@
     <string name="red">Red</string>
     <string name="green">Green</string>
     <string name="blue">Blue</string>
+    <string name="gamma_tuning_control_set_header">Group %d</string>
+    <string name="gamma_tuning_contrast">Contrast</string>
+    <string name="gamma_tuning_brightness">Brightness</string>
+    <string name="gamma_tuning_saturation">Saturation</string>
+    <string name="display_gamma_calibration">Gamma calibration</string>
+    <string name="display_gamma_calibration_summary">Tweak gamma values</string>
+    <!-- No spaces after ',' -->
+    <string name="hardware_display_gamma_calibration_desc_one">Red,Green,Blue</string>
 </resources>

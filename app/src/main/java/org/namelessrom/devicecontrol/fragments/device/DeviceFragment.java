@@ -29,12 +29,14 @@ import org.namelessrom.devicecontrol.bus.ShellOutputEvent;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.DisplayColorCalibration;
+import org.namelessrom.devicecontrol.hardware.DisplayGammaCalibration;
 import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.preferences.hardware.DisplayColor;
+import org.namelessrom.devicecontrol.ui.preferences.hardware.DisplayGamma;
 import org.namelessrom.devicecontrol.ui.preferences.hardware.VibratorIntensity;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -80,6 +82,7 @@ public class DeviceFragment extends AttachPreferenceFragment
 
     //----------------------------------------------------------------------------------------------
     private DisplayColor          mDisplayColor;
+    private DisplayGamma          mDisplayGamma;
     private AwesomeListPreference mPanelColor;
 
     //==============================================================================================
@@ -203,6 +206,11 @@ public class DeviceFragment extends AttachPreferenceFragment
             mDisplayColor = (DisplayColor) findPreference(DisplayColorCalibration.TAG);
             if (!DisplayColor.isSupported()) {
                 category.removePreference(mDisplayColor);
+            }
+
+            mDisplayGamma = (DisplayGamma) findPreference(DisplayGammaCalibration.TAG);
+            if (!DisplayGamma.isSupported()) {
+                category.removePreference(mDisplayGamma);
             }
 
             mPanelColor = (AwesomeListPreference) findPreference("panel_color_temperature");

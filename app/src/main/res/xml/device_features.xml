@@ -134,6 +134,12 @@
             android:title="@string/display_color_calibration"
             android:summary="@string/display_color_calibration_summary" />
 
+        <org.namelessrom.devicecontrol.ui.preferences.hardware.DisplayGamma
+            android:key="display_gamma_calibration"
+            android:dialogTitle="@string/display_gamma_calibration"
+            android:title="@string/display_gamma_calibration"
+            android:summary="@string/display_gamma_calibration_summary" />
+
         <org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference
             android:defaultValue="2"
             android:entries="@array/panel_color_temp_entries"
