@@ -30,6 +30,7 @@ public class DisplayColorCalibration {
 
     private String path;
     private String ctrl;
+    private String def;
     private int    max;
     private int    min;
 
@@ -37,8 +38,13 @@ public class DisplayColorCalibration {
         final Resources res = Application.get().getResources();
         final String[] paths = res.getStringArray(R.array.hardware_display_color_calibration_paths);
         final String[] ctrls = res.getStringArray(R.array.hardware_display_color_calibration_ctrls);
+        final String[] defs = res.getStringArray(R.array.hardware_display_color_calibration_defs);
         final String[] maxs = res.getStringArray(R.array.hardware_display_color_calibration_max);
         final String[] mins = res.getStringArray(R.array.hardware_display_color_calibration_min);
+        final String[] maxPaths =
+                res.getStringArray(R.array.hardware_display_color_calibration_max_path);
+        final String[] minPaths =
+                res.getStringArray(R.array.hardware_display_color_calibration_min_path);
 
         final int length = paths.length;
         for (int i = 0; i < length; i++) {
@@ -48,11 +54,34 @@ public class DisplayColorCalibration {
                 path = paths[i];
 
                 // our control path, optional
-                ctrl = Utils.fileExists(ctrls[i]) ? ctrls[i] : null;
+                ctrl = ctrls[i];
+                if (TextUtils.isEmpty(ctrl)
+                        // check if we disabled it
+                        || TextUtils.equals(ctrl, "-")
+                        // check if it exists
+                        || !Utils.fileExists(ctrl)) {
+                    ctrl = null;
+                }
 
                 // maximum and minimum
-                max = Integer.parseInt(maxs[i]);
-                min = Integer.parseInt(mins[i]);
+                if (!TextUtils.equals("-", maxPaths[i]) && Utils.fileExists(maxPaths[i])) {
+                    max = Integer.parseInt(Utils.readOneLine(maxPaths[i]));
+                } else {
+                    max = Integer.parseInt(maxs[i]);
+                }
+                if (!TextUtils.equals("-", minPaths[i]) && Utils.fileExists(minPaths[i])) {
+                    min = Integer.parseInt(Utils.readOneLine(minPaths[i]));
+                } else {
+                    min = Integer.parseInt(mins[i]);
+                }
+
+                // get default value
+                def = defs[i];
+                if (TextUtils.equals("max", def)) {
+                    def = String.valueOf(max);
+                } else if (TextUtils.equals("min", def)) {
+                    def = String.valueOf(min);
+                }
 
                 // and get out of here
                 break;
@@ -73,7 +102,7 @@ public class DisplayColorCalibration {
 
     public int getMinValue() { return min; }
 
-    public int getDefValue() { return getMaxValue(); }
+    public int getDefValue() { return Integer.parseInt(def); }
 
     public String getCurColors() { return Utils.readOneLine(path); }
 
