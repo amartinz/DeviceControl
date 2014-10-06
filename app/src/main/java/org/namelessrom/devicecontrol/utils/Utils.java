@@ -236,7 +236,12 @@ public class Utils implements DeviceConstants {
      * @param filename The filename
      * @return Whether the file exists or not
      */
-    public static boolean fileExists(final String filename) { return new File(filename).exists(); }
+    public static boolean fileExists(final String filename) {
+        if (TextUtils.isEmpty(filename) || TextUtils.equals("-", filename)) {
+            return false;
+        }
+        return new File(filename).exists();
+    }
 
     /**
      * Check if one of the specified files exists.
@@ -245,7 +250,7 @@ public class Utils implements DeviceConstants {
      * @return Whether one of the files exists or not
      */
     public static boolean fileExists(final String[] files) {
-        for (final String s : files) { if (new File(s).exists()) return true; }
+        for (final String s : files) { if (fileExists(s)) return true; }
         return false;
     }
 
