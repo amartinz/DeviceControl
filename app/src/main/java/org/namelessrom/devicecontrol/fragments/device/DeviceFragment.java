@@ -28,12 +28,14 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.bus.ShellOutputEvent;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.hardware.DisplayColorCalibration;
 import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.ui.preferences.VibratorTuningPreference;
+import org.namelessrom.devicecontrol.ui.preferences.hardware.DisplayColor;
+import org.namelessrom.devicecontrol.ui.preferences.hardware.VibratorIntensity;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -75,8 +77,10 @@ public class DeviceFragment extends AttachPreferenceFragment
     private AwesomeCheckBoxPreference mLcdPowerReduce;
     private AwesomeCheckBoxPreference mLcdSunlightEnhancement;
     private AwesomeCheckBoxPreference mLcdColorEnhancement;
+
     //----------------------------------------------------------------------------------------------
-    private AwesomeListPreference     mPanelColor;
+    private DisplayColor          mDisplayColor;
+    private AwesomeListPreference mPanelColor;
 
     //==============================================================================================
     // Extras
@@ -119,9 +123,8 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         category = (PreferenceCategory) findPreference("input_others");
         if (category != null) {
-            final VibratorTuningPreference pref =
-                    (VibratorTuningPreference) findPreference("vibrator_tuning");
-            if (pref != null && !VibratorTuningPreference.isSupported()) {
+            final VibratorIntensity pref = (VibratorIntensity) findPreference("vibrator_tuning");
+            if (!VibratorIntensity.isSupported()) {
                 category.removePreference(pref);
             }
 
@@ -135,21 +138,19 @@ public class DeviceFragment extends AttachPreferenceFragment
             }
 
             mGloveMode = (CustomCheckBoxPreference) findPreference("input_glove_mode");
-            if (mGloveMode != null) {
-                try {
-                    // if we have already added a glove mode preference, remove it too
-                    if (mAwesomeGloveMode == null || !isHtsSupported()) {
-                        category.removePreference(mGloveMode);
-                    } else {
-                        final String value = DatabaseHandler.getInstance()
-                                .getValueByName(mGloveMode.getKey(), DatabaseHandler.TABLE_BOOTUP);
-                        final boolean enableGlove = (value != null && value.equals("1"));
+            try {
+                // if we have already added a glove mode preference, remove it too
+                if (mAwesomeGloveMode != null || !isHtsSupported()) {
+                    category.removePreference(mGloveMode);
+                } else {
+                    final String value = DatabaseHandler.getInstance()
+                            .getValueByName(mGloveMode.getKey(), DatabaseHandler.TABLE_BOOTUP);
+                    final boolean enableGlove = (value != null && value.equals("1"));
 
-                        enableHts(enableGlove);
-                        mGloveMode.setOnPreferenceChangeListener(this);
-                    }
-                } catch (Exception exc) { category.removePreference(mGloveMode); }
-            }
+                    enableHts(enableGlove);
+                    mGloveMode.setOnPreferenceChangeListener(this);
+                }
+            } catch (Exception exc) { category.removePreference(mGloveMode); }
 
             if (category.getPreferenceCount() == 0) {
                 preferenceScreen.removePreference(category);
@@ -199,6 +200,11 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         category = (PreferenceCategory) findPreference("graphics");
         if (category != null) {
+            mDisplayColor = (DisplayColor) findPreference(DisplayColorCalibration.TAG);
+            if (!DisplayColor.isSupported()) {
+                category.removePreference(mDisplayColor);
+            }
+
             mPanelColor = (AwesomeListPreference) findPreference("panel_color_temperature");
             if (mPanelColor != null) {
                 if (mPanelColor.isSupported()) {

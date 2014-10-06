@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.namelessrom.devicecontrol.ui.preferences;
+package org.namelessrom.devicecontrol.ui.preferences.hardware;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -45,7 +45,7 @@ import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-public class VibratorTuningPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
+public class VibratorIntensity extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
 
 
     private final Vibrator vib;
@@ -67,7 +67,7 @@ public class VibratorTuningPreference extends DialogPreference implements SeekBa
 
     private static LightingColorFilter mRedFilter = null;
 
-    public VibratorTuningPreference(final Context context, final AttributeSet attrs) {
+    public VibratorIntensity(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         vib = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 

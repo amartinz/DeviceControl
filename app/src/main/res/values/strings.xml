@@ -347,4 +347,9 @@
     <string name="memory">Memory</string>
     <string name="free">Free</string>
     <string name="cached">Cached</string>
+    <string name="display_color_calibration">Color calibration</string>
+    <string name="display_color_calibration_summary">Calibrate on-screen colors</string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
+    <string name="blue">Blue</string>
 </resources>

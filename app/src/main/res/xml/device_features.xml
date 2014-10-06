@@ -59,7 +59,7 @@
             android:summary="@string/glove_mode_summary"
             android:title="@string/glove_mode" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.VibratorTuningPreference
+        <org.namelessrom.devicecontrol.ui.preferences.hardware.VibratorIntensity
             android:dialogTitle="@string/vibrator_strength"
             android:key="vibrator_tuning"
             android:summary="@string/vibrator_strength_summary"
@@ -127,6 +127,12 @@
             android:title="@string/color_enhancement"
             dc:category="device"
             dc:filePathList="@array/files_lcd_color_enhancement" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.hardware.DisplayColor
+            android:key="display_color_calibration"
+            android:dialogTitle="@string/display_color_calibration"
+            android:title="@string/display_color_calibration"
+            android:summary="@string/display_color_calibration_summary" />
 
         <org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference
             android:defaultValue="2"

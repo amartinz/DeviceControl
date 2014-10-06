@@ -137,4 +137,15 @@
         <item>76</item>
         <item>-1</item>
     </string-array>
+
+    <!-- Display color calibration -->
+    <string-array name="hardware_display_color_calibration_paths" translatable="false">
+        <item>/sys/devices/platform/kcal_ctrl.0/kcal</item>
+    </string-array>
+    <string-array name="hardware_display_color_calibration_max" translatable="false">
+        <item>255</item>
+    </string-array>
+    <string-array name="hardware_display_color_calibration_min" translatable="false">
+        <item>0</item>
+    </string-array>
 </resources>
