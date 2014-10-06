@@ -68,6 +68,9 @@
     <string-array name="files_knock_on" translatable="false">
         <item>/sys/devices/virtual/input/lge_touch/touch_gesture</item>
         <item>/proc/touchpanel/double_tap_enable</item>
+        <item>/sys/devices/virtual/input/clearpad/wakeup_gesture</item>
+        <item>/sys/devices/virtual/htc_sensorhub/sensor_hub/tap2wake</item>
+        <item>/sys/devices/i2c-3/3-004b/knock_on</item>
     </string-array>
     <string-array name="files_lcd_power_reduce" translatable="false">
         <item>/sys/class/lcd/panel/power_reduce</item>
@@ -81,6 +84,8 @@
     </string-array>
     <string-array name="files_glove_mode" translatable="false">
         <item>/proc/touchpanel/glove_mode_enable</item>
+        <item>/sys/devices/virtual/input/clearpad/glove</item>
+        <item>/sys/devices/virtual/input/max1187x/glove</item>
     </string-array>
     <string-array name="files_panel_color_temp" translatable="false">
         <item>/sys/class/lcd/panel/panel_colors</item>
@@ -94,6 +99,14 @@
         <item>/sys/vibrator/pwm_val</item>
         <item>/sys/vibrator/pwmvalue</item>
         <item>/sys/class/timed_output/vibrator/vtg_level</item>
+        <item>/sys/class/timed_output/vibrator/level</item>
+        <item>/sys/class/timed_output/vibrator/amp</item>
+        <item>/sys/class/timed_output/vibrator/dutycycle</item>
+        <item>/sys/class/misc/pwm_duty/pwm_duty</item>
+        <item>/sys/class/timed_output/vibrator/voltage_level</item>
+        <item>/sys/devices/virtual/timed_output/vibrator/voltage_level</item>
+        <item>/sys/devices/i2c-12/12-0049/intensity</item>
+        <item>/sys/devices/i2c-2/2-0049/intensity</item>
     </string-array>
     <string-array name="hardware_vibrator_maximum_path" translatable="false">
         <item>-</item>
@@ -101,13 +114,29 @@
         <item>-</item>
         <item>-</item>
         <item>/sys/class/timed_output/vibrator/vtg_max</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
     </string-array>
     <string-array name="hardware_vibrator_maximum" translatable="false">
         <item>100</item>
+        <item>127</item>
         <item>100</item>
         <item>100</item>
+        <item>31</item>
+        <item>30</item>
         <item>100</item>
+        <item>50000</item>
         <item>100</item>
+        <item>3100</item>
+        <item>3199</item>
+        <item>8</item>
+        <item>8</item>
     </string-array>
     <string-array name="hardware_vibrator_minimum_path" translatable="false">
         <item>-</item>
@@ -115,27 +144,59 @@
         <item>-</item>
         <item>-</item>
         <item>/sys/class/timed_output/vibrator/vtg_min</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
+        <item>-</item>
     </string-array>
     <string-array name="hardware_vibrator_minimum" translatable="false">
         <item>0</item>
+        <item>1</item>
         <item>0</item>
         <item>0</item>
+        <item>12</item>
+        <item>5</item>
+        <item>50</item>
+        <item>25000</item>
+        <item>0</item>
+        <item>1200</item>
+        <item>1200</item>
         <item>0</item>
         <item>0</item>
     </string-array>
     <string-array name="hardware_vibrator_default" translatable="false">
         <item>50</item>
-        <item>50</item>
+        <item>65</item>
         <item>50</item>
         <item>50</item>
         <item>max</item>
+        <item>22</item>
+        <item>70</item>
+        <item>38000</item>
+        <item>100</item>
+        <item>1700</item>
+        <item>2700</item>
+        <item>5</item>
+        <item>5</item>
     </string-array>
     <string-array name="hardware_vibrator_threshold" translatable="false">
         <item>76</item>
-        <item>76</item>
+        <item>90</item>
         <item>76</item>
         <item>76</item>
         <item>-1</item>
+        <item>25</item>
+        <item>-1</item>
+        <item>44000</item>
+        <item>-1</item>
+        <item>2700</item>
+        <item>3000</item>
+        <item>6</item>
+        <item>6</item>
     </string-array>
 
     <!-- Display color calibration -->
