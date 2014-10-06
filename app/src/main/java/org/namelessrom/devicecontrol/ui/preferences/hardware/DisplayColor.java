@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
@@ -59,10 +60,6 @@ public class DisplayColor extends DialogPreference {
     public DisplayColor(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        if (!isSupported()) {
-            return;
-        }
-
         setLayoutResource(R.layout.preference);
         setDialogLayoutResource(R.layout.preference_display_color_calibration);
     }
@@ -78,6 +75,7 @@ public class DisplayColor extends DialogPreference {
         super.onBindDialogView(view);
 
         mOriginalColors = DisplayColorCalibration.get().getCurColors();
+        Logger.v(this, "mOriginalColors -> %s", mOriginalColors);
         mCurrentColors = mOriginalColors.split(" ");
 
         for (int i = 0; i < SEEKBAR_ID.length; i++) {
@@ -98,7 +96,7 @@ public class DisplayColor extends DialogPreference {
         defaultsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final int defaultValue = DisplayColorCalibration.get().getMaxValue();
+                final int defaultValue = DisplayColorCalibration.get().getDefValue();
                 for (int i = 0; i < mSeekBars.length; i++) {
                     mSeekBars[i].mSeekBar.setProgress(defaultValue);
                     mCurrentColors[i] = String.valueOf(defaultValue);
@@ -121,9 +119,7 @@ public class DisplayColor extends DialogPreference {
         }
     }
 
-    public static boolean isSupported() {
-        return DisplayColorCalibration.get().isSupported();
-    }
+    public static boolean isSupported() { return DisplayColorCalibration.get().isSupported(); }
 
     private class ColorSeekBar implements SeekBar.OnSeekBarChangeListener {
         private int      mIndex;
@@ -141,11 +137,10 @@ public class DisplayColor extends DialogPreference {
         }
 
         public void setValueFromString(String valueString) {
-            mSeekBar.setProgress(Integer.valueOf(valueString));
+            mSeekBar.setProgress(Integer.parseInt(valueString));
         }
 
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             final int min = DisplayColorCalibration.get().getMinValue();
             final int max = DisplayColorCalibration.get().getMaxValue();
 
@@ -158,14 +153,8 @@ public class DisplayColor extends DialogPreference {
             mValue.setText(String.format("%d%%", percent));
         }
 
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-            // Do nothing here
-        }
+        @Override public void onStartTrackingTouch(SeekBar seekBar) { }
 
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-            // Do nothing here
-        }
+        @Override public void onStopTrackingTouch(SeekBar seekBar) { }
     }
 }
