@@ -203,6 +203,9 @@
     <string-array name="hardware_display_color_calibration_paths" translatable="false">
         <item>/sys/devices/platform/kcal_ctrl.0/kcal</item>
     </string-array>
+    <string-array name="hardware_display_color_calibration_ctrls" translatable="false">
+        <item>/sys/devices/platform/kcal_ctrl.0/kcal_ctrl</item>
+    </string-array>
     <string-array name="hardware_display_color_calibration_max" translatable="false">
         <item>255</item>
     </string-array>

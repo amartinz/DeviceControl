@@ -17,6 +17,7 @@
 package org.namelessrom.devicecontrol.hardware;
 
 import android.content.res.Resources;
+import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
@@ -28,12 +29,14 @@ public class DisplayColorCalibration {
     private static DisplayColorCalibration sInstance;
 
     private String path;
+    private String ctrl;
     private int    max;
     private int    min;
 
     private DisplayColorCalibration() {
         final Resources res = Application.get().getResources();
         final String[] paths = res.getStringArray(R.array.hardware_display_color_calibration_paths);
+        final String[] ctrls = res.getStringArray(R.array.hardware_display_color_calibration_ctrls);
         final String[] maxs = res.getStringArray(R.array.hardware_display_color_calibration_max);
         final String[] mins = res.getStringArray(R.array.hardware_display_color_calibration_min);
 
@@ -43,6 +46,9 @@ public class DisplayColorCalibration {
             if (Utils.fileExists(paths[i])) {
                 // our existing path
                 path = paths[i];
+
+                // our control path, optional
+                ctrl = Utils.fileExists(ctrls[i]) ? ctrls[i] : null;
 
                 // maximum and minimum
                 max = Integer.parseInt(maxs[i]);
@@ -72,7 +78,12 @@ public class DisplayColorCalibration {
     public String getCurColors() { return Utils.readOneLine(path); }
 
     public void setColors(final String colors) {
-        Utils.runRootCommand(Utils.getWriteCommand(path, colors));
+        final StringBuilder sb = new StringBuilder();
+        sb.append(Utils.getWriteCommand(path, colors));
+        if (!TextUtils.isEmpty(ctrl)) {
+            sb.append(Utils.getWriteCommand(ctrl, "1"));
+        }
+        Utils.runRootCommand(sb.toString());
     }
 
     public String getPath() { return path; }
