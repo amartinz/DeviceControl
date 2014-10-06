@@ -207,7 +207,7 @@
   <string name="menu">Меню</string>
   <string name="preferences">Настройки</string>
   <string name="become_a_monkey">Стать обезьяной</string>
-  <string name="is_monkey">Подождите, вы серьезно?\nВы очень умны для обезьяны.\nНе то, чтобы они глупы, но…\nЛадно, давайте пропустим это.</string>
+  <string name="is_monkey">Подождите, вы серьезно?\nВы очень умны для обезьяны.\nНе то, чтобы они глупы, но...\nЛадно, давайте пропустим это.</string>
   <string name="no_monkey">Не обезьяна? *вздохнул* :(</string>
   <string name="downgraded">База данных стёрта из-за понижения версии!</string>
   <string name="media_scan_trigger">Запустить сканирование медиафайлов</string>
@@ -226,7 +226,7 @@
   <string name="ext_cache">Внешний кэш</string>
   <string name="ext">Внешний</string>
   <string name="cache">Кэш</string>
-  <string name="applying_wait">Применение изменений, пожалуйста, подождите…</string>
+  <string name="applying_wait">Применение изменений, пожалуйста, подождите...</string>
   <string name="full_scans">Полных сканирований</string>
   <string name="pages_shared">Объединённых страниц</string>
   <string name="pages_sharing">Объединяющихся страниц</string>

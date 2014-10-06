@@ -21,8 +21,8 @@
   <string name="app_warning_busybox">¡Por favor tenga en cuenta que %s necesita de BusyBox para poder trabajar correctamente!</string>
   <string name="get_busybox">Instalar BusyBox</string>
   <string name="get_superuser">Instalar Superuser</string>
-  <string name="checking_root">Comprobación de root…</string>
-  <string name="checking_busybox">Comprobación de busybox…</string>
+  <string name="checking_root">Comprobación de root...</string>
+  <string name="checking_busybox">Comprobación de busybox...</string>
   <string name="exit">Salir</string>
   <string name="close">Cerrar</string>
   <string name="message_loading">Cargando, por favor espere&#8230;</string>
@@ -31,7 +31,7 @@
   <string name="general">General</string>
   <string name="others">Otros</string>
   <string name="help">Ayuda</string>
-  <string name="more">Más…</string>
+  <string name="more">Más...</string>
   <string name="dialog_warning">¡Advertencia!</string>
   <string name="dialog_warning_apply">¿Está seguro que desea aplicar esta configuración?</string>
   <string name="toast_settings_applied">¡Aplicado con éxito!</string>
@@ -202,7 +202,7 @@
   <string name="menu">Menú</string>
   <string name="preferences">Preferencias</string>
   <string name="become_a_monkey">Conviertete en un mono</string>
-  <string name="is_monkey">Espera, ¿en serio?\nEres muy inteligente para un mono.\nNo es que sean tontos pero…\nBueno, podemos omitir esto.</string>
+  <string name="is_monkey">Espera, ¿en serio?\nEres muy inteligente para un mono.\nNo es que sean tontos pero...\nBueno, podemos omitir esto.</string>
   <string name="no_monkey">¿No es un mono? *Suspiro* :(</string>
   <string name="downgraded">¡La base de datos será borrada debido al downgrade!</string>
   <string name="media_scan_trigger">Disparador del análisis de medios</string>
@@ -221,7 +221,7 @@
   <string name="ext_cache">Cache externa</string>
   <string name="ext">Externo</string>
   <string name="cache">Cache</string>
-  <string name="applying_wait">Aplicando, por favor espere…</string>
+  <string name="applying_wait">Aplicando, por favor espere...</string>
   <string name="full_scans">Análisis completo</string>
   <string name="pages_shared">Páginas compartidas</string>
   <string name="pages_sharing">Páginas de intercambio</string>
@@ -236,7 +236,7 @@
   <string name="wfm_root">Buscador en modo root</string>
   <string name="wfm_port">Puerto del servidor Web</string>
   <string name="start_wfm">El servidor no está funcionando\nPulse para conectar el servidor.</string>
-  <string name="starting_wfm">El servidor se esta iniciando…</string>
+  <string name="starting_wfm">El servidor se esta iniciando...</string>
   <string name="stop_wfm">El servidor está funcionando en la %s\nPulse para detener el servidor.</string>
   <string name="authentication">Autentificación</string>
   <string name="wfm_auth">Usar la autentificación</string>

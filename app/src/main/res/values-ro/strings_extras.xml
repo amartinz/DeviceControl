@@ -16,10 +16,11 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="permission_api_description">Permite aplicaţiei sa acceseze şi sa utilizeze API-ul Device Control.\nAplicaţia poate controla caracteristicile dispozitivului, incluzând manipularea hardware-ului acestuia.</string>
+  <string name="permission_api_label">accesare API-ul Device Control</string>
+  <string name="permission_api_description">Permite aplicaţiei să acceseze şi să utilizeze API-ul Device Control.\nAplicaţia poate controla caracteristicile dispozitivului, incluzând manipularea hardware-ului acestuia.</string>
   <string name="donate">Donează \u2665</string>
-  <string name="donate_summary">Luaţi in considerare o donaţie dacă vă place aplicatia si doriţi să contribuiţi la îmbunătăţirea acesteia.\nMulţumesc! - Alex</string>
-  <string name="performance_settings_warning_title">Continuaţi cu atenţie</string>
+  <string name="donate_summary">Luaţi în considerare o donaţie dacă vă place aplicația și doriţi să contribuiţi la îmbunătăţirea acesteia.\nMulţumesc! - Alex</string>
+  <string name="performance_settings_warning_title">Continuați cu precauție</string>
   <string name="performance_settings_warning_header">Atenţie</string>
   <string name="build_prop_mods">Modificări build.prop</string>
   <string name="switches">Comutatoare</string>
@@ -27,25 +28,25 @@
   <string name="buildprop_settings_warning">Aceste setări sunt pentru experimentare iar fiecare modificare făcută asupra lor are potenţialul de a cauza instabilitatea sistemului, opriri, pierderi de date sau defecţiuni hardware.</string>
   <string name="nonprop_cat_title">Modificările care implică script init.d</string>
   <string name="wifi_scan_interval_title">Interval scanare Wifi</string>
-  <string name="wifi_scan_interval_summary">Timpul dintre scanările wifi, când nici o reţea salvată nu este disponibilă</string>
+  <string name="wifi_scan_interval_summary">Timpul dintre scanările wifi, când nicio reţea salvată nu este disponibilă</string>
   <string name="wifi_scan_alt_summary">Timpul dintre scanările wifi: %s</string>
-  <string name="max_events_title">Maxim de evenimente pentru manager de Windows pe secundă</string>
-  <string name="max_events_summary">Aceasta este valoarea de timp de punere în aplicare a controlează numărul de evenimente care sistemul va permite pentru un al doilea</string>
+  <string name="max_events_title">Numărul maxim de evenimente pe secundă a Managerului de Ferestre</string>
+  <string name="max_events_summary">Aceasta este o valoare care controlează numărul de evenimente pe care sistemul le permite într-o secundă</string>
   <string name="max_events_alt_summary">Număr maxim de evenimente de sistem: %s</string>
-  <string name="ring_delay_title">Întârziere în inelul de telefon</string>
-  <string name="ring_delay_summary">Cantitate de de timp deoarece sistemul înregistrează un apel primit la inelul</string>
+  <string name="ring_delay_title">Întârzierea soneriei telefonului</string>
+  <string name="ring_delay_summary">Timpul de când sistemul detectează un apel de telefon și până când soneria va suna</string>
   <string name="ring_delay_alt_summary">Întârziere în apelul primit: %s</string>
-  <string name="vm_heapsize_title">Heapsize în cache Dalvik</string>
-  <string name="vm_heapsize_summary">Controlează dimensiunea memoriei cache la care va Dalvik VM avea acces</string>
+  <string name="vm_heapsize_title">Heapsize în cache-ul Dalvik</string>
+  <string name="vm_heapsize_summary">Controlează dimensiunea memoriei cache la care Dalvik VM va avea acces</string>
   <string name="vm_heapsize_alt_summary">Dimensiunea cache de Dalvik VM: %s</string>
-  <string name="fast_up_title">Hack de viteză în creștere HSUPA</string>
-  <string name="fast_up_summary">*ATENŢIE* Dacă modificați această valoare valorile necesare vor fi adăugate la build.prop dumneavoastră dacă nu este deja prezent</string>
-  <string name="fast_up_alt_summary">Creștere rapidă a fost găsit activ: %s</string>
-  <string name="prox_delay_title">Întârzierea senzor de proximitate</string>
-  <string name="prox_delay_summary">Controlul întârziere, în cazul în care ecranului se va întoarce în timpul unui apel și atunci când telefonul departe de cap</string>
-  <string name="prox_delay_alt_summary">Senzor de Proximitate: %s</string>
+  <string name="fast_up_title">Hack de viteză de încărcare HSUPA</string>
+  <string name="fast_up_summary">*ATENŢIE* Dacă modificați această valoare, atunci va fi adăugată la build.prop-ul dvs. dacă nu este deja prezentă</string>
+  <string name="fast_up_alt_summary">Încărcarea rapidă a fost găsit activă: %s</string>
+  <string name="prox_delay_title">Întârzierea senzorului de proximitate</string>
+  <string name="prox_delay_summary">Controlează întârzierea aprinderii ecranului în timpul unui apel atunci când telefonul este departe de cap</string>
+  <string name="prox_delay_alt_summary">Senzor de proximitate setat la: %s</string>
   <string name="sleep_title">Modul de Sleep PM</string>
-  <string name="sleep_summary">Modificarea orei de confidențialitate de somn noaptea</string>
+  <string name="sleep_summary">Modifica politica de somn pe durata nopții</string>
   <string name="sleep_alt_summary">Modul de Sleep actuală: %s</string>
   <string name="jit_title">Chiar înăuntru timp Compiler</string>
   <string name="jit_summary">Activează/dezactivează compilatorul JIT</string>

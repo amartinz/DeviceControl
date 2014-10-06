@@ -207,7 +207,7 @@
   <string name="menu">Menu</string>
   <string name="preferences">Preferencje</string>
   <string name="become_a_monkey">Zostań małpą</string>
-  <string name="is_monkey">Na serio?\nJesteś dość mądry jak na małpę.\nNo nie żeby małpy były głupie ale…\nNo dobra, dajmy spokój.</string>
+  <string name="is_monkey">Na serio?\nJesteś dość mądry jak na małpę.\nNo nie żeby małpy były głupie ale...\nNo dobra, dajmy spokój.</string>
   <string name="no_monkey">Nie jesteś małpą? *Ehhh* :(</string>
   <string name="downgraded">Baza danych wyczyszczona z powodu downgrade\'u!</string>
   <string name="media_scan_trigger">Uruchom skanowanie mediów</string>

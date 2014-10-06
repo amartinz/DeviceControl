@@ -18,9 +18,11 @@
 <resources>
   <string name="app_version_name">Versions-Name: %s</string>
   <string name="app_version_code">Versions-Code: %s</string>
-  <string name="app_information_message">Willkommen zu %1$s!\n\nUm zu starten, wische das Menü aus der linken Seite heraus oder drücke auf die linke obere Ecke!\n\nFalls eine Funktion von deinem Gerät nicht unterstützt wird, wird sie automatisch ausgeblendet!\nUnterstützte Funktionen sind abhängig von dem Gerät, der ROM und dem Kernel, den du benutzt.\n\nFalls du keine unterstützten Funktionen hast, versuche einen Custom-Kernel zu benutzen!\n\nBitte beachte, dass Root-Rechte benötigt werden, damit du %2$s in vollen Zügen genießen kannst!</string>
+  <string name="app_welcome">Willkommen bei %s</string>
+  <string name="app_welcome_message">Um zu starten, wische das Menü aus der linken Seite heraus oder drücke auf die linke obere Ecke!\n\nFalls eine Funktion von deinemGerät nicht unterstützt wird, wird sie automatisch ausgeblendet!\nUnterstützte Funktionen sind abhängig von dem Gerät, der ROM und dem Kernel, den du benutzt.\n\nFalls du keine unterstützten Funktionen hast, versuche einen Custom-Kernel zu benutzen!\n\nBitte beachte, dass Root-Rechte benötigt werden, damit du %s in vollen Zügen genießen kannst!</string>
   <string name="app_warning_root">Bitte beachte, dass %s ein Gerät mit Root-Rechten benötigt, um richtig zu funktionieren!</string>
   <string name="app_warning_busybox">Bitte beachte, dass %s eine BusyBox erfordert, um vollständig zu funktionieren!</string>
+  <string name="start_wizard">Assistenten starten</string>
   <string name="get_busybox">BusyBox installieren</string>
   <string name="get_superuser">Superuser installieren</string>
   <string name="checking_root">Root-Rechte werden überprüft&#8230;</string>
@@ -209,7 +211,7 @@
   <string name="menu">Menü</string>
   <string name="preferences">Einstellungen</string>
   <string name="become_a_monkey">Werde ein Affe</string>
-  <string name="is_monkey">Warte, ist das dein Ernst?\nDu bist ziemlich clever für einen Affen.\nNicht dass sie dumm wären, aber…\nWie auch immer, lass uns das Thema wechseln.</string>
+  <string name="is_monkey">Warte, ist das dein Ernst?\nDu bist ziemlich clever für einen Affen.\nNicht dass sie dumm wären, aber...\nWie auch immer, lass uns das Thema wechseln.</string>
   <string name="no_monkey">Kein Affe? *seufz* :(</string>
   <string name="downgraded">Datenbank wurde aufgrund eines Downgrades gelöscht!</string>
   <string name="media_scan_trigger">Media-Scanner auslösen</string>
@@ -252,6 +254,7 @@
   <string name="password">Passwort</string>
   <string name="entropy">Entropie</string>
   <string name="entropy_avail">Verfügbare Entropie</string>
+  <string name="rng">Zufallszahlengenerator</string>
   <string name="rng_active">Benutze den Zufallszahlen-Generator</string>
   <string name="install_rng">Herunterladen und Installieren des Zufallszahlen-Generators</string>
   <string name="error_download">Fehler beim Herunterladen der Datei!\nBitte versuche es später erneut!</string>
@@ -345,4 +348,16 @@
   <string name="memory">Arbeitsspeicher</string>
   <string name="free">Verfügbar</string>
   <string name="cached">Zwischengespeichert</string>
+  <string name="display_color_calibration">Farbkalibrierung</string>
+  <string name="display_color_calibration_summary">Bildschirmfarben kalibrieren</string>
+  <string name="red">Rot</string>
+  <string name="green">Grün</string>
+  <string name="blue">Blau</string>
+  <string name="gamma_tuning_control_set_header">Gruppe %d</string>
+  <string name="gamma_tuning_contrast">Kontrast</string>
+  <string name="gamma_tuning_brightness">Helligkeit</string>
+  <string name="gamma_tuning_saturation">Sättigung</string>
+  <string name="display_gamma_calibration">Gammakorrektur</string>
+  <string name="display_gamma_calibration_summary">Gammawerte einstellen</string>
+  <string name="hardware_display_gamma_calibration_desc_one">Rot,Grün,Blau</string>
 </resources>

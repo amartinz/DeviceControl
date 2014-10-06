@@ -18,7 +18,11 @@
 <resources>
   <string name="app_version_name">Nume versiune: %s</string>
   <string name="app_version_code">Cod versiune: %s</string>
+  <string name="app_welcome">Bine ati venit la %s</string>
+  <string name="app_welcome_message">Pentru a începe, glisați meniul din stânga sau apăsaţi butonul din partea superioară stânga!\n\nDacă o caracteristică nu este acceptată de dispozitiv, acesta este ascunsă automat!\nCaracteristicile suportate depinde de dispozitivul, de ROM-ul şi kernel-ul pe care le utilizați.\n\nDacă nu ai caracteristici suportate, vă rugăm să utilizaţi un kernel customizat!\n\nRețineți că aveți nevoie de un dispozitiv cu root ca să vă bucurați de toate caracteristicile ale %s!</string>
+  <string name="app_warning_root">Vă rugăm să reţineţi că %s necesită un dispozitiv cu root ca  să lucreze complet!</string>
   <string name="app_warning_busybox">Reţineţi că %s are nevoie de BusyBox pentru a funcţiona pe deplin!</string>
+  <string name="start_wizard">Pornirea expertului</string>
   <string name="get_busybox">Instalează BusyBox</string>
   <string name="get_superuser">Instalează Superuser</string>
   <string name="checking_root">Se verifică accesul root&#8230;</string>
@@ -207,7 +211,7 @@
   <string name="menu">Meniu</string>
   <string name="preferences">Preferinţe</string>
   <string name="become_a_monkey">Transformă-te într-o maimuţă</string>
-  <string name="is_monkey">Stai, ești serios?\nEști destul de inteligent pentru o maimuţă.\nNu că ar fi ele proaste dar…\nDeci, săriţi peste acest lucru.</string>
+  <string name="is_monkey">Stai, ești serios?\nEști destul de inteligent pentru o maimuţă.\nNu că ar fi ele proaste dar...\nDeci, săriţi peste acest lucru.</string>
   <string name="no_monkey">Nu ești maimuţă? :(</string>
   <string name="downgraded">Baza de date a fost ștearsă din cauza retrogradării!</string>
   <string name="media_scan_trigger">Activați scanarea de mass-media</string>
@@ -226,7 +230,7 @@
   <string name="ext_cache">Cache extern</string>
   <string name="ext">Extern</string>
   <string name="cache">Cache</string>
-  <string name="applying_wait">Se aplică, așteaptă…</string>
+  <string name="applying_wait">Se aplică, așteaptă...</string>
   <string name="full_scans">Scanare totală</string>
   <string name="pages_shared">Pagini partajate</string>
   <string name="pages_sharing">Pagini de partajare</string>
@@ -241,7 +245,7 @@
   <string name="wfm_root">Căutați în modul root</string>
   <string name="wfm_port">Portul serverului Web</string>
   <string name="start_wfm">Serverul nu funcționează\nApasă pentru a porni serverul.</string>
-  <string name="starting_wfm">Serverul pornește…</string>
+  <string name="starting_wfm">Serverul pornește...</string>
   <string name="stop_wfm">Server rulează la %s\nApasă pentru a opri serverul.</string>
   <string name="authentication">Autentificare</string>
   <string name="wfm_auth">Utilizare autentificare</string>
@@ -250,6 +254,7 @@
   <string name="password">Parolă</string>
   <string name="entropy">Entropie</string>
   <string name="entropy_avail">Entropie disponibilă</string>
+  <string name="rng">Generator de numere aleatoare</string>
   <string name="rng_active">Folosește generator de numere aleatorii</string>
   <string name="install_rng">Descarcă şi instalează generatorul de numere aleatorii</string>
   <string name="error_download">Eroare descărcare fișier!\nÎncercați mai târziu!</string>
@@ -277,10 +282,11 @@
   <string name="hot_reboot">Repornire la Cald</string>
   <string name="shutdown">Închidere</string>
   <string name="warning_data_corruption">Poate cauza corupția datelor dacă este activată</string>
+  <string name="warning_data_corruption_invert">Poate cauza corupția datelor dacă este dezactivată</string>
   <string name="read_ahead">Citește înainte</string>
   <string name="filesystem">Sistemul de fișiere</string>
   <string name="low_memory_killer">Eliberare spațiu memorie</string>
-  <string name="select_preset">Selectaţi presetarea…</string>
+  <string name="select_preset">Selectaţi presetarea...</string>
   <string name="very_light">Foarte uşoară</string>
   <string name="light">Ușoară</string>
   <string name="medium">Mediu</string>
@@ -309,7 +315,7 @@
   <string name="tcp_congestion_control">Controlul congestiei TCP</string>
   <string name="app_size">Dimensiunea aplicației</string>
   <string name="uninstall">Dezinstalare</string>
-  <string name="uninstalling">Dezinstalare…</string>
+  <string name="uninstalling">Dezinstalare...</string>
   <string name="uninstall_msg">Doriţi să dezinstalaţi \"%s\"?\nAceastă acţiune nu poate fi anulată!</string>
   <string name="uninstall_success">Dezinstalat cu succes \"%s\"</string>
   <string name="sunlight_enhancement">Intensificator lumină solară</string>
@@ -324,4 +330,22 @@
   <string name="type">Tip</string>
   <string name="tags">Tag-uri</string>
   <string name="sensors">Senzori</string>
+  <string name="microphone">Microfon</string>
+  <string name="speaker">Difuzor</string>
+  <string name="headphones">Căşti</string>
+  <string name="sound_control">Control sunet</string>
+  <string name="model">Modelul</string>
+  <string name="manufacturer">Producător</string>
+  <string name="product">Produs</string>
+  <string name="board">Bază</string>
+  <string name="radio_version">Versiune radio</string>
+  <string name="build_date">Dată compilare</string>
+  <string name="processor">Procesor</string>
+  <string name="kernel">Kernel</string>
+  <string name="hardware">Hardware</string>
+  <string name="toolchain">Toolchain</string>
+  <string name="host">Gazdă</string>
+  <string name="memory">Memorie</string>
+  <string name="free">Liber</string>
+  <string name="cached">În cache</string>
 </resources>
