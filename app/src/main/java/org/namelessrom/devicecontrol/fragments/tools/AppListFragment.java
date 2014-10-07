@@ -519,14 +519,14 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         if (mAppItem.isSystemApp()) {
             sb.append("busybox mount -o rw,remount /system;");
         } else {
-            sb.append(String.format("pm uninstall %s", mAppItem.getPackageName()));
+            sb.append(String.format("pm uninstall %s;", mAppItem.getPackageName()));
         }
 
         sb.append(String.format("rm -rf %s;", mAppItem.getApplicationInfo().sourceDir));
         sb.append(String.format("rm -rf %s;", mAppItem.getApplicationInfo().dataDir));
 
         if (mAppItem.isSystemApp()) {
-            sb.append(String.format("pm uninstall %s", mAppItem.getPackageName()));
+            sb.append(String.format("pm uninstall %s;", mAppItem.getPackageName()));
             sb.append("busybox mount -o ro,remount /system;");
         }
 
