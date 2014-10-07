@@ -28,17 +28,19 @@ import org.namelessrom.devicecontrol.Application;
  */
 public class DrawableHelper {
 
-    public static void applyColorFilter(final Drawable d, final int color, final boolean isRes) {
-        applyColorFilter(d, isRes ? Application.get().getColor(color) : color);
+    public static Drawable applyColorFilter(final Drawable d, final int color,
+            final boolean isRes) {
+        return applyColorFilter(d, isRes ? Application.get().getColor(color) : color);
     }
 
-    public static void applyColorFilter(final Drawable drawable, final int color) {
+    public static Drawable applyColorFilter(final Drawable drawable, final int color) {
         final LightingColorFilter lightingColorFilter = new LightingColorFilter(Color.BLACK, color);
         drawable.setColorFilter(lightingColorFilter);
+        return drawable;
     }
 
-    public static void applyAccentColorFilter(final Drawable drawable) {
-        applyColorFilter(drawable, Application.get().getAccentColor());
+    public static Drawable applyAccentColorFilter(final Drawable drawable) {
+        return applyColorFilter(drawable, Application.get().getAccentColor());
     }
 
 }

@@ -10,13 +10,6 @@ LOCAL_SRC_FILES    := \
         $(call all-java-files-under,java) \
         aidl/org/namelessrom/devicecontrol/api/IRemoteService.aidl \
 
-## Cardslib
-
-library_src_files := ../../../../../../external/cardslib/library/src/main/java
-LOCAL_SRC_FILES   += $(call all-java-files-under, $(library_src_files))
-
-LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/cardslib/library/src/main/res
-
 ## Holoaccent
 
 library_src_files := ../../../../../../external/holoaccent/HoloAccent/src
@@ -42,7 +35,6 @@ LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/mpandroidchart/MP
 
 LOCAL_AAPT_FLAGS := \
     --auto-add-overlay \
-    --extra-packages it.gmariotti.cardslib.library \
     --extra-packages com.negusoft.holoaccent \
     --extra-packages com.larswerkman.holocolorpicker \
     --extra-packages com.github.mikephil.charting \

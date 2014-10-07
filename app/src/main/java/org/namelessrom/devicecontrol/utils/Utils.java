@@ -19,11 +19,13 @@ package org.namelessrom.devicecontrol.utils;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.BatteryManager;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
@@ -46,6 +48,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
@@ -541,6 +545,23 @@ public class Utils implements DeviceConstants {
     public static String getAndroidId() {
         return Settings.Secure.getString(
                 Application.get().getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    public static void showToast(final Context context, final int resourceId) {
+        showToast(context, Application.get().getString(resourceId));
+    }
+
+    public static void showToast(final Context context, final String string) {
+        Application.HANDLER.post(new Runnable() {
+            @Override public void run() {
+                Toast.makeText(context, string, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public static String getDateAndTime() {
+        return new SimpleDateFormat("yyyy-MM-dd.HH.mm.ss")
+                .format(new Date(System.currentTimeMillis()));
     }
 
 }

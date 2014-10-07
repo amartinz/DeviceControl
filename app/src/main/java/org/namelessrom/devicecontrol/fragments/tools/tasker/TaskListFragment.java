@@ -28,7 +28,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 
 import com.negusoft.holoaccent.widget.AccentSwitch;
 
@@ -36,7 +38,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.services.TaskerService;
-import org.namelessrom.devicecontrol.ui.adapters.TaskerAdapter;
 import org.namelessrom.devicecontrol.ui.cards.TaskerCard;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -47,21 +48,16 @@ import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.gmariotti.cardslib.library.view.CardListView;
-
 public class TaskListFragment extends AttachFragment implements DeviceConstants {
 
-    private CardListView  mListView;
-    private TaskerAdapter mAdapter;
-    private View          mEmptyView;
+    private LinearLayout mCardsLayout;
+    private View         mEmptyView;
 
     @Override protected int getFragmentId() { return ID_TOOLS_TASKER_LIST; }
 
     @Override public void onResume() {
         super.onResume();
-        if (mAdapter != null) {
-            refreshListView();
-        }
+        refreshListView();
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,19 +65,29 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
         setHasOptionsMenu(true);
         final View v = inflater.inflate(R.layout.fragment_tasker, container, false);
 
-        mListView = (CardListView) v.findViewById(android.R.id.list);
+        mCardsLayout = (LinearLayout) v.findViewById(R.id.cards_layout);
         mEmptyView = v.findViewById(android.R.id.empty);
-
-        mAdapter = new TaskerAdapter(getActivity());
 
         return v;
     }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mListView.setAdapter(mAdapter);
-
         refreshListView();
+    }
+
+    public void addCards(final ArrayList<TaskerCard> cards, boolean animate, boolean remove) {
+        mCardsLayout.clearAnimation();
+        if (remove) {
+            mCardsLayout.removeAllViews();
+        }
+        if (animate) {
+            mCardsLayout.setAnimation(
+                    AnimationUtils.loadAnimation(getActivity(), R.anim.up_from_bottom));
+        }
+        for (final TaskerCard card : cards) {
+            mCardsLayout.addView(card);
+        }
     }
 
     private void refreshListView() {
@@ -133,7 +139,7 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
         @Override protected void onPreExecute() {
             // TODO: animations and progress view
             mEmptyView.setVisibility(View.GONE);
-            mListView.setVisibility(View.GONE);
+            mCardsLayout.setVisibility(View.GONE);
         }
 
         @Override protected ArrayList<TaskerCard> doInBackground(final Void... voids) {
@@ -141,7 +147,7 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
             final ArrayList<TaskerCard> cards = new ArrayList<TaskerCard>(items.size());
 
             for (final TaskerItem item : items) {
-                cards.add(new TaskerCard(getActivity(), item));
+                cards.add(new TaskerCard(getActivity(), null, item, null));
             }
 
             return cards;
@@ -149,14 +155,13 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
 
         @Override protected void onPostExecute(final ArrayList<TaskerCard> result) {
             // if the adapter exists and we have items, clear it and add the results
-            if (mAdapter != null && result != null && result.size() > 0) {
-                mAdapter.clear();
-                mAdapter.addAll(result);
+            if (result != null && result.size() > 0) {
+                addCards(result, true, true);
                 mEmptyView.setVisibility(View.GONE);
-                mListView.setVisibility(View.VISIBLE);
+                mCardsLayout.setVisibility(View.VISIBLE);
             } else {
                 mEmptyView.setVisibility(View.VISIBLE);
-                mListView.setVisibility(View.GONE);
+                mCardsLayout.setVisibility(View.GONE);
             }
         }
     }

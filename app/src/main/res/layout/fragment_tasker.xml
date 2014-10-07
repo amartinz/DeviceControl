@@ -14,18 +14,24 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <it.gmariotti.cardslib.library.view.CardListView
-        android:id="@android:id/list"
+    <ScrollView
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        card:list_card_layout_resourceID="@layout/card_list_image_layout" />
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/cards_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </ScrollView>
 
     <TextView
         android:id="@android:id/empty"
@@ -34,6 +40,7 @@
         android:textAlignment="center"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/list_empty" />
+        android:text="@string/list_empty"
+        android:visibility="gone" />
 
-</LinearLayout>
+</RelativeLayout>

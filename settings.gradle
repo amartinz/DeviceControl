@@ -1,1 +1,1 @@
-include ':app', ':sample', ':libs:cardslib:library', ':libs:mpandroidchart:MPChartLib'
+include ':app', ':sample', ':libs:mpandroidchart:MPChartLib'

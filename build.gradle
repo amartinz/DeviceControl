@@ -5,8 +5,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.13.0'
-        // for cardslib
-        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
     }
 }
 
