@@ -17,9 +17,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-/**
- * Created by alex on 15.07.14.
- */
 public class ColorPickerDialogFragment extends AccentDialogFragment {
 
     private final PreferencesFragment.OnColorPickedListener onColorPickedListener;

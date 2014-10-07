@@ -44,9 +44,8 @@ import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.ShellOutputEvent;
-import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.objects.Prop;
+import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.Scripts;
@@ -59,7 +58,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class SysctlEditorFragment extends AttachFragment implements DeviceConstants,
-        AdapterView.OnItemClickListener, OnShellOutputListener {
+        AdapterView.OnItemClickListener, ShellOutput.OnShellOutputListener {
 
     //==============================================================================================
     // Fields
@@ -243,10 +242,8 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
         }
     }
 
-    public void onShellOutput(final ShellOutputEvent event) {
-        final int id = event.getId();
-        final String result = event.getOutput();
-        switch (id) {
+    public void onShellOutput(final ShellOutput shellOutput) {
+        switch (shellOutput.id) {
             case SAVE:
                 Utils.remount("/system", "ro"); // slip through to APPLY
             case APPLY:
@@ -254,9 +251,9 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
                         + "busybox sysctl -p /system/etc/sysctl.conf;");
                 break;
             default:
-                Logger.v(this, "onReadPropsCompleted: " + result);
+                Logger.v(this, "onReadPropsCompleted: " + shellOutput.output);
                 if (isAdded()) {
-                    loadProp(result);
+                    loadProp(shellOutput.output);
                 } else {
                     Logger.w(this, "Not attached!");
                 }
@@ -282,7 +279,10 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
                         if (pv != null && !pv.isEmpty()) {
                             pv = pv.trim();
                         }
-                        final String pn = aP.replace("/", ".").substring(10, length);
+                        String pn = aP.replace("/", ".");
+                        if (pn.length() > 10) {
+                            pn = pn.substring(10, length);
+                        }
                         mProps.add(new Prop(pn, pv));
                     }
                 }

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.CanvasTransformer;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 
 public class CustomViewBehind extends ViewGroup {
@@ -230,7 +231,7 @@ public class CustomViewBehind extends ViewGroup {
                         (x - getBehindWidth()) * mScrollScale), y);
             }
         }
-        if (CustomViewAbove.DEBUG && vis == View.INVISIBLE) { Log.v(TAG, "behind INVISIBLE"); }
+        if (vis == View.INVISIBLE) { Logger.d(TAG, "behind INVISIBLE"); }
         setVisibility(vis);
     }
 

@@ -21,15 +21,11 @@ import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.View;
 
-import com.squareup.otto.Subscribe;
-
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.FlashItemEvent;
-import org.namelessrom.devicecontrol.bus.ShellOutputEvent;
+import org.namelessrom.devicecontrol.activities.FilePickerActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
-import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.objects.FlashItem;
+import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -40,7 +36,7 @@ import java.util.ArrayList;
  * A class for picking a file
  */
 public class FilePickerFragment extends ListFragment implements OnBackPressedListener,
-        OnShellOutputListener {
+        ShellOutput.OnShellOutputListener, FilePickerListener {
 
     public static final String ARG_FILE_TYPE = "arg_file_type";
 
@@ -55,16 +51,6 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
 
     private FileAdapter mFileAdapter;
 
-    @Override public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
-
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -77,7 +63,7 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // TODO: restore instance state
-        mFileAdapter = new FileAdapter();
+        mFileAdapter = new FileAdapter(this);
         mFileAdapter.setFileType(fileType);
         loadFiles(root, true);
     }
@@ -90,7 +76,7 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
         Utils.getCommandResult(this, ID_GET_FILES, String.format("ls %s", path), true);
     }
 
-    @Subscribe public void onFile(final File f) {
+    @Override public void onFilePicked(final File f) {
         currentPath = f.getAbsolutePath() + File.separator;
         if (currentPath.endsWith("../")) {
             onBackPressed();
@@ -101,19 +87,20 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
         loadFiles(currentPath, true);
     }
 
-    @Subscribe public void onFlashItem(final FlashItem item) {
+    @Override public void onFlashItemPicked(final FlashItem item) {
         if (!ContentTypes.isFiletypeMatching(item.getName(), fileType)) return;
 
         Logger.v(this, String.format("filePicked(%s)", item.getPath()));
-        BusProvider.getBus().post(new FlashItemEvent(item));
+        if (getActivity() instanceof FilePickerActivity) {
+            ((FilePickerActivity) getActivity()).onFlashItemPicked(item);
+        }
     }
 
-    public void onShellOutput(final ShellOutputEvent event) {
-        if (event == null) return;
-        final int id = event.getId();
-        switch (id) {
+    @Override public void onShellOutput(final ShellOutput shellOutput) {
+        if (shellOutput == null) return;
+        switch (shellOutput.id) {
             case ID_GET_FILES:
-                final String[] output = event.getOutput().split("\n");
+                final String[] output = shellOutput.output.split("\n");
                 final ArrayList<File> fileList = new ArrayList<File>(output.length);
                 if (!currentPath.equals(root)) {
                     fileList.add(new File(currentPath + File.separator + "../"));

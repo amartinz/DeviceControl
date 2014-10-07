@@ -40,6 +40,7 @@
     <string name="toast_settings_applied">Successfully applied!</string>
     <string name="no_tweaks_available">No tweaks available</string>
     <string name="no_tweaks_message">Sorry but your device doesn\'t have any supported features</string>
+    <string name="gov_tweaks">Tweakable values: %s</string>
     <string name="no_gov_tweaks_message">Sorry but this governor has no tunable values</string>
     <string name="home">Home</string>
     <string name="device">Device</string>

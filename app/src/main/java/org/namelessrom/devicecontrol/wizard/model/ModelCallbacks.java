@@ -24,4 +24,8 @@ public interface ModelCallbacks {
     void onPageDataChanged(Page page);
 
     void onPageTreeChanged();
+
+    void onSaveTask();
+
+    void onItemSelected();
 }

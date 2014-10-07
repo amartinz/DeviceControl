@@ -18,7 +18,6 @@
 package org.namelessrom.devicecontrol.fragments.performance.sub;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,36 +45,34 @@ import com.negusoft.holoaccent.dialog.DividerPainter;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.hardware.VoltageUtils;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
-public class VoltageFragment extends AttachPreferenceFragment
-        implements DeviceConstants, PerformanceConstants {
+public class VoltageFragment extends AttachPreferenceFragment implements Constants,
+        DeviceConstants {
 
     private static final String PREF_UV  = "pref_uv";
     private static final String PREF_VDD = "pref_vdd";
 
     private PreferenceCategory mCategory;
-    private Context            mContext;
     private String[]           mNames;
     private String[]           mValues;
     private LinearLayout       mButtonLayout;
+
     private boolean isVdd = false;
 
     @Override protected int getFragmentId() { return ID_VOLTAGE; }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.voltage_control);
         setHasOptionsMenu(true);
 
-        mContext = getActivity();
         mCategory = (PreferenceCategory) findPreference("uv_category");
 
         if (Utils.fileExists(UV_TABLE_FILE)) {
@@ -98,13 +95,11 @@ public class VoltageFragment extends AttachPreferenceFragment
             }
         }
 
-        isSupported(getPreferenceScreen(), mContext);
+        isSupported(getPreferenceScreen(), getActivity());
     }
 
-    @Override
-    public View onCreateView(@NonNull final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+    @Override public View onCreateView(@NonNull final LayoutInflater inflater,
+            final ViewGroup container, final Bundle savedInstance) {
         final View v = inflater.inflate(R.layout.fragment_voltage, container, false);
 
         final ListView list = (ListView) v.findViewById(android.R.id.list);
@@ -168,16 +163,14 @@ public class VoltageFragment extends AttachPreferenceFragment
         return v;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         if (Utils.fileExists(UV_TABLE_FILE) || Utils.fileExists(VDD_TABLE_FILE)) {
             inflater.inflate(R.menu.menu_voltage, menu);
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
         switch (id) {
             case R.id.action_plus:
@@ -230,11 +223,10 @@ public class VoltageFragment extends AttachPreferenceFragment
 
         class LongOperation extends AsyncTask<String, Void, String> {
 
-            @Override
-            protected String doInBackground(String... params) {
+            @Override protected String doInBackground(String... params) {
                 try {
-                    mNames = CpuUtils.getUvValues(true);
-                    mValues = CpuUtils.getUvValues(false);
+                    mNames = VoltageUtils.get().getUvValues(true);
+                    mValues = VoltageUtils.get().getUvValues(false);
                 } catch (Exception exc) {
                     Logger.e(this, "UV ERROR: " + exc.getMessage());
                     return "ERROR";
@@ -247,7 +239,7 @@ public class VoltageFragment extends AttachPreferenceFragment
                 for (int i = 0; i < length; i++) {
                     final int j = i;
                     name = mNames[i];
-                    pref = new CustomPreference(mContext);
+                    pref = new CustomPreference(getActivity());
                     pref.setTitle(name);
                     pref.areMilliVolts(millivolts);
                     if (isVdd) {
@@ -262,14 +254,15 @@ public class VoltageFragment extends AttachPreferenceFragment
 
                         @Override
                         public boolean onPreferenceClick(final Preference p) {
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                            final AlertDialog.Builder builder =
+                                    new AlertDialog.Builder(getActivity());
 
-                            final LinearLayout ll = new LinearLayout(mContext);
+                            final LinearLayout ll = new LinearLayout(getActivity());
                             ll.setLayoutParams(new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.WRAP_CONTENT,
                                     LinearLayout.LayoutParams.MATCH_PARENT));
 
-                            final EditText et = new EditText(mContext);
+                            final EditText et = new EditText(getActivity());
 
                             final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -318,7 +311,7 @@ public class VoltageFragment extends AttachPreferenceFragment
 
                             final Window window = dialog.getWindow();
                             window.setLayout(800, LayoutParams.WRAP_CONTENT);
-                            new DividerPainter(mContext).paint(window);
+                            new DividerPainter(getActivity()).paint(window);
 
                             return true;
                         }

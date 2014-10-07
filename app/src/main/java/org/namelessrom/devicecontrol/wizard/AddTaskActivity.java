@@ -32,14 +32,10 @@ import android.widget.Button;
 import com.negusoft.holoaccent.activity.AccentActivity;
 import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 import com.negusoft.holoaccent.dialog.AccentDialogFragment;
-import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
 import org.namelessrom.devicecontrol.database.TaskerItem;
-import org.namelessrom.devicecontrol.wizard.events.ItemSelectedEvent;
-import org.namelessrom.devicecontrol.wizard.events.SaveTaskEvent;
 import org.namelessrom.devicecontrol.wizard.model.AbstractWizardModel;
 import org.namelessrom.devicecontrol.wizard.model.ModelCallbacks;
 import org.namelessrom.devicecontrol.wizard.model.Page;
@@ -73,16 +69,6 @@ public class AddTaskActivity extends AccentActivity implements
 
     @Override public int getOverrideAccentColor() {
         return Application.get().getAccentColor();
-    }
-
-    @Override protected void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override protected void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
     }
 
     public void onCreate(Bundle savedInstanceState) {
@@ -193,15 +179,16 @@ public class AddTaskActivity extends AccentActivity implements
         }
     }
 
-    @Subscribe public void onItemSelectedEvent(final ItemSelectedEvent event) {
-        if (event == null) return;
+    @Override public void onSaveTask() { }
+
+    @Override public void onItemSelected() {
         onNextButton();
     }
 
     private DialogInterface.OnClickListener mSubListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            BusProvider.getBus().post(new SaveTaskEvent());
+            mWizardModel.onSaveTask();
         }
     };
 

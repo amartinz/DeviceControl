@@ -503,11 +503,7 @@ public class NumberProgressBar extends View implements ProgressCallback {
     }
 
     public void setProgressTextVisibility(ProgressTextVisibility visibility){
-        if(visibility == ProgressTextVisibility.Visible){
-            mIfDrawText = true;
-        }else{
-            mIfDrawText = false;
-        }
+        mIfDrawText = (visibility == ProgressTextVisibility.Visible);
         invalidate();
     }
 

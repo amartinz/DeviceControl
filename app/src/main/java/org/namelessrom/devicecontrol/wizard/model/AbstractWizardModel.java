@@ -62,6 +62,26 @@ public abstract class AbstractWizardModel implements ModelCallbacks {
         }
     }
 
+    @Override
+    public void onSaveTask() {
+        // can't use for each because of concurrent modification (review fragment
+        // can get added or removed and will register itself as a listener)
+        //noinspection ForLoopReplaceableByForEach
+        for (int i = 0; i < mListeners.size(); i++) {
+            mListeners.get(i).onSaveTask();
+        }
+    }
+
+    @Override
+    public void onItemSelected() {
+        // can't use for each because of concurrent modification (review fragment
+        // can get added or removed and will register itself as a listener)
+        //noinspection ForLoopReplaceableByForEach
+        for (int i = 0; i < mListeners.size(); i++) {
+            mListeners.get(i).onItemSelected();
+        }
+    }
+
     public Page findByKey(String key) {
         return mRootPageList.findByKey(key);
     }

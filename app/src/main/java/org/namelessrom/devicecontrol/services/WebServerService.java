@@ -33,9 +33,6 @@ import com.koushikdutta.async.http.server.AsyncHttpServer;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.server.ServerStoppedEvent;
-import org.namelessrom.devicecontrol.bus.server.ServerStoppingEvent;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
 import org.namelessrom.devicecontrol.net.ServerWrapper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -52,7 +49,6 @@ public class WebServerService extends Service {
     @Override public IBinder onBind(final Intent intent) { return new WebServerBinder(); }
 
     @Override public void onDestroy() {
-        BusProvider.getBus().post(new ServerStoppedEvent());
         stopServer();
         super.onDestroy();
     }
@@ -142,7 +138,6 @@ public class WebServerService extends Service {
             mServerWrapper.createServer();
         } else {
             Logger.i(this, "stopping service!");
-            BusProvider.getBus().post(new ServerStoppingEvent());
             stopServer();
         }
         return START_NOT_STICKY;

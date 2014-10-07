@@ -1107,7 +1107,9 @@ public final class RootToolsInternalMethods {
             blockSize = stat.getBlockSizeLong();
             availableBlocks = stat.getAvailableBlocksLong();
         } else {
+            //noinspection deprecation
             blockSize = stat.getBlockSize();
+            //noinspection deprecation
             availableBlocks = stat.getAvailableBlocks();
         }
         return (updateSize < availableBlocks * blockSize);

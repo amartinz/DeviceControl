@@ -42,9 +42,8 @@ import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.ShellOutputEvent;
-import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
 import org.namelessrom.devicecontrol.objects.Prop;
+import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.Scripts;
@@ -56,7 +55,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class BuildPropEditorFragment extends AttachFragment implements DeviceConstants,
-        AdapterView.OnItemClickListener, OnShellOutputListener {
+        AdapterView.OnItemClickListener, ShellOutput.OnShellOutputListener {
 
     //==============================================================================================
     // Fields
@@ -171,10 +170,8 @@ public class BuildPropEditorFragment extends AttachFragment implements DeviceCon
         }
     }
 
-    public void onShellOutput(final ShellOutputEvent event) {
-        final int id = event.getId();
-        final String result = event.getOutput();
-        switch (id) {
+    public void onShellOutput(final ShellOutput shellOutput) {
+        switch (shellOutput.id) {
             case SAVE:
                 Utils.remount("/system", "ro");
                 break;
@@ -183,9 +180,9 @@ public class BuildPropEditorFragment extends AttachFragment implements DeviceCon
                 if (mAdapter != null) mAdapter.notifyDataSetChanged();
                 break;
             default:
-                Logger.v(this, "onReadPropsCompleted: " + result);
+                Logger.v(this, "onReadPropsCompleted: " + shellOutput.output);
                 if (isAdded()) {
-                    loadBuildProp(result);
+                    loadBuildProp(shellOutput.output);
                 } else {
                     Logger.w(this, "Not attached!");
                 }

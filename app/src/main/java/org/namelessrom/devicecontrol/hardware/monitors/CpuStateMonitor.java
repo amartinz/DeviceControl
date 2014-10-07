@@ -23,8 +23,6 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.CpuStateEvent;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
@@ -42,11 +40,13 @@ public class CpuStateMonitor implements DeviceConstants {
 
     private static CpuStateMonitor mCpuStateMonitor;
 
-    private CpuStateMonitor() { }
+    private static CpuUtils.StateListener mListener;
 
-    public static CpuStateMonitor getInstance() {
+    private CpuStateMonitor(final CpuUtils.StateListener listener) { mListener = listener; }
+
+    public static CpuStateMonitor getInstance(final CpuUtils.StateListener listener) {
         if (mCpuStateMonitor == null) {
-            mCpuStateMonitor = new CpuStateMonitor();
+            mCpuStateMonitor = new CpuStateMonitor(listener);
         }
         return mCpuStateMonitor;
     }
@@ -76,6 +76,8 @@ public class CpuStateMonitor implements DeviceConstants {
     }
 
     public void updateStates() throws IOException {
+        if (mListener == null) return;
+
         InputStream is = null;
         InputStreamReader ir = null;
         BufferedReader br = null;
@@ -99,7 +101,7 @@ public class CpuStateMonitor implements DeviceConstants {
         Application.HANDLER.post(new Runnable() {
             @Override
             public void run() {
-                BusProvider.getBus().post(new CpuStateEvent(mStates, getTotalStateTime(mStates)));
+                mListener.onStates(new CpuUtils.State(mStates, getTotalStateTime(mStates)));
             }
         });
     }

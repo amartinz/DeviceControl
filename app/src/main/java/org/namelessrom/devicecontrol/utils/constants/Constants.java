@@ -17,7 +17,7 @@
  */
 package org.namelessrom.devicecontrol.utils.constants;
 
-public interface PerformanceConstants {
+public interface Constants {
 
     //==============================================================================================
     // Paths

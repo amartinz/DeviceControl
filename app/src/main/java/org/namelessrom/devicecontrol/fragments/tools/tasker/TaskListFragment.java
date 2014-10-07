@@ -33,7 +33,6 @@ import android.widget.CompoundButton;
 import com.negusoft.holoaccent.widget.AccentSwitch;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.services.TaskerService;
@@ -60,16 +59,9 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
 
     @Override public void onResume() {
         super.onResume();
-        BusProvider.getBus().register(this);
-
         if (mAdapter != null) {
             refreshListView();
         }
-    }
-
-    @Override public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,

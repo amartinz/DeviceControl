@@ -37,13 +37,13 @@ import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.io.File;
 
 public class BootUpService extends IntentService
-        implements DeviceConstants, PerformanceConstants {
+        implements DeviceConstants, Constants {
 
     public static final String SOB_SYSCTL  = "sob_sysctl";
     public static final String SOB_CPU     = "sob_cpu";
@@ -124,14 +124,14 @@ public class BootUpService extends IntentService
                 //==================================================================================
                 Logger.i(this, "----- CPU START -----");
                 if (PreferenceHelper.getBoolean(SOB_CPU, false)) {
-                    cmd = CpuUtils.restore();
+                    cmd = CpuUtils.get().restore();
                     Logger.v(this, cmd);
                     sbCmd.append(cmd);
                 }
                 Logger.i(this, "----- CPU END -----");
                 Logger.i(this, "----- GPU START -----");
                 if (PreferenceHelper.getBoolean(SOB_GPU, false)) {
-                    cmd = GpuUtils.restore();
+                    cmd = GpuUtils.get().restore();
                     Logger.v(this, cmd);
                     sbCmd.append(cmd);
                 }

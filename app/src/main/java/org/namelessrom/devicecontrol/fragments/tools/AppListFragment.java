@@ -56,7 +56,6 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Legend;
-import com.squareup.otto.Subscribe;
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 
@@ -64,10 +63,9 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.AppDetailsActivity;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.ShellOutputEvent;
 import org.namelessrom.devicecontrol.listeners.OnAppChoosenListener;
 import org.namelessrom.devicecontrol.objects.AppItem;
+import org.namelessrom.devicecontrol.objects.PackageObserver;
 import org.namelessrom.devicecontrol.ui.adapters.AppListAdapter;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.AnimationHelper;
@@ -82,7 +80,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class AppListFragment extends AttachFragment implements DeviceConstants,
-        OnAppChoosenListener {
+        OnAppChoosenListener, PackageObserver.OnPackageStatsListener {
 
     private static final int DIALOG_TYPE_DISABLE   = 0;
     private static final int DIALOG_TYPE_UNINSTALL = 1;
@@ -118,16 +116,6 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     private LinearLayout mCacheInfo;
 
     @Override protected int getFragmentId() { return ID_TOOLS_APP_MANAGER; }
-
-    @Override public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -401,7 +389,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                     getString(R.string.app_version_name, mAppItem.getPackageInfo().versionName));
 
             try {
-                AppHelper.getSize(mAppItem.getPackageName());
+                AppHelper.getSize(this, mAppItem.getPackageName());
             } catch (Exception e) { Logger.e(this, "AppHelper.getSize(): " + e); }
         }
 
@@ -516,7 +504,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                     }
 
                     @Override public void commandTerminated(int id, String reason) {
-                        BusProvider.getBus().post(new ShellOutputEvent(-1, ""));
+                        super.commandTerminated(id, reason);
                     }
                 };
 
@@ -595,7 +583,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         }.execute();
     }
 
-    @Subscribe public void onPackageStats(final PackageStats packageStats) {
+    @Override public void onPackageStats(final PackageStats packageStats) {
         Logger.i(this, "onAppSizeEvent()");
         if (packageStats == null) return;
 
@@ -694,7 +682,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         @Override
         public void run() {
             try {
-                AppHelper.getSize(mAppItem.getPackageName());
+                AppHelper.getSize(AppListFragment.this, mAppItem.getPackageName());
             } catch (Exception e) { Logger.e(this, "AppHelper.getSize(): " + e); }
         }
     };
