@@ -50,15 +50,16 @@ public class AppHelper {
      * The package stats are getting sent via OTTO
      *
      * @param pkg The package name of the application
-     * @throws Exception
      */
-    public static void getSize(final PackageObserver.OnPackageStatsListener listener,
-            final String pkg) throws Exception {
-        final Method getPackageSizeInfo = Application.get().getPackageManager().getClass()
-                .getMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
+    public static void getSize(final PackageObserver.OnPackageStatsListener l, final String pkg) {
+        try {
+            final Method getPackageSizeInfo = Application.get().getPackageManager()
+                    .getClass()
+                    .getMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
 
-        getPackageSizeInfo
-                .invoke(Application.get().getPackageManager(), pkg, new PackageObserver(listener));
+            getPackageSizeInfo.invoke(Application.get().getPackageManager(),
+                    pkg, new PackageObserver(l));
+        } catch (Exception e) { Logger.e(AppHelper.class, "AppHelper.getSize()", e); }
     }
 
     /**

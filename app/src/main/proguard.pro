@@ -69,3 +69,6 @@
 -keep class org.namelessrom.devicecontrol.bus.**
 -keep class org.namelessrom.devicecontrol.objects.**
 -keep class org.namelessrom.devicecontrol.wizard.**
+
+# Do not break our reflection voodoo
+-keep class android.content.pm.IPackageStatsObserver

@@ -388,9 +388,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             mAppVersion.setText(
                     getString(R.string.app_version_name, mAppItem.getPackageInfo().versionName));
 
-            try {
-                AppHelper.getSize(this, mAppItem.getPackageName());
-            } catch (Exception e) { Logger.e(this, "AppHelper.getSize(): " + e); }
+            AppHelper.getSize(this, mAppItem.getPackageName());
         }
 
         if (!startedFromActivity && !mDetailsShowing) {
