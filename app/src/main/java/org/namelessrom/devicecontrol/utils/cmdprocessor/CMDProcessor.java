@@ -81,8 +81,10 @@ public final class CMDProcessor {
 
             try {
                 if (dis.available() > 0) {
+                    //noinspection deprecation
                     buffer = new StringBuffer(dis.readLine());
                     while (dis.available() > 0) {
+                        //noinspection deprecation
                         buffer.append('\n').append(dis.readLine());
                     }
                 }

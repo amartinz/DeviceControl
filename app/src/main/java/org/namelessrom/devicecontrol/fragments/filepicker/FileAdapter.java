@@ -29,7 +29,6 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
 import org.namelessrom.devicecontrol.objects.FlashItem;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -49,7 +48,11 @@ public class FileAdapter extends BaseAdapter {
     private String fileType   = "";
     private int    colorResId = -1;
 
-    public FileAdapter() { }
+    private FilePickerListener listener;
+
+    public FileAdapter(final FilePickerListener filePickerListener) {
+        listener = filePickerListener;
+    }
 
     public void setFiles(final ArrayList<File> files) {
         this.files = files;
@@ -105,12 +108,13 @@ public class FileAdapter extends BaseAdapter {
                 || (file.getAbsolutePath() + File.separator).endsWith("../");
 
         viewHolder.rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isDirectory) {
-                    BusProvider.getBus().post(file);
-                } else {
-                    BusProvider.getBus().post(new FlashItem(file.getAbsolutePath()));
+            @Override public void onClick(View v) {
+                if (listener != null) {
+                    if (isDirectory) {
+                        listener.onFilePicked(file);
+                    } else {
+                        listener.onFlashItemPicked(new FlashItem(file.getAbsolutePath()));
+                    }
                 }
             }
         });

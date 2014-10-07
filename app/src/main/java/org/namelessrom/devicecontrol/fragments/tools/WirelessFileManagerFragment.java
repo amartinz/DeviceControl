@@ -25,13 +25,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.Preference;
 
-import com.squareup.otto.Subscribe;
-
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.server.ServerStoppedEvent;
-import org.namelessrom.devicecontrol.bus.server.ServerStoppingEvent;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
 import org.namelessrom.devicecontrol.services.WebServerService;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
@@ -59,13 +53,11 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
 
     @Override public void onPause() {
         super.onPause();
-        BusProvider.getBus().unregister(this);
         unbindService();
     }
 
     @Override public void onResume() {
         super.onResume();
-        BusProvider.getBus().register(this);
         bindService();
     }
 
@@ -208,18 +200,6 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
             summary = getString(R.string.start_wfm);
         }
         mWirelessFileManager.setSummary(summary);
-    }
-
-    @Subscribe public void onServerStoppedEvent(final ServerStoppedEvent event) {
-        if (event == null) return;
-        Logger.i(this, "onServerStoppedEvent");
-        updateSummary(false);
-    }
-
-    @Subscribe public void onServerStoppingEvent(final ServerStoppingEvent event) {
-        if (event == null) return;
-        Logger.i(this, "onServerStoppingEvent");
-        unbindService();
     }
 
     private final ServiceConnection mConnection = new ServiceConnection() {

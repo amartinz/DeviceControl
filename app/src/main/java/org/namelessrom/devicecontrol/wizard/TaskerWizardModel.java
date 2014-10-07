@@ -22,16 +22,18 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
+import org.namelessrom.devicecontrol.hardware.IoSchedulerUtils;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.wizard.model.AbstractWizardModel;
 import org.namelessrom.devicecontrol.wizard.model.BranchPage;
 import org.namelessrom.devicecontrol.wizard.model.Page;
 import org.namelessrom.devicecontrol.wizard.model.PageList;
 import org.namelessrom.devicecontrol.wizard.model.SingleFixedChoicePage;
 
-public class TaskerWizardModel extends AbstractWizardModel implements PerformanceConstants {
+public class TaskerWizardModel extends AbstractWizardModel implements Constants {
     private TaskerItem mItem;
     private String mCategory = "";
     private String mAction   = "";
@@ -84,15 +86,15 @@ public class TaskerWizardModel extends AbstractWizardModel implements Performanc
         //------------------------------------------------------------------------------------------
         if (ActionProcessor.ACTION_CPU_FREQUENCY_MAX.equals(action)
                 || ActionProcessor.ACTION_CPU_FREQUENCY_MIN.equals(action)) {
-            choices = CpuUtils.getAvailableFrequencies();
+            choices = CpuUtils.get().getAvailableFrequencies();
         } else if (ActionProcessor.ACTION_CPU_GOVERNOR.equals(action)) {
-            choices = CpuUtils.getAvailableGovernors();
+            choices = GovernorUtils.get().getAvailableGovernors();
         }
         //------------------------------------------------------------------------------------------
         // General Actions
         //------------------------------------------------------------------------------------------
         else if (ActionProcessor.ACTION_IO_SCHEDULER.equals(action)) {
-            choices = CpuUtils.getAvailableIOSchedulers();
+            choices = IoSchedulerUtils.get().getAvailableIoSchedulers();
         } else if (ActionProcessor.ACTION_KSM_ENABLED.equals(action)
                 || ActionProcessor.ACTION_KSM_DEFERRED.equals(action)) {
             choices = getBooleanChoices();
@@ -105,7 +107,7 @@ public class TaskerWizardModel extends AbstractWizardModel implements Performanc
         // GPU
         //------------------------------------------------------------------------------------------
         else if (ActionProcessor.ACTION_GPU_FREQUENCY_MAX.equals(action)) {
-            choices = GpuUtils.getAvailableFrequencies();
+            choices = GpuUtils.get().getAvailableFrequencies();
         } else if (ActionProcessor.ACTION_GPU_GOVERNOR.equals(action)) {
             choices = GPU_GOVS;
         } else if (ActionProcessor.ACTION_3D_SCALING.equals(action)) {
@@ -140,4 +142,5 @@ public class TaskerWizardModel extends AbstractWizardModel implements Performanc
 
         return pageList;
     }
+
 }

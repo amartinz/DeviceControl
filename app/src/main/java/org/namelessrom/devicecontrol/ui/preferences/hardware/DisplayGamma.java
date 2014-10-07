@@ -16,6 +16,7 @@
 
 package org.namelessrom.devicecontrol.ui.preferences.hardware;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +26,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -80,7 +82,7 @@ public class DisplayGamma extends DialogPreference {
                 });
     }
 
-    @Override protected void onBindDialogView(View view) {
+    @SuppressLint("CommitPrefEdits") @Override protected void onBindDialogView(@NonNull View view) {
         super.onBindDialogView(view);
 
         final ViewGroup container = (ViewGroup) view.findViewById(R.id.gamma_container);

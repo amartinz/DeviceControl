@@ -32,8 +32,7 @@ import com.koushikdutta.ion.Ion;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.ShellOutputEvent;
-import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
+import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
@@ -41,15 +40,15 @@ import org.namelessrom.devicecontrol.ui.views.AttachPreferenceProgressFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EntropyFragment extends AttachPreferenceProgressFragment implements DeviceConstants,
-        PerformanceConstants, Preference.OnPreferenceChangeListener, OnShellOutputListener {
+        Constants, Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener {
     private static final String URL_RNG =
             "http://sourceforge.net/projects/namelessrom/files/romextras/binaries/rngd/download";
     private static final File   RNGD    = new File(Application.get().getFilesDirectory(), "rngd");
@@ -192,13 +191,13 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
         return false;
     }
 
-    public void onShellOutput(final ShellOutputEvent event) {
-        if (event == null) return;
+    public void onShellOutput(final ShellOutput shellOutput) {
+        if (shellOutput == null) return;
 
-        final int id = event.getId();
-        if (id == ID_PGREP) {
+        if (shellOutput.id == ID_PGREP) {
             if (mRngActive != null) {
-                final boolean isActive = event.getOutput() != null && !event.getOutput().isEmpty();
+                final boolean isActive =
+                        shellOutput.output != null && !shellOutput.output.isEmpty();
                 mRngActive.setChecked(isActive);
                 if (!RNGD.exists()) {
                     mRngActive.setSummary(R.string.install_rng);

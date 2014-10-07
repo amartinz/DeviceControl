@@ -19,7 +19,6 @@ package org.namelessrom.devicecontrol.ui.views;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +27,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
-import com.squareup.otto.Subscribe;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.CpuStateEvent;
+import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.monitors.CpuStateMonitor;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
@@ -40,7 +38,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CpuStateView extends LinearLayout {
+public class CpuStateView extends LinearLayout implements CpuUtils.StateListener {
 
     private LinearLayout mStatesView;
 
@@ -51,7 +49,6 @@ public class CpuStateView extends LinearLayout {
     private TextView mStatesWarning;
 
     private boolean mUpdatingData = false;
-    private boolean mIsAttached   = false;
 
     public CpuStateView(final Context context) { this(context, null); }
 
@@ -65,13 +62,11 @@ public class CpuStateView extends LinearLayout {
     }
 
     public void onResume() {
-        mIsAttached = true;
-        BusProvider.getBus().register(this);
+
     }
 
     public void onPause() {
-        mIsAttached = false;
-        BusProvider.getBus().unregister(this);
+
     }
 
     private void createViews(final Context context) {
@@ -83,6 +78,7 @@ public class CpuStateView extends LinearLayout {
         mHeaderTotalStateTime = (TextView) view.findViewById(R.id.ui_header_total_state_time);
         mStatesWarning = (TextView) view.findViewById(R.id.ui_states_warning);
         mTotalStateTime = (TextView) view.findViewById(R.id.ui_total_state_time);
+
         final ImageView mRefresh = (ImageView) view.findViewById(R.id.ui_refresh);
         mRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,8 +100,10 @@ public class CpuStateView extends LinearLayout {
             if (!mUpdatingData) {
                 mUpdatingData = true;
                 try {
-                    CpuStateMonitor.getInstance().updateStates();
-                } catch (IOException ignored) { }
+                    CpuStateMonitor.getInstance().updateStates(CpuStateView.this);
+                } catch (IOException e) {
+                    Logger.e(this, "updateStates()", e);
+                }
             }
             return null;
         }
@@ -134,20 +132,14 @@ public class CpuStateView extends LinearLayout {
 
     private View generateStateRow(final CpuStateMonitor.CpuState state, final ViewGroup parent,
             final long totalStateTime) {
-        if (!isAttached()) { return null; }
-
-        final Context context = getContext();
-
-        if (context == null) { return null; }
-
-        final LinearLayout view = (LinearLayout) inflate(context, R.layout.row_state, null);
+        final LinearLayout view = (LinearLayout) inflate(getContext(), R.layout.row_state, null);
 
         int per = ((int) ((float) state.duration * 100 / totalStateTime));
         if (per > 100) { per = 100; } else if (per < 0) { per = 0; }
 
         final String sFreq;
         if (state.freq == 0) {
-            sFreq = context.getString(R.string.deep_sleep);
+            sFreq = getContext().getString(R.string.deep_sleep);
         } else {
             sFreq = state.freq / 1000 + " MHz";
         }
@@ -167,18 +159,13 @@ public class CpuStateView extends LinearLayout {
         return view;
     }
 
-    @Subscribe public void onCpuStateEvent(final CpuStateEvent event) {
-        if (event == null) { return; }
-        if (!isAttached() || getContext() == null) { return; }
-
-        final List<CpuStateMonitor.CpuState> states = event.getStates();
-        final long totalStateTime = event.getTotalStateTime();
-
+    @Override public void onStates(final CpuUtils.State states) {
         mStatesView.removeAllViews();
+
         final List<String> extraStates = new ArrayList<String>();
-        for (CpuStateMonitor.CpuState state : states) {
+        for (CpuStateMonitor.CpuState state : states.states) {
             if (state.duration > 0) {
-                generateStateRow(state, mStatesView, totalStateTime);
+                generateStateRow(state, mStatesView, states.totalTime);
             } else {
                 if (state.freq == 0) {
                     extraStates.add(getContext().getString(R.string.deep_sleep));
@@ -188,14 +175,14 @@ public class CpuStateView extends LinearLayout {
             }
         }
 
-        if (states.size() == 0) {
+        if (states.states.size() == 0) {
             mStatesWarning.setVisibility(View.VISIBLE);
             mHeaderTotalStateTime.setVisibility(View.GONE);
             mTotalStateTime.setVisibility(View.GONE);
             mStatesView.setVisibility(View.GONE);
         }
 
-        final long totTime = totalStateTime / 100;
+        final long totTime = states.totalTime / 100;
         mTotalStateTime.setText(toString(totTime));
 
         if (extraStates.size() > 0) {
@@ -215,14 +202,6 @@ public class CpuStateView extends LinearLayout {
         } else {
             mAdditionalStates.setVisibility(View.GONE);
             mHeaderAdditionalStates.setVisibility(View.GONE);
-        }
-    }
-
-    private boolean isAttached() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return isAttachedToWindow();
-        } else {
-            return mIsAttached;
         }
     }
 

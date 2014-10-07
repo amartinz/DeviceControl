@@ -28,18 +28,16 @@ android {
         release {
             runProguard true
             signingConfig signingConfigs.release
-            proguardFile 'src/main/proguard.flags'
+            proguardFile 'src/main/proguard.pro'
             zipAlign true
             debuggable false
-            buildConfigField "boolean", "IS_RELEASE", "true"
         }
         debug {
-            runProguard false
+            runProguard true
             signingConfig signingConfigs.release
-            proguardFile 'src/main/proguard.flags'
-            zipAlign false
+            proguardFile 'src/main/proguard.pro'
+            zipAlign true
             debuggable true
-            buildConfigField "boolean", "IS_RELEASE", "false"
             applicationIdSuffix '.dev'
             versionNameSuffix '-dev'
         }

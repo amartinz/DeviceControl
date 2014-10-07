@@ -57,7 +57,6 @@
             android:id="@+id/ui_device_bar_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_marginRight="10dp"
             android:textSize="12sp"
             tools:text="0°C" />

@@ -30,8 +30,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.wizard.events.ItemSelectedEvent;
+import org.namelessrom.devicecontrol.wizard.model.ModelCallbacks;
 import org.namelessrom.devicecontrol.wizard.model.MultipleFixedChoicePage;
 import org.namelessrom.devicecontrol.wizard.model.Page;
 
@@ -44,6 +43,7 @@ public class MultipleChoiceFragment extends ListFragment {
     private static final String ARG_KEY = "key";
 
     private PageFragmentCallbacks mCallbacks;
+    private ModelCallbacks        mModelCallbacks;
     private List<String>          mChoices;
     private Page                  mPage;
 
@@ -115,6 +115,12 @@ public class MultipleChoiceFragment extends ListFragment {
         }
 
         mCallbacks = (PageFragmentCallbacks) activity;
+
+        if (!(activity instanceof ModelCallbacks)) {
+            throw new ClassCastException("Activity must implement ModelCallbacks");
+        }
+
+        mModelCallbacks = (ModelCallbacks) activity;
     }
 
     @Override
@@ -137,6 +143,8 @@ public class MultipleChoiceFragment extends ListFragment {
 
         mPage.getData().putStringArrayList(Page.SIMPLE_DATA_KEY, selections);
         mPage.notifyDataChanged();
-        BusProvider.getBus().post(new ItemSelectedEvent());
+        if (mModelCallbacks != null) {
+            mModelCallbacks.onItemSelected();
+        }
     }
 }

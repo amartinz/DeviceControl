@@ -23,8 +23,6 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.CpuStateEvent;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
@@ -51,7 +49,7 @@ public class CpuStateMonitor implements DeviceConstants {
         return mCpuStateMonitor;
     }
 
-    public class CpuState implements Comparable<CpuState> {
+    public static class CpuState implements Comparable<CpuState> {
         public final int  freq;
         public final long duration;
 
@@ -75,7 +73,7 @@ public class CpuStateMonitor implements DeviceConstants {
         return (sum < 0 ? 0 : sum);
     }
 
-    public void updateStates() throws IOException {
+    public void updateStates(final CpuUtils.StateListener listener) throws IOException {
         InputStream is = null;
         InputStreamReader ir = null;
         BufferedReader br = null;
@@ -99,7 +97,7 @@ public class CpuStateMonitor implements DeviceConstants {
         Application.HANDLER.post(new Runnable() {
             @Override
             public void run() {
-                BusProvider.getBus().post(new CpuStateEvent(mStates, getTotalStateTime(mStates)));
+                listener.onStates(new CpuUtils.State(mStates, getTotalStateTime(mStates)));
             }
         });
     }

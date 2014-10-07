@@ -26,6 +26,8 @@ import android.widget.Scroller;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnClosedListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnOpenedListener;
 
+import org.namelessrom.devicecontrol.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 //import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnCloseListener;
@@ -611,7 +613,7 @@ public class CustomViewAbove extends ViewGroup {
 
         final int action = ev.getAction() & MotionEventCompat.ACTION_MASK;
 
-        if (DEBUG && action == MotionEvent.ACTION_DOWN) { Log.v(TAG, "Received ACTION_DOWN"); }
+        if (action == MotionEvent.ACTION_DOWN) { Logger.v(TAG, "Received ACTION_DOWN"); }
 
         if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP
                 || (action != MotionEvent.ACTION_DOWN && mIsUnableToDrag)) {

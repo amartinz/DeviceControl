@@ -46,6 +46,7 @@ public class HtmlHelper {
         try {
             decoded = URLDecoder.decode(s, "UTF-8");
         } catch (Exception ignored) {
+            //noinspection deprecation
             decoded = URLDecoder.decode(s);
         }
         return decoded;
@@ -56,6 +57,7 @@ public class HtmlHelper {
         try {
             encoded = URLEncoder.encode(s, "UTF-8");
         } catch (Exception ignored) {
+            //noinspection deprecation
             encoded = URLEncoder.encode(s);
         }
         return encoded;
