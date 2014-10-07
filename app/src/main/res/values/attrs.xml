@@ -92,4 +92,12 @@
             <enum name="invisible" value="1" />
         </attr>
     </declare-styleable>
+    <!-- Cards -->
+    <declare-styleable name="Card">
+        <attr name="title" format="string" />
+    </declare-styleable>
+    <declare-styleable name="Item">
+        <attr name="itemTitle" format="string" />
+        <attr name="itemIcon" format="integer" />
+    </declare-styleable>
 </resources>

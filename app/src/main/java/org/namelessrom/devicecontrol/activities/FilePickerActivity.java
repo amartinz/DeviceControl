@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol.activities;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.negusoft.holoaccent.activity.AccentActivity;
@@ -79,6 +80,7 @@ public class FilePickerActivity extends AccentActivity implements FilePickerList
         b.putString("path", flashItem.getPath());
         final Intent i = new Intent();
         i.putExtras(b);
+        i.setDataAndNormalize(Uri.fromFile(new File(flashItem.getPath())));
         setResult(Activity.RESULT_OK, i);
         finish();
     }

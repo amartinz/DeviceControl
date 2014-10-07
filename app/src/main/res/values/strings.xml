@@ -361,4 +361,26 @@
     <string name="display_gamma_calibration_summary">Tweak gamma values</string>
     <!-- No spaces after ',' -->
     <string name="hardware_display_gamma_calibration_desc_one">Red,Green,Blue</string>
+    <string name="install_info">The following file(s) are going to be installed.\n\nYou can add more zips by clicking on the \"Add file\" button.</string>
+    <string name="select_actions">Select the actions you would like to perform</string>
+    <string name="backup">Backup</string>
+    <string name="wipe_data">Wipe Data</string>
+    <string name="wipe_caches">Wipe Cache &amp; Dalvik</string>
+    <string name="no_additional_info">No additional information</string>
+    <string name="install_title">Choose files to install</string>
+    <string name="install_now">Install now</string>
+    <string name="file_not_found">Unable to add file</string>
+    <string name="system">System</string>
+    <string name="boot">Boot</string>
+    <string name="androidsecure">Android secure</string>
+    <string name="sdext">SD-Ext</string>
+    <string name="alert_reboot_install_title">Install file(s)</string>
+    <string name="alert_reboot_one_message">Your device will reboot and install the file.</string>
+    <string name="alert_reboot_more_message">Your device will reboot and install the files.</string>
+    <string name="alert_backup_space_title">Space left</string>
+    <string name="alert_backup_space_message">There is less than %sGB space left on the internal SD card. Do you want to continue with the backup?</string>
+    <string name="alert_backup_title">Backup</string>
+    <string name="alert_backup_message">Specify the backup name (illegal characters will be removed).\n\nThe following options will only work in OpenRecovery based recoveries.</string>
+    <string name="remove_file_title">Remove file</string>
+    <string name="remove_file_summary">Do you want to remove the file from the list?\n\n%s</string>
 </resources>

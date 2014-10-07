@@ -14,64 +14,16 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
-        android:id="@+id/container"
+        android:id="@+id/cards_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="invisible">
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 
-        <it.gmariotti.cardslib.library.view.CardListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:animateLayoutChanges="true"
-            card:list_card_layout_resourceID="@layout/card_list_image_layout" />
-
-        <LinearLayout
-            android:id="@+id/btn_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible">
-
-            <Button
-                style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/btn_cancel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@android:string/cancel" />
-
-            <View style="@style/ButtonBarDivider" />
-
-            <Button
-                style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/btn_apply"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/apply" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@android:id/empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAlignment="center"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="@string/list_empty" />
-
-</RelativeLayout>
+</ScrollView>

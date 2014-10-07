@@ -40,8 +40,15 @@
     <!-- Application permissions -->
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <!-- Power -->
+    <uses-permission android:name="android.permission.REBOOT" />
+    <uses-permission android:name="android.permission.DEVICE_POWER" />
     <!-- Device Control -->
     <uses-permission android:name="org.namelessrom.devicecontrol.API" />
+
+    <uses-feature
+        android:name="org.namelessrom.android"
+        android:required="false" />
 
     <permission
         android:name="org.namelessrom.devicecontrol.API"
@@ -97,13 +104,21 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.RequestFileActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/pick_file"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".activities.FilePickerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/pick_file"
             android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="org.namelessrom.devicecontrol.api.FILE_PICKER" />
+                <action android:name="android.intent.action.GET_CONTENT" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/zip" />
             </intent-filter>
         </activity>
         <activity

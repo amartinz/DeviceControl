@@ -17,184 +17,57 @@
  */
 package org.namelessrom.devicecontrol.fragments.tools.flasher;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.negusoft.holoaccent.dialog.AccentAlertDialog;
-import com.negusoft.holoaccent.dialog.DividerPainter;
-
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.activities.FilePickerActivity;
-import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
-import org.namelessrom.devicecontrol.objects.FlashItem;
-import org.namelessrom.devicecontrol.ui.adapters.FlashListAdapter;
-import org.namelessrom.devicecontrol.ui.cards.FlasherCard;
+import org.namelessrom.devicecontrol.ui.cards.Card;
+import org.namelessrom.devicecontrol.ui.cards.FlashCard;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
-import org.namelessrom.devicecontrol.utils.FlashUtils;
+import org.namelessrom.devicecontrol.utils.RebootHelper;
+import org.namelessrom.devicecontrol.utils.RecoveryHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-import java.util.ArrayList;
-
-import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.view.CardListView;
-
-public class FlasherFragment extends AttachFragment implements DeviceConstants,
-        View.OnClickListener {
-
-    private static final int    REQUEST_CODE_FILE = 100;
-    public static final  String EXTRA_FLASHITEM   = "extra_flashitem";
-
-    private FlashListAdapter mAdapter;
-
-    private LinearLayout mContainer;
-    private CardListView mFlashList;
-
-    private TextView mEmptyView;
+public class FlasherFragment extends AttachFragment implements DeviceConstants {
+    private LinearLayout mCardsLayout;
+    private FlashCard    mFlashCard;
 
     @Override protected int getFragmentId() { return ID_TOOLS_FLASHER; }
 
-    @SuppressLint("WrongViewCast") // R.id.container in our flash layout is a LinearLayout
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
         final View v = inflater.inflate(R.layout.fragment_flasher, container, false);
 
-        mContainer = (LinearLayout) v.findViewById(R.id.container);
-        mFlashList = (CardListView) v.findViewById(android.R.id.list);
-        mEmptyView = (TextView) v.findViewById(android.R.id.empty);
-
-        final Button mCancel = (Button) v.findViewById(R.id.btn_cancel);
-        mCancel.setOnClickListener(this);
-        final Button mApply = (Button) v.findViewById(R.id.btn_apply);
-        mApply.setOnClickListener(this);
-
-        mAdapter = new FlashListAdapter(getActivity());
+        mCardsLayout = (LinearLayout) v.findViewById(R.id.cards_layout);
 
         return v;
     }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFlashList.setAdapter(mAdapter);
-
-        checkAdapter();
+        mFlashCard = new FlashCard(getActivity(), null,
+                new RebootHelper(new RecoveryHelper(getActivity())), savedInstanceState);
+        addCards(new Card[]{mFlashCard}, true, true);
     }
 
-    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_flasher, menu);
-    }
-
-    @Override public boolean onOptionsItemSelected(final MenuItem item) {
-        final int id = item.getItemId();
-        switch (id) {
-            case R.id.action_task_add: {
-                final Intent i = new Intent(getActivity(), FilePickerActivity.class);
-                i.putExtra(FilePickerFragment.ARG_FILE_TYPE, "zip");
-                startActivityForResult(i, REQUEST_CODE_FILE);
-                return true;
-            }
+    public void addCards(final Card[] cards, boolean animate, boolean remove) {
+        mCardsLayout.clearAnimation();
+        if (remove) {
+            mCardsLayout.removeAllViews();
         }
-        return false;
-    }
-
-    private void checkAdapter() {
-        if (mAdapter != null && mContainer != null && mEmptyView != null) {
-            if (mAdapter.getCount() != 0) {
-                mContainer.setVisibility(View.VISIBLE);
-                mEmptyView.setVisibility(View.INVISIBLE);
-            } else {
-                mContainer.setVisibility(View.INVISIBLE);
-                mEmptyView.setVisibility(View.VISIBLE);
-            }
+        if (animate) {
+            mCardsLayout.setAnimation(
+                    AnimationUtils.loadAnimation(getActivity(), R.anim.up_from_bottom));
+        }
+        for (Card card : cards) {
+            mCardsLayout.addView(card);
         }
     }
 
-    @Override public void onActivityResult(final int req, final int res, final Intent data) {
-        Logger.v(this, String.format("onActivityResult(%s, %s, %s)", req, res, data));
-        if (req == REQUEST_CODE_FILE && res == Activity.RESULT_OK) {
-            final String name = data.getStringExtra("name");
-            final String path = data.getStringExtra("path");
-            final FlashItem item = new FlashItem(name, path);
-
-            Logger.v(this, String.format("onActivityResult(%s)", item.getPath()));
-
-            final FlasherCard card = new FlasherCard(getActivity(), item);
-            card.setOnSwipeListener(new Card.OnSwipeListener() {
-                @Override public void onSwipe(Card card) {
-                    checkAdapter();
-                }
-            });
-
-            mAdapter.add(card);
-            checkAdapter();
-        } else {
-            super.onActivityResult(req, res, data);
-        }
-    }
-
-    @Override public void onClick(final View v) {
-        final int id = v.getId();
-        switch (id) {
-            case R.id.btn_apply: {
-                final Activity activity = getActivity();
-                new AccentAlertDialog.Builder(activity)
-                        .setTitle(R.string.dialog_warning)
-                        .setMessage(R.string.flash_warning)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface
-                                .OnClickListener() {
-                            @Override public void onClick(DialogInterface dialog, int which) {
-                                // start the progress dialog
-                                final ProgressDialog pd = new ProgressDialog(activity);
-                                pd.setMessage(activity.getString(R.string.applying_wait));
-                                pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                                pd.setCancelable(false);
-                                pd.setIndeterminate(true);
-                                pd.show();
-                                new DividerPainter(getActivity()).paint(pd.getWindow());
-
-                                // finally flash it
-                                final int count = mAdapter.getCount();
-                                final ArrayList<String> fileList = new ArrayList<String>(count);
-                                Card card;
-                                for (int i = 0; i < count; i++) {
-                                    card = mAdapter.getItem(i);
-                                    if (card != null && card instanceof FlasherCard) {
-                                        fileList.add(((FlasherCard) card).getItem().getPath());
-                                    }
-                                }
-                                FlashUtils.triggerFlash(fileList);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, new DialogInterface
-                                .OnClickListener() {
-                            @Override public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }).show();
-                break;
-            }
-            case R.id.btn_cancel: {
-                // TODO: allow to revert action?
-                mAdapter.clear();
-                checkAdapter();
-                break;
-            }
-        }
-    }
 }
