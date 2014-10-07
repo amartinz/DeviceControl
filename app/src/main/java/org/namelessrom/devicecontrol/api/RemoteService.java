@@ -22,13 +22,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
 
-import com.squareup.otto.Subscribe;
-
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.CpuFreqEvent;
-import org.namelessrom.devicecontrol.bus.GovernorEvent;
-import org.namelessrom.devicecontrol.bus.GpuEvent;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.objects.MemoryInfo;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
@@ -39,37 +34,25 @@ import java.util.List;
 /**
  * API Service for use by other apps.
  */
-public class RemoteService extends Service {
+public class RemoteService extends Service implements CpuUtils.FrequencyListener,
+        GovernorUtils.GovernorListener, GpuUtils.GpuListener {
 
-    private CpuFreqEvent  mCpuFreqEvent;
-    private GovernorEvent mGovernorEvent;
-    private GpuEvent      mGpuEvent;
+    private CpuUtils.Frequency     mCpuFreq;
+    private GovernorUtils.Governor mGovernor;
+    private GpuUtils.Gpu           mGpu;
 
     @Override public IBinder onBind(final Intent intent) { return mBinder; }
 
-    @Override public void onCreate() {
-        super.onCreate();
-        BusProvider.getBus().register(this);
+    @Override public void onFrequency(final CpuUtils.Frequency cpuFreq) {
+        mCpuFreq = cpuFreq;
     }
 
-    @Override public void onDestroy() {
-        super.onDestroy();
-        BusProvider.getBus().unregister(this);
+    @Override public void onGovernor(final GovernorUtils.Governor governor) {
+        mGovernor = governor;
     }
 
-    @Subscribe public void onCpuFreqEvent(final CpuFreqEvent event) {
-        if (event == null) return;
-        mCpuFreqEvent = event;
-    }
-
-    @Subscribe public void onGovernorEvent(final GovernorEvent event) {
-        if (event == null) return;
-        mGovernorEvent = event;
-    }
-
-    @Subscribe public void onGpuEvent(final GpuEvent event) {
-        if (event == null) return;
-        mGpuEvent = event;
+    @Override public void onGpu(final GpuUtils.Gpu gpu) {
+        mGpu = gpu;
     }
 
     private final IRemoteService.Stub mBinder = new IRemoteService.Stub() {
@@ -77,31 +60,33 @@ public class RemoteService extends Service {
         //------------------------------------------------------------------------------------------
         // CPU
         //------------------------------------------------------------------------------------------
-        @Override public boolean isCpuFreqAvailable()
-                throws RemoteException { return (mCpuFreqEvent != null); }
+        @Override public boolean isCpuFreqAvailable() throws RemoteException {
+            return (mCpuFreq != null);
+        }
 
         @Override public void prepareCpuFreq() throws RemoteException {
-            mCpuFreqEvent = null;
-            CpuUtils.getCpuFreqEvent();
+            mCpuFreq = null;
+            CpuUtils.get().getCpuFreq(RemoteService.this);
         }
 
         @Override public List<String> getAvailableCpuFrequencies() throws RemoteException {
-            if (mCpuFreqEvent == null) return null;
-            return Arrays.asList(mCpuFreqEvent.getCpuFreqAvail());
+            if (mCpuFreq == null) return null;
+            return Arrays.asList(mCpuFreq.available);
         }
 
         @Override public String getMaxFrequency() throws RemoteException {
-            if (mCpuFreqEvent == null) return null;
-            return mCpuFreqEvent.getCpuFreqMax();
+            if (mCpuFreq == null) return null;
+            return mCpuFreq.maximum;
         }
 
         @Override public String getMinFrequency() throws RemoteException {
-            if (mCpuFreqEvent == null) return null;
-            return mCpuFreqEvent.getCpuFreqMin();
+            if (mCpuFreq == null) return null;
+            return mCpuFreq.minimum;
         }
 
-        @Override public int getAvailableCores()
-                throws RemoteException { return CpuUtils.getNumOfCpus(); }
+        @Override public int getAvailableCores() throws RemoteException {
+            return CpuUtils.get().getNumOfCpus();
+        }
 
         @Override public void setMaxFrequency(final String value) throws RemoteException {
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MAX, value);
@@ -114,21 +99,22 @@ public class RemoteService extends Service {
         //------------------------------------------------------------------------------------------
 
         @Override public void prepareGovernor() throws RemoteException {
-            mGovernorEvent = null;
-            CpuUtils.getGovernorEvent();
+            mGovernor = null;
+            GovernorUtils.get().getGovernor(RemoteService.this);
         }
 
-        @Override public boolean isGovernorAvailable()
-                throws RemoteException { return (mGovernorEvent != null); }
+        @Override public boolean isGovernorAvailable() throws RemoteException {
+            return (mGovernor != null);
+        }
 
         @Override public List<String> getAvailableGovernors() throws RemoteException {
-            if (mGovernorEvent == null) return null;
-            return Arrays.asList(mGovernorEvent.getAvailableGovernors());
+            if (mGovernor == null) return null;
+            return Arrays.asList(mGovernor.available);
         }
 
         @Override public String getCurrentGovernor() throws RemoteException {
-            if (mGovernorEvent == null) return null;
-            return mGovernorEvent.getCurrentGovernor();
+            if (mGovernor == null) return null;
+            return mGovernor.current;
         }
 
         @Override public void setGovernor(final String value) throws RemoteException {
@@ -139,26 +125,25 @@ public class RemoteService extends Service {
         // GPU
         //------------------------------------------------------------------------------------------
         @Override public void prepareGpu() throws RemoteException {
-            mGpuEvent = null;
-            GpuUtils.getOnGpuEvent();
+            mGpu = null;
+            GpuUtils.get().getGpu(RemoteService.this);
         }
 
-        @Override public boolean isGpuAvailable()
-                throws RemoteException { return (mGpuEvent != null); }
+        @Override public boolean isGpuAvailable() throws RemoteException { return (mGpu != null); }
 
         @Override public List<String> getAvailableGpuFrequencies() throws RemoteException {
-            if (mGpuEvent == null) return null;
-            return Arrays.asList(mGpuEvent.getAvailFreqs());
+            if (mGpu == null) return null;
+            return Arrays.asList(mGpu.available);
         }
 
         @Override public String getMaxGpuFrequency() throws RemoteException {
-            if (mGpuEvent == null) return null;
-            return mGpuEvent.getMaxFreq();
+            if (mGpu == null) return null;
+            return mGpu.max;
         }
 
         @Override public String getCurrentGpuGovernor() throws RemoteException {
-            if (mGpuEvent == null) return null;
-            return mGpuEvent.getGovernor();
+            if (mGpu == null) return null;
+            return mGpu.governor;
         }
 
         @Override public void setMaxGpuFrequency(final String value) throws RemoteException {

@@ -22,19 +22,15 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.text.TextUtils;
 
-import com.squareup.otto.Subscribe;
-
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.GpuEvent;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import static android.opengl.GLES20.GL_EXTENSIONS;
 import static android.opengl.GLES20.GL_RENDERER;
@@ -43,8 +39,8 @@ import static android.opengl.GLES20.GL_VENDOR;
 import static android.opengl.GLES20.GL_VERSION;
 import static android.opengl.GLES20.glGetString;
 
-public class GpuSettingsFragment extends AttachPreferenceFragment
-        implements DeviceConstants, PerformanceConstants, Preference.OnPreferenceChangeListener {
+public class GpuSettingsFragment extends AttachPreferenceFragment implements Constants,
+        DeviceConstants, GpuUtils.GpuListener, Preference.OnPreferenceChangeListener {
 
     private PreferenceCategory mRoot;
 
@@ -69,16 +65,6 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
     };
 
     @Override protected int getFragmentId() { return ID_PERFORMANCE_GPU_SETTINGS; }
-
-    @Override public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
 
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,28 +95,26 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
             getPreferenceScreen().removePreference(category);
         }
 
-        GpuUtils.getOnGpuEvent();
+        GpuUtils.get().getGpu(this);
     }
 
     private void refreshPreferences() {
         if (Utils.fileExists(GPU_FREQUENCIES_FILE)) {
-            GpuUtils.getOnGpuEvent();
+            GpuUtils.get().getGpu(this);
         }
     }
 
-    @Subscribe public void onGpuEvent(final GpuEvent event) {
-        if (event == null) { return; }
-
+    @Override public void onGpu(final GpuUtils.Gpu gpu) {
         String tmp;
 
         if (Utils.fileExists(GPU_FREQUENCIES_FILE)) {
-            final String[] frequencies = event.getAvailFreqs();
+            final String[] frequencies = gpu.available;
             final String[] gpuNames = GpuUtils.freqsToMhz(frequencies);
 
             final int freqsLength = frequencies.length;
             final int namesLength = gpuNames.length;
-            tmp = event.getMaxFreq();
-            if (tmp != null && !tmp.isEmpty() && freqsLength == namesLength) {
+            tmp = gpu.max;
+            if (!TextUtils.isEmpty(tmp) && freqsLength == namesLength) {
                 tmp = tmp.trim();
                 for (int i = 0; i < freqsLength; i++) {
                     if (frequencies[i].equals(tmp)) {
@@ -155,8 +139,8 @@ public class GpuSettingsFragment extends AttachPreferenceFragment
                 }
             }
 
-            tmp = event.getGovernor();
-            if (tmp != null && !tmp.isEmpty() && GpuUtils.containsGov(tmp)) {
+            tmp = gpu.governor;
+            if (!TextUtils.isEmpty(tmp) && GpuUtils.get().containsGov(tmp)) {
                 if (mGpuGovernor != null) {
                     mGpuGovernor.setSummary(tmp);
                     mGpuGovernor.setValue(tmp);

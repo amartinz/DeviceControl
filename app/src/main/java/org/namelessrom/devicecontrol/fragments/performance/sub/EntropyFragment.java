@@ -41,15 +41,15 @@ import org.namelessrom.devicecontrol.ui.views.AttachPreferenceProgressFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EntropyFragment extends AttachPreferenceProgressFragment implements DeviceConstants,
-        PerformanceConstants, Preference.OnPreferenceChangeListener, OnShellOutputListener {
+        Constants, Preference.OnPreferenceChangeListener, OnShellOutputListener {
     private static final String URL_RNG =
             "http://sourceforge.net/projects/namelessrom/files/romextras/binaries/rngd/download";
     private static final File   RNGD    = new File(Application.get().getFilesDirectory(), "rngd");

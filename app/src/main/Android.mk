@@ -49,7 +49,7 @@ LOCAL_AAPT_FLAGS := \
 
 ######
 
-LOCAL_PROGUARD_FLAG_FILES := proguard.flags
+LOCAL_PROGUARD_FLAG_FILES := proguard.pro
 
 LOCAL_PACKAGE_NAME      := DeviceControl
 LOCAL_CERTIFICATE       := platform

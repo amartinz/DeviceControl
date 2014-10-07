@@ -31,11 +31,11 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 public class ThermalFragment extends AttachPreferenceFragment
-        implements DeviceConstants, PerformanceConstants,
+        implements DeviceConstants, Constants,
         Preference.OnPreferenceChangeListener {
 
     //----------------------------------------------------------------------------------------------

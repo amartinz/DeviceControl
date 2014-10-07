@@ -121,7 +121,7 @@ public class DeviceStatusView extends LinearLayout {
         private int cpuTemp;
 
         @Override protected Void doInBackground(Void... voids) {
-            cpuTemp = CpuUtils.getCpuTemperature();
+            cpuTemp = CpuUtils.get().getCpuTemperature();
             return null;
         }
 

@@ -28,7 +28,7 @@ android {
         release {
             runProguard true
             signingConfig signingConfigs.release
-            proguardFile 'src/main/proguard.flags'
+            proguardFile 'src/main/proguard.pro'
             zipAlign true
             debuggable false
             buildConfigField "boolean", "IS_RELEASE", "true"
@@ -36,7 +36,7 @@ android {
         debug {
             runProguard false
             signingConfig signingConfigs.release
-            proguardFile 'src/main/proguard.flags'
+            proguardFile 'src/main/proguard.pro'
             zipAlign false
             debuggable true
             buildConfigField "boolean", "IS_RELEASE", "false"

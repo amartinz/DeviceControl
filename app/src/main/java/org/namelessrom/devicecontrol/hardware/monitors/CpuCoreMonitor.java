@@ -24,12 +24,10 @@ import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.CpuCoreEvent;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
@@ -38,11 +36,12 @@ import java.util.List;
 
 public class CpuCoreMonitor implements DeviceConstants {
 
-    private static final int CPU_COUNT = CpuUtils.getNumOfCpus();
+    private static final int CPU_COUNT = CpuUtils.get().getNumOfCpus();
 
     private static CpuCoreMonitor cpuFrequencyMonitor;
     private static Shell          mShell;
     private static Activity       mActivity;
+    private static Thread         mThread;
     private static Handler        mHandler;
     private static int            mInterval;
 
@@ -83,10 +82,22 @@ public class CpuCoreMonitor implements DeviceConstants {
     }
 
     private final Runnable mUpdater = new Runnable() {
-        @Override
-        public void run() {
+        @Override public void run() {
             synchronized (mLock) {
-                updateStates();
+                if (mThread != null) {
+                    try {
+                        mThread.join();
+                    } catch (Exception ignored) {
+                        // we do not care
+                    } finally {
+                        mThread = null;
+                    }
+                }
+                mThread = new Thread(new Runnable() {
+                    @Override public void run() {
+                        updateStates();
+                    }
+                });
             }
         }
     };
@@ -102,6 +113,7 @@ public class CpuCoreMonitor implements DeviceConstants {
     }
 
     private void updateStates() {
+        final String END = " 2> /dev/null;";
         final StringBuilder sb = new StringBuilder();
         // command=$(
         sb.append("command=$(");
@@ -110,16 +122,13 @@ public class CpuCoreMonitor implements DeviceConstants {
             sb.append("if [ -d \"/sys/devices/system/cpu/cpu").append(String.valueOf(i))
                     .append("/cpufreq\" ]; then ");
             // busybox cat /path/to/cpu/frequency
-            sb.append("busybox cat ").append(CpuUtils.getCpuFrequencyPath(i))
-                    .append(" 2> /dev/null;");
+            sb.append("busybox cat ").append(CpuUtils.get().getCpuFrequencyPath(i)).append(END);
             // busybox cat /path/to/cpu/frequency_max
-            sb.append("busybox cat ").append(CpuUtils.getMaxCpuFrequencyPath(i))
-                    .append(" 2> /dev/null;");
+            sb.append("busybox cat ").append(CpuUtils.get().getMaxCpuFrequencyPath(i)).append(END);
             // busybox cat /path/to/cpu/governor
-            sb.append("busybox cat ").append(CpuUtils.getGovernorPath(i))
-                    .append(" 2> /dev/null;");
+            sb.append("busybox cat ").append(GovernorUtils.get().getGovernorPath(i)).append(END);
             // ... else echo 0 for them
-            sb.append("else busybox echo \"0 0 0\" 2> /dev/null; fi;");
+            sb.append("else busybox echo \"0 0 0\"").append(END).append(" fi;");
         }
         // replace new lines with space
         sb.append(");").append("echo $command | tr -d \"\\n\"");
@@ -168,12 +177,14 @@ public class CpuCoreMonitor implements DeviceConstants {
                         mult += 2;
                     }
 
-                    Application.HANDLER.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            BusProvider.getBus().post(new CpuCoreEvent(mCoreList));
-                        }
-                    });
+                    if (mActivity instanceof CpuUtils.CoreListener) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override public void run() {
+                                ((CpuUtils.CoreListener) mActivity)
+                                        .onCores(new CpuUtils.Cores(mCoreList));
+                            }
+                        });
+                    }
                 }
 
                 mHandler.removeCallbacks(mUpdater);

@@ -36,13 +36,13 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.util.List;
 
 public class ExtrasFragment extends AttachPreferenceFragment
-        implements DeviceConstants, PerformanceConstants,
+        implements DeviceConstants, Constants,
         Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
     //==============================================================================================
     // Files
@@ -299,7 +299,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
             value = item.getValue();
 
             if (MPDECISION_PATH.equals(name)) {
-                sbCmd.append(CpuUtils.enableMpDecision(value.equals("1")));
+                sbCmd.append(CpuUtils.get().enableMpDecision(value.equals("1")));
             } else {
                 sbCmd.append(Utils.getWriteCommand(name, value));
             }

@@ -35,16 +35,11 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.squareup.otto.Subscribe;
-
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.CpuCoreEvent;
-import org.namelessrom.devicecontrol.bus.CpuFreqEvent;
-import org.namelessrom.devicecontrol.bus.GovernorEvent;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
@@ -52,16 +47,16 @@ import org.namelessrom.devicecontrol.ui.views.CpuCoreView;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class CpuSettingsFragment extends AttachFragment
-        implements DeviceConstants, PerformanceConstants {
+public class CpuSettingsFragment extends AttachFragment implements DeviceConstants, Constants,
+        CpuUtils.CoreListener, CpuUtils.FrequencyListener, GovernorUtils.GovernorListener {
 
     private CheckBox mStatusHide;
     private Spinner  mMax;
@@ -76,7 +71,6 @@ public class CpuSettingsFragment extends AttachFragment
 
     @Override public void onResume() {
         super.onResume();
-        BusProvider.getBus().register(this);
         if (mStatusHide != null && !mStatusHide.isChecked()) {
             CpuCoreMonitor.getInstance(getActivity()).start(mInterval);
         }
@@ -84,12 +78,11 @@ public class CpuSettingsFragment extends AttachFragment
 
     @Override public void onPause() {
         super.onPause();
-        BusProvider.getBus().unregister(this);
         CpuCoreMonitor.getInstance(getActivity()).stop();
     }
 
-    @Subscribe public void onCoresUpdated(final CpuCoreEvent event) {
-        final List<CpuCore> coreList = event.getStates();
+    @Override public void onCores(final CpuUtils.Cores cores) {
+        final List<CpuCore> coreList = cores.list;
         if (coreList != null && !coreList.isEmpty()) {
             final int count = coreList.size();
             for (int i = 0; i < count; i++) {
@@ -118,8 +111,7 @@ public class CpuSettingsFragment extends AttachFragment
         return false;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup root, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup root, Bundle savedState) {
         setHasOptionsMenu(true);
         final View view = inflater.inflate(R.layout.fragment_cpu_settings, root, false);
 
@@ -131,8 +123,7 @@ public class CpuSettingsFragment extends AttachFragment
         intervalBar.setProgress(Integer.parseInt(
                 PreferenceHelper.getString("pref_interval_cpu_info", "1000")) - 1000);
         intervalBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            @Override public void onProgressChanged(SeekBar bar, int progress, boolean fromUser) {
                 mIntervalText.setText((progress == 4000
                         ? getString(R.string.off)
                         : (((double) progress + 1000) / 1000) + "s"));
@@ -179,7 +170,7 @@ public class CpuSettingsFragment extends AttachFragment
         mStatusHide.setChecked(PreferenceHelper.getString("pref_hide_cpu_info", "1").equals("1"));
 
         CpuCore tmpCore;
-        final int mCpuNum = CpuUtils.getNumOfCpus();
+        final int mCpuNum = CpuUtils.get().getNumOfCpus();
         for (int i = 0; i < mCpuNum; i++) {
             tmpCore = new CpuCore(getString(R.string.core) + ' ' + String.valueOf(i) + ": ",
                     "0",
@@ -203,17 +194,14 @@ public class CpuSettingsFragment extends AttachFragment
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        CpuUtils.getCpuFreqEvent();
-        CpuUtils.getGovernorEvent();
+        CpuUtils.get().getCpuFreq(this);
+        GovernorUtils.get().getGovernor(this);
     }
 
-    @Subscribe public void onCpuFreq(final CpuFreqEvent event) {
+    @Override public void onFrequency(final CpuUtils.Frequency cpuFreq) {
         final Activity activity = getActivity();
-        if (activity != null && event != null) {
-            final String mCurMaxSpeed = event.getCpuFreqMax();
-            final String mCurMinSpeed = event.getCpuFreqMin();
-
-            String[] mAvailableFrequencies = event.getCpuFreqAvail();
+        if (activity != null && cpuFreq != null) {
+            final String[] mAvailableFrequencies = cpuFreq.available;
             Arrays.sort(mAvailableFrequencies, new Comparator<String>() {
                 @Override
                 public int compare(String object1, String object2) {
@@ -230,7 +218,7 @@ public class CpuSettingsFragment extends AttachFragment
             }
 
             mMax.setAdapter(freqAdapter);
-            mMax.setSelection(Arrays.asList(mAvailableFrequencies).indexOf(mCurMaxSpeed));
+            mMax.setSelection(Arrays.asList(mAvailableFrequencies).indexOf(cpuFreq.maximum));
             mMax.post(new Runnable() {
                 public void run() {
                     mMax.setOnItemSelectedListener(new MaxListener());
@@ -239,7 +227,7 @@ public class CpuSettingsFragment extends AttachFragment
             mMax.setEnabled(true);
 
             mMin.setAdapter(freqAdapter);
-            mMin.setSelection(Arrays.asList(mAvailableFrequencies).indexOf(mCurMinSpeed));
+            mMin.setSelection(Arrays.asList(mAvailableFrequencies).indexOf(cpuFreq.minimum));
             mMin.post(new Runnable() {
                 public void run() {
                     mMin.setOnItemSelectedListener(new MinListener());
@@ -249,19 +237,17 @@ public class CpuSettingsFragment extends AttachFragment
         }
     }
 
-    @Subscribe public void onGovernor(final GovernorEvent event) {
+    @Override public void onGovernor(final GovernorUtils.Governor governor) {
         final Activity activity = getActivity();
-        if (activity != null && event != null) {
-            final String[] availableGovernors = event.getAvailableGovernors();
-            final String currentGovernor = event.getCurrentGovernor();
+        if (activity != null && governor != null) {
             final ArrayAdapter<CharSequence> governorAdapter = new ArrayAdapter<CharSequence>(
                     activity, android.R.layout.simple_spinner_item);
             governorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            for (final String availableGovernor : availableGovernors) {
+            for (final String availableGovernor : governor.available) {
                 governorAdapter.add(availableGovernor);
             }
             mGovernor.setAdapter(governorAdapter);
-            mGovernor.setSelection(Arrays.asList(availableGovernors).indexOf(currentGovernor));
+            mGovernor.setSelection(Arrays.asList(governor.available).indexOf(governor.current));
             mGovernor.post(new Runnable() {
                 public void run() {
                     mGovernor.setOnItemSelectedListener(new GovListener());

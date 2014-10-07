@@ -43,13 +43,13 @@ import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.util.ArrayList;
 
 public class PreferencesFragment extends AttachPreferenceFragment
-        implements Preference.OnPreferenceChangeListener, DeviceConstants, PerformanceConstants {
+        implements Preference.OnPreferenceChangeListener, DeviceConstants, Constants {
 
     //==============================================================================================
     // App
