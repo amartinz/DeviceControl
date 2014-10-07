@@ -282,7 +282,10 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
                         if (pv != null && !pv.isEmpty()) {
                             pv = pv.trim();
                         }
-                        final String pn = aP.replace("/", ".").substring(10, length);
+                        String pn = aP.replace("/", ".");
+                        if (pn.length() > 10) {
+                            pn = pn.substring(10, length);
+                        }
                         mProps.add(new Prop(pn, pv));
                     }
                 }

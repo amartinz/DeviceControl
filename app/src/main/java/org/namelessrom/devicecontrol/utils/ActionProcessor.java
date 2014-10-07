@@ -24,12 +24,13 @@ import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
+import org.namelessrom.devicecontrol.hardware.GovernorUtils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActionProcessor implements PerformanceConstants {
+public class ActionProcessor implements Constants {
 
     //----------------------------------------------------------------------------------------------
     // CPU
@@ -120,37 +121,37 @@ public class ActionProcessor implements PerformanceConstants {
         //------------------------------------------------------------------------------------------
         // CPU
         //------------------------------------------------------------------------------------------
-        final int cpu = CpuUtils.getNumOfCpus();
+        final int cpu = CpuUtils.get().getNumOfCpus();
         String path;
 
         if (ACTION_CPU_FREQUENCY_MAX.equals(action)) {
             for (int i = 0; i < cpu; i++) {
-                sb.append(CpuUtils.onlineCpu(i));
-                path = CpuUtils.getMaxCpuFrequencyPath(i);
+                sb.append(CpuUtils.get().onlineCpu(i));
+                path = CpuUtils.get().getMaxCpuFrequencyPath(i);
                 sb.append(Utils.getWriteCommand(path, value));
                 if (boot) {
                     PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                            "cpu_max" + i, CpuUtils.getMaxCpuFrequencyPath(i), value));
+                            "cpu_max" + i, CpuUtils.get().getMaxCpuFrequencyPath(i), value));
                 }
             }
         } else if (ACTION_CPU_FREQUENCY_MIN.equals(action)) {
             for (int i = 0; i < cpu; i++) {
-                sb.append(CpuUtils.onlineCpu(i));
-                path = CpuUtils.getMinCpuFrequencyPath(i);
+                sb.append(CpuUtils.get().onlineCpu(i));
+                path = CpuUtils.get().getMinCpuFrequencyPath(i);
                 sb.append(Utils.getWriteCommand(path, value));
                 if (boot) {
                     PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                            "cpu_min" + i, CpuUtils.getMinCpuFrequencyPath(i), value));
+                            "cpu_min" + i, CpuUtils.get().getMinCpuFrequencyPath(i), value));
                 }
             }
         } else if (ACTION_CPU_GOVERNOR.equals(action)) {
             for (int i = 0; i < cpu; i++) {
-                sb.append(CpuUtils.onlineCpu(i));
-                path = CpuUtils.getGovernorPath(i);
+                sb.append(CpuUtils.get().onlineCpu(i));
+                path = GovernorUtils.get().getGovernorPath(i);
                 sb.append(Utils.getWriteCommand(path, value));
                 if (boot) {
                     PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                            "cpu_gov" + i, CpuUtils.getGovernorPath(i), value));
+                            "cpu_gov" + i, GovernorUtils.get().getGovernorPath(i), value));
                 }
             }
         }

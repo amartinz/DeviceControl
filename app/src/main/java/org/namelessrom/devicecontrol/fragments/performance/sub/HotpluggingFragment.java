@@ -36,11 +36,11 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 public class HotpluggingFragment extends AttachPreferenceFragment
-        implements DeviceConstants, PerformanceConstants,
+        implements DeviceConstants, Constants,
         Preference.OnPreferenceChangeListener, OnShellOutputListener {
 
     //----------------------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
 
         if (preference == mMpDecision) {
             final boolean value = (Boolean) o;
-            Utils.runRootCommand(CpuUtils.enableMpDecision(value));
+            Utils.runRootCommand(CpuUtils.get().enableMpDecision(value));
             PreferenceHelper.setBootup(new DataItem(
                     DatabaseHandler.CATEGORY_EXTRAS, mMpDecision.getKey(),
                     MPDECISION_PATH, value ? "1" : "0"));

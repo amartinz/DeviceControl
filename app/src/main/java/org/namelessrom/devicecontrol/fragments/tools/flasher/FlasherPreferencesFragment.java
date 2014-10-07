@@ -25,11 +25,11 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 public class FlasherPreferencesFragment extends AttachPreferenceFragment
-        implements Preference.OnPreferenceChangeListener, DeviceConstants, PerformanceConstants {
+        implements Preference.OnPreferenceChangeListener, DeviceConstants, Constants {
 
     private CustomListPreference mRecoveryType;
 

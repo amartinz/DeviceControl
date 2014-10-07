@@ -1,6 +1,5 @@
 # This is a configuration file for ProGuard.
 # http://proguard.sourceforge.net/index.html#manual/usage.html
-
 -dontusemixedcaseclassnames
 -dontskipnonpubliclibraryclasses
 -verbose
@@ -10,12 +9,12 @@
 # of these optimizations on its own).
 -dontoptimize
 -dontpreverify
+
 # Note that if you want to enable optimization, you cannot just
 # include optimization flags in your own project configuration file;
 # instead you will need to point to the
 # "proguard-android-optimize.txt" file instead of this one from your
 # project.properties file.
-
 -keepattributes *Annotation*
 
 # For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
@@ -54,47 +53,17 @@
 # platform version.  We know about them, and they are safe.
 -dontwarn android.support.**
 
-# ACRA specifics
-# Restore some Source file names and restore approximate line numbers in the stack traces,
+-dontnote com.android.internal.annotations.**
+-dontnote com.google.common.annotations.**
+
+# Restore some source file names and restore approximate line numbers in the stack traces,
 # otherwise the stack traces are pretty useless
 -keepattributes SourceFile,LineNumberTable
 
-# ACRA needs "annotations" so add this...
 # Note: This may already be defined in the default "proguard-android-optimize.txt"
 # file in the SDK. If it is, then you don't need to duplicate it. See your
 # "project.properties" file to get the path to the default "proguard-android-optimize.txt".
 -keepattributes *Annotation*
-
-# keep this class so that logging will show 'ACRA' and not a obfuscated name like 'a'.
-# Note: if you are removing log messages elsewhere in this file then this isn't necessary
--keep class org.acra.ACRA {
-    *;
-}
-
-# keep this around for some enums that ACRA needs
--keep class org.acra.ReportingInteractionMode {
-    *;
-}
-
--keepnames class org.acra.sender.HttpSender$** {
-    *;
-}
-
--keepnames class org.acra.ReportField {
-    *;
-}
-
-# keep this otherwise it is removed by ProGuard
--keep public class org.acra.ErrorReporter {
-    public void addCustomData(java.lang.String,java.lang.String);
-    public void putCustomData(java.lang.String,java.lang.String);
-    public void removeCustomData(java.lang.String);
-}
-
-# keep this otherwise it is removed by ProGuard
--keep public class org.acra.ErrorReporter {
-    public void handleSilentException(java.lang.Throwable);
-}
 
 # Otto
 -keepclassmembers class ** {
@@ -102,29 +71,7 @@
     @com.squareup.otto.Produce public *;
 }
 
-# In App Purchases
--keep class com.android.vending.billing.**
-
--keep class * extends java.util.ListResourceBundle {
-    protected Object[][] getContents();
-}
-
--keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
-    public static final *** NULL;
-}
-
--keepnames @com.google.android.gms.common.annotation.KeepName class *
--keepclassmembernames class * {
-    @com.google.android.gms.common.annotation.KeepName *;
-}
-
--keepnames class * implements android.os.Parcelable {
-    public static final ** CREATOR;
-}
-
--keep public class com.google.** {*;}
-
-# Butterknife
--dontwarn butterknife.internal.**
--keep class **$$ViewInjector { *; }
--keepnames class * { @butterknife.InjectView *;}
+# Also save some stuff from us
+-keep class org.namelessrom.devicecontrol.bus.**
+-keep class org.namelessrom.devicecontrol.objects.**
+-keep class org.namelessrom.devicecontrol.wizard.**
