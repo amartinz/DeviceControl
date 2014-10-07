@@ -22,21 +22,17 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.IPackageStatsObserver;
-import android.content.pm.PackageStats;
 import android.net.Uri;
-import android.os.IBinder;
-import android.os.Parcel;
-import android.os.RemoteException;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
+import org.namelessrom.devicecontrol.objects.PackageObserver;
 
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
 import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.ID_PGREP;
 
 /**
@@ -49,8 +45,6 @@ public class AppHelper {
 
     public static boolean preventOnResume = false;
 
-    private static final String DESCRIPTOR = "android.content.pm.IPackageStatsObserver";
-
     /**
      * Gets the package stats of the given application.
      * The package stats are getting sent via OTTO
@@ -58,11 +52,13 @@ public class AppHelper {
      * @param pkg The package name of the application
      * @throws Exception
      */
-    public static void getSize(final String pkg) throws Exception {
+    public static void getSize(final PackageObserver.OnPackageStatsListener listener,
+            final String pkg) throws Exception {
         final Method getPackageSizeInfo = Application.get().getPackageManager().getClass()
                 .getMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
 
-        getPackageSizeInfo.invoke(Application.get().getPackageManager(), pkg, mPkgObs);
+        getPackageSizeInfo
+                .invoke(Application.get().getPackageManager(), pkg, new PackageObserver(listener));
     }
 
     /**
@@ -217,50 +213,6 @@ public class AppHelper {
             return null;
         }
     }
-
-    /**
-     * Our Stub for the package stats observer.
-     * Usually we just have to override onGetStatsCompleted but my android studio instance is
-     * going crazy and produces apps, which crash at onTransact...
-     */
-    private static final IPackageStatsObserver.Stub mPkgObs = new IPackageStatsObserver.Stub() {
-        @Override public IBinder asBinder() { return super.asBinder(); }
-
-        @Override public boolean onTransact(int code, Parcel data, Parcel reply, int flags)
-                throws RemoteException {
-            switch (code) {
-                case INTERFACE_TRANSACTION: {
-                    reply.writeString(DESCRIPTOR);
-                    return true;
-                }
-                case FIRST_CALL_TRANSACTION: {
-                    data.enforceInterface(DESCRIPTOR);
-                    final PackageStats _arg0;
-                    if ((0 != data.readInt())) {
-                        _arg0 = PackageStats.CREATOR.createFromParcel(data);
-                    } else {
-                        _arg0 = null;
-                    }
-                    final boolean _arg1 = (0 != data.readInt());
-                    this.onGetStatsCompleted(_arg0, _arg1);
-                    return true;
-                }
-            }
-            return true;
-        }
-
-        @Override
-        public void onGetStatsCompleted(final PackageStats pStats, final boolean succeeded)
-                throws RemoteException {
-            Logger.v(this, String.format("onGetStatsCompleted(): %s", succeeded));
-            Application.HANDLER.post(new Runnable() {
-                @Override
-                public void run() {
-                    BusProvider.getBus().post(pStats);
-                }
-            });
-        }
-    };
 
     public static boolean startExternalDonation(final Context context) {
         final Intent intent = new Intent();

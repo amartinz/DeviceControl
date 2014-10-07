@@ -29,21 +29,20 @@ import android.view.MenuItem;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.DialogHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class KsmFragment extends AttachPreferenceFragment
-        implements DeviceConstants, PerformanceConstants,
+        implements DeviceConstants, Constants,
         Preference.OnPreferenceChangeListener {
 
     //----------------------------------------------------------------------------------------------
@@ -61,16 +60,6 @@ public class KsmFragment extends AttachPreferenceFragment
     private CustomPreference          mSleep;
 
     @Override protected int getFragmentId() { return ID_KSM; }
-
-    @Override public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
 
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

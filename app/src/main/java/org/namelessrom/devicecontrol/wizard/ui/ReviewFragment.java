@@ -28,14 +28,10 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.squareup.otto.Subscribe;
-
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.wizard.TaskerWizardModel;
-import org.namelessrom.devicecontrol.wizard.events.SaveTaskEvent;
 import org.namelessrom.devicecontrol.wizard.model.AbstractWizardModel;
 import org.namelessrom.devicecontrol.wizard.model.ModelCallbacks;
 import org.namelessrom.devicecontrol.wizard.model.Page;
@@ -80,7 +76,6 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        BusProvider.getBus().register(this);
 
         if (!(activity instanceof Callbacks)) {
             throw new ClassCastException("Activity must implement fragment's callbacks");
@@ -103,7 +98,6 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
     @Override
     public void onDetach() {
         super.onDetach();
-        BusProvider.getBus().unregister(this);
         mCallbacks = null;
 
         mWizardModel.unregisterListener(this);
@@ -128,10 +122,7 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
         }
     }
 
-    @Subscribe
-    public void onSaveTaskEvent(final SaveTaskEvent event) {
-        if (event == null) return;
-
+    @Override public void onSaveTask() {
         String category = "", action = "", value = "";
         String title, displayValue;
         for (final ReviewItem item : mCurrentReviewItems) {
@@ -166,8 +157,9 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
         getActivity().finish();
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    @Override public void onItemSelected() { }
+
+    @Override public void onListItemClick(ListView l, View v, int position, long id) {
         mCallbacks.onEditScreenAfterReview(mCurrentReviewItems.get(position).getPageKey());
     }
 

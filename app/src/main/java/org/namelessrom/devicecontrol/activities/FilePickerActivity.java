@@ -23,18 +23,18 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.negusoft.holoaccent.activity.AccentActivity;
-import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.FlashItemEvent;
 import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
+import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerListener;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.objects.FlashItem;
 
-public class FilePickerActivity extends AccentActivity {
+import java.io.File;
+
+public class FilePickerActivity extends AccentActivity implements FilePickerListener {
 
     private Fragment mCurrentFragment;
 
@@ -60,16 +60,6 @@ public class FilePickerActivity extends AccentActivity {
                 .commit();
     }
 
-    @Override protected void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override protected void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
-
     private Fragment buildFragment(final Intent intent) {
         final String fileType = intent.getStringExtra(FilePickerFragment.ARG_FILE_TYPE);
         // Prepare bundle, containing the package name
@@ -83,17 +73,17 @@ public class FilePickerActivity extends AccentActivity {
         return f;
     }
 
-    @Subscribe public void onFlashItemEvent(final FlashItemEvent event) {
-        if (event == null) return;
+    @Override public void onFlashItemPicked(final FlashItem flashItem) {
         final Bundle b = new Bundle(1);
-        final FlashItem item = event.getItem();
-        b.putString("name", item.getName());
-        b.putString("path", item.getPath());
+        b.putString("name", flashItem.getName());
+        b.putString("path", flashItem.getPath());
         final Intent i = new Intent();
         i.putExtras(b);
         setResult(Activity.RESULT_OK, i);
         finish();
     }
+
+    @Override public void onFilePicked(final File ignored) { }
 
     @Override public void onBackPressed() {
         if (mCurrentFragment instanceof OnBackPressedListener

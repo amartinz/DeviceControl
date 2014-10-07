@@ -22,26 +22,26 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
+import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.ShellOutputEvent;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
-import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
+import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 public class HotpluggingFragment extends AttachPreferenceFragment
-        implements DeviceConstants, PerformanceConstants,
-        Preference.OnPreferenceChangeListener, OnShellOutputListener {
+        implements DeviceConstants, Constants,
+        Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener {
 
     //----------------------------------------------------------------------------------------------
     private static final int ID_MPDECISION = 200;
@@ -142,7 +142,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
 
         if (preference == mMpDecision) {
             final boolean value = (Boolean) o;
-            Utils.runRootCommand(CpuUtils.enableMpDecision(value));
+            Utils.runRootCommand(CpuUtils.get().enableMpDecision(value));
             PreferenceHelper.setBootup(new DataItem(
                     DatabaseHandler.CATEGORY_EXTRAS, mMpDecision.getKey(),
                     MPDECISION_PATH, value ? "1" : "0"));
@@ -167,14 +167,12 @@ public class HotpluggingFragment extends AttachPreferenceFragment
         return changed;
     }
 
-    public void onShellOutput(final ShellOutputEvent event) {
-        if (event != null) {
-            final int id = event.getId();
-            final String result = event.getOutput();
-            switch (id) {
+    public void onShellOutput(final ShellOutput shellOutput) {
+        if (shellOutput != null) {
+            switch (shellOutput.id) {
                 case ID_MPDECISION:
                     if (mMpDecision != null) {
-                        mMpDecision.setChecked(!result.isEmpty());
+                        mMpDecision.setChecked(!TextUtils.isEmpty(shellOutput.output));
                         mMpDecision.setOnPreferenceChangeListener(this);
                     }
                     break;

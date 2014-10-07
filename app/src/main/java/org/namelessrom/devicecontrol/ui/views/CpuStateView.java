@@ -28,11 +28,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
-import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.CpuStateEvent;
+import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.monitors.CpuStateMonitor;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
@@ -40,7 +38,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CpuStateView extends LinearLayout {
+public class CpuStateView extends LinearLayout implements CpuUtils.StateListener {
 
     private LinearLayout mStatesView;
 
@@ -64,14 +62,14 @@ public class CpuStateView extends LinearLayout {
         createViews(context);
     }
 
-    public void onResume() {
+    @Override protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
         mIsAttached = true;
-        BusProvider.getBus().register(this);
     }
 
-    public void onPause() {
+    @Override protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
         mIsAttached = false;
-        BusProvider.getBus().unregister(this);
     }
 
     private void createViews(final Context context) {
@@ -104,7 +102,7 @@ public class CpuStateView extends LinearLayout {
             if (!mUpdatingData) {
                 mUpdatingData = true;
                 try {
-                    CpuStateMonitor.getInstance().updateStates();
+                    CpuStateMonitor.getInstance(CpuStateView.this).updateStates();
                 } catch (IOException ignored) { }
             }
             return null;
@@ -167,18 +165,14 @@ public class CpuStateView extends LinearLayout {
         return view;
     }
 
-    @Subscribe public void onCpuStateEvent(final CpuStateEvent event) {
-        if (event == null) { return; }
+    @Override public void onStates(final CpuUtils.State states) {
         if (!isAttached() || getContext() == null) { return; }
-
-        final List<CpuStateMonitor.CpuState> states = event.getStates();
-        final long totalStateTime = event.getTotalStateTime();
 
         mStatesView.removeAllViews();
         final List<String> extraStates = new ArrayList<String>();
-        for (CpuStateMonitor.CpuState state : states) {
+        for (CpuStateMonitor.CpuState state : states.states) {
             if (state.duration > 0) {
-                generateStateRow(state, mStatesView, totalStateTime);
+                generateStateRow(state, mStatesView, states.totalTime);
             } else {
                 if (state.freq == 0) {
                     extraStates.add(getContext().getString(R.string.deep_sleep));
@@ -188,14 +182,14 @@ public class CpuStateView extends LinearLayout {
             }
         }
 
-        if (states.size() == 0) {
+        if (states.states.size() == 0) {
             mStatesWarning.setVisibility(View.VISIBLE);
             mHeaderTotalStateTime.setVisibility(View.GONE);
             mTotalStateTime.setVisibility(View.GONE);
             mStatesView.setVisibility(View.GONE);
         }
 
-        final long totTime = totalStateTime / 100;
+        final long totTime = states.totalTime / 100;
         mTotalStateTime.setText(toString(totTime));
 
         if (extraStates.size() > 0) {

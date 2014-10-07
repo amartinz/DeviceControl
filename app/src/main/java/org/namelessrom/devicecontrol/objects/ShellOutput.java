@@ -15,20 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.bus;
+package org.namelessrom.devicecontrol.objects;
 
-public class IoSchedulerEvent {
+public class ShellOutput {
 
-    private final String[] mAvailableIoSchedulers;
-    private final String   mCurrentIoScheduler;
+    public final int    id;
+    public final String output;
 
-    public IoSchedulerEvent(final String[] availableIoSchedulers, final String ioScheduler) {
-        mAvailableIoSchedulers = availableIoSchedulers;
-        mCurrentIoScheduler = ioScheduler;
+    public ShellOutput(final int id, final String output) {
+        this.id = id;
+        this.output = output;
     }
 
-    public String[] getAvailableIoScheduler() {return mAvailableIoSchedulers;}
-
-    public String getCurrentIoScheduler() { return mCurrentIoScheduler; }
+    public interface OnShellOutputListener {
+        public void onShellOutput(final ShellOutput shellOutput);
+    }
 
 }

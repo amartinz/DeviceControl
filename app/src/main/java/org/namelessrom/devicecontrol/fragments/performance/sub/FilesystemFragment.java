@@ -20,25 +20,22 @@ package org.namelessrom.devicecontrol.fragments.performance.sub;
 import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
-
-import com.squareup.otto.Subscribe;
+import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.IoSchedulerEvent;
-import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.hardware.IoSchedulerUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
-public class FilesystemFragment extends AttachPreferenceFragment
-        implements DeviceConstants, Preference.OnPreferenceChangeListener {
+public class FilesystemFragment extends AttachPreferenceFragment implements DeviceConstants,
+        IoSchedulerUtils.IoSchedulerListener, Preference.OnPreferenceChangeListener {
 
     private CustomListPreference mIoScheduler;
     private CustomListPreference mReadAhead;
@@ -49,16 +46,6 @@ public class FilesystemFragment extends AttachPreferenceFragment
 
     @Override protected int getFragmentId() { return ID_FILESYSTEM; }
 
-    @Override public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
-
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.extras_filesystem);
@@ -67,11 +54,11 @@ public class FilesystemFragment extends AttachPreferenceFragment
 
         mIoScheduler = (CustomListPreference) findPreference("io");
         mIoScheduler.setEnabled(false);
-        CpuUtils.getIoSchedulerEvent();
+        IoSchedulerUtils.get().getIoScheduler(this);
         // setting listener when "onIoScheduler" arrives
 
         mReadAhead = (CustomListPreference) findPreference("read_ahead");
-        value = Utils.readOneLine(PerformanceConstants.READ_AHEAD_PATH[0]);
+        value = Utils.readOneLine(Constants.READ_AHEAD_PATH[0]);
         mReadAhead.setValue(value);
         mReadAhead.setSummary(mapReadAhead(value));
         mReadAhead.setOnPreferenceChangeListener(this);
@@ -149,17 +136,15 @@ public class FilesystemFragment extends AttachPreferenceFragment
         }
     }
 
-    @Subscribe public void onIoScheduler(final IoSchedulerEvent event) {
+    @Override public void onIoScheduler(final IoSchedulerUtils.IoScheduler ioScheduler) {
         final Activity activity = getActivity();
-        if (activity != null && event != null) {
-            final String[] mAvailableIo = event.getAvailableIoScheduler();
-            final String mCurrentIo = event.getCurrentIoScheduler();
-            if (mAvailableIo != null && mAvailableIo.length > 0
-                    && mCurrentIo != null && !mCurrentIo.isEmpty()) {
-                mIoScheduler.setEntries(mAvailableIo);
-                mIoScheduler.setEntryValues(mAvailableIo);
-                mIoScheduler.setValue(mCurrentIo);
-                mIoScheduler.setSummary(mCurrentIo);
+        if (activity != null && ioScheduler != null) {
+            if (ioScheduler.available != null && ioScheduler.available.length > 0
+                    && !TextUtils.isEmpty(ioScheduler.current)) {
+                mIoScheduler.setEntries(ioScheduler.available);
+                mIoScheduler.setEntryValues(ioScheduler.available);
+                mIoScheduler.setValue(ioScheduler.current);
+                mIoScheduler.setSummary(ioScheduler.current);
                 mIoScheduler.setOnPreferenceChangeListener(this);
                 mIoScheduler.setEnabled(true);
             }

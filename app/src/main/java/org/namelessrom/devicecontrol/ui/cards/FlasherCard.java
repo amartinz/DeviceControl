@@ -6,8 +6,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.RefreshEvent;
 import org.namelessrom.devicecontrol.objects.FlashItem;
 
 import it.gmariotti.cardslib.library.internal.Card;
@@ -29,11 +27,6 @@ public class FlasherCard extends Card {
 
         setClickable(false);
         setSwipeable(true);
-        setOnSwipeListener(new OnSwipeListener() {
-            @Override public void onSwipe(Card card) {
-                BusProvider.getBus().post(new RefreshEvent());
-            }
-        });
     }
 
     @Override public void setupInnerViewElements(final ViewGroup parent, final View view) {

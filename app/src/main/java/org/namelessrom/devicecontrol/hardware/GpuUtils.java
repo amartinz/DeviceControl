@@ -28,54 +28,45 @@ import com.stericson.roottools.execution.Shell;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.GpuEvent;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GpuUtils implements PerformanceConstants {
+public class GpuUtils implements Constants {
 
-    public static String toMhz(final String mhz) {
-        int mhzInt;
-        try {
-            mhzInt = Integer.parseInt(mhz);
-        } catch (Exception exc) {
-            Logger.e(GpuUtils.class, exc.getMessage());
-            mhzInt = 0;
+    public static class Gpu {
+        public final String[] available;
+        public final String   max;
+        public final String   governor;
+
+        public Gpu(final String[] availFreqs, final String maxFreq, final String gov) {
+            available = availFreqs;
+            max = maxFreq;
+            governor = gov;
         }
-        return (String.valueOf(mhzInt / 1000000) + " MHz");
     }
 
-    public static String fromMHz(final String mhzString) {
-        if (mhzString != null && !mhzString.isEmpty()) {
-            try {
-                return String.valueOf(Integer.parseInt(mhzString.replace(" MHz", "")) * 1000000);
-            } catch (Exception exc) {
-                Logger.e(GpuUtils.class, exc.getMessage());
-            }
-        }
-        return "0";
+    public interface GpuListener {
+        public void onGpu(final Gpu gpu);
     }
 
-    public static String restore() {
-        final StringBuilder sbCmd = new StringBuilder();
+    private static GpuUtils sInstance;
 
-        final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
-                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_GPU);
-        for (final DataItem item : items) {
-            sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
+    private GpuUtils() { }
+
+    public static GpuUtils get() {
+        if (sInstance == null) {
+            sInstance = new GpuUtils();
         }
-
-        return sbCmd.toString();
+        return sInstance;
     }
 
-    public static String[] getAvailableFrequencies() {
+    public String[] getAvailableFrequencies() {
         final String freqsRaw = Utils.readOneLine(GPU_FREQUENCIES_FILE);
         if (freqsRaw != null && !freqsRaw.isEmpty()) {
             return freqsRaw.split(" ");
@@ -83,28 +74,14 @@ public class GpuUtils implements PerformanceConstants {
         return null;
     }
 
-    public static String[] freqsToMhz(final String[] frequencies) {
-        final int length = frequencies.length;
-        final String[] names = new String[length];
-
-        for (int i = 0; i < length; i++) {
-            names[i] = toMhz(frequencies[i]);
-        }
-
-        return names;
-    }
-
-    public static boolean containsGov(final String gov) {
+    public boolean containsGov(final String gov) {
         for (final String s : GPU_GOVS) {
             if (gov.toLowerCase().equals(s.toLowerCase())) { return true; }
         }
         return false;
     }
 
-    //==============================================================================================
-    // Events
-    //==============================================================================================
-    public static void getOnGpuEvent() {
+    public void getGpu(final GpuListener listener) {
         try {
             final Shell mShell = RootTools.getShell(true);
             if (mShell == null) { throw new Exception("Shell is null"); }
@@ -152,9 +129,8 @@ public class GpuUtils implements PerformanceConstants {
                     final String max = tmpMax;
                     final String gov = tmpGov;
                     Application.HANDLER.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            BusProvider.getBus().post(new GpuEvent(avail, max, gov));
+                        @Override public void run() {
+                            listener.onGpu(new Gpu(avail, max, gov));
                         }
                     });
 
@@ -166,6 +142,51 @@ public class GpuUtils implements PerformanceConstants {
         } catch (Exception exc) {
             Logger.e(GpuUtils.class, String.format("Error: %s", exc.getMessage()));
         }
+    }
+
+    public String restore() {
+        final StringBuilder sbCmd = new StringBuilder();
+
+        final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
+                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_GPU);
+        for (final DataItem item : items) {
+            sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
+        }
+
+        return sbCmd.toString();
+    }
+
+    public static String toMhz(final String mhz) {
+        int mhzInt;
+        try {
+            mhzInt = Integer.parseInt(mhz);
+        } catch (Exception exc) {
+            Logger.e(GpuUtils.get(), exc.getMessage());
+            mhzInt = 0;
+        }
+        return (String.valueOf(mhzInt / 1000000) + " MHz");
+    }
+
+    public static String fromMHz(final String mhzString) {
+        if (mhzString != null && !mhzString.isEmpty()) {
+            try {
+                return String.valueOf(Integer.parseInt(mhzString.replace(" MHz", "")) * 1000000);
+            } catch (Exception exc) {
+                Logger.e(GpuUtils.get(), exc.getMessage());
+            }
+        }
+        return "0";
+    }
+
+    public static String[] freqsToMhz(final String[] frequencies) {
+        final int length = frequencies.length;
+        final String[] names = new String[length];
+
+        for (int i = 0; i < length; i++) {
+            names[i] = toMhz(frequencies[i]);
+        }
+
+        return names;
     }
 
     public static boolean isOpenGLES20Supported() {

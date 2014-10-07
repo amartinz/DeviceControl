@@ -35,14 +35,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.negusoft.holoaccent.dialog.DividerPainter;
-import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.GovernorEvent;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -51,44 +48,28 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.File;
 
-public class GovernorFragment extends AttachPreferenceFragment implements DeviceConstants {
+public class GovernorFragment extends AttachPreferenceFragment implements DeviceConstants,
+        GovernorUtils.GovernorListener {
 
     private PreferenceCategory mCategory;
     private Context            mContext;
 
     @Override protected int getFragmentId() { return ID_GOVERNOR_TUNABLE; }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.governor);
 
         mCategory = (PreferenceCategory) findPreference("key_gov_category");
         mContext = getActivity();
 
-        CpuUtils.getGovernorEvent();
+        GovernorUtils.get().getGovernor(this);
     }
 
-    @Subscribe
-    public void onGovernor(final GovernorEvent event) {
-        if (event == null) return;
-
-        final String curGov = event.getCurrentGovernor();
-        if (new File("/sys/devices/system/cpu/cpufreq/" + curGov).exists()) {
-            mCategory.setTitle(curGov + " Tweakable values");
-            new addPreferences().execute(curGov);
+    @Override public void onGovernor(final GovernorUtils.Governor governor) {
+        if (new File("/sys/devices/system/cpu/cpufreq/" + governor.current).exists()) {
+            mCategory.setTitle(getString(R.string.gov_tweaks, governor.current));
+            new addPreferences().execute(governor.current);
         } else {
             getPreferenceScreen().removeAll();
         }
@@ -96,8 +77,7 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
         isSupported(getPreferenceScreen(), mContext, R.string.no_gov_tweaks_message);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         final int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
@@ -113,10 +93,9 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
         return false;
     }
 
-    class addPreferences extends AsyncTask<String, Void, Void> {
+    private class addPreferences extends AsyncTask<String, Void, Void> {
 
-        @Override
-        protected Void doInBackground(String... params) {
+        @Override protected Void doInBackground(String... params) {
             if (mCategory.getPreferenceCount() != 0) {
                 mCategory.removeAll();
             }
@@ -195,8 +174,7 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
 
         class updateListDb extends AsyncTask<String, Void, Void> {
 
-            @Override
-            protected Void doInBackground(String... params) {
+            @Override protected Void doInBackground(String... params) {
                 final String name = p.getTitle().toString();
                 final String key = p.getKey();
                 PreferenceHelper.setBootup(new DataItem(

@@ -31,10 +31,9 @@ import com.stericson.roottools.execution.CommandCapture;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.ShellOutputEvent;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
-import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
+import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -48,6 +47,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
+
+import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
 
 public class Utils implements DeviceConstants {
 
@@ -370,7 +371,7 @@ public class Utils implements DeviceConstants {
                         String.format("Shell output: %s", result));
                 Application.HANDLER.post(new Runnable() {
                     @Override public void run() {
-                        listener.onShellOutput(new ShellOutputEvent(ID, sb.toString()));
+                        listener.onShellOutput(new ShellOutput(ID, sb.toString()));
                     }
                 });
             }

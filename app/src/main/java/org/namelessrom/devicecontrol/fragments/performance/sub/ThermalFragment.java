@@ -23,7 +23,6 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.BusProvider;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
@@ -31,12 +30,11 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.constants.PerformanceConstants;
 
 public class ThermalFragment extends AttachPreferenceFragment
-        implements DeviceConstants, PerformanceConstants,
-        Preference.OnPreferenceChangeListener {
+        implements DeviceConstants, Constants, Preference.OnPreferenceChangeListener {
 
     //----------------------------------------------------------------------------------------------
     private PreferenceScreen          mRoot;
@@ -53,20 +51,7 @@ public class ThermalFragment extends AttachPreferenceFragment
 
     @Override protected int getFragmentId() { return ID_THERMAL; }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.extras_thermal);
 
@@ -182,8 +167,7 @@ public class ThermalFragment extends AttachPreferenceFragment
         }
     }
 
-    @Override
-    public boolean onPreferenceChange(final Preference preference, final Object o) {
+    @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
         if (mCoreControl == preference) {
             mCoreControl.writeValue((Boolean) o);
             return true;

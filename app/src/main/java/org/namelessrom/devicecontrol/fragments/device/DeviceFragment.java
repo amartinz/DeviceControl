@@ -25,12 +25,11 @@ import android.preference.PreferenceScreen;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.bus.ShellOutputEvent;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.DisplayColorCalibration;
 import org.namelessrom.devicecontrol.hardware.DisplayGammaCalibration;
-import org.namelessrom.devicecontrol.listeners.OnShellOutputListener;
+import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
@@ -51,7 +50,7 @@ import java.util.List;
 
 public class DeviceFragment extends AttachPreferenceFragment
         implements DeviceConstants, Preference.OnPreferenceChangeListener,
-        Preference.OnPreferenceClickListener, OnShellOutputListener {
+        Preference.OnPreferenceClickListener, ShellOutput.OnShellOutputListener {
 
     private static final String FC_PATH = "/sys/kernel/fast_charge";
 
@@ -391,14 +390,10 @@ public class DeviceFragment extends AttachPreferenceFragment
                 Utils.getReadCommand("/sys/class/sec/tsp/cmd_result"));
     }
 
-    public void onShellOutput(final ShellOutputEvent event) {
-        if (event == null) return;
-
-        final String output = event.getOutput();
-
+    @Override public void onShellOutput(final ShellOutput output) {
         if (output == null || mGloveMode == null) return;
 
-        mGloveMode.setChecked(output.contains(GLOVE_MODE_ENABLE));
+        mGloveMode.setChecked(output.output.contains(GLOVE_MODE_ENABLE));
         mGloveMode.setEnabled(true);
     }
 

@@ -24,14 +24,12 @@ import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
-import org.namelessrom.devicecontrol.ui.views.CpuStateView;
 import org.namelessrom.devicecontrol.ui.views.DeviceStatusView;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class InformationFragment extends AttachFragment implements DeviceConstants {
 
     private DeviceStatusView mDeviceStats;
-    private CpuStateView     mCpuStates;
 
     @Override protected int getFragmentId() { return ID_PERFORMANCE_INFO; }
 
@@ -40,7 +38,6 @@ public class InformationFragment extends AttachFragment implements DeviceConstan
         final View v = inflater.inflate(R.layout.fragment_performance, container, false);
 
         mDeviceStats = (DeviceStatusView) v.findViewById(R.id.device_stats);
-        mCpuStates = (CpuStateView) v.findViewById(R.id.cpu_states);
 
         return v;
     }
@@ -50,18 +47,12 @@ public class InformationFragment extends AttachFragment implements DeviceConstan
         if (mDeviceStats != null) {
             mDeviceStats.onResume();
         }
-        if (mCpuStates != null) {
-            mCpuStates.onResume();
-        }
     }
 
     @Override public void onPause() {
         super.onPause();
         if (mDeviceStats != null) {
             mDeviceStats.onPause();
-        }
-        if (mCpuStates != null) {
-            mCpuStates.onPause();
         }
     }
 }

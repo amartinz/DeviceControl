@@ -35,13 +35,10 @@ import android.widget.TextView;
 
 import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 import com.negusoft.holoaccent.dialog.DividerPainter;
-import com.squareup.otto.Subscribe;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.FilePickerActivity;
-import org.namelessrom.devicecontrol.bus.BusProvider;
-import org.namelessrom.devicecontrol.bus.RefreshEvent;
 import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
 import org.namelessrom.devicecontrol.objects.FlashItem;
 import org.namelessrom.devicecontrol.ui.adapters.FlashListAdapter;
@@ -69,16 +66,6 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
     private TextView mEmptyView;
 
     @Override protected int getFragmentId() { return ID_TOOLS_FLASHER; }
-
-    @Override public void onResume() {
-        super.onResume();
-        BusProvider.getBus().register(this);
-    }
-
-    @Override public void onPause() {
-        super.onPause();
-        BusProvider.getBus().unregister(this);
-    }
 
     @SuppressLint("WrongViewCast") // R.id.container in our flash layout is a LinearLayout
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -138,11 +125,6 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
         }
     }
 
-    @Subscribe public void onRefreshEvent(final RefreshEvent event) {
-        if (event == null) return;
-        checkAdapter();
-    }
-
     @Override public void onActivityResult(final int req, final int res, final Intent data) {
         Logger.v(this, String.format("onActivityResult(%s, %s, %s)", req, res, data));
         if (req == REQUEST_CODE_FILE && res == Activity.RESULT_OK) {
@@ -152,7 +134,14 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
 
             Logger.v(this, String.format("onActivityResult(%s)", item.getPath()));
 
-            mAdapter.add(new FlasherCard(getActivity(), item));
+            final FlasherCard card = new FlasherCard(getActivity(), item);
+            card.setOnSwipeListener(new Card.OnSwipeListener() {
+                @Override public void onSwipe(Card card) {
+                    checkAdapter();
+                }
+            });
+
+            mAdapter.add(card);
             checkAdapter();
         } else {
             super.onActivityResult(req, res, data);
