@@ -168,7 +168,9 @@ public class CpuCoreMonitor implements DeviceConstants {
                     if (mListener != null) {
                         Application.HANDLER.post(new Runnable() {
                             @Override public void run() {
-                                mListener.onCores(new CpuUtils.Cores(mCoreList));
+                                if (mListener != null) {
+                                    mListener.onCores(new CpuUtils.Cores(mCoreList));
+                                }
                             }
                         });
                     }
