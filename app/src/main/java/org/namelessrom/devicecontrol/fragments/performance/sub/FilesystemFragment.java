@@ -107,7 +107,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
 
         // try to parse the value we are writing
         try {
-            val = Integer.parseInt(value);
+            val = Utils.parseInt(value);
         } catch (Exception exc) {
             Logger.e(this, exc.getMessage());
             val = -1;

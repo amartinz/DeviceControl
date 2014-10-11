@@ -61,7 +61,7 @@ public class DialogHelper {
                     final Editable text = settingText.getText();
                     if (text != null) {
                         try {
-                            final int val = Integer.parseInt(text.toString());
+                            final int val = Utils.parseInt(text.toString());
                             seekbar.setProgress(val);
                         } catch (Exception ignored) { /* ignored */ }
                     }
@@ -83,7 +83,7 @@ public class DialogHelper {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    int val = Integer.parseInt(s.toString());
+                    int val = Utils.parseInt(s.toString());
                     if (val > max) {
                         s.replace(0, s.length(), Integer.toString(max));
                         val = max;
@@ -124,7 +124,7 @@ public class DialogHelper {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (settingText.getText() == null) return;
-                        int val = Integer.parseInt(settingText.getText().toString());
+                        int val = Utils.parseInt(settingText.getText().toString());
                         if (val < min) {
                             val = min;
                         }

@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.BufferedReader;
@@ -109,7 +110,7 @@ public class CpuStateMonitor implements DeviceConstants {
             line = line.trim();
             if (!line.isEmpty()) {
                 nums = line.split(" ");
-                mStates.add(new CpuState(Integer.parseInt(nums[0]), Long.parseLong(nums[1])));
+                mStates.add(new CpuState(Utils.parseInt(nums[0]), Long.parseLong(nums[1])));
             }
         }
     }

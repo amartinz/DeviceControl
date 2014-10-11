@@ -522,7 +522,7 @@ public class Utils implements DeviceConstants {
     }
 
     public static int tryParse(final String parse, final int def) {
-        try { return Integer.parseInt(parse); } catch (Exception exc) { return def; }
+        try { return Utils.parseInt(parse); } catch (Exception exc) { return def; }
     }
 
     public static Integer tryValueOf(final String value, final int def) {
@@ -562,6 +562,20 @@ public class Utils implements DeviceConstants {
     public static String getDateAndTime() {
         return new SimpleDateFormat("yyyy-MM-dd.HH.mm.ss")
                 .format(new Date(System.currentTimeMillis()));
+    }
+
+    public static int parseInt(final String integer) {
+        return parseInt(integer, -1);
+    }
+
+    public static int parseInt(String integer, final int def) {
+        try {
+            if (integer != null) integer = integer.trim();
+            return Integer.parseInt(integer);
+        } catch (NumberFormatException exc) {
+            Logger.e("Utils", String.format("parseInt(%s, %s)", integer, def), exc);
+            return def;
+        }
     }
 
 }

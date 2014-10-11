@@ -264,7 +264,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
             mMcPowerScheduler.writeValue(value);
             if (mMcPowerScheduler.getEntries() != null) {
                 final String summary =
-                        String.valueOf(mMcPowerScheduler.getEntries()[Integer.parseInt(value)]);
+                        String.valueOf(mMcPowerScheduler.getEntries()[Utils.parseInt(value)]);
                 mMcPowerScheduler.setSummary(summary);
             }
             return true;

@@ -98,15 +98,15 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
                 path = paths[i];
                 // if we have a path for maximum, use it. else use the maximum defined value
                 if (TextUtils.equals("-", maxPaths[i])) {
-                    max = Integer.parseInt(maxs[i]);
+                    max = Utils.parseInt(maxs[i]);
                 } else {
-                    max = (Integer.parseInt(Utils.readOneLine(maxPaths[i])));
+                    max = (Utils.parseInt(Utils.readOneLine(maxPaths[i])));
                 }
                 // same for minimum
                 if (TextUtils.equals("-", minPaths[i])) {
-                    min = Integer.parseInt(mins[i]);
+                    min = Utils.parseInt(mins[i]);
                 } else {
-                    min = (Integer.parseInt(Utils.readOneLine(minPaths[i])));
+                    min = (Utils.parseInt(Utils.readOneLine(minPaths[i])));
                 }
                 // we can also use max or min for the default value
                 if (TextUtils.equals("max", defs[i])) {
@@ -114,10 +114,10 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
                 } else if (TextUtils.equals("min", defs[i])) {
                     defValue = min;
                 } else {
-                    defValue = Integer.parseInt(defs[i]);
+                    defValue = Utils.parseInt(defs[i]);
                 }
                 // if the threshold is -1, we should not show the warning dialog
-                threshold = Integer.parseInt(thresholds[i]);
+                threshold = Utils.parseInt(thresholds[i]);
                 // and get out of here
                 break;
             }
@@ -164,7 +164,7 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
         // Restore percent value from SharedPreferences object
         final String value = PreferenceHelper.getBootupValue("vibrator_tuning");
         final int percent = strengthToPercent(value != null
-                ? Integer.parseInt(mOriginalValue) : defValue);
+                ? Utils.parseInt(mOriginalValue) : defValue);
         Logger.v(this, "value: %s, percent: %s", value, percent);
         mSeekBar.setOnSeekBarChangeListener(this);
         mSeekBar.setProgress(percent);

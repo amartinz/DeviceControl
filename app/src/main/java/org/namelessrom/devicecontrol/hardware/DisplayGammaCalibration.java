@@ -58,8 +58,8 @@ public class DisplayGammaCalibration {
             if (exists) {
                 this.paths = splitted;
                 // maximum and minimum
-                max = Integer.parseInt(maxs[i]);
-                min = Integer.parseInt(mins[i]);
+                max = Utils.parseInt(maxs[i]);
+                min = Utils.parseInt(mins[i]);
                 // descriptors
                 descriptors = descs[i].split(",");
                 // get out of here finally

@@ -47,7 +47,7 @@ public class PreferenceHelper {
     public static int getInt(final String name, final int defaultValue) {
         final String value = DatabaseHandler.getInstance()
                 .getValueByName(name, DatabaseHandler.TABLE_DC);
-        return (value == null || value.isEmpty() ? defaultValue : Integer.parseInt(value));
+        return (value == null || value.isEmpty() ? defaultValue : Utils.parseInt(value));
     }
 
     public static String getString(final String key) {

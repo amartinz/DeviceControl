@@ -96,7 +96,7 @@ public class AwesomeSeekBarPreference extends SeekBarPreference {
         if (isSupported()) {
             final int value;
             try {
-                value = Integer.parseInt(Utils.readOneLine(mPath, true));
+                value = Utils.parseInt(Utils.readOneLine(mPath, true));
             } catch (Exception exc) {
                 Logger.e(this, "Error initializing value", exc);
                 return;

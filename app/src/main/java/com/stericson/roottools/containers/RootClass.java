@@ -23,6 +23,8 @@
 
 package com.stericson.roottools.containers;
 
+import org.namelessrom.devicecontrol.utils.Utils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
@@ -275,11 +277,11 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
             for (final File file : files) {
                 int sdkVersion;
                 String[] sdkVersionBits = file.getName().split("[.]");
-                sdkVersion = Integer.parseInt(sdkVersionBits[0]) * 10000;
+                sdkVersion = Utils.parseInt(sdkVersionBits[0]) * 10000;
                 if (sdkVersionBits.length > 1) {
-                    sdkVersion += Integer.parseInt(sdkVersionBits[1]) * 100;
+                    sdkVersion += Utils.parseInt(sdkVersionBits[1]) * 100;
                     if (sdkVersionBits.length > 2) {
-                        sdkVersion += Integer.parseInt(sdkVersionBits[2]);
+                        sdkVersion += Utils.parseInt(sdkVersionBits[2]);
                     }
                 }
                 if (sdkVersion > recentSdkVersion) {

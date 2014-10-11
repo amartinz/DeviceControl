@@ -26,6 +26,7 @@ import com.stericson.roottools.RootTools;
 import com.stericson.roottools.exceptions.RootDeniedException;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -400,13 +401,13 @@ public class Shell {
                             int id = 0;
 
                             try {
-                                id = Integer.parseInt(fields[1]);
+                                id = Utils.parseInt(fields[1]);
                             } catch (NumberFormatException ignored) { }
 
                             int exitCode = -1;
 
                             try {
-                                exitCode = Integer.parseInt(fields[2]);
+                                exitCode = Utils.parseInt(fields[2]);
                             } catch (NumberFormatException ignored) { }
 
                             if (id == totalRead) {

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 public class SeekBarPreference extends Preference implements OnSeekBarChangeListener {
 
@@ -62,7 +63,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
         mUnitsRight = getAttributeStringValue(attrs, DC, "unitsRight", units);
         try {
             final String newInterval = attrs.getAttributeValue(DC, "interval");
-            if (newInterval != null) { mInterval = Integer.parseInt(newInterval); }
+            if (newInterval != null) { mInterval = Utils.parseInt(newInterval); }
         } catch (Exception e) {
             Logger.e(TAG, "Invalid interval value", e);
         }

@@ -159,7 +159,7 @@ public class GpuUtils implements Constants {
     public static String toMhz(final String mhz) {
         int mhzInt;
         try {
-            mhzInt = Integer.parseInt(mhz);
+            mhzInt = Utils.parseInt(mhz);
         } catch (Exception exc) {
             Logger.e(GpuUtils.get(), exc.getMessage());
             mhzInt = 0;
@@ -170,7 +170,7 @@ public class GpuUtils implements Constants {
     public static String fromMHz(final String mhzString) {
         if (mhzString != null && !mhzString.isEmpty()) {
             try {
-                return String.valueOf(Integer.parseInt(mhzString.replace(" MHz", "")) * 1000000);
+                return String.valueOf(Utils.parseInt(mhzString.replace(" MHz", "")) * 1000000);
             } catch (Exception exc) {
                 Logger.e(GpuUtils.get(), exc.getMessage());
             }

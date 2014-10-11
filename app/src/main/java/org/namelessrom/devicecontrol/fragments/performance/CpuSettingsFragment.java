@@ -120,7 +120,7 @@ public class CpuSettingsFragment extends AttachFragment implements DeviceConstan
         final TextView mIntervalText = (TextView) view.findViewById(R.id.ui_device_value);
         final SeekBar intervalBar = (SeekBar) view.findViewById(R.id.ui_device_seekbar);
         intervalBar.setMax(4000);
-        intervalBar.setProgress(Integer.parseInt(
+        intervalBar.setProgress(Utils.parseInt(
                 PreferenceHelper.getString("pref_interval_cpu_info", "1000")) - 1000);
         intervalBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override public void onProgressChanged(SeekBar bar, int progress, boolean fromUser) {
@@ -263,7 +263,7 @@ public class CpuSettingsFragment extends AttachFragment implements DeviceConstan
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             final String selected = CpuUtils.fromMHz(String.valueOf(parent.getItemAtPosition(pos)));
             final String other = CpuUtils.fromMHz(String.valueOf(mMin.getSelectedItem()));
-            final boolean updateOther = Integer.parseInt(selected) < Integer.parseInt(other);
+            final boolean updateOther = Utils.parseInt(selected) < Utils.parseInt(other);
             if (updateOther) { mMin.setSelection(pos);}
 
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MAX, selected, true);
@@ -276,7 +276,7 @@ public class CpuSettingsFragment extends AttachFragment implements DeviceConstan
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             final String selected = CpuUtils.fromMHz(String.valueOf(parent.getItemAtPosition(pos)));
             final String other = CpuUtils.fromMHz(String.valueOf(mMax.getSelectedItem()));
-            final boolean updateOther = Integer.parseInt(selected) > Integer.parseInt(other);
+            final boolean updateOther = Utils.parseInt(selected) > Utils.parseInt(other);
             if (updateOther) { mMax.setSelection(pos);}
 
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MIN, selected, true);

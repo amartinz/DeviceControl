@@ -25,6 +25,7 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
@@ -81,7 +82,7 @@ public class FlasherPreferencesFragment extends AttachPreferenceFragment
 
     @Override public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (mRecoveryType == preference) {
-            final int value = Integer.parseInt(String.valueOf(newValue));
+            final int value = Utils.parseInt(String.valueOf(newValue));
             PreferenceHelper.setInt(PREF_RECOVERY_TYPE, value);
             setSummary(preference, value);
             return true;

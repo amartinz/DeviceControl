@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 public class CustomPreference extends Preference {
     private int sumColor = -1;
@@ -37,7 +38,7 @@ public class CustomPreference extends Preference {
     }
 
     public void setCustomSummaryKeyPlus(final int plus) {
-        final int newValue = Integer.parseInt(getKey()) + plus;
+        final int newValue = Utils.parseInt(getKey()) + plus;
         setKey(newValue + "");
         if (areMilliVolts) {
             setSummary(newValue + " mV");
@@ -47,7 +48,7 @@ public class CustomPreference extends Preference {
     }
 
     public void setCustomSummaryKeyMinus(final int minus) {
-        final int newValue = Integer.parseInt(getKey()) - minus;
+        final int newValue = Utils.parseInt(getKey()) - minus;
         setKey(newValue + "");
         if (areMilliVolts) {
             setSummary(newValue + " mV");

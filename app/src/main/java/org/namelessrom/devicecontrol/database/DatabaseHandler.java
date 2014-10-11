@@ -26,6 +26,7 @@ import android.util.Log;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.File;
@@ -211,7 +212,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         if (cursor != null) { cursor.moveToFirst(); }
         if (cursor == null) return null;
 
-        final DataItem item = new DataItem(Integer.parseInt(cursor.getString(0)),
+        final DataItem item = new DataItem(Utils.parseInt(cursor.getString(0)),
                 cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
 
         cursor.close();
@@ -232,7 +233,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
             DataItem item;
             do {
                 item = new DataItem();
-                item.setID(Integer.parseInt(cursor.getString(0)));
+                item.setID(Utils.parseInt(cursor.getString(0)));
                 item.setCategory(cursor.getString(1));
                 item.setName(cursor.getString(2));
                 item.setFileName(cursor.getString(3));
@@ -284,7 +285,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
             TaskerItem item;
             do {
                 item = new TaskerItem();
-                item.setID(Integer.parseInt(cursor.getString(0)));
+                item.setID(Utils.parseInt(cursor.getString(0)));
                 item.setCategory(cursor.getString(1));
                 item.setName(cursor.getString(2));
                 item.setFileName(cursor.getString(3));

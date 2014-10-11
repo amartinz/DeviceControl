@@ -174,13 +174,13 @@ public class KsmFragment extends AttachPreferenceFragment
             @NonNull final Preference preference) {
         if (mPagesToScan == preference) {
             final String title = String.valueOf(mPagesToScan.getTitle());
-            final int currentProgress = Integer.parseInt(Utils.readOneLine(KSM_PAGES_TO_SCAN));
+            final int currentProgress = Utils.parseInt(Utils.readOneLine(KSM_PAGES_TO_SCAN));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 1,
                     1024, preference, KSM_PAGES_TO_SCAN, DatabaseHandler.CATEGORY_EXTRAS);
             return true;
         } else if (mSleep == preference) {
             final String title = String.valueOf(mSleep.getTitle());
-            final int currentProgress = Integer.parseInt(Utils.readOneLine(KSM_SLEEP));
+            final int currentProgress = Utils.parseInt(Utils.readOneLine(KSM_SLEEP));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 50,
                     5000, preference, KSM_SLEEP, DatabaseHandler.CATEGORY_EXTRAS);
             return true;

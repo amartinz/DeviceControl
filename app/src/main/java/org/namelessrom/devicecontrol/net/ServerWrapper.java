@@ -24,6 +24,7 @@ import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.HtmlHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.SortHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -221,7 +222,7 @@ public class ServerWrapper {
         final String portString = PreferenceHelper.getString("wfm_port", "8080");
         int port;
         try {
-            port = Integer.parseInt(portString);
+            port = Utils.parseInt(portString);
         } catch (Exception e) {
             port = 8080;
         }

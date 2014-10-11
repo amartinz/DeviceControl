@@ -35,6 +35,7 @@ import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.DisplayColorCalibration;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 /**
  * Special preference type that allows configuration of Color settings
@@ -137,7 +138,7 @@ public class DisplayColor extends DialogPreference {
         }
 
         public void setValueFromString(String valueString) {
-            mSeekBar.setProgress(Integer.parseInt(valueString));
+            mSeekBar.setProgress(Utils.parseInt(valueString));
         }
 
         @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

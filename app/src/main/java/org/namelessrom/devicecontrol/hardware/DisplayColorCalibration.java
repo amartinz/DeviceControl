@@ -61,11 +61,11 @@ public class DisplayColorCalibration {
                 }
 
                 // maximum
-                max = Integer.parseInt(maxs[i]);
+                max = Utils.parseInt(maxs[i]);
                 Logger.i(this, "max --> %s", max);
 
                 // minimum
-                min = Integer.parseInt(mins[i]);
+                min = Utils.parseInt(mins[i]);
                 Logger.i(this, "min --> %s", min);
 
                 // get default value
@@ -95,7 +95,7 @@ public class DisplayColorCalibration {
 
     public int getMinValue() { return min; }
 
-    public int getDefValue() { return Integer.parseInt(def); }
+    public int getDefValue() { return Utils.parseInt(def); }
 
     public String getCurColors() { return Utils.readOneLine(path); }
 

@@ -153,7 +153,7 @@ public class CpuUtils implements Constants {
         String tmpString = Utils.readOneLine(CPU_TEMP_PATH);
         if (!TextUtils.isEmpty(tmpString) && !tmpString.trim().isEmpty()) {
             int temp;
-            try { temp = Integer.parseInt(tmpString);} catch (Exception e) { return -1; }
+            try { temp = Utils.parseInt(tmpString);} catch (Exception e) { return -1; }
             temp = (temp < 0 ? 0 : temp);
             temp = (temp > 100 ? 100 : temp);
             return temp;
@@ -181,7 +181,7 @@ public class CpuUtils implements Constants {
             final String[] cpuCount = numOfCpus.split("-");
             if (cpuCount.length > 1) {
                 try {
-                    numOfCpu = Integer.parseInt(cpuCount[1]) - Integer.parseInt(cpuCount[0]) + 1;
+                    numOfCpu = Utils.parseInt(cpuCount[1]) - Utils.parseInt(cpuCount[0]) + 1;
                     if (numOfCpu < 0) {
                         numOfCpu = 1;
                     }
@@ -205,7 +205,7 @@ public class CpuUtils implements Constants {
             tmpString = item.getName();
             if (tmpString != null && !tmpString.contains("io")) {
                 try {
-                    tmpInt = Integer.parseInt(
+                    tmpInt = Utils.parseInt(
                             String.valueOf(tmpString.charAt(tmpString.length() - 1)));
                 } catch (Exception exc) {
                     tmpInt = -1;
@@ -310,7 +310,7 @@ public class CpuUtils implements Constants {
         int value = -1;
         if (!TextUtils.isEmpty(mhzString)) {
             try {
-                value = Integer.parseInt(mhzString) / 1000;
+                value = Utils.parseInt(mhzString) / 1000;
             } catch (NumberFormatException exc) {
                 Logger.e(CpuUtils.get(), "toMHz", exc);
                 value = -1;
@@ -333,7 +333,7 @@ public class CpuUtils implements Constants {
     public static String fromMHz(final String mhzString) {
         if (!TextUtils.isEmpty(mhzString)) {
             try {
-                return String.valueOf(Integer.parseInt(mhzString.replace(" MHz", "")) * 1000);
+                return String.valueOf(Utils.parseInt(mhzString.replace(" MHz", "")) * 1000);
             } catch (Exception exc) {
                 Logger.e(CpuUtils.get(), exc.getMessage());
             }

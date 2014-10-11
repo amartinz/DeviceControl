@@ -105,7 +105,7 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
 
     private int parseFstrim(final String position) {
         try {
-            return parseFstrim(Integer.parseInt(position));
+            return parseFstrim(Utils.parseInt(position));
         } catch (Exception exc) {
             return 480;
         }

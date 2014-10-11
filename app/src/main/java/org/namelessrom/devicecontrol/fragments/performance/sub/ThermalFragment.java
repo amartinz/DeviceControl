@@ -215,7 +215,7 @@ public class ThermalFragment extends AttachPreferenceFragment
     private String validateValue(final String value, final int type) {
         final int parsed;
         try {
-            parsed = Integer.parseInt(value);
+            parsed = Utils.parseInt(value);
 
         } catch (Exception e) { return "";}
 

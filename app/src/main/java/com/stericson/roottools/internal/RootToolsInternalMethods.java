@@ -40,6 +40,7 @@ import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
 import org.namelessrom.devicecontrol.utils.AppHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 import java.io.FileReader;
@@ -129,7 +130,7 @@ public final class RootToolsInternalMethods {
             finalPermissions += parsePermissions(permissions.getGroupPermissions());
             finalPermissions += parsePermissions(permissions.getOtherPermissions());
 
-            permissions.setPermissions(Integer.parseInt(finalPermissions));
+            permissions.setPermissions(Utils.parseInt(finalPermissions));
             return permissions;
         }
 
