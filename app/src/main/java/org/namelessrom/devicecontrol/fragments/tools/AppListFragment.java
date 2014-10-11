@@ -22,6 +22,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -659,8 +660,15 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     }
 
     private View addCacheWidget(final int txtId, final String text) {
-        final View v = LayoutInflater.from(getActivity())
-                .inflate(R.layout.widget_app_cache, mCacheInfo, false);
+        final View v;
+        if (getActivity() != null) {
+            v = LayoutInflater.from(getActivity())
+                    .inflate(R.layout.widget_app_cache, mCacheInfo, false);
+        } else {
+            v = ((LayoutInflater) Application.get()
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                    .inflate(R.layout.widget_app_cache, mCacheInfo, false);
+        }
 
         final int color = PreferenceHelper.getBoolean("dark_theme", true)
                 ? Color.WHITE : Color.BLACK;
