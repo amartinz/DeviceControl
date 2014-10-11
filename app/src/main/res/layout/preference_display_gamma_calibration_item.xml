@@ -17,8 +17,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="20dip"
-    android:paddingEnd="20dip"
+    android:paddingLeft="20dip"
+    android:paddingRight="20dip"
     android:paddingTop="10dip">
 
     <TextView

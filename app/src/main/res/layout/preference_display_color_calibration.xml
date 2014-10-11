@@ -22,8 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:paddingStart="20dip"
-        android:paddingEnd="20dip"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
         android:paddingBottom="20dip">
 
         <TextView

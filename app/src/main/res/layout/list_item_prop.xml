@@ -20,7 +20,6 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:paddingEnd="?android:attr/scrollbarSize"
     android:paddingTop="4dp"
     android:paddingRight="10dp"
     android:paddingBottom="4dp"

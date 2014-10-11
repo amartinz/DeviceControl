@@ -30,7 +30,7 @@
     android:foreground="?android:attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingEnd="?android:attr/scrollbarSize">
+    android:paddingRight="?android:attr/scrollbarSize">
 
     <TextView
         android:id="@android:id/text1"
