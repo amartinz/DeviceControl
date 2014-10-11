@@ -21,10 +21,10 @@
 package org.namelessrom.devicecontrol.activities;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -37,7 +37,6 @@ import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class RequestFileActivity extends Activity {
 
@@ -59,26 +58,39 @@ public class RequestFileActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PackageManager packageManager = getPackageManager();
-        Intent test = new Intent(Intent.ACTION_GET_CONTENT);
-        test.setType("application/zip*");
-        List<ResolveInfo> list = packageManager.queryIntentActivities(test,
-                PackageManager.GET_ACTIVITIES);
-        if (list.size() > 0) {
-            Intent intent = new Intent();
-            intent.setType("application/zip");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intent, REQUEST_PICK_FILE);
-        } else {
+        final PackageManager pm = getPackageManager();
+        if (pm == null) {
+            launchInternalPicker();
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("application/zip");
+
+        try {
+            if (pm.queryIntentActivities(intent, PackageManager.GET_ACTIVITIES).size() > 0) {
+                intent = new Intent();
+                intent.setType("application/zip");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, REQUEST_PICK_FILE);
+            } else {
+                throw new ActivityNotFoundException();
+            }
+        } catch (ActivityNotFoundException e) {
+            Logger.e(this, "No activity found to handle file picking! Falling back to default!", e);
             launchInternalPicker();
         }
     }
 
     private void launchInternalPicker() {
-        Intent intent = new Intent();
+        final Intent intent = new Intent();
         final Intent i = new Intent(this, FilePickerActivity.class);
         i.putExtra(FilePickerFragment.ARG_FILE_TYPE, "zip");
-        startActivityForResult(intent, REQUEST_PICK_FILE_TWO);
+        try {
+            startActivityForResult(intent, REQUEST_PICK_FILE_TWO);
+        } catch (ActivityNotFoundException e) {
+            Logger.wtf(this, "Could not start default activity to pick files", e);
+        }
     }
 
     @Override
