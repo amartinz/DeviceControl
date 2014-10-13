@@ -51,8 +51,6 @@
   <string name="jit_summary">Hiermee schakelt u de JIT-compiler aan/uit</string>
   <string name="tcp_stack_title">Optimaliseren van TCP-Stack</string>
   <string name="tcp_stack_summary">Wijzig de grootte van de buffer voor betere prestaties</string>
-  <string name="g_speed_title">3G snelheids-hack</string>
-  <string name="g_speed_summary">Ontgrendel 3G snelheid</string>
   <string name="gpu_acceleration">GPU versnelling</string>
   <string name="gpu_acceleration_summary">Hardwareversnelling inschakelen waarbij de GPU de UI aanstuurt in plaats van de CPU</string>
   <string name="lcd_density">LCD dichtheid wijzigen</string>

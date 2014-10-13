@@ -51,8 +51,6 @@
   <string name="jit_summary">Włącza/wyłącza kompilator JIT</string>
   <string name="tcp_stack_title">Optymalizuj TCP Stack</string>
   <string name="tcp_stack_summary">Zmień rozmiar bufora dla lepszej wydajności</string>
-  <string name="g_speed_title">Popraw prędkość sieci 3G</string>
-  <string name="g_speed_summary">Polepsza prędkość przesyłu danych przez sieci 3G</string>
   <string name="gpu_acceleration">Przyspieszenie GPU</string>
   <string name="gpu_acceleration_summary">Włącza akcelerację sprzętową, gdzie interfejs użytkownika kontrolowany jest przez procesor graficzny, a nie CPU</string>
   <string name="lcd_density">Zmiana gęstości LCD</string>

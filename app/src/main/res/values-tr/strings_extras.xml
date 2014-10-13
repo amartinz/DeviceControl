@@ -51,8 +51,6 @@
   <string name="jit_summary">JIT derleyicisi Aktif/Devredışı</string>
   <string name="tcp_stack_title">TCP yığını optimize</string>
   <string name="tcp_stack_summary">Daha iyi performans için tampon boyutunu değiştirmek</string>
-  <string name="g_speed_title">3G Hızını hackle</string>
-  <string name="g_speed_summary">3G hızını aç</string>
   <string name="gpu_acceleration">GPU Hızlanma</string>
   <string name="gpu_acceleration_summary">GPU yerine CPU UI kontrol ettiği donanım ivmesini etkinleştirin</string>
   <string name="lcd_density">LCD yoğunluğunu değiştirmek</string>

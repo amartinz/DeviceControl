@@ -51,8 +51,6 @@
   <string name="jit_summary">Включает/выключает динамический компилятор</string>
   <string name="tcp_stack_title">Оптимизировать стек TCP</string>
   <string name="tcp_stack_summary">Изменить размер буфера для лучшей производительности</string>
-  <string name="g_speed_title">Хак скорости 3G</string>
-  <string name="g_speed_summary">Снять ограничения на скорость 3G</string>
   <string name="gpu_acceleration">Ускорение видеочипом</string>
   <string name="gpu_acceleration_summary">Использовать аппаратное ускорение, чтобы видеочип контролировал интерфейс вместо процессора</string>
   <string name="lcd_density">Изменить плотность экрана</string>

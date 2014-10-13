@@ -322,4 +322,5 @@
   <string name="type">Тип</string>
   <string name="tags">Теги</string>
   <string name="sensors">Датчики</string>
+  <string name="system">Система</string>
 </resources>

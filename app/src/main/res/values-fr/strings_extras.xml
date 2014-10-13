@@ -51,8 +51,6 @@
   <string name="jit_summary">Activer/Désactiver compilateur JIT</string>
   <string name="tcp_stack_title">Optimiser la pile TCP</string>
   <string name="tcp_stack_summary">Modifier la taille du buffer pour de meilleures performances</string>
-  <string name="g_speed_title">3G Speed Hack</string>
-  <string name="g_speed_summary">Débrider la vitesse 3g</string>
   <string name="gpu_acceleration">Accélération GPU</string>
   <string name="gpu_acceleration_summary">Activer l\'accélération matérielle où le GPU contrôle l\'UI au lieu de la CPU</string>
   <string name="lcd_density">Modifier la densité de pixel</string>

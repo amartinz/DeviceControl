@@ -260,4 +260,5 @@
   <string name="both">Tous les deux</string>
   <string name="pick_file">Choisissez un fichier</string>
   <string name="user_interface">Interface</string>
+  <string name="system">Système</string>
 </resources>

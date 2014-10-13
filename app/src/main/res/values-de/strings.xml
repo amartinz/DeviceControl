@@ -19,7 +19,7 @@
   <string name="app_version_name">Versions-Name: %s</string>
   <string name="app_version_code">Versions-Code: %s</string>
   <string name="app_welcome">Willkommen bei %s</string>
-  <string name="app_welcome_message">Um zu starten, wische das Menü aus der linken Seite heraus oder drücke auf die linke obere Ecke!\n\nFalls eine Funktion von deinemGerät nicht unterstützt wird, wird sie automatisch ausgeblendet!\nUnterstützte Funktionen sind abhängig von dem Gerät, der ROM und dem Kernel, den du benutzt.\n\nFalls du keine unterstützten Funktionen hast, versuche einen Custom-Kernel zu benutzen!\n\nBitte beachte, dass Root-Rechte benötigt werden, damit du %s in vollen Zügen genießen kannst!</string>
+  <string name="app_welcome_message">Um zu starten, wische das Menü aus der linken Seite heraus oder drücke auf die linke obere Ecke!\n\nFalls eine Funktion von deinem Gerät nicht unterstützt wird, wird sie automatisch ausgeblendet!\nUnterstützte Funktionen sind abhängig von dem Gerät, der ROM und dem Kernel, den du benutzt.\n\nFalls du keine unterstützten Funktionen hast, versuche einen Custom-Kernel zu benutzen!\n\nBitte beachte, dass Root-Rechte benötigt werden, damit du %s in vollen Zügen genießen kannst!</string>
   <string name="app_warning_root">Bitte beachte, dass %s ein Gerät mit Root-Rechten benötigt, um richtig zu funktionieren!</string>
   <string name="app_warning_busybox">Bitte beachte, dass %s eine BusyBox erfordert, um vollständig zu funktionieren!</string>
   <string name="start_wizard">Assistenten starten</string>
@@ -41,6 +41,7 @@
   <string name="toast_settings_applied">Erfolgreich angewendet!</string>
   <string name="no_tweaks_available">Keine Optimierungen verfügbar</string>
   <string name="no_tweaks_message">Tut uns leid, aber das Gerät unterstützt keine dieser Funktionen</string>
+  <string name="gov_tweaks">Veränderbare Werte: %s</string>
   <string name="no_gov_tweaks_message">Tut uns leid, aber dieser Governor hat keine einstellbaren Werte</string>
   <string name="home">Startseite</string>
   <string name="device">Gerät</string>
@@ -360,4 +361,26 @@
   <string name="display_gamma_calibration">Gammakorrektur</string>
   <string name="display_gamma_calibration_summary">Gammawerte einstellen</string>
   <string name="hardware_display_gamma_calibration_desc_one">Rot,Grün,Blau</string>
+  <string name="install_info">Die folgende(n) Datei(en) sind bereit zur Installation.\n\nSie können mehr komprimierte Dateien (.zip) über die \"Datei hinzufügen\" Taste hinzufügen.</string>
+  <string name="select_actions">Wählen Sie die Aktionen aus, die Sie ausführen möchten</string>
+  <string name="backup">Datensicherung</string>
+  <string name="wipe_data">Daten löschen</string>
+  <string name="wipe_caches">Cache &amp; Dalvik löschen</string>
+  <string name="no_additional_info">Keine weiteren Informationen</string>
+  <string name="install_title">Wählen Sie die zu installierenden Dateien</string>
+  <string name="install_now">Jetzt installieren</string>
+  <string name="file_not_found">Fehler beim Hinzufügen der Datei</string>
+  <string name="system">System</string>
+  <string name="boot">Boot</string>
+  <string name="androidsecure">Android Secure</string>
+  <string name="sdext">SD-Ext</string>
+  <string name="alert_reboot_install_title">Installiere Datei(en)</string>
+  <string name="alert_reboot_one_message">Ihr Gerät wird neu starten und die Datei installieren.</string>
+  <string name="alert_reboot_more_message">Ihr Gerät wird neu starten und die Dateien installieren.</string>
+  <string name="alert_backup_space_title">Freier Speicher</string>
+  <string name="alert_backup_space_message">Auf der internen SD-Karte sind weniger als %sGB Speicher verfügbar. Wollen Sie mit der Sicherung fortfahren?</string>
+  <string name="alert_backup_title">Datensicherung</string>
+  <string name="alert_backup_message">Geben Sie den Name der Datensicherung an (ungültige Zeichen werden entfernt).\n\nDie folgenden Optionen funktionieren nur mit einer auf OpenRecovery basierten Recovery.</string>
+  <string name="remove_file_title">Datei entfernen</string>
+  <string name="remove_file_summary">Wollen Sie die Datei aus der Liste entfernen?\n\n%s</string>
 </resources>

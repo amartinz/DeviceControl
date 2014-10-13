@@ -51,8 +51,6 @@
   <string name="jit_summary">Povolit/Zakázat JIT Compiler</string>
   <string name="tcp_stack_title">Optimalizovat TCP Stack</string>
   <string name="tcp_stack_summary">Modifikuje velikost vyrovnávací paměti pro lepší výkon</string>
-  <string name="g_speed_title">Hack rychlosti 3G</string>
-  <string name="g_speed_summary">Odemknutí omezení rychlosti 3G</string>
   <string name="gpu_acceleration">GPU akcelerace</string>
   <string name="gpu_acceleration_summary">Povolit hardwarovou akceleraci kde GPU řídí vykreslování UI namísto CPU</string>
   <string name="lcd_density">Změnit LCD density</string>

@@ -52,8 +52,6 @@
   <string name="jit_summary">Activează/dezactivează compilatorul JIT</string>
   <string name="tcp_stack_title">Optimizarea stivuire de TCP</string>
   <string name="tcp_stack_summary">Modifica dimensiunea buffer pentru o performanță mai bună</string>
-  <string name="g_speed_title">Hack în viteză 3G</string>
-  <string name="g_speed_summary">Descoperă viteza 3g</string>
   <string name="gpu_acceleration">Accelerare de GPU</string>
   <string name="gpu_acceleration_summary">Activeaza accelerarea hardware în interfața GPU controlează UI în loc de CPU</string>
   <string name="lcd_density">Modificarea densității ecranului LCD</string>

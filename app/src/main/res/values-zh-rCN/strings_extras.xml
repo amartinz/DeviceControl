@@ -16,6 +16,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="permission_api_label">访问设备控制 API</string>
   <string name="permission_api_description">允许应用访问和使用设备控制 API接口。\n这意味着应用程序可以控制设备的功能，包括控制您的设备的硬件。</string>
   <string name="donate">捐助 \u2665</string>
   <string name="donate_summary">如果你喜欢这个应用并想帮助我们进一步的开发，请考虑捐助。谢谢！- Alex</string>
@@ -29,10 +30,37 @@
   <string name="wifi_scan_interval_title">Wifi 扫描间隔</string>
   <string name="wifi_scan_interval_summary">当没有已储存的可用接入点时WiFi扫描时间间隔</string>
   <string name="wifi_scan_alt_summary">Wifi 扫描间隔: %s</string>
+  <string name="max_events_title">窗口管理器每秒最大运行事件数</string>
+  <string name="max_events_summary">系统允许每秒运行事件数的值</string>
+  <string name="max_events_alt_summary">系统事件的最大数目： %s</string>
+  <string name="ring_delay_title">电话铃声延迟</string>
+  <string name="ring_delay_summary">系统接收到电话请求到铃声响起的时间</string>
+  <string name="ring_delay_alt_summary">来电延迟： %s</string>
+  <string name="vm_heapsize_title">Dalvik 缓存 大小</string>
+  <string name="vm_heapsize_summary">此参数控制 Dalvik 虚拟机有权访问的缓存的大小</string>
+  <string name="vm_heapsize_alt_summary">Dalvik 虚拟机缓存大小: %s</string>
+  <string name="fast_up_title">HSUPA 上传速度限制</string>
+  <string name="fast_up_summary">* 警告 * 如果您更改此值，它会在当这些值不存在时向您的 build.prop 添加所需的值</string>
+  <string name="prox_delay_title">距离传感器延迟</string>
+  <string name="prox_delay_summary">控制打电话时手机离开头部到屏幕重新点亮的延时</string>
+  <string name="prox_delay_alt_summary">设置距离传感器为: %s</string>
+  <string name="sleep_title">夜间睡眠模式</string>
+  <string name="sleep_summary">修改夜间睡眠策略</string>
+  <string name="sleep_alt_summary">当前的睡眠模式: %s</string>
+  <string name="jit_title">JIT编译器</string>
+  <string name="jit_summary">启用/禁用 JIT 编译器</string>
+  <string name="tcp_stack_title">优化TCP协议栈</string>
+  <string name="tcp_stack_summary">修改缓冲区大小来获得更好的性能</string>
+  <string name="gpu_acceleration">GPU 加速</string>
+  <string name="gpu_acceleration_summary">启用硬件加速，由GPU代替CPU进行界面绘制</string>
   <string name="lcd_density">改变LCD密度</string>
   <string name="lcd_density_summary">设置您所需的LCD密度</string>
   <string name="lcd_density_alt_summary">屏幕密度： %s</string>
   <string name="task_type">任务类型</string>
   <string name="next">下一步</string>
   <string name="prev">上一步</string>
+  <string name="review">审查</string>
+  <string name="finish">完成</string>
+  <string name="submit_confirm_message">你想要继续吗？</string>
+  <string name="edit">编辑</string>
 </resources>

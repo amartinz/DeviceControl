@@ -324,4 +324,5 @@
   <string name="type">Tipo</string>
   <string name="tags">Tags</string>
   <string name="sensors">Sensori</string>
+  <string name="system">Sistema</string>
 </resources>

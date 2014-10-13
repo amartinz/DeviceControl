@@ -51,8 +51,6 @@
   <string name="jit_summary">Habilitar/Deshabilitar el Compilador JIT</string>
   <string name="tcp_stack_title">Optimizar el Apilamiento del TCP</string>
   <string name="tcp_stack_summary">Modificar el tamaño del búfer para un mejor rendimiento</string>
-  <string name="g_speed_title">Hack en velocidad 3G</string>
-  <string name="g_speed_summary">Destapar la velocidad 3g</string>
   <string name="gpu_acceleration">Aceleración de la GPU</string>
   <string name="gpu_acceleration_summary">Activar la aceleración por hardware en la que la GPU controla la UI en lugar de la CPU</string>
   <string name="lcd_density">Cambiar la densidad de la pantalla LCD</string>

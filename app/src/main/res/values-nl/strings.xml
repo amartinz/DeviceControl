@@ -258,4 +258,5 @@
   <string name="flash_warning">Je gaat zo flashen!\nAls je doorgaat, zal uw apparaat opnieuw opstarten naar de recovery en zal de geselecteerde items worden geflashed.\n\nWilt u doorgaan?</string>
   <string name="both">Beide</string>
   <string name="pick_file">Kies een bestand</string>
+  <string name="system">Systeem</string>
 </resources>

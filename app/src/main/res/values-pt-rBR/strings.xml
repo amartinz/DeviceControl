@@ -68,6 +68,7 @@
   <string name="core_max">Núcleos máximos on-line</string>
   <string name="core_min">Núcleos mínimos on-line</string>
   <string name="intelli_thermal_enabled">Habilitar Inteligéncia-Térmica</string>
+  <string name="msm_thermal_enabled">Ativar MSM-Thermal</string>
   <string name="voltage">Tensão</string>
   <string name="msm_dcvs_summary">Usar o MSM DCVS para controle de freqüência da CPU/GPU</string>
   <string name="voltage_control">Controle de tensão</string>
@@ -260,4 +261,5 @@
   <string name="both">Ambos</string>
   <string name="pick_file">Escolha um arquivo</string>
   <string name="user_interface">Interface</string>
+  <string name="system">Sistema</string>
 </resources>

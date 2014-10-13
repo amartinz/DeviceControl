@@ -317,4 +317,5 @@
   <string name="color_enhancement">Poprawa koloru</string>
   <string name="dark_theme">Ciemny motyw</string>
   <string name="dark_theme_summary">Przełącz pomiędzy ciemnym / jasnym motywem</string>
+  <string name="system">System</string>
 </resources>
