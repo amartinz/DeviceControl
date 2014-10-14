@@ -22,16 +22,15 @@ Try it out:
 Third party libraries
 -------
 
-* android-support-v13
-* [ACRA by Kevin Gaudin](https://github.com/ACRA/acra)
-* [Butterknife by Jake Wharton](https://github.com/JakeWharton/butterknife)
-* [Otto by Square](http://square.github.io/otto/)
-* [SlidingMenu by jfeinstein10](https://github.com/jfeinstein10/slidingmenu)
-
-Other third party usages
--------
-
-* [Subtle Patterns](http://subtlepatterns.com/)
+* [android-support-v13](http://developer.android.com/tools/extras/support-library.html)
+* [HoloAccent](https://github.com/negusoft/holoaccent)
+* [HoloColorPicker](https://github.com/LarsWerkman/HoloColorPicker)
+* [ion](https://github.com/koush/ion)
+* [Material-Menu](https://github.com/balysv/material-menu)
+* [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
+* [NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
+* [RootTools](https://github.com/Stericson/RootTools)
+* [SlidingMenu](https://github.com/jfeinstein10/slidingmenu)
 
 Developed by
 -------
