@@ -1,0 +1,10 @@
+<div class="filecontainer" ng-controller="FileController as fileCtrl">
+    <ul ng-repeat="file in fileCtrl.files">
+        <li ng-hide="file.isDirectory">
+            <i class="fa fa-file-o fa-fw"></i>&nbsp;<a href="/files{{file.path}}" target="_blank">{{file.name}}</a>
+        </li>
+        <li ng-show="file.isDirectory">
+            <i class="fa fa-folder-o fa-fw"></i>&nbsp;<a href ng-click="fileCtrl.loadFiles(file)">{{file.name}}</a>
+        </li>
+    </ul>
+</div>

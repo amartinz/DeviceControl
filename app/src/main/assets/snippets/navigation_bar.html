@@ -1,0 +1,24 @@
+<!-- navigation bar -->
+<nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" data-toggle="collapse" data-target="#navigationbar" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href class="navbar-brand" ng-click="navBarCtrl.setTab(1)">Device Control</a>
+        </div>
+        <div class="navbar-collapse collapse" id="navigationbar">
+            <ul class="nav navbar-nav">
+                <li ng-class="{ active:navBarCtrl.isSelected(2) }">
+                    <a href ng-click="navBarCtrl.setTab(2)">Files</a>
+                </li>
+                <li ng-class="{ active:navBarCtrl.isSelected(3) }">
+                    <a href ng-click="navBarCtrl.setTab(3)">Licenses</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
