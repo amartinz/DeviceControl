@@ -59,13 +59,15 @@ public class Shell {
     private static int     shellTimeout = 25000;
     public static  boolean isExecuting  = false;
     public static  boolean isReading    = false;
+    public         boolean isClosed     = false;
 
-    private final int     maxCommands   = 1000;
-    private       int     read          = 0;
-    private       int     write         = 0;
-    private       int     totalExecuted = 0;
-    private       int     totalRead     = 0;
-    private       boolean isCleaning    = false;
+    private static final int maxCommands = 1000;
+
+    private int     read          = 0;
+    private int     write         = 0;
+    private int     totalExecuted = 0;
+    private int     totalRead     = 0;
+    private boolean isCleaning    = false;
 
     //private constructor responsible for opening/constructing the shell
     private Shell(final String cmd) throws IOException, TimeoutException, RootDeniedException {
@@ -194,13 +196,6 @@ public class Shell {
     }
 
     public void close() {
-        if (this == rootShell) {
-            rootShell = null;
-        } else if (this == shell) {
-            shell = null;
-        } else if (this == customShell) {
-            customShell = null;
-        }
         synchronized (commands) {
             /**
              * instruct the two threads monitoring input and output
@@ -208,6 +203,27 @@ public class Shell {
              */
             this.close = true;
             notifyThreads();
+        }
+
+        int count = 0;
+        while (isExecuting) {
+            RootTools.log("Waiting on shell to finish executing before closing...");
+            count++;
+
+            //failsafe to keep from hanging...
+            if (count > 1000) {
+                break;
+            }
+        }
+
+        RootTools.log("Shell Closed!");
+
+        if (this == Shell.rootShell) {
+            Shell.rootShell = null;
+        } else if (this == Shell.shell) {
+            Shell.shell = null;
+        } else if (this == Shell.customShell) {
+            Shell.customShell = null;
         }
     }
 
@@ -431,8 +447,6 @@ public class Shell {
                 closeQuietly(out);
                 closeQuietly(in);
 
-                RootTools.log("Shell destroyed");
-
                 while (read < commands.size()) {
                     if (command == null) { command = commands.get(read); }
 
@@ -445,6 +459,10 @@ public class Shell {
 
             } catch (IOException e) {
                 RootTools.log(e.getMessage(), 2, e);
+            } finally {
+                RootTools.log("Shell destroyed");
+                isClosed = true;
+                isReading = false;
             }
         }
     };

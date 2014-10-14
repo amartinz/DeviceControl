@@ -41,4 +41,24 @@
         dc:category="extras"
         dc:filePath="@string/file_dyn_fsync" />
 
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+        android:key="fstrim_cat"
+        android:title="@string/fstrim_title">
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+            android:key="fstrim"
+            android:title="@string/fstrim_title"
+            android:summary="@string/fstrim_summary" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
+            android:key="fstrim_interval"
+            android:dependency="fstrim"
+            android:title="@string/fstrim_interval_title"
+            android:summary="@string/fstrim_interval_summary"
+            android:entries="@array/fstrim_entries"
+            android:entryValues="@array/fstrim_values"
+            android:defaultValue="7" />
+
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+
 </PreferenceScreen>

@@ -15,9 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.fragments.tools.tasker;
+package org.namelessrom.devicecontrol.fragments.tools;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -48,12 +47,12 @@ import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskListFragment extends AttachFragment implements DeviceConstants {
+public class TaskerFragment extends AttachFragment implements DeviceConstants {
 
     private LinearLayout mCardsLayout;
     private View         mEmptyView;
 
-    @Override protected int getFragmentId() { return ID_TOOLS_TASKER_LIST; }
+    @Override protected int getFragmentId() { return ID_TOOLS_TASKER; }
 
     @Override public void onResume() {
         super.onResume();
@@ -125,8 +124,7 @@ public class TaskListFragment extends AttachFragment implements DeviceConstants 
         final int id = item.getItemId();
         switch (id) {
             case R.id.action_task_add: {
-                final Activity activity = getActivity();
-                if (activity != null) {
+                if (getActivity() != null) {
                     startActivity(new Intent(getActivity(), AddTaskActivity.class));
                 }
                 return true;

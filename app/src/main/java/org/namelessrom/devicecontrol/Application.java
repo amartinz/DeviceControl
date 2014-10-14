@@ -125,8 +125,8 @@ public class Application extends android.app.Application implements DeviceConsta
                 return;
             }
 
-            if (!showLauncher && res != null
-                    && res.getIdentifier("device_control", "string", pkg) > 0) {
+            if (!showLauncher
+                    && (res != null && res.getIdentifier("device_control", "string", pkg) > 0)) {
                 Logger.v(this, "Implemented into system and showLauncher is not set!");
                 Utils.disableComponent(getPackageName(), DummyLauncher.class.getName());
             } else {

@@ -227,4 +227,14 @@ public class AppHelper {
             return false;
         }
     }
+
+    public static void viewInBrowser(final String url) {
+        final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            Application.get().startActivity(i);
+        } catch (Exception e) {
+            Logger.e(AppHelper.class, "viewInBrowser", e);
+        }
+    }
 }
