@@ -33,14 +33,6 @@ import java.util.List;
  */
 public class HtmlHelper {
 
-    public static String escapeHtml(final String html) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            return Html.escapeHtml(html);
-        } else {
-            return TextUtils.htmlEncode(html);
-        }
-    }
-
     public static String urlDecode(final String s) {
         String decoded;
         try {
@@ -63,87 +55,19 @@ public class HtmlHelper {
         return encoded;
     }
 
-    public static String getHtmlContainer(final String title, final String body) {
-        String html = "<!DOCTYPE html><html lang=\"en\">" +
-                "<head>" +
-                "<meta charset=\"utf-8\">" +
-                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, " +
-                "maximum-scale=1, user-scalable=no\">" +
-                "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">" +
-                "<title>${title}</title>" +
-                "<link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\">" +
-                "<link rel=\"stylesheet\" href=\"/css/font-awesome.min.css\">" +
-                "<link rel=\"stylesheet\" href=\"/css/main.css\">" +
-                "</head>" +
-                "<body role=\"document\" style=\"overflow-y:scroll;\">" +
-                "${navigationbar}" +
-                "<div id=\"maincontent\" class=\"container\" role=\"main\">" +
-                "${body}" +
-                "</div>" +
-                loadFooter() +
-                "<script src=\"/js/jquery.min.js\"></script>" +
-                "<script src=\"/js/bootstrap.min.js\"></script>" +
-                "<script src=\"/js/navigation.js\"></script>" +
-                "<script src=\"/js/websocket.js\"></script>" +
-                "</body>" +
-                "</html>";
-
-        return html
-                .replace("${title}", title)
-                .replace("${navigationbar}", loadNavigationBar())
-                .replace("${body}", body);
-    }
-
-    public static String getBreadcrumbs(final String path) {
-        Logger.v(HtmlHelper.class, String.format("getBreadcrumbs(): %s", path));
-        return getBreadcrumbs(Arrays.asList(path.split("/")));
-    }
-
-    public static String getBreadcrumbs(final List<String> breadcrumbs) {
-        final StringBuilder sb = new StringBuilder();
-        String paths = "/files/";
-        sb.append("<ol class=\"breadcrumb\">");
-        sb.append(
-                String.format("<li><a class=\"loadAsync\" href=\"%s\">%s</a></li>", paths, "Home"));
-        for (final String s : breadcrumbs) {
-            paths += (s + '/');
-            sb.append(
-                    String.format("<li><a class=\"loadAsync\" href=\"%s\">%s</a></li>", paths, s));
-            Logger.v(HtmlHelper.class, String.format("s: %s | paths: %s", s, paths));
+    public static String loadPath(String path) {
+        if (path.startsWith("./")) {
+            path = path.replaceFirst("./", "");
         }
-        sb.append("</ol>");
-        return sb.toString();
-    }
-
-    public static String loadNavigationBar() {
-        String navbar = "";
+        if (path.startsWith("/")) {
+            path = path.replaceFirst("/", "");
+        }
         try {
-            navbar += Utils.loadFromAssets("html/navbar.html");
-        } catch (Exception ignored) { }
-
-        return navbar;
-    }
-
-    public static String loadFooter() {
-        String footer = "";
-        try {
-            footer += Utils.loadFromAssets("html/footer.html");
-        } catch (Exception ignored) { }
-
-        return footer;
-    }
-
-    public static String getDirectoryLine(final String path, final String name) {
-        return String.format("<li><i class=\"fa fa-folder-o fa-fw\"></i>&nbsp; " +
-                "<a class=\"loadAsync\" href=\"/files%s\">%s</a></li>", path, name);
-    }
-
-    public static String getFileLine(final String path, final String name) {
-        return String.format("<li><i class=\"fa fa-file-o fa-fw\"></i>&nbsp; " +
-                        "<a href=\"/files%s\" download=\"%s\" target=\"_blank\">%s</a></li>", path,
-                name,
-                name
-        );
+            return Utils.loadFromAssets(path);
+        } catch (Exception exc) {
+            Logger.e(HtmlHelper.class, "loadPath", exc);
+        }
+        return "";
     }
 
 }
