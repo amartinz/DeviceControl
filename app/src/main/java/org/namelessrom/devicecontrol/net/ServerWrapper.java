@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Base64;
 
+import com.google.gson.Gson;
 import com.koushikdutta.async.AsyncServerSocket;
 import com.koushikdutta.async.callback.CompletedCallback;
 import com.koushikdutta.async.http.WebSocket;
@@ -39,7 +41,6 @@ public class ServerWrapper {
     public static final String ACTION_TERMINATING = "---TERMINATING---";
 
     public boolean isStopped = false;
-    public StringBuilder mStringBuilder;
 
     private static final ArrayList<WebSocket> _sockets = new ArrayList<WebSocket>();
 
@@ -75,149 +76,30 @@ public class ServerWrapper {
 
     public void createServer() {
         if (mServer != null) return;
-
         registerReceivers();
 
-        mStringBuilder = new StringBuilder();
         mServer = new AsyncHttpServer();
-        mStringBuilder.append("[!] Server created!\n");
+        Logger.v(this, "[!] Server created");
 
-        setupStaticFiles();
-        mStringBuilder.append("[!] Setup static files\n");
+        setupFonts();
+        Logger.v(this, "[!] Setup fonts");
 
         setupWebSockets();
-        mStringBuilder.append("[!] Setup websockets\n");
+        Logger.v(this, "[!] Setup websockets");
 
         mServer.directory(Application.get(), "/license", "license.html");
-        mStringBuilder.append("[!] Setup route: /license\n");
+        Logger.v(this, "[!] Setup route: /license");
 
         mServer.get("/files", new HttpServerRequestCallback() {
             @Override public void onRequest(final AsyncHttpServerRequest req,
                     final AsyncHttpServerResponse res) { res.redirect("/files/"); }
         });
-        mServer.get("/files/(?s).*", new HttpServerRequestCallback() {
-            @Override public void onRequest(final AsyncHttpServerRequest req,
-                    final AsyncHttpServerResponse res) {
-                if (isStopped) {
-                    res.responseCode(404);
-                    res.end();
-                    return;
-                }
-                if (!isAuthenticated(req)) {
-                    res.getHeaders().getHeaders().add("WWW-Authenticate",
-                            "Basic realm=\"DeviceControl\"");
-                    res.responseCode(401);
-                    res.end();
-                    return;
-                }
-                if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                    res.send("SDCARD not mounted!");
-                    return;
-                }
-                boolean isDirectory = true;
-                final String filePath = HtmlHelper.urlDecode(req.getPath()).replace("/files/", "");
-                Logger.v(this, "req.getPath(): " + req.getPath());
-                Logger.v(this, "filePath: " + filePath);
-                File file;
-                String sdRoot;
-                if (PreferenceHelper.getBoolean("wfm_root", false)) {
-                    file = new File("/");
-                    sdRoot = "";
-                } else {
-                    file = Environment.getExternalStorageDirectory();
-                    sdRoot = file.getAbsolutePath();
-                }
-                if (filePath != null && !filePath.isEmpty()) {
-                    file = new File(file, filePath);
-                    if (file.exists()) {
-                        isDirectory = file.isDirectory();
-                    } else {
-                        res.send("File or directory does not exist!");
-                        return;
-                    }
-                }
-                if (isDirectory) {
-                    final File[] fs = file.listFiles();
-                    if (fs == null) {
-                        res.send("An error occured!");
-                        return;
-                    }
-                    final StringBuilder sb = new StringBuilder();
-                    final List<File> directories = new ArrayList<File>();
-                    final List<File> files = new ArrayList<File>();
-                    for (final File f : fs) {
-                        if (f.exists()) {
-                            if (f.isDirectory()) {
-                                directories.add(f);
-                            } else {
-                                files.add(f);
-                            }
-                        }
-                    }
+        mServer.get("/files/(?s).*", filesCallback);
+        Logger.v(this, "[!] Setup route: /files/(?s).*");
 
-                    sb.append(HtmlHelper.getBreadcrumbs(filePath));
-                    final boolean isEmpty = (directories.size() == 0 && files.size() == 0);
-                    sb.append("<ul>");
-                    if (isEmpty) sb.append("<li>Empty :(</li>");
-
-                    if (directories.size() > 0) {
-                        Collections.sort(directories, SortHelper.sFileComparator);
-                        for (final File f : directories) {
-                            sb.append(HtmlHelper.getDirectoryLine(
-                                    HtmlHelper.escapeHtml(f.getAbsolutePath().replace(sdRoot, "")),
-                                    f.getName()));
-                        }
-                    }
-                    if (files.size() > 0) {
-                        Collections.sort(files, SortHelper.sFileComparator);
-                        for (final File f : files) {
-                            sb.append(HtmlHelper.getFileLine(
-                                    HtmlHelper.escapeHtml(f.getAbsolutePath().replace(sdRoot, "")),
-                                    f.getName()));
-                        }
-                    }
-
-                    sb.append("</ul>");
-
-                    res.send(HtmlHelper.getHtmlContainer("File Manager", sb.toString()));
-                } else {
-                    final String contentType = ContentTypes.getInstance()
-                            .getContentType(file.getAbsolutePath());
-                    mStringBuilder.append("Requested file: ").append(file.getName()).append('\n');
-                    mStringBuilder.append("Content-Type: ").append(contentType).append('\n');
-                    res.setContentType(contentType);
-                    res.sendFile(file);
-                }
-            }
-        });
-        mStringBuilder.append("[!] Setup route: /files/(?s).*\n");
-
-        mServer.get("/(?s).*", new HttpServerRequestCallback() {
-            @Override public void onRequest(final AsyncHttpServerRequest req,
-                    final AsyncHttpServerResponse res) {
-                if (isStopped) {
-                    res.responseCode(404);
-                    res.end();
-                }
-                if (!isAuthenticated(req)) {
-                    res.getHeaders().getHeaders().add("WWW-Authenticate",
-                            "Basic realm=\"DeviceControl\"");
-                    res.responseCode(401);
-                    res.end();
-                    return;
-                }
-                mStringBuilder.append("[+] Received connection from: ")
-                        .append(req.getHeaders().getUserAgent())
-                        .append('\n');
-                res.send(HtmlHelper.getHtmlContainer("Device Control Web Server",
-                        "Welcome to Device Control's web server!<br /><br />" +
-                                "This feature is highly experimental at the current stage, " +
-                                "you are warned!<br />" +
-                                "More to come soon!"
-                ));
-            }
-        });
-        mStringBuilder.append("[!] Setup route: /\n");
+        // should be always the last, matches anything that the stuff above did not
+        mServer.get("/(?s).*", mainCallback);
+        Logger.v(this, "[!] Setup route: /");
 
         final String portString = PreferenceHelper.getString("wfm_port", "8080");
         int port;
@@ -231,13 +113,134 @@ public class ServerWrapper {
         mService.setNotification(null);
     }
 
-    private void setupStaticFiles() {
-        mServer.directory(Application.get(), "/css/bootstrap.min.css",
-                "css/bootstrap.min.css");
-        mServer.directory(Application.get(), "/css/font-awesome.min.css",
-                "css/font-awesome.min.css");
-        mServer.directory(Application.get(), "/css/main.css",
-                "css/main.css");
+    private final HttpServerRequestCallback mainCallback = new HttpServerRequestCallback() {
+        @Override public void onRequest(final AsyncHttpServerRequest req,
+                final AsyncHttpServerResponse res) {
+            if (isStopped) {
+                res.responseCode(404);
+                res.end();
+            }
+            if (!isAuthenticated(req)) {
+                res.getHeaders().getHeaders()
+                        .add("WWW-Authenticate", "Basic realm=\"DeviceControl\"");
+                res.responseCode(401);
+                res.end();
+                return;
+            }
+            Logger.v(this, "[+] Received connection from: %s", req.getHeaders().getUserAgent());
+            final String path = remapPath(req.getPath());
+            res.getHeaders().getHeaders()
+                    .set("Content-Type", ContentTypes.getInstance().getContentType(path));
+
+            res.send(HtmlHelper.loadPath(path));
+        }
+    };
+
+    private final HttpServerRequestCallback filesCallback = new HttpServerRequestCallback() {
+        @Override public void onRequest(final AsyncHttpServerRequest req,
+                final AsyncHttpServerResponse res) {
+            if (isStopped) {
+                res.responseCode(404);
+                res.end();
+                return;
+            }
+            if (!isAuthenticated(req)) {
+                res.getHeaders().getHeaders().add("WWW-Authenticate",
+                        "Basic realm=\"DeviceControl\"");
+                res.responseCode(401);
+                res.end();
+                return;
+            }
+            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                res.send("SDCARD not mounted!");
+                return;
+            }
+            boolean isDirectory = true;
+            final String filePath = HtmlHelper.urlDecode(req.getPath()).replace("/files/", "");
+            Logger.v(this, "req.getPath(): " + req.getPath());
+            Logger.v(this, "filePath: " + filePath);
+            File file;
+            String sdRoot;
+            if (PreferenceHelper.getBoolean("wfm_root", false)) {
+                file = new File("/");
+                sdRoot = "";
+            } else {
+                file = Environment.getExternalStorageDirectory();
+                sdRoot = file.getAbsolutePath();
+            }
+            if (filePath != null && !filePath.isEmpty()) {
+                file = new File(file, filePath);
+                if (file.exists()) {
+                    isDirectory = file.isDirectory();
+                } else {
+                    res.send("File or directory does not exist!");
+                    return;
+                }
+            }
+            if (isDirectory) {
+                final File[] fs = file.listFiles();
+                if (fs == null) {
+                    res.send("An error occured!");
+                    return;
+                }
+                final List<File> directories = new ArrayList<File>();
+                final List<File> files = new ArrayList<File>();
+                for (final File f : fs) {
+                    if (f.exists()) {
+                        if (f.isDirectory()) {
+                            directories.add(f);
+                        } else {
+                            files.add(f);
+                        }
+                    }
+                }
+
+                final ArrayList<FileEntry> fileEntries = new ArrayList<FileEntry>();
+                if (directories.size() > 0) {
+                    Collections.sort(directories, SortHelper.sFileComparator);
+                    for (final File f : directories) {
+                        fileEntries.add(new FileEntry(f.getName(),
+                                f.getAbsolutePath().replace(sdRoot, ""), true));
+                    }
+                }
+                if (files.size() > 0) {
+                    Collections.sort(files, SortHelper.sFileComparator);
+                    for (final File f : files) {
+                        fileEntries.add(new FileEntry(f.getName(),
+                                f.getAbsolutePath().replace(sdRoot, ""), false));
+                    }
+                }
+
+                res.send(new Gson().toJson(fileEntries));
+            } else {
+                final String contentType = ContentTypes.getInstance()
+                        .getContentType(file.getAbsolutePath());
+                Logger.v(this, "Requested file: %s", file.getName());
+                Logger.v(this, "Content-Type: %s", contentType);
+                res.setContentType(contentType);
+                res.sendFile(file);
+            }
+        }
+    };
+
+    private String remapPath(final String path) {
+        if (TextUtils.equals("/", path)) {
+            return "index.html";
+        }
+        return path;
+    }
+
+    private void setupFonts() {
+        // Bootstrap glyphicons
+        mServer.directory(Application.get(), "/fonts/glyphicons-halflings-regular.eot",
+                "fonts/glyphicons-halflings-regular.eot");
+        mServer.directory(Application.get(), "/fonts/glyphicons-halflings-regular.svg",
+                "fonts/glyphicons-halflings-regular.svg");
+        mServer.directory(Application.get(), "/fonts/glyphicons-halflings-regular.ttf",
+                "fonts/glyphicons-halflings-regular.ttf");
+        mServer.directory(Application.get(), "/fonts/glyphicons-halflings-regular.woff",
+                "fonts/glyphicons-halflings-regular.woff");
+        // FontAwesome
         mServer.directory(Application.get(), "/fonts/FontAwesome.otf",
                 "fonts/FontAwesome.otf");
         mServer.directory(Application.get(), "/fonts/fontawesome-webfont.eot",
@@ -248,14 +251,6 @@ public class ServerWrapper {
                 "fonts/fontawesome-webfont.ttf");
         mServer.directory(Application.get(), "/fonts/fontawesome-webfont.woff",
                 "fonts/fontawesome-webfont.woff");
-        mServer.directory(Application.get(), "/js/bootstrap.min.js",
-                "js/bootstrap.min.js");
-        mServer.directory(Application.get(), "/js/jquery.min.js",
-                "js/jquery.min.js");
-        mServer.directory(Application.get(), "/js/navigation.js",
-                "js/navigation.js");
-        mServer.directory(Application.get(), "/js/websocket.js",
-                "js/websocket.js");
     }
 
     private void setupWebSockets() {
@@ -347,5 +342,17 @@ public class ServerWrapper {
     public AsyncHttpServer getServer() { return mServer; }
 
     public AsyncServerSocket getServerSocket() { return mServerSocket; }
+
+    private class FileEntry {
+        public final String  name;
+        public final String  path;
+        public final boolean isDirectory;
+
+        public FileEntry(final String name, final String path, final boolean isDirectory) {
+            this.name = name;
+            this.path = path;
+            this.isDirectory = isDirectory;
+        }
+    }
 
 }

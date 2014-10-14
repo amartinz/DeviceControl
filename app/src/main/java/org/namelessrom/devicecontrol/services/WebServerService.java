@@ -29,7 +29,6 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
 import com.koushikdutta.async.AsyncServerSocket;
-import com.koushikdutta.async.http.server.AsyncHttpServer;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
@@ -150,21 +149,6 @@ public class WebServerService extends Service {
         }
         stopForeground(true);
         stopSelf();
-    }
-
-    public String getWebServerLog() {
-        if (mServerWrapper == null || mServerWrapper.mStringBuilder == null) return "";
-        final String log = mServerWrapper.mStringBuilder.toString();              // save
-        if (!log.isEmpty()) mServerWrapper.mStringBuilder = new StringBuilder();  // clear
-        return log;                                                               // return
-    }
-
-    public AsyncHttpServer getServer() {
-        if (mServerWrapper != null) {
-            return mServerWrapper.getServer();
-        } else {
-            return null;
-        }
     }
 
     public AsyncServerSocket getServerSocket() {

@@ -1,0 +1,20 @@
+<!-- main content -->
+<div class="main">
+    <div class="welcome" ng-show="navBarCtrl.isSelected(1)">
+        <h1>Welcome to Device Control!</h1>
+        <br/><br/>
+        This feature is highly experimental at the current stage, you are warned!<br/>
+        More to come soon!
+    </div>
+    <div class="files" ng-show="navBarCtrl.isSelected(2)" ng-controller="FileController as fileCtrl">
+        <h1>Files</h1>
+        <ol class="breadcrumb">
+            <li><a href ng-click="fileCtrl.loadPath('/')">Home</a></li>
+            <li ng-repeat="breadcrumb in fileCtrl.breadcrumbs">
+                <a href ng-click="fileCtrl.loadPath(breadcrumb.path)">{{breadcrumb.name}}</a>
+            </li>
+        </ol>
+        <file-entry></file-entry>
+    </div>
+    <div class="license" ng-show="navBarCtrl.isSelected(3)" ng-include="'/license.html'"></div>
+</div>
