@@ -61,8 +61,8 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
 
     @Override protected int getFragmentId() { return ID_DEVICE_INFORMATION; }
 
-    @Override public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @Override public void onActivityCreated(final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         addPreferencesFromResource(R.xml.device_information);
 
         final SensorManager sensorManager =

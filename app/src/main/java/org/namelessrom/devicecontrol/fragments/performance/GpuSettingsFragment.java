@@ -66,8 +66,8 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements Con
 
     @Override protected int getFragmentId() { return ID_PERFORMANCE_GPU_SETTINGS; }
 
-    @Override public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @Override public void onActivityCreated(final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         addPreferencesFromResource(R.xml.gpu);
         mRoot = (PreferenceCategory) getPreferenceScreen().findPreference("gpu");
 

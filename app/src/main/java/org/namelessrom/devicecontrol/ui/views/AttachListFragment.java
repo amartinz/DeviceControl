@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.ui.views;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
-import android.view.View;
 
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
@@ -41,9 +40,8 @@ public abstract class AttachListFragment extends ListFragment implements OnBackP
         }
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    @Override public void onActivityCreated(final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         if (MainActivity.sSlidingMenu != null && MainActivity.sSlidingMenu.isMenuShowing()) {
             MainActivity.sSlidingMenu.toggle(true);
