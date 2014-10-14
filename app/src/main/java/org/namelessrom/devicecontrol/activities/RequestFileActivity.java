@@ -95,7 +95,8 @@ public class RequestFileActivity extends Activity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_PICK_FILE || requestCode == REQUEST_PICK_FILE_TWO) {
+        if (requestCode == REQUEST_PICK_FILE || requestCode == REQUEST_PICK_FILE_TWO
+                && resultCode == RESULT_OK) {
             if (data == null) {
                 finish();
                 return;

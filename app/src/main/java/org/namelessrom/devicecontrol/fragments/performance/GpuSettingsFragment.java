@@ -71,7 +71,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements Con
         addPreferencesFromResource(R.xml.gpu);
         mRoot = (PreferenceCategory) getPreferenceScreen().findPreference("gpu");
 
-        PreferenceCategory category = (PreferenceCategory) findPreference("gpu_opengl");
+        final PreferenceCategory category = (PreferenceCategory) findPreference("gpu_opengl");
         if (GpuUtils.isOpenGLES20Supported()) {
             // our preference and string for storing gpu / opengl information
             Preference infoPref;

@@ -238,7 +238,7 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
      * Convert vibrator strength to percent
      */
     private int strengthToPercent(final int strength) {
-        final double percent = (strength - min) * (100 / (max - min));
+        final double percent = (strength - min) * (100 / (max - min != 0 ? max - min : 1));
 
         if (percent > 100) { return 100; } else if (percent < 0) { return 0; }
 

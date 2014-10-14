@@ -21,6 +21,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -75,7 +76,11 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
 
     private DatabaseHandler(final Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        sDb = getWritableDatabase();
+        try {
+            sDb = getWritableDatabase();
+        } catch (SQLiteException sqle) {
+            Logger.wtf(this, "Could not get writable database.", sqle);
+        }
     }
 
     public static synchronized DatabaseHandler getInstance() {

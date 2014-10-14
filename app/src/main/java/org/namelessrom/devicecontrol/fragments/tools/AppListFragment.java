@@ -678,7 +678,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         final TextView tvRight = (TextView) v.findViewById(R.id.widget_app_cache_right);
         tvRight.setTextColor(color);
 
-        tvLeft.setText(getString(txtId) + ':');
+        tvLeft.setText(Application.get().getString(txtId) + ':');
         tvRight.setText(text);
 
         return v;
