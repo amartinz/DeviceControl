@@ -25,11 +25,15 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.hardware.IoSchedulerUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.ActionProcessor;
+import org.namelessrom.devicecontrol.utils.AlarmHelper;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -42,6 +46,9 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
 
     private AwesomeCheckBoxPreference mFsync;
     private AwesomeCheckBoxPreference mDynFsync;
+
+    private CustomCheckBoxPreference mFstrim;
+    private CustomListPreference     mFstrimInterval;
     //----------------------------------------------------------------------------------------------
 
     @Override protected int getFragmentId() { return ID_FILESYSTEM; }
@@ -78,6 +85,23 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
         } else {
             getPreferenceScreen().removePreference(mDynFsync);
         }
+
+        final boolean canBrickEmmc = Emmc.get().canBrick();
+        mFstrim = (CustomCheckBoxPreference) findPreference(FSTRIM);
+        if (canBrickEmmc) {
+            mFstrim.setEnabled(false);
+        } else {
+            mFstrim.setChecked(PreferenceHelper.getBoolean(FSTRIM));
+            mFstrim.setOnPreferenceChangeListener(this);
+        }
+
+        mFstrimInterval = (CustomListPreference) findPreference(FSTRIM_INTERVAL);
+        if (canBrickEmmc) {
+            mFstrimInterval.setEnabled(false);
+        } else {
+            mFstrimInterval.setValueIndex(getFstrim());
+            mFstrimInterval.setOnPreferenceChangeListener(this);
+        }
     }
 
     @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
@@ -96,6 +120,27 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
             final String value = String.valueOf(o);
             mReadAhead.setSummary(mapReadAhead(value));
             ActionProcessor.processAction(ActionProcessor.ACTION_READ_AHEAD, value, true);
+            return true;
+        } else if (mFstrim == preference) {
+            final boolean value = (Boolean) o;
+            PreferenceHelper.setBoolean(FSTRIM, value);
+            if (value) {
+                AlarmHelper.setAlarmFstrim(getActivity(),
+                        parseFstrim(mFstrimInterval.getValue()));
+            } else {
+                AlarmHelper.cancelAlarmFstrim(getActivity());
+            }
+            mFstrim.setChecked(value);
+            Logger.v(this, String.format("mFstrim: %s", value));
+            return true;
+        } else if (mFstrimInterval == preference) {
+            final String value = String.valueOf(o);
+            final int realValue = parseFstrim(value);
+            PreferenceHelper.setInt(FSTRIM_INTERVAL, realValue);
+            if (mFstrim.isChecked()) {
+                AlarmHelper.setAlarmFstrim(getActivity(), realValue);
+            }
+            Logger.v(this, "mFstrimInterval: " + value);
             return true;
         }
 
@@ -149,6 +194,81 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
                 mIoScheduler.setEnabled(true);
             }
         }
+    }
+
+    private int parseFstrim(final String position) {
+        try {
+            return parseFstrim(Utils.parseInt(position));
+        } catch (Exception exc) {
+            return 480;
+        }
+    }
+
+    private int parseFstrim(final int position) {
+        int value;
+        switch (position) {
+            case 0:
+                value = 5;
+                break;
+            case 1:
+                value = 10;
+                break;
+            case 2:
+                value = 20;
+                break;
+            case 3:
+                value = 30;
+                break;
+            case 4:
+                value = 60;
+                break;
+            case 5:
+                value = 120;
+                break;
+            case 6:
+                value = 240;
+                break;
+            default:
+            case 7:
+                value = 480;
+                break;
+        }
+        return value;
+    }
+
+    private int getFstrim() {
+        int position;
+
+        final int value = PreferenceHelper.getInt(FSTRIM_INTERVAL, 480);
+        switch (value) {
+            case 5:
+                position = 0;
+                break;
+            case 10:
+                position = 1;
+                break;
+            case 20:
+                position = 2;
+                break;
+            case 30:
+                position = 3;
+                break;
+            case 60:
+                position = 4;
+                break;
+            case 120:
+                position = 5;
+                break;
+            case 240:
+                position = 6;
+                break;
+            default:
+            case 480:
+                position = 7;
+                break;
+        }
+
+        return position;
     }
 
 }

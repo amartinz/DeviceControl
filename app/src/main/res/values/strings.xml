@@ -383,4 +383,10 @@
     <string name="alert_backup_message">Specify the backup name (illegal characters will be removed).\n\nThe following options will only work in OpenRecovery based recoveries.</string>
     <string name="remove_file_title">Remove file</string>
     <string name="remove_file_summary">Do you want to remove the file from the list?\n\n%s</string>
+    <string name="emmc_rev">Revision</string>
+    <string name="emmc_date">Date</string>
+    <string name="emmc_can_brick">Issues</string>
+    <string name="emmc_can_brick_true">Your eMMC is known to cause issues!</string>
+    <string name="emmc_can_brick_false">Your eMMC should be safe!</string>
+    <string name="press_learn_more">Press to learn more…</string>
 </resources>

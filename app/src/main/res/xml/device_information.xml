@@ -29,6 +29,10 @@
         android:title="@string/device_information" />
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+        android:key="emmc"
+        android:title="@string/emmc" />
+
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="processor"
         android:title="@string/processor" />
 

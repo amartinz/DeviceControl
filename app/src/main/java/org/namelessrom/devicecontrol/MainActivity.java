@@ -60,6 +60,7 @@ import org.namelessrom.devicecontrol.fragments.performance.sub.KsmFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.ThermalFragment;
 import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
+import org.namelessrom.devicecontrol.fragments.tools.TaskerFragment;
 import org.namelessrom.devicecontrol.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.fragments.tools.WirelessFileManagerFragment;
 import org.namelessrom.devicecontrol.fragments.tools.editor.BuildPropEditorFragment;
@@ -69,8 +70,6 @@ import org.namelessrom.devicecontrol.fragments.tools.editor.SysctlEditorFragment
 import org.namelessrom.devicecontrol.fragments.tools.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.fragments.tools.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.fragments.tools.flasher.FlasherPreferencesFragment;
-import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskListFragment;
-import org.namelessrom.devicecontrol.fragments.tools.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -438,10 +437,6 @@ public class MainActivity extends AccentActivity
                 if (!onResume) mCurrentFragment = new TaskerFragment();
                 mTitle = mFragmentTitle = R.string.tasker;
                 mSubFragmentTitle = -1;
-                break;
-            case ID_TOOLS_TASKER_LIST:
-                if (!onResume) mCurrentFragment = new TaskListFragment();
-                mTitle = mSubFragmentTitle = R.string.tasker;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_FLASHER:

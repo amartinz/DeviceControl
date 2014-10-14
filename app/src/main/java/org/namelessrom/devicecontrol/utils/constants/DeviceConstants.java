@@ -57,7 +57,6 @@ public interface DeviceConstants {
     public static final int ID_FILESYSTEM               = ID_PERFORMANCE_EXTRA + 1500;
     public static final int ID_LOWMEMORYKILLER          = ID_PERFORMANCE_EXTRA + 1600;
     public static final int ID_TOOLS_TASKER             = R.string.tasker;
-    public static final int ID_TOOLS_TASKER_LIST        = ID_TOOLS_TASKER + 1000;
     public static final int ID_TOOLS_FLASHER            = R.string.flasher;
     public static final int ID_TOOLS_FLASHER_PREFS      = ID_TOOLS_FLASHER + 1000;
     public static final int ID_TOOLS_MORE               = R.string.more;

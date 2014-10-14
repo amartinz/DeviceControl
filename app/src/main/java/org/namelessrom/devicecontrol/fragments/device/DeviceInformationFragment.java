@@ -34,11 +34,13 @@ import android.text.format.DateFormat;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.objects.CpuInfo;
 import org.namelessrom.devicecontrol.objects.KernelInfo;
 import org.namelessrom.devicecontrol.objects.MemoryInfo;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
@@ -82,13 +84,13 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
         // Runtime
         category = (PreferenceCategory) findPreference("runtime");
 
-        String summary = Utils.getCommandResult("getprop persist.sys.dalvik.vm.lib", "-");
-        if (!TextUtils.equals(summary, "-")) {
-            final String runtime = TextUtils.equals(summary, "libdvm.so")
-                    ? "Dalvik" : TextUtils.equals(summary, "libart.so") ? "ART" : "-";
-            summary = String.format("%s (%s)", runtime, summary);
+        String tmp = Utils.getCommandResult("getprop persist.sys.dalvik.vm.lib", "-");
+        if (!TextUtils.equals(tmp, "-")) {
+            final String runtime = TextUtils.equals(tmp, "libdvm.so")
+                    ? "Dalvik" : TextUtils.equals(tmp, "libart.so") ? "ART" : "-";
+            tmp = String.format("%s (%s)", runtime, tmp);
         }
-        addPreference(category, "vm_library", R.string.type, summary);
+        addPreference(category, "vm_library", R.string.type, tmp);
         addPreference(category, "vm_version", R.string.version,
                 System.getProperty("java.vm.version", "-"));
 
@@ -104,6 +106,19 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
         addPreference(category, "device_bootloader", R.string.bootloader, Build.BOOTLOADER);
         addPreference(category, "device_radio_version", R.string.radio_version,
                 Build.getRadioVersion());
+
+        // eMMC
+        category = (PreferenceCategory) findPreference("emmc");
+        addPreference(category, "emmc_name", R.string.name, Emmc.get().getName());
+        addPreference(category, "emmc_cid", R.string.emmc_cid, Emmc.get().getCid());
+        addPreference(category, "emmc_mid", R.string.emmc_mid, Emmc.get().getMid());
+        addPreference(category, "emmc_rev", R.string.emmc_rev, Emmc.get().getRev());
+        addPreference(category, "emmc_date", R.string.emmc_date, Emmc.get().getDate());
+        tmp = Emmc.get().canBrick()
+                ? getString(R.string.emmc_can_brick_true)
+                : getString(R.string.emmc_can_brick_false);
+        tmp = String.format("%s\n%s", tmp, getString(R.string.press_learn_more));
+        addPreference(category, "emmc_can_brick", R.string.emmc_can_brick, tmp).setSelectable(true);
 
         // Processor
         category = (PreferenceCategory) findPreference("processor");
@@ -157,13 +172,17 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
 
     @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
             @NonNull final Preference preference) {
-        if (TextUtils.equals(KEY_PLATFORM_VERSION, preference.getKey())) {
+        final String key = preference.getKey();
+        if (TextUtils.equals(KEY_PLATFORM_VERSION, key)) {
             System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
             mHits[mHits.length - 1] = SystemClock.uptimeMillis();
             if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
                 Utils.runRootCommand("am start android/com.android.internal.app.PlatLogoActivity");
                 preference.setSelectable(false);
             }
+            return true;
+        } else if (TextUtils.equals("emmc_can_brick", key)) {
+            AppHelper.viewInBrowser(Emmc.BRICK_INFO_URL);
             return true;
         }
 
