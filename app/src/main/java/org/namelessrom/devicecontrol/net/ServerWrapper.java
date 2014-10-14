@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Base64;
 
+import com.google.gson.Gson;
 import com.koushikdutta.async.AsyncServerSocket;
 import com.koushikdutta.async.callback.CompletedCallback;
 import com.koushikdutta.async.http.WebSocket;
@@ -82,8 +84,8 @@ public class ServerWrapper {
         mServer = new AsyncHttpServer();
         mStringBuilder.append("[!] Server created!\n");
 
-        setupStaticFiles();
-        mStringBuilder.append("[!] Setup static files\n");
+        setupFonts();
+        mStringBuilder.append("[!] Setup fonts\n");
 
         setupWebSockets();
         mStringBuilder.append("[!] Setup websockets\n");
@@ -142,7 +144,6 @@ public class ServerWrapper {
                         res.send("An error occured!");
                         return;
                     }
-                    final StringBuilder sb = new StringBuilder();
                     final List<File> directories = new ArrayList<File>();
                     final List<File> files = new ArrayList<File>();
                     for (final File f : fs) {
@@ -155,31 +156,25 @@ public class ServerWrapper {
                         }
                     }
 
-                    sb.append(HtmlHelper.getBreadcrumbs(filePath));
-                    final boolean isEmpty = (directories.size() == 0 && files.size() == 0);
-                    sb.append("<ul>");
-                    if (isEmpty) sb.append("<li>Empty :(</li>");
+//                    sb.append(HtmlHelper.getBreadcrumbs(filePath));
 
+                    final ArrayList<FileEntry> fileEntries = new ArrayList<FileEntry>();
                     if (directories.size() > 0) {
                         Collections.sort(directories, SortHelper.sFileComparator);
                         for (final File f : directories) {
-                            sb.append(HtmlHelper.getDirectoryLine(
-                                    HtmlHelper.escapeHtml(f.getAbsolutePath().replace(sdRoot, "")),
-                                    f.getName()));
+                            fileEntries.add(new FileEntry(f.getName(),
+                                    f.getAbsolutePath().replace(sdRoot, ""), true));
                         }
                     }
                     if (files.size() > 0) {
                         Collections.sort(files, SortHelper.sFileComparator);
                         for (final File f : files) {
-                            sb.append(HtmlHelper.getFileLine(
-                                    HtmlHelper.escapeHtml(f.getAbsolutePath().replace(sdRoot, "")),
-                                    f.getName()));
+                            fileEntries.add(new FileEntry(f.getName(),
+                                    f.getAbsolutePath().replace(sdRoot, ""), false));
                         }
                     }
 
-                    sb.append("</ul>");
-
-                    res.send(HtmlHelper.getHtmlContainer("File Manager", sb.toString()));
+                    res.send(new Gson().toJson(fileEntries));
                 } else {
                     final String contentType = ContentTypes.getInstance()
                             .getContentType(file.getAbsolutePath());
@@ -192,31 +187,8 @@ public class ServerWrapper {
         });
         mStringBuilder.append("[!] Setup route: /files/(?s).*\n");
 
-        mServer.get("/(?s).*", new HttpServerRequestCallback() {
-            @Override public void onRequest(final AsyncHttpServerRequest req,
-                    final AsyncHttpServerResponse res) {
-                if (isStopped) {
-                    res.responseCode(404);
-                    res.end();
-                }
-                if (!isAuthenticated(req)) {
-                    res.getHeaders().getHeaders().add("WWW-Authenticate",
-                            "Basic realm=\"DeviceControl\"");
-                    res.responseCode(401);
-                    res.end();
-                    return;
-                }
-                mStringBuilder.append("[+] Received connection from: ")
-                        .append(req.getHeaders().getUserAgent())
-                        .append('\n');
-                res.send(HtmlHelper.getHtmlContainer("Device Control Web Server",
-                        "Welcome to Device Control's web server!<br /><br />" +
-                                "This feature is highly experimental at the current stage, " +
-                                "you are warned!<br />" +
-                                "More to come soon!"
-                ));
-            }
-        });
+        // should be always the last, matches anything that the stuff above did not
+        mServer.get("/(?s).*", mainCallback);
         mStringBuilder.append("[!] Setup route: /\n");
 
         final String portString = PreferenceHelper.getString("wfm_port", "8080");
@@ -231,13 +203,50 @@ public class ServerWrapper {
         mService.setNotification(null);
     }
 
-    private void setupStaticFiles() {
-        mServer.directory(Application.get(), "/css/bootstrap.min.css",
-                "css/bootstrap.min.css");
-        mServer.directory(Application.get(), "/css/font-awesome.min.css",
-                "css/font-awesome.min.css");
-        mServer.directory(Application.get(), "/css/main.css",
-                "css/main.css");
+    private final HttpServerRequestCallback mainCallback = new HttpServerRequestCallback() {
+        @Override public void onRequest(final AsyncHttpServerRequest req,
+                final AsyncHttpServerResponse res) {
+            if (isStopped) {
+                res.responseCode(404);
+                res.end();
+            }
+            if (!isAuthenticated(req)) {
+                res.getHeaders().getHeaders().add("WWW-Authenticate",
+                        "Basic realm=\"DeviceControl\"");
+                res.responseCode(401);
+                res.end();
+                return;
+            }
+            mStringBuilder.append("[+] Received connection from: ")
+                    .append(req.getHeaders().getUserAgent())
+                    .append('\n');
+            final String path = remapPath(req.getPath());
+            res.getHeaders().getHeaders()
+                    .set("Content-Type", AsyncHttpServer.getContentType(path));
+
+            res.send(HtmlHelper.loadPath(path));
+            //res.send(HtmlHelper.getHtmlContainer());
+        }
+    };
+
+    private String remapPath(final String path) {
+        if (TextUtils.equals("/", path)) {
+            return "index.html";
+        }
+        return path;
+    }
+
+    private void setupFonts() {
+        // Bootstrap glyphicons
+        mServer.directory(Application.get(), "/fonts/glyphicons-halflings-regular.eot",
+                "fonts/glyphicons-halflings-regular.eot");
+        mServer.directory(Application.get(), "/fonts/glyphicons-halflings-regular.svg",
+                "fonts/glyphicons-halflings-regular.svg");
+        mServer.directory(Application.get(), "/fonts/glyphicons-halflings-regular.ttf",
+                "fonts/glyphicons-halflings-regular.ttf");
+        mServer.directory(Application.get(), "/fonts/glyphicons-halflings-regular.woff",
+                "fonts/glyphicons-halflings-regular.woff");
+        // FontAwesome
         mServer.directory(Application.get(), "/fonts/FontAwesome.otf",
                 "fonts/FontAwesome.otf");
         mServer.directory(Application.get(), "/fonts/fontawesome-webfont.eot",
@@ -248,14 +257,6 @@ public class ServerWrapper {
                 "fonts/fontawesome-webfont.ttf");
         mServer.directory(Application.get(), "/fonts/fontawesome-webfont.woff",
                 "fonts/fontawesome-webfont.woff");
-        mServer.directory(Application.get(), "/js/bootstrap.min.js",
-                "js/bootstrap.min.js");
-        mServer.directory(Application.get(), "/js/jquery.min.js",
-                "js/jquery.min.js");
-        mServer.directory(Application.get(), "/js/navigation.js",
-                "js/navigation.js");
-        mServer.directory(Application.get(), "/js/websocket.js",
-                "js/websocket.js");
     }
 
     private void setupWebSockets() {
@@ -347,5 +348,17 @@ public class ServerWrapper {
     public AsyncHttpServer getServer() { return mServer; }
 
     public AsyncServerSocket getServerSocket() { return mServerSocket; }
+
+    private class FileEntry {
+        public final String  name;
+        public final String  path;
+        public final boolean isDirectory;
+
+        public FileEntry(final String name, final String path, final boolean isDirectory) {
+            this.name = name;
+            this.path = path;
+            this.isDirectory = isDirectory;
+        }
+    }
 
 }

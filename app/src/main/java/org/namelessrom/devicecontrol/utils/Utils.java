@@ -111,7 +111,7 @@ public class Utils implements DeviceConstants {
             br = new BufferedReader(reader);
             String line;
             while ((line = br.readLine()) != null) {
-                sb.append(line);
+                sb.append(line).append('\n');
             }
         } finally {
             if (br != null) br.close();
