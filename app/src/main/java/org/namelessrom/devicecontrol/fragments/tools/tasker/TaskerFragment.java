@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
@@ -44,19 +45,23 @@ public class TaskerFragment extends AttachPreferenceFragment implements DeviceCo
 
     @Override protected int getFragmentId() { return ID_TOOLS_TASKER; }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.tasker);
 
+        final boolean canBrickEmmc = Emmc.get().canBrick();
         mFstrim = (CustomCheckBoxPreference) findPreference(FSTRIM);
-        if (mFstrim != null) {
+        if (canBrickEmmc) {
+            mFstrim.setEnabled(false);
+        } else {
             mFstrim.setChecked(PreferenceHelper.getBoolean(FSTRIM));
             mFstrim.setOnPreferenceChangeListener(this);
         }
 
         mFstrimInterval = (CustomListPreference) findPreference(FSTRIM_INTERVAL);
-        if (mFstrimInterval != null) {
+        if (canBrickEmmc) {
+            mFstrimInterval.setEnabled(false);
+        } else {
             mFstrimInterval.setValueIndex(getFstrim());
             mFstrimInterval.setOnPreferenceChangeListener(this);
         }
