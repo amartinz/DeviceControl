@@ -19,14 +19,9 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 public class ColorPickerDialogFragment extends AccentDialogFragment {
 
-    private final PreferencesFragment.OnColorPickedListener onColorPickedListener;
+    public PreferencesFragment.OnColorPickedListener onColorPickedListener;
 
     private ColorPicker colorPicker;
-
-    public ColorPickerDialogFragment(final PreferencesFragment.OnColorPickedListener listener) {
-        super();
-        this.onColorPickedListener = listener;
-    }
 
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
@@ -53,7 +48,9 @@ public class ColorPickerDialogFragment extends AccentDialogFragment {
             @Override public void onClick(View view) {
                 colorPicker.setColor(defaultColor);
                 PreferenceHelper.setInt("pref_color", defaultColor);
-                onColorPickedListener.onColorPicked(defaultColor);
+                if (onColorPickedListener != null) {
+                    onColorPickedListener.onColorPicked(defaultColor);
+                }
             }
         });
 
@@ -62,7 +59,9 @@ public class ColorPickerDialogFragment extends AccentDialogFragment {
             @Override public void onClick(View view) {
                 Application.get().setAccentColor(colorPicker.getColor());
                 PreferenceHelper.setInt("pref_color", Application.get().getAccentColor());
-                onColorPickedListener.onColorPicked(Application.get().getAccentColor());
+                if (onColorPickedListener != null) {
+                    onColorPickedListener.onColorPicked(Application.get().getAccentColor());
+                }
                 Utils.restartActivity(getActivity());
             }
         });
