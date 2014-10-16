@@ -55,4 +55,18 @@
     <color name="step_pager_next_tab_color">#10ffffff</color>
     <color name="step_pager_next_tab_color_light">#10000000</color>
     <color name="review_green">#ff669900</color>
+    <!-- Wizard #2 -->
+    <color name="transparent">#00ffffff</color>
+    <color name="black">#000000</color>
+    <color name="dark_gray">#ff1c1c1c</color>
+    <color name="white">#ffffff</color>
+    <color name="light_gray">#ffdbdbdb</color>
+    <color name="shadow_gray">#888c8c8c</color>
+    <color name="holo_blue_light">#ff33b5e5</color>
+    <color name="holo_blue_dark">#ff0099cc</color>
+    <color name="holo_blue_bright">#ff00ddff</color>
+    <color name="holo_green_light">#ff99cc00</color>
+    <color name="holo_green_dark">#ff669900</color>
+    <color name="holo_red_light">#ffff4444</color>
+    <color name="holo_red_dark">#ffcc0000</color>
 </resources>

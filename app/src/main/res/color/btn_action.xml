@@ -14,18 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-    <!-- Wizard -->
-    <style name="WizardPageTitle">
-        <item name="android:id">@android:id/title</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:layout_marginLeft">16dp</item>
-        <item name="android:layout_marginRight">16dp</item>
-        <item name="android:paddingLeft">?android:attr/listPreferredItemPaddingLeft</item>
-        <item name="android:textSize">36sp</item>
-        <item name="android:textColor">#ff0099cc</item>
-        <item name="android:fontFamily">sans-serif-thin</item>
-    </style>
-</resources>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_enabled="false" android:color="@color/shadow_gray" />
+    <item android:color="@color/holo_blue_light" />
+</selector>

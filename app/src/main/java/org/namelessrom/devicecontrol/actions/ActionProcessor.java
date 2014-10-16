@@ -15,16 +15,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.utils;
+package org.namelessrom.devicecontrol.actions;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.actions.cpu.CpuFreqMaxAction;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.Constants;
 
 import java.util.ArrayList;
@@ -35,28 +38,31 @@ public class ActionProcessor implements Constants {
     //----------------------------------------------------------------------------------------------
     // CPU
     //----------------------------------------------------------------------------------------------
-    public static final String ACTION_CPU_FREQUENCY_MAX = "cpu_frequency_max";
+    public static final String ACTION_CPU_FREQUENCY_MAX = CpuFreqMaxAction.NAME;
     public static final String ACTION_CPU_FREQUENCY_MIN = "cpu_frequency_min";
     public static final String ACTION_CPU_GOVERNOR      = "cpu_governor";
+
     //----------------------------------------------------------------------------------------------
     // GPU
     //----------------------------------------------------------------------------------------------
     public static final String ACTION_GPU_FREQUENCY_MAX = "gpu_frequency_max";
     public static final String ACTION_GPU_GOVERNOR      = "gpu_governor";
+
     //----------------------------------------------------------------------------------------------
-    public static final String ACTION_3D_SCALING        = "3d_scaling";
+    public static final String ACTION_3D_SCALING = "3d_scaling";
+
     //----------------------------------------------------------------------------------------------
     // Extras
     //----------------------------------------------------------------------------------------------
-    public static final String ACTION_IO_SCHEDULER      = "io_scheduler";
-    public static final String ACTION_READ_AHEAD        = "read_ahead";
-    public static final String ACTION_KSM_ENABLED       = "ksm_enabled";
-    public static final String ACTION_KSM_DEFERRED      = "ksm_deferred";
-    public static final String ACTION_KSM_PAGES         = "ksm_pages";
-    public static final String ACTION_KSM_SLEEP         = "ksm_sleep";
+    public static final String ACTION_IO_SCHEDULER = "io_scheduler";
+    public static final String ACTION_READ_AHEAD   = "read_ahead";
+    public static final String ACTION_KSM_ENABLED  = "ksm_enabled";
+    public static final String ACTION_KSM_DEFERRED = "ksm_deferred";
+    public static final String ACTION_KSM_PAGES    = "ksm_pages";
+    public static final String ACTION_KSM_SLEEP    = "ksm_sleep";
 
     public static final String[] CATEGORIES =
-            {TaskerItem.CATEGORY_SCREEN_ON, TaskerItem.CATEGORY_SCREEN_OFF};
+            {BaseAction.TRIGGER_SCREEN_ON, BaseAction.TRIGGER_SCREEN_OFF};
 
     public static List<String> getActions() {
         final List<String> actions = new ArrayList<String>();
@@ -125,15 +131,7 @@ public class ActionProcessor implements Constants {
         String path;
 
         if (ACTION_CPU_FREQUENCY_MAX.equals(action)) {
-            for (int i = 0; i < cpu; i++) {
-                sb.append(CpuUtils.get().onlineCpu(i));
-                path = CpuUtils.get().getMaxCpuFrequencyPath(i);
-                sb.append(Utils.getWriteCommand(path, value));
-                if (boot) {
-                    PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                            "cpu_max" + i, CpuUtils.get().getMaxCpuFrequencyPath(i), value));
-                }
-            }
+            new CpuFreqMaxAction(value, boot).triggerAction();
         } else if (ACTION_CPU_FREQUENCY_MIN.equals(action)) {
             for (int i = 0; i < cpu; i++) {
                 sb.append(CpuUtils.get().onlineCpu(i));
