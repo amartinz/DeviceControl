@@ -15,16 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.utils;
+package org.namelessrom.devicecontrol.actions;
+
+import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.actions.cpu.CpuFreqMaxAction;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.Constants;
 
 import java.util.ArrayList;
@@ -32,31 +36,92 @@ import java.util.List;
 
 public class ActionProcessor implements Constants {
 
+    public static final String CATEGORY_CPU = "cpu";
+
+    public static final String TRIGGER_SCREEN_ON  = "screen_on";
+    public static final String TRIGGER_SCREEN_OFF = "screen_off";
+
     //----------------------------------------------------------------------------------------------
     // CPU
     //----------------------------------------------------------------------------------------------
-    public static final String ACTION_CPU_FREQUENCY_MAX = "cpu_frequency_max";
+    public static final String ACTION_CPU_FREQUENCY_MAX = CpuFreqMaxAction.NAME;
     public static final String ACTION_CPU_FREQUENCY_MIN = "cpu_frequency_min";
     public static final String ACTION_CPU_GOVERNOR      = "cpu_governor";
+
     //----------------------------------------------------------------------------------------------
     // GPU
     //----------------------------------------------------------------------------------------------
     public static final String ACTION_GPU_FREQUENCY_MAX = "gpu_frequency_max";
     public static final String ACTION_GPU_GOVERNOR      = "gpu_governor";
+
     //----------------------------------------------------------------------------------------------
-    public static final String ACTION_3D_SCALING        = "3d_scaling";
+    public static final String ACTION_3D_SCALING = "3d_scaling";
+
     //----------------------------------------------------------------------------------------------
     // Extras
     //----------------------------------------------------------------------------------------------
-    public static final String ACTION_IO_SCHEDULER      = "io_scheduler";
-    public static final String ACTION_READ_AHEAD        = "read_ahead";
-    public static final String ACTION_KSM_ENABLED       = "ksm_enabled";
-    public static final String ACTION_KSM_DEFERRED      = "ksm_deferred";
-    public static final String ACTION_KSM_PAGES         = "ksm_pages";
-    public static final String ACTION_KSM_SLEEP         = "ksm_sleep";
+    public static final String ACTION_IO_SCHEDULER = "io_scheduler";
+    public static final String ACTION_READ_AHEAD   = "read_ahead";
+    public static final String ACTION_KSM_ENABLED  = "ksm_enabled";
+    public static final String ACTION_KSM_DEFERRED = "ksm_deferred";
+    public static final String ACTION_KSM_PAGES    = "ksm_pages";
+    public static final String ACTION_KSM_SLEEP    = "ksm_sleep";
 
-    public static final String[] CATEGORIES =
-            {TaskerItem.CATEGORY_SCREEN_ON, TaskerItem.CATEGORY_SCREEN_OFF};
+    public static class Entry {
+        public final String name;
+        public final String value;
+
+        public Entry(final String name, final String value) {
+            this.name = name;
+            this.value = value;
+        }
+    }
+
+    public static ArrayList<Entry> getTriggers() {
+        final ArrayList<Entry> triggers = new ArrayList<Entry>();
+
+        Entry e = new Entry(Application.get().getString(R.string.screen_off), TRIGGER_SCREEN_OFF);
+        triggers.add(e);
+        e = new Entry(Application.get().getString(R.string.screen_on), TRIGGER_SCREEN_ON);
+        triggers.add(e);
+
+        return triggers;
+    }
+
+    public static ArrayList<Entry> getCategories() {
+        final ArrayList<Entry> categories = new ArrayList<Entry>();
+
+        categories.add(new Entry(Application.get().getString(R.string.cpu), CATEGORY_CPU));
+
+        return categories;
+    }
+
+    public static ArrayList<Entry> getActions(final String category) {
+        final ArrayList<Entry> actions = new ArrayList<Entry>();
+        if (TextUtils.isEmpty(category)) return actions;
+
+        if (TextUtils.equals(CATEGORY_CPU, category)) {
+            actions.add(new Entry(Application.get().getString(R.string.cpu_freq_max),
+                    ACTION_CPU_FREQUENCY_MAX));
+        }
+
+        return actions;
+    }
+
+    public static ArrayList<Entry> getValues(final String action) {
+        final ArrayList<Entry> values = new ArrayList<Entry>();
+        if (TextUtils.isEmpty(action)) return values;
+
+        if (TextUtils.equals(ACTION_CPU_FREQUENCY_MAX, action)) {
+            final String[] freqs = CpuUtils.get().getAvailableFrequencies(true);
+            if (freqs == null) return values;
+            for (final String s : freqs) {
+                values.add(new Entry(CpuUtils.toMHz(s), s));
+            }
+        }
+
+        return values;
+    }
 
     public static List<String> getActions() {
         final List<String> actions = new ArrayList<String>();
@@ -125,15 +190,7 @@ public class ActionProcessor implements Constants {
         String path;
 
         if (ACTION_CPU_FREQUENCY_MAX.equals(action)) {
-            for (int i = 0; i < cpu; i++) {
-                sb.append(CpuUtils.get().onlineCpu(i));
-                path = CpuUtils.get().getMaxCpuFrequencyPath(i);
-                sb.append(Utils.getWriteCommand(path, value));
-                if (boot) {
-                    PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                            "cpu_max" + i, CpuUtils.get().getMaxCpuFrequencyPath(i), value));
-                }
-            }
+            new CpuFreqMaxAction(value, boot).triggerAction();
         } else if (ACTION_CPU_FREQUENCY_MIN.equals(action)) {
             for (int i = 0; i < cpu; i++) {
                 sb.append(CpuUtils.get().onlineCpu(i));
