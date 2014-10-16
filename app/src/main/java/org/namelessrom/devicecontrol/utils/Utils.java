@@ -428,7 +428,7 @@ public class Utils implements DeviceConstants {
         boolean enabled = false;
         final List<TaskerItem> taskerItemList = DatabaseHandler.getInstance().getAllTaskerItems("");
         for (final TaskerItem item : taskerItemList) {
-            if (item.getEnabled()) {
+            if (item.enabled) {
                 enabled = true;
                 break;
             }

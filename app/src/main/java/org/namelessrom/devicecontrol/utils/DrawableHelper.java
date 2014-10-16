@@ -39,6 +39,11 @@ public class DrawableHelper {
         return drawable;
     }
 
+    public static Drawable applyAccentColorFilter(final int drawableRes) {
+        return applyColorFilter(Application.get().getResources()
+                .getDrawable(drawableRes), Application.get().getAccentColor());
+    }
+
     public static Drawable applyAccentColorFilter(final Drawable drawable) {
         return applyColorFilter(drawable, Application.get().getAccentColor());
     }
