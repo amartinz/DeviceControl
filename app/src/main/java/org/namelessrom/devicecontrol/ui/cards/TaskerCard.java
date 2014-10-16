@@ -49,14 +49,14 @@ public class TaskerCard extends Card {
         final TextView value = (TextView) findViewById(R.id.value);
         final CheckBox enabled = (CheckBox) findViewById(R.id.enabled);
 
-        category.setText(item.getCategory());
-        action.setText(item.getName());
-        value.setText(item.getValue());
-        enabled.setChecked(item.getEnabled());
+        category.setText(item.category);
+        action.setText(item.name);
+        value.setText(item.value);
+        enabled.setChecked(item.enabled);
         enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                item.setEnabled(isChecked);
+                item.enabled = isChecked;
                 DatabaseHandler.getInstance().updateTaskerItem(item);
             }
         });

@@ -389,4 +389,12 @@
     <string name="emmc_can_brick_true">Your eMMC is known to cause issues!</string>
     <string name="emmc_can_brick_false">Your eMMC should be safe!</string>
     <string name="press_learn_more">Press to learn more…</string>
+    <string name="setup_welcome">Welcome to the tasker setup</string>
+    <string name="setup_trigger">Setup trigger</string>
+    <string name="setup_category">Setup category</string>
+    <string name="setup_action">Setup action</string>
+    <string name="setup_value">Setup value</string>
+    <string name="setup_complete">Setup is complete</string>
+    <string name="screen_off">Screen off</string>
+    <string name="screen_on">Screen on</string>
 </resources>

@@ -16,247 +16,203 @@
 
 package org.namelessrom.devicecontrol.wizard;
 
-import android.app.ActionBar;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.os.Handler;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.negusoft.holoaccent.activity.AccentActivity;
-import com.negusoft.holoaccent.dialog.AccentAlertDialog;
-import com.negusoft.holoaccent.dialog.AccentDialogFragment;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.TaskerItem;
-import org.namelessrom.devicecontrol.wizard.model.AbstractWizardModel;
-import org.namelessrom.devicecontrol.wizard.model.ModelCallbacks;
-import org.namelessrom.devicecontrol.wizard.model.Page;
-import org.namelessrom.devicecontrol.wizard.ui.PageFragmentCallbacks;
-import org.namelessrom.devicecontrol.wizard.ui.ReviewFragment;
+import org.namelessrom.devicecontrol.wizard.setup.AbstractSetupData;
+import org.namelessrom.devicecontrol.wizard.setup.NamelessSetupWizardData;
+import org.namelessrom.devicecontrol.wizard.setup.Page;
+import org.namelessrom.devicecontrol.wizard.setup.PageList;
+import org.namelessrom.devicecontrol.wizard.setup.SetupDataCallbacks;
 import org.namelessrom.devicecontrol.wizard.ui.StepPagerStrip;
 
-import java.util.List;
-
-public class AddTaskActivity extends AccentActivity implements
-        PageFragmentCallbacks,
-        ReviewFragment.Callbacks,
-        ModelCallbacks {
-
+public class AddTaskActivity extends AccentActivity implements SetupDataCallbacks {
     public static final String ARG_ITEM = "arg_item";
+
+    private ViewPager          mViewPager;
+    private StepPagerStrip     mStepPagerStrip;
+    private CustomPagerAdapter mPagerAdapter;
 
     private Button mNextButton;
     private Button mPrevButton;
 
-    private ViewPager      mPager;
-    private StepPagerStrip mStepPagerStrip;
-    private MyPagerAdapter mPagerAdapter;
+    private PageList mPageList;
 
-    private boolean mEditingAfterReview;
+    private AbstractSetupData mSetupData;
 
-    private AbstractWizardModel mWizardModel;
-
-    private boolean mConsumePageSelectedEvent;
-
-    private List<Page> mCurrentPageSequence;
-
-    @Override public int getOverrideAccentColor() {
-        return Application.get().getAccentColor();
-    }
+    private final Handler mHandler = new Handler();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setTheme(Application.get().isDarkTheme() ? R.style.BaseThemeDark : R.style.BaseThemeLight);
-
         setContentView(R.layout.wizard_activity);
 
-        mNextButton = (Button) findViewById(R.id.next_button);
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                onNextButton();
-            }
-        });
-
-        mPrevButton = (Button) findViewById(R.id.prev_button);
-        mPrevButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-            }
-        });
-
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mStepPagerStrip = (StepPagerStrip) findViewById(R.id.strip);
-
-        final ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-        }
-
-        final TaskerItem item = (TaskerItem) getIntent().getSerializableExtra(ARG_ITEM);
-        if (item != null) {
-            if (actionBar != null) {
-                actionBar.setTitle(R.string.edit_task);
-            }
-            mWizardModel = new TaskerWizardModel(this, item);
-        } else {
-            mWizardModel = new TaskerWizardModel(this);
+        mSetupData = (AbstractSetupData) getLastNonConfigurationInstance();
+        if (mSetupData == null) {
+            mSetupData = new NamelessSetupWizardData(this);
         }
 
         if (savedInstanceState != null) {
-            mWizardModel.load(savedInstanceState.getBundle("model"));
+            mSetupData.load(savedInstanceState.getBundle("data"));
         }
 
-        mWizardModel.registerListener(this);
+        TaskerItem item = (TaskerItem) getIntent().getSerializableExtra(ARG_ITEM);
+        if (item != null) {
+            mSetupData.setTaskerItem(item);
+        }
+        if (mSetupData.getSetupData() == null) {
+            mSetupData.setTaskerItem(new TaskerItem());
+        }
 
-        mPagerAdapter = new MyPagerAdapter(getFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-        mStepPagerStrip.setOnPageSelectedListener(new StepPagerStrip.OnPageSelectedListener() {
-            @Override
-            public void onPageStripSelected(int position) {
-                position = Math.min(mPagerAdapter.getCount() - 1, position);
-                if (mPager.getCurrentItem() != position) {
-                    mPager.setCurrentItem(position);
-                }
-            }
-        });
-
-        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        mNextButton = (Button) findViewById(R.id.next_button);
+        mPrevButton = (Button) findViewById(R.id.prev_button);
+        mSetupData.registerListener(this);
+        mPagerAdapter = new CustomPagerAdapter(getFragmentManager());
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setPageTransformer(false, new DepthPageTransformer());
+        mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 mStepPagerStrip.setCurrentPage(position);
 
-                if (mConsumePageSelectedEvent) {
-                    mConsumePageSelectedEvent = false;
-                    return;
+                if (position < mPageList.size()) {
+                    onPageLoaded(mPageList.get(position));
                 }
-
-                mEditingAfterReview = false;
-                updateBottomBar();
+            }
+        });
+        mStepPagerStrip = (StepPagerStrip) findViewById(R.id.strip);
+        mStepPagerStrip.setOnPageSelectedListener(new StepPagerStrip.OnPageSelectedListener() {
+            @Override
+            public void onPageStripSelected(int position) {
+                position = Math.min(mPagerAdapter.getCount() - 1, position);
+                if (mViewPager.getCurrentItem() != position) {
+                    mViewPager.setCurrentItem(position);
+                }
+            }
+        });
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doNext();
+            }
+        });
+        mPrevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doPrevious();
             }
         });
 
         onPageTreeChanged();
-        updateBottomBar();
     }
 
-    private void onNextButton() {
-        if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
-            AccentDialogFragment dg = new AccentDialogFragment() {
-                @Override
-                public Dialog onCreateDialog(Bundle savedInstanceState) {
-                    return new AccentAlertDialog.Builder(getActivity())
-                            .setMessage(R.string.submit_confirm_message)
-                            .setPositiveButton(R.string.submit_confirm_button, mSubListener)
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .create();
-                }
-            };
-            dg.show(getFragmentManager(), "create_tasker_dialog");
-        } else {
-            if (mEditingAfterReview) {
-                mPager.setCurrentItem(mPagerAdapter.getCount() - 1);
-            } else {
-                mPager.setCurrentItem(mPager.getCurrentItem() + 1);
-            }
-        }
-    }
-
-    @Override public void onBackPressed() {
-        final int item = mPager.getCurrentItem();
-        if (item > 0) {
-            mPager.setCurrentItem(item - 1);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override public void onSaveTask() { }
-
-    @Override public void onItemSelected() {
-        onNextButton();
-    }
-
-    private DialogInterface.OnClickListener mSubListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            mWizardModel.onSaveTask();
-        }
-    };
-
-    @Override public void onPageTreeChanged() {
-        mCurrentPageSequence = mWizardModel.getCurrentPageSequence();
-        recalculateCutOffPage();
-        mStepPagerStrip.setPageCount(mCurrentPageSequence.size() + 1); // + 1 = review step
-        mPagerAdapter.notifyDataSetChanged();
-        updateBottomBar();
-    }
-
-    private void updateBottomBar() {
-        int position = mPager.getCurrentItem();
-        if (position == mCurrentPageSequence.size()) {
-            mNextButton.setText(R.string.finish);
-            mNextButton.setBackgroundResource(R.drawable.finish_background);
-        } else {
-            mNextButton.setText(mEditingAfterReview
-                    ? R.string.review
-                    : R.string.next);
-            mNextButton.setBackgroundResource(0);
-            mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
-        }
-
-        mPrevButton.setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);
+    @Override protected void onResume() {
+        super.onResume();
+        onPageTreeChanged();
     }
 
     @Override protected void onDestroy() {
+        mSetupData.unregisterListener(this);
         super.onDestroy();
-        mWizardModel.unregisterListener(this);
     }
 
-    @Override protected void onSaveInstanceState(@NonNull Bundle outState) {
+    @Override protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBundle("model", mWizardModel.save());
+        outState.putBundle("data", mSetupData.save());
     }
 
-    @Override public AbstractWizardModel onGetModel() { return mWizardModel; }
+    @Override public void onBackPressed() {
+        doPrevious();
+    }
 
-    @Override public void onEditScreenAfterReview(final String key) {
-        for (int i = mCurrentPageSequence.size() - 1; i >= 0; i--) {
-            if (mCurrentPageSequence.get(i).getKey().equals(key)) {
-                mConsumePageSelectedEvent = true;
-                mEditingAfterReview = true;
-                mPager.setCurrentItem(i);
-                updateBottomBar();
-                break;
+    public void doNext() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                final int currentItem = mViewPager.getCurrentItem();
+                final Page currentPage = mPageList.get(currentItem);
+                if (currentPage.getId() == R.string.setup_complete) {
+                    finishSetup();
+                } else {
+                    mViewPager.setCurrentItem(currentItem + 1, true);
+                }
             }
-        }
+        });
     }
 
-    @Override public void onPageDataChanged(final Page page) {
+    public void doPrevious() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                final int currentItem = mViewPager.getCurrentItem();
+                if (currentItem > 0) {
+                    mViewPager.setCurrentItem(currentItem - 1, true);
+                }
+            }
+        });
+    }
+
+    private void updateNextPreviousState() {
+        final int position = mViewPager.getCurrentItem();
+        mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
+        mPrevButton.setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);
+    }
+
+    @Override public void onPageLoaded(Page page) {
+        mNextButton.setText(page.getNextButtonResId());
         if (page.isRequired()) {
             if (recalculateCutOffPage()) {
                 mPagerAdapter.notifyDataSetChanged();
-                updateBottomBar();
             }
         }
+        updateNextPreviousState();
     }
 
-    @Override public Page onGetPage(final String key) { return mWizardModel.findByKey(key); }
+    @Override public void onPageTreeChanged() {
+        mPageList = mSetupData.getPageList();
+        recalculateCutOffPage();
+        mPagerAdapter.notifyDataSetChanged();
+        updateNextPreviousState();
+
+        mStepPagerStrip.setPageCount(mPageList.size());
+    }
+
+    @Override public Page getPage(String key) {
+        return mSetupData.findPage(key);
+    }
+
+    @Override public TaskerItem getSetupData() { return mSetupData.getSetupData(); }
+
+    @Override public void setTaskerItem(final TaskerItem item) { mSetupData.setTaskerItem(item); }
+
+    @Override public void onPageFinished(final Page page) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (page == null) {
+                    doNext();
+                }
+                onPageTreeChanged();
+            }
+        });
+    }
 
     private boolean recalculateCutOffPage() {
         // Cut off the pager adapter at first required page that isn't completed
-        int cutOffPage = mCurrentPageSequence.size() + 1;
+        int cutOffPage = mPageList.size();
         Page page;
-        for (int i = 0; i < mCurrentPageSequence.size(); i++) {
-            page = mCurrentPageSequence.get(i);
+        for (int i = 0; i < mPageList.size(); i++) {
+            page = mPageList.get(i);
             if (page.isRequired() && !page.isCompleted()) {
                 cutOffPage = i;
                 break;
@@ -271,39 +227,29 @@ public class AddTaskActivity extends AccentActivity implements
         return false;
     }
 
-    public class MyPagerAdapter extends FragmentStatePagerAdapter {
-        private int      mCutOffPage;
-        private Fragment mPrimaryItem;
+    private void finishSetup() {
+        finish();
+    }
 
-        public MyPagerAdapter(final FragmentManager fm) { super(fm); }
+    private class CustomPagerAdapter extends FragmentStatePagerAdapter {
 
-        @Override
-        public Fragment getItem(final int i) {
-            if (i >= mCurrentPageSequence.size()) return new ReviewFragment();
+        private int mCutOffPage;
 
-            return mCurrentPageSequence.get(i).createFragment();
+        private CustomPagerAdapter(FragmentManager fm) {
+            super(fm);
         }
 
-        @Override public int getItemPosition(final Object object) {
-            // TODO: be smarter about this
-            if (object == mPrimaryItem) {
-                // Re-use the current fragment (its position never changes)
-                return POSITION_UNCHANGED;
-            }
+        @Override public Fragment getItem(int i) {
+            return mPageList.get(i).createFragment();
+        }
 
+        @Override public int getItemPosition(Object object) {
             return POSITION_NONE;
         }
 
-        @Override public void setPrimaryItem(ViewGroup container, int position, Object object) {
-            super.setPrimaryItem(container, position, object);
-            mPrimaryItem = (Fragment) object;
-        }
-
         @Override public int getCount() {
-            if (mCurrentPageSequence == null) {
-                return 0;
-            }
-            return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
+            if (mPageList == null) { return 0; }
+            return Math.min(mCutOffPage + 1, mPageList.size());
         }
 
         public void setCutOffPage(int cutOffPage) {
@@ -313,6 +259,44 @@ public class AddTaskActivity extends AccentActivity implements
             mCutOffPage = cutOffPage;
         }
 
-        public int getCutOffPage() { return mCutOffPage; }
+        public int getCutOffPage() {
+            return mCutOffPage;
+        }
+    }
+
+    public static class DepthPageTransformer implements ViewPager.PageTransformer {
+        private static float MIN_SCALE = 0.5f;
+
+        public void transformPage(View view, float position) {
+            int pageWidth = view.getWidth();
+
+            if (position < -1) {
+                view.setAlpha(0);
+
+            } else if (position <= 0) { // [-1,0]
+                // Use the default slide transition when moving to the left page
+                view.setAlpha(1);
+                view.setTranslationX(0);
+                view.setScaleX(1);
+                view.setScaleY(1);
+
+            } else if (position <= 1) { // (0,1]
+                // Fade the page out.
+                view.setAlpha(1 - position);
+
+                // Counteract the default slide transition
+                view.setTranslationX(pageWidth * -position);
+
+                // Scale the page down (between MIN_SCALE and 1)
+                float scaleFactor = MIN_SCALE
+                        + (1 - MIN_SCALE) * (1 - Math.abs(position));
+                view.setScaleX(scaleFactor);
+                view.setScaleY(scaleFactor);
+
+            } else { // (1,+Infinity]
+                // This page is way off-screen to the right.
+                view.setAlpha(0);
+            }
+        }
     }
 }
