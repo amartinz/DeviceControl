@@ -32,7 +32,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
+import org.namelessrom.devicecontrol.ui.fragments.filepicker.FilePickerFragment;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 

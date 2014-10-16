@@ -26,18 +26,16 @@ android {
 
     buildTypes {
         release {
-            runProguard true
             signingConfig signingConfigs.release
             proguardFile 'src/main/proguard.pro'
+            runProguard true
             zipAlign true
-            debuggable false
         }
         debug {
-            runProguard true
             signingConfig signingConfigs.release
             proguardFile 'src/main/proguard.pro'
+            runProguard true
             zipAlign true
-            debuggable true
             applicationIdSuffix '.dev'
             versionNameSuffix '-dev'
         }
@@ -45,8 +43,9 @@ android {
 
     lintOptions {
         abortOnError true
-        checkAllWarnings false
-        disable 'HardcodedDebugMode', 'ValidFragment', 'MissingTranslation', 'ExtraTranslation'
+        checkAllWarnings true
+        // do not warn about translations
+        disable 'MissingTranslation', 'ExtraTranslation'
     }
 
     dexOptions {

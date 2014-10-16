@@ -26,7 +26,7 @@ import com.negusoft.holoaccent.activity.AccentActivity;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.fragments.tools.AppListFragment;
+import org.namelessrom.devicecontrol.ui.fragments.tools.AppListFragment;
 
 public class AppDetailsActivity extends AccentActivity {
 

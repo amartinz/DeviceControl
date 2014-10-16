@@ -26,12 +26,12 @@ import android.text.TextUtils;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.fragments.device.DeviceFragment;
-import org.namelessrom.devicecontrol.fragments.performance.ExtrasFragment;
-import org.namelessrom.devicecontrol.fragments.performance.sub.EntropyFragment;
-import org.namelessrom.devicecontrol.fragments.performance.sub.VoltageFragment;
-import org.namelessrom.devicecontrol.fragments.tools.editor.LowMemoryKillerFragment;
-import org.namelessrom.devicecontrol.fragments.tools.editor.SysctlFragment;
+import org.namelessrom.devicecontrol.ui.fragments.device.DeviceFragment;
+import org.namelessrom.devicecontrol.ui.fragments.performance.ExtrasFragment;
+import org.namelessrom.devicecontrol.ui.fragments.performance.sub.EntropyFragment;
+import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;
+import org.namelessrom.devicecontrol.ui.fragments.tools.editor.LowMemoryKillerFragment;
+import org.namelessrom.devicecontrol.ui.fragments.tools.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;

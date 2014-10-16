@@ -28,8 +28,8 @@ import com.negusoft.holoaccent.activity.AccentActivity;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerFragment;
-import org.namelessrom.devicecontrol.fragments.filepicker.FilePickerListener;
+import org.namelessrom.devicecontrol.ui.fragments.filepicker.FilePickerFragment;
+import org.namelessrom.devicecontrol.ui.fragments.filepicker.FilePickerListener;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.objects.FlashItem;
 
