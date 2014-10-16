@@ -1,11 +1,12 @@
 /*
- * Copyright 2013 Google Inc.
+ * Copyright (C) 2013 The MoKee OpenSource Project
+ * Modifications Copyright (C) 2014 The NamelessRom Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,18 +15,11 @@
  * limitations under the License.
  */
 
-package org.namelessrom.devicecontrol.wizard.model;
+package org.namelessrom.devicecontrol.wizard.setup;
 
 import java.util.ArrayList;
 
-/**
- * Represents a list of wizard pages.
- */
-public class PageList extends ArrayList<Page> implements PageTreeNode {
-
-    public PageList() {
-
-    }
+public class PageList extends ArrayList<Page> implements PageNode {
 
     public PageList(Page... pages) {
         for (Page page : pages) {
@@ -34,21 +28,25 @@ public class PageList extends ArrayList<Page> implements PageTreeNode {
     }
 
     @Override
-    public Page findByKey(String key) {
+    public Page findPage(String key) {
         for (Page childPage : this) {
-            Page found = childPage.findByKey(key);
+            Page found = childPage.findPage(key);
             if (found != null) {
                 return found;
             }
         }
-
         return null;
     }
 
     @Override
-    public void flattenCurrentPageSequence(ArrayList<Page> dest) {
+    public Page findPage(int id) {
         for (Page childPage : this) {
-            childPage.flattenCurrentPageSequence(dest);
+            Page found = childPage.findPage(id);
+            if (found != null) {
+                return found;
+            }
         }
+        return null;
     }
+
 }

@@ -25,16 +25,18 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
 public class TaskerCard extends Card {
 
-    private final TaskerItem item;
+    public final TaskerItem item;
 
     public TaskerCard(Context context, AttributeSet attrs, TaskerItem taskerItem,
             Bundle savedInstanceState) {
@@ -44,20 +46,22 @@ public class TaskerCard extends Card {
         hideHeaderLayout();
         setLayoutId(R.layout.card_tasker);
 
-        final TextView category = (TextView) findViewById(R.id.category);
+        final ImageView image = (ImageView) findViewById(R.id.task_image);
+        final TextView trigger = (TextView) findViewById(R.id.trigger);
         final TextView action = (TextView) findViewById(R.id.action);
         final TextView value = (TextView) findViewById(R.id.value);
         final CheckBox enabled = (CheckBox) findViewById(R.id.enabled);
 
-        category.setText(item.getCategory());
-        action.setText(item.getName());
-        value.setText(item.getValue());
-        enabled.setChecked(item.getEnabled());
+        image.setImageResource(ActionProcessor.getImageForCategory(item.category));
+        trigger.setText(item.trigger);
+        action.setText(item.name);
+        value.setText(item.value);
+        enabled.setChecked(item.enabled);
         enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                item.setEnabled(isChecked);
-                DatabaseHandler.getInstance().updateTaskerItem(item);
+                item.enabled = isChecked;
+                DatabaseHandler.getInstance().updateOrInsertTaskerItem(item);
             }
         });
 

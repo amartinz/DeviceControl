@@ -36,13 +36,14 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants {
 
-    private static final int    DATABASE_VERSION = 8;
+    private static final int    DATABASE_VERSION = 9;
     private static final String DATABASE_NAME    = "DeviceControl.db";
 
     private static final String KEY_ID       = "id";
     private static final String KEY_CATEGORY = "category";
     private static final String KEY_NAME     = "name";
     private static final String KEY_FILENAME = "filename";
+    private static final String KEY_TRIGGER  = "trigger";
     private static final String KEY_VALUE    = "value";
     private static final String KEY_ENABLED  = "enabled";
 
@@ -68,7 +69,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
 
     private static final String CREATE_TASKER_TABLE = "CREATE TABLE " + TABLE_TASKER + '('
             + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_NAME + " TEXT,"
-            + KEY_FILENAME + " TEXT," + KEY_VALUE + " TEXT," + KEY_ENABLED + " TEXT)";
+            + KEY_TRIGGER + " TEXT," + KEY_VALUE + " TEXT," + KEY_ENABLED + " TEXT)";
     private static final String DROP_TASKER_TABLE   = "DROP TABLE IF EXISTS " + TABLE_TASKER;
 
     private static DatabaseHandler sDatabaseHandler = null;
@@ -133,6 +134,17 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
             db.execSQL(DROP_DEVICE_CONTROL_TABLE);
             db.execSQL(CREATE_DEVICE_CONTROL_TABLE);
             currentVersion = 8;
+        }
+
+        if (currentVersion < 9) {
+            db.execSQL(String.format("ALTER TABLE %s RENAME TO tmp;", TABLE_TASKER));
+            db.execSQL(CREATE_TASKER_TABLE);
+            db.execSQL(String.format(
+                    "INSERT INTO %s(%s,%s,%s,%s,%s) SELECT %s,%s,%s,%s,%s FROM tmp;",
+                    TABLE_TASKER,
+                    KEY_ID, KEY_CATEGORY, KEY_NAME, KEY_VALUE, KEY_ENABLED,
+                    KEY_ID, KEY_CATEGORY, KEY_NAME, KEY_VALUE, KEY_ENABLED));
+            db.execSQL("DROP TABLE tmp;");
         }
 
         if (currentVersion != DATABASE_VERSION) {
@@ -266,20 +278,20 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         if (sDb == null) return false;
 
         final ContentValues values = new ContentValues();
-        values.put(KEY_CATEGORY, item.getCategory());
-        values.put(KEY_NAME, item.getName());
-        values.put(KEY_FILENAME, item.getFileName());
-        values.put(KEY_VALUE, item.getValue());
-        values.put(KEY_ENABLED, (item.getEnabled() ? "1" : "0"));
+        values.put(KEY_CATEGORY, item.category);
+        values.put(KEY_NAME, item.name);
+        values.put(KEY_TRIGGER, item.trigger);
+        values.put(KEY_VALUE, item.value);
+        values.put(KEY_ENABLED, (item.enabled ? "1" : "0"));
 
         sDb.insert(TABLE_TASKER, null, values);
         return true;
     }
 
     public List<TaskerItem> getAllTaskerItems(final String category) {
-        if (sDb == null) return null;
-
         final List<TaskerItem> itemList = new ArrayList<TaskerItem>();
+        if (sDb == null) return itemList;
+
         final String selectQuery = "SELECT * FROM " + TABLE_TASKER + (category.isEmpty()
                 ? ""
                 : " WHERE " + KEY_CATEGORY + " = '" + category + '\'');
@@ -290,13 +302,13 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
             TaskerItem item;
             do {
                 item = new TaskerItem();
-                item.setID(Utils.parseInt(cursor.getString(0)));
-                item.setCategory(cursor.getString(1));
-                item.setName(cursor.getString(2));
-                item.setFileName(cursor.getString(3));
-                item.setValue(cursor.getString(4));
+                item.id = Utils.parseInt(cursor.getString(0));
+                item.category = cursor.getString(1);
+                item.name = cursor.getString(2);
+                item.trigger = cursor.getString(3);
+                item.value = cursor.getString(4);
                 final String enabled = cursor.getString(5);
-                item.setEnabled(enabled != null && enabled.equals("1"));
+                item.enabled = (enabled != null && enabled.equals("1"));
                 itemList.add(item);
             } while (cursor.moveToNext());
         }
@@ -305,24 +317,31 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return itemList;
     }
 
-    public int updateTaskerItem(final TaskerItem item) {
+    public int updateOrInsertTaskerItem(final TaskerItem item) {
         if (sDb == null) return -1;
 
         final ContentValues values = new ContentValues();
-        values.put(KEY_CATEGORY, item.getCategory());
-        values.put(KEY_NAME, item.getName());
-        values.put(KEY_VALUE, item.getValue());
-        values.put(KEY_FILENAME, item.getFileName());
-        values.put(KEY_ENABLED, (item.getEnabled() ? "1" : "0"));
+        values.put(KEY_CATEGORY, item.category);
+        values.put(KEY_NAME, item.name);
+        values.put(KEY_VALUE, item.value);
+        values.put(KEY_TRIGGER, item.trigger);
+        values.put(KEY_ENABLED, (item.enabled ? "1" : "0"));
 
-        return sDb.update(TABLE_TASKER, values, KEY_ID + " = ?",
-                new String[]{String.valueOf(item.getID())});
+        final int rowsAffected = sDb.update(TABLE_TASKER, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(item.id)});
+
+        if (rowsAffected <= 0) {
+            sDb.insert(TABLE_TASKER, null, values);
+            return 1;
+        }
+
+        return rowsAffected;
     }
 
     public boolean deleteTaskerItem(final TaskerItem item) {
         if (sDb == null) return false;
 
-        sDb.delete(TABLE_TASKER, KEY_ID + " = ?", new String[]{String.valueOf(item.getID())});
+        sDb.delete(TABLE_TASKER, KEY_ID + " = ?", new String[]{String.valueOf(item.id)});
         return true;
     }
 

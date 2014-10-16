@@ -74,30 +74,21 @@ public class StepPagerStrip extends View {
         mTabHeight = res.getDimensionPixelSize(R.dimen.step_pager_tab_height);
         mTabSpacing = res.getDimensionPixelSize(R.dimen.step_pager_tab_spacing);
 
-        final boolean isDarkTheme = Application.get().isDarkTheme();
         int color;
 
-        color = isDarkTheme
-                ? res.getColor(R.color.step_pager_previous_tab_color)
-                : res.getColor(R.color.step_pager_previous_tab_color_light);
+        color = res.getColor(R.color.step_pager_previous_tab_color_light);
         mPrevTabPaint = new Paint();
         mPrevTabPaint.setColor(color);
 
-        color = isDarkTheme
-                ? res.getColor(R.color.step_pager_selected_tab_color)
-                : res.getColor(R.color.step_pager_selected_tab_color_light);
+        color = res.getColor(R.color.step_pager_selected_tab_color_light);
         mSelectedTabPaint = new Paint();
         mSelectedTabPaint.setColor(color);
 
-        color = isDarkTheme
-                ? res.getColor(R.color.step_pager_selected_last_tab_color)
-                : res.getColor(R.color.step_pager_selected_last_tab_color_light);
+        color = res.getColor(R.color.step_pager_selected_last_tab_color_light);
         mSelectedLastTabPaint = new Paint();
         mSelectedLastTabPaint.setColor(color);
 
-        color = isDarkTheme
-                ? res.getColor(R.color.step_pager_next_tab_color)
-                : res.getColor(R.color.step_pager_next_tab_color_light);
+        color = res.getColor(R.color.step_pager_next_tab_color_light);
         mNextTabPaint = new Paint();
         mNextTabPaint.setColor(color);
     }
