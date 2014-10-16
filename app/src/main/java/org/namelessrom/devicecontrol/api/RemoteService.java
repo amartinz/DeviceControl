@@ -26,7 +26,7 @@ import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.objects.MemoryInfo;
-import org.namelessrom.devicecontrol.utils.ActionProcessor;
+import org.namelessrom.devicecontrol.actions.ActionProcessor;
 
 import java.util.Arrays;
 import java.util.List;

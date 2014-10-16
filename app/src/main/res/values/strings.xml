@@ -168,6 +168,8 @@
     <string name="add_task">Add task</string>
     <string name="edit_task">Edit task</string>
     <string name="delete_task">Delete task</string>
+    <string name="delete_task_question">Do you really want to delete the selected task?</string>
+    <string name="trigger">Trigger</string>
     <string name="category">Category</string>
     <string name="action">Action</string>
     <string name="value">Value</string>
@@ -207,6 +209,7 @@
     <string name="eight_hours">8 Hours</string>
     <string name="cpu_temperature">CPU temperature:</string>
     <string name="battery_temperature">Battery temperature:</string>
+    <string name="on">On</string>
     <string name="off">Off</string>
     <string name="menu">Menu</string>
     <string name="preferences">Preferences</string>
@@ -389,4 +392,14 @@
     <string name="emmc_can_brick_true">Your eMMC is known to cause issues!</string>
     <string name="emmc_can_brick_false">Your eMMC should be safe!</string>
     <string name="press_learn_more">Press to learn more…</string>
+    <string name="setup_welcome">Welcome to the tasker setup</string>
+    <string name="setup_welcome_text">At the following pages you will be able to set up a task.\n\nTasks are disabled by default, you will need to tick the checkbox on the right of each item to activate it.\n\nTo activate the Tasker, turn the switch at the top right at the task list on.</string>
+    <string name="setup_trigger">Setup trigger</string>
+    <string name="setup_category">Setup category</string>
+    <string name="setup_action">Setup action</string>
+    <string name="setup_value">Setup value</string>
+    <string name="setup_complete">Setup is complete</string>
+    <string name="screen_off">Screen off</string>
+    <string name="screen_on">Screen on</string>
+    <string name="cpu">CPU</string>
 </resources>

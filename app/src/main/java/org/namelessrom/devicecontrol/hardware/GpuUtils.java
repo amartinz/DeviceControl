@@ -35,6 +35,8 @@ import org.namelessrom.devicecontrol.utils.constants.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class GpuUtils implements Constants {
@@ -66,10 +68,21 @@ public class GpuUtils implements Constants {
         return sInstance;
     }
 
-    public String[] getAvailableFrequencies() {
+    public String[] getAvailableFrequencies(final boolean sorted) {
         final String freqsRaw = Utils.readOneLine(GPU_FREQUENCIES_FILE);
         if (freqsRaw != null && !freqsRaw.isEmpty()) {
-            return freqsRaw.split(" ");
+            final String[] freqs = freqsRaw.split(" ");
+            if (!sorted) {
+                return freqs;
+            }
+            Arrays.sort(freqs, new Comparator<String>() {
+                @Override
+                public int compare(String object1, String object2) {
+                    return Utils.tryValueOf(object1, 0).compareTo(Utils.tryValueOf(object2, 0));
+                }
+            });
+            Collections.reverse(Arrays.asList(freqs));
+            return freqs;
         }
         return null;
     }
