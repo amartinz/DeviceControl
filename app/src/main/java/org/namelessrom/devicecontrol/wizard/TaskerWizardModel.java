@@ -16,24 +16,25 @@
 
 package org.namelessrom.devicecontrol.wizard;
 
-import android.content.Context;
+/*import android.content.Context;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.hardware.IoSchedulerUtils;
-import org.namelessrom.devicecontrol.utils.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.wizard.model.AbstractWizardModel;
 import org.namelessrom.devicecontrol.wizard.model.BranchPage;
 import org.namelessrom.devicecontrol.wizard.model.Page;
 import org.namelessrom.devicecontrol.wizard.model.PageList;
-import org.namelessrom.devicecontrol.wizard.model.SingleFixedChoicePage;
+import org.namelessrom.devicecontrol.wizard.model.SingleFixedChoicePage;*/
 
-public class TaskerWizardModel extends AbstractWizardModel implements Constants {
+public class TaskerWizardModel /*extends AbstractWizardModel implements Constants*/ {
+    /*
     private TaskerItem mItem;
     private String mCategory = "";
     private String mAction   = "";
@@ -48,9 +49,9 @@ public class TaskerWizardModel extends AbstractWizardModel implements Constants 
 
         mItem = item;
         if (mItem != null) {
-            mCategory = mItem.getCategory();
-            mAction = mItem.getName();
-            mValue = mItem.getValue();
+            mCategory = mItem.category;
+            mAction = mItem.name;
+            mValue = mItem.value;
         }
 
         setRootPageList(getRootPageList());
@@ -142,5 +143,5 @@ public class TaskerWizardModel extends AbstractWizardModel implements Constants 
 
         return pageList;
     }
-
+*/
 }
