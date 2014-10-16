@@ -44,7 +44,7 @@ import org.namelessrom.devicecontrol.hardware.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.ui.views.CpuCoreView;
-import org.namelessrom.devicecontrol.utils.ActionProcessor;
+import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.Constants;
