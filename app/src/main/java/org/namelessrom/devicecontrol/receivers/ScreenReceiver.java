@@ -23,9 +23,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.actions.ActionProcessor;
+import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
-import org.namelessrom.devicecontrol.utils.ActionProcessor;
 
 import java.util.List;
 
@@ -37,9 +38,9 @@ public class ScreenReceiver extends BroadcastReceiver {
         if (action != null && !action.isEmpty()) {
             Logger.i(this, String.format("action: %s", action));
             if (Intent.ACTION_SCREEN_ON.equals(action)) {
-                new Worker().execute(TaskerItem.CATEGORY_SCREEN_ON);
+                new Worker().execute(BaseAction.TRIGGER_SCREEN_ON);
             } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
-                new Worker().execute(TaskerItem.CATEGORY_SCREEN_OFF);
+                new Worker().execute(BaseAction.TRIGGER_SCREEN_OFF);
             }
         }
     }
@@ -54,15 +55,10 @@ public class ScreenReceiver extends BroadcastReceiver {
                     .getAllTaskerItems(category);
 
             final StringBuilder sb = new StringBuilder();
-            String name, value;
-            boolean enabled;
             for (final TaskerItem item : itemList) {
-                name = item.getName();
-                value = item.getValue();
-                enabled = item.getEnabled();
-                Logger.v(this, String.format("Processing: %s | %s | %s", name, value, enabled));
-                if (enabled) {
-                    sb.append(ActionProcessor.getProcessAction(name, value, false));
+                Logger.v(this, "Processing: %s | %s | %s", item.name, item.value, item.enabled);
+                if (item.enabled) {
+                    sb.append(ActionProcessor.getProcessAction(item.name, item.value, false));
                 }
             }
             ActionProcessor.processAction(sb.toString());
