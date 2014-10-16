@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol.ui.fragments.tools;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
+import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 import com.negusoft.holoaccent.widget.AccentSwitch;
 
 import org.namelessrom.devicecontrol.R;
@@ -39,6 +41,7 @@ import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.ui.cards.TaskerCard;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
+import org.namelessrom.devicecontrol.utils.DrawableHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -85,6 +88,32 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
                     AnimationUtils.loadAnimation(getActivity(), R.anim.up_from_bottom));
         }
         for (final TaskerCard card : cards) {
+            card.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override public boolean onLongClick(View view) {
+                    final AccentAlertDialog.Builder alert =
+                            new AccentAlertDialog.Builder(getActivity());
+                    alert.setIcon(
+                            DrawableHelper.applyAccentColorFilter(R.drawable.ic_general_trash));
+                    alert.setTitle(R.string.delete_task);
+                    alert.setMessage(getString(R.string.delete_task_question));
+                    alert.setNegativeButton(android.R.string.cancel,
+                            new DialogInterface.OnClickListener() {
+                                @Override public void onClick(DialogInterface d, int b) {
+                                    d.dismiss();
+                                }
+                            });
+                    alert.setPositiveButton(android.R.string.yes,
+                            new DialogInterface.OnClickListener() {
+                                @Override public void onClick(DialogInterface d, int b) {
+                                    DatabaseHandler.getInstance().deleteTaskerItem(card.item);
+                                    d.dismiss();
+                                    refreshListView();
+                                }
+                            });
+                    alert.show();
+                    return true;
+                }
+            });
             mCardsLayout.addView(card);
         }
     }

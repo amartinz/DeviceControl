@@ -57,15 +57,27 @@ public class GovernorUtils {
         }
     }
 
-    public String[] getAvailableGovernors() {
+    public String[] getAvailableGovernors(final boolean isGpu) {
         String[] govArray = null;
-        final String govs = Utils.readOneLine(Constants.GOV_AVAILALBLE_PATH);
+        final String govs = Utils.readOneLine(isGpu
+                ? Constants.GPU_GOV_PATH : Constants.GOV_AVAILALBLE_PATH);
 
         if (govs != null && !govs.isEmpty()) {
             govArray = govs.split(" ");
         }
 
         return govArray;
+    }
+
+    public String[] getAvailableCpuGovernors() {
+        return getAvailableGovernors(false);
+    }
+
+    public String[] getAvailableGpuGovernors() {
+        // returns a pre defined set of governors
+        // TODO: read dynamically if supported
+        //return getAvailableGovernors(true);
+        return Constants.GPU_GOVS;
     }
 
     public void getGovernor(final GovernorListener listener) {

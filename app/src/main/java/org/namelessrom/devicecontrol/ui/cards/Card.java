@@ -22,6 +22,8 @@ package org.namelessrom.devicecontrol.ui.cards;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -83,10 +85,16 @@ public abstract class Card extends LinearLayout {
                         .isDarkTheme() ? R.color.dark_background : R.color.light_background;
                 mView.findViewById(R.id.card_border_main)
                         .setBackgroundColor(Application.get().getAccentColor());
+                mCardLayout.setBackgroundColor(getResources().getColor(backgroundColor));
             } else {
-                backgroundColor = R.color.card_background;
+                final Drawable drawable = getResources().getDrawable(R.drawable.card_background);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    mCardLayout.setBackground(drawable);
+                } else {
+                    //noinspection deprecation
+                    mCardLayout.setBackgroundDrawable(drawable);
+                }
             }
-            mCardLayout.setBackgroundColor(getResources().getColor(backgroundColor));
         }
 
         mButton = (ImageView) mView.findViewById(R.id.headerbutton);

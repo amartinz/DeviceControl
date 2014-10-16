@@ -23,9 +23,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
-import org.namelessrom.devicecontrol.utils.ActionProcessor;
 
 import java.util.List;
 
@@ -37,35 +37,30 @@ public class ScreenReceiver extends BroadcastReceiver {
         if (action != null && !action.isEmpty()) {
             Logger.i(this, String.format("action: %s", action));
             if (Intent.ACTION_SCREEN_ON.equals(action)) {
-                new Worker().execute(TaskerItem.CATEGORY_SCREEN_ON);
+                new Worker().execute(ActionProcessor.TRIGGER_SCREEN_ON);
             } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
-                new Worker().execute(TaskerItem.CATEGORY_SCREEN_OFF);
+                new Worker().execute(ActionProcessor.TRIGGER_SCREEN_OFF);
             }
         }
     }
 
-    class Worker extends AsyncTask<String, Void, Void> {
+    private class Worker extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... params) {
-            final String category = params[0];
-            Logger.v(this, "ScreenReceiver: " + category);
+            final String trigger = params[0];
+            Logger.v(this, "ScreenReceiver: %s", trigger);
 
             final List<TaskerItem> itemList = DatabaseHandler.getInstance()
-                    .getAllTaskerItems(category);
+                    .getAllTaskerItemsByTrigger(trigger);
 
-            final StringBuilder sb = new StringBuilder();
-            String name, value;
-            boolean enabled;
+            Logger.v(this, "Trigger: %s | Items: %s", trigger, itemList.size());
+
             for (final TaskerItem item : itemList) {
-                name = item.getName();
-                value = item.getValue();
-                enabled = item.getEnabled();
-                Logger.v(this, String.format("Processing: %s | %s | %s", name, value, enabled));
-                if (enabled) {
-                    sb.append(ActionProcessor.getProcessAction(name, value, false));
+                Logger.v(this, "Processing: %s | %s | %s", item.name, item.value, item.enabled);
+                if (item.enabled) {
+                    ActionProcessor.getProcessAction(item.name, item.value, false);
                 }
             }
-            ActionProcessor.processAction(sb.toString());
 
             return null;
         }
