@@ -19,4 +19,5 @@
   <string name="enable">Engedélyezése</string>
   <string name="user_interface">Felület</string>
   <string name="system">Rendszer</string>
+  <string name="emmc_date">Dátum</string>
 </resources>

@@ -261,4 +261,5 @@
   <string name="pick_file">Triï un arxiu</string>
   <string name="user_interface">Interfície</string>
   <string name="system">Sistema</string>
+  <string name="emmc_date">Data</string>
 </resources>

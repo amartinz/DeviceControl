@@ -261,4 +261,5 @@
   <string name="pick_file">Vybrat soubor</string>
   <string name="user_interface">Rozhraní</string>
   <string name="system">Systém</string>
+  <string name="emmc_date">Datum</string>
 </resources>

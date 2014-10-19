@@ -18,4 +18,5 @@
 <resources>
   <string name="user_interface">Arayüz</string>
   <string name="system">Sistem</string>
+  <string name="emmc_date">Tarih</string>
 </resources>

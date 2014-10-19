@@ -259,4 +259,5 @@
   <string name="both">Beide</string>
   <string name="pick_file">Kies een bestand</string>
   <string name="system">Systeem</string>
+  <string name="emmc_date">Datum</string>
 </resources>
