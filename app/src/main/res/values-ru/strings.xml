@@ -323,4 +323,6 @@
   <string name="tags">Теги</string>
   <string name="sensors">Датчики</string>
   <string name="system">Система</string>
+  <string name="emmc_date">Дата</string>
+  <string name="setup_complete">Установка завершена</string>
 </resources>

@@ -358,4 +358,6 @@
   <string name="display_gamma_calibration_summary">调整伽玛值</string>
   <string name="hardware_display_gamma_calibration_desc_one">红，绿，蓝</string>
   <string name="system">系统</string>
+  <string name="emmc_date">日期</string>
+  <string name="setup_complete">设置完成</string>
 </resources>

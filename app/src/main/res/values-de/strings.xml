@@ -169,6 +169,8 @@
   <string name="add_task">Aufgabe hinzufügen</string>
   <string name="edit_task">Aufgabe bearbeiten</string>
   <string name="delete_task">Aufgabe löschen</string>
+  <string name="delete_task_question">Möchten Sie wirklich die ausgewählte Aufgabe löschen?</string>
+  <string name="trigger">Auslöser</string>
   <string name="category">Kategorie</string>
   <string name="action">Aktion</string>
   <string name="value">Wert</string>
@@ -208,6 +210,7 @@
   <string name="eight_hours">8 Stunden</string>
   <string name="cpu_temperature">CPU-Temperatur:</string>
   <string name="battery_temperature">Batterie-Temperatur:</string>
+  <string name="on">Ein</string>
   <string name="off">Aus</string>
   <string name="menu">Menü</string>
   <string name="preferences">Einstellungen</string>
@@ -383,4 +386,20 @@
   <string name="alert_backup_message">Geben Sie den Name der Datensicherung an (ungültige Zeichen werden entfernt).\n\nDie folgenden Optionen funktionieren nur mit einer auf OpenRecovery basierten Recovery.</string>
   <string name="remove_file_title">Datei entfernen</string>
   <string name="remove_file_summary">Wollen Sie die Datei aus der Liste entfernen?\n\n%s</string>
+  <string name="emmc_rev">Revision</string>
+  <string name="emmc_date">Datum</string>
+  <string name="emmc_can_brick">Probleme</string>
+  <string name="emmc_can_brick_true">Ihr eMMC ist bekannt Probleme zu verursachen!</string>
+  <string name="emmc_can_brick_false">Ihr eMMC sollte sicher sein!</string>
+  <string name="press_learn_more">Drücken, um mehr zu erfahren&#8230;</string>
+  <string name="setup_welcome">Willkommen zum Tasker-Assistenten</string>
+  <string name="setup_welcome_text">Auf den folgenden Seiten können Sie eine Aufgabe einrichten.\n\nAufgaben sind standardmäßig deaktiviert, Sie müssen das Kontrollkästchen auf der rechten Seite der Aufgabe aktivieren, damit die Aufgabe ausgeführt wird.\n\nUm den Tasker zu aktivieren, müssen Sie den Schalter auf der rechten oberen Seite der Aufgabenliste aktivieren.</string>
+  <string name="setup_trigger">Einrichten: Auslöser</string>
+  <string name="setup_category">Einrichten: Kategorie</string>
+  <string name="setup_action">Einrichten: Aktion</string>
+  <string name="setup_value">Einrichten: Wert</string>
+  <string name="setup_complete">Einrichtung abgeschlossen</string>
+  <string name="screen_off">Bildschirm aus</string>
+  <string name="screen_on">Bildschirm an</string>
+  <string name="cpu">CPU</string>
 </resources>

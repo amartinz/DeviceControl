@@ -383,4 +383,6 @@
   <string name="alert_backup_message">Specificați numele de rezervă (caractere nepermise vor fi înlăturate).\n\nUrmătoarele opţiuni vor funcţiona doar în recuperări pe bază de OpenRecovery.</string>
   <string name="remove_file_title">Ștergere fișier</string>
   <string name="remove_file_summary">Doriţi să ștergeţi fişierul din listă?\n\n%s</string>
+  <string name="emmc_date">Data</string>
+  <string name="setup_complete">Configurarea este completă</string>
 </resources>
