@@ -17,7 +17,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="org.namelessrom.devicecontrol"
-    android:versionCode="88"
+    android:versionCode="89"
     android:versionName="0.7.0">
 
     <uses-sdk tools:node="replace" />
