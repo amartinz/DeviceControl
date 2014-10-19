@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_STATIC_JAVA_LIBRARIES      := android-support-v13-r20 android-support-v7-recyclerview-r21 ion
+LOCAL_STATIC_JAVA_LIBRARIES      := android-support-v13-extra android-support-v7-recyclerview-extra ion
 
 LOCAL_ASSET_DIR    := $(LOCAL_PATH)/assets
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
@@ -54,8 +54,18 @@ include $(call all-makefiles-under,$(LOCAL_PATH))
 
 #===================================================================
 include $(CLEAR_VARS)
-LOCAL_SRC_FILES := ../../../libs/android-support-v7-recyclerview-r21.jar
-LOCAL_MODULE := android-support-v7-recyclerview-r21
+LOCAL_SRC_FILES := ../../../libs/android-support-v7-recyclerview.jar
+LOCAL_MODULE := android-support-v7-recyclerview-extra
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+LOCAL_MODULE_PATH := $(TARGET_OUT)/fake_packages/$(LOCAL_SRC_FILES)
+include $(BUILD_PREBUILT)
+#===================================================================
+
+#===================================================================
+include $(CLEAR_VARS)
+LOCAL_SRC_FILES := ../../../libs/android-support-v13.jar
+LOCAL_MODULE := android-support-v13-extra
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := JAVA_LIBRARIES
 LOCAL_MODULE_PATH := $(TARGET_OUT)/fake_packages/$(LOCAL_SRC_FILES)
