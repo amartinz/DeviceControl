@@ -215,7 +215,7 @@ public class CpuSettingsFragment extends AttachFragment implements DeviceConstan
                     activity, android.R.layout.simple_spinner_item);
             freqAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             for (final String mAvailableFreq : mAvailableFrequencies) {
-                freqAdapter.add(CpuUtils.toMHz(mAvailableFreq));
+                freqAdapter.add(CpuUtils.toMhz(mAvailableFreq));
             }
 
             mMax.setAdapter(freqAdapter);
@@ -309,8 +309,8 @@ public class CpuSettingsFragment extends AttachFragment implements DeviceConstan
             ((CpuCoreView) rowView).core.setText(cpuCore.mCore);
             ((CpuCoreView) rowView).freq.setText(isOffline
                     ? getString(R.string.core_offline)
-                    : CpuUtils.toMHz(String.valueOf(cpuCore.mCoreCurrent))
-                    + " / " + CpuUtils.toMHz(String.valueOf(cpuCore.mCoreMax))
+                    : CpuUtils.toMhz(String.valueOf(cpuCore.mCoreCurrent))
+                    + " / " + CpuUtils.toMhz(String.valueOf(cpuCore.mCoreMax))
                     + " [" + cpuCore.mCoreGov + ']');
             ((CpuCoreView) rowView).bar.setMax(cpuCore.mCoreMax);
             ((CpuCoreView) rowView).bar.setProgress(cpuCore.mCoreCurrent);

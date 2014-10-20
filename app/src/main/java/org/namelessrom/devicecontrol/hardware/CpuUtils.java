@@ -289,13 +289,13 @@ public class CpuUtils {
      * @param mhzString The string to convert to MHz
      * @return tagged and converted String
      */
-    public static String toMHz(final String mhzString) {
+    public static String toMhz(final String mhzString) {
         int value = -1;
         if (!TextUtils.isEmpty(mhzString)) {
             try {
                 value = Utils.parseInt(mhzString) / 1000;
             } catch (NumberFormatException exc) {
-                Logger.e(CpuUtils.get(), "toMHz", exc);
+                Logger.e(CpuUtils.get(), "toMhz", exc);
                 value = -1;
             }
         }

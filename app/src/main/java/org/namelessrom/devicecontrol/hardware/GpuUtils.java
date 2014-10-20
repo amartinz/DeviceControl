@@ -41,17 +41,21 @@ public class GpuUtils {
     private static String gpuGovsAvailablePath = null;
     private static String gpuFreqsAvailPath = null;
     private static String gpuFreqMaxPath = null;
+    private static String gpuFreqMinPath = null;
 
     public static final String FILE_3D_SCALING = "/sys/devices/gr3d/enable_3d_scaling";
 
     public static class Gpu {
         public final String[] available;
         public final String max;
+        public final String min;
         public final String governor;
 
-        public Gpu(final String[] availFreqs, final String maxFreq, final String gov) {
+        public Gpu(final String[] availFreqs, final String maxFreq, final String minFreq,
+                final String gov) {
             available = availFreqs;
             max = maxFreq;
+            min = minFreq;
             governor = gov;
         }
     }
@@ -151,6 +155,23 @@ public class GpuUtils {
         return gpuFreqMaxPath;
     }
 
+    public String getGpuFreqMinPath() {
+        if (gpuFreqMinPath == null) {
+            final String base = getGpuBasePath();
+            final String[] paths = Application.get().getStringArray(R.array.gpu_freqs_min);
+            for (final String s : paths) {
+                if (Utils.fileExists(base + s)) {
+                    gpuFreqMinPath = base + s;
+                    break;
+                }
+            }
+            if (TextUtils.isEmpty(gpuFreqMinPath)) {
+                return "";
+            }
+        }
+        return gpuFreqMinPath;
+    }
+
     public String[] getAvailableFrequencies(final boolean sorted) {
         final String freqsRaw = Utils.readOneLine(getGpuFreqsAvailPath());
         if (freqsRaw != null && !freqsRaw.isEmpty()) {
@@ -174,6 +195,10 @@ public class GpuUtils {
         return Utils.readOneLine(getGpuFreqMaxPath());
     }
 
+    public String getMinFreq() {
+        return Utils.readOneLine(getGpuFreqMinPath());
+    }
+
     public String getGovernor() {
         return Utils.readOneLine(getGpuGovPath());
     }
@@ -182,6 +207,7 @@ public class GpuUtils {
         return new GpuUtils.Gpu(
                 GpuUtils.get().getAvailableFrequencies(true),
                 GpuUtils.get().getMaxFreq(),
+                GpuUtils.get().getMinFreq(),
                 GpuUtils.get().getGovernor());
     }
 
