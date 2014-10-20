@@ -34,6 +34,7 @@ import org.namelessrom.devicecontrol.actions.fs.IoSchedulerAction;
 import org.namelessrom.devicecontrol.actions.fs.ReadAheadAction;
 import org.namelessrom.devicecontrol.actions.gpu.Gpu3dScalingAction;
 import org.namelessrom.devicecontrol.actions.gpu.GpuFreqMaxAction;
+import org.namelessrom.devicecontrol.actions.gpu.GpuFreqMinAction;
 import org.namelessrom.devicecontrol.actions.gpu.GpuGovAction;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
@@ -66,6 +67,7 @@ public class ActionProcessor {
     // GPU
     //----------------------------------------------------------------------------------------------
     public static final String ACTION_GPU_FREQUENCY_MAX = GpuFreqMaxAction.NAME;
+    public static final String ACTION_GPU_FREQUENCY_MIN = GpuFreqMinAction.NAME;
     public static final String ACTION_GPU_GOVERNOR = GpuGovAction.NAME;
 
     //----------------------------------------------------------------------------------------------
@@ -156,11 +158,14 @@ public class ActionProcessor {
                     ACTION_CPU_GOVERNOR));
         }
         // GPU
-        if (TextUtils.equals(CATEGORY_GPU, category)
-                && Utils.fileExists(GpuUtils.get().getGpuBasePath())) {
+        if (TextUtils.equals(CATEGORY_GPU, category)) {
             if (Utils.fileExists(GpuUtils.get().getGpuFreqMaxPath())) {
                 actions.add(new Entry(Application.get().getString(R.string.gpu_freq_max),
                         ACTION_GPU_FREQUENCY_MAX));
+            }
+            if (Utils.fileExists(GpuUtils.get().getGpuFreqMinPath())) {
+                actions.add(new Entry(Application.get().getString(R.string.gpu_freq_min),
+                        ACTION_GPU_FREQUENCY_MIN));
             }
             if (Utils.fileExists(GpuUtils.get().getGpuGovPath())) {
                 actions.add(new Entry(Application.get().getString(R.string.gpu_governor),
@@ -217,7 +222,7 @@ public class ActionProcessor {
             if (freqs == null) return values;
 
             for (final String s : freqs) {
-                values.add(new Entry(CpuUtils.toMHz(s), s));
+                values.add(new Entry(CpuUtils.toMhz(s), s));
             }
         }
 
@@ -232,12 +237,13 @@ public class ActionProcessor {
         }
 
         // GPU frequencies
-        if (TextUtils.equals(ACTION_GPU_FREQUENCY_MAX, action)) {
+        if (TextUtils.equals(ACTION_GPU_FREQUENCY_MAX, action)
+                || TextUtils.equals(ACTION_GPU_FREQUENCY_MIN, action)) {
             final String[] freqs = GpuUtils.get().getAvailableFrequencies(true);
             if (freqs == null) return values;
 
             for (final String s : freqs) {
-                values.add(new Entry(CpuUtils.toMHz(s), s));
+                values.add(new Entry(GpuUtils.toMhz(s), s));
             }
         }
 

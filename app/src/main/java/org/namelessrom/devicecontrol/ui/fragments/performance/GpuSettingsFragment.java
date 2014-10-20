@@ -43,7 +43,8 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private PreferenceCategory mRoot;
 
-    private CustomListPreference mGpuFrequency = null;
+    private CustomListPreference mFreqMax = null;
+    private CustomListPreference mFreqMin = null;
     private CustomListPreference mGpuGovernor = null;
     private CustomCheckBoxPreference m3dScaling = null;
 
@@ -119,19 +120,45 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
                     }
                 }
 
-                if (mGpuFrequency != null) {
-                    mGpuFrequency.setValue(GpuUtils.fromMHz(tmp));
-                    mGpuFrequency.setSummary(tmp);
+                if (mFreqMax != null) {
+                    mFreqMax.setValue(GpuUtils.fromMHz(tmp));
+                    mFreqMax.setSummary(tmp);
                 } else {
-                    mGpuFrequency = new CustomListPreference(getActivity());
-                    mGpuFrequency.setKey("pref_max_gpu");
-                    mGpuFrequency.setTitle(R.string.gpu_freq_max);
-                    mGpuFrequency.setEntries(gpuNames);
-                    mGpuFrequency.setEntryValues(frequencies);
-                    mGpuFrequency.setValue(GpuUtils.fromMHz(tmp));
-                    mGpuFrequency.setSummary(tmp);
-                    mGpuFrequency.setOnPreferenceChangeListener(this);
-                    mRoot.addPreference(mGpuFrequency);
+                    mFreqMax = new CustomListPreference(getActivity());
+                    mFreqMax.setKey("pref_max_gpu");
+                    mFreqMax.setTitle(R.string.gpu_freq_max);
+                    mFreqMax.setEntries(gpuNames);
+                    mFreqMax.setEntryValues(frequencies);
+                    mFreqMax.setValue(GpuUtils.fromMHz(tmp));
+                    mFreqMax.setSummary(tmp);
+                    mFreqMax.setOnPreferenceChangeListener(this);
+                    mRoot.addPreference(mFreqMax);
+                }
+            }
+
+            tmp = gpu.min;
+            if (!TextUtils.isEmpty(tmp) && freqsLength == namesLength) {
+                tmp = tmp.trim();
+                for (int i = 0; i < freqsLength; i++) {
+                    if (frequencies[i].equals(tmp)) {
+                        tmp = gpuNames[i];
+                        break;
+                    }
+                }
+
+                if (mFreqMin != null) {
+                    mFreqMin.setValue(GpuUtils.fromMHz(tmp));
+                    mFreqMin.setSummary(tmp);
+                } else {
+                    mFreqMin = new CustomListPreference(getActivity());
+                    mFreqMin.setKey("pref_min_gpu");
+                    mFreqMin.setTitle(R.string.gpu_freq_min);
+                    mFreqMin.setEntries(gpuNames);
+                    mFreqMin.setEntryValues(frequencies);
+                    mFreqMin.setValue(GpuUtils.fromMHz(tmp));
+                    mFreqMin.setSummary(tmp);
+                    mFreqMin.setOnPreferenceChangeListener(this);
+                    mRoot.addPreference(mFreqMin);
                 }
             }
 
@@ -172,11 +199,17 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
     }
 
     @Override public boolean onPreferenceChange(final Preference preference, final Object objVal) {
-        if (mGpuFrequency == preference) {
+        if (mFreqMax == preference) {
             final String value = String.valueOf(objVal);
-            mGpuFrequency.setValue(value);
-            mGpuFrequency.setSummary(GpuUtils.toMhz(value));
+            mFreqMax.setValue(value);
+            mFreqMax.setSummary(GpuUtils.toMhz(value));
             ActionProcessor.processAction(ActionProcessor.ACTION_GPU_FREQUENCY_MAX, value, true);
+            return true;
+        } else if (mFreqMin == preference) {
+            final String value = String.valueOf(objVal);
+            mFreqMin.setValue(value);
+            mFreqMin.setSummary(GpuUtils.toMhz(value));
+            ActionProcessor.processAction(ActionProcessor.ACTION_GPU_FREQUENCY_MIN, value, true);
             return true;
         } else if (mGpuGovernor == preference) {
             final String value = String.valueOf(objVal);

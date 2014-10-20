@@ -126,6 +126,7 @@
     <string name="gpu_governor">GPU governor</string>
     <string name="gpusettings">GPU settings</string>
     <string name="gpu_freq_max">GPU maximum speed</string>
+    <string name="gpu_freq_min">GPU minimum speed</string>
     <string name="gpu_3d_scaling">GPU 3D scaling</string>
     <string name="gpu_3d_scaling_summary">GPU 3D scaling intelligently regulates the gpu frequency</string>
     <string name="touchkey">Touch key</string>
