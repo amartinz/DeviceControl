@@ -40,13 +40,12 @@ import static android.opengl.GLES20.GL_VERSION;
 import static android.opengl.GLES20.glGetString;
 
 public class GpuSettingsFragment extends AttachPreferenceFragment implements
-        DeviceConstants, GpuUtils.GpuListener, Preference.OnPreferenceChangeListener {
-
+        Preference.OnPreferenceChangeListener {
     private PreferenceCategory mRoot;
 
-    private CustomListPreference     mGpuFrequency = null;
-    private CustomListPreference     mGpuGovernor  = null;
-    private CustomCheckBoxPreference m3dScaling    = null;
+    private CustomListPreference mGpuFrequency = null;
+    private CustomListPreference mGpuGovernor = null;
+    private CustomCheckBoxPreference m3dScaling = null;
 
     private static final int[] GL_INFO = new int[]{
             GL_VENDOR,                  // gpu vendor
@@ -64,7 +63,9 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
             R.string.shader_version     // shader language version
     };
 
-    @Override protected int getFragmentId() { return ID_PERFORMANCE_GPU_SETTINGS; }
+    @Override protected int getFragmentId() {
+        return DeviceConstants.ID_PERFORMANCE_GPU_SETTINGS;
+    }
 
     @Override public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -95,19 +96,14 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
             getPreferenceScreen().removePreference(category);
         }
 
-        GpuUtils.get().getGpu(this);
+        getGpu();
     }
 
-    private void refreshPreferences() {
-        if (Utils.fileExists(GpuUtils.GPU_FREQS_FILE)) {
-            GpuUtils.get().getGpu(this);
-        }
-    }
-
-    @Override public void onGpu(final GpuUtils.Gpu gpu) {
+    private void getGpu() {
         String tmp;
 
-        if (Utils.fileExists(GpuUtils.GPU_FREQS_FILE)) {
+        if (Utils.fileExists(GpuUtils.get().getGpuBasePath())) {
+            final GpuUtils.Gpu gpu = GpuUtils.get().getGpu();
             final String[] frequencies = gpu.available;
             final String[] gpuNames = GpuUtils.freqsToMhz(frequencies);
 
@@ -145,11 +141,12 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
                     mGpuGovernor.setSummary(tmp);
                     mGpuGovernor.setValue(tmp);
                 } else {
+                    final String[] gpuGovs = GovernorUtils.get().getAvailableGpuGovernors();
                     mGpuGovernor = new CustomListPreference(getActivity());
                     mGpuGovernor.setKey("pref_gpu_gov");
                     mGpuGovernor.setTitle(R.string.gpu_governor);
-                    mGpuGovernor.setEntries(GovernorUtils.GPU_GOVS);
-                    mGpuGovernor.setEntryValues(GovernorUtils.GPU_GOVS);
+                    mGpuGovernor.setEntries(gpuGovs);
+                    mGpuGovernor.setEntryValues(gpuGovs);
                     mGpuGovernor.setSummary(tmp);
                     mGpuGovernor.setValue(tmp);
                     mGpuGovernor.setOnPreferenceChangeListener(this);
@@ -175,32 +172,27 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
     }
 
     @Override public boolean onPreferenceChange(final Preference preference, final Object objVal) {
-        boolean changed = false;
-
         if (mGpuFrequency == preference) {
             final String value = String.valueOf(objVal);
             mGpuFrequency.setValue(value);
             mGpuFrequency.setSummary(GpuUtils.toMhz(value));
             ActionProcessor.processAction(ActionProcessor.ACTION_GPU_FREQUENCY_MAX, value, true);
-            changed = true;
+            return true;
         } else if (mGpuGovernor == preference) {
             final String value = String.valueOf(objVal);
             mGpuGovernor.setValue(value);
             mGpuGovernor.setSummary(value);
             ActionProcessor.processAction(ActionProcessor.ACTION_GPU_GOVERNOR, value, true);
-            changed = true;
+            return true;
         } else if (m3dScaling == preference) {
             final boolean value = (Boolean) objVal;
             m3dScaling.setChecked(value);
             ActionProcessor
                     .processAction(ActionProcessor.ACTION_3D_SCALING, value ? "1" : "0", true);
+            return true;
         }
 
-        if (changed) {
-            refreshPreferences();
-        }
-
-        return changed;
+        return false;
     }
 
 }

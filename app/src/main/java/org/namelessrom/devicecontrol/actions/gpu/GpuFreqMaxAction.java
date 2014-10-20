@@ -32,10 +32,10 @@ public class GpuFreqMaxAction extends BaseAction {
 
     public static final String NAME = "gpu_frequency_max";
 
-    public int     id      = -1;
-    public String  trigger = "";
-    public String  value   = "";
-    public boolean bootup  = false;
+    public int id = -1;
+    public String trigger = "";
+    public String value = "";
+    public boolean bootup = false;
 
     public GpuFreqMaxAction(final String value, final boolean bootup) {
         super();
@@ -65,10 +65,10 @@ public class GpuFreqMaxAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_GPU, "gpu_max",
-                    GpuUtils.GPU_MAX_FREQ_FILE, value));
+                    GpuUtils.get().getGpuFreqMaxPath(), value));
         }
 
-        Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.GPU_MAX_FREQ_FILE, value));
+        Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.get().getGpuFreqMaxPath(), value));
     }
 
 }

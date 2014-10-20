@@ -22,11 +22,11 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
 
+import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.objects.MemoryInfo;
-import org.namelessrom.devicecontrol.actions.ActionProcessor;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,11 +35,11 @@ import java.util.List;
  * API Service for use by other apps.
  */
 public class RemoteService extends Service implements CpuUtils.FrequencyListener,
-        GovernorUtils.GovernorListener, GpuUtils.GpuListener {
+        GovernorUtils.GovernorListener {
 
-    private CpuUtils.Frequency     mCpuFreq;
+    private CpuUtils.Frequency mCpuFreq;
     private GovernorUtils.Governor mGovernor;
-    private GpuUtils.Gpu           mGpu;
+    private GpuUtils.Gpu mGpu;
 
     @Override public IBinder onBind(final Intent intent) { return mBinder; }
 
@@ -49,10 +49,6 @@ public class RemoteService extends Service implements CpuUtils.FrequencyListener
 
     @Override public void onGovernor(final GovernorUtils.Governor governor) {
         mGovernor = governor;
-    }
-
-    @Override public void onGpu(final GpuUtils.Gpu gpu) {
-        mGpu = gpu;
     }
 
     private final IRemoteService.Stub mBinder = new IRemoteService.Stub() {
@@ -125,8 +121,7 @@ public class RemoteService extends Service implements CpuUtils.FrequencyListener
         // GPU
         //------------------------------------------------------------------------------------------
         @Override public void prepareGpu() throws RemoteException {
-            mGpu = null;
-            GpuUtils.get().getGpu(RemoteService.this);
+            mGpu = GpuUtils.get().getGpu();
         }
 
         @Override public boolean isGpuAvailable() throws RemoteException { return (mGpu != null); }

@@ -32,10 +32,10 @@ public class GpuGovAction extends BaseAction {
 
     public static final String NAME = "gpu_governor";
 
-    public int     id      = -1;
-    public String  trigger = "";
-    public String  value   = "";
-    public boolean bootup  = false;
+    public int id = -1;
+    public String trigger = "";
+    public String value = "";
+    public boolean bootup = false;
 
     public GpuGovAction(final String value, final boolean bootup) {
         super();
@@ -65,10 +65,10 @@ public class GpuGovAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_GPU, "gpu_gov",
-                    GpuUtils.GPU_GOV_PATH, value));
+                    GpuUtils.get().getGpuGovPath(), value));
         }
 
-        Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.GPU_GOV_PATH, value));
+        Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.get().getGpuGovPath(), value));
     }
 
 }

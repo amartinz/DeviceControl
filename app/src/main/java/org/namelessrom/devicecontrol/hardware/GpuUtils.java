@@ -22,17 +22,13 @@ import android.content.Context;
 import android.content.pm.ConfigurationInfo;
 import android.text.TextUtils;
 
-import com.stericson.roottools.RootTools;
-import com.stericson.roottools.execution.CommandCapture;
-import com.stericson.roottools.execution.Shell;
-
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -40,29 +36,24 @@ import java.util.List;
 
 public class GpuUtils {
 
-    public static final String GPU_FOLDER        = "/sys/class/kgsl";
-    public static final String GPU_GOV_PATH      =
-            GPU_FOLDER + "/kgsl-3d0/pwrscale/trustzone/governor";
-    public static final String GPU_FREQS_FILE    =
-            GPU_FOLDER + "/kgsl-3d0/gpu_available_frequencies";
-    public static final String GPU_MAX_FREQ_FILE = GPU_FOLDER + "/kgsl-3d0/max_gpuclk";
+    private static String gpuBasePath = null;
+    private static String gpuGovPath = null;
+    private static String gpuGovsAvailablePath = null;
+    private static String gpuFreqsAvailPath = null;
+    private static String gpuFreqMaxPath = null;
 
     public static final String FILE_3D_SCALING = "/sys/devices/gr3d/enable_3d_scaling";
 
     public static class Gpu {
         public final String[] available;
-        public final String   max;
-        public final String   governor;
+        public final String max;
+        public final String governor;
 
         public Gpu(final String[] availFreqs, final String maxFreq, final String gov) {
             available = availFreqs;
             max = maxFreq;
             governor = gov;
         }
-    }
-
-    public interface GpuListener {
-        public void onGpu(final Gpu gpu);
     }
 
     private static GpuUtils sInstance;
@@ -76,8 +67,92 @@ public class GpuUtils {
         return sInstance;
     }
 
+    public String getGpuBasePath() {
+        if (gpuBasePath == null) {
+            final String[] paths = Application.get().getStringArray(R.array.gpu_base);
+            for (final String s : paths) {
+                if (Utils.fileExists(s)) {
+                    gpuBasePath = s;
+                    break;
+                }
+            }
+            if (TextUtils.isEmpty(gpuBasePath)) {
+                return "";
+            }
+        }
+        return gpuBasePath;
+    }
+
+    public String getGpuGovPath() {
+        if (gpuGovPath == null) {
+            final String base = getGpuBasePath();
+            final String[] paths = Application.get().getStringArray(R.array.gpu_gov_path);
+            for (final String s : paths) {
+                if (Utils.fileExists(base + s)) {
+                    gpuGovPath = base + s;
+                    break;
+                }
+            }
+            if (TextUtils.isEmpty(gpuGovPath)) {
+                return "";
+            }
+        }
+        return gpuGovPath;
+    }
+
+    public String getGpuGovsAvailablePath() {
+        if (gpuGovsAvailablePath == null) {
+            final String base = getGpuBasePath();
+            final String[] paths = Application.get().getStringArray(R.array.gpu_govs_avail_path);
+            for (final String s : paths) {
+                if (Utils.fileExists(base + s)) {
+                    gpuGovsAvailablePath = base + s;
+                    break;
+                }
+            }
+            if (TextUtils.isEmpty(gpuGovsAvailablePath)) {
+                return "";
+            }
+        }
+        return gpuGovsAvailablePath;
+    }
+
+    public String getGpuFreqsAvailPath() {
+        if (gpuFreqsAvailPath == null) {
+            final String base = getGpuBasePath();
+            final String[] paths = Application.get().getStringArray(R.array.gpu_freqs_avail);
+            for (final String s : paths) {
+                if (Utils.fileExists(base + s)) {
+                    gpuFreqsAvailPath = base + s;
+                    break;
+                }
+            }
+            if (TextUtils.isEmpty(gpuFreqsAvailPath)) {
+                return "";
+            }
+        }
+        return gpuFreqsAvailPath;
+    }
+
+    public String getGpuFreqMaxPath() {
+        if (gpuFreqMaxPath == null) {
+            final String base = getGpuBasePath();
+            final String[] paths = Application.get().getStringArray(R.array.gpu_freqs_max);
+            for (final String s : paths) {
+                if (Utils.fileExists(base + s)) {
+                    gpuFreqMaxPath = base + s;
+                    break;
+                }
+            }
+            if (TextUtils.isEmpty(gpuFreqMaxPath)) {
+                return "";
+            }
+        }
+        return gpuFreqMaxPath;
+    }
+
     public String[] getAvailableFrequencies(final boolean sorted) {
-        final String freqsRaw = Utils.readOneLine(GPU_FREQS_FILE);
+        final String freqsRaw = Utils.readOneLine(getGpuFreqsAvailPath());
         if (freqsRaw != null && !freqsRaw.isEmpty()) {
             final String[] freqs = freqsRaw.split(" ");
             if (!sorted) {
@@ -95,74 +170,26 @@ public class GpuUtils {
         return null;
     }
 
-    public boolean containsGov(final String gov) {
-        for (final String s : GovernorUtils.GPU_GOVS) {
-            if (gov.toLowerCase().equals(s.toLowerCase())) { return true; }
-        }
-        return false;
+    public String getMaxFreq() {
+        return Utils.readOneLine(getGpuFreqMaxPath());
     }
 
-    public void getGpu(final GpuListener listener) {
-        try {
-            final Shell mShell = RootTools.getShell(true);
-            if (mShell == null) { throw new Exception("Shell is null"); }
+    public String getGovernor() {
+        return Utils.readOneLine(getGpuGovPath());
+    }
 
-            final StringBuilder cmd = new StringBuilder();
-            cmd.append("command=$(");
-            cmd.append("cat ").append(GPU_FREQS_FILE).append(" 2> /dev/null;");
-            cmd.append("echo -n \"[\";");
-            cmd.append("cat ").append(GPU_MAX_FREQ_FILE).append(" 2> /dev/null;");
-            cmd.append("echo -n \"]\";");
-            cmd.append("cat ").append(GPU_GOV_PATH).append(" 2> /dev/null;");
-            cmd.append(");").append("echo $command | tr -d \"\\n\"");
-            Logger.v(GpuUtils.class, cmd.toString());
+    public Gpu getGpu() {
+        return new GpuUtils.Gpu(
+                GpuUtils.get().getAvailableFrequencies(true),
+                GpuUtils.get().getMaxFreq(),
+                GpuUtils.get().getGovernor());
+    }
 
-            final StringBuilder outputCollector = new StringBuilder();
-            final CommandCapture cmdCapture = new CommandCapture(0, false, cmd.toString()) {
-                @Override
-                public void commandOutput(int id, String line) {
-                    outputCollector.append(line);
-                    Logger.v(GpuUtils.class, line);
-                }
-
-                @Override
-                public void commandCompleted(int id, int exitcode) {
-                    final List<String> result =
-                            Arrays.asList(outputCollector.toString().split(" "));
-                    final List<String> tmpList = new ArrayList<String>();
-                    String tmpMax = "", tmpGov = "";
-
-                    for (final String s : result) {
-                        if (TextUtils.isEmpty(s)) {
-                            Logger.w(GpuUtils.class, "empty");
-                            continue;
-                        }
-                        if (s.charAt(0) == '[') {
-                            tmpMax = s.substring(1, s.length());
-                        } else if (s.charAt(0) == ']') {
-                            tmpGov = s.substring(1, s.length());
-                        } else {
-                            tmpList.add(s);
-                        }
-                    }
-
-                    final String[] avail = tmpList.toArray(new String[tmpList.size()]);
-                    final String max = tmpMax;
-                    final String gov = tmpGov;
-                    Application.HANDLER.post(new Runnable() {
-                        @Override public void run() {
-                            listener.onGpu(new Gpu(avail, max, gov));
-                        }
-                    });
-
-                }
-            };
-
-            if (mShell.isClosed()) { throw new Exception("Shell is closed"); }
-            mShell.add(cmdCapture);
-        } catch (Exception exc) {
-            Logger.e(GpuUtils.class, String.format("Error: %s", exc.getMessage()));
+    public boolean containsGov(final String gov) {
+        for (final String s : GovernorUtils.get().getAvailableGpuGovernors()) {
+            if (gov.toLowerCase().equals(s.toLowerCase())) return true;
         }
+        return false;
     }
 
     public String restore() {

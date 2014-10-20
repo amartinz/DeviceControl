@@ -156,12 +156,13 @@ public class ActionProcessor {
                     ACTION_CPU_GOVERNOR));
         }
         // GPU
-        if (TextUtils.equals(CATEGORY_GPU, category) && Utils.fileExists(GpuUtils.GPU_FREQS_FILE)) {
-            if (Utils.fileExists(GpuUtils.GPU_MAX_FREQ_FILE)) {
+        if (TextUtils.equals(CATEGORY_GPU, category)
+                && Utils.fileExists(GpuUtils.get().getGpuBasePath())) {
+            if (Utils.fileExists(GpuUtils.get().getGpuFreqMaxPath())) {
                 actions.add(new Entry(Application.get().getString(R.string.gpu_freq_max),
                         ACTION_GPU_FREQUENCY_MAX));
             }
-            if (Utils.fileExists(GpuUtils.GPU_GOV_PATH)) {
+            if (Utils.fileExists(GpuUtils.get().getGpuGovPath())) {
                 actions.add(new Entry(Application.get().getString(R.string.gpu_governor),
                         ACTION_GPU_GOVERNOR));
             }
@@ -222,7 +223,7 @@ public class ActionProcessor {
 
         // CPU governor
         if (TextUtils.equals(ACTION_CPU_GOVERNOR, action)) {
-            final String[] governors = GovernorUtils.get().getAvailableGovernors(false);
+            final String[] governors = GovernorUtils.get().getAvailableCpuGovernors();
             if (governors == null) return values;
 
             for (final String s : governors) {
@@ -242,7 +243,7 @@ public class ActionProcessor {
 
         // GPU governor
         if (TextUtils.equals(ACTION_GPU_GOVERNOR, action)) {
-            final String[] governors = GovernorUtils.get().getAvailableGovernors(true);
+            final String[] governors = GovernorUtils.get().getAvailableGpuGovernors();
             if (governors == null) return values;
 
             for (final String s : governors) {

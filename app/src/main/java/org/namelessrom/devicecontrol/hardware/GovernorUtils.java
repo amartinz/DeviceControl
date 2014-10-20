@@ -1,5 +1,7 @@
 package org.namelessrom.devicecontrol.hardware;
 
+import android.text.TextUtils;
+
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
@@ -33,11 +35,11 @@ public class GovernorUtils {
 
     //----------------------------------------------------------------------------------------------
     public static final String[] GPU_GOVS =
-            {"performance", "ondemand", "simple", "conservative", "interactive"};
+            { "performance", "ondemand", "simple", "conservative", "interactive" };
 
     public static class Governor {
         public final String[] available;
-        public final String   current;
+        public final String current;
 
         public Governor(final String[] availableGovernors, final String governor) {
             available = availableGovernors;
@@ -77,7 +79,7 @@ public class GovernorUtils {
     public String[] getAvailableGovernors(final boolean isGpu) {
         String[] govArray = null;
         final String govs = Utils.readOneLine(isGpu
-                ? GpuUtils.GPU_GOV_PATH : GOV_AVAILALBLE_PATH);
+                ? GpuUtils.get().getGpuGovsAvailablePath() : GOV_AVAILALBLE_PATH);
 
         if (govs != null && !govs.isEmpty()) {
             govArray = govs.split(" ");
@@ -91,10 +93,8 @@ public class GovernorUtils {
     }
 
     public String[] getAvailableGpuGovernors() {
-        // returns a pre defined set of governors
-        // TODO: read dynamically if supported
-        //return getAvailableGovernors(true);
-        return GPU_GOVS;
+        if (TextUtils.isEmpty(GpuUtils.get().getGpuGovsAvailablePath())) return GPU_GOVS;
+        return getAvailableGovernors(true);
     }
 
     public void getGovernor(final GovernorListener listener) {
