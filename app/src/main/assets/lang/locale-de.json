@@ -1,0 +1,16 @@
+{
+  "WELCOME":"Willkommen zu Device Control!",
+  "WELCOME_MESSAGE_1":"Warnung, diese Funktion ist höchstens experimentell!",
+  "WELCOME_MESSAGE_2":"Weitere Funktionen folgen!",
+  "LANGUAGE":"Sprache",
+  "ENGLISH":"Englisch",
+  "GERMAN":"Deutsch",
+  "DEVICE":"Gerät",
+  "FILES":"Dateien",
+  "LICENSES":"Lizenzen",
+  "TOGGLE_NAVIGATION":"Navigation umschalten",
+  "HOME":"Startseite",
+  "NO_FILES_FOUND":"Keine Dateien gefunden…",
+  "FILTER_FILES":"Filtern der Dateien…",
+  "DEVICE_INFORMATION":"Geräteinformation"
+}

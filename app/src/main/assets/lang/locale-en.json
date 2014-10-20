@@ -1,0 +1,16 @@
+{
+  "WELCOME": "Welcome to Device Control!",
+  "WELCOME_MESSAGE_1": "This feature is highly experimental at the current stage, you are warned!",
+  "WELCOME_MESSAGE_2": "More to come soon!",
+  "LANGUAGE": "Language",
+  "ENGLISH": "English",
+  "GERMAN": "German",
+  "DEVICE": "Device",
+  "FILES": "Files",
+  "LICENSES": "Licenses",
+  "TOGGLE_NAVIGATION": "Toggle navigation",
+  "HOME": "Home",
+  "NO_FILES_FOUND": "No files found…",
+  "FILTER_FILES": "Filter files…",
+  "DEVICE_INFORMATION": "Device information"
+}
