@@ -26,9 +26,9 @@ import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
@@ -36,22 +36,21 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class HotpluggingFragment extends AttachPreferenceFragment
-        implements DeviceConstants, Constants,
+        implements DeviceConstants,
         Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener {
 
     //----------------------------------------------------------------------------------------------
     private static final int ID_MPDECISION = 200;
     //----------------------------------------------------------------------------------------------
-    private PreferenceScreen          mRoot;
+    private PreferenceScreen mRoot;
     //----------------------------------------------------------------------------------------------
-    private CustomCheckBoxPreference  mMpDecision;
+    private CustomCheckBoxPreference mMpDecision;
     private AwesomeCheckBoxPreference mIntelliPlug;
     private AwesomeCheckBoxPreference mIntelliPlugEco;
-    private CustomListPreference      mCpuQuietGov;
+    private CustomListPreference mCpuQuietGov;
 
     @Override protected int getFragmentId() { return ID_HOTPLUGGING; }
 
@@ -66,7 +65,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         mMpDecision = (CustomCheckBoxPreference) findPreference("mpdecision");
         if (mMpDecision != null) {
-            if (Utils.fileExists(MPDECISION_PATH)) {
+            if (Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
                 Utils.getCommandResult(this, ID_MPDECISION, "pgrep mpdecision 2> /dev/null;");
             } else {
                 mRoot.removePreference(mMpDecision);
@@ -142,10 +141,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
 
         if (preference == mMpDecision) {
             final boolean value = (Boolean) o;
-            Utils.runRootCommand(CpuUtils.get().enableMpDecision(value));
-            PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_EXTRAS, mMpDecision.getKey(),
-                    MPDECISION_PATH, value ? "1" : "0"));
+            new MpDecisionAction(value ? "1" : "0", true).triggerAction();
             changed = true;
         } else if (preference == mIntelliPlug) {
             mIntelliPlug.writeValue((Boolean) o);

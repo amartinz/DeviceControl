@@ -23,13 +23,13 @@ import android.preference.PreferenceCategory;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.actions.ActionProcessor;
+import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import static android.opengl.GLES20.GL_EXTENSIONS;
@@ -39,7 +39,7 @@ import static android.opengl.GLES20.GL_VENDOR;
 import static android.opengl.GLES20.GL_VERSION;
 import static android.opengl.GLES20.glGetString;
 
-public class GpuSettingsFragment extends AttachPreferenceFragment implements Constants,
+public class GpuSettingsFragment extends AttachPreferenceFragment implements
         DeviceConstants, GpuUtils.GpuListener, Preference.OnPreferenceChangeListener {
 
     private PreferenceCategory mRoot;
@@ -99,7 +99,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements Con
     }
 
     private void refreshPreferences() {
-        if (Utils.fileExists(GPU_FREQUENCIES_FILE)) {
+        if (Utils.fileExists(GpuUtils.GPU_FREQS_FILE)) {
             GpuUtils.get().getGpu(this);
         }
     }
@@ -107,7 +107,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements Con
     @Override public void onGpu(final GpuUtils.Gpu gpu) {
         String tmp;
 
-        if (Utils.fileExists(GPU_FREQUENCIES_FILE)) {
+        if (Utils.fileExists(GpuUtils.GPU_FREQS_FILE)) {
             final String[] frequencies = gpu.available;
             final String[] gpuNames = GpuUtils.freqsToMhz(frequencies);
 
@@ -148,8 +148,8 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements Con
                     mGpuGovernor = new CustomListPreference(getActivity());
                     mGpuGovernor.setKey("pref_gpu_gov");
                     mGpuGovernor.setTitle(R.string.gpu_governor);
-                    mGpuGovernor.setEntries(GPU_GOVS);
-                    mGpuGovernor.setEntryValues(GPU_GOVS);
+                    mGpuGovernor.setEntries(GovernorUtils.GPU_GOVS);
+                    mGpuGovernor.setEntryValues(GovernorUtils.GPU_GOVS);
                     mGpuGovernor.setSummary(tmp);
                     mGpuGovernor.setValue(tmp);
                     mGpuGovernor.setOnPreferenceChangeListener(this);
@@ -158,11 +158,11 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements Con
             }
         }
 
-        if (Utils.fileExists(FILE_3D_SCALING)) {
+        if (Utils.fileExists(GpuUtils.FILE_3D_SCALING)) {
             if (m3dScaling == null) {
-                tmp = Utils.readOneLine(FILE_3D_SCALING);
+                tmp = Utils.readOneLine(GpuUtils.FILE_3D_SCALING);
                 m3dScaling = new CustomCheckBoxPreference(getActivity());
-                m3dScaling.setKey(PREF_3D_SCALING);
+                m3dScaling.setKey("3d_scaling");
                 m3dScaling.setTitle(R.string.gpu_3d_scaling);
                 m3dScaling.setSummary(R.string.gpu_3d_scaling_summary);
                 m3dScaling.setChecked(tmp != null && tmp.equals("1"));

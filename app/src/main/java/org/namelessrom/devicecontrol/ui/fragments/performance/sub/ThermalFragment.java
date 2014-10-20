@@ -25,16 +25,16 @@ import android.preference.PreferenceScreen;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.hardware.ThermalUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class ThermalFragment extends AttachPreferenceFragment
-        implements DeviceConstants, Constants, Preference.OnPreferenceChangeListener {
+        implements DeviceConstants, Preference.OnPreferenceChangeListener {
 
     //----------------------------------------------------------------------------------------------
     private PreferenceScreen          mRoot;
@@ -89,8 +89,8 @@ public class ThermalFragment extends AttachPreferenceFragment
 
             mMsmThermalLimit = (CustomEditTextPreference) findPreference("msm_thermal_temp_limit");
             if (mMsmThermalLimit != null) {
-                if (Utils.fileExists(MSM_THERMAL_TEMP_LIMIT)) {
-                    tmpString = Utils.readOneLine(MSM_THERMAL_TEMP_LIMIT);
+                if (Utils.fileExists(ThermalUtils.MSM_THERMAL_TEMP_LIMIT)) {
+                    tmpString = Utils.readOneLine(ThermalUtils.MSM_THERMAL_TEMP_LIMIT);
                     mMsmThermalLimit.setText(tmpString);
                     mMsmThermalLimit.setSummary(tmpString);
                     mMsmThermalLimit.setOnPreferenceChangeListener(this);
@@ -102,8 +102,8 @@ public class ThermalFragment extends AttachPreferenceFragment
             mMsmThermalCoreLimit =
                     (CustomEditTextPreference) findPreference("msm_thermal_core_temp_limit");
             if (mMsmThermalCoreLimit != null) {
-                if (Utils.fileExists(MSM_THERMAL_CORE_TEMP_LIMIT)) {
-                    tmpString = Utils.readOneLine(MSM_THERMAL_CORE_TEMP_LIMIT);
+                if (Utils.fileExists(ThermalUtils.MSM_THERMAL_CORE_TEMP_LIMIT)) {
+                    tmpString = Utils.readOneLine(ThermalUtils.MSM_THERMAL_CORE_TEMP_LIMIT);
                     mMsmThermalCoreLimit.setText(tmpString);
                     mMsmThermalCoreLimit.setSummary(tmpString);
                     mMsmThermalCoreLimit.setOnPreferenceChangeListener(this);
@@ -114,8 +114,8 @@ public class ThermalFragment extends AttachPreferenceFragment
 
             mMsmThermalCoreMax = (CustomEditTextPreference) findPreference("msm_thermal_core_max");
             if (mMsmThermalCoreMax != null) {
-                if (Utils.fileExists(MSM_THERMAL_MAX_CORE)) {
-                    tmpString = Utils.readOneLine(MSM_THERMAL_MAX_CORE);
+                if (Utils.fileExists(ThermalUtils.MSM_THERMAL_MAX_CORE)) {
+                    tmpString = Utils.readOneLine(ThermalUtils.MSM_THERMAL_MAX_CORE);
                     mMsmThermalCoreMax.setText(tmpString);
                     mMsmThermalCoreMax.setSummary(tmpString);
                     mMsmThermalCoreMax.setOnPreferenceChangeListener(this);
@@ -126,8 +126,8 @@ public class ThermalFragment extends AttachPreferenceFragment
 
             mMsmThermalCoreMin = (CustomEditTextPreference) findPreference("msm_thermal_core_min");
             if (mMsmThermalCoreMin != null) {
-                if (Utils.fileExists(MSM_THERMAL_MIN_CORE)) {
-                    tmpString = Utils.readOneLine(MSM_THERMAL_MIN_CORE);
+                if (Utils.fileExists(ThermalUtils.MSM_THERMAL_MIN_CORE)) {
+                    tmpString = Utils.readOneLine(ThermalUtils.MSM_THERMAL_MIN_CORE);
                     mMsmThermalCoreMin.setText(tmpString);
                     mMsmThermalCoreMin.setSummary(tmpString);
                     mMsmThermalCoreMin.setOnPreferenceChangeListener(this);
@@ -180,22 +180,22 @@ public class ThermalFragment extends AttachPreferenceFragment
         } else if (mMsmThermalLimit == preference) {
             final String value = validateValue(String.valueOf(o), 0);
             if (value.isEmpty()) return false;
-            preferenceChange(mMsmThermalLimit, value, MSM_THERMAL_TEMP_LIMIT);
+            preferenceChange(mMsmThermalLimit, value, ThermalUtils.MSM_THERMAL_TEMP_LIMIT);
             return true;
         } else if (mMsmThermalCoreLimit == preference) {
             final String value = validateValue(String.valueOf(o), 1);
             if (value.isEmpty()) return false;
-            preferenceChange(mMsmThermalCoreLimit, value, MSM_THERMAL_CORE_TEMP_LIMIT);
+            preferenceChange(mMsmThermalCoreLimit, value, ThermalUtils.MSM_THERMAL_CORE_TEMP_LIMIT);
             return true;
         } else if (mMsmThermalCoreMax == preference) {
             final String value = validateValue(String.valueOf(o), 2);
             if (value.isEmpty()) return false;
-            preferenceChange(mMsmThermalCoreMax, value, MSM_THERMAL_MAX_CORE);
+            preferenceChange(mMsmThermalCoreMax, value, ThermalUtils.MSM_THERMAL_MAX_CORE);
             return true;
         } else if (mMsmThermalCoreMin == preference) {
             final String value = validateValue(String.valueOf(o), 3);
             if (value.isEmpty()) return false;
-            preferenceChange(mMsmThermalCoreMin, value, MSM_THERMAL_MIN_CORE);
+            preferenceChange(mMsmThermalCoreMin, value, ThermalUtils.MSM_THERMAL_MIN_CORE);
             return true;
         }
 

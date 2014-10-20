@@ -24,9 +24,9 @@ import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.hardware.IoUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 
 public class IoSchedulerAction extends BaseAction {
 
@@ -45,7 +45,7 @@ public class IoSchedulerAction extends BaseAction {
 
     @Override public String getName() { return NAME; }
 
-    @Override public String getCategory() { return ActionProcessor.CATEGORY_GPU; }
+    @Override public String getCategory() { return ActionProcessor.CATEGORY_FS; }
 
     @Override public String getTrigger() { return trigger; }
 
@@ -65,7 +65,7 @@ public class IoSchedulerAction extends BaseAction {
 
         final StringBuilder sb = new StringBuilder();
         int c = 0;
-        for (final String ioPath : Constants.IO_SCHEDULER_PATH) {
+        for (final String ioPath : IoUtils.IO_SCHEDULER_PATH) {
             sb.append(Utils.getWriteCommand(ioPath, value));
             if (bootup) {
                 PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS,

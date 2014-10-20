@@ -38,10 +38,10 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.hardware.ExtraUtils;
 import org.namelessrom.devicecontrol.ui.views.AttachListFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.List;
@@ -112,10 +112,10 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
 
     private void applyMinFree(String value) {
         if (value.endsWith(",")) { value = value.substring(0, value.length() - 1); }
-        Utils.runRootCommand(Utils.getWriteCommand(Constants.FILE_MINFREE, value));
+        Utils.runRootCommand(Utils.getWriteCommand(ExtraUtils.FILE_MINFREE, value));
 
         PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_LMK, "lmk",
-                Constants.FILE_MINFREE, value));
+                ExtraUtils.FILE_MINFREE, value));
 
         final Context context = (getActivity() != null) ? getActivity() : Application.get();
         adapter = new LmkAdapter(context, value.trim().split(","));
@@ -154,7 +154,7 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
 
     private class LmkTask extends AsyncTask<Void, Void, String[]> {
         @Override protected String[] doInBackground(Void... voids) {
-            final String values = Utils.readFile(Constants.FILE_MINFREE);
+            final String values = Utils.readFile(ExtraUtils.FILE_MINFREE);
             if (values != null) {
                 return values.trim().replace("\n", "").split(",");
             }

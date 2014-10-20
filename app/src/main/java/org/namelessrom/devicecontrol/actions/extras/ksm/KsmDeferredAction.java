@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.actions.extras;
+package org.namelessrom.devicecontrol.actions.extras.ksm;
 
 import android.text.TextUtils;
 
@@ -46,7 +46,7 @@ public class KsmDeferredAction extends BaseAction {
 
     @Override public String getName() { return NAME; }
 
-    @Override public String getCategory() { return ActionProcessor.CATEGORY_GPU; }
+    @Override public String getCategory() { return ActionProcessor.CATEGORY_EXTRAS; }
 
     @Override public String getTrigger() { return trigger; }
 

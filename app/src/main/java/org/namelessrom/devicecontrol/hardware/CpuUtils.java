@@ -31,7 +31,6 @@ import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.monitors.CpuStateMonitor;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,12 +41,23 @@ import java.util.List;
 /**
  * Generic CPU Tasks.
  */
-public class CpuUtils implements Constants {
+public class CpuUtils {
+
+    //----------------------------------------------------------------------------------------------
+    public static final String CPU_BASE = "/sys/devices/system/cpu/";
+    public static final String CORE_ONLINE = CPU_BASE + "cpu%s/online";
+    public static final String CORE_PRESENT = CPU_BASE + "present";
+    public static final String FREQ_AVAIL = CPU_BASE + "cpu0/cpufreq/scaling_available_frequencies";
+    public static final String FREQ_CURRENT = CPU_BASE + "cpu%s/cpufreq/scaling_cur_freq";
+    public static final String FREQ_MAX = CPU_BASE + "cpu%s/cpufreq/scaling_max_freq";
+    public static final String FREQ_MIN = CPU_BASE + "cpu%s/cpufreq/scaling_min_freq";
+
+    public static final String FREQ_TIME_IN_STATE = CPU_BASE + "cpu0/cpufreq/stats/time_in_state";
 
     public static class Frequency {
         public final String[] available;
-        public final String   maximum;
-        public final String   minimum;
+        public final String maximum;
+        public final String minimum;
 
         public Frequency(final String[] avail, final String max, final String min) {
             available = avail;
@@ -64,7 +74,7 @@ public class CpuUtils implements Constants {
 
     public static class State {
         public final List<CpuStateMonitor.CpuState> states;
-        public final long                           totalTime;
+        public final long totalTime;
 
         public State(final List<CpuStateMonitor.CpuState> stateList, final long totalStateTime) {
             states = stateList;
@@ -96,66 +106,26 @@ public class CpuUtils implements Constants {
     }
 
     public String getCpuFrequencyPath(final int cpu) {
-        switch (cpu) {
-            default:
-            case 0:
-                return CPU0_FREQ_CURRENT_PATH;
-            case 1:
-                return CPU1_FREQ_CURRENT_PATH;
-            case 2:
-                return CPU2_FREQ_CURRENT_PATH;
-            case 3:
-                return CPU3_FREQ_CURRENT_PATH;
-        }
+        return String.format(FREQ_CURRENT, cpu);
     }
 
     public String getMaxCpuFrequencyPath(final int cpu) {
-        switch (cpu) {
-            default:
-            case 0:
-                return FREQ0_MAX_PATH;
-            case 1:
-                return FREQ1_MAX_PATH;
-            case 2:
-                return FREQ2_MAX_PATH;
-            case 3:
-                return FREQ3_MAX_PATH;
-        }
+        return String.format(FREQ_MAX, cpu);
     }
 
     public String getMinCpuFrequencyPath(final int cpu) {
-        switch (cpu) {
-            default:
-            case 0:
-                return FREQ0_MIN_PATH;
-            case 1:
-                return FREQ1_MIN_PATH;
-            case 2:
-                return FREQ2_MIN_PATH;
-            case 3:
-                return FREQ3_MIN_PATH;
-        }
+        return String.format(FREQ_MIN, cpu);
     }
 
     public String getOnlinePath(final int cpu) {
-        switch (cpu) {
-            default:
-            case 0:
-                return "";
-            case 1:
-                return CORE1_ONLINE;
-            case 2:
-                return CORE2_ONLINE;
-            case 3:
-                return CORE3_ONLINE;
-        }
+        return String.format(CORE_ONLINE, cpu);
     }
 
     public int getCpuTemperature() {
-        String tmpString = Utils.readOneLine(CPU_TEMP_PATH);
+        String tmpString = Utils.readOneLine(ThermalUtils.CPU_TEMP_PATH);
         if (!TextUtils.isEmpty(tmpString) && !tmpString.trim().isEmpty()) {
             int temp;
-            try { temp = Utils.parseInt(tmpString);} catch (Exception e) { return -1; }
+            try { temp = Utils.parseInt(tmpString); } catch (Exception e) { return -1; }
             temp = (temp < 0 ? 0 : temp);
             temp = (temp > 100 ? 100 : temp);
             return temp;
@@ -164,7 +134,7 @@ public class CpuUtils implements Constants {
     }
 
     public String[] getAvailableFrequencies(final boolean sorted) {
-        final String freqsRaw = Utils.readOneLine(FREQ_AVAILABLE_PATH);
+        final String freqsRaw = Utils.readOneLine(FREQ_AVAIL);
         if (freqsRaw != null && !freqsRaw.isEmpty()) {
             final String[] freqs = freqsRaw.split(" ");
             if (!sorted) {
@@ -189,7 +159,7 @@ public class CpuUtils implements Constants {
      */
     public int getNumOfCpus() {
         int numOfCpu = 1;
-        final String numOfCpus = Utils.readOneLine(PRESENT_CPUS);
+        final String numOfCpus = Utils.readOneLine(CORE_PRESENT);
         if (numOfCpus != null && !numOfCpus.isEmpty()) {
             final String[] cpuCount = numOfCpus.split("-");
             if (cpuCount.length > 1) {
@@ -244,11 +214,11 @@ public class CpuUtils implements Constants {
 
             final StringBuilder cmd = new StringBuilder();
             cmd.append("command=$(");
-            cmd.append("cat ").append(FREQ_AVAILABLE_PATH).append(" 2> /dev/null;");
+            cmd.append("cat ").append(FREQ_AVAIL).append(" 2> /dev/null;");
             cmd.append("echo -n \"[\";");
-            cmd.append("cat ").append(FREQ0_MAX_PATH).append(" 2> /dev/null;");
+            cmd.append("cat ").append(getMaxCpuFrequencyPath(0)).append(" 2> /dev/null;");
             cmd.append("echo -n \"]\";");
-            cmd.append("cat ").append(FREQ0_MIN_PATH).append(" 2> /dev/null;");
+            cmd.append("cat ").append(getMinCpuFrequencyPath(0)).append(" 2> /dev/null;");
             cmd.append(");").append("echo $command | tr -d \"\\n\"");
             Logger.v(CpuUtils.class, cmd.toString());
 
@@ -267,10 +237,14 @@ public class CpuUtils implements Constants {
                     final List<String> tmpList = new ArrayList<String>();
                     String tmpMax = "", tmpMin = "";
 
-                    if (result.size() <= 0) return;
+                    if (result.size() <= 0) {
+                        return;
+                    }
 
                     for (final String s : result) {
-                        if (s.isEmpty()) continue;
+                        if (s.isEmpty()) {
+                            continue;
+                        }
                         if (s.charAt(0) == '[') {
                             tmpMax = s.substring(1, s.length());
                         } else if (s.charAt(0) == ']') {
@@ -297,10 +271,6 @@ public class CpuUtils implements Constants {
         } catch (Exception exc) {
             Logger.e(CpuUtils.class, "Error: " + exc.getMessage());
         }
-    }
-
-    public String enableMpDecision(final boolean start) {
-        return (start ? "start mpdecision 2> /dev/null;\n" : "stop mpdecision 2> /dev/null;\n");
     }
 
     public String onlineCpu(final int cpu) {

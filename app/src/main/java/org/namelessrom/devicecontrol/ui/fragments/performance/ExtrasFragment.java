@@ -26,9 +26,12 @@ import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.hardware.KsmUtils;
+import org.namelessrom.devicecontrol.hardware.ThermalUtils;
+import org.namelessrom.devicecontrol.hardware.VoltageUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
@@ -36,20 +39,19 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.List;
 
 public class ExtrasFragment extends AttachPreferenceFragment
-        implements DeviceConstants, Constants,
+        implements DeviceConstants,
         Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
     //==============================================================================================
     // Files
     //==============================================================================================
     private static final String TCP_CONGESTION_AVAILABLE =
             "/proc/sys/net/ipv4/tcp_available_congestion_control";
-    private static final String TCP_CONGESTION_CONTROL   =
+    private static final String TCP_CONGESTION_CONTROL =
             "/proc/sys/net/ipv4/tcp_congestion_control";
 
     //----------------------------------------------------------------------------------------------
@@ -64,11 +66,11 @@ public class ExtrasFragment extends AttachPreferenceFragment
 
     //----------------------------------------------------------------------------------------------
     private AwesomeCheckBoxPreference mPowerEfficientWork;
-    private AwesomeListPreference     mMcPowerScheduler;
+    private AwesomeListPreference mMcPowerScheduler;
 
     //----------------------------------------------------------------------------------------------
     private AwesomeCheckBoxPreference mMsmDcvs;
-    private CustomPreference          mVoltageControl;
+    private CustomPreference mVoltageControl;
 
     //----------------------------------------------------------------------------------------------
     private CustomListPreference mTcpCongestion;
@@ -108,7 +110,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
         if (category != null) {
             mKsm = (CustomPreference) findPreference("ksm");
             if (mKsm != null) {
-                if (Utils.fileExists(KSM_PATH)) {
+                if (Utils.fileExists(KsmUtils.KSM_PATH)) {
                     mKsm.setOnPreferenceClickListener(this);
                 } else {
                     category.removePreference(mKsm);
@@ -119,7 +121,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
             if (mHotplugging != null) {
                 if (Utils.fileExists(getString(R.string.file_intelli_plug_base))
                         || Utils.fileExists(getString(R.string.file_cpu_quiet_base))
-                        || Utils.fileExists(MPDECISION_PATH)) {
+                        || Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
                     mHotplugging.setOnPreferenceClickListener(this);
                 } else {
                     category.removePreference(mHotplugging);
@@ -128,7 +130,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
 
             mThermal = (CustomPreference) findPreference("thermal");
             if (mThermal != null) {
-                if (Utils.fileExists(MSM_THERMAL_PARAMS)
+                if (Utils.fileExists(ThermalUtils.MSM_THERMAL_PARAMS)
                         || Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
                     mThermal.setOnPreferenceClickListener(this);
                 } else {
@@ -184,7 +186,8 @@ public class ExtrasFragment extends AttachPreferenceFragment
 
             mVoltageControl = (CustomPreference) findPreference("voltage_control");
             if (mVoltageControl != null) {
-                if (Utils.fileExists(VDD_TABLE_FILE) || Utils.fileExists(UV_TABLE_FILE)) {
+                if (Utils.fileExists(VoltageUtils.VDD_TABLE_FILE) || Utils.fileExists(
+                        VoltageUtils.UV_TABLE_FILE)) {
                     mVoltageControl.setOnPreferenceClickListener(this);
                 } else {
                     category.removePreference(mVoltageControl);
@@ -298,8 +301,8 @@ public class ExtrasFragment extends AttachPreferenceFragment
             name = item.getFileName();
             value = item.getValue();
 
-            if (MPDECISION_PATH.equals(name)) {
-                sbCmd.append(CpuUtils.get().enableMpDecision(value.equals("1")));
+            if (MpDecisionAction.MPDECISION_PATH.equals(name)) {
+                new MpDecisionAction(value, false).triggerAction();
             } else {
                 sbCmd.append(Utils.getWriteCommand(name, value));
             }

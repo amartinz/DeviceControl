@@ -24,9 +24,9 @@ import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 
 public class GpuFreqMaxAction extends BaseAction {
 
@@ -65,10 +65,10 @@ public class GpuFreqMaxAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_GPU, "gpu_max",
-                    Constants.GPU_MAX_FREQ_FILE, value));
+                    GpuUtils.GPU_MAX_FREQ_FILE, value));
         }
 
-        Utils.runRootCommand(Utils.getWriteCommand(Constants.GPU_MAX_FREQ_FILE, value));
+        Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.GPU_MAX_FREQ_FILE, value));
     }
 
 }

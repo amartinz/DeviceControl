@@ -8,10 +8,10 @@ import android.os.Bundle;
 import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.hardware.VoltageUtils;
 import org.namelessrom.devicecontrol.services.BootUpService;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 
 import java.util.ArrayList;
 
@@ -27,8 +27,8 @@ public class SobDialogFragment extends DialogFragment {
         entries.add(R.string.sysctl_vm);
         entries.add(R.string.low_memory_killer);
 
-        if (Utils.fileExists(Constants.VDD_TABLE_FILE)
-                || Utils.fileExists(Constants.UV_TABLE_FILE)) {
+        if (Utils.fileExists(VoltageUtils.VDD_TABLE_FILE)
+                || Utils.fileExists(VoltageUtils.UV_TABLE_FILE)) {
             entries.add(R.string.voltage_control);
         }
     }

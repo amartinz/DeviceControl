@@ -24,9 +24,9 @@ import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 
 public class Gpu3dScalingAction extends BaseAction {
 
@@ -65,10 +65,10 @@ public class Gpu3dScalingAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_GPU,
-                    Constants.PREF_3D_SCALING, Constants.FILE_3D_SCALING, value));
+                    "3d_scaling", GpuUtils.FILE_3D_SCALING, value));
         }
 
-        Utils.runRootCommand(Utils.getWriteCommand(Constants.FILE_3D_SCALING, value));
+        Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.FILE_3D_SCALING, value));
     }
 
 }

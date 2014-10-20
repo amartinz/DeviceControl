@@ -26,24 +26,23 @@ import android.text.TextUtils;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.ui.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.editor.LowMemoryKillerFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.editor.SysctlFragment;
-import org.namelessrom.devicecontrol.hardware.CpuUtils;
-import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.File;
 
 public class BootUpService extends IntentService
-        implements DeviceConstants, Constants {
+        implements DeviceConstants {
 
     public static final String SOB_SYSCTL  = "sob_sysctl";
     public static final String SOB_CPU     = "sob_cpu";

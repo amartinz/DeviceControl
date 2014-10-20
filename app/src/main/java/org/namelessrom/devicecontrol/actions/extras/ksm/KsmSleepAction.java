@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.actions.extras;
+package org.namelessrom.devicecontrol.actions.extras.ksm;
 
 import android.text.TextUtils;
 
@@ -24,20 +24,20 @@ import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.hardware.KsmUtils;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 
-public class KsmPagesAction extends BaseAction {
+public class KsmSleepAction extends BaseAction {
 
-    public static final String NAME = "ksm_pages";
+    public static final String NAME = "ksm_sleep";
 
     public int     id      = -1;
     public String  trigger = "";
     public String  value   = "";
     public boolean bootup  = false;
 
-    public KsmPagesAction(final String value, final boolean bootup) {
+    public KsmSleepAction(final String value, final boolean bootup) {
         super();
         this.value = value;
         this.bootup = bootup;
@@ -45,7 +45,7 @@ public class KsmPagesAction extends BaseAction {
 
     @Override public String getName() { return NAME; }
 
-    @Override public String getCategory() { return ActionProcessor.CATEGORY_GPU; }
+    @Override public String getCategory() { return ActionProcessor.CATEGORY_EXTRAS; }
 
     @Override public String getTrigger() { return trigger; }
 
@@ -65,10 +65,10 @@ public class KsmPagesAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS,
-                    "ksm_pages_to_scan", Constants.KSM_PAGES_TO_SCAN, value));
+                    "ksm_sleep", KsmUtils.KSM_SLEEP, value));
         }
 
-        Utils.runRootCommand(Utils.getWriteCommand(Constants.KSM_PAGES_TO_SCAN, value));
+        Utils.runRootCommand(Utils.getWriteCommand(KsmUtils.KSM_SLEEP, value));
     }
 
 }

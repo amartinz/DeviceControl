@@ -26,11 +26,10 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class FlasherPreferencesFragment extends AttachPreferenceFragment
-        implements Preference.OnPreferenceChangeListener, DeviceConstants, Constants {
+        implements Preference.OnPreferenceChangeListener, DeviceConstants {
 
     private CustomListPreference mRecoveryType;
 

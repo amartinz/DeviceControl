@@ -47,7 +47,6 @@ import org.namelessrom.devicecontrol.ui.views.CpuCoreView;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.Arrays;
@@ -55,7 +54,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class CpuSettingsFragment extends AttachFragment implements DeviceConstants, Constants,
+public class CpuSettingsFragment extends AttachFragment implements DeviceConstants,
         CpuUtils.CoreListener, CpuUtils.FrequencyListener, GovernorUtils.GovernorListener {
 
     private CheckBox mStatusHide;

@@ -1,7 +1,5 @@
 package org.namelessrom.devicecontrol.hardware;
 
-import org.namelessrom.devicecontrol.utils.constants.Constants;
-
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
@@ -12,6 +10,9 @@ import java.util.ArrayList;
 
 public class VoltageUtils {
 
+    //----------------------------------------------------------------------------------------------
+    public static final String UV_TABLE_FILE  = CpuUtils.CPU_BASE + "cpu0/cpufreq/UV_mV_table";
+    public static final String VDD_TABLE_FILE = CpuUtils.CPU_BASE + "cpufreq/vdd_table/vdd_levels";
     private static VoltageUtils sInstance;
 
     private VoltageUtils() { }
@@ -32,11 +33,11 @@ public class VoltageUtils {
         DataInputStream in = null;
         BufferedReader br = null;
         try {
-            File f = new File(Constants.VDD_TABLE_FILE);
+            File f = new File(VDD_TABLE_FILE);
             if (f.exists()) {
                 fstream = new FileInputStream(f);
             } else {
-                f = new File(Constants.UV_TABLE_FILE);
+                f = new File(UV_TABLE_FILE);
                 if (f.exists()) {
                     fstream = new FileInputStream(f);
                 }

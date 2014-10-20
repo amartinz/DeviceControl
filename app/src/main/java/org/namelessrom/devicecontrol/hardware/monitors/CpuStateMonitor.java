@@ -79,7 +79,7 @@ public class CpuStateMonitor implements DeviceConstants {
         InputStreamReader ir = null;
         BufferedReader br = null;
         try {
-            is = new FileInputStream(CpuUtils.FREQ_TIME_IN_STATE_PATH);
+            is = new FileInputStream(CpuUtils.FREQ_TIME_IN_STATE);
             ir = new InputStreamReader(is);
             br = new BufferedReader(ir);
             mStates.clear();

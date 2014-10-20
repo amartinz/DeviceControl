@@ -31,7 +31,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,7 +38,16 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class GpuUtils implements Constants {
+public class GpuUtils {
+
+    public static final String GPU_FOLDER        = "/sys/class/kgsl";
+    public static final String GPU_GOV_PATH      =
+            GPU_FOLDER + "/kgsl-3d0/pwrscale/trustzone/governor";
+    public static final String GPU_FREQS_FILE    =
+            GPU_FOLDER + "/kgsl-3d0/gpu_available_frequencies";
+    public static final String GPU_MAX_FREQ_FILE = GPU_FOLDER + "/kgsl-3d0/max_gpuclk";
+
+    public static final String FILE_3D_SCALING = "/sys/devices/gr3d/enable_3d_scaling";
 
     public static class Gpu {
         public final String[] available;
@@ -69,7 +77,7 @@ public class GpuUtils implements Constants {
     }
 
     public String[] getAvailableFrequencies(final boolean sorted) {
-        final String freqsRaw = Utils.readOneLine(GPU_FREQUENCIES_FILE);
+        final String freqsRaw = Utils.readOneLine(GPU_FREQS_FILE);
         if (freqsRaw != null && !freqsRaw.isEmpty()) {
             final String[] freqs = freqsRaw.split(" ");
             if (!sorted) {
@@ -88,7 +96,7 @@ public class GpuUtils implements Constants {
     }
 
     public boolean containsGov(final String gov) {
-        for (final String s : GPU_GOVS) {
+        for (final String s : GovernorUtils.GPU_GOVS) {
             if (gov.toLowerCase().equals(s.toLowerCase())) { return true; }
         }
         return false;
@@ -101,7 +109,7 @@ public class GpuUtils implements Constants {
 
             final StringBuilder cmd = new StringBuilder();
             cmd.append("command=$(");
-            cmd.append("cat ").append(GPU_FREQUENCIES_FILE).append(" 2> /dev/null;");
+            cmd.append("cat ").append(GPU_FREQS_FILE).append(" 2> /dev/null;");
             cmd.append("echo -n \"[\";");
             cmd.append("cat ").append(GPU_MAX_FREQ_FILE).append(" 2> /dev/null;");
             cmd.append("echo -n \"]\";");

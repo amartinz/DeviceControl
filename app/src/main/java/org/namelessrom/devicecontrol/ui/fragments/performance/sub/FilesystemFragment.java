@@ -26,7 +26,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.Emmc;
-import org.namelessrom.devicecontrol.hardware.IoSchedulerUtils;
+import org.namelessrom.devicecontrol.hardware.IoUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
@@ -35,11 +35,10 @@ import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class FilesystemFragment extends AttachPreferenceFragment implements DeviceConstants,
-        IoSchedulerUtils.IoSchedulerListener, Preference.OnPreferenceChangeListener {
+        IoUtils.IoSchedulerListener, Preference.OnPreferenceChangeListener {
 
     private CustomListPreference mIoScheduler;
     private CustomListPreference mReadAhead;
@@ -61,11 +60,11 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
 
         mIoScheduler = (CustomListPreference) findPreference("io");
         mIoScheduler.setEnabled(false);
-        IoSchedulerUtils.get().getIoScheduler(this);
+        IoUtils.get().getIoScheduler(this);
         // setting listener when "onIoScheduler" arrives
 
         mReadAhead = (CustomListPreference) findPreference("read_ahead");
-        value = Utils.readOneLine(Constants.READ_AHEAD_PATH[0]);
+        value = Utils.readOneLine(IoUtils.READ_AHEAD_PATH[0]);
         mReadAhead.setValue(value);
         mReadAhead.setSummary(mapReadAhead(value));
         mReadAhead.setOnPreferenceChangeListener(this);
@@ -181,7 +180,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
         }
     }
 
-    @Override public void onIoScheduler(final IoSchedulerUtils.IoScheduler ioScheduler) {
+    @Override public void onIoScheduler(final IoUtils.IoScheduler ioScheduler) {
         final Activity activity = getActivity();
         if (activity != null && ioScheduler != null) {
             if (ioScheduler.available != null && ioScheduler.available.length > 0

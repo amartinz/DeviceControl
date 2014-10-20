@@ -7,13 +7,21 @@ import com.stericson.roottools.execution.Shell;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class IoSchedulerUtils {
+public class IoUtils {
+
+    public static final String[] IO_SCHEDULER_PATH = {
+            "/sys/block/mmcblk0/queue/scheduler",
+            "/sys/block/mmcblk1/queue/scheduler"
+    };
+    public static final String[] READ_AHEAD_PATH   = {
+            "/sys/block/mmcblk0/queue/read_ahead_kb",
+            "/sys/block/mmcblk1/queue/read_ahead_kb"
+    };
 
     public static class IoScheduler {
         public final String[] available;
@@ -29,13 +37,13 @@ public class IoSchedulerUtils {
         public void onIoScheduler(final IoScheduler ioScheduler);
     }
 
-    private static IoSchedulerUtils sInstance;
+    private static IoUtils sInstance;
 
-    private IoSchedulerUtils() { }
+    private IoUtils() { }
 
-    public static IoSchedulerUtils get() {
+    public static IoUtils get() {
         if (sInstance == null) {
-            sInstance = new IoSchedulerUtils();
+            sInstance = new IoUtils();
         }
         return sInstance;
     }
@@ -47,7 +55,7 @@ public class IoSchedulerUtils {
      */
     public String[] getAvailableIoSchedulers() {
         String[] schedulers = null;
-        final String[] aux = Utils.readStringArray(Constants.IO_SCHEDULER_PATH[0]);
+        final String[] aux = Utils.readStringArray(IO_SCHEDULER_PATH[0]);
         if (aux != null) {
             schedulers = new String[aux.length];
             for (int i = 0; i < aux.length; i++) {
@@ -66,7 +74,7 @@ public class IoSchedulerUtils {
             final Shell mShell = RootTools.getShell(true);
             if (mShell == null) { throw new Exception("Shell is null"); }
 
-            final String cmd = "cat " + Constants.IO_SCHEDULER_PATH[0] + " 2> /dev/null;";
+            final String cmd = "cat " + IO_SCHEDULER_PATH[0] + " 2> /dev/null;";
 
             final StringBuilder outputCollector = new StringBuilder();
             final CommandCapture cmdCapture = new CommandCapture(0, false, cmd) {

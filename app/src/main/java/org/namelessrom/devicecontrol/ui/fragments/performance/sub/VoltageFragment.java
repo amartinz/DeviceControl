@@ -50,10 +50,9 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class VoltageFragment extends AttachPreferenceFragment implements Constants,
+public class VoltageFragment extends AttachPreferenceFragment implements
         DeviceConstants {
 
     private static final String PREF_UV  = "pref_uv";
@@ -75,14 +74,14 @@ public class VoltageFragment extends AttachPreferenceFragment implements Constan
 
         mCategory = (PreferenceCategory) findPreference("uv_category");
 
-        if (Utils.fileExists(UV_TABLE_FILE)) {
+        if (Utils.fileExists(VoltageUtils.UV_TABLE_FILE)) {
             if (mCategory.getPreferenceCount() != 0) {
                 mCategory.removeAll();
             }
             addPreferences(true);
             isVdd = false;
         } else {
-            if (Utils.fileExists(VDD_TABLE_FILE)) {
+            if (Utils.fileExists(VoltageUtils.VDD_TABLE_FILE)) {
                 if (mCategory.getPreferenceCount() != 0) {
                     mCategory.removeAll();
                 }
@@ -139,7 +138,7 @@ public class VoltageFragment extends AttachPreferenceFragment implements Constan
                         value = pref.getTitle() + " " + pref.getSummary();
                         mValues[i] = pref.getKey();
                         sb.append(value).append("XXX");
-                        execute.append(Utils.getWriteCommand(VDD_TABLE_FILE, value));
+                        execute.append(Utils.getWriteCommand(VoltageUtils.VDD_TABLE_FILE, value));
                     }
                     Utils.runRootCommand(execute.toString());
                     PreferenceHelper.setString(PREF_VDD, sb.toString().trim());
@@ -150,7 +149,7 @@ public class VoltageFragment extends AttachPreferenceFragment implements Constan
                     }
                     final String table = buildTable(mValues);
                     PreferenceHelper.setString(PREF_UV, table);
-                    Utils.writeValue(UV_TABLE_FILE, table);
+                    Utils.writeValue(VoltageUtils.UV_TABLE_FILE, table);
                 }
                 mButtonLayout.setVisibility(View.GONE);
                 list.bringToFront();
@@ -165,7 +164,8 @@ public class VoltageFragment extends AttachPreferenceFragment implements Constan
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (Utils.fileExists(UV_TABLE_FILE) || Utils.fileExists(VDD_TABLE_FILE)) {
+        if (Utils.fileExists(VoltageUtils.UV_TABLE_FILE) || Utils.fileExists(
+                VoltageUtils.VDD_TABLE_FILE)) {
             inflater.inflate(R.menu.menu_voltage, menu);
         }
     }
@@ -290,7 +290,7 @@ public class VoltageFragment extends AttachPreferenceFragment implements Constan
                                                     final String value =
                                                             p.getTitle() + " " + et.getText()
                                                                     .toString();
-                                                    Utils.writeValue(UV_TABLE_FILE, value);
+                                                    Utils.writeValue(VoltageUtils.UV_TABLE_FILE, value);
                                                     p.setSummary(et.getText().toString());
                                                     p.setKey(et.getText().toString());
                                                     mValues[j] = p.getKey();
@@ -299,7 +299,7 @@ public class VoltageFragment extends AttachPreferenceFragment implements Constan
                                                     p.setSummary(value + " mV");
                                                     p.setKey(value);
                                                     mValues[j] = value;
-                                                    Utils.writeValue(UV_TABLE_FILE,
+                                                    Utils.writeValue(VoltageUtils.UV_TABLE_FILE,
                                                             buildTable(mValues));
                                                 }
                                             }
@@ -340,22 +340,22 @@ public class VoltageFragment extends AttachPreferenceFragment implements Constan
     public static String restore() {
         final StringBuilder restore = new StringBuilder();
 
-        if (Utils.fileExists(VDD_TABLE_FILE)) {
+        if (Utils.fileExists(VoltageUtils.VDD_TABLE_FILE)) {
             final String value = PreferenceHelper.getString(PREF_VDD, "");
             Logger.v(VoltageFragment.class, "VDD Table: " + value);
 
             if (!value.isEmpty()) {
                 final String[] values = value.split("XXX");
                 for (final String s : values) {
-                    restore.append(Utils.getWriteCommand(VDD_TABLE_FILE, s));
+                    restore.append(Utils.getWriteCommand(VoltageUtils.VDD_TABLE_FILE, s));
                 }
             }
-        } else if (Utils.fileExists(UV_TABLE_FILE)) {
+        } else if (Utils.fileExists(VoltageUtils.UV_TABLE_FILE)) {
             final String value = PreferenceHelper.getString(PREF_UV, "");
             Logger.v(VoltageFragment.class, "UV Table: " + value);
 
             if (!value.isEmpty()) {
-                restore.append(Utils.getWriteCommand(UV_TABLE_FILE, value));
+                restore.append(Utils.getWriteCommand(VoltageUtils.UV_TABLE_FILE, value));
             }
         }
 

@@ -32,6 +32,7 @@ import com.koushikdutta.ion.Ion;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.hardware.ExtraUtils;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
@@ -40,7 +41,6 @@ import org.namelessrom.devicecontrol.ui.views.AttachPreferenceProgressFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.File;
@@ -48,7 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntropyFragment extends AttachPreferenceProgressFragment implements DeviceConstants,
-        Constants, Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener {
+        Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener {
     private static final String URL_RNG =
             "http://sourceforge.net/projects/namelessrom/files/romextras/binaries/rngd/download";
     private static final File   RNGD    = new File(Application.get().getFilesDirectory(), "rngd");
@@ -69,7 +69,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
 
         PreferenceCategory category = (PreferenceCategory) findPreference("entropy");
         mEntropyAvail = (CustomPreference) findPreference("entropy_avail");
-        if (!Utils.fileExists(ENTROPY_AVAIL)) {
+        if (!Utils.fileExists(ExtraUtils.ENTROPY_AVAIL)) {
             category.removePreference(mEntropyAvail);
         }
         mReadWakeupThreshold =
@@ -222,7 +222,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
         @Override protected List<String> doInBackground(Void... params) {
             final ArrayList<String> list = new ArrayList<String>();
 
-            list.add(Utils.readOneLine(ENTROPY_AVAIL));     // 0
+            list.add(Utils.readOneLine(ExtraUtils.ENTROPY_AVAIL));     // 0
 
             return list;
         }

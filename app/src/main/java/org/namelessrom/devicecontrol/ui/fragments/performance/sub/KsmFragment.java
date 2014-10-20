@@ -30,19 +30,19 @@ import android.view.MenuItem;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.hardware.KsmUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.DialogHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class KsmFragment extends AttachPreferenceFragment
-        implements DeviceConstants, Constants,
+        implements DeviceConstants,
         Preference.OnPreferenceChangeListener {
 
     //----------------------------------------------------------------------------------------------
@@ -77,35 +77,35 @@ public class KsmFragment extends AttachPreferenceFragment
         if (category != null) {
             mFullScans = (CustomPreference) findPreference("ksm_full_scans");
             if (mFullScans != null) {
-                if (!Utils.fileExists(KSM_FULL_SCANS)) {
+                if (!Utils.fileExists(KsmUtils.KSM_FULL_SCANS)) {
                     category.removePreference(mFullScans);
                 }
             }
 
             mPagesShared = (CustomPreference) findPreference("ksm_pages_shared");
             if (mPagesShared != null) {
-                if (!Utils.fileExists(KSM_PAGES_SHARED)) {
+                if (!Utils.fileExists(KsmUtils.KSM_PAGES_SHARED)) {
                     category.removePreference(mPagesShared);
                 }
             }
 
             mPagesSharing = (CustomPreference) findPreference("ksm_pages_sharing");
             if (mPagesSharing != null) {
-                if (!Utils.fileExists(KSM_PAGES_SHARING)) {
+                if (!Utils.fileExists(KsmUtils.KSM_PAGES_SHARING)) {
                     category.removePreference(mPagesSharing);
                 }
             }
 
             mPagesUnshared = (CustomPreference) findPreference("ksm_pages_unshared");
             if (mPagesUnshared != null) {
-                if (!Utils.fileExists(KSM_PAGES_UNSHARED)) {
+                if (!Utils.fileExists(KsmUtils.KSM_PAGES_UNSHARED)) {
                     category.removePreference(mPagesUnshared);
                 }
             }
 
             mPagesVolatile = (CustomPreference) findPreference("ksm_pages_volatile");
             if (mPagesVolatile != null) {
-                if (!Utils.fileExists(KSM_PAGES_VOLATILE)) {
+                if (!Utils.fileExists(KsmUtils.KSM_PAGES_VOLATILE)) {
                     category.removePreference(mPagesVolatile);
                 }
             }
@@ -141,8 +141,8 @@ public class KsmFragment extends AttachPreferenceFragment
 
             mPagesToScan = (CustomPreference) findPreference("ksm_pages_to_scan");
             if (mPagesToScan != null) {
-                if (Utils.fileExists(KSM_PAGES_TO_SCAN)) {
-                    tmpString = Utils.readOneLine(KSM_PAGES_TO_SCAN);
+                if (Utils.fileExists(KsmUtils.KSM_PAGES_TO_SCAN)) {
+                    tmpString = Utils.readOneLine(KsmUtils.KSM_PAGES_TO_SCAN);
                     mPagesToScan.setSummary(tmpString);
                 } else {
                     category.removePreference(mPagesToScan);
@@ -151,8 +151,8 @@ public class KsmFragment extends AttachPreferenceFragment
 
             mSleep = (CustomPreference) findPreference("ksm_sleep");
             if (mSleep != null) {
-                if (Utils.fileExists(KSM_SLEEP)) {
-                    tmpString = Utils.readOneLine(KSM_SLEEP);
+                if (Utils.fileExists(KsmUtils.KSM_SLEEP)) {
+                    tmpString = Utils.readOneLine(KsmUtils.KSM_SLEEP);
                     mSleep.setSummary(tmpString);
                 } else {
                     category.removePreference(mSleep);
@@ -174,15 +174,15 @@ public class KsmFragment extends AttachPreferenceFragment
             @NonNull final Preference preference) {
         if (mPagesToScan == preference) {
             final String title = String.valueOf(mPagesToScan.getTitle());
-            final int currentProgress = Utils.parseInt(Utils.readOneLine(KSM_PAGES_TO_SCAN));
+            final int currentProgress = Utils.parseInt(Utils.readOneLine(KsmUtils.KSM_PAGES_TO_SCAN));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 1,
-                    1024, preference, KSM_PAGES_TO_SCAN, DatabaseHandler.CATEGORY_EXTRAS);
+                    1024, preference, KsmUtils.KSM_PAGES_TO_SCAN, DatabaseHandler.CATEGORY_EXTRAS);
             return true;
         } else if (mSleep == preference) {
             final String title = String.valueOf(mSleep.getTitle());
-            final int currentProgress = Utils.parseInt(Utils.readOneLine(KSM_SLEEP));
+            final int currentProgress = Utils.parseInt(Utils.readOneLine(KsmUtils.KSM_SLEEP));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 50,
-                    5000, preference, KSM_SLEEP, DatabaseHandler.CATEGORY_EXTRAS);
+                    5000, preference, KsmUtils.KSM_SLEEP, DatabaseHandler.CATEGORY_EXTRAS);
             return true;
         }
 
@@ -222,11 +222,11 @@ public class KsmFragment extends AttachPreferenceFragment
         @Override protected List<String> doInBackground(Void... params) {
             final ArrayList<String> list = new ArrayList<String>();
 
-            list.add(Utils.readOneLine(KSM_FULL_SCANS));     // 0
-            list.add(Utils.readOneLine(KSM_PAGES_SHARED));   // 1
-            list.add(Utils.readOneLine(KSM_PAGES_SHARING));  // 2
-            list.add(Utils.readOneLine(KSM_PAGES_UNSHARED)); // 3
-            list.add(Utils.readOneLine(KSM_PAGES_VOLATILE)); // 4
+            list.add(Utils.readOneLine(KsmUtils.KSM_FULL_SCANS));     // 0
+            list.add(Utils.readOneLine(KsmUtils.KSM_PAGES_SHARED));   // 1
+            list.add(Utils.readOneLine(KsmUtils.KSM_PAGES_SHARING));  // 2
+            list.add(Utils.readOneLine(KsmUtils.KSM_PAGES_UNSHARED)); // 3
+            list.add(Utils.readOneLine(KsmUtils.KSM_PAGES_VOLATILE)); // 4
 
             return list;
         }

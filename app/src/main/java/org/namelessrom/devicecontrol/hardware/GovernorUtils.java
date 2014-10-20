@@ -7,7 +7,6 @@ import com.stericson.roottools.execution.Shell;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +16,24 @@ import java.util.List;
  * Easy interaction with governors
  */
 public class GovernorUtils {
+
+    //----------------------------------------------------------------------------------------------
+    public static final String GOV0_CURRENT_PATH =
+            CpuUtils.CPU_BASE + "cpu0/cpufreq/scaling_governor";
+    public static final String GOV1_CURRENT_PATH =
+            CpuUtils.CPU_BASE + "cpu1/cpufreq/scaling_governor";
+    public static final String GOV2_CURRENT_PATH =
+            CpuUtils.CPU_BASE + "cpu2/cpufreq/scaling_governor";
+    public static final String GOV3_CURRENT_PATH =
+            CpuUtils.CPU_BASE + "cpu3/cpufreq/scaling_governor";
+
+    //----------------------------------------------------------------------------------------------
+    public static final String GOV_AVAILALBLE_PATH =
+            CpuUtils.CPU_BASE + "cpu0/cpufreq/scaling_available_governors";
+
+    //----------------------------------------------------------------------------------------------
+    public static final String[] GPU_GOVS =
+            {"performance", "ondemand", "simple", "conservative", "interactive"};
 
     public static class Governor {
         public final String[] available;
@@ -47,20 +64,20 @@ public class GovernorUtils {
         switch (cpu) {
             default:
             case 0:
-                return Constants.GOV0_CURRENT_PATH;
+                return GOV0_CURRENT_PATH;
             case 1:
-                return Constants.GOV1_CURRENT_PATH;
+                return GOV1_CURRENT_PATH;
             case 2:
-                return Constants.GOV2_CURRENT_PATH;
+                return GOV2_CURRENT_PATH;
             case 3:
-                return Constants.GOV3_CURRENT_PATH;
+                return GOV3_CURRENT_PATH;
         }
     }
 
     public String[] getAvailableGovernors(final boolean isGpu) {
         String[] govArray = null;
         final String govs = Utils.readOneLine(isGpu
-                ? Constants.GPU_GOV_PATH : Constants.GOV_AVAILALBLE_PATH);
+                ? GpuUtils.GPU_GOV_PATH : GOV_AVAILALBLE_PATH);
 
         if (govs != null && !govs.isEmpty()) {
             govArray = govs.split(" ");
@@ -77,7 +94,7 @@ public class GovernorUtils {
         // returns a pre defined set of governors
         // TODO: read dynamically if supported
         //return getAvailableGovernors(true);
-        return Constants.GPU_GOVS;
+        return GPU_GOVS;
     }
 
     public void getGovernor(final GovernorListener listener) {
@@ -87,9 +104,9 @@ public class GovernorUtils {
 
             final StringBuilder cmd = new StringBuilder();
             cmd.append("command=$(");
-            cmd.append("cat ").append(Constants.GOV_AVAILALBLE_PATH).append(" 2> /dev/null;");
+            cmd.append("cat ").append(GOV_AVAILALBLE_PATH).append(" 2> /dev/null;");
             cmd.append("echo -n \"[\";");
-            cmd.append("cat ").append(Constants.GOV0_CURRENT_PATH).append(" 2> /dev/null;");
+            cmd.append("cat ").append(GOV0_CURRENT_PATH).append(" 2> /dev/null;");
             cmd.append(");").append("echo $command | tr -d \"\\n\"");
             Logger.v(CpuUtils.class, cmd.toString());
 
