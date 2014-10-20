@@ -40,6 +40,7 @@ public class GpuUtils {
     private static String gpuGovPath = null;
     private static String gpuGovsAvailablePath = null;
     private static String gpuFreqsAvailPath = null;
+    private static String gpuFreqCurrentPath = null;
     private static String gpuFreqMaxPath = null;
     private static String gpuFreqMinPath = null;
 
@@ -47,13 +48,15 @@ public class GpuUtils {
 
     public static class Gpu {
         public final String[] available;
+        public final String current;
         public final String max;
         public final String min;
         public final String governor;
 
-        public Gpu(final String[] availFreqs, final String maxFreq, final String minFreq,
-                final String gov) {
+        public Gpu(final String[] availFreqs, final String curFreq, final String maxFreq,
+                final String minFreq, final String gov) {
             available = availFreqs;
+            current = curFreq;
             max = maxFreq;
             min = minFreq;
             governor = gov;
@@ -138,6 +141,23 @@ public class GpuUtils {
         return gpuFreqsAvailPath;
     }
 
+    public String getGpuFreqCurrentPath() {
+        if (gpuFreqCurrentPath == null) {
+            final String base = getGpuBasePath();
+            final String[] paths = Application.get().getStringArray(R.array.gpu_freqs_current);
+            for (final String s : paths) {
+                if (Utils.fileExists(base + s)) {
+                    gpuFreqCurrentPath = base + s;
+                    break;
+                }
+            }
+            if (TextUtils.isEmpty(gpuFreqCurrentPath)) {
+                return "";
+            }
+        }
+        return gpuFreqCurrentPath;
+    }
+
     public String getGpuFreqMaxPath() {
         if (gpuFreqMaxPath == null) {
             final String base = getGpuBasePath();
@@ -191,6 +211,10 @@ public class GpuUtils {
         return null;
     }
 
+    private String getCurrentFreq() {
+        return Utils.readOneLine(getGpuFreqCurrentPath());
+    }
+
     public String getMaxFreq() {
         return Utils.readOneLine(getGpuFreqMaxPath());
     }
@@ -206,6 +230,7 @@ public class GpuUtils {
     public Gpu getGpu() {
         return new GpuUtils.Gpu(
                 GpuUtils.get().getAvailableFrequencies(true),
+                GpuUtils.get().getCurrentFreq(),
                 GpuUtils.get().getMaxFreq(),
                 GpuUtils.get().getMinFreq(),
                 GpuUtils.get().getGovernor());

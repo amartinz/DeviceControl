@@ -266,6 +266,10 @@
         <item>/kgsl-3d0/devfreq/available_frequencies</item>
         <item>/scaling_available_frequencies</item>
     </string-array>
+    <string-array name="gpu_freqs_current" translatable="false">
+        <item>/kgsl-3d0/devfreq/cur_freq</item>
+        <item>/scaling_cur_freq</item>
+    </string-array>
     <string-array name="gpu_freqs_max" translatable="false">
         <item>/kgsl-3d0/max_gpuclk</item>
         <item>/kgsl-3d0/devfreq/max_freq</item>

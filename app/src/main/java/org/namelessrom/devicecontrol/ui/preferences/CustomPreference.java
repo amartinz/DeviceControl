@@ -18,24 +18,26 @@ public class CustomPreference extends Preference {
     private int sumColor = -1;
 
     private boolean areMilliVolts;
-    private String  category;
+    private String category;
 
     private TextView summary;
 
     public CustomPreference(Context context) {
         super(context);
-        setLayoutResource(R.layout.preference);
+        setLayoutResource(getLayoutResourceId());
     }
 
     public CustomPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setLayoutResource(R.layout.preference);
+        setLayoutResource(getLayoutResourceId());
     }
 
     public CustomPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        setLayoutResource(R.layout.preference);
+        setLayoutResource(getLayoutResourceId());
     }
+
+    public int getLayoutResourceId() { return R.layout.preference; }
 
     public void setCustomSummaryKeyPlus(final int plus) {
         final int newValue = Utils.parseInt(getKey()) + plus;
@@ -87,7 +89,7 @@ public class CustomPreference extends Preference {
         super.onBindView(view);
 
         summary = (TextView) view.findViewById(android.R.id.summary);
-        if (sumColor != -1) {
+        if (summary != null && sumColor != -1) {
             summary.setTextColor(sumColor);
         }
 

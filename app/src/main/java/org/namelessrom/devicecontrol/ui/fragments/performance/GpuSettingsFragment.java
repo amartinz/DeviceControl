@@ -28,6 +28,7 @@ import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.ui.preferences.hardware.GpuView;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
@@ -43,6 +44,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private PreferenceCategory mRoot;
 
+    private GpuView mFreqCurrent = null;
     private CustomListPreference mFreqMax = null;
     private CustomListPreference mFreqMin = null;
     private CustomListPreference mGpuGovernor = null;
@@ -66,6 +68,16 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
 
     @Override protected int getFragmentId() {
         return DeviceConstants.ID_PERFORMANCE_GPU_SETTINGS;
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+        if (mFreqCurrent != null) mFreqCurrent.onResume();
+    }
+
+    @Override public void onPause() {
+        super.onPause();
+        if (mFreqCurrent != null) mFreqCurrent.onPause();
     }
 
     @Override public void onActivityCreated(final Bundle savedInstanceState) {
@@ -110,6 +122,15 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
 
             final int freqsLength = frequencies.length;
             final int namesLength = gpuNames.length;
+            tmp = gpu.current;
+            if (!TextUtils.isEmpty(tmp)) {
+                if (mFreqCurrent == null) {
+                    mFreqCurrent = new GpuView(getActivity());
+                    mRoot.addPreference(mFreqCurrent);
+                    mFreqCurrent.onResume();
+                }
+            }
+
             tmp = gpu.max;
             if (!TextUtils.isEmpty(tmp) && freqsLength == namesLength) {
                 tmp = tmp.trim();
