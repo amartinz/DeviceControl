@@ -211,7 +211,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             final String packageName = bundle.getString(AppDetailsActivity.ARG_PACKAGE_NAME);
             startedFromActivity = (packageName != null && !packageName.isEmpty());
             if (startedFromActivity) {
-                final PackageManager pm = getActivity().getPackageManager();
+                final PackageManager pm = Application.get().getPackageManager();
                 PackageInfo info = null;
                 try {
                     info = pm.getPackageInfo(packageName, 0);
@@ -323,7 +323,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         }
         animatorSet.start();
         mDetailsShowing = false;
-        if (getActivity() != null) getActivity().invalidateOptionsMenu();
+        invalidateOptionsMenu();
     }
 
     @Override public void onAppChoosen(final AppItem appItem) {
@@ -423,7 +423,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             });
             animatorSet.start();
             mDetailsShowing = true;
-            if (getActivity() != null) getActivity().invalidateOptionsMenu();
+            invalidateOptionsMenu();
         } else {
             mCacheGraph.animateXY(700, 700);
         }
@@ -740,7 +740,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     private class LoadApps extends AsyncTask<Void, Void, List<AppItem>> {
         @Override protected List<AppItem> doInBackground(Void... params) {
             if (startedFromActivity) return null;
-            final PackageManager pm = getActivity().getPackageManager();
+            final PackageManager pm = Application.get().getPackageManager();
             final List<AppItem> appList = new ArrayList<AppItem>();
             final List<PackageInfo> pkgInfos = pm.getInstalledPackages(0);
 
