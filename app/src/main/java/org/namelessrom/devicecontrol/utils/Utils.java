@@ -25,6 +25,7 @@ import android.content.pm.PackageManager;
 import android.os.BatteryManager;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.widget.Toast;
 
 import com.stericson.roottools.RootTools;
@@ -49,8 +50,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
 
@@ -578,4 +581,9 @@ public class Utils implements DeviceConstants {
         }
     }
 
+    public static String getDate(final long time) {
+        final Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+        cal.setTimeInMillis(time);
+        return DateFormat.format("dd-MM-yyyy", cal).toString();
+    }
 }

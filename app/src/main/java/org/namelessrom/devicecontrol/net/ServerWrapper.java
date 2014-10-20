@@ -21,6 +21,7 @@ import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.objects.Device;
 import org.namelessrom.devicecontrol.services.WebServerService;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.HtmlHelper;
@@ -37,14 +38,14 @@ import java.util.List;
  * A wrapper for the AsyncHttpServer
  */
 public class ServerWrapper {
-    public static final String ACTION_CONNECTED   = "---CONNECTED---";
+    public static final String ACTION_CONNECTED = "---CONNECTED---";
     public static final String ACTION_TERMINATING = "---TERMINATING---";
 
     public boolean isStopped = false;
 
     private static final ArrayList<WebSocket> _sockets = new ArrayList<WebSocket>();
 
-    private AsyncHttpServer   mServer;
+    private AsyncHttpServer mServer;
     private AsyncServerSocket mServerSocket;
 
     private final WebServerService mService;
@@ -87,6 +88,9 @@ public class ServerWrapper {
         setupWebSockets();
         Logger.v(this, "[!] Setup websockets");
 
+        setupApi();
+        Logger.v(this, "[!] Setup api");
+
         mServer.directory(Application.get(), "/license", "license.html");
         Logger.v(this, "[!] Setup route: /license");
 
@@ -96,6 +100,9 @@ public class ServerWrapper {
         });
         mServer.get("/files/(?s).*", filesCallback);
         Logger.v(this, "[!] Setup route: /files/(?s).*");
+
+        mServer.get("/information", informationCallback);
+        Logger.v(this, "[!] Setup route: /information");
 
         // should be always the last, matches anything that the stuff above did not
         mServer.get("/(?s).*", mainCallback);
@@ -223,6 +230,13 @@ public class ServerWrapper {
         }
     };
 
+    private final HttpServerRequestCallback informationCallback = new HttpServerRequestCallback() {
+        @Override public void onRequest(final AsyncHttpServerRequest req,
+                final AsyncHttpServerResponse res) {
+
+        }
+    };
+
     private String remapPath(final String path) {
         if (TextUtils.equals("/", path)) {
             return "index.html";
@@ -287,6 +301,23 @@ public class ServerWrapper {
         });
     }
 
+    private void setupApi() {
+        mServer.get("/api", new HttpServerRequestCallback() {
+            @Override public void onRequest(final AsyncHttpServerRequest req,
+                    final AsyncHttpServerResponse res) {
+                res.redirect("/api/device");
+            }
+        });
+
+        mServer.get("/api/device", new HttpServerRequestCallback() {
+            @Override public void onRequest(final AsyncHttpServerRequest req,
+                    final AsyncHttpServerResponse res) {
+                final String result = new Gson().toJson(Device.get());
+                res.send(result);
+            }
+        });
+    }
+
     private boolean isAuthenticated(final AsyncHttpServerRequest req) {
         final boolean isAuth = !PreferenceHelper.getBoolean("wfm_auth", true);
         if (req.getHeaders().hasAuthorization() && !isAuth) {
@@ -344,8 +375,8 @@ public class ServerWrapper {
     public AsyncServerSocket getServerSocket() { return mServerSocket; }
 
     private class FileEntry {
-        public final String  name;
-        public final String  path;
+        public final String name;
+        public final String path;
         public final boolean isDirectory;
 
         public FileEntry(final String name, final String path, final boolean isDirectory) {

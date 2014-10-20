@@ -6,7 +6,11 @@
         This feature is highly experimental at the current stage, you are warned!<br/>
         More to come soon!
     </div>
-    <div class="files" ng-show="navBarCtrl.isSelected(2)" ng-controller="FileController as fileCtrl">
+    <div class="device" ng-show="navBarCtrl.isSelected(2)">
+        <h1>Device information</h1>
+        <device-information></device-information>
+    </div>
+    <div class="files" ng-show="navBarCtrl.isSelected(3)" ng-controller="FileController as fileCtrl">
         <h1>Files</h1>
         <ol class="breadcrumb">
             <li><a href ng-click="fileCtrl.loadPath('/')">Home</a></li>
@@ -16,5 +20,5 @@
         </ol>
         <file-entry></file-entry>
     </div>
-    <div class="license" ng-show="navBarCtrl.isSelected(3)" ng-include="'/license.html'"></div>
+    <div class="license" ng-show="navBarCtrl.isSelected(4)" ng-include="'/license.html'"></div>
 </div>

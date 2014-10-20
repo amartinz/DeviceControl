@@ -29,13 +29,13 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.objects.CpuInfo;
+import org.namelessrom.devicecontrol.objects.Device;
 import org.namelessrom.devicecontrol.objects.KernelInfo;
 import org.namelessrom.devicecontrol.objects.MemoryInfo;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
@@ -45,15 +45,13 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Locale;
 
 public class DeviceInformationFragment extends AttachPreferenceFragment implements DeviceConstants {
 
     private static final String KEY_PLATFORM_VERSION = "platform_version";
-    private static final String KEY_ANDROID_ID       = "android_id";
+    private static final String KEY_ANDROID_ID = "android_id";
 
     private long[] mHits = new long[3];
 
@@ -69,43 +67,36 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
 
         final SensorManager sensorManager =
                 (SensorManager) Application.get().getSystemService(Context.SENSOR_SERVICE);
+        final Device device = Device.get();
 
         // Platform
         PreferenceCategory category = (PreferenceCategory) findPreference("platform");
 
-        addPreference(category, KEY_PLATFORM_VERSION, R.string.version, Build.VERSION.RELEASE)
+        addPreference(category, KEY_PLATFORM_VERSION, R.string.version, device.platformVersion)
                 .setSelectable(true); // selectable because of the easter egg
-        addPreference(category, "platform_id", R.string.build_id, Build.DISPLAY);
-        addPreference(category, "platform_type", R.string.type,
-                Build.VERSION.CODENAME + " " + Build.TYPE);
-        addPreference(category, "platform_tags", R.string.tags, Build.TAGS);
-        addPreference(category, "platform_build_date", R.string.build_date, getDate(Build.TIME));
+        addPreference(category, "platform_id", R.string.build_id, device.platformId);
+        addPreference(category, "platform_type", R.string.type, device.platformType);
+        addPreference(category, "platform_tags", R.string.tags, device.platformTags);
+        addPreference(category, "platform_build_date", R.string.build_date,
+                device.platformBuildType);
 
         // Runtime
         category = (PreferenceCategory) findPreference("runtime");
 
-        String tmp = Utils.getCommandResult("getprop persist.sys.dalvik.vm.lib", "-");
-        if (!TextUtils.equals(tmp, "-")) {
-            final String runtime = TextUtils.equals(tmp, "libdvm.so")
-                    ? "Dalvik" : TextUtils.equals(tmp, "libart.so") ? "ART" : "-";
-            tmp = String.format("%s (%s)", runtime, tmp);
-        }
-        addPreference(category, "vm_library", R.string.type, tmp);
-        addPreference(category, "vm_version", R.string.version,
-                System.getProperty("java.vm.version", "-"));
+        addPreference(category, "vm_library", R.string.type, device.vmLibrary);
+        addPreference(category, "vm_version", R.string.version, device.vmVersion);
 
         // Device
         category = (PreferenceCategory) findPreference("device_information");
 
         // TODO: save / restore / check --> ANDROID ID
-        addPreference(category, KEY_ANDROID_ID, R.string.android_id, Utils.getAndroidId());
-        addPreference(category, "device_manufacturer", R.string.manufacturer, Build.MANUFACTURER);
-        addPreference(category, "device_model", R.string.model, Build.MODEL);
-        addPreference(category, "device_product", R.string.product, Build.PRODUCT);
-        addPreference(category, "device_board", R.string.board, Build.BOARD);
-        addPreference(category, "device_bootloader", R.string.bootloader, Build.BOOTLOADER);
-        addPreference(category, "device_radio_version", R.string.radio_version,
-                Build.getRadioVersion());
+        addPreference(category, KEY_ANDROID_ID, R.string.android_id,device.androidId);
+        addPreference(category, "device_manufacturer", R.string.manufacturer, device.manufacturer);
+        addPreference(category, "device_model", R.string.model, device.model);
+        addPreference(category, "device_product", R.string.product, device.product);
+        addPreference(category, "device_board", R.string.board, device.board);
+        addPreference(category, "device_bootloader", R.string.bootloader, device.bootloader);
+        addPreference(category, "device_radio_version", R.string.radio_version, device.radio);
 
         // eMMC
         category = (PreferenceCategory) findPreference("emmc");
@@ -114,7 +105,7 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
         addPreference(category, "emmc_mid", R.string.emmc_mid, Emmc.get().getMid());
         addPreference(category, "emmc_rev", R.string.emmc_rev, Emmc.get().getRev());
         addPreference(category, "emmc_date", R.string.emmc_date, Emmc.get().getDate());
-        tmp = Emmc.get().canBrick()
+        String tmp = Emmc.get().canBrick()
                 ? getString(R.string.emmc_can_brick_true)
                 : getString(R.string.emmc_can_brick_false);
         tmp = String.format("%s\n%s", tmp, getString(R.string.press_learn_more));
@@ -197,14 +188,8 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
         }
     }
 
-    private String getDate(final long time) {
-        final Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(time);
-        return DateFormat.format("dd-MM-yyyy", cal).toString();
-    }
-
     private class CpuInfoTask extends AsyncTask<Void, Void, Boolean> {
-        private final CpuInfo            cpuInfo;
+        private final CpuInfo cpuInfo;
         private final PreferenceCategory category;
 
         public CpuInfoTask(final PreferenceCategory category) {
@@ -228,7 +213,7 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
     }
 
     private class KernelInfoTask extends AsyncTask<Void, Void, Boolean> {
-        private final KernelInfo         kernelInfo;
+        private final KernelInfo kernelInfo;
         private final PreferenceCategory category;
 
         public KernelInfoTask(final PreferenceCategory category) {

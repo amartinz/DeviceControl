@@ -1,0 +1,78 @@
+<div class="devicecontainer" ng-controller="DeviceController as deviceCtrl">
+    <div class="col-md-12 col-lg-12">
+        <table class="table table-device-information">
+            <tbody ng-show="deviceCtrl.device !== null">
+            <tr>
+                <td><h3>Device</h3></td>
+            </tr>
+            <tr>
+                <td><b>Android id:</b></td>
+                <td>{{deviceCtrl.device.android_id}}</td>
+            </tr>
+            <tr>
+                <td><b>Manufacturer:</b></td>
+                <td>{{deviceCtrl.device.device_manufacturer}}</td>
+            </tr>
+            <tr>
+                <td><b>Model:</b></td>
+                <td>{{deviceCtrl.device.device_model}}</td>
+            </tr>
+            <tr>
+                <td><b>Product:</b></td>
+                <td>{{deviceCtrl.device.device_product}}</td>
+            </tr>
+            <tr>
+                <td><b>Board:</b></td>
+                <td>{{deviceCtrl.device.device_board}}</td>
+            </tr>
+            <tr>
+                <td><b>Bootloader:</b></td>
+                <td>{{deviceCtrl.device.device_bootloader}}</td>
+            </tr>
+            <tr>
+                <td><b>Radio version:</b></td>
+                <td>{{deviceCtrl.device.device_radio_version}}</td>
+            </tr>
+            <tr>
+                <td><h3>Platform</h3></td>
+            </tr>
+            <tr>
+                <td><b>Platform version:</b></td>
+                <td>{{deviceCtrl.device.platform_version}}</td>
+            </tr>
+            <tr>
+                <td><b>Build id:</b></td>
+                <td>{{deviceCtrl.device.platform_id}}</td>
+            </tr>
+            <tr>
+                <td><b>Build type:</b></td>
+                <td>{{deviceCtrl.device.platform_type}}</td>
+            </tr>
+            <tr>
+                <td><b>Build tags:</b></td>
+                <td>{{deviceCtrl.device.platform_tags}}</td>
+            </tr>
+            <tr>
+                <td><b>Build date:</b></td>
+                <td>{{deviceCtrl.device.platform_build_date}}</td>
+            </tr>
+            <tr>
+                <td><h3>Runtime</h3></td>
+            </tr>
+            <tr>
+                <td><b>Runtime library:</b></td>
+                <td>{{deviceCtrl.device.vm_library}}</td>
+            </tr>
+            <tr>
+                <td><b>Runtime version:</b></td>
+                <td>{{deviceCtrl.device.vm_version}}</td>
+            </tr>
+            </tbody>
+            <tbody ng-show="deviceCtrl.device === null">
+            <tr>
+                <td><b>No information available!</b></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
