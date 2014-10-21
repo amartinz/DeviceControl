@@ -253,6 +253,7 @@ public class GpuUtils {
     }
 
     public static String[] freqsToMhz(final String[] frequencies) {
+        if (frequencies == null) return new String[0];
         final int length = frequencies.length;
         final String[] names = new String[length];
 

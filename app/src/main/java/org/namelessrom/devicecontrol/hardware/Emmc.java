@@ -29,11 +29,11 @@ import java.util.ArrayList;
 public class Emmc {
     public static final String BRICK_INFO_URL = "http://wiki.cyanogenmod.org/w/EMMC_Bugs";
 
-    private String cid  = null;
+    private String cid = null;
     private String date = null;
-    private String mid  = null;
+    private String mid = null;
     private String name = null;
-    private String rev  = null;
+    private String rev = null;
 
     private static final ArrayList<EmmcBugged> EMMC_BUGGED_LIST = new ArrayList<EmmcBugged>();
 
@@ -101,8 +101,9 @@ public class Emmc {
     public boolean canBrick() {
         final EmmcBugged emmc = new EmmcBugged(getName(), getMid(), getRev());
         for (final EmmcBugged bugged : EMMC_BUGGED_LIST) {
-            if (TextUtils.equals(emmc.name.toLowerCase(), bugged.name.toLowerCase())
-                    && TextUtils.equals(emmc.mid.toLowerCase(), bugged.mid.toLowerCase())
+            if (bugged != null
+                    && TextUtils.equals(emmc.name, bugged.name)
+                    && TextUtils.equals(emmc.mid, bugged.mid)
                     && !TextUtils.isEmpty(bugged.rev)
                     &&
                     (TextUtils.equals(bugged.rev, "0") || TextUtils.equals(emmc.rev, bugged.rev))) {
@@ -114,9 +115,9 @@ public class Emmc {
     }
 
     public static class EmmcBugged {
-        public static final int IMPACT_NONE       = 0;
+        public static final int IMPACT_NONE = 0;
         public static final int IMPACT_CORRUPTION = 1;
-        public static final int IMPACT_BRICK      = 2;
+        public static final int IMPACT_BRICK = 2;
 
         public final String name;
         public final String mid;
