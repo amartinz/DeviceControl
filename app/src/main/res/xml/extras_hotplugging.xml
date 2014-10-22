@@ -31,8 +31,6 @@
         <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:key="intelli_plug_active"
             android:title="@string/intelli_plug"
-            android:summaryOn="@string/intelli_plug_summary_on"
-            android:summaryOff="@string/intelli_plug_summary_off"
             android:defaultValue="false"
             dc:filePath="@string/file_intelli_plug_active"
             dc:category="extras" />
@@ -40,13 +38,16 @@
         <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
             android:key="intelli_plug_eco"
             android:title="@string/intelli_plug_eco"
-            android:summaryOn="@string/intelli_plug_eco_summary_on"
-            android:summaryOff="@string/intelli_plug_eco_summary_off"
             android:defaultValue="false"
             dc:filePath="@string/file_eco_mode_active"
             dc:category="extras" />
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+
+    <org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory
+        android:key="mako_hotplug"
+        android:title="@string/mako_hotplug"
+        dc:filePath="@string/directory_mako_hotplug" />
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="cpu_quiet"

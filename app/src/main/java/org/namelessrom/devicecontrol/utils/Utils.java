@@ -50,6 +50,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -59,7 +60,9 @@ import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputLis
 
 public class Utils implements DeviceConstants {
 
-    private static final String[] ENABLED_STATES = {"Y", "TRUE", "1", "255"};
+    private static final String[] BLACKLIST =
+            Application.get().getStringArray(R.array.file_black_list);
+    private static final String[] ENABLED_STATES = { "Y", "TRUE", "1", "255" };
 
     public static boolean isNameless() {
         return Application.get().getPackageManager().hasSystemFeature("org.namelessrom.android")
@@ -292,7 +295,7 @@ public class Utils implements DeviceConstants {
      */
     public static void setupDirectories() {
         final String basePath = Application.get().getFilesDirectory();
-        final String[] dirList = new String[]{basePath + DC_LOG_DIR};
+        final String[] dirList = new String[]{ basePath + DC_LOG_DIR };
         File dir;
         for (final String s : dirList) {
             dir = new File(s);
@@ -315,6 +318,46 @@ public class Utils implements DeviceConstants {
             return line.split(" ");
         }
         return null;
+    }
+
+    public static String[] listFiles(final String path) {
+        return listFiles(path, false);
+    }
+
+    public static String[] listFiles(final String path, final boolean blacklist) {
+        final String output = execute(String.format("ls %s", path));
+        Logger.v(Utils.class, "listFiles --> output: %s", output);
+        if (TextUtils.isEmpty(output)) return new String[0];
+
+        final String[] files = output.trim().split("\n");
+        if (blacklist) {
+            final ArrayList<String> filtered = new ArrayList<String>();
+            for (final String s : files) {
+                if (!Utils.isFileBlacklisted(s)) {
+                    filtered.add(s);
+                }
+            }
+            return filtered.toArray(new String[filtered.size()]);
+        }
+        return files;
+    }
+
+    public static boolean isFileBlacklisted(final String file) {
+        for (final String s : BLACKLIST) {
+            if (TextUtils.equals(s, file)) return true;
+        }
+        return false;
+    }
+
+    public static String getFileName(final String path) {
+        if (TextUtils.isEmpty(path)) return "";
+        final String[] splitted = path.trim().split("/");
+        Logger.v(Utils.class, "getFileName(%s) --> %s", path, splitted[splitted.length - 1]);
+        return splitted[splitted.length - 1];
+    }
+
+    public static String execute(final String command) {
+        return new CMDProcessor().su.runWaitFor(command).stdout;
     }
 
     public static boolean getCommandResult(final String command) {

@@ -100,11 +100,7 @@
     <string name="powersaving_sched_mc_0">0 - Disabled</string>
     <string name="powersaving_sched_mc_1">1 - Balanced</string>
     <string name="powersaving_sched_mc_2">2 - Aggressive</string>
-    <string name="intelli_plug_summary_on">Intelli-Plug is enabled.</string>
-    <string name="intelli_plug_summary_off">Intelli-Plug is disabled.</string>
     <string name="intelli_plug_eco">Eco mode</string>
-    <string name="intelli_plug_eco_summary_on">Intelli-Plug eco mode enabled.</string>
-    <string name="intelli_plug_eco_summary_off">Intelli-Plug eco mode disabled.</string>
     <string name="cpusettings">CPU settings</string>
     <string name="current_speed">Current speed</string>
     <string name="cpu_freq_max">CPU maximum speed</string>
@@ -157,8 +153,6 @@
     <string name="show_launcher_summary">Hides/unhides the launcher icon</string>
     <string name="debugging">Debugging</string>
     <string name="extensive_logging">Extensive logging</string>
-    <string name="extensive_logging_summary_on">Logging to LogCat enabled.</string>
-    <string name="extensive_logging_summary_off">Logging to LogCat disabled.</string>
     <string name="reapply_on_boot">Reapply on boot</string>
     <string name="reapply_on_boot_summary">Choose the settings you want to restore when the device boots up</string>
     <string name="version">Version</string>

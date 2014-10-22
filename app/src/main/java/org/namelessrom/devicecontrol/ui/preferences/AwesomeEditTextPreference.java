@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.ui.preferences;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.preference.EditTextPreference;
 import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.Logger;
@@ -34,14 +33,13 @@ import org.namelessrom.devicecontrol.utils.Utils;
  * writing to files on preference change, even with multiple files,
  * handling bootup restoration.
  */
-public class AwesomeEditTextPreference extends EditTextPreference {
+public class AwesomeEditTextPreference extends CustomEditTextPreference {
 
-    private String category;
+    private String mCategory;
+    private boolean mStartUp;
+    private boolean mMultiFile;
 
-    private boolean startUp;
-    private boolean multiFile;
-
-    private String   mPath;
+    private String mPath;
     private String[] mPaths;
 
     public AwesomeEditTextPreference(final Context context) {
@@ -53,6 +51,16 @@ public class AwesomeEditTextPreference extends EditTextPreference {
         init(context, attrs);
     }
 
+    public AwesomeEditTextPreference(final Context context, final String path, final String[] paths,
+            final String category, final boolean multiFile, final boolean startUp) {
+        super(context);
+        mPath = path;
+        mPaths = paths;
+        mCategory = category;
+        mMultiFile = multiFile;
+        mStartUp = startUp;
+    }
+
     private void init(final Context context, final AttributeSet attrs) {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AwesomePreference);
 
@@ -61,9 +69,9 @@ public class AwesomeEditTextPreference extends EditTextPreference {
             assert (a != null);
             filePath = a.getResourceId(R.styleable.AwesomePreference_filePath, -1);
             filePathList = a.getResourceId(R.styleable.AwesomePreference_filePathList, -1);
-            category = a.getString(R.styleable.AwesomePreference_category);
-            startUp = a.getBoolean(R.styleable.AwesomePreference_startup, true);
-            multiFile = a.getBoolean(R.styleable.AwesomePreference_multifile, false);
+            mCategory = a.getString(R.styleable.AwesomePreference_category);
+            mStartUp = a.getBoolean(R.styleable.AwesomePreference_startup, true);
+            mMultiFile = a.getBoolean(R.styleable.AwesomePreference_multifile, false);
         } finally {
             if (a != null) a.recycle();
         }
@@ -75,7 +83,7 @@ public class AwesomeEditTextPreference extends EditTextPreference {
         } else if (filePathList != -1) {
             mPaths = res.getStringArray(filePathList);
             mPath = Utils.checkPaths(mPaths);
-            if (mPath.isEmpty() || !multiFile) {
+            if (mPath.isEmpty() || !mMultiFile) {
                 mPaths = null;
             }
         } else {
@@ -83,12 +91,10 @@ public class AwesomeEditTextPreference extends EditTextPreference {
             mPaths = null;
         }
 
-        if (category == null || category.isEmpty()) {
+        if (mCategory == null || mCategory.isEmpty()) {
             Logger.w(this, "Category is not set! Defaulting to \"default\"");
-            category = "default";
+            mCategory = "default";
         }
-
-        setLayoutResource(R.layout.preference);
     }
 
     public void initValue() {
@@ -112,19 +118,19 @@ public class AwesomeEditTextPreference extends EditTextPreference {
 
     public void writeValue(final String value) {
         if (isSupported()) {
-            if (mPaths != null && multiFile) {
+            if (mPaths != null && mMultiFile) {
                 final int length = mPaths.length;
                 for (int i = 0; i < length; i++) {
                     Utils.writeValue(mPaths[i], value);
-                    if (startUp) {
+                    if (mStartUp) {
                         PreferenceHelper.setBootup(new DataItem(
-                                category, getKey() + String.valueOf(i), mPaths[i], value));
+                                mCategory, getKey() + String.valueOf(i), mPaths[i], value));
                     }
                 }
             } else {
                 Utils.writeValue(mPath, value);
-                if (startUp) {
-                    PreferenceHelper.setBootup(new DataItem(category, getKey(), mPath, value));
+                if (mStartUp) {
+                    PreferenceHelper.setBootup(new DataItem(mCategory, getKey(), mPath, value));
                 }
             }
             initValue();

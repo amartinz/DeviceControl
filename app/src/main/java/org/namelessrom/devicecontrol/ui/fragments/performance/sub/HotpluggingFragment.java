@@ -31,6 +31,8 @@ import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
@@ -48,8 +50,6 @@ public class HotpluggingFragment extends AttachPreferenceFragment
     private PreferenceScreen mRoot;
     //----------------------------------------------------------------------------------------------
     private CustomCheckBoxPreference mMpDecision;
-    private AwesomeCheckBoxPreference mIntelliPlug;
-    private AwesomeCheckBoxPreference mIntelliPlugEco;
     private CustomListPreference mCpuQuietGov;
 
     @Override protected int getFragmentId() { return ID_HOTPLUGGING; }
@@ -77,27 +77,49 @@ public class HotpluggingFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         PreferenceCategory category = (PreferenceCategory) findPreference("intelli_plug");
         if (category != null) {
-            mIntelliPlug = (AwesomeCheckBoxPreference) findPreference("intelli_plug_active");
-            if (mIntelliPlug != null) {
-                if (mIntelliPlug.isSupported()) {
-                    mIntelliPlug.initValue();
-                    mIntelliPlug.setOnPreferenceChangeListener(this);
+            final AwesomeCheckBoxPreference intelliPlug =
+                    (AwesomeCheckBoxPreference) findPreference("intelli_plug_active");
+            if (intelliPlug != null) {
+                if (intelliPlug.isSupported()) {
+                    intelliPlug.initValue();
+                    intelliPlug.setOnPreferenceChangeListener(this);
                 } else {
-                    category.removePreference(mIntelliPlug);
+                    category.removePreference(intelliPlug);
                 }
             }
 
-            mIntelliPlugEco = (AwesomeCheckBoxPreference) findPreference("intelli_plug_eco");
-            if (mIntelliPlugEco != null) {
-                if (mIntelliPlugEco.isSupported()) {
-                    mIntelliPlugEco.initValue();
-                    mIntelliPlugEco.setOnPreferenceChangeListener(this);
+            final AwesomeCheckBoxPreference intelliPlugEco =
+                    (AwesomeCheckBoxPreference) findPreference("intelli_plug_eco");
+            if (intelliPlugEco != null) {
+                if (intelliPlugEco.isSupported()) {
+                    intelliPlugEco.initValue();
+                    intelliPlugEco.setOnPreferenceChangeListener(this);
                 } else {
-                    category.removePreference(mIntelliPlugEco);
+                    category.removePreference(intelliPlugEco);
                 }
             }
         }
         removeIfEmpty(category);
+
+        final AwesomePreferenceCategory makoHotplug =
+                (AwesomePreferenceCategory) findPreference("mako_hotplug");
+        if (makoHotplug.isSupported()) {
+            final String[] files = Utils.listFiles(makoHotplug.getPath(), true);
+            AwesomeEditTextPreference preference;
+            for (String file : files) {
+                preference = new AwesomeEditTextPreference(getActivity(),
+                        makoHotplug.getPath() + file, null, "extras", false, true);
+                preference.setKey("mako_" + file);
+                if (preference.isSupported()) {
+                    makoHotplug.addPreference(preference);
+                    preference.setTitle(Utils.getFileName(makoHotplug.getPath() + file));
+                    preference.initValue();
+                    preference.setOnPreferenceChangeListener(this);
+                }
+            }
+        } else {
+            getPreferenceScreen().removePreference(makoHotplug);
+        }
 
         //------------------------------------------------------------------------------------------
         // CPUquiet
@@ -137,18 +159,16 @@ public class HotpluggingFragment extends AttachPreferenceFragment
     }
 
     @Override public boolean onPreferenceChange(Preference preference, Object o) {
-        boolean changed = false;
-
-        if (preference == mMpDecision) {
+        if (preference instanceof AwesomeCheckBoxPreference) {
+            ((AwesomeCheckBoxPreference) preference).writeValue((Boolean) o);
+            return true;
+        } else if (preference instanceof AwesomeEditTextPreference) {
+            ((AwesomeEditTextPreference) preference).writeValue(String.valueOf(o));
+            return true;
+        } else if (preference == mMpDecision) {
             final boolean value = (Boolean) o;
             new MpDecisionAction(value ? "1" : "0", true).triggerAction();
-            changed = true;
-        } else if (preference == mIntelliPlug) {
-            mIntelliPlug.writeValue((Boolean) o);
-            changed = true;
-        } else if (preference == mIntelliPlugEco) {
-            mIntelliPlugEco.writeValue((Boolean) o);
-            changed = true;
+            return true;
         } else if (preference == mCpuQuietGov) {
             final String path = Application.get().getString(R.string.file_cpu_quiet_cur_gov);
             final String value = String.valueOf(o);
@@ -157,10 +177,10 @@ public class HotpluggingFragment extends AttachPreferenceFragment
                     DatabaseHandler.CATEGORY_EXTRAS, mCpuQuietGov.getKey(),
                     path, value));
             mCpuQuietGov.setSummary(value);
-            changed = true;
+            return true;
         }
 
-        return changed;
+        return false;
     }
 
     public void onShellOutput(final ShellOutput shellOutput) {
