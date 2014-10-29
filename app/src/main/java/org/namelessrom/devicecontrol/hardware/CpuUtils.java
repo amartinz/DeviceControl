@@ -219,7 +219,7 @@ public class CpuUtils {
             cmd.append("cat ").append(getMaxCpuFrequencyPath(0)).append(" 2> /dev/null;");
             cmd.append("echo -n \"]\";");
             cmd.append("cat ").append(getMinCpuFrequencyPath(0)).append(" 2> /dev/null;");
-            cmd.append(");").append("echo $command | tr -d \"\\n\"");
+            cmd.append(");").append("echo $command | busybox tr -d \"\\n\"");
             Logger.v(CpuUtils.class, cmd.toString());
 
             final StringBuilder outputCollector = new StringBuilder();
