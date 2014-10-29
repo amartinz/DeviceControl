@@ -43,31 +43,6 @@
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="input_others"
-        android:title="@string/others">
-
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
-            android:defaultValue="false"
-            android:key="input_glove_mode_aw"
-            android:summary="@string/glove_mode_summary"
-            android:title="@string/glove_mode"
-            dc:category="device"
-            dc:filePathList="@array/files_glove_mode" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
-            android:key="input_glove_mode"
-            android:summary="@string/glove_mode_summary"
-            android:title="@string/glove_mode" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.hardware.VibratorIntensity
-            android:dialogTitle="@string/vibrator_strength"
-            android:key="vibrator_tuning"
-            android:summary="@string/vibrator_strength_summary"
-            android:title="@string/vibrator_strength" />
-
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
-
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="touchkey"
         android:title="@string/touchkey">
 
@@ -163,6 +138,39 @@
             android:title="@string/logger_mode"
             dc:category="device"
             dc:filePath="@string/file_logger_mode" />
+
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+        android:key="input_others"
+        android:title="@string/others">
+
+        <org.namelessrom.devicecontrol.ui.preferences.hardware.VibratorIntensity
+            android:dialogTitle="@string/vibrator_strength"
+            android:key="vibrator_tuning"
+            android:summary="@string/vibrator_strength_summary"
+            android:title="@string/vibrator_strength" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+            android:defaultValue="false"
+            android:key="input_glove_mode_aw"
+            android:summary="@string/glove_mode_summary"
+            android:title="@string/glove_mode"
+            dc:category="device"
+            dc:filePathList="@array/files_glove_mode" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+            android:key="input_glove_mode"
+            android:summary="@string/glove_mode_summary"
+            android:title="@string/glove_mode" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+            android:defaultValue="false"
+            android:key="input_reset_on_suspend"
+            android:summary="@string/input_reset_on_suspend_summary"
+            android:title="@string/input_reset_on_suspend"
+            dc:category="device"
+            dc:filePathList="@array/files_reset_on_suspend" />
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
