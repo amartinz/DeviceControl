@@ -281,6 +281,7 @@
     <string name="shutdown">Shutdown</string>
     <string name="warning_data_corruption">May cause data corruption if enabled</string>
     <string name="warning_data_corruption_invert">May cause data corruption if disabled</string>
+    <string name="data_integrity_decreased_performance">Ensures data integrity but decreases performance</string>
     <string name="read_ahead">Read ahead</string>
     <string name="filesystem">Filesystem</string>
     <string name="low_memory_killer">Low memory killer</string>

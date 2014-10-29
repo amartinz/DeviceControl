@@ -25,13 +25,13 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -46,8 +46,10 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
     private AwesomeCheckBoxPreference mFsync;
     private AwesomeCheckBoxPreference mDynFsync;
 
+    private AwesomeCheckBoxPreference mSoftwareCrc;
+
     private CustomCheckBoxPreference mFstrim;
-    private CustomListPreference     mFstrimInterval;
+    private CustomListPreference mFstrimInterval;
     //----------------------------------------------------------------------------------------------
 
     @Override protected int getFragmentId() { return ID_FILESYSTEM; }
@@ -85,6 +87,14 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
             getPreferenceScreen().removePreference(mDynFsync);
         }
 
+        mSoftwareCrc = (AwesomeCheckBoxPreference) findPreference("mmc_software_crc");
+        if (mSoftwareCrc.isSupported()) {
+            mSoftwareCrc.initValue();
+            mSoftwareCrc.setOnPreferenceChangeListener(this);
+        } else {
+            getPreferenceScreen().removePreference(mSoftwareCrc);
+        }
+
         final boolean canBrickEmmc = Emmc.get().canBrick();
         mFstrim = (CustomCheckBoxPreference) findPreference(FSTRIM);
         if (canBrickEmmc) {
@@ -114,6 +124,9 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
             return true;
         } else if (preference == mDynFsync) {
             mDynFsync.writeValue((Boolean) o);
+            return true;
+        } else if (preference == mSoftwareCrc) {
+            mSoftwareCrc.writeValue((Boolean) o);
             return true;
         } else if (preference == mReadAhead) {
             final String value = String.valueOf(o);
