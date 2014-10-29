@@ -397,4 +397,6 @@
     <string name="screen_off">Screen off</string>
     <string name="screen_on">Screen on</string>
     <string name="cpu">CPU</string>
+    <string name="input_reset_on_suspend">Reset on suspend</string>
+    <string name="input_reset_on_suspend_summary">Reset the input device when suspending to workaround touchpanel issues like ghost touches</string>
 </resources>
