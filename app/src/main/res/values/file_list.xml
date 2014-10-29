@@ -70,6 +70,7 @@
     <string name="file_dyn_fsync" translatable="false">/sys/kernel/dyn_fsync/Dyn_fsync_active</string>
     <string name="file_fsync" translatable="false">/sys/module/sync/parameters/fsync_enabled</string>
     <string name="file_mc_power_sched" translatable="false">/sys/devices/system/cpu/sched_mc_power_savings</string>
+    <string name="file_mmc_software_crc" translatable="false">/sys/module/mmc_core/parameters/use_spi_crc</string>
 
     <!-- ARRAYS -->
     <string-array name="files_touchkey_light" translatable="false">

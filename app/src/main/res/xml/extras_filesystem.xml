@@ -41,6 +41,13 @@
         dc:category="extras"
         dc:filePath="@string/file_dyn_fsync" />
 
+    <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        android:key="mmc_software_crc"
+        android:summary="@string/data_integrity_decreased_performance"
+        android:title="@string/mmc_software_crc"
+        dc:category="extras"
+        dc:filePath="@string/file_mmc_software_crc" />
+
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="fstrim_cat"
         android:title="@string/fstrim_title">
