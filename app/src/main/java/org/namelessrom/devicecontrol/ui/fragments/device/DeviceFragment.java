@@ -64,6 +64,7 @@ public class DeviceFragment extends AttachPreferenceFragment
     private CustomCheckBoxPreference  mGloveMode;
     private AwesomeCheckBoxPreference mAwesomeGloveMode;
     private AwesomeCheckBoxPreference mKnockOn;
+    private AwesomeCheckBoxPreference mResetOnSuspend;
 
     //==============================================================================================
     // Lights
@@ -153,6 +154,14 @@ public class DeviceFragment extends AttachPreferenceFragment
                     mGloveMode.setOnPreferenceChangeListener(this);
                 }
             } catch (Exception exc) { category.removePreference(mGloveMode); }
+
+            mResetOnSuspend = (AwesomeCheckBoxPreference) findPreference("input_reset_on_suspend");
+            if (mResetOnSuspend.isSupported()) {
+                mResetOnSuspend.initValue();
+                mResetOnSuspend.setOnPreferenceChangeListener(this);
+            } else {
+                category.removePreference(mResetOnSuspend);
+            }
 
             if (category.getPreferenceCount() == 0) {
                 preferenceScreen.removePreference(category);
@@ -307,6 +316,9 @@ public class DeviceFragment extends AttachPreferenceFragment
             return true;
         } else if (preference == mAwesomeGloveMode) {
             mAwesomeGloveMode.writeValue((Boolean) o);
+            return true;
+        } else if (preference == mResetOnSuspend) {
+            mResetOnSuspend.writeValue((Boolean) o);
             return true;
         } else if (preference == mKnockOn) {
             mKnockOn.writeValue((Boolean) o);
