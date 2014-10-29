@@ -119,7 +119,7 @@ public class CpuCoreMonitor implements DeviceConstants {
             sb.append("else busybox echo \"0 0 0\"").append(END).append(" fi;");
         }
         // replace new lines with space
-        sb.append(");").append("echo $command | tr -d \"\\n\"");
+        sb.append(");").append("echo $command | busybox tr -d \"\\n\"");
         // example output: 0 162000 1890000 interactive
         final String cmd = sb.toString();
         Logger.v(this, "cmd: " + cmd);

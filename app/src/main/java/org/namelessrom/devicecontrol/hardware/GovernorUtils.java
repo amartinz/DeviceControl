@@ -107,7 +107,7 @@ public class GovernorUtils {
             cmd.append("cat ").append(GOV_AVAILALBLE_PATH).append(" 2> /dev/null;");
             cmd.append("echo -n \"[\";");
             cmd.append("cat ").append(GOV0_CURRENT_PATH).append(" 2> /dev/null;");
-            cmd.append(");").append("echo $command | tr -d \"\\n\"");
+            cmd.append(");").append("echo $command | busybox tr -d \"\\n\"");
             Logger.v(CpuUtils.class, cmd.toString());
 
             final StringBuilder outputCollector = new StringBuilder();
