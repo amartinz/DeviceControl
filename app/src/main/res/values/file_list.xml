@@ -110,6 +110,9 @@
         <item>/sys/class/lcd/panel/panel_colors</item>
         <item>/sys/class/sec/tsp/panel_colors</item>
     </string-array>
+    <string-array name="files_reset_on_suspend" translatable="false">
+        <item>/sys/class/input/input0/reset_on_suspend</item>
+    </string-array>
 
     <!-- Vibrator -->
     <string-array name="hardware_vibrator_paths" translatable="false">
