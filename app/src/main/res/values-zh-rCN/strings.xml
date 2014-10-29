@@ -100,11 +100,7 @@
   <string name="powersaving_sched_mc_0">0-禁用</string>
   <string name="powersaving_sched_mc_1">1-平衡</string>
   <string name="powersaving_sched_mc_2">2-激进的</string>
-  <string name="intelli_plug_summary_on">智能插拔已启用。</string>
-  <string name="intelli_plug_summary_off">智能插拔已禁用。</string>
   <string name="intelli_plug_eco">Eco模式</string>
-  <string name="intelli_plug_eco_summary_on">智能插拔eco模式已启用。</string>
-  <string name="intelli_plug_eco_summary_off">智能插拔eco模式已禁用。</string>
   <string name="cpusettings">CPU设置</string>
   <string name="current_speed">当前频率</string>
   <string name="cpu_freq_max">CPU 的最大速度</string>
@@ -156,8 +152,6 @@
   <string name="show_launcher_summary">隐藏/取消隐藏的启动器图标</string>
   <string name="debugging">调试</string>
   <string name="extensive_logging">大量的日志记录</string>
-  <string name="extensive_logging_summary_on">将日志记录到 LogCat 。</string>
-  <string name="extensive_logging_summary_off">不将日志记录到 LogCat 。</string>
   <string name="reapply_on_boot">启动时重新应用</string>
   <string name="reapply_on_boot_summary">选择您想要在设备启动时恢复的设置</string>
   <string name="version">版本</string>

@@ -94,11 +94,7 @@
   <string name="powersaving_sched_mc_0">0 - Desactivar</string>
   <string name="powersaving_sched_mc_1">1 - Equilibrado</string>
   <string name="powersaving_sched_mc_2">2 - Agresivo</string>
-  <string name="intelli_plug_summary_on">Intelli-Plug está habilitado.</string>
-  <string name="intelli_plug_summary_off">Intelli-Plug está deshabilitado.</string>
   <string name="intelli_plug_eco">Modo Eco</string>
-  <string name="intelli_plug_eco_summary_on">Intelli-Plug modo eco activado.</string>
-  <string name="intelli_plug_eco_summary_off">Intelli-Plug modo eco desactivado.</string>
   <string name="cpusettings">Configuración de la CPU</string>
   <string name="current_speed">Velocidad Actual</string>
   <string name="cpu_freq_max">Máxima velocidad de la CPU</string>
@@ -150,8 +146,6 @@
   <string name="show_launcher_summary">Ocultar/mostrar el icono del launcher</string>
   <string name="debugging">Depuración</string>
   <string name="extensive_logging">Activación del registro Extensivo</string>
-  <string name="extensive_logging_summary_on">Activación del registro en el LogCat habilitado.</string>
-  <string name="extensive_logging_summary_off">Activación del registro en el LogCat deshabilitado.</string>
   <string name="reapply_on_boot">Vuelva a aplicar en el arranque</string>
   <string name="version">Versión</string>
   <string name="tasker">Tareas en</string>

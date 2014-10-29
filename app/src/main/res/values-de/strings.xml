@@ -101,11 +101,7 @@
   <string name="powersaving_sched_mc_0">0 - Deaktiviert</string>
   <string name="powersaving_sched_mc_1">1 - Ausgewogen</string>
   <string name="powersaving_sched_mc_2">2 - Aggressiv</string>
-  <string name="intelli_plug_summary_on">Intelli-Plug ist aktiviert.</string>
-  <string name="intelli_plug_summary_off">Intelli-Plug ist deaktiviert.</string>
   <string name="intelli_plug_eco">Energiespar-Modus</string>
-  <string name="intelli_plug_eco_summary_on">Intelli-Plug Energiespar-Modus aktiviert.</string>
-  <string name="intelli_plug_eco_summary_off">Intelli-Plug Energiespar-Modus deaktiviert.</string>
   <string name="cpusettings">CPU-Einstellungen</string>
   <string name="current_speed">Aktuelle Geschwindigkeit</string>
   <string name="cpu_freq_max">Maximale CPU-Geschwindigkeit</string>
@@ -127,6 +123,7 @@
   <string name="gpu_governor">GPU Governor</string>
   <string name="gpusettings">GPU-Einstellungen</string>
   <string name="gpu_freq_max">Maximale GPU-Geschwindigkeit</string>
+  <string name="gpu_freq_min">GPU-Mindestgeschwindigkeit</string>
   <string name="gpu_3d_scaling">GPU 3D Skalierung</string>
   <string name="gpu_3d_scaling_summary">GPU 3D Skalierung regelt die GPU Frequenz intelligent</string>
   <string name="touchkey">Tasten</string>
@@ -157,8 +154,6 @@
   <string name="show_launcher_summary">Zeigt/versteckt das Icon</string>
   <string name="debugging">Debugging</string>
   <string name="extensive_logging">Umfangreiche Protokollierung</string>
-  <string name="extensive_logging_summary_on">Protokollierung in LogCat aktiviert.</string>
-  <string name="extensive_logging_summary_off">Protokollierung in LogCat deaktiviert.</string>
   <string name="reapply_on_boot">Beim Starten anwenden</string>
   <string name="reapply_on_boot_summary">Wähle die Einstellungen, welche wiederhergestellt werden, wenn das Gerät startet</string>
   <string name="version">Version</string>
@@ -287,6 +282,7 @@
   <string name="shutdown">Herunterfahren</string>
   <string name="warning_data_corruption">Kann zu Datenverlusten führen falls aktiviert</string>
   <string name="warning_data_corruption_invert">Kann zu Datenverlusten führen falls deaktiviert</string>
+  <string name="data_integrity_decreased_performance">Stellt Datenintegrität sicher, verringert aber die Leistung</string>
   <string name="read_ahead">Read-Ahead</string>
   <string name="filesystem">Dateisystem</string>
   <string name="low_memory_killer">Low-Memory-Killer</string>
@@ -402,4 +398,6 @@
   <string name="screen_off">Bildschirm aus</string>
   <string name="screen_on">Bildschirm an</string>
   <string name="cpu">CPU</string>
+  <string name="input_reset_on_suspend">Automatisches Zurücksetzen</string>
+  <string name="input_reset_on_suspend_summary">Der Touchscreen wird zurückgesetzt, wenn das Display ausgeschalten wird, um Probleme wie Geister-Berührungen und schlechte Reaktionsfähigkeit zu beheben</string>
 </resources>

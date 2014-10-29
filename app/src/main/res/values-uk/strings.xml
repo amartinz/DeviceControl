@@ -139,8 +139,6 @@
   <string name="show_launcher_summary">Ховає/відображає значок запуску</string>
   <string name="debugging">Налагодження</string>
   <string name="extensive_logging">Обширне журналювання</string>
-  <string name="extensive_logging_summary_on">Запис в LogCat увімкнено.</string>
-  <string name="extensive_logging_summary_off">Запис в LogCat відключено.</string>
   <string name="reapply_on_boot">Застосовувати під час завантаження</string>
   <string name="reapply_on_boot_summary">Виберіть налаштування, які ви хочете відновити під час завантаження пристрою</string>
   <string name="version">Версія</string>

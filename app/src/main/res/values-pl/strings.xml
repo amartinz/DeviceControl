@@ -100,11 +100,7 @@
   <string name="powersaving_sched_mc_0">0 - wyłączone</string>
   <string name="powersaving_sched_mc_1">1 - zrównoważony</string>
   <string name="powersaving_sched_mc_2">2 - agresywny</string>
-  <string name="intelli_plug_summary_on">Intelli-Plug jest włączone.</string>
-  <string name="intelli_plug_summary_off">Intelli-Plug jest wyłączone.</string>
   <string name="intelli_plug_eco">Tryb Eco</string>
-  <string name="intelli_plug_eco_summary_on">Tryb eco Intelli-Plug jest włączony.</string>
-  <string name="intelli_plug_eco_summary_off">Tryb eco Intelli-Plug jest wyłączony.</string>
   <string name="cpusettings">Ustawienia procesora</string>
   <string name="current_speed">Bieżąca szybkość</string>
   <string name="cpu_freq_max">Maksymalna prędkość procesora</string>
@@ -156,8 +152,6 @@
   <string name="show_launcher_summary">Ukrywa/odkrywa ikonę launcher</string>
   <string name="debugging">Debugowanie</string>
   <string name="extensive_logging">Szczegółowe rejestrowanie</string>
-  <string name="extensive_logging_summary_on">Raportowanie do LogCat włączone</string>
-  <string name="extensive_logging_summary_off">Raportowanie do LogCat wyłączone</string>
   <string name="reapply_on_boot">Zastosuj pownownie przy uruchamianiu urządzenia</string>
   <string name="reapply_on_boot_summary">Wybierz ustawienia, które chcesz przywrócić podczas następnego uruchomienia</string>
   <string name="version">Wersja</string>

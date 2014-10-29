@@ -94,11 +94,7 @@
   <string name="powersaving_sched_mc_0">0 - Uitgeschakeld</string>
   <string name="powersaving_sched_mc_1">1 - Gebalanceerd</string>
   <string name="powersaving_sched_mc_2">2 - Agressief</string>
-  <string name="intelli_plug_summary_on">Intelli-Plug is ingeschakeld.</string>
-  <string name="intelli_plug_summary_off">Intelli-Plug is uitgeschakeld.</string>
   <string name="intelli_plug_eco">Eco-modus</string>
-  <string name="intelli_plug_eco_summary_on">Intelli-Plug eco-modus is ingeschakeld.</string>
-  <string name="intelli_plug_eco_summary_off">Intelli-Plug eco-modus is uitgeschakeld.</string>
   <string name="cpusettings">CPU instellingen</string>
   <string name="current_speed">Huidige snelheid</string>
   <string name="cpu_freq_max">Maximale CPU-snelheid</string>
@@ -150,8 +146,6 @@
   <string name="show_launcher_summary">Toont/verbergt het launcher-pictogram</string>
   <string name="debugging">Foutopsporing</string>
   <string name="extensive_logging">Uitgebreide logboekregistratie</string>
-  <string name="extensive_logging_summary_on">Registratie van gegevens met LogCat ingeschakeld.</string>
-  <string name="extensive_logging_summary_off">Registratie van gegevens met LogCat uitgeschakeld.</string>
   <string name="reapply_on_boot">Opnieuw toepassen bij opstarten</string>
   <string name="version">Versie</string>
   <string name="tasker">Taakbeheer</string>

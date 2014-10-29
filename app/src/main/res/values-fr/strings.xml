@@ -94,11 +94,7 @@
   <string name="powersaving_sched_mc_0">0 - Désactivé</string>
   <string name="powersaving_sched_mc_1">1 - Symétrique</string>
   <string name="powersaving_sched_mc_2">2 - Agressif</string>
-  <string name="intelli_plug_summary_on">Intelli-Plug est activé.</string>
-  <string name="intelli_plug_summary_off">Intelli-Plug est désactivé.</string>
   <string name="intelli_plug_eco">Mode Eco</string>
-  <string name="intelli_plug_eco_summary_on">Mode Intelli-Plug eco activé.</string>
-  <string name="intelli_plug_eco_summary_off">Mode Intelli-Plug eco désactivé.</string>
   <string name="cpusettings">Paramètres du CPU</string>
   <string name="current_speed">Vitesse actuelle</string>
   <string name="cpu_freq_max">Vitesse maximum du CPU</string>
@@ -150,8 +146,6 @@
   <string name="show_launcher_summary">Masque/affiche l\'icône du lanceur</string>
   <string name="debugging">Débogage</string>
   <string name="extensive_logging">Journalisation étendue</string>
-  <string name="extensive_logging_summary_on">Connexion à LogCat activée.</string>
-  <string name="extensive_logging_summary_off">Connexion à LogCat désactivée.</string>
   <string name="reapply_on_boot">Réappliquer au démarrage</string>
   <string name="version">Version</string>
   <string name="tasker">Tasker</string>

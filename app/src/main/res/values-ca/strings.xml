@@ -94,11 +94,7 @@
   <string name="powersaving_sched_mc_0">0 - Desactivar</string>
   <string name="powersaving_sched_mc_1">1 - Equilibrat</string>
   <string name="powersaving_sched_mc_2">2 - Agressiu</string>
-  <string name="intelli_plug_summary_on">Intelli-Plug està habilitat.</string>
-  <string name="intelli_plug_summary_off">Intelli-Plug està deshabilitat.</string>
   <string name="intelli_plug_eco">Mode Eco</string>
-  <string name="intelli_plug_eco_summary_on">Intelli-Plug mode eco activat.</string>
-  <string name="intelli_plug_eco_summary_off">Intelli-Plug mode eco desactivat.</string>
   <string name="cpusettings">Configuració de la CPU</string>
   <string name="current_speed">Velocitat Actual</string>
   <string name="cpu_freq_max">Màxima velocitat de la CPU</string>
@@ -150,8 +146,6 @@
   <string name="show_launcher_summary">Oculta/mostra la icona del launcher</string>
   <string name="debugging">Depuració</string>
   <string name="extensive_logging">Activació del registre Extensiu</string>
-  <string name="extensive_logging_summary_on">Activació del registre en el LogCat habilitat.</string>
-  <string name="extensive_logging_summary_off">Activació del registre en el LogCat deshabilitat.</string>
   <string name="reapply_on_boot">Torneu a aplicar en l\'arrencada</string>
   <string name="version">Versió</string>
   <string name="tasker">Tasques a</string>

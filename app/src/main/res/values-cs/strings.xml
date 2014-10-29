@@ -94,11 +94,7 @@
   <string name="powersaving_sched_mc_0">0 - Zakázáno</string>
   <string name="powersaving_sched_mc_1">1 - Vyvážený</string>
   <string name="powersaving_sched_mc_2">2 - Agresivní</string>
-  <string name="intelli_plug_summary_on">Intelli-Plug je povolen.</string>
-  <string name="intelli_plug_summary_off">Intelli-Plug je zakázán.</string>
   <string name="intelli_plug_eco">Eco režim</string>
-  <string name="intelli_plug_eco_summary_on">Intelli-Plug eco režim povolen.</string>
-  <string name="intelli_plug_eco_summary_off">Intelli-Plug eco režim zakázán.</string>
   <string name="cpusettings">Nastavení CPU</string>
   <string name="current_speed">Aktuální rychlost</string>
   <string name="cpu_freq_max">Maximální rychlost CPU</string>
@@ -150,8 +146,6 @@
   <string name="show_launcher_summary">Skryje/Odkryje ikonu launcheru</string>
   <string name="debugging">Debugging (Ladění a hledání chyb)</string>
   <string name="extensive_logging">Rozsáhlé logování</string>
-  <string name="extensive_logging_summary_on">Logování do LogCat povoleno.</string>
-  <string name="extensive_logging_summary_off">Logování do LogCat zakázáno.</string>
   <string name="reapply_on_boot">Nastav při bootu</string>
   <string name="version">Verze</string>
   <string name="tasker">Tasker</string>

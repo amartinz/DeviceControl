@@ -96,11 +96,7 @@
   <string name="powersaving_sched_mc_0">0 - отключен</string>
   <string name="powersaving_sched_mc_1">1 - сбалансированный</string>
   <string name="powersaving_sched_mc_2">2 - агрессивный</string>
-  <string name="intelli_plug_summary_on">Intelli-Plug включен.</string>
-  <string name="intelli_plug_summary_off">Intelli-Plug отключен.</string>
   <string name="intelli_plug_eco">Эко-режим</string>
-  <string name="intelli_plug_eco_summary_on">Эко-режим Intelli-Plug включен.</string>
-  <string name="intelli_plug_eco_summary_off">Эко-режим Intelli-Plug отключен.</string>
   <string name="cpusettings">Параметры процессора</string>
   <string name="current_speed">Текущая скорость</string>
   <string name="cpu_freq_max">Максимальная частота процессора</string>
@@ -152,8 +148,6 @@
   <string name="show_launcher_summary">Скрывает/показывает значок запуска</string>
   <string name="debugging">Отладка</string>
   <string name="extensive_logging">Активное журналирование</string>
-  <string name="extensive_logging_summary_on">Запись в LogCat включена.</string>
-  <string name="extensive_logging_summary_off">Запись в LogCat отключена.</string>
   <string name="reapply_on_boot">Применять вновь при загрузке</string>
   <string name="reapply_on_boot_summary">Выберите настройки, которые вы хотите восстановить, когда устройство загрузится</string>
   <string name="version">Версия</string>

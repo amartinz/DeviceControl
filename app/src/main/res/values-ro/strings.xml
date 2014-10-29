@@ -101,11 +101,7 @@
   <string name="powersaving_sched_mc_0">0 - Dezactivat</string>
   <string name="powersaving_sched_mc_1">1 - Echilibrat</string>
   <string name="powersaving_sched_mc_2">2 - Agresiv</string>
-  <string name="intelli_plug_summary_on">Intelli-Plug este activat.</string>
-  <string name="intelli_plug_summary_off">Intelli-Plug este dezactivat.</string>
   <string name="intelli_plug_eco">Mod Eco</string>
-  <string name="intelli_plug_eco_summary_on">Mod eco Intelli-Plug activat.</string>
-  <string name="intelli_plug_eco_summary_off">Mod eco Intelli-Plug dezactivat.</string>
   <string name="cpusettings">Setari CPU</string>
   <string name="current_speed">Viteza curentă</string>
   <string name="cpu_freq_max">Viteza maximă CPU</string>
@@ -157,8 +153,6 @@
   <string name="show_launcher_summary">Ascunde/arata iconiţa in lansator</string>
   <string name="debugging">Depanare</string>
   <string name="extensive_logging">Logare extensiva</string>
-  <string name="extensive_logging_summary_on">Logare în LogCat activat.</string>
-  <string name="extensive_logging_summary_off">Logare în LogCat dezactivat.</string>
   <string name="reapply_on_boot">Aplicaţi din nou la pornire</string>
   <string name="reapply_on_boot_summary">Alegeţi setările pe care doriţi să le restauraţi atunci când dispozitivul repornește</string>
   <string name="version">Versiunea</string>
