@@ -325,15 +325,19 @@ public class Utils implements DeviceConstants {
     }
 
     public static String[] listFiles(final String path, final boolean blacklist) {
+        return listFiles(path, blacklist ? BLACKLIST : null);
+    }
+
+    public static String[] listFiles(final String path, final String[] blacklist) {
         final String output = execute(String.format("ls %s", path));
         Logger.v(Utils.class, "listFiles --> output: %s", output);
         if (TextUtils.isEmpty(output)) return new String[0];
 
         final String[] files = output.trim().split("\n");
-        if (blacklist) {
+        if (blacklist != null) {
             final ArrayList<String> filtered = new ArrayList<String>();
             for (final String s : files) {
-                if (!Utils.isFileBlacklisted(s)) {
+                if (!Utils.isFileBlacklisted(s, blacklist)) {
                     filtered.add(s);
                 }
             }
@@ -343,7 +347,11 @@ public class Utils implements DeviceConstants {
     }
 
     public static boolean isFileBlacklisted(final String file) {
-        for (final String s : BLACKLIST) {
+        return isFileBlacklisted(file, BLACKLIST);
+    }
+
+    public static boolean isFileBlacklisted(final String file, final String[] blacklist) {
+        for (final String s : blacklist) {
             if (TextUtils.equals(s, file)) return true;
         }
         return false;

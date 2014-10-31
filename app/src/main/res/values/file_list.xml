@@ -37,15 +37,8 @@
     <string name="file_intelli_thermal_cc" translatable="false">/sys/module/msm_intelli_thermal/core_control/enabled</string>
     <!-- Mako Hotplug -->
     <string name="directory_mako_hotplug" translatable="false">/sys/devices/virtual/misc/mako_hotplug_control/</string>
-    <string name="mako_cpufreq_unplug_limit" translatable="false">/sys/devices/virtual/misc/mako_hotplug_control/cpufreq_unplug_limit</string>
-    <string name="mako_high_load_counter" translatable="false">/sys/devices/virtual/misc/mako_hotplug_control/high_load_counter</string>
-    <string name="mako_load_threshold" translatable="false">/sys/devices/virtual/misc/mako_hotplug_control/load_threshold</string>
-    <string name="mako_max_load_counter" translatable="false">/sys/devices/virtual/misc/mako_hotplug_control/max_load_counter</string>
-    <string name="mako_min_time_cpu_online" translatable="false">/sys/devices/virtual/misc/mako_hotplug_control/min_time_cpu_online</string>
-    <string name="mako_timer" translatable="false">/sys/devices/virtual/misc/mako_hotplug_control/timer</string>
     <!-- MSM Thermal -->
-    <string name="file_msm_thermal_base" translatable="false">/sys/module/msm_thermal/</string>
-    <string name="file_msm_thermal" translatable="false">/sys/module/msm_thermal/parameters/enabled</string>
+    <string name="directory_msm_thermal" translatable="false">/sys/module/msm_thermal/parameters/</string>
     <string name="file_msm_thermal_cc" translatable="false">/sys/module/msm_thermal/core_control/enabled</string>
     <string name="file_msm_thermal_cc_offlined" translatable="false">/sys/module/msm_thermal/core_control/cpus_offlined</string>
     <!-- KSM -->

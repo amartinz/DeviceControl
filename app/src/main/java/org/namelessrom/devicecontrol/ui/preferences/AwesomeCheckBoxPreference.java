@@ -36,14 +36,14 @@ import org.namelessrom.devicecontrol.utils.Utils;
  */
 public class AwesomeCheckBoxPreference extends CheckBoxPreference {
 
-    private String category;
-    private String valueChecked;
-    private String valueNotChecked;
+    private String mCategory;
+    private String mValueChecked;
+    private String mValueNotChecked;
 
-    private boolean startUp;
-    private boolean multiFile;
+    private boolean mStartUp;
+    private boolean mMultiFile;
 
-    private String   mPath;
+    private String mPath;
     private String[] mPaths;
 
     public AwesomeCheckBoxPreference(final Context context, final AttributeSet attrs) {
@@ -57,6 +57,16 @@ public class AwesomeCheckBoxPreference extends CheckBoxPreference {
         init(context, attrs);
     }
 
+    public AwesomeCheckBoxPreference(final Context context, final String path, final String[] paths,
+            final String category, final boolean multiFile, final boolean startUp) {
+        super(context);
+        mPath = path;
+        mPaths = paths;
+        mCategory = category;
+        mMultiFile = multiFile;
+        mStartUp = startUp;
+    }
+
     private void init(final Context context, final AttributeSet attrs) {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AwesomePreference);
 
@@ -65,11 +75,11 @@ public class AwesomeCheckBoxPreference extends CheckBoxPreference {
             assert (a != null);
             filePath = a.getResourceId(R.styleable.AwesomePreference_filePath, -1);
             filePathList = a.getResourceId(R.styleable.AwesomePreference_filePathList, -1);
-            category = a.getString(R.styleable.AwesomePreference_category);
-            startUp = a.getBoolean(R.styleable.AwesomePreference_startup, true);
-            multiFile = a.getBoolean(R.styleable.AwesomePreference_multifile, false);
-            valueChecked = a.getString(R.styleable.AwesomePreference_valueChecked);
-            valueNotChecked = a.getString(R.styleable.AwesomePreference_valueNotChecked);
+            mCategory = a.getString(R.styleable.AwesomePreference_category);
+            mStartUp = a.getBoolean(R.styleable.AwesomePreference_startup, true);
+            mMultiFile = a.getBoolean(R.styleable.AwesomePreference_multifile, false);
+            mValueChecked = a.getString(R.styleable.AwesomePreference_valueChecked);
+            mValueNotChecked = a.getString(R.styleable.AwesomePreference_valueNotChecked);
         } finally {
             if (a != null) a.recycle();
         }
@@ -81,7 +91,7 @@ public class AwesomeCheckBoxPreference extends CheckBoxPreference {
         } else if (filePathList != -1) {
             mPaths = res.getStringArray(filePathList);
             mPath = Utils.checkPaths(mPaths);
-            if (mPath.isEmpty() || !multiFile) {
+            if (mPath.isEmpty() || !mMultiFile) {
                 mPaths = null;
             }
         } else {
@@ -89,12 +99,12 @@ public class AwesomeCheckBoxPreference extends CheckBoxPreference {
             mPaths = null;
         }
 
-        if (category == null || category.isEmpty()) {
+        if (mCategory == null || mCategory.isEmpty()) {
             Logger.w(this, "Category is not set! Defaulting to \"default\"");
-            category = "default";
+            mCategory = "default";
         }
-        if (valueChecked == null || valueChecked.isEmpty()) valueChecked = "1";
-        if (valueNotChecked == null || valueNotChecked.isEmpty()) valueNotChecked = "0";
+        if (mValueChecked == null || mValueChecked.isEmpty()) mValueChecked = "1";
+        if (mValueNotChecked == null || mValueNotChecked.isEmpty()) mValueNotChecked = "0";
 
         setLayoutResource(R.layout.preference);
     }
@@ -113,21 +123,21 @@ public class AwesomeCheckBoxPreference extends CheckBoxPreference {
 
     public void writeValue(final boolean isChecked) {
         if (isSupported()) {
-            if (mPaths != null && multiFile) {
+            if (mPaths != null && mMultiFile) {
                 final int length = mPaths.length;
                 for (int i = 0; i < length; i++) {
-                    Utils.writeValue(mPaths[i], (isChecked ? valueChecked : valueNotChecked));
-                    if (startUp) {
+                    Utils.writeValue(mPaths[i], (isChecked ? mValueChecked : mValueNotChecked));
+                    if (mStartUp) {
                         PreferenceHelper.setBootup(new DataItem(
-                                category, getKey() + String.valueOf(i), mPaths[i],
-                                (isChecked ? valueChecked : valueNotChecked)));
+                                mCategory, getKey() + String.valueOf(i), mPaths[i],
+                                (isChecked ? mValueChecked : mValueNotChecked)));
                     }
                 }
             } else {
-                Utils.writeValue(mPath, (isChecked ? valueChecked : valueNotChecked));
-                if (startUp) {
-                    PreferenceHelper.setBootup(new DataItem(category, getKey(), mPath,
-                            (isChecked ? valueChecked : valueNotChecked)));
+                Utils.writeValue(mPath, (isChecked ? mValueChecked : mValueNotChecked));
+                if (mStartUp) {
+                    PreferenceHelper.setBootup(new DataItem(mCategory, getKey(), mPath,
+                            (isChecked ? mValueChecked : mValueNotChecked)));
                 }
             }
         }

@@ -23,13 +23,11 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.DataItem;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.hardware.ThermalUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.PreferenceUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
@@ -37,15 +35,11 @@ public class ThermalFragment extends AttachPreferenceFragment
         implements DeviceConstants, Preference.OnPreferenceChangeListener {
 
     //----------------------------------------------------------------------------------------------
-    private PreferenceScreen          mRoot;
+    private PreferenceScreen mRoot;
+
     //----------------------------------------------------------------------------------------------
     private AwesomeCheckBoxPreference mCoreControl;
-    //----------------------------------------------------------------------------------------------
-    private AwesomeCheckBoxPreference mMsmThermalEnabled;
-    private CustomEditTextPreference  mMsmThermalLimit;
-    private CustomEditTextPreference  mMsmThermalCoreLimit;
-    private CustomEditTextPreference  mMsmThermalCoreMax;
-    private CustomEditTextPreference  mMsmThermalCoreMin;
+
     //----------------------------------------------------------------------------------------------
     private AwesomeCheckBoxPreference mIntelliThermalEnabled;
 
@@ -57,7 +51,6 @@ public class ThermalFragment extends AttachPreferenceFragment
 
         mRoot = getPreferenceScreen();
         PreferenceCategory category;
-        String tmpString;
 
         //------------------------------------------------------------------------------------------
         // General
@@ -75,69 +68,24 @@ public class ThermalFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         // MSM-Thermal
         //------------------------------------------------------------------------------------------
-        category = (PreferenceCategory) findPreference("msm_thermal");
-        if (category != null) {
-            mMsmThermalEnabled = (AwesomeCheckBoxPreference) findPreference("msm_thermal_enabled");
-            if (mMsmThermalEnabled != null) {
-                if (mMsmThermalEnabled.isSupported()) {
-                    mMsmThermalEnabled.initValue();
-                    mMsmThermalEnabled.setOnPreferenceChangeListener(this);
-                } else {
-                    category.removePreference(mMsmThermalEnabled);
+        final AwesomePreferenceCategory msmThermal =
+                (AwesomePreferenceCategory) findPreference("msm_thermal");
+        if (msmThermal.isSupported()) {
+            final String[] files = Utils.listFiles(msmThermal.getPath(), true);
+            for (final String file : files) {
+                final int type = PreferenceUtils.getType(file);
+                if (PreferenceUtils.TYPE_EDITTEXT == type) {
+                    PreferenceUtils.addAwesomeEditTextPreference(getActivity(), "msm_thermal_",
+                            "extras", msmThermal.getPath(), file, msmThermal, this);
+                } else if (PreferenceUtils.TYPE_CHECKBOX == type) {
+                    PreferenceUtils.addAwesomeCheckboxPreference(getActivity(), "msm_thermal_",
+                            getString(R.string.thermal_warning), "extras", msmThermal.getPath(),
+                            file, msmThermal, this);
                 }
             }
-
-            mMsmThermalLimit = (CustomEditTextPreference) findPreference("msm_thermal_temp_limit");
-            if (mMsmThermalLimit != null) {
-                if (Utils.fileExists(ThermalUtils.MSM_THERMAL_TEMP_LIMIT)) {
-                    tmpString = Utils.readOneLine(ThermalUtils.MSM_THERMAL_TEMP_LIMIT);
-                    mMsmThermalLimit.setText(tmpString);
-                    mMsmThermalLimit.setSummary(tmpString);
-                    mMsmThermalLimit.setOnPreferenceChangeListener(this);
-                } else {
-                    category.removePreference(mMsmThermalLimit);
-                }
-            }
-
-            mMsmThermalCoreLimit =
-                    (CustomEditTextPreference) findPreference("msm_thermal_core_temp_limit");
-            if (mMsmThermalCoreLimit != null) {
-                if (Utils.fileExists(ThermalUtils.MSM_THERMAL_CORE_TEMP_LIMIT)) {
-                    tmpString = Utils.readOneLine(ThermalUtils.MSM_THERMAL_CORE_TEMP_LIMIT);
-                    mMsmThermalCoreLimit.setText(tmpString);
-                    mMsmThermalCoreLimit.setSummary(tmpString);
-                    mMsmThermalCoreLimit.setOnPreferenceChangeListener(this);
-                } else {
-                    category.removePreference(mMsmThermalCoreLimit);
-                }
-            }
-
-            mMsmThermalCoreMax = (CustomEditTextPreference) findPreference("msm_thermal_core_max");
-            if (mMsmThermalCoreMax != null) {
-                if (Utils.fileExists(ThermalUtils.MSM_THERMAL_MAX_CORE)) {
-                    tmpString = Utils.readOneLine(ThermalUtils.MSM_THERMAL_MAX_CORE);
-                    mMsmThermalCoreMax.setText(tmpString);
-                    mMsmThermalCoreMax.setSummary(tmpString);
-                    mMsmThermalCoreMax.setOnPreferenceChangeListener(this);
-                } else {
-                    category.removePreference(mMsmThermalCoreMax);
-                }
-            }
-
-            mMsmThermalCoreMin = (CustomEditTextPreference) findPreference("msm_thermal_core_min");
-            if (mMsmThermalCoreMin != null) {
-                if (Utils.fileExists(ThermalUtils.MSM_THERMAL_MIN_CORE)) {
-                    tmpString = Utils.readOneLine(ThermalUtils.MSM_THERMAL_MIN_CORE);
-                    mMsmThermalCoreMin.setText(tmpString);
-                    mMsmThermalCoreMin.setSummary(tmpString);
-                    mMsmThermalCoreMin.setOnPreferenceChangeListener(this);
-                } else {
-                    category.removePreference(mMsmThermalCoreMin);
-                }
-            }
+        } else {
+            getPreferenceScreen().removePreference(msmThermal);
         }
-
-        removeIfEmpty(category);
 
         //------------------------------------------------------------------------------------------
         // Intelli-Thermal
@@ -168,86 +116,21 @@ public class ThermalFragment extends AttachPreferenceFragment
     }
 
     @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
-        if (mCoreControl == preference) {
-            mCoreControl.writeValue((Boolean) o);
+        if (preference instanceof AwesomeEditTextPreference) {
+            ((AwesomeEditTextPreference) preference).writeValue(String.valueOf(o));
             return true;
-        } else if (mMsmThermalEnabled == preference) {
-            mMsmThermalEnabled.writeValue((Boolean) o);
+        } else if (preference instanceof AwesomeCheckBoxPreference) {
+            ((AwesomeCheckBoxPreference) preference).writeValue((Boolean) o);
+            return true;
+        } else if (mCoreControl == preference) {
+            mCoreControl.writeValue((Boolean) o);
             return true;
         } else if (mIntelliThermalEnabled == preference) {
             mIntelliThermalEnabled.writeValue((Boolean) o);
             return true;
-        } else if (mMsmThermalLimit == preference) {
-            final String value = validateValue(String.valueOf(o), 0);
-            if (value.isEmpty()) return false;
-            preferenceChange(mMsmThermalLimit, value, ThermalUtils.MSM_THERMAL_TEMP_LIMIT);
-            return true;
-        } else if (mMsmThermalCoreLimit == preference) {
-            final String value = validateValue(String.valueOf(o), 1);
-            if (value.isEmpty()) return false;
-            preferenceChange(mMsmThermalCoreLimit, value, ThermalUtils.MSM_THERMAL_CORE_TEMP_LIMIT);
-            return true;
-        } else if (mMsmThermalCoreMax == preference) {
-            final String value = validateValue(String.valueOf(o), 2);
-            if (value.isEmpty()) return false;
-            preferenceChange(mMsmThermalCoreMax, value, ThermalUtils.MSM_THERMAL_MAX_CORE);
-            return true;
-        } else if (mMsmThermalCoreMin == preference) {
-            final String value = validateValue(String.valueOf(o), 3);
-            if (value.isEmpty()) return false;
-            preferenceChange(mMsmThermalCoreMin, value, ThermalUtils.MSM_THERMAL_MIN_CORE);
-            return true;
         }
 
         return false;
-    }
-
-    private void preferenceChange(final CustomEditTextPreference pref, final String value,
-            final String file) {
-        Utils.writeValue(file, value);
-        final String currentValue = Utils.readOneLine(file);
-        pref.setSummary(currentValue);
-        pref.setText(currentValue);
-        PreferenceHelper.setBootup(
-                new DataItem(DatabaseHandler.CATEGORY_EXTRAS, pref.getKey(), file, value));
-    }
-
-    private String validateValue(final String value, final int type) {
-        final int parsed;
-        try {
-            parsed = Utils.parseInt(value);
-
-        } catch (Exception e) { return "";}
-
-        switch (type) {
-            case 0:
-                if (parsed < 50) {
-                    return "50";
-                } else if (parsed > 95) {
-                    return "95";
-                } else {
-                    return String.valueOf(parsed);
-                }
-            case 1:
-                if (parsed < 75) {
-                    return "75";
-                } else if (parsed > 110) {
-                    return "110";
-                } else {
-                    return String.valueOf(parsed);
-                }
-            case 2:
-            case 3:
-                if (parsed < 1) {
-                    return "1";
-                } else if (parsed > 4) {
-                    return "4";
-                } else {
-                    return String.valueOf(parsed);
-                }
-            default:
-                return "";
-        }
     }
 
 }

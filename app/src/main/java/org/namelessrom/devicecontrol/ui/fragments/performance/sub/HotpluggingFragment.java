@@ -106,7 +106,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
         if (makoHotplug.isSupported()) {
             final String[] files = Utils.listFiles(makoHotplug.getPath(), true);
             AwesomeEditTextPreference preference;
-            for (String file : files) {
+            for (final String file : files) {
                 preference = new AwesomeEditTextPreference(getActivity(),
                         makoHotplug.getPath() + file, null, "extras", false, true);
                 preference.setKey("mako_" + file);

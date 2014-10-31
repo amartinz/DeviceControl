@@ -24,38 +24,10 @@
         dc:filePathList="@array/files_core_control"
         dc:category="extras" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory
         android:key="msm_thermal"
-        android:title="@string/msm_thermal">
-
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
-            android:key="msm_thermal_enabled"
-            android:title="@string/msm_thermal_enabled"
-            android:summary="@string/thermal_warning"
-            dc:filePath="@string/file_msm_thermal"
-            dc:category="extras" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
-            android:key="msm_thermal_temp_limit"
-            android:title="@string/temp_limit"
-            android:inputType="number" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
-            android:key="msm_thermal_core_temp_limit"
-            android:title="@string/core_temp_limit"
-            android:inputType="number" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
-            android:key="msm_thermal_core_max"
-            android:title="@string/core_max"
-            android:inputType="number" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
-            android:key="msm_thermal_core_min"
-            android:title="@string/core_min"
-            android:inputType="number" />
-
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+        android:title="@string/msm_thermal"
+        dc:filePath="@string/directory_msm_thermal" />
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="intelli_thermal"
