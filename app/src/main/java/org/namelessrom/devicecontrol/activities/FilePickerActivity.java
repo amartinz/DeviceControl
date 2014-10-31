@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.negusoft.holoaccent.activity.AccentActivity;
@@ -28,12 +29,14 @@ import com.negusoft.holoaccent.activity.AccentActivity;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.fragments.filepicker.FilePickerFragment;
-import org.namelessrom.devicecontrol.ui.fragments.filepicker.FilePickerListener;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.objects.FlashItem;
+import org.namelessrom.devicecontrol.ui.fragments.filepicker.FilePickerFragment;
+import org.namelessrom.devicecontrol.ui.fragments.filepicker.FilePickerListener;
 
 import java.io.File;
+import java.net.URI;
+import java.util.Locale;
 
 public class FilePickerActivity extends AccentActivity implements FilePickerListener {
 
@@ -80,7 +83,31 @@ public class FilePickerActivity extends AccentActivity implements FilePickerList
         b.putString("path", flashItem.getPath());
         final Intent i = new Intent();
         i.putExtras(b);
-        i.setDataAndNormalize(Uri.fromFile(new File(flashItem.getPath())));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            final Uri uri = Uri.fromFile(new File(flashItem.getPath()));
+            Logger.v(this, "Uri: %s", uri.toString());
+            i.setDataAndNormalize(uri);
+        } else {
+            // we do not have the convenient normalizing method so we need to "normalize" ourselves
+            String path;
+            try {
+                path = new File(flashItem.getPath()).toURI().normalize().getPath();
+            } catch (Exception exc) {
+                path = flashItem.getPath();
+            }
+
+            Uri uri = Uri.fromFile(new File(path));
+            String scheme = uri.getScheme();
+            if (scheme != null) {
+                scheme = scheme.toLowerCase(Locale.ROOT);
+            }
+
+            // finally done, lets build that garbage back to an uri…
+            uri = new Uri.Builder().scheme(scheme).path(path).build();
+
+            Logger.v(this, "Legacy | Uri: %s", uri.toString());
+            i.setData(uri);
+        }
         setResult(Activity.RESULT_OK, i);
         finish();
     }
