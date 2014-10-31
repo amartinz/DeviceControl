@@ -117,10 +117,11 @@ public class RequestFileActivity extends Activity {
             Logger.i(this, "uri: %s, filepath: %s", uri, filePath);
 
             if (!Utils.fileExists(filePath) && uri != null) {
-                ContentResolver cr = getContentResolver();
-                Cursor cursor = cr.query(uri, null, null, null, null);
+                final ContentResolver cr = getContentResolver();
+                Cursor cursor = null;
                 try {
-                    if (cursor.moveToNext()) {
+                    cursor = cr.query(uri, null, null, null, null);
+                    if (cursor != null && cursor.moveToNext()) {
                         int index = cursor.getColumnIndex(MediaStore.MediaColumns.DATA);
                         if (index >= 0) {
                             filePath = cursor.getString(index);
@@ -128,7 +129,8 @@ public class RequestFileActivity extends Activity {
                                 && uri.toString().startsWith(ContentResolver.SCHEME_CONTENT)) {
                             String newUri = new Uri.Builder()
                                     .scheme(ContentResolver.SCHEME_CONTENT)
-                                    .authority(uri.getAuthority()).appendPath("document")
+                                    .authority(uri.getAuthority())
+                                    .appendPath("document")
                                     .build().toString();
                             String path = uri.toString();
                             index = filePath.indexOf(":");
@@ -147,7 +149,7 @@ public class RequestFileActivity extends Activity {
                         }
                     }
                 } finally {
-                    cursor.close();
+                    if (cursor != null) cursor.close();
                 }
             }
 
