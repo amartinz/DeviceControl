@@ -20,7 +20,9 @@
     android:versionCode="91"
     android:versionName="0.7.1">
 
-    <uses-sdk tools:node="replace" />
+    <!-- currently broken, reenable once fixed -->
+    <!--uses-sdk tools:node="replace" /-->
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="21" />
 
     <!-- Internet / Networking -->
     <uses-permission android:name="android.permission.INTERNET" />

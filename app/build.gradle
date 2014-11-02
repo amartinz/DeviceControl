@@ -28,14 +28,16 @@ android {
         release {
             signingConfig signingConfigs.release
             proguardFile 'src/main/proguard.pro'
-            runProguard true
-            zipAlign true
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
         }
         debug {
             signingConfig signingConfigs.release
             proguardFile 'src/main/proguard.pro'
-            runProguard true
-            zipAlign true
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
             applicationIdSuffix '.dev'
             versionNameSuffix '-dev'
         }
