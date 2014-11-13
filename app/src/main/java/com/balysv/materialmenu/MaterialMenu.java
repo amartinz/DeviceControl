@@ -32,6 +32,13 @@ public interface MaterialMenu {
     public void setState(IconState state);
 
     /**
+     * Return current icon state
+     *
+     * @return icon state
+     */
+    public IconState getState();
+
+    /**
      * Animate icon to given state.
      *
      * @param state new icon state
@@ -72,6 +79,23 @@ public interface MaterialMenu {
      * @param interpolator new interpolator
      */
     public void setInterpolator(Interpolator interpolator);
+
+    /**
+     * Enable RTL layout. Flips all icons horizontally
+     *
+     * @param rtlEnabled true to enable RTL layout
+     */
+    public void setRTLEnabled(boolean rtlEnabled);
+
+    /**
+     * Manually set a transformation value for an {@link com.balysv.materialmenu.MaterialMenuDrawable.AnimationState}
+     *
+     * @param animationState state to set value in
+     * @param value          between {@link com.balysv.materialmenu.MaterialMenuDrawable#TRANSFORMATION_START} and
+     *                       {@link com.balysv.materialmenu.MaterialMenuDrawable#TRANSFORMATION_END}.
+     */
+    public void setTransformationOffset(MaterialMenuDrawable.AnimationState animationState,
+            float value);
 
     /**
      * @return {@link MaterialMenuDrawable} to be used for the menu

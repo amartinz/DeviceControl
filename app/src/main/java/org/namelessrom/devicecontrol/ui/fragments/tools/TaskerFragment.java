@@ -17,11 +17,13 @@
  */
 package org.namelessrom.devicecontrol.ui.fragments.tools;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,9 +33,6 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-
-import com.negusoft.holoaccent.dialog.AccentAlertDialog;
-import com.negusoft.holoaccent.widget.AccentSwitch;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
@@ -90,8 +89,7 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
         for (final TaskerCard card : cards) {
             card.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override public boolean onLongClick(View view) {
-                    final AccentAlertDialog.Builder alert =
-                            new AccentAlertDialog.Builder(getActivity());
+                    final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
                     alert.setIcon(
                             DrawableHelper.applyAccentColorFilter(R.drawable.ic_general_trash));
                     alert.setTitle(R.string.delete_task);
@@ -129,7 +127,7 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
         final MenuItem toggle = menu.findItem(R.id.menu_action_toggle);
         final View v;
         if (toggle != null && (v = toggle.getActionView()) != null) {
-            final AccentSwitch sw = (AccentSwitch) v.findViewById(R.id.ab_switch);
+            final SwitchCompat sw = (SwitchCompat) v.findViewById(R.id.ab_switch);
             sw.setChecked(PreferenceHelper.getBoolean(USE_TASKER, false));
             sw.setOnCheckedChangeListener(
                     new CompoundButton.OnCheckedChangeListener() {

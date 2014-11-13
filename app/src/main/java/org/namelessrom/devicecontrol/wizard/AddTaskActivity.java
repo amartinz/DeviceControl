@@ -18,13 +18,13 @@
 
 package org.namelessrom.devicecontrol.wizard;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -39,11 +39,11 @@ import org.namelessrom.devicecontrol.wizard.setup.SetupDataCallbacks;
 import org.namelessrom.devicecontrol.wizard.setup.TaskerSetupWizardData;
 import org.namelessrom.devicecontrol.wizard.ui.StepPagerStrip;
 
-public class AddTaskActivity extends Activity implements SetupDataCallbacks {
+public class AddTaskActivity extends ActionBarActivity implements SetupDataCallbacks {
     public static final String ARG_ITEM = "arg_item";
 
-    private ViewPager          mViewPager;
-    private StepPagerStrip     mStepPagerStrip;
+    private ViewPager mViewPager;
+    private StepPagerStrip mStepPagerStrip;
     private CustomPagerAdapter mPagerAdapter;
 
     private Button mNextButton;

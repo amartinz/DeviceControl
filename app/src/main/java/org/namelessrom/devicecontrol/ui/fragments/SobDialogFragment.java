@@ -1,11 +1,10 @@
 package org.namelessrom.devicecontrol.ui.fragments;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
@@ -43,7 +42,7 @@ public class SobDialogFragment extends DialogFragment {
             checked[i] = isChecked(entries.get(i));
         }
 
-        final AccentAlertDialog.Builder builder = new AccentAlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle(R.string.reapply_on_boot);
         builder.setMultiChoiceItems(items, checked,

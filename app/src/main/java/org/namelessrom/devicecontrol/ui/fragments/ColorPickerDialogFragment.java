@@ -1,5 +1,6 @@
 package org.namelessrom.devicecontrol.ui.fragments;
 
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +11,13 @@ import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.OpacityBar;
 import com.larswerkman.holocolorpicker.SaturationBar;
 import com.larswerkman.holocolorpicker.ValueBar;
-import com.negusoft.holoaccent.dialog.AccentDialogFragment;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-public class ColorPickerDialogFragment extends AccentDialogFragment {
+public class ColorPickerDialogFragment extends DialogFragment {
 
     public PreferencesFragment.OnColorPickedListener onColorPickedListener;
 

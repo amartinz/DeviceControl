@@ -45,7 +45,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
     //==============================================================================================
     // App
     //==============================================================================================
-    private CustomPreference         mColorPreference;
+    private CustomPreference mColorPreference;
     private CustomCheckBoxPreference mMonkeyPref;
 
     //==============================================================================================
@@ -56,7 +56,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
     //==============================================================================================
     // General
     //==============================================================================================
-    private CustomPreference         mSetOnBoot;
+    private CustomPreference mSetOnBoot;
     private CustomCheckBoxPreference mShowLauncher;
     private CustomCheckBoxPreference mSkipChecks;
 

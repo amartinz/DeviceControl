@@ -23,8 +23,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.negusoft.holoaccent.activity.AccentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
@@ -35,16 +35,11 @@ import org.namelessrom.devicecontrol.ui.fragments.filepicker.FilePickerFragment;
 import org.namelessrom.devicecontrol.ui.fragments.filepicker.FilePickerListener;
 
 import java.io.File;
-import java.net.URI;
 import java.util.Locale;
 
-public class FilePickerActivity extends AccentActivity implements FilePickerListener {
+public class FilePickerActivity extends BaseActivity implements FilePickerListener {
 
     private Fragment mCurrentFragment;
-
-    @Override public int getOverrideAccentColor() {
-        return Application.get().getAccentColor();
-    }
 
     @Override protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
@@ -53,10 +48,10 @@ public class FilePickerActivity extends AccentActivity implements FilePickerList
 
     @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setTheme(Application.get().isDarkTheme() ? R.style.BaseThemeDark : R.style.BaseThemeLight);
-
         setContentView(R.layout.activity_main);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         mCurrentFragment = buildFragment(getIntent());
         getFragmentManager().beginTransaction()

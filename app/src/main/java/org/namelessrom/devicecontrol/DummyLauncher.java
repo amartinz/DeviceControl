@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,6 +29,7 @@ import android.widget.TextView;
 
 import com.stericson.roottools.RootTools;
 
+import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
@@ -39,24 +39,21 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
  * <p/>
  * If we deactivate this activity, the launcher icon disappears.
  */
-public class DummyLauncher extends Activity {
+public class DummyLauncher extends BaseActivity {
 
     private RelativeLayout mProgressLayout;
-    private TextView       mProgressStatus;
+    private TextView mProgressStatus;
 
     private LinearLayout mLauncher;
-    private TextView     mStatus;
-    private Button       mAction;
+    private TextView mStatus;
+    private Button mAction;
 
-    private final Handler mHandler   = new Handler();
-    private       boolean hasRoot    = false;
-    private       boolean hasBusyBox = false;
+    private final Handler mHandler = new Handler();
+    private boolean hasRoot = false;
+    private boolean hasBusyBox = false;
 
     @Override protected void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
-
-        setTheme(Application.get().isDarkTheme() ? R.style.BaseThemeDark : R.style.BaseThemeLight);
-
         setContentView(R.layout.activity_launcher);
 
         mProgressLayout = (RelativeLayout) findViewById(R.id.launcher_progress);

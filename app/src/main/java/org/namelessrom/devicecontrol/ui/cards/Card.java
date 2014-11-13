@@ -64,7 +64,7 @@ public abstract class Card extends LinearLayout {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Card);
 
-        CharSequence s = a.getString(R.styleable.Card_title);
+        CharSequence s = a.getString(R.styleable.Card_cardTitle);
         if (s != null) {
             title = s.toString();
         }

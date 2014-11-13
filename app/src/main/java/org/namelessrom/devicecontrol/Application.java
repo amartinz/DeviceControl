@@ -149,7 +149,8 @@ public class Application extends android.app.Application implements DeviceConsta
 
     public int getAccentColor() {
         if (sAccentColor == -1) {
-            sAccentColor = PreferenceHelper.getInt("pref_color", getColor(R.color.accent));
+            sAccentColor =
+                    isDarkTheme() ? getColor(R.color.accent) : getColor(R.color.accent_light);
         }
         return sAccentColor;
     }

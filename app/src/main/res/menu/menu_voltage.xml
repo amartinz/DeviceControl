@@ -14,17 +14,17 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/action_plus"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_plus">
-    </item>
+        android:title="@string/menu_plus"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_minus"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_minus">
-    </item>
+        android:title="@string/menu_minus"
+        app:showAsAction="ifRoom" />
 
 </menu>

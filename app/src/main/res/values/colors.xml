@@ -16,17 +16,22 @@
 -->
 <resources>
     <!-- Accents -->
-    <color name="accent">@color/palette_orange</color>
-    <color name="accent_light">@color/palette_blue</color>
+    <color name="accent">@color/palette_blue_600</color>
+    <color name="accent_light">@color/palette_teal_500</color>
     <color name="grass">#ff2ab081</color>
     <color name="green">#ff53a93f</color>
-    <color name="palette_blue">#ff1e88e5</color>
+    <color name="palette_blue_600">#ff1e88e5</color>
+    <color name="palette_blue_800">#ff1565c0</color>
     <color name="palette_orange">#fff5a816</color>
+    <color name="palette_teal_500">#ff009688</color>
+    <color name="palette_teal_700">#ff00796B</color>
     <color name="palette_yellow">#ffafb42b</color>
     <color name="dark_background">#ff152127</color>
-    <color name="light_background">#ffe7e7e7</color>
     <color name="dark_menu">#ff132125</color>
+    <color name="dark_primary_dark">@color/palette_blue_800</color>
+    <color name="light_background">#ffe7e7e7</color>
     <color name="light_menu">#ffd6d6d6</color>
+    <color name="light_primary_dark">@color/palette_teal_700</color>
     <!-- card -->
     <color name="card_text">#ff8d8d8d</color>
     <color name="card_text_error">#ffff0000</color>

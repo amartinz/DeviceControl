@@ -2,20 +2,13 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_STATIC_JAVA_LIBRARIES      := android-support-v13-extra android-support-v7-recyclerview-extra ion
+LOCAL_STATIC_JAVA_LIBRARIES      := android-support-v13 android-support-v7-recyclerview ion
 
 LOCAL_ASSET_DIR    := $(LOCAL_PATH)/assets
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
 LOCAL_SRC_FILES    := \
         $(call all-java-files-under,java) \
         aidl/org/namelessrom/devicecontrol/api/IRemoteService.aidl \
-
-## Holoaccent
-
-library_src_files := ../../../../../../external/holoaccent/HoloAccent/src
-LOCAL_SRC_FILES   += $(call all-java-files-under, $(library_src_files))
-
-LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/holoaccent/HoloAccent/res
 
 ## Holocolorpicker
 
@@ -35,7 +28,6 @@ LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/mpandroidchart/MP
 
 LOCAL_AAPT_FLAGS := \
     --auto-add-overlay \
-    --extra-packages com.negusoft.holoaccent \
     --extra-packages com.larswerkman.holocolorpicker \
     --extra-packages com.github.mikephil.charting \
 
@@ -51,23 +43,3 @@ LOCAL_MODULE_TAGS       := optional
 include $(BUILD_PACKAGE)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
-
-#===================================================================
-include $(CLEAR_VARS)
-LOCAL_SRC_FILES := ../../../libs/android-support-v7-recyclerview.jar
-LOCAL_MODULE := android-support-v7-recyclerview-extra
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := JAVA_LIBRARIES
-LOCAL_MODULE_PATH := $(TARGET_OUT)/fake_packages/$(LOCAL_SRC_FILES)
-include $(BUILD_PREBUILT)
-#===================================================================
-
-#===================================================================
-include $(CLEAR_VARS)
-LOCAL_SRC_FILES := ../../../libs/android-support-v13.jar
-LOCAL_MODULE := android-support-v13-extra
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := JAVA_LIBRARIES
-LOCAL_MODULE_PATH := $(TARGET_OUT)/fake_packages/$(LOCAL_SRC_FILES)
-include $(BUILD_PREBUILT)
-#===================================================================

@@ -41,8 +41,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.negusoft.holoaccent.dialog.DividerPainter;
-
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
@@ -311,7 +309,6 @@ public class VoltageFragment extends AttachPreferenceFragment implements
 
                             final Window window = dialog.getWindow();
                             window.setLayout(800, LayoutParams.WRAP_CONTENT);
-                            new DividerPainter(getActivity()).paint(window);
 
                             return true;
                         }

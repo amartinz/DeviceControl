@@ -16,43 +16,44 @@
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="org.namelessrom.devicecontrol.activities.AppDetailsActivity">
 
     <item
         android:id="@+id/menu_action_play_store"
         android:icon="@drawable/ic_action_play_store"
-        android:showAsAction="ifRoom"
-        android:title="@string/open_play_store" />
+        android:title="@string/open_play_store"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_action_refresh"
         android:icon="@drawable/ic_action_refresh"
-        android:showAsAction="ifRoom"
-        android:title="@string/refresh" />
+        android:title="@string/refresh"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_app_kill"
-        android:showAsAction="never"
-        android:title="@string/kill_app" />
+        android:title="@string/kill_app"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_app_clear_cache"
-        android:showAsAction="never"
-        android:title="@string/clear_cache" />
+        android:title="@string/clear_cache"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_app_clear_data"
-        android:showAsAction="never"
-        android:title="@string/clear_data" />
+        android:title="@string/clear_data"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_app_disable"
-        android:showAsAction="never"
-        android:title="@string/disable" />
+        android:title="@string/disable"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_app_uninstall"
-        android:showAsAction="never"
-        android:title="@string/uninstall" />
+        android:title="@string/uninstall"
+        app:showAsAction="never" />
 
 </menu>
