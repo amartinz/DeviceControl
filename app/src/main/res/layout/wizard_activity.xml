@@ -17,49 +17,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    style="@style/RootLayout"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
-    <org.namelessrom.devicecontrol.wizard.ui.StepPagerStrip
-        android:id="@+id/strip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:paddingBottom="8dp"
-        android:gravity="left" />
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <View style="@style/SetupWizardDivider" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/actionbar_toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        style="@style/RootLayout"
+        android:fitsSystemWindows="true">
 
-        <Button
-            style="@style/ButtonBar"
-            android:id="@+id/prev_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <org.namelessrom.devicecontrol.wizard.ui.StepPagerStrip
+            android:id="@+id/strip"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:text="@string/prev" />
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:paddingBottom="8dp"
+            android:gravity="left" />
 
-        <Button
-            style="@style/ButtonBar"
-            android:id="@+id/next_button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <View style="@style/SetupWizardDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text="@string/next" />
+            android:orientation="horizontal">
+
+            <Button
+                style="@style/ButtonBar"
+                android:id="@+id/prev_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="@string/prev" />
+
+            <Button
+                style="@style/ButtonBar"
+                android:id="@+id/next_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="@string/next" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

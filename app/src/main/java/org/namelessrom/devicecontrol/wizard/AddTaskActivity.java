@@ -18,20 +18,27 @@
 
 package org.namelessrom.devicecontrol.wizard;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.balysv.materialmenu.MaterialMenuDrawable;
+import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
+import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.wizard.setup.AbstractSetupData;
 import org.namelessrom.devicecontrol.wizard.setup.Page;
 import org.namelessrom.devicecontrol.wizard.setup.PageList;
@@ -39,11 +46,11 @@ import org.namelessrom.devicecontrol.wizard.setup.SetupDataCallbacks;
 import org.namelessrom.devicecontrol.wizard.setup.TaskerSetupWizardData;
 import org.namelessrom.devicecontrol.wizard.ui.StepPagerStrip;
 
-public class AddTaskActivity extends Activity implements SetupDataCallbacks {
+public class AddTaskActivity extends ActionBarActivity implements SetupDataCallbacks {
     public static final String ARG_ITEM = "arg_item";
 
-    private ViewPager          mViewPager;
-    private StepPagerStrip     mStepPagerStrip;
+    private ViewPager mViewPager;
+    private StepPagerStrip mStepPagerStrip;
     private CustomPagerAdapter mPagerAdapter;
 
     private Button mNextButton;
@@ -55,9 +62,32 @@ public class AddTaskActivity extends Activity implements SetupDataCallbacks {
 
     private final Handler mHandler = new Handler();
 
+    private static long mBackPressed;
+    private Toast mToast;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wizard_activity);
+
+        // setup action bar
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // setup material menu icon
+        final MaterialMenuIconToolbar materialMenu =
+                new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
+                    @Override public int getToolbarViewId() { return R.id.toolbar; }
+                };
+        if (AppHelper.isLollipop()) {
+            materialMenu.setNeverDrawTouch(true);
+        }
+        materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         mSetupData = (AbstractSetupData) getLastNonConfigurationInstance();
         if (mSetupData == null) {
@@ -163,9 +193,23 @@ public class AddTaskActivity extends Activity implements SetupDataCallbacks {
                 final int currentItem = mViewPager.getCurrentItem();
                 if (currentItem > 0) {
                     mViewPager.setCurrentItem(currentItem - 1, true);
+                } else {
+                    shouldExit();
                 }
             }
         });
+    }
+
+    private void shouldExit() {
+        if (mBackPressed + 2000 > System.currentTimeMillis()) {
+            if (mToast != null) { mToast.cancel(); }
+            finish();
+        } else {
+            mToast = Toast.makeText(getBaseContext(),
+                    getString(R.string.action_press_again), Toast.LENGTH_SHORT);
+            mToast.show();
+        }
+        mBackPressed = System.currentTimeMillis();
     }
 
     private void updateNextPreviousState() {

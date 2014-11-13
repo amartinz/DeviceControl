@@ -63,11 +63,6 @@
         android:key="prefs_interface"
         android:title="@string/user_interface">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:key="pref_color"
-            android:summary="@string/accent_summary"
-            android:title="@string/accent" />
-
         <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
             android:key="dark_theme"
             android:summary="@string/dark_theme_summary"

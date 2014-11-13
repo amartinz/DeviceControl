@@ -61,10 +61,12 @@
     </declare-styleable>
     <!-- Material Menu -->
     <declare-styleable name="MaterialMenuView">
-        <attr name="color" format="color" />
-        <attr name="scale" format="integer" />
-        <attr name="transformDuration" format="integer" />
-        <attr name="pressedDuration" format="integer" />
+        <attr name="mm_color" format="color"/>
+        <attr name="mm_scale" format="integer"/>
+        <attr name="mm_transformDuration" format="integer"/>
+        <attr name="mm_pressedDuration" format="integer"/>
+        <attr name="mm_strokeWidth" format="integer"/>
+        <attr name="mm_rtlEnabled" format="boolean"/>
     </declare-styleable>
     <!-- theme color -->
     <attr name="themeColor" format="reference|color" />
@@ -94,7 +96,7 @@
     </declare-styleable>
     <!-- Cards -->
     <declare-styleable name="Card">
-        <attr name="title" format="string" />
+        <attr name="cardTitle" format="string" />
     </declare-styleable>
     <declare-styleable name="Item">
         <attr name="itemTitle" format="string" />

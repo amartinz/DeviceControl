@@ -19,6 +19,7 @@ package org.namelessrom.devicecontrol.ui.fragments.tools.editor;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,8 +39,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
@@ -175,7 +174,7 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
         final Activity activity = getActivity();
         if (activity == null) return;
 
-        new AccentAlertDialog.Builder(activity)
+        new AlertDialog.Builder(activity)
                 .setTitle(getString(R.string.dialog_warning))
                 .setMessage(getString(R.string.dialog_warning_apply))
                 .setNegativeButton(getString(android.R.string.cancel),
@@ -326,7 +325,7 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
             title = getString(R.string.add_property);
         }
 
-        new AccentAlertDialog.Builder(activity)
+        new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setView(editDialog)
                 .setNegativeButton(getString(android.R.string.cancel),

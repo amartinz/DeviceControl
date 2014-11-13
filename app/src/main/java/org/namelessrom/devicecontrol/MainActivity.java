@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -26,8 +25,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -35,12 +35,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
-import com.balysv.materialmenu.MaterialMenuIcon;
+import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.negusoft.holoaccent.activity.AccentActivity;
 import com.stericson.roottools.RootTools;
 
+import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
+import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.ui.fragments.HomeFragment;
 import org.namelessrom.devicecontrol.ui.fragments.LicenseFragment;
 import org.namelessrom.devicecontrol.ui.fragments.PreferencesFragment;
@@ -70,8 +72,6 @@ import org.namelessrom.devicecontrol.ui.fragments.tools.editor.SysctlEditorFragm
 import org.namelessrom.devicecontrol.ui.fragments.tools.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.flasher.FlasherPreferencesFragment;
-import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
-import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -79,7 +79,7 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.File;
 
-public class MainActivity extends AccentActivity
+public class MainActivity extends BaseActivity
         implements DeviceConstants, AdapterView.OnItemClickListener,
         SlidingMenu.OnClosedListener, SlidingMenu.OnOpenedListener {
 
@@ -88,16 +88,16 @@ public class MainActivity extends AccentActivity
     //==============================================================================================
     private static final Object lockObject = new Object();
 
-    private static long  back_pressed;
-    private        Toast mToast;
+    private static long mBackPressed;
+    private Toast mToast;
 
-    public static SlidingMenu      sSlidingMenu;
-    public static MaterialMenuIcon sMaterialMenuIcon;
+    public static SlidingMenu sSlidingMenu;
+    public static MaterialMenuIconToolbar sMaterialMenu;
 
     private Fragment mCurrentFragment;
 
-    private int mTitle            = R.string.home;
-    private int mFragmentTitle    = R.string.home;
+    private int mTitle = R.string.home;
+    private int mFragmentTitle = R.string.home;
     private int mSubFragmentTitle = -1;
 
     private static final int[] MENU_ENTRIES = {
@@ -140,23 +140,35 @@ public class MainActivity extends AccentActivity
     // Overridden Methods
     //==============================================================================================
 
-    @Override public int getOverrideAccentColor() {
-        return Application.get().getAccentColor();
-    }
-
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setTheme(Application.get().isDarkTheme() ? R.style.BaseThemeDark : R.style.BaseThemeLight);
-
         setContentView(R.layout.activity_main);
 
         if (PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
             PreferenceHelper.setBoolean(DC_FIRST_START, false);
         }
 
-        // setup action bar / material menu icon
-        sMaterialMenuIcon = new MaterialMenuIcon(this, Color.WHITE);
+        // setup action bar
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                if (mSubFragmentTitle == -1) {
+                    sSlidingMenu.toggle(true);
+                } else {
+                    onCustomBackPressed(true);
+                }
+            }
+        });
+
+        // setup material menu icon
+        sMaterialMenu =
+                new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
+                    @Override public int getToolbarViewId() { return R.id.toolbar; }
+                };
+        if (AppHelper.isLollipop()) {
+            sMaterialMenu.setNeverDrawTouch(true);
+        }
 
         Utils.setupDirectories();
 
@@ -219,27 +231,12 @@ public class MainActivity extends AccentActivity
 
     @Override protected void onPostCreate(final Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        sMaterialMenuIcon.syncState(savedInstanceState);
+        sMaterialMenu.syncState(savedInstanceState);
     }
 
     @Override protected void onSaveInstanceState(@NonNull final Bundle outState) {
-        sMaterialMenuIcon.onSaveInstanceState(outState);
+        sMaterialMenu.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
-    }
-
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                if (mSubFragmentTitle == -1) {
-                    sMaterialMenuIcon.animatePressedState(MaterialMenuDrawable.IconState.BURGER);
-                    sSlidingMenu.toggle(true);
-                } else {
-                    onCustomBackPressed(true);
-                }
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void onCustomBackPressed(final boolean animatePressed) {
@@ -274,9 +271,9 @@ public class MainActivity extends AccentActivity
 
             // we can separate actionbar back actions and back key presses
             if (animatePressed) {
-                sMaterialMenuIcon.animatePressedState(iconState);
+                sMaterialMenu.animatePressedState(iconState);
             } else {
-                sMaterialMenuIcon.animateState(iconState);
+                sMaterialMenu.animateState(iconState);
             }
 
             // after animating, go further
@@ -299,7 +296,7 @@ public class MainActivity extends AccentActivity
 
         // if nothing matched by now, we do not have any fragments in the BackStack, nor we have
         // the menu open. in that case lets detect a double back press and exit the activity
-        if (back_pressed + 2000 > System.currentTimeMillis()) {
+        if (mBackPressed + 2000 > System.currentTimeMillis()) {
             if (mToast != null) { mToast.cancel(); }
             finish();
         } else {
@@ -307,7 +304,7 @@ public class MainActivity extends AccentActivity
                     getString(R.string.action_press_again), Toast.LENGTH_SHORT);
             mToast.show();
         }
-        back_pressed = System.currentTimeMillis();
+        mBackPressed = System.currentTimeMillis();
     }
 
     @Override public void onBackPressed() {
@@ -527,11 +524,11 @@ public class MainActivity extends AccentActivity
             iconState = MaterialMenuDrawable.IconState.BURGER;
         }
 
-        sMaterialMenuIcon.animateState(iconState);
+        sMaterialMenu.animateState(iconState);
     }
 
     private void restoreActionBar() {
-        final ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(mTitle);
         }

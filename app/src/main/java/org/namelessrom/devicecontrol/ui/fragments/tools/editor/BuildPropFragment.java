@@ -28,8 +28,6 @@ import android.text.InputFilter;
 import android.text.InputFilter.LengthFilter;
 import android.widget.EditText;
 
-import com.negusoft.holoaccent.dialog.DividerPainter;
-
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
@@ -237,7 +235,6 @@ public class BuildPropFragment extends AttachPreferenceFragment
                     pd.setMessage(getString(R.string.applying_wait));
                     pd.setCancelable(false);
                     pd.show();
-                    new DividerPainter(activity).paint(pd.getWindow());
                 }
             }
 

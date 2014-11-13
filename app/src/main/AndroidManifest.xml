@@ -15,14 +15,15 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="org.namelessrom.devicecontrol"
     android:versionCode="92"
     android:versionName="0.7.1">
 
     <!-- currently broken, reenable once fixed -->
     <!--uses-sdk tools:node="replace" /-->
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="21" />
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="21" />
 
     <!-- Internet / Networking -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -66,14 +67,13 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="false"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme.Dark"
         android:largeHeap="true">
         <activity
             android:name=".DummyLauncher"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:enabled="true"
-            android:launchMode="singleTask"
-            android:theme="@style/NoActionBar">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -129,6 +129,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/add_task"
             android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Light"
             android:parentActivityName=".MainActivity" />
 
         <!-- Services -->

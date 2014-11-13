@@ -1,9 +1,8 @@
 package org.namelessrom.devicecontrol.ui.preferences;
 
 import android.content.Context;
+import android.preference.ListPreference;
 import android.util.AttributeSet;
-
-import com.negusoft.holoaccent.preference.ListPreference;
 
 import org.namelessrom.devicecontrol.R;
 

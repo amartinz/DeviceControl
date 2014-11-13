@@ -34,8 +34,6 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.negusoft.holoaccent.dialog.DividerPainter;
-
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
@@ -157,7 +155,6 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
                             dialog.show();
                             final Window window = dialog.getWindow();
                             window.setLayout(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                            new DividerPainter(mContext).paint(window);
                             return true;
                         }
 
