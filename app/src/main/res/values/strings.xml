@@ -236,8 +236,15 @@
     <string name="pages_volatile">Pages volatile</string>
     <string name="enable_ksm">Enable KSM</string>
     <string name="enable_ksm_summary">May reduce memory usage but also uses a bit more CPU power</string>
+    <string name="enable_uksm">Enable UKSM</string>
+    <string name="enable_uksm_summary">May reduce memory usage but also uses a bit more CPU power</string>
+    <string name="uksm_cpu_governor">CPU governor</string>
+    <string name="pages_scanned">Pages scanned</string>
+    <string name="hash_strength">Hash strength</string>
+    <string name="sleep_times">Sleep times</string>
     <string name="pages_to_scan">Pages to scan</string>
     <string name="ksm_sleep">Sleep between scans (ms)</string>
+    <string name="uksm_sleep">Sleep between scans (ms)</string>
     <string name="deferred_timer">Deferred timer</string>
     <string name="deferred_timer_summary">Do not wake CPU for KSM activities to save battery</string>
     <string name="wfm_root">Browse in root mode</string>

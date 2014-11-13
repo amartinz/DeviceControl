@@ -31,6 +31,7 @@ import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.KsmUtils;
 import org.namelessrom.devicecontrol.hardware.ThermalUtils;
+import org.namelessrom.devicecontrol.hardware.UksmUtils;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference;
@@ -61,6 +62,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
     private CustomPreference mEntropy;
     private CustomPreference mFilesystem;
     private CustomPreference mKsm;
+    private CustomPreference mUksm;
     private CustomPreference mHotplugging;
     private CustomPreference mThermal;
 
@@ -114,6 +116,15 @@ public class ExtrasFragment extends AttachPreferenceFragment
                     mKsm.setOnPreferenceClickListener(this);
                 } else {
                     category.removePreference(mKsm);
+                }
+            }
+
+            mUksm = (CustomPreference) findPreference("uksm");
+            if (mUksm != null) {
+                if (Utils.fileExists(UksmUtils.UKSM_PATH)) {
+                    mUksm.setOnPreferenceClickListener(this);
+                } else {
+                    category.removePreference(mUksm);
                 }
             }
 
@@ -246,6 +257,9 @@ public class ExtrasFragment extends AttachPreferenceFragment
             return true;
         } else if (mKsm == preference) {
             MainActivity.loadFragment(getActivity(), ID_KSM);
+            return true;
+        } else if (mUksm == preference) {
+            MainActivity.loadFragment(getActivity(), ID_UKSM);
             return true;
         } else if (mEntropy == preference) {
             MainActivity.loadFragment(getActivity(), ID_ENTROPY);

@@ -30,6 +30,9 @@ import org.namelessrom.devicecontrol.actions.extras.ksm.KsmDeferredAction;
 import org.namelessrom.devicecontrol.actions.extras.ksm.KsmEnableAction;
 import org.namelessrom.devicecontrol.actions.extras.ksm.KsmPagesAction;
 import org.namelessrom.devicecontrol.actions.extras.ksm.KsmSleepAction;
+import org.namelessrom.devicecontrol.actions.extras.uksm.UksmEnableAction;
+import org.namelessrom.devicecontrol.actions.extras.uksm.UksmGovernorAction;
+import org.namelessrom.devicecontrol.actions.extras.uksm.UksmSleepAction;
 import org.namelessrom.devicecontrol.actions.fs.IoSchedulerAction;
 import org.namelessrom.devicecontrol.actions.fs.ReadAheadAction;
 import org.namelessrom.devicecontrol.actions.gpu.Gpu3dScalingAction;
@@ -81,6 +84,10 @@ public class ActionProcessor {
     public static final String ACTION_KSM_DEFERRED = KsmDeferredAction.NAME;
     public static final String ACTION_KSM_PAGES = KsmPagesAction.NAME;
     public static final String ACTION_KSM_SLEEP = KsmSleepAction.NAME;
+    // UKSM
+    public static final String ACTION_UKSM_ENABLED = UksmEnableAction.NAME;
+    public static final String ACTION_UKSM_SLEEP = UksmSleepAction.NAME;
+    public static final String ACTION_UKSM_GOVERNOR = UksmGovernorAction.NAME;
     //----------------------------------------------------------------------------------------------
     public static final String ACTION_MPDECISION = MpDecisionAction.NAME;
 
@@ -351,6 +358,12 @@ public class ActionProcessor {
             new KsmPagesAction(value, boot).triggerAction();
         } else if (ACTION_KSM_SLEEP.equals(action)) {
             new KsmSleepAction(value, boot).triggerAction();
+        } else if (ACTION_UKSM_SLEEP.equals(action)) {
+            new UksmSleepAction(value, boot).triggerAction();
+        } else if(ACTION_UKSM_ENABLED.equals(action)) {
+            new UksmEnableAction(value, boot).triggerAction();
+        } else if(ACTION_UKSM_GOVERNOR.equals(action)) {
+            new UksmGovernorAction(value, boot).triggerAction();
         }
     }
 
