@@ -57,6 +57,7 @@ import org.namelessrom.devicecontrol.ui.fragments.performance.sub.FilesystemFrag
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.GovernorFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.HotpluggingFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.KsmFragment;
+import org.namelessrom.devicecontrol.ui.fragments.performance.sub.UksmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.ThermalFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.AppListFragment;
@@ -407,6 +408,10 @@ public class MainActivity extends AccentActivity
             case ID_KSM:
                 if (!onResume) mCurrentFragment = new KsmFragment();
                 mTitle = mSubFragmentTitle = R.string.ksm;
+                break;
+            case ID_UKSM:
+                if (!onResume) mCurrentFragment = new UksmFragment();
+                mTitle = mSubFragmentTitle = R.string.uksm;
                 break;
             case ID_HOTPLUGGING:
                 if (!onResume) mCurrentFragment = new HotpluggingFragment();
