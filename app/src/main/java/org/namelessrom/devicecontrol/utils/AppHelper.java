@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.IPackageStatsObserver;
 import android.net.Uri;
+import android.os.Build;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
@@ -154,7 +155,7 @@ public class AppHelper {
      */
     public static String convertSize(final long size) {
         if (size <= 0) return "0 B";
-        final String[] units = new String[]{"B", "KB", "MB", "GB", "TB"};
+        final String[] units = new String[]{ "B", "KB", "MB", "GB", "TB" };
         int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
         return new DecimalFormat("#,##0.##")
                 .format(size / Math.pow(1024, digitGroups)) + ' ' + units[digitGroups];
@@ -236,5 +237,9 @@ public class AppHelper {
         } catch (Exception e) {
             Logger.e(AppHelper.class, "viewInBrowser", e);
         }
+    }
+
+    public static boolean isLollipop() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 }

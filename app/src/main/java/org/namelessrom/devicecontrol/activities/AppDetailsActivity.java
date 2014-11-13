@@ -20,21 +20,15 @@ package org.namelessrom.devicecontrol.activities;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
-import com.negusoft.holoaccent.activity.AccentActivity;
-
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.fragments.tools.AppListFragment;
 
-public class AppDetailsActivity extends AccentActivity {
+public class AppDetailsActivity extends BaseActivity {
 
     public static final String ARG_PACKAGE_NAME = "package";
-
-    @Override public int getOverrideAccentColor() {
-        return Application.get().getAccentColor();
-    }
 
     @Override protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
@@ -43,10 +37,10 @@ public class AppDetailsActivity extends AccentActivity {
 
     @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setTheme(Application.get().isDarkTheme() ? R.style.BaseThemeDark : R.style.BaseThemeLight);
-
         setContentView(R.layout.activity_main);
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     @Override protected void onResume() {

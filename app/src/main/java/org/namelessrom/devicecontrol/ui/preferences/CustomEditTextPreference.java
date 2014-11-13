@@ -1,9 +1,8 @@
 package org.namelessrom.devicecontrol.ui.preferences;
 
 import android.content.Context;
+import android.preference.EditTextPreference;
 import android.util.AttributeSet;
-
-import com.negusoft.holoaccent.preference.EditTextPreference;
 
 import org.namelessrom.devicecontrol.R;
 

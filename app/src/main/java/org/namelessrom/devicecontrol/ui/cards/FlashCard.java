@@ -20,6 +20,7 @@
 
 package org.namelessrom.devicecontrol.ui.cards;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,8 +30,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-
-import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
@@ -178,7 +177,7 @@ public class FlashCard extends Card implements RequestFileActivity.RequestFileCa
 
     private void showRemoveDialog(final Item item, final File file) {
         Context context = getContext();
-        AccentAlertDialog.Builder alert = new AccentAlertDialog.Builder(context);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(context);
         alert.setTitle(R.string.remove_file_title);
         String message = context.getResources().getString(R.string.remove_file_summary,
                 file.getName());

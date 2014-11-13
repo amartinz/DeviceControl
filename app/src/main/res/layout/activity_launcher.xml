@@ -20,6 +20,10 @@
     android:layout_height="match_parent"
     tools:context="org.namelessrom.devicecontrol.DummyLauncher">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/actionbar_toolbar" />
+
     <RelativeLayout
         android:id="@+id/launcher_progress"
         android:layout_width="match_parent"

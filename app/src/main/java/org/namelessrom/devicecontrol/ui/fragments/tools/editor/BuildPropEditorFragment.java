@@ -19,6 +19,7 @@ package org.namelessrom.devicecontrol.ui.fragments.tools.editor;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -37,8 +38,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
@@ -302,7 +301,7 @@ public class BuildPropEditorFragment extends AttachFragment implements DeviceCon
 
             @Override public void onNothingSelected(AdapterView<?> parentView) { }
         });
-        new AccentAlertDialog.Builder(activity)
+        new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setView(editDialog)
                 .setNegativeButton(getString(android.R.string.cancel),
@@ -349,7 +348,7 @@ public class BuildPropEditorFragment extends AttachFragment implements DeviceCon
         final Activity activity = getActivity();
         if (activity == null) return;
 
-        new AccentAlertDialog.Builder(activity)
+        new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setMessage(msg)
                 .setNegativeButton(getString(android.R.string.cancel),

@@ -14,7 +14,8 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- General -->
 
@@ -24,7 +25,7 @@
         android:id="@+id/menu_action_add"
         android:icon="@drawable/ic_action_add"
         android:title="@string/add_property"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />
 
     <!-- VM & Sysctl -->
 
@@ -32,11 +33,11 @@
         android:id="@+id/menu_action_apply"
         android:icon="@drawable/ic_action_apply"
         android:title="@string/apply"
-        android:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_action_toggle"
         android:title="@string/toggle_vm_sysctl"
-        android:showAsAction="never" />
+        app:showAsAction="never" />
 
 </menu>

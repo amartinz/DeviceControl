@@ -28,11 +28,6 @@ import org.namelessrom.devicecontrol.Application;
  */
 public class DrawableHelper {
 
-    public static Drawable applyColorFilter(final Drawable d, final int color,
-            final boolean isRes) {
-        return applyColorFilter(d, isRes ? Application.get().getColor(color) : color);
-    }
-
     public static Drawable applyColorFilter(final Drawable drawable, final int color) {
         final LightingColorFilter lightingColorFilter = new LightingColorFilter(Color.BLACK, color);
         drawable.setColorFilter(lightingColorFilter);

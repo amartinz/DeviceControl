@@ -45,7 +45,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
     //==============================================================================================
     // App
     //==============================================================================================
-    private CustomPreference         mColorPreference;
     private CustomCheckBoxPreference mMonkeyPref;
 
     //==============================================================================================
@@ -56,7 +55,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
     //==============================================================================================
     // General
     //==============================================================================================
-    private CustomPreference         mSetOnBoot;
+    private CustomPreference mSetOnBoot;
     private CustomCheckBoxPreference mShowLauncher;
     private CustomCheckBoxPreference mSkipChecks;
 
@@ -64,6 +63,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
     // Interface
     //==============================================================================================
     private CustomCheckBoxPreference mSwipeOnContent;
+    // TODO: more customization
     private CustomCheckBoxPreference mDarkTheme;
 
     //==============================================================================================
@@ -117,10 +117,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
         //category = (PreferenceCategory) findPreference("prefs_tools");
         mFlasherConfig = (CustomPreference) findPreference("flasher_prefs");
-
-        //category = (PreferenceCategory) findPreference("prefs_interface");
-        mColorPreference = (CustomPreference) findPreference("pref_color");
-        mColorPreference.setSummaryColor(Application.get().getAccentColor());
 
         mDarkTheme = (CustomCheckBoxPreference) findPreference("dark_theme");
         mDarkTheme.setChecked(PreferenceHelper.getBoolean(mDarkTheme.getKey(), true));
@@ -210,16 +206,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
     @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
             @NonNull final Preference preference) {
-        if (mColorPreference == preference) {
-            final ColorPickerDialogFragment fragment = new ColorPickerDialogFragment();
-            fragment.onColorPickedListener = new OnColorPickedListener() {
-                @Override public void onColorPicked(final int color) {
-                    if (mColorPreference != null) mColorPreference.setSummaryColor(color);
-                }
-            };
-            fragment.show(getFragmentManager(), "color_picker");
-            return true;
-        } else if (TextUtils.equals("pref_donate", preference.getKey())) {
+        if (TextUtils.equals("pref_donate", preference.getKey())) {
             return AppHelper.startExternalDonation(getActivity());
         } else if (mFlasherConfig == preference) {
             MainActivity.loadFragment(getActivity(), ID_TOOLS_FLASHER_PREFS);
@@ -230,10 +217,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
-    }
-
-    public static interface OnColorPickedListener {
-        public void onColorPicked(final int color);
     }
 
 }

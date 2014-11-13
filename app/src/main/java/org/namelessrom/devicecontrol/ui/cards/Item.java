@@ -48,7 +48,6 @@ public class Item extends LinearLayout {
     private OnItemClickListener mItemClickListener;
     private ColorStateList      mDefaultColors;
     private int                 mPressedColor;
-    private int                 mIconActiveColor;
 
     public Item(final Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -77,10 +76,6 @@ public class Item extends LinearLayout {
         mTitleView.setText(title);
         mDefaultColors = mTitleView.getTextColors();
         mPressedColor = context.getResources().getColor(R.color.item_pressed);
-        mIconActiveColor = Application.get().getAccentColor();
-        if (icon != null) {
-            icon.setColorFilter(mIconActiveColor, PorterDuff.Mode.SRC_ATOP);
-        }
 
         mIconView = (ImageView) view.findViewById(R.id.icon);
         mIconView.setImageDrawable(icon);
@@ -130,13 +125,10 @@ public class Item extends LinearLayout {
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        if (mIconView != null && mTitleView != null) {
-            Drawable icon = mIconView.getDrawable();
+        if (mTitleView != null) {
             if (enabled) {
-                icon.setColorFilter(mIconActiveColor, PorterDuff.Mode.SRC_ATOP);
                 mTitleView.setTextColor(mDefaultColors);
             } else {
-                icon.clearColorFilter();
                 mTitleView.setTextColor(getResources().getColor(R.color.card_text));
             }
         }

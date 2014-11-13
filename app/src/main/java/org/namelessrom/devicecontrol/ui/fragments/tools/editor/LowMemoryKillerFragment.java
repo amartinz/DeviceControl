@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol.ui.fragments.tools.editor;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -31,8 +32,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
@@ -134,7 +133,7 @@ public class LowMemoryKillerFragment extends AttachListFragment implements Devic
         tv.setText(adapter.values[position]);
         tn.setText(LmkAdapter.TYPES[position]);
 
-        new AccentAlertDialog.Builder(activity)
+        new AlertDialog.Builder(activity)
                 .setTitle(getString(R.string.edit_property))
                 .setView(editDialog)
                 .setNegativeButton(getString(android.R.string.cancel),

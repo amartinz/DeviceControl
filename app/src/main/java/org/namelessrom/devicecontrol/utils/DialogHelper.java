@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol.utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.preference.Preference;
 import android.text.Editable;
@@ -29,8 +30,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
@@ -109,7 +108,7 @@ public class DialogHelper {
             public void onStartTrackingTouch(SeekBar seekbar) { }
         });
 
-        new AccentAlertDialog.Builder(activity)
+        new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setView(alphaDialog)
                 .setNegativeButton(cancel,
