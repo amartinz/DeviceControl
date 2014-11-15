@@ -44,6 +44,8 @@
     <!-- KSM -->
     <string name="file_ksm_deferred" translatable="false">/sys/kernel/mm/ksm/deferred_timer</string>
     <string name="file_ksm_run" translatable="false">/sys/kernel/mm/ksm/run</string>
+    <!-- UKSM -->
+    <string name="file_uksm_run" translatable="false">/sys/kernel/mm/uksm/run</string>
     <!-- Sound control -->
     <!-- francisco franco -->
     <string name="file_sc_ff_microphone_gain">/sys/devices/virtual/misc/soundcontrol/mic_boost</string>

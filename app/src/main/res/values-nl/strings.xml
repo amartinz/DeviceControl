@@ -222,9 +222,9 @@
   <string name="pages_unshared">Pagina\'s niet gedeeld</string>
   <string name="pages_volatile">Snellere pagina\'s</string>
   <string name="enable_ksm">KSM aanzetten</string>
-  <string name="enable_ksm_summary">Het kan het geheugen verminderen en het gebruikt ook meer CPU energie</string>
+  <string name="reduce_memory_increase_cpu_load">Het kan het geheugen verminderen en het gebruikt ook meer CPU energie</string>
   <string name="pages_to_scan">Pagina\'s om te scannen</string>
-  <string name="ksm_sleep">Wachten tussen scannen (ms)</string>
+  <string name="sleep_between_scans">Wachten tussen scannen (ms)</string>
   <string name="deferred_timer">Uitgestelde timer</string>
   <string name="deferred_timer_summary">Om batterij te besparen. Gebruik de CPU niet voor KSM activiteiten</string>
   <string name="wfm_port">Web server poort</string>

@@ -236,9 +236,9 @@
   <string name="pages_unshared">Ungeteilte Seiten</string>
   <string name="pages_volatile">Flüchtige Seiten</string>
   <string name="enable_ksm">KSM aktivieren</string>
-  <string name="enable_ksm_summary">Kann den Speicherbedarf reduzieren, aber auch mehr CPU-Leistung erfordern</string>
+  <string name="reduce_memory_increase_cpu_load">Kann den Speicherbedarf reduzieren, aber auch mehr CPU-Leistung erfordern</string>
   <string name="pages_to_scan">Seiten zu scannen</string>
-  <string name="ksm_sleep">Pause zwischen Scans (ms)</string>
+  <string name="sleep_between_scans">Pause zwischen Scans (ms)</string>
   <string name="deferred_timer">Aussetzende Timer</string>
   <string name="deferred_timer_summary">CPU für KSM-Aktivitäten nicht reaktivieren, um Batterie zu sparen</string>
   <string name="wfm_root">Im Root-Modus durchsuchen</string>

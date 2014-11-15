@@ -227,9 +227,9 @@
   <string name="pages_sharing">可以共享的页面</string>
   <string name="pages_unshared">非共享的页面</string>
   <string name="enable_ksm">启用 KSM</string>
-  <string name="enable_ksm_summary">能够减少内存的使用量，但也增加了cpu 负荷</string>
+  <string name="reduce_memory_increase_cpu_load">能够减少内存的使用量，但也增加了cpu 负荷</string>
   <string name="pages_to_scan">要扫描的页数</string>
-  <string name="ksm_sleep">扫描间隔 (毫秒)</string>
+  <string name="sleep_between_scans">扫描间隔 (毫秒)</string>
   <string name="deferred_timer">延迟定时器</string>
   <string name="deferred_timer_summary">禁止 KSM 进程唤醒 CPU 以节省电量</string>
   <string name="wfm_root">以root模式浏览</string>

@@ -222,9 +222,9 @@
   <string name="pages_unshared">Pàgines no compartides</string>
   <string name="pages_volatile">Pàgines volàtils</string>
   <string name="enable_ksm">Activar KSM</string>
-  <string name="enable_ksm_summary">Pot reduir l\'ús de la memòria a costa d\'un major ús de la potència de la CPU</string>
+  <string name="reduce_memory_increase_cpu_load">Pot reduir l\'ús de la memòria a costa d\'un major ús de la potència de la CPU</string>
   <string name="pages_to_scan">Pàgines que escanejar</string>
-  <string name="ksm_sleep">Descansos entre les escanejos (ms)</string>
+  <string name="sleep_between_scans">Descansos entre les escanejos (ms)</string>
   <string name="deferred_timer">Temporitzador diferit de temps</string>
   <string name="deferred_timer_summary">No despertar a la CPU amb activitats KSM per estalviar bateria</string>
   <string name="wfm_root">Cercador en manera root</string>

@@ -210,9 +210,9 @@
   <string name="applying_wait">Застосування, будь ласка, зачекайте&#8230;</string>
   <string name="full_scans">Повне сканування</string>
   <string name="enable_ksm">Увімкнути KSM</string>
-  <string name="enable_ksm_summary">Може зменшити використання пам\'яті, але також використовує трохи більше ресурсів процесора</string>
+  <string name="reduce_memory_increase_cpu_load">Може зменшити використання пам\'яті, але також використовує трохи більше ресурсів процесора</string>
   <string name="pages_to_scan">Сторінок для сканування</string>
-  <string name="ksm_sleep">Період між скануванням (в мілісекундах)</string>
+  <string name="sleep_between_scans">Період між скануванням (в мілісекундах)</string>
   <string name="deferred_timer">Відстрочений таймер</string>
   <string name="deferred_timer_summary">Не будити процесор для діяльності KSM заради збереження заряду акумулятора</string>
   <string name="wfm_root">Перегляд в режимі суперкористувача</string>

@@ -222,9 +222,9 @@
   <string name="pages_unshared">Pages non partagées</string>
   <string name="pages_volatile">Pages volatiles</string>
   <string name="enable_ksm">Activez KSM</string>
-  <string name="enable_ksm_summary">Peut réduire l\'utilisation de la mémoire, mais utilise également un peu plus de puissance CPU</string>
+  <string name="reduce_memory_increase_cpu_load">Peut réduire l\'utilisation de la mémoire, mais utilise également un peu plus de puissance CPU</string>
   <string name="pages_to_scan">Pages à scanner</string>
-  <string name="ksm_sleep">Dormir entre les scans (ms)</string>
+  <string name="sleep_between_scans">Dormir entre les scans (ms)</string>
   <string name="deferred_timer">Minuteur différé</string>
   <string name="deferred_timer_summary">Ne pas réveiller le CPU pour les activités KSM afin d\'économiser la batterie</string>
   <string name="wfm_root">Naviguer en mode root</string>

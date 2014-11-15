@@ -232,9 +232,9 @@
   <string name="pages_unshared">Pagini nepartajate</string>
   <string name="pages_volatile">Pagini volatile</string>
   <string name="enable_ksm">Activează KSM</string>
-  <string name="enable_ksm_summary">Poate reduce folosirea memoriei dar folosește CPU mai mult</string>
+  <string name="reduce_memory_increase_cpu_load">Poate reduce folosirea memoriei dar folosește CPU mai mult</string>
   <string name="pages_to_scan">Pagini de scanat</string>
-  <string name="ksm_sleep">Pauză intre scanări (ms)</string>
+  <string name="sleep_between_scans">Pauză intre scanări (ms)</string>
   <string name="deferred_timer">Timp întârziere</string>
   <string name="deferred_timer_summary">Nu trezi CPU pentru activităţi KSM, economisește bateria</string>
   <string name="wfm_root">Căutați în modul root</string>

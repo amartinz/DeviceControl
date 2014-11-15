@@ -18,59 +18,55 @@
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="ksm_info"
+        android:key="uksm_info"
         android:title="@string/information">
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:key="ksm_full_scans"
-            android:title="@string/full_scans" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:key="ksm_pages_shared"
+            android:key="uksm_pages_shared"
             android:title="@string/pages_shared" />
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:key="ksm_pages_sharing"
+            android:key="uksm_pages_sharing"
             android:title="@string/pages_sharing" />
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:key="ksm_pages_unshared"
-            android:title="@string/pages_unshared" />
+            android:key="uksm_pages_scanned"
+            android:title="@string/pages_scanned" />
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:key="ksm_pages_volatile"
-            android:title="@string/pages_volatile" />
+            android:key="uksm_full_scans"
+            android:title="@string/full_scans" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+            android:key="uksm_hash_strength"
+            android:title="@string/hash_strength" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+            android:key="uksm_sleep_times"
+            android:title="@string/sleep_times" />
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="ksm_settings"
-        android:title="@string/ksm">
+        android:key="uksm_settings"
+        android:title="@string/uksm">
 
         <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
-            android:key="ksm_run"
-            android:title="@string/enable_ksm"
+            android:key="uksm_run"
+            android:title="@string/enable_uksm"
             android:summary="@string/reduce_memory_increase_cpu_load"
-            dc:filePath="@string/file_ksm_run"
-            dc:category="extras" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
-            android:key="ksm_deferred"
-            android:title="@string/deferred_timer"
-            android:summary="@string/deferred_timer_summary"
-            android:dependency="ksm_run"
-            dc:filePath="@string/file_ksm_deferred"
+            dc:filePath="@string/file_uksm_run"
             dc:category="extras" />
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:key="ksm_pages_to_scan"
-            android:title="@string/pages_to_scan"
-            android:dependency="ksm_run" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:key="ksm_sleep"
+            android:key="uksm_sleep"
             android:title="@string/sleep_between_scans"
-            android:dependency="ksm_run" />
+            android:dependency="uksm_run" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
+            android:key="uksm_governor"
+            android:title="@string/uksm_cpu_governor"
+            android:dependency="uksm_run" />
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
