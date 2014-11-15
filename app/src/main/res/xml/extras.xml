@@ -41,6 +41,10 @@
             android:title="@string/ksm" />
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+            android:key="uksm"
+            android:title="@string/uksm" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:icon="@drawable/ic_general_hotplug"
             android:key="hotplugging"
             android:title="@string/hotplugging" />

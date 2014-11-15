@@ -231,9 +231,9 @@
   <string name="pages_unshared">Strony nieudostępnione</string>
   <string name="pages_volatile">Strony niestabilne</string>
   <string name="enable_ksm">Włącz KSM</string>
-  <string name="enable_ksm_summary">Może zmniejszyć zużycie pamięci, ale także używa nieco więcej mocy procesora.</string>
+  <string name="reduce_memory_increase_cpu_load">Może zmniejszyć zużycie pamięci, ale także używa nieco więcej mocy procesora.</string>
   <string name="pages_to_scan">Strony do przeskanowania</string>
-  <string name="ksm_sleep">Przerwa między skanami (ms)</string>
+  <string name="sleep_between_scans">Przerwa między skanami (ms)</string>
   <string name="deferred_timer">Późniejsze wykonanie</string>
   <string name="deferred_timer_summary">Nie wykorzystuj mocy procesora do przeprowadzenia czynności KSM w celu oszczędności baterii.</string>
   <string name="wfm_root">Przeglądaj z uprawnieniami roota</string>

@@ -33,6 +33,7 @@
     <string name="intelli_plug" translatable="false">Intelli-Plug</string>
     <string name="intelli_thermal" translatable="false">Intelli-Thermal</string>
     <string name="ksm" translatable="false">Kernel Samepage Merging</string>
+    <string name="uksm" translatable="false">Ultra Kernel Samepage Merging</string>
     <string name="mako_hotplug" translatable="false">Mako Hotplug</string>
     <string name="msm_thermal" translatable="false">MSM-Thermal</string>
     <string name="menu_plus" translatable="false">+25mV</string>

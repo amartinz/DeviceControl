@@ -222,9 +222,9 @@
   <string name="pages_unshared">Nesdílené stránky</string>
   <string name="pages_volatile">Stránky nestálé</string>
   <string name="enable_ksm">Povolit KSM</string>
-  <string name="enable_ksm_summary">Může snížit využití paměti, ale může způsobit větší zátěž CPU</string>
+  <string name="reduce_memory_increase_cpu_load">Může snížit využití paměti, ale může způsobit větší zátěž CPU</string>
   <string name="pages_to_scan">Stránky pro skenování</string>
-  <string name="ksm_sleep">Uspání mezi skenováním (ms)</string>
+  <string name="sleep_between_scans">Uspání mezi skenováním (ms)</string>
   <string name="deferred_timer">Odložený časovač</string>
   <string name="deferred_timer_summary">Neprobuzovat CPU pro aktivity KSM a šetřit tak baterii</string>
   <string name="wfm_root">Prohlížení v módu root</string>

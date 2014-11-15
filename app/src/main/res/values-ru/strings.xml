@@ -227,9 +227,9 @@
   <string name="pages_unshared">Разделённых страниц</string>
   <string name="pages_volatile">Необъединяемых страниц</string>
   <string name="enable_ksm">Включить KSM</string>
-  <string name="enable_ksm_summary">Может снизить использование памяти, но также использует немного больше мощности процессора</string>
+  <string name="reduce_memory_increase_cpu_load">Может снизить использование памяти, но также использует немного больше мощности процессора</string>
   <string name="pages_to_scan">Страниц для сканирования</string>
-  <string name="ksm_sleep">Период между сканированием (в миллисекундах)</string>
+  <string name="sleep_between_scans">Период между сканированием (в миллисекундах)</string>
   <string name="deferred_timer">Отсроченный таймер</string>
   <string name="deferred_timer_summary">Не будить процессор для деятельности KSM ради сохранения заряда аккумулятора</string>
   <string name="wfm_root">Просмотр в режиме суперпользователя</string>

@@ -49,10 +49,11 @@ public interface DeviceConstants {
     public static final int ID_HOTPLUGGING = ID_PERFORMANCE_EXTRA + 1000;
     public static final int ID_THERMAL = ID_PERFORMANCE_EXTRA + 1100;
     public static final int ID_KSM = ID_PERFORMANCE_EXTRA + 1200;
-    public static final int ID_VOLTAGE = ID_PERFORMANCE_EXTRA + 1300;
-    public static final int ID_ENTROPY = ID_PERFORMANCE_EXTRA + 1400;
-    public static final int ID_FILESYSTEM = ID_PERFORMANCE_EXTRA + 1500;
-    public static final int ID_LOWMEMORYKILLER = ID_PERFORMANCE_EXTRA + 1600;
+    public static final int ID_UKSM = ID_PERFORMANCE_EXTRA + 1300;
+    public static final int ID_VOLTAGE = ID_PERFORMANCE_EXTRA + 1400;
+    public static final int ID_ENTROPY = ID_PERFORMANCE_EXTRA + 1500;
+    public static final int ID_FILESYSTEM = ID_PERFORMANCE_EXTRA + 1600;
+    public static final int ID_LOWMEMORYKILLER = ID_PERFORMANCE_EXTRA + 1700;
     public static final int ID_TOOLS_TASKER = R.string.tasker;
     public static final int ID_TOOLS_FLASHER = R.string.flasher;
     public static final int ID_TOOLS_FLASHER_PREFS = ID_TOOLS_FLASHER + 1000;
