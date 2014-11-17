@@ -33,8 +33,6 @@ public class FlasherPreferencesFragment extends AttachPreferenceFragment
 
     private CustomListPreference mRecoveryType;
 
-    private CustomCheckBoxPreference mMultiUserMode;
-
     @Override protected int getFragmentId() { return ID_TOOLS_FLASHER_PREFS; }
 
     @Override public void onCreate(final Bundle bundle) {
@@ -49,12 +47,6 @@ public class FlasherPreferencesFragment extends AttachPreferenceFragment
             mRecoveryType.setValue(String.valueOf(tmp));
             setSummary(mRecoveryType, tmp);
             mRecoveryType.setOnPreferenceChangeListener(this);
-        }
-
-        mMultiUserMode = (CustomCheckBoxPreference) findPreference(PREF_FLASHER_MULTI_USER);
-        if (mMultiUserMode != null) {
-            mMultiUserMode.setChecked(PreferenceHelper.getBoolean(PREF_FLASHER_MULTI_USER, false));
-            mMultiUserMode.setOnPreferenceChangeListener(this);
         }
 
     }
@@ -84,10 +76,6 @@ public class FlasherPreferencesFragment extends AttachPreferenceFragment
             final int value = Utils.parseInt(String.valueOf(newValue));
             PreferenceHelper.setInt(PREF_RECOVERY_TYPE, value);
             setSummary(preference, value);
-            return true;
-        } else if (mMultiUserMode == preference) {
-            final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(PREF_FLASHER_MULTI_USER, value);
             return true;
         }
 

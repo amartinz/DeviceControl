@@ -272,8 +272,6 @@
     <string name="flash_warning">You are about to flash!\nWhen continuing, your device will reboot to recovery and flash the selected items.\n\nDo you want to proceed?</string>
     <string name="both">Both</string>
     <string name="pick_file">Pick a file</string>
-    <string name="multi_user_do_not_use">Do not use multi user mode</string>
-    <string name="multi_user_do_not_use_summary">Check this if you have problems with flashing zip files from sdcard</string>
     <string name="something_went_wrong">Sorry but something went wrong!\nPlease try again!</string>
     <string name="recovery">Recovery</string>
     <string name="bootloader">Bootloader</string>

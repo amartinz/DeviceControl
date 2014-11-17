@@ -95,7 +95,6 @@ public interface DeviceConstants {
     public static final int RECOVERY_TYPE_BOTH = 0;
     public static final int RECOVERY_TYPE_CWM = 1;
     public static final int RECOVERY_TYPE_OPEN = 2;
-    public static final String PREF_FLASHER_MULTI_USER = "flasher_multi_user";
 
     //==============================================================================================
     // Directories

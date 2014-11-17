@@ -35,8 +35,8 @@ public class IOUtils {
 
     private static boolean sSdcardsChecked;
 
-    private String  sPrimarySdcard;
-    private String  sSecondarySdcard;
+    private String sPrimarySdcard;
+    private String sSecondarySdcard;
 
     private IOUtils() {
         readMounts();
@@ -82,6 +82,7 @@ public class IOUtils {
         for (final String s : output) {
             if (s.startsWith("/dev/block/vold/")) {
                 String[] lineElements = s.split(" ");
+                if (lineElements[1] == null) continue;
                 String element = lineElements[1];
                 mounts.add(element);
             }
@@ -99,6 +100,7 @@ public class IOUtils {
             for (final String s : output) {
                 if (s.startsWith("dev_mount")) {
                     String[] lineElements = s.split(" ");
+                    if (lineElements[2] == null) continue;
                     String element = lineElements[2];
 
                     if (element.contains(":")) {
@@ -110,6 +112,7 @@ public class IOUtils {
                     }
                 } else if (s.startsWith("/devices/platform")) {
                     String[] lineElements = s.split(" ");
+                    if (lineElements[1] != null) continue;
                     String element = lineElements[1];
 
                     if (element.contains(":")) {
