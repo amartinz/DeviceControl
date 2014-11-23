@@ -15,16 +15,15 @@ DeviceControl
 Try it out:
  
 <a href="https://play.google.com/store/apps/details?id=org.namelessrom.devicecontrol">
-  <img alt="Android app on Google Play"
-       src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" />
+  <img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" />
 </a>
 
 Third party libraries
 -------
 
 * [android-support-v13](http://developer.android.com/tools/extras/support-library.html)
-* [HoloAccent](https://github.com/negusoft/holoaccent)
-* [HoloColorPicker](https://github.com/LarsWerkman/HoloColorPicker)
+* [android-appcompat-v7](http://developer.android.com/tools/extras/support-library.html)
+* [android-recyclerview-v7](http://developer.android.com/tools/extras/support-library.html)
 * [ion](https://github.com/koush/ion)
 * [Material-Menu](https://github.com/balysv/material-menu)
 * [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)

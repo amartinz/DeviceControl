@@ -18,13 +18,6 @@ LOCAL_SRC_FILES    := \
 
 LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../frameworks/support/v7/appcompat/res
 
-## Holocolorpicker
-
-library_src_files := ../../../../../../external/holocolorpicker/src
-LOCAL_SRC_FILES   += $(call all-java-files-under, $(library_src_files))
-
-LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/holocolorpicker/res
-
 ## MPAndroidChart
 
 library_src_files := ../../../../../../external/mpandroidchart/MPChartLib/src
@@ -37,7 +30,6 @@ LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/mpandroidchart/MP
 LOCAL_AAPT_FLAGS := \
     --auto-add-overlay \
     --extra-packages android.support.v7.appcompat \
-    --extra-packages com.larswerkman.holocolorpicker \
     --extra-packages com.github.mikephil.charting \
 
 ######

@@ -11,11 +11,9 @@
 -dontoptimize
 -dontpreverify
 
-# Note that if you want to enable optimization, you cannot just
-# include optimization flags in your own project configuration file;
-# instead you will need to point to the
-# "proguard-android-optimize.txt" file instead of this one from your
-# project.properties file.
+# Note: This may already be defined in the default "proguard-android-optimize.txt"
+# file in the SDK. If it is, then you don't need to duplicate it. See your
+# "project.properties" file to get the path to the default "proguard-android-optimize.txt".
 -keepattributes *Annotation*
 
 # For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
@@ -61,13 +59,7 @@
 # otherwise the stack traces are pretty useless
 -keepattributes SourceFile,LineNumberTable
 
-# Note: This may already be defined in the default "proguard-android-optimize.txt"
-# file in the SDK. If it is, then you don't need to duplicate it. See your
-# "project.properties" file to get the path to the default "proguard-android-optimize.txt".
--keepattributes *Annotation*
-
 # Also save some stuff from us
--keep class org.namelessrom.devicecontrol.bus.**
 -keep class org.namelessrom.devicecontrol.objects.**
 -keep class org.namelessrom.devicecontrol.wizard.**
 
