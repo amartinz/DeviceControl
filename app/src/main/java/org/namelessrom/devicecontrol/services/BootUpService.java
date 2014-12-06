@@ -32,7 +32,6 @@ import org.namelessrom.devicecontrol.ui.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;
-import org.namelessrom.devicecontrol.ui.fragments.tools.editor.LowMemoryKillerFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -50,7 +49,6 @@ public class BootUpService extends IntentService
     public static final String SOB_EXTRAS  = "sob_extras";
     public static final String SOB_DEVICE  = "sob_device";
     public static final String SOB_VOLTAGE = "sob_voltage";
-    public static final String SOB_LMK     = "sob_lmk";
 
     public BootUpService() { super("BootUpService"); }
 
@@ -149,13 +147,6 @@ public class BootUpService extends IntentService
                     sbCmd.append(cmd);
                 }
                 Logger.i(this, "----- VOLTAGE END -----");
-                Logger.i(this, "----- LMK START -----");
-                if (PreferenceHelper.getBoolean("sob_lmk", false)) {
-                    cmd = LowMemoryKillerFragment.restore();
-                    Logger.v(this, cmd);
-                    sbCmd.append(cmd);
-                }
-                Logger.i(this, "----- LMK END -----");
 
                 //==================================================================================
                 // Tools

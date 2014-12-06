@@ -36,12 +36,11 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
         MediaScannerConnection.MediaScannerConnectionClient {
 
     private MediaScannerConnection mMediaScannerConnection;
-    private CustomPreference       mMediaScan;
-    private String                 mMediaScanPath;
+    private CustomPreference mMediaScan;
+    private String mMediaScanPath;
 
     private CustomPreference mBuildProp;
     private CustomPreference mSysctlVm;
-    private CustomPreference mLowMemoryKiller;
     private CustomPreference mAppManager;
     private CustomPreference mWirelessFileManager;
 
@@ -53,12 +52,11 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
 
         mMediaScan = (CustomPreference) findPreference("media_scan");
 
-        mBuildProp = (CustomPreference) findPreference("build_prop");
-        mSysctlVm = (CustomPreference) findPreference("sysctl_vm");
-        mLowMemoryKiller = (CustomPreference) findPreference("low_memory_killer");
-
         mAppManager = (CustomPreference) findPreference("app_manager");
         mWirelessFileManager = (CustomPreference) findPreference("wireless_file_manager");
+
+        mBuildProp = (CustomPreference) findPreference("build_prop");
+        mSysctlVm = (CustomPreference) findPreference("sysctl_vm");
     }
 
     @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
@@ -77,8 +75,6 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
             MainActivity.loadFragment(getActivity(), ID_TOOLS_BUILD_PROP);
         } else if (mSysctlVm == preference) {
             MainActivity.loadFragment(getActivity(), ID_TOOLS_VM);
-        } else if (mLowMemoryKiller == preference) {
-            MainActivity.loadFragment(getActivity(), ID_LOWMEMORYKILLER);
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);

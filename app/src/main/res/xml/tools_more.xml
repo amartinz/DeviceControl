@@ -45,10 +45,6 @@
             android:key="sysctl_vm"
             android:title="@string/sysctl_vm" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:key="low_memory_killer"
-            android:title="@string/low_memory_killer" />
-
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

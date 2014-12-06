@@ -69,7 +69,6 @@ import org.namelessrom.devicecontrol.ui.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.WirelessFileManagerFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.editor.BuildPropEditorFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.editor.BuildPropFragment;
-import org.namelessrom.devicecontrol.ui.fragments.tools.editor.LowMemoryKillerFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.editor.SysctlEditorFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.flasher.FlasherFragment;
@@ -436,10 +435,6 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
             case ID_FILESYSTEM:
                 if (!onResume) mCurrentFragment = new FilesystemFragment();
                 mTitle = mSubFragmentTitle = R.string.filesystem;
-                break;
-            case ID_LOWMEMORYKILLER:
-                if (!onResume) mCurrentFragment = new LowMemoryKillerFragment();
-                mTitle = mSubFragmentTitle = R.string.low_memory_killer;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_TASKER:

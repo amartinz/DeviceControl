@@ -24,7 +24,6 @@ public class SobDialogFragment extends DialogFragment {
         entries.add(R.string.gpusettings);
         entries.add(R.string.extras);
         entries.add(R.string.sysctl_vm);
-        entries.add(R.string.low_memory_killer);
 
         if (Utils.fileExists(VoltageUtils.VDD_TABLE_FILE)
                 || Utils.fileExists(VoltageUtils.UV_TABLE_FILE)) {
@@ -76,8 +75,6 @@ public class SobDialogFragment extends DialogFragment {
                 return BootUpService.SOB_EXTRAS;
             case R.string.sysctl_vm:
                 return BootUpService.SOB_SYSCTL;
-            case R.string.low_memory_killer:
-                return BootUpService.SOB_LMK;
             case R.string.voltage_control:
                 return BootUpService.SOB_VOLTAGE;
             default:
