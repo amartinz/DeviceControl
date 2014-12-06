@@ -25,12 +25,14 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -82,7 +84,7 @@ import java.io.File;
 
 public class MainActivity extends BaseActivity
         implements DeviceConstants, AdapterView.OnItemClickListener,
-        SlidingMenu.OnClosedListener, SlidingMenu.OnOpenedListener {
+        SlidingMenu.OnClosedListener, SlidingMenu.OnOpenedListener, View.OnClickListener {
 
     //==============================================================================================
     // Fields
@@ -113,10 +115,7 @@ public class MainActivity extends BaseActivity
             R.string.tools,         // Tools
             ID_TOOLS_TASKER,
             ID_TOOLS_FLASHER,
-            ID_TOOLS_MORE,
-            R.string.information,   // Information
-            ID_PREFERENCES,
-            ID_LICENSES
+            ID_TOOLS_MORE
     };
 
     private static final int[] MENU_ICONS = {
@@ -131,10 +130,7 @@ public class MainActivity extends BaseActivity
             -1, // Tools
             R.drawable.ic_menu_tasker,
             R.drawable.ic_menu_flash,
-            R.drawable.ic_menu_code,
-            -1, // Information
-            R.drawable.ic_menu_preferences,
-            R.drawable.ic_menu_licences
+            R.drawable.ic_menu_code
     };
 
     //==============================================================================================
@@ -182,7 +178,11 @@ public class MainActivity extends BaseActivity
         }
 
         final View v = getLayoutInflater().inflate(R.layout.menu_list, container, false);
-        final ListView mMenuList = (ListView) v.findViewById(R.id.navbarlist);
+        final ListView menuList = (ListView) v.findViewById(R.id.navbarlist);
+        final LinearLayout menuContainer = (LinearLayout) v.findViewById(R.id.menu_container);
+        // setup our static items
+        menuContainer.findViewById(R.id.menu_prefs).setOnClickListener(this);
+        menuContainer.findViewById(R.id.menu_about).setOnClickListener(this);
 
         sSlidingMenu = new SlidingMenu(this);
         sSlidingMenu.setMode(SlidingMenu.LEFT);
@@ -202,9 +202,9 @@ public class MainActivity extends BaseActivity
                 R.layout.menu_main_list_item,
                 MENU_ENTRIES,
                 MENU_ICONS);
-        mMenuList.setAdapter(mAdapter);
-        mMenuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        mMenuList.setOnItemClickListener(this);
+        menuList.setAdapter(mAdapter);
+        menuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        menuList.setOnItemClickListener(this);
 
         sSlidingMenu.setOnClosedListener(this);
         sSlidingMenu.setOnOpenedListener(this);
@@ -218,6 +218,18 @@ public class MainActivity extends BaseActivity
                 Logger.wtf(this, "Could not delete downgrade indicator file!");
             }
             Toast.makeText(this, R.string.downgraded, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override public void onClick(final View v) {
+        final int id = v.getId();
+        switch (id) {
+            case R.id.menu_prefs:
+                loadFragmentPrivate(ID_PREFERENCES, false);
+                break;
+            case R.id.menu_about:
+                loadFragmentPrivate(ID_ABOUT, false);
+                break;
         }
     }
 
@@ -486,8 +498,8 @@ public class MainActivity extends BaseActivity
                 mTitle = mFragmentTitle = R.string.preferences;
                 mSubFragmentTitle = -1;
                 break;
-            //--------------------------------------------------------------------------------------
-            case ID_LICENSES:
+            case ID_ABOUT:
+            case ID_LICENSES: // TODO: seperate
                 if (!onResume) mCurrentFragment = new LicenseFragment();
                 mTitle = mFragmentTitle = R.string.licenses;
                 mSubFragmentTitle = -1;
@@ -563,4 +575,5 @@ public class MainActivity extends BaseActivity
         sSlidingMenu.setTouchModeAbove(
                 swipeOnContent ? SlidingMenu.TOUCHMODE_FULLSCREEN : SlidingMenu.TOUCHMODE_MARGIN);
     }
+
 }

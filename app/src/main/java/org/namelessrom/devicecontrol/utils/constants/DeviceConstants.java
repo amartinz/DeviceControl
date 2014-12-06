@@ -65,7 +65,8 @@ public interface DeviceConstants {
     public static final int ID_TOOLS_APP_MANAGER = ID_TOOLS_MORE + 1200;
     public static final int ID_TOOLS_WIRELESS_FM = ID_TOOLS_MORE + 1300;
     public static final int ID_PREFERENCES = R.string.preferences;
-    public static final int ID_LICENSES = R.string.licenses;
+    public static final int ID_ABOUT = R.string.about;
+    public static final int ID_LICENSES = ID_ABOUT + 1000;
     //----------------------------------------------------------------------------------------------
 
     //==============================================================================================

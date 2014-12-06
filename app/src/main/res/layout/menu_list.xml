@@ -15,19 +15,47 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?themeMenu"
-    android:orientation="vertical"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp">
+    android:orientation="vertical">
 
     <ListView
         android:id="@+id/navbarlist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:divider="@null"
-        android:scrollbars="none"
         android:drawSelectorOnTop="true" />
+
+    <LinearLayout
+        android:id="@+id/menu_container"
+        android:background="?attr/themeMenuFooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:elevation="6dp">
+
+        <org.namelessrom.devicecontrol.ui.views.MenuListItem
+            android:id="@+id/menu_prefs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            app:menuItemTitle="@string/preferences"
+            app:menuItemImage="@drawable/ic_menu_preferences" />
+
+        <org.namelessrom.devicecontrol.ui.views.MenuListItem
+            android:id="@+id/menu_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            app:menuItemTitle="@string/about"
+            app:menuItemImage="@drawable/ic_menu_about" />
+
+    </LinearLayout>
 
 </LinearLayout>

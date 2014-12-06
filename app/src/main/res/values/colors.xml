@@ -28,9 +28,11 @@
     <color name="palette_yellow">#ffafb42b</color>
     <color name="dark_background">#ff152127</color>
     <color name="dark_menu">#ff132125</color>
+    <color name="darker_menu">#ff101010</color>
     <color name="dark_primary_dark">@color/palette_blue_800</color>
     <color name="light_background">#ffe7e7e7</color>
     <color name="light_menu">#ffd6d6d6</color>
+    <color name="lighter_menu">#fff8f8f8</color>
     <color name="light_primary_dark">@color/palette_teal_700</color>
     <!-- card -->
     <color name="card_text">#ff8d8d8d</color>

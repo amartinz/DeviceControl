@@ -31,6 +31,11 @@
         <attr name="unitsLeft" format="string" />
         <attr name="unitsRight" format="string" />
     </declare-styleable>
+    <!-- Menu item -->
+    <declare-styleable name="MenuListItem">
+        <attr name="menuItemImage" format="reference" />
+        <attr name="menuItemTitle" format="reference" />
+    </declare-styleable>
     <!-- Sliding Menu -->
     <declare-styleable name="SlidingMenu">
         <attr name="mode">
@@ -61,17 +66,18 @@
     </declare-styleable>
     <!-- Material Menu -->
     <declare-styleable name="MaterialMenuView">
-        <attr name="mm_color" format="color"/>
-        <attr name="mm_scale" format="integer"/>
-        <attr name="mm_transformDuration" format="integer"/>
-        <attr name="mm_pressedDuration" format="integer"/>
-        <attr name="mm_strokeWidth" format="integer"/>
-        <attr name="mm_rtlEnabled" format="boolean"/>
+        <attr name="mm_color" format="color" />
+        <attr name="mm_scale" format="integer" />
+        <attr name="mm_transformDuration" format="integer" />
+        <attr name="mm_pressedDuration" format="integer" />
+        <attr name="mm_strokeWidth" format="integer" />
+        <attr name="mm_rtlEnabled" format="boolean" />
     </declare-styleable>
     <!-- theme color -->
     <attr name="themeColor" format="reference|color" />
     <attr name="themeColorInvert" format="reference|color" />
     <attr name="themeMenu" format="reference|color" />
+    <attr name="themeMenuFooter" format="reference|color" />
     <!-- NumberProgressBar -->
     <attr name="numberProgressBarStyle" format="reference" />
     <declare-styleable name="NumberProgressBar">

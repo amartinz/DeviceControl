@@ -17,7 +17,7 @@
 <resources>
 
     <dimen name="app_margin">8dp</dimen>
-    <dimen name="slidingmenu_offset">200dp</dimen>
+    <dimen name="slidingmenu_offset">300dp</dimen>
     <dimen name="shadow_width">6dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
