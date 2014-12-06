@@ -26,8 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
         android:divider="@null"
         android:drawSelectorOnTop="true" />
 
@@ -44,7 +42,6 @@
             android:id="@+id/menu_prefs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
             app:menuItemTitle="@string/preferences"
             app:menuItemImage="@drawable/ic_menu_preferences" />
 
@@ -52,7 +49,6 @@
             android:id="@+id/menu_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
             app:menuItemTitle="@string/about"
             app:menuItemImage="@drawable/ic_menu_about" />
 

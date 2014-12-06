@@ -25,7 +25,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -82,9 +81,8 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.File;
 
-public class MainActivity extends BaseActivity
-        implements DeviceConstants, AdapterView.OnItemClickListener,
-        SlidingMenu.OnClosedListener, SlidingMenu.OnOpenedListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements DeviceConstants,
+        AdapterView.OnItemClickListener, View.OnClickListener {
 
     //==============================================================================================
     // Fields
@@ -205,9 +203,6 @@ public class MainActivity extends BaseActivity
         menuList.setAdapter(mAdapter);
         menuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         menuList.setOnItemClickListener(this);
-
-        sSlidingMenu.setOnClosedListener(this);
-        sSlidingMenu.setOnOpenedListener(this);
 
         loadFragmentPrivate(ID_HOME, false);
         Utils.startTaskerService();
@@ -549,24 +544,6 @@ public class MainActivity extends BaseActivity
         if (actionBar != null) {
             actionBar.setTitle(mTitle);
         }
-    }
-
-    @Override public void onOpened() {
-        if (sSlidingMenu.isMenuShowing() && !sSlidingMenu.isSecondaryMenuShowing()) {
-            mTitle = R.string.menu;
-        } else {
-            mTitle = R.string.help;
-        }
-        restoreActionBar();
-    }
-
-    @Override public void onClosed() {
-        if (mSubFragmentTitle != -1) {
-            mTitle = mSubFragmentTitle;
-        } else {
-            mTitle = mFragmentTitle;
-        }
-        restoreActionBar();
     }
 
     public static void setSwipeOnContent(final boolean swipeOnContent) {
