@@ -17,7 +17,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+    <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
         android:key="core_control"
         android:title="@string/core_control"
         android:summary="@string/core_control_summary"
@@ -33,7 +33,7 @@
         android:key="intelli_thermal"
         android:title="@string/intelli_thermal">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:key="intelli_thermal_enabled"
             android:title="@string/intelli_thermal_enabled"
             android:summary="@string/thermal_warning"

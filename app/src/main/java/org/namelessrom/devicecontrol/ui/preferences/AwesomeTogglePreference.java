@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.ui.preferences;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.preference.CheckBoxPreference;
 import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.Logger;
@@ -34,7 +33,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
  * writing to files on preference change, even with multiple files,
  * handling bootup restoration.
  */
-public class AwesomeCheckBoxPreference extends CheckBoxPreference {
+public class AwesomeTogglePreference extends CustomTogglePreference {
 
     private String mCategory;
     private String mValueChecked;
@@ -46,18 +45,18 @@ public class AwesomeCheckBoxPreference extends CheckBoxPreference {
     private String mPath;
     private String[] mPaths;
 
-    public AwesomeCheckBoxPreference(final Context context, final AttributeSet attrs) {
+    public AwesomeTogglePreference(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public AwesomeCheckBoxPreference(final Context context, final AttributeSet attrs,
+    public AwesomeTogglePreference(final Context context, final AttributeSet attrs,
             final int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
 
-    public AwesomeCheckBoxPreference(final Context context, final String path, final String[] paths,
+    public AwesomeTogglePreference(final Context context, final String path, final String[] paths,
             final String category, final boolean multiFile, final boolean startUp) {
         super(context);
         mPath = path;
@@ -65,14 +64,15 @@ public class AwesomeCheckBoxPreference extends CheckBoxPreference {
         mCategory = category;
         mMultiFile = multiFile;
         mStartUp = startUp;
+        setLayoutResource(R.layout.preference);
+        init(context, null);
     }
 
     private void init(final Context context, final AttributeSet attrs) {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AwesomePreference);
 
         int filePath = -1, filePathList = -1;
-        try {
-            assert (a != null);
+        if (a != null) {
             filePath = a.getResourceId(R.styleable.AwesomePreference_filePath, -1);
             filePathList = a.getResourceId(R.styleable.AwesomePreference_filePathList, -1);
             mCategory = a.getString(R.styleable.AwesomePreference_category);
@@ -80,8 +80,7 @@ public class AwesomeCheckBoxPreference extends CheckBoxPreference {
             mMultiFile = a.getBoolean(R.styleable.AwesomePreference_multifile, false);
             mValueChecked = a.getString(R.styleable.AwesomePreference_valueChecked);
             mValueNotChecked = a.getString(R.styleable.AwesomePreference_valueNotChecked);
-        } finally {
-            if (a != null) a.recycle();
+            a.recycle();
         }
 
         final Resources res = context.getResources();
@@ -105,8 +104,6 @@ public class AwesomeCheckBoxPreference extends CheckBoxPreference {
         }
         if (mValueChecked == null || mValueChecked.isEmpty()) mValueChecked = "1";
         if (mValueNotChecked == null || mValueNotChecked.isEmpty()) mValueNotChecked = "0";
-
-        setLayoutResource(R.layout.preference);
     }
 
     public void initValue() { initValue(false); }
@@ -143,7 +140,4 @@ public class AwesomeCheckBoxPreference extends CheckBoxPreference {
         }
     }
 
-    @Override public boolean isPersistent() { return false; }
-
-    @Override protected boolean shouldPersist() { return false; }
 }

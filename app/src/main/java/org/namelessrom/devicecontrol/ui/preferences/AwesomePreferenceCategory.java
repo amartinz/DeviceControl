@@ -48,12 +48,10 @@ public class AwesomePreferenceCategory extends CustomPreferenceCategory {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AwesomePreference);
 
         int filePath = -1, filePathList = -1;
-        try {
-            assert (a != null);
+        if (a != null) {
             filePath = a.getResourceId(R.styleable.AwesomePreference_filePath, -1);
             filePathList = a.getResourceId(R.styleable.AwesomePreference_filePathList, -1);
-        } finally {
-            if (a != null) a.recycle();
+            a.recycle();
         }
 
         final Resources res = context.getResources();
@@ -78,7 +76,4 @@ public class AwesomePreferenceCategory extends CustomPreferenceCategory {
         return ((mPath != null && !mPath.isEmpty()) || (mPaths != null && mPaths.length != 0));
     }
 
-    @Override public boolean isPersistent() { return false; }
-
-    @Override protected boolean shouldPersist() { return false; }
 }

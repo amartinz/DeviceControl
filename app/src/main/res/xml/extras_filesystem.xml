@@ -27,21 +27,21 @@
         android:key="read_ahead"
         android:title="@string/read_ahead" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+    <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
         android:key="fsync"
         android:summary="@string/warning_data_corruption_invert"
         android:title="@string/fsync"
         dc:category="extras"
         dc:filePath="@string/file_fsync" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+    <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
         android:key="dyn_fsync"
         android:summary="@string/warning_data_corruption"
         android:title="@string/dyn_fsync"
         dc:category="extras"
         dc:filePath="@string/file_dyn_fsync" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+    <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
         android:key="mmc_software_crc"
         android:summary="@string/data_integrity_decreased_performance"
         android:title="@string/mmc_software_crc"
@@ -52,7 +52,7 @@
         android:key="fstrim_cat"
         android:title="@string/fstrim_title">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="fstrim"
             android:title="@string/fstrim_title"
             android:summary="@string/fstrim_summary" />

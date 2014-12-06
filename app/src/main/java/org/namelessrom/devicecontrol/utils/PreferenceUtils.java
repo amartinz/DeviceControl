@@ -22,7 +22,7 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
 
 import java.util.HashMap;
@@ -72,7 +72,7 @@ public class PreferenceUtils {
             final String summary, final String category, final String path, final String fileName,
             final PreferenceCategory prefCat,
             final Preference.OnPreferenceChangeListener listener) {
-        final AwesomeCheckBoxPreference preference = new AwesomeCheckBoxPreference(context,
+        final AwesomeTogglePreference preference = new AwesomeTogglePreference(context,
                 path + fileName, null, category, false, true);
         preference.setKey(key + fileName);
         if (preference.isSupported()) {

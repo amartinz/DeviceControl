@@ -25,7 +25,7 @@
         android:key="force_fast_charge"
         android:title="@string/force_fast_charge" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+    <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
         android:key="failsafe"
         android:title="@string/failsafe"
         dc:filePath="@string/file_fc_failsafe"

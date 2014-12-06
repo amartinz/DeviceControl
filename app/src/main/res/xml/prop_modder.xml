@@ -112,19 +112,19 @@
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:title="@string/switches">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="pref_tcp_stack"
             android:title="@string/tcp_stack_title"
             android:summary="@string/tcp_stack_summary"
             android:persistent="false" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="pref_jit"
             android:title="@string/jit_title"
             android:summary="@string/jit_summary"
             android:persistent="false" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="pref_gpu"
             android:title="@string/gpu_acceleration"
             android:summary="@string/gpu_acceleration_summary"

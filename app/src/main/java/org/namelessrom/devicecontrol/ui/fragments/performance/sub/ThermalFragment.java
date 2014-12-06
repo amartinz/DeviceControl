@@ -23,7 +23,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
@@ -38,10 +38,10 @@ public class ThermalFragment extends AttachPreferenceFragment
     private PreferenceScreen mRoot;
 
     //----------------------------------------------------------------------------------------------
-    private AwesomeCheckBoxPreference mCoreControl;
+    private AwesomeTogglePreference mCoreControl;
 
     //----------------------------------------------------------------------------------------------
-    private AwesomeCheckBoxPreference mIntelliThermalEnabled;
+    private AwesomeTogglePreference mIntelliThermalEnabled;
 
     @Override protected int getFragmentId() { return ID_THERMAL; }
 
@@ -55,7 +55,7 @@ public class ThermalFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         // General
         //------------------------------------------------------------------------------------------
-        mCoreControl = (AwesomeCheckBoxPreference) findPreference("core_control");
+        mCoreControl = (AwesomeTogglePreference) findPreference("core_control");
         if (mCoreControl != null) {
             if (mCoreControl.isSupported()) {
                 mCoreControl.initValue();
@@ -92,7 +92,7 @@ public class ThermalFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         category = (PreferenceCategory) findPreference("intelli_thermal");
         if (category != null) {
-            mIntelliThermalEnabled = (AwesomeCheckBoxPreference)
+            mIntelliThermalEnabled = (AwesomeTogglePreference)
                     findPreference("intelli_thermal_enabled");
             if (mIntelliThermalEnabled != null) {
                 if (mIntelliThermalEnabled.isSupported()) {
@@ -119,8 +119,8 @@ public class ThermalFragment extends AttachPreferenceFragment
         if (preference instanceof AwesomeEditTextPreference) {
             ((AwesomeEditTextPreference) preference).writeValue(String.valueOf(o));
             return true;
-        } else if (preference instanceof AwesomeCheckBoxPreference) {
-            ((AwesomeCheckBoxPreference) preference).writeValue((Boolean) o);
+        } else if (preference instanceof AwesomeTogglePreference) {
+            ((AwesomeTogglePreference) preference).writeValue((Boolean) o);
             return true;
         } else if (mCoreControl == preference) {
             mCoreControl.writeValue((Boolean) o);

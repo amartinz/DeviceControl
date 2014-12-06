@@ -30,7 +30,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -45,7 +45,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
     //==============================================================================================
     // App
     //==============================================================================================
-    private CustomCheckBoxPreference mMonkeyPref;
+    private CustomTogglePreference mMonkeyPref;
 
     //==============================================================================================
     // Tools
@@ -56,20 +56,20 @@ public class PreferencesFragment extends AttachPreferenceFragment
     // General
     //==============================================================================================
     private CustomPreference mSetOnBoot;
-    private CustomCheckBoxPreference mShowLauncher;
-    private CustomCheckBoxPreference mSkipChecks;
+    private CustomTogglePreference mShowLauncher;
+    private CustomTogglePreference mSkipChecks;
 
     //==============================================================================================
     // Interface
     //==============================================================================================
-    private CustomCheckBoxPreference mSwipeOnContent;
+    private CustomTogglePreference mSwipeOnContent;
     // TODO: more customization
-    private CustomCheckBoxPreference mDarkTheme;
+    private CustomTogglePreference mDarkTheme;
 
     //==============================================================================================
     // Debug
     //==============================================================================================
-    private CustomCheckBoxPreference mExtensiveLogging;
+    private CustomTogglePreference mExtensiveLogging;
 
     @Override protected int getFragmentId() { return ID_PREFERENCES; }
 
@@ -77,7 +77,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml._device_control);
 
-        mExtensiveLogging = (CustomCheckBoxPreference) findPreference(EXTENSIVE_LOGGING);
+        mExtensiveLogging = (CustomTogglePreference) findPreference(EXTENSIVE_LOGGING);
         if (mExtensiveLogging != null) {
             mExtensiveLogging.setChecked(PreferenceHelper.getBoolean(EXTENSIVE_LOGGING));
             mExtensiveLogging.setOnPreferenceChangeListener(this);
@@ -86,7 +86,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
         PreferenceCategory category = (PreferenceCategory) findPreference("prefs_general");
         mSetOnBoot = (CustomPreference) findPreference("prefs_set_on_boot");
 
-        mShowLauncher = (CustomCheckBoxPreference) findPreference(SHOW_LAUNCHER);
+        mShowLauncher = (CustomTogglePreference) findPreference(SHOW_LAUNCHER);
         if (mShowLauncher != null) {
             if (Application.IS_NAMELESS) {
                 mShowLauncher.setChecked(PreferenceHelper.getBoolean(SHOW_LAUNCHER, true));
@@ -96,7 +96,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
             }
         }
 
-        mSkipChecks = (CustomCheckBoxPreference) findPreference(SKIP_CHECKS);
+        mSkipChecks = (CustomTogglePreference) findPreference(SKIP_CHECKS);
         if (mSkipChecks != null) {
             mSkipChecks.setChecked(PreferenceHelper.getBoolean(SKIP_CHECKS));
             mSkipChecks.setOnPreferenceChangeListener(this);
@@ -105,7 +105,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
         category = (PreferenceCategory) findPreference("prefs_app");
 
         if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.secret=1")) {
-            mMonkeyPref = new CustomCheckBoxPreference(getActivity());
+            mMonkeyPref = new CustomTogglePreference(getActivity());
             mMonkeyPref.setKey("monkey");
             mMonkeyPref.setTitle(R.string.become_a_monkey);
             mMonkeyPref.setSummaryOn(R.string.is_monkey);
@@ -118,11 +118,11 @@ public class PreferencesFragment extends AttachPreferenceFragment
         //category = (PreferenceCategory) findPreference("prefs_tools");
         mFlasherConfig = (CustomPreference) findPreference("flasher_prefs");
 
-        mDarkTheme = (CustomCheckBoxPreference) findPreference("dark_theme");
+        mDarkTheme = (CustomTogglePreference) findPreference("dark_theme");
         mDarkTheme.setChecked(PreferenceHelper.getBoolean(mDarkTheme.getKey(), true));
         mDarkTheme.setOnPreferenceChangeListener(this);
 
-        mSwipeOnContent = (CustomCheckBoxPreference) findPreference("swipe_on_content");
+        mSwipeOnContent = (CustomTogglePreference) findPreference("swipe_on_content");
         mSwipeOnContent.setChecked(PreferenceHelper.getBoolean(mSwipeOnContent.getKey()));
         mSwipeOnContent.setOnPreferenceChangeListener(this);
 

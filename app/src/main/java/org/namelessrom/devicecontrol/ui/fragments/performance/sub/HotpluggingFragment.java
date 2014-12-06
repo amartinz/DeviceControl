@@ -30,10 +30,10 @@ import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory;
-import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
@@ -49,7 +49,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
     //----------------------------------------------------------------------------------------------
     private PreferenceScreen mRoot;
     //----------------------------------------------------------------------------------------------
-    private CustomCheckBoxPreference mMpDecision;
+    private CustomTogglePreference mMpDecision;
     private CustomListPreference mCpuQuietGov;
 
     @Override protected int getFragmentId() { return ID_HOTPLUGGING; }
@@ -63,7 +63,7 @@ public class HotpluggingFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         // General
         //------------------------------------------------------------------------------------------
-        mMpDecision = (CustomCheckBoxPreference) findPreference("mpdecision");
+        mMpDecision = (CustomTogglePreference) findPreference("mpdecision");
         if (mMpDecision != null) {
             if (Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
                 Utils.getCommandResult(this, ID_MPDECISION, "pgrep mpdecision 2> /dev/null;");
@@ -77,8 +77,8 @@ public class HotpluggingFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         PreferenceCategory category = (PreferenceCategory) findPreference("intelli_plug");
         if (category != null) {
-            final AwesomeCheckBoxPreference intelliPlug =
-                    (AwesomeCheckBoxPreference) findPreference("intelli_plug_active");
+            final AwesomeTogglePreference intelliPlug =
+                    (AwesomeTogglePreference) findPreference("intelli_plug_active");
             if (intelliPlug != null) {
                 if (intelliPlug.isSupported()) {
                     intelliPlug.initValue();
@@ -88,8 +88,8 @@ public class HotpluggingFragment extends AttachPreferenceFragment
                 }
             }
 
-            final AwesomeCheckBoxPreference intelliPlugEco =
-                    (AwesomeCheckBoxPreference) findPreference("intelli_plug_eco");
+            final AwesomeTogglePreference intelliPlugEco =
+                    (AwesomeTogglePreference) findPreference("intelli_plug_eco");
             if (intelliPlugEco != null) {
                 if (intelliPlugEco.isSupported()) {
                     intelliPlugEco.initValue();
@@ -159,8 +159,8 @@ public class HotpluggingFragment extends AttachPreferenceFragment
     }
 
     @Override public boolean onPreferenceChange(Preference preference, Object o) {
-        if (preference instanceof AwesomeCheckBoxPreference) {
-            ((AwesomeCheckBoxPreference) preference).writeValue((Boolean) o);
+        if (preference instanceof AwesomeTogglePreference) {
+            ((AwesomeTogglePreference) preference).writeValue((Boolean) o);
             return true;
         } else if (preference instanceof AwesomeEditTextPreference) {
             ((AwesomeEditTextPreference) preference).writeValue(String.valueOf(o));

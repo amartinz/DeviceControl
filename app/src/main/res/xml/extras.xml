@@ -60,7 +60,7 @@
         android:key="powersaving"
         android:title="@string/powersaving">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:key="power_efficient_work"
             android:summary="@string/power_efficient_work_summary"
             android:title="@string/power_efficient_work"
@@ -81,7 +81,7 @@
         android:key="voltage"
         android:title="@string/voltage">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:key="msm_dcvs"
             android:summary="@string/msm_dcvs_summary"
             android:title="@string/msm_dcvs"

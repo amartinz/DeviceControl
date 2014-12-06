@@ -35,7 +35,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.ExtraUtils;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceProgressFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -57,8 +57,8 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
     private AwesomeEditTextPreference mReadWakeupThreshold;
     private AwesomeEditTextPreference mWriteWakeupThreshold;
 
-    private CustomCheckBoxPreference mRngActive;
-    private CustomCheckBoxPreference mRngStartup;
+    private CustomTogglePreference mRngActive;
+    private CustomTogglePreference mRngStartup;
 
     @Override protected int getFragmentId() { return ID_ENTROPY; }
 
@@ -90,12 +90,12 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
         }
 
         // category = (PreferenceCategory) findPreference("rng");
-        mRngStartup = (CustomCheckBoxPreference) findPreference("rng_startup");
+        mRngStartup = (CustomTogglePreference) findPreference("rng_startup");
         mRngStartup.setChecked(PreferenceHelper.getBoolean("rng_startup", false));
         mRngStartup.setOnPreferenceChangeListener(this);
 
 
-        mRngActive = (CustomCheckBoxPreference) findPreference("rng_active");
+        mRngActive = (CustomTogglePreference) findPreference("rng_active");
         AppHelper.getProcess(this, RNGD.getAbsolutePath());
         mRngActive.setOnPreferenceChangeListener(this);
 

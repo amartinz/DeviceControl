@@ -47,12 +47,12 @@
             android:summary="@string/reapply_on_boot_summary"
             android:title="@string/reapply_on_boot" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="show_launcher"
             android:summary="@string/show_launcher_summary"
             android:title="@string/show_launcher" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="skip_checks"
             android:summary="@string/skip_checks_summary"
             android:title="@string/skip_checks" />
@@ -63,12 +63,12 @@
         android:key="prefs_interface"
         android:title="@string/user_interface">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="dark_theme"
             android:summary="@string/dark_theme_summary"
             android:title="@string/dark_theme" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="swipe_on_content"
             android:summary="@string/swipe_on_content_summary"
             android:title="@string/swipe_on_content" />
@@ -79,7 +79,7 @@
         android:key="prefs_debug"
         android:title="@string/debugging">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="extensive_logging"
             android:title="@string/extensive_logging" />
 

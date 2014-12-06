@@ -19,11 +19,10 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class SeekBarPreference extends Preference implements OnSeekBarChangeListener {
-
     private final String TAG = getClass().getName();
 
     private static final String ANDROIDNS = "http://schemas.android.com/apk/res/android";
-    private static final String DC        = "http://schemas.android.com/apk/res-auto";
+    private static final String DC = "http://schemas.android.com/apk/res-auto";
 
     protected static final int DEFAULT_VALUE = 50;
 
@@ -33,14 +32,15 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     private int mMinValue = 0;
     private int mInterval = 1;
     private int mCurrentValue;
-    private String mUnitsLeft  = "";
+    private String mUnitsLeft = "";
     private String mUnitsRight = "";
     private TextView mTitle;
 
     private TextView mStatusText;
 
     public SeekBarPreference(final Context context, final AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        initPreference(context, attrs);
     }
 
     public SeekBarPreference(final Context context, final AttributeSet attrs, final int defStyle) {
@@ -75,8 +75,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
         return (value != null ? value : defaultValue);
     }
 
-    @Override
-    public void onDependencyChanged(Preference dependency, boolean disableDependent) {
+    @Override public void onDependencyChanged(Preference dependency, boolean disableDependent) {
         super.onDependencyChanged(dependency, disableDependent);
         this.setShouldDisableView(true);
         if (mTitle != null) { mTitle.setEnabled(!disableDependent); }
@@ -201,4 +200,5 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     @Override public boolean isPersistent() { return false; }
 
     @Override protected boolean shouldPersist() { return false; }
+
 }

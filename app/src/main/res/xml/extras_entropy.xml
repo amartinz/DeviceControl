@@ -46,11 +46,11 @@
         android:key="rng"
         android:title="@string/rng">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="rng_active"
             android:title="@string/rng_active" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="rng_startup"
             android:title="@string/reapply_on_boot" />
 
