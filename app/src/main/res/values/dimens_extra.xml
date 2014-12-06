@@ -15,6 +15,12 @@
   limitations under the License.
   -->
 <resources>
+    <!-- Floating action button -->
+    <dimen name="fab_size_normal">56dp</dimen>
+    <dimen name="fab_size_mini">40dp</dimen>
+    <dimen name="fab_shadow_size">12dp</dimen>
+    <dimen name="fab_scroll_threshold">4dp</dimen>
+    <dimen name="fab_elevation_lollipop">8dp</dimen>
     <!-- Material menu -->
     <dimen name="mm_up_arrow_margin">-16dp</dimen>
     <!-- Wizard -->

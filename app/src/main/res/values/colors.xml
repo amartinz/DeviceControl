@@ -18,14 +18,6 @@
     <!-- Accents -->
     <color name="accent">@color/palette_blue_600</color>
     <color name="accent_light">@color/palette_teal_500</color>
-    <color name="grass">#ff2ab081</color>
-    <color name="green">#ff53a93f</color>
-    <color name="palette_blue_600">#ff1e88e5</color>
-    <color name="palette_blue_800">#ff1565c0</color>
-    <color name="palette_orange">#fff5a816</color>
-    <color name="palette_teal_500">#ff009688</color>
-    <color name="palette_teal_700">#ff00796B</color>
-    <color name="palette_yellow">#ffafb42b</color>
     <color name="dark_background">#ff152127</color>
     <color name="dark_menu">#ff132125</color>
     <color name="darker_menu">#ff101010</color>
@@ -34,6 +26,17 @@
     <color name="light_menu">#ffd6d6d6</color>
     <color name="lighter_menu">#fff8f8f8</color>
     <color name="light_primary_dark">@color/palette_teal_700</color>
+    <!-- palette -->
+    <color name="grass">#ff2ab081</color>
+    <color name="green">#ff53a93f</color>
+    <color name="palette_blue_600">#ff1e88e5</color>
+    <color name="palette_blue_800">#ff1565c0</color>
+    <color name="palette_orange">#fff5a816</color>
+    <color name="palette_teal_500">#ff009688</color>
+    <color name="palette_teal_700">#ff00796B</color>
+    <color name="palette_yellow">#ffafb42b</color>
+    <color name="material_blue_500">#5677fc</color>
+    <color name="material_blue_600">#4e6cef</color>
     <!-- card -->
     <color name="card_text">#ff8d8d8d</color>
     <color name="card_text_error">#ffff0000</color>

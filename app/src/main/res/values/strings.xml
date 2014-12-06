@@ -159,7 +159,7 @@
     <string name="tasker">Tasker</string>
     <string name="tasklist">Task list</string>
     <string name="tasklist_summary">Setup, modify, enable or disable tasks.</string>
-    <string name="list_empty">You have not set up any items yet!\nHow about adding some? :)\n\n(Press the \"+\" at the top right)</string>
+    <string name="list_empty">You have not set up any items yet!\nHow about adding some? :)</string>
     <string name="add_task">Add task</string>
     <string name="edit_task">Edit task</string>
     <string name="delete_task">Delete task</string>

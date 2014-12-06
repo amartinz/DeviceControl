@@ -18,12 +18,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_task_add"
-        android:title="@string/add_task"
-        android:icon="@drawable/ic_action_add"
-        app:showAsAction="ifRoom|withText" />
-
-    <item
         android:id="@+id/menu_action_toggle"
         android:title="@string/enable"
         app:actionLayout="@layout/ab_switch"

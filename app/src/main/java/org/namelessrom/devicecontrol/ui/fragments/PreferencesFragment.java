@@ -119,7 +119,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
         mFlasherConfig = (CustomPreference) findPreference("flasher_prefs");
 
         mDarkTheme = (CustomTogglePreference) findPreference("dark_theme");
-        mDarkTheme.setChecked(PreferenceHelper.getBoolean(mDarkTheme.getKey(), true));
+        mDarkTheme.setChecked(PreferenceHelper.getBoolean(mDarkTheme.getKey(), false));
         mDarkTheme.setOnPreferenceChangeListener(this);
 
         mSwipeOnContent = (CustomTogglePreference) findPreference("swipe_on_content");

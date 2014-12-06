@@ -34,6 +34,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
+import com.melnykov.fab.FloatingActionButton;
+import com.melnykov.fab.ObservableScrollView;
+
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
@@ -68,6 +71,20 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
 
         mCardsLayout = (LinearLayout) v.findViewById(R.id.cards_layout);
         mEmptyView = v.findViewById(android.R.id.empty);
+        final FloatingActionButton fabAdd = (FloatingActionButton) v.findViewById(R.id.fab_add);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                if (getActivity() != null) {
+                    startActivity(new Intent(getActivity(), AddTaskActivity.class));
+                }
+            }
+        });
+
+        final ObservableScrollView scrollView = (ObservableScrollView)
+                v.findViewById(R.id.cards_layout_container);
+        if (scrollView != null) {
+            fabAdd.attachToScrollView(scrollView);
+        }
 
         return v;
     }
@@ -147,19 +164,6 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
         }
     }
 
-    @Override public boolean onOptionsItemSelected(final MenuItem item) {
-        final int id = item.getItemId();
-        switch (id) {
-            case R.id.action_task_add: {
-                if (getActivity() != null) {
-                    startActivity(new Intent(getActivity(), AddTaskActivity.class));
-                }
-                return true;
-            }
-        }
-        return false;
-    }
-
     private class UpdateTaskerCardList extends AsyncTask<Void, Void, List<TaskerItem>> {
         @Override protected void onPreExecute() {
             // TODO: animations and progress view
@@ -174,7 +178,7 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
         @Override protected void onPostExecute(final List<TaskerItem> result) {
             // if the adapter exists and we have items, clear it and add the results
             if (result != null && result.size() > 0) {
-                final ArrayList<TaskerCard> cards = new ArrayList<TaskerCard>(result.size());
+                final ArrayList<TaskerCard> cards = new ArrayList<>(result.size());
 
                 for (final TaskerItem item : result) {
                     cards.add(new TaskerCard(getActivity(), null, item, null));

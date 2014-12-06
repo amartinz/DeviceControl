@@ -15,11 +15,13 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <com.melnykov.fab.ObservableScrollView
+        android:id="@+id/cards_layout_container"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,7 +33,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
 
-    </ScrollView>
+    </com.melnykov.fab.ObservableScrollView>
 
     <TextView
         android:id="@android:id/empty"
@@ -42,5 +44,19 @@
         android:gravity="center"
         android:text="@string/list_empty"
         android:visibility="gone" />
+
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_action_add"
+        fab:fab_type="normal"
+        fab:fab_shadow="true"
+        fab:fab_colorNormal="?attr/colorAccent"
+        fab:fab_colorPressed="?attr/colorPrimaryDark"
+        fab:fab_colorRipple="?attr/colorPrimaryDark" />
 
 </RelativeLayout>
