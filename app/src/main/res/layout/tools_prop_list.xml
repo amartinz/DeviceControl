@@ -69,7 +69,8 @@
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:elevation="4dp">
 
         <EditText
             android:layout_width="match_parent"
@@ -82,20 +83,5 @@
             android:layout_marginTop="20dp" />
 
     </RelativeLayout>
-
-    <View
-        android:id="@+id/tools_editor_shadow_bottom"
-        android:layout_alignBottom="@+id/proplist"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@drawable/shadow_bottom"
-        android:visibility="invisible" />
-
-    <View
-        android:id="@+id/tools_editor_shadow_top"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@drawable/shadow_top"
-        android:visibility="invisible" />
 
 </RelativeLayout>

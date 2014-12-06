@@ -24,20 +24,10 @@
         android:paddingBottom="20dp">
 
         <TextView
-            android:id="@+id/vibrator_text"
+            android:id="@+id/vibrator_value_def"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp"
-            android:text="@string/vibrator_strength" />
-
-        <TextView
-            android:id="@+id/vibrator_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:fontFamily="sans-serif-light"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
@@ -47,7 +37,7 @@
             android:id="@+id/seekbar_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/vibrator_text"
+            android:layout_below="@id/vibrator_value_def"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp">
 
@@ -57,6 +47,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" />
+
+            <TextView
+                android:id="@+id/vibrator_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="sans-serif-light"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp" />
 

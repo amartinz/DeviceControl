@@ -60,17 +60,16 @@ public class BuildPropEditorFragment extends AttachFragment implements DeviceCon
     // Fields
     //==============================================================================================
     private static final int REMOVE = 100;
-    private static final int SAVE   = 200;
+    private static final int SAVE = 200;
 
-    private ListView       mListView;
-    private LinearLayout   mLoadingView;
-    private LinearLayout   mEmptyView;
+    private ListView mListView;
+    private LinearLayout mLoadingView;
+    private LinearLayout mEmptyView;
     private RelativeLayout mTools;
-    private View           mShadowTop, mShadowBottom;
 
-    private       PropAdapter mAdapter = null;
-    private       EditText    mFilter  = null;
-    private final List<Prop>  mProps   = new ArrayList<Prop>();
+    private PropAdapter mAdapter = null;
+    private EditText mFilter = null;
+    private final List<Prop> mProps = new ArrayList<Prop>();
 
     //==============================================================================================
     // Overridden Methods
@@ -126,10 +125,8 @@ public class BuildPropEditorFragment extends AttachFragment implements DeviceCon
             }
         });
 
+        mListView.setVisibility(View.GONE);
         mTools.setVisibility(View.GONE);
-
-        mShadowTop = view.findViewById(R.id.tools_editor_shadow_top);
-        mShadowBottom = view.findViewById(R.id.tools_editor_shadow_bottom);
 
         return view;
     }
@@ -220,9 +217,8 @@ public class BuildPropEditorFragment extends AttachFragment implements DeviceCon
             mEmptyView.setVisibility(View.VISIBLE);
         } else {
             mEmptyView.setVisibility(View.GONE);
+            mListView.setVisibility(View.VISIBLE);
             mTools.setVisibility(View.VISIBLE);
-            mShadowTop.setVisibility(View.VISIBLE);
-            mShadowBottom.setVisibility(View.VISIBLE);
             mAdapter = new PropAdapter(activity, mProps);
             mListView.setAdapter(mAdapter);
         }

@@ -71,7 +71,6 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
     private LinearLayout   mLoadingView;
     private LinearLayout   mEmptyView;
     private RelativeLayout mTools;
-    private View           mShadowTop, mShadowBottom;
 
     private       PropAdapter mAdapter = null;
     private       EditText    mFilter  = null;
@@ -128,9 +127,6 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
         });
 
         mTools.setVisibility(View.GONE);
-
-        mShadowTop = view.findViewById(R.id.tools_editor_shadow_top);
-        mShadowBottom = view.findViewById(R.id.tools_editor_shadow_bottom);
 
         return view;
     }
@@ -212,6 +208,7 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
     private class GetPropOperation extends AsyncTask<String, Void, Void> {
         @Override protected void onPreExecute() {
             mLoadingView.setVisibility(View.VISIBLE);
+            mListView.setVisibility(View.GONE);
             mEmptyView.setVisibility(View.GONE);
             mTools.setVisibility(View.GONE);
         }
@@ -292,9 +289,8 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
                 mEmptyView.setVisibility(View.VISIBLE);
             } else {
                 mEmptyView.setVisibility(View.GONE);
+                mListView.setVisibility(View.VISIBLE);
                 mTools.setVisibility(View.VISIBLE);
-                mShadowTop.setVisibility(View.VISIBLE);
-                mShadowBottom.setVisibility(View.VISIBLE);
                 mAdapter = new PropAdapter(activity, mProps);
                 mListView.setAdapter(mAdapter);
             }

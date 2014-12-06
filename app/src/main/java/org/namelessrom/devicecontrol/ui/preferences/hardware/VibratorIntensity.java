@@ -18,21 +18,18 @@ package org.namelessrom.devicecontrol.ui.preferences.hardware;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.DialogPreference;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -52,14 +49,14 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
     private static String[] paths;
 
     private String path;
-    private int    max;
-    private int    min;
-    private int    defValue;
-    private int    threshold;
+    private int max;
+    private int min;
+    private int defValue;
+    private int threshold;
 
-    private SeekBar  mSeekBar;
+    private SeekBar mSeekBar;
     private TextView mValue;
-    private String   mOriginalValue;
+    private String mOriginalValue;
     private Drawable mProgressDrawable;
 
     private Drawable mProgressThumb = null;
@@ -123,14 +120,12 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
         }
     }
 
-    @Override protected void onPrepareDialogBuilder(final AlertDialog.Builder builder) {
-        builder.setNeutralButton(R.string.defaults_button, new DialogInterface.OnClickListener() {
-            @Override public void onClick(final DialogInterface dialog, final int which) { }
-        });
-    }
-
     @Override protected void onBindDialogView(@NonNull final View view) {
         super.onBindDialogView(view);
+
+        final String def = String.format(getContext().getString(R.string.string_default) + ": %s",
+                String.valueOf(strengthToPercent(defValue)) + "%");
+        ((TextView) view.findViewById(R.id.vibrator_value_def)).setText(def);
 
         mSeekBar = (SeekBar) view.findViewById(R.id.vibrator_seekbar);
         mValue = (TextView) view.findViewById(R.id.vibrator_value);
@@ -179,29 +174,6 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
                     }
                 }
         );
-    }
-
-    @Override protected void showDialog(final Bundle state) {
-        super.showDialog(state);
-
-        // can't use onPrepareDialogBuilder for this as we want the dialog
-        // to be kept open on click
-        final AlertDialog d = (AlertDialog) getDialog();
-        if (d != null) {
-            final Button defaultsButton = d.getButton(DialogInterface.BUTTON_NEUTRAL);
-            if (defaultsButton != null) {
-                defaultsButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        final int progress = strengthToPercent(defValue);
-                        mSeekBar.setProgress(progress);
-
-                        final String value = String.valueOf(percentToStrength(progress));
-                        Utils.runRootCommand(Utils.getWriteCommand(path, value));
-                    }
-                });
-            }
-        }
     }
 
     @Override protected void onDialogClosed(final boolean positiveResult) {
