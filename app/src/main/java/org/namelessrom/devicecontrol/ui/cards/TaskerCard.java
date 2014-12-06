@@ -23,9 +23,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
@@ -50,7 +50,7 @@ public class TaskerCard extends Card {
         final TextView trigger = (TextView) findViewById(R.id.trigger);
         final TextView action = (TextView) findViewById(R.id.action);
         final TextView value = (TextView) findViewById(R.id.value);
-        final CheckBox enabled = (CheckBox) findViewById(R.id.enabled);
+        final Switch enabled = (Switch) findViewById(R.id.enabled);
 
         image.setImageDrawable(ActionProcessor.getImageForCategory(item.category));
         trigger.setText(item.trigger);

@@ -52,7 +52,7 @@ import java.util.List;
 public class TaskerFragment extends AttachFragment implements DeviceConstants {
 
     private LinearLayout mCardsLayout;
-    private View         mEmptyView;
+    private View mEmptyView;
 
     @Override protected int getFragmentId() { return ID_TOOLS_TASKER; }
 
@@ -160,28 +160,27 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
         return false;
     }
 
-    private class UpdateTaskerCardList extends AsyncTask<Void, Void, ArrayList<TaskerCard>> {
+    private class UpdateTaskerCardList extends AsyncTask<Void, Void, List<TaskerItem>> {
         @Override protected void onPreExecute() {
             // TODO: animations and progress view
             mEmptyView.setVisibility(View.GONE);
             mCardsLayout.setVisibility(View.GONE);
         }
 
-        @Override protected ArrayList<TaskerCard> doInBackground(final Void... voids) {
-            final List<TaskerItem> items = DatabaseHandler.getInstance().getAllTaskerItems("");
-            final ArrayList<TaskerCard> cards = new ArrayList<TaskerCard>(items.size());
-
-            for (final TaskerItem item : items) {
-                cards.add(new TaskerCard(getActivity(), null, item, null));
-            }
-
-            return cards;
+        @Override protected List<TaskerItem> doInBackground(final Void... voids) {
+            return DatabaseHandler.getInstance().getAllTaskerItems("");
         }
 
-        @Override protected void onPostExecute(final ArrayList<TaskerCard> result) {
+        @Override protected void onPostExecute(final List<TaskerItem> result) {
             // if the adapter exists and we have items, clear it and add the results
             if (result != null && result.size() > 0) {
-                addCards(result, true, true);
+                final ArrayList<TaskerCard> cards = new ArrayList<TaskerCard>(result.size());
+
+                for (final TaskerItem item : result) {
+                    cards.add(new TaskerCard(getActivity(), null, item, null));
+                }
+
+                addCards(cards, true, true);
                 mEmptyView.setVisibility(View.GONE);
                 mCardsLayout.setVisibility(View.VISIBLE);
             } else {
