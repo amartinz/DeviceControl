@@ -24,7 +24,7 @@ import android.preference.PreferenceScreen;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
@@ -47,7 +47,7 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
     private boolean isNewVersion = false;
 
     private CustomListPreference      mForceFastCharge;
-    private AwesomeCheckBoxPreference mFailsafe;
+    private AwesomeTogglePreference mFailsafe;
     private CustomPreference          mAcLevelsValid;
     private CustomEditTextPreference  mAcLevel;
     private CustomPreference          mUsbLevelsValid;
@@ -90,7 +90,7 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
             }
         }
 
-        mFailsafe = (AwesomeCheckBoxPreference) findPreference("failsafe");
+        mFailsafe = (AwesomeTogglePreference) findPreference("failsafe");
         if (mFailsafe != null) {
             if (isNewVersion && mFailsafe.isSupported()) {
                 mFailsafe.initValue();

@@ -30,9 +30,9 @@ import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.DisplayColorCalibration;
 import org.namelessrom.devicecontrol.hardware.DisplayGammaCalibration;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.preferences.hardware.DisplayColor;
 import org.namelessrom.devicecontrol.ui.preferences.hardware.DisplayGamma;
@@ -61,24 +61,24 @@ public class DeviceFragment extends AttachPreferenceFragment
     //==============================================================================================
     // Input
     //==============================================================================================
-    private CustomCheckBoxPreference  mGloveMode;
-    private AwesomeCheckBoxPreference mAwesomeGloveMode;
-    private AwesomeCheckBoxPreference mKnockOn;
-    private AwesomeCheckBoxPreference mResetOnSuspend;
+    private CustomTogglePreference mGloveMode;
+    private AwesomeTogglePreference mAwesomeGloveMode;
+    private AwesomeTogglePreference mKnockOn;
+    private AwesomeTogglePreference mResetOnSuspend;
 
     //==============================================================================================
     // Lights
     //==============================================================================================
-    private AwesomeCheckBoxPreference mBacklightKey;
-    private AwesomeCheckBoxPreference mBacklightNotification;
-    private AwesomeCheckBoxPreference mKeyboardBacklight;
+    private AwesomeTogglePreference mBacklightKey;
+    private AwesomeTogglePreference mBacklightNotification;
+    private AwesomeTogglePreference mKeyboardBacklight;
 
     //==============================================================================================
     // Display
     //==============================================================================================
-    private AwesomeCheckBoxPreference mLcdPowerReduce;
-    private AwesomeCheckBoxPreference mLcdSunlightEnhancement;
-    private AwesomeCheckBoxPreference mLcdColorEnhancement;
+    private AwesomeTogglePreference mLcdPowerReduce;
+    private AwesomeTogglePreference mLcdSunlightEnhancement;
+    private AwesomeTogglePreference mLcdColorEnhancement;
 
     //----------------------------------------------------------------------------------------------
     private DisplayColor          mDisplayColor;
@@ -88,7 +88,7 @@ public class DeviceFragment extends AttachPreferenceFragment
     //==============================================================================================
     // Extras
     //==============================================================================================
-    private AwesomeCheckBoxPreference mLoggerMode;
+    private AwesomeTogglePreference mLoggerMode;
     private CustomPreference          mFastCharge;
     private CustomPreference          mSoundControl;
 
@@ -107,7 +107,7 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         PreferenceCategory category = (PreferenceCategory) findPreference("input_gestures");
         if (category != null) {
-            mKnockOn = (AwesomeCheckBoxPreference) findPreference("knockon_gesture_enable");
+            mKnockOn = (AwesomeTogglePreference) findPreference("knockon_gesture_enable");
             if (mKnockOn != null) {
                 if (mKnockOn.isSupported()) {
                     try {
@@ -131,7 +131,7 @@ public class DeviceFragment extends AttachPreferenceFragment
                 category.removePreference(pref);
             }
 
-            mAwesomeGloveMode = (AwesomeCheckBoxPreference) findPreference("input_glove_mode_aw");
+            mAwesomeGloveMode = (AwesomeTogglePreference) findPreference("input_glove_mode_aw");
             if (mAwesomeGloveMode.isSupported()) {
                 mAwesomeGloveMode.initValue();
                 mAwesomeGloveMode.setOnPreferenceChangeListener(this);
@@ -140,7 +140,7 @@ public class DeviceFragment extends AttachPreferenceFragment
                 mAwesomeGloveMode = null;
             }
 
-            mGloveMode = (CustomCheckBoxPreference) findPreference("input_glove_mode");
+            mGloveMode = (CustomTogglePreference) findPreference("input_glove_mode");
             try {
                 // if we have already added a glove mode preference, remove it too
                 if (mAwesomeGloveMode != null || !isHtsSupported()) {
@@ -155,7 +155,7 @@ public class DeviceFragment extends AttachPreferenceFragment
                 }
             } catch (Exception exc) { category.removePreference(mGloveMode); }
 
-            mResetOnSuspend = (AwesomeCheckBoxPreference) findPreference("input_reset_on_suspend");
+            mResetOnSuspend = (AwesomeTogglePreference) findPreference("input_reset_on_suspend");
             if (mResetOnSuspend.isSupported()) {
                 mResetOnSuspend.initValue();
                 mResetOnSuspend.setOnPreferenceChangeListener(this);
@@ -172,7 +172,7 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         category = (PreferenceCategory) findPreference("touchkey");
         if (category != null) {
-            mBacklightKey = (AwesomeCheckBoxPreference) findPreference("touchkey_light");
+            mBacklightKey = (AwesomeTogglePreference) findPreference("touchkey_light");
             if (mBacklightKey != null) {
                 if (mBacklightKey.isSupported()) {
                     mBacklightKey.initValue();
@@ -182,7 +182,7 @@ public class DeviceFragment extends AttachPreferenceFragment
                 }
             }
 
-            mBacklightNotification = (AwesomeCheckBoxPreference) findPreference("touchkey_bln");
+            mBacklightNotification = (AwesomeTogglePreference) findPreference("touchkey_bln");
             if (mBacklightNotification != null) {
                 if (mBacklightNotification.isSupported()) {
                     mBacklightNotification.initValue();
@@ -192,7 +192,7 @@ public class DeviceFragment extends AttachPreferenceFragment
                 }
             }
 
-            mKeyboardBacklight = (AwesomeCheckBoxPreference) findPreference("keyboard_light");
+            mKeyboardBacklight = (AwesomeTogglePreference) findPreference("keyboard_light");
             if (mKeyboardBacklight != null) {
                 if (mKeyboardBacklight.isSupported()) {
                     mKeyboardBacklight.initValue();
@@ -231,7 +231,7 @@ public class DeviceFragment extends AttachPreferenceFragment
                 }
             }
 
-            mLcdPowerReduce = (AwesomeCheckBoxPreference) findPreference("lcd_power_reduce");
+            mLcdPowerReduce = (AwesomeTogglePreference) findPreference("lcd_power_reduce");
             if (mLcdPowerReduce != null) {
                 if (mLcdPowerReduce.isSupported()) {
                     mLcdPowerReduce.initValue();
@@ -242,7 +242,7 @@ public class DeviceFragment extends AttachPreferenceFragment
             }
 
             mLcdSunlightEnhancement =
-                    (AwesomeCheckBoxPreference) findPreference("lcd_sunlight_enhancement");
+                    (AwesomeTogglePreference) findPreference("lcd_sunlight_enhancement");
             if (mLcdSunlightEnhancement != null) {
                 if (mLcdSunlightEnhancement.isSupported()) {
                     mLcdSunlightEnhancement.initValue();
@@ -253,7 +253,7 @@ public class DeviceFragment extends AttachPreferenceFragment
             }
 
             mLcdColorEnhancement =
-                    (AwesomeCheckBoxPreference) findPreference("lcd_color_enhancement");
+                    (AwesomeTogglePreference) findPreference("lcd_color_enhancement");
             if (mLcdColorEnhancement != null) {
                 if (mLcdColorEnhancement.isSupported()) {
                     mLcdColorEnhancement.initValue();
@@ -270,7 +270,7 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         category = (PreferenceCategory) findPreference("extras");
         if (category != null) {
-            mLoggerMode = (AwesomeCheckBoxPreference) findPreference("logger_mode");
+            mLoggerMode = (AwesomeTogglePreference) findPreference("logger_mode");
             if (mLoggerMode != null) {
                 if (mLoggerMode.isSupported()) {
                     mLoggerMode.initValue(true);

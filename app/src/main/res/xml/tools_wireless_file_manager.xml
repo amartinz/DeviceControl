@@ -28,7 +28,7 @@
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/authentication">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="wfm_auth"
             android:title="@string/wfm_auth"
             android:summary="@string/wfm_auth_summary"
@@ -52,7 +52,7 @@
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/extras">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="wfm_root"
             android:title="@string/wfm_root"
             android:defaultValue="false" />

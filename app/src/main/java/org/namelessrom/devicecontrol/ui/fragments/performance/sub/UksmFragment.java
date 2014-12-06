@@ -32,7 +32,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.UksmUtils;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
@@ -76,7 +76,7 @@ public class UksmFragment extends AttachPreferenceFragment
     private CustomPreference          mPagesSharing;
     private CustomPreference          mSleepTimes;
     //----------------------------------------------------------------------------------------------
-    private AwesomeCheckBoxPreference mEnable;
+    private AwesomeTogglePreference mEnable;
     private CustomPreference          mSleep;
     private CustomListPreference      mCpuGovernor;
 
@@ -141,7 +141,7 @@ public class UksmFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         category = (PreferenceCategory) findPreference("uksm_settings");
         if (category != null) {
-            mEnable = (AwesomeCheckBoxPreference) findPreference("uksm_run");
+            mEnable = (AwesomeTogglePreference) findPreference("uksm_run");
             if (mEnable != null) {
                 if (mEnable.isSupported()) {
                     mEnable.initValue();

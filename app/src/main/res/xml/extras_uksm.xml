@@ -51,7 +51,7 @@
         android:key="uksm_settings"
         android:title="@string/uksm">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:key="uksm_run"
             android:title="@string/enable_uksm"
             android:summary="@string/reduce_memory_increase_cpu_load"

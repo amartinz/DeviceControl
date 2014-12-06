@@ -28,8 +28,8 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
@@ -43,12 +43,12 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
     private CustomListPreference mIoScheduler;
     private CustomListPreference mReadAhead;
 
-    private AwesomeCheckBoxPreference mFsync;
-    private AwesomeCheckBoxPreference mDynFsync;
+    private AwesomeTogglePreference mFsync;
+    private AwesomeTogglePreference mDynFsync;
 
-    private AwesomeCheckBoxPreference mSoftwareCrc;
+    private AwesomeTogglePreference mSoftwareCrc;
 
-    private CustomCheckBoxPreference mFstrim;
+    private CustomTogglePreference mFstrim;
     private CustomListPreference mFstrimInterval;
     //----------------------------------------------------------------------------------------------
 
@@ -71,7 +71,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
         mReadAhead.setSummary(mapReadAhead(value));
         mReadAhead.setOnPreferenceChangeListener(this);
 
-        mFsync = (AwesomeCheckBoxPreference) findPreference("fsync");
+        mFsync = (AwesomeTogglePreference) findPreference("fsync");
         if (mFsync.isSupported()) {
             mFsync.initValue();
             mFsync.setOnPreferenceChangeListener(this);
@@ -79,7 +79,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
             getPreferenceScreen().removePreference(mFsync);
         }
 
-        mDynFsync = (AwesomeCheckBoxPreference) findPreference("dyn_fsync");
+        mDynFsync = (AwesomeTogglePreference) findPreference("dyn_fsync");
         if (mDynFsync.isSupported()) {
             mDynFsync.initValue();
             mDynFsync.setOnPreferenceChangeListener(this);
@@ -87,7 +87,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
             getPreferenceScreen().removePreference(mDynFsync);
         }
 
-        mSoftwareCrc = (AwesomeCheckBoxPreference) findPreference("mmc_software_crc");
+        mSoftwareCrc = (AwesomeTogglePreference) findPreference("mmc_software_crc");
         if (mSoftwareCrc.isSupported()) {
             mSoftwareCrc.initValue();
             mSoftwareCrc.setOnPreferenceChangeListener(this);
@@ -96,7 +96,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
         }
 
         final boolean canBrickEmmc = Emmc.get().canBrick();
-        mFstrim = (CustomCheckBoxPreference) findPreference(FSTRIM);
+        mFstrim = (CustomTogglePreference) findPreference(FSTRIM);
         if (canBrickEmmc) {
             mFstrim.setEnabled(false);
         } else {

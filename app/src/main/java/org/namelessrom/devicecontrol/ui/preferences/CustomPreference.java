@@ -18,7 +18,7 @@ public class CustomPreference extends Preference {
     private int sumColor = -1;
 
     private boolean areMilliVolts;
-    private String  category;
+    private String category;
 
     private TextView summary;
 

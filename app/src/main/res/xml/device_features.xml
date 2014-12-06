@@ -32,7 +32,7 @@
         android:key="input_gestures"
         android:title="@string/gestures">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="knockon_gesture_enable"
             android:summary="@string/knock_on_summary"
@@ -47,7 +47,7 @@
         android:title="@string/touchkey">
 
         <!-- Touchkey backlight -->
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:defaultValue="true"
             android:key="touchkey_light"
             android:summary="@string/enable_keys_backlight_summary"
@@ -57,7 +57,7 @@
             dc:multifile="true"
             dc:valueChecked="255" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:defaultValue="true"
             android:key="touchkey_bln"
             android:summary="@string/enable_keys_notifications_summary"
@@ -65,7 +65,7 @@
             dc:category="device"
             dc:filePath="@string/file_touchkey_bln" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:defaultValue="true"
             android:key="keyboard_light"
             android:summary="@string/enable_keyboard_backlight_summary"
@@ -80,7 +80,7 @@
         android:key="graphics"
         android:title="@string/display">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="lcd_power_reduce"
             android:summary="@string/lcd_power_reduce_summary"
@@ -88,7 +88,7 @@
             dc:category="device"
             dc:filePathList="@array/files_lcd_power_reduce" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="lcd_sunlight_enhancement"
             android:summary="@string/sunlight_enhancement_summary"
@@ -96,7 +96,7 @@
             dc:category="device"
             dc:filePathList="@array/files_lcd_sunlight_enhancement" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="lcd_color_enhancement"
             android:title="@string/color_enhancement"
@@ -131,7 +131,7 @@
         android:key="extras"
         android:title="@string/extras">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="logger_mode"
             android:summary="@string/logger_mode_summary"
@@ -151,7 +151,7 @@
             android:summary="@string/vibrator_strength_summary"
             android:title="@string/vibrator_strength" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="input_glove_mode_aw"
             android:summary="@string/glove_mode_summary"
@@ -159,12 +159,12 @@
             dc:category="device"
             dc:filePathList="@array/files_glove_mode" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="input_glove_mode"
             android:summary="@string/glove_mode_summary"
             android:title="@string/glove_mode" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="input_reset_on_suspend"
             android:summary="@string/input_reset_on_suspend_summary"

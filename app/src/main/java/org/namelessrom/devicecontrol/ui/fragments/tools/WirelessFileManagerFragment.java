@@ -28,7 +28,7 @@ import android.preference.Preference;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
 import org.namelessrom.devicecontrol.services.WebServerService;
-import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
@@ -42,10 +42,10 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
     private WebServerService webServerService;
 
     private CustomPreference         mWirelessFileManager;
-    private CustomCheckBoxPreference mBrowseRoot;
+    private CustomTogglePreference mBrowseRoot;
     private CustomEditTextPreference mPort;
 
-    private CustomCheckBoxPreference mUseAuth;
+    private CustomTogglePreference mUseAuth;
     private CustomEditTextPreference mUsername;
     private CustomEditTextPreference mPassword;
 
@@ -89,7 +89,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
             mWirelessFileManager.setOnPreferenceClickListener(this);
         }
 
-        mBrowseRoot = (CustomCheckBoxPreference) findPreference("wfm_root");
+        mBrowseRoot = (CustomTogglePreference) findPreference("wfm_root");
         if (mBrowseRoot != null) {
             mBrowseRoot.setChecked(PreferenceHelper.getBoolean(mBrowseRoot.getKey(), false));
             mBrowseRoot.setOnPreferenceChangeListener(this);
@@ -103,7 +103,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
             mPort.setOnPreferenceChangeListener(this);
         }
 
-        mUseAuth = (CustomCheckBoxPreference) findPreference("wfm_auth");
+        mUseAuth = (CustomTogglePreference) findPreference("wfm_auth");
         if (mUseAuth != null) {
             mUseAuth.setChecked(PreferenceHelper.getBoolean(mUseAuth.getKey(), true));
             mUseAuth.setOnPreferenceChangeListener(this);

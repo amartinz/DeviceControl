@@ -17,7 +17,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference
+    <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
         android:key="mpdecision"
         android:title="@string/mpdecision"
         android:summaryOn="@string/mpdecision_summary_on"
@@ -28,14 +28,14 @@
         android:key="intelli_plug"
         android:title="@string/intelli_plug">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:key="intelli_plug_active"
             android:title="@string/intelli_plug"
             android:defaultValue="false"
             dc:filePath="@string/file_intelli_plug_active"
             dc:category="extras" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:key="intelli_plug_eco"
             android:title="@string/intelli_plug_eco"
             android:defaultValue="false"

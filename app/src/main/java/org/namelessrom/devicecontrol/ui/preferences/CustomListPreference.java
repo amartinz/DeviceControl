@@ -18,10 +18,8 @@ public class CustomListPreference extends ListPreference {
         setLayoutResource(R.layout.preference);
     }
 
-    @Override
-    public boolean isPersistent() { return false; }
+    @Override public boolean isPersistent() { return false; }
 
-    @Override
-    protected boolean shouldPersist() { return false; }
+    @Override protected boolean shouldPersist() { return false; }
 
 }

@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.ui.preferences;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.preference.ListPreference;
 import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.Logger;
@@ -34,14 +33,14 @@ import org.namelessrom.devicecontrol.utils.Utils;
  * writing to files on preference change, even with multiple files,
  * handling bootup restoration.
  */
-public class AwesomeListPreference extends ListPreference {
+public class AwesomeListPreference extends CustomListPreference {
 
     private String category;
 
     private boolean startUp;
     private boolean multiFile;
 
-    private String   mPath;
+    private String mPath;
     private String[] mPaths;
 
     public AwesomeListPreference(final Context context) {
@@ -57,15 +56,13 @@ public class AwesomeListPreference extends ListPreference {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AwesomePreference);
 
         int filePath = -1, filePathList = -1;
-        try {
-            assert (a != null);
+        if (a != null) {
             filePath = a.getResourceId(R.styleable.AwesomePreference_filePath, -1);
             filePathList = a.getResourceId(R.styleable.AwesomePreference_filePathList, -1);
             category = a.getString(R.styleable.AwesomePreference_category);
             startUp = a.getBoolean(R.styleable.AwesomePreference_startup, true);
             multiFile = a.getBoolean(R.styleable.AwesomePreference_multifile, false);
-        } finally {
-            if (a != null) a.recycle();
+            a.recycle();
         }
 
         final Resources res = context.getResources();
@@ -123,7 +120,4 @@ public class AwesomeListPreference extends ListPreference {
         }
     }
 
-    @Override public boolean isPersistent() { return false; }
-
-    @Override protected boolean shouldPersist() { return false; }
 }

@@ -47,14 +47,14 @@
         android:key="ksm_settings"
         android:title="@string/ksm">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:key="ksm_run"
             android:title="@string/enable_ksm"
             android:summary="@string/reduce_memory_increase_cpu_load"
             dc:filePath="@string/file_ksm_run"
             dc:category="extras" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
             android:key="ksm_deferred"
             android:title="@string/deferred_timer"
             android:summary="@string/deferred_timer_summary"

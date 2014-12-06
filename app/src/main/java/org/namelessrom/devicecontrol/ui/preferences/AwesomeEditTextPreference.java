@@ -65,15 +65,13 @@ public class AwesomeEditTextPreference extends CustomEditTextPreference {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AwesomePreference);
 
         int filePath = -1, filePathList = -1;
-        try {
-            assert (a != null);
+        if (a != null) {
             filePath = a.getResourceId(R.styleable.AwesomePreference_filePath, -1);
             filePathList = a.getResourceId(R.styleable.AwesomePreference_filePathList, -1);
             mCategory = a.getString(R.styleable.AwesomePreference_category);
             mStartUp = a.getBoolean(R.styleable.AwesomePreference_startup, true);
             mMultiFile = a.getBoolean(R.styleable.AwesomePreference_multifile, false);
-        } finally {
-            if (a != null) a.recycle();
+            a.recycle();
         }
 
         final Resources res = context.getResources();
@@ -137,7 +135,4 @@ public class AwesomeEditTextPreference extends CustomEditTextPreference {
         }
     }
 
-    @Override public boolean isPersistent() { return false; }
-
-    @Override protected boolean shouldPersist() { return false; }
 }

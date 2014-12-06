@@ -33,7 +33,7 @@ import org.namelessrom.devicecontrol.hardware.KsmUtils;
 import org.namelessrom.devicecontrol.hardware.ThermalUtils;
 import org.namelessrom.devicecontrol.hardware.UksmUtils;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
@@ -67,11 +67,11 @@ public class ExtrasFragment extends AttachPreferenceFragment
     private CustomPreference mThermal;
 
     //----------------------------------------------------------------------------------------------
-    private AwesomeCheckBoxPreference mPowerEfficientWork;
+    private AwesomeTogglePreference mPowerEfficientWork;
     private AwesomeListPreference mMcPowerScheduler;
 
     //----------------------------------------------------------------------------------------------
-    private AwesomeCheckBoxPreference mMsmDcvs;
+    private AwesomeTogglePreference mMsmDcvs;
     private CustomPreference mVoltageControl;
 
     //----------------------------------------------------------------------------------------------
@@ -157,7 +157,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
         category = (PreferenceCategory) findPreference("powersaving");
         if (category != null) {
             mPowerEfficientWork =
-                    (AwesomeCheckBoxPreference) findPreference("power_efficient_work");
+                    (AwesomeTogglePreference) findPreference("power_efficient_work");
             if (mPowerEfficientWork != null) {
                 if (mPowerEfficientWork.isSupported()) {
                     mPowerEfficientWork.initValue();
@@ -185,7 +185,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         category = (PreferenceCategory) findPreference("voltage");
         if (category != null) {
-            mMsmDcvs = (AwesomeCheckBoxPreference) findPreference("msm_dcvs");
+            mMsmDcvs = (AwesomeTogglePreference) findPreference("msm_dcvs");
             if (mMsmDcvs != null) {
                 if (mMsmDcvs.isSupported()) {
                     mMsmDcvs.initValue();

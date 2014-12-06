@@ -31,7 +31,7 @@ import android.widget.EditText;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
@@ -88,9 +88,9 @@ public class BuildPropFragment extends AttachPreferenceFragment
     private CustomListPreference     mProxDelayPref;
     private CustomEditTextPreference mLcdPref;
     private CustomListPreference     mSleepPref;
-    private CustomCheckBoxPreference mTcpStackPref;
-    private CustomCheckBoxPreference mJitPref;
-    private CustomCheckBoxPreference mGpuPref;
+    private CustomTogglePreference mTcpStackPref;
+    private CustomTogglePreference mJitPref;
+    private CustomTogglePreference mGpuPref;
 
     private boolean result = false;
 
@@ -140,9 +140,9 @@ public class BuildPropFragment extends AttachPreferenceFragment
             mSleepPref.setOnPreferenceChangeListener(this);
         }
 
-        mTcpStackPref = (CustomCheckBoxPreference) prefSet.findPreference(TCP_STACK_PREF);
+        mTcpStackPref = (CustomTogglePreference) prefSet.findPreference(TCP_STACK_PREF);
 
-        mJitPref = (CustomCheckBoxPreference) prefSet.findPreference(JIT_PREF);
+        mJitPref = (CustomTogglePreference) prefSet.findPreference(JIT_PREF);
 
         mLcdPref = (CustomEditTextPreference) prefSet.findPreference(MOD_LCD_PREF);
         final String lcd = Utils.findPropValue(Scripts.BUILD_PROP, MOD_LCD_PROP);
@@ -158,7 +158,7 @@ public class BuildPropFragment extends AttachPreferenceFragment
             mLcdPref.setOnPreferenceChangeListener(this);
         }
 
-        mGpuPref = (CustomCheckBoxPreference) prefSet.findPreference(GPU_PREF);
+        mGpuPref = (CustomTogglePreference) prefSet.findPreference(GPU_PREF);
 
         updateScreen();
     }

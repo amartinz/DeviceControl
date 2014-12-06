@@ -26,7 +26,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
-import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -46,7 +46,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
     private CustomListPreference mFreqMax = null;
     private CustomListPreference mFreqMin = null;
     private CustomListPreference mGpuGovernor = null;
-    private CustomCheckBoxPreference m3dScaling = null;
+    private CustomTogglePreference m3dScaling = null;
 
     private static final int[] GL_INFO = new int[]{
             GL_VENDOR,                  // gpu vendor
@@ -185,7 +185,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
         if (Utils.fileExists(GpuUtils.FILE_3D_SCALING)) {
             if (m3dScaling == null) {
                 tmp = Utils.readOneLine(GpuUtils.FILE_3D_SCALING);
-                m3dScaling = new CustomCheckBoxPreference(getActivity());
+                m3dScaling = new CustomTogglePreference(getActivity());
                 m3dScaling.setKey("3d_scaling");
                 m3dScaling.setTitle(R.string.gpu_3d_scaling);
                 m3dScaling.setSummary(R.string.gpu_3d_scaling_summary);

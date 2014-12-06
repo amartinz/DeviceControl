@@ -17,7 +17,8 @@ public class CustomPreferenceCategory extends PreferenceCategory {
     }
 
     public CustomPreferenceCategory(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        setLayoutResource(R.layout.preference_category);
     }
 
     public CustomPreferenceCategory(Context context, AttributeSet attrs, int defStyle) {
@@ -33,5 +34,10 @@ public class CustomPreferenceCategory extends PreferenceCategory {
         final View separator = view.findViewById(R.id.category_separator);
         separator.setBackgroundColor(Application.get().getAccentColor());
     }
+
+    @Override public boolean isPersistent() { return false; }
+
+    @Override protected boolean shouldPersist() { return false; }
+
 }
 

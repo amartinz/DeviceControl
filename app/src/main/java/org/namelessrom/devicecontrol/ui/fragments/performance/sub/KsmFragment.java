@@ -31,7 +31,7 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.KsmUtils;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeCheckBoxPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.DialogHelper;
@@ -54,8 +54,8 @@ public class KsmFragment extends AttachPreferenceFragment
     private CustomPreference          mPagesUnshared;
     private CustomPreference          mPagesVolatile;
     //----------------------------------------------------------------------------------------------
-    private AwesomeCheckBoxPreference mEnable;
-    private AwesomeCheckBoxPreference mDefer;
+    private AwesomeTogglePreference mEnable;
+    private AwesomeTogglePreference mDefer;
     private CustomPreference          mPagesToScan;
     private CustomPreference          mSleep;
 
@@ -119,7 +119,7 @@ public class KsmFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         category = (PreferenceCategory) findPreference("ksm_settings");
         if (category != null) {
-            mEnable = (AwesomeCheckBoxPreference) findPreference("ksm_run");
+            mEnable = (AwesomeTogglePreference) findPreference("ksm_run");
             if (mEnable != null) {
                 if (mEnable.isSupported()) {
                     mEnable.initValue();
@@ -129,7 +129,7 @@ public class KsmFragment extends AttachPreferenceFragment
                 }
             }
 
-            mDefer = (AwesomeCheckBoxPreference) findPreference("ksm_deferred");
+            mDefer = (AwesomeTogglePreference) findPreference("ksm_deferred");
             if (mDefer != null) {
                 if (mDefer.isSupported()) {
                     mDefer.initValue();

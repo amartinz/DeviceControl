@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.preferences.CustomCheckBoxPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
