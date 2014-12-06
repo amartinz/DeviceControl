@@ -48,7 +48,6 @@
     <string name="fsync" translatable="false">FSync</string>
     <string name="dyn_fsync" translatable="false">Dynamic FSync</string>
     <string name="cpu_abi" translatable="false">CPU ABI</string>
-    <string name="cpu_abi2" translatable="false">CPU ABI2</string>
     <string name="bogomips" translatable="false">BogoMIPS</string>
     <string name="entropy_read_wakeup_threshold" translatable="false">read_wakeup_threshold</string>
     <string name="entropy_write_wakeup_threshold" translatable="false">write_wakeup_threshold</string>
@@ -83,4 +82,7 @@
     <string name="size_100_mb" translatable="false">100 MB</string>
     <!-- GPU / OpenGL -->
     <string name="gpu_opengl" translatable="false">GPU / OpenGL</string>
+    <!-- Bits -->
+    <string name="bit_32" translatable="false">32-bit</string>
+    <string name="bit_64" translatable="false">64-bit</string>
 </resources>

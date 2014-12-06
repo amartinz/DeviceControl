@@ -1,3 +1,20 @@
+/*
+ *  Copyright (C) 2014 Alexander "Evisceration" Martinz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 package org.namelessrom.devicecontrol.objects;
 
 import android.os.Build;
@@ -7,9 +24,6 @@ import com.google.gson.annotations.SerializedName;
 
 import org.namelessrom.devicecontrol.utils.Utils;
 
-/**
- * Created by alex on 20.10.14.
- */
 public class Device {
     @SerializedName("platform_version") public final String platformVersion;
     @SerializedName("platform_id") public final String platformId;
@@ -37,8 +51,8 @@ public class Device {
         platformTags = Build.TAGS;
         platformBuildType = Utils.getDate(Build.TIME);
 
-        vmLibrary = getRuntime();
         vmVersion = System.getProperty("java.vm.version", "-");
+        vmLibrary = getRuntime();
 
         androidId = Utils.getAndroidId();
         manufacturer = Build.MANUFACTURER;
@@ -57,12 +71,23 @@ public class Device {
     }
 
     private String getRuntime() {
+        // check the vm lib
         String tmp = Utils.getCommandResult("getprop persist.sys.dalvik.vm.lib", "-");
-        if (!TextUtils.equals(tmp, "-")) {
-            final String runtime = TextUtils.equals(tmp, "libdvm.so")
-                    ? "Dalvik" : TextUtils.equals(tmp, "libart.so") ? "ART" : "-";
-            tmp = String.format("%s (%s)", runtime, tmp);
+        if (TextUtils.equals(tmp, "-")) {
+            // if we do not get a result, try falling back to the new property (API 21+)
+            tmp = Utils.getCommandResult("getprop persist.sys.dalvik.vm.lib.2", "-");
         }
+
+        if (TextUtils.equals(tmp, "-")) {
+            // if we still did not get a result, lets cheat a bit.
+            // we know that ART starts with vm version 2.x
+            tmp = vmVersion.startsWith("1") ? "libdvm.so" : "libart.so";
+        }
+
+        final String runtime = TextUtils.equals(tmp, "libdvm.so")
+                ? "Dalvik" : TextUtils.equals(tmp, "libart.so") ? "ART" : "-";
+        tmp = String.format("%s (%s)", runtime, tmp);
+
         return tmp;
     }
 }

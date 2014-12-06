@@ -54,12 +54,20 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
     private static final String KEY_ANDROID_ID = "android_id";
 
     private long[] mHits = new long[3];
+    private boolean mEasterEggStarted = false;
 
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
 
-    @Override protected int getFragmentId() { return ID_DEVICE_INFORMATION; }
+    @Override protected int getFragmentId() {
+        return ID_DEVICE_INFORMATION;
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+        mEasterEggStarted = false;
+    }
 
     @Override public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -90,7 +98,7 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
         category = (PreferenceCategory) findPreference("device_information");
 
         // TODO: save / restore / check --> ANDROID ID
-        addPreference(category, KEY_ANDROID_ID, R.string.android_id,device.androidId);
+        addPreference(category, KEY_ANDROID_ID, R.string.android_id, device.androidId);
         addPreference(category, "device_manufacturer", R.string.manufacturer, device.manufacturer);
         addPreference(category, "device_model", R.string.model, device.model);
         addPreference(category, "device_product", R.string.product, device.product);
@@ -114,8 +122,19 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
         // Processor
         category = (PreferenceCategory) findPreference("processor");
 
-        addPreference(category, "cpu_abi", R.string.cpu_abi, Build.CPU_ABI);
-        addPreference(category, "cpu_abi2", R.string.cpu_abi2, Build.CPU_ABI2);
+        final String cpuAbi = getString(R.string.cpu_abi);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            final int bitResId = Build.SUPPORTED_64_BIT_ABIS.length == 0
+                    ? R.string.bit_32 : R.string.bit_64;
+            addPreference(category, "cpu_bit", R.string.arch, getString(bitResId));
+            for (int i = 0; i < Build.SUPPORTED_ABIS.length; i++) {
+                addPreference(category, String.format("cpu_abi%s", i + 1),
+                        cpuAbi + String.valueOf(i + 1), Build.SUPPORTED_ABIS[i]);
+            }
+        } else {
+            addPreference(category, "cpu_abi", cpuAbi, Build.CPU_ABI);
+            addPreference(category, "cpu_abi2", cpuAbi + "2", Build.CPU_ABI2);
+        }
         new CpuInfoTask(category).execute();
 
         // Kernel
@@ -131,18 +150,13 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
 
         // we need an array list to be able to sort it, a normal list throws
         // java.lang.UnsupportedOperationException when sorting
-        final ArrayList<Sensor> sensorList =
-                new ArrayList<Sensor>(sensorManager.getSensorList(Sensor.TYPE_ALL));
+        final ArrayList<Sensor> sensorList = new ArrayList<>(
+                sensorManager.getSensorList(Sensor.TYPE_ALL));
 
         Collections.sort(sensorList, new SortIgnoreCase());
 
-        Preference preference;
         for (final Sensor s : sensorList) {
-            preference = new CustomPreference(getActivity());
-            preference.setTitle(s.getName());
-            preference.setSummary(s.getVendor());
-            preference.setSelectable(false);
-            category.addPreference(preference);
+            addPreference(category, "", s.getName(), s.getVendor());
         }
 
         if (category.getPreferenceCount() == 0) {
@@ -152,11 +166,15 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
 
     private CustomPreference addPreference(final PreferenceCategory category, final String key,
             final int titleResId, final String summary) {
+        return addPreference(category, key, getString(titleResId), summary);
+    }
+
+    private CustomPreference addPreference(final PreferenceCategory category, final String key,
+            final String title, final String summary) {
         final CustomPreference preference = new CustomPreference(getActivity());
         preference.setKey(key);
-        preference.setTitle(titleResId);
+        preference.setTitle(title);
         preference.setSummary(TextUtils.isEmpty(summary) ? getString(R.string.unknown) : summary);
-        preference.setSelectable(false);
         category.addPreference(preference);
         return preference;
     }
@@ -164,12 +182,12 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
     @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
             @NonNull final Preference preference) {
         final String key = preference.getKey();
-        if (TextUtils.equals(KEY_PLATFORM_VERSION, key)) {
+        if (!mEasterEggStarted && TextUtils.equals(KEY_PLATFORM_VERSION, key)) {
             System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
             mHits[mHits.length - 1] = SystemClock.uptimeMillis();
             if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
                 Utils.runRootCommand("am start android/com.android.internal.app.PlatLogoActivity");
-                preference.setSelectable(false);
+                mEasterEggStarted = true;
             }
             return true;
         } else if (TextUtils.equals("emmc_can_brick", key)) {
