@@ -16,8 +16,8 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.namelessrom.devicecontrol"
-    android:versionCode="94"
-    android:versionName="0.7.2">
+    android:versionCode="95"
+    android:versionName="0.7.3">
 
     <!-- currently broken, reenable once fixed -->
     <!--uses-sdk tools:node="replace" /-->
