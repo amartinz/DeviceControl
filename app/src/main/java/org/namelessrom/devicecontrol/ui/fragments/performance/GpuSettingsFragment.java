@@ -26,18 +26,14 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
+import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-import static android.opengl.GLES20.GL_EXTENSIONS;
-import static android.opengl.GLES20.GL_RENDERER;
-import static android.opengl.GLES20.GL_SHADING_LANGUAGE_VERSION;
-import static android.opengl.GLES20.GL_VENDOR;
-import static android.opengl.GLES20.GL_VERSION;
-import static android.opengl.GLES20.glGetString;
+import java.util.ArrayList;
 
 public class GpuSettingsFragment extends AttachPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
@@ -47,22 +43,6 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
     private CustomListPreference mFreqMin = null;
     private CustomListPreference mGpuGovernor = null;
     private CustomTogglePreference m3dScaling = null;
-
-    private static final int[] GL_INFO = new int[]{
-            GL_VENDOR,                  // gpu vendor
-            GL_RENDERER,                // gpu renderer
-            GL_VERSION,                 // opengl version
-            GL_EXTENSIONS,              // opengl extensions
-            GL_SHADING_LANGUAGE_VERSION // shader language version
-    };
-
-    private static final int[] GL_STRINGS = new int[]{
-            R.string.gpu_vendor,        // gpu vendor
-            R.string.gpu_renderer,      // gpu renderer
-            R.string.opengl_version,    // opengl version
-            R.string.opengl_extensions, // opengl extensions
-            R.string.shader_version     // shader language version
-    };
 
     @Override protected int getFragmentId() {
         return DeviceConstants.ID_PERFORMANCE_GPU_SETTINGS;
@@ -77,16 +57,16 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
         if (GpuUtils.isOpenGLES20Supported()) {
             // our preference and string for storing gpu / opengl information
             Preference infoPref;
-            String tmp;
 
-            final int length = GL_INFO.length;
-            for (int i = 0; i < length; i++) {
-                tmp = glGetString(GL_INFO[i]);
+            final ArrayList<String> glesInformation = GpuUtils.getOpenGLESInformation();
+
+            String tmp;
+            for (int i = 0; i < glesInformation.size(); i++) {
+                tmp = glesInformation.get(i);
                 if (!TextUtils.isEmpty(tmp)) {
-                    infoPref = new Preference(getActivity());
-                    infoPref.setTitle(GL_STRINGS[i]);
+                    infoPref = new CustomPreference(getActivity());
+                    infoPref.setTitle(GpuUtils.GL_STRINGS[i]);
                     infoPref.setSummary(tmp);
-                    infoPref.setSelectable(false);
                     category.addPreference(infoPref);
                 }
             }
@@ -98,6 +78,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
         }
 
         getGpu();
+
     }
 
     private void getGpu() {
