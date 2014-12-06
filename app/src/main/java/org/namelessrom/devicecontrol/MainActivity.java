@@ -184,7 +184,7 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         sSlidingMenu = new SlidingMenu(this);
         sSlidingMenu.setMode(SlidingMenu.LEFT);
         sSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
-        sSlidingMenu.setShadowDrawable(R.drawable.shadow);
+        sSlidingMenu.setShadowDrawable(R.drawable.shadow_left);
         sSlidingMenu.setBehindWidthRes(R.dimen.slidingmenu_offset);
         sSlidingMenu.setFadeEnabled(true);
         sSlidingMenu.setFadeDegree(0.45f);
