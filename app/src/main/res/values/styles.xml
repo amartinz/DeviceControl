@@ -18,7 +18,6 @@
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="android:listDivider">@drawable/transparent</item>
-        <item name="android:windowBackground">@color/dark_background</item>
         <item name="windowActionBar">false</item>
         <item name="colorAccent">@color/accent</item>
         <item name="colorPrimary">@color/dark_background</item>
@@ -26,11 +25,11 @@
         <item name="themeColor">@color/dark_background</item>
         <item name="themeColorInvert">@color/light_background</item>
         <item name="themeMenu">@color/dark_menu</item>
+        <item name="themeMenuFooter">@color/darker_menu</item>
     </style>
 
     <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:listDivider">@drawable/transparent</item>
-        <item name="android:windowBackground">@color/light_background</item>
         <item name="windowActionBar">false</item>
         <item name="colorAccent">@color/accent_light</item>
         <item name="colorPrimary">@color/light_background</item>
@@ -38,6 +37,7 @@
         <item name="themeColor">@color/light_background</item>
         <item name="themeColorInvert">@color/dark_background</item>
         <item name="themeMenu">@color/light_menu</item>
+        <item name="themeMenuFooter">@color/lighter_menu</item>
     </style>
 
     <style name="StandardDivider">
@@ -73,13 +73,12 @@
         <item name="android:layout_marginTop">10dp</item>
     </style>
 
-    <style name="CustomDialog" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="CustomDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:windowFullscreen">true</item>
     </style>
 
 </resources>

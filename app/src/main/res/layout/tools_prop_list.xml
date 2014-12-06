@@ -88,14 +88,14 @@
         android:layout_alignBottom="@+id/proplist"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@drawable/bottom_shadow"
+        android:background="@drawable/shadow_bottom"
         android:visibility="invisible" />
 
     <View
         android:id="@+id/tools_editor_shadow_top"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@drawable/top_shadow"
+        android:background="@drawable/shadow_top"
         android:visibility="invisible" />
 
 </RelativeLayout>
