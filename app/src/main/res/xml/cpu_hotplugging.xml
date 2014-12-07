@@ -24,25 +24,10 @@
         android:summaryOff="@string/mpdecision_summary_off"
         android:defaultValue="false" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory
         android:key="intelli_plug"
-        android:title="@string/intelli_plug">
-
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
-            android:key="intelli_plug_active"
-            android:title="@string/intelli_plug"
-            android:defaultValue="false"
-            dc:filePath="@string/file_intelli_plug_active"
-            dc:category="extras" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
-            android:key="intelli_plug_eco"
-            android:title="@string/intelli_plug_eco"
-            android:defaultValue="false"
-            dc:filePath="@string/file_eco_mode_active"
-            dc:category="extras" />
-
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+        android:title="@string/intelli_plug"
+        dc:filePath="@string/directory_intelli_plug" />
 
     <org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory
         android:key="mako_hotplug"

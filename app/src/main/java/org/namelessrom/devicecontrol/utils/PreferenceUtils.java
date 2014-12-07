@@ -20,8 +20,10 @@ package org.namelessrom.devicecontrol.utils;
 import android.content.Context;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
 
@@ -33,10 +35,32 @@ public class PreferenceUtils {
     public static final int TYPE_EDITTEXT = 0;
     public static final int TYPE_CHECKBOX = 1;
 
-    private static final HashMap<String, Integer> CONTENT_MAP = new HashMap<String, Integer>();
+    private static final HashMap<String, Integer> CONTENT_MAP = new HashMap<>();
 
     static {
+        // general
+        CONTENT_MAP.put("enable", TYPE_CHECKBOX);
         CONTENT_MAP.put("enabled", TYPE_CHECKBOX);
+        // intelli plug
+        CONTENT_MAP.put("intelli_plug_active", TYPE_CHECKBOX);
+        CONTENT_MAP.put("touch_boost_active", TYPE_CHECKBOX);
+    }
+
+    private static final HashMap<String, Integer> MAP_TITLE = new HashMap<>();
+
+    static {
+        // general
+        MAP_TITLE.put("enable", R.string.enable);
+        MAP_TITLE.put("enabled", R.string.enable);
+        // intelli plug
+        MAP_TITLE.put("intelli_plug_active", R.string.enable);
+        MAP_TITLE.put("touch_boost_active", R.string.touch_boost);
+    }
+
+    private static final HashMap<String, Integer> MAP_SUMMARY = new HashMap<>();
+
+    static {
+        // TODO: fill up!
     }
 
     public static int getType(final String fileName) {
@@ -53,41 +77,51 @@ public class PreferenceUtils {
         return TYPE_EDITTEXT;
     }
 
-    public static void addAwesomeEditTextPreference(final Context context, final String key,
-            final String category, final String path, final String fileName,
+    @Nullable public static Integer getTitle(final String fileName) {
+        return MAP_TITLE.get(fileName);
+    }
+
+    @Nullable public static Integer getSummary(final String fileName) {
+        return MAP_SUMMARY.get(fileName);
+    }
+
+    public static AwesomeEditTextPreference addAwesomeEditTextPreference(final Context context,
+            final String key, final String category, final String path, final String fileName,
             final PreferenceCategory prefCat,
             final Preference.OnPreferenceChangeListener listener) {
         final AwesomeEditTextPreference preference = new AwesomeEditTextPreference(context,
                 path + fileName, null, category, false, true);
-        preference.setKey(key + fileName);
         if (!preference.isSupported()) {
             // not supported, end here
-            return;
+            return null;
         }
         prefCat.addPreference(preference);
-        preference.setTitle(Utils.getFileName(path + fileName));
+        preference.setKey(key + fileName);
+        preference.setTitle(fileName);
         preference.initValue();
-
+        preference.setOnPreferenceChangeListener(listener);
+        return preference;
     }
 
-    public static void addAwesomeCheckboxPreference(final Context context, final String key,
-            final String summary, final String category, final String path, final String fileName,
-            final PreferenceCategory prefCat,
+    public static AwesomeTogglePreference addAwesomeTogglePreference(final Context context,
+            final String key, String summary, final String category, final String path,
+            String fileName, final PreferenceCategory prefCat,
             final Preference.OnPreferenceChangeListener listener) {
         final AwesomeTogglePreference preference = new AwesomeTogglePreference(context,
                 path + fileName, null, category, false, true);
-        preference.setKey(key + fileName);
         if (!preference.isSupported()) {
             // not supported, end here
-            return;
+            return null;
         }
         prefCat.addPreference(preference);
-        preference.setTitle(Utils.getFileName(path + fileName));
+        preference.setKey(key + fileName);
+        preference.setTitle(fileName);
         if (!TextUtils.isEmpty(summary)) {
             preference.setSummary(summary);
         }
         preference.initValue();
         preference.setOnPreferenceChangeListener(listener);
+        return preference;
     }
 
 }

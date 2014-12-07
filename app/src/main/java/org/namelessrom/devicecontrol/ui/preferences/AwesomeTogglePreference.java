@@ -20,12 +20,14 @@ package org.namelessrom.devicecontrol.ui.preferences;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.PreferenceUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 /**
@@ -36,8 +38,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 public class AwesomeTogglePreference extends CustomTogglePreference {
 
     private String mCategory;
-    private String mValueChecked;
-    private String mValueNotChecked;
+    private String mValueChecked = "1";
+    private String mValueNotChecked = "0";
 
     private boolean mStartUp;
     private boolean mMultiFile;
@@ -100,8 +102,8 @@ public class AwesomeTogglePreference extends CustomTogglePreference {
             Logger.w(this, "Category is not set! Defaulting to \"default\"");
             mCategory = "default";
         }
-        if (mValueChecked == null || mValueChecked.isEmpty()) mValueChecked = "1";
-        if (mValueNotChecked == null || mValueNotChecked.isEmpty()) mValueNotChecked = "0";
+        if (TextUtils.isEmpty(mValueChecked)) mValueChecked = "1";
+        if (TextUtils.isEmpty(mValueNotChecked)) mValueNotChecked = "0";
     }
 
     public void initValue() { initValue(false); }
@@ -110,10 +112,32 @@ public class AwesomeTogglePreference extends CustomTogglePreference {
         if (isSupported()) setChecked(Utils.isEnabled(Utils.readOneLine(mPath), contains));
     }
 
+    public void setupTitle() {
+        if (!isSupported()) {
+            Logger.v(this, "setupTitle -> not supported");
+            return;
+        }
+        final Integer title = PreferenceUtils.getTitle(Utils.getFileName(mPath));
+        if (title != null) {
+            setTitle(title);
+        }
+    }
+
+    public void setupSummary() {
+        if (!isSupported()) {
+            Logger.v(this, "setupTitle -> not supported");
+            return;
+        }
+        final Integer summary = PreferenceUtils.getSummary(Utils.getFileName(mPath));
+        if (summary != null) {
+            setSummary(summary);
+        }
+    }
+
     public String getPath() { return mPath; }
 
     public boolean isSupported() {
-        return ((mPath != null && !mPath.isEmpty()) || (mPaths != null && mPaths.length != 0));
+        return ((!TextUtils.isEmpty(mPath)) || (mPaths != null && mPaths.length != 0));
     }
 
     public void writeValue(final boolean isChecked) {

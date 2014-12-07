@@ -16,60 +16,30 @@ Copyright (C) 2012  James Roberts
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingRight="10dp"
     android:paddingLeft="10dp">
 
-    <LinearLayout
+    <ListView android:id="@android:id/list"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <ScrollView android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:text="@string/settings"
-            style="?android:attr/listSeparatorTextViewStyle" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="top"
-            android:id="@+id/settings">
-
-            <CheckBox
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/cpu_info_hide"
-                android:text="@string/hide_status"
-                android:gravity="center_vertical|left"
-                android:layout_gravity="center_vertical" />
-
-            <include
-                layout="@layout/row_seekbar"
-                android:id="@+id/ui_interval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center_vertical"
-                android:layout_gravity="center_vertical" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:paddingBottom="4dp"
+            android:background="?attr/themeMenuFooter"
+            android:gravity="center_vertical"
             android:orientation="vertical"
-            android:id="@+id/speed">
-
-            <TextView
-                android:text="@string/core_status"
-                style="?android:attr/listSeparatorTextViewStyle" />
+            android:elevation="4dp">
 
             <LinearLayout
                 android:id="@+id/cpu_info"
@@ -80,91 +50,16 @@ Copyright (C) 2012  James Roberts
                 android:orientation="vertical"
                 android:animateLayoutChanges="false" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/speed_set"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:text="@string/core_limits"
-                style="?android:attr/listSeparatorTextViewStyle" />
-
-            <LinearLayout
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/cpu_info_hide"
+                style="?android:attr/listSeparatorTextViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cpu_freq_max"
-                    android:textSize="16sp" />
-
-                <Spinner
-                    android:id="@+id/pref_max"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cpu_freq_min"
-                    android:textSize="16sp" />
-
-                <Spinner
-                    android:id="@+id/pref_min"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp" />
-
-            </LinearLayout>
+                android:text="@string/core_status"
+                android:background="@null" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    </ScrollView>
 
-            <TextView
-                android:text="@string/cpu_governor"
-                style="?android:attr/listSeparatorTextViewStyle" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:orientation="vertical">
-
-            <Spinner
-                android:id="@+id/pref_governor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>
