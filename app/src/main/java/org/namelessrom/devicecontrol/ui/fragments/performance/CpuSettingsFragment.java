@@ -19,59 +19,73 @@ package org.namelessrom.devicecontrol.ui.fragments.performance;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceScreen;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.SwitchCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
-import android.widget.Spinner;
-import android.widget.TextView;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
+import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.objects.CpuCore;
-import org.namelessrom.devicecontrol.ui.views.AttachFragment;
+import org.namelessrom.devicecontrol.objects.ShellOutput;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
+import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.ui.views.CpuCoreView;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.PreferenceUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class CpuSettingsFragment extends AttachFragment implements DeviceConstants,
+public class CpuSettingsFragment extends AttachPreferenceFragment implements DeviceConstants,
+        Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener,
         CpuUtils.CoreListener, CpuUtils.FrequencyListener, GovernorUtils.GovernorListener {
 
-    private CheckBox mStatusHide;
-    private Spinner  mMax;
-    private Spinner  mMin;
-    private Spinner  mGovernor;
+    private CustomListPreference mMax;
+    private CustomListPreference mMin;
+    private CustomListPreference mGovernor;
+    private CustomPreference mGovernorTuning;
 
+    private CustomTogglePreference mMpDecision;
+    private CustomListPreference mCpuQuietGov;
+
+    private static final int ID_MPDECISION = 200;
+    //----------------------------------------------------------------------------------------------
+
+    private SwitchCompat mStatusHide;
     private LinearLayout mCpuInfo;
-
-    private static int mInterval = 2000;
 
     @Override protected int getFragmentId() { return ID_PERFORMANCE_CPU_SETTINGS; }
 
     @Override public void onResume() {
         super.onResume();
-        if (mStatusHide != null && !mStatusHide.isChecked()) {
-            CpuCoreMonitor.getInstance(getActivity()).start(this, mInterval);
+        if (mStatusHide != null && mStatusHide.isChecked()) {
+            CpuCoreMonitor.getInstance(getActivity()).start(this, 1000);
         }
     }
 
@@ -90,24 +104,204 @@ public class CpuSettingsFragment extends AttachFragment implements DeviceConstan
         }
     }
 
-    @Override public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
+    @Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.cpu);
 
-        // add cpu governor settings entry
-        menu.add(0, 0, Menu.NONE, R.string.cpu_governor_tuning)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        // get hold of hotplugging and remove it, to add it back later if supported
+        final PreferenceCategory hotplugging = (PreferenceCategory) findPreference("hotplugging");
+        getPreferenceScreen().removePreference(hotplugging);
+
+        if (Utils.fileExists(getString(R.string.directory_intelli_plug))
+                || Utils.fileExists(getString(R.string.directory_mako_hotplug))
+                || Utils.fileExists(getString(R.string.file_cpu_quiet_base))
+                || Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
+            getPreferenceScreen().addPreference(hotplugging);
+            addPreferencesFromResource(R.xml.cpu_hotplugging);
+            setupHotpluggingPreferences();
+        }
     }
 
-    @Override public boolean onOptionsItemSelected(final MenuItem item) {
-        final int id = item.getItemId();
+    private void setupHotpluggingPreferences() {
+        AwesomePreferenceCategory awCategory;
+        PreferenceCategory category;
 
-        switch (id) {
-            case 0: // cpu governor
-                MainActivity.loadFragment(getActivity(), ID_GOVERNOR_TUNABLE);
-                return true;
+        mMax = (CustomListPreference) findPreference("pref_max");
+        mMax.setOnPreferenceChangeListener(this);
+
+        mMin = (CustomListPreference) findPreference("pref_min");
+        mMin.setOnPreferenceChangeListener(this);
+
+        mGovernor = (CustomListPreference) findPreference("pref_governor");
+        mGovernor.setOnPreferenceChangeListener(this);
+
+        mGovernorTuning = (CustomPreference) findPreference("pref_governor_tuning");
+
+        //------------------------------------------------------------------------------------------
+        // General
+        //------------------------------------------------------------------------------------------
+        mMpDecision = (CustomTogglePreference) findPreference("mpdecision");
+        if (mMpDecision != null) {
+            if (Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
+                Utils.getCommandResult(this, ID_MPDECISION, "pgrep mpdecision 2> /dev/null;");
+            } else {
+                getPreferenceScreen().removePreference(mMpDecision);
+            }
         }
 
-        return false;
+        //------------------------------------------------------------------------------------------
+        // Intelli-Plug
+        //------------------------------------------------------------------------------------------
+        awCategory = (AwesomePreferenceCategory) findPreference("intelli_plug");
+        if (awCategory.isSupported()) {
+            // setup intelli plug toggle
+            AwesomeTogglePreference togglePreference = PreferenceUtils.addAwesomeTogglePreference(
+                    getActivity(), "intelli_plug_", "", "extras", awCategory.getPath(),
+                    "intelli_plug_active", awCategory, this);
+            if (togglePreference != null) {
+                togglePreference.setupTitle();
+            }
+            // setup touch boost toggle
+            togglePreference = PreferenceUtils.addAwesomeTogglePreference(
+                    getActivity(), "intelli_plug_", "", "extras", awCategory.getPath(),
+                    "touch_boost_active", awCategory, this);
+            if (togglePreference != null) {
+                togglePreference.setupTitle();
+            }
+            // add the other files
+            final String[] files = Utils.listFiles(awCategory.getPath(), false);
+            for (final String file : files) {
+                final int type = PreferenceUtils.getType(file);
+                if (PreferenceUtils.TYPE_EDITTEXT == type) {
+                    PreferenceUtils.addAwesomeEditTextPreference(getActivity(), "intelli_plug_",
+                            "extras", awCategory.getPath(), file, awCategory, this);
+                }
+            }
+        }
+        removeIfEmpty(getPreferenceScreen(), awCategory);
+
+        awCategory = (AwesomePreferenceCategory) findPreference("mako_hotplug");
+        if (awCategory.isSupported()) {
+            // setup mako_hotplug toggle
+            AwesomeTogglePreference togglePreference = PreferenceUtils.addAwesomeTogglePreference(
+                    getActivity(), "mako_", "", "extras", awCategory.getPath(),
+                    "enabled", awCategory, this);
+            if (togglePreference != null) {
+                togglePreference.setupTitle();
+            }
+            final String[] files = Utils.listFiles(awCategory.getPath(), true);
+            for (final String file : files) {
+                final int type = PreferenceUtils.getType(file);
+                if (PreferenceUtils.TYPE_EDITTEXT == type) {
+                    PreferenceUtils.addAwesomeEditTextPreference(getActivity(), "mako_",
+                            "extras", awCategory.getPath(), file, awCategory, this);
+                }
+            }
+        }
+        removeIfEmpty(getPreferenceScreen(), awCategory);
+
+        //------------------------------------------------------------------------------------------
+        // CPUquiet
+        //------------------------------------------------------------------------------------------
+        category = (PreferenceCategory) findPreference("cpu_quiet");
+        if (Utils.fileExists(Application.get().getString(R.string.file_cpu_quiet_base))
+                && Utils.fileExists(Application.get().getString(R.string.file_cpu_quiet_avail_gov))
+                && Utils.fileExists(Application.get().getString(R.string.file_cpu_quiet_cur_gov))) {
+            final String[] govs = Utils.readOneLine(
+                    Application.get().getString(R.string.file_cpu_quiet_avail_gov)).split(" ");
+            final String gov = Utils.readOneLine(
+                    Application.get().getString(R.string.file_cpu_quiet_cur_gov));
+            mCpuQuietGov = new CustomListPreference(getActivity());
+            mCpuQuietGov.setKey("pref_cpu_quiet_governor");
+            mCpuQuietGov.setTitle(R.string.governor);
+            mCpuQuietGov.setEntries(govs);
+            mCpuQuietGov.setEntryValues(govs);
+            mCpuQuietGov.setValue(gov);
+            mCpuQuietGov.setSummary(gov);
+            mCpuQuietGov.setOnPreferenceChangeListener(this);
+            category.addPreference(mCpuQuietGov);
+        }
+        removeIfEmpty(getPreferenceScreen(), category);
+
+        isSupported(getPreferenceScreen(), getActivity());
+    }
+
+    @Override public boolean onPreferenceChange(Preference preference, Object o) {
+        if (preference == mMax) {
+            final String selected = String.valueOf(o);
+            final String other = String.valueOf(mMin.getValue());
+            final boolean updateOther = Utils.parseInt(selected) < Utils.parseInt(other);
+            Logger.v(this, "o: %s | selected: %s | other: %s | updateOther: %s", o, selected, other,
+                    updateOther);
+            if (updateOther) {
+                mMin.setValue(selected);
+                mMin.setSummary(CpuUtils.toMhz(selected));
+            }
+            mMax.setValue(selected);
+            mMax.setSummary(CpuUtils.toMhz(selected));
+
+            ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MAX, selected, true);
+            return true;
+        } else if (preference == mMin) {
+            final String selected = String.valueOf(o);
+            final String other = String.valueOf(mMax.getValue());
+            final boolean updateOther = Utils.parseInt(selected) > Utils.parseInt(other);
+            if (updateOther) {
+                mMax.setValue(selected);
+                mMax.setSummary(CpuUtils.toMhz(selected));
+            }
+            mMin.setValue(selected);
+            mMin.setSummary(CpuUtils.toMhz(selected));
+
+            ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MIN, selected, true);
+            return true;
+        } else if (preference == mGovernor) {
+            final String selected = String.valueOf(o);
+            mGovernor.setValue(selected);
+            mGovernor.setSummary(selected);
+
+            ActionProcessor.processAction(ActionProcessor.ACTION_CPU_GOVERNOR, selected, true);
+            return true;
+        } else if (preference == mMpDecision) {
+            final boolean value = (Boolean) o;
+            new MpDecisionAction(value ? "1" : "0", true).triggerAction();
+            return true;
+        } else if (preference == mCpuQuietGov) {
+            final String path = Application.get().getString(R.string.file_cpu_quiet_cur_gov);
+            final String value = String.valueOf(o);
+            Utils.runRootCommand(Utils.getWriteCommand(path, value));
+            PreferenceHelper.setBootup(new DataItem(
+                    DatabaseHandler.CATEGORY_EXTRAS, mCpuQuietGov.getKey(),
+                    path, value));
+            mCpuQuietGov.setSummary(value);
+            return true;
+        }
+
+        return super.onPreferenceChange(preference, o);
+    }
+
+    @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
+            @NonNull final Preference preference) {
+        if (preference == mGovernorTuning) {
+            MainActivity.loadFragment(getActivity(), ID_GOVERNOR_TUNABLE);
+            return true;
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
+    }
+
+    public void onShellOutput(final ShellOutput shellOutput) {
+        if (shellOutput != null) {
+            switch (shellOutput.id) {
+                case ID_MPDECISION:
+                    if (mMpDecision != null) {
+                        mMpDecision.setChecked(!TextUtils.isEmpty(shellOutput.output));
+                        mMpDecision.setOnPreferenceChangeListener(this);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup root, Bundle savedState) {
@@ -116,59 +310,25 @@ public class CpuSettingsFragment extends AttachFragment implements DeviceConstan
 
         mCpuInfo = (LinearLayout) view.findViewById(R.id.cpu_info);
 
-        final TextView mIntervalText = (TextView) view.findViewById(R.id.ui_device_value);
-        final SeekBar intervalBar = (SeekBar) view.findViewById(R.id.ui_device_seekbar);
-        intervalBar.setMax(4000);
-        intervalBar.setProgress(Utils.parseInt(
-                PreferenceHelper.getString("pref_interval_cpu_info", "1000")) - 1000);
-        intervalBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override public void onProgressChanged(SeekBar bar, int progress, boolean fromUser) {
-                mIntervalText.setText((progress == 4000
-                        ? getString(R.string.off)
-                        : (((double) progress + 1000) / 1000) + "s"));
-            }
-
-            @Override public void onStartTrackingTouch(SeekBar seekBar) { }
-
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {
-                mInterval = seekBar.getProgress() + 1000;
-                if (mInterval >= 5000) {
-                    CpuCoreMonitor.getInstance(getActivity()).stop();
-                } else {
-                    CpuCoreMonitor.getInstance(getActivity())
-                            .start(CpuSettingsFragment.this, mInterval);
-                }
-                mIntervalText.setText((mInterval == 5000
-                        ? getString(R.string.off)
-                        : (((double) mInterval) / 1000) + "s"));
-                updateSharedPrefs("pref_interval_cpu_info", String.valueOf(mInterval));
-            }
-        });
-
-        ((TextView) view.findViewById(R.id.ui_device_title)).setText(R.string.refresh_interval);
-        mInterval = intervalBar.getProgress() + 1000;
-        mIntervalText.setText((mInterval == 5000
-                ? getString(R.string.off)
-                : (((double) mInterval) / 1000) + "s"));
-
-        final LinearLayout speed = (LinearLayout) view.findViewById(R.id.speed);
-        mStatusHide = (CheckBox) view.findViewById(R.id.cpu_info_hide);
+        mStatusHide = (SwitchCompat) view.findViewById(R.id.cpu_info_hide);
         mStatusHide.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(final CompoundButton button, final boolean b) {
-                view.findViewById(R.id.ui_interval).setVisibility(b ? View.GONE : View.VISIBLE);
                 if (b) {
-                    CpuCoreMonitor.getInstance(getActivity()).stop();
-                    speed.setVisibility(View.GONE);
+                    mCpuInfo.setVisibility(View.VISIBLE);
+                    CpuCoreMonitor.getInstance(getActivity()).start(CpuSettingsFragment.this, 1000);
                 } else {
-                    speed.setVisibility(View.VISIBLE);
-                    mInterval = intervalBar.getProgress() + 1000;
-                    CpuCoreMonitor.getInstance(getActivity())
-                            .start(CpuSettingsFragment.this, mInterval);
+                    CpuCoreMonitor.getInstance(getActivity()).stop();
+                    mCpuInfo.setVisibility(View.GONE);
                 }
-                updateSharedPrefs("pref_hide_cpu_info", b ? "1" : "0");
+                updateSharedPrefs("pref_show_cpu_info", b ? "1" : "0");
             }
         });
-        mStatusHide.setChecked(PreferenceHelper.getString("pref_hide_cpu_info", "1").equals("1"));
+        mStatusHide.setChecked(PreferenceHelper.getString("pref_show_cpu_info", "1").equals("1"));
+        if (mStatusHide.isChecked()) {
+            mCpuInfo.setVisibility(View.VISIBLE);
+        } else {
+            mCpuInfo.setVisibility(View.GONE);
+        }
 
         CpuCore tmpCore;
         final int mCpuNum = CpuUtils.get().getNumOfCpus();
@@ -179,15 +339,6 @@ public class CpuSettingsFragment extends AttachFragment implements DeviceConstan
                     "0");
             generateRow(i, tmpCore);
         }
-
-        mMax = (Spinner) view.findViewById(R.id.pref_max);
-        mMax.setEnabled(false);
-
-        mMin = (Spinner) view.findViewById(R.id.pref_min);
-        mMin.setEnabled(false);
-
-        mGovernor = (Spinner) view.findViewById(R.id.pref_governor);
-        mGovernor.setEnabled(false);
 
         return view;
     }
@@ -211,86 +362,36 @@ public class CpuSettingsFragment extends AttachFragment implements DeviceConstan
             });
             Collections.reverse(Arrays.asList(mAvailableFrequencies));
 
-            final ArrayAdapter<CharSequence> freqAdapter = new ArrayAdapter<CharSequence>(
-                    activity, android.R.layout.simple_spinner_item);
-            freqAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            final ArrayList<String> entries = new ArrayList<>();
             for (final String mAvailableFreq : mAvailableFrequencies) {
-                freqAdapter.add(CpuUtils.toMhz(mAvailableFreq));
+                entries.add(CpuUtils.toMhz(mAvailableFreq));
             }
 
-            mMax.setAdapter(freqAdapter);
-            mMax.setSelection(Arrays.asList(mAvailableFrequencies).indexOf(cpuFreq.maximum));
-            mMax.post(new Runnable() {
-                public void run() {
-                    mMax.setOnItemSelectedListener(new MaxListener());
-                }
-            });
+            mMax.setEntries(entries.toArray(new String[entries.size()]));
+            mMax.setEntryValues(mAvailableFrequencies);
+            mMax.setValue(cpuFreq.maximum);
+            mMax.setSummary(CpuUtils.toMhz(cpuFreq.maximum));
             mMax.setEnabled(true);
 
-            mMin.setAdapter(freqAdapter);
-            mMin.setSelection(Arrays.asList(mAvailableFrequencies).indexOf(cpuFreq.minimum));
-            mMin.post(new Runnable() {
-                public void run() {
-                    mMin.setOnItemSelectedListener(new MinListener());
-                }
-            });
+            mMin.setEntries(entries.toArray(new String[entries.size()]));
+            mMin.setEntryValues(mAvailableFrequencies);
+            mMin.setValue(cpuFreq.minimum);
+            mMin.setSummary(CpuUtils.toMhz(cpuFreq.minimum));
             mMin.setEnabled(true);
+
+            entries.clear();
         }
     }
 
     @Override public void onGovernor(final GovernorUtils.Governor governor) {
         final Activity activity = getActivity();
         if (activity != null && governor != null) {
-            final ArrayAdapter<CharSequence> governorAdapter = new ArrayAdapter<CharSequence>(
-                    activity, android.R.layout.simple_spinner_item);
-            governorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            for (final String availableGovernor : governor.available) {
-                governorAdapter.add(availableGovernor);
-            }
-            mGovernor.setAdapter(governorAdapter);
-            mGovernor.setSelection(Arrays.asList(governor.available).indexOf(governor.current));
-            mGovernor.post(new Runnable() {
-                public void run() {
-                    mGovernor.setOnItemSelectedListener(new GovListener());
-                }
-            });
+            mGovernor.setEntries(governor.available);
+            mGovernor.setEntryValues(governor.available);
+            mGovernor.setValue(governor.current);
+            mGovernor.setSummary(governor.current);
             mGovernor.setEnabled(true);
         }
-    }
-
-    public class MaxListener implements OnItemSelectedListener {
-        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            final String selected = CpuUtils.fromMHz(String.valueOf(parent.getItemAtPosition(pos)));
-            final String other = CpuUtils.fromMHz(String.valueOf(mMin.getSelectedItem()));
-            final boolean updateOther = Utils.parseInt(selected) < Utils.parseInt(other);
-            if (updateOther) { mMin.setSelection(pos);}
-
-            ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MAX, selected, true);
-        }
-
-        public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
-    }
-
-    public class MinListener implements OnItemSelectedListener {
-        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            final String selected = CpuUtils.fromMHz(String.valueOf(parent.getItemAtPosition(pos)));
-            final String other = CpuUtils.fromMHz(String.valueOf(mMax.getSelectedItem()));
-            final boolean updateOther = Utils.parseInt(selected) > Utils.parseInt(other);
-            if (updateOther) { mMax.setSelection(pos);}
-
-            ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MIN, selected, true);
-        }
-
-        public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
-    }
-
-    public class GovListener implements OnItemSelectedListener {
-        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-            final String selected = String.valueOf(parent.getItemAtPosition(pos));
-            ActionProcessor.processAction(ActionProcessor.ACTION_CPU_GOVERNOR, selected, true);
-        }
-
-        public void onNothingSelected(AdapterView<?> parent) { /* Do nothing. */ }
     }
 
     public View generateRow(final int core, final CpuCore cpuCore) {

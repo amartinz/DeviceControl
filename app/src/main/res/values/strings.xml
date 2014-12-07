@@ -389,4 +389,5 @@
     <string name="input_reset_on_suspend_summary">Reset the input device when suspending to workaround touchpanel issues like ghost touches and unresponsiveness</string>
     <string name="arch">Architecture</string>
     <string name="string_default">Default</string>
+    <string name="touch_boost">Touch boost</string>
 </resources>

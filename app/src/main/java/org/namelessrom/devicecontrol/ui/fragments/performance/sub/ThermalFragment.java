@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.ui.fragments.performance.sub;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
-import android.preference.PreferenceScreen;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
@@ -33,10 +32,6 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class ThermalFragment extends AttachPreferenceFragment
         implements DeviceConstants, Preference.OnPreferenceChangeListener {
-
-    //----------------------------------------------------------------------------------------------
-    private PreferenceScreen mRoot;
-
     //----------------------------------------------------------------------------------------------
     private AwesomeTogglePreference mCoreControl;
 
@@ -49,7 +44,6 @@ public class ThermalFragment extends AttachPreferenceFragment
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.extras_thermal);
 
-        mRoot = getPreferenceScreen();
         PreferenceCategory category;
 
         //------------------------------------------------------------------------------------------
@@ -61,7 +55,7 @@ public class ThermalFragment extends AttachPreferenceFragment
                 mCoreControl.initValue();
                 mCoreControl.setOnPreferenceChangeListener(this);
             } else {
-                mRoot.removePreference(mCoreControl);
+                getPreferenceScreen().removePreference(mCoreControl);
             }
         }
 
@@ -78,14 +72,13 @@ public class ThermalFragment extends AttachPreferenceFragment
                     PreferenceUtils.addAwesomeEditTextPreference(getActivity(), "msm_thermal_",
                             "extras", msmThermal.getPath(), file, msmThermal, this);
                 } else if (PreferenceUtils.TYPE_CHECKBOX == type) {
-                    PreferenceUtils.addAwesomeCheckboxPreference(getActivity(), "msm_thermal_",
+                    PreferenceUtils.addAwesomeTogglePreference(getActivity(), "msm_thermal_",
                             getString(R.string.thermal_warning), "extras", msmThermal.getPath(),
-                            getString(R.string.enable), msmThermal, this);
+                            file, msmThermal, this);
                 }
             }
-        } else {
-            getPreferenceScreen().removePreference(msmThermal);
         }
+        removeIfEmpty(getPreferenceScreen(), msmThermal);
 
         //------------------------------------------------------------------------------------------
         // Intelli-Thermal
@@ -103,16 +96,9 @@ public class ThermalFragment extends AttachPreferenceFragment
                 }
             }
         }
+        removeIfEmpty(getPreferenceScreen(), category);
 
-        removeIfEmpty(category);
-
-        isSupported(mRoot, getActivity());
-    }
-
-    private void removeIfEmpty(final PreferenceCategory preferenceCategory) {
-        if (mRoot != null && preferenceCategory.getPreferenceCount() == 0) {
-            mRoot.removePreference(preferenceCategory);
-        }
+        isSupported(getPreferenceScreen(), getActivity());
     }
 
     @Override public boolean onPreferenceChange(final Preference preference, final Object o) {

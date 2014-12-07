@@ -320,10 +320,6 @@ public class Utils implements DeviceConstants {
         return null;
     }
 
-    public static String[] listFiles(final String path) {
-        return listFiles(path, false);
-    }
-
     public static String[] listFiles(final String path, final boolean blacklist) {
         return listFiles(path, blacklist ? BLACKLIST : null);
     }
@@ -344,10 +340,6 @@ public class Utils implements DeviceConstants {
             return filtered.toArray(new String[filtered.size()]);
         }
         return files;
-    }
-
-    public static boolean isFileBlacklisted(final String file) {
-        return isFileBlacklisted(file, BLACKLIST);
     }
 
     public static boolean isFileBlacklisted(final String file, final String[] blacklist) {

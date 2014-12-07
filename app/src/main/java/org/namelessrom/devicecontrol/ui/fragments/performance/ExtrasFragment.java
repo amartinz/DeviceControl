@@ -63,7 +63,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
     private CustomPreference mFilesystem;
     private CustomPreference mKsm;
     private CustomPreference mUksm;
-    private CustomPreference mHotplugging;
     private CustomPreference mThermal;
 
     //----------------------------------------------------------------------------------------------
@@ -125,17 +124,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
                     mUksm.setOnPreferenceClickListener(this);
                 } else {
                     category.removePreference(mUksm);
-                }
-            }
-
-            mHotplugging = (CustomPreference) findPreference("hotplugging");
-            if (mHotplugging != null) {
-                if (Utils.fileExists(getString(R.string.file_intelli_plug_base))
-                        || Utils.fileExists(getString(R.string.file_cpu_quiet_base))
-                        || Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
-                    mHotplugging.setOnPreferenceClickListener(this);
-                } else {
-                    category.removePreference(mHotplugging);
                 }
             }
 
@@ -248,9 +236,6 @@ public class ExtrasFragment extends AttachPreferenceFragment
     @Override public boolean onPreferenceClick(final Preference preference) {
         if (mVoltageControl == preference) {
             MainActivity.loadFragment(getActivity(), ID_VOLTAGE);
-            return true;
-        } else if (mHotplugging == preference) {
-            MainActivity.loadFragment(getActivity(), ID_HOTPLUGGING);
             return true;
         } else if (mThermal == preference) {
             MainActivity.loadFragment(getActivity(), ID_THERMAL);

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+        android:key="core_limits"
+        android:title="@string/core_limits">
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
+            android:key="pref_max"
+            android:title="@string/cpu_freq_max" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
+            android:key="pref_min"
+            android:title="@string/cpu_freq_min" />
+
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+        android:key="governor"
+        android:title="@string/governor">
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
+            android:key="pref_governor"
+            android:title="@string/cpu_governor" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+            android:key="pref_governor_tuning"
+            android:title="@string/cpu_governor_tuning" />
+
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+        android:key="hotplugging"
+        android:title="@string/hotplugging" />
+
+</PreferenceScreen>

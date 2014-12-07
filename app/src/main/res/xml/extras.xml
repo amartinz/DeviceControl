@@ -45,11 +45,6 @@
             android:title="@string/uksm" />
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:icon="@drawable/ic_general_hotplug"
-            android:key="hotplugging"
-            android:title="@string/hotplugging" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:icon="@drawable/ic_general_heat"
             android:key="thermal"
             android:title="@string/thermal" />

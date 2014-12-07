@@ -58,7 +58,6 @@ import org.namelessrom.devicecontrol.ui.fragments.performance.InformationFragmen
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.FilesystemFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.GovernorFragment;
-import org.namelessrom.devicecontrol.ui.fragments.performance.sub.HotpluggingFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.KsmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.UksmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.ThermalFragment;
@@ -415,10 +414,6 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
             case ID_UKSM:
                 if (!onResume) mCurrentFragment = new UksmFragment();
                 mTitle = mSubFragmentTitle = R.string.uksm;
-                break;
-            case ID_HOTPLUGGING:
-                if (!onResume) mCurrentFragment = new HotpluggingFragment();
-                mTitle = mSubFragmentTitle = R.string.hotplugging;
                 break;
             case ID_THERMAL:
                 if (!onResume) mCurrentFragment = new ThermalFragment();
