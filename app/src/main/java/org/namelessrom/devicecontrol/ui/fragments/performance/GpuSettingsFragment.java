@@ -48,8 +48,13 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
         return DeviceConstants.ID_PERFORMANCE_GPU_SETTINGS;
     }
 
-    @Override public void onActivityCreated(final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    @Override public void onResume() {
+        super.onResume();
+        getGpu();
+    }
+
+    @Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.gpu);
         mRoot = (PreferenceCategory) getPreferenceScreen().findPreference("gpu");
 
@@ -76,8 +81,6 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
         if (category.getPreferenceCount() <= 0) {
             getPreferenceScreen().removePreference(category);
         }
-
-        getGpu();
     }
 
     private void getGpu() {

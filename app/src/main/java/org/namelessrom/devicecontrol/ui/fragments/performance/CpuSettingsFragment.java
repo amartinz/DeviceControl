@@ -87,6 +87,8 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
         if (mStatusHide != null && mStatusHide.isChecked()) {
             CpuCoreMonitor.getInstance(getActivity()).start(this, 1000);
         }
+        CpuUtils.get().getCpuFreq(this);
+        GovernorUtils.get().getGovernor(this);
     }
 
     @Override public void onPause() {
@@ -341,13 +343,6 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
         }
 
         return view;
-    }
-
-    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        CpuUtils.get().getCpuFreq(this);
-        GovernorUtils.get().getGovernor(this);
     }
 
     @Override public void onFrequency(final CpuUtils.Frequency cpuFreq) {
