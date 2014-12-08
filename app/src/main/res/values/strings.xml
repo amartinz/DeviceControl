@@ -62,8 +62,7 @@
     <string name="deep_sleep">\"Deep sleep\"</string>
     <string name="device_information">Device information</string>
     <string name="hotplugging">Hotplugging</string>
-    <string name="mpdecision_summary_on">MPDecision is running.</string>
-    <string name="mpdecision_summary_off">MPDecision is turned off.</string>
+    <string name="mpdecision_summary">Should be deactivated if you use a custom hotplugger</string>
     <string name="thermal">Thermal driver</string>
     <string name="core_control">Core control</string>
     <string name="core_control_summary">Turns cpu cores off if temperature limit is reached</string>

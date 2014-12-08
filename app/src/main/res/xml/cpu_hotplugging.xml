@@ -20,8 +20,7 @@
     <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
         android:key="mpdecision"
         android:title="@string/mpdecision"
-        android:summaryOn="@string/mpdecision_summary_on"
-        android:summaryOff="@string/mpdecision_summary_off"
+        android:summary="@string/mpdecision_summary"
         android:defaultValue="false" />
 
     <org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory
