@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments;
+package org.namelessrom.devicecontrol.ui.fragments.preferences;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -24,31 +24,27 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
+import android.support.v4.preference.PreferenceFragment;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
+import org.namelessrom.devicecontrol.ui.fragments.SobDialogFragment;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class PreferencesFragment extends AttachPreferenceFragment
+public class MainPreferencesFragment extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants {
 
     //==============================================================================================
     // App
     //==============================================================================================
     private CustomTogglePreference mMonkeyPref;
-
-    //==============================================================================================
-    // Tools
-    //==============================================================================================
-    private CustomPreference mFlasherConfig;
 
     //==============================================================================================
     // General
@@ -68,8 +64,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
     // Debug
     //==============================================================================================
     private CustomTogglePreference mExtensiveLogging;
-
-    @Override protected int getFragmentId() { return ID_PREFERENCES; }
 
     @Override public void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
@@ -112,9 +106,6 @@ public class PreferencesFragment extends AttachPreferenceFragment
             mMonkeyPref.setOnPreferenceChangeListener(this);
             category.addPreference(mMonkeyPref);
         }
-
-        //category = (PreferenceCategory) findPreference("prefs_tools");
-        mFlasherConfig = (CustomPreference) findPreference("flasher_prefs");
 
         mDarkTheme = (CustomTogglePreference) findPreference("dark_theme");
         mDarkTheme.setChecked(PreferenceHelper.getBoolean(mDarkTheme.getKey(), false));
@@ -204,11 +195,9 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
     @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
             @NonNull final Preference preference) {
-        if (mFlasherConfig == preference) {
-            MainActivity.loadFragment(getActivity(), ID_TOOLS_FLASHER_PREFS);
-            return true;
-        } else if (mSetOnBoot == preference) {
-            new SobDialogFragment().show(getActivity().getFragmentManager(), "sob_dialog_fragment");
+        if (mSetOnBoot == preference) {
+            new SobDialogFragment()
+                    .show(getActivity().getSupportFragmentManager(), "sob_dialog_fragment");
             return true;
         }
 

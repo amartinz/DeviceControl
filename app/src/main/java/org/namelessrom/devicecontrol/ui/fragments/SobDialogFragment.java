@@ -2,9 +2,9 @@ package org.namelessrom.devicecontrol.ui.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;

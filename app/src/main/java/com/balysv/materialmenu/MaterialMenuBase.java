@@ -22,11 +22,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
+import org.namelessrom.devicecontrol.R;
+
 import static com.balysv.materialmenu.MaterialMenuDrawable.DEFAULT_PRESSED_DURATION;
 import static com.balysv.materialmenu.MaterialMenuDrawable.DEFAULT_SCALE;
 import static com.balysv.materialmenu.MaterialMenuDrawable.DEFAULT_TRANSFORM_DURATION;
-
-import org.namelessrom.devicecontrol.R;
 
 /**
  * Base class for ActionBar implementations of {@link MaterialMenuDrawable}

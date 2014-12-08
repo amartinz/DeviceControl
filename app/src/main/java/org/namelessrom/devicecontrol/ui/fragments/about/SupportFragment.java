@@ -15,17 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments;
+package org.namelessrom.devicecontrol.ui.fragments.about;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
@@ -35,17 +34,14 @@ public class SupportFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_support, container, false);
 
         final TextView details = (TextView) view.findViewById(R.id.detailsTxtView);
-        final StringBuilder sb = new StringBuilder();
-        sb.append(getString(R.string.support_message))
-                .append('\n')
-                .append('\n')
-                .append(getString(R.string.donate_message))
-                .append(" - Alex");
-        details.setText(sb.toString());
+        details.setText(getString(R.string.support_message)
+                + '\n'
+                + '\n'
+                + getString(R.string.donate_message) + " - Alex");
 
         final Button donateButton = (Button) view.findViewById(R.id.donateButton);
         donateButton.setText(
-                String.format("%s %s", getString(R.string.donate), getString(R.string.heart)));
+                String.format("%s %s", getString(R.string.donate_), getString(R.string.heart)));
         donateButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 AppHelper.startExternalDonation(getActivity());

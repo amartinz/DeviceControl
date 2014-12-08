@@ -31,7 +31,6 @@ import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Remounter {

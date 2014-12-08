@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -21,17 +22,17 @@ public class CustomViewBehind extends ViewGroup {
 
     private static final String TAG = "CustomViewBehind";
 
-    private static final int MARGIN_THRESHOLD = 48; // dips
-    private              int mTouchMode       = SlidingMenu.TOUCHMODE_MARGIN;
+    private static final int MARGIN_THRESHOLD = 64; // dips
+    private int mTouchMode = SlidingMenu.TOUCHMODE_MARGIN;
 
     private CustomViewAbove mViewAbove;
 
-    private View              mContent;
-    private View              mSecondaryContent;
-    private int               mMarginThreshold;
-    private int               mWidthOffset;
+    private View mContent;
+    private View mSecondaryContent;
+    private int mMarginThreshold;
+    private int mWidthOffset;
     private CanvasTransformer mTransformer;
-    private boolean           mChildrenEnabled;
+    private boolean mChildrenEnabled;
 
     public CustomViewBehind(Context context) {
         this(context, null);
@@ -109,12 +110,12 @@ public class CustomViewBehind extends ViewGroup {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent e) {
+    public boolean onTouchEvent(@NonNull MotionEvent e) {
         return !mChildrenEnabled;
     }
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
         if (mTransformer != null) {
             canvas.save();
             mTransformer.transformCanvas(canvas, mViewAbove.getPercentOpen());
@@ -144,14 +145,14 @@ public class CustomViewBehind extends ViewGroup {
         if (mSecondaryContent != null) { mSecondaryContent.measure(contentWidth, contentHeight); }
     }
 
-    private int     mMode;
+    private int mMode;
     private boolean mFadeEnabled;
     private final Paint mFadePaint = new Paint();
-    private float    mScrollScale;
+    private float mScrollScale;
     private Drawable mShadowDrawable;
     private Drawable mSecondaryShadowDrawable;
-    private int      mShadowWidth;
-    private float    mFadeDegree;
+    private int mShadowWidth;
+    private float mFadeDegree;
 
     public void setMode(int mode) {
         if (mode == SlidingMenu.LEFT || mode == SlidingMenu.RIGHT) {
@@ -381,7 +382,7 @@ public class CustomViewBehind extends ViewGroup {
 
     private boolean mSelectorEnabled = true;
     private Bitmap mSelectorDrawable;
-    private View   mSelectedView;
+    private View mSelectedView;
 
     public void drawSelector(View content, Canvas canvas, float openPercent) {
         if (!mSelectorEnabled) return;

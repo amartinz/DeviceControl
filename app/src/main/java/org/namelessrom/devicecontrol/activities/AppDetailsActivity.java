@@ -17,9 +17,9 @@
  */
 package org.namelessrom.devicecontrol.activities;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 
 import org.namelessrom.devicecontrol.Logger;
@@ -45,7 +45,7 @@ public class AppDetailsActivity extends BaseActivity {
 
     @Override protected void onResume() {
         super.onResume();
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, buildFragment(getIntent()))
                 .commit();
     }

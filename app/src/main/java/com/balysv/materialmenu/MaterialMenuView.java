@@ -23,6 +23,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -80,7 +81,7 @@ public class MaterialMenuView extends View implements MaterialMenu {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         super.draw(canvas);
         if (getPaddingLeft() != 0 || getPaddingTop() != 0) {
             int saveCount = canvas.getSaveCount();
@@ -224,7 +225,7 @@ public class MaterialMenuView extends View implements MaterialMenu {
         }
 
         @Override
-        public void writeToParcel(Parcel out, int flags) {
+        public void writeToParcel(@NonNull Parcel out, int flags) {
             super.writeToParcel(out, flags);
             out.writeString(state.name());
         }

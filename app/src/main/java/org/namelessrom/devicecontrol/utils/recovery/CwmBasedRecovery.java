@@ -20,11 +20,14 @@
 
 package org.namelessrom.devicecontrol.utils.recovery;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
 import android.os.storage.StorageManager;
+import android.support.annotation.Nullable;
 
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 
 import java.util.ArrayList;
@@ -38,7 +41,14 @@ public class CwmBasedRecovery extends RecoveryInfo {
         setId(RecoveryInfo.CWM_BASED);
         setName("cwmbased");
         setInternalSdcard(internalStorage());
-        setExternalSdcard(externalStorage(context));
+
+        String externalSd = null;
+        try {
+            externalSd = externalStorage(context);
+        } catch (Exception e) {
+            Logger.e(this, "externalStorage: %s", e);
+        }
+        setExternalSdcard(externalSd);
     }
 
     @Override
@@ -84,7 +94,7 @@ public class CwmBasedRecovery extends RecoveryInfo {
         return commands.toArray(new String[commands.size()]);
     }
 
-    private String internalStorage() {
+    @SuppressLint("SdCardPath") private String internalStorage() {
         if (Environment.getExternalStorageDirectory() == null) {
             return "sdcard";
         }
@@ -113,57 +123,42 @@ public class CwmBasedRecovery extends RecoveryInfo {
         return dirPath;
     }
 
-    private String externalStorage(Context paramContext) {
-        String dirPath = null;
-        try {
-            String[] volumePaths = null;
-            ArrayList<String> volumePathsList = null;
-            String path = null;
-            if (Build.VERSION.SDK_INT >= 14) {
-                volumePaths = volumePaths(paramContext);
-                if (volumePaths != null) {
-                    volumePathsList = new ArrayList<>();
-                    path = Environment.getExternalStorageDirectory().getAbsolutePath();
-                }
-            }
-            try {
-                String primaryVolumePath = primaryVolumePath(paramContext);
-                int i = volumePaths.length;
-                for (int j = 0; ; j++) {
-                    if (j < i) {
-                        String volumePath = volumePaths[j];
-                        try {
-                            if ((volumePath.equals(System.getenv("EMULATED_STORAGE_SOURCE")))
-                                    || (volumePath.equals(System.getenv("EXTERNAL_STORAGE")))
-                                    || (volumePath.equals(path))
-                                    || (volumePath.equals(primaryVolumePath))
-                                    || (volumePath.toLowerCase().contains("usb"))) { continue; }
-                            volumePathsList.add(volumePath);
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    } else {
-                        if (volumePathsList.size() == 1) {
-                            dirPath = (String) volumePathsList.get(0);
-                        }
-                        return dirPath;
-                    }
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    @Nullable private String externalStorage(final Context paramContext) throws Exception {
+        if (Build.VERSION.SDK_INT < 14) {
+            Logger.e(this, "api less than 14, aborting");
+            return null;
         }
-        return dirPath;
+        String[] volumePaths = volumePaths(paramContext);
+        ArrayList<String> volumePathsList = new ArrayList<>();
+        String path = null;
+        if (volumePaths != null) {
+            path = Environment.getExternalStorageDirectory().getAbsolutePath();
+        }
+        if (volumePaths == null) {
+            Logger.e(this, "volumePaths is null!");
+            return null;
+        }
+
+        final String primaryVolumePath = primaryVolumePath(paramContext);
+        for (final String volumePath : volumePaths) {
+            if ((volumePath.equals(System.getenv("EMULATED_STORAGE_SOURCE")))
+                    || (volumePath.equals(System.getenv("EXTERNAL_STORAGE")))
+                    || (volumePath.equals(path))
+                    || (volumePath.equals(primaryVolumePath))
+                    || (volumePath.toLowerCase().contains("usb"))) { continue; }
+            volumePathsList.add(volumePath);
+        }
+        if (volumePathsList.size() == 1) {
+            return volumePathsList.get(0);
+        }
+        return null;
     }
 
     private String[] volumePaths(Context context) {
         try {
             StorageManager localStorageManager = (StorageManager) context
                     .getSystemService(Context.STORAGE_SERVICE);
-            return (String[]) (String[]) localStorageManager.getClass()
+            return (String[]) localStorageManager.getClass()
                     .getMethod("getVolumePaths", new Class[0])
                     .invoke(localStorageManager);
         } catch (Exception ex) {

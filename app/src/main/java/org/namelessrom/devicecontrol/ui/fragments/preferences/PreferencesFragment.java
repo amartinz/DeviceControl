@@ -15,30 +15,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments;
+package org.namelessrom.devicecontrol.ui.fragments.preferences;
 
-import android.app.Fragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
+import android.support.v4.app.Fragment;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.views.AttachFragment;
+import org.namelessrom.devicecontrol.ui.views.AttachViewPagerFragment;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class LicenseFragment extends Fragment {
+import java.util.ArrayList;
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_webview, container, false);
+public class PreferencesFragment extends AttachViewPagerFragment {
 
-        final WebView wv = (WebView) view.findViewById(R.id.dialog_help_webview);
-        wv.getSettings().setTextZoom(90);
-        wv.loadUrl("file:///android_asset/license.html");
+    @Override protected int getFragmentId() { return DeviceConstants.ID_PREFERENCES; }
 
-        return view;
+    @Override public ViewPagerAdapter getPagerAdapter() {
+        final ArrayList<Fragment> fragments = new ArrayList<>(1);
+        final ArrayList<CharSequence> titles = new ArrayList<>(1);
+
+        fragments.add(new MainPreferencesFragment());
+        titles.add(getString(R.string.general));
+        fragments.add(new FlasherPreferencesFragment());
+        titles.add(getString(R.string.flasher));
+
+        return new ViewPagerAdapter(getChildFragmentManager(), fragments, titles);
     }
 
 }

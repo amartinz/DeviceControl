@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.view.KeyEventCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.VelocityTrackerCompat;
@@ -658,7 +659,7 @@ public class CustomViewAbove extends ViewGroup {
 
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
+    public boolean onTouchEvent(@NonNull MotionEvent ev) {
 
         if (!mEnabled) { return false; }
 
@@ -813,7 +814,7 @@ public class CustomViewAbove extends ViewGroup {
     }
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(@NonNull Canvas canvas) {
         super.dispatchDraw(canvas);
         // Draw the margin drawable if needed.
         mViewBehind.drawShadow(mContent, canvas);
@@ -906,7 +907,7 @@ public class CustomViewAbove extends ViewGroup {
 
 
     @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
+    public boolean dispatchKeyEvent(@NonNull KeyEvent event) {
         // Let the focused view and/or our descendants get the key first
         return super.dispatchKeyEvent(event) || executeKeyEvent(event);
     }

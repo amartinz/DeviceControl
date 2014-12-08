@@ -15,13 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments;
+package org.namelessrom.devicecontrol.ui.views;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,23 +28,11 @@ import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.views.AttachFragment;
-import org.namelessrom.devicecontrol.ui.views.SlidingTabLayout;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.ArrayList;
 
-public class AboutFragment extends AttachFragment {
-
-    private ViewPager mViewPager;
-    private SamplePagerAdapter mAdapter;
-
-    // hack around the missing child fragment manager on pre api 17
-    private final Handler mHandler = new Handler();
-    private Runnable mRunnable;
-
-    @Override protected int getFragmentId() { return DeviceConstants.ID_ABOUT; }
+public abstract class AttachViewPagerFragment extends AttachFragment {
 
     @Override public void onResume() {
         super.onResume();
@@ -54,7 +41,6 @@ public class AboutFragment extends AttachFragment {
 
     @Override public void onPause() {
         super.onPause();
-        mHandler.removeCallbacks(mRunnable);
         MainActivity.setSwipeOnContent(PreferenceHelper.getBoolean("swipe_on_content", false));
     }
 
@@ -62,41 +48,27 @@ public class AboutFragment extends AttachFragment {
             final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
 
-        mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        mViewPager.setAdapter(new SamplePagerAdapter(getFragmentManager()));
+        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        viewPager.setAdapter(getPagerAdapter());
+        viewPager.setOffscreenPageLimit(3);
 
         final SlidingTabLayout tabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
-        tabLayout.setViewPager(mViewPager);
+        tabLayout.setViewPager(viewPager);
 
         return view;
     }
 
-    @Override public void onActivityCreated(final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public abstract ViewPagerAdapter getPagerAdapter();
 
-        mAdapter = new SamplePagerAdapter(getFragmentManager());
-        mRunnable = new Runnable() {
-            @Override public void run() {
-                mViewPager.setAdapter(mAdapter);
-            }
-        };
-        mHandler.post(mRunnable);
-    }
+    public class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final ArrayList<Fragment> fragments;
+        private final ArrayList<CharSequence> titles;
 
-    private class SamplePagerAdapter extends FragmentPagerAdapter {
-        private static final int COUNT = 3;
-
-        private final ArrayList<Fragment> fragments = new ArrayList<>(COUNT);
-        private final ArrayList<CharSequence> titles = new ArrayList<>(COUNT);
-
-        public SamplePagerAdapter(final FragmentManager fm) {
+        public ViewPagerAdapter(final FragmentManager fm, final ArrayList<Fragment> fragments,
+                final ArrayList<CharSequence> titles) {
             super(fm);
-            fragments.add(new WelcomeFragment());
-            titles.add(getString(R.string.about));
-            fragments.add(new SupportFragment());
-            titles.add(getString(R.string.support));
-            fragments.add(new LicenseFragment());
-            titles.add(getString(R.string.licenses));
+            this.fragments = fragments;
+            this.titles = titles;
         }
 
         @Override public CharSequence getPageTitle(final int position) {
@@ -108,7 +80,7 @@ public class AboutFragment extends AttachFragment {
         }
 
         @Override public int getCount() {
-            return COUNT;
+            return fragments.size();
         }
 
     }
