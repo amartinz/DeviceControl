@@ -26,6 +26,8 @@ import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
 import android.support.v4.preference.PreferenceFragment;
 
+import com.pollfish.main.PollFish;
+
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
@@ -59,6 +61,11 @@ public class MainPreferencesFragment extends PreferenceFragment
     private CustomTogglePreference mSwipeOnContent;
     // TODO: more customization
     private CustomTogglePreference mDarkTheme;
+
+    //==============================================================================================
+    // Support
+    //==============================================================================================
+    private CustomTogglePreference mShowPollfish;
 
     //==============================================================================================
     // Debug
@@ -115,6 +122,10 @@ public class MainPreferencesFragment extends PreferenceFragment
         mSwipeOnContent.setChecked(PreferenceHelper.getBoolean(mSwipeOnContent.getKey()));
         mSwipeOnContent.setOnPreferenceChangeListener(this);
 
+        mShowPollfish = (CustomTogglePreference) findPreference("show_pollfish");
+        mShowPollfish.setChecked(PreferenceHelper.getBoolean(mShowPollfish.getKey(), false));
+        mShowPollfish.setOnPreferenceChangeListener(this);
+
         setupVersionPreference();
     }
 
@@ -142,7 +153,17 @@ public class MainPreferencesFragment extends PreferenceFragment
     }
 
     @Override public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (mExtensiveLogging == preference) {
+        if (mShowPollfish == preference) {
+            final boolean value = (Boolean) newValue;
+            PreferenceHelper.setBoolean(mShowPollfish.getKey(), value);
+            if (value) {
+                PollFish.show();
+            } else {
+                PollFish.hide();
+            }
+            mShowPollfish.setChecked(value);
+            return true;
+        } else if (mExtensiveLogging == preference) {
             final boolean value = (Boolean) newValue;
             PreferenceHelper.setBoolean(EXTENSIVE_LOGGING, value);
             Logger.setEnabled(value);

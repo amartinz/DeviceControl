@@ -54,6 +54,17 @@
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+        android:key="support"
+        android:title="@string/support">
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
+            android:key="show_pollfish"
+            android:title="@string/show_pollfish"
+            android:summary="@string/show_pollfish_summary" />
+
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="prefs_debug"
         android:title="@string/debugging">
 
