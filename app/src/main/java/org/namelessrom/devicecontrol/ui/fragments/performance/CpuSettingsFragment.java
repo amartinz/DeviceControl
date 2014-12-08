@@ -110,6 +110,17 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.cpu);
 
+        mMax = (CustomListPreference) findPreference("pref_max");
+        mMax.setOnPreferenceChangeListener(this);
+
+        mMin = (CustomListPreference) findPreference("pref_min");
+        mMin.setOnPreferenceChangeListener(this);
+
+        mGovernor = (CustomListPreference) findPreference("pref_governor");
+        mGovernor.setOnPreferenceChangeListener(this);
+
+        mGovernorTuning = (CustomPreference) findPreference("pref_governor_tuning");
+
         // get hold of hotplugging and remove it, to add it back later if supported
         final PreferenceCategory hotplugging = (PreferenceCategory) findPreference("hotplugging");
         getPreferenceScreen().removePreference(hotplugging);
@@ -127,17 +138,6 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
     private void setupHotpluggingPreferences() {
         AwesomePreferenceCategory awCategory;
         PreferenceCategory category;
-
-        mMax = (CustomListPreference) findPreference("pref_max");
-        mMax.setOnPreferenceChangeListener(this);
-
-        mMin = (CustomListPreference) findPreference("pref_min");
-        mMin.setOnPreferenceChangeListener(this);
-
-        mGovernor = (CustomListPreference) findPreference("pref_governor");
-        mGovernor.setOnPreferenceChangeListener(this);
-
-        mGovernorTuning = (CustomPreference) findPreference("pref_governor_tuning");
 
         //------------------------------------------------------------------------------------------
         // General
