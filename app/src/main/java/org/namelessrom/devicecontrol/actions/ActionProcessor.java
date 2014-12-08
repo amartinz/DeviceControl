@@ -231,7 +231,7 @@ public class ActionProcessor {
             for (final String s : freqs) {
                 values.add(new Entry(CpuUtils.toMhz(s), s));
             }
-        }
+        } else
 
         // CPU governor
         if (TextUtils.equals(ACTION_CPU_GOVERNOR, action)) {
@@ -241,7 +241,7 @@ public class ActionProcessor {
             for (final String s : governors) {
                 values.add(new Entry(s, s));
             }
-        }
+        } else
 
         // GPU frequencies
         if (TextUtils.equals(ACTION_GPU_FREQUENCY_MAX, action)
@@ -252,7 +252,7 @@ public class ActionProcessor {
             for (final String s : freqs) {
                 values.add(new Entry(GpuUtils.toMhz(s), s));
             }
-        }
+        } else
 
         // GPU governor
         if (TextUtils.equals(ACTION_GPU_GOVERNOR, action)) {
@@ -262,12 +262,12 @@ public class ActionProcessor {
             for (final String s : governors) {
                 values.add(new Entry(s, s));
             }
-        }
+        } else
 
         // GPU 3D scaling
         if (TextUtils.equals(ACTION_3D_SCALING, action)) {
             addValuesOnOff(values);
-        }
+        } else
 
         // Filesystem
         if (TextUtils.equals(ACTION_IO_SCHEDULER, action)) {
@@ -277,31 +277,31 @@ public class ActionProcessor {
             for (final String s : scheds) {
                 values.add(new Entry(s, s));
             }
-        }
+        }else
         if (TextUtils.equals(ACTION_READ_AHEAD, action)) {
             final String[] entries = Application.get().getStringArray(R.array.read_ahead_entries);
             final String[] vals = Application.get().getStringArray(R.array.read_ahead_values);
             for (int i = 0; i < entries.length; i++) {
                 values.add(new Entry(entries[i], vals[i]));
             }
-        }
+        }else
         // Extras
         if (TextUtils.equals(ACTION_KSM_ENABLED, action)
                 || TextUtils.equals(ACTION_KSM_DEFERRED, action)) {
             addValuesOnOff(values);
-        }
+        }else
         if (TextUtils.equals(ACTION_KSM_PAGES, action)) {
             final String[] vals = { "32", "64", "128", "256", "512", "1024" };
             for (final String s : vals) {
                 values.add(new Entry(s, s));
             }
-        }
+        }else
         if (TextUtils.equals(ACTION_KSM_SLEEP, action)) {
             final String[] vals = { "100", "250", "500", "1000", "2000", "3000", "4000", "5000" };
             for (final String s : vals) {
                 values.add(new Entry(s, s));
             }
-        }
+        }else
         if (TextUtils.equals(ACTION_MPDECISION, action)) {
             addValuesOnOff(values);
         }
@@ -318,54 +318,65 @@ public class ActionProcessor {
         //------------------------------------------------------------------------------------------
         // CPU
         //------------------------------------------------------------------------------------------
-        if (ACTION_CPU_FREQUENCY_MAX.equals(action)) {
-            new CpuFreqMaxAction(value, boot).triggerAction();
-        } else if (ACTION_CPU_FREQUENCY_MIN.equals(action)) {
-            new CpuFreqMinAction(value, boot).triggerAction();
-        } else if (ACTION_CPU_GOVERNOR.equals(action)) {
-            new CpuGovAction(value, boot).triggerAction();
-        }
-        //------------------------------------------------------------------------------------------
-        // GPU
-        //------------------------------------------------------------------------------------------
-        else if (ACTION_GPU_FREQUENCY_MAX.equals(action)) {
-            new GpuFreqMaxAction(value, boot).triggerAction();
-        } else if (ACTION_GPU_FREQUENCY_MIN.equals(action)) {
-            new GpuFreqMinAction(value, boot).triggerAction();
-        } else if (ACTION_GPU_GOVERNOR.equals(action)) {
-            new GpuGovAction(value, boot).triggerAction();
-        } else if (ACTION_3D_SCALING.equals(action)) {
-            new Gpu3dScalingAction(value, boot).triggerAction();
-        }
-        //------------------------------------------------------------------------------------------
-        // Filesystem
-        //------------------------------------------------------------------------------------------
-        // IO sched --------------------------------------------------------------------------------
-        else if (ACTION_IO_SCHEDULER.equals(action)) {
-            new IoSchedulerAction(value, boot).triggerAction();
-        }
-        // Read Ahead ------------------------------------------------------------------------------
-        else if (ACTION_READ_AHEAD.equals(action)) {
-            new ReadAheadAction(value, boot).triggerAction();
-        }
-        //------------------------------------------------------------------------------------------
-        // Extras
-        //------------------------------------------------------------------------------------------
-        // KSM -------------------------------------------------------------------------------------
-        else if (ACTION_KSM_ENABLED.equals(action)) {
-            new KsmEnableAction(value, boot).triggerAction();
-        } else if (ACTION_KSM_DEFERRED.equals(action)) {
-            new KsmDeferredAction(value, boot).triggerAction();
-        } else if (ACTION_KSM_PAGES.equals(action)) {
-            new KsmPagesAction(value, boot).triggerAction();
-        } else if (ACTION_KSM_SLEEP.equals(action)) {
-            new KsmSleepAction(value, boot).triggerAction();
-        } else if (ACTION_UKSM_SLEEP.equals(action)) {
-            new UksmSleepAction(value, boot).triggerAction();
-        } else if(ACTION_UKSM_ENABLED.equals(action)) {
-            new UksmEnableAction(value, boot).triggerAction();
-        } else if(ACTION_UKSM_GOVERNOR.equals(action)) {
-            new UksmGovernorAction(value, boot).triggerAction();
+        switch (action) {
+            case ACTION_CPU_FREQUENCY_MAX:
+                new CpuFreqMaxAction(value, boot).triggerAction();
+                break;
+            case ACTION_CPU_FREQUENCY_MIN:
+                new CpuFreqMinAction(value, boot).triggerAction();
+                break;
+            case ACTION_CPU_GOVERNOR:
+                new CpuGovAction(value, boot).triggerAction();
+                break;
+            //------------------------------------------------------------------------------------------
+            // GPU
+            //------------------------------------------------------------------------------------------
+            case ACTION_GPU_FREQUENCY_MAX:
+                new GpuFreqMaxAction(value, boot).triggerAction();
+                break;
+            case ACTION_GPU_FREQUENCY_MIN:
+                new GpuFreqMinAction(value, boot).triggerAction();
+                break;
+            case ACTION_GPU_GOVERNOR:
+                new GpuGovAction(value, boot).triggerAction();
+                break;
+            case ACTION_3D_SCALING:
+                new Gpu3dScalingAction(value, boot).triggerAction();
+                break;
+            //------------------------------------------------------------------------------------------
+            // Filesystem
+            //------------------------------------------------------------------------------------------
+            case ACTION_IO_SCHEDULER:
+                new IoSchedulerAction(value, boot).triggerAction();
+                break;
+            // Read Ahead ------------------------------------------------------------------------------
+            case ACTION_READ_AHEAD:
+                new ReadAheadAction(value, boot).triggerAction();
+                break;
+            //------------------------------------------------------------------------------------------
+            // Extras
+            //------------------------------------------------------------------------------------------
+            case ACTION_KSM_ENABLED:
+                new KsmEnableAction(value, boot).triggerAction();
+                break;
+            case ACTION_KSM_DEFERRED:
+                new KsmDeferredAction(value, boot).triggerAction();
+                break;
+            case ACTION_KSM_PAGES:
+                new KsmPagesAction(value, boot).triggerAction();
+                break;
+            case ACTION_KSM_SLEEP:
+                new KsmSleepAction(value, boot).triggerAction();
+                break;
+            case ACTION_UKSM_SLEEP:
+                new UksmSleepAction(value, boot).triggerAction();
+                break;
+            case ACTION_UKSM_ENABLED:
+                new UksmEnableAction(value, boot).triggerAction();
+                break;
+            case ACTION_UKSM_GOVERNOR:
+                new UksmGovernorAction(value, boot).triggerAction();
+                break;
         }
     }
 

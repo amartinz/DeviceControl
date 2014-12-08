@@ -15,24 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments.tools.flasher;
+package org.namelessrom.devicecontrol.ui.fragments.preferences;
 
 import android.os.Bundle;
 import android.preference.Preference;
+import android.support.v4.preference.PreferenceFragment;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
-import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class FlasherPreferencesFragment extends AttachPreferenceFragment
+public class FlasherPreferencesFragment extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener, DeviceConstants {
 
     private CustomListPreference mRecoveryType;
-
-    @Override protected int getFragmentId() { return ID_TOOLS_FLASHER_PREFS; }
 
     @Override public void onCreate(final Bundle bundle) {
         super.onCreate(bundle);

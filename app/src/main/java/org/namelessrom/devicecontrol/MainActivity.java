@@ -18,13 +18,13 @@
 package org.namelessrom.devicecontrol;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -44,8 +44,7 @@ import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
-import org.namelessrom.devicecontrol.ui.fragments.AboutFragment;
-import org.namelessrom.devicecontrol.ui.fragments.PreferencesFragment;
+import org.namelessrom.devicecontrol.ui.fragments.about.AboutFragment;
 import org.namelessrom.devicecontrol.ui.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.ui.fragments.device.DeviceInformationFragment;
 import org.namelessrom.devicecontrol.ui.fragments.device.sub.FastChargeFragment;
@@ -58,10 +57,12 @@ import org.namelessrom.devicecontrol.ui.fragments.performance.sub.EntropyFragmen
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.FilesystemFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.GovernorFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.KsmFragment;
-import org.namelessrom.devicecontrol.ui.fragments.performance.sub.UksmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.ThermalFragment;
+import org.namelessrom.devicecontrol.ui.fragments.performance.sub.UksmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;
+import org.namelessrom.devicecontrol.ui.fragments.preferences.PreferencesFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.AppListFragment;
+import org.namelessrom.devicecontrol.ui.fragments.tools.FlasherFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.TaskerFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.WirelessFileManagerFragment;
@@ -69,8 +70,6 @@ import org.namelessrom.devicecontrol.ui.fragments.tools.editor.BuildPropEditorFr
 import org.namelessrom.devicecontrol.ui.fragments.tools.editor.BuildPropFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.editor.SysctlEditorFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.editor.SysctlFragment;
-import org.namelessrom.devicecontrol.ui.fragments.tools.flasher.FlasherFragment;
-import org.namelessrom.devicecontrol.ui.fragments.tools.flasher.FlasherPreferencesFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -198,7 +197,7 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         menuList.setOnItemClickListener(this);
 
         loadFragmentPrivate(ID_ABOUT, false);
-        getFragmentManager().executePendingTransactions();
+        getSupportFragmentManager().executePendingTransactions();
 
         Utils.startTaskerService();
 
@@ -287,8 +286,8 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         }
 
         // we we have at least one fragment in the BackStack, pop it and return
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
 
             // restore title / actionbar
             if (mSubFragmentTitle != -1) {
@@ -444,10 +443,6 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
                 mTitle = mFragmentTitle = R.string.flasher;
                 mSubFragmentTitle = -1;
                 break;
-            case ID_TOOLS_FLASHER_PREFS:
-                if (!onResume) mCurrentFragment = new FlasherPreferencesFragment();
-                mTitle = mSubFragmentTitle = R.string.flasher;
-                break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_MORE:
                 if (!onResume) mCurrentFragment = new ToolsMoreFragment();
@@ -494,7 +489,7 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
 
         final boolean isSubFragment = mSubFragmentTitle != -1;
 
-        final FragmentManager fragmentManager = getFragmentManager();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
         if (!isSubFragment && fragmentManager.getBackStackEntryCount() > 0) {
             // set a lock to prevent calling setFragment as onResume gets called
             AppHelper.preventOnResume = true;
@@ -506,8 +501,8 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         final FragmentTransaction ft = fragmentManager.beginTransaction();
 
         if (isSubFragment) {
-            ft.setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_right,
-                    R.animator.slide_in_left, R.animator.slide_out_left);
+            ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right,
+                    R.anim.slide_in_left, R.anim.slide_out_left);
             ft.addToBackStack(null);
         }
 

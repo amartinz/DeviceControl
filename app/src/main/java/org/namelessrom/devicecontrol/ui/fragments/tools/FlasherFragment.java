@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments.tools.flasher;
+package org.namelessrom.devicecontrol.ui.fragments.tools;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

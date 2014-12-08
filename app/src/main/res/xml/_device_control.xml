@@ -17,17 +17,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="prefs_tools"
-        android:title="@string/tools">
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:icon="@drawable/ic_menu_flash"
-            android:key="flasher_prefs"
-            android:title="@string/flasher" />
-
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
-
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="prefs_general"
         android:title="@string/general">
 

@@ -24,8 +24,8 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 
 import java.util.HashMap;
 import java.util.Map;
