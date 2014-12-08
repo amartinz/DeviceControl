@@ -138,7 +138,7 @@ public class CpuCoreMonitor implements DeviceConstants {
 
                 if (mActivity != null) {
                     final String[] parts = output.split(" ");
-                    final List<CpuCore> mCoreList = new ArrayList<CpuCore>(CPU_COUNT);
+                    final List<CpuCore> mCoreList = new ArrayList<>(CPU_COUNT);
                     int mult = 0;
                     CpuCore tmp;
                     String max, current;

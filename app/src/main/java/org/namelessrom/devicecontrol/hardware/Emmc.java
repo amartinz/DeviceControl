@@ -35,7 +35,7 @@ public class Emmc {
     private String name = null;
     private String rev = null;
 
-    private static final ArrayList<EmmcBugged> EMMC_BUGGED_LIST = new ArrayList<EmmcBugged>();
+    private static final ArrayList<EmmcBugged> EMMC_BUGGED_LIST = new ArrayList<>();
 
     static {
         EMMC_BUGGED_LIST.add(new EmmcBugged("KYL00M", "15", "25", EmmcBugged.IMPACT_BRICK));

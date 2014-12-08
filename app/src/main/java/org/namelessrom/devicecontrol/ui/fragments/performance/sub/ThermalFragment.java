@@ -66,15 +66,17 @@ public class ThermalFragment extends AttachPreferenceFragment
                 (AwesomePreferenceCategory) findPreference("msm_thermal");
         if (msmThermal.isSupported()) {
             final String[] files = Utils.listFiles(msmThermal.getPath(), true);
+            AwesomeTogglePreference togglePreference = PreferenceUtils.addAwesomeTogglePreference(
+                    getActivity(), "msm_thermal_", getString(R.string.thermal_warning), "extras",
+                    msmThermal.getPath(), "enabled", msmThermal, this);
+            if (togglePreference != null) {
+                togglePreference.setupTitle();
+            }
             for (final String file : files) {
                 final int type = PreferenceUtils.getType(file);
                 if (PreferenceUtils.TYPE_EDITTEXT == type) {
                     PreferenceUtils.addAwesomeEditTextPreference(getActivity(), "msm_thermal_",
                             "extras", msmThermal.getPath(), file, msmThermal, this);
-                } else if (PreferenceUtils.TYPE_CHECKBOX == type) {
-                    PreferenceUtils.addAwesomeTogglePreference(getActivity(), "msm_thermal_",
-                            getString(R.string.thermal_warning), "extras", msmThermal.getPath(),
-                            file, msmThermal, this);
                 }
             }
         }

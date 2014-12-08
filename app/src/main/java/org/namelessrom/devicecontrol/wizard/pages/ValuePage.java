@@ -68,14 +68,14 @@ public class ValuePage extends Page {
 
             final String action = mCallbacks.getSetupData().name;
             final ArrayList<ActionProcessor.Entry> values = ActionProcessor.getValues(action);
-            final ArrayList<String> entries = new ArrayList<String>(values.size());
-            final ArrayList<String> entryValues = new ArrayList<String>(values.size());
+            final ArrayList<String> entries = new ArrayList<>(values.size());
+            final ArrayList<String> entryValues = new ArrayList<>(values.size());
             for (final ActionProcessor.Entry value : values) {
                 entries.add(value.name);
                 entryValues.add(value.value);
             }
 
-            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+            final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_list_item_single_choice, entries);
 
             listView.setAdapter(adapter);

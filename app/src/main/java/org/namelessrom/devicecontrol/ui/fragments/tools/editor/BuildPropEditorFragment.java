@@ -69,7 +69,7 @@ public class BuildPropEditorFragment extends AttachFragment implements DeviceCon
 
     private PropAdapter mAdapter = null;
     private EditText mFilter = null;
-    private final List<Prop> mProps = new ArrayList<Prop>();
+    private final List<Prop> mProps = new ArrayList<>();
 
     //==============================================================================================
     // Overridden Methods
@@ -242,7 +242,7 @@ public class BuildPropEditorFragment extends AttachFragment implements DeviceCon
         final Spinner sp = (Spinner) editDialog.findViewById(R.id.preset_spinner);
         final LinearLayout lpresets = (LinearLayout) editDialog.findViewById(R.id.prop_presets);
         final ArrayAdapter<CharSequence> vAdapter =
-                new ArrayAdapter<CharSequence>(activity, android.R.layout.simple_spinner_item);
+                new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item);
         vAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         vAdapter.clear();
 

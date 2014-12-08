@@ -79,10 +79,12 @@ public class MaterialMenuIcon extends MaterialMenuBase {
 
     @Override @TargetApi(14)
     protected void setActionBarSettings(Activity activity) {
-        ActionBar actionBar = activity.getActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setIcon(getDrawable());
+        final ActionBar actionBar = activity.getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setIcon(getDrawable());
+        }
     }
 }

@@ -67,14 +67,14 @@ public class TriggerPage extends Page {
             final ListView listView = (ListView) mRootView.findViewById(android.R.id.list);
 
             final ArrayList<ActionProcessor.Entry> triggers = ActionProcessor.getTriggers();
-            final ArrayList<String> entries = new ArrayList<String>(triggers.size());
-            final ArrayList<String> values = new ArrayList<String>(triggers.size());
+            final ArrayList<String> entries = new ArrayList<>(triggers.size());
+            final ArrayList<String> values = new ArrayList<>(triggers.size());
             for (final ActionProcessor.Entry entry : triggers) {
                 entries.add(entry.name);
                 values.add(entry.value);
             }
 
-            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+            final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_list_item_single_choice, entries);
 
             listView.setAdapter(adapter);

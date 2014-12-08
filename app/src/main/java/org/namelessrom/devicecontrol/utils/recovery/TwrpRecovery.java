@@ -46,7 +46,7 @@ public class TwrpRecovery extends RecoveryInfo {
     @Override
     public String[] getCommands(Context context, String[] items, String[] originalItems,
             boolean wipeData, boolean wipeCaches, String backupFolder, String backupOptions) {
-        List<String> commands = new ArrayList<String>();
+        List<String> commands = new ArrayList<>();
 
         int size = items.length, i = 0;
 

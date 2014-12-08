@@ -58,9 +58,9 @@ public class UksmUtils {
     public String getCurrentCpuGovernor() {
         final String[] aux = Utils.readStringArray(UKSM_CPU_GOV);
         if (aux != null) {
-            for (int i = 0; i < aux.length; i++) {
-                if (aux[i].charAt(0) == '[') {
-                    return aux[i].substring(1, aux[i].length() - 1);
+            for (final String anAux : aux) {
+                if (anAux.charAt(0) == '[') {
+                    return anAux.substring(1, anAux.length() - 1);
                 }
             }
         }

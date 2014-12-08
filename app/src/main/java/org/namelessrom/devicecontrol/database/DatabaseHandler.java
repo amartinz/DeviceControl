@@ -239,7 +239,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     public List<DataItem> getAllItems(final String tableName, final String category) {
         if (sDb == null) return null;
 
-        final List<DataItem> itemList = new ArrayList<DataItem>();
+        final List<DataItem> itemList = new ArrayList<>();
         final String selectQuery = "SELECT * FROM " + tableName + (category.isEmpty()
                 ? ""
                 : " WHERE " + KEY_CATEGORY + " = '" + category + '\'');
@@ -289,7 +289,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     }
 
     public List<TaskerItem> getAllTaskerItems(final String category) {
-        final List<TaskerItem> itemList = new ArrayList<TaskerItem>();
+        final List<TaskerItem> itemList = new ArrayList<>();
         if (sDb == null) return itemList;
 
         final String selectQuery = "SELECT * FROM " + TABLE_TASKER + (category.isEmpty()
@@ -318,7 +318,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     }
 
     public List<TaskerItem> getAllTaskerItemsByTrigger(final String trigger) {
-        final List<TaskerItem> itemList = new ArrayList<TaskerItem>();
+        final List<TaskerItem> itemList = new ArrayList<>();
         if (sDb == null) return itemList;
 
         final String selectQuery = "SELECT * FROM " + TABLE_TASKER + (trigger.isEmpty()

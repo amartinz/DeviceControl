@@ -28,7 +28,7 @@ public class VoltageUtils {
     // Methods
     //==============================================================================================
     public String[] getUvValues(final boolean getName) throws IOException {
-        final ArrayList<String> valueList = new ArrayList<String>();
+        final ArrayList<String> valueList = new ArrayList<>();
         FileInputStream fstream = null;
         DataInputStream in = null;
         BufferedReader br = null;

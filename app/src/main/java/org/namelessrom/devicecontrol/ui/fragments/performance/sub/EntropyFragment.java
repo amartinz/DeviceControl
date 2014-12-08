@@ -220,7 +220,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
     private class RefreshTask extends AsyncTask<Void, Void, List<String>> {
 
         @Override protected List<String> doInBackground(Void... params) {
-            final ArrayList<String> list = new ArrayList<String>();
+            final ArrayList<String> list = new ArrayList<>();
 
             list.add(Utils.readOneLine(ExtraUtils.ENTROPY_AVAIL));     // 0
 
