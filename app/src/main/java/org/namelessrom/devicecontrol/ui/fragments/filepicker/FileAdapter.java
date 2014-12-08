@@ -119,7 +119,7 @@ public class FileAdapter extends BaseAdapter {
             }
         });
 
-        int color = PreferenceHelper.getBoolean("dark_theme", true) ? Color.WHITE : Color.BLACK;
+        int color = PreferenceHelper.getBoolean("dark_theme", false) ? Color.WHITE : Color.BLACK;
 
         viewHolder.name.setText(file.getName());
 

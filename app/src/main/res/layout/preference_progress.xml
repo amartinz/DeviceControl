@@ -25,7 +25,7 @@
         android:id="@+id/preference_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:padding="10dp"
         android:visibility="gone"
         tools:visibility="visible" />
 
