@@ -27,6 +27,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,6 +39,8 @@ import android.widget.Toast;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.pollfish.constants.Position;
+import com.pollfish.main.PollFish;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
@@ -74,6 +77,7 @@ import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.proprietary.Configuration;
 
 import java.io.File;
 
@@ -130,6 +134,16 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
+
+
+    @Override protected void onResume() {
+        super.onResume();
+        final String pollFishApiKey = Configuration.getApiKey();
+        if (!TextUtils.equals("---", pollFishApiKey)) {
+            Logger.v(this, "PollFish.init()");
+            PollFish.init(this, pollFishApiKey, Position.TOP_RIGHT, 5);
+        }
+    }
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

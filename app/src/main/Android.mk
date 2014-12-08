@@ -7,7 +7,9 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v7-appcompat \
     android-support-v7-recyclerview \
     ion \
+    nameless-proprietary \
     play \
+    pollfish-sdk \
 
 LOCAL_ASSET_DIR    := $(LOCAL_PATH)/assets
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
@@ -39,6 +41,7 @@ LOCAL_AAPT_FLAGS := \
     --extra-packages android.support.v7.appcompat \
     --extra-packages com.github.mikephil.charting \
     --extra-packages com.google.android.gms \
+    --extra-packages org.namelessrom.proprietary \
 
 ######
 

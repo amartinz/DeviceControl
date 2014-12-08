@@ -26,6 +26,7 @@ android {
 
     buildTypes {
         release {
+            debuggable false
             signingConfig signingConfigs.release
             proguardFile 'src/main/proguard.pro'
             minifyEnabled true
@@ -33,6 +34,7 @@ android {
             zipAlignEnabled true
         }
         debug {
+            debuggable true
             signingConfig signingConfigs.release
             proguardFile 'src/main/proguard.pro'
             minifyEnabled true
@@ -63,8 +65,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: '../libs', include: ['*.jar'])
     // links to MPChartLib via a symlink, used in the Nameless Rom source tree
+    compile project(':lib')
     compile project(':libs:mpandroidchart:MPChartLib') // inherits support-v13
     compile "com.android.support:appcompat-v7:21.0.2"
     compile 'com.android.support:recyclerview-v7:21.0.2'
