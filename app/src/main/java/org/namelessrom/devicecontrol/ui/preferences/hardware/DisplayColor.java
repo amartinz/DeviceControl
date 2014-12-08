@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.preference.DialogPreference;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
@@ -72,7 +73,7 @@ public class DisplayColor extends DialogPreference {
                 });
     }
 
-    @Override protected void onBindDialogView(final View view) {
+    @Override protected void onBindDialogView(@NonNull final View view) {
         super.onBindDialogView(view);
 
         mOriginalColors = DisplayColorCalibration.get().getCurColors();

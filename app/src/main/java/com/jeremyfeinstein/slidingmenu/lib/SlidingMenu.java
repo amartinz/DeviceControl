@@ -12,6 +12,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -976,7 +977,7 @@ public class SlidingMenu extends RelativeLayout {
         /* (non-Javadoc)
          * @see android.view.AbsSavedState#writeToParcel(android.os.Parcel, int)
          */
-        public void writeToParcel(Parcel out, int flags) {
+        public void writeToParcel(@NonNull Parcel out, int flags) {
             super.writeToParcel(out, flags);
             out.writeInt(mItem);
         }
@@ -1018,7 +1019,7 @@ public class SlidingMenu extends RelativeLayout {
      */
     @SuppressLint("NewApi")
     @Override
-    protected boolean fitSystemWindows(Rect insets) {
+    protected boolean fitSystemWindows(@NonNull Rect insets) {
         int leftPadding = insets.left;
         int rightPadding = insets.right;
         int topPadding = insets.top;

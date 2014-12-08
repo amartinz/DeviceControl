@@ -172,7 +172,7 @@ public class NumberProgressBar extends View implements ProgressCallback {
 
     public enum ProgressTextVisibility{
         Visible,Invisible
-    };
+    }
 
 
 

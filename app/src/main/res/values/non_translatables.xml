@@ -86,4 +86,8 @@
     <!-- Bits -->
     <string name="bit_32" translatable="false">32-bit</string>
     <string name="bit_64" translatable="false">64-bit</string>
+    <!-- misc -->
+    <string name="back_button_label" translatable="false">Back</string>
+    <string name="next_button_label" translatable="false">Next</string>
+    <string name="skip_button_label" translatable="false">Skip</string>
 </resources>

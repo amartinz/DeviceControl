@@ -18,8 +18,8 @@
 package org.namelessrom.devicecontrol.ui.views;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;

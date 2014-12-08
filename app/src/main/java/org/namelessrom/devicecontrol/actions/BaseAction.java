@@ -1,12 +1,5 @@
 package org.namelessrom.devicecontrol.actions;
 
-import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.actions.cpu.CpuFreqMaxAction;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  * Created by alex on 16.10.14.
  */
