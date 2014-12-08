@@ -330,6 +330,8 @@ public class ActionProcessor {
         //------------------------------------------------------------------------------------------
         else if (ACTION_GPU_FREQUENCY_MAX.equals(action)) {
             new GpuFreqMaxAction(value, boot).triggerAction();
+        } else if (ACTION_GPU_FREQUENCY_MIN.equals(action)) {
+            new GpuFreqMinAction(value, boot).triggerAction();
         } else if (ACTION_GPU_GOVERNOR.equals(action)) {
             new GpuGovAction(value, boot).triggerAction();
         } else if (ACTION_3D_SCALING.equals(action)) {
