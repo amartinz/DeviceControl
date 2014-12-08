@@ -45,6 +45,9 @@
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
     <!--suppress DeprecatedClassUsageInspection -->
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <!-- Location -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- Power -->
     <uses-permission android:name="android.permission.REBOOT"
         tools:ignore="ProtectedPermissions" />
@@ -53,8 +56,10 @@
     <!-- Device Control -->
     <uses-permission android:name="org.namelessrom.devicecontrol.API" />
 
-    <uses-feature
-        android:name="org.namelessrom.android"
+    <uses-feature android:name="org.namelessrom.android"
+        android:required="false" />
+
+    <uses-feature android:name="android.hardware.location.gps"
         android:required="false" />
 
     <permission
