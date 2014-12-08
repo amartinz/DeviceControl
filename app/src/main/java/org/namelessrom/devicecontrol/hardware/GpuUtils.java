@@ -26,6 +26,7 @@ import android.opengl.EGLContext;
 import android.opengl.EGLDisplay;
 import android.opengl.EGLSurface;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
@@ -201,7 +202,7 @@ public class GpuUtils {
         return gpuFreqMinPath;
     }
 
-    public String[] getAvailableFrequencies(final boolean sorted) {
+    @Nullable public String[] getAvailableFrequencies(final boolean sorted) {
         final String freqsRaw = Utils.readOneLine(getGpuFreqsAvailPath());
         if (freqsRaw != null && !freqsRaw.isEmpty()) {
             final String[] freqs = freqsRaw.split(" ");
@@ -281,8 +282,8 @@ public class GpuUtils {
         return "0";
     }
 
-    public static String[] freqsToMhz(final String[] frequencies) {
-        if (frequencies == null) return new String[0];
+    @Nullable public static String[] freqsToMhz(final String[] frequencies) {
+        if (frequencies == null) return null;
         final int length = frequencies.length;
         final String[] names = new String[length];
 

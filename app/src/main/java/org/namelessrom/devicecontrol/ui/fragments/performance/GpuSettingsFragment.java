@@ -88,10 +88,10 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
             final String[] frequencies = gpu.available;
             final String[] gpuNames = GpuUtils.freqsToMhz(frequencies);
 
-            final int freqsLength = frequencies.length;
-            final int namesLength = gpuNames.length;
+            final int freqsLength = frequencies == null ? 0 : frequencies.length;
+            final int namesLength = gpuNames == null ? 0 : gpuNames.length;
             tmp = gpu.max;
-            if (!TextUtils.isEmpty(tmp) && freqsLength == namesLength) {
+            if (!TextUtils.isEmpty(tmp) && freqsLength != 0 && freqsLength == namesLength) {
                 tmp = tmp.trim();
                 for (int i = 0; i < freqsLength; i++) {
                     if (frequencies[i].equals(tmp)) {
@@ -117,7 +117,7 @@ public class GpuSettingsFragment extends AttachPreferenceFragment implements
             }
 
             tmp = gpu.min;
-            if (!TextUtils.isEmpty(tmp) && freqsLength == namesLength) {
+            if (!TextUtils.isEmpty(tmp) && freqsLength != 0 && freqsLength == namesLength) {
                 tmp = tmp.trim();
                 for (int i = 0; i < freqsLength; i++) {
                     if (frequencies[i].equals(tmp)) {
