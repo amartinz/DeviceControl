@@ -65,8 +65,8 @@ public class FinishPage extends Page {
             final ListView listView = (ListView) mRootView.findViewById(android.R.id.list);
 
             final TaskerItem item = mCallbacks.getSetupData();
-            final ArrayList<String> entries = new ArrayList<String>(4);
-            final ArrayList<String> values = new ArrayList<String>(4);
+            final ArrayList<String> entries = new ArrayList<>(4);
+            final ArrayList<String> values = new ArrayList<>(4);
             entries.add(getString(R.string.trigger));
             values.add(item.trigger);
             entries.add(getString(R.string.category));

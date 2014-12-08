@@ -15,7 +15,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.util.ArrayList;
 
 public class SobDialogFragment extends DialogFragment {
-    final ArrayList<Integer> entries = new ArrayList<Integer>();
+    final ArrayList<Integer> entries = new ArrayList<>();
 
     public SobDialogFragment() {
         super();

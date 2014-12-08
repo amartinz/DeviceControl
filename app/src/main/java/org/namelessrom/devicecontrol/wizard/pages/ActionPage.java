@@ -68,14 +68,14 @@ public class ActionPage extends Page {
 
             final String category = mCallbacks.getSetupData().category;
             final ArrayList<ActionProcessor.Entry> actions = ActionProcessor.getActions(category);
-            final ArrayList<String> entries = new ArrayList<String>(actions.size());
-            final ArrayList<String> values = new ArrayList<String>(actions.size());
+            final ArrayList<String> entries = new ArrayList<>(actions.size());
+            final ArrayList<String> values = new ArrayList<>(actions.size());
             for (final ActionProcessor.Entry entry : actions) {
                 entries.add(entry.name);
                 values.add(entry.value);
             }
 
-            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+            final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_list_item_single_choice, entries);
 
             listView.setAdapter(adapter);

@@ -126,7 +126,7 @@ public class ActionProcessor {
     }
 
     public static ArrayList<Entry> getTriggers() {
-        final ArrayList<Entry> triggers = new ArrayList<Entry>();
+        final ArrayList<Entry> triggers = new ArrayList<>();
 
         Entry e = new Entry(Application.get().getString(R.string.screen_off), TRIGGER_SCREEN_OFF);
         triggers.add(e);
@@ -137,7 +137,7 @@ public class ActionProcessor {
     }
 
     public static ArrayList<Entry> getCategories() {
-        final ArrayList<Entry> categories = new ArrayList<Entry>();
+        final ArrayList<Entry> categories = new ArrayList<>();
 
         // CPU
         categories.add(new Entry(Application.get().getString(R.string.cpu), CATEGORY_CPU));
@@ -152,7 +152,7 @@ public class ActionProcessor {
     }
 
     public static ArrayList<Entry> getActions(final String category) {
-        final ArrayList<Entry> actions = new ArrayList<Entry>();
+        final ArrayList<Entry> actions = new ArrayList<>();
         if (TextUtils.isEmpty(category)) return actions;
 
         // CPU
@@ -219,7 +219,7 @@ public class ActionProcessor {
     }
 
     public static ArrayList<Entry> getValues(final String action) {
-        final ArrayList<Entry> values = new ArrayList<Entry>();
+        final ArrayList<Entry> values = new ArrayList<>();
         if (TextUtils.isEmpty(action)) return values;
 
         // CPU frequencies

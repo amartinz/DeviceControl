@@ -31,7 +31,7 @@ public class ContentTypes {
     private static ContentTypes              contentTypes;
 
     private ContentTypes() {
-        mContentTypes = new Hashtable<String, String>();
+        mContentTypes = new Hashtable<>();
         mContentTypes.put("3gp", "video/3gp");
         mContentTypes.put("7z", "application/x-7z-compressed");
         mContentTypes.put("aac", "audio/x-aac");

@@ -75,8 +75,8 @@ public class IOUtils {
             return;
         }
 
-        ArrayList<String> mounts = new ArrayList<String>();
-        ArrayList<String> vold = new ArrayList<String>();
+        ArrayList<String> mounts = new ArrayList<>();
+        ArrayList<String> vold = new ArrayList<>();
 
         String[] output = Utils.getCommandResult("cat /proc/mounts;\n", "").split("\n");
         for (final String s : output) {

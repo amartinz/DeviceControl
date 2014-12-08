@@ -34,10 +34,7 @@ import android.util.TypedValue;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-import org.namelessrom.devicecontrol.R;
-
 import static android.graphics.Paint.Style;
-
 
 public class MaterialMenuDrawable extends Drawable implements Animatable {
 

@@ -17,16 +17,10 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import android.os.Build;
-import android.text.Html;
-import android.text.TextUtils;
-
 import org.namelessrom.devicecontrol.Logger;
 
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Easier formatting of HTML pages

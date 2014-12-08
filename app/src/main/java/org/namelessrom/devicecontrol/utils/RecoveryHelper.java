@@ -29,7 +29,7 @@ import org.namelessrom.devicecontrol.utils.recovery.TwrpRecovery;
 
 public class RecoveryHelper {
 
-    private SparseArray<RecoveryInfo> mRecoveries = new SparseArray<RecoveryInfo>();
+    private SparseArray<RecoveryInfo> mRecoveries = new SparseArray<>();
     private Context mContext;
 
     public RecoveryHelper(Context context) {

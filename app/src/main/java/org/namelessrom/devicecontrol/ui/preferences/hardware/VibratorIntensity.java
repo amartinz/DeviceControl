@@ -16,7 +16,6 @@
  */
 package org.namelessrom.devicecontrol.ui.preferences.hardware;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;

@@ -306,7 +306,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     }
 
     private void hideAppDetails(final Animator.AnimatorListener animationListener) {
-        final ArrayList<ObjectAnimator> animators = new ArrayList<ObjectAnimator>();
+        final ArrayList<ObjectAnimator> animators = new ArrayList<>();
         final AnimatorSet animatorSet = new AnimatorSet();
         final ObjectAnimator outAnim = ObjectAnimator.ofFloat(mAppDetails, "x",
                 mAppIcon.getWidth() + 2 * AnimationHelper.getDp(R.dimen.app_margin),
@@ -395,7 +395,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         if (!startedFromActivity && !mDetailsShowing) {
             mAppDetails.bringToFront();
             // animate the details in
-            final ArrayList<ObjectAnimator> animators = new ArrayList<ObjectAnimator>();
+            final ArrayList<ObjectAnimator> animators = new ArrayList<>();
             final AnimatorSet animatorSet = new AnimatorSet();
             final ObjectAnimator outAnim = ObjectAnimator.ofFloat(mAppDetails, "x",
                     mAppDetails.getWidth(),
@@ -615,8 +615,8 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         }
 
         if (mCacheGraph != null) {
-            final ArrayList<Entry> sliceList = new ArrayList<Entry>();
-            final ArrayList<String> textList = new ArrayList<String>();
+            final ArrayList<Entry> sliceList = new ArrayList<>();
+            final ArrayList<String> textList = new ArrayList<>();
             // App ---------------------------------------------------------------------------------
             textList.add(getString(R.string.app));
             sliceList.add(new Entry(packageStats.codeSize + packageStats.externalCodeSize, 0));
@@ -741,7 +741,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         @Override protected List<AppItem> doInBackground(Void... params) {
             if (startedFromActivity) return null;
             final PackageManager pm = Application.get().getPackageManager();
-            final List<AppItem> appList = new ArrayList<AppItem>();
+            final List<AppItem> appList = new ArrayList<>();
             final List<PackageInfo> pkgInfos = pm.getInstalledPackages(0);
 
             ApplicationInfo appInfo;

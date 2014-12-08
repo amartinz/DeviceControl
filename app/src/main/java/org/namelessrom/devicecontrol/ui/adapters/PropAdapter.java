@@ -94,7 +94,7 @@ public class PropAdapter extends ArrayAdapter<Prop> {
         private final List<Prop> sourceObjects;
 
         public AppFilter(List<Prop> props) {
-            sourceObjects = new ArrayList<Prop>();
+            sourceObjects = new ArrayList<>();
             synchronized (this) {
                 sourceObjects.addAll(props);
             }
@@ -105,7 +105,7 @@ public class PropAdapter extends ArrayAdapter<Prop> {
             final String filterSeq = chars.toString().toLowerCase();
             final FilterResults result = new FilterResults();
             if (filterSeq.length() > 0) {
-                final List<Prop> filter = new ArrayList<Prop>();
+                final List<Prop> filter = new ArrayList<>();
                 for (final Prop o : mProps) {
                     if (o.getName().toLowerCase().contains(filterSeq)) { filter.add(o); }
                 }
