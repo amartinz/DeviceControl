@@ -55,6 +55,7 @@
     <string name="file_entropy_read_wakeup_threshold">/proc/sys/kernel/random/read_wakeup_threshold</string>
     <string name="file_entropy_write_wakeup_threshold">/proc/sys/kernel/random/write_wakeup_threshold</string>
     <!-- Misc -->
+    <string name="file_thermal_cpu" translatable="false">/sys/class/thermal/thermal_zone0/temp</string>
     <string name="file_fc_failsafe" translatable="false">/sys/kernel/fast_charge/failsafe</string>
     <string name="file_keyboard_light" translatable="false">/sys/class/leds/keyboard-backlight/max_brightness</string>
     <string name="file_logger_mode" translatable="false">/sys/kernel/logger_mode/logger_mode</string>

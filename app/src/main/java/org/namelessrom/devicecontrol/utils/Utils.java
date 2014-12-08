@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.BatteryManager;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.widget.Toast;
@@ -138,7 +139,7 @@ public class Utils implements DeviceConstants {
         return readOneLine(sFile, false);
     }
 
-    public static String readOneLine(final String sFile, final boolean trim) {
+    @Nullable public static String readOneLine(final String sFile, final boolean trim) {
         if (fileExists(sFile)) {
             BufferedReader brBuffer;
             try {
@@ -150,7 +151,7 @@ public class Utils implements DeviceConstants {
                     brBuffer.close();
                 }
             } catch (Exception e) {
-                return readFileViaShell(sFile);
+                return readFileViaShell(sFile, true);
             }
         }
         return null;
@@ -162,7 +163,7 @@ public class Utils implements DeviceConstants {
      * @param sFile The file to read from.
      * @return The read string OR null if not existing.
      */
-    public static String readFile(final String sFile) {
+    @Nullable public static String readFile(final String sFile) {
         if (fileExists(sFile)) {
             FileReader reader = null;
             BufferedReader brBuffer = null;
@@ -177,23 +178,13 @@ public class Utils implements DeviceConstants {
                 }
                 return sb.toString();
             } catch (Exception e) {
-                return readFileViaShell(sFile);
+                return readFileViaShell(sFile, true);
             } finally {
                 if (brBuffer != null) try { brBuffer.close(); } catch (Exception ignored) { }
                 if (reader != null) try { reader.close(); } catch (Exception ignored) { }
             }
         }
         return null;
-    }
-
-    /**
-     * Fallback if everything fails
-     *
-     * @param filePath The file to read
-     * @return The file's content
-     */
-    public static String readFileViaShell(final String filePath) {
-        return readFileViaShell(filePath, true);
     }
 
     public static String readFileViaShell(final String filePath, final boolean useSu) {
@@ -312,7 +303,7 @@ public class Utils implements DeviceConstants {
      * @param path File to read from
      * @return string array
      */
-    public static String[] readStringArray(final String path) {
+    @Nullable public static String[] readStringArray(final String path) {
         final String line = readOneLine(path);
         if (line != null) {
             return line.split(" ");

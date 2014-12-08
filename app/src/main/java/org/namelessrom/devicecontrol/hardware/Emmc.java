@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.hardware;
 
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -61,35 +62,35 @@ public class Emmc {
         return sInstance;
     }
 
-    public String getCid() {
+    @Nullable public String getCid() {
         if (cid == null) {
             cid = Utils.readOneLine("/sys/class/block/mmcblk0/device/cid");
         }
         return cid;
     }
 
-    public String getDate() {
+    @Nullable public String getDate() {
         if (date == null) {
             date = Utils.readOneLine("/sys/class/block/mmcblk0/device/date");
         }
         return date;
     }
 
-    public String getMid() {
+    @Nullable public String getMid() {
         if (mid == null) {
             mid = Utils.readOneLine("/sys/class/block/mmcblk0/device/manfid");
         }
         return mid;
     }
 
-    public String getName() {
+    @Nullable public String getName() {
         if (name == null) {
             name = Utils.readOneLine("/sys/class/block/mmcblk0/device/name");
         }
         return name;
     }
 
-    public String getRev() {
+    @Nullable public String getRev() {
         if (rev == null) {
             rev = (getCid() != null && getCid().length() > 20)
                     ? getCid().substring(18, 20)

@@ -101,7 +101,7 @@ public class GpuUtils {
         return sInstance;
     }
 
-    public String getGpuBasePath() {
+    @Nullable public String getGpuBasePath() {
         if (gpuBasePath == null) {
             final String[] paths = Application.get().getStringArray(R.array.gpu_base);
             for (final String s : paths) {
@@ -117,7 +117,7 @@ public class GpuUtils {
         return gpuBasePath;
     }
 
-    public String getGpuGovPath() {
+    @Nullable public String getGpuGovPath() {
         if (gpuGovPath == null) {
             final String base = getGpuBasePath();
             final String[] paths = Application.get().getStringArray(R.array.gpu_gov_path);
@@ -134,7 +134,7 @@ public class GpuUtils {
         return gpuGovPath;
     }
 
-    public String getGpuGovsAvailablePath() {
+    @Nullable public String getGpuGovsAvailablePath() {
         if (gpuGovsAvailablePath == null) {
             final String base = getGpuBasePath();
             final String[] paths = Application.get().getStringArray(R.array.gpu_govs_avail_path);
@@ -145,13 +145,13 @@ public class GpuUtils {
                 }
             }
             if (TextUtils.isEmpty(gpuGovsAvailablePath)) {
-                return "";
+                return null;
             }
         }
         return gpuGovsAvailablePath;
     }
 
-    public String getGpuFreqsAvailPath() {
+    @Nullable public String getGpuFreqsAvailPath() {
         if (gpuFreqsAvailPath == null) {
             final String base = getGpuBasePath();
             final String[] paths = Application.get().getStringArray(R.array.gpu_freqs_avail);
@@ -162,13 +162,13 @@ public class GpuUtils {
                 }
             }
             if (TextUtils.isEmpty(gpuFreqsAvailPath)) {
-                return "";
+                return null;
             }
         }
         return gpuFreqsAvailPath;
     }
 
-    public String getGpuFreqMaxPath() {
+    @Nullable public String getGpuFreqMaxPath() {
         if (gpuFreqMaxPath == null) {
             final String base = getGpuBasePath();
             final String[] paths = Application.get().getStringArray(R.array.gpu_freqs_max);
@@ -179,13 +179,13 @@ public class GpuUtils {
                 }
             }
             if (TextUtils.isEmpty(gpuFreqMaxPath)) {
-                return "";
+                return null;
             }
         }
         return gpuFreqMaxPath;
     }
 
-    public String getGpuFreqMinPath() {
+    @Nullable public String getGpuFreqMinPath() {
         if (gpuFreqMinPath == null) {
             final String base = getGpuBasePath();
             final String[] paths = Application.get().getStringArray(R.array.gpu_freqs_min);
@@ -196,7 +196,7 @@ public class GpuUtils {
                 }
             }
             if (TextUtils.isEmpty(gpuFreqMinPath)) {
-                return "";
+                return null;
             }
         }
         return gpuFreqMinPath;
@@ -221,15 +221,15 @@ public class GpuUtils {
         return null;
     }
 
-    public String getMaxFreq() {
+    @Nullable public String getMaxFreq() {
         return Utils.readOneLine(getGpuFreqMaxPath());
     }
 
-    public String getMinFreq() {
+    @Nullable public String getMinFreq() {
         return Utils.readOneLine(getGpuFreqMinPath());
     }
 
-    public String getGovernor() {
+    @Nullable public String getGovernor() {
         return Utils.readOneLine(getGpuGovPath());
     }
 
@@ -284,10 +284,9 @@ public class GpuUtils {
 
     @Nullable public static String[] freqsToMhz(final String[] frequencies) {
         if (frequencies == null) return null;
-        final int length = frequencies.length;
-        final String[] names = new String[length];
+        final String[] names = new String[frequencies.length];
 
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < frequencies.length; i++) {
             names[i] = toMhz(frequencies[i]);
         }
 

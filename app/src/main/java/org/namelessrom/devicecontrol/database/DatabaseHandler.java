@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.namelessrom.devicecontrol.Application;
@@ -36,41 +37,40 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants {
 
-    private static final int    DATABASE_VERSION = 9;
-    private static final String DATABASE_NAME    = "DeviceControl.db";
+    private static final int DATABASE_VERSION = 9;
+    private static final String DATABASE_NAME = "DeviceControl.db";
 
-    private static final String KEY_ID       = "id";
+    private static final String KEY_ID = "id";
     private static final String KEY_CATEGORY = "category";
-    private static final String KEY_NAME     = "name";
+    private static final String KEY_NAME = "name";
     private static final String KEY_FILENAME = "filename";
-    private static final String KEY_TRIGGER  = "trigger";
-    private static final String KEY_VALUE    = "value";
-    private static final String KEY_ENABLED  = "enabled";
+    private static final String KEY_TRIGGER = "trigger";
+    private static final String KEY_VALUE = "value";
+    private static final String KEY_ENABLED = "enabled";
 
     public static final String TABLE_BOOTUP = "boot_up";
-    public static final String TABLE_DC     = "devicecontrol";
+    public static final String TABLE_DC = "devicecontrol";
     public static final String TABLE_TASKER = "tasker";
 
     public static final String CATEGORY_DEVICE = "device";
-    public static final String CATEGORY_CPU    = "cpu";
-    public static final String CATEGORY_GPU    = "gpu";
+    public static final String CATEGORY_CPU = "cpu";
+    public static final String CATEGORY_GPU = "gpu";
     public static final String CATEGORY_EXTRAS = "extras";
     public static final String CATEGORY_SYSCTL = "sysctl";
-    public static final String CATEGORY_LMK    = "lmk";
 
     private static final String CREATE_BOOTUP_TABLE = "CREATE TABLE " + TABLE_BOOTUP + '('
             + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_NAME + " TEXT,"
             + KEY_FILENAME + " TEXT," + KEY_VALUE + " TEXT)";
-    private static final String DROP_BOOTUP_TABLE   = "DROP TABLE IF EXISTS " + TABLE_BOOTUP;
+    private static final String DROP_BOOTUP_TABLE = "DROP TABLE IF EXISTS " + TABLE_BOOTUP;
 
     private static final String CREATE_DEVICE_CONTROL_TABLE = "CREATE TABLE " + TABLE_DC + '('
             + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_VALUE + " TEXT)";
-    private static final String DROP_DEVICE_CONTROL_TABLE   = "DROP TABLE IF EXISTS " + TABLE_DC;
+    private static final String DROP_DEVICE_CONTROL_TABLE = "DROP TABLE IF EXISTS " + TABLE_DC;
 
     private static final String CREATE_TASKER_TABLE = "CREATE TABLE " + TABLE_TASKER + '('
             + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_NAME + " TEXT,"
             + KEY_TRIGGER + " TEXT," + KEY_VALUE + " TEXT," + KEY_ENABLED + " TEXT)";
-    private static final String DROP_TASKER_TABLE   = "DROP TABLE IF EXISTS " + TABLE_TASKER;
+    private static final String DROP_TASKER_TABLE = "DROP TABLE IF EXISTS " + TABLE_TASKER;
 
     private static DatabaseHandler sDatabaseHandler = null;
     private static SQLiteDatabase sDb;
@@ -176,11 +176,11 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     // All CRUD(Create, Read, Update, Delete) Operations
     //==============================================================================================
 
-    public String getValueByName(final String name, final String tableName) {
+    @Nullable public String getValueByName(final String name, final String tableName) {
         if (sDb == null) return null;
 
-        final Cursor cursor = sDb.query(tableName, new String[]{KEY_VALUE}, KEY_NAME + "=?",
-                new String[]{name}, null, null, null, null
+        final Cursor cursor = sDb.query(tableName, new String[]{ KEY_VALUE }, KEY_NAME + "=?",
+                new String[]{ name }, null, null, null, null
         );
         if (cursor != null) { cursor.moveToFirst(); }
         if (cursor == null) return null;
@@ -200,7 +200,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         values.put(KEY_NAME, name);
         values.put(KEY_VALUE, value);
 
-        sDb.delete(tableName, KEY_NAME + " = ?", new String[]{name});
+        sDb.delete(tableName, KEY_NAME + " = ?", new String[]{ name });
         sDb.insert(tableName, null, values);
         return true;
     }
@@ -214,32 +214,15 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         values.put(KEY_FILENAME, item.getFileName());
         values.put(KEY_VALUE, item.getValue());
 
-        sDb.delete(TABLE_BOOTUP, KEY_NAME + " = ?", new String[]{item.getName()});
+        sDb.delete(TABLE_BOOTUP, KEY_NAME + " = ?", new String[]{ item.getName() });
         sDb.insert(TABLE_BOOTUP, null, values);
         return true;
     }
 
-    public DataItem getItem(final int id, final String tableName) {
-        if (sDb == null) return null;
+     public List<DataItem> getAllItems(final String tableName, final String category) {
+         final List<DataItem> itemList = new ArrayList<>();
+         if (sDb == null) return itemList;
 
-        final Cursor cursor = sDb.query(tableName, new String[]{
-                        KEY_ID, KEY_CATEGORY, KEY_NAME, KEY_FILENAME, KEY_VALUE}, KEY_ID + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null
-        );
-        if (cursor != null) { cursor.moveToFirst(); }
-        if (cursor == null) return null;
-
-        final DataItem item = new DataItem(Utils.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
-
-        cursor.close();
-        return item;
-    }
-
-    public List<DataItem> getAllItems(final String tableName, final String category) {
-        if (sDb == null) return null;
-
-        final List<DataItem> itemList = new ArrayList<>();
         final String selectQuery = "SELECT * FROM " + tableName + (category.isEmpty()
                 ? ""
                 : " WHERE " + KEY_CATEGORY + " = '" + category + '\'');
@@ -266,28 +249,13 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     public boolean deleteItemByName(final String name, final String tableName) {
         if (sDb == null) return false;
 
-        sDb.delete(tableName, KEY_NAME + " = ?", new String[]{name});
+        sDb.delete(tableName, KEY_NAME + " = ?", new String[]{ name });
         return true;
     }
 
     //----------------------------------------------------------------------------------------------
     // Tasker
     //----------------------------------------------------------------------------------------------
-
-    public boolean addTaskerItem(final TaskerItem item) {
-        if (sDb == null) return false;
-
-        final ContentValues values = new ContentValues();
-        values.put(KEY_CATEGORY, item.category);
-        values.put(KEY_NAME, item.name);
-        values.put(KEY_TRIGGER, item.trigger);
-        values.put(KEY_VALUE, item.value);
-        values.put(KEY_ENABLED, (item.enabled ? "1" : "0"));
-
-        sDb.insert(TABLE_TASKER, null, values);
-        return true;
-    }
-
     public List<TaskerItem> getAllTaskerItems(final String category) {
         final List<TaskerItem> itemList = new ArrayList<>();
         if (sDb == null) return itemList;
@@ -357,7 +325,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         values.put(KEY_ENABLED, (item.enabled ? "1" : "0"));
 
         final int rowsAffected = sDb.update(TABLE_TASKER, values, KEY_ID + " = ?",
-                new String[]{String.valueOf(item.id)});
+                new String[]{ String.valueOf(item.id) });
 
         if (rowsAffected <= 0) {
             sDb.insert(TABLE_TASKER, null, values);
@@ -370,7 +338,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     public boolean deleteTaskerItem(final TaskerItem item) {
         if (sDb == null) return false;
 
-        sDb.delete(TABLE_TASKER, KEY_ID + " = ?", new String[]{String.valueOf(item.id)});
+        sDb.delete(TABLE_TASKER, KEY_ID + " = ?", new String[]{ String.valueOf(item.id) });
         return true;
     }
 

@@ -1,5 +1,6 @@
 package org.namelessrom.devicecontrol.hardware;
 
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.stericson.roottools.RootTools;
@@ -76,7 +77,7 @@ public class GovernorUtils {
         }
     }
 
-    public String[] getAvailableGovernors(final boolean isGpu) {
+    @Nullable public String[] getAvailableGovernors(final boolean isGpu) {
         String[] govArray = null;
         final String govs = Utils.readOneLine(isGpu
                 ? GpuUtils.get().getGpuGovsAvailablePath() : GOV_AVAILALBLE_PATH);

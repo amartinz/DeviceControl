@@ -1,5 +1,7 @@
 package org.namelessrom.devicecontrol.hardware;
 
+import android.support.annotation.Nullable;
+
 import org.namelessrom.devicecontrol.utils.Utils;
 
 /**
@@ -34,7 +36,7 @@ public class UksmUtils {
      *
      * @return available UKSM cpu governors
      */
-    public String[] getAvailableCpuGovernors() {
+    @Nullable public String[] getAvailableCpuGovernors() {
         String[] schedulers = null;
         final String[] aux = Utils.readStringArray(UKSM_CPU_GOV);
         if (aux != null) {

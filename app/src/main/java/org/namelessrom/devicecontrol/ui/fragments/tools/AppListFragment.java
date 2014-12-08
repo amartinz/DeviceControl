@@ -69,7 +69,6 @@ import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.objects.PackageObserver;
 import org.namelessrom.devicecontrol.ui.adapters.AppListAdapter;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
-import org.namelessrom.devicecontrol.utils.AnimationHelper;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.SortHelper;
@@ -83,37 +82,37 @@ import java.util.List;
 public class AppListFragment extends AttachFragment implements DeviceConstants,
         OnAppChoosenListener, PackageObserver.OnPackageStatsListener {
 
-    private static final int DIALOG_TYPE_DISABLE   = 0;
+    private static final int DIALOG_TYPE_DISABLE = 0;
     private static final int DIALOG_TYPE_UNINSTALL = 1;
 
     private final Handler mHandler = new Handler();
 
-    private boolean mDetailsShowing     = false;
+    private boolean mDetailsShowing = false;
     private boolean startedFromActivity = false;
 
     //==============================================================================================
-    private AppItem             mAppItem;
-    private RecyclerView        mRecyclerView;
+    private AppItem mAppItem;
+    private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
-    private AppListAdapter      mAdapter;
+    private AppListAdapter mAdapter;
 
     //==============================================================================================
-    private FrameLayout  mAppDetails;
-    private View         mAppDetailsContainer;
-    private View         mAppDetailsError;
+    private FrameLayout mAppDetails;
+    private View mAppDetailsContainer;
+    private View mAppDetailsError;
     private LinearLayout mProgressContainer;
 
     //==============================================================================================
     private ImageView mAppIcon;
-    private TextView  mAppLabel;
-    private TextView  mAppPackage;
-    private View      mAppLayer;
+    private TextView mAppLabel;
+    private TextView mAppPackage;
+    private View mAppLayer;
 
     //----------------------------------------------------------------------------------------------
-    private TextView     mStatus;
-    private TextView     mAppCode;
-    private TextView     mAppVersion;
-    private PieChart     mCacheGraph;
+    private TextView mStatus;
+    private TextView mAppCode;
+    private TextView mAppVersion;
+    private PieChart mCacheGraph;
     private LinearLayout mCacheInfo;
 
     @Override protected int getFragmentId() { return ID_TOOLS_APP_MANAGER; }
@@ -309,7 +308,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         final ArrayList<ObjectAnimator> animators = new ArrayList<>();
         final AnimatorSet animatorSet = new AnimatorSet();
         final ObjectAnimator outAnim = ObjectAnimator.ofFloat(mAppDetails, "x",
-                mAppIcon.getWidth() + 2 * AnimationHelper.getDp(R.dimen.app_margin),
+                mAppIcon.getWidth() + 2 * getResources().getDimensionPixelSize(R.dimen.app_margin),
                 mAppDetails.getWidth());
         outAnim.setDuration(500);
         animators.add(outAnim);
@@ -397,9 +396,10 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             // animate the details in
             final ArrayList<ObjectAnimator> animators = new ArrayList<>();
             final AnimatorSet animatorSet = new AnimatorSet();
-            final ObjectAnimator outAnim = ObjectAnimator.ofFloat(mAppDetails, "x",
-                    mAppDetails.getWidth(),
-                    mAppIcon.getWidth() + 2 * AnimationHelper.getDp(R.dimen.app_margin));
+            final float start = mAppDetails.getWidth();
+            final float end = mAppIcon.getWidth() +
+                    2 * getResources().getDimensionPixelSize(R.dimen.app_margin);
+            final ObjectAnimator outAnim = ObjectAnimator.ofFloat(mAppDetails, "x", start, end);
             outAnim.setDuration(500);
             animators.add(outAnim);
             final ObjectAnimator alphaAnim = ObjectAnimator.ofFloat(mAppDetails, "alpha", 0f, 1f);
@@ -700,8 +700,8 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
     }
 
     private class DisableHandler extends Handler {
-        private static final int COMMAND_OUTPUT     = 0x01;
-        private static final int COMMAND_COMPLETED  = 0x02;
+        private static final int COMMAND_OUTPUT = 0x01;
+        private static final int COMMAND_COMPLETED = 0x02;
         private static final int COMMAND_TERMINATED = 0x03;
 
         private final AppItem item;
@@ -763,7 +763,10 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                 }
                 mAdapter = new AppListAdapter(AppListFragment.this, appItems);
                 mRecyclerView.setAdapter(mAdapter);
-                AnimationHelper.animateX(mAppDetails, 0, 0, mAppDetails.getWidth());
+                final ObjectAnimator outAnim = ObjectAnimator.ofFloat(
+                        mAppDetails, "x", 0, mAppDetails.getWidth());
+                outAnim.setDuration(0);
+                outAnim.start();
             }
             invalidateOptionsMenu();
         }

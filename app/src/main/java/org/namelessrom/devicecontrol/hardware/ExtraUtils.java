@@ -1,9 +1,6 @@
 package org.namelessrom.devicecontrol.hardware;
 
 public class ExtraUtils {
-
-    //----------------------------------------------------------------------------------------------
-    public static final String FILE_MINFREE = "/sys/module/lowmemorykiller/parameters/minfree";
     public static final String ENTROPY_AVAIL = "/proc/sys/kernel/random/entropy_avail";
 
     private static ExtraUtils sInstance;

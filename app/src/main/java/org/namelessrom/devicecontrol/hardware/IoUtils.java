@@ -1,5 +1,7 @@
 package org.namelessrom.devicecontrol.hardware;
 
+import android.support.annotation.Nullable;
+
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 import com.stericson.roottools.execution.Shell;
@@ -53,7 +55,7 @@ public class IoUtils {
      *
      * @return available schedulers
      */
-    public String[] getAvailableIoSchedulers() {
+    @Nullable public String[] getAvailableIoSchedulers() {
         String[] schedulers = null;
         final String[] aux = Utils.readStringArray(IO_SCHEDULER_PATH[0]);
         if (aux != null) {

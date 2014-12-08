@@ -17,24 +17,14 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import android.text.TextUtils;
+
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 
 public class PreferenceHelper {
-    //==============================================================================================
-    // Fields
-    //==============================================================================================
-    private static PreferenceHelper ourInstance;
-
-    //==============================================================================================
-    // Initialization
-    //==============================================================================================
 
     private PreferenceHelper() { }
-
-    //==============================================================================================
-    // Generic
-    //==============================================================================================
 
     public static void remove(final String name) {
         DatabaseHandler.getInstance().deleteItemByName(name, DatabaseHandler.TABLE_DC);
@@ -47,7 +37,7 @@ public class PreferenceHelper {
     public static int getInt(final String name, final int defaultValue) {
         final String value = DatabaseHandler.getInstance()
                 .getValueByName(name, DatabaseHandler.TABLE_DC);
-        return (value == null || value.isEmpty() ? defaultValue : Utils.parseInt(value));
+        return (TextUtils.isEmpty(value) ? defaultValue : Utils.parseInt(value));
     }
 
     public static String getString(final String key) {
@@ -57,7 +47,7 @@ public class PreferenceHelper {
     public static String getString(final String name, final String defaultValue) {
         final String value = DatabaseHandler.getInstance()
                 .getValueByName(name, DatabaseHandler.TABLE_DC);
-        return (value == null || value.isEmpty() ? defaultValue : value);
+        return (TextUtils.isEmpty(value) ? defaultValue : value);
     }
 
     public static boolean getBoolean(final String name) {
@@ -67,7 +57,7 @@ public class PreferenceHelper {
     public static boolean getBoolean(final String name, final boolean defaultValue) {
         final String value = DatabaseHandler.getInstance()
                 .getValueByName(name, DatabaseHandler.TABLE_DC);
-        return (value == null || value.isEmpty() ? defaultValue : value.equals("1"));
+        return (TextUtils.isEmpty(value) ? defaultValue : value.equals("1"));
     }
 
     public static void setString(final String name, final String value) {

@@ -20,6 +20,7 @@
 
 package org.namelessrom.devicecontrol.utils;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
@@ -53,15 +54,6 @@ public class IOUtils {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
-    public boolean isInSecondaryStorage(String path) {
-        return !path.startsWith(sPrimarySdcard) && !path.startsWith("/sdcard")
-                && !path.startsWith("/mnt/sdcard");
-    }
-
-    public boolean hasSecondarySdCard() {
-        return sSecondarySdcard != null;
-    }
-
     public String getPrimarySdCard() {
         return sPrimarySdcard;
     }
@@ -70,7 +62,7 @@ public class IOUtils {
         return sSecondarySdcard;
     }
 
-    private void readMounts() {
+    @SuppressLint("SdCardPath") private void readMounts() {
         if (sSdcardsChecked) {
             return;
         }

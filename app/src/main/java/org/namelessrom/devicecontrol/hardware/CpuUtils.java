@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.hardware;
 
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.stericson.roottools.RootTools;
@@ -122,10 +123,10 @@ public class CpuUtils {
     }
 
     public int getCpuTemperature() {
-        String tmpString = Utils.readOneLine(ThermalUtils.CPU_TEMP_PATH);
-        if (!TextUtils.isEmpty(tmpString) && !tmpString.trim().isEmpty()) {
+        String tmp = Utils.readOneLine(Application.get().getString(R.string.file_thermal_cpu));
+        if (!TextUtils.isEmpty(tmp) && !tmp.trim().isEmpty()) {
             int temp;
-            try { temp = Utils.parseInt(tmpString); } catch (Exception e) { return -1; }
+            try { temp = Utils.parseInt(tmp); } catch (Exception e) { return -1; }
             temp = (temp < 0 ? 0 : temp);
             temp = (temp > 100 ? 100 : temp);
             return temp;
@@ -133,7 +134,7 @@ public class CpuUtils {
         return -1;
     }
 
-    public String[] getAvailableFrequencies(final boolean sorted) {
+    @Nullable public String[] getAvailableFrequencies(final boolean sorted) {
         final String freqsRaw = Utils.readOneLine(FREQ_AVAIL);
         if (freqsRaw != null && !freqsRaw.isEmpty()) {
             final String[] freqs = freqsRaw.split(" ");
@@ -305,23 +306,6 @@ public class CpuUtils {
         } else {
             return Application.get().getString(R.string.core_offline);
         }
-    }
-
-    /**
-     * Convert from MHz to its original frequency
-     *
-     * @param mhzString The MHz string to convert to a frequency
-     * @return the original frequency
-     */
-    public static String fromMHz(final String mhzString) {
-        if (!TextUtils.isEmpty(mhzString)) {
-            try {
-                return String.valueOf(Utils.parseInt(mhzString.replace(" MHz", "")) * 1000);
-            } catch (Exception exc) {
-                Logger.e(CpuUtils.get(), exc.getMessage());
-            }
-        }
-        return "0";
     }
 
 }

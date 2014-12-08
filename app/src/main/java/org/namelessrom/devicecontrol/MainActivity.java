@@ -137,10 +137,6 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
-            PreferenceHelper.setBoolean(DC_FIRST_START, false);
-        }
-
         // setup action bar
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -211,6 +207,10 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
                 Logger.wtf(this, "Could not delete downgrade indicator file!");
             }
             Toast.makeText(this, R.string.downgraded, Toast.LENGTH_LONG).show();
+        }
+
+        if (PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
+            PreferenceHelper.setBoolean(DC_FIRST_START, false);
         }
     }
 

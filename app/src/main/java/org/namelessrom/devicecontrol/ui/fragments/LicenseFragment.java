@@ -31,8 +31,7 @@ public class LicenseFragment extends AttachFragment implements DeviceConstants {
 
     @Override protected int getFragmentId() { return ID_LICENSES; }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_webview, container, false);
 

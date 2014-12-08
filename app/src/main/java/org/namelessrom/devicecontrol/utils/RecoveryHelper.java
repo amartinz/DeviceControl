@@ -20,6 +20,7 @@
 
 package org.namelessrom.devicecontrol.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.SparseArray;
 
@@ -55,7 +56,7 @@ public class RecoveryHelper {
         return getRecovery(id).getCommandsFile();
     }
 
-    public String getRecoveryFilePath(int id, String filePath) {
+    @SuppressLint("SdCardPath") public String getRecoveryFilePath(final int id, String filePath) {
         RecoveryInfo info = getRecovery(id);
 
         String internalStorage = info.getInternalSdcard();

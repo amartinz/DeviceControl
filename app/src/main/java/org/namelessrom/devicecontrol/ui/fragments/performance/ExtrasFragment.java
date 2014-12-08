@@ -30,7 +30,6 @@ import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.KsmUtils;
-import org.namelessrom.devicecontrol.hardware.ThermalUtils;
 import org.namelessrom.devicecontrol.hardware.UksmUtils;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
@@ -44,8 +43,7 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.List;
 
-public class ExtrasFragment extends AttachPreferenceFragment
-        implements DeviceConstants,
+public class ExtrasFragment extends AttachPreferenceFragment implements DeviceConstants,
         Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
     //==============================================================================================
     // Files
@@ -129,7 +127,7 @@ public class ExtrasFragment extends AttachPreferenceFragment
 
             mThermal = (CustomPreference) findPreference("thermal");
             if (mThermal != null) {
-                if (Utils.fileExists(ThermalUtils.MSM_THERMAL_PARAMS)
+                if (Utils.fileExists(getString(R.string.directory_msm_thermal))
                         || Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
                     mThermal.setOnPreferenceClickListener(this);
                 } else {
