@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.ui.fragments;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,9 +28,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class LicenseFragment extends AttachFragment implements DeviceConstants {
-
-    @Override protected int getFragmentId() { return ID_LICENSES; }
+public class LicenseFragment extends Fragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {

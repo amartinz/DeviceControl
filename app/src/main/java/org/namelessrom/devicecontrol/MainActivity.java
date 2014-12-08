@@ -44,8 +44,7 @@ import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
-import org.namelessrom.devicecontrol.ui.fragments.HomeFragment;
-import org.namelessrom.devicecontrol.ui.fragments.LicenseFragment;
+import org.namelessrom.devicecontrol.ui.fragments.AboutFragment;
 import org.namelessrom.devicecontrol.ui.fragments.PreferencesFragment;
 import org.namelessrom.devicecontrol.ui.fragments.device.DeviceFragment;
 import org.namelessrom.devicecontrol.ui.fragments.device.DeviceInformationFragment;
@@ -198,7 +197,9 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         menuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         menuList.setOnItemClickListener(this);
 
-        loadFragmentPrivate(ID_HOME, false);
+        loadFragmentPrivate(ID_ABOUT, false);
+        getFragmentManager().executePendingTransactions();
+
         Utils.startTaskerService();
 
         final String downgradePath = getFilesDir() + DC_DOWNGRADE;
@@ -354,9 +355,9 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         switch (i) {
             default: // slip through...
                 //--------------------------------------------------------------------------------------
-            case ID_HOME:
-                if (!onResume) mCurrentFragment = new HomeFragment();
-                mTitle = mFragmentTitle = R.string.home;
+            case ID_ABOUT:
+                if (!onResume) mCurrentFragment = new AboutFragment();
+                mTitle = mFragmentTitle = R.string.app_name;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
@@ -483,12 +484,6 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
                 mTitle = mFragmentTitle = R.string.preferences;
                 mSubFragmentTitle = -1;
                 break;
-            case ID_ABOUT:
-            case ID_LICENSES: // TODO: seperate
-                if (!onResume) mCurrentFragment = new LicenseFragment();
-                mTitle = mFragmentTitle = R.string.licenses;
-                mSubFragmentTitle = -1;
-                break;
         }
 
         restoreActionBar();
@@ -539,8 +534,8 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
     public static void setSwipeOnContent(final boolean swipeOnContent) {
         if (sSlidingMenu == null) return;
 
-        sSlidingMenu.setTouchModeAbove(
-                swipeOnContent ? SlidingMenu.TOUCHMODE_FULLSCREEN : SlidingMenu.TOUCHMODE_MARGIN);
+        sSlidingMenu.setTouchModeAbove(swipeOnContent
+                ? SlidingMenu.TOUCHMODE_FULLSCREEN : SlidingMenu.TOUCHMODE_MARGIN);
     }
 
 }

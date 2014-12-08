@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.ui.fragments;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,17 +26,11 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.views.AttachFragment;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class HomeFragment extends AttachFragment implements DeviceConstants {
-
-    @Override protected int getFragmentId() { return ID_HOME; }
-
-    @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+public class WelcomeFragment extends Fragment {
+    @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_home, container, false);
+        final View view = inflater.inflate(R.layout.fragment_about, container, false);
 
         final String appname = getString(R.string.app_name);
 
@@ -48,5 +43,4 @@ public class HomeFragment extends AttachFragment implements DeviceConstants {
 
         return view;
     }
-
 }

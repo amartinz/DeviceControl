@@ -36,7 +36,6 @@ public interface DeviceConstants {
     //==============================================================================================
     // Fragments
     //==============================================================================================
-    public static final int ID_HOME = -100;
     public static final int ID_DEVICE_INFORMATION = R.string.device_information;
     public static final int ID_FEATURES = R.string.features;
     public static final int ID_FAST_CHARGE = ID_FEATURES + 1000;
@@ -64,7 +63,6 @@ public interface DeviceConstants {
     public static final int ID_TOOLS_WIRELESS_FM = ID_TOOLS_MORE + 1300;
     public static final int ID_PREFERENCES = R.string.preferences;
     public static final int ID_ABOUT = R.string.about;
-    public static final int ID_LICENSES = ID_ABOUT + 1000;
     //----------------------------------------------------------------------------------------------
 
     //==============================================================================================

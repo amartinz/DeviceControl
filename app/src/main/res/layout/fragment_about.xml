@@ -33,7 +33,7 @@
 
             <TextView
                 android:textSize="30sp"
-                tools:textColor="@color/accent"
+                tools:textColor="?attr/colorAccent"
                 android:id="@+id/welcomeTxtView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
