@@ -30,6 +30,8 @@ import android.widget.TextView;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
+import org.namelessrom.devicecontrol.objects.Device;
+import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
@@ -65,7 +67,9 @@ public class DummyLauncher extends BaseActivity {
         mAction.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 if (!hasRoot) {
-                    RootTools.offerSuperUser();
+                    final String url = String.format("https://www.google.com/#q=how+to+root+%s",
+                            Device.get().model);
+                    AppHelper.viewInBrowser(url);
                 } else if (!hasBusyBox) {
                     RootTools.offerBusyBox();
                 }
@@ -119,13 +123,15 @@ public class DummyLauncher extends BaseActivity {
             mLauncher.setVisibility(View.VISIBLE);
 
             if (hasRoot) {
-                mStatus.setText(getString(R.string.app_warning_busybox,
-                        getString(R.string.app_name)));
+                final String status = getString(R.string.app_warning_busybox,
+                        getString(R.string.app_name)) + "\n\n" +
+                        getString(R.string.app_warning_busybox_note);
+                mStatus.setText(status);
                 mAction.setText(R.string.get_busybox);
             } else {
                 mStatus.setText(getString(R.string.app_warning_root,
                         getString(R.string.app_name)));
-                mAction.setText(R.string.get_superuser);
+                mAction.setText(R.string.more_information);
             }
         }
     }
