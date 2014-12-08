@@ -54,6 +54,7 @@
     <string name="app_manager">App manager</string>
     <string name="wireless_file_manager">Wireless file manager</string>
     <string name="licenses">Licenses</string>
+    <string name="privacy">Privacy</string>
     <string name="graphics">Graphics</string>
     <string name="display">Display</string>
     <string name="time_in_state">Time in state</string>

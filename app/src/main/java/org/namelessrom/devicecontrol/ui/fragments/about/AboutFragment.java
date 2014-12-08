@@ -39,6 +39,8 @@ public class AboutFragment extends AttachViewPagerFragment {
         titles.add(getString(R.string.support));
         fragments.add(new LicenseFragment());
         titles.add(getString(R.string.licenses));
+        fragments.add(new PrivacyFragment());
+        titles.add(getString(R.string.privacy));
 
         return new ViewPagerAdapter(getChildFragmentManager(), fragments, titles);
     }
