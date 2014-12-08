@@ -36,15 +36,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:text="@string/support"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
             android:fontFamily="@string/font_thin"
             android:textAlignment="center"
             android:gravity="center" />
 
         <TextView
-            android:textSize="16sp"
-            android:gravity="center"
             android:id="@+id/detailsTxtView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -53,15 +49,17 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
             tools:text="@string/donate_message"
-            android:layout_below="@+id/supportTxtView"
             android:fontFamily="@string/font_light"
-            android:textAlignment="center" />
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:gravity="top|center"
+            android:layout_gravity="top" />
 
         <Button style="?android:borderlessButtonStyle"
             android:id="@+id/donateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/donate"
+            android:text="@string/donate_"
             android:textColor="?attr/colorAccent"
             android:layout_gravity="right" />
 
