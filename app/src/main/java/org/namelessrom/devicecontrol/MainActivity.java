@@ -138,7 +138,7 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
 
     @Override protected void onResume() {
         super.onResume();
-        final String pollFishApiKey = Configuration.getApiKey();
+        final String pollFishApiKey = Configuration.getPollfishApiKeyDc();
         if (!TextUtils.equals("---", pollFishApiKey)
                 && PreferenceHelper.getBoolean("show_pollfish", false)) {
             Logger.v(this, "PollFish.init()");
