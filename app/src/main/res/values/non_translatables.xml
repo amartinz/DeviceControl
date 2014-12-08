@@ -28,6 +28,7 @@
     <string name="emmc" translatable="false">eMMC</string>
     <string name="emmc_cid" translatable="false">CID</string>
     <string name="emmc_mid" translatable="false">MID</string>
+    <string name="heart" translatable="false">\u2665</string>
     <string name="msm_dcvs" translatable="false">MSM DCVS</string>
     <string name="empty" translatable="false" />
     <string name="intelli_plug" translatable="false">Intelli-Plug</string>

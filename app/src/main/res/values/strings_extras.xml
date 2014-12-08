@@ -18,8 +18,10 @@
     <!-- App -->
     <string name="permission_api_label">access Device Control API</string>
     <string name="permission_api_description">Allows the app to access and use the Device Control API.\nThis means the app can control device features, including manipulating your device\'s hardware.</string>
-    <string name="donate">Donate \u2665</string>
-    <string name="donate_summary">Please consider a donation if you like this app and would like to contribute in further development of it.\nThank you! - Alex</string>
+    <string name="support">Support</string>
+    <string name="support_message">I hope you enjoy Device Control as much as i do developing it.\nI am using this application daily myself and would like to make you happy with providing it free of charge.</string>
+    <string name="donate">Donate</string>
+    <string name="donate_message">However, if you like this app and would like to contribute in further development of it, please consider a donation.\nIt would really encourage me :)\n\nThank you!</string>
     <!-- Build.Prop -->
     <string name="performance_settings_warning_title">Proceed with caution</string>
     <string name="performance_settings_warning_header">Warning</string>

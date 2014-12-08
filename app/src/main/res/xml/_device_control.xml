@@ -17,17 +17,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="prefs_app"
-        android:title="@string/app_name">
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:key="pref_donate"
-            android:summary="@string/donate_summary"
-            android:title="@string/donate" />
-
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
-
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="prefs_tools"
         android:title="@string/tools">
 
@@ -92,8 +81,7 @@
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="prefs_version"
             android:summary="@string/empty"
-            android:title="@string/empty"
-            android:selectable="false" />
+            android:title="@string/empty" />
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 

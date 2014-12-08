@@ -24,7 +24,6 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
@@ -33,7 +32,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -206,9 +204,7 @@ public class PreferencesFragment extends AttachPreferenceFragment
 
     @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
             @NonNull final Preference preference) {
-        if (TextUtils.equals("pref_donate", preference.getKey())) {
-            return AppHelper.startExternalDonation(getActivity());
-        } else if (mFlasherConfig == preference) {
+        if (mFlasherConfig == preference) {
             MainActivity.loadFragment(getActivity(), ID_TOOLS_FLASHER_PREFS);
             return true;
         } else if (mSetOnBoot == preference) {

@@ -84,7 +84,7 @@ public class AboutFragment extends AttachFragment {
     }
 
     private class SamplePagerAdapter extends FragmentPagerAdapter {
-        private static final int COUNT = 2;
+        private static final int COUNT = 3;
 
         private final ArrayList<Fragment> fragments = new ArrayList<>(COUNT);
         private final ArrayList<CharSequence> titles = new ArrayList<>(COUNT);
@@ -93,6 +93,8 @@ public class AboutFragment extends AttachFragment {
             super(fm);
             fragments.add(new WelcomeFragment());
             titles.add(getString(R.string.about));
+            fragments.add(new SupportFragment());
+            titles.add(getString(R.string.support));
             fragments.add(new LicenseFragment());
             titles.add(getString(R.string.licenses));
         }
