@@ -7,12 +7,19 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v7-appcompat \
     android-support-v7-recyclerview \
     ion \
+    play \
 
 LOCAL_ASSET_DIR    := $(LOCAL_PATH)/assets
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
 LOCAL_SRC_FILES    := \
     $(call all-java-files-under,java) \
     aidl/org/namelessrom/devicecontrol/api/IRemoteService.aidl \
+
+LOCAL_AAPT_INCLUDE_ALL_RESOURCES := true
+
+## google-play-services
+
+LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/google/google_play_services/libproject/google-play-services_lib/res
 
 ## android-support-v7-appcompat
 
@@ -31,6 +38,7 @@ LOCAL_AAPT_FLAGS := \
     --auto-add-overlay \
     --extra-packages android.support.v7.appcompat \
     --extra-packages com.github.mikephil.charting \
+    --extra-packages com.google.android.gms \
 
 ######
 
