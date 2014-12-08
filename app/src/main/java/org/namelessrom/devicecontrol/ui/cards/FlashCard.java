@@ -49,7 +49,7 @@ public class FlashCard extends Card implements RequestFileActivity.RequestFileCa
     private static final String FILES = "FILES";
 
     private RebootHelper mRebootHelper;
-    private List<File> mFiles = new ArrayList<File>();
+    private List<File> mFiles = new ArrayList<>();
     private LinearLayout mLayout;
     private Item         mAdd;
     private Item         mInstall;

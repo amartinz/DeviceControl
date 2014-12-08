@@ -43,7 +43,7 @@ public class ServerWrapper {
 
     public boolean isStopped = false;
 
-    private static final ArrayList<WebSocket> _sockets = new ArrayList<WebSocket>();
+    private static final ArrayList<WebSocket> _sockets = new ArrayList<>();
 
     private AsyncHttpServer mServer;
     private AsyncServerSocket mServerSocket;
@@ -190,8 +190,8 @@ public class ServerWrapper {
                     res.send("An error occured!");
                     return;
                 }
-                final List<File> directories = new ArrayList<File>();
-                final List<File> files = new ArrayList<File>();
+                final List<File> directories = new ArrayList<>();
+                final List<File> files = new ArrayList<>();
                 for (final File f : fs) {
                     if (f.exists()) {
                         if (f.isDirectory()) {
@@ -202,7 +202,7 @@ public class ServerWrapper {
                     }
                 }
 
-                final ArrayList<FileEntry> fileEntries = new ArrayList<FileEntry>();
+                final ArrayList<FileEntry> fileEntries = new ArrayList<>();
                 if (directories.size() > 0) {
                     Collections.sort(directories, SortHelper.sFileComparator);
                     for (final File f : directories) {

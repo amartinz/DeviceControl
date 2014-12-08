@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public abstract class AbstractSetupData implements SetupDataCallbacks {
     protected Context mContext;
-    private ArrayList<SetupDataCallbacks> mListeners = new ArrayList<SetupDataCallbacks>();
+    private ArrayList<SetupDataCallbacks> mListeners = new ArrayList<>();
     private PageList mPageList;
     private TaskerItem item = new TaskerItem();
 

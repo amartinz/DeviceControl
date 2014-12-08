@@ -74,7 +74,7 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
 
     private       PropAdapter mAdapter = null;
     private       EditText    mFilter  = null;
-    private final List<Prop>  mProps   = new ArrayList<Prop>();
+    private final List<Prop>  mProps   = new ArrayList<>();
 
     private boolean mLoadFull = false;
 

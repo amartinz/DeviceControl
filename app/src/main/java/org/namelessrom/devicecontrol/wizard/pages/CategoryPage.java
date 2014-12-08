@@ -69,15 +69,15 @@ public class CategoryPage extends Page {
             // TODO: modify once we have actions with seperate categories
             final ArrayList<ActionProcessor.Entry> categories = ActionProcessor.getCategories();
             final ArrayList<String> entries =
-                    new ArrayList<String>(ActionProcessor.getCategories().size());
+                    new ArrayList<>(ActionProcessor.getCategories().size());
             final ArrayList<String> values =
-                    new ArrayList<String>(ActionProcessor.getCategories().size());
+                    new ArrayList<>(ActionProcessor.getCategories().size());
             for (final ActionProcessor.Entry e : categories) {
                 entries.add(e.name);
                 values.add(e.value);
             }
 
-            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+            final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                     android.R.layout.simple_list_item_single_choice, entries);
 
             listView.setAdapter(adapter);

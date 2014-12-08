@@ -78,7 +78,7 @@ public final class RootToolsInternalMethods {
 
             String line;
             String[] fields;
-            final ArrayList<Symlink> symlink = new ArrayList<Symlink>();
+            final ArrayList<Symlink> symlink = new ArrayList<>();
             while ((line = lnr.readLine()) != null) {
                 RootTools.log(line);
                 fields = line.split(" ");
@@ -290,7 +290,7 @@ public final class RootToolsInternalMethods {
     public boolean checkUtil(String util) {
         if (RootTools.findBinary(util)) {
 
-            final List<String> binaryPaths = new ArrayList<String>();
+            final List<String> binaryPaths = new ArrayList<>();
             binaryPaths.addAll(RootTools.lastFoundBinaryPaths);
 
             for (String path : binaryPaths) {
@@ -380,7 +380,7 @@ public final class RootToolsInternalMethods {
      * @return a boolean that will indicate whether or not the file exists.
      */
     public boolean exists(final String file) {
-        final List<String> result = new ArrayList<String>();
+        final List<String> result = new ArrayList<>();
 
         CommandCapture command = new CommandCapture(0, false, "ls " + file) {
             @Override
@@ -421,7 +421,7 @@ public final class RootToolsInternalMethods {
         }
 
         //Avoid concurrent modification...
-        final List<String> final_result = new ArrayList<String>();
+        final List<String> final_result = new ArrayList<>();
         final_result.addAll(result);
 
         for (final String line : final_result) {
@@ -448,7 +448,7 @@ public final class RootToolsInternalMethods {
             RootTools.remount("/system", "rw");
 
             if (RootTools.findBinary(util)) {
-                final List<String> paths = new ArrayList<String>();
+                final List<String> paths = new ArrayList<>();
                 paths.addAll(RootTools.lastFoundBinaryPaths);
                 for (final String path : paths) {
                     final CommandCapture command =
@@ -510,7 +510,7 @@ public final class RootToolsInternalMethods {
         boolean found = false;
         RootTools.lastFoundBinaryPaths.clear();
 
-        final List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<>();
         final String[] places = {
                 "/sbin/", "/system/bin/", "/system/xbin/", "/data/local/xbin/",
                 "/data/local/bin/", "/system/sd/xbin/", "/system/bin/failsafe/", "/data/local/"};
@@ -604,7 +604,7 @@ public final class RootToolsInternalMethods {
             throw new Exception("Path is null, please specifiy a path");
         }
 
-        final List<String> results = new ArrayList<String>();
+        final List<String> results = new ArrayList<>();
 
         CommandCapture command = new CommandCapture(Constants.BBA, false, path + "busybox --list") {
 
@@ -732,7 +732,7 @@ public final class RootToolsInternalMethods {
                 @Override
                 public void output(int id, String line) {
                     if (id == Constants.IAG) {
-                        Set<String> ID = new HashSet<String>(Arrays.asList(line.split(" ")));
+                        Set<String> ID = new HashSet<>(Arrays.asList(line.split(" ")));
                         for (String userid : ID) {
                             RootTools.log(userid);
 
@@ -849,7 +849,7 @@ public final class RootToolsInternalMethods {
             lnr = new LineNumberReader(fr);
             String line;
             String[] fields;
-            final ArrayList<Mount> mounts = new ArrayList<Mount>();
+            final ArrayList<Mount> mounts = new ArrayList<>();
             while ((line = lnr.readLine()) != null) {
                 RootTools.log(line);
                 fields = line.split(" ");
@@ -987,7 +987,7 @@ public final class RootToolsInternalMethods {
         RootTools.log("Looking for Symlink for " + file);
 
         try {
-            final List<String> results = new ArrayList<String>();
+            final List<String> results = new ArrayList<>();
 
             CommandCapture command = new CommandCapture(Constants.GSYM, false, "ls -l " + file) {
 

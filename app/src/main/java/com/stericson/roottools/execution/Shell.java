@@ -45,7 +45,7 @@ public class Shell {
     private final Process            proc;
     private final BufferedReader     in;
     private final OutputStreamWriter out;
-    private final List<Command> commands = new ArrayList<Command>();
+    private final List<Command> commands = new ArrayList<>();
 
     //indicates whether or not to close the shell
     private boolean close = false;
@@ -341,9 +341,7 @@ public class Shell {
                         return;
                     }
                 }
-            } catch (IOException e) {
-                RootTools.log(e.getMessage(), 2, e);
-            } catch (InterruptedException e) {
+            } catch (IOException | InterruptedException e) {
                 RootTools.log(e.getMessage(), 2, e);
             } finally {
                 write = 0;

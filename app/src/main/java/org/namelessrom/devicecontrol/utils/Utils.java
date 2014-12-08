@@ -331,7 +331,7 @@ public class Utils implements DeviceConstants {
 
         final String[] files = output.trim().split("\n");
         if (blacklist != null) {
-            final ArrayList<String> filtered = new ArrayList<String>();
+            final ArrayList<String> filtered = new ArrayList<>();
             for (final String s : files) {
                 if (!Utils.isFileBlacklisted(s, blacklist)) {
                     filtered.add(s);

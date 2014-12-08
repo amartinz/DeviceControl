@@ -234,7 +234,7 @@ public class CpuUtils {
                 public void commandCompleted(int id, int exitcode) {
                     final List<String> result =
                             Arrays.asList(outputCollector.toString().split(" "));
-                    final List<String> tmpList = new ArrayList<String>();
+                    final List<String> tmpList = new ArrayList<>();
                     String tmpMax = "", tmpMin = "";
 
                     if (result.size() <= 0) {

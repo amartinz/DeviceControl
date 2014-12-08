@@ -162,7 +162,7 @@ public class CpuStateView extends LinearLayout implements CpuUtils.StateListener
     @Override public void onStates(final CpuUtils.State states) {
         mStatesView.removeAllViews();
 
-        final List<String> extraStates = new ArrayList<String>();
+        final List<String> extraStates = new ArrayList<>();
         for (CpuStateMonitor.CpuState state : states.states) {
             if (state.duration > 0) {
                 generateStateRow(state, mStatesView, states.totalTime);

@@ -232,7 +232,7 @@ public class UksmFragment extends AttachPreferenceFragment
     private class RefreshTask extends AsyncTask<Void, Void, List<String>> {
 
         @Override protected List<String> doInBackground(Void... params) {
-            final ArrayList<String> list = new ArrayList<String>();
+            final ArrayList<String> list = new ArrayList<>();
 
             list.add(Utils.readOneLine(UksmUtils.UKSM_PAGES_SHARED));   // 0
             list.add(Utils.readOneLine(UksmUtils.UKSM_PAGES_SCANNED));  // 1

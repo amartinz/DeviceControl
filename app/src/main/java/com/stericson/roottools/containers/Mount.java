@@ -38,7 +38,7 @@ public class Mount {
         mDevice = device;
         mMountPoint = path;
         mType = type;
-        mFlags = new LinkedHashSet<String>(Arrays.asList(flagsStr.split(",")));
+        mFlags = new LinkedHashSet<>(Arrays.asList(flagsStr.split(",")));
     }
 
     public File getDevice() { return mDevice; }

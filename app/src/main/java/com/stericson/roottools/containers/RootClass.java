@@ -100,7 +100,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
 
         public AnnotationsFinder() throws IOException {
             System.out.println("Discovering root class annotations...");
-            classFiles = new ArrayList<File>();
+            classFiles = new ArrayList<>();
             lookup(new File("src"), classFiles);
             System.out.println("Done discovering annotations. Building jar file.");
             File builtPath = getBuiltPath();
@@ -147,7 +147,7 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                                     sb.toString()
                     };
                 } else {
-                    final ArrayList<String> al = new ArrayList<String>();
+                    final ArrayList<String> al = new ArrayList<>();
                     al.add("jar");
                     al.add("cf");
                     al.add("anbuild.jar");
@@ -253,8 +253,6 @@ public class RootClass /* #ANNOTATIONS extends AbstractProcessor */ {
                             break;
                     }
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {

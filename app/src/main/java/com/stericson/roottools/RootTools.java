@@ -73,7 +73,7 @@ public final class RootTools {
     // --------------------
 
     public static       boolean      debugMode            = false;
-    public static final List<String> lastFoundBinaryPaths = new ArrayList<String>();
+    public static final List<String> lastFoundBinaryPaths = new ArrayList<>();
     public static String utilPath;
 
     /**

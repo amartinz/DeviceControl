@@ -50,7 +50,7 @@ public class CwmBasedRecovery extends RecoveryInfo {
     public String[] getCommands(Context context, String[] items, String[] originalItems,
             boolean wipeData, boolean wipeCaches, String backupFolder, String backupOptions) {
 
-        List<String> commands = new ArrayList<String>();
+        List<String> commands = new ArrayList<>();
 
         int size = items.length, i = 0;
 
@@ -122,7 +122,7 @@ public class CwmBasedRecovery extends RecoveryInfo {
             if (Build.VERSION.SDK_INT >= 14) {
                 volumePaths = volumePaths(paramContext);
                 if (volumePaths != null) {
-                    volumePathsList = new ArrayList<String>();
+                    volumePathsList = new ArrayList<>();
                     path = Environment.getExternalStorageDirectory().getAbsolutePath();
                 }
             }
@@ -165,7 +165,7 @@ public class CwmBasedRecovery extends RecoveryInfo {
                     .getSystemService(Context.STORAGE_SERVICE);
             return (String[]) (String[]) localStorageManager.getClass()
                     .getMethod("getVolumePaths", new Class[0])
-                    .invoke(localStorageManager, new Object[0]);
+                    .invoke(localStorageManager);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
@@ -178,9 +178,9 @@ public class CwmBasedRecovery extends RecoveryInfo {
                     .getSystemService(Context.STORAGE_SERVICE);
             Object localObject = localStorageManager.getClass()
                     .getMethod("getPrimaryVolume", new Class[0])
-                    .invoke(localStorageManager, new Object[0]);
+                    .invoke(localStorageManager);
             return (String) localObject.getClass().getMethod("getPath", new Class[0])
-                    .invoke(localObject, new Object[0]);
+                    .invoke(localObject);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;

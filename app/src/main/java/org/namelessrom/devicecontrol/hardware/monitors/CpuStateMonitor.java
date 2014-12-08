@@ -37,7 +37,7 @@ import java.util.Collections;
 
 public class CpuStateMonitor implements DeviceConstants {
 
-    private final ArrayList<CpuState> mStates = new ArrayList<CpuState>();
+    private final ArrayList<CpuState> mStates = new ArrayList<>();
 
     private static CpuStateMonitor mCpuStateMonitor;
 

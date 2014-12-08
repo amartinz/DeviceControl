@@ -143,10 +143,6 @@ public class Remounter {
             }
 
             return null;
-        } catch (IOException e) {
-            if (RootTools.debugMode) {
-                e.printStackTrace();
-            }
         } catch (Exception e) {
             if (RootTools.debugMode) {
                 e.printStackTrace();

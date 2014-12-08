@@ -45,7 +45,7 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
     private String root        = "/";
     private String currentPath = "/";
 
-    private ArrayList<String> breadcrumbs = new ArrayList<String>();
+    private ArrayList<String> breadcrumbs = new ArrayList<>();
 
     private String fileType = "";
 
@@ -101,7 +101,7 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
         switch (shellOutput.id) {
             case ID_GET_FILES:
                 final String[] output = shellOutput.output.split("\n");
-                final ArrayList<File> fileList = new ArrayList<File>(output.length);
+                final ArrayList<File> fileList = new ArrayList<>(output.length);
                 if (!currentPath.equals(root)) {
                     fileList.add(new File(currentPath + File.separator + "../"));
                 }

@@ -219,18 +219,19 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
     private int getForceSummary(final String value) {
         if (value == null || value.isEmpty()) return R.string.unknown;
 
-        if ("0".equals(value)) {
-            return R.string.fast_charge_0;
-        } else if ("1".equals(value)) {
-            if (isNewVersion) {
-                return R.string.fast_charge_1_new;
-            } else {
-                return R.string.fast_charge_1_old;
-            }
-        } else if ("2".equals(value)) {
-            return R.string.fast_charge_2;
-        } else {
-            return R.string.unknown;
+        switch (value) {
+            case "0":
+                return R.string.fast_charge_0;
+            case "1":
+                if (isNewVersion) {
+                    return R.string.fast_charge_1_new;
+                } else {
+                    return R.string.fast_charge_1_old;
+                }
+            case "2":
+                return R.string.fast_charge_2;
+            default:
+                return R.string.unknown;
         }
     }
 
