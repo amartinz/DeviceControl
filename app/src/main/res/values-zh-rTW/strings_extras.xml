@@ -16,3 +16,51 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources/>
+  <string name="permission_api_label">訪問設備控制 API</string>
+  <string name="permission_api_description">允許應用訪問和使用設備控制 API介面。\n這意味著應用程式可以控制設備的功能，包括控制您的設備的硬體。</string>
+  <string name="donate">捐贈 \u2665</string>
+  <string name="donate_summary">如果你喜歡這個應用並想幫助我們進一步的開發，請考慮捐贈。謝謝！- Alex</string>
+  <string name="performance_settings_warning_title">謹慎使用</string>
+  <string name="performance_settings_warning_header">警告</string>
+  <string name="build_prop_mods">修改Build.prop</string>
+  <string name="switches">開關</string>
+  <string name="buildprop_title">修改build.prop（需要重新開機)</string>
+  <string name="buildprop_settings_warning">這些是實驗性的設置，對他們所做的任何更改都可能導致不穩定、崩潰、資料丟失或硬體故障。</string>
+  <string name="nonprop_cat_title">init.d 腳本相關修改</string>
+  <string name="wifi_scan_interval_title">Wifi 掃描間隔</string>
+  <string name="wifi_scan_interval_summary">當沒有已儲存的可用接入點時WiFi掃描時間間隔</string>
+  <string name="wifi_scan_alt_summary">Wifi 掃描間隔: %s</string>
+  <string name="max_events_title">視窗管理器每秒最大運行事件數</string>
+  <string name="max_events_summary">系統允許每秒運行事件數的值</string>
+  <string name="max_events_alt_summary">系統事件的最大數目： %s</string>
+  <string name="ring_delay_title">電話鈴聲延遲</string>
+  <string name="ring_delay_summary">系統接收到電話請求到鈴聲響起的時間</string>
+  <string name="ring_delay_alt_summary">來電延遲： %s</string>
+  <string name="vm_heapsize_title">Dalvik 緩存 大小</string>
+  <string name="vm_heapsize_summary">此參數控制 Dalvik 虛擬機器有權訪問的緩存的大小</string>
+  <string name="vm_heapsize_alt_summary">Dalvik 虛擬機器緩存大小: %s</string>
+  <string name="fast_up_title">HSUPA 上傳速度限制</string>
+  <string name="fast_up_summary">* 警告 * 如果您更改此值，它會在當這些值不存在時向您的 build.prop 添加所需的值</string>
+  <string name="prox_delay_title">距離感測器延遲</string>
+  <string name="prox_delay_summary">控制打電話時手機離開頭部到螢幕重新點亮的延時</string>
+  <string name="prox_delay_alt_summary">設置距離感測器為: %s</string>
+  <string name="sleep_title">夜間睡眠模式</string>
+  <string name="sleep_summary">修改夜間睡眠策略</string>
+  <string name="sleep_alt_summary">當前的睡眠模式: %s</string>
+  <string name="jit_title">JIT編譯器</string>
+  <string name="jit_summary">啟用/禁用 JIT 編譯器</string>
+  <string name="tcp_stack_title">優化TCP協議棧</string>
+  <string name="tcp_stack_summary">修改緩衝區大小來獲得更好的性能</string>
+  <string name="gpu_acceleration">GPU 加速</string>
+  <string name="gpu_acceleration_summary">啟用硬體加速，由GPU代替CPU進行介面繪製</string>
+  <string name="lcd_density">改變LCD密度</string>
+  <string name="lcd_density_summary">設置您所需的LCD密度</string>
+  <string name="lcd_density_alt_summary">螢幕密度： %s</string>
+  <string name="task_type">任務類型</string>
+  <string name="next">下一步</string>
+  <string name="prev">上一步</string>
+  <string name="review">審查</string>
+  <string name="finish">完成</string>
+  <string name="submit_confirm_message">你想要繼續嗎？</string>
+  <string name="edit">編輯</string>
+</resources>
