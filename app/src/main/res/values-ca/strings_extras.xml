@@ -17,8 +17,6 @@
 -->
 <resources>
   <string name="permission_api_description">Permet a l\'aplicació l\'accés i ús del Device Control de l\'API.\nAixò vol dir que l\'aplicació pot controlar característiques del dispositiu, incloent manipulació en el hardware del dispositiu.</string>
-  <string name="donate">Donació \u2665</string>
-  <string name="donate_summary">Si us plau consideri una donació si t\'agrada aquesta aplicació i desitja contribuir en el desenvolupament d\'ella.\nGràcies! -Alex</string>
   <string name="performance_settings_warning_title">Procedir amb Precaució</string>
   <string name="performance_settings_warning_header">Perill</string>
   <string name="build_prop_mods">Modificacions del build.prop</string>

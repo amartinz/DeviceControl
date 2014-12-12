@@ -20,7 +20,6 @@
   <string name="app_version_code">Номер версии: %s</string>
   <string name="app_warning_busybox">Учтите, что %s требует BusyBox для полноценной работы!</string>
   <string name="get_busybox">Установить BusyBox</string>
-  <string name="get_superuser">Установить Superuser</string>
   <string name="checking_root">Запрос прав суперпользователя&#8230;</string>
   <string name="checking_busybox">Проверка busybox&#8230;</string>
   <string name="exit">Выход</string>
@@ -49,6 +48,7 @@
   <string name="app_manager">Диспетчер приложений</string>
   <string name="wireless_file_manager">Беспроводной файловый менеджер</string>
   <string name="licenses">Лицензии</string>
+  <string name="privacy">Конфиденциальность</string>
   <string name="graphics">Графика</string>
   <string name="display">Экран</string>
   <string name="time_in_state">Время в состоянии</string>
@@ -58,8 +58,6 @@
   <string name="deep_sleep">«Глубокий сон»</string>
   <string name="device_information">Информация об устройстве</string>
   <string name="hotplugging">Горячая замена</string>
-  <string name="mpdecision_summary_on">MPDecision работает.</string>
-  <string name="mpdecision_summary_off">MPDecision отключен.</string>
   <string name="thermal">Тепловая служба</string>
   <string name="core_control">Управление ядрами</string>
   <string name="core_control_summary">Выключает ядра процессора если достигнут предел температуры</string>
@@ -77,7 +75,7 @@
   <string name="fast_charge">Быстрая зарядка</string>
   <string name="fast_charge_summary">Позволяет изменять уровень зарядки</string>
   <string name="force_fast_charge">Использовать быструю зарядку</string>
-  <string name="fast_charge_0">0 - отключено</string>
+  <string name="fast_charge_0">0 - отключен</string>
   <string name="fast_charge_1_new">1 - использовать стандартную силу тока по USB</string>
   <string name="fast_charge_1_old">1 - включено</string>
   <string name="fast_charge_2">2 - использовать заданную силу тока</string>
@@ -154,7 +152,6 @@
   <string name="tasker">Планировщик</string>
   <string name="tasklist">Список задач</string>
   <string name="tasklist_summary">Установите, измените, включите или отключите задачи.</string>
-  <string name="list_empty">Вы ещё не создали ни одной задачи!\nНе хотите ли добавить что-нибудь? :)\n\n(Нажмите \"+\" вверху справа)</string>
   <string name="add_task">Добавить задачу</string>
   <string name="edit_task">Изменить задачу</string>
   <string name="delete_task">Удалить задачу</string>
@@ -228,6 +225,7 @@
   <string name="pages_volatile">Необъединяемых страниц</string>
   <string name="enable_ksm">Включить KSM</string>
   <string name="reduce_memory_increase_cpu_load">Может снизить использование памяти, но также использует немного больше мощности процессора</string>
+  <string name="uksm_cpu_governor">Схема питания процессора</string>
   <string name="pages_to_scan">Страниц для сканирования</string>
   <string name="sleep_between_scans">Период между сканированием (в миллисекундах)</string>
   <string name="deferred_timer">Отсроченный таймер</string>
@@ -258,12 +256,6 @@
   <string name="flash_warning">Вы собираетесь обновить ПО!\nВ случае согласия, устройство перезагрузится в режим восстановления и обновит выбранные элементы\n\nЖелаете продолжить?</string>
   <string name="both">Оба</string>
   <string name="pick_file">Выбрать файл</string>
-  <string name="multi_user_do_not_use">Не использовать многопользовательский режим</string>
-  <string name="multi_user_do_not_use_summary">Отметить, если у вас возникли проблемы прошивки zip файлов с SD-карты</string>
-  <string name="accent">Контрастный цвет</string>
-  <string name="accent_summary">Используйте ваш любимый цвет!</string>
-  <string name="color_reset">Сбросить настройки цвета</string>
-  <string name="color_pick">Выбрать цвет</string>
   <string name="something_went_wrong">Извините, но что-то пошло не так!\nПожалуйста попробуйте еще раз!</string>
   <string name="recovery">Режим восстановления</string>
   <string name="bootloader">Загрузчик</string>
@@ -273,19 +265,6 @@
   <string name="warning_data_corruption">Может привести к повреждению данных, если включена</string>
   <string name="read_ahead">Упреждающее чтение</string>
   <string name="filesystem">Файловая система</string>
-  <string name="low_memory_killer">Очистка памяти</string>
-  <string name="select_preset">Выберите пресет&#8230;</string>
-  <string name="very_light">Очень легкий</string>
-  <string name="light">Легкий</string>
-  <string name="medium">Средний</string>
-  <string name="very_aggressive">Очень агрессивный</string>
-  <string name="aggressive">Агрессивный</string>
-  <string name="foreground_applications">Приоритетные приложения</string>
-  <string name="visible_applications">Видимые приложения</string>
-  <string name="secondary_server">Дополнительный сервер</string>
-  <string name="hidden_applications">Скрытые приложения</string>
-  <string name="content_providers">Поставщики контента</string>
-  <string name="empty_applications">Пустые приложения</string>
   <string name="user_interface">Интерфейс</string>
   <string name="swipe_on_content">Свайп по контенту</string>
   <string name="swipe_on_content_summary">Перейти в меню при свайпе по контенту</string>
@@ -319,4 +298,5 @@
   <string name="system">Система</string>
   <string name="emmc_date">Дата</string>
   <string name="setup_complete">Установка завершена</string>
+  <string name="string_default">По умолчанию</string>
 </resources>

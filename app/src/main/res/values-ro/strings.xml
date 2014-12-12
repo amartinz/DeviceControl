@@ -24,7 +24,6 @@
   <string name="app_warning_busybox">Reţineţi că %s are nevoie de BusyBox pentru a funcţiona pe deplin!</string>
   <string name="start_wizard">Pornirea expertului</string>
   <string name="get_busybox">Instalează BusyBox</string>
-  <string name="get_superuser">Instalează Superuser</string>
   <string name="checking_root">Se verifică accesul root&#8230;</string>
   <string name="checking_busybox">Se verifică busybox&#8230;</string>
   <string name="exit">Ieșire</string>
@@ -54,6 +53,7 @@
   <string name="app_manager">App manager</string>
   <string name="wireless_file_manager">Manager fişiere Wireless</string>
   <string name="licenses">Licenţe</string>
+  <string name="privacy">Confidentialitate</string>
   <string name="graphics">Grafica</string>
   <string name="display">Afişare</string>
   <string name="time_in_state">Durata în status</string>
@@ -63,8 +63,6 @@
   <string name="deep_sleep">\"Deep Sleep\"</string>
   <string name="device_information">Informații despre dispozitiv</string>
   <string name="hotplugging">Hotplugging</string>
-  <string name="mpdecision_summary_on">MPDecision este activat.</string>
-  <string name="mpdecision_summary_off">MPDecision este dezactivat.</string>
   <string name="thermal">Conductor Termic</string>
   <string name="core_control">Control Nucleu</string>
   <string name="core_control_summary">Dezactivează nucleurile cpu dacă temperatura limită este atinsă</string>
@@ -159,7 +157,6 @@
   <string name="tasker">Manager sarcini</string>
   <string name="tasklist">Listă de activități</string>
   <string name="tasklist_summary">Configurare, modificare, activare sau dezactivare sarcini.</string>
-  <string name="list_empty">Nu ați setat încă nici un element!\nCe ar fi să adaugi câteva? :)\n\n(Apasă \"+\" din dreapta sus)</string>
   <string name="add_task">Adauga sarcina</string>
   <string name="edit_task">Editare sarcina</string>
   <string name="delete_task">Ștergere sarcina</string>
@@ -233,6 +230,7 @@
   <string name="pages_volatile">Pagini volatile</string>
   <string name="enable_ksm">Activează KSM</string>
   <string name="reduce_memory_increase_cpu_load">Poate reduce folosirea memoriei dar folosește CPU mai mult</string>
+  <string name="uksm_cpu_governor">Guvernator CPU</string>
   <string name="pages_to_scan">Pagini de scanat</string>
   <string name="sleep_between_scans">Pauză intre scanări (ms)</string>
   <string name="deferred_timer">Timp întârziere</string>
@@ -264,12 +262,6 @@
   <string name="flash_warning">Ești pe cale să flash-uiești!\nÎn continuare, dispozitivul tău va reporni în modul de recuperare și va flash-ui elementele selectate.\n\nDoriți să continuați?</string>
   <string name="both">Ambele</string>
   <string name="pick_file">Alege un fişier</string>
-  <string name="multi_user_do_not_use">Nu utilizaţi modul multiutilizator</string>
-  <string name="multi_user_do_not_use_summary">Bifează aici dacă sunt probleme cu flash-uirea fișierelor de pe cardul SD</string>
-  <string name="accent">Nuanță culoare</string>
-  <string name="accent_summary">Folosește culoarea ta preferată!</string>
-  <string name="color_reset">Resetare culoare</string>
-  <string name="color_pick">Alege culoare</string>
   <string name="something_went_wrong">Ne pare rău dar ceva nu a funcționat!\nVă rugăm să încercaţi din nou!</string>
   <string name="recovery">Mod Recuperare</string>
   <string name="bootloader">Bootloader</string>
@@ -280,19 +272,6 @@
   <string name="warning_data_corruption_invert">Poate cauza corupția datelor dacă este dezactivată</string>
   <string name="read_ahead">Citește înainte</string>
   <string name="filesystem">Sistemul de fișiere</string>
-  <string name="low_memory_killer">Eliberare spațiu memorie</string>
-  <string name="select_preset">Selectaţi presetarea...</string>
-  <string name="very_light">Foarte uşoară</string>
-  <string name="light">Ușoară</string>
-  <string name="medium">Mediu</string>
-  <string name="very_aggressive">Foarte agresiv</string>
-  <string name="aggressive">Agresiv</string>
-  <string name="foreground_applications">Aplicații de prim-plan</string>
-  <string name="visible_applications">Aplicații vizibile</string>
-  <string name="secondary_server">Server secundar</string>
-  <string name="hidden_applications">Aplicații ascunse</string>
-  <string name="content_providers">Furnizori de conţinut</string>
-  <string name="empty_applications">Aplicații goale</string>
   <string name="user_interface">Interfață</string>
   <string name="swipe_on_content">Glisați pe conținut</string>
   <string name="swipe_on_content_summary">Comută meniul atunci când glisați pe întregul conținut</string>
@@ -379,4 +358,5 @@
   <string name="remove_file_summary">Doriţi să ștergeţi fişierul din listă?\n\n%s</string>
   <string name="emmc_date">Data</string>
   <string name="setup_complete">Configurarea este completă</string>
+  <string name="string_default">Implicit</string>
 </resources>

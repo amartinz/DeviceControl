@@ -17,8 +17,6 @@
 -->
 <resources>
   <string name="permission_api_description">Uygulama arayüzü (API) cihaz denetimi (Device Control) için erişim izni verir.\nBu cihaz özellikleri kontrol anlamına gelir,Cihazınızın donanımını manipüle etmekte dahil.</string>
-  <string name="donate">Bağış \u2665</string>
-  <string name="donate_summary">Bu uygulama ve bunun daha da geliştirilmesi için katkıda bulunmak istiyorsanız bir bağış düşünün lütfen.\nTeşekkürler! - Alex</string>
   <string name="performance_settings_warning_title">Dikkatli ilerleyin</string>
   <string name="performance_settings_warning_header">Uyarı</string>
   <string name="build_prop_mods">Build.prop Modu</string>

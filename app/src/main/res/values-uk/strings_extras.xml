@@ -17,8 +17,6 @@
 -->
 <resources>
   <string name="permission_api_description">Дозволяє додатку доступ і використання API Device Control.\nЦе означає, що додаток може контролювати функції пристрою, включаючи управління обладнанням вашого пристрою.</string>
-  <string name="donate">Пожертвувати \u2665</string>
-  <string name="donate_summary">Якщо Вам сподобався цей додаток, зробіть, будь-ласка, пожертвування для заохочення подальшого розвитку додатку.\nДякую! -Alex</string>
   <string name="performance_settings_warning_title">Будьте обережні</string>
   <string name="performance_settings_warning_header">Увага</string>
   <string name="build_prop_mods">Модифікації Build.prop</string>

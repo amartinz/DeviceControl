@@ -20,7 +20,6 @@
   <string name="app_version_code">Versiecode: %s</string>
   <string name="app_warning_busybox">Houd er rekening mee dat %s vereist dat BusyBox volledig werkt!</string>
   <string name="get_busybox">Installeer BusyBox</string>
-  <string name="get_superuser">Installeer Superuser</string>
   <string name="checking_root">Checken voor root&#8230;</string>
   <string name="checking_busybox">Checken voor busybox&#8230;</string>
   <string name="exit">Afsluiten</string>
@@ -49,6 +48,7 @@
   <string name="app_manager">App-beheerder</string>
   <string name="wireless_file_manager">Draadloze bestandsbeheer</string>
   <string name="licenses">Licenties</string>
+  <string name="privacy">Privacy</string>
   <string name="graphics">Graphics</string>
   <string name="display">Weergave</string>
   <string name="time_in_state">TIJD IN STATUS</string>
@@ -58,8 +58,6 @@
   <string name="deep_sleep">\'Diepe slaap\'</string>
   <string name="device_information">Apparaatgegevens</string>
   <string name="hotplugging">Hotplugging</string>
-  <string name="mpdecision_summary_on">MPDecision wordt uitgevoerd.</string>
-  <string name="mpdecision_summary_off">MPDecision is uitgeschakeld.</string>
   <string name="thermal">Thermische Driver</string>
   <string name="core_control">Core controle</string>
   <string name="core_control_summary">Cpu-cores uitgeschakeld als temperatuurlimiet is bereikt</string>
@@ -151,7 +149,6 @@
   <string name="tasker">Taakbeheer</string>
   <string name="tasklist">Taaklijst</string>
   <string name="tasklist_summary">Instellen, wijzigen, inschakelen of uitschakelen van taken.</string>
-  <string name="list_empty">U heeft nog geen taken ingesteld!\nWaarom voegt u er niet enkele toe? :)\n\n(Druk op de \"+\" aan de rechterbovenkant)</string>
   <string name="add_task">Taak toevoegen</string>
   <string name="edit_task">Taak bewerken</string>
   <string name="delete_task">Verwijder taak</string>
@@ -223,6 +220,7 @@
   <string name="pages_volatile">Snellere pagina\'s</string>
   <string name="enable_ksm">KSM aanzetten</string>
   <string name="reduce_memory_increase_cpu_load">Het kan het geheugen verminderen en het gebruikt ook meer CPU energie</string>
+  <string name="uksm_cpu_governor">CPU governor</string>
   <string name="pages_to_scan">Pagina\'s om te scannen</string>
   <string name="sleep_between_scans">Wachten tussen scannen (ms)</string>
   <string name="deferred_timer">Uitgestelde timer</string>
@@ -254,4 +252,5 @@
   <string name="pick_file">Kies een bestand</string>
   <string name="system">Systeem</string>
   <string name="emmc_date">Datum</string>
+  <string name="string_default">Standaard</string>
 </resources>

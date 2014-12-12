@@ -20,7 +20,6 @@
   <string name="app_version_code">Código de la versión: %s</string>
   <string name="app_warning_busybox">¡Por favor tenga en cuenta que %s necesita de BusyBox para poder trabajar correctamente!</string>
   <string name="get_busybox">Instalar BusyBox</string>
-  <string name="get_superuser">Instalar Superuser</string>
   <string name="checking_root">Comprobación de root...</string>
   <string name="checking_busybox">Comprobación de busybox...</string>
   <string name="exit">Salir</string>
@@ -49,6 +48,7 @@
   <string name="app_manager">Gestor de Aplicaciones</string>
   <string name="wireless_file_manager">Administrador de archivos inalámbrico</string>
   <string name="licenses">Licencias</string>
+  <string name="privacy">Privacidad</string>
   <string name="graphics">Gráficos</string>
   <string name="display">Pantalla</string>
   <string name="time_in_state">Tiempo en estado</string>
@@ -58,8 +58,6 @@
   <string name="deep_sleep">\"Deep Sleep\"</string>
   <string name="device_information">Información del dispositivo</string>
   <string name="hotplugging">Conexión en caliente</string>
-  <string name="mpdecision_summary_on">MPDecision se está ejecutando.</string>
-  <string name="mpdecision_summary_off">MPDecision está apagado.</string>
   <string name="thermal">Conductor Térmico</string>
   <string name="core_control">Control del Núcleo</string>
   <string name="core_control_summary">Apaga los núcleos de la CPU si el límite de temperatura es alcanzado</string>
@@ -75,7 +73,7 @@
   <string name="fast_charge">Carga rápida</string>
   <string name="fast_charge_summary">Le permite cambiar el nivel de carga</string>
   <string name="force_fast_charge">Forzar carga rápida</string>
-  <string name="fast_charge_0">0 - Deshabilitado</string>
+  <string name="fast_charge_0">0 - Desactivar</string>
   <string name="fast_charge_1_new">1 - Utilizar el nivel stock de AC para el USB</string>
   <string name="fast_charge_1_old">1 - Habilitado</string>
   <string name="fast_charge_2">2 - Usar personalización de mA en AC y USB</string>
@@ -151,7 +149,6 @@
   <string name="tasker">Tareas en</string>
   <string name="tasklist">Lista de tareas</string>
   <string name="tasklist_summary">Configurar, modificar, habilitar o deshabilitar las tareas.</string>
-  <string name="list_empty">¡Aún no ha configurado ninguna tarea!\n¿Como agregar algunas de ellas? :)\n\n(Presione \"+\" en la parte superior derecha)</string>
   <string name="add_task">Añadir tarea</string>
   <string name="edit_task">Editar tarea</string>
   <string name="delete_task">Eliminar tarea</string>
@@ -223,6 +220,7 @@
   <string name="pages_volatile">Páginas volátiles</string>
   <string name="enable_ksm">Activar KSM</string>
   <string name="reduce_memory_increase_cpu_load">Puede reducir el uso de la memoria a costa de un mayor uso de la potencia de la CPU</string>
+  <string name="uksm_cpu_governor">Governor de la CPU</string>
   <string name="pages_to_scan">Páginas que escanear</string>
   <string name="sleep_between_scans">Descansos entre las escaneos (ms)</string>
   <string name="deferred_timer">Temporizador diferido de tiempo</string>
@@ -256,4 +254,5 @@
   <string name="user_interface">Interfaz</string>
   <string name="system">Sistema</string>
   <string name="emmc_date">Fecha</string>
+  <string name="string_default">Por defecto</string>
 </resources>

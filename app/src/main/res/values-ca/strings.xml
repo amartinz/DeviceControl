@@ -20,7 +20,6 @@
   <string name="app_version_code">Codi de la versió: %s</string>
   <string name="app_warning_busybox">Tinga en compte que %s requereix de BusyBox per a funcionar completament!</string>
   <string name="get_busybox">Instal·lar BusyBox</string>
-  <string name="get_superuser">Instal·lar Superuser</string>
   <string name="checking_root">Comprovació de root...</string>
   <string name="checking_busybox">Comprovació de busybox...</string>
   <string name="exit">Sortir</string>
@@ -49,6 +48,7 @@
   <string name="app_manager">Gestor d\'Aplicacions</string>
   <string name="wireless_file_manager">Administrador d\'arxius sense fil</string>
   <string name="licenses">Llicències</string>
+  <string name="privacy">Privacitat</string>
   <string name="graphics">Gràfics</string>
   <string name="display">Exhibició</string>
   <string name="time_in_state">Temps en estat</string>
@@ -58,8 +58,6 @@
   <string name="deep_sleep">\"Deep Sleep\"</string>
   <string name="device_information">Informació del dispositiu</string>
   <string name="hotplugging">Connexió en calent</string>
-  <string name="mpdecision_summary_on">MPDecision s\'està executant.</string>
-  <string name="mpdecision_summary_off">MPDecision està desactivat.</string>
   <string name="thermal">Conductor Tèrmic</string>
   <string name="core_control">Control del Nucli</string>
   <string name="core_control_summary">Apaga els nuclis de la CPU si el límit de temperatura és arribat</string>
@@ -75,7 +73,7 @@
   <string name="fast_charge">Càrrega ràpida</string>
   <string name="fast_charge_summary">Li permet canviar el nivell de càrrega</string>
   <string name="force_fast_charge">Forçar càrrega ràpida</string>
-  <string name="fast_charge_0">0 - Desactivat</string>
+  <string name="fast_charge_0">0 - Desactivar</string>
   <string name="fast_charge_1_new">1 - Utilitzar el nivell estoc d\'AC per l\'USB</string>
   <string name="fast_charge_1_old">1 - Habilitat</string>
   <string name="fast_charge_2">2 - Utilitzar personalització de mA en AC i USB</string>
@@ -151,7 +149,6 @@
   <string name="tasker">Tasques a</string>
   <string name="tasklist">Llista de tasques</string>
   <string name="tasklist_summary">Configurar, modificar, activar o desactivar les tasques.</string>
-  <string name="list_empty">¡Encara no ha configurat cap tasca!\n¿Com agregar algunes d\'elles? :)\n\n(Pressioni \"+\" en la part superior dreta)</string>
   <string name="add_task">Afegir tasca</string>
   <string name="edit_task">Editar tasca</string>
   <string name="delete_task">Eliminar tasca</string>
@@ -223,6 +220,7 @@
   <string name="pages_volatile">Pàgines volàtils</string>
   <string name="enable_ksm">Activar KSM</string>
   <string name="reduce_memory_increase_cpu_load">Pot reduir l\'ús de la memòria a costa d\'un major ús de la potència de la CPU</string>
+  <string name="uksm_cpu_governor">Governor de la CPU</string>
   <string name="pages_to_scan">Pàgines que escanejar</string>
   <string name="sleep_between_scans">Descansos entre les escanejos (ms)</string>
   <string name="deferred_timer">Temporitzador diferit de temps</string>
@@ -256,4 +254,5 @@
   <string name="user_interface">Interfície</string>
   <string name="system">Sistema</string>
   <string name="emmc_date">Data</string>
+  <string name="string_default">Per defecte</string>
 </resources>
