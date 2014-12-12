@@ -23,7 +23,6 @@
   <string name="app_warning_busybox">Pamiętaj, że %s wymaga BusyBox aby działać prawidłowo!</string>
   <string name="start_wizard">Rozpocznij konfigurację</string>
   <string name="get_busybox">Zainstaluj BusyBox</string>
-  <string name="get_superuser">Zainstaluj Superuser</string>
   <string name="checking_root">Sprawdzam root\'a&#8230;</string>
   <string name="checking_busybox">Sprawdzam busybox&#8230;</string>
   <string name="exit">Wyjdź</string>
@@ -53,6 +52,7 @@
   <string name="app_manager">Menedżer aplikacji</string>
   <string name="wireless_file_manager">Bezprzewodowy menedżer plików</string>
   <string name="licenses">Licencje</string>
+  <string name="privacy">Prywatność</string>
   <string name="graphics">Grafika</string>
   <string name="display">Wyświetlacz</string>
   <string name="time_in_state">Czas pracy w danym stanie CPU</string>
@@ -62,8 +62,6 @@
   <string name="deep_sleep">Stan uśpienia</string>
   <string name="device_information">Informacje o urządzeniu</string>
   <string name="hotplugging">Hotplugging</string>
-  <string name="mpdecision_summary_on">MPDecision jest włączone</string>
-  <string name="mpdecision_summary_off">MPDecision jest wyłączone</string>
   <string name="thermal">Thermal Driver</string>
   <string name="core_control">Kontrola rdzenia</string>
   <string name="core_control_summary">Wyłącza rdzenie procesora, jeśli zostanie osiągnięty limit temperatury</string>
@@ -158,7 +156,6 @@
   <string name="tasker">Tasker</string>
   <string name="tasklist">Lista zadań</string>
   <string name="tasklist_summary">Ustaw, modyfikuj, włącz lub wyłącz zadania.</string>
-  <string name="list_empty">Nie wybrałeś jeszcze żadnych zadań!\nMoże dodasz jakieś? :)\n\n(Wciśnij \"+\" na górze po prawej)</string>
   <string name="add_task">Dodaj zadanie</string>
   <string name="edit_task">Edytuj Zadanie</string>
   <string name="delete_task">Usuń zadanie</string>
@@ -232,6 +229,7 @@
   <string name="pages_volatile">Strony niestabilne</string>
   <string name="enable_ksm">Włącz KSM</string>
   <string name="reduce_memory_increase_cpu_load">Może zmniejszyć zużycie pamięci, ale także używa nieco więcej mocy procesora.</string>
+  <string name="uksm_cpu_governor">Zarządca procesora</string>
   <string name="pages_to_scan">Strony do przeskanowania</string>
   <string name="sleep_between_scans">Przerwa między skanami (ms)</string>
   <string name="deferred_timer">Późniejsze wykonanie</string>
@@ -263,12 +261,6 @@
   <string name="flash_warning">Zamierzasz zaflaszować wybrany plik!\nGdy kontynuujesz, twoje urządzenie uruchomi się ponownie w trybie recovery i zaflaszuje wybrany plik.\n\nCzy chcesz kontynuować?</string>
   <string name="both">Obydwa</string>
   <string name="pick_file">Wybierz plik</string>
-  <string name="multi_user_do_not_use">Nie używaj trybu wielu użytkowników</string>
-  <string name="multi_user_do_not_use_summary">Zaznacz to, jeśli masz problemy z flashowaniem plików zip z karty pamięci</string>
-  <string name="accent">Odcień koloru</string>
-  <string name="accent_summary">Użyj swojego ulubionego koloru!</string>
-  <string name="color_reset">Zresetuj kolor</string>
-  <string name="color_pick">Wybierz kolor</string>
   <string name="something_went_wrong">Przepraszamy, ale coś poszło nie tak!\nSpróbuj ponownie!</string>
   <string name="recovery">Uruchom w trybie Recovery</string>
   <string name="bootloader">Uruchom w trybie Bootloader</string>
@@ -279,19 +271,6 @@
   <string name="warning_data_corruption_invert">Może spowodować uszkodzenie danych, jeśli wyłączone</string>
   <string name="read_ahead">Odczyt z wyprzedzeniem</string>
   <string name="filesystem">System plików</string>
-  <string name="low_memory_killer">Zarządca niskiego poziomu pamięci</string>
-  <string name="select_preset">Wybierz ustawienie&#8230;</string>
-  <string name="very_light">Bardzo lekki</string>
-  <string name="light">Lekki</string>
-  <string name="medium">Średni</string>
-  <string name="very_aggressive">Bardzo agresywny</string>
-  <string name="aggressive">Agresywny</string>
-  <string name="foreground_applications">Aplikacje pierwszoplanowe</string>
-  <string name="visible_applications">Widoczne aplikacje</string>
-  <string name="secondary_server">Serwer pomocniczy</string>
-  <string name="hidden_applications">Ukryte aplikacje</string>
-  <string name="content_providers">Dostawcy treści</string>
-  <string name="empty_applications">Puste aplikacje</string>
   <string name="user_interface">Interfejs</string>
   <string name="swipe_on_content">Przesuń na zawartości</string>
   <string name="swipe_on_content_summary">Przełącz menu, podczas przesuwania nad całą zawartością</string>
@@ -358,6 +337,8 @@
   <string name="wipe_caches">Wyczyść Cache i Dalvik</string>
   <string name="no_additional_info">Brak dodatkowych informacji</string>
   <string name="system">System</string>
+  <string name="alert_backup_title">Kopia zapasowa</string>
   <string name="emmc_date">Data</string>
   <string name="setup_complete">Konfiguracja zakończona</string>
+  <string name="string_default">Domyślne</string>
 </resources>

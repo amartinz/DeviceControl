@@ -24,7 +24,6 @@
   <string name="app_warning_busybox">请注意，%s需要BusyBox才能完整工作！</string>
   <string name="start_wizard">启动向导</string>
   <string name="get_busybox">安装 BusyBox</string>
-  <string name="get_superuser">安装超级用户</string>
   <string name="checking_root">正在检查root...</string>
   <string name="checking_busybox">正在检查 BusyBox...</string>
   <string name="exit">退出</string>
@@ -53,6 +52,7 @@
   <string name="app_manager">应用管理器</string>
   <string name="wireless_file_manager">无线文件管理器</string>
   <string name="licenses">许可</string>
+  <string name="privacy">隐私</string>
   <string name="graphics">图形</string>
   <string name="display">显示</string>
   <string name="time_in_state">状态时间</string>
@@ -62,8 +62,6 @@
   <string name="deep_sleep">\"深度睡眠\"</string>
   <string name="device_information">设备信息</string>
   <string name="hotplugging">热插拔</string>
-  <string name="mpdecision_summary_on">MPDecision 正在运行。</string>
-  <string name="mpdecision_summary_off">MPDecision 处于关闭状态。</string>
   <string name="thermal">温控驱动程序</string>
   <string name="core_control">核心控制</string>
   <string name="core_control_summary">达到限温时关闭cpu内核</string>
@@ -158,7 +156,6 @@
   <string name="tasker">任务管理</string>
   <string name="tasklist">任务列表</string>
   <string name="tasklist_summary">新建，修改，启用或禁用任务。</string>
-  <string name="list_empty">你还没有设置任何任务！ 试着增加一些任务？ (点击右上角的”+“按钮)</string>
   <string name="add_task">添加任务</string>
   <string name="edit_task">编辑任务</string>
   <string name="delete_task">删除任务</string>
@@ -228,6 +225,7 @@
   <string name="pages_unshared">非共享的页面</string>
   <string name="enable_ksm">启用 KSM</string>
   <string name="reduce_memory_increase_cpu_load">能够减少内存的使用量，但也增加了cpu 负荷</string>
+  <string name="uksm_cpu_governor">CPU调节器</string>
   <string name="pages_to_scan">要扫描的页数</string>
   <string name="sleep_between_scans">扫描间隔 (毫秒)</string>
   <string name="deferred_timer">延迟定时器</string>
@@ -260,12 +258,6 @@
   <string name="flash_warning">即将刷入！如果继续，您的设备将启动到recovery 并将刷入所选的项目。\n\n 您要继续吗？</string>
   <string name="both">两者</string>
   <string name="pick_file">选择文件</string>
-  <string name="multi_user_do_not_use">不要使用多用户模式</string>
-  <string name="multi_user_do_not_use_summary">从sd卡刷入zip包出现问题时勾选</string>
-  <string name="accent">配色方案</string>
-  <string name="accent_summary">选择您喜爱的颜色 ！</string>
-  <string name="color_reset">重置颜色</string>
-  <string name="color_pick">选取颜色</string>
   <string name="something_went_wrong">出错了 ！ \n请再试一次 ！</string>
   <string name="recovery">Recovery</string>
   <string name="bootloader">Bootloader</string>
@@ -276,19 +268,6 @@
   <string name="warning_data_corruption_invert">禁用可能会导致数据损坏</string>
   <string name="read_ahead">预读</string>
   <string name="filesystem">文件系统</string>
-  <string name="low_memory_killer">低内存清理器</string>
-  <string name="select_preset">选择预设......</string>
-  <string name="very_light">非常轻</string>
-  <string name="light">轻度</string>
-  <string name="medium">中度</string>
-  <string name="very_aggressive">非常激进</string>
-  <string name="aggressive">激进</string>
-  <string name="foreground_applications">前台应用</string>
-  <string name="visible_applications">可见应用</string>
-  <string name="secondary_server">辅助服务</string>
-  <string name="hidden_applications">隐藏的应用</string>
-  <string name="content_providers">内容提供</string>
-  <string name="empty_applications">空的应用</string>
   <string name="user_interface">界面</string>
   <string name="swipe_on_content">任意位置滑出菜单</string>
   <string name="swipe_on_content_summary">在界面任意位置右滑均能打开菜单</string>
@@ -354,4 +333,5 @@
   <string name="system">系统</string>
   <string name="emmc_date">日期</string>
   <string name="setup_complete">设置完成</string>
+  <string name="string_default">默认</string>
 </resources>

@@ -16,9 +16,8 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="permission_api_label">Acesso ao controlo do dispositivo da API</string>
   <string name="permission_api_description">Permite à aplicação o acesso e uso do Device Control da API.\nIsto significa que a aplicação pode controlar características do dispositivo, incluindo manipulação no hardware do dispositivo.</string>
-  <string name="donate">Doar \u2665</string>
-  <string name="donate_summary">Por favor considere uma doação se você gosta desse aplicativo e deseja contribuir no desenvolvimento dela.\nObrigado! -Alex</string>
   <string name="performance_settings_warning_title">Proceda com cautela</string>
   <string name="performance_settings_warning_header">Alerta</string>
   <string name="build_prop_mods">Modificações do build.prop</string>

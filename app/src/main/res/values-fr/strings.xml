@@ -20,7 +20,6 @@
   <string name="app_version_code">Code version: %s</string>
   <string name="app_warning_busybox">Veuillez noter que %s exige BusyBox pour fonctionner pleinement !</string>
   <string name="get_busybox">Installer BusyBox</string>
-  <string name="get_superuser">Installer Superuser</string>
   <string name="checking_root">Vérification du root&#8230;</string>
   <string name="checking_busybox">Vérification de busybox&#8230;</string>
   <string name="exit">Sortir</string>
@@ -49,6 +48,7 @@
   <string name="app_manager">Gestionnaire d\'Applications</string>
   <string name="wireless_file_manager">Gestionnaire de fichiers sans fil</string>
   <string name="licenses">Licences</string>
+  <string name="privacy">Confidentialité</string>
   <string name="graphics">Graphiques</string>
   <string name="display">Affichage</string>
   <string name="time_in_state">Durée dans l\'état</string>
@@ -58,8 +58,6 @@
   <string name="deep_sleep">« Sommeil profond »</string>
   <string name="device_information">Information sur l\'appareil</string>
   <string name="hotplugging">Branchement à chaud</string>
-  <string name="mpdecision_summary_on">MPDecision est en cours d\'exécution.</string>
-  <string name="mpdecision_summary_off">MPDecision est arrêté.</string>
   <string name="thermal">Driver Thermique</string>
   <string name="core_control">Contrôle du Noyau</string>
   <string name="core_control_summary">Arrêter les cpu du noyau si la température limite est atteinte</string>
@@ -151,7 +149,6 @@
   <string name="tasker">Tasker</string>
   <string name="tasklist">Liste des tâches</string>
   <string name="tasklist_summary">Configurer, modifier, activer ou désactiver les tâches.</string>
-  <string name="list_empty">Vous n\'avez encore configuré aucune tache!\nComment en ajouter? :)\n\n(Appuyer sur \"+\" en haut à droite)</string>
   <string name="add_task">Ajouter une tâche</string>
   <string name="edit_task">Modifier la tâche</string>
   <string name="delete_task">Supprimer la tâche</string>
@@ -223,6 +220,7 @@
   <string name="pages_volatile">Pages volatiles</string>
   <string name="enable_ksm">Activez KSM</string>
   <string name="reduce_memory_increase_cpu_load">Peut réduire l\'utilisation de la mémoire, mais utilise également un peu plus de puissance CPU</string>
+  <string name="uksm_cpu_governor">Gouverneur de CPU</string>
   <string name="pages_to_scan">Pages à scanner</string>
   <string name="sleep_between_scans">Dormir entre les scans (ms)</string>
   <string name="deferred_timer">Minuteur différé</string>
@@ -256,4 +254,5 @@
   <string name="user_interface">Interface</string>
   <string name="system">Système</string>
   <string name="emmc_date">Date</string>
+  <string name="string_default">Par défaut</string>
 </resources>

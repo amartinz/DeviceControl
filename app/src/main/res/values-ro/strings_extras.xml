@@ -18,8 +18,6 @@
 <resources>
   <string name="permission_api_label">accesare API-ul Device Control</string>
   <string name="permission_api_description">Permite aplicaţiei să acceseze şi să utilizeze API-ul Device Control.\nAplicaţia poate controla caracteristicile dispozitivului, incluzând manipularea hardware-ului acestuia.</string>
-  <string name="donate">Donează \u2665</string>
-  <string name="donate_summary">Luaţi în considerare o donaţie dacă vă place aplicația și doriţi să contribuiţi la îmbunătăţirea acesteia.\nMulţumesc! - Alex</string>
   <string name="performance_settings_warning_title">Continuați cu precauție</string>
   <string name="performance_settings_warning_header">Atenţie</string>
   <string name="build_prop_mods">Modificări build.prop</string>

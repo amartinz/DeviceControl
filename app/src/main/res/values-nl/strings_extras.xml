@@ -17,8 +17,6 @@
 -->
 <resources>
   <string name="permission_api_description">Geeft de app toegang tot en gebruik van de Device Control API.\nDit betekend dat de app functies van het apparaat, met inbegrip van uw apparaat hardware, kan manipuleren.</string>
-  <string name="donate">Doneer \u2665</string>
-  <string name="donate_summary">Gelieve een donatie te overwegen als deze app u bevalt en u zou willen bijdragen aan de verdere ontwikkeling ervan. \nDank u! -Alex</string>
   <string name="performance_settings_warning_title">Ga voorzichtig te werk</string>
   <string name="performance_settings_warning_header">Waarschuwing</string>
   <string name="build_prop_mods">Build.prop modificaties</string>

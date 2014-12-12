@@ -20,7 +20,6 @@
   <string name="app_version_code">Код версії: %s</string>
   <string name="app_warning_busybox">Будь ласка, зверніть увагу, що %s потрібно BusyBox для повноцінної роботи!</string>
   <string name="get_busybox">Встановити BusyBox</string>
-  <string name="get_superuser">Встановити Superuser</string>
   <string name="checking_root">Перевірка на root-прав&#8230;</string>
   <string name="checking_busybox">Перевірка busybox&#8230;</string>
   <string name="exit">Вихід</string>
@@ -49,6 +48,7 @@
   <string name="app_manager">Менеджер додатків</string>
   <string name="wireless_file_manager">Бездротовий файловий менеджер</string>
   <string name="licenses">Ліцензії</string>
+  <string name="privacy">Конфіденційність</string>
   <string name="graphics">Графіка</string>
   <string name="display">Дисплей</string>
   <string name="time_in_state">Використаний ЦПУ</string>
@@ -58,8 +58,6 @@
   <string name="deep_sleep">\"Глибокий сон\"</string>
   <string name="device_information">Інформація про пристрій</string>
   <string name="hotplugging">\"Гаряче\" підключення</string>
-  <string name="mpdecision_summary_on">Виконується MPDecision.</string>
-  <string name="mpdecision_summary_off">MPDecision вимкнено.</string>
   <string name="thermal">Теплова служба</string>
   <string name="core_control">Керування ядром</string>
   <string name="core_control_summary">Вимикає ядра процесора якщо досягнута кретична температура</string>
@@ -145,7 +143,6 @@
   <string name="tasker">Планувальник</string>
   <string name="tasklist">Список завдань</string>
   <string name="tasklist_summary">Налаштування, зміна, увімкнення або вимкнення завдань.</string>
-  <string name="list_empty">Ви ще не створили жодного завдання!\nНе хочете додати що-небудь? :)\n\n(Натисніть \"+\" праворуч вгорі)</string>
   <string name="add_task">Додати завдання</string>
   <string name="edit_task">Редагувати завдання</string>
   <string name="delete_task">Видалити завдання</string>
@@ -241,12 +238,6 @@
   <string name="flash_warning">Ви маєте намір оновити ПЗ!\nВ разі згоди, пристрій перезавантажиться в режим відновлення і оновить вибрані елементи.\n\nБажаєте продовжити?</string>
   <string name="both">Обидва</string>
   <string name="pick_file">Вибрати файл</string>
-  <string name="multi_user_do_not_use">Не використовувати режим для багатьох користувачів</string>
-  <string name="multi_user_do_not_use_summary">Відзначити, якщо у вас виникли проблеми при прошивці zip файлів з ​​SD-карти</string>
-  <string name="accent">Контрастний колір</string>
-  <string name="accent_summary">Використовуйте ваш улюблений колір!</string>
-  <string name="color_reset">Стандартний колір</string>
-  <string name="color_pick">Вибрати колір</string>
   <string name="something_went_wrong">Вибачте, але щось пішло не так! \nБудь-ласка спробувати ще раз!</string>
   <string name="recovery">Режим відновлення</string>
   <string name="bootloader">Завантажувач</string>
@@ -256,18 +247,6 @@
   <string name="warning_data_corruption">Може викликати пошкодження даних, якщо включений</string>
   <string name="read_ahead">Читати далі</string>
   <string name="filesystem">Файлова система</string>
-  <string name="low_memory_killer">Очищення пам\'яті</string>
-  <string name="very_light">Особливо легкий</string>
-  <string name="light">Легкий</string>
-  <string name="medium">Середній</string>
-  <string name="very_aggressive">Дуже агресивний</string>
-  <string name="aggressive">Агресивний</string>
-  <string name="foreground_applications">Пріоритетні програми</string>
-  <string name="visible_applications">Видимі програми</string>
-  <string name="secondary_server">Вторинний сервер</string>
-  <string name="hidden_applications">Приховані програми</string>
-  <string name="content_providers">Контент-провайдери</string>
-  <string name="empty_applications">Порожні програми</string>
   <string name="user_interface">Інтерфейс</string>
   <string name="swipe_on_content">Проведіть по змісту</string>
   <string name="swipe_on_content_summary">Перейти в меню при зсуві вмісту</string>
@@ -303,4 +282,5 @@
   <string name="system">Система</string>
   <string name="emmc_date">Дата</string>
   <string name="setup_complete">Встановлення завершено</string>
+  <string name="string_default">За замовчуванням</string>
 </resources>

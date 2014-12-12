@@ -17,8 +17,6 @@
 -->
 <resources>
   <string name="permission_api_description">Povolit aplikaci přístup a použítí Device Control API.\nTo znamená že aplikace může ovládat funkce zařízení, včetně manipulace s hardwarem vašeho zařízení.</string>
-  <string name="donate">Podpořte nás \u2665</string>
-  <string name="donate_summary">Pokud se Vám naše aplikace líbí a chtěli by jste přispět k jejímu dalšímu vývoji, prosím zvažte poskytnutí příspěvku.\nDěkuji! - Alex</string>
   <string name="performance_settings_warning_title">Postupujte s opatrností</string>
   <string name="performance_settings_warning_header">Varování</string>
   <string name="build_prop_mods">Modifikace Build.prop</string>

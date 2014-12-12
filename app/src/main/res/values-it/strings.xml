@@ -24,7 +24,6 @@
   <string name="app_warning_busybox">Nota che %s richiede una BusyBox per funzionare completamente!</string>
   <string name="start_wizard">Avvia la procedura guidata</string>
   <string name="get_busybox">Installa BusyBox</string>
-  <string name="get_superuser">Installa Superuser</string>
   <string name="checking_root">Controllo di root...</string>
   <string name="checking_busybox">Controllo di busybox&#8230;</string>
   <string name="exit">Esci</string>
@@ -54,6 +53,7 @@
   <string name="app_manager">App manager</string>
   <string name="wireless_file_manager">Gestore file wireless</string>
   <string name="licenses">Licenze</string>
+  <string name="privacy">Privacy</string>
   <string name="graphics">Grafica</string>
   <string name="display">Schermo</string>
   <string name="time_in_state">Tempo nello stato</string>
@@ -63,8 +63,6 @@
   <string name="deep_sleep">\"Deep Sleep\"</string>
   <string name="device_information">Informazioni sul dispositivo</string>
   <string name="hotplugging">Hotplugging</string>
-  <string name="mpdecision_summary_on">MPDecision è in esecuzione.</string>
-  <string name="mpdecision_summary_off">MPDecision è spento.</string>
   <string name="thermal">Driver di temperatura</string>
   <string name="core_control">Controllo core</string>
   <string name="core_control_summary">Disattiva core cpu se viene raggiunto il limite di temperatura</string>
@@ -159,7 +157,6 @@
   <string name="tasker">Tasker</string>
   <string name="tasklist">Elenco attività</string>
   <string name="tasklist_summary">Impostare, modificare, attivare o disattivare compiti.</string>
-  <string name="list_empty">Non hai ancora impostato nessun elemento!\nChe ne dici di aggiungerne qualcuno? :)\n\n(Premi \"+\" in alto a destra)</string>
   <string name="add_task">Aggiungi attività</string>
   <string name="edit_task">Modifica attività</string>
   <string name="delete_task">Elimina attività</string>
@@ -233,6 +230,7 @@
   <string name="pages_volatile">Pagine volatili</string>
   <string name="enable_ksm">Abilita KSM</string>
   <string name="reduce_memory_increase_cpu_load">Può ridurre l\'utilizzo della memoria, ma utilizza anche un po\' più di potenza della CPU</string>
+  <string name="uksm_cpu_governor">Governor CPU</string>
   <string name="pages_to_scan">Pagine da scansire</string>
   <string name="sleep_between_scans">Pausa tra le scansioni (ms)</string>
   <string name="deferred_timer">Timer differito</string>
@@ -264,12 +262,6 @@
   <string name="flash_warning">Siete in procinto di eseguire l\'installazione!\nSe continui, il dispositivo si riavvierà in recovery e installerà gli elementi selezionati.\n\nVuoi procedere?</string>
   <string name="both">Entrambi</string>
   <string name="pick_file">Seleziona un file</string>
-  <string name="multi_user_do_not_use">Non usare la modalità multi utente</string>
-  <string name="multi_user_do_not_use_summary">Seleziona questa opzione se hai problemi nel flashare file zip dalla scheda sd</string>
-  <string name="accent">Colore tinta</string>
-  <string name="accent_summary">Usa il tuo colore preferito!</string>
-  <string name="color_reset">Ripristina colore</string>
-  <string name="color_pick">Scegli colore</string>
   <string name="something_went_wrong">Mi dispiace ma qualcosa è andato storto!\nRiprova per favore!</string>
   <string name="recovery">Recovery</string>
   <string name="bootloader">Bootloader</string>
@@ -280,19 +272,7 @@
   <string name="warning_data_corruption_invert">Può causare la corruzione dei dati se disabilitato</string>
   <string name="read_ahead">Lettura anticipata</string>
   <string name="filesystem">Filesystem</string>
-  <string name="low_memory_killer">Low memory killer</string>
-  <string name="select_preset">Seleziona preset&#8230;</string>
-  <string name="very_light">Molto leggero</string>
-  <string name="light">Leggero</string>
-  <string name="medium">Medio</string>
-  <string name="very_aggressive">Molto aggressivo</string>
-  <string name="aggressive">Aggressivo</string>
-  <string name="foreground_applications">Applicazioni in primo piano</string>
-  <string name="visible_applications">Applicazioni visibili</string>
-  <string name="secondary_server">Server secondario</string>
-  <string name="hidden_applications">Applicazioni nascoste</string>
-  <string name="content_providers">Fornitori di contenuti</string>
-  <string name="empty_applications">Applicazioni vuote</string>
+  <string name="user_interface">Interfaccia</string>
   <string name="swipe_on_content">Swipe su contenuto</string>
   <string name="swipe_on_content_summary">Attiva o disattiva il menu quando viene eseguito uno swipe sull\'intero contenuto</string>
   <string name="gpu_vendor">Fornitore GPU</string>
@@ -363,6 +343,7 @@
   <string name="install_title">Scegli i file da installare</string>
   <string name="install_now">Installa ora</string>
   <string name="file_not_found">Impossibile aggiungere i file</string>
+  <string name="system">Sistema</string>
   <string name="boot">Avvio</string>
   <string name="androidsecure">Sicurezza di Android</string>
   <string name="sdext">SD-Ext</string>
@@ -371,8 +352,11 @@
   <string name="alert_reboot_more_message">Il tuo dispositivo si riavvierà ed installerà i file.</string>
   <string name="alert_backup_space_title">Spazio rimanente</string>
   <string name="alert_backup_space_message">C\'è meno di %sGB di spazio libero sulla SD interna. Vuoi continuare con il backup?</string>
+  <string name="alert_backup_title">Backup</string>
   <string name="alert_backup_message">Specificare il nome del backup (i caratteri vietati saranno rimossi).\n\nLe seguenti opzioni funzioneranno solo in recovery basate su OpenRecovery.</string>
   <string name="remove_file_title">Rimuovi file</string>
   <string name="remove_file_summary">Vuoi rimuovere il file dalla lista?\n\n%s</string>
+  <string name="emmc_date">Data</string>
   <string name="setup_complete">Il setup è completo</string>
+  <string name="string_default">Predefinito</string>
 </resources>

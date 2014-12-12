@@ -18,8 +18,6 @@
 <resources>
   <string name="permission_api_label">zugriff auf die Device Control API</string>
   <string name="permission_api_description">Ermöglicht der Anwendung Zugriff auf die Device Control API.\nDas bedeutet, dass die Anwendung Gerätefunktionen, einschließlich Gerätehardware, steuern und manipulieren kann.</string>
-  <string name="donate">Spenden \u2665</string>
-  <string name="donate_summary">Falls du diese Anwendung magst und ihre weitere Entwicklung unterstützen möchtest, erwäge bitte eine Spende.\nDanke! - Alex</string>
   <string name="performance_settings_warning_title">Weiter mit besonderer Vorsicht</string>
   <string name="performance_settings_warning_header">Achtung</string>
   <string name="build_prop_mods">Build.prop Mods</string>

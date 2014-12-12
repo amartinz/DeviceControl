@@ -24,7 +24,6 @@
   <string name="app_warning_busybox">Bitte beachte, dass %s eine BusyBox erfordert, um vollständig zu funktionieren!</string>
   <string name="start_wizard">Assistenten starten</string>
   <string name="get_busybox">BusyBox installieren</string>
-  <string name="get_superuser">Superuser installieren</string>
   <string name="checking_root">Root-Rechte werden überprüft&#8230;</string>
   <string name="checking_busybox">Busybox wird überprüft&#8230;</string>
   <string name="exit">Beenden</string>
@@ -54,6 +53,7 @@
   <string name="app_manager">Anwendungs-Manager</string>
   <string name="wireless_file_manager">Drahtloser Dateimanager</string>
   <string name="licenses">Lizenzen</string>
+  <string name="privacy">Privatsphäre</string>
   <string name="graphics">Grafik</string>
   <string name="display">Bildschirm</string>
   <string name="time_in_state">Zeit in Zustand</string>
@@ -63,8 +63,6 @@
   <string name="deep_sleep">\"Tiefschlaf\"</string>
   <string name="device_information">Geräteinformation</string>
   <string name="hotplugging">Hotplugging</string>
-  <string name="mpdecision_summary_on">MPDecision ist aktiv.</string>
-  <string name="mpdecision_summary_off">MPDecision ist deaktiviert.</string>
   <string name="thermal">Thermal-Treiber</string>
   <string name="core_control">Kern-Steuerung</string>
   <string name="core_control_summary">Deaktiviert CPU-Kerne, wenn das Temperatur-Limit erreicht wird</string>
@@ -160,7 +158,6 @@
   <string name="tasker">Tasker</string>
   <string name="tasklist">Aufgaben-Liste</string>
   <string name="tasklist_summary">Erstelle, bearbeite, aktiviere oder deaktiviere Aufgaben.</string>
-  <string name="list_empty">Du hast noch keine Punkte festgelegt!\nWie wäre es, wenn du ein paar festlegst? :)\n\n(Drücke auf das \"+\" rechts oben)</string>
   <string name="add_task">Aufgabe hinzufügen</string>
   <string name="edit_task">Aufgabe bearbeiten</string>
   <string name="delete_task">Aufgabe löschen</string>
@@ -237,6 +234,7 @@
   <string name="pages_volatile">Flüchtige Seiten</string>
   <string name="enable_ksm">KSM aktivieren</string>
   <string name="reduce_memory_increase_cpu_load">Kann den Speicherbedarf reduzieren, aber auch mehr CPU-Leistung erfordern</string>
+  <string name="uksm_cpu_governor">CPU Governor</string>
   <string name="pages_to_scan">Seiten zu scannen</string>
   <string name="sleep_between_scans">Pause zwischen Scans (ms)</string>
   <string name="deferred_timer">Aussetzende Timer</string>
@@ -268,12 +266,6 @@
   <string name="flash_warning">Wenn du fortfährst, wird das Gerät in die Recovery booten und die ausgewählten Elemente flashen.\n\nMöchtest du wirklich fortfahren?</string>
   <string name="both">Beide</string>
   <string name="pick_file">Datei wählen</string>
-  <string name="multi_user_do_not_use">Mehrbenutzer-Modus deaktivieren</string>
-  <string name="multi_user_do_not_use_summary">Aktivieren, falls du Probleme mit dem Flashen hast</string>
-  <string name="accent">Akzentfarbe</string>
-  <string name="accent_summary">Verwende deine Lieblingsfarbe!</string>
-  <string name="color_reset">Farbe zurücksetzen</string>
-  <string name="color_pick">Farbe auswählen</string>
   <string name="something_went_wrong">Entschuldigung, aber etwas ging schief!\nBitte versuche es erneut!</string>
   <string name="recovery">Recovery</string>
   <string name="bootloader">Bootloader</string>
@@ -285,19 +277,6 @@
   <string name="data_integrity_decreased_performance">Stellt Datenintegrität sicher, verringert aber die Leistung</string>
   <string name="read_ahead">Read-Ahead</string>
   <string name="filesystem">Dateisystem</string>
-  <string name="low_memory_killer">Low-Memory-Killer</string>
-  <string name="select_preset">Wähle eine Vorgabe&#8230;</string>
-  <string name="very_light">Sehr leicht</string>
-  <string name="light">Leicht</string>
-  <string name="medium">Mittel</string>
-  <string name="very_aggressive">Sehr aggressiv</string>
-  <string name="aggressive">Aggressive</string>
-  <string name="foreground_applications">Vordergrund-Anwendungen</string>
-  <string name="visible_applications">Sichtbare Anwendungen</string>
-  <string name="secondary_server">Sekundäre Server</string>
-  <string name="hidden_applications">Versteckte Anwendungen</string>
-  <string name="content_providers">Inhaltsanbieter</string>
-  <string name="empty_applications">Leere Anwendungen</string>
   <string name="user_interface">Benutzeroberfläche</string>
   <string name="swipe_on_content">Vollbild-Wischen</string>
   <string name="swipe_on_content_summary">Erlaube auf dem gesamten Bildschirm zu wischen, um zum Menü zu wechseln</string>
@@ -400,4 +379,5 @@
   <string name="cpu">CPU</string>
   <string name="input_reset_on_suspend">Automatisches Zurücksetzen</string>
   <string name="input_reset_on_suspend_summary">Der Touchscreen wird zurückgesetzt, wenn das Display ausgeschalten wird, um Probleme wie Geister-Berührungen und schlechte Reaktionsfähigkeit zu beheben</string>
+  <string name="string_default">Standard</string>
 </resources>

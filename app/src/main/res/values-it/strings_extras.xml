@@ -18,8 +18,6 @@
 <resources>
   <string name="permission_api_label">Accedere all\'API del Device Control</string>
   <string name="permission_api_description">Consente all\'applicazione di accedere e utilizzare l\'API di Device Control.\nQuesto significa che l\'app può controllare le funzionalità del dispositivo, tra cui la manipolazione dell\'hardware del dispositivo.</string>
-  <string name="donate">Dona \u2665</string>
-  <string name="donate_summary">Per favore prendi in considerazione una donazione se ti piace questa app e vuoi contribuire ulteriormente al suo sviluppo\nGrazie! - Alex</string>
   <string name="performance_settings_warning_title">Procedere con cautela</string>
   <string name="performance_settings_warning_header">Attenzione</string>
   <string name="build_prop_mods">Build.prop Mods</string>

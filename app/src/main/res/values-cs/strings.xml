@@ -20,7 +20,6 @@
   <string name="app_version_code">Číslo verze: %s</string>
   <string name="app_warning_busybox">Vezměte prosím na vědomí, že %s vyžaduje BusyBox pro svou správnou činnost!</string>
   <string name="get_busybox">Instalovat BusyBox</string>
-  <string name="get_superuser">Instalovat Superuser</string>
   <string name="checking_root">Kontroluji oprávnění root&#8230;</string>
   <string name="checking_busybox">Kontroluji přítomnost busybox&#8230;</string>
   <string name="exit">Konec</string>
@@ -49,6 +48,7 @@
   <string name="app_manager">Správce aplikací</string>
   <string name="wireless_file_manager">Správce souborů pro bezdrátový přenos</string>
   <string name="licenses">Licence</string>
+  <string name="privacy">Soukromí</string>
   <string name="graphics">Grafika</string>
   <string name="display">Displej</string>
   <string name="time_in_state">Čas strávený v daném stavu CPU</string>
@@ -58,8 +58,6 @@
   <string name="deep_sleep">\"Deep Sleep\"</string>
   <string name="device_information">Informace o zařízení</string>
   <string name="hotplugging">Hotplugging</string>
-  <string name="mpdecision_summary_on">MPDecision je spuštěn.</string>
-  <string name="mpdecision_summary_off">MPDecision je vypnut.</string>
   <string name="thermal">Ovladač Teploty</string>
   <string name="core_control">Řízení Jádra</string>
   <string name="core_control_summary">Vypne CPU jádra pokud je překročen teplotní limit</string>
@@ -151,7 +149,6 @@
   <string name="tasker">Tasker</string>
   <string name="tasklist">Seznam úloh</string>
   <string name="tasklist_summary">Nastavit, modifikovat, povolit nebo zakázat úlohy.</string>
-  <string name="list_empty">Doposud jste nevybrali žádné položky!\nCo takhle nějaké přidat? :)\n\n(Stiskněte \"+\" v pravém horním rohu)</string>
   <string name="add_task">Přidat úlohu</string>
   <string name="edit_task">Upravit úlohu</string>
   <string name="delete_task">Odstranit úlohu</string>
@@ -223,6 +220,7 @@
   <string name="pages_volatile">Stránky nestálé</string>
   <string name="enable_ksm">Povolit KSM</string>
   <string name="reduce_memory_increase_cpu_load">Může snížit využití paměti, ale může způsobit větší zátěž CPU</string>
+  <string name="uksm_cpu_governor">CPU governor</string>
   <string name="pages_to_scan">Stránky pro skenování</string>
   <string name="sleep_between_scans">Uspání mezi skenováním (ms)</string>
   <string name="deferred_timer">Odložený časovač</string>
@@ -256,4 +254,5 @@
   <string name="user_interface">Rozhraní</string>
   <string name="system">Systém</string>
   <string name="emmc_date">Datum</string>
+  <string name="string_default">Výchozí</string>
 </resources>
