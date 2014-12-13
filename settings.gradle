@@ -1,4 +1,3 @@
 include ':app'
-include ':lib'
 include ':libs:mpandroidchart:MPChartLib'
 //include ':sample'
