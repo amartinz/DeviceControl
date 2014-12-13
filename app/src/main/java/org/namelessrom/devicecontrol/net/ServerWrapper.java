@@ -29,7 +29,10 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.SortHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -139,7 +142,19 @@ public class ServerWrapper {
             res.getHeaders().getHeaders()
                     .set("Content-Type", ContentTypes.getInstance().getContentType(path));
 
-            res.send(HtmlHelper.loadPath(path));
+            final InputStream is = HtmlHelper.loadPath(path);
+            if (is != null) {
+                final DataInputStream dis = new DataInputStream(is);
+                try {
+                    res.sendStream(dis, dis.available());
+                    return;
+                } catch (IOException ioe) {
+                    Logger.e(this, "Error!", ioe);
+                } finally {
+                    try { dis.close(); } catch (IOException ignored) { }
+                }
+            }
+            res.send(HtmlHelper.loadPathAsString(path));
         }
     };
 

@@ -17,8 +17,14 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 
+import java.io.InputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
@@ -49,13 +55,39 @@ public class HtmlHelper {
         return encoded;
     }
 
-    public static String loadPath(String path) {
+    @NonNull private static String cleanupPath(final String path) {
+        if (TextUtils.isEmpty(path)) {
+            return "";
+        }
         if (path.startsWith("./")) {
-            path = path.replaceFirst("./", "");
+            return path.replaceFirst("./", "");
         }
         if (path.startsWith("/")) {
-            path = path.replaceFirst("/", "");
+            return path.replaceFirst("/", "");
         }
+        return path;
+    }
+
+    @Nullable public static InputStream loadPath(String path) {
+        path = cleanupPath(path);
+        return loadPathInternal(path);
+    }
+
+    @NonNull public static String loadPathAsString(String path) {
+        path = cleanupPath(path);
+        return loadPathAsStringInternal(path);
+    }
+
+    @Nullable private static InputStream loadPathInternal(final String path) {
+        try {
+            return Application.get().getAssets().open(path);
+        } catch (Exception exc) {
+            Logger.e(HtmlHelper.class, "loadPath", exc);
+        }
+        return null;
+    }
+
+    @NonNull private static String loadPathAsStringInternal(final String path) {
         try {
             return Utils.loadFromAssets(path);
         } catch (Exception exc) {
