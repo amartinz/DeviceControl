@@ -376,14 +376,11 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
     }
 
     @Override public void onGovernor(@NonNull final GovernorUtils.Governor governor) {
-        final Activity activity = getActivity();
-        if (activity != null && governor != null) {
-            mGovernor.setEntries(governor.available);
-            mGovernor.setEntryValues(governor.available);
-            mGovernor.setValue(governor.current);
-            mGovernor.setSummary(governor.current);
-            mGovernor.setEnabled(true);
-        }
+        mGovernor.setEntries(governor.available);
+        mGovernor.setEntryValues(governor.available);
+        mGovernor.setValue(governor.current);
+        mGovernor.setSummary(governor.current);
+        mGovernor.setEnabled(true);
     }
 
     public View generateRow(final int core, final CpuCore cpuCore) {
