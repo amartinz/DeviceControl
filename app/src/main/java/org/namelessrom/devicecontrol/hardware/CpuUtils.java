@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.hardware;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -84,15 +85,15 @@ public class CpuUtils {
     }
 
     public interface FrequencyListener {
-        public void onFrequency(final Frequency cpuFreq);
+        public void onFrequency(@NonNull final Frequency cpuFreq);
     }
 
     public interface CoreListener {
-        public void onCores(final Cores cores);
+        public void onCores(@NonNull final Cores cores);
     }
 
     public interface StateListener {
-        public void onStates(final State states);
+        public void onStates(@NonNull final State states);
     }
 
     private static CpuUtils sInstance;
@@ -106,19 +107,19 @@ public class CpuUtils {
         return sInstance;
     }
 
-    public String getCpuFrequencyPath(final int cpu) {
+    @NonNull public String getCpuFrequencyPath(final int cpu) {
         return String.format(FREQ_CURRENT, cpu);
     }
 
-    public String getMaxCpuFrequencyPath(final int cpu) {
+    @NonNull public String getMaxCpuFrequencyPath(final int cpu) {
         return String.format(FREQ_MAX, cpu);
     }
 
-    public String getMinCpuFrequencyPath(final int cpu) {
+    @NonNull public String getMinCpuFrequencyPath(final int cpu) {
         return String.format(FREQ_MIN, cpu);
     }
 
-    public String getOnlinePath(final int cpu) {
+    @NonNull public String getOnlinePath(final int cpu) {
         return String.format(CORE_ONLINE, cpu);
     }
 
@@ -197,7 +198,7 @@ public class CpuUtils {
             }
             if (tmpInt != -1) {
                 final String path = getOnlinePath(tmpInt);
-                if (path != null && !path.isEmpty()) {
+                if (!TextUtils.isEmpty(path)) {
                     sbCmd.append(Utils.getWriteCommand(path, "0"));
                     sbCmd.append(Utils.getWriteCommand(path, "1"));
                 }
@@ -274,7 +275,7 @@ public class CpuUtils {
         }
     }
 
-    public String onlineCpu(final int cpu) {
+    @NonNull public String onlineCpu(final int cpu) {
         final StringBuilder sb = new StringBuilder();
         final String pathOnline = getOnlinePath(cpu);
         if (!pathOnline.isEmpty()) {
@@ -290,7 +291,7 @@ public class CpuUtils {
      * @param mhzString The string to convert to MHz
      * @return tagged and converted String
      */
-    public static String toMhz(final String mhzString) {
+    @NonNull public static String toMhz(final String mhzString) {
         int value = -1;
         if (!TextUtils.isEmpty(mhzString)) {
             try {

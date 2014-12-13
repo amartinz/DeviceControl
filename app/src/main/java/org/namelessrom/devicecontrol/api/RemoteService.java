@@ -21,6 +21,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
@@ -43,11 +44,11 @@ public class RemoteService extends Service implements CpuUtils.FrequencyListener
 
     @Override public IBinder onBind(final Intent intent) { return mBinder; }
 
-    @Override public void onFrequency(final CpuUtils.Frequency cpuFreq) {
+    @Override public void onFrequency(@NonNull final CpuUtils.Frequency cpuFreq) {
         mCpuFreq = cpuFreq;
     }
 
-    @Override public void onGovernor(final GovernorUtils.Governor governor) {
+    @Override public void onGovernor(@NonNull final GovernorUtils.Governor governor) {
         mGovernor = governor;
     }
 

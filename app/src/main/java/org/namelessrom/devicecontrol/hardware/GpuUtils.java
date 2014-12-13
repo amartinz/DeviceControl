@@ -26,6 +26,7 @@ import android.opengl.EGLContext;
 import android.opengl.EGLDisplay;
 import android.opengl.EGLSurface;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -242,13 +243,14 @@ public class GpuUtils {
     }
 
     public boolean containsGov(final String gov) {
-        for (final String s : GovernorUtils.get().getAvailableGpuGovernors()) {
+        final String[] governors = GovernorUtils.get().getAvailableGpuGovernors();
+        for (final String s : governors) {
             if (gov.toLowerCase().equals(s.toLowerCase())) return true;
         }
         return false;
     }
 
-    public String restore() {
+    @NonNull public String restore() {
         final StringBuilder sbCmd = new StringBuilder();
 
         final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
@@ -260,7 +262,7 @@ public class GpuUtils {
         return sbCmd.toString();
     }
 
-    public static String toMhz(final String mhz) {
+    @NonNull public static String toMhz(final String mhz) {
         int mhzInt;
         try {
             mhzInt = Utils.parseInt(mhz);
@@ -271,7 +273,7 @@ public class GpuUtils {
         return (String.valueOf(mhzInt / 1000000) + " MHz");
     }
 
-    public static String fromMHz(final String mhzString) {
+    @NonNull public static String fromMHz(final String mhzString) {
         if (mhzString != null && !mhzString.isEmpty()) {
             try {
                 return String.valueOf(Utils.parseInt(mhzString.replace(" MHz", "")) * 1000000);
@@ -307,7 +309,7 @@ public class GpuUtils {
         return (glEsVersion >= 2);
     }
 
-    public static ArrayList<String> getOpenGLESInformation() {
+    @NonNull public static ArrayList<String> getOpenGLESInformation() {
         final ArrayList<String> glesInformation = new ArrayList<>(GL_INFO.length);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // get a hold of the display and initialize

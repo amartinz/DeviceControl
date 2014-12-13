@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
+import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -50,7 +51,7 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
         GovernorUtils.GovernorListener {
 
     private PreferenceCategory mCategory;
-    private Context            mContext;
+    private Context mContext;
 
     @Override protected int getFragmentId() { return ID_GOVERNOR_TUNABLE; }
 
@@ -64,7 +65,7 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
         GovernorUtils.get().getGovernor(this);
     }
 
-    @Override public void onGovernor(final GovernorUtils.Governor governor) {
+    @Override public void onGovernor(@NonNull final GovernorUtils.Governor governor) {
         if (new File("/sys/devices/system/cpu/cpufreq/" + governor.current).exists()) {
             mCategory.setTitle(getString(R.string.gov_tweaks, governor.current));
             new addPreferences().execute(governor.current);

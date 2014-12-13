@@ -1,5 +1,23 @@
+/*
+ *  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 package org.namelessrom.devicecontrol.hardware;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -49,7 +67,7 @@ public class GovernorUtils {
     }
 
     public interface GovernorListener {
-        public void onGovernor(final Governor governor);
+        public void onGovernor(@NonNull final Governor governor);
     }
 
     private static GovernorUtils sInstance;
@@ -63,7 +81,7 @@ public class GovernorUtils {
         return sInstance;
     }
 
-    public String getGovernorPath(final int cpu) {
+    @NonNull public String getGovernorPath(final int cpu) {
         switch (cpu) {
             default:
             case 0:
@@ -89,11 +107,11 @@ public class GovernorUtils {
         return govArray;
     }
 
-    public String[] getAvailableCpuGovernors() {
+    @Nullable public String[] getAvailableCpuGovernors() {
         return getAvailableGovernors(false);
     }
 
-    public String[] getAvailableGpuGovernors() {
+    @Nullable public String[] getAvailableGpuGovernors() {
         if (TextUtils.isEmpty(GpuUtils.get().getGpuGovsAvailablePath())) return GPU_GOVS;
         return getAvailableGovernors(true);
     }

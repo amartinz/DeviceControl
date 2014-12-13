@@ -19,6 +19,7 @@ package org.namelessrom.devicecontrol.ui.views;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -159,7 +160,7 @@ public class CpuStateView extends LinearLayout implements CpuUtils.StateListener
         return view;
     }
 
-    @Override public void onStates(final CpuUtils.State states) {
+    @Override public void onStates(@NonNull final CpuUtils.State states) {
         mStatesView.removeAllViews();
 
         final List<String> extraStates = new ArrayList<>();

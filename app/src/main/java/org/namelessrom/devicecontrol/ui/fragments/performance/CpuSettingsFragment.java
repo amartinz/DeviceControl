@@ -96,7 +96,7 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
         CpuCoreMonitor.getInstance(getActivity()).stop();
     }
 
-    @Override public void onCores(final CpuUtils.Cores cores) {
+    @Override public void onCores(@NonNull final CpuUtils.Cores cores) {
         final List<CpuCore> coreList = cores.list;
         if (coreList != null && !coreList.isEmpty()) {
             final int count = coreList.size();
@@ -345,40 +345,37 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
         return view;
     }
 
-    @Override public void onFrequency(final CpuUtils.Frequency cpuFreq) {
-        final Activity activity = getActivity();
-        if (activity != null && cpuFreq != null) {
-            final String[] mAvailableFrequencies = cpuFreq.available;
-            Arrays.sort(mAvailableFrequencies, new Comparator<String>() {
-                @Override
-                public int compare(String object1, String object2) {
-                    return Utils.tryValueOf(object1, 0).compareTo(Utils.tryValueOf(object2, 0));
-                }
-            });
-            Collections.reverse(Arrays.asList(mAvailableFrequencies));
-
-            final ArrayList<String> entries = new ArrayList<>();
-            for (final String mAvailableFreq : mAvailableFrequencies) {
-                entries.add(CpuUtils.toMhz(mAvailableFreq));
+    @Override public void onFrequency(@NonNull final CpuUtils.Frequency cpuFreq) {
+        final String[] mAvailableFrequencies = cpuFreq.available;
+        Arrays.sort(mAvailableFrequencies, new Comparator<String>() {
+            @Override
+            public int compare(String object1, String object2) {
+                return Utils.tryValueOf(object1, 0).compareTo(Utils.tryValueOf(object2, 0));
             }
+        });
+        Collections.reverse(Arrays.asList(mAvailableFrequencies));
 
-            mMax.setEntries(entries.toArray(new String[entries.size()]));
-            mMax.setEntryValues(mAvailableFrequencies);
-            mMax.setValue(cpuFreq.maximum);
-            mMax.setSummary(CpuUtils.toMhz(cpuFreq.maximum));
-            mMax.setEnabled(true);
-
-            mMin.setEntries(entries.toArray(new String[entries.size()]));
-            mMin.setEntryValues(mAvailableFrequencies);
-            mMin.setValue(cpuFreq.minimum);
-            mMin.setSummary(CpuUtils.toMhz(cpuFreq.minimum));
-            mMin.setEnabled(true);
-
-            entries.clear();
+        final ArrayList<String> entries = new ArrayList<>();
+        for (final String mAvailableFreq : mAvailableFrequencies) {
+            entries.add(CpuUtils.toMhz(mAvailableFreq));
         }
+
+        mMax.setEntries(entries.toArray(new String[entries.size()]));
+        mMax.setEntryValues(mAvailableFrequencies);
+        mMax.setValue(cpuFreq.maximum);
+        mMax.setSummary(CpuUtils.toMhz(cpuFreq.maximum));
+        mMax.setEnabled(true);
+
+        mMin.setEntries(entries.toArray(new String[entries.size()]));
+        mMin.setEntryValues(mAvailableFrequencies);
+        mMin.setValue(cpuFreq.minimum);
+        mMin.setSummary(CpuUtils.toMhz(cpuFreq.minimum));
+        mMin.setEnabled(true);
+
+        entries.clear();
     }
 
-    @Override public void onGovernor(final GovernorUtils.Governor governor) {
+    @Override public void onGovernor(@NonNull final GovernorUtils.Governor governor) {
         final Activity activity = getActivity();
         if (activity != null && governor != null) {
             mGovernor.setEntries(governor.available);
