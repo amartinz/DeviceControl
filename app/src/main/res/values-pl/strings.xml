@@ -340,5 +340,6 @@
   <string name="alert_backup_title">Kopia zapasowa</string>
   <string name="emmc_date">Data</string>
   <string name="setup_complete">Konfiguracja zakończona</string>
+  <string name="cpu">CPU</string>
   <string name="string_default">Domyślne</string>
 </resources>

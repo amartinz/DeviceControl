@@ -22,8 +22,10 @@
   <string name="app_welcome_message">Um zu starten, wische das Menü aus der linken Seite heraus oder drücke auf die linke obere Ecke!\n\nFalls eine Funktion von deinem Gerät nicht unterstützt wird, wird sie automatisch ausgeblendet!\nUnterstützte Funktionen sind abhängig von dem Gerät, der ROM und dem Kernel, den du benutzt.\n\nFalls du keine unterstützten Funktionen hast, versuche einen Custom-Kernel zu benutzen!\n\nBitte beachte, dass Root-Rechte benötigt werden, damit du %s in vollen Zügen genießen kannst!</string>
   <string name="app_warning_root">Bitte beachte, dass %s ein Gerät mit Root-Rechten benötigt, um richtig zu funktionieren!</string>
   <string name="app_warning_busybox">Bitte beachte, dass %s eine BusyBox erfordert, um vollständig zu funktionieren!</string>
+  <string name="app_warning_busybox_note">BusyBox ist erforderlich da nicht jedes System die gleichen Werkzeuge anbietet, was zu Fehlern und Instabilität führen kann.\n\nBusyBox ist einheitlich und funktioniert auf jedem Gerät.</string>
   <string name="start_wizard">Assistenten starten</string>
   <string name="get_busybox">BusyBox installieren</string>
+  <string name="more_information">Weitere Informationen</string>
   <string name="checking_root">Root-Rechte werden überprüft&#8230;</string>
   <string name="checking_busybox">Busybox wird überprüft&#8230;</string>
   <string name="exit">Beenden</string>
@@ -63,6 +65,7 @@
   <string name="deep_sleep">\"Tiefschlaf\"</string>
   <string name="device_information">Geräteinformation</string>
   <string name="hotplugging">Hotplugging</string>
+  <string name="mpdecision_summary">Sollte deaktiviert werden, wenn Sie einen benutzerdefinierten Hotplugger verwenden</string>
   <string name="thermal">Thermal-Treiber</string>
   <string name="core_control">Kern-Steuerung</string>
   <string name="core_control_summary">Deaktiviert CPU-Kerne, wenn das Temperatur-Limit erreicht wird</string>
@@ -158,6 +161,7 @@
   <string name="tasker">Tasker</string>
   <string name="tasklist">Aufgaben-Liste</string>
   <string name="tasklist_summary">Erstelle, bearbeite, aktiviere oder deaktiviere Aufgaben.</string>
+  <string name="list_empty">Sie haben noch keine Punkte festgelegt!\nWie wäre es, wenn Sie ein paar festlegen? :)</string>
   <string name="add_task">Aufgabe hinzufügen</string>
   <string name="edit_task">Aufgabe bearbeiten</string>
   <string name="delete_task">Aufgabe löschen</string>
@@ -205,6 +209,7 @@
   <string name="on">Ein</string>
   <string name="off">Aus</string>
   <string name="menu">Menü</string>
+  <string name="about">Über uns</string>
   <string name="preferences">Einstellungen</string>
   <string name="become_a_monkey">Werde ein Affe</string>
   <string name="is_monkey">Warte, ist das dein Ernst?\nDu bist ziemlich clever für einen Affen.\nNicht dass sie dumm wären, aber...\nWie auch immer, lass uns das Thema wechseln.</string>
@@ -234,7 +239,11 @@
   <string name="pages_volatile">Flüchtige Seiten</string>
   <string name="enable_ksm">KSM aktivieren</string>
   <string name="reduce_memory_increase_cpu_load">Kann den Speicherbedarf reduzieren, aber auch mehr CPU-Leistung erfordern</string>
+  <string name="enable_uksm">UKSM aktivieren</string>
   <string name="uksm_cpu_governor">CPU Governor</string>
+  <string name="pages_scanned">Gescannte Seiten</string>
+  <string name="hash_strength">Hash-Stärke</string>
+  <string name="sleep_times">Schlafzeit</string>
   <string name="pages_to_scan">Seiten zu scannen</string>
   <string name="sleep_between_scans">Pause zwischen Scans (ms)</string>
   <string name="deferred_timer">Aussetzende Timer</string>
@@ -379,5 +388,7 @@
   <string name="cpu">CPU</string>
   <string name="input_reset_on_suspend">Automatisches Zurücksetzen</string>
   <string name="input_reset_on_suspend_summary">Der Touchscreen wird zurückgesetzt, wenn das Display ausgeschalten wird, um Probleme wie Geister-Berührungen und schlechte Reaktionsfähigkeit zu beheben</string>
+  <string name="arch">Architektur</string>
   <string name="string_default">Standard</string>
+  <string name="touch_boost">Berührungs-Boost</string>
 </resources>

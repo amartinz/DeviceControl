@@ -16,7 +16,14 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="permission_api_label">Accéder à l\'API Device Control</string>
   <string name="permission_api_description">Autorise l\'application à accéder et utiliser l\'API Device Control.\nCeci signifie que l\'application peut contrôler les fonctionnalités du périphérique, y compris la manipulation du matériel de votre appareil.</string>
+  <string name="support">Aide</string>
+  <string name="support_message">J\'espère que vous aimez Device Control autant que j\'ai pris de plaisir à le développer.\nlJ\'utiles moi-même cette application tous les jours et tiens à vous faire plaisir en la mettant à disposition gratuitement.</string>
+  <string name="donate_">Faire un Don</string>
+  <string name="donate_message">Néanmoins, si vous aimez cette application et voulez contribuer à son développement futur, faites un don.\nCela m\'encouragerait :-)\n\n Merci !</string>
+  <string name="show_pollfish">Activer Pollfish</string>
+  <string name="show_pollfish_summary">Ajoute une petite icône en bas à droite. Avec chaque questionnaire rempli, vous nous aidez à nous développer. Vous pouvez toujours désactiver la fonctionnalité, bien sûr :)</string>
   <string name="performance_settings_warning_title">Procéder avec prudence</string>
   <string name="performance_settings_warning_header">Attention</string>
   <string name="build_prop_mods">Modification du build.prop</string>

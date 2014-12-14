@@ -178,6 +178,7 @@
   <string name="delete_property_message">%s zal worden verwijderd.\n\nDoorgaan?</string>
   <string name="name">Naam</string>
   <string name="presets">Voorinstellingen</string>
+  <string name="gestures">Gebaren</string>
   <string name="knock_on">Knock on</string>
   <string name="five_minutes">5 minuten</string>
   <string name="ten_minutes">10 minuten</string>
@@ -250,7 +251,14 @@
   <string name="flash_warning">Je gaat zo flashen!\nAls je doorgaat, zal uw apparaat opnieuw opstarten naar de recovery en zal de geselecteerde items worden geflashed.\n\nWilt u doorgaan?</string>
   <string name="both">Beide</string>
   <string name="pick_file">Kies een bestand</string>
+  <string name="gpu_vendor">GPU leverancier</string>
+  <string name="gpu_renderer">GPU Renderer</string>
+  <string name="opengl_version">OpenGL versie</string>
+  <string name="opengl_extensions">OpenGL-extensies</string>
+  <string name="shader_version">Shader versie</string>
+  <string name="memory">Geheugen</string>
   <string name="system">Systeem</string>
   <string name="emmc_date">Datum</string>
+  <string name="cpu">CPU</string>
   <string name="string_default">Standaard</string>
 </resources>

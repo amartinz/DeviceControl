@@ -18,6 +18,9 @@
 <resources>
   <string name="privacy">Adatvédelem</string>
   <string name="enable">Engedélyezése</string>
+  <string name="recovery">Recovery</string>
+  <string name="bootloader">Bootloader</string>
+  <string name="reboot">Újraindítás</string>
   <string name="user_interface">Felület</string>
   <string name="system">Rendszer</string>
   <string name="emmc_date">Dátum</string>
