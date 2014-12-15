@@ -17,6 +17,7 @@
 -->
 <resources>
   <string name="privacy">Gizlilik</string>
+  <string name="gestures">Hareketler</string>
   <string name="user_interface">Arayüz</string>
   <string name="system">Sistem</string>
   <string name="emmc_date">Tarih</string>

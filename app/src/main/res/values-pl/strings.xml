@@ -95,7 +95,6 @@
   <string name="power_efficient_work">Energooszczędne kolejkowanie</string>
   <string name="power_efficient_work_summary">Pozwala na przypisania zadania do aktualnie aktywnego rdzenia</string>
   <string name="powersaving_sched_mc_title">Harmonogram pracy</string>
-  <string name="powersaving_sched_mc_0">0 - wyłączone</string>
   <string name="powersaving_sched_mc_1">1 - zrównoważony</string>
   <string name="powersaving_sched_mc_2">2 - agresywny</string>
   <string name="intelli_plug_eco">Tryb Eco</string>
@@ -185,7 +184,6 @@
   <string name="delete_property_message">%s będzie usunięte.\n\nKontynuować?</string>
   <string name="name">Nazwa</string>
   <string name="presets">Ustawienia domyślne</string>
-  <string name="gestures">Gesty</string>
   <string name="knock_on">Knock On</string>
   <string name="knock_on_summary">Dotknij dwukrotnie na ekranie, aby go włączyć</string>
   <string name="five_minutes">5 minut</string>
@@ -229,7 +227,6 @@
   <string name="pages_volatile">Strony niestabilne</string>
   <string name="enable_ksm">Włącz KSM</string>
   <string name="reduce_memory_increase_cpu_load">Może zmniejszyć zużycie pamięci, ale także używa nieco więcej mocy procesora.</string>
-  <string name="uksm_cpu_governor">Zarządca procesora</string>
   <string name="pages_to_scan">Strony do przeskanowania</string>
   <string name="sleep_between_scans">Przerwa między skanami (ms)</string>
   <string name="deferred_timer">Późniejsze wykonanie</string>
@@ -274,11 +271,6 @@
   <string name="user_interface">Interfejs</string>
   <string name="swipe_on_content">Przesuń na zawartości</string>
   <string name="swipe_on_content_summary">Przełącz menu, podczas przesuwania nad całą zawartością</string>
-  <string name="gpu_vendor">Producent GPU</string>
-  <string name="gpu_renderer">GPU Renderer</string>
-  <string name="opengl_version">Wersja OpenGL</string>
-  <string name="opengl_extensions">Rozszerzenia OpenGL</string>
-  <string name="shader_version">Wersja modułu cieniującego</string>
   <string name="getting_information">Pobieram informacje</string>
   <string name="health">Zdrowie</string>
   <string name="good">Dobry</string>
@@ -315,7 +307,6 @@
   <string name="hardware">Sprzęt</string>
   <string name="toolchain">Toolchain</string>
   <string name="host">Host</string>
-  <string name="memory">Pamięć RAM</string>
   <string name="free">Free</string>
   <string name="cached">Cache</string>
   <string name="display_color_calibration">Kalibracja kolorów</string>
@@ -337,9 +328,7 @@
   <string name="wipe_caches">Wyczyść Cache i Dalvik</string>
   <string name="no_additional_info">Brak dodatkowych informacji</string>
   <string name="system">System</string>
-  <string name="alert_backup_title">Kopia zapasowa</string>
   <string name="emmc_date">Data</string>
   <string name="setup_complete">Konfiguracja zakończona</string>
-  <string name="cpu">CPU</string>
   <string name="string_default">Domyślne</string>
 </resources>

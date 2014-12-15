@@ -24,6 +24,7 @@
   <string name="app_warning_busybox">Reţineţi că %s are nevoie de BusyBox pentru a funcţiona pe deplin!</string>
   <string name="start_wizard">Pornirea expertului</string>
   <string name="get_busybox">Instalează BusyBox</string>
+  <string name="more_information">Mai multe informaţii</string>
   <string name="checking_root">Se verifică accesul root&#8230;</string>
   <string name="checking_busybox">Se verifică busybox&#8230;</string>
   <string name="exit">Ieșire</string>
@@ -121,6 +122,7 @@
   <string name="gpu_governor">Guvernator GPU</string>
   <string name="gpusettings">Setările GPU-ului</string>
   <string name="gpu_freq_max">Viteză maxima GPU</string>
+  <string name="gpu_freq_min">Viteza minimă GPU</string>
   <string name="gpu_3d_scaling">Scalare 3D GPU</string>
   <string name="gpu_3d_scaling_summary">Scalare 3D GPU reguleaza inteligent frecventa GPU</string>
   <string name="touchkey">Buton touch</string>
@@ -157,6 +159,7 @@
   <string name="tasker">Manager sarcini</string>
   <string name="tasklist">Listă de activități</string>
   <string name="tasklist_summary">Configurare, modificare, activare sau dezactivare sarcini.</string>
+  <string name="list_empty">Nu ați adăugat nici un element încă!\nDe ce nu încercați să adăugați? :)</string>
   <string name="add_task">Adauga sarcina</string>
   <string name="edit_task">Editare sarcina</string>
   <string name="delete_task">Ștergere sarcina</string>
@@ -199,6 +202,7 @@
   <string name="eight_hours">8 ore</string>
   <string name="cpu_temperature">Temperatura Procesorului:</string>
   <string name="battery_temperature">Temperatura bateriei:</string>
+  <string name="on">Activat</string>
   <string name="off">Off</string>
   <string name="menu">Meniu</string>
   <string name="preferences">Preferinţe</string>
@@ -356,7 +360,15 @@
   <string name="alert_backup_message">Specificați numele de rezervă (caractere nepermise vor fi înlăturate).\n\nUrmătoarele opţiuni vor funcţiona doar în recuperări pe bază de OpenRecovery.</string>
   <string name="remove_file_title">Ștergere fișier</string>
   <string name="remove_file_summary">Doriţi să ștergeţi fişierul din listă?\n\n%s</string>
+  <string name="emmc_rev">Revizuirea</string>
   <string name="emmc_date">Data</string>
+  <string name="press_learn_more">Apăsaţi pentru a afla mai multe...</string>
+  <string name="setup_category">Configurare categorie</string>
+  <string name="setup_action">Acțiunea de configurare</string>
+  <string name="setup_value">Valoarea de configurare</string>
   <string name="setup_complete">Configurarea este completă</string>
+  <string name="screen_off">Ecran oprit</string>
+  <string name="screen_on">Ecran pornit</string>
+  <string name="cpu">Procesor</string>
   <string name="string_default">Implicit</string>
 </resources>

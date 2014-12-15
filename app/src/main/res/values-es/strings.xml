@@ -178,6 +178,7 @@
   <string name="delete_property_message">%s será eliminado.\n\n¿Continuar?</string>
   <string name="name">Nombre</string>
   <string name="presets">Ajustes Predeterminados</string>
+  <string name="gestures">Gestos</string>
   <string name="knock_on">Llamar a</string>
   <string name="five_minutes">5 Minutos</string>
   <string name="ten_minutes">10 Minutos</string>

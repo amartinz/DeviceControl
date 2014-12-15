@@ -16,6 +16,5 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="gestures">手勢</string>
-  <string name="setup_complete">設定完成</string>
+  <string name="gestures">Χειρονομίες</string>
 </resources>

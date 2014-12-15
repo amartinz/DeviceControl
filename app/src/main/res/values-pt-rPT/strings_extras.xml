@@ -18,6 +18,12 @@
 <resources>
   <string name="permission_api_label">Acesso ao controlo do dispositivo da API</string>
   <string name="permission_api_description">Permite à aplicação o acesso e uso do Device Control da API.\nIsto significa que a aplicação pode controlar características do dispositivo, incluindo manipulação no hardware do dispositivo.</string>
+  <string name="support">Suporte</string>
+  <string name="support_message">Espero que goste da aplicação Controlador de Dispositivos tanto quanto eu a desenvolvê-la.\nEu uso esta aplicação diáriamente e gostaria de ve-lo satisfeito em fornece-la gratituamente.</string>
+  <string name="donate_">Doar</string>
+  <string name="donate_message">No entanto, se gosta desta applicação e gostaria de contribuir no desenvolvimento da mesma, por favor, considere uma doação.\nSeria um bom encorajamento para continuar:)\n\nObrigado!</string>
+  <string name="show_pollfish">Ativar Pollfish</string>
+  <string name="show_pollfish_summary">Ativa um pequeno ícone no canto inferior direito. Para cada pesquisa feita está a ajuda-nos a crescer. Sinta-se livre para desativá-lo, é claro :)</string>
   <string name="performance_settings_warning_title">Proceder com Precaução</string>
   <string name="performance_settings_warning_header">Aviso</string>
   <string name="build_prop_mods">Modificações do build.prop</string>

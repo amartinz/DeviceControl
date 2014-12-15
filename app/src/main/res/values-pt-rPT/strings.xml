@@ -22,8 +22,10 @@
   <string name="app_welcome_message">Para começar, percorrer o menu da esquerda ou pressione o botão na parte superior esquerda! \n\nIf um recurso não é suportado pelo seu aparelho, ele automaticamente fica oculto! \nSupported características dependem do dispositivo que você está usando e o ROM e o kernel que você está running.\n\nIf você tem recursos não suportados, por favor, tente usar um kernel personalizado! \n\nPlease nota, que precisa de um dispositivo com root para desfrutar de todas as características de %s!</string>
   <string name="app_warning_root">Por favor, note que %s requer um dispositivo com root para funcionar plenamente!</string>
   <string name="app_warning_busybox">Faz favor tenha em conta que %s precisa de BusyBox para poder trabalhar correctamente!</string>
+  <string name="app_warning_busybox_note">BusyBox é necessária porque nem todos os sistemas fornecem o mesmo conjunto de ferramentas, o que pode levar a erros e instabilidade.\n\nBusyBox é uniforme e funciona da mesma forma em todos os dispositivos.</string>
   <string name="start_wizard">Iniciar assistente</string>
   <string name="get_busybox">Instalar BusyBox</string>
+  <string name="more_information">Mais informações</string>
   <string name="checking_root">Verificação de root...</string>
   <string name="checking_busybox">Verificação de busybox...</string>
   <string name="exit">Saír</string>
@@ -63,6 +65,7 @@
   <string name="deep_sleep">\"Deep Sleep\"</string>
   <string name="device_information">Informações do dispositivo</string>
   <string name="hotplugging">Conexão em quente</string>
+  <string name="mpdecision_summary">Deverá ser desativado se usar um hotplugger personalizado</string>
   <string name="thermal">Conductor Térmico</string>
   <string name="core_control">Controle do Núcleo</string>
   <string name="core_control_summary">Desliga núcleos da CPU se o limite de temperatura é atingido</string>
@@ -158,6 +161,7 @@
   <string name="tasker">Tarefas em</string>
   <string name="tasklist">Lista de tarefas</string>
   <string name="tasklist_summary">Configurar, modificar, habilitar ou deshabilitar as tarefas.</string>
+  <string name="list_empty">Ainda não configurou nenhum item ainda!\nQue tal configurar alguns? :)</string>
   <string name="add_task">Acrescentar tarefa</string>
   <string name="edit_task">Editar tarefa</string>
   <string name="delete_task">Eliminar tarefa</string>
@@ -205,6 +209,7 @@
   <string name="on">Ligado</string>
   <string name="off">Desligado</string>
   <string name="menu">Menu</string>
+  <string name="about">Sobre</string>
   <string name="preferences">Preferências</string>
   <string name="become_a_monkey">Converter num macaco</string>
   <string name="is_monkey">Espera, a sério?\nÉs muito inteligente para um macaco.\nNão é que eles sejam estúpidos mas...\nBom, vamos ignorar isto.</string>
@@ -234,7 +239,9 @@
   <string name="pages_volatile">Páginas voláteis</string>
   <string name="enable_ksm">Ativar KSM</string>
   <string name="reduce_memory_increase_cpu_load">Pode reduzir o uso da memória mas usa mais a potência do CPU</string>
-  <string name="uksm_cpu_governor">Governor do CPU</string>
+  <string name="enable_uksm">Ativar UKSM</string>
+  <string name="uksm_cpu_governor">Regulador do CPU</string>
+  <string name="pages_scanned">Páginas verificadas</string>
   <string name="pages_to_scan">Páginas que escanear</string>
   <string name="sleep_between_scans">Descansos entre as varreduras (ms)</string>
   <string name="deferred_timer">Temporizador diferido de tempo</string>
@@ -379,5 +386,6 @@
   <string name="cpu">CPU</string>
   <string name="input_reset_on_suspend">Reíniciar em suspensão</string>
   <string name="input_reset_on_suspend_summary">Redefinir o dispositivo de entrada quando suspende, para resolver problemas como a apatia ou toques fantasma</string>
+  <string name="arch">Arquitectura</string>
   <string name="string_default">Por defeito</string>
 </resources>

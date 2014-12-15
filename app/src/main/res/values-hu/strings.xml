@@ -18,11 +18,18 @@
 <resources>
   <string name="privacy">Adatvédelem</string>
   <string name="enable">Engedélyezése</string>
+  <string name="gestures">Gesztusok</string>
   <string name="recovery">Recovery</string>
   <string name="bootloader">Bootloader</string>
   <string name="reboot">Újraindítás</string>
   <string name="user_interface">Felület</string>
+  <string name="gpu_renderer">GPU Renderelő</string>
+  <string name="opengl_version">OpenGL Verzió</string>
+  <string name="opengl_extensions">OpenGL Kiegészítők</string>
+  <string name="shader_version">Shader Verzió</string>
+  <string name="memory">Memória</string>
   <string name="system">Rendszer</string>
   <string name="emmc_date">Dátum</string>
+  <string name="cpu">Processzor</string>
   <string name="string_default">Alapértelmezett</string>
 </resources>
