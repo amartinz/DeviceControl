@@ -169,6 +169,7 @@ public class Application extends android.app.Application implements DeviceConsta
 
     public Application setDarkTheme(final boolean isDark) {
         sIsDarkTheme = isDark ? 1 : 0;
+        PreferenceHelper.setBoolean("dark_theme", isDark);
         return this;
     }
 }

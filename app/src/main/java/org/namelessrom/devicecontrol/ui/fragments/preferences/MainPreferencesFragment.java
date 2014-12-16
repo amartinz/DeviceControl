@@ -115,7 +115,7 @@ public class MainPreferencesFragment extends PreferenceFragment
         }
 
         mDarkTheme = (CustomTogglePreference) findPreference("dark_theme");
-        mDarkTheme.setChecked(PreferenceHelper.getBoolean(mDarkTheme.getKey(), false));
+        mDarkTheme.setChecked(Application.get().isDarkTheme());
         mDarkTheme.setOnPreferenceChangeListener(this);
 
         mSwipeOnContent = (CustomTogglePreference) findPreference("swipe_on_content");
@@ -196,7 +196,6 @@ public class MainPreferencesFragment extends PreferenceFragment
         } else if (mDarkTheme == preference) {
             final boolean isDark = (Boolean) newValue;
             Application.get().setDarkTheme(isDark);
-            PreferenceHelper.setBoolean(mDarkTheme.getKey(), isDark);
             mDarkTheme.setChecked(isDark);
 
             if (isDark) {
@@ -204,7 +203,6 @@ public class MainPreferencesFragment extends PreferenceFragment
             } else {
                 Application.get().setAccentColor(getResources().getColor(R.color.accent_light));
             }
-            PreferenceHelper.setInt("pref_color", Application.get().getAccentColor());
 
             // restart the activity to apply new theme
             Utils.restartActivity(getActivity());

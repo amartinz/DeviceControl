@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
@@ -87,7 +88,7 @@ public class CpuStateView extends LinearLayout implements CpuUtils.StateListener
                 refreshData();
             }
         });
-        mRefresh.setImageResource(PreferenceHelper.getBoolean("dark_theme", false)
+        mRefresh.setImageResource(Application.get().isDarkTheme()
                 ? R.drawable.ic_action_refresh : R.drawable.ic_action_refresh_dark);
 
         refreshData();

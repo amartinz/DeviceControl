@@ -268,7 +268,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
 
         mCacheGraph.setTouchEnabled(false);
 
-        final int color = PreferenceHelper.getBoolean("dark_theme", false)
+        final int color = Application.get().isDarkTheme()
                 ? Application.get().getColor(R.color.dark_background)
                 : Application.get().getColor(R.color.light_background);
         mCacheGraph.setBackgroundColor(color);
@@ -376,8 +376,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                 mStatus.setTextColor(getResources().getColor(R.color.red_middle));
             } else {
                 tmp = getString(R.string.app_user, mAppItem.getLabel());
-                final int color = PreferenceHelper.getBoolean("dark_theme", false)
-                        ? Color.WHITE : Color.BLACK;
+                final int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
                 mStatus.setTextColor(color);
             }
             mStatus.setText(Html.fromHtml(tmp));
@@ -650,8 +649,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             l.setXEntrySpace(7f);
             l.setYEntrySpace(5f);
 
-            final int color = PreferenceHelper.getBoolean("dark_theme", false)
-                    ? Color.WHITE : Color.BLACK;
+            final int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
             l.setTextColor(color);
 
             // we are ready
@@ -670,8 +668,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
                     .inflate(R.layout.widget_app_cache, mCacheInfo, false);
         }
 
-        final int color = PreferenceHelper.getBoolean("dark_theme", false)
-                ? Color.WHITE : Color.BLACK;
+        final int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
 
         final TextView tvLeft = (TextView) v.findViewById(R.id.widget_app_cache_left);
         tvLeft.setTextColor(color);
