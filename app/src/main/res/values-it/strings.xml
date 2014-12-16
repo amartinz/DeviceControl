@@ -22,8 +22,10 @@
   <string name="app_welcome_message">Per iniziare, scorri il menu di sinistra o premi il pulsante in alto a sinistra!\n\nSe una funzionalità non è supportata dal tuo dispositivo, sì nasconderà automaticamente!\nLe funzionalità supportate dipendono dal dispositivo in uso e dalla ROM e dal kernel che stai usando.\n\nSe nessuna funzionalità è supportata, prova ad usare un kernel personalizzato!\n\nNotare che occorrerà un dispositivo con permessi di root per godere di tutte le funzionalità di %s!</string>
   <string name="app_warning_root">Notare che %s richiede i permessi di root per funzionare completamente!</string>
   <string name="app_warning_busybox">Nota che %s richiede una BusyBox per funzionare completamente!</string>
+  <string name="app_warning_busybox_note">BusyBox è richiesto perchè non tutti i sistemi forniscono le stesse funzionalità, questo può comportare bug e instabilità.\n\nBusyBox è uniforme e funziona allo stesso modo su tutti i sistemi.</string>
   <string name="start_wizard">Avvia la procedura guidata</string>
   <string name="get_busybox">Installa BusyBox</string>
+  <string name="more_information">Ulteriori informazioni</string>
   <string name="checking_root">Controllo di root...</string>
   <string name="checking_busybox">Controllo di busybox&#8230;</string>
   <string name="exit">Esci</string>
@@ -63,6 +65,7 @@
   <string name="deep_sleep">\"Deep Sleep\"</string>
   <string name="device_information">Informazioni sul dispositivo</string>
   <string name="hotplugging">Hotplugging</string>
+  <string name="mpdecision_summary">Deve essere disattivato se si utilizza un hotplugger personalizzato</string>
   <string name="thermal">Driver di temperatura</string>
   <string name="core_control">Controllo core</string>
   <string name="core_control_summary">Disattiva core cpu se viene raggiunto il limite di temperatura</string>
@@ -121,6 +124,7 @@
   <string name="gpu_governor">Governor GPU</string>
   <string name="gpusettings">Impostazioni GPU</string>
   <string name="gpu_freq_max">Velocità massima della GPU</string>
+  <string name="gpu_freq_min">Velocità minima della CPU</string>
   <string name="gpu_3d_scaling">Scaling della GPU 3D</string>
   <string name="gpu_3d_scaling_summary">I gradini della GPU 3D regolano in modo intelligente la frequenza della GPU</string>
   <string name="touchkey">Tasto touch</string>
@@ -157,9 +161,12 @@
   <string name="tasker">Tasker</string>
   <string name="tasklist">Elenco attività</string>
   <string name="tasklist_summary">Impostare, modificare, attivare o disattivare compiti.</string>
+  <string name="list_empty">Non è stato impostato alcun oggetto.\nConfigurarlo ora? :)</string>
   <string name="add_task">Aggiungi attività</string>
   <string name="edit_task">Modifica attività</string>
   <string name="delete_task">Elimina attività</string>
+  <string name="delete_task_question">Vuoi davvero eliminare l\'attività selezionata?</string>
+  <string name="trigger">Trigger</string>
   <string name="category">Categoria</string>
   <string name="action">Azione</string>
   <string name="value">Valore</string>
@@ -199,8 +206,10 @@
   <string name="eight_hours">8 ore</string>
   <string name="cpu_temperature">Temperatura della CPU:</string>
   <string name="battery_temperature">Temperatura della batteria:</string>
+  <string name="on">Attivo</string>
   <string name="off">Off</string>
   <string name="menu">Menu</string>
+  <string name="about">Info</string>
   <string name="preferences">Impostazioni</string>
   <string name="become_a_monkey">Diventa una scimmia</string>
   <string name="is_monkey">Aspetta, fai sul serio? \nSei piuttosto intelligente per essere una scimmia. \nNon che siano stupide ma...\nBeh, saltiamo questo passaggio.</string>
@@ -230,7 +239,10 @@
   <string name="pages_volatile">Pagine volatili</string>
   <string name="enable_ksm">Abilita KSM</string>
   <string name="reduce_memory_increase_cpu_load">Può ridurre l\'utilizzo della memoria, ma utilizza anche un po\' più di potenza della CPU</string>
+  <string name="enable_uksm">Attiva UKSM</string>
   <string name="uksm_cpu_governor">Governor CPU</string>
+  <string name="pages_scanned">Pagine controllate</string>
+  <string name="hash_strength">Forza dell\'hash</string>
   <string name="pages_to_scan">Pagine da scansire</string>
   <string name="sleep_between_scans">Pausa tra le scansioni (ms)</string>
   <string name="deferred_timer">Timer differito</string>
@@ -270,6 +282,7 @@
   <string name="shutdown">Spegnimento</string>
   <string name="warning_data_corruption">Può causare la corruzione dei dati se abilitato</string>
   <string name="warning_data_corruption_invert">Può causare la corruzione dei dati se disabilitato</string>
+  <string name="data_integrity_decreased_performance">Assicura l\'integrità dei dati, ma diminuisce le prestazioni</string>
   <string name="read_ahead">Lettura anticipata</string>
   <string name="filesystem">Filesystem</string>
   <string name="user_interface">Interfaccia</string>
@@ -356,7 +369,25 @@
   <string name="alert_backup_message">Specificare il nome del backup (i caratteri vietati saranno rimossi).\n\nLe seguenti opzioni funzioneranno solo in recovery basate su OpenRecovery.</string>
   <string name="remove_file_title">Rimuovi file</string>
   <string name="remove_file_summary">Vuoi rimuovere il file dalla lista?\n\n%s</string>
+  <string name="emmc_rev">Revisione</string>
   <string name="emmc_date">Data</string>
+  <string name="emmc_can_brick">Problemi</string>
+  <string name="emmc_can_brick_true">Il tuo chip eMMC causa probelmi!</string>
+  <string name="emmc_can_brick_false">Il tuo chip eMMC funziona corratamente!</string>
+  <string name="press_learn_more">Premi qui per saperne di piu\'...</string>
+  <string name="setup_welcome">Benvenuti al setup tasker</string>
+  <string name="setup_welcome_text">Seguendo le prossime schermate sarete in grado di impostare un task.\n\nTasks sono disattivati per impostazione predefinita, sarà necessario spuntare la casella a destra di ciascun elemento per attivare it.\n\nTo attivare il Tasker, ruotare l\'interruttore nella parte superiore destra all\'elenco delle attività su.</string>
+  <string name="setup_trigger">Setup trigger</string>
+  <string name="setup_category">Categoria di installazione</string>
+  <string name="setup_action">Azione di installazione</string>
+  <string name="setup_value">Impostazione valore</string>
   <string name="setup_complete">Il setup è completo</string>
+  <string name="screen_off">Spegni schermo</string>
+  <string name="screen_on">Accendi schermo</string>
+  <string name="cpu">CPU</string>
+  <string name="input_reset_on_suspend">resetta dopo la sospensione</string>
+  <string name="input_reset_on_suspend_summary">ripristina il dispositivo di input durante la sospensione per risolvere problemi del pannello touch come tocchi fantasma e irresponsibilità</string>
+  <string name="arch">Architettura</string>
   <string name="string_default">Predefinito</string>
+  <string name="touch_boost">Touch boost</string>
 </resources>

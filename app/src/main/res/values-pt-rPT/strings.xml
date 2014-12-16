@@ -242,6 +242,8 @@
   <string name="enable_uksm">Ativar UKSM</string>
   <string name="uksm_cpu_governor">Regulador do CPU</string>
   <string name="pages_scanned">Páginas verificadas</string>
+  <string name="hash_strength">Capacidade de hash</string>
+  <string name="sleep_times">Momentos de inatividade</string>
   <string name="pages_to_scan">Páginas que escanear</string>
   <string name="sleep_between_scans">Descansos entre as varreduras (ms)</string>
   <string name="deferred_timer">Temporizador diferido de tempo</string>
@@ -388,4 +390,5 @@
   <string name="input_reset_on_suspend_summary">Redefinir o dispositivo de entrada quando suspende, para resolver problemas como a apatia ou toques fantasma</string>
   <string name="arch">Arquitectura</string>
   <string name="string_default">Por defeito</string>
+  <string name="touch_boost">Aumento do toque</string>
 </resources>

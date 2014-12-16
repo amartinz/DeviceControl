@@ -18,6 +18,12 @@
 <resources>
   <string name="permission_api_label">Accedere all\'API del Device Control</string>
   <string name="permission_api_description">Consente all\'applicazione di accedere e utilizzare l\'API di Device Control.\nQuesto significa che l\'app può controllare le funzionalità del dispositivo, tra cui la manipolazione dell\'hardware del dispositivo.</string>
+  <string name="support">Supporto</string>
+  <string name="support_message">Spero ti piaccia Device Control quanto a me svilupparlo.\nAnche io utilizzo questa applicazione giornalmente e mi piacerebbe farti felice fornendotela gratis.</string>
+  <string name="donate_">Donare</string>
+  <string name="donate_message">Tuttavia, se ti piace questa app e vorresti contribuire ulteriormente al suo sviluppo, considerate una donazione.\nMi darebbe un forte incoraggiamento :)\n\nGrazie!</string>
+  <string name="show_pollfish">Attiva Pollfish</string>
+  <string name="show_pollfish_summary">Attiva una piccola icona in basso a destra. Ogni sondaggio effettuato ci aiuteràa crescere. Sentitevi liberi di disattivarla, ovviamente :)</string>
   <string name="performance_settings_warning_title">Procedere con cautela</string>
   <string name="performance_settings_warning_header">Attenzione</string>
   <string name="build_prop_mods">Build.prop Mods</string>

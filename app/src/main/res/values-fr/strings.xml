@@ -65,6 +65,7 @@
   <string name="deep_sleep">« Sommeil profond »</string>
   <string name="device_information">Information sur l\'appareil</string>
   <string name="hotplugging">Branchement à chaud</string>
+  <string name="mpdecision_summary">Doit être désactivé si vous utilisez un hotplugger personnalisé</string>
   <string name="thermal">Driver Thermique</string>
   <string name="core_control">Contrôle du Noyau</string>
   <string name="core_control_summary">Arrêter les cpu du noyau si la température limite est atteinte</string>
@@ -98,6 +99,7 @@
   <string name="power_efficient_work">File de puissance efficace</string>
   <string name="power_efficient_work_summary">Permet au travail d\'être re-planifié sur un noyau qui est déjà réveillé.</string>
   <string name="powersaving_sched_mc_title">Planificateur d\'energie</string>
+  <string name="powersaving_sched_mc_0">0 - Désactivé</string>
   <string name="powersaving_sched_mc_1">1 - Symétrique</string>
   <string name="powersaving_sched_mc_2">2 - Agressif</string>
   <string name="intelli_plug_eco">Mode Eco</string>
@@ -191,6 +193,7 @@
   <string name="delete_property_message">%s sera supprimé.\n\nContinuer ?</string>
   <string name="name">Nom</string>
   <string name="presets">Préréglages</string>
+  <string name="gestures">Gestes</string>
   <string name="knock_on">Knock On</string>
   <string name="knock_on_summary">Appui double sur l\'écran pour l\'allumer</string>
   <string name="five_minutes">5 Minutes</string>
@@ -236,6 +239,10 @@
   <string name="pages_volatile">Pages volatiles</string>
   <string name="enable_ksm">Activez KSM</string>
   <string name="reduce_memory_increase_cpu_load">Peut réduire l\'utilisation de la mémoire, mais utilise également un peu plus de puissance CPU</string>
+  <string name="enable_uksm">Enclencher UKSM</string>
+  <string name="uksm_cpu_governor">Gouverneur de CPU</string>
+  <string name="pages_scanned">Pages scannées</string>
+  <string name="hash_strength">Force du hachage</string>
   <string name="sleep_times">Délai de mise en veille</string>
   <string name="pages_to_scan">Pages à scanner</string>
   <string name="sleep_between_scans">Dormir entre les scans (ms)</string>
@@ -283,6 +290,10 @@
   <string name="swipe_on_content">Glisser sur le contenu</string>
   <string name="swipe_on_content_summary">Ouvre/ferme le menu avec un glissé sur toute la surface du contenu</string>
   <string name="gpu_vendor">Fournisseur GPU</string>
+  <string name="gpu_renderer">Moteur de rendu GPU</string>
+  <string name="opengl_version">Version d\'OpenGL</string>
+  <string name="opengl_extensions">Extensions OpenGL</string>
+  <string name="shader_version">Version du Shader</string>
   <string name="getting_information">Obtention d\'informations</string>
   <string name="health">État</string>
   <string name="good">Bon</string>
@@ -322,6 +333,7 @@
   <string name="hardware">Matériel</string>
   <string name="toolchain">Toolchain</string>
   <string name="host">Hôte</string>
+  <string name="memory">Mémoire</string>
   <string name="free">Libre</string>
   <string name="cached">Mise en cache</string>
   <string name="display_color_calibration">Calibrage des couleurs</string>
@@ -354,6 +366,7 @@
   <string name="alert_reboot_more_message">L\'appareil va redémarrer et installer les fichiers.</string>
   <string name="alert_backup_space_title">Espace restant</string>
   <string name="alert_backup_space_message">Il reste moins de %sGB de mémoire interne. Voulez-vous continuer la sauvegarde ?</string>
+  <string name="alert_backup_title">Sauvegarder</string>
   <string name="alert_backup_message">Nommez la sauvegarde (les caractères interdits seront retirés).\n\nLes options suivantes ne fonctionneront qu\'avec des Recovery Open Source.</string>
   <string name="remove_file_title">Retirer le fichier</string>
   <string name="remove_file_summary">Voulez-vous retirer le fichier de la liste ?\n\n%s</string>
@@ -372,7 +385,10 @@
   <string name="setup_complete">La configuration est terminée</string>
   <string name="screen_off">Écran éteint</string>
   <string name="screen_on">Écran allumé</string>
+  <string name="cpu">CPU</string>
   <string name="input_reset_on_suspend">Réinitialiser quand suspendu</string>
   <string name="input_reset_on_suspend_summary">Réinitialise le périphérique d\'entrée lorsqu\'il est suspendu afin de solutionner les problèmes d\'appui fantômes et de réactivité</string>
+  <string name="arch">Architecture</string>
   <string name="string_default">Par défaut</string>
+  <string name="touch_boost">Boost tactile</string>
 </resources>
