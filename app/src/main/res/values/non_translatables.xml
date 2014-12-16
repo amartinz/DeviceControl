@@ -90,4 +90,6 @@
     <string name="back_button_label" translatable="false">Back</string>
     <string name="next_button_label" translatable="false">Next</string>
     <string name="skip_button_label" translatable="false">Skip</string>
+    <string name="androidsecure" translatable="false">Android secure</string>
+    <string name="sdext" translatable="false">SD-Ext</string>
 </resources>

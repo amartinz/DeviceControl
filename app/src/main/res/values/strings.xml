@@ -117,7 +117,6 @@
     <string name="other_settings">Other settings</string>
     <string name="settings">Settings</string>
     <string name="refresh">Refresh</string>
-    <string name="refresh_interval">Refresh interval</string>
     <string name="hide_status">Hide status</string>
     <string name="gpu">GPU</string>
     <string name="gpu_governor">GPU governor</string>
@@ -359,8 +358,6 @@
     <string name="file_not_found">Unable to add file</string>
     <string name="system">System</string>
     <string name="boot">Boot</string>
-    <string name="androidsecure">Android secure</string>
-    <string name="sdext">SD-Ext</string>
     <string name="alert_reboot_install_title">Install file(s)</string>
     <string name="alert_reboot_one_message">Your device will reboot and install the file.</string>
     <string name="alert_reboot_more_message">Your device will reboot and install the files.</string>
