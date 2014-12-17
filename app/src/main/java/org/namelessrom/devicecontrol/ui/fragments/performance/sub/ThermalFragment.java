@@ -32,11 +32,6 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class ThermalFragment extends AttachPreferenceFragment
         implements DeviceConstants, Preference.OnPreferenceChangeListener {
-    //----------------------------------------------------------------------------------------------
-    private AwesomeTogglePreference mCoreControl;
-
-    //----------------------------------------------------------------------------------------------
-    private AwesomeTogglePreference mIntelliThermalEnabled;
 
     @Override protected int getFragmentId() { return ID_THERMAL; }
 
@@ -49,14 +44,13 @@ public class ThermalFragment extends AttachPreferenceFragment
         //------------------------------------------------------------------------------------------
         // General
         //------------------------------------------------------------------------------------------
-        mCoreControl = (AwesomeTogglePreference) findPreference("core_control");
-        if (mCoreControl != null) {
-            if (mCoreControl.isSupported()) {
-                mCoreControl.initValue();
-                mCoreControl.setOnPreferenceChangeListener(this);
-            } else {
-                getPreferenceScreen().removePreference(mCoreControl);
-            }
+        final AwesomeTogglePreference coreControl =
+                (AwesomeTogglePreference) findPreference("core_control");
+        if (coreControl.isSupported()) {
+            coreControl.initValue();
+            coreControl.setOnPreferenceChangeListener(this);
+        } else {
+            getPreferenceScreen().removePreference(coreControl);
         }
 
         //------------------------------------------------------------------------------------------
@@ -65,18 +59,21 @@ public class ThermalFragment extends AttachPreferenceFragment
         final AwesomePreferenceCategory msmThermal =
                 (AwesomePreferenceCategory) findPreference("msm_thermal");
         if (msmThermal.isSupported()) {
-            final String[] files = Utils.listFiles(msmThermal.getPath(), true);
-            AwesomeTogglePreference togglePreference = PreferenceUtils.addAwesomeTogglePreference(
-                    getActivity(), "msm_thermal_", getString(R.string.thermal_warning), "extras",
-                    msmThermal.getPath(), "enabled", msmThermal, this);
-            if (togglePreference != null) {
-                togglePreference.setupTitle();
+            final String path = msmThermal.getPath();
+            final String[] files = Utils.listFiles(path, true);
+            if (Utils.fileExists(path + "enabled")) {
+                AwesomeTogglePreference togglePref = PreferenceUtils.addAwesomeTogglePreference(
+                        getActivity(), "msm_thermal_", getString(R.string.thermal_warning),
+                        "extras", msmThermal.getPath(), "enabled", msmThermal, this);
+                if (togglePref != null) {
+                    togglePref.setupTitle();
+                }
             }
             for (final String file : files) {
                 final int type = PreferenceUtils.getType(file);
                 if (PreferenceUtils.TYPE_EDITTEXT == type) {
                     PreferenceUtils.addAwesomeEditTextPreference(getActivity(), "msm_thermal_",
-                            "extras", msmThermal.getPath(), file, msmThermal, this);
+                            "extras", path, file, msmThermal, this);
                 }
             }
         }
@@ -86,17 +83,13 @@ public class ThermalFragment extends AttachPreferenceFragment
         // Intelli-Thermal
         //------------------------------------------------------------------------------------------
         category = (PreferenceCategory) findPreference("intelli_thermal");
-        if (category != null) {
-            mIntelliThermalEnabled = (AwesomeTogglePreference)
-                    findPreference("intelli_thermal_enabled");
-            if (mIntelliThermalEnabled != null) {
-                if (mIntelliThermalEnabled.isSupported()) {
-                    mIntelliThermalEnabled.initValue();
-                    mIntelliThermalEnabled.setOnPreferenceChangeListener(this);
-                } else {
-                    category.removePreference(mIntelliThermalEnabled);
-                }
-            }
+        final AwesomeTogglePreference mIntelliThermal =
+                (AwesomeTogglePreference) findPreference("intelli_thermal_enabled");
+        if (mIntelliThermal.isSupported()) {
+            mIntelliThermal.initValue();
+            mIntelliThermal.setOnPreferenceChangeListener(this);
+        } else {
+            category.removePreference(mIntelliThermal);
         }
         removeIfEmpty(getPreferenceScreen(), category);
 
@@ -109,12 +102,6 @@ public class ThermalFragment extends AttachPreferenceFragment
             return true;
         } else if (preference instanceof AwesomeTogglePreference) {
             ((AwesomeTogglePreference) preference).writeValue((Boolean) o);
-            return true;
-        } else if (mCoreControl == preference) {
-            mCoreControl.writeValue((Boolean) o);
-            return true;
-        } else if (mIntelliThermalEnabled == preference) {
-            mIntelliThermalEnabled.writeValue((Boolean) o);
             return true;
         }
 

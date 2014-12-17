@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.ui.fragments.performance;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -143,12 +142,10 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
         // General
         //------------------------------------------------------------------------------------------
         mMpDecision = (CustomTogglePreference) findPreference("mpdecision");
-        if (mMpDecision != null) {
-            if (Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
-                Utils.getCommandResult(this, ID_MPDECISION, "pgrep mpdecision 2> /dev/null;");
-            } else {
-                getPreferenceScreen().removePreference(mMpDecision);
-            }
+        if (Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
+            Utils.getCommandResult(this, ID_MPDECISION, "pgrep mpdecision 2> /dev/null;");
+        } else {
+            getPreferenceScreen().removePreference(mMpDecision);
         }
 
         //------------------------------------------------------------------------------------------
@@ -156,27 +153,33 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
         //------------------------------------------------------------------------------------------
         awCategory = (AwesomePreferenceCategory) findPreference("intelli_plug");
         if (awCategory.isSupported()) {
+            final String path = awCategory.getPath();
+            AwesomeTogglePreference togglePref;
             // setup intelli plug toggle
-            AwesomeTogglePreference togglePreference = PreferenceUtils.addAwesomeTogglePreference(
-                    getActivity(), "intelli_plug_", "", "extras", awCategory.getPath(),
-                    "intelli_plug_active", awCategory, this);
-            if (togglePreference != null) {
-                togglePreference.setupTitle();
+            if (Utils.fileExists(path + "intelli_plug_active")) {
+                togglePref = PreferenceUtils.addAwesomeTogglePreference(getActivity(),
+                        "intelli_plug_", "", "extras", path, "intelli_plug_active", awCategory,
+                        this);
+                if (togglePref != null) {
+                    togglePref.setupTitle();
+                }
             }
             // setup touch boost toggle
-            togglePreference = PreferenceUtils.addAwesomeTogglePreference(
-                    getActivity(), "intelli_plug_", "", "extras", awCategory.getPath(),
-                    "touch_boost_active", awCategory, this);
-            if (togglePreference != null) {
-                togglePreference.setupTitle();
+            if (Utils.fileExists(path + "touch_boost_active")) {
+                togglePref = PreferenceUtils.addAwesomeTogglePreference(
+                        getActivity(), "intelli_plug_", "", "extras", path,
+                        "touch_boost_active", awCategory, this);
+                if (togglePref != null) {
+                    togglePref.setupTitle();
+                }
             }
             // add the other files
-            final String[] files = Utils.listFiles(awCategory.getPath(), false);
+            final String[] files = Utils.listFiles(path, false);
             for (final String file : files) {
                 final int type = PreferenceUtils.getType(file);
                 if (PreferenceUtils.TYPE_EDITTEXT == type) {
                     PreferenceUtils.addAwesomeEditTextPreference(getActivity(), "intelli_plug_",
-                            "extras", awCategory.getPath(), file, awCategory, this);
+                            "extras", path, file, awCategory, this);
                 }
             }
         }
@@ -184,19 +187,21 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
 
         awCategory = (AwesomePreferenceCategory) findPreference("mako_hotplug");
         if (awCategory.isSupported()) {
+            final String path = awCategory.getPath();
             // setup mako_hotplug toggle
-            AwesomeTogglePreference togglePreference = PreferenceUtils.addAwesomeTogglePreference(
-                    getActivity(), "mako_", "", "extras", awCategory.getPath(),
-                    "enabled", awCategory, this);
-            if (togglePreference != null) {
-                togglePreference.setupTitle();
+            if (Utils.fileExists(path + "enabled")) {
+                AwesomeTogglePreference togglePref = PreferenceUtils.addAwesomeTogglePreference(
+                        getActivity(), "mako_", "", "extras", path, "enabled", awCategory, this);
+                if (togglePref != null) {
+                    togglePref.setupTitle();
+                }
             }
-            final String[] files = Utils.listFiles(awCategory.getPath(), true);
+            final String[] files = Utils.listFiles(path, true);
             for (final String file : files) {
                 final int type = PreferenceUtils.getType(file);
                 if (PreferenceUtils.TYPE_EDITTEXT == type) {
                     PreferenceUtils.addAwesomeEditTextPreference(getActivity(), "mako_",
-                            "extras", awCategory.getPath(), file, awCategory, this);
+                            "extras", path, file, awCategory, this);
                 }
             }
         }
@@ -233,8 +238,6 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
             final String selected = String.valueOf(o);
             final String other = String.valueOf(mMin.getValue());
             final boolean updateOther = Utils.parseInt(selected) < Utils.parseInt(other);
-            Logger.v(this, "o: %s | selected: %s | other: %s | updateOther: %s", o, selected, other,
-                    updateOther);
             if (updateOther) {
                 mMin.setValue(selected);
                 mMin.setSummary(CpuUtils.toMhz(selected));
@@ -334,11 +337,9 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
 
         CpuCore tmpCore;
         final int mCpuNum = CpuUtils.get().getNumOfCpus();
+        final String format = getString(R.string.core) + " %s:";
         for (int i = 0; i < mCpuNum; i++) {
-            tmpCore = new CpuCore(getString(R.string.core) + ' ' + String.valueOf(i) + ": ",
-                    "0",
-                    "0",
-                    "0");
+            tmpCore = new CpuCore(String.format(format, String.valueOf(i)), "0", "0", "0");
             generateRow(i, tmpCore);
         }
 
@@ -385,7 +386,7 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
 
     public View generateRow(final int core, final CpuCore cpuCore) {
         if (!isAdded() || mCpuInfo == null) { return null; }
-        Logger.d(this, String.format("generateRow(%s);", cpuCore.toString()));
+        Logger.v(this, String.format("generateRow(%s);", cpuCore.toString()));
 
         View rowView = mCpuInfo.getChildAt(core);
         if (rowView == null) {
