@@ -75,6 +75,7 @@
     <string name="size_2048_kb" translatable="false">2048 kB</string>
     <string name="size_3072_kb" translatable="false">3072 kB</string>
     <string name="size_4096_kb" translatable="false">4096 kB</string>
+    <string name="size_8192_kb" translatable="false">8192 kB</string>
     <!-- MB -->
     <string name="size_25_mb" translatable="false">25 MB</string>
     <string name="size_50_mb" translatable="false">50 MB</string>

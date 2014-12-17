@@ -305,6 +305,7 @@
         <item>@string/size_2048_kb</item>
         <item>@string/size_3072_kb</item>
         <item>@string/size_4096_kb</item>
+        <item>@string/size_8192_kb</item>
     </string-array>
     <string-array name="read_ahead_values" translatable="false">
         <item>128</item>
@@ -314,6 +315,7 @@
         <item>2048</item>
         <item>3072</item>
         <item>4096</item>
+        <item>8192</item>
     </string-array>
 
 </resources>
