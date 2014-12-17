@@ -5,10 +5,10 @@
 -dontobfuscate
 -verbose
 
-# Optimization is turned off by default. Dex does not like code run
-# through the ProGuard optimize and preverify steps (and performs some
-# of these optimizations on its own).
--dontoptimize
+# Optimizations
+-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*,!code/allocation/variable
+-optimizationpasses 5
+-allowaccessmodification
 -dontpreverify
 
 # Note: This may already be defined in the default "proguard-android-optimize.txt"
