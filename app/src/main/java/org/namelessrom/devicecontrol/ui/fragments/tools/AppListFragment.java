@@ -532,16 +532,23 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
         Logger.v(this, cmd);
 
         // create the dialog (will not be shown for a long amount of time though)
-        final ProgressDialog dialog = new ProgressDialog(getActivity());
-        dialog.setTitle(R.string.uninstalling);
-        dialog.setMessage(getString(R.string.applying_wait));
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setCancelable(false);
+        final ProgressDialog dialog;
+        if (getActivity() != null) {
+            dialog = new ProgressDialog(getActivity());
+            dialog.setTitle(R.string.uninstalling);
+            dialog.setMessage(getString(R.string.applying_wait));
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setCancelable(false);
+        } else {
+            dialog = null;
+        }
 
         new AsyncTask<Void, Void, Void>() {
 
             @Override protected void onPreExecute() {
-                dialog.show();
+                if (dialog != null) {
+                    dialog.show();
+                }
             }
 
             @Override protected Void doInBackground(Void... voids) {
@@ -550,7 +557,9 @@ public class AppListFragment extends AttachFragment implements DeviceConstants,
             }
 
             @Override protected void onPostExecute(Void aVoid) {
-                dialog.dismiss();
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
 
                 if (getActivity() != null) {
                     Toast.makeText(getActivity(),
