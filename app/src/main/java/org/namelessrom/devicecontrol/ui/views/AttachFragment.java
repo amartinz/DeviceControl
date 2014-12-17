@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol.ui.views;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.animation.Animation;
 
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
@@ -55,6 +56,15 @@ public abstract class AttachFragment extends Fragment implements OnBackPressedLi
             ((MainActivity) activity).setFragment(this);
         }
         MainActivity.loadFragment(activity, getFragmentId(), true);
+    }
+
+    @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (MainActivity.sDisableFragmentAnimations) {
+            final Animation a = new Animation() { };
+            a.setDuration(0);
+            return a;
+        }
+        return super.onCreateAnimation(transit, enter, nextAnim);
     }
 
     /*

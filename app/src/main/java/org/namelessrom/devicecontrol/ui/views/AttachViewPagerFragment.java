@@ -25,6 +25,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
@@ -56,6 +57,15 @@ public abstract class AttachViewPagerFragment extends AttachFragment {
         tabLayout.setViewPager(viewPager);
 
         return view;
+    }
+
+    @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (MainActivity.sDisableFragmentAnimations) {
+            final Animation a = new Animation() { };
+            a.setDuration(0);
+            return a;
+        }
+        return super.onCreateAnimation(transit, enter, nextAnim);
     }
 
     public abstract ViewPagerAdapter getPagerAdapter();

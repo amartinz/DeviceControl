@@ -25,6 +25,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.support.v4.preference.PreferenceFragment;
+import android.view.animation.Animation;
 
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
@@ -112,6 +113,15 @@ public abstract class AttachPreferenceFragment extends PreferenceFragment
         pref.setTitle(R.string.no_tweaks_available);
         pref.setSummary(sId);
         return pref;
+    }
+
+    @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (MainActivity.sDisableFragmentAnimations) {
+            final Animation a = new Animation() { };
+            a.setDuration(0);
+            return a;
+        }
+        return super.onCreateAnimation(transit, enter, nextAnim);
     }
 
     /*

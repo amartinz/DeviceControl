@@ -95,6 +95,8 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
     public static SlidingMenu sSlidingMenu;
     public static MaterialMenuIconToolbar sMaterialMenu;
 
+    public static boolean sDisableFragmentAnimations;
+
     private Fragment mCurrentFragment;
 
     private int mTitle = R.string.home;
@@ -508,7 +510,9 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         if (!isSubFragment && fragmentManager.getBackStackEntryCount() > 0) {
             // set a lock to prevent calling setFragment as onResume gets called
             AppHelper.preventOnResume = true;
+            MainActivity.sDisableFragmentAnimations = true;
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            MainActivity.sDisableFragmentAnimations = false;
             // release the lock
             AppHelper.preventOnResume = false;
         }

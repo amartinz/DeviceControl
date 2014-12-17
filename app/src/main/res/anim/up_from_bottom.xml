@@ -24,6 +24,6 @@
         android:toXDelta="0%"
         android:fromYDelta="100%"
         android:toYDelta="0%"
-        android:duration="@integer/anim_duration"
+        android:duration="@integer/animation_time"
         android:interpolator="@android:anim/decelerate_interpolator" />
 </set>
