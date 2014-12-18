@@ -20,21 +20,16 @@
     tools:context="org.namelessrom.devicecontrol.activities.AppDetailsActivity">
 
     <item
-        android:id="@+id/menu_action_play_store"
-        android:icon="@drawable/ic_action_play_store"
-        android:title="@string/open_play_store"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/menu_action_refresh"
         android:icon="@drawable/ic_action_refresh"
         android:title="@string/refresh"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menu_app_kill"
-        android:title="@string/kill_app"
-        app:showAsAction="never" />
+        android:id="@+id/menu_action_play_store"
+        android:icon="@drawable/ic_action_play_store"
+        android:title="@string/open_play_store"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_app_clear_cache"
@@ -49,11 +44,6 @@
     <item
         android:id="@+id/menu_app_disable"
         android:title="@string/disable"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_app_uninstall"
-        android:title="@string/uninstall"
         app:showAsAction="never" />
 
 </menu>

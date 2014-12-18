@@ -14,17 +14,21 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:background="?android:attr/selectableItemBackground">
 
     <LinearLayout
+        android:id="@+id/app_details_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:minHeight="72dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/app_icon"
@@ -36,8 +40,9 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/app_margin"
+            android:paddingLeft="@dimen/app_margin"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
@@ -46,28 +51,18 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:fontFamily="@string/font_condensed"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 tools:text="@string/app_name" />
 
             <TextView
                 android:id="@+id/app_package"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:ellipsize="marquee"
                 android:fontFamily="@string/font_light"
                 android:textSize="14sp"
                 tools:text="org.namelessrom.devicecontrol" />
-
         </LinearLayout>
-
     </LinearLayout>
-
-    <View
-        android:id="@+id/app_layer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/darker_gray"
-        android:visibility="invisible" />
-
-</RelativeLayout>
+</LinearLayout>

@@ -172,8 +172,6 @@
     <string name="fstrim_summary">FStrim is used to discard (or \"trim\") blocks which are not in use by the filesystem.\nThis can improve performance and reduce lags.</string>
     <string name="fstrim_interval_title">FStrim interval</string>
     <string name="fstrim_interval_summary">Choose interval for automatic FStrimming.</string>
-    <string name="app_system"><![CDATA[WARNING!<br /><b>%s</b> is a system application!]]></string>
-    <string name="app_user"><![CDATA[<b>%s</b> is a user application.]]></string>
     <string name="enable">Enable</string>
     <string name="enable_msg">%s will be enabled.\n\nContinue?</string>
     <string name="disable">Disable</string>
@@ -215,13 +213,13 @@
     <string name="downgraded">Database got wiped due a downgrade!</string>
     <string name="media_scan_trigger">Trigger media scan</string>
     <string name="media_scan_summary">Manuall trigger a media scan, in case you have your phone connected via MTP and new files are not visible.</string>
-    <string name="kill_app">Kill app</string>
-    <string name="app_details">App details</string>
+    <string name="force_stop">Force stop</string>
+    <string name="app_details">Application details</string>
     <string name="clear_cache">Clear cache</string>
     <string name="clear_data">Clear data</string>
     <string name="total">Total</string>
-    <string name="app">App</string>
-    <string name="ext_app">External app</string>
+    <string name="app">Application</string>
+    <string name="ext_app">External application</string>
     <string name="data">Data</string>
     <string name="ext_data">External data</string>
     <string name="ext_media">External media</string>

@@ -29,16 +29,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -63,7 +63,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 
-public class AppDetailsActivity extends BaseActivity implements PackageObserver.OnPackageStatsListener {
+public class AppDetailsActivity extends BaseActivity implements PackageObserver.OnPackageStatsListener, View.OnClickListener {
     public static final String ARG_FROM_ACTIVITY = "arg_from_activity";
     public static final String ARG_PACKAGE_NAME = "arg_package_name";
 
@@ -77,14 +77,15 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
     private View mAppDetailsContainer;
     private View mAppDetailsError;
 
+    private LinearLayout mAppContainer;
     private ImageView mAppIcon;
     private TextView mAppLabel;
     private TextView mAppPackage;
-    private View mAppLayer;
-
-    private TextView mStatus;
-    private TextView mAppCode;
     private TextView mAppVersion;
+
+    private Button mForceStop;
+    private Button mUninstall;
+
     private PieChart mCacheGraph;
     private LinearLayout mCacheInfo;
 
@@ -109,17 +110,21 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
         mAppDetailsContainer = findViewById(R.id.app_details_container);
         mAppDetailsError = findViewById(R.id.app_details_error);
 
-        findViewById(R.id.item_app).setSelected(false);
-
+        mAppContainer = (LinearLayout) findViewById(R.id.item_app);
         mAppIcon = (ImageView) findViewById(R.id.app_icon);
         mAppLabel = (TextView) findViewById(R.id.app_label);
         mAppPackage = (TextView) findViewById(R.id.app_package);
-        mAppLayer = findViewById(R.id.app_layer);
-        mStatus = (TextView) findViewById(R.id.app_status);
-        mAppCode = (TextView) findViewById(R.id.app_version_code);
-        mAppVersion = (TextView) findViewById(R.id.app_version_name);
+        mAppVersion = (TextView) findViewById(R.id.app_version);
         mCacheGraph = (PieChart) findViewById(R.id.app_cache_graph);
         mCacheInfo = (LinearLayout) findViewById(R.id.app_cache_info_container);
+
+        mForceStop = (Button) findViewById(R.id.app_force_stop);
+        ViewCompat.setElevation(mForceStop, 2.0f);
+        mForceStop.setOnClickListener(this);
+
+        mUninstall = (Button) findViewById(R.id.app_uninstall);
+        ViewCompat.setElevation(mUninstall, 2.0f);
+        mUninstall.setOnClickListener(this);
     }
 
     @Override protected void onResume() {
@@ -162,21 +167,15 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        new MenuInflater(this).inflate(R.menu.menu_app_details, menu);
+        getMenuInflater().inflate(R.menu.menu_app_details, menu);
 
         if (mAppItem != null) {
             if (!AppHelper.isPlayStoreInstalled()) {
                 menu.removeItem(R.id.menu_action_play_store);
             }
-            // prevent disabling and uninstalling Device Control
+            // prevent disabling Device Control
             if (Application.get().getPackageName().equals(mAppItem.getPackageName())) {
-                menu.removeItem(R.id.menu_app_uninstall);
                 menu.removeItem(R.id.menu_app_disable);
-            }
-
-            final MenuItem appKill = menu.findItem(R.id.menu_app_kill);
-            if (appKill != null) {
-                appKill.setEnabled(AppHelper.isAppRunning(mAppItem.getPackageName()));
             }
 
             final MenuItem disable = menu.findItem(R.id.menu_app_disable);
@@ -184,12 +183,10 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
                 disable.setTitle(mAppItem.isEnabled() ? R.string.disable : R.string.enable);
             }
         } else {
-            menu.removeItem(R.id.menu_app_kill);
             menu.removeItem(R.id.menu_app_clear_cache);
             menu.removeItem(R.id.menu_app_clear_data);
             menu.removeItem(R.id.menu_action_play_store);
             menu.removeItem(R.id.menu_app_disable);
-            menu.removeItem(R.id.menu_app_uninstall);
         }
 
         return true;
@@ -211,10 +208,6 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
                 refreshAppDetails();
                 return true;
             }
-            case R.id.menu_app_kill: {
-                killApp();
-                return true;
-            }
             case R.id.menu_app_clear_cache: {
                 clearAppCache();
                 return true;
@@ -227,12 +220,22 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
                 disableApp();
                 return true;
             }
-            case R.id.menu_app_uninstall: {
-                uninstallApp();
-                return true;
-            }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override public void onClick(@NonNull View v) {
+        final int id = v.getId();
+        switch (id) {
+            case R.id.app_force_stop: {
+                forceStopApp();
+                break;
+            }
+            case R.id.app_uninstall: {
+                uninstallApp();
+                break;
+            }
+        }
     }
 
     private void setupCacheGraph() {
@@ -263,41 +266,36 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
         if (mAppItem == null) {
             mAppDetailsContainer.setVisibility(View.GONE);
             mAppDetailsError.setVisibility(View.VISIBLE);
-        } else {
-            mAppDetailsContainer.setVisibility(View.VISIBLE);
-            mAppDetailsError.setVisibility(View.GONE);
-            String tmp;
-
-            mAppIcon.setImageDrawable(mAppItem.getIcon());
-            mAppLabel.setText(mAppItem.getLabel());
-            mAppPackage.setText(mAppItem.getPackageName());
-            mAppLayer.setVisibility(mAppItem.isEnabled() ? View.INVISIBLE : View.VISIBLE);
-
-            if (mAppItem.isSystemApp()) {
-                tmp = getString(R.string.app_system, mAppItem.getLabel());
-                mStatus.setTextColor(getResources().getColor(R.color.red_middle));
-            } else {
-                tmp = getString(R.string.app_user, mAppItem.getLabel());
-                final int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
-                mStatus.setTextColor(color);
-            }
-            mStatus.setText(Html.fromHtml(tmp));
-
-            mAppCode.setText(
-                    getString(R.string.app_version_code, mAppItem.getPackageInfo().versionCode));
-
-            mAppVersion.setText(
-                    getString(R.string.app_version_name, mAppItem.getPackageInfo().versionName));
-
-            AppHelper.getSize(this, mAppItem.getPackageName());
+            invalidateOptionsMenu();
+            return;
         }
+        mAppDetailsContainer.setVisibility(View.VISIBLE);
+        mAppDetailsError.setVisibility(View.GONE);
 
-        mCacheGraph.animateXY(700, 700);
+        mAppIcon.setImageDrawable(mAppItem.getIcon());
+        mAppLabel.setText(mAppItem.getLabel());
+        mAppPackage.setText(mAppItem.getPackageName());
+        mAppContainer.setBackgroundResource(mAppItem.isEnabled()
+                ? android.R.color.transparent : R.color.darker_gray);
 
+        final int color = mAppItem.isSystemApp()
+                ? getResources().getColor(R.color.red_middle)
+                : Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
+        mAppLabel.setTextColor(color);
+
+        final String version = String.format("%s (%s)",
+                mAppItem.getPackageInfo().versionName, mAppItem.getPackageInfo().versionCode);
+        mAppVersion.setText(version);
+
+        mForceStop.setEnabled(AppHelper.isAppRunning(mAppItem.getPackageName()));
+        // prevent uninstalling of Device Control
+        mUninstall.setEnabled(Application.get().getPackageName().equals(mAppItem.getPackageName()));
+
+        AppHelper.getSize(this, mAppItem.getPackageName());
         invalidateOptionsMenu();
     }
 
-    private void killApp() {
+    private void forceStopApp() {
         AppHelper.killProcess(mAppItem.getPackageName());
         mHandler.postDelayed(new Runnable() {
             @Override public void run() {
@@ -315,11 +313,13 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
     }
 
     private void clearAppData() {
+        // TODO: clear external data as well
         AppHelper.clearData(mAppItem.getPackageName());
         mHandler.postDelayed(mClearRunnable, 500);
     }
 
     private void clearAppCache() {
+        // TODO: clear external cache as well
         AppHelper.clearCache(mAppItem.getPackageName());
         mHandler.postDelayed(mClearRunnable, 500);
     }
@@ -424,8 +424,9 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
                 case COMMAND_COMPLETED:
                 case COMMAND_TERMINATED:
                     item.setEnabled(!item.isEnabled());
-                    if (mAppLayer != null) {
-                        mAppLayer.setVisibility(item.isEnabled() ? View.INVISIBLE : View.VISIBLE);
+                    if (mAppContainer != null) {
+                        mAppContainer.setBackgroundResource(item.isEnabled()
+                                ? android.R.color.transparent : R.color.darker_gray);
                     }
                     invalidateOptionsMenu();
                     break;
@@ -507,22 +508,17 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
             l.setTextColor(color);
 
             // we are ready
-            mCacheGraph.invalidate();
+            mCacheGraph.animateXY(700, 700);
         }
     }
 
     private View addCacheWidget(final int txtId, final String text) {
-        final View v;
-        v = LayoutInflater.from(this).inflate(R.layout.widget_app_cache, mCacheInfo, false);
-
-        final int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
+        final View v = getLayoutInflater().inflate(R.layout.widget_app_cache, mCacheInfo, false);
 
         final TextView tvLeft = (TextView) v.findViewById(R.id.widget_app_cache_left);
-        tvLeft.setTextColor(color);
-        final TextView tvRight = (TextView) v.findViewById(R.id.widget_app_cache_right);
-        tvRight.setTextColor(color);
+        tvLeft.setText(txtId);
 
-        tvLeft.setText(Application.get().getString(txtId) + ':');
+        final TextView tvRight = (TextView) v.findViewById(R.id.widget_app_cache_right);
         tvRight.setText(text);
 
         return v;
