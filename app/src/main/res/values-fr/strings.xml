@@ -118,7 +118,6 @@
   <string name="other_settings">Autres paramètres</string>
   <string name="settings">Paramètres</string>
   <string name="refresh">Actualiser</string>
-  <string name="refresh_interval">Fréquence d\'actualisation</string>
   <string name="hide_status">Masquer le statut</string>
   <string name="gpu">GPU</string>
   <string name="gpu_governor">Gouverneur du GPU</string>
@@ -174,8 +173,6 @@
   <string name="fstrim_summary">Fstrim sert à écarter (ou \"trim\") les blocs qui ne sont pas utilisés par le système de fichiers.\nCeci peut améliorer les performances et réduire les latences.</string>
   <string name="fstrim_interval_title">Intervalle de FStrim</string>
   <string name="fstrim_interval_summary">Choisissez l\'intervalle pour le FStrimming automatique.</string>
-  <string name="app_system"><![CDATA[AVERTISSEMENT!<br /><b>%s</b> est une application système!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> est une application utilisateur.]]></string>
   <string name="enable">Activer</string>
   <string name="enable_msg">%s sera activé.\n\nContinuer?</string>
   <string name="disable">Désactiver</string>
@@ -217,13 +214,9 @@
   <string name="downgraded">La base de données a été effacée en raison du downgrade!</string>
   <string name="media_scan_trigger">Déclencher le scan média</string>
   <string name="media_scan_summary">Déclencher manuellement un scan média, si votre téléphone est connecté via MTP et les nouveaux fichiers sont non visibles.</string>
-  <string name="kill_app">Tuer app</string>
-  <string name="app_details">Détails de l\'application</string>
   <string name="clear_cache">Vider le cache</string>
   <string name="clear_data">Effacer les données</string>
   <string name="total">Total</string>
-  <string name="app">Application</string>
-  <string name="ext_app">Application externe</string>
   <string name="data">Données</string>
   <string name="ext_data">Données externes</string>
   <string name="ext_media">Média Externe</string>
@@ -359,8 +352,6 @@
   <string name="file_not_found">Impossible d\'ajouter le fichier</string>
   <string name="system">Système</string>
   <string name="boot">Démarrage</string>
-  <string name="androidsecure">Android secure</string>
-  <string name="sdext">SD-Ext</string>
   <string name="alert_reboot_install_title">Installer le(s) fichier(s)</string>
   <string name="alert_reboot_one_message">L\'appareil va redémarrer et installer le fichier.</string>
   <string name="alert_reboot_more_message">L\'appareil va redémarrer et installer les fichiers.</string>

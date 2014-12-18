@@ -69,7 +69,6 @@
   <string name="other_settings">其他設置</string>
   <string name="settings">設置</string>
   <string name="refresh">重新整理</string>
-  <string name="refresh_interval">重整間隔</string>
   <string name="hide_status">隱藏狀態</string>
   <string name="gpu">GPU</string>
   <string name="gpu_governor">GPU 管理</string>
@@ -129,13 +128,9 @@
   <string name="about">關於</string>
   <string name="preferences">偏好設定</string>
   <string name="become_a_monkey">變成一隻猴子</string>
-  <string name="kill_app">終止應用程式</string>
-  <string name="app_details">應用程式詳細資訊</string>
   <string name="clear_cache">清除緩存</string>
   <string name="clear_data">清除資料</string>
   <string name="total">總計</string>
-  <string name="app">應用程式</string>
-  <string name="ext_app">外部應用程式</string>
   <string name="data">資料</string>
   <string name="ext_data">外部資料</string>
   <string name="ext_media">外部媒體</string>
@@ -214,8 +209,6 @@
   <string name="file_not_found">無法添加檔案</string>
   <string name="system">系統</string>
   <string name="boot">啟動</string>
-  <string name="androidsecure">Android 系統安全</string>
-  <string name="sdext">記憶卡</string>
   <string name="alert_reboot_one_message">您的設備將重新開機並安裝該檔。</string>
   <string name="alert_reboot_more_message">您的設備將重新開機並安裝該檔。</string>
   <string name="alert_backup_space_title">剩餘空間</string>

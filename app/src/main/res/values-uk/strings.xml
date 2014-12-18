@@ -105,7 +105,6 @@
   <string name="other_settings">Інші налаштування</string>
   <string name="settings">Налаштування</string>
   <string name="refresh">Оновити</string>
-  <string name="refresh_interval">Інтервал оновлення</string>
   <string name="hide_status">Приховати статус</string>
   <string name="gpu">Графічний процесор</string>
   <string name="gpu_freq_max">Максимальна частота відео-процесора</string>
@@ -150,8 +149,6 @@
   <string name="action">Дія</string>
   <string name="value">Значення</string>
   <string name="fstrim_title">Автоматичне використання FStrim</string>
-  <string name="app_system"><![CDATA[Увага!<br /><b>%s</b> є системна програма!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> є користувацька програма.]]></string>
   <string name="enable">Увімкнення</string>
   <string name="enable_msg">%s буде увімкнено.\n\nПродовжити?</string>
   <string name="disable">Вимкнути</string>
@@ -190,13 +187,9 @@
   <string name="downgraded">База даних стерта через пониження версії!</string>
   <string name="media_scan_trigger">Запустити сканування медіафайлів</string>
   <string name="media_scan_summary">Вручну запустити сканування медіафайлів, на випадок, якщо ваш телефон підключений по MTP і нові файли не відображаються.</string>
-  <string name="kill_app">Завершити програму</string>
-  <string name="app_details">Інформація про програму</string>
   <string name="clear_cache">Очистити кеш</string>
   <string name="clear_data">Очистити дані</string>
   <string name="total">Всього</string>
-  <string name="app">Програма</string>
-  <string name="ext_app">Стороння програма</string>
   <string name="data">Дані</string>
   <string name="ext_data">Сторонні дані</string>
   <string name="ext_media">Сторонні медіа файли</string>

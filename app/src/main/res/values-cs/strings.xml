@@ -108,7 +108,6 @@
   <string name="other_settings">Další nastavení</string>
   <string name="settings">Nastavení</string>
   <string name="refresh">Obnovení</string>
-  <string name="refresh_interval">Interval obnovení</string>
   <string name="hide_status">Skrýt stav</string>
   <string name="gpu">GPU</string>
   <string name="gpu_governor">GPU governor</string>
@@ -159,8 +158,6 @@
   <string name="fstrim_summary">FStrim je používán k odstranění (jinak \"trim\") bloků, které již nadále nejsou používány souborovým systémem.\nTo může vylepšit výkon a snížit zpoždění.</string>
   <string name="fstrim_interval_title">FStrim interval</string>
   <string name="fstrim_interval_summary">Zvolte interval pro automatický FStrimming.</string>
-  <string name="app_system"><![CDATA[WARNING!<br /><b>%s</b> je systémová aplikace!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> je uživatelská aplikace.]]></string>
   <string name="enable">Povolit</string>
   <string name="enable_msg">%s bude povolen.\n\nPokračovat?</string>
   <string name="disable">Zakázat</string>
@@ -198,13 +195,9 @@
   <string name="downgraded">Databáze byla vymazána kvůli přestupu na nižší verzi!</string>
   <string name="media_scan_trigger">Spouštěč skenování médií</string>
   <string name="media_scan_summary">Ruční spouštění skenování médií, pro případ že váš telefon je připojen přes MTP a soubory nejsou viditelné.</string>
-  <string name="kill_app">Vynutit ukončení aplikace</string>
-  <string name="app_details">Detaily aplikace</string>
   <string name="clear_cache">Vymazat cache</string>
   <string name="clear_data">Vymazat data</string>
   <string name="total">Celkem</string>
-  <string name="app">Aplikace</string>
-  <string name="ext_app">Externí aplikace</string>
   <string name="data">Data</string>
   <string name="ext_data">Externí data</string>
   <string name="ext_media">Externí média</string>

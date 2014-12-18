@@ -108,7 +108,6 @@
   <string name="other_settings">Altres configuracions</string>
   <string name="settings">Configuració</string>
   <string name="refresh">Refrescar</string>
-  <string name="refresh_interval">Interval de refresc</string>
   <string name="hide_status">Amagar estat</string>
   <string name="gpu">GPU</string>
   <string name="gpu_governor">Governor de la GPU</string>
@@ -159,8 +158,6 @@
   <string name="fstrim_summary">FStrim s\'usa per descartar (o \"retallar\") els blocs que no estiguin sent utilitzats pel sistema de fitxers.\nAixò pot millorar el rendiment i reduir les alentiments.</string>
   <string name="fstrim_interval_title">Interval de FStrim</string>
   <string name="fstrim_interval_summary">Tria un interval automàtic de FStrimming.</string>
-  <string name="app_system"><![CDATA[PERILL!<br /><b>%s</b> és una aplicació del sistema!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> és una aplicació d\'usuari.]]></string>
   <string name="enable">Habilitar</string>
   <string name="enable_msg">%s serà habilitat.\n\nContinuar?</string>
   <string name="disable">Deshabilitar</string>
@@ -198,13 +195,9 @@
   <string name="downgraded">La base de dades serà esborrada a causa del downgrade!</string>
   <string name="media_scan_trigger">Disparador de l\'anàlisi de mitjans</string>
   <string name="media_scan_summary">Disparador manual desencadenés una exploració dels mitjans, en cas de tenir el telèfon connectat via MTP, els nous arxius no seran visibles.</string>
-  <string name="kill_app">Matar l\'aplicació</string>
-  <string name="app_details">Detalls de l\'aplicació</string>
   <string name="clear_cache">Netejar la cache</string>
   <string name="clear_data">Netejar dades</string>
   <string name="total">Total</string>
-  <string name="app">Aplicació</string>
-  <string name="ext_app">Aplicació externa</string>
   <string name="data">Dades</string>
   <string name="ext_data">Dades externes</string>
   <string name="ext_media">Mitjans externs</string>

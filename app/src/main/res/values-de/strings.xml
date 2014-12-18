@@ -118,7 +118,6 @@
   <string name="other_settings">Andere Einstellungen</string>
   <string name="settings">Einstellungen</string>
   <string name="refresh">Aktualisieren</string>
-  <string name="refresh_interval">Aktualisierungs-Intervall</string>
   <string name="hide_status">Status verbergen</string>
   <string name="gpu">GPU</string>
   <string name="gpu_governor">GPU Governor</string>
@@ -174,8 +173,6 @@
   <string name="fstrim_summary">Fstrim \"trimmt\" Blöcke, die vom Dateisystem nicht mehr verwendet werden.\nDies kann die Leistung erhöhen und Ruckler reduzieren.</string>
   <string name="fstrim_interval_title">Fstrim Intervall</string>
   <string name="fstrim_interval_summary">Wähle das Intervall für automatisches Fstrimming.</string>
-  <string name="app_system"><![CDATA[WARNUNG!<br /><b>%s</b> ist eine Systemanwendung!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> ist eine Benutzeranwendung.]]></string>
   <string name="enable">Aktivieren</string>
   <string name="enable_msg">%s wird aktiviert.\n\nFortfahren?</string>
   <string name="disable">Deaktivieren</string>
@@ -217,13 +214,9 @@
   <string name="downgraded">Datenbank wurde aufgrund eines Downgrades gelöscht!</string>
   <string name="media_scan_trigger">Media-Scanner auslösen</string>
   <string name="media_scan_summary">Löst einen Media-Scan aus, für den Fall, dass du dein Gerät über MTP angeschlossen hast und neue Dateien nicht sichtbar sind.</string>
-  <string name="kill_app">Anwendung beenden</string>
-  <string name="app_details">Anwendungs-Details</string>
   <string name="clear_cache">Cache leeren</string>
   <string name="clear_data">Daten löschen</string>
   <string name="total">Gesamt</string>
-  <string name="app">Anwendung</string>
-  <string name="ext_app">Externe Anwendung</string>
   <string name="data">Daten</string>
   <string name="ext_data">Externe Daten</string>
   <string name="ext_media">Externe Medien</string>
@@ -359,8 +352,6 @@
   <string name="file_not_found">Fehler beim Hinzufügen der Datei</string>
   <string name="system">System</string>
   <string name="boot">Boot</string>
-  <string name="androidsecure">Android Secure</string>
-  <string name="sdext">SD-Ext</string>
   <string name="alert_reboot_install_title">Installiere Datei(en)</string>
   <string name="alert_reboot_one_message">Ihr Gerät wird neu starten und die Datei installieren.</string>
   <string name="alert_reboot_more_message">Ihr Gerät wird neu starten und die Dateien installieren.</string>

@@ -118,7 +118,6 @@
   <string name="other_settings">Outras configurações</string>
   <string name="settings">Configurações</string>
   <string name="refresh">Atualizar</string>
-  <string name="refresh_interval">Intervalo de actualização</string>
   <string name="hide_status">Ocultar estado</string>
   <string name="gpu">GPU</string>
   <string name="gpu_governor">Governador de GPU</string>
@@ -174,8 +173,6 @@
   <string name="fstrim_summary">FStrim é usado para descartar (ou \"cortar\") blocos que não estão em uso pelo sistema de arquivos.\nIsto pode melhorar o desempenho e reduzir ralentizações.</string>
   <string name="fstrim_interval_title">Intervalo FStrim</string>
   <string name="fstrim_interval_summary">Escolha o intervalo de FStrimming automático.</string>
-  <string name="app_system"><![CDATA[WARNING!<br /><b>%s</b> é uma aplicação do sistema!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> é uma aplicaçao de usuário.]]></string>
   <string name="enable">Habilitar</string>
   <string name="enable_msg">%s será habilitado.\n\nContinuar?</string>
   <string name="disable">Desativar</string>
@@ -217,13 +214,9 @@
   <string name="downgraded">Base de dados tem apagado devido um downgrade!</string>
   <string name="media_scan_trigger">Iniciar scan media</string>
   <string name="media_scan_summary">Iniciar manual media scan, no caso você ter seu telefone conectado via MTP e novos arquivos não estão visiveis.</string>
-  <string name="kill_app">Matar app</string>
-  <string name="app_details">Detalhes de App</string>
   <string name="clear_cache">Limpar cache</string>
   <string name="clear_data">Limpar dados</string>
   <string name="total">Total</string>
-  <string name="app">App</string>
-  <string name="ext_app">App externa</string>
   <string name="data">Dados</string>
   <string name="ext_data">Dados externos</string>
   <string name="ext_media">Mídia externa</string>
@@ -359,8 +352,6 @@
   <string name="file_not_found">Não foi possível adicionar o ficheiro</string>
   <string name="system">Sistema</string>
   <string name="boot">Inicialização</string>
-  <string name="androidsecure">Android seguro</string>
-  <string name="sdext">SD-Ext</string>
   <string name="alert_reboot_install_title">Instalar o ficheiro(s)</string>
   <string name="alert_reboot_one_message">Seu dispositivo irá reiniciar e instalar o ficheiro.</string>
   <string name="alert_reboot_more_message">Seu dispositivo irá reiniciar e instalar o ficheiro.</string>

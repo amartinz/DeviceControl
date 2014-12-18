@@ -118,7 +118,6 @@
   <string name="other_settings">Thiết lập khác</string>
   <string name="settings">Thiết lập</string>
   <string name="refresh">Làm mới</string>
-  <string name="refresh_interval">Thời khoảng làm mới</string>
   <string name="hide_status">Ẩn trạng thái</string>
   <string name="gpu">GPU-bộ xử lý đồ họa</string>
   <string name="gpu_governor">Trình kiểm soát GPU</string>
@@ -174,8 +173,6 @@
   <string name="fstrim_summary">FStrim được sử dụng để loại bỏ (hoặc \"cắt\") các block mà filesystem không dùng.\nCó thể cải thiện hiệu suất và giảm lag.</string>
   <string name="fstrim_interval_title">Khoảng thời gian FStrim</string>
   <string name="fstrim_interval_summary">Chọn tự động khoảng thời gian FStrimming.</string>
-  <string name="app_system"><![CDATA[Cảnh báo!<br /><b>%s</b> là một ứng dụng hệ thống!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> là một ứng dụng người dùng.]]></string>
   <string name="enable">Bật</string>
   <string name="enable_msg">%s sẽ bật.\n\nVẫn tiếp tục?</string>
   <string name="disable">Tắt</string>
@@ -217,13 +214,9 @@
   <string name="downgraded">Cơ sở dữ liệu sẽ bị xóa do xuống cấp!</string>
   <string name="media_scan_trigger">Kích hoạt tìm kiếm tập tin truyền thông</string>
   <string name="media_scan_summary">Kích hoạt thủ công  tìm kiếm tập tin truyền thông, trong trường hợp máy của bạn kết nối bằng phương thức MTP và các tập tin mới không hiển thị.</string>
-  <string name="kill_app">Tắt hẳn ứng dụng</string>
-  <string name="app_details">Chi tiết ứng dụng</string>
   <string name="clear_cache">Xóa bộ nhớ đệm</string>
   <string name="clear_data">Xóa dữ liệu</string>
   <string name="total">Tổng cộng</string>
-  <string name="app">Ứng dụng</string>
-  <string name="ext_app">Ứng dụng ngoài</string>
   <string name="data">Dữ liệu</string>
   <string name="ext_data">Dữ liệu ngoài</string>
   <string name="ext_media">Dữ liệu truyền thông bên ngoài</string>
@@ -266,6 +259,7 @@
   <string name="error_download">Lỗi tải tập tin! \nXin thử lại sau!</string>
   <string name="kernel_features">Tính năng Kernel</string>
   <string name="open_play_store">Xem Ứng dụng trên Google Play\u2122</string>
+  <string name="governor">Trình kiểm soát</string>
   <string name="skip_checks">Bỏ qua kiểm tra lúc khởi động</string>
   <string name="skip_checks_summary">Không chọn khi máy đã root và có busybox khi khởi động\nCó rủi ro khi tiến hành!</string>
   <string name="flasher">Trình cài đặt flash</string>
@@ -358,8 +352,6 @@
   <string name="file_not_found">Không thể thêm tập tin</string>
   <string name="system">Hệ thống</string>
   <string name="boot">Khởi động</string>
-  <string name="androidsecure">An toàn Android </string>
-  <string name="sdext">Thẻ nhớ SD ngoài</string>
   <string name="alert_reboot_install_title">Cài đặt tập tin</string>
   <string name="alert_reboot_one_message">Máy sẽ khởi động lại và cài đặt tập tin.</string>
   <string name="alert_reboot_more_message">Máy sẽ khởi động lại và cài đặt tập tin.</string>

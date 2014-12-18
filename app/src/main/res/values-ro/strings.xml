@@ -116,7 +116,6 @@
   <string name="other_settings">Alte setări</string>
   <string name="settings">Setări</string>
   <string name="refresh">Reîmprospătare</string>
-  <string name="refresh_interval">Interval de reîmprospătare</string>
   <string name="hide_status">Ascunde starea</string>
   <string name="gpu">GPU</string>
   <string name="gpu_governor">Guvernator GPU</string>
@@ -170,8 +169,6 @@
   <string name="fstrim_summary">FStrim este folosit pentru a înlătura (sau aranja) blocurile care nu sunt folosite de fișierele de sistem.\nAcesta poate îmbunătați performanța si reduce întârzierile.</string>
   <string name="fstrim_interval_title">Intervalul de FStrim</string>
   <string name="fstrim_interval_summary">Alegeţi intervalul pentru FStrimming automat.</string>
-  <string name="app_system"><![CDATA[ATENȚIE!<br /><b>%s</b> este o aplicaţie de sistem!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> este o aplicaţie a utilizatorului.]]></string>
   <string name="enable">Activați</string>
   <string name="enable_msg">%s va fi activat.\n\nContinuați?</string>
   <string name="disable">Dezactivare</string>
@@ -212,13 +209,9 @@
   <string name="downgraded">Baza de date a fost ștearsă din cauza retrogradării!</string>
   <string name="media_scan_trigger">Activați scanarea de mass-media</string>
   <string name="media_scan_summary">Declanșează manual o scanare de media, în cazul în care ai telefonul conectat în modul MTP și fișierele noi nu sunt vizibile.</string>
-  <string name="kill_app">Închide forțat aplicația</string>
-  <string name="app_details">Detalii aplicație</string>
   <string name="clear_cache">Goliţi Cache-ul</string>
   <string name="clear_data">Ștergeți datele</string>
   <string name="total">Toate</string>
-  <string name="app">Aplicație</string>
-  <string name="ext_app">Aplicație externă</string>
   <string name="data">Date</string>
   <string name="ext_data">Date externe</string>
   <string name="ext_media">Media externă</string>
@@ -349,8 +342,6 @@
   <string name="file_not_found">Imposibil de adăugat fișierul</string>
   <string name="system">Sistem</string>
   <string name="boot">Pornire</string>
-  <string name="androidsecure">Securizare Android</string>
-  <string name="sdext">SD-Ext</string>
   <string name="alert_reboot_install_title">Instalare fișier(e)</string>
   <string name="alert_reboot_one_message">Dispozitivul va reporni şi va instala fişierul.</string>
   <string name="alert_reboot_more_message">Aparatul va reporni şi va instala fişierele.</string>

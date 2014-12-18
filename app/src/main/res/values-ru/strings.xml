@@ -110,7 +110,6 @@
   <string name="other_settings">Другие параметры</string>
   <string name="settings">Параметры</string>
   <string name="refresh">Обновить</string>
-  <string name="refresh_interval">Период обновления</string>
   <string name="hide_status">Скрыть статус</string>
   <string name="gpu">Видеочип</string>
   <string name="gpu_governor">Схема питания видеочипа</string>
@@ -162,8 +161,6 @@
   <string name="fstrim_summary">FStrim используется для очистки (\"trim\") блоков, которые не используются файловой системой.\nЭто может улучшить производительность и уменьшить лаги.</string>
   <string name="fstrim_interval_title">Период FStrim</string>
   <string name="fstrim_interval_summary">Выберите период автоматического FStrim.</string>
-  <string name="app_system"><![CDATA[Внимание!<br /><b>%s</b> - системное приложение!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> - пользовательское приложение.]]></string>
   <string name="enable">Включить</string>
   <string name="enable_msg">%s будет включено.\n\nПродолжить?</string>
   <string name="disable">Отключить</string>
@@ -203,13 +200,9 @@
   <string name="downgraded">База данных стёрта из-за понижения версии!</string>
   <string name="media_scan_trigger">Запустить сканирование медиафайлов</string>
   <string name="media_scan_summary">Вручную запустить сканирование медиафайлов, на случай, если ваш телефон подключен по MTP и новые файлы не видны.</string>
-  <string name="kill_app">Завершить приложение</string>
-  <string name="app_details">Подробности приложения</string>
   <string name="clear_cache">Очистить кэш</string>
   <string name="clear_data">Очистить данные</string>
   <string name="total">Итого</string>
-  <string name="app">Приложение</string>
-  <string name="ext_app">Внешнее приложение</string>
   <string name="data">Данные</string>
   <string name="ext_data">Внешние данные</string>
   <string name="ext_media">Внешние медиафайлы</string>

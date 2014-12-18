@@ -17,6 +17,12 @@
 -->
 <resources>
   <string name="permission_api_description">Uygulama arayüzü (API) cihaz denetimi (Device Control) için erişim izni verir.\nBu cihaz özellikleri kontrol anlamına gelir,Cihazınızın donanımını manipüle etmekte dahil.</string>
+  <string name="support">Destek</string>
+  <string name="support_message">Umarım Device Control den benim uygulamayı geliştirirken aldığım kadar keyif almışsınızdır.\nBu uygulamayı bende hergün kullanıyorum ve size bunu ücretsiz olarak sağlamaktan dolayı mutluyum.</string>
+  <string name="donate_">Bağış Yap</string>
+  <string name="donate_message">Eğer bu uygulamayı sevdiyseniz ve gelecekteki gelişmeler için katkıda bulunmak istiyorsanız, lütfen bağış yapmayı düşünün.\nBağışınız beni cesaretlendirecektir :)\n\nTeşekkürler!</string>
+  <string name="show_pollfish">Pollfish i etkinleştir</string>
+  <string name="show_pollfish_summary">Sağ alt köşede küçük bir simgeyi etkinleştirir. Tarafınızca yapılan her anket büyümemize yardım etmektedir. Devre dışı bırakmak isterseniz çekinmeyin tabi ki :)</string>
   <string name="performance_settings_warning_title">Dikkatli ilerleyin</string>
   <string name="performance_settings_warning_header">Uyarı</string>
   <string name="build_prop_mods">Build.prop Modu</string>

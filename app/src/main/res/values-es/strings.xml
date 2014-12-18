@@ -108,7 +108,6 @@
   <string name="other_settings">Otras configuraciones</string>
   <string name="settings">Configuración</string>
   <string name="refresh">Refrescar</string>
-  <string name="refresh_interval">Intervalo de actualización</string>
   <string name="hide_status">Ocultar estado</string>
   <string name="gpu">GPU</string>
   <string name="gpu_governor">Governor de la GPU</string>
@@ -159,8 +158,6 @@
   <string name="fstrim_summary">FStrim se usa para descartar (o \"recortar\") los bloques que no estén siendo utilizados por el sistema de archivos.\nEsto puede mejorar el rendimiento y reducir las ralentizaciones.</string>
   <string name="fstrim_interval_title">Intervalo de FStrim</string>
   <string name="fstrim_interval_summary">Elija un intervalo automático de FStrimming.</string>
-  <string name="app_system"><![CDATA[¡PELIGRO!¡<br /><b>%s</b> es una aplicación del sistema!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> es una aplicación de usuario.]]></string>
   <string name="enable">Habilitar</string>
   <string name="enable_msg">%s va a ser habilitado.\n\n¿Continuar?</string>
   <string name="disable">Deshabilitar</string>
@@ -199,13 +196,9 @@
   <string name="downgraded">¡La base de datos será borrada debido al downgrade!</string>
   <string name="media_scan_trigger">Disparador del análisis de medios</string>
   <string name="media_scan_summary">Disparador manual desencadenara una exploración de los medios, en caso de tener el teléfono conectado vía MTP, los nuevos archivos no serán visibles.</string>
-  <string name="kill_app">Matar la aplicación</string>
-  <string name="app_details">Detalles de la aplicación</string>
   <string name="clear_cache">Limpiar la cache</string>
   <string name="clear_data">Limpiar datos</string>
   <string name="total">Total</string>
-  <string name="app">Aplicación</string>
-  <string name="ext_app">Aplicación externa</string>
   <string name="data">Datos</string>
   <string name="ext_data">Datos externos</string>
   <string name="ext_media">Medios externos</string>

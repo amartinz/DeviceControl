@@ -113,7 +113,6 @@
   <string name="other_settings">Inne ustawienia</string>
   <string name="settings">Ustawienia</string>
   <string name="refresh">Odśwież</string>
-  <string name="refresh_interval">Interwał odświeżania</string>
   <string name="hide_status">Ukryj stan</string>
   <string name="gpu">GPU</string>
   <string name="gpu_governor">Zarządca procesora graficznego</string>
@@ -165,8 +164,6 @@
   <string name="fstrim_summary">FStrim jest używana aby odrzucić (lub \"przyciąć\") bloki danych, które nie są używane przez filesystem.\nTo może zwiększyć wydajność i zmniejszyć lagi.</string>
   <string name="fstrim_interval_title">Czas pomiędzy uruchomieniami FStrim</string>
   <string name="fstrim_interval_summary">Wybierz interwał automatycznego FStrimming.</string>
-  <string name="app_system"><![CDATA[UWAGA!<br /><b>%s</b> jest aplikacją systemową!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> jest aplikacją użytkownika.]]></string>
   <string name="enable">Włącz</string>
   <string name="enable_msg">%s będzie włączone.\n\nKontynuować?</string>
   <string name="disable">Wyłącz</string>
@@ -205,13 +202,9 @@
   <string name="downgraded">Baza danych wyczyszczona z powodu downgrade\'u!</string>
   <string name="media_scan_trigger">Uruchom skanowanie mediów</string>
   <string name="media_scan_summary">Ręcznie włącza skanowanie mediów, w przypadku gdy telefon podłączony jest jako MTP i nie widzisz nowych plików</string>
-  <string name="kill_app">Zabij aplikację</string>
-  <string name="app_details">Szczegóły aplikacji</string>
   <string name="clear_cache">Wyczyść pamięć podręczną</string>
   <string name="clear_data">Wyczyść dane</string>
   <string name="total">Ogółem</string>
-  <string name="app">Aplikacja</string>
-  <string name="ext_app">Aplikacja zewnętrzna</string>
   <string name="data">Dane</string>
   <string name="ext_data">Dane zewnętrzne</string>
   <string name="ext_media">Nośniki zewnętrzne</string>

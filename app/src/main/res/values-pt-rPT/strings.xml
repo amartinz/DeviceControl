@@ -43,7 +43,7 @@
   <string name="no_tweaks_available">Não há ajustes disponíveis</string>
   <string name="no_tweaks_message">Desculpe, mas o dispositivo não tem nenhuma característica compatível</string>
   <string name="gov_tweaks">Valores para alterar: %s</string>
-  <string name="no_gov_tweaks_message">Desculpe, mas este governor não tem valores ajustables</string>
+  <string name="no_gov_tweaks_message">Desculpe, este governador não tem valores ajustáveis</string>
   <string name="home">Início</string>
   <string name="device">Dispositivo</string>
   <string name="features">Características</string>
@@ -118,7 +118,6 @@
   <string name="other_settings">Outras configurações</string>
   <string name="settings">Configurações</string>
   <string name="refresh">Atualizar</string>
-  <string name="refresh_interval">Intervalo de atualização</string>
   <string name="hide_status">Ocultar estado</string>
   <string name="gpu">GPU</string>
   <string name="gpu_governor">Governor do CPU</string>
@@ -160,7 +159,7 @@
   <string name="version">Versão</string>
   <string name="tasker">Tarefas em</string>
   <string name="tasklist">Lista de tarefas</string>
-  <string name="tasklist_summary">Configurar, modificar, habilitar ou deshabilitar as tarefas.</string>
+  <string name="tasklist_summary">Configurar, modificar, habilitar ou desabilitar as tarefas.</string>
   <string name="list_empty">Ainda não configurou nenhum item ainda!\nQue tal configurar alguns? :)</string>
   <string name="add_task">Acrescentar tarefa</string>
   <string name="edit_task">Editar tarefa</string>
@@ -174,8 +173,6 @@
   <string name="fstrim_summary">FStrim usa-se para descartar (ou \"recortar\") os blocos que não estejam a ser utilizados pelo sistema de arquivos.\nIsto pode melhorar o rendimento e reduzir as ralentizaciones.</string>
   <string name="fstrim_interval_title">Intervalo de FStrim</string>
   <string name="fstrim_interval_summary">Escolha um intervalo automático de FStrimming.</string>
-  <string name="app_system"><![CDATA[Aviso<br /><b>%s</b> é uma aplicação do sistema!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> é uma aplicação de utente.]]></string>
   <string name="enable">Ative</string>
   <string name="enable_msg">%s vai ser ativado.\n\nContinuar?</string>
   <string name="disable">Desativar</string>
@@ -194,7 +191,7 @@
   <string name="name">Nome</string>
   <string name="presets">Predefinições</string>
   <string name="gestures">Gestos</string>
-  <string name="knock_on">Chamar On</string>
+  <string name="knock_on">Knock On</string>
   <string name="knock_on_summary">Duplo toque no ecrã para ligá-lo</string>
   <string name="five_minutes">5 Minutos</string>
   <string name="ten_minutes">10 Minutos</string>
@@ -217,13 +214,9 @@
   <string name="downgraded">A base de dados será apagado devido ao downgrade!</string>
   <string name="media_scan_trigger">Disparador da análise de meios</string>
   <string name="media_scan_summary">Disparador manual desencadeasse uma exploração dos ficheiros, em caso de ter o telefone conectado via MTP, os novos arquivos não serão visíveis.</string>
-  <string name="kill_app">Matar a aplicação</string>
-  <string name="app_details">Detalhes da Aplicação</string>
   <string name="clear_cache">Limpar a cache</string>
   <string name="clear_data">Limpar dados</string>
   <string name="total">Total</string>
-  <string name="app">Aplicação</string>
-  <string name="ext_app">Aplicação externa</string>
   <string name="data">Dados</string>
   <string name="ext_data">Dados externos</string>
   <string name="ext_media">Meios externos</string>
@@ -251,12 +244,12 @@
   <string name="wfm_root">Buscador em modo root</string>
   <string name="wfm_port">Porto do servidor Web</string>
   <string name="start_wfm">O servidor não está a funcionar\nPulse para ligar o servidor.</string>
-  <string name="starting_wfm">O servidor se esta iniciando...</string>
+  <string name="starting_wfm">Servidor está a iniciar...</string>
   <string name="stop_wfm">O servidor está a funcionar no %s\nPulse para deter o servidor.</string>
   <string name="authentication">Autenticação</string>
   <string name="wfm_auth">Usar a autenticação</string>
-  <string name="wfm_auth_summary">O nome de utente por defeito é \"root\" e a senha é \"toor\"</string>
-  <string name="username">Nome de utente</string>
+  <string name="wfm_auth_summary">O nome de utilizador por defeito é \"root\" e a senha é \"toor\"</string>
+  <string name="username">Nome de Utilizador</string>
   <string name="password">Senha</string>
   <string name="entropy">Entropia</string>
   <string name="entropy_avail">Entropia disponível</string>
@@ -359,8 +352,6 @@
   <string name="file_not_found">Não foi possível adicionar o ficheiro</string>
   <string name="system">Sistema</string>
   <string name="boot">Inicialização</string>
-  <string name="androidsecure">Android seguro</string>
-  <string name="sdext">SD-Ext</string>
   <string name="alert_reboot_install_title">Instalar o ficheiro(s)</string>
   <string name="alert_reboot_one_message">Seu dispositivo irá reiniciar e instalar o ficheiro.</string>
   <string name="alert_reboot_more_message">Seu dispositivo irá reiniciar e instalar o ficheiro.</string>

@@ -118,7 +118,6 @@
   <string name="other_settings">Altre impostazioni</string>
   <string name="settings">Impostazioni</string>
   <string name="refresh">Aggiorna</string>
-  <string name="refresh_interval">Intervallo di aggiornamento</string>
   <string name="hide_status">Nascondi lo stato</string>
   <string name="gpu">GPU</string>
   <string name="gpu_governor">Governor GPU</string>
@@ -174,8 +173,6 @@
   <string name="fstrim_summary">FStrim viene utilizzato per eliminare (o \"tagliare\") blocchi isolati che non sono in uso dal filesystem.\nCiò può migliorare le prestazioni e ridurre i rallentamenti.</string>
   <string name="fstrim_interval_title">Intervallo di FStrim</string>
   <string name="fstrim_interval_summary">Scegliere l\'intervallo per FStrimming automatico.</string>
-  <string name="app_system"><![CDATA[ATTENZIONE!<br /><b>%s</b> è un\'applicazione di sistema!]]></string>
-  <string name="app_user"><![CDATA[<b>%s</b> è un\'applicazione utente.]]></string>
   <string name="enable">Abilita</string>
   <string name="enable_msg">%s sarà abilitato.\n\nContinuare?</string>
   <string name="disable">Disabilita</string>
@@ -217,13 +214,9 @@
   <string name="downgraded">Il Database è stato cancellato a causa di un downgrade!</string>
   <string name="media_scan_trigger">Avvia scansione media</string>
   <string name="media_scan_summary">Avvia manualmente una scansione multimediale, nel caso in cui il telefono sia collegato via MTP e nuovi file non sono visibili.</string>
-  <string name="kill_app">Termina applicazione</string>
-  <string name="app_details">Dettagli applicazione</string>
   <string name="clear_cache">Pulisci la cache</string>
   <string name="clear_data">Cancella i dati</string>
   <string name="total">Totale</string>
-  <string name="app">App</string>
-  <string name="ext_app">App esterna</string>
   <string name="data">Dati</string>
   <string name="ext_data">Dati esterni</string>
   <string name="ext_media">Supporti esterni</string>
@@ -243,6 +236,7 @@
   <string name="uksm_cpu_governor">Governor CPU</string>
   <string name="pages_scanned">Pagine controllate</string>
   <string name="hash_strength">Forza dell\'hash</string>
+  <string name="sleep_times">Tempi di riposo</string>
   <string name="pages_to_scan">Pagine da scansire</string>
   <string name="sleep_between_scans">Pausa tra le scansioni (ms)</string>
   <string name="deferred_timer">Timer differito</string>
@@ -358,8 +352,6 @@
   <string name="file_not_found">Impossibile aggiungere i file</string>
   <string name="system">Sistema</string>
   <string name="boot">Avvio</string>
-  <string name="androidsecure">Sicurezza di Android</string>
-  <string name="sdext">SD-Ext</string>
   <string name="alert_reboot_install_title">Installa file</string>
   <string name="alert_reboot_one_message">Il tuo dispositivo si riavvierà ed installerà il file.</string>
   <string name="alert_reboot_more_message">Il tuo dispositivo si riavvierà ed installerà i file.</string>
