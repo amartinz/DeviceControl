@@ -48,6 +48,7 @@
     <color name="card_background">#ffffffff</color>
     <color name="item_pressed">#f8f8f8</color>
     <!-- Misc -->
+    <color name="red_bright">#ff5252</color>
     <color name="red_middle">#dc3d24</color>
     <color name="darker_gray">#66666666</color>
     <color name="blueish">#63AA9C</color>
@@ -69,7 +70,7 @@
     <color name="transparent">#00ffffff</color>
     <color name="black">#000000</color>
     <color name="dark_gray">#ff1c1c1c</color>
-    <color name="white">#ffffff</color>
+    <color name="white">#fafafa</color>
     <color name="light_gray">#ffdbdbdb</color>
     <color name="shadow_gray">#888c8c8c</color>
     <color name="holo_blue_light">#ff33b5e5</color>

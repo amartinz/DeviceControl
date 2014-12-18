@@ -26,8 +26,8 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:scaleType="fitCenter"

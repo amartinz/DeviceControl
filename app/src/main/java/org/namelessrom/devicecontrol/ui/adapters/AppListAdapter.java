@@ -47,16 +47,16 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     }
 
     public static final class ViewHolder extends RecyclerView.ViewHolder {
-        private View rootView;
-        private ImageView appIcon;
-        private TextView appLabel;
-        private TextView packageName;
-        private View layer;
+        private final View rootView;
+        private final View container;
+        private final ImageView appIcon;
+        private final TextView appLabel;
+        private final TextView packageName;
 
         public ViewHolder(final View v) {
             super(v);
             rootView = v;
-            layer = v.findViewById(R.id.app_layer);
+            container = v.findViewById(R.id.app_details_container);
             appIcon = (ImageView) v.findViewById(R.id.app_icon);
             appLabel = (TextView) v.findViewById(R.id.app_label);
             packageName = (TextView) v.findViewById(R.id.app_package);
@@ -85,9 +85,10 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         viewHolder.packageName.setText(appItem.getPackageName());
 
         final int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
-        viewHolder.appLabel.setTextColor(appItem.isSystemApp() ? res.getColor(R.color.red_middle)
-                : color);
-        viewHolder.layer.setVisibility(appItem.isEnabled() ? View.INVISIBLE : View.VISIBLE);
+        viewHolder.appLabel.setTextColor(appItem.isSystemApp()
+                ? res.getColor(R.color.red_middle) : color);
+        viewHolder.container.setBackgroundResource(appItem.isEnabled()
+                ? android.R.color.transparent : R.color.darker_gray);
     }
 
 }

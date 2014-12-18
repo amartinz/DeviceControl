@@ -37,8 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
             android:baselineAligned="false">
 
             <RelativeLayout
@@ -63,47 +61,95 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <include
-                    android:id="@+id/item_app"
-                    layout="@layout/item_app" />
-
-                <View style="@style/StandardDivider" />
-
-                <TextView
-                    android:id="@+id/app_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:textSize="16sp" />
-
                 <LinearLayout
+                    android:id="@+id/item_app"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
+                    android:minHeight="72dp"
+                    android:padding="5dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    tools:background="@color/darker_gray">
 
-                    <TextView
-                        android:id="@+id/app_version_code"
+                    <ImageView
+                        android:id="@+id/app_icon"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_margin="4dp"
+                        tools:src="@drawable/ic_launcher" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/app_version_code" />
+                        android:paddingLeft="@dimen/app_margin"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/app_version_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_version_name" />
+                        <TextView
+                            android:id="@+id/app_label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="marquee"
+                            android:fontFamily="@string/font_condensed"
+                            android:textSize="18sp"
+                            tools:text="@string/app_name" />
+
+                        <TextView
+                            android:id="@+id/app_package"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:ellipsize="marquee"
+                            android:fontFamily="@string/font_light"
+                            android:textSize="14sp"
+                            tools:text="org.namelessrom.devicecontrol" />
+
+                        <TextView
+                            android:id="@+id/app_version"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:ellipsize="marquee"
+                            android:fontFamily="@string/font_light"
+                            android:textSize="14sp"
+                            tools:text="98 (0.7.3-dev)" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
-                <View style="@style/StandardDivider" />
+                <LinearLayout
+                    android:id="@+id/app_controls"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:orientation="horizontal"
+                    android:gravity="right">
+
+                    <Button
+                        android:id="@+id/app_force_stop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/force_stop"
+                        android:outlineProvider="background" />
+
+                    <Button
+                        android:id="@+id/app_uninstall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/uninstall"
+                        android:outlineProvider="background" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:orientation="vertical">
 
                     <com.github.mikephil.charting.charts.PieChart
@@ -123,7 +169,34 @@
                         android:orientation="vertical" />
                 </LinearLayout>
 
-                <View style="@style/StandardDivider" />
+                <LinearLayout
+                    android:id="@+id/cache_controls"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:orientation="horizontal"
+                    android:gravity="right">
+
+                    <Button
+                        android:id="@+id/clear_cache"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/clear_cache"
+                        android:outlineProvider="background" />
+
+                    <Button
+                        android:id="@+id/clear_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/clear_data"
+                        android:outlineProvider="background" />
+
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

@@ -27,7 +27,6 @@
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawSelectorOnTop="false"
             android:scrollbars="vertical" />
 
         <TextView
@@ -38,7 +37,6 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </FrameLayout>
-
 
     <LinearLayout
         android:id="@+id/progressContainer"
