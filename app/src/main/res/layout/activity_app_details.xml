@@ -37,8 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
             android:baselineAligned="false">
 
             <RelativeLayout
@@ -63,9 +61,60 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <include
+                <LinearLayout
                     android:id="@+id/item_app"
-                    layout="@layout/item_app" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="72dp"
+                    android:padding="5dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    tools:background="@color/darker_gray">
+
+                    <ImageView
+                        android:id="@+id/app_icon"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        tools:src="@drawable/ic_launcher" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/app_margin"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/app_label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="marquee"
+                            android:fontFamily="@string/font_condensed"
+                            android:textSize="20sp"
+                            tools:text="@string/app_name" />
+
+                        <TextView
+                            android:id="@+id/app_package"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:ellipsize="marquee"
+                            android:fontFamily="@string/font_light"
+                            android:textSize="14sp"
+                            tools:text="org.namelessrom.devicecontrol" />
+
+                        <TextView
+                            android:id="@+id/app_version"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:ellipsize="marquee"
+                            android:fontFamily="@string/font_light"
+                            android:textSize="14sp"
+                            tools:text="98 (0.7.3-dev)" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <View style="@style/StandardDivider" />
 
@@ -73,37 +122,17 @@
                     android:id="@+id/app_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:textSize="16sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/app_version_code"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_version_code" />
-
-                    <TextView
-                        android:id="@+id/app_version_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_version_name" />
-                </LinearLayout>
+                    android:textSize="16sp"
+                    tools:text="Device Control is a system application" />
 
                 <View style="@style/StandardDivider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="5dp"
                     android:orientation="vertical">
 
                     <com.github.mikephil.charting.charts.PieChart

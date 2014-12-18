@@ -41,6 +41,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,14 +78,13 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
     private View mAppDetailsContainer;
     private View mAppDetailsError;
 
+    private LinearLayout mAppContainer;
     private ImageView mAppIcon;
     private TextView mAppLabel;
     private TextView mAppPackage;
-    private View mAppLayer;
+    private TextView mAppVersion;
 
     private TextView mStatus;
-    private TextView mAppCode;
-    private TextView mAppVersion;
     private PieChart mCacheGraph;
     private LinearLayout mCacheInfo;
 
@@ -109,15 +109,12 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
         mAppDetailsContainer = findViewById(R.id.app_details_container);
         mAppDetailsError = findViewById(R.id.app_details_error);
 
-        findViewById(R.id.item_app).setSelected(false);
-
+        mAppContainer = (LinearLayout) findViewById(R.id.item_app);
         mAppIcon = (ImageView) findViewById(R.id.app_icon);
         mAppLabel = (TextView) findViewById(R.id.app_label);
         mAppPackage = (TextView) findViewById(R.id.app_package);
-        mAppLayer = findViewById(R.id.app_layer);
+        mAppVersion = (TextView) findViewById(R.id.app_version);
         mStatus = (TextView) findViewById(R.id.app_status);
-        mAppCode = (TextView) findViewById(R.id.app_version_code);
-        mAppVersion = (TextView) findViewById(R.id.app_version_name);
         mCacheGraph = (PieChart) findViewById(R.id.app_cache_graph);
         mCacheInfo = (LinearLayout) findViewById(R.id.app_cache_info_container);
     }
@@ -271,7 +268,8 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
             mAppIcon.setImageDrawable(mAppItem.getIcon());
             mAppLabel.setText(mAppItem.getLabel());
             mAppPackage.setText(mAppItem.getPackageName());
-            mAppLayer.setVisibility(mAppItem.isEnabled() ? View.INVISIBLE : View.VISIBLE);
+            mAppContainer.setBackgroundResource(mAppItem.isEnabled()
+                    ? android.R.color.transparent : R.color.darker_gray);
 
             if (mAppItem.isSystemApp()) {
                 tmp = getString(R.string.app_system, mAppItem.getLabel());
@@ -283,11 +281,9 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
             }
             mStatus.setText(Html.fromHtml(tmp));
 
-            mAppCode.setText(
-                    getString(R.string.app_version_code, mAppItem.getPackageInfo().versionCode));
-
-            mAppVersion.setText(
-                    getString(R.string.app_version_name, mAppItem.getPackageInfo().versionName));
+            final String version = String.format("%s (%s)",
+                    mAppItem.getPackageInfo().versionName, mAppItem.getPackageInfo().versionCode);
+            mAppVersion.setText(version);
 
             AppHelper.getSize(this, mAppItem.getPackageName());
         }
@@ -315,11 +311,13 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
     }
 
     private void clearAppData() {
+        // TODO: clear external data as well
         AppHelper.clearData(mAppItem.getPackageName());
         mHandler.postDelayed(mClearRunnable, 500);
     }
 
     private void clearAppCache() {
+        // TODO: clear external cache as well
         AppHelper.clearCache(mAppItem.getPackageName());
         mHandler.postDelayed(mClearRunnable, 500);
     }
@@ -424,8 +422,9 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
                 case COMMAND_COMPLETED:
                 case COMMAND_TERMINATED:
                     item.setEnabled(!item.isEnabled());
-                    if (mAppLayer != null) {
-                        mAppLayer.setVisibility(item.isEnabled() ? View.INVISIBLE : View.VISIBLE);
+                    if (mAppContainer != null) {
+                        mAppContainer.setBackgroundResource(item.isEnabled()
+                                ? android.R.color.transparent : R.color.darker_gray);
                     }
                     invalidateOptionsMenu();
                     break;
