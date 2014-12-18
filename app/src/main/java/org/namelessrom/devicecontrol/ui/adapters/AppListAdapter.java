@@ -17,6 +17,8 @@
  */
 package org.namelessrom.devicecontrol.ui.adapters;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +30,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.listeners.OnAppChoosenListener;
+import org.namelessrom.devicecontrol.activities.AppDetailsActivity;
 import org.namelessrom.devicecontrol.objects.AppItem;
 
 import java.util.List;
@@ -36,20 +38,20 @@ import java.util.List;
 public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
     private final Resources res = Application.get().getResources();
 
-    private final List<AppItem>        mAppList;
-    private final OnAppChoosenListener mAppChoosenListener;
+    private final Activity mActivity;
+    private final List<AppItem> mAppList;
 
-    public AppListAdapter(final OnAppChoosenListener listener, final List<AppItem> appList) {
-        this.mAppChoosenListener = listener;
+    public AppListAdapter(final Activity activity, final List<AppItem> appList) {
+        this.mActivity = activity;
         this.mAppList = appList;
     }
 
     public static final class ViewHolder extends RecyclerView.ViewHolder {
-        private View      rootView;
+        private View rootView;
         private ImageView appIcon;
-        private TextView  appLabel;
-        private TextView  packageName;
-        private View      layer;
+        private TextView appLabel;
+        private TextView packageName;
+        private View layer;
 
         public ViewHolder(final View v) {
             super(v);
@@ -72,7 +74,10 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         final AppItem appItem = mAppList.get(position);
         viewHolder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                mAppChoosenListener.onAppChoosen(appItem);
+                final Intent intent = new Intent(mActivity, AppDetailsActivity.class);
+                intent.putExtra(AppDetailsActivity.ARG_FROM_ACTIVITY, true);
+                intent.putExtra(AppDetailsActivity.ARG_PACKAGE_NAME, appItem.getPackageName());
+                mActivity.startActivity(intent);
             }
         });
         viewHolder.appIcon.setImageDrawable(appItem.getIcon());

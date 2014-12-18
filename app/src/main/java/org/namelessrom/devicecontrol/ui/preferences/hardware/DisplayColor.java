@@ -38,6 +38,9 @@ import org.namelessrom.devicecontrol.hardware.DisplayColorCalibration;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Special preference type that allows configuration of Color settings
  */
@@ -55,9 +58,9 @@ public class DisplayColor extends DialogPreference {
             R.id.color_blue_value
     };
 
-    private ColorSeekBar[] mSeekBars = new ColorSeekBar[SEEKBAR_ID.length];
+    private List<ColorSeekBar> mSeekBars = new ArrayList<>(SEEKBAR_ID.length);
     private String[] mCurrentColors;
-    private String   mOriginalColors;
+    private String mOriginalColors;
 
     public DisplayColor(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -83,8 +86,9 @@ public class DisplayColor extends DialogPreference {
         for (int i = 0; i < SEEKBAR_ID.length; i++) {
             SeekBar seekBar = (SeekBar) view.findViewById(SEEKBAR_ID[i]);
             TextView value = (TextView) view.findViewById(SEEKBAR_VALUE_ID[i]);
-            mSeekBars[i] = new ColorSeekBar(seekBar, value, i);
-            mSeekBars[i].setValueFromString(mCurrentColors[i]);
+            ColorSeekBar colorSeekBar = new ColorSeekBar(seekBar, value, i);
+            mSeekBars.add(colorSeekBar);
+            colorSeekBar.setValueFromString(mCurrentColors[i]);
         }
     }
 
@@ -99,8 +103,8 @@ public class DisplayColor extends DialogPreference {
             @Override
             public void onClick(View v) {
                 final int defaultValue = DisplayColorCalibration.get().getDefValue();
-                for (int i = 0; i < mSeekBars.length; i++) {
-                    mSeekBars[i].mSeekBar.setProgress(defaultValue);
+                for (int i = 0; i < mSeekBars.size(); i++) {
+                    mSeekBars.get(i).mSeekBar.setProgress(defaultValue);
                     mCurrentColors[i] = String.valueOf(defaultValue);
                 }
                 DisplayColorCalibration.get().setColors(TextUtils.join(" ", mCurrentColors));
@@ -124,8 +128,8 @@ public class DisplayColor extends DialogPreference {
     public static boolean isSupported() { return DisplayColorCalibration.get().isSupported(); }
 
     private class ColorSeekBar implements SeekBar.OnSeekBarChangeListener {
-        private int      mIndex;
-        private SeekBar  mSeekBar;
+        private int mIndex;
+        private SeekBar mSeekBar;
         private TextView mValue;
 
         public ColorSeekBar(SeekBar seekBar, TextView value, int index) {

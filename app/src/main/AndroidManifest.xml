@@ -112,18 +112,26 @@
             android:excludeFromRecents="true"
             android:label="@string/app_details"
             android:launchMode="singleTask"
-            android:taskAffinity="">
+            android:taskAffinity=""
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="android.settings.APPLICATION_DETAILS_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="package" />
             </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.namelessrom.devicecontrol.MainActivity" />
         </activity>
         <activity
             android:name=".activities.RequestFileActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/pick_file"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.namelessrom.devicecontrol.MainActivity" />
+        </activity>
         <activity
             android:name=".activities.FilePickerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -136,6 +144,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="application/zip" />
             </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.namelessrom.devicecontrol.MainActivity" />
         </activity>
         <activity
             android:name=".wizard.AddTaskActivity"
@@ -143,7 +154,11 @@
             android:label="@string/add_task"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Light"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.namelessrom.devicecontrol.MainActivity" />
+        </activity>
 
         <!-- Services -->
         <service
