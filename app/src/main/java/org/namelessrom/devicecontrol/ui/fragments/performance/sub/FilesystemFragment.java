@@ -186,6 +186,8 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
                 return Application.get().getString(R.string.size_3072_kb);
             case 4096:
                 return Application.get().getString(R.string.size_4096_kb);
+            case 8192:
+                return Application.get().getString(R.string.size_8192_kb);
             // if all fails, we return the value we got at the beginning
             default:
             case -1:
