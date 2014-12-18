@@ -258,12 +258,8 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
         mCacheGraph.setTouchEnabled(false);
 
         final int color = Application.get().isDarkTheme()
-                ? Application.get().getColor(R.color.dark_background)
-                : Application.get().getColor(R.color.light_background);
-        mCacheGraph.setBackgroundColor(color);
-        mCacheGraph.setDrawPaintColor(color);
-        mCacheGraph.setHolePaintColor(color);
-        mCacheGraph.setValuePaintColor(color);
+                ? R.color.dark_background : R.color.light_background;
+        mCacheGraph.setBackgroundResource(color);
 
         mCacheGraph.invalidate();
     }
@@ -499,7 +495,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
 
             final PieDataSet dataSet = new PieDataSet(sliceList, getString(R.string.app_size));
             dataSet.setSliceSpace(5f);
-            dataSet.setColors(ColorTemplate.createColors(this, ColorTemplate.VORDIPLOM_COLORS));
+            dataSet.setColors(ColorTemplate.createColors(ColorTemplate.VORDIPLOM_COLORS));
 
             final PieData data = new PieData(textList, dataSet);
             mCacheGraph.setData(data);
