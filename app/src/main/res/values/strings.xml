@@ -213,6 +213,7 @@
     <string name="downgraded">Database got wiped due a downgrade!</string>
     <string name="media_scan_trigger">Trigger media scan</string>
     <string name="media_scan_summary">Manuall trigger a media scan, in case you have your phone connected via MTP and new files are not visible.</string>
+    <string name="media_scan_triggered">Media scan triggered, this may take a while!</string>
     <string name="force_stop">Force stop</string>
     <string name="app_details">Application details</string>
     <string name="clear_cache">Clear cache</string>

@@ -24,6 +24,8 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.io.File;
@@ -54,11 +56,11 @@ public class IOUtils {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
-    public String getPrimarySdCard() {
+    @NonNull public String getPrimarySdCard() {
         return sPrimarySdcard;
     }
 
-    public String getSecondarySdCard() {
+    @Nullable public String getSecondarySdCard() {
         return sSecondarySdcard;
     }
 
