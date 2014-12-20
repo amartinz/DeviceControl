@@ -7,7 +7,6 @@ import org.namelessrom.devicecontrol.Logger;
 
 @SuppressWarnings("AccessOfSystemProperties")
 public class CommandResult implements Parcelable {
-    private final String TAG = "CommandResult";
     private final long   mStartTime;
     private final int    mExitValue;
     private final String mStdout;
@@ -22,7 +21,7 @@ public class CommandResult implements Parcelable {
         mStderr = stderr;
         mEndTime = endTime;
 
-        Logger.d(TAG, "Time to execute: " + (mEndTime - mStartTime) + " ns (nanoseconds)");
+        Logger.d(this, "Time to execute: " + (mEndTime - mStartTime) + " ns (nanoseconds)");
     }
 
     // pretty much just forward the constructor from parcelable to our main

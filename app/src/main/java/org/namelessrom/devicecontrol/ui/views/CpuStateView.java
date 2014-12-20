@@ -34,7 +34,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.monitors.CpuStateMonitor;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;

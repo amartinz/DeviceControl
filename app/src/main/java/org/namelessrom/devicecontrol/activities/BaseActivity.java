@@ -23,7 +23,6 @@ import android.support.v7.app.ActionBarActivity;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 
 public abstract class BaseActivity extends ActionBarActivity {
 

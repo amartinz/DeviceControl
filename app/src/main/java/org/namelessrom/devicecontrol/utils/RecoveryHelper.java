@@ -66,7 +66,7 @@ public class RecoveryHelper {
         String secondarySdcard = IOUtils.get().getSecondarySdCard();
 
         String[] internalNames = new String[]{
-                primarySdcard == null ? " " : primarySdcard,
+                primarySdcard,
                 "/mnt/sdcard",
                 "/storage/sdcard/",
                 "/sdcard",

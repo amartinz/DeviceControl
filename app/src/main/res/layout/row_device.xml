@@ -65,8 +65,6 @@
             android:id="@+id/ui_device_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/ui_device_bar_right"
-            android:layout_toRightOf="@+id/ui_device_bar_left"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:max="100" />

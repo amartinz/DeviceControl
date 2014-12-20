@@ -57,6 +57,7 @@ public class PreferenceUtils {
         MAP_TITLE.put("touch_boost_active", R.string.touch_boost);
     }
 
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private static final HashMap<String, Integer> MAP_SUMMARY = new HashMap<>();
 
     static {

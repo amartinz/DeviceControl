@@ -80,17 +80,14 @@ public class DeviceFragment extends AttachPreferenceFragment
     private AwesomeTogglePreference mLcdSunlightEnhancement;
     private AwesomeTogglePreference mLcdColorEnhancement;
 
-    //----------------------------------------------------------------------------------------------
-    private DisplayColor          mDisplayColor;
-    private DisplayGamma          mDisplayGamma;
     private AwesomeListPreference mPanelColor;
 
     //==============================================================================================
     // Extras
     //==============================================================================================
     private AwesomeTogglePreference mLoggerMode;
-    private CustomPreference          mFastCharge;
-    private CustomPreference          mSoundControl;
+    private CustomPreference mFastCharge;
+    private CustomPreference mSoundControl;
 
     //==============================================================================================
     // Overridden Methods
@@ -211,12 +208,12 @@ public class DeviceFragment extends AttachPreferenceFragment
 
         category = (PreferenceCategory) findPreference("graphics");
         if (category != null) {
-            mDisplayColor = (DisplayColor) findPreference(DisplayColorCalibration.TAG);
+            DisplayColor mDisplayColor = (DisplayColor) findPreference(DisplayColorCalibration.TAG);
             if (!DisplayColor.isSupported()) {
                 category.removePreference(mDisplayColor);
             }
 
-            mDisplayGamma = (DisplayGamma) findPreference(DisplayGammaCalibration.TAG);
+            DisplayGamma mDisplayGamma = (DisplayGamma) findPreference(DisplayGammaCalibration.TAG);
             if (!DisplayGamma.isSupported()) {
                 category.removePreference(mDisplayGamma);
             }
@@ -390,9 +387,9 @@ public class DeviceFragment extends AttachPreferenceFragment
         return sbCmd.toString();
     }
 
-    private static final String COMMAND_PATH       = "/sys/class/sec/tsp/cmd";
-    private static final String GLOVE_MODE         = "glove_mode";
-    private static final String GLOVE_MODE_ENABLE  = GLOVE_MODE + ",1";
+    private static final String COMMAND_PATH = "/sys/class/sec/tsp/cmd";
+    private static final String GLOVE_MODE = "glove_mode";
+    private static final String GLOVE_MODE_ENABLE = GLOVE_MODE + ",1";
     private static final String GLOVE_MODE_DISABLE = GLOVE_MODE + ",0";
 
     public void enableHts(final boolean enable) {

@@ -156,8 +156,9 @@ public class Shell {
             throw new IllegalStateException("Unable to add commands to a closed shell");
         }
 
+        //noinspection StatementWithEmptyBody
         while (isCleaning) {
-            //Don't add commands while cleaning
+            // Don't add commands while cleaning
         }
         commands.add(command);
 

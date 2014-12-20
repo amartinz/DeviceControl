@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 
 import org.namelessrom.devicecontrol.R;
@@ -31,7 +32,7 @@ public class SobDialogFragment extends DialogFragment {
         }
     }
 
-    @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
+    @Override @NonNull public Dialog onCreateDialog(Bundle savedInstanceState) {
         final int length = entries.size();
         final String[] items = new String[length];
         final boolean[] checked = new boolean[length];
