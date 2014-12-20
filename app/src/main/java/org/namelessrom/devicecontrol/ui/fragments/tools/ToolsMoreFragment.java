@@ -20,24 +20,24 @@ package org.namelessrom.devicecontrol.ui.fragments.tools;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class ToolsMoreFragment extends AttachPreferenceFragment implements DeviceConstants,
-        MediaScannerConnection.MediaScannerConnectionClient {
+import java.util.ArrayList;
 
-    private MediaScannerConnection mMediaScannerConnection;
+public class ToolsMoreFragment extends AttachPreferenceFragment implements DeviceConstants,
+        MediaScannerConnection.OnScanCompletedListener {
     private CustomPreference mMediaScan;
-    private String mMediaScanPath;
 
     private CustomPreference mBuildProp;
     private CustomPreference mSysctlVm;
@@ -81,44 +81,32 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
     }
 
     private void startMediaScan() {
-        if (mMediaScannerConnection != null) {
-            mMediaScannerConnection.disconnect();
+        final ArrayList<String> paths = new ArrayList<>();
+        paths.add(IOUtils.get().getPrimarySdCard());
+        if (!TextUtils.isEmpty(IOUtils.get().getSecondarySdCard())) {
+            paths.add(IOUtils.get().getSecondarySdCard());
         }
-        mMediaScannerConnection = new MediaScannerConnection(getActivity(), this);
-        mMediaScannerConnection.connect();
-    }
-
-    @Override public void onMediaScannerConnected() {
-        try {
-            if (mMediaScanPath == null || mMediaScanPath.isEmpty()) {
-                mMediaScanPath = Environment.getExternalStorageDirectory().getPath();
-            }
-            mMediaScannerConnection.scanFile(mMediaScanPath, "*/*");
-            Application.HANDLER.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (mMediaScan != null) {
-                        mMediaScan.setEnabled(false);
-                        mMediaScan.setSummary("Media Scanner started scanning " + mMediaScanPath);
-                    }
+        MediaScannerConnection.scanFile(getActivity(), paths.toArray(new String[paths.size()]),
+                new String[]{ "*/*" }, this);
+        Application.HANDLER.post(new Runnable() {
+            @Override public void run() {
+                if (mMediaScan != null) {
+                    mMediaScan.setEnabled(false);
+                    mMediaScan.setSummary("Media Scanner started scanning ");
                 }
-            });
-        } catch (Exception ignored) { /* ignored */ }
+            }
+        });
     }
 
     @Override public void onScanCompleted(final String path, final Uri uri) {
         Application.HANDLER.post(new Runnable() {
-            @Override
-            public void run() {
+            @Override public void run() {
                 if (mMediaScan != null) {
                     mMediaScan.setEnabled(true);
                     mMediaScan.setSummary("Media Scanner finished scanning " + path);
                 }
             }
         });
-        if (mMediaScannerConnection.isConnected()) {
-            mMediaScannerConnection.disconnect();
-        }
     }
 
 }
