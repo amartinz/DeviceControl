@@ -5,6 +5,7 @@ include $(CLEAR_VARS)
 LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v13 \
     android-support-v7-appcompat \
+    android-support-v7-cardview \
     android-support-v7-recyclerview \
     ion \
     nameless-proprietary \
@@ -26,6 +27,10 @@ LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/google/google_pla
 ## android-support-v7-appcompat
 
 LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../frameworks/support/v7/appcompat/res
+
+## android-support-v7-cardview
+
+LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../frameworks/support/v7/cardview/res
 
 ## MPAndroidChart
 
