@@ -44,6 +44,7 @@ LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/mpandroidchart/MP
 LOCAL_AAPT_FLAGS := \
     --auto-add-overlay \
     --extra-packages android.support.v7.appcompat \
+    --extra-packages android.support.v7.cardview \
     --extra-packages com.github.mikephil.charting \
     --extra-packages com.google.android.gms \
     --extra-packages org.namelessrom.proprietary \
