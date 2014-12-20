@@ -288,7 +288,7 @@ public abstract class PreferenceFragment extends Fragment implements
                                 "performClick", PreferenceScreen.class);
                         performClick.setAccessible(true);
                         performClick.invoke(preference, preferenceScreen);
-                    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+                    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException ignored) {
                     }
                 }
             });

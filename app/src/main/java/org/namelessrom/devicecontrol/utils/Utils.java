@@ -209,6 +209,7 @@ public class Utils implements DeviceConstants {
         if (fileExists(filename)) {
             try {
                 final FileWriter fw = new FileWriter(filename);
+                //noinspection TryFinallyCanBeTryWithResources
                 try {
                     fw.write(value);
                 } finally {

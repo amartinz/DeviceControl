@@ -17,12 +17,13 @@
  */
 package org.namelessrom.devicecontrol.ui.fragments.tools;
 
-import android.app.AlertDialog;
 import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,9 +31,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ObservableScrollView;
@@ -41,20 +40,18 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.services.TaskerService;
-import org.namelessrom.devicecontrol.ui.cards.TaskerCard;
+import org.namelessrom.devicecontrol.ui.adapters.TaskerAdapter;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
-import org.namelessrom.devicecontrol.utils.DrawableHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TaskerFragment extends AttachFragment implements DeviceConstants {
 
-    private LinearLayout mCardsLayout;
+    private RecyclerView mRecyclerView;
     private View mEmptyView;
 
     @Override protected int getFragmentId() { return ID_TOOLS_TASKER; }
@@ -69,7 +66,10 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
         setHasOptionsMenu(true);
         final View v = inflater.inflate(R.layout.fragment_tasker, container, false);
 
-        mCardsLayout = (LinearLayout) v.findViewById(R.id.cards_layout);
+        mRecyclerView = (RecyclerView) v.findViewById(android.R.id.list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
         mEmptyView = v.findViewById(android.R.id.empty);
         final FloatingActionButton fabAdd = (FloatingActionButton) v.findViewById(R.id.fab_add);
         fabAdd.setOnClickListener(new View.OnClickListener() {
@@ -92,45 +92,6 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
     @Override public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         refreshListView();
-    }
-
-    public void addCards(final ArrayList<TaskerCard> cards, boolean animate, boolean remove) {
-        mCardsLayout.clearAnimation();
-        if (remove) {
-            mCardsLayout.removeAllViews();
-        }
-        if (animate) {
-            mCardsLayout.setAnimation(
-                    AnimationUtils.loadAnimation(getActivity(), R.anim.up_from_bottom));
-        }
-        for (final TaskerCard card : cards) {
-            card.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override public boolean onLongClick(View view) {
-                    final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                    alert.setIcon(
-                            DrawableHelper.applyAccentColorFilter(R.drawable.ic_general_trash));
-                    alert.setTitle(R.string.delete_task);
-                    alert.setMessage(getString(R.string.delete_task_question));
-                    alert.setNegativeButton(android.R.string.cancel,
-                            new DialogInterface.OnClickListener() {
-                                @Override public void onClick(DialogInterface d, int b) {
-                                    d.dismiss();
-                                }
-                            });
-                    alert.setPositiveButton(android.R.string.yes,
-                            new DialogInterface.OnClickListener() {
-                                @Override public void onClick(DialogInterface d, int b) {
-                                    DatabaseHandler.getInstance().deleteTaskerItem(card.item);
-                                    d.dismiss();
-                                    refreshListView();
-                                }
-                            });
-                    alert.show();
-                    return true;
-                }
-            });
-            mCardsLayout.addView(card);
-        }
     }
 
     private void refreshListView() {
@@ -168,7 +129,7 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
         @Override protected void onPreExecute() {
             // TODO: animations and progress view
             mEmptyView.setVisibility(View.GONE);
-            mCardsLayout.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.GONE);
         }
 
         @Override protected List<TaskerItem> doInBackground(final Void... voids) {
@@ -177,19 +138,13 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
 
         @Override protected void onPostExecute(final List<TaskerItem> result) {
             // if the adapter exists and we have items, clear it and add the results
-            if (result != null && result.size() > 0) {
-                final ArrayList<TaskerCard> cards = new ArrayList<>(result.size());
-
-                for (final TaskerItem item : result) {
-                    cards.add(new TaskerCard(getActivity(), null, item, null));
-                }
-
-                addCards(cards, true, true);
+            if (result != null && result.size() > 0 && getActivity() != null) {
                 mEmptyView.setVisibility(View.GONE);
-                mCardsLayout.setVisibility(View.VISIBLE);
+                mRecyclerView.setVisibility(View.VISIBLE);
+                mRecyclerView.setAdapter(new TaskerAdapter(getActivity(), result));
             } else {
                 mEmptyView.setVisibility(View.VISIBLE);
-                mCardsLayout.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.GONE);
             }
         }
     }

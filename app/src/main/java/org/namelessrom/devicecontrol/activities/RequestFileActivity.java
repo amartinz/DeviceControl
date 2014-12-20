@@ -32,7 +32,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.ui.fragments.filepicker.FilePickerFragment;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -85,7 +84,7 @@ public class RequestFileActivity extends Activity {
     private void launchInternalPicker() {
         final Intent intent = new Intent();
         final Intent i = new Intent(this, FilePickerActivity.class);
-        i.putExtra(FilePickerFragment.ARG_FILE_TYPE, "zip");
+        i.setType("application/zip");
         try {
             startActivityForResult(intent, REQUEST_PICK_FILE_TWO);
         } catch (ActivityNotFoundException e) {
