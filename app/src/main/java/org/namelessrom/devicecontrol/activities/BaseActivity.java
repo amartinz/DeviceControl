@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.activities;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
@@ -31,7 +32,7 @@ public abstract class BaseActivity extends ActionBarActivity {
 
         final boolean isDarkTheme = Application.get().isDarkTheme();
         setTheme(isDarkTheme ? R.style.AppTheme_Dark : R.style.AppTheme_Light);
-        if (AppHelper.isLollipop()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Application.get().getColor(
                     isDarkTheme ? R.color.dark_primary_dark : R.color.light_primary_dark));
         }

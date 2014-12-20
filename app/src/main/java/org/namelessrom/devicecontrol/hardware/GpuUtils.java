@@ -244,6 +244,7 @@ public class GpuUtils {
 
     public boolean containsGov(final String gov) {
         final String[] governors = GovernorUtils.get().getAvailableGpuGovernors();
+        if (governors == null) return false;
         for (final String s : governors) {
             if (gov.toLowerCase().equals(s.toLowerCase())) return true;
         }

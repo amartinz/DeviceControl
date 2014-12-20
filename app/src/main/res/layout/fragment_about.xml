@@ -23,51 +23,46 @@
     android:fillViewport="true"
     android:scrollbarStyle="outsideOverlay">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <TextView
+            android:textSize="30sp"
+            tools:textColor="?attr/colorAccent"
+            android:id="@+id/welcomeTxtView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            tools:text="Welcome to Device Control"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:fontFamily="@string/font_thin"
+            android:textAlignment="center"
+            android:gravity="center" />
 
-            <TextView
-                android:textSize="30sp"
-                tools:textColor="?attr/colorAccent"
-                android:id="@+id/welcomeTxtView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                tools:text="Welcome to Device Control"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"
-                android:fontFamily="@string/font_thin"
-                android:textAlignment="center"
-                android:gravity="center" />
+        <TextView
+            android:textSize="16sp"
+            android:gravity="center"
+            android:id="@+id/detailsTxtView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:text="@string/app_welcome_message"
+            android:layout_below="@+id/welcomeTxtView"
+            android:fontFamily="@string/font_light"
+            android:textAlignment="center" />
 
-            <TextView
-                android:textSize="16sp"
-                android:gravity="center"
-                android:id="@+id/detailsTxtView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="30dp"
-                android:text="@string/app_welcome_message"
-                android:layout_below="@+id/welcomeTxtView"
-                android:fontFamily="@string/font_light"
-                android:textAlignment="center" />
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/logo"
+            android:scaleType="fitCenter"
+            android:layout_below="@+id/detailsTxtView"
+            android:layout_alignParentBottom="true" />
 
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/logo"
-                android:scaleType="fitCenter"
-                android:layout_below="@+id/detailsTxtView"
-                android:layout_alignParentBottom="true" />
-
-        </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

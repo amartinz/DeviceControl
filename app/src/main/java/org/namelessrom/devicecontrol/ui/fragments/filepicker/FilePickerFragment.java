@@ -38,11 +38,9 @@ import java.util.ArrayList;
 public class FilePickerFragment extends ListFragment implements OnBackPressedListener,
         ShellOutput.OnShellOutputListener, FilePickerListener {
 
-    public static final String ARG_FILE_TYPE = "arg_file_type";
-
     private static final int ID_GET_FILES = 100;
 
-    private String root        = "/";
+    private String root = "/";
     private String currentPath = "/";
 
     private ArrayList<String> breadcrumbs = new ArrayList<>();
@@ -51,19 +49,13 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
 
     private FileAdapter mFileAdapter;
 
-    @Override public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        final Bundle bundle = getArguments();
-        if (bundle != null) {
-            fileType = bundle.getString(ARG_FILE_TYPE, fileType);
-        }
-    }
-
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // TODO: restore instance state
         mFileAdapter = new FileAdapter(this);
+
+        // hardcoded to zip for our usage
+        fileType = "zip";
         mFileAdapter.setFileType(fileType);
         loadFiles(root, true);
     }

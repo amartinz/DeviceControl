@@ -21,6 +21,7 @@ package org.namelessrom.devicecontrol.wizard;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v13.app.FragmentStatePagerAdapter;
@@ -38,7 +39,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.wizard.setup.AbstractSetupData;
 import org.namelessrom.devicecontrol.wizard.setup.Page;
 import org.namelessrom.devicecontrol.wizard.setup.PageList;
@@ -78,7 +78,7 @@ public class AddTaskActivity extends ActionBarActivity implements SetupDataCallb
                 new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
                     @Override public int getToolbarViewId() { return R.id.toolbar; }
                 };
-        if (AppHelper.isLollipop()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             materialMenu.setNeverDrawTouch(true);
         }
         materialMenu.animateState(MaterialMenuDrawable.IconState.ARROW);

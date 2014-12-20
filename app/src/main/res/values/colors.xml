@@ -37,16 +37,6 @@
     <color name="palette_yellow">#ffafb42b</color>
     <color name="material_blue_500">#5677fc</color>
     <color name="material_blue_600">#4e6cef</color>
-    <!-- card -->
-    <color name="card_text">#ff8d8d8d</color>
-    <color name="card_text_error">#ffff0000</color>
-    <color name="card_title_text">#ff707070</color>
-    <color name="card_light_text">#ffb5b5b5</color>
-    <color name="card_grid_text">#ff707070</color>
-    <color name="card_separator">#ffe5e5e5</color>
-    <color name="card_border">#ffdedede</color>
-    <color name="card_background">#ffffffff</color>
-    <color name="item_pressed">#f8f8f8</color>
     <!-- Misc -->
     <color name="red_bright">#ff5252</color>
     <color name="red_middle">#dc3d24</color>

@@ -100,14 +100,6 @@
             <enum name="invisible" value="1" />
         </attr>
     </declare-styleable>
-    <!-- Cards -->
-    <declare-styleable name="Card">
-        <attr name="cardTitle" format="string" />
-    </declare-styleable>
-    <declare-styleable name="Item">
-        <attr name="itemTitle" format="string" />
-        <attr name="itemIcon" format="integer" />
-    </declare-styleable>
     <!-- Floating action button -->
     <declare-styleable name="FloatingActionButton">
         <attr name="fab_colorPressed" format="color" />

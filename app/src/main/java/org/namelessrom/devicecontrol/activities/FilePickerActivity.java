@@ -51,23 +51,10 @@ public class FilePickerActivity extends BaseActivity implements FilePickerListen
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mCurrentFragment = buildFragment(getIntent());
+        mCurrentFragment = new FilePickerFragment();
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, mCurrentFragment)
                 .commit();
-    }
-
-    private Fragment buildFragment(final Intent intent) {
-        final String fileType = intent.getStringExtra(FilePickerFragment.ARG_FILE_TYPE);
-        // Prepare bundle, containing the package name
-        final Bundle bundle = new Bundle(1);
-        bundle.putString(FilePickerFragment.ARG_FILE_TYPE, (fileType != null ? fileType : ""));
-
-        // Bind bundle to fragment
-        final Fragment f = new FilePickerFragment();
-        f.setArguments(bundle);
-
-        return f;
     }
 
     @Override public void onFlashItemPicked(final FlashItem flashItem) {

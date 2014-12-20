@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
     android:baselineAligned="false"
     android:gravity="center_vertical"
-    android:minHeight="50dp"
-    android:orientation="horizontal"
-    tools:background="@drawable/card_background">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:id="@id/list_item_container"
@@ -20,8 +32,8 @@
 
         <ImageView
             android:id="@+id/task_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             tools:src="@drawable/ic_menu_perf_cpu" />
 
         <LinearLayout
@@ -37,9 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fadingEdge="horizontal"
-                android:fontFamily="@string/font_bold"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/primary_text_light"
                 tools:text="screen_off" />
 
             <LinearLayout
@@ -54,7 +64,6 @@
                     android:layout_marginRight="10dp"
                     android:fontFamily="@string/font_light"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/secondary_text_light"
                     tools:text="cpu_frequency_max" />
 
                 <TextView
@@ -65,7 +74,6 @@
                     android:layout_weight="1"
                     android:fontFamily="@string/font_light"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/secondary_text_light"
                     tools:text="2457600" />
 
             </LinearLayout>

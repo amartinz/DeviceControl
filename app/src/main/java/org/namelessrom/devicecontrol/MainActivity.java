@@ -170,7 +170,7 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
                 new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
                     @Override public int getToolbarViewId() { return R.id.toolbar; }
                 };
-        if (AppHelper.isLollipop()) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             sMaterialMenu.setNeverDrawTouch(true);
         }
 
