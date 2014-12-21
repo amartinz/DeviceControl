@@ -22,6 +22,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.TaskerItem;
@@ -84,7 +85,10 @@ public class FinishPage extends Page {
         }
 
         @Override protected int getLayoutResource() {
-            return R.layout.wizard_page_list;
+            if (Application.get().isDarkTheme()) {
+                return R.layout.wizard_page_list_dark;
+            }
+            return R.layout.wizard_page_list_light;
         }
 
         @Override protected int getTitleResource() {

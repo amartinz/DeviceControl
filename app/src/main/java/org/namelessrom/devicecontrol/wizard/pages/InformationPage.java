@@ -21,6 +21,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.wizard.setup.Page;
@@ -54,7 +55,12 @@ public class InformationPage extends Page {
             Logger.v(this, "TaskerItem: %s", mCallbacks.getSetupData().toString());
         }
 
-        @Override protected int getLayoutResource() { return R.layout.wizard_page_welcome; }
+        @Override protected int getLayoutResource() {
+            if (Application.get().isDarkTheme()) {
+                return R.layout.wizard_page_welcome_dark;
+            }
+            return R.layout.wizard_page_welcome_light;
+        }
 
         @Override protected int getTitleResource() { return R.string.setup_welcome; }
 

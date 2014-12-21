@@ -36,7 +36,6 @@ public class WelcomeFragment extends Fragment {
 
         final TextView welcome = (TextView) view.findViewById(R.id.welcomeTxtView);
         welcome.setText(getString(R.string.app_welcome, appname));
-        welcome.setTextColor(Application.get().getAccentColor());
 
         final TextView details = (TextView) view.findViewById(R.id.detailsTxtView);
         details.setText(getString(R.string.app_welcome_message, appname));

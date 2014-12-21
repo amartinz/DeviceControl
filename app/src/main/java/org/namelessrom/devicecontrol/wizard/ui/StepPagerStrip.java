@@ -27,6 +27,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Scroller;
 
 import org.namelessrom.devicecontrol.R;
 
@@ -49,7 +50,7 @@ public class StepPagerStrip extends View {
 
     private RectF mTempRectF = new RectF();
 
-    //private Scroller mScroller;
+    private Scroller mScroller;
 
     private OnPageSelectedListener mOnPageSelectedListener;
 
@@ -96,8 +97,7 @@ public class StepPagerStrip extends View {
         mOnPageSelectedListener = onPageSelectedListener;
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+    @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
         if (mPageCount == 0) {
@@ -155,8 +155,7 @@ public class StepPagerStrip extends View {
         }
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(
                 View.resolveSize(
                         (int) (mPageCount * (mTabWidth + mTabSpacing) - mTabSpacing)
@@ -171,14 +170,12 @@ public class StepPagerStrip extends View {
         );
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         scrollCurrentPageIntoView();
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
-    @Override
-    public boolean onTouchEvent(@NonNull final MotionEvent event) {
+    @Override public boolean onTouchEvent(@NonNull final MotionEvent event) {
         if (mOnPageSelectedListener != null) {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
@@ -233,29 +230,29 @@ public class StepPagerStrip extends View {
 
     public void setCurrentPage(int currentPage) {
         mCurrentPage = currentPage;
-        invalidate();
-        scrollCurrentPageIntoView();
+        //invalidate();
+        //scrollCurrentPageIntoView();
 
         // TODO: Set content description appropriately
     }
 
     private void scrollCurrentPageIntoView() {
         // TODO: only works with left gravity for now
-//
-//        float widthToActive = getPaddingLeft() + (mCurrentPage + 1) * (mTabWidth + mTabSpacing)
-//                - mTabSpacing;
-//        int viewWidth = getWidth();
-//
-//        int startScrollX = getScrollX();
-//        int destScrollX = (widthToActive > viewWidth) ? (int) (widthToActive - viewWidth) : 0;
-//
-//        if (mScroller == null) {
-//            mScroller = new Scroller(getContext());
-//        }
-//
-//        mScroller.abortAnimation();
-//        mScroller.startScroll(startScrollX, 0, destScrollX - startScrollX, 0);
-//        postInvalidate();
+
+        float widthToActive = getPaddingLeft() + (mCurrentPage + 1) * (mTabWidth + mTabSpacing)
+                - mTabSpacing;
+        int viewWidth = getWidth();
+
+        int startScrollX = getScrollX();
+        int destScrollX = (widthToActive > viewWidth) ? (int) (widthToActive - viewWidth) : 0;
+
+        if (mScroller == null) {
+            mScroller = new Scroller(getContext());
+        }
+
+        mScroller.abortAnimation();
+        mScroller.startScroll(startScrollX, 0, destScrollX - startScrollX, 0);
+        postInvalidate();
     }
 
     public void setPageCount(int count) {
@@ -269,12 +266,10 @@ public class StepPagerStrip extends View {
         void onPageStripSelected(int position);
     }
 
-//
-//    @Override
-//    public void computeScroll() {
-//        super.computeScroll();
-//        if (mScroller.computeScrollOffset()) {
-//            setScrollX(mScroller.getCurrX());
-//        }
-//    }
+    @Override public void computeScroll() {
+        super.computeScroll();
+        if (mScroller.computeScrollOffset()) {
+            setScrollX(mScroller.getCurrX());
+        }
+    }
 }

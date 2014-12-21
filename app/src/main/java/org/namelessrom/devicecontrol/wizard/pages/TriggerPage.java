@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
@@ -100,7 +101,12 @@ public class TriggerPage extends Page {
             mPage.setCompleted(true);
         }
 
-        @Override protected int getLayoutResource() { return R.layout.wizard_page_list; }
+        @Override protected int getLayoutResource() {
+            if (Application.get().isDarkTheme()) {
+                return R.layout.wizard_page_list_dark;
+            }
+            return R.layout.wizard_page_list_light;
+        }
 
         @Override protected int getTitleResource() { return R.string.setup_trigger; }
 
