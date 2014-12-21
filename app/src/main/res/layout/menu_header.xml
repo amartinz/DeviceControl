@@ -24,7 +24,7 @@
         android:id="@+id/menu_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@string/font_thin"
+        android:fontFamily="@string/font_light"
         android:paddingTop="6dp"
         android:paddingLeft="10dp"
         android:paddingRight="5dp"
