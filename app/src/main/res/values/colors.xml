@@ -16,12 +16,13 @@
 -->
 <resources>
     <!-- Accents -->
-    <color name="accent">@color/palette_blue_600</color>
-    <color name="accent_light">@color/palette_teal_500</color>
-    <color name="dark_background">#ff152127</color>
+    <color name="accent">@color/pallete_indigo_600</color>
+    <color name="dark_background">#1b2327</color>
     <color name="dark_menu">#ff132125</color>
-    <color name="darker_menu">#ff101010</color>
-    <color name="dark_primary_dark">@color/palette_blue_800</color>
+    <color name="darker_menu">#ff21272b</color>
+    <color name="dark_primary_dark">@color/pallete_indigo_800</color>
+    <!-- Accents light -->
+    <color name="accent_light">@color/palette_teal_500</color>
     <color name="light_background">#ffe7e7e7</color>
     <color name="light_menu">#ffd6d6d6</color>
     <color name="lighter_menu">#fff8f8f8</color>
@@ -31,9 +32,14 @@
     <color name="green">#ff53a93f</color>
     <color name="palette_blue_600">#ff1e88e5</color>
     <color name="palette_blue_800">#ff1565c0</color>
+    <color name="pallete_blue_grey_500">#ff607D8B</color>
+    <color name="pallete_blue_grey_700">#ff455A64</color>
+    <color name="pallete_indigo_600">#3949AB</color>
+    <color name="pallete_indigo_800">#283593</color>
     <color name="palette_orange">#fff5a816</color>
     <color name="palette_teal_500">#ff009688</color>
     <color name="palette_teal_700">#ff00796B</color>
+    <color name="palette_teal_900">#ff004D40</color>
     <color name="palette_yellow">#ffafb42b</color>
     <color name="material_blue_500">#5677fc</color>
     <color name="material_blue_600">#4e6cef</color>
@@ -57,7 +63,7 @@
     <color name="step_pager_next_tab_color_light">#10000000</color>
     <color name="review_green">#ff669900</color>
     <!-- Wizard #2 -->
-    <color name="transparent">#00ffffff</color>
+    <color name="transparent">#00000000</color>
     <color name="black">#000000</color>
     <color name="dark_gray">#ff1c1c1c</color>
     <color name="white">#fafafa</color>

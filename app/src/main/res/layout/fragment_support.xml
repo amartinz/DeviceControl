@@ -30,7 +30,6 @@
 
         <TextView
             android:textSize="30sp"
-            tools:textColor="?attr/colorAccent"
             android:id="@+id/supportTxtView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
