@@ -80,6 +80,8 @@ public class DeviceFragment extends AttachPreferenceFragment
     private AwesomeTogglePreference mLcdSunlightEnhancement;
     private AwesomeTogglePreference mLcdColorEnhancement;
 
+    private AwesomeListPreference mMdnieScenario;
+    private AwesomeListPreference mMdnieMode;
     private AwesomeListPreference mPanelColor;
 
     //==============================================================================================
@@ -260,6 +262,28 @@ public class DeviceFragment extends AttachPreferenceFragment
                 }
             }
 
+            mMdnieScenario = (AwesomeListPreference) findPreference("mdnie_scenario");
+            if (mMdnieScenario != null) {
+                if (mMdnieScenario.isSupported()) {
+                    mMdnieScenario.initValue();
+                    mMdnieScenario.setSummary(mMdnieScenario.getEntry());
+                    mMdnieScenario.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mMdnieScenario);
+                }
+            }
+
+            mMdnieMode = (AwesomeListPreference) findPreference("mdnie_mode");
+            if (mMdnieMode != null) {
+                if (mMdnieMode.isSupported()) {
+                    mMdnieMode.initValue();
+                    mMdnieMode.setSummary(mMdnieMode.getEntry());
+                    mMdnieMode.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mMdnieMode);
+                }
+            }
+
             if (category.getPreferenceCount() == 0) {
                 preferenceScreen.removePreference(category);
             }
@@ -343,6 +367,14 @@ public class DeviceFragment extends AttachPreferenceFragment
             return true;
         } else if (mLoggerMode == preference) {
             mLoggerMode.writeValue((Boolean) o);
+            return true;
+        } else if (preference == mMdnieScenario) {
+            mMdnieScenario.writeValue(String.valueOf(o));
+            mMdnieScenario.setSummary(mMdnieScenario.getEntries()[mMdnieScenario.findIndexOfValue(String.valueOf(o))]);
+            return true;
+        } else if (preference == mMdnieMode) {
+            mMdnieMode.writeValue(String.valueOf(o));
+            mMdnieMode.setSummary(mMdnieMode.getEntries()[mMdnieMode.findIndexOfValue(String.valueOf(o))]);
             return true;
         }
 

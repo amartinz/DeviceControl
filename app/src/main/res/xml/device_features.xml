@@ -125,6 +125,24 @@
             dc:category="device"
             dc:filePathList="@array/files_panel_color_temp" />
 
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference
+            android:defaultValue="0"
+            android:entries="@array/mdnie_scenario_entries"
+            android:entryValues="@array/mdnie_scenario_entries_values"
+            android:key="mdnie_scenario"
+            android:title="@string/mdnie_scenario_title"
+            dc:category="device"
+            dc:filePathList="@array/files_mdnie_scenario" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference
+            android:defaultValue="0"
+            android:entries="@array/mdnie_mode_entries"
+            android:entryValues="@array/mdnie_mode_entries_values"
+            android:key="mdnie_mode"
+            android:title="@string/mdnie_mode_title"
+            dc:category="device"
+            dc:filePathList="@array/files_mdnie_mode" />
+
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
