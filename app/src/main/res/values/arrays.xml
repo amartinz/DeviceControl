@@ -318,4 +318,49 @@
         <item>8192</item>
     </string-array>
 
+    <string-array name="mdnie_scenario_entries" translatable="false">
+        <item>@string/mdnie_scenario_ui</item>
+        <item>@string/mdnie_scenario_video</item>
+        <item>@string/mdnie_scenario_camera</item>
+        <item>@string/mdnie_scenario_navigation</item>
+        <item>@string/mdnie_scenario_gallery</item>
+        <item>@string/mdnie_scenario_vt</item>
+        <item>@string/mdnie_scenario_browser</item>
+        <item>@string/mdnie_scenario_ebook</item>
+        <item>@string/mdnie_scenario_email</item>
+        <item>@string/mdnie_scenario_tone1</item>
+        <item>@string/mdnie_scenario_tone2</item>
+        <item>@string/mdnie_scenario_tone3</item>
+    </string-array>
+
+    <string-array name="mdnie_scenario_entries_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+    </string-array>
+
+    <string-array name="mdnie_mode_entries" translatable="false">
+        <item>@string/mdnie_mode_dynamic</item>
+        <item>@string/mdnie_mode_standard</item>
+        <item>@string/mdnie_mode_natural</item>
+        <item>@string/mdnie_mode_movie</item>
+        <item>@string/mdnie_mode_auto</item>
+    </string-array>
+
+    <string-array name="mdnie_mode_entries_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 </resources>

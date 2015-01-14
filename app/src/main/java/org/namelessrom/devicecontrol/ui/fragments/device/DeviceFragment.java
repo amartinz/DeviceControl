@@ -80,6 +80,8 @@ public class DeviceFragment extends AttachPreferenceFragment
     private AwesomeTogglePreference mLcdSunlightEnhancement;
     private AwesomeTogglePreference mLcdColorEnhancement;
 
+    private AwesomeListPreference mMdnieScenario;
+    private AwesomeListPreference mMdnieMode;
     private AwesomeListPreference mPanelColor;
 
     //==============================================================================================
@@ -260,6 +262,26 @@ public class DeviceFragment extends AttachPreferenceFragment
                 }
             }
 
+            mMdnieScenario = (AwesomeListPreference) findPreference("mdnie_scenario");
+            if (mMdnieScenario != null) {
+                if (mMdnieScenario.isSupported()) {
+                    mMdnieScenario.initValue();
+                    mMdnieScenario.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mMdnieScenario);
+                }
+            }
+
+            mMdnieMode = (AwesomeListPreference) findPreference("mdnie_mode");
+            if (mMdnieMode != null) {
+                if (mMdnieMode.isSupported()) {
+                    mMdnieMode.initValue();
+                    mMdnieMode.setOnPreferenceChangeListener(this);
+                } else {
+                    category.removePreference(mMdnieMode);
+                }
+            }
+
             if (category.getPreferenceCount() == 0) {
                 preferenceScreen.removePreference(category);
             }
@@ -343,6 +365,12 @@ public class DeviceFragment extends AttachPreferenceFragment
             return true;
         } else if (mLoggerMode == preference) {
             mLoggerMode.writeValue((Boolean) o);
+            return true;
+        } else if (preference == mMdnieScenario) {
+            mMdnieScenario.writeValue(String.valueOf(o));
+            return true;
+        } else if (preference == mMdnieMode) {
+            mMdnieMode.writeValue(String.valueOf(o));
             return true;
         }
 

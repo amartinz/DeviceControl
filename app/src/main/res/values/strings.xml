@@ -387,4 +387,25 @@
     <string name="arch">Architecture</string>
     <string name="string_default">Default</string>
     <string name="touch_boost">Touch boost</string>
+    <string name="mdnie_scenario_summary">Set the mDNIe Scenario</string>
+    <string name="mdnie_scenario_title">Scenario</string>
+    <string name="mdnie_scenario_ui">UI (Default)</string>
+    <string name="mdnie_scenario_video">Video</string>
+    <string name="mdnie_scenario_camera">Camera</string>
+    <string name="mdnie_scenario_navigation">Navigation</string>
+    <string name="mdnie_scenario_gallery">Gallery</string>
+    <string name="mdnie_scenario_vt">VT</string>
+    <string name="mdnie_scenario_browser">Browser</string>
+    <string name="mdnie_scenario_ebook">Ebook</string>
+    <string name="mdnie_scenario_email">Email</string>
+    <string name="mdnie_scenario_tone1">Tone 1</string>
+    <string name="mdnie_scenario_tone2">Tone 2</string>
+    <string name="mdnie_scenario_tone3">Tone 3</string>
+    <string name="mdnie_mode_summary">Set the mDNIe Mode</string>
+    <string name="mdnie_mode_title">Mode</string>
+    <string name="mdnie_mode_dynamic">Dynamic (Default)</string>
+    <string name="mdnie_mode_standard">Standard</string>
+    <string name="mdnie_mode_natural">Natural</string>
+    <string name="mdnie_mode_movie">Movie</string>
+    <string name="mdnie_mode_auto">Auto</string>
 </resources>
