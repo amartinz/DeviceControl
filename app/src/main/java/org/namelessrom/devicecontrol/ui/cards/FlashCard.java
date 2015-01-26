@@ -48,8 +48,8 @@ public class FlashCard extends LinearLayout {
 
         install = (Button) findViewById(R.id.install);
         final CheckBox backup = (CheckBox) findViewById(R.id.backup);
-        final CheckBox wipeCaches = (CheckBox) findViewById(R.id.wipedata);
-        final CheckBox wipeData = (CheckBox) findViewById(R.id.wipecaches);
+        final CheckBox wipeCaches = (CheckBox) findViewById(R.id.wipecaches);
+        final CheckBox wipeData = (CheckBox) findViewById(R.id.wipedata);
 
         install.setEnabled(false);
         install.setOnClickListener(new OnClickListener() {
