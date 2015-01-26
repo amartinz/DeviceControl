@@ -32,10 +32,10 @@ public class UksmGovernorAction extends BaseAction {
 
     public static final String NAME = "uksm_governor";
 
-    public int     id      = -1;
-    public String  trigger = "";
-    public String  value   = "";
-    public boolean bootup  = false;
+    public int id = -1;
+    public String trigger = "";
+    public String value = "";
+    public boolean bootup = false;
 
     public UksmGovernorAction(final String value, final boolean bootup) {
         super();

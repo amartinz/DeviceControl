@@ -32,10 +32,10 @@ public class ReadAheadAction extends BaseAction {
 
     public static final String NAME = "read_ahead";
 
-    public int     id      = -1;
-    public String  trigger = "";
-    public String  value   = "";
-    public boolean bootup  = false;
+    public int id = -1;
+    public String trigger = "";
+    public String value = "";
+    public boolean bootup = false;
 
     public ReadAheadAction(final String value, final boolean bootup) {
         super();

@@ -7,11 +7,11 @@ import org.namelessrom.devicecontrol.Logger;
 
 @SuppressWarnings("AccessOfSystemProperties")
 public class CommandResult implements Parcelable {
-    private final long   mStartTime;
-    private final int    mExitValue;
+    private final long mStartTime;
+    private final int mExitValue;
     private final String mStdout;
     private final String mStderr;
-    private final long   mEndTime;
+    private final long mEndTime;
 
     public CommandResult(final long startTime, final int exitValue, final String stdout,
             final String stderr, final long endTime) {

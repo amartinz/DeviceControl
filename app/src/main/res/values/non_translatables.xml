@@ -93,4 +93,7 @@
     <string name="skip_button_label" translatable="false">Skip</string>
     <string name="androidsecure" translatable="false">Android secure</string>
     <string name="sdext" translatable="false">SD-Ext</string>
+    <!-- Donation -->
+    <string name="google_play">Google Play</string>
+    <string name="paypal" translatable="false">PayPal</string>
 </resources>

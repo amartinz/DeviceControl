@@ -67,18 +67,18 @@ public class UksmFragment extends AttachPreferenceFragment
         Preference.OnPreferenceChangeListener {
 
     //----------------------------------------------------------------------------------------------
-    private PreferenceScreen          mRoot;
+    private PreferenceScreen mRoot;
     //----------------------------------------------------------------------------------------------
-    private CustomPreference          mPagesShared;
-    private CustomPreference          mPagesScanned;
-    private CustomPreference          mFullScans;
-    private CustomPreference          mHashStrength;
-    private CustomPreference          mPagesSharing;
-    private CustomPreference          mSleepTimes;
+    private CustomPreference mPagesShared;
+    private CustomPreference mPagesScanned;
+    private CustomPreference mFullScans;
+    private CustomPreference mHashStrength;
+    private CustomPreference mPagesSharing;
+    private CustomPreference mSleepTimes;
     //----------------------------------------------------------------------------------------------
     private AwesomeTogglePreference mEnable;
-    private CustomPreference          mSleep;
-    private CustomListPreference      mCpuGovernor;
+    private CustomPreference mSleep;
+    private CustomListPreference mCpuGovernor;
 
     @Override protected int getFragmentId() { return ID_UKSM; }
 

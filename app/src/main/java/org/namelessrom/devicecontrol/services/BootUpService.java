@@ -43,11 +43,11 @@ import java.io.File;
 public class BootUpService extends IntentService
         implements DeviceConstants {
 
-    public static final String SOB_SYSCTL  = "sob_sysctl";
-    public static final String SOB_CPU     = "sob_cpu";
-    public static final String SOB_GPU     = "sob_gpu";
-    public static final String SOB_EXTRAS  = "sob_extras";
-    public static final String SOB_DEVICE  = "sob_device";
+    public static final String SOB_SYSCTL = "sob_sysctl";
+    public static final String SOB_CPU = "sob_cpu";
+    public static final String SOB_GPU = "sob_gpu";
+    public static final String SOB_EXTRAS = "sob_extras";
+    public static final String SOB_DEVICE = "sob_device";
     public static final String SOB_VOLTAGE = "sob_voltage";
 
     public BootUpService() { super("BootUpService"); }

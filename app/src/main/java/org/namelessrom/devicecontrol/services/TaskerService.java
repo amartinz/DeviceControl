@@ -30,7 +30,7 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 public class TaskerService extends Service {
 
     public static final String ACTION_START = "action_start";
-    public static final String ACTION_STOP  = "action_stop";
+    public static final String ACTION_STOP = "action_stop";
 
     private ScreenReceiver mScreenReceiver = null;
 

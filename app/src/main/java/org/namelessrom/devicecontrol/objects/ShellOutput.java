@@ -19,7 +19,7 @@ package org.namelessrom.devicecontrol.objects;
 
 public class ShellOutput {
 
-    public final int    id;
+    public final int id;
     public final String output;
 
     public ShellOutput(final int id, final String output) {
