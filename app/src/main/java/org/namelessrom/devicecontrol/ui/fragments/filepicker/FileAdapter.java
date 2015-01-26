@@ -44,8 +44,8 @@ public class FileAdapter extends BaseAdapter {
 
     private ArrayList<File> files;
 
-    private String fileType   = "";
-    private int    colorResId = -1;
+    private String fileType = "";
+    private int colorResId = -1;
 
     private FilePickerListener listener;
 
@@ -75,10 +75,10 @@ public class FileAdapter extends BaseAdapter {
     }
 
     private static final class ViewHolder {
-        private final View      rootView;
+        private final View rootView;
         private final ImageView icon;
-        private final TextView  name;
-        private final TextView  info;
+        private final TextView name;
+        private final TextView info;
 
         private ViewHolder(final View rootView) {
             this.rootView = rootView;

@@ -32,10 +32,10 @@ public class KsmPagesAction extends BaseAction {
 
     public static final String NAME = "ksm_pages";
 
-    public int     id      = -1;
-    public String  trigger = "";
-    public String  value   = "";
-    public boolean bootup  = false;
+    public int id = -1;
+    public String trigger = "";
+    public String value = "";
+    public boolean bootup = false;
 
     public KsmPagesAction(final String value, final boolean bootup) {
         super();

@@ -37,21 +37,21 @@ import java.util.List;
 public class SysctlFragment extends AttachPreferenceFragment implements DeviceConstants {
 
     //==============================================================================================
-    private static final String PREF_DIRTY_RATIO        = "pref_dirty_ratio";
-    private static final String PREF_DIRTY_BACKGROUND   = "pref_dirty_background";
-    private static final String PREF_DIRTY_EXPIRE       = "pref_dirty_expire";
-    private static final String PREF_DIRTY_WRITEBACK    = "pref_dirty_writeback";
-    private static final String PREF_MIN_FREE_KB        = "pref_min_free_kb";
-    private static final String PREF_OVERCOMMIT         = "pref_overcommit";
-    private static final String PREF_SWAPPINESS         = "pref_swappiness";
-    private static final String PREF_VFS                = "pref_vfs";
-    private static final String DIRTY_RATIO_PATH        = "/proc/sys/vm/dirty_ratio";
-    private static final String DIRTY_BACKGROUND_PATH   = "/proc/sys/vm/dirty_background_ratio";
-    private static final String DIRTY_EXPIRE_PATH       = "/proc/sys/vm/dirty_expire_centisecs";
-    private static final String DIRTY_WRITEBACK_PATH    = "/proc/sys/vm/dirty_writeback_centisecs";
-    private static final String MIN_FREE_PATH           = "/proc/sys/vm/min_free_kbytes";
-    private static final String OVERCOMMIT_PATH         = "/proc/sys/vm/overcommit_ratio";
-    private static final String SWAPPINESS_PATH         = "/proc/sys/vm/swappiness";
+    private static final String PREF_DIRTY_RATIO = "pref_dirty_ratio";
+    private static final String PREF_DIRTY_BACKGROUND = "pref_dirty_background";
+    private static final String PREF_DIRTY_EXPIRE = "pref_dirty_expire";
+    private static final String PREF_DIRTY_WRITEBACK = "pref_dirty_writeback";
+    private static final String PREF_MIN_FREE_KB = "pref_min_free_kb";
+    private static final String PREF_OVERCOMMIT = "pref_overcommit";
+    private static final String PREF_SWAPPINESS = "pref_swappiness";
+    private static final String PREF_VFS = "pref_vfs";
+    private static final String DIRTY_RATIO_PATH = "/proc/sys/vm/dirty_ratio";
+    private static final String DIRTY_BACKGROUND_PATH = "/proc/sys/vm/dirty_background_ratio";
+    private static final String DIRTY_EXPIRE_PATH = "/proc/sys/vm/dirty_expire_centisecs";
+    private static final String DIRTY_WRITEBACK_PATH = "/proc/sys/vm/dirty_writeback_centisecs";
+    private static final String MIN_FREE_PATH = "/proc/sys/vm/min_free_kbytes";
+    private static final String OVERCOMMIT_PATH = "/proc/sys/vm/overcommit_ratio";
+    private static final String SWAPPINESS_PATH = "/proc/sys/vm/swappiness";
     private static final String VFS_CACHE_PRESSURE_PATH = "/proc/sys/vm/vfs_cache_pressure";
     //==============================================================================================
     private CustomPreference mFullEditor;

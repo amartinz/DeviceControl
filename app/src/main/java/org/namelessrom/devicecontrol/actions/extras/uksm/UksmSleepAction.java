@@ -32,10 +32,10 @@ public class UksmSleepAction extends BaseAction {
 
     public static final String NAME = "uksm_sleep";
 
-    public int     id      = -1;
-    public String  trigger = "";
-    public String  value   = "";
-    public boolean bootup  = false;
+    public int id = -1;
+    public String trigger = "";
+    public String value = "";
+    public boolean bootup = false;
 
     public UksmSleepAction(final String value, final boolean bootup) {
         super();

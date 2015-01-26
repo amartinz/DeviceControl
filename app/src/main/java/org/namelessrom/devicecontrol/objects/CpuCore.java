@@ -22,8 +22,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 public class CpuCore {
 
     public final String mCore;
-    public final int    mCoreMax;
-    public final int    mCoreCurrent;
+    public final int mCoreMax;
+    public final int mCoreCurrent;
     public final String mCoreGov;
 
     public CpuCore(final String core, final String coreCurrent,

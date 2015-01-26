@@ -31,7 +31,7 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 public class InformationFragment extends AttachFragment implements DeviceConstants {
 
     private DeviceStatusView mDeviceStats;
-    private CpuStateView     mCpuStates;
+    private CpuStateView mCpuStates;
 
     @Override protected int getFragmentId() { return ID_PERFORMANCE_INFO; }
 

@@ -41,7 +41,7 @@ public class WebServerService extends Service {
     public static final int NOTIFICATION_ONGOING = 7861;
 
     public static final String ACTION_START = "action_start";
-    public static final String ACTION_STOP  = "action_stop";
+    public static final String ACTION_STOP = "action_stop";
 
     private ServerWrapper mServerWrapper;
 

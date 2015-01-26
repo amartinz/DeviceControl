@@ -190,11 +190,11 @@ public class RebootHelper implements DeviceConstants {
         final int[] recoveries;
         final int flashType = PreferenceHelper.getInt(PREF_RECOVERY_TYPE, RECOVERY_TYPE_BOTH);
         if (RECOVERY_TYPE_CWM == flashType) {
-            recoveries = new int[]{RecoveryInfo.CWM_BASED};
+            recoveries = new int[]{ RecoveryInfo.CWM_BASED };
         } else if (RECOVERY_TYPE_OPEN == flashType) {
-            recoveries = new int[]{RecoveryInfo.TWRP_BASED};
+            recoveries = new int[]{ RecoveryInfo.TWRP_BASED };
         } else {
-            recoveries = new int[]{RecoveryInfo.CWM_BASED, RecoveryInfo.TWRP_BASED};
+            recoveries = new int[]{ RecoveryInfo.CWM_BASED, RecoveryInfo.TWRP_BASED };
         }
 
         StringBuilder sb;

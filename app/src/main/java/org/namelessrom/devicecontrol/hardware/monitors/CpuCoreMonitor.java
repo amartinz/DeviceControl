@@ -39,9 +39,9 @@ public class CpuCoreMonitor implements DeviceConstants {
     private static final int CPU_COUNT = CpuUtils.get().getNumOfCpus();
 
     private static CpuCoreMonitor cpuFrequencyMonitor;
-    private static Shell          mShell;
-    private static Activity       mActivity;
-    private static int            mInterval;
+    private static Shell mShell;
+    private static Activity mActivity;
+    private static int mInterval;
 
     private static boolean isStarted = false;
 

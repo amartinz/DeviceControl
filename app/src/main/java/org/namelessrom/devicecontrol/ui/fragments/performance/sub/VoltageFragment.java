@@ -53,13 +53,13 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 public class VoltageFragment extends AttachPreferenceFragment implements
         DeviceConstants {
 
-    private static final String PREF_UV  = "pref_uv";
+    private static final String PREF_UV = "pref_uv";
     private static final String PREF_VDD = "pref_vdd";
 
     private PreferenceCategory mCategory;
-    private String[]           mNames;
-    private String[]           mValues;
-    private LinearLayout       mButtonLayout;
+    private String[] mNames;
+    private String[] mValues;
+    private LinearLayout mButtonLayout;
 
     private boolean isVdd = false;
 
@@ -288,7 +288,8 @@ public class VoltageFragment extends AttachPreferenceFragment implements
                                                     final String value =
                                                             p.getTitle() + " " + et.getText()
                                                                     .toString();
-                                                    Utils.writeValue(VoltageUtils.UV_TABLE_FILE, value);
+                                                    Utils.writeValue(VoltageUtils.UV_TABLE_FILE,
+                                                            value);
                                                     p.setSummary(et.getText().toString());
                                                     p.setKey(et.getText().toString());
                                                     mValues[j] = p.getKey();

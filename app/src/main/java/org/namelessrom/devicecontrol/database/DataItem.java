@@ -19,7 +19,7 @@ package org.namelessrom.devicecontrol.database;
 
 public class DataItem {
 
-    private int    _id;
+    private int _id;
     private String _category;
     private String _name;
     private String _filename;

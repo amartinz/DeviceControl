@@ -42,14 +42,14 @@ public class DeviceStatusView extends LinearLayout {
 
     private LinearLayout mDeviceInfo;
 
-    private int    mBatteryTemperature = 0;
-    private String mBatteryExtra       =
+    private int mBatteryTemperature = 0;
+    private String mBatteryExtra =
             String.format(" - %s…", Application.get().getString(R.string.getting_information));
 
     private boolean mIsAttached = false;
 
-    private static final int     mInterval = 2000;
-    private static final Handler mHandler  = new Handler();
+    private static final int mInterval = 2000;
+    private static final Handler mHandler = new Handler();
 
     private static final Object mLockObject = new Object();
 

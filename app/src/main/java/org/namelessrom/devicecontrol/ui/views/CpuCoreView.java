@@ -12,8 +12,8 @@ import org.namelessrom.devicecontrol.R;
 
 public class CpuCoreView extends LinearLayout {
 
-    public TextView    core;
-    public TextView    freq;
+    public TextView core;
+    public TextView freq;
     public NumberProgressBar bar;
 
     public CpuCoreView(final Context context) {

@@ -32,8 +32,8 @@ public class DisplayColorCalibration {
     private String path;
     private String ctrl;
     private String def;
-    private int    max;
-    private int    min;
+    private int max;
+    private int min;
 
     private DisplayColorCalibration() {
         final Resources res = Application.get().getResources();

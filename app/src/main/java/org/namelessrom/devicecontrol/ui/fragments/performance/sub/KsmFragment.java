@@ -46,18 +46,18 @@ public class KsmFragment extends AttachPreferenceFragment
         Preference.OnPreferenceChangeListener {
 
     //----------------------------------------------------------------------------------------------
-    private PreferenceScreen          mRoot;
+    private PreferenceScreen mRoot;
     //----------------------------------------------------------------------------------------------
-    private CustomPreference          mFullScans;
-    private CustomPreference          mPagesShared;
-    private CustomPreference          mPagesSharing;
-    private CustomPreference          mPagesUnshared;
-    private CustomPreference          mPagesVolatile;
+    private CustomPreference mFullScans;
+    private CustomPreference mPagesShared;
+    private CustomPreference mPagesSharing;
+    private CustomPreference mPagesUnshared;
+    private CustomPreference mPagesVolatile;
     //----------------------------------------------------------------------------------------------
     private AwesomeTogglePreference mEnable;
     private AwesomeTogglePreference mDefer;
-    private CustomPreference          mPagesToScan;
-    private CustomPreference          mSleep;
+    private CustomPreference mPagesToScan;
+    private CustomPreference mSleep;
 
     @Override protected int getFragmentId() { return ID_KSM; }
 
@@ -174,7 +174,8 @@ public class KsmFragment extends AttachPreferenceFragment
             @NonNull final Preference preference) {
         if (mPagesToScan == preference) {
             final String title = String.valueOf(mPagesToScan.getTitle());
-            final int currentProgress = Utils.parseInt(Utils.readOneLine(KsmUtils.KSM_PAGES_TO_SCAN));
+            final int currentProgress =
+                    Utils.parseInt(Utils.readOneLine(KsmUtils.KSM_PAGES_TO_SCAN));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 1,
                     1024, preference, KsmUtils.KSM_PAGES_TO_SCAN, DatabaseHandler.CATEGORY_EXTRAS);
             return true;

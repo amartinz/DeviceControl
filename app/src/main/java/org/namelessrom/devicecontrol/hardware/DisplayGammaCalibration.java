@@ -29,8 +29,8 @@ public class DisplayGammaCalibration {
 
     private String[] paths;
     private String[] descriptors;
-    private int      max;
-    private int      min;
+    private int max;
+    private int min;
 
     private DisplayGammaCalibration() {
         final Resources res = Application.get().getResources();

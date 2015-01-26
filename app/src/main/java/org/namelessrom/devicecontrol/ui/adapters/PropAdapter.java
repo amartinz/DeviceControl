@@ -33,9 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PropAdapter extends ArrayAdapter<Prop> {
-    private final  Context    mContext;
-    private final  List<Prop> mProps;
-    private static Filter     mFilter;
+    private final Context mContext;
+    private final List<Prop> mProps;
+    private static Filter mFilter;
 
     public PropAdapter(Context context, List<Prop> objects) {
         super(context, R.layout.list_item_prop, objects);

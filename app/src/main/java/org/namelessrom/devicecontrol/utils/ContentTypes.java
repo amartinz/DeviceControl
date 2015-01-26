@@ -27,8 +27,8 @@ import java.util.Hashtable;
  */
 public class ContentTypes {
 
-    private final  Hashtable<String, String> mContentTypes;
-    private static ContentTypes              contentTypes;
+    private final Hashtable<String, String> mContentTypes;
+    private static ContentTypes contentTypes;
 
     private ContentTypes() {
         mContentTypes = new Hashtable<>();
