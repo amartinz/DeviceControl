@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.ui.fragments.about;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.activities.DonationActivity;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
 public class SupportFragment extends Fragment {
@@ -44,7 +46,9 @@ public class SupportFragment extends Fragment {
                 String.format("%s %s", getString(R.string.donate_), getString(R.string.heart)));
         donateButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                AppHelper.startExternalDonation(getActivity());
+                final Intent intent = new Intent();
+                intent.setClass(getActivity(), DonationActivity.class);
+                startActivity(intent);
             }
         });
 
