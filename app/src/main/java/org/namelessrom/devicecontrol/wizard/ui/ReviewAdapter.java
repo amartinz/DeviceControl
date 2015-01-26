@@ -13,8 +13,8 @@ import java.util.ArrayList;
  * Created by alex on 17.10.14.
  */
 public class ReviewAdapter extends BaseAdapter {
-    private final Context           mContext;
-    private final int               mLayoutResId;
+    private final Context mContext;
+    private final int mLayoutResId;
     private final ArrayList<String> mEntries;
     private final ArrayList<String> mValues;
 

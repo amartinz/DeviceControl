@@ -51,8 +51,8 @@ public final class CMDProcessor {
     }
 
     public class CommandResult2 {
-        public final String  stdout;
-        public final String  stderr;
+        public final String stdout;
+        public final String stderr;
         public final Integer exit_value;
 
         CommandResult2(final Integer exit_value_in, final String stdout_in,

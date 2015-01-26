@@ -33,10 +33,10 @@ public class UksmEnableAction extends BaseAction {
 
     public static final String NAME = "uksm_enabled";
 
-    public int     id      = -1;
-    public String  trigger = "";
-    public String  value   = "";
-    public boolean bootup  = false;
+    public int id = -1;
+    public String trigger = "";
+    public String value = "";
+    public boolean bootup = false;
 
     public UksmEnableAction(final String value, final boolean bootup) {
         super();

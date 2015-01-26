@@ -137,7 +137,6 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
     // Overridden Methods
     //==============================================================================================
 
-
     @Override protected void onResume() {
         super.onResume();
         final String pollFishApiKey = Configuration.getPollfishApiKeyDc();

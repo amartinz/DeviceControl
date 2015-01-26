@@ -26,7 +26,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
  */
 public class MemoryInfo {
 
-    public static final int TYPE_B  = 0;
+    public static final int TYPE_B = 0;
     public static final int TYPE_KB = 1;
     public static final int TYPE_MB = 2;
 
@@ -87,7 +87,7 @@ public class MemoryInfo {
                 break;
         }
 
-        return new long[]{memoryTotal, memoryFree, memoryCached};
+        return new long[]{ memoryTotal, memoryFree, memoryCached };
     }
 
     private long checkMemory(String s) {
