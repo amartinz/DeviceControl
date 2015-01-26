@@ -67,8 +67,8 @@ android {
 
 dependencies {
     compile fileTree(dir: '../libs', include: ['*.jar'])
-    // links to MPChartLib via a symlink, used in the Nameless Rom source tree
-    compile project(':libs:mpandroidchart:MPChartLib') // inherits support-v13
+    // links to MPChartLib via a symlink, used in the Nameless Rom source tree, inherits support-v13
+    compile project(':libs:mpandroidchart:MPChartLib')
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.android.support:cardview-v7:21.0.3'
     compile 'com.android.support:recyclerview-v7:21.0.3'
