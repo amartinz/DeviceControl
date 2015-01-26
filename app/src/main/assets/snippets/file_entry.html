@@ -3,7 +3,8 @@
         <span class="input-group-addon">
             <span class="glyphicon glyphicon-search"></span>
         </span>
-        <input type="search" class="form-control" ng-model="filterQuery" placeholder="{{'FILTER_FILES' | translate}}"/>
+        <input type="search" class="form-control" ng-model="filterQuery"
+               placeholder="{{'FILTER_FILES' | translate}}"/>
     </div>
     <ul ng-repeat="file in fileCtrl.files | filter:filterQuery as results">
         <li ng-hide="file.isDirectory">
@@ -15,7 +16,8 @@
     </ul>
     <ul ng-if="results.length === 0">
         <li>
-            <i class="fa fa-frown-o fa-fw"></i>&nbsp;<strong>{{'NO_FILES_FOUND' | translate}}</strong>
+            <i class="fa fa-frown-o fa-fw"></i>&nbsp;<strong>{{'NO_FILES_FOUND' |
+            translate}}</strong>
         </li>
     </ul>
 </div>

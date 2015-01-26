@@ -10,7 +10,8 @@
         <h1>{{'DEVICE_INFORMATION' | translate}}</h1>
         <device-information></device-information>
     </div>
-    <div class="files" ng-show="navBarCtrl.isSelected(3)" ng-controller="FileController as fileCtrl">
+    <div class="files" ng-show="navBarCtrl.isSelected(3)"
+         ng-controller="FileController as fileCtrl">
         <h1>Files</h1>
         <ol class="breadcrumb">
             <li><a href ng-click="fileCtrl.loadPath('/')">{{'HOME' | translate}}</a></li>

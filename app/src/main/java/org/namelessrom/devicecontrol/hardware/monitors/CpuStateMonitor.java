@@ -51,7 +51,7 @@ public class CpuStateMonitor implements DeviceConstants {
     }
 
     public static class CpuState implements Comparable<CpuState> {
-        public final int  freq;
+        public final int freq;
         public final long duration;
 
         public CpuState(final int freq, final long duration) {

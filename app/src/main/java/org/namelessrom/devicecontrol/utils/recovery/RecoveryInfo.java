@@ -24,11 +24,11 @@ import android.content.Context;
 
 public abstract class RecoveryInfo {
 
-    public static final int CWM_BASED  = 0;
+    public static final int CWM_BASED = 0;
     public static final int TWRP_BASED = 1;
 
     private int id;
-    private String name           = null;
+    private String name = null;
     private String internalSdcard = null;
     private String externalSdcard = null;
 

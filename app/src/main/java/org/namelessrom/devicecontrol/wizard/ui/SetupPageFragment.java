@@ -35,8 +35,8 @@ public abstract class SetupPageFragment extends Fragment {
     protected SetupDataCallbacks mCallbacks;
 
     protected String mKey;
-    protected Page   mPage;
-    protected View   mRootView;
+    protected Page mPage;
+    protected View mRootView;
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

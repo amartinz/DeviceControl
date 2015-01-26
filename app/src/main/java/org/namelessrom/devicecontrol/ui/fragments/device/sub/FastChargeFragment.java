@@ -35,23 +35,23 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class FastChargeFragment extends AttachPreferenceFragment implements DeviceConstants,
         Preference.OnPreferenceChangeListener {
-    private static final String FC_BASE       = "/sys/kernel/fast_charge";
-    private static final String FC_FORCE      = FC_BASE + "/force_fast_charge";
-    private static final String FC_AC_LEVELS  = FC_BASE + "/ac_levels";
-    private static final String FC_AC_LEVEL   = FC_BASE + "/ac_charge_level";
+    private static final String FC_BASE = "/sys/kernel/fast_charge";
+    private static final String FC_FORCE = FC_BASE + "/force_fast_charge";
+    private static final String FC_AC_LEVELS = FC_BASE + "/ac_levels";
+    private static final String FC_AC_LEVEL = FC_BASE + "/ac_charge_level";
     private static final String FC_USB_LEVELS = FC_BASE + "/usb_levels";
-    private static final String FC_USB_LEVEL  = FC_BASE + "/usb_charge_level";
-    private static final String FC_VERSION    = FC_BASE + "/version";
+    private static final String FC_USB_LEVEL = FC_BASE + "/usb_charge_level";
+    private static final String FC_VERSION = FC_BASE + "/version";
     //----------------------------------------------------------------------------------------------
 
     private boolean isNewVersion = false;
 
-    private CustomListPreference      mForceFastCharge;
+    private CustomListPreference mForceFastCharge;
     private AwesomeTogglePreference mFailsafe;
-    private CustomPreference          mAcLevelsValid;
-    private CustomEditTextPreference  mAcLevel;
-    private CustomPreference          mUsbLevelsValid;
-    private CustomEditTextPreference  mUsbLevel;
+    private CustomPreference mAcLevelsValid;
+    private CustomEditTextPreference mAcLevel;
+    private CustomPreference mUsbLevelsValid;
+    private CustomEditTextPreference mUsbLevel;
 
     @Override protected int getFragmentId() { return ID_FAST_CHARGE; }
 
@@ -79,7 +79,7 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
         if (mForceFastCharge != null) {
             if (Utils.fileExists(FC_FORCE)) {
                 final String[] values = isNewVersion
-                        ? new String[]{"0", "1", "2"} : new String[]{"0", "1"};
+                        ? new String[]{ "0", "1", "2" } : new String[]{ "0", "1" };
                 mForceFastCharge.setEntries(values);
                 mForceFastCharge.setEntryValues(values);
                 mForceFastCharge.setValue(Utils.readOneLine(FC_FORCE));

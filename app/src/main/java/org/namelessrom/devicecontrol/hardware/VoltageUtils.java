@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class VoltageUtils {
 
     //----------------------------------------------------------------------------------------------
-    public static final String UV_TABLE_FILE  = CpuUtils.CPU_BASE + "cpu0/cpufreq/UV_mV_table";
+    public static final String UV_TABLE_FILE = CpuUtils.CPU_BASE + "cpu0/cpufreq/UV_mV_table";
     public static final String VDD_TABLE_FILE = CpuUtils.CPU_BASE + "cpufreq/vdd_table/vdd_levels";
     private static VoltageUtils sInstance;
 
