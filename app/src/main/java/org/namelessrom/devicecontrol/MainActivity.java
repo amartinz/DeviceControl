@@ -59,6 +59,7 @@ import org.namelessrom.devicecontrol.ui.fragments.performance.InformationFragmen
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.FilesystemFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.GovernorFragment;
+import org.namelessrom.devicecontrol.ui.fragments.performance.sub.IoSchedConfigFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.KsmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.ThermalFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.UksmFragment;
@@ -447,6 +448,10 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
             case ID_FILESYSTEM:
                 if (!onResume) mCurrentFragment = new FilesystemFragment();
                 mTitle = mSubFragmentTitle = R.string.filesystem;
+                break;
+            case ID_IOSCHED_TUNING:
+                if (!onResume) mCurrentFragment = new IoSchedConfigFragment();
+                mTitle = mSubFragmentTitle = R.string.io;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_TASKER:

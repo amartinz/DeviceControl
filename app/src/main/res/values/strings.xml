@@ -43,6 +43,7 @@
     <string name="no_tweaks_message">Sorry but your device doesn\'t have any supported features</string>
     <string name="gov_tweaks">Tweakable values: %s</string>
     <string name="no_gov_tweaks_message">Sorry but this governor has no tunable values</string>
+    <string name="no_io_tweaks_message">Sorry but this I/O scheduler has no tunable values</string>
     <string name="home">Home</string>
     <string name="device">Device</string>
     <string name="features">Features</string>
@@ -109,6 +110,7 @@
     <string name="cpu_governor">CPU governor</string>
     <string name="cpu_governor_tuning">CPU governor tuning</string>
     <string name="io">I/O scheduler</string>
+    <string name="configure_format">Configure %s</string>
     <string name="sob">Apply automatically on boot</string>
     <string name="core">Core</string>
     <string name="core_offline">Offline</string>
