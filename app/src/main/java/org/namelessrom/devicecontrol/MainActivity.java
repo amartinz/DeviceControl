@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +37,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.TransactionDetails;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -136,7 +139,6 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
-
 
     @Override protected void onResume() {
         super.onResume();
