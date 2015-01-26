@@ -32,10 +32,10 @@ public class Gpu3dScalingAction extends BaseAction {
 
     public static final String NAME = "3d_scaling";
 
-    public int     id      = -1;
-    public String  trigger = "";
-    public String  value   = "";
-    public boolean bootup  = false;
+    public int id = -1;
+    public String trigger = "";
+    public String value = "";
+    public boolean bootup = false;
 
     public Gpu3dScalingAction(final String value, final boolean bootup) {
         super();

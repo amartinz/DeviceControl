@@ -37,14 +37,14 @@ public class IoUtils {
             "/sys/block/mmcblk0/queue/scheduler",
             "/sys/block/mmcblk1/queue/scheduler"
     };
-    public static final String[] READ_AHEAD_PATH   = {
+    public static final String[] READ_AHEAD_PATH = {
             "/sys/block/mmcblk0/queue/read_ahead_kb",
             "/sys/block/mmcblk1/queue/read_ahead_kb"
     };
 
     public static class IoScheduler {
         public final String[] available;
-        public final String   current;
+        public final String current;
 
         public IoScheduler(final String[] availableIoSchedulers, final String ioScheduler) {
             available = availableIoSchedulers;

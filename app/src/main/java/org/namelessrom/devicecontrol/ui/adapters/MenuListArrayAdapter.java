@@ -34,9 +34,9 @@ import org.namelessrom.devicecontrol.utils.DrawableHelper;
 public class MenuListArrayAdapter extends BaseAdapter {
 
     private final Context mContext;
-    private final int     mLayoutResourceId;
-    private final int[]   mTitles;
-    private final int[]   mIcons;
+    private final int mLayoutResourceId;
+    private final int[] mTitles;
+    private final int[] mIcons;
 
     public MenuListArrayAdapter(final Context context, final int layoutResourceId,
             final int[] titles, final int[] icons) {
@@ -59,8 +59,8 @@ public class MenuListArrayAdapter extends BaseAdapter {
     @Override public boolean isEnabled(final int pos) { return getItemViewType(pos) != 1; }
 
     private static final class ViewHolder {
-        private final TextView  header;
-        private final TextView  title;
+        private final TextView header;
+        private final TextView title;
         private final ImageView image;
 
         public ViewHolder(final View v, final int type) {

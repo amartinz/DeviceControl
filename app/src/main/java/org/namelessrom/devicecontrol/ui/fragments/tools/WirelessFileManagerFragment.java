@@ -41,7 +41,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
         Preference.OnPreferenceClickListener {
     private WebServerService webServerService;
 
-    private CustomPreference         mWirelessFileManager;
+    private CustomPreference mWirelessFileManager;
     private CustomTogglePreference mBrowseRoot;
     private CustomEditTextPreference mPort;
 

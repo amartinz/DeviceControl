@@ -33,10 +33,10 @@ public class KsmDeferredAction extends BaseAction {
 
     public static final String NAME = "ksm_deferred";
 
-    public int     id      = -1;
-    public String  trigger = "";
-    public String  value   = "";
-    public boolean bootup  = false;
+    public int id = -1;
+    public String trigger = "";
+    public String value = "";
+    public boolean bootup = false;
 
     public KsmDeferredAction(final String value, final boolean bootup) {
         super();

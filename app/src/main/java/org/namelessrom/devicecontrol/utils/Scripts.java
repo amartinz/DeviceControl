@@ -23,12 +23,12 @@ package org.namelessrom.devicecontrol.utils;
 public class Scripts {
 
     public static final String BUILD_PROP = "/system/build.prop";
-    public static final String SYSCTL     = "/system/etc/sysctl.conf";
+    public static final String SYSCTL = "/system/etc/sysctl.conf";
 
-    public static final String APPEND_CMD    = "echo \"%s=%s\" >> %s;";
-    public static final String COPY_CMD      = "busybox cp %s %s;";
+    public static final String APPEND_CMD = "echo \"%s=%s\" >> %s;";
+    public static final String COPY_CMD = "busybox cp %s %s;";
     public static final String KILL_PROP_CMD = "busybox sed -i \"/%s/D\" %s;";
-    public static final String REPLACE_CMD   = "busybox sed -i \"/%s/ c %<s=%s\" %s;";
+    public static final String REPLACE_CMD = "busybox sed -i \"/%s/ c %<s=%s\" %s;";
 
     public static String copyFile(final String source, final String destination) {
         return String.format(COPY_CMD, source, destination);

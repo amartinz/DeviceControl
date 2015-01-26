@@ -55,8 +55,8 @@ public class DisplayGamma extends DialogPreference {
     private GammaSeekBar[][] mSeekBars;
 
     private String[][] mCurrentColors;
-    private String[]   mOriginalColors;
-    private int        mNumberOfControls;
+    private String[] mOriginalColors;
+    private int mNumberOfControls;
 
     public DisplayGamma(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -227,8 +227,8 @@ public class DisplayGamma extends DialogPreference {
     }
 
     private static class SavedState extends BaseSavedState {
-        int        controlCount;
-        String[]   originalColors;
+        int controlCount;
+        String[] originalColors;
         String[][] currentColors;
 
         public SavedState(Parcelable superState) {
@@ -269,11 +269,11 @@ public class DisplayGamma extends DialogPreference {
     }
 
     private class GammaSeekBar implements SeekBar.OnSeekBarChangeListener {
-        private int      mControlIndex;
-        private int      mColorIndex;
-        private int      mOriginal;
-        private int      mMin;
-        private SeekBar  mSeekBar;
+        private int mControlIndex;
+        private int mColorIndex;
+        private int mOriginal;
+        private int mMin;
+        private SeekBar mSeekBar;
         private TextView mValue;
 
         public GammaSeekBar(int controlIndex, int colorIndex, ViewGroup container) {

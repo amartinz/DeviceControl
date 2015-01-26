@@ -65,16 +65,16 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
     private static final int HANDLER_DELAY = 200;
 
     private static final int APPLY = 200;
-    private static final int SAVE  = 201;
+    private static final int SAVE = 201;
 
-    private ListView       mListView;
-    private LinearLayout   mLoadingView;
-    private LinearLayout   mEmptyView;
+    private ListView mListView;
+    private LinearLayout mLoadingView;
+    private LinearLayout mEmptyView;
     private RelativeLayout mTools;
 
-    private       PropAdapter mAdapter = null;
-    private       EditText    mFilter  = null;
-    private final List<Prop>  mProps   = new ArrayList<>();
+    private PropAdapter mAdapter = null;
+    private EditText mFilter = null;
+    private final List<Prop> mProps = new ArrayList<>();
 
     private boolean mLoadFull = false;
 

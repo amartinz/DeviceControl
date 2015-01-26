@@ -32,10 +32,10 @@ public class CpuFreqMinAction extends BaseAction {
 
     public static final String NAME = "cpu_frequency_min";
 
-    public int     id      = -1;
-    public String  trigger = "";
-    public String  value   = "";
-    public boolean bootup  = false;
+    public int id = -1;
+    public String trigger = "";
+    public String value = "";
+    public boolean bootup = false;
 
     public CpuFreqMinAction(final String value, final boolean bootup) {
         super();

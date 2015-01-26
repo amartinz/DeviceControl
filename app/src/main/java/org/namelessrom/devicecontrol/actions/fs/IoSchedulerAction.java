@@ -32,10 +32,10 @@ public class IoSchedulerAction extends BaseAction {
 
     public static final String NAME = "io_scheduler";
 
-    public int     id      = -1;
-    public String  trigger = "";
-    public String  value   = "";
-    public boolean bootup  = false;
+    public int id = -1;
+    public String trigger = "";
+    public String value = "";
+    public boolean bootup = false;
 
     public IoSchedulerAction(final String value, final boolean bootup) {
         super();

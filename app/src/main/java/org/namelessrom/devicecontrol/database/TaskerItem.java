@@ -21,11 +21,11 @@ import java.io.Serializable;
 
 public class TaskerItem implements Serializable {
 
-    public int     id;
-    public String  category;
-    public String  name;
-    public String  trigger;
-    public String  value;
+    public int id;
+    public String category;
+    public String name;
+    public String trigger;
+    public String value;
     public boolean enabled;
 
     public TaskerItem() { }

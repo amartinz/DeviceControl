@@ -23,10 +23,10 @@ import android.graphics.drawable.Drawable;
 
 public class AppItem {
 
-    private final PackageInfo     pkgInfo;
+    private final PackageInfo pkgInfo;
     private final ApplicationInfo appInfo;
 
-    private final String   label;
+    private final String label;
     private final Drawable icon;
 
     private boolean enabled = false;

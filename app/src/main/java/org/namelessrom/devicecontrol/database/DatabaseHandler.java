@@ -219,9 +219,9 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return true;
     }
 
-     public List<DataItem> getAllItems(final String tableName, final String category) {
-         final List<DataItem> itemList = new ArrayList<>();
-         if (sDb == null) return itemList;
+    public List<DataItem> getAllItems(final String tableName, final String category) {
+        final List<DataItem> itemList = new ArrayList<>();
+        if (sDb == null) return itemList;
 
         final String selectQuery = "SELECT * FROM " + tableName + (category.isEmpty()
                 ? ""

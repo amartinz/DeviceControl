@@ -29,8 +29,8 @@ public abstract class Page implements PageNode {
 
     private Bundle mData = new Bundle();
     private String mTitle;
-    private int    mTitleResourceId;
-    private boolean mRequired  = false;
+    private int mTitleResourceId;
+    private boolean mRequired = false;
     private boolean mCompleted = false;
 
     protected Page(Context context, SetupDataCallbacks callbacks, int titleResourceId) {

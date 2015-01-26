@@ -233,78 +233,79 @@ public class ActionProcessor {
             }
         } else
 
-        // CPU governor
-        if (TextUtils.equals(ACTION_CPU_GOVERNOR, action)) {
-            final String[] governors = GovernorUtils.get().getAvailableCpuGovernors();
-            if (governors == null) return values;
+            // CPU governor
+            if (TextUtils.equals(ACTION_CPU_GOVERNOR, action)) {
+                final String[] governors = GovernorUtils.get().getAvailableCpuGovernors();
+                if (governors == null) return values;
 
-            for (final String s : governors) {
-                values.add(new Entry(s, s));
-            }
-        } else
+                for (final String s : governors) {
+                    values.add(new Entry(s, s));
+                }
+            } else
 
-        // GPU frequencies
-        if (TextUtils.equals(ACTION_GPU_FREQUENCY_MAX, action)
-                || TextUtils.equals(ACTION_GPU_FREQUENCY_MIN, action)) {
-            final String[] freqs = GpuUtils.get().getAvailableFrequencies(true);
-            if (freqs == null) return values;
+                // GPU frequencies
+                if (TextUtils.equals(ACTION_GPU_FREQUENCY_MAX, action)
+                        || TextUtils.equals(ACTION_GPU_FREQUENCY_MIN, action)) {
+                    final String[] freqs = GpuUtils.get().getAvailableFrequencies(true);
+                    if (freqs == null) return values;
 
-            for (final String s : freqs) {
-                values.add(new Entry(GpuUtils.toMhz(s), s));
-            }
-        } else
+                    for (final String s : freqs) {
+                        values.add(new Entry(GpuUtils.toMhz(s), s));
+                    }
+                } else
 
-        // GPU governor
-        if (TextUtils.equals(ACTION_GPU_GOVERNOR, action)) {
-            final String[] governors = GovernorUtils.get().getAvailableGpuGovernors();
-            if (governors == null) return values;
+                    // GPU governor
+                    if (TextUtils.equals(ACTION_GPU_GOVERNOR, action)) {
+                        final String[] governors = GovernorUtils.get().getAvailableGpuGovernors();
+                        if (governors == null) return values;
 
-            for (final String s : governors) {
-                values.add(new Entry(s, s));
-            }
-        } else
+                        for (final String s : governors) {
+                            values.add(new Entry(s, s));
+                        }
+                    } else
 
-        // GPU 3D scaling
-        if (TextUtils.equals(ACTION_3D_SCALING, action)) {
-            addValuesOnOff(values);
-        } else
+                        // GPU 3D scaling
+                        if (TextUtils.equals(ACTION_3D_SCALING, action)) {
+                            addValuesOnOff(values);
+                        } else
 
-        // Filesystem
-        if (TextUtils.equals(ACTION_IO_SCHEDULER, action)) {
-            final String[] scheds = IoUtils.get().getAvailableIoSchedulers();
-            if (scheds == null) return values;
+                            // Filesystem
+                            if (TextUtils.equals(ACTION_IO_SCHEDULER, action)) {
+                                final String[] scheds = IoUtils.get().getAvailableIoSchedulers();
+                                if (scheds == null) return values;
 
-            for (final String s : scheds) {
-                values.add(new Entry(s, s));
-            }
-        }else
-        if (TextUtils.equals(ACTION_READ_AHEAD, action)) {
-            final String[] entries = Application.get().getStringArray(R.array.read_ahead_entries);
-            final String[] vals = Application.get().getStringArray(R.array.read_ahead_values);
-            for (int i = 0; i < entries.length; i++) {
-                values.add(new Entry(entries[i], vals[i]));
-            }
-        }else
-        // Extras
-        if (TextUtils.equals(ACTION_KSM_ENABLED, action)
-                || TextUtils.equals(ACTION_KSM_DEFERRED, action)) {
-            addValuesOnOff(values);
-        }else
-        if (TextUtils.equals(ACTION_KSM_PAGES, action)) {
-            final String[] vals = { "32", "64", "128", "256", "512", "1024" };
-            for (final String s : vals) {
-                values.add(new Entry(s, s));
-            }
-        }else
-        if (TextUtils.equals(ACTION_KSM_SLEEP, action)) {
-            final String[] vals = { "100", "250", "500", "1000", "2000", "3000", "4000", "5000" };
-            for (final String s : vals) {
-                values.add(new Entry(s, s));
-            }
-        }else
-        if (TextUtils.equals(ACTION_MPDECISION, action)) {
-            addValuesOnOff(values);
-        }
+                                for (final String s : scheds) {
+                                    values.add(new Entry(s, s));
+                                }
+                            } else if (TextUtils.equals(ACTION_READ_AHEAD, action)) {
+                                final String[] entries = Application.get()
+                                        .getStringArray(R.array.read_ahead_entries);
+                                final String[] vals =
+                                        Application.get().getStringArray(R.array.read_ahead_values);
+                                for (int i = 0; i < entries.length; i++) {
+                                    values.add(new Entry(entries[i], vals[i]));
+                                }
+                            } else
+                                // Extras
+                                if (TextUtils.equals(ACTION_KSM_ENABLED, action)
+                                        || TextUtils.equals(ACTION_KSM_DEFERRED, action)) {
+                                    addValuesOnOff(values);
+                                } else if (TextUtils.equals(ACTION_KSM_PAGES, action)) {
+                                    final String[] vals =
+                                            { "32", "64", "128", "256", "512", "1024" };
+                                    for (final String s : vals) {
+                                        values.add(new Entry(s, s));
+                                    }
+                                } else if (TextUtils.equals(ACTION_KSM_SLEEP, action)) {
+                                    final String[] vals =
+                                            { "100", "250", "500", "1000", "2000", "3000", "4000",
+                                                    "5000" };
+                                    for (final String s : vals) {
+                                        values.add(new Entry(s, s));
+                                    }
+                                } else if (TextUtils.equals(ACTION_MPDECISION, action)) {
+                                    addValuesOnOff(values);
+                                }
 
         return values;
     }
