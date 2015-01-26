@@ -20,16 +20,19 @@ package org.namelessrom.devicecontrol.ui.fragments.performance.sub;
 import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
@@ -41,6 +44,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
         IoUtils.IoSchedulerListener, Preference.OnPreferenceChangeListener {
 
     private CustomListPreference mIoScheduler;
+    private CustomPreference mIoSchedulerConfigure;
     private CustomListPreference mReadAhead;
 
     private AwesomeTogglePreference mFsync;
@@ -64,6 +68,8 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
         mIoScheduler.setEnabled(false);
         IoUtils.get().getIoScheduler(this);
         // setting listener when "onIoScheduler" arrives
+        mIoSchedulerConfigure = (CustomPreference) findPreference("io_configure");
+        mIoSchedulerConfigure.setEnabled(false);
 
         mReadAhead = (CustomListPreference) findPreference("read_ahead");
         value = Utils.readOneLine(IoUtils.READ_AHEAD_PATH[0]);
@@ -113,11 +119,21 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
         }
     }
 
+    @Override public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
+            Preference preference) {
+        if (preference == mIoSchedulerConfigure) {
+            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_IOSCHED_TUNING);
+            return true;
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
+    }
+
     @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
         if (preference == mIoScheduler) {
             final String value = String.valueOf(o);
             mIoScheduler.setSummary(value);
             ActionProcessor.processAction(ActionProcessor.ACTION_IO_SCHEDULER, value, true);
+            updateIoSchedulerConfigure(value);
             return true;
         } else if (preference == mFsync) {
             mFsync.writeValue((Boolean) o);
@@ -206,8 +222,16 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
                 mIoScheduler.setSummary(ioScheduler.current);
                 mIoScheduler.setOnPreferenceChangeListener(this);
                 mIoScheduler.setEnabled(true);
+
+                updateIoSchedulerConfigure(ioScheduler.current);
             }
         }
+    }
+
+    private void updateIoSchedulerConfigure(final String scheduler) {
+        final String title = getString(R.string.configure_format, scheduler);
+        mIoSchedulerConfigure.setTitle(title);
+        mIoSchedulerConfigure.setEnabled(true);
     }
 
     private int parseFstrim(final String position) {

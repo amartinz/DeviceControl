@@ -21,6 +21,10 @@
         android:key="io"
         android:title="@string/io" />
 
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        android:key="io_configure"
+        android:title="@string/configure_format" />
+
     <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
         android:entries="@array/read_ahead_entries"
         android:entryValues="@array/read_ahead_values"
