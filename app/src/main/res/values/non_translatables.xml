@@ -14,7 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- Fonts -->
     <string name="font_bold" translatable="false">sans-serif-bold</string>
     <string name="font_condensed" translatable="false">sans-serif-condensed</string>
@@ -93,6 +93,8 @@
     <string name="skip_button_label" translatable="false">Skip</string>
     <string name="androidsecure" translatable="false">Android secure</string>
     <string name="sdext" translatable="false">SD-Ext</string>
+    <string name="join_many_items_first" translatable="false"><xliff:g id="first_item">%1$s</xliff:g>, <xliff:g id="all_but_first_and_last_item">%2$s</xliff:g></string>
+    <string name="join_many_items_middle" translatable="false"><xliff:g id="added_item">%1$s</xliff:g>, <xliff:g id="rest_of_items">%2$s</xliff:g></string>
     <!-- Donation -->
     <string name="google_play">Google Play</string>
     <string name="paypal" translatable="false">PayPal</string>

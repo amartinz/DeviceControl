@@ -15,17 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.activities;
+package org.namelessrom.devicecontrol.appmanager;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -55,6 +58,8 @@ import com.stericson.roottools.execution.CommandCapture;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.activities.BaseActivity;
+import org.namelessrom.devicecontrol.appmanager.permissions.AppSecurityPermissions;
 import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.objects.PackageObserver;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -70,6 +75,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
     private static final int DIALOG_TYPE_UNINSTALL = 1;
 
     private static final Handler mHandler = new Handler();
+    private final PackageManager mPm = Application.get().getPackageManager();
 
     private AppItem mAppItem;
 
@@ -138,15 +144,14 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
         super.onResume();
         final String packageName = getTargetPackageName(getIntent());
         if (!TextUtils.isEmpty(packageName)) {
-            final PackageManager pm = Application.get().getPackageManager();
             PackageInfo info = null;
             try {
-                info = pm.getPackageInfo(packageName, 0);
+                info = mPm.getPackageInfo(packageName, 0);
             } catch (Exception ignored) { }
             if (info != null && info.applicationInfo != null) {
                 mAppItem = new AppItem(info,
-                        String.valueOf(info.applicationInfo.loadLabel(pm)),
-                        info.applicationInfo.loadIcon(pm));
+                        String.valueOf(info.applicationInfo.loadLabel(mPm)),
+                        info.applicationInfo.loadIcon(mPm));
             }
         }
 
@@ -288,6 +293,8 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
                 mAppItem.getPackageInfo().versionName, mAppItem.getPackageInfo().versionCode);
         mAppVersion.setText(version);
 
+        setupPermissionsView();
+
         // prevent uninstalling of Device Control
         mUninstall.setEnabled(!TextUtils
                 .equals(Application.get().getPackageName(), mAppItem.getPackageName()));
@@ -295,6 +302,59 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
         AppHelper.getSize(this, mAppItem.getPackageName());
         refreshAppControls();
         invalidateOptionsMenu();
+    }
+
+    private void setupPermissionsView() {
+        final LinearLayout permissionsView = (LinearLayout) findViewById(R.id.permissions_section);
+        final boolean unsupported = Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN;
+        if (unsupported) {
+            permissionsView.setVisibility(View.GONE);
+            return;
+        }
+
+        AppSecurityPermissions asp = new AppSecurityPermissions(this, mAppItem.getPackageName());
+        // Make the security sections header visible
+        LinearLayout securityList = (LinearLayout) findViewById(R.id.security_settings_list);
+        securityList.removeAllViews();
+        securityList.addView(asp.getPermissionsView());
+        // If this app is running under a shared user ID with other apps,
+        // update the description to explain this.
+        String[] packages = mPm.getPackagesForUid(mAppItem.getApplicationInfo().uid);
+        if (packages != null && packages.length > 1) {
+            final ArrayList<CharSequence> pnames = new ArrayList<>();
+            for (final String pkg : packages) {
+                if (mAppItem.getPackageName().equals(pkg)) {
+                    continue;
+                }
+                try {
+                    ApplicationInfo ainfo = mPm.getApplicationInfo(pkg, 0);
+                    pnames.add(ainfo.loadLabel(mPm));
+                } catch (PackageManager.NameNotFoundException ignored) { }
+            }
+            final int N = pnames.size();
+            if (N > 0) {
+                final Resources res = getResources();
+                String appListStr;
+                if (N == 1) {
+                    appListStr = pnames.get(0).toString();
+                } else if (N == 2) {
+                    appListStr = res.getString(R.string.join_two_items,
+                            pnames.get(0), pnames.get(1));
+                } else {
+                    appListStr = pnames.get(N - 2).toString();
+                    for (int i = N - 3; i >= 0; i--) {
+                        appListStr = res.getString(i == 0 ? R.string.join_many_items_first
+                                : R.string.join_many_items_middle, pnames.get(i), appListStr);
+                    }
+                    appListStr = res.getString(R.string.join_many_items_last, appListStr,
+                            pnames.get(N - 1));
+                }
+                final TextView descr = (TextView) findViewById(R.id.security_settings_desc);
+                descr.setText(res.getString(R.string.security_settings_desc_multi,
+                        mAppItem.getApplicationInfo().loadLabel(mPm), appListStr));
+            }
+        }
+
     }
 
     private void refreshAppControls() {

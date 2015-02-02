@@ -20,7 +20,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="org.namelessrom.devicecontrol.activities.AppDetailsActivity">
+    tools:context="org.namelessrom.devicecontrol.appmanager.AppDetailsActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -196,6 +196,36 @@
                         android:text="@string/clear_data"
                         android:outlineProvider="background" />
 
+                </LinearLayout>
+
+                <!-- Permissions section -->
+                <LinearLayout
+                    android:id="@+id/permissions_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="?android:attr/listSeparatorTextViewStyle"
+                        android:layout_marginTop="8dip"
+                        android:text="@string/permissions" />
+
+                    <TextView android:id="@+id/security_settings_desc"
+                        android:text="@string/security_settings_desc"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:paddingTop="6dip"
+                        android:paddingBottom="6dip"
+                        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+                        android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:id="@+id/security_settings_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" />
                 </LinearLayout>
 
             </LinearLayout>

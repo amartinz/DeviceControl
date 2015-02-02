@@ -14,7 +14,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_version_name">Versionname: %s</string>
     <string name="app_version_code">Versioncode: %s</string>
     <string name="app_welcome">Welcome to %s</string>
@@ -389,4 +389,13 @@
     <string name="arch">Architecture</string>
     <string name="string_default">Default</string>
     <string name="touch_boost">Touch boost</string>
+    <string name="permissions">Permissions</string>
+    <string name="security_settings_desc">This app can access the following on your devices:</string>
+    <string name="join_two_items"><xliff:g id="first_item">%1$s</xliff:g> and <xliff:g id="second_item">%2$s</xliff:g></string>
+    <string name="join_many_items_last"><xliff:g id="all_but_last_item">%1$s</xliff:g> and <xliff:g id="last_item">%2$s</xliff:g></string>
+    <string name="security_settings_desc_multi" product="default">This app can access the following on your phone. In order to improve performance and reduce memory usage, some of these permissions are available to <xliff:g id="base_app_name">%1$s</xliff:g> because it runs in the same process as <xliff:g id="additional_apps_list">%2$s</xliff:g>:</string>
+    <string name="no_permissions">No permissions required</string>
+    <string name="perm_costs_money">this may cost you money</string>
+    <string name="perms_new_perm_prefix"><font size="12" fgcolor="#ff33b5e5">NEW: </font></string>
+    <string name="perms_description_app">Provided by <xliff:g id="app_name">%1$s</xliff:g>.</string>
 </resources>
