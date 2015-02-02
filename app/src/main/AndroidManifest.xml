@@ -17,14 +17,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="org.namelessrom.devicecontrol"
-    android:versionCode="101"
+    android:versionCode="102"
     android:versionName="0.7.4">
 
     <!-- currently broken, reenable once fixed -->
     <!--uses-sdk tools:node="replace" /-->
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="21" />
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="21" />
 
     <!-- Internet / Networking -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -51,24 +49,14 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- Power -->
-    <uses-permission android:name="android.permission.REBOOT"
-        tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.DEVICE_POWER"
-        tools:ignore="ProtectedPermissions" />
-    <!-- Device Control -->
-    <uses-permission android:name="org.namelessrom.devicecontrol.API" />
+    <uses-permission android:name="android.permission.REBOOT" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.DEVICE_POWER" tools:ignore="ProtectedPermissions" />
 
     <uses-feature android:name="org.namelessrom.android"
         android:required="false" />
 
     <uses-feature android:name="android.hardware.location.gps"
         android:required="false" />
-
-    <permission
-        android:name="org.namelessrom.devicecontrol.API"
-        android:description="@string/permission_api_description"
-        android:label="@string/permission_api_label"
-        android:protectionLevel="dangerous" />
 
     <application
         android:name=".Application"
@@ -190,18 +178,6 @@
             android:name=".services.WebServerService"
             android:enabled="true"
             android:exported="false" />
-        <service
-            android:name=".api.RemoteService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="org.namelessrom.devicecontrol.API"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="org.namelessrom.devicecontrol.api.IRemoteService" />
-                <action android:name="org.namelessrom.devicecontrol.api.RemoteService" />
-                <action android:name="org.namelessrom.devicecontrol.api.REMOTE_SERVICE" />
-            </intent-filter>
-        </service>
 
         <!-- Broadcast Receivers -->
         <receiver android:name=".receivers.BootUpReceiver">

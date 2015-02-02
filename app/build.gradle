@@ -4,30 +4,36 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
-    defaultConfig {
-        applicationId 'org.namelessrom.devicecontrol'
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-    }
-
     signingConfigs {
         release {
             def Properties localProps = new Properties()
             localProps.load(new FileInputStream(file('../local.properties')))
-            def Properties keyProps = new Properties()
-            assert localProps['keystore.props.file'];
-            keyProps.load(new FileInputStream(file(localProps['keystore.props.file'])))
-            storeFile file(keyProps["store"])
-            keyAlias keyProps["alias"]
-            storePassword keyProps["storePass"]
-            keyPassword keyProps["pass"]
+            if (localProps.hasProperty('keystore')) {
+                def Properties keyProps = new Properties()
+                keyProps.load(new FileInputStream(file(localProps['keystore'])))
+                storeFile file(keyProps["store"])
+                storePassword keyProps["storePass"]
+                keyAlias keyProps["alias"]
+                keyPassword keyProps["pass"]
+            } else {
+                storeFile signingConfigs.debug.storeFile
+                storePassword signingConfigs.debug.storePassword
+                keyAlias signingConfigs.debug.keyAlias
+                keyPassword signingConfigs.debug.keyPassword
+            }
         }
+    }
+
+    defaultConfig {
+        applicationId 'org.namelessrom.devicecontrol'
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        signingConfig signingConfigs.release
     }
 
     buildTypes {
         release {
             debuggable false
-            signingConfig signingConfigs.release
             proguardFile 'src/main/proguard.pro'
             minifyEnabled true
             shrinkResources true
@@ -35,7 +41,6 @@ android {
         }
         debug {
             debuggable true
-            signingConfig signingConfigs.release
             proguardFile 'src/main/proguard.pro'
             minifyEnabled true
             shrinkResources true

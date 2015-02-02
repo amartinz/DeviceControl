@@ -9,4 +9,4 @@
 # header note.
 #Sat Dec 13 22:51:41 CET 2014
 sdk.dir=/opt/android/sdk
-keystore.props.file=/android/vendor/nameless/private/keys/keystore.properties
+keystore=/android/nameless/vendor/nameless/private/keys/keystore.properties
