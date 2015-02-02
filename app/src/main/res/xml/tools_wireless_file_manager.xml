@@ -16,7 +16,7 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
         android:key="wireless_file_manager"
         android:title="@string/wireless_file_manager" />
 

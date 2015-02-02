@@ -175,6 +175,7 @@
             android:exported="false" />
         <service
             android:name=".services.WebServerService"
+            android:process=":webservice"
             android:enabled="true"
             android:exported="false" />
 

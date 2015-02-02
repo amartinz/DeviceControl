@@ -23,7 +23,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
@@ -37,7 +36,6 @@ import org.namelessrom.devicecontrol.net.ServerWrapper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 public class WebServerService extends Service {
-
     public static final int NOTIFICATION_ONGOING = 7861;
 
     public static final String ACTION_START = "action_start";
@@ -45,7 +43,7 @@ public class WebServerService extends Service {
 
     private ServerWrapper mServerWrapper;
 
-    @Override public IBinder onBind(final Intent intent) { return new WebServerBinder(); }
+    @Override public IBinder onBind(final Intent intent) { return null; }
 
     @Override public void onDestroy() {
         stopServer();
@@ -116,10 +114,10 @@ public class WebServerService extends Service {
         notificationManager.notify(NOTIFICATION_ONGOING, notification);
     }
 
-    public void cancelNotification(final int notificationId) {
+    public void cancelNotification() {
         final NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(notificationId);
+        notificationManager.cancel(NOTIFICATION_ONGOING);
     }
 
     @Override public int onStartCommand(final Intent intent, final int flags, final int startId) {
@@ -147,6 +145,7 @@ public class WebServerService extends Service {
             mServerWrapper.stopServer();
             mServerWrapper = null;
         }
+        cancelNotification();
         stopForeground(true);
         stopSelf();
     }
@@ -157,10 +156,6 @@ public class WebServerService extends Service {
         } else {
             return null;
         }
-    }
-
-    public class WebServerBinder extends Binder {
-        public WebServerService getService() { return WebServerService.this; }
     }
 
 }
