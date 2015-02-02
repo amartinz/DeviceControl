@@ -76,7 +76,7 @@ public class FstrimService extends IntentService implements DeviceConstants {
                         + "busybox fstrim -v /data;\n"
                         + "busybox fstrim -v /cache;\n";
 
-                final CommandCapture comm = new CommandCapture(0, false, sb) {
+                final CommandCapture comm = new CommandCapture(0, sb) {
 
                     @Override
                     public void commandOutput(int id, String line) {

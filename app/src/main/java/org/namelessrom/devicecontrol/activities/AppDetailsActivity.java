@@ -28,7 +28,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
@@ -341,16 +340,15 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
             cmd = "pm enable " + mAppItem.getPackageName() + " 2> /dev/null";
         }
 
-        final CommandCapture commandCapture =
-                new CommandCapture(new DisableHandler(mAppItem), cmd) {
-                    @Override public void commandCompleted(int id, int exitcode) {
-                        super.commandCompleted(id, exitcode);
-                    }
+        final CommandCapture commandCapture = new CommandCapture(0, cmd) {
+            @Override public void commandTerminated(int id, String reason) {
+                updateAppEnabled();
+            }
 
-                    @Override public void commandTerminated(int id, String reason) {
-                        super.commandTerminated(id, reason);
-                    }
-                };
+            @Override public void commandCompleted(int id, int exitcode) {
+                updateAppEnabled();
+            }
+        };
 
         try {
             RootTools.getShell(true).add(commandCapture);
@@ -408,40 +406,23 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
         }.execute();
     }
 
-    private class DisableHandler extends Handler {
-        private static final int COMMAND_OUTPUT = 0x01;
-        private static final int COMMAND_COMPLETED = 0x02;
-        private static final int COMMAND_TERMINATED = 0x03;
-
-        private final AppItem item;
-
-        public DisableHandler(final AppItem appItem) {
-            this.item = appItem;
+    private void updateAppEnabled() {
+        if (mAppItem == null) {
+            return;
         }
+        runOnUiThread(new Runnable() {
+            @Override public void run() {
+                invalidateOptionsMenu();
 
-        @Override public void handleMessage(final Message msg) {
-            final Bundle data = msg.getData();
-            final int action;
-            if (data != null) {
-                action = msg.getData().getInt("action");
-            } else {
-                action = 0x00;
+                final boolean isEnabled = !mAppItem.isEnabled();
+                mAppItem.setEnabled(isEnabled);
+
+                if (mAppContainer != null) {
+                    mAppContainer.setBackgroundResource(
+                            isEnabled ? android.R.color.transparent : R.color.darker_gray);
+                }
             }
-            switch (action) {
-                case COMMAND_COMPLETED:
-                case COMMAND_TERMINATED:
-                    item.setEnabled(!item.isEnabled());
-                    if (mAppContainer != null) {
-                        mAppContainer.setBackgroundResource(item.isEnabled()
-                                ? android.R.color.transparent : R.color.darker_gray);
-                    }
-                    invalidateOptionsMenu();
-                    break;
-                default:
-                case COMMAND_OUTPUT:
-                    break;
-            }
-        }
+        });
     }
 
     @Override public void onPackageStats(final PackageStats packageStats) {

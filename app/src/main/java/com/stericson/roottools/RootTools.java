@@ -23,20 +23,15 @@
 
 package com.stericson.roottools;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.stericson.roottools.containers.Mount;
 import com.stericson.roottools.containers.Permissions;
 import com.stericson.roottools.containers.Symlink;
 import com.stericson.roottools.exceptions.RootDeniedException;
-import com.stericson.roottools.execution.Command;
 import com.stericson.roottools.execution.Shell;
-import com.stericson.roottools.internal.Remounter;
 import com.stericson.roottools.internal.RootToolsInternalMethods;
-import com.stericson.roottools.internal.Runner;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,7 +67,7 @@ public final class RootTools {
     // # Public Variables #
     // --------------------
 
-    public static       boolean      debugMode            = false;
+    public static boolean debugMode = false;
     public static final List<String> lastFoundBinaryPaths = new ArrayList<>();
     public static String utilPath;
 
@@ -115,55 +110,17 @@ public final class RootTools {
 
     /**
      * This will close all open shells.
-     *
-     * @throws java.io.IOException
      */
     public static void closeAllShells() { Shell.closeAll(); }
-
-    /**
-     * This will close the custom shell that you opened.
-     *
-     * @throws java.io.IOException
-     */
-    public static void closeCustomShell() { Shell.closeCustomShell(); }
 
     /**
      * This will close either the root shell or the standard shell depending on what you specify.
      *
      * @param root a <code>boolean</code> to specify whether to close the root shell or the
      *             standard shell.
-     * @throws java.io.IOException
      */
     public static void closeShell(final boolean root) {
         if (root) { Shell.closeRootShell(); } else { Shell.closeShell(); }
-    }
-
-    /**
-     * Copys a file to a destination. Because cp is not available on all android devices, we have a
-     * fallback on the cat command
-     *
-     * @param source                 example: /data/data/org.adaway/files/hosts
-     * @param destination            example: /system/etc/hosts
-     * @param remountAsRw            remounts the destination as read/write before writing to it
-     * @param preserveFileAttributes tries to copy file attributes from source to destination,
-     *                               if only cat is available
-     *                               only permissions are preserved
-     * @return true if it was successfully copied
-     */
-    public static boolean copyFile(final String source, final String destination,
-            final boolean remountAsRw, final boolean preserveFileAttributes) {
-        return getInternals().copyFile(source, destination, remountAsRw, preserveFileAttributes);
-    }
-
-    /**
-     * Deletes a file or directory
-     *
-     * @param target      example: /data/data/org.adaway/files/hosts
-     * @param remountAsRw remounts the destination as read/write before writing to it
-     * @return true if it was successfully deleted
-     */
-    public static boolean deleteFileOrDirectory(final String target, final boolean remountAsRw) {
-        return getInternals().deleteFileOrDirectory(target, remountAsRw);
     }
 
     /**
@@ -174,34 +131,6 @@ public final class RootTools {
      * @return a boolean that will indicate whether or not the file exists.
      */
     public static boolean exists(final String file) { return getInternals().exists(file); }
-
-    /**
-     * This will try and fix a given binary. (This is for Busybox applets or Toolbox applets) By
-     * "fix", I mean it will try and symlink the binary from either toolbox or Busybox and fix the
-     * permissions if the permissions are not correct.
-     *
-     * @param util     Name of the utility to fix.
-     * @param utilPath path to the toolbox that provides ln, rm, and chmod. This can be a blank
-     *                 string, a
-     *                 path to a binary that will provide these, or you can use
-     *                 RootTools.getWorkingToolbox()
-     */
-    public static void fixUtil(final String util, final String utilPath) {
-        getInternals().fixUtil(util, utilPath);
-    }
-
-    /**
-     * This will check an array of binaries, determine if they exist and determine that it has
-     * either the permissions 755, 775, or 777. If an applet is not setup correctly it will try and
-     * fix it. (This is for Busybox applets or Toolbox applets)
-     *
-     * @param utils Name of the utility to check.
-     * @return boolean to indicate whether the operation completed. Note that this is not indicative
-     * of whether the problem was fixed, just that the method did not encounter any
-     * exceptions.
-     * @throws Exception if the operation cannot be completed.
-     */
-    public static boolean fixUtils(final String[] utils) { return getInternals().fixUtils(utils); }
 
     /**
      * @param binaryName String that represent the binary to find.
@@ -477,112 +406,10 @@ public final class RootTools {
     public static boolean isRootAvailable() { return findBinary("su"); }
 
     /**
-     * This method can be used to kill a running process
-     *
-     * @param processName name of process to kill
-     * @return <code>true</code> if process was found and killed successfully
-     */
-    public static boolean killProcess(final String processName) {
-        //TODO convert to new shell
-        return getInternals().killProcess(processName);
-    }
-
-    /**
      * This will launch the Android market looking for BusyBox
      */
     public static void offerBusyBox() {
         getInternals().offerBusyBox();
-    }
-
-    /**
-     * This will launch the Android market looking for BusyBox, but will return the intent fired and
-     * starts the activity with startActivityForResult
-     *
-     * @param activity    pass in your Activity
-     * @param requestCode pass in the request code
-     * @return intent fired
-     */
-    public static Intent offerBusyBox(final Activity activity, final int requestCode) {
-        return getInternals().offerBusyBox(activity, requestCode);
-    }
-
-    /**
-     * This will launch the Android market looking for SuperUser
-     */
-    public static void offerSuperUser() {
-        getInternals().offerSuperUser();
-    }
-
-    /**
-     * This will launch the Android market looking for SuperUser, but will return the intent fired
-     * and starts the activity with startActivityForResult
-     *
-     * @param activity    pass in your Activity
-     * @param requestCode pass in the request code
-     * @return intent fired
-     */
-    public static Intent offerSuperUser(final Activity activity, final int requestCode) {
-        return getInternals().offerSuperUser(activity, requestCode);
-    }
-
-    /**
-     * This will take a path, which can contain the file name as well, and attempt to remount the
-     * underlying partition.
-     * <p/>
-     * For example, passing in the following string:
-     * "/system/bin/some/directory/that/really/would/never/exist" will result in /system ultimately
-     * being remounted. However, keep in mind that the longer the path you supply, the more work
-     * this has to do, and the slower it will run.
-     *
-     * @param file      file path
-     * @param mountType mount type: pass in RO (Read only) or RW (Read Write)
-     * @return a <code>boolean</code> which indicates whether or not the partition has been
-     * remounted as specified.
-     */
-    public static boolean remount(final String file, final String mountType) throws Exception {
-        return (new Remounter().remount(file, mountType));
-    }
-
-    /**
-     * This restarts only Android OS without rebooting the whole device. This does NOT work on all
-     * devices. This is done by killing the main init process named zygote. Zygote is restarted
-     * automatically by Android after killing it.
-     *
-     * @throws java.util.concurrent.TimeoutException
-     */
-    public static void restartAndroid() {
-        RootTools.log("Restart Android");
-        killProcess("zygote");
-    }
-
-    /**
-     * Executes binary in a separated process. Before using this method, the binary has to be
-     * installed in /data/data/app.package/files/ using the installBinary method.
-     *
-     * @param context    the current activity's <code>Context</code>
-     * @param binaryName name of installed binary
-     * @param parameter  parameter to append to binary like "-vxf"
-     */
-    public static void runBinary(final Context context, final String binaryName,
-            final String parameter) {
-        new Runner(context, binaryName, parameter).start();
-    }
-
-    /**
-     * Executes a given command with root access or without depending on the value of the boolean
-     * passed.
-     * This will also start a root shell or a standard shell without you having to open it
-     * specifically.
-     * <p/>
-     * You will still need to close the shell after you are done using the shell.
-     *
-     * @param shell   The shell to execute the command on, this can be a root shell or a standard
-     *                shell.
-     * @param command The command to execute in the shell
-     * @throws java.io.IOException
-     */
-    public static void runShellCommand(final Shell shell, final Command command) {
-        shell.add(command);
     }
 
     /**
@@ -633,26 +460,6 @@ public final class RootTools {
     }
 
     /**
-     * This method allows you to check whether logging is enabled.
-     * Yes, it has a goofy name, but that's to keep it as short as possible.
-     * After all writing logging calls should be painless.
-     * This method exists to save Android going through the various Java layers
-     * that are traversed any time a string is created (i.e. what you are logging)
-     * <p/>
-     * Example usage:
-     * if(islog) {
-     * StrinbBuilder sb = new StringBuilder();
-     * // ...
-     * // build string
-     * // ...
-     * log(sb.toString());
-     * }
-     *
-     * @return true if logging is enabled
-     */
-    public static boolean islog() { return debugMode; }
-
-    /**
      * This method allows you to output debug messages only when debugging is on. This will allow
      * you to add a debug option to your app, which by default can be left off for performance.
      * However, when you need debugging information, a simple switch can enable it and provide you
@@ -668,24 +475,24 @@ public final class RootTools {
      * @param e    The exception that was thrown (Needed for errors)
      */
     public static void log(String TAG, final String msg, final int type, final Exception e) {
-        if (msg != null && !msg.isEmpty()) {
-            if (debugMode) {
-                if (TAG == null) {
-                    TAG = Constants.TAG;
-                }
+        if (!debugMode || TextUtils.isEmpty(msg)) {
+            return;
+        }
 
-                switch (type) {
-                    case 1:
-                        Log.v(TAG, msg);
-                        break;
-                    case 2:
-                        Log.e(TAG, msg, e);
-                        break;
-                    case 3:
-                        Log.d(TAG, msg);
-                        break;
-                }
-            }
+        if (TAG == null) {
+            TAG = Constants.TAG;
+        }
+
+        switch (type) {
+            case 1:
+                Log.v(TAG, msg);
+                break;
+            case 2:
+                Log.e(TAG, msg, e);
+                break;
+            case 3:
+                Log.d(TAG, msg);
+                break;
         }
     }
 }

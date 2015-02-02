@@ -125,7 +125,7 @@ public class CpuCoreMonitor implements DeviceConstants {
         Logger.v(this, "cmd: " + cmd);
 
         final StringBuilder outputCollector = new StringBuilder();
-        final CommandCapture commandCapture = new CommandCapture(0, false, cmd) {
+        final CommandCapture commandCapture = new CommandCapture(0, cmd) {
             @Override
             public void commandOutput(int id, String line) {
                 outputCollector.append(line);

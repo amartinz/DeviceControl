@@ -373,7 +373,7 @@ public class Utils implements DeviceConstants {
      */
     public static void runRootCommand(final String command, final boolean wait) {
         Logger.v("runRootCommand", "executing -> %s", command);
-        final CommandCapture comm = new CommandCapture(0, false, command);
+        final CommandCapture comm = new CommandCapture(0, command);
         try {
             RootTools.getShell(true).add(comm);
             if (wait) {
@@ -399,7 +399,7 @@ public class Utils implements DeviceConstants {
     public static void getCommandResult(final OnShellOutputListener listener, final int ID,
             final String COMMAND, final boolean NEWLINE) {
         final StringBuilder sb = new StringBuilder();
-        final CommandCapture comm = new CommandCapture(0, false, COMMAND) {
+        final CommandCapture comm = new CommandCapture(0, COMMAND) {
             @Override public void commandOutput(int id, String line) {
                 sb.append(line);
                 if (NEWLINE) {
@@ -534,15 +534,8 @@ public class Utils implements DeviceConstants {
         return Application.get().getString(health);
     }
 
-    public static boolean remount(final String path, final String mode) {
-        try {
-            RootTools.remount(path, mode);
-        } catch (Exception e) {
-            Logger.v(Utils.class, String.format(
-                    "Could not remount %s with \"%s\", error: %s", path, mode, e));
-            return false;
-        }
-        return true;
+    public static void remount(final String path, final String mode) {
+        runRootCommand(String.format("busybox mount -o %s,remount %s", mode, path));
     }
 
     public static String setPermissions(final String path, final String mask,
@@ -598,8 +591,9 @@ public class Utils implements DeviceConstants {
     }
 
     public static String getDateAndTime() {
-        return new SimpleDateFormat("yyyy-MM-dd.HH.mm.ss")
-                .format(new Date(System.currentTimeMillis()));
+        final Date date = new Date(System.currentTimeMillis());
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd.HH.mm.ss");
+        return simpleDateFormat.format(date);
     }
 
     public static int parseInt(final String integer) {

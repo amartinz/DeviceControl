@@ -42,32 +42,32 @@ import java.util.concurrent.TimeoutException;
 
 public class Shell {
 
-    private final Process            proc;
-    private final BufferedReader     in;
+    private final Process proc;
+    private final BufferedReader in;
     private final OutputStreamWriter out;
     private final List<Command> commands = new ArrayList<>();
 
     //indicates whether or not to close the shell
     private boolean close = false;
 
-    private static       String error       = "";
-    private static final String token       = "F*D^W@#FGF";
-    private static       Shell  rootShell   = null;
-    private static       Shell  shell       = null;
-    private static       Shell  customShell = null;
+    private static String error = "";
+    private static final String token = "F*D^W@#FGF";
+    private static Shell rootShell = null;
+    private static Shell shell = null;
+    private static Shell customShell = null;
 
-    private static int     shellTimeout = 25000;
-    public static  boolean isExecuting  = false;
-    public static  boolean isReading    = false;
-    public         boolean isClosed     = false;
+    private static int shellTimeout = 25000;
+    public static boolean isExecuting = false;
+    public static boolean isReading = false;
+    public boolean isClosed = false;
 
     private static final int maxCommands = 1000;
 
-    private int     read          = 0;
-    private int     write         = 0;
-    private int     totalExecuted = 0;
-    private int     totalRead     = 0;
-    private boolean isCleaning    = false;
+    private int read = 0;
+    private int write = 0;
+    private int totalExecuted = 0;
+    private int totalRead = 0;
+    private boolean isCleaning = false;
 
     //private constructor responsible for opening/constructing the shell
     private Shell(final String cmd) throws IOException, TimeoutException, RootDeniedException {
@@ -168,7 +168,7 @@ public class Shell {
     }
 
     public void useCWD() {
-        add(new CommandCapture(-1, false, "cd " + Application.get().getFilesDirectory()));
+        add(new CommandCapture(-1, "cd " + Application.get().getFilesDirectory()));
     }
 
     private void cleanCommands() {
@@ -550,8 +550,8 @@ public class Shell {
     protected static class Worker extends Thread {
         public int exit = -911;
 
-        public final Process            proc;
-        public final BufferedReader     in;
+        public final Process proc;
+        public final BufferedReader in;
         public final OutputStreamWriter out;
 
         private Worker(Process proc, BufferedReader in, OutputStreamWriter out) {

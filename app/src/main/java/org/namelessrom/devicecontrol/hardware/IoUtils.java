@@ -96,7 +96,7 @@ public class IoUtils {
             final String cmd = "cat " + IO_SCHEDULER_PATH[0] + " 2> /dev/null;";
 
             final StringBuilder outputCollector = new StringBuilder();
-            final CommandCapture cmdCapture = new CommandCapture(0, false, cmd) {
+            final CommandCapture cmdCapture = new CommandCapture(0, cmd) {
                 @Override public void commandOutput(int id, String line) {
                     outputCollector.append(line);
                 }
