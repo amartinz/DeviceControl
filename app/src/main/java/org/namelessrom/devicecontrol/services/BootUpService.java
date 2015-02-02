@@ -26,6 +26,7 @@ import android.text.TextUtils;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.ui.fragments.device.DeviceFragment;
@@ -40,8 +41,8 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.File;
 
-public class BootUpService extends IntentService
-        implements DeviceConstants {
+public class BootUpService extends IntentService implements DeviceConstants {
+    private static final Object lockObject = new Object();
 
     public static final String SOB_SYSCTL = "sob_sysctl";
     public static final String SOB_CPU = "sob_cpu";
@@ -58,6 +59,20 @@ public class BootUpService extends IntentService
             stopSelf();
         }
         new BootTask(this).execute();
+    }
+
+    @Override
+    public void onDestroy() {
+        DatabaseHandler.tearDown();
+        synchronized (lockObject) {
+            Logger.i(this, "closing shells");
+            try {
+                RootTools.closeAllShells();
+            } catch (Exception e) {
+                Logger.e(this, String.format("onDestroy(): %s", e));
+            }
+        }
+        super.onDestroy();
     }
 
     private class BootTask extends AsyncTask<Void, Void, Void> {
