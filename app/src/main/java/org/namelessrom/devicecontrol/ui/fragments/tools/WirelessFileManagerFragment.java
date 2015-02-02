@@ -127,7 +127,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
             final Intent i = new Intent(getActivity(), WebServerService.class);
             if (AppHelper.isServiceRunning(WebServerService.class.getName())) {
                 i.setAction(WebServerService.ACTION_STOP);
-                mWirelessFileManager.setSummary(R.string.start_wfm);
+                mWirelessFileManager.setSummary(R.string.web_server_not_running);
             } else {
                 i.setAction(WebServerService.ACTION_START);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -154,9 +154,9 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
         if (isRunning) {
             final String ip = NetworkInfo.getAnyIpAddress();
             final String port = PreferenceHelper.getString("wfn_port", "8080");
-            text = getString(R.string.stop_wfm, String.format("http://%s:%s", ip, port));
+            text = getString(R.string.web_server_running, String.format("http://%s:%s", ip, port));
         } else {
-            text = getString(R.string.start_wfm);
+            text = getString(R.string.web_server_not_running);
         }
         mWirelessFileManager.setSummary(text);
         mWirelessFileManager.setChecked(isRunning);

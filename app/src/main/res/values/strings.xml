@@ -249,9 +249,9 @@
     <string name="deferred_timer_summary">Do not wake CPU for KSM activities to save battery</string>
     <string name="wfm_root">Browse in root mode</string>
     <string name="wfm_port">Web server port</string>
-    <string name="start_wfm">Server is not running</string>
-    <string name="starting_wfm">Server is starting up…</string>
-    <string name="stop_wfm">Server is running at %s</string>
+    <string name="web_server_not_running">Server is not running</string>
+    <string name="web_server_running">Server is running at %s</string>
+    <string name="stop">Stop</string>
     <string name="authentication">Authentication</string>
     <string name="wfm_auth">Use authentication</string>
     <string name="wfm_auth_summary">Default username is \"root\" and password is \"toor\"</string>

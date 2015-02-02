@@ -23,7 +23,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
@@ -62,10 +61,10 @@ public class WebServerService extends Service {
             final String port = ((getServerSocket() != null)
                     ? String.valueOf(getServerSocket().getLocalPort())
                     : PreferenceHelper.getString("wfn_port", "8080"));
-            text = getString(R.string.stop_wfm,
+            text = getString(R.string.web_server_running,
                     "http://" + NetworkInfo.getAnyIpAddress() + ":" + port);
         } else {
-            text = getString(R.string.starting_wfm);
+            text = getString(R.string.web_server_not_running);
         }
 
         final Intent intent = new Intent(this, WebServerService.class);
@@ -73,38 +72,24 @@ public class WebServerService extends Service {
         final PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            final Notification.Builder builder = new Notification.Builder(this);
-            final Notification.InboxStyle inboxStyle = new Notification.InboxStyle(builder);
-            inboxStyle.setBigContentTitle(title);
-            final String[] split = text.split("\n");
-            for (final String s : split) inboxStyle.addLine(s);
-            return builder
-                    .setContentTitle(title)
-                    .setContentText(text)
-                    .setOngoing(true)
-                    .setSmallIcon(R.drawable.ic_general_wifi)
-                    .setStyle(inboxStyle)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .build();
-        } else {
-            final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-            final NotificationCompat.InboxStyle inboxStyle =
-                    new NotificationCompat.InboxStyle(builder);
-            inboxStyle.setBigContentTitle(title);
-            final String[] split = text.split("\n");
-            for (final String s : split) inboxStyle.addLine(s);
-            return builder
-                    .setContentTitle(title)
-                    .setContentText(text)
-                    .setOngoing(true)
-                    .setSmallIcon(R.drawable.ic_general_wifi)
-                    .setStyle(inboxStyle)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .build();
-        }
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setContentTitle(title)
+                .setContentText(text)
+                .setOngoing(true)
+                .setSmallIcon(R.drawable.ic_general_wifi)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+        addNotificationStopButton(builder);
+        return builder.build();
+    }
+
+    private void addNotificationStopButton(final NotificationCompat.Builder builder) {
+        final Intent stop = new Intent(this, WebServerService.class);
+        stop.setAction(WebServerService.ACTION_STOP);
+        final PendingIntent stopIntent =
+                PendingIntent.getService(this, 0, stop, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.addAction(android.R.drawable.ic_menu_close_clear_cancel, getString(R.string.stop),
+                stopIntent);
     }
 
     public void setNotification(Notification notification) {
