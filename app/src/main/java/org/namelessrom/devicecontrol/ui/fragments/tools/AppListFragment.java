@@ -79,9 +79,10 @@ public class AppListFragment extends AttachFragment implements DeviceConstants {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
+        mRecyclerView.setHasFixedSize(true);
+
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
     }
 
     @Override public void onResume() {

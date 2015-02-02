@@ -38,7 +38,7 @@ import java.util.List;
 public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
     private final Resources res = Application.get().getResources();
 
-    private final Activity mActivity;
+    /* package */ final Activity mActivity;
     private final List<AppItem> mAppList;
 
     public AppListAdapter(final Activity activity, final List<AppItem> appList) {
@@ -46,12 +46,14 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         this.mAppList = appList;
     }
 
-    public static final class ViewHolder extends RecyclerView.ViewHolder {
+    public final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final View rootView;
         private final View container;
         private final ImageView appIcon;
         private final TextView appLabel;
         private final TextView packageName;
+
+        private AppItem mAppItem;
 
         public ViewHolder(final View v) {
             super(v);
@@ -60,6 +62,29 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             appIcon = (ImageView) v.findViewById(R.id.app_icon);
             appLabel = (TextView) v.findViewById(R.id.app_label);
             packageName = (TextView) v.findViewById(R.id.app_package);
+
+            rootView.setOnClickListener(this);
+        }
+
+        public void bind(final AppItem appItem) {
+            mAppItem = appItem;
+
+            appIcon.setImageDrawable(appItem.getIcon());
+            appLabel.setText(appItem.getLabel());
+            packageName.setText(appItem.getPackageName());
+
+            final int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
+            appLabel.setTextColor(appItem.isSystemApp()
+                    ? res.getColor(R.color.red_middle) : color);
+            container.setBackgroundResource(appItem.isEnabled()
+                    ? android.R.color.transparent : R.color.darker_gray);
+        }
+
+        @Override public void onClick(View v) {
+            final Intent intent = new Intent(mActivity, AppDetailsActivity.class);
+            intent.putExtra(AppDetailsActivity.ARG_FROM_ACTIVITY, true);
+            intent.putExtra(AppDetailsActivity.ARG_PACKAGE_NAME, mAppItem.getPackageName());
+            mActivity.startActivity(intent);
         }
     }
 
@@ -72,23 +97,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
 
     @Override public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         final AppItem appItem = mAppList.get(position);
-        viewHolder.rootView.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                final Intent intent = new Intent(mActivity, AppDetailsActivity.class);
-                intent.putExtra(AppDetailsActivity.ARG_FROM_ACTIVITY, true);
-                intent.putExtra(AppDetailsActivity.ARG_PACKAGE_NAME, appItem.getPackageName());
-                mActivity.startActivity(intent);
-            }
-        });
-        viewHolder.appIcon.setImageDrawable(appItem.getIcon());
-        viewHolder.appLabel.setText(appItem.getLabel());
-        viewHolder.packageName.setText(appItem.getPackageName());
-
-        final int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
-        viewHolder.appLabel.setTextColor(appItem.isSystemApp()
-                ? res.getColor(R.color.red_middle) : color);
-        viewHolder.container.setBackgroundResource(appItem.isEnabled()
-                ? android.R.color.transparent : R.color.darker_gray);
+        viewHolder.bind(appItem);
     }
 
 }
