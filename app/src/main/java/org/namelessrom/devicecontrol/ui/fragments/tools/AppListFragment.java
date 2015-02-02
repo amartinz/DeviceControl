@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.ui.fragments.tools;
 
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -80,9 +79,13 @@ public class AppListFragment extends AttachFragment implements DeviceConstants {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+    }
+
+    @Override public void onResume() {
+        super.onResume();
         new LoadApps().execute();
     }
 
@@ -93,17 +96,24 @@ public class AppListFragment extends AttachFragment implements DeviceConstants {
     }
 
     private class LoadApps extends AsyncTask<Void, Void, List<AppItem>> {
+        @Override protected void onPreExecute() {
+            if (mProgressContainer != null) {
+                mProgressContainer.setVisibility(View.VISIBLE);
+            }
+        }
+
         @Override protected List<AppItem> doInBackground(Void... params) {
             final PackageManager pm = Application.get().getPackageManager();
             final List<AppItem> appList = new ArrayList<>();
             final List<PackageInfo> pkgInfos = pm.getInstalledPackages(0);
 
-            ApplicationInfo appInfo;
             for (final PackageInfo pkgInfo : pkgInfos) {
-                appInfo = pkgInfo.applicationInfo;
-                if (appInfo == null) { continue; }
-                appList.add(new AppItem(
-                        pkgInfo, String.valueOf(appInfo.loadLabel(pm)), appInfo.loadIcon(pm)));
+                if (pkgInfo.applicationInfo == null) {
+                    continue;
+                }
+                appList.add(new AppItem(pkgInfo,
+                        String.valueOf(pkgInfo.applicationInfo.loadLabel(pm)),
+                        pkgInfo.applicationInfo.loadIcon(pm)));
             }
             Collections.sort(appList, SortHelper.sAppComparator);
 

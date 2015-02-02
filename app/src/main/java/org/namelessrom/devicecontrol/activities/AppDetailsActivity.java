@@ -52,6 +52,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Legend;
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
+import com.stericson.roottools.execution.CommandHandler;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
@@ -61,6 +62,7 @@ import org.namelessrom.devicecontrol.objects.PackageObserver;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class AppDetailsActivity extends BaseActivity implements PackageObserver.OnPackageStatsListener, View.OnClickListener {
@@ -342,15 +344,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
         }
 
         final CommandCapture commandCapture =
-                new CommandCapture(new DisableHandler(mAppItem), cmd) {
-                    @Override public void commandCompleted(int id, int exitcode) {
-                        super.commandCompleted(id, exitcode);
-                    }
-
-                    @Override public void commandTerminated(int id, String reason) {
-                        super.commandTerminated(id, reason);
-                    }
-                };
+                new CommandCapture(new DisableHandler(mAppItem), cmd);
 
         try {
             RootTools.getShell(true).add(commandCapture);
@@ -408,31 +402,30 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
         }.execute();
     }
 
-    private class DisableHandler extends Handler {
-        private static final int COMMAND_OUTPUT = 0x01;
-        private static final int COMMAND_COMPLETED = 0x02;
-        private static final int COMMAND_TERMINATED = 0x03;
-
-        private final AppItem item;
+    // ignore the must be static warning, we are using a weak reference
+    // https://groups.google.com/d/msg/android-developers/1aPZXZG6kWk/lIYDavGYn5UJ
+    private class DisableHandler extends CommandHandler {
+        private final WeakReference<AppItem> item;
 
         public DisableHandler(final AppItem appItem) {
-            this.item = appItem;
+            this.item = new WeakReference<>(appItem);
         }
 
         @Override public void handleMessage(final Message msg) {
             final Bundle data = msg.getData();
             final int action;
             if (data != null) {
-                action = msg.getData().getInt("action");
+                action = msg.getData().getInt(CommandHandler.ACTION);
             } else {
                 action = 0x00;
             }
             switch (action) {
                 case COMMAND_COMPLETED:
                 case COMMAND_TERMINATED:
-                    item.setEnabled(!item.isEnabled());
+                    final boolean isEnabled = !item.get().isEnabled();
+                    item.get().setEnabled(isEnabled);
                     if (mAppContainer != null) {
-                        mAppContainer.setBackgroundResource(item.isEnabled()
+                        mAppContainer.setBackgroundResource(isEnabled
                                 ? android.R.color.transparent : R.color.darker_gray);
                     }
                     invalidateOptionsMenu();

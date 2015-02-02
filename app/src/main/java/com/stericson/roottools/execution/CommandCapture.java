@@ -23,25 +23,20 @@
 
 package com.stericson.roottools.execution;
 
-import android.os.Handler;
-
 import com.stericson.roottools.RootTools;
 
-public class CommandCapture extends Command {
+public class CommandCapture extends Command implements CommandListener {
     private final StringBuilder sb = new StringBuilder();
 
     public CommandCapture(final int id, final String... command) { super(id, command); }
 
-    public CommandCapture(final int id, final boolean handlerEnabled, final String... command) {
-        super(id, handlerEnabled, command);
-    }
-
-    public CommandCapture(final int id, final int timeout, final String... command) {
-        super(id, timeout, command);
-    }
-
-    public CommandCapture(final Handler handler, final String... command) {
+    public CommandCapture(final CommandHandler handler, final String... command) {
         super(handler, command);
+    }
+
+    @Override
+    public CommandListener getCommandListener() {
+        return this;
     }
 
     @Override

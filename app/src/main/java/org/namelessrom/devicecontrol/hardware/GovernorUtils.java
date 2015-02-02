@@ -130,7 +130,7 @@ public class GovernorUtils {
             Logger.v(CpuUtils.class, cmd.toString());
 
             final StringBuilder outputCollector = new StringBuilder();
-            final CommandCapture cmdCapture = new CommandCapture(0, false, cmd.toString()) {
+            final CommandCapture cmdCapture = new CommandCapture(0, cmd.toString()) {
                 @Override public void commandOutput(int id, String line) {
                     outputCollector.append(line);
                     Logger.v(CpuUtils.class, line);

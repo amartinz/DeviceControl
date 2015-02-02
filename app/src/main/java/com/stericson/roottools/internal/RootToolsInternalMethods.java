@@ -23,11 +23,10 @@
 
 package com.stericson.roottools.internal;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.stericson.roottools.Constants;
@@ -171,115 +170,6 @@ public final class RootToolsInternalMethods {
     }
 
     /**
-     * Copys a file to a destination. Because cp is not available on all android devices, we have a
-     * fallback on the cat command
-     *
-     * @param source                 example: /data/data/org.adaway/files/hosts
-     * @param destination            example: /system/etc/hosts
-     * @param remountAsRw            remounts the destination as read/write before writing to it
-     * @param preserveFileAttributes tries to copy file attributes from source to destination,
-     *                               if only cat is available
-     *                               only permissions are preserved
-     * @return true if it was successfully copied
-     */
-    public boolean copyFile(String source, String destination, boolean remountAsRw,
-            boolean preserveFileAttributes) {
-
-        CommandCapture command = null;
-        boolean result = true;
-
-        try {
-            // mount destination as rw before writing to it
-            if (remountAsRw) {
-                RootTools.remount(destination, "RW");
-            }
-
-            // if cp is available and has appropriate permissions
-            if (checkUtil("cp")) {
-                RootTools.log("cp command is available!");
-
-                if (preserveFileAttributes) {
-                    command = new CommandCapture(0, false, "cp -fp " + source + ' ' + destination);
-                    Shell.startRootShell().add(command);
-                    commandWait(command);
-
-                    //ensure that the file was copied, an exitcode of zero means success
-                    result = command.getExitCode() == 0;
-
-                } else {
-                    command = new CommandCapture(0, false, "cp -f " + source + ' ' + destination);
-                    Shell.startRootShell().add(command);
-                    commandWait(command);
-
-                    //ensure that the file was copied, an exitcode of zero means success
-                    result = command.getExitCode() == 0;
-                }
-            } else {
-                if (checkUtil("busybox") && hasUtil("cp", "busybox")) {
-                    RootTools.log("busybox cp command is available!");
-
-                    if (preserveFileAttributes) {
-                        command = new CommandCapture(0, false,
-                                "busybox cp -fp " + source + ' ' + destination);
-                        Shell.startRootShell().add(command);
-                        commandWait(command);
-
-                    } else {
-                        command = new CommandCapture(0, false,
-                                "busybox cp -f " + source + ' ' + destination);
-                        Shell.startRootShell().add(command);
-                        commandWait(command);
-
-                    }
-                } else { // if cp is not available use cat
-                    // if cat is available and has appropriate permissions
-                    if (checkUtil("cat")) {
-                        RootTools.log("cp is not available, use cat!");
-
-                        int filePermission = -1;
-                        if (preserveFileAttributes) {
-                            // get permissions of source before overwriting
-                            Permissions permissions = getFilePermissionsSymlinks(source);
-                            filePermission = permissions.getPermissions();
-                        }
-
-                        // copy with cat
-                        command =
-                                new CommandCapture(0, false, "cat " + source + " > " + destination);
-                        Shell.startRootShell().add(command);
-                        commandWait(command);
-
-                        if (preserveFileAttributes) {
-                            // set premissions of source to destination
-                            command = new CommandCapture(0, false,
-                                    "chmod " + filePermission + ' ' + destination);
-                            Shell.startRootShell().add(command);
-                            commandWait(command);
-                        }
-                    } else {
-                        result = false;
-                    }
-                }
-            }
-
-            // mount destination back to ro
-            if (remountAsRw) {
-                RootTools.remount(destination, "RO");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            result = false;
-        }
-
-        if (command != null) {
-            //ensure that the file was copied, an exitcode of zero means success
-            result = command.getExitCode() == 0;
-        }
-
-        return result;
-    }
-
-    /**
      * This will check a given binary, determine if it exists and determine that
      * it has either the permissions 755, 775, or 777.
      *
@@ -318,61 +208,6 @@ public final class RootToolsInternalMethods {
     }
 
     /**
-     * Deletes a file or directory
-     *
-     * @param target      example: /data/data/org.adaway/files/hosts
-     * @param remountAsRw remounts the destination as read/write before writing to it
-     * @return true if it was successfully deleted
-     */
-    public boolean deleteFileOrDirectory(final String target, final boolean remountAsRw) {
-        boolean result = true;
-
-        try {
-            // mount destination as rw before writing to it
-            if (remountAsRw) {
-                RootTools.remount(target, "RW");
-            }
-
-            if (hasUtil("rm", "toolbox")) {
-                RootTools.log("rm command is available!");
-
-                CommandCapture command = new CommandCapture(0, false, "rm -r " + target);
-                Shell.startRootShell().add(command);
-                commandWait(command);
-
-                if (command.getExitCode() != 0) {
-                    RootTools.log("target not exist or unable to delete file");
-                    result = false;
-                }
-            } else {
-                if (checkUtil("busybox") && hasUtil("rm", "busybox")) {
-                    RootTools.log("busybox cp command is available!");
-
-                    CommandCapture command =
-                            new CommandCapture(0, false, "busybox rm -rf " + target);
-                    Shell.startRootShell().add(command);
-                    commandWait(command);
-
-                    if (command.getExitCode() != 0) {
-                        RootTools.log("target not exist or unable to delete file");
-                        result = false;
-                    }
-                }
-            }
-
-            // mount destination back to ro
-            if (remountAsRw) {
-                RootTools.remount(target, "RO");
-            }
-        } catch (Exception e) {
-            RootTools.log(e.getMessage());
-            result = false;
-        }
-
-        return result;
-    }
-
-    /**
      * Use this to check whether or not a file exists on the filesystem.
      *
      * @param file String that represent the file, including the full path to the
@@ -382,7 +217,7 @@ public final class RootToolsInternalMethods {
     public boolean exists(final String file) {
         final List<String> result = new ArrayList<>();
 
-        CommandCapture command = new CommandCapture(0, false, "ls " + file) {
+        CommandCapture command = new CommandCapture(0, "ls " + file) {
             @Override
             public void output(int arg0, String arg1) {
                 RootTools.log(arg1);
@@ -433,74 +268,6 @@ public final class RootToolsInternalMethods {
     }
 
     /**
-     * This will try and fix a given binary. (This is for Busybox applets or Toolbox applets) By
-     * "fix", I mean it will try and symlink the binary from either toolbox or Busybox and fix the
-     * permissions if the permissions are not correct.
-     *
-     * @param util     Name of the utility to fix.
-     * @param utilPath path to the toolbox that provides ln, rm, and chmod. This can be a blank
-     *                 string, a
-     *                 path to a binary that will provide these, or you can use
-     *                 RootTools.getWorkingToolbox()
-     */
-    public void fixUtil(String util, String utilPath) {
-        try {
-            RootTools.remount("/system", "rw");
-
-            if (RootTools.findBinary(util)) {
-                final List<String> paths = new ArrayList<>();
-                paths.addAll(RootTools.lastFoundBinaryPaths);
-                for (final String path : paths) {
-                    final CommandCapture command =
-                            new CommandCapture(0, false, utilPath + " rm " + path + '/' + util);
-                    Shell.startRootShell().add(command);
-                    commandWait(command);
-
-                }
-
-                CommandCapture command = new CommandCapture(0, false,
-                        utilPath + " ln -s " + utilPath + " /system/bin/" + util,
-                        utilPath + " chmod 0755 /system/bin/" + util);
-                Shell.startRootShell().add(command);
-                commandWait(command);
-
-            }
-
-            RootTools.remount("/system", "ro");
-        } catch (Exception ignored) { }
-    }
-
-    /**
-     * This will check an array of binaries, determine if they exist and determine that it has
-     * either the permissions 755, 775, or 777. If an applet is not setup correctly it will try and
-     * fix it. (This is for Busybox applets or Toolbox applets)
-     *
-     * @param utils Name of the utility to check.
-     * @return boolean to indicate whether the operation completed. Note that this is not indicative
-     * of whether the problem was fixed, just that the method did not encounter any
-     * exceptions.
-     * @throws Exception if the operation cannot be completed.
-     */
-    public boolean fixUtils(String[] utils) {
-
-        for (String util : utils) {
-            if (!checkUtil(util)) {
-                if (checkUtil("busybox")) {
-                    if (hasUtil(util, "busybox")) { fixUtil(util, RootTools.utilPath); }
-                } else {
-                    if (checkUtil("toolbox")) {
-                        if (hasUtil(util, "toolbox")) { fixUtil(util, RootTools.utilPath); }
-                    } else {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * @param binaryName String that represent the binary to find.
      * @return <code>true</code> if the specified binary was found. Also, the path the binary was
      * found at can be retrieved via the variable lastFoundBinaryPath, if the binary was
@@ -513,14 +280,14 @@ public final class RootToolsInternalMethods {
         final List<String> list = new ArrayList<>();
         final String[] places = {
                 "/sbin/", "/system/bin/", "/system/xbin/", "/data/local/xbin/",
-                "/data/local/bin/", "/system/sd/xbin/", "/system/bin/failsafe/", "/data/local/"};
+                "/data/local/bin/", "/system/sd/xbin/", "/system/bin/failsafe/", "/data/local/" };
 
         RootTools.log("Checking for " + binaryName);
 
         //Try to use stat first
         try {
             for (final String path : places) {
-                CommandCapture cc = new CommandCapture(0, false, "stat " + path + binaryName) {
+                CommandCapture cc = new CommandCapture(0, "stat " + path + binaryName) {
                     @Override
                     public void commandOutput(int id, String line) {
                         if (line.contains("File: ") && line.contains(binaryName)) {
@@ -597,7 +364,7 @@ public final class RootToolsInternalMethods {
      */
     public List<String> getBusyBoxApplets(String path) throws Exception {
 
-        if (path != null && !path.endsWith("/") && !path.isEmpty()) {
+        if (!TextUtils.isEmpty(path) && !path.endsWith("/")) {
             path += "/";
         } else if (path == null) {
             //Don't know what the user wants to do...what am I pshycic?
@@ -606,7 +373,7 @@ public final class RootToolsInternalMethods {
 
         final List<String> results = new ArrayList<>();
 
-        CommandCapture command = new CommandCapture(Constants.BBA, false, path + "busybox --list") {
+        CommandCapture command = new CommandCapture(Constants.BBA, path + "busybox --list") {
 
             @Override
             public void output(int id, String line) {
@@ -635,7 +402,7 @@ public final class RootToolsInternalMethods {
         RootTools.log("Getting BusyBox Version");
         InternalVariables.busyboxVersion = "";
         try {
-            CommandCapture command = new CommandCapture(Constants.BBV, false, path + "busybox") {
+            CommandCapture command = new CommandCapture(Constants.BBV, path + "busybox") {
                 @Override
                 public void output(int id, String line) {
                     if (id == Constants.BBV) {
@@ -697,7 +464,7 @@ public final class RootToolsInternalMethods {
     public String getInode(String file) {
         try {
             CommandCapture command =
-                    new CommandCapture(Constants.GI, false, "/data/local/ls -i " + file) {
+                    new CommandCapture(Constants.GI, "/data/local/ls -i " + file) {
 
                         @Override
                         public void output(int id, String line) {
@@ -720,15 +487,13 @@ public final class RootToolsInternalMethods {
 
     /**
      * @return <code>true</code> if your app has been given root access.
-     * @throws java.util.concurrent.TimeoutException if this operation times out. (cannot
-     *                                               determine if access is given)
      */
     public boolean isAccessGiven() {
         try {
             RootTools.log("Checking for Root access");
             InternalVariables.accessGiven = false;
 
-            CommandCapture command = new CommandCapture(Constants.IAG, false, "id") {
+            CommandCapture command = new CommandCapture(Constants.IAG, "id") {
                 @Override
                 public void output(int id, String line) {
                     if (id == Constants.IAG) {
@@ -773,7 +538,7 @@ public final class RootToolsInternalMethods {
             try {
 
                 CommandCapture command = new CommandCapture(
-                        Constants.FPS, false, "ls -l " + file,
+                        Constants.FPS, "ls -l " + file,
                         "busybox ls -l " + file,
                         "/system/bin/failsafe/toolbox ls -l " + file,
                         "toolbox ls -l " + file) {
@@ -835,8 +600,7 @@ public final class RootToolsInternalMethods {
 
         Shell shell = RootTools.getShell(true);
 
-        CommandCapture cmd = new CommandCapture(0, false,
-                "cat /proc/mounts > /data/local/RootToolsMounts",
+        CommandCapture cmd = new CommandCapture(0, "cat /proc/mounts > /data/local/RootToolsMounts",
                 "chmod 0777 /data/local/RootToolsMounts");
         shell.add(cmd);
         this.commandWait(cmd);
@@ -914,14 +678,13 @@ public final class RootToolsInternalMethods {
      * @param path The partition to find the space for.
      * @return the amount if space found within the desired partition. If the space was not found
      * then the value is -1
-     * @throws java.util.concurrent.TimeoutException
      */
     public long getSpace(String path) {
         InternalVariables.getSpaceFor = path;
         boolean found = false;
         RootTools.log("Looking for Space");
         try {
-            final CommandCapture command = new CommandCapture(Constants.GS, false, "df " + path) {
+            final CommandCapture command = new CommandCapture(Constants.GS, "df " + path) {
 
                 @Override
                 public void output(int id, String line) {
@@ -989,7 +752,7 @@ public final class RootToolsInternalMethods {
         try {
             final List<String> results = new ArrayList<>();
 
-            CommandCapture command = new CommandCapture(Constants.GSYM, false, "ls -l " + file) {
+            CommandCapture command = new CommandCapture(Constants.GSYM, "ls -l " + file) {
 
                 @Override
                 public void output(int id, String line) {
@@ -1052,13 +815,13 @@ public final class RootToolsInternalMethods {
             throw new Exception();
         }
 
-        CommandCapture command = new CommandCapture(0, false,
+        CommandCapture command = new CommandCapture(0,
                 "dd if=/dev/zero of=/data/local/symlinks.txt bs=1024 count=1",
                 "chmod 0777 /data/local/symlinks.txt");
         Shell.startRootShell().add(command);
         commandWait(command);
 
-        command = new CommandCapture(0, false,
+        command = new CommandCapture(0,
                 "find " + path + " -type l -exec ls -l {} \\; > /data/local/symlinks.txt");
         Shell.startRootShell().add(command);
         commandWait(command);
@@ -1117,57 +880,6 @@ public final class RootToolsInternalMethods {
     }
 
     /**
-     * Checks whether the toolbox or busybox binary contains a specific util
-     *
-     * @param util
-     * @param box  Should contain "toolbox" or "busybox"
-     * @return true if it contains this util
-     */
-    public boolean hasUtil(final String util, final String box) {
-
-        InternalVariables.found = false;
-
-        // only for busybox and toolbox
-        if (!(box.endsWith("toolbox") || box.endsWith("busybox"))) {
-            return false;
-        }
-
-        try {
-            final CommandCapture command = new CommandCapture(0, false,
-                    box.endsWith("toolbox") ? box + ' ' + util : box + " --list") {
-
-                @Override
-                public void output(int id, String line) {
-                    if (box.endsWith("toolbox")) {
-                        if (!line.contains("no such tool")) {
-                            InternalVariables.found = true;
-                        }
-                    } else if (box.endsWith("busybox")) {
-                        // go through all lines of busybox --list
-                        if (line.contains(util)) {
-                            RootTools.log("Found util!");
-                            InternalVariables.found = true;
-                        }
-                    }
-                }
-            };
-            RootTools.getShell(true).add(command);
-            commandWait(command);
-
-            if (InternalVariables.found) {
-                RootTools.log("Box contains " + util + " util!");
-                return true;
-            } else {
-                RootTools.log("Box does not contain " + util + " util!");
-                return false;
-            }
-        } catch (Exception e) {
-            RootTools.log(e.getMessage());
-            return false;
-        }
-    }
-
-    /**
      * This will let you know if an applet is available from BusyBox
      * <p/>
      *
@@ -1193,7 +905,6 @@ public final class RootToolsInternalMethods {
      *
      * @param processName name of process to check
      * @return <code>true</code> if process was found
-     * @throws java.util.concurrent.TimeoutException (Could not determine if the process is running)
      */
     public boolean isProcessRunning(final String processName) {
 
@@ -1202,7 +913,7 @@ public final class RootToolsInternalMethods {
         InternalVariables.processRunning = false;
 
         try {
-            CommandCapture command = new CommandCapture(0, false, "ps") {
+            CommandCapture command = new CommandCapture(0, "ps") {
                 @Override
                 public void output(int id, String line) {
                     if (line.contains(processName)) {
@@ -1236,7 +947,7 @@ public final class RootToolsInternalMethods {
 
         try {
 
-            CommandCapture command = new CommandCapture(0, false, "ps") {
+            CommandCapture command = new CommandCapture(0, "ps") {
                 @Override
                 public void output(int id, String line) {
                     if (line.contains(processName)) {
@@ -1270,7 +981,7 @@ public final class RootToolsInternalMethods {
             if (!pids.isEmpty()) {
                 try {
                     // example: kill -9 1234 1222 5343
-                    command = new CommandCapture(0, false, "kill -9 " + pids);
+                    command = new CommandCapture(0, "kill -9 " + pids);
                     RootTools.getShell(true).add(command);
                     commandWait(command);
 
@@ -1291,50 +1002,10 @@ public final class RootToolsInternalMethods {
 
     /**
      * This will launch the Android market looking for BusyBox
-     *
-     * @param activity pass in your Activity
      */
     public void offerBusyBox() {
         RootTools.log("Launching Market for BusyBox");
         AppHelper.showInPlaystore("market://details?id=stericson.busybox");
-    }
-
-    /**
-     * This will launch the Android market looking for BusyBox, but will return the intent fired and
-     * starts the activity with startActivityForResult
-     *
-     * @param activity    pass in your Activity
-     * @param requestCode pass in the request code
-     * @return intent fired
-     */
-    public Intent offerBusyBox(final Activity activity, final int requestCode) {
-        RootTools.log("Launching Market for BusyBox");
-        return AppHelper.showInPlaystore(
-                activity, "market://details?id=stericson.busybox", requestCode);
-    }
-
-    /**
-     * This will launch the Android market looking for SuperUser
-     *
-     * @param activity pass in your Activity
-     */
-    public void offerSuperUser() {
-        RootTools.log("Launching Market for SuperUser");
-        AppHelper.showInPlaystore("market://details?id=eu.chainfire.supersu");
-    }
-
-    /**
-     * This will launch the Android market looking for SuperUser, but will return the intent fired
-     * and starts the activity with startActivityForResult
-     *
-     * @param activity    pass in your Activity
-     * @param requestCode pass in the request code
-     * @return intent fired
-     */
-    public Intent offerSuperUser(final Activity activity, final int requestCode) {
-        RootTools.log("Launching Market for SuperUser");
-        return AppHelper.showInPlaystore(
-                activity, "market://details?id=eu.chainfire.supersu", requestCode);
     }
 
     private void commandWait(final Command cmd) {
