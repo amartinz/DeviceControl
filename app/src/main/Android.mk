@@ -12,11 +12,17 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     play \
     pollfish-sdk \
 
-LOCAL_ASSET_DIR    := $(LOCAL_PATH)/assets
-LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
+LOCAL_ASSET_DIR := \
+    $(LOCAL_PATH)/../../../base/src/main/assets \
+
+LOCAL_RESOURCE_DIR := \
+    $(LOCAL_PATH)/res \
+    $(LOCAL_PATH)/../../../base/src/main/res \
+
 LOCAL_SRC_FILES    := \
     $(call all-java-files-under,java) \
-    aidl/com/android/vending/billing/IInAppBillingService.aidl \
+    $(call all-java-files-under,../../../base/src/main/java) \
+    ../../../base/src/main/aidl/com/android/vending/billing/IInAppBillingService.aidl \
 
 LOCAL_AAPT_INCLUDE_ALL_RESOURCES := true
 
@@ -47,6 +53,10 @@ LOCAL_AAPT_FLAGS := \
     --extra-packages android.support.v7.cardview \
     --extra-packages com.github.mikephil.charting \
     --extra-packages com.google.android.gms \
+
+# DeviceControl modules
+LOCAL_AAPT_FLAGS += \
+    --extra-packages org.namelessrom.devicecontrol.base \
     --extra-packages org.namelessrom.proprietary \
 
 ######

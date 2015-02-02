@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':base'
 include ':libs:mpandroidchart:MPChartLib'
