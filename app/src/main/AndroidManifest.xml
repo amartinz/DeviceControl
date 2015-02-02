@@ -95,7 +95,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AppDetailsActivity"
+            android:name=".appmanager.AppDetailsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
             android:label="@string/app_details"

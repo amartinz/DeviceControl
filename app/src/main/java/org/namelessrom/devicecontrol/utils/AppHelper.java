@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -198,21 +197,6 @@ public class AppHelper {
             Logger.e(AppHelper.class, exc.getMessage());
         }
         return false;
-    }
-
-    /**
-     * Shows the app in Google's Play Store if Play Store is installed
-     */
-    public static Intent showInPlaystore(final Activity activity, final String uri, final int req) {
-        try {
-            final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            activity.startActivityForResult(i, req);
-            return i;
-        } catch (Exception exc) {
-            Logger.e(AppHelper.class, exc.getMessage());
-            return null;
-        }
     }
 
     public static boolean startExternalDonation(final Context context) {
