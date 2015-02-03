@@ -33,4 +33,7 @@
     <dimen name="actionbar_title_top_margin">5dp</dimen>
     <dimen name="page_top_margin">10dp</dimen>
     <dimen name="title_top_margin">10dp</dimen>
+
+    <dimen name="tabSelectorHeight">2dp</dimen>
+    <dimen name="materialTextTab">14sp</dimen>
 </resources>

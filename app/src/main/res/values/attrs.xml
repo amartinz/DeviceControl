@@ -111,4 +111,10 @@
             <enum name="mini" value="1" />
         </attr>
     </declare-styleable>
+    <!-- Material tabs -->
+    <declare-styleable name="MaterialTabHost">
+        <attr name="hasIcons" format="boolean" />
+        <attr name="iconColor" format="color|reference" />
+        <attr name="textColor" format="color|reference" />
+    </declare-styleable>
 </resources>
