@@ -8,19 +8,12 @@ android {
         release {
             def Properties localProps = new Properties()
             localProps.load(new FileInputStream(file('../local.properties')))
-            if (localProps.hasProperty('keystore')) {
-                def Properties keyProps = new Properties()
-                keyProps.load(new FileInputStream(file(localProps['keystore'])))
-                storeFile file(keyProps["store"])
-                storePassword keyProps["storePass"]
-                keyAlias keyProps["alias"]
-                keyPassword keyProps["pass"]
-            } else {
-                storeFile signingConfigs.debug.storeFile
-                storePassword signingConfigs.debug.storePassword
-                keyAlias signingConfigs.debug.keyAlias
-                keyPassword signingConfigs.debug.keyPassword
-            }
+            def Properties keyProps = new Properties()
+            keyProps.load(new FileInputStream(file(localProps['keystore'])))
+            storeFile file(keyProps["store"])
+            storePassword keyProps["storePass"]
+            keyAlias keyProps["alias"]
+            keyPassword keyProps["pass"]
         }
     }
 
