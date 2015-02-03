@@ -33,7 +33,17 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 import java.util.ArrayList;
 
-public abstract class AttachViewPagerFragment extends AttachFragment {
+import it.neokree.materialtabs.MaterialTab;
+import it.neokree.materialtabs.MaterialTabHost;
+import it.neokree.materialtabs.MaterialTabListener;
+
+public abstract class AttachViewPagerFragment extends AttachFragment implements MaterialTabListener {
+    private MaterialTabHost mTabHost;
+    private ViewPager mPager;
+
+    @Override protected int getFragmentId() {
+        return 0;
+    }
 
     @Override public void onResume() {
         super.onResume();
@@ -49,15 +59,36 @@ public abstract class AttachViewPagerFragment extends AttachFragment {
             final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
 
-        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        viewPager.setAdapter(getPagerAdapter());
-        viewPager.setOffscreenPageLimit(3);
+        mTabHost = (MaterialTabHost) view.findViewById(R.id.tabHost);
 
-        final SlidingTabLayout tabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
-        tabLayout.setViewPager(viewPager);
+        final ViewPagerAdapter adapter = getPagerAdapter();
+        mPager = (ViewPager) view.findViewById(R.id.viewpager);
+        mPager.setAdapter(adapter);
+        mPager.setOffscreenPageLimit(3);
+        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override public void onPageSelected(int position) {
+                // when user do a swipe the selected tab change
+                mTabHost.setSelectedNavigationItem(position);
+            }
+        });
+
+        for (int x = 0; x < adapter.getCount(); x++) {
+            mTabHost.addTab(mTabHost.newTab()
+                    .setText(adapter.getPageTitle(x))
+                    .setTabListener(this));
+        }
 
         return view;
     }
+
+    @Override public void onTabSelected(final MaterialTab tab) {
+        // when the tab is clicked the pager swipe content to the tab position
+        mPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override public void onTabReselected(MaterialTab tab) { }
+
+    @Override public void onTabUnselected(MaterialTab tab) { }
 
     @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
         if (MainActivity.sDisableFragmentAnimations) {

@@ -24,9 +24,11 @@ Third party libraries
 * [android-support-v13](http://developer.android.com/tools/extras/support-library.html)
 * [android-appcompat-v7](http://developer.android.com/tools/extras/support-library.html)
 * [android-recyclerview-v7](http://developer.android.com/tools/extras/support-library.html)
+* [android-ui](https://github.com/markushi/android-ui)
 * [FloatingActionButton](https://github.com/makovkastar/FloatingActionButton)
 * [ion](https://github.com/koush/ion)
 * [Material-Menu](https://github.com/balysv/material-menu)
+* [MaterialTabs](https://github.com/neokree/MaterialTabs)
 * [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
 * [NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
 * [RootTools](https://github.com/Stericson/RootTools)
@@ -39,7 +41,7 @@ Developed by
 License
 -------
 
-    Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+    Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

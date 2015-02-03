@@ -34,12 +34,15 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -67,7 +70,11 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 
-public class AppDetailsActivity extends BaseActivity implements PackageObserver.OnPackageStatsListener, View.OnClickListener {
+import it.neokree.materialtabs.MaterialTab;
+import it.neokree.materialtabs.MaterialTabHost;
+import it.neokree.materialtabs.MaterialTabListener;
+
+public class AppDetailsActivity extends BaseActivity implements PackageObserver.OnPackageStatsListener, View.OnClickListener, MaterialTabListener {
     public static final String ARG_FROM_ACTIVITY = "arg_from_activity";
     public static final String ARG_PACKAGE_NAME = "arg_package_name";
 
@@ -76,6 +83,9 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
 
     private static final Handler mHandler = new Handler();
     private final PackageManager mPm = Application.get().getPackageManager();
+
+    private MaterialTabHost mTabHost;
+    private ViewPager mPager;
 
     private AppItem mAppItem;
 
@@ -110,6 +120,27 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
         final Intent i = getIntent();
         if (i != null && i.hasExtra(ARG_FROM_ACTIVITY) && getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        mTabHost = (MaterialTabHost) findViewById(R.id.tabHost);
+        // TODO: make it visible once used
+        mTabHost.setVisibility(View.GONE);
+
+        final String[] titles = { getString(R.string.app_details) };
+        final AppPagerAdapter adapter = new AppPagerAdapter(titles);
+        mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(adapter);
+        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override public void onPageSelected(int position) {
+                // when user do a swipe the selected tab change
+                mTabHost.setSelectedNavigationItem(position);
+            }
+        });
+
+        for (int x = 0; x < adapter.getCount(); x++) {
+            mTabHost.addTab(mTabHost.newTab()
+                    .setText(adapter.getTitle(x))
+                    .setTabListener(this));
         }
 
         mAppDetailsContainer = findViewById(R.id.app_details_container);
@@ -634,5 +665,51 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
 
         builder.show();
     }
+
+    class AppPagerAdapter extends PagerAdapter {
+        private final String[] mTitles;
+
+        public AppPagerAdapter(final String[] titles) {
+            mTitles = titles;
+        }
+
+        public String getTitle(final int position) {
+            return mTitles[position];
+        }
+
+        @Override public Object instantiateItem(ViewGroup container, int position) {
+            final int resId;
+            switch (position) {
+                default:
+                case 0: {
+                    resId = R.id.page_app_details;
+                    break;
+                }
+                // TODO: make visible once done
+                //case 1: {
+                //    resId = R.id.page_app_details;
+                //    break;
+                //}
+            }
+            return findViewById(resId);
+        }
+
+        @Override public int getCount() {
+            return 1;
+        }
+
+        @Override public boolean isViewFromObject(View arg0, Object arg1) {
+            return arg0 == arg1;
+        }
+    }
+
+    @Override public void onTabSelected(final MaterialTab tab) {
+        // when the tab is clicked the pager swipe content to the tab position
+        mPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override public void onTabReselected(MaterialTab tab) { }
+
+    @Override public void onTabUnselected(MaterialTab tab) { }
 
 }
