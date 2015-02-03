@@ -11,6 +11,10 @@ include $(BUILD_PREBUILT)
 #===================================================================
 
 #===================================================================
+#This jar cointains api keys. just unzip it and you can even get the
+#keys with notepad. However policies state that i may not check the
+#api keys in plaintext in source control, thats why the jar is there
+#===================================================================
 include $(CLEAR_VARS)
 LOCAL_SRC_FILES := nameless-proprietary.jar
 LOCAL_MODULE := nameless-proprietary
