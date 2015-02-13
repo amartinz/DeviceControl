@@ -60,7 +60,7 @@ public class MaterialTabHost extends RelativeLayout implements View.OnClickListe
         scrollView.addView(layout);
 
         primaryColor = Application.get().getAccentColor();
-        accentColor = Application.get().getPrimaryColor();
+        accentColor = Application.get().getColor(R.color.white);
 
         // get attributes
         if (attrs != null) {
