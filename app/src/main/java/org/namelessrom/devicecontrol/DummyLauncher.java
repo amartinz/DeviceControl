@@ -33,7 +33,10 @@ import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.objects.Device;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+
+import java.io.File;
 
 /**
  * Dummy Activity, used as Launcher.
@@ -107,7 +110,16 @@ public class DummyLauncher extends BaseActivity {
 
         @Override protected Void doInBackground(Void... params) {
             updateStatus(getString(R.string.checking_root));
-            hasRoot = RootTools.isRootAvailable() && RootTools.isAccessGiven();
+            final boolean binaryExists = RootTools.isRootAvailable()
+                    || new File("/system/bin/su").exists()
+                    || new File("/system/xbin/su").exists()
+                    || new File("/system/bin/.ext/.su").exists()
+                    || new File("/system/xbin/sugote").exists();
+            hasRoot = binaryExists && RootTools.isAccessGiven();
+
+            final String suVersion = Utils.getCommandResult("su -v", "unknown");
+            Logger.i(this, "suVersion -> %s", suVersion);
+
             updateStatus(getString(R.string.checking_busybox));
             hasBusyBox = RootTools.isBusyboxAvailable();
             return null;
