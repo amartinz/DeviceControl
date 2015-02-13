@@ -1,0 +1,97 @@
+<div class="device">
+    <h1>{{'DEVICE_INFORMATION' | translate}}</h1>
+
+    <div class="devicecontainer" ng-controller="DeviceController as deviceCtrl">
+        <div class="col-md-12 col-lg-12">
+            <table class="table table-device-information">
+                <tbody ng-show="deviceCtrl.device !== null">
+                <tr>
+                    <td><h3>{{'DEVICE' | translate}}</h3></td>
+                </tr>
+                <tr>
+                    <td><b>{{'ANDROID_ID' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.android_id}}</td>
+                </tr>
+                <tr>
+                    <td><b>{{'MANUFACTURER' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.device_manufacturer}}</td>
+                </tr>
+                <tr>
+                    <td><b>{{'MODEL' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.device_model}}</td>
+                </tr>
+                <tr>
+                    <td><b>{{'PRODUCT' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.device_product}}</td>
+                </tr>
+                <tr>
+                    <td><b>{{'BOARD' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.device_board}}</td>
+                </tr>
+                <tr>
+                    <td><b>{{'BOOTLOADER' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.device_bootloader}}</td>
+                </tr>
+                <tr>
+                    <td><b>{{'RADIO_VERSION' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.device_radio_version}}</td>
+                </tr>
+                <tr>
+                    <td><h3>{{'PLATFORM' | translate}}</h3></td>
+                </tr>
+                <tr>
+                    <td><b>{{'PLATFORM_VERSION' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.platform_version}}</td>
+                </tr>
+                <tr>
+                    <td><b>{{'BUILD_ID' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.platform_id}}</td>
+                </tr>
+                <tr>
+                    <td><b>{{'BUILD_TYPE' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.platform_type}}</td>
+                </tr>
+                <tr>
+                    <td><b>{{'BUILD_TAGS' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.platform_tags}}</td>
+                </tr>
+                <tr>
+                    <td><b>{{'BUILD_DATE' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.platform_build_date}}</td>
+                </tr>
+                <tr>
+                    <td><h3>{{'RUNTIME' | translate}}</h3></td>
+                </tr>
+                <tr>
+                    <td><b>{{'RUNTIME_LIBRARY' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.vm_library}}</td>
+                </tr>
+                <tr>
+                    <td><b>{{'RUNTIME_VERSION' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.vm_version}}</td>
+                </tr>
+                <tr>
+                    <td><h3>{{'EXTRAS' | translate}}</h3></td>
+                </tr>
+                <tr>
+                    <td><b>{{'IS_ROOTED' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.device_has_root}}</td>
+                </tr>
+                <tr>
+                    <td><b>{{'SU_VERSION' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.device_su_version}}</td>
+                </tr>
+                <tr>
+                    <td><b>{{'HAS_BUSYBOX' | translate}}:</b></td>
+                    <td>{{deviceCtrl.device.device_has_busybox}}</td>
+                </tr>
+                </tbody>
+                <tbody ng-show="deviceCtrl.device === null">
+                <tr>
+                    <td><b>{{'NO_INFORMATION_AVAILABLE' | translate}}</b></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

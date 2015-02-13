@@ -8,23 +8,23 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href class="navbar-brand" ng-click="navBarCtrl.setTab(1)">Device Control</a>
+            <a class="navbar-brand" href="#!index" ng-click="navBarCtrl.setTab(1)">Device Control</a>
         </div>
         <div class="navbar-collapse collapse" id="navigationbar">
             <ul class="nav navbar-nav">
                 <li ng-class="{ active:navBarCtrl.isSelected(2) }">
-                    <a href ng-click="navBarCtrl.setTab(2)">{{'DEVICE' | translate}}</a>
+                    <a href="#!device" ng-click="navBarCtrl.setTab(2)">{{'DEVICE' | translate}}</a>
                 </li>
                 <li ng-class="{ active:navBarCtrl.isSelected(3) }">
-                    <a href ng-click="navBarCtrl.setTab(3)">{{'FILES' | translate}}</a>
+                    <a href="#!files" ng-click="navBarCtrl.setTab(3)">{{'FILES' | translate}}</a>
                 </li>
                 <li ng-class="{ active:navBarCtrl.isSelected(4) }">
-                    <a href ng-click="navBarCtrl.setTab(4)">{{'LICENSES' | translate}}</a>
+                    <a href="#!license" ng-click="navBarCtrl.setTab(4)">{{'LICENSES' | translate}}</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{'LANGUAGE' | translate}} <span class="caret"></span></a>
+                    <a href class="dropdown-toggle" data-toggle="dropdown">{{'LANGUAGE' | translate}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href ng-click="changeLanguage('en')">{{'ENGLISH' | translate}}</a></li>
                         <li><a href ng-click="changeLanguage('de')">{{'GERMAN' | translate}}</a></li>

@@ -167,14 +167,15 @@ public class ServerWrapper {
                 return;
             }
             if (!isAuthenticated(req)) {
-                res.getHeaders().getHeaders().add("WWW-Authenticate",
-                        "Basic realm=\"DeviceControl\"");
+                res.getHeaders()
+                        .getHeaders()
+                        .add("WWW-Authenticate", "Basic realm=\"DeviceControl\"");
                 res.responseCode(401);
                 res.end();
                 return;
             }
             if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                res.send("SDCARD not mounted!");
+                res.send("sdcard not mounted!");
                 return;
             }
             boolean isDirectory = true;

@@ -2,26 +2,30 @@
  * Created by alex on 13.10.14.
  */
 (function () {
-    var app = angular.module('interface', ['device', 'files', 'pascalprecht.translate']);
+    var app = angular.module('interface', ['device', 'files', 'ngRoute', 'pascalprecht.translate']);
 
-    app.directive('mainContent', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'snippets/main_content.html'
-        };
+    app.config(function ($routeProvider, $locationProvider) {
+        $locationProvider.hashPrefix('!');
+        $routeProvider.
+            when("/index", {templateUrl: "snippets/index.html"}).
+            // Environment
+            when("/device", {templateUrl: "snippets/device.html"}).
+            when("/files", {templateUrl: "snippets/files.html"}).
+            when("/license", {templateUrl: "license.html"}).
+            otherwise({redirectTo: "/index"});
     });
 
     app.directive('navigationBar', function () {
         return {
             restrict: 'E',
-            templateUrl: 'snippets/navigation_bar.html'
+            templateUrl: 'snippets/directives/navigation_bar.html'
         };
     });
 
     app.directive('awesomeFooter', function () {
         return {
             restrict: 'E',
-            templateUrl: 'snippets/awesome_footer.html'
+            templateUrl: 'snippets/directives/awesome_footer.html'
         }
     });
 
@@ -54,22 +58,21 @@
 })();
 
 $(document).ready(function () {
+    var backToTop = $('#back-to-top');
+
     $(window).scroll(function () {
         if ($(this).scrollTop() > 50) {
-            $('#back-to-top').fadeIn();
+            backToTop.fadeIn();
         } else {
-            $('#back-to-top').fadeOut();
+            backToTop.fadeOut();
         }
     });
-    $('#back-to-top').click(function () {
-        $('#back-to-top').tooltip('hide');
+    backToTop.click(function () {
         $('body,html').animate({
             scrollTop: 0
         }, 800);
         return false;
     });
-
-    $('#back-to-top').tooltip('show');
 
     $(".dropdown").hover(
         function () {

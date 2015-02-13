@@ -1,0 +1,32 @@
+<div class="files" ng-controller="FileController as fileCtrl">
+    <h1>Files</h1>
+    <ol class="breadcrumb">
+        <li><a href ng-click="fileCtrl.loadPath('/')">{{'HOME' | translate}}</a></li>
+        <li ng-repeat="breadcrumb in fileCtrl.breadcrumbs">
+            <a href ng-click="fileCtrl.loadPath(breadcrumb.path)">{{breadcrumb.name}}</a>
+        </li>
+    </ol>
+    <div class="filecontainer">
+        <div class="input-group" style="margin-bottom:10px;">
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-search"></span>
+        </span>
+            <input type="search" class="form-control" ng-model="filterQuery"
+                   placeholder="{{'FILTER_FILES' | translate}}"/>
+        </div>
+        <ul ng-repeat="file in fileCtrl.files | filter:filterQuery as results">
+            <li ng-hide="file.isDirectory">
+                <i class="fa fa-file-o fa-fw"></i>&nbsp;<a href="/files{{file.path}}" target="_blank">{{file.name}}</a>
+            </li>
+            <li ng-show="file.isDirectory">
+                <i class="fa fa-folder-o fa-fw"></i>&nbsp;<a href ng-click="fileCtrl.loadFiles(file)">{{file.name}}</a>
+            </li>
+        </ul>
+        <ul ng-if="results.length === 0">
+            <li>
+                <i class="fa fa-frown-o fa-fw"></i>&nbsp;<strong>{{'NO_FILES_FOUND' | translate}}</strong>
+            </li>
+        </ul>
+    </div>
+
+</div>
