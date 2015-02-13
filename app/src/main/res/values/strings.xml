@@ -25,8 +25,7 @@
     <string name="start_wizard">Start wizard</string>
     <string name="get_busybox">Install BusyBox</string>
     <string name="more_information">More information</string>
-    <string name="checking_root">Checking for root…</string>
-    <string name="checking_busybox">Checking for busybox…</string>
+    <string name="checking_requirements">Checking requirements…</string>
     <string name="exit">Exit</string>
     <string name="close">Close</string>
     <string name="message_loading">Loading, please stand by…</string>

@@ -29,5 +29,9 @@
   "RUNTIME": "Runtime",
   "RUNTIME_LIBRARY": "Runtime library",
   "RUNTIME_VERSION": "Runtime version",
+  "EXTRAS": "Extras",
+  "IS_ROOTED": "Is rooted",
+  "SU_VERSION": "Superuser version",
+  "HAS_BUSYBOX": "BusyBox installed",
   "NO_INFORMATION_AVAILABLE": "No information available!"
 }

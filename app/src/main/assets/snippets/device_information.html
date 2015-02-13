@@ -67,6 +67,21 @@
                 <td><b>{{'RUNTIME_VERSION' | translate}}:</b></td>
                 <td>{{deviceCtrl.device.vm_version}}</td>
             </tr>
+            <tr>
+                <td><h3>{{'EXTRAS' | translate}}</h3></td>
+            </tr>
+            <tr>
+                <td><b>{{'IS_ROOTED' | translate}}:</b></td>
+                <td>{{deviceCtrl.device.device_has_root}}</td>
+            </tr>
+            <tr>
+                <td><b>{{'SU_VERSION' | translate}}:</b></td>
+                <td>{{deviceCtrl.device.device_su_version}}</td>
+            </tr>
+            <tr>
+                <td><b>{{'HAS_BUSYBOX' | translate}}:</b></td>
+                <td>{{deviceCtrl.device.device_has_busybox}}</td>
+            </tr>
             </tbody>
             <tbody ng-show="deviceCtrl.device === null">
             <tr>

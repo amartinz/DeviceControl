@@ -15,14 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.objects;
+package org.namelessrom.devicecontrol;
 
 import android.os.Build;
 import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
+import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.utils.Utils;
+
+import java.io.File;
 
 public class Device {
     @SerializedName("platform_version") public final String platformVersion;
@@ -42,7 +45,11 @@ public class Device {
     @SerializedName("device_bootloader") public final String bootloader;
     @SerializedName("device_radio_version") public final String radio;
 
-    private static Device sInstance;
+    @SerializedName("device_has_busybox") public boolean hasBusyBox;
+    @SerializedName("device_has_root") public boolean hasRoot;
+    @SerializedName("device_su_version") public String suVersion;
+
+    private static final Device sInstance = new Device();
 
     private Device() {
         platformVersion = Build.VERSION.RELEASE;
@@ -61,13 +68,31 @@ public class Device {
         board = Build.BOARD;
         bootloader = Build.BOOTLOADER;
         radio = Build.getRadioVersion();
+
+        // initialize defaults
+        hasBusyBox = false;
+        hasRoot = false;
+        suVersion = "-";
     }
 
     public static Device get() {
-        if (sInstance == null) {
-            sInstance = new Device();
-        }
         return sInstance;
+    }
+
+    public void update() {
+        // check root
+        final boolean binaryExists = RootTools.isRootAvailable()
+                || new File("/system/bin/su").exists()
+                || new File("/system/xbin/su").exists()
+                || new File("/system/bin/.ext/.su").exists()
+                || new File("/system/xbin/sugote").exists();
+        hasRoot = binaryExists && RootTools.isAccessGiven();
+
+        // get su version
+        suVersion = Utils.getCommandResult("su -v", "-");
+
+        // check busybox
+        hasBusyBox = RootTools.isBusyboxAvailable();
     }
 
     private String getRuntime() {

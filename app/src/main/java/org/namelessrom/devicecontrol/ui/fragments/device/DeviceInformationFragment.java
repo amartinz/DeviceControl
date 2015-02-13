@@ -35,7 +35,7 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.objects.CpuInfo;
-import org.namelessrom.devicecontrol.objects.Device;
+import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.objects.KernelInfo;
 import org.namelessrom.devicecontrol.objects.MemoryInfo;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;

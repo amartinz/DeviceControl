@@ -30,13 +30,9 @@ import android.widget.TextView;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
-import org.namelessrom.devicecontrol.objects.Device;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-
-import java.io.File;
 
 /**
  * Dummy Activity, used as Launcher.
@@ -54,8 +50,6 @@ public class DummyLauncher extends BaseActivity {
     private Button mAction;
 
     private final Handler mHandler = new Handler();
-    private boolean hasRoot = false;
-    private boolean hasBusyBox = false;
 
     @Override protected void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
@@ -69,11 +63,11 @@ public class DummyLauncher extends BaseActivity {
         mAction = (Button) findViewById(R.id.btn_left);
         mAction.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                if (!hasRoot) {
+                if (!Device.get().hasRoot) {
                     final String url = String.format("https://www.google.com/#q=how+to+root+%s",
                             Device.get().model);
                     AppHelper.viewInBrowser(url);
-                } else if (!hasBusyBox) {
+                } else if (!Device.get().hasBusyBox) {
                     RootTools.offerBusyBox();
                 }
             }
@@ -106,27 +100,23 @@ public class DummyLauncher extends BaseActivity {
         finish();
     }
 
-    private class CheckTools extends AsyncTask<Void, Void, Void> {
+    private class CheckTools extends AsyncTask<Void, Void, Device> {
 
-        @Override protected Void doInBackground(Void... params) {
-            updateStatus(getString(R.string.checking_root));
-            final boolean binaryExists = RootTools.isRootAvailable()
-                    || new File("/system/bin/su").exists()
-                    || new File("/system/xbin/su").exists()
-                    || new File("/system/bin/.ext/.su").exists()
-                    || new File("/system/xbin/sugote").exists();
-            hasRoot = binaryExists && RootTools.isAccessGiven();
+        @Override protected Device doInBackground(Void... params) {
+            final Device device = Device.get();
 
-            final String suVersion = Utils.getCommandResult("su -v", "unknown");
-            Logger.i(this, "suVersion -> %s", suVersion);
+            updateStatus(getString(R.string.checking_requirements));
+            device.update();
 
-            updateStatus(getString(R.string.checking_busybox));
-            hasBusyBox = RootTools.isBusyboxAvailable();
-            return null;
+            Logger.i(this, "hasRoot -> %s", device.hasRoot);
+            Logger.i(this, "suVersion -> %s", device.suVersion);
+            Logger.i(this, "hasBusyBox -> %s", device.hasBusyBox);
+
+            return device;
         }
 
-        @Override protected void onPostExecute(Void aVoid) {
-            if (hasRoot && hasBusyBox) {
+        @Override protected void onPostExecute(final Device device) {
+            if (device.hasRoot && device.hasBusyBox) {
                 startActivity();
                 return;
             }
@@ -134,15 +124,14 @@ public class DummyLauncher extends BaseActivity {
             mProgressLayout.setVisibility(View.GONE);
             mLauncher.setVisibility(View.VISIBLE);
 
-            if (hasRoot) {
+            if (device.hasRoot) {
                 final String status = getString(R.string.app_warning_busybox,
                         getString(R.string.app_name)) + "\n\n" +
                         getString(R.string.app_warning_busybox_note);
                 mStatus.setText(status);
                 mAction.setText(R.string.get_busybox);
             } else {
-                mStatus.setText(getString(R.string.app_warning_root,
-                        getString(R.string.app_name)));
+                mStatus.setText(getString(R.string.app_warning_root, getString(R.string.app_name)));
                 mAction.setText(R.string.more_information);
             }
         }
