@@ -45,7 +45,7 @@
             android:title="@string/uksm" />
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:icon="@drawable/ic_general_heat"
+            android:icon="@drawable/ic_heat"
             android:key="thermal"
             android:title="@string/thermal" />
 
