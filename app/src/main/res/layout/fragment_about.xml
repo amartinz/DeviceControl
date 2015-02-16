@@ -59,9 +59,8 @@
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/logo"
-            android:scaleType="fitCenter"
-            android:layout_below="@+id/detailsTxtView"
-            android:layout_alignParentBottom="true" />
+            android:scaleType="centerInside"
+            android:layout_below="@+id/detailsTxtView" />
 
     </RelativeLayout>
 </ScrollView>

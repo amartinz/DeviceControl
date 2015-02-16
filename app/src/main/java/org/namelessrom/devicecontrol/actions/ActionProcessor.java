@@ -108,7 +108,7 @@ public class ActionProcessor {
             return DrawableHelper.applyAccentColorFilter(R.drawable.ic_menu_perf_extras);
         }
         if (TextUtils.equals(CATEGORY_FS, category)) {
-            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_general_storage);
+            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_storage);
         }
 
         // return the extras one by default

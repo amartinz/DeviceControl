@@ -24,24 +24,24 @@
 
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-        android:icon="@drawable/ic_general_app"
+        android:icon="@drawable/ic_android"
         android:key="app_manager"
         android:title="@string/app_manager" />
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-        android:icon="@drawable/ic_general_wifi"
+        android:icon="@drawable/ic_wifi"
         android:key="wireless_file_manager"
         android:title="@string/wireless_file_manager" />
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/editors">
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:icon="@drawable/ic_general_editor"
+            android:icon="@drawable/ic_mode_edit"
             android:key="build_prop"
             android:title="@string/buildprop" />
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:icon="@drawable/ic_general_editor"
+            android:icon="@drawable/ic_mode_edit"
             android:key="sysctl_vm"
             android:title="@string/sysctl_vm" />
 

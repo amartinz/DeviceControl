@@ -76,7 +76,7 @@ public class WebServerService extends Service {
         builder.setContentTitle(title)
                 .setContentText(text)
                 .setOngoing(true)
-                .setSmallIcon(R.drawable.ic_general_wifi)
+                .setSmallIcon(R.drawable.ic_wifi)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
         addNotificationStopButton(builder);

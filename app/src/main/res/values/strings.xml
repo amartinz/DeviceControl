@@ -402,7 +402,7 @@
     <string name="motion">Motion</string>
     <string name="position">Position</string>
     <string name="sensor_information">Show sensor information</string>
-    <string name="sensor_information_summary">Sensors which are not supported are hidden</string>
+    <string name="sensor_information_summary">View detailed information about your sensors</string>
     <string name="sensor_light">Light</string>
     <string name="sensor_temperature">Temperature</string>
     <string name="sensor_pressure">Pressure</string>

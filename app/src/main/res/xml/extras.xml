@@ -26,7 +26,7 @@
             android:title="@string/entropy" />
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:icon="@drawable/ic_general_storage"
+            android:icon="@drawable/ic_storage"
             android:key="filesystem"
             android:title="@string/filesystem" />
 

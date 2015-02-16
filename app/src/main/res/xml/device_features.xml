@@ -18,7 +18,7 @@
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-        android:icon="@drawable/ic_general_battery"
+        android:icon="@drawable/ic_battery"
         android:key="fast_charge"
         android:summary="@string/fast_charge_summary"
         android:title="@string/fast_charge" />
