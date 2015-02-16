@@ -43,14 +43,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menuItemTitle="@string/preferences"
-            app:menuItemImage="@drawable/ic_menu_preferences" />
+            app:menuItemImage="@drawable/ic_settings" />
 
         <org.namelessrom.devicecontrol.ui.views.MenuListItem
             android:id="@+id/menu_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menuItemTitle="@string/about"
-            app:menuItemImage="@drawable/ic_menu_about" />
+            app:menuItemImage="@drawable/ic_info" />
 
     </LinearLayout>
 

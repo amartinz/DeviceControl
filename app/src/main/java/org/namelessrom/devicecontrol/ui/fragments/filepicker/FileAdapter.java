@@ -124,10 +124,10 @@ public class FileAdapter extends BaseAdapter {
 
         if (isDirectory) {
             viewHolder.icon
-                    .setImageDrawable(resources.getDrawable(R.drawable.ic_general_directory));
+                    .setImageDrawable(resources.getDrawable(R.drawable.ic_folder));
             viewHolder.info.setText(String.valueOf(new Date(file.lastModified())));
         } else {
-            viewHolder.icon.setImageDrawable(resources.getDrawable(R.drawable.ic_general_file));
+            viewHolder.icon.setImageDrawable(resources.getDrawable(R.drawable.ic_file));
             viewHolder.info.setText(String.valueOf(new Date(file.lastModified())) + " | "
                     + Formatter.formatFileSize(Application.get(), file.length()));
 
