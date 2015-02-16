@@ -15,11 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments.device;
+package org.namelessrom.devicecontrol.device;
 
-import android.content.Context;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,27 +25,22 @@ import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
+import android.support.v4.preference.PreferenceFragment;
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.objects.CpuInfo;
-import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.objects.KernelInfo;
 import org.namelessrom.devicecontrol.objects.MemoryInfo;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
-public class DeviceInformationFragment extends AttachPreferenceFragment implements DeviceConstants {
+public class DeviceInformationGeneralFragment extends PreferenceFragment implements DeviceConstants {
 
     private static final String KEY_PLATFORM_VERSION = "platform_version";
     private static final String KEY_ANDROID_ID = "android_id";
@@ -60,10 +52,6 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
     // Overridden Methods
     //==============================================================================================
 
-    @Override protected int getFragmentId() {
-        return ID_DEVICE_INFORMATION;
-    }
-
     @Override public void onResume() {
         super.onResume();
         mEasterEggStarted = false;
@@ -71,10 +59,8 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
 
     @Override public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        addPreferencesFromResource(R.xml.device_information);
+        addPreferencesFromResource(R.xml.device_information_general);
 
-        final SensorManager sensorManager =
-                (SensorManager) Application.get().getSystemService(Context.SENSOR_SERVICE);
         final Device device = Device.get();
 
         // Platform
@@ -145,20 +131,6 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
         category = (PreferenceCategory) findPreference("memory");
         new MemoryInfoTask(category).execute();
 
-        // Sensors
-        category = (PreferenceCategory) findPreference("sensors");
-
-        // we need an array list to be able to sort it, a normal list throws
-        // java.lang.UnsupportedOperationException when sorting
-        final ArrayList<Sensor> sensorList = new ArrayList<>(
-                sensorManager.getSensorList(Sensor.TYPE_ALL));
-
-        Collections.sort(sensorList, new SortIgnoreCase());
-
-        for (final Sensor s : sensorList) {
-            addPreference(category, "", s.getName(), s.getVendor());
-        }
-
         if (category.getPreferenceCount() == 0) {
             getPreferenceScreen().removePreference(category);
         }
@@ -196,14 +168,6 @@ public class DeviceInformationFragment extends AttachPreferenceFragment implemen
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
-    }
-
-    private class SortIgnoreCase implements Comparator<Sensor> {
-        public int compare(final Sensor sensor1, final Sensor sensor2) {
-            final String s1 = sensor1 != null ? sensor1.getName() : "";
-            final String s2 = sensor2 != null ? sensor2.getName() : "";
-            return s1.compareToIgnoreCase(s2);
-        }
     }
 
     private class CpuInfoTask extends AsyncTask<Void, Void, Boolean> {

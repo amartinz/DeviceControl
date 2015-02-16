@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments.device;
+package org.namelessrom.devicecontrol.device;
 
 import android.os.Bundle;
 import android.preference.Preference;
@@ -48,7 +48,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
-public class DeviceFragment extends AttachPreferenceFragment
+public class DeviceFeatureFragment extends AttachPreferenceFragment
         implements DeviceConstants, Preference.OnPreferenceChangeListener,
         Preference.OnPreferenceClickListener, ShellOutput.OnShellOutputListener {
 
@@ -422,7 +422,7 @@ public class DeviceFragment extends AttachPreferenceFragment
                 String currentLine;
                 while ((currentLine = reader.readLine()) != null) {
                     if (currentLine.equals(GLOVE_MODE)) {
-                        Logger.v(DeviceInformationFragment.class,
+                        Logger.v(DeviceInformationGeneralFragment.class,
                                 "Glove mode / high touch sensitivity supported");
                         return true;
                     }
@@ -440,7 +440,7 @@ public class DeviceFragment extends AttachPreferenceFragment
             }
         }
 
-        Logger.v(DeviceInformationFragment.class,
+        Logger.v(DeviceInformationGeneralFragment.class,
                 "Glove mode / high touch sensitivity NOT supported");
 
         return false;

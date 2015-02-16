@@ -44,8 +44,4 @@
         android:key="memory"
         android:title="@string/memory" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="sensors"
-        android:title="@string/sensors" />
-
 </PreferenceScreen>

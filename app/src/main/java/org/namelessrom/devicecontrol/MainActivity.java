@@ -45,13 +45,14 @@ import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.device.DeviceFeatureFragment;
+import org.namelessrom.devicecontrol.device.DeviceInformationFragment;
+import org.namelessrom.devicecontrol.device.sub.FastChargeFragment;
+import org.namelessrom.devicecontrol.device.sub.SoundControlFragment;
+import org.namelessrom.devicecontrol.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.ui.fragments.about.AboutFragment;
-import org.namelessrom.devicecontrol.ui.fragments.device.DeviceFragment;
-import org.namelessrom.devicecontrol.ui.fragments.device.DeviceInformationFragment;
-import org.namelessrom.devicecontrol.ui.fragments.device.sub.FastChargeFragment;
-import org.namelessrom.devicecontrol.ui.fragments.device.sub.SoundControlFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.GpuSettingsFragment;
@@ -66,7 +67,6 @@ import org.namelessrom.devicecontrol.ui.fragments.performance.sub.UksmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.ui.fragments.preferences.PreferencesFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.AppListFragment;
-import org.namelessrom.devicecontrol.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.TaskerFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.WirelessFileManagerFragment;
@@ -384,7 +384,7 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
                 break;
             //--------------------------------------------------------------------------------------
             case ID_FEATURES:
-                if (!onResume) mCurrentFragment = new DeviceFragment();
+                if (!onResume) mCurrentFragment = new DeviceFeatureFragment();
                 mTitle = mFragmentTitle = R.string.features;
                 mSubFragmentTitle = -1;
                 break;

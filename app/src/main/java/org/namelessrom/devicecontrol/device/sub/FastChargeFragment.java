@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments.device.sub;
+package org.namelessrom.devicecontrol.device.sub;
 
 import android.os.Bundle;
 import android.preference.Preference;

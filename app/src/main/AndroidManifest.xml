@@ -166,7 +166,7 @@
             android:enabled="true"
             android:exported="false" />
         <service
-            android:name=".services.BootUpService"
+            android:name=".services.BootupService"
             android:enabled="true"
             android:exported="false" />
         <service

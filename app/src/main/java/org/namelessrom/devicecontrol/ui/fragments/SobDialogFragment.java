@@ -9,7 +9,7 @@ import android.support.v4.app.DialogFragment;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
-import org.namelessrom.devicecontrol.services.BootUpService;
+import org.namelessrom.devicecontrol.services.BootupService;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -67,17 +67,17 @@ public class SobDialogFragment extends DialogFragment {
     private String getKey(final int entry) {
         switch (entry) {
             case R.string.device:
-                return BootUpService.SOB_DEVICE;
+                return BootupService.SOB_DEVICE;
             case R.string.cpusettings:
-                return BootUpService.SOB_CPU;
+                return BootupService.SOB_CPU;
             case R.string.gpusettings:
-                return BootUpService.SOB_GPU;
+                return BootupService.SOB_GPU;
             case R.string.extras:
-                return BootUpService.SOB_EXTRAS;
+                return BootupService.SOB_EXTRAS;
             case R.string.sysctl_vm:
-                return BootUpService.SOB_SYSCTL;
+                return BootupService.SOB_SYSCTL;
             case R.string.voltage_control:
-                return BootUpService.SOB_VOLTAGE;
+                return BootupService.SOB_VOLTAGE;
             default:
                 return "-";
         }
