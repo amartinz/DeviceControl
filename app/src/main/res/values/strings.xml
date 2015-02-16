@@ -398,4 +398,30 @@
     <string name="perm_costs_money">this may cost you money</string>
     <string name="perms_new_perm_prefix"><font size="12" fgcolor="#ff33b5e5">NEW: </font></string>
     <string name="perms_description_app">Provided by <xliff:g id="app_name">%1$s</xliff:g>.</string>
+    <string name="environment">Environment</string>
+    <string name="motion">Motion</string>
+    <string name="position">Position</string>
+    <string name="sensor_information">Show sensor information</string>
+    <string name="sensor_information_summary">Sensors which are not supported are hidden</string>
+    <string name="sensor_light">Light</string>
+    <string name="sensor_temperature">Temperature</string>
+    <string name="sensor_pressure">Pressure</string>
+    <string name="sensor_pressure_note">Note: values can be in %1$s or %2$s depending on the manufacturers implementation</string>
+    <string name="sensor_relative_humitidy">Relative humitidy</string>
+    <string name="sensor_accelerometer">Accelerometer (including gravity)</string>
+    <string name="sensor_accelerometer_linear">Accelerometer linear (excluding gravity)</string>
+    <string name="sensor_gravity">Gravity</string>
+    <string name="sensor_rotation_vector">Rotation vector</string>
+    <string name="sensor_gyroscope">Gyroscope</string>
+    <string name="sensor_gyroscope_uncalibrated">Gyroscope (uncalibrated)</string>
+    <string name="sensor_step">Step counter</string>
+    <string name="sensor_proximity">Proximity</string>
+    <string name="sensor_magnetic_field">Magnetic field</string>
+    <string name="sensor_magnetic_field_uncalibrated">Magnetic field (uncalibrated)</string>
+    <string name="sensor_geomagnetic_rotation_vector">Geomagnetic rotation vector</string>
+    <string name="sensor_game_rotation_vector">Game rotation vector</string>
+    <string name="power_usage">Power usage</string>
+    <string name="steps">Steps</string>
+    <string name="far">Far</string>
+    <string name="near">Near</string>
 </resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+<!--  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -14,15 +14,16 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/themeColor"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-        android:key="sensor_test"
-        android:title="@string/sensor_information"
-        android:summary="@string/sensor_information_summary" />
-
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="sensors"
-        android:title="@string/sensors" />
-
-</PreferenceScreen>
+    <LinearLayout
+        android:id="@+id/sensor_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+</ScrollView>
