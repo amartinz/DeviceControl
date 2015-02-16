@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+<!--  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -154,6 +154,19 @@
             android:label="@string/add_task"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Light"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.namelessrom.devicecontrol.MainActivity" />
+        </activity>
+        <!-- Device activities -->
+        <activity
+            android:name=".device.SensorActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true"
+            android:label="@string/sensors"
+            android:launchMode="singleTask"
+            android:taskAffinity=""
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
