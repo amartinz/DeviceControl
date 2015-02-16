@@ -97,7 +97,6 @@
         <activity
             android:name=".appmanager.AppDetailsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:excludeFromRecents="true"
             android:label="@string/app_details"
             android:launchMode="singleTask"
             android:taskAffinity=""
@@ -114,7 +113,6 @@
         <activity
             android:name=".activities.DonationActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:excludeFromRecents="true"
             android:label="@string/donate_"
             android:launchMode="singleTask"
             android:taskAffinity=""
@@ -163,7 +161,6 @@
         <activity
             android:name=".device.SensorActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:excludeFromRecents="true"
             android:label="@string/sensors"
             android:launchMode="singleTask"
             android:taskAffinity=""
