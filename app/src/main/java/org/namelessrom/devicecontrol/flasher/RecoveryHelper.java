@@ -1,6 +1,6 @@
 /*
  * Copyright 2014 ParanoidAndroid Project
- * Modifications Copyright (C) 2014 Alexander "Evisceration" Martinz
+ * Modifications Copyright (C) 2014 - 2015 Alexander "Evisceration" Martinz
  *
  * This file is part of Paranoid OTA.
  *
@@ -18,25 +18,22 @@
  * along with Paranoid OTA.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.namelessrom.devicecontrol.utils;
+package org.namelessrom.devicecontrol.flasher;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.SparseArray;
 
-import org.namelessrom.devicecontrol.utils.recovery.CwmBasedRecovery;
-import org.namelessrom.devicecontrol.utils.recovery.RecoveryInfo;
-import org.namelessrom.devicecontrol.utils.recovery.TwrpRecovery;
+import org.namelessrom.devicecontrol.flasher.recovery.CwmBasedRecovery;
+import org.namelessrom.devicecontrol.flasher.recovery.RecoveryInfo;
+import org.namelessrom.devicecontrol.flasher.recovery.TwrpRecovery;
+import org.namelessrom.devicecontrol.utils.IOUtils;
 
 public class RecoveryHelper {
 
     private SparseArray<RecoveryInfo> mRecoveries = new SparseArray<>();
-    private Context mContext;
 
     public RecoveryHelper(Context context) {
-
-        mContext = context;
-
         mRecoveries.put(RecoveryInfo.CWM_BASED, new CwmBasedRecovery(context));
         mRecoveries.put(RecoveryInfo.TWRP_BASED, new TwrpRecovery());
     }
@@ -56,7 +53,8 @@ public class RecoveryHelper {
         return getRecovery(id).getCommandsFile();
     }
 
-    @SuppressLint("SdCardPath") public String getRecoveryFilePath(final int id, String filePath) {
+    @SuppressLint("SdCardPath")
+    public String getRecoveryFilePath(final int id, String filePath) {
         RecoveryInfo info = getRecovery(id);
 
         String internalStorage = info.getInternalSdcard();
@@ -100,9 +98,8 @@ public class RecoveryHelper {
         return filePath;
     }
 
-    public String[] getCommands(int id, String[] items, String[] originalItems, boolean wipeData,
-            boolean wipeCaches, String backupFolder, String backupOptions) {
-        return getRecovery(id).getCommands(mContext, items, originalItems, wipeData, wipeCaches,
-                backupFolder, backupOptions);
+    public String[] getCommands(int id, String[] items, boolean wipeData, boolean wipeCache,
+            String backupFolder, String backupOptions) {
+        return getRecovery(id).getCommands(items, wipeData, wipeCache, backupFolder, backupOptions);
     }
 }

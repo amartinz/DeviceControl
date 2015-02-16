@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments.tools;
+package org.namelessrom.devicecontrol.flasher;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,11 +34,11 @@ import android.widget.LinearLayout;
 import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ObservableScrollView;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.RequestFileActivity;
 import org.namelessrom.devicecontrol.ui.adapters.FlasherAdapter;
-import org.namelessrom.devicecontrol.ui.cards.FlashCard;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -90,9 +90,13 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFlashCard = new FlashCard(getActivity(), this);
         final LinearLayout container = (LinearLayout) view.findViewById(R.id.file_container);
+        // add flasher card
+        mFlashCard = new FlashCard(getActivity(), this);
         container.addView(mFlashCard, 0);
+        // add option card
+        container.addView(new FlashOptionCard(getActivity()), 0);
+
         RequestFileActivity.setRequestFileCallback(this);
     }
 
@@ -104,6 +108,7 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
         mFiles.add(file);
         mRecyclerView.setAdapter(new FlasherAdapter(this, mFiles));
         mFlashCard.install.setEnabled(true);
+        mFlashCard.install.setTextColor(Application.get().getAccentColor());
     }
 
     @Override public void fileRequested(String filePath) {
@@ -135,7 +140,11 @@ public class FlasherFragment extends AttachFragment implements DeviceConstants,
 
                 mFiles.remove(file);
                 mRecyclerView.setAdapter(new FlasherAdapter(FlasherFragment.this, mFiles));
-                mFlashCard.install.setEnabled(mFiles.size() > 0);
+                final boolean isEnabled = mFiles.size() > 0;
+                mFlashCard.install.setEnabled(isEnabled);
+                mFlashCard.install.setTextColor(isEnabled
+                        ? Application.get().getAccentColor()
+                        : Application.get().getColor(android.R.color.darker_gray));
             }
         });
         alert.show();

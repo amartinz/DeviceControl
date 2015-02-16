@@ -35,8 +35,6 @@ public class PreferencesFragment extends AttachViewPagerFragment {
 
         fragments.add(new MainPreferencesFragment());
         titles.add(getString(R.string.general));
-        fragments.add(new FlasherPreferencesFragment());
-        titles.add(getString(R.string.flasher));
 
         return new ViewPagerAdapter(getChildFragmentManager(), fragments, titles);
     }

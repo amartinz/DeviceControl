@@ -1,6 +1,6 @@
 /*
  * Copyright 2014 ParanoidAndroid Project
- * Modifications Copyright (C) 2014 Alexander "Evisceration" Martinz
+ * Modifications Copyright (C) 2014 - 2015 Alexander "Evisceration" Martinz
  *
  * This file is part of Paranoid OTA.
  *
@@ -18,9 +18,7 @@
  * along with Paranoid OTA.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.namelessrom.devicecontrol.utils.recovery;
-
-import android.content.Context;
+package org.namelessrom.devicecontrol.flasher.recovery;
 
 public abstract class RecoveryInfo {
 
@@ -69,6 +67,6 @@ public abstract class RecoveryInfo {
 
     public abstract String getCommandsFile();
 
-    public abstract String[] getCommands(Context context, String[] items, String[] originalItems,
-            boolean wipeData, boolean wipeCaches, String backupFolder, String backupOptions);
+    public abstract String[] getCommands(String[] items, boolean wipeData, boolean wipeCaches,
+            String backupFolder, String backupOptions);
 }

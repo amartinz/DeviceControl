@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,33 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.cards;
+package org.namelessrom.devicecontrol.flasher;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.fragments.tools.FlasherFragment;
-import org.namelessrom.devicecontrol.utils.RebootHelper;
-import org.namelessrom.devicecontrol.utils.RecoveryHelper;
 
-public class FlashCard extends LinearLayout {
+public class FlashCard extends BaseCard {
     public Button install;
 
     public FlashCard(Context context, final FlasherFragment flasherFragment) {
-        super(context, null);
-        final int resId;
-        if (Application.get().isDarkTheme()) {
-            resId = R.layout.card_install_dark;
-        } else {
-            resId = R.layout.card_install_light;
-        }
-        LayoutInflater.from(context).inflate(resId, this, true);
+        super(context);
+        LayoutInflater.from(context)
+                .inflate(R.layout.merge_card_flasher_install, getContainer(), true);
 
         final RecoveryHelper recoveryHelper = new RecoveryHelper(flasherFragment.getActivity());
         final RebootHelper rebootHelper = new RebootHelper(recoveryHelper);
@@ -64,6 +55,5 @@ public class FlashCard extends LinearLayout {
 
         });
     }
-
 
 }

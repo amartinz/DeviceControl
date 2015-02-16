@@ -285,18 +285,6 @@
         <item>2</item>
     </string-array>
 
-    <string-array name="recovery_type_entries" translatable="false">
-        <item>@string/both</item>
-        <item>@string/clockworkmod</item>
-        <item>@string/open_recovery</item>
-    </string-array>
-
-    <string-array name="recovery_type_values" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
     <string-array name="read_ahead_entries" translatable="false">
         <item>@string/size_128_kb</item>
         <item>@string/size_256_kb</item>
