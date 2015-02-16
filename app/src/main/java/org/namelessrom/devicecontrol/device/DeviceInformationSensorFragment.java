@@ -18,10 +18,13 @@
 package org.namelessrom.devicecontrol.device;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceCategory;
+import android.preference.PreferenceScreen;
 import android.support.v4.preference.PreferenceFragment;
 import android.text.TextUtils;
 
@@ -60,6 +63,17 @@ public class DeviceInformationSensorFragment extends PreferenceFragment implemen
         if (category.getPreferenceCount() == 0) {
             getPreferenceScreen().removePreference(category);
         }
+    }
+
+    @Override public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
+            Preference preference) {
+        final String key = preference.getKey();
+        if ("sensor_test".equals(key)) {
+            final Intent intent = new Intent(getActivity(), SensorActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
     private CustomPreference addPreference(final PreferenceCategory category, final String key,
