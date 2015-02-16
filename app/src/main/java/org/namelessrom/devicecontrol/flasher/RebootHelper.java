@@ -1,6 +1,6 @@
 /*
  * Copyright 2014 ParanoidAndroid Project
- * Modifications Copyright (C) 2014 Alexander "Evisceration" Martinz
+ * Modifications Copyright (C) 2014 - 2015 Alexander "Evisceration" Martinz
  *
  * This file is part of Paranoid OTA.
  *
@@ -18,7 +18,7 @@
  * along with Paranoid OTA.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.namelessrom.devicecontrol.utils;
+package org.namelessrom.devicecontrol.flasher;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -33,8 +33,11 @@ import android.widget.EditText;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.flasher.recovery.RecoveryInfo;
+import org.namelessrom.devicecontrol.utils.IOUtils;
+import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
-import org.namelessrom.devicecontrol.utils.recovery.RecoveryInfo;
 
 public class RebootHelper implements DeviceConstants {
 
@@ -207,8 +210,8 @@ public class RebootHelper implements DeviceConstants {
                 files[i] = mRecoveryHelper.getRecoveryFilePath(recovery, items[i]);
             }
 
-            final String[] commands = mRecoveryHelper.getCommands(recovery, files, items,
-                    wipeData, wipeCaches, backupFolder, backupOptions);
+            final String[] commands = mRecoveryHelper.getCommands(recovery, files, wipeData,
+                    wipeCaches, backupFolder, backupOptions);
             if (commands != null) {
                 for (final String s : commands) {
                     sb.append(s).append("\n");

@@ -349,6 +349,7 @@
     <string name="hardware_display_gamma_calibration_desc_one">Red,Green,Blue</string>
     <string name="install_info">The following file(s) are going to be installed.\n\nYou can add more zips by clicking on the \"Add file\" button.</string>
     <string name="select_actions">Select the actions you would like to perform</string>
+    <string name="select_recovery">Select your recovery variant</string>
     <string name="backup">Backup</string>
     <string name="wipe_data">Wipe Data</string>
     <string name="wipe_caches">Wipe Cache &amp; Dalvik</string>

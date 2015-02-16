@@ -26,7 +26,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.fragments.tools.FlasherFragment;
+import org.namelessrom.devicecontrol.flasher.FlasherFragment;
 
 import java.io.File;
 import java.util.List;

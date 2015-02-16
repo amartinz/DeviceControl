@@ -66,7 +66,7 @@ import org.namelessrom.devicecontrol.ui.fragments.performance.sub.UksmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.ui.fragments.preferences.PreferencesFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.AppListFragment;
-import org.namelessrom.devicecontrol.ui.fragments.tools.FlasherFragment;
+import org.namelessrom.devicecontrol.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.TaskerFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.WirelessFileManagerFragment;

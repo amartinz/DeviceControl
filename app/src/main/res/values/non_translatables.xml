@@ -44,8 +44,8 @@
     <string name="submit_confirm_button" translatable="false">@string/finish</string>
     <string name="lcd_density_default" translatable="false">480</string>
     <string name="sysctl_vm" translatable="false">SysCtl / VM</string>
-    <string name="open_recovery" translatable="false">OpenRecovery</string>
-    <string name="clockworkmod" translatable="false">ClockWorkMod</string>
+    <string name="openrecovery_twrp" translatable="false">OpenRecovery / TWRP</string>
+    <string name="cyanogen_clockworkmod" translatable="false">Cyanogen / ClockWorkMod</string>
     <string name="fsync" translatable="false">FSync</string>
     <string name="dyn_fsync" translatable="false">Dynamic FSync</string>
     <string name="cpu_abi" translatable="false">CPU ABI</string>
