@@ -113,10 +113,10 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         mMenuIcons.add(-1);
         // device - information
         mMenuEntries.add(ID_DEVICE_INFORMATION);
-        mMenuIcons.add(R.drawable.ic_menu_device);
+        mMenuIcons.add(R.drawable.ic_device_info);
         // device - features
         mMenuEntries.add(ID_FEATURES);
-        mMenuIcons.add(R.drawable.ic_menu_features);
+        mMenuIcons.add(R.drawable.ic_developer_mode);
 
         // header - performance
         mMenuEntries.add(R.string.performance);
@@ -148,13 +148,13 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         mMenuIcons.add(-1);
         // tools - tasker
         mMenuEntries.add(ID_TOOLS_TASKER);
-        mMenuIcons.add(R.drawable.ic_menu_tasker);
+        mMenuIcons.add(R.drawable.ic_extension);
         // tools - flasher
         mMenuEntries.add(ID_TOOLS_FLASHER);
-        mMenuIcons.add(R.drawable.ic_menu_flash);
+        mMenuIcons.add(R.drawable.ic_flash);
         // tools - more
         mMenuEntries.add(ID_TOOLS_MORE);
-        mMenuIcons.add(R.drawable.ic_menu_code);
+        mMenuIcons.add(R.drawable.ic_widgets);
     }
 
     //==============================================================================================
