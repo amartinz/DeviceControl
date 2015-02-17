@@ -29,9 +29,9 @@ import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.device.DeviceFeatureFragment;
+import org.namelessrom.devicecontrol.device.DeviceFeatureKernelFragment;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
-import org.namelessrom.devicecontrol.ui.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.editor.SysctlFragment;
@@ -157,7 +157,7 @@ public class BootupService extends IntentService implements DeviceConstants {
             Logger.i(this, "----- GPU END -----");
             Logger.i(this, "----- EXTRAS START -----");
             if (PreferenceHelper.getBoolean(SOB_EXTRAS, false)) {
-                cmd = ExtrasFragment.restore();
+                cmd = DeviceFeatureKernelFragment.restore();
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
             }

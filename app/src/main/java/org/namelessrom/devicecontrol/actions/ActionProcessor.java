@@ -105,14 +105,14 @@ public class ActionProcessor {
             return DrawableHelper.applyAccentColorFilter(R.drawable.ic_menu_perf_gpu);
         }
         if (TextUtils.equals(CATEGORY_EXTRAS, category)) {
-            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_menu_perf_extras);
+            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_developer_mode);
         }
         if (TextUtils.equals(CATEGORY_FS, category)) {
             return DrawableHelper.applyAccentColorFilter(R.drawable.ic_storage);
         }
 
         // return the extras one by default
-        return DrawableHelper.applyAccentColorFilter(R.drawable.ic_menu_perf_extras);
+        return DrawableHelper.applyAccentColorFilter(R.drawable.ic_developer_mode);
     }
 
     public static class Entry {

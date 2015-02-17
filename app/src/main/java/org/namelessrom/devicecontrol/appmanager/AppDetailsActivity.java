@@ -49,6 +49,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -70,11 +71,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 
-import it.neokree.materialtabs.MaterialTab;
-import it.neokree.materialtabs.MaterialTabHost;
-import it.neokree.materialtabs.MaterialTabListener;
-
-public class AppDetailsActivity extends BaseActivity implements PackageObserver.OnPackageStatsListener, View.OnClickListener, MaterialTabListener {
+public class AppDetailsActivity extends BaseActivity implements PackageObserver.OnPackageStatsListener, View.OnClickListener {
     public static final String ARG_FROM_ACTIVITY = "arg_from_activity";
     public static final String ARG_PACKAGE_NAME = "arg_package_name";
 
@@ -83,9 +80,6 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
 
     private static final Handler mHandler = new Handler();
     private final PackageManager mPm = Application.get().getPackageManager();
-
-    private MaterialTabHost mTabHost;
-    private ViewPager mPager;
 
     private AppItem mAppItem;
 
@@ -122,26 +116,15 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mTabHost = (MaterialTabHost) findViewById(R.id.tabHost);
-        // TODO: make it visible once used
-        mTabHost.setVisibility(View.GONE);
-
         final String[] titles = { getString(R.string.app_details) };
         final AppPagerAdapter adapter = new AppPagerAdapter(titles);
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPager.setAdapter(adapter);
-        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override public void onPageSelected(int position) {
-                // when user do a swipe the selected tab change
-                mTabHost.setSelectedNavigationItem(position);
-            }
-        });
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(adapter);
 
-        for (int x = 0; x < adapter.getCount(); x++) {
-            mTabHost.addTab(mTabHost.newTab()
-                    .setText(adapter.getTitle(x))
-                    .setTabListener(this));
-        }
+        final PagerSlidingTabStrip tabHost = (PagerSlidingTabStrip) findViewById(R.id.tabHost);
+        // TODO: make it visible once used
+        tabHost.setVisibility(View.GONE);
+        //tabHost.setViewPager(viewPager);
 
         mAppDetailsContainer = findViewById(R.id.app_details_container);
         mAppDetailsError = findViewById(R.id.app_details_error);
@@ -673,7 +656,8 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
             mTitles = titles;
         }
 
-        public String getTitle(final int position) {
+        @Override
+        public String getPageTitle(final int position) {
             return mTitles[position];
         }
 
@@ -695,21 +679,12 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
         }
 
         @Override public int getCount() {
-            return 1;
+            return mTitles.length;
         }
 
         @Override public boolean isViewFromObject(View arg0, Object arg1) {
             return arg0 == arg1;
         }
     }
-
-    @Override public void onTabSelected(final MaterialTab tab) {
-        // when the tab is clicked the pager swipe content to the tab position
-        mPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override public void onTabReselected(MaterialTab tab) { }
-
-    @Override public void onTabUnselected(MaterialTab tab) { }
 
 }

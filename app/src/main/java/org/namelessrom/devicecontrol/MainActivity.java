@@ -57,7 +57,6 @@ import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.ui.fragments.about.AboutFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.CpuSettingsFragment;
-import org.namelessrom.devicecontrol.ui.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.FilesystemFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.GpuSettingsFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.InformationFragment;
@@ -139,9 +138,6 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
             mMenuEntries.add(ID_THERMAL);
             mMenuIcons.add(R.drawable.ic_heat);
         }
-        // performance - extras
-        mMenuEntries.add(ID_PERFORMANCE_EXTRA);
-        mMenuIcons.add(R.drawable.ic_menu_perf_extras);
 
         // header - tools
         mMenuEntries.add(R.string.tools);
@@ -418,6 +414,22 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
                 if (!onResume) mCurrentFragment = new SoundControlFragment();
                 mTitle = mSubFragmentTitle = R.string.sound_control;
                 break;
+            case ID_KSM:
+                if (!onResume) mCurrentFragment = new KsmFragment();
+                mTitle = mSubFragmentTitle = R.string.ksm;
+                break;
+            case ID_UKSM:
+                if (!onResume) mCurrentFragment = new UksmFragment();
+                mTitle = mSubFragmentTitle = R.string.uksm;
+                break;
+            case ID_VOLTAGE:
+                if (!onResume) mCurrentFragment = new VoltageFragment();
+                mTitle = mSubFragmentTitle = R.string.voltage_control;
+                break;
+            case ID_ENTROPY:
+                if (!onResume) mCurrentFragment = new EntropyFragment();
+                mTitle = mSubFragmentTitle = R.string.entropy;
+                break;
             //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_INFO:
                 if (!onResume) mCurrentFragment = new InformationFragment();
@@ -446,37 +458,15 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
                 mTitle = mFragmentTitle = R.string.filesystem;
                 mSubFragmentTitle = -1;
                 break;
+            case ID_IOSCHED_TUNING:
+                if (!onResume) mCurrentFragment = new IoSchedConfigFragment();
+                mTitle = mSubFragmentTitle = R.string.io;
+                break;
             //--------------------------------------------------------------------------------------
             case ID_THERMAL:
                 if (!onResume) mCurrentFragment = new ThermalFragment();
                 mTitle = mFragmentTitle = R.string.thermal;
                 mSubFragmentTitle = -1;
-                break;
-            //--------------------------------------------------------------------------------------
-            case ID_PERFORMANCE_EXTRA:
-                if (!onResume) mCurrentFragment = new ExtrasFragment();
-                mTitle = mFragmentTitle = R.string.extras;
-                mSubFragmentTitle = -1;
-                break;
-            case ID_KSM:
-                if (!onResume) mCurrentFragment = new KsmFragment();
-                mTitle = mSubFragmentTitle = R.string.ksm;
-                break;
-            case ID_UKSM:
-                if (!onResume) mCurrentFragment = new UksmFragment();
-                mTitle = mSubFragmentTitle = R.string.uksm;
-                break;
-            case ID_VOLTAGE:
-                if (!onResume) mCurrentFragment = new VoltageFragment();
-                mTitle = mSubFragmentTitle = R.string.voltage_control;
-                break;
-            case ID_ENTROPY:
-                if (!onResume) mCurrentFragment = new EntropyFragment();
-                mTitle = mSubFragmentTitle = R.string.entropy;
-                break;
-            case ID_IOSCHED_TUNING:
-                if (!onResume) mCurrentFragment = new IoSchedConfigFragment();
-                mTitle = mSubFragmentTitle = R.string.io;
                 break;
             //--------------------------------------------------------------------------------------
             case ID_TOOLS_TASKER:

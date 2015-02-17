@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
@@ -56,16 +57,9 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 import java.util.ArrayList;
 
-import it.neokree.materialtabs.MaterialTab;
-import it.neokree.materialtabs.MaterialTabHost;
-import it.neokree.materialtabs.MaterialTabListener;
-
-public class SensorActivity extends BaseActivity implements MaterialTabListener {
+public class SensorActivity extends BaseActivity {
     private final ArrayList<BaseSensor> mSensorList = new ArrayList<>();
     private final ArrayList<String> mTitleList = new ArrayList<>();
-
-    private MaterialTabHost mTabHost;
-    private ViewPager mPager;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,24 +84,13 @@ public class SensorActivity extends BaseActivity implements MaterialTabListener 
         mTitleList.add(getString(R.string.motion));
         mTitleList.add(getString(R.string.position));
 
-        mTabHost = (MaterialTabHost) findViewById(R.id.tabHost);
-
         final ViewPagerAdapter adapter = new ViewPagerAdapter(mTitleList);
-        mPager = (ViewPager) findViewById(R.id.viewpager);
-        mPager.setAdapter(adapter);
-        mPager.setOffscreenPageLimit(3);
-        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override public void onPageSelected(int position) {
-                // when user do a swipe the selected tab change
-                mTabHost.setSelectedNavigationItem(position);
-            }
-        });
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
 
-        for (int x = 0; x < adapter.getCount(); x++) {
-            mTabHost.addTab(mTabHost.newTab()
-                    .setText(adapter.getTitle(x))
-                    .setTabListener(this));
-        }
+        final PagerSlidingTabStrip tabHost = (PagerSlidingTabStrip) findViewById(R.id.tabHost);
+        tabHost.setViewPager(viewPager);
 
         // Environment
         final View environmentRoot = findViewById(R.id.environment_layout);
@@ -291,7 +274,8 @@ public class SensorActivity extends BaseActivity implements MaterialTabListener 
             mTitles = titles;
         }
 
-        public String getTitle(final int position) {
+        @Override
+        public String getPageTitle(final int position) {
             return mTitles.get(position);
         }
 
@@ -324,12 +308,4 @@ public class SensorActivity extends BaseActivity implements MaterialTabListener 
         }
     }
 
-    @Override public void onTabSelected(final MaterialTab tab) {
-        // when the tab is clicked the pager swipe content to the tab position
-        mPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override public void onTabReselected(MaterialTab tab) { }
-
-    @Override public void onTabUnselected(MaterialTab tab) { }
 }

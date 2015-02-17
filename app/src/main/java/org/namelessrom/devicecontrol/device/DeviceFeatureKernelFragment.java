@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments.performance;
+package org.namelessrom.devicecontrol.device;
 
 import android.os.Bundle;
 import android.preference.Preference;
@@ -36,15 +36,14 @@ import org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.ui.views.CustomPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.List;
 
-public class ExtrasFragment extends AttachPreferenceFragment implements DeviceConstants,
-        Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
+public class DeviceFeatureKernelFragment extends CustomPreferenceFragment implements Preference.OnPreferenceClickListener {
     //==============================================================================================
     // Files
     //==============================================================================================
@@ -76,11 +75,9 @@ public class ExtrasFragment extends AttachPreferenceFragment implements DeviceCo
     // Overridden Methods
     //==============================================================================================
 
-    @Override protected int getFragmentId() { return ID_PERFORMANCE_EXTRA; }
-
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.extras);
+        addPreferencesFromResource(R.xml.device_feature_kernel);
         mRoot = getPreferenceScreen();
 
         //------------------------------------------------------------------------------------------
@@ -190,16 +187,16 @@ public class ExtrasFragment extends AttachPreferenceFragment implements DeviceCo
 
     @Override public boolean onPreferenceClick(final Preference preference) {
         if (mVoltageControl == preference) {
-            MainActivity.loadFragment(getActivity(), ID_VOLTAGE);
+            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_VOLTAGE);
             return true;
         } else if (mKsm == preference) {
-            MainActivity.loadFragment(getActivity(), ID_KSM);
+            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_KSM);
             return true;
         } else if (mUksm == preference) {
-            MainActivity.loadFragment(getActivity(), ID_UKSM);
+            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_UKSM);
             return true;
         } else if (mEntropy == preference) {
-            MainActivity.loadFragment(getActivity(), ID_ENTROPY);
+            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_ENTROPY);
             return true;
         }
 
