@@ -57,8 +57,7 @@ public interface DeviceConstants {
     public static final int ID_TOOLS_MORE = R.string.more;
     public static final int ID_TOOLS_VM = ID_TOOLS_MORE + 1000;
     public static final int ID_TOOLS_EDITORS_VM = ID_TOOLS_MORE + 1020;
-    public static final int ID_TOOLS_BUILD_PROP = ID_TOOLS_MORE + 1100;
-    public static final int ID_TOOLS_EDITORS_BUILD_PROP = ID_TOOLS_MORE + 1120;
+    public static final int ID_TOOLS_EDITORS_BUILD_PROP = ID_TOOLS_MORE + 1100;
     public static final int ID_TOOLS_APP_MANAGER = ID_TOOLS_MORE + 1200;
     public static final int ID_TOOLS_WIRELESS_FM = ID_TOOLS_MORE + 1300;
     public static final int ID_PREFERENCES = R.string.preferences;

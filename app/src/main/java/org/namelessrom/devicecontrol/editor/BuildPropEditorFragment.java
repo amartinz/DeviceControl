@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments.tools.editor;
+package org.namelessrom.devicecontrol.editor;
 
 
 import android.app.Activity;

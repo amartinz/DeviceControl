@@ -67,7 +67,7 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
         } else if (mWirelessFileManager == preference) {
             MainActivity.loadFragment(getActivity(), ID_TOOLS_WIRELESS_FM);
         } else if (mBuildProp == preference) {
-            MainActivity.loadFragment(getActivity(), ID_TOOLS_BUILD_PROP);
+            MainActivity.loadFragment(getActivity(), ID_TOOLS_EDITORS_BUILD_PROP);
         } else if (mSysctlVm == preference) {
             MainActivity.loadFragment(getActivity(), ID_TOOLS_VM);
         }

@@ -70,10 +70,9 @@ import org.namelessrom.devicecontrol.ui.fragments.tools.AppListFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.TaskerFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.WirelessFileManagerFragment;
-import org.namelessrom.devicecontrol.ui.fragments.tools.editor.BuildPropEditorFragment;
-import org.namelessrom.devicecontrol.ui.fragments.tools.editor.BuildPropFragment;
-import org.namelessrom.devicecontrol.ui.fragments.tools.editor.SysctlEditorFragment;
-import org.namelessrom.devicecontrol.ui.fragments.tools.editor.SysctlFragment;
+import org.namelessrom.devicecontrol.editor.BuildPropEditorFragment;
+import org.namelessrom.devicecontrol.editor.SysctlEditorFragment;
+import org.namelessrom.devicecontrol.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -477,10 +476,6 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
             case ID_TOOLS_EDITORS_VM:
                 if (!onResume) mCurrentFragment = new SysctlEditorFragment();
                 mTitle = mSubFragmentTitle = R.string.sysctl_vm;
-                break;
-            case ID_TOOLS_BUILD_PROP:
-                if (!onResume) mCurrentFragment = new BuildPropFragment();
-                mTitle = mSubFragmentTitle = R.string.buildprop;
                 break;
             case ID_TOOLS_EDITORS_BUILD_PROP:
                 if (!onResume) mCurrentFragment = new BuildPropEditorFragment();

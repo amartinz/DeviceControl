@@ -34,7 +34,7 @@ import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.ui.fragments.performance.ExtrasFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;
-import org.namelessrom.devicecontrol.ui.fragments.tools.editor.SysctlFragment;
+import org.namelessrom.devicecontrol.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
