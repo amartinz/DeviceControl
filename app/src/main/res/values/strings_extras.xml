@@ -17,9 +17,7 @@
 <resources>
     <!-- App -->
     <string name="support">Support</string>
-    <string name="support_message">I hope you enjoy Device Control as much as i do developing it.\nI am using this application daily myself and would like to make you happy with providing it free of charge.</string>
     <string name="donate_">Donate</string>
-    <string name="donate_message">However, if you like this app and would like to contribute in further development of it, please consider a donation.\nIt would really encourage me :)\n\nThank you!</string>
 
     <string name="donate_value">Donate %s</string>
 

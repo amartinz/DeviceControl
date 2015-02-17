@@ -17,8 +17,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_version_name">Versionname: %s</string>
     <string name="app_version_code">Versioncode: %s</string>
-    <string name="app_welcome">Welcome to %s</string>
-    <string name="app_welcome_message">To get started, swipe out the menu from the left or press the button at the very top left!\n\nIf a feature is not supported by your device, it gets automatically hidden!\nSupported features depend on the device you are using and the ROM and kernel you are running.\n\nIf you have no supported features, please try using a custom kernel!\n\nPlease note, that you need a rooted device to enjoy all features of %s!</string>
+    <string name="welcome">Welcome</string>
+    <string name="welcome_message">To get started, swipe out the menu from the left or press the button at the very top left!\n\nIf a feature is not supported by your device, it gets automatically hidden!\nSupported features depend on the device you are using and the ROM and kernel you are running.\n\nIf you have no supported features, please try using a custom kernel!\n\nPlease note, that you need a rooted device to enjoy all features of %s!</string>
     <string name="app_warning_root">Please note that %s requires a rooted device to fully work!</string>
     <string name="app_warning_busybox">Please note that %s requires a BusyBox to fully work!</string>
     <string name="app_warning_busybox_note">BusyBox is required because not every system provides the same set of tools, which can lead to bugs and instability.\n\nBusyBox is uniform and works the same on every device.</string>

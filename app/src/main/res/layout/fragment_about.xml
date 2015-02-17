@@ -15,7 +15,6 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="24dp"
@@ -23,9 +22,10 @@
     android:fillViewport="true"
     android:scrollbarStyle="outsideOverlay">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:textSize="30sp"
@@ -33,11 +33,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            tools:text="Welcome to Device Control"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
-            android:fontFamily="@string/font_thin"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@string/font_bold"
             android:textAlignment="center"
+            android:text="@string/welcome"
             android:gravity="center" />
 
         <TextView
@@ -46,21 +45,24 @@
             android:id="@+id/detailsTxtView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-            android:text="@string/app_welcome_message"
-            android:layout_below="@+id/welcomeTxtView"
+            android:paddingTop="30dp"
+            android:text="@string/welcome_message"
+            android:layout_gravity="center_horizontal"
             android:fontFamily="@string/font_light"
             android:textAlignment="center" />
 
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/logo"
-            android:scaleType="centerInside"
-            android:layout_below="@+id/detailsTxtView" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-    </RelativeLayout>
+        <Button style="?android:borderlessButtonStyle"
+            android:id="@+id/donateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/donate_"
+            android:textColor="?attr/colorAccent"
+            android:layout_gravity="right" />
+
+    </LinearLayout>
 </ScrollView>

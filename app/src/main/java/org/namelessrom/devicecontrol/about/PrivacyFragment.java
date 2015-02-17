@@ -15,30 +15,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments.about;
+package org.namelessrom.devicecontrol.about;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.webkit.WebView;
 
 import org.namelessrom.devicecontrol.R;
 
-public class WelcomeFragment extends Fragment {
-    @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_about, container, false);
+public class PrivacyFragment extends Fragment {
 
-        final String appname = getString(R.string.app_name);
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_webview, container, false);
 
-        final TextView welcome = (TextView) view.findViewById(R.id.welcomeTxtView);
-        welcome.setText(getString(R.string.app_welcome, appname));
-
-        final TextView details = (TextView) view.findViewById(R.id.detailsTxtView);
-        details.setText(getString(R.string.app_welcome_message, appname));
+        final WebView wv = (WebView) view.findViewById(R.id.dialog_help_webview);
+        wv.getSettings().setTextZoom(90);
+        wv.loadUrl("file:///android_asset/privacy.html");
 
         return view;
     }
+
 }

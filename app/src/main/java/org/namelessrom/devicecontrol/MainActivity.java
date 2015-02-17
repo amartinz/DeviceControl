@@ -55,7 +55,7 @@ import org.namelessrom.devicecontrol.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
-import org.namelessrom.devicecontrol.ui.fragments.about.AboutFragment;
+import org.namelessrom.devicecontrol.about.AboutFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.FilesystemFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.GpuSettingsFragment;

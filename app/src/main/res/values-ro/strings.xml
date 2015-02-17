@@ -19,7 +19,7 @@
   <string name="app_version_name">Nume versiune: %s</string>
   <string name="app_version_code">Cod versiune: %s</string>
   <string name="app_welcome">Bine ati venit la %s</string>
-  <string name="app_welcome_message">Pentru a începe, glisați meniul din stânga sau apăsaţi butonul din partea superioară stânga!\n\nDacă o caracteristică nu este acceptată de dispozitiv, acesta este ascunsă automat!\nCaracteristicile suportate depinde de dispozitivul, de ROM-ul şi kernel-ul pe care le utilizați.\n\nDacă nu ai caracteristici suportate, vă rugăm să utilizaţi un kernel customizat!\n\nRețineți că aveți nevoie de un dispozitiv cu root ca să vă bucurați de toate caracteristicile ale %s!</string>
+  <string name="welcome_message">Pentru a începe, glisați meniul din stânga sau apăsaţi butonul din partea superioară stânga!\n\nDacă o caracteristică nu este acceptată de dispozitiv, acesta este ascunsă automat!\nCaracteristicile suportate depinde de dispozitivul, de ROM-ul şi kernel-ul pe care le utilizați.\n\nDacă nu ai caracteristici suportate, vă rugăm să utilizaţi un kernel customizat!\n\nRețineți că aveți nevoie de un dispozitiv cu root ca să vă bucurați de toate caracteristicile ale %s!</string>
   <string name="app_warning_root">Vă rugăm să reţineţi că %s necesită un dispozitiv cu root ca  să lucreze complet!</string>
   <string name="app_warning_busybox">Reţineţi că %s are nevoie de BusyBox pentru a funcţiona pe deplin!</string>
   <string name="start_wizard">Pornirea expertului</string>

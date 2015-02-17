@@ -19,7 +19,7 @@
   <string name="app_version_name">版本名称：%s</string>
   <string name="app_version_code">版本号: %s</string>
   <string name="app_welcome">欢迎使用 %s</string>
-  <string name="app_welcome_message">开始使用，请从屏幕左侧滑出菜单或点击左上角的按钮！ \n\n您的设备所不支持的功能将自动隐藏 ！ \n所能使用的功能取决于您正使用的设备以及该设备运行的系统和内核。\n\n如果找不到有功能支持，请尝试使用第三方内核 ！ \n\n请注意，您的设备需要获得root权限才能使用 %s 的所有功能 ！</string>
+  <string name="welcome_message">开始使用，请从屏幕左侧滑出菜单或点击左上角的按钮！ \n\n您的设备所不支持的功能将自动隐藏 ！ \n所能使用的功能取决于您正使用的设备以及该设备运行的系统和内核。\n\n如果找不到有功能支持，请尝试使用第三方内核 ！ \n\n请注意，您的设备需要获得root权限才能使用 %s 的所有功能 ！</string>
   <string name="app_warning_root">请注意，%s 需要设备具有root权限才能完全工作 ！</string>
   <string name="app_warning_busybox">请注意，%s需要BusyBox才能完整工作！</string>
   <string name="app_warning_busybox_note">由于并不是所有系统也提供同样的工具，而这有可能会导致错误和不稳定，所以需要安装 BusyBox。\n\nBusyBox 在每个设备上的工作原理都统一的。</string>

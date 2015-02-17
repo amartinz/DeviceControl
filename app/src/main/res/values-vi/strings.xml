@@ -19,7 +19,7 @@
   <string name="app_version_name">Tên phiên bản: %s</string>
   <string name="app_version_code">Mã phiên bản: %s</string>
   <string name="app_welcome">Chào mừng tới %s</string>
-  <string name="app_welcome_message">Để bắt đầu, vuốt từ mép trái màn hình hoặc bấm nút ở đầu phía bên trái!\n\nNếu có một tính năng mà máy của bạn không hỗ trợ, nó sẽ tự động bị ẩn đi!\nCác chức năng hỗ trợ phụ thuộc vào máy của bạn, ROM và Kernel  đang chạy.\n\n Nếu không có các chức năng hỗ trợ,  thử sử dụng một một Custom Kernel khác !\n\nLưu ý, máy của bạn cần được root để sử dụng tất cả các chức năng %s!</string>
+  <string name="welcome_message">Để bắt đầu, vuốt từ mép trái màn hình hoặc bấm nút ở đầu phía bên trái!\n\nNếu có một tính năng mà máy của bạn không hỗ trợ, nó sẽ tự động bị ẩn đi!\nCác chức năng hỗ trợ phụ thuộc vào máy của bạn, ROM và Kernel  đang chạy.\n\n Nếu không có các chức năng hỗ trợ,  thử sử dụng một một Custom Kernel khác !\n\nLưu ý, máy của bạn cần được root để sử dụng tất cả các chức năng %s!</string>
   <string name="app_warning_root">Xin lưu ý  %s máy cần được root để có thể hoạt động đủ chức năngt!</string>
   <string name="app_warning_busybox">Xin lưu ý rằng %s yêu cầu BusyBox để hoạt động đầy đủ!</string>
   <string name="app_warning_busybox_note">Cần có phần mềm BusyBox, vì không phải mọi hệ thống đều cung cấp cùng một bộ công cụ như vậy,  việc đó có thể dẫn đến lỗi  và mất ổn định hệ thống.\n\nBusyBox có thể hoạt động như nhau trên mọi thiết bị.</string>

@@ -19,7 +19,7 @@
   <string name="app_version_name">Versienaam: %s</string>
   <string name="app_version_code">Versiecode: %s</string>
   <string name="app_welcome">Welkom bij %s</string>
-  <string name="app_welcome_message">Om te beginnen, veeg het menu aan de linkerzijde tevoorschijn of druk op de knop linksonder!\n\nAls een functie niet ondersteund wordt voor uw apparaat, dan wordt het automatisch verborgen!\nOndersteunde functies hangt van het apparaat, de ROM en de kernel die u gebruikt.\n\nAls u geen enkele ondersteunde functie heeft, probeer dan alstublieft een aangepaste kernel!\n\nOpmerking, u heeft een geroot apparaat nodig om elke functie te kunnen gebruiken van %s!</string>
+  <string name="welcome_message">Om te beginnen, veeg het menu aan de linkerzijde tevoorschijn of druk op de knop linksonder!\n\nAls een functie niet ondersteund wordt voor uw apparaat, dan wordt het automatisch verborgen!\nOndersteunde functies hangt van het apparaat, de ROM en de kernel die u gebruikt.\n\nAls u geen enkele ondersteunde functie heeft, probeer dan alstublieft een aangepaste kernel!\n\nOpmerking, u heeft een geroot apparaat nodig om elke functie te kunnen gebruiken van %s!</string>
   <string name="app_warning_root">Houd er rekening mee dat %s een geroot apparaat vereist om volledig te werken!</string>
   <string name="app_warning_busybox">Houd er rekening mee dat %s vereist dat BusyBox volledig werkt!</string>
   <string name="app_warning_busybox_note">BusyBox is vereist omdat niet elk systeem dezelfde set hulpprogramma\'s aanbiedt, dit kan tot fouten leiden en instabiliteit veroorzaken.\n\nBusyBox is uniform en werkt hetzelfde op elk apparaat.</string>

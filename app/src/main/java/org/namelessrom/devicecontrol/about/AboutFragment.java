@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments.about;
+package org.namelessrom.devicecontrol.about;
 
 import android.support.v4.app.Fragment;
 
@@ -33,14 +33,12 @@ public class AboutFragment extends AttachViewPagerFragment {
         final ArrayList<Fragment> fragments = new ArrayList<>(3);
         final ArrayList<CharSequence> titles = new ArrayList<>(3);
 
+        titles.add(getString(R.string.welcome));
         fragments.add(new WelcomeFragment());
-        titles.add(getString(R.string.about));
-        fragments.add(new SupportFragment());
-        titles.add(getString(R.string.support));
-        fragments.add(new LicenseFragment());
         titles.add(getString(R.string.licenses));
-        fragments.add(new PrivacyFragment());
+        fragments.add(new LicenseFragment());
         titles.add(getString(R.string.privacy));
+        fragments.add(new PrivacyFragment());
 
         return new ViewPagerAdapter(getChildFragmentManager(), fragments, titles);
     }

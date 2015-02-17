@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments.about;
+package org.namelessrom.devicecontrol.about;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,24 +29,20 @@ import android.widget.TextView;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.DonationActivity;
 
-public class SupportFragment extends Fragment {
+public class WelcomeFragment extends Fragment {
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_support, container, false);
+        final View view = inflater.inflate(R.layout.fragment_about, container, false);
 
         final TextView details = (TextView) view.findViewById(R.id.detailsTxtView);
-        details.setText(getString(R.string.support_message)
-                + '\n'
-                + '\n'
-                + getString(R.string.donate_message) + " - Alex");
+        details.setText(getString(R.string.welcome_message, getString(R.string.app_name)));
 
         final Button donateButton = (Button) view.findViewById(R.id.donateButton);
         donateButton.setText(
                 String.format("%s %s", getString(R.string.donate_), getString(R.string.heart)));
         donateButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                final Intent intent = new Intent();
-                intent.setClass(getActivity(), DonationActivity.class);
+                final Intent intent = new Intent(getActivity(), DonationActivity.class);
                 startActivity(intent);
             }
         });

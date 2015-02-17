@@ -19,7 +19,7 @@
   <string name="app_version_name">Nome da versão: %s</string>
   <string name="app_version_code">Nome do código: %s</string>
   <string name="app_welcome">Bem-vindo ao %s</string>
-  <string name="app_welcome_message">Para começar, percorrer o menu da esquerda ou pressione o botão na parte superior esquerda! \n\nIf um recurso não é suportado pelo seu aparelho, ele automaticamente fica oculto! \nSupported características dependem do dispositivo que você está usando e o ROM e o kernel que você está running.\n\nIf você tem recursos não suportados, por favor, tente usar um kernel personalizado! \n\nPlease nota, que precisa de um dispositivo com root para desfrutar de todas as características de %s!</string>
+  <string name="welcome_message">Para começar, percorrer o menu da esquerda ou pressione o botão na parte superior esquerda! \n\nIf um recurso não é suportado pelo seu aparelho, ele automaticamente fica oculto! \nSupported características dependem do dispositivo que você está usando e o ROM e o kernel que você está running.\n\nIf você tem recursos não suportados, por favor, tente usar um kernel personalizado! \n\nPlease nota, que precisa de um dispositivo com root para desfrutar de todas as características de %s!</string>
   <string name="app_warning_root">Por favor, note que %s requer um dispositivo com root para funcionar plenamente!</string>
   <string name="app_warning_busybox">Faz favor tenha em conta que %s precisa de BusyBox para poder trabalhar correctamente!</string>
   <string name="app_warning_busybox_note">BusyBox é necessária porque nem todos os sistemas fornecem o mesmo conjunto de ferramentas, o que pode levar a erros e instabilidade.\n\nBusyBox é uniforme e funciona da mesma forma em todos os dispositivos.</string>
