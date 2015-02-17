@@ -18,23 +18,12 @@
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="general"
-        android:title="@string/general">
+        android:key="kernel_features"
+        android:title="@string/kernel_features">
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="entropy"
             android:title="@string/entropy" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:icon="@drawable/ic_storage"
-            android:key="filesystem"
-            android:title="@string/filesystem" />
-
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
-
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="kernel_features"
-        android:title="@string/kernel_features">
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="ksm"
@@ -43,11 +32,6 @@
         <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
             android:key="uksm"
             android:title="@string/uksm" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-            android:icon="@drawable/ic_heat"
-            android:key="thermal"
-            android:title="@string/thermal" />
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 

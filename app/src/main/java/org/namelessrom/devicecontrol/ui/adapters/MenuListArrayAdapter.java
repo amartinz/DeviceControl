@@ -31,30 +31,32 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
+import java.util.ArrayList;
+
 public class MenuListArrayAdapter extends BaseAdapter {
 
     private final Context mContext;
     private final int mLayoutResourceId;
-    private final int[] mTitles;
-    private final int[] mIcons;
+    private final ArrayList<Integer> mTitles;
+    private final ArrayList<Integer> mIcons;
 
     public MenuListArrayAdapter(final Context context, final int layoutResourceId,
-            final int[] titles, final int[] icons) {
+            final ArrayList<Integer> titles, final ArrayList<Integer> icons) {
         mContext = context;
         mLayoutResourceId = layoutResourceId;
         mTitles = titles;
         mIcons = icons;
     }
 
-    @Override public int getCount() { return mTitles.length; }
+    @Override public int getCount() { return mTitles.size(); }
 
-    @Override public Object getItem(final int position) { return mTitles[position]; }
+    @Override public Object getItem(final int position) { return mTitles.get(position); }
 
     @Override public long getItemId(final int arg0) { return 0; }
 
     @Override public int getViewTypeCount() { return 2; }
 
-    @Override public int getItemViewType(final int pos) { return (mIcons[pos] == -1) ? 1 : 0; }
+    @Override public int getItemViewType(final int pos) { return (mIcons.get(pos) == -1) ? 1 : 0; }
 
     @Override public boolean isEnabled(final int pos) { return getItemViewType(pos) != 1; }
 
@@ -97,21 +99,22 @@ public class MenuListArrayAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) v.getTag();
         }
 
+        final int titleResId = mTitles.get(position);
         if (type == 0) {
-            viewHolder.title.setText(mTitles[position]);
+            viewHolder.title.setText(titleResId);
 
-            final int imageRes = mIcons[position];
+            final int imageRes = mIcons.get(position);
             if (imageRes == 0) {
                 viewHolder.image.setVisibility(View.INVISIBLE);
             } else {
-                final Drawable icon = mContext.getResources().getDrawable(mIcons[position]);
+                final Drawable icon = mContext.getResources().getDrawable(imageRes);
                 if (icon != null) {
                     DrawableHelper.applyAccentColorFilter(icon);
                     viewHolder.image.setImageDrawable(icon);
                 }
             }
         } else if (type == 1) {
-            viewHolder.header.setText(mTitles[position]);
+            viewHolder.header.setText(titleResId);
             viewHolder.header.setClickable(false);
             viewHolder.header.setTextColor(Application.get().getAccentColor());
         }

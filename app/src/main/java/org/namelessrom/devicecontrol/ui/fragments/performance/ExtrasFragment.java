@@ -58,10 +58,8 @@ public class ExtrasFragment extends AttachPreferenceFragment implements DeviceCo
 
     //----------------------------------------------------------------------------------------------
     private CustomPreference mEntropy;
-    private CustomPreference mFilesystem;
     private CustomPreference mKsm;
     private CustomPreference mUksm;
-    private CustomPreference mThermal;
 
     //----------------------------------------------------------------------------------------------
     private AwesomeTogglePreference mPowerEfficientWork;
@@ -86,83 +84,48 @@ public class ExtrasFragment extends AttachPreferenceFragment implements DeviceCo
         mRoot = getPreferenceScreen();
 
         //------------------------------------------------------------------------------------------
-        // General
-        //------------------------------------------------------------------------------------------
-        PreferenceCategory category = (PreferenceCategory) findPreference("general");
-        if (category != null) {
-            mFilesystem = (CustomPreference) findPreference("filesystem");
-            if (mFilesystem != null) {
-                mFilesystem.setOnPreferenceClickListener(this);
-            }
-
-            mEntropy = (CustomPreference) findPreference("entropy");
-            if (mEntropy != null) {
-                mEntropy.setOnPreferenceClickListener(this);
-            }
-        }
-        removeIfEmpty(category);
-
-        //------------------------------------------------------------------------------------------
         // Kernel Features
         //------------------------------------------------------------------------------------------
-        category = (PreferenceCategory) findPreference("kernel_features");
-        if (category != null) {
-            mKsm = (CustomPreference) findPreference("ksm");
-            if (mKsm != null) {
-                if (Utils.fileExists(KsmUtils.KSM_PATH)) {
-                    mKsm.setOnPreferenceClickListener(this);
-                } else {
-                    category.removePreference(mKsm);
-                }
-            }
+        PreferenceCategory category = (PreferenceCategory) findPreference("kernel_features");
 
-            mUksm = (CustomPreference) findPreference("uksm");
-            if (mUksm != null) {
-                if (Utils.fileExists(UksmUtils.UKSM_PATH)) {
-                    mUksm.setOnPreferenceClickListener(this);
-                } else {
-                    category.removePreference(mUksm);
-                }
-            }
+        mEntropy = (CustomPreference) findPreference("entropy");
+        mEntropy.setOnPreferenceClickListener(this);
 
-            mThermal = (CustomPreference) findPreference("thermal");
-            if (mThermal != null) {
-                if (Utils.fileExists(getString(R.string.directory_msm_thermal))
-                        || Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
-                    mThermal.setOnPreferenceClickListener(this);
-                } else {
-                    category.removePreference(mThermal);
-                }
-            }
+        mKsm = (CustomPreference) findPreference("ksm");
+        if (Utils.fileExists(KsmUtils.KSM_PATH)) {
+            mKsm.setOnPreferenceClickListener(this);
+        } else {
+            category.removePreference(mKsm);
         }
+
+        mUksm = (CustomPreference) findPreference("uksm");
+        if (Utils.fileExists(UksmUtils.UKSM_PATH)) {
+            mUksm.setOnPreferenceClickListener(this);
+        } else {
+            category.removePreference(mUksm);
+        }
+
         removeIfEmpty(category);
 
         //------------------------------------------------------------------------------------------
         // Power Saving
         //------------------------------------------------------------------------------------------
         category = (PreferenceCategory) findPreference("powersaving");
-        if (category != null) {
-            mPowerEfficientWork =
-                    (AwesomeTogglePreference) findPreference("power_efficient_work");
-            if (mPowerEfficientWork != null) {
-                if (mPowerEfficientWork.isSupported()) {
-                    mPowerEfficientWork.initValue();
-                    mPowerEfficientWork.setOnPreferenceChangeListener(this);
-                } else {
-                    category.removePreference(mPowerEfficientWork);
-                }
-            }
+        mPowerEfficientWork = (AwesomeTogglePreference) findPreference("power_efficient_work");
+        if (mPowerEfficientWork.isSupported()) {
+            mPowerEfficientWork.initValue();
+            mPowerEfficientWork.setOnPreferenceChangeListener(this);
+        } else {
+            category.removePreference(mPowerEfficientWork);
+        }
 
-            mMcPowerScheduler = (AwesomeListPreference) findPreference("sched_mc_power_savings");
-            if (mMcPowerScheduler != null) {
-                if (mMcPowerScheduler.isSupported()) {
-                    mMcPowerScheduler.initValue();
-                    mMcPowerScheduler.setSummary(mMcPowerScheduler.getEntry());
-                    mMcPowerScheduler.setOnPreferenceChangeListener(this);
-                } else {
-                    category.removePreference(mMcPowerScheduler);
-                }
-            }
+        mMcPowerScheduler = (AwesomeListPreference) findPreference("sched_mc_power_savings");
+        if (mMcPowerScheduler.isSupported()) {
+            mMcPowerScheduler.initValue();
+            mMcPowerScheduler.setSummary(mMcPowerScheduler.getEntry());
+            mMcPowerScheduler.setOnPreferenceChangeListener(this);
+        } else {
+            category.removePreference(mMcPowerScheduler);
         }
         removeIfEmpty(category);
 
@@ -170,26 +133,20 @@ public class ExtrasFragment extends AttachPreferenceFragment implements DeviceCo
         // Voltage
         //------------------------------------------------------------------------------------------
         category = (PreferenceCategory) findPreference("voltage");
-        if (category != null) {
-            mMsmDcvs = (AwesomeTogglePreference) findPreference("msm_dcvs");
-            if (mMsmDcvs != null) {
-                if (mMsmDcvs.isSupported()) {
-                    mMsmDcvs.initValue();
-                    mMsmDcvs.setOnPreferenceChangeListener(this);
-                } else {
-                    category.removePreference(mMsmDcvs);
-                }
-            }
+        mMsmDcvs = (AwesomeTogglePreference) findPreference("msm_dcvs");
+        if (mMsmDcvs.isSupported()) {
+            mMsmDcvs.initValue();
+            mMsmDcvs.setOnPreferenceChangeListener(this);
+        } else {
+            category.removePreference(mMsmDcvs);
+        }
 
-            mVoltageControl = (CustomPreference) findPreference("voltage_control");
-            if (mVoltageControl != null) {
-                if (Utils.fileExists(VoltageUtils.VDD_TABLE_FILE) || Utils.fileExists(
-                        VoltageUtils.UV_TABLE_FILE)) {
-                    mVoltageControl.setOnPreferenceClickListener(this);
-                } else {
-                    category.removePreference(mVoltageControl);
-                }
-            }
+        mVoltageControl = (CustomPreference) findPreference("voltage_control");
+        if (Utils.fileExists(VoltageUtils.VDD_TABLE_FILE) || Utils.fileExists(
+                VoltageUtils.UV_TABLE_FILE)) {
+            mVoltageControl.setOnPreferenceClickListener(this);
+        } else {
+            category.removePreference(mVoltageControl);
         }
         removeIfEmpty(category);
 
@@ -235,9 +192,6 @@ public class ExtrasFragment extends AttachPreferenceFragment implements DeviceCo
         if (mVoltageControl == preference) {
             MainActivity.loadFragment(getActivity(), ID_VOLTAGE);
             return true;
-        } else if (mThermal == preference) {
-            MainActivity.loadFragment(getActivity(), ID_THERMAL);
-            return true;
         } else if (mKsm == preference) {
             MainActivity.loadFragment(getActivity(), ID_KSM);
             return true;
@@ -246,9 +200,6 @@ public class ExtrasFragment extends AttachPreferenceFragment implements DeviceCo
             return true;
         } else if (mEntropy == preference) {
             MainActivity.loadFragment(getActivity(), ID_ENTROPY);
-            return true;
-        } else if (mFilesystem == preference) {
-            MainActivity.loadFragment(getActivity(), ID_FILESYSTEM);
             return true;
         }
 
