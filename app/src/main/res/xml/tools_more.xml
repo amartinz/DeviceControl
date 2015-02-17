@@ -17,13 +17,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-        android:icon="@drawable/ic_general_media_scan"
-        android:key="media_scan"
-        android:summary="@string/media_scan_summary"
-        android:title="@string/media_scan_trigger" />
-
-
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
         android:icon="@drawable/ic_android"
         android:key="app_manager"
         android:title="@string/app_manager" />
@@ -44,6 +37,15 @@
             android:icon="@drawable/ic_mode_edit"
             android:key="sysctl_vm"
             android:title="@string/sysctl_vm" />
+
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/general">
+
+        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+            android:key="media_scan"
+            android:summary="@string/media_scan_summary"
+            android:title="@string/media_scan_trigger" />
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
