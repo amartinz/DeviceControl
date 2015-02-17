@@ -49,20 +49,23 @@ import org.namelessrom.devicecontrol.device.DeviceFeatureFragment;
 import org.namelessrom.devicecontrol.device.DeviceInformationFragment;
 import org.namelessrom.devicecontrol.device.sub.FastChargeFragment;
 import org.namelessrom.devicecontrol.device.sub.SoundControlFragment;
+import org.namelessrom.devicecontrol.editor.BuildPropEditorFragment;
+import org.namelessrom.devicecontrol.editor.SysctlEditorFragment;
+import org.namelessrom.devicecontrol.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.ui.fragments.about.AboutFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.ExtrasFragment;
+import org.namelessrom.devicecontrol.ui.fragments.performance.FilesystemFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.GpuSettingsFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.InformationFragment;
+import org.namelessrom.devicecontrol.ui.fragments.performance.ThermalFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.EntropyFragment;
-import org.namelessrom.devicecontrol.ui.fragments.performance.sub.FilesystemFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.GovernorFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.IoSchedConfigFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.KsmFragment;
-import org.namelessrom.devicecontrol.ui.fragments.performance.sub.ThermalFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.UksmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.ui.fragments.preferences.PreferencesFragment;
@@ -70,9 +73,6 @@ import org.namelessrom.devicecontrol.ui.fragments.tools.AppListFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.TaskerFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.WirelessFileManagerFragment;
-import org.namelessrom.devicecontrol.editor.BuildPropEditorFragment;
-import org.namelessrom.devicecontrol.editor.SysctlEditorFragment;
-import org.namelessrom.devicecontrol.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -80,6 +80,7 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.proprietary.Configuration;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity implements DeviceConstants,
         AdapterView.OnItemClickListener, View.OnClickListener {
@@ -103,35 +104,58 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
     private int mFragmentTitle = R.string.home;
     private int mSubFragmentTitle = -1;
 
-    private static final int[] MENU_ENTRIES = {
-            R.string.device,        // Device
-            ID_DEVICE_INFORMATION,
-            ID_FEATURES,
-            R.string.performance,   // Performance
-            ID_PERFORMANCE_INFO,
-            ID_PERFORMANCE_CPU_SETTINGS,
-            ID_PERFORMANCE_GPU_SETTINGS,
-            ID_PERFORMANCE_EXTRA,
-            R.string.tools,         // Tools
-            ID_TOOLS_TASKER,
-            ID_TOOLS_FLASHER,
-            ID_TOOLS_MORE
-    };
+    private final ArrayList<Integer> mMenuEntries = new ArrayList<>();
+    private final ArrayList<Integer> mMenuIcons = new ArrayList<>();
 
-    private static final int[] MENU_ICONS = {
-            -1, // Device
-            R.drawable.ic_menu_device,
-            R.drawable.ic_menu_features,
-            -1, // Performance
-            R.drawable.ic_menu_perf_info,
-            R.drawable.ic_menu_perf_cpu,
-            R.drawable.ic_menu_perf_gpu,
-            R.drawable.ic_menu_perf_extras,
-            -1, // Tools
-            R.drawable.ic_menu_tasker,
-            R.drawable.ic_menu_flash,
-            R.drawable.ic_menu_code
-    };
+    private void setupMenuLists() {
+        // header - device
+        mMenuEntries.add(R.string.device);
+        mMenuIcons.add(-1);
+        // device - information
+        mMenuEntries.add(ID_DEVICE_INFORMATION);
+        mMenuIcons.add(R.drawable.ic_menu_device);
+        // device - features
+        mMenuEntries.add(ID_FEATURES);
+        mMenuIcons.add(R.drawable.ic_menu_features);
+
+        // header - performance
+        mMenuEntries.add(R.string.performance);
+        mMenuIcons.add(-1);
+        // performance - information
+        mMenuEntries.add(ID_PERFORMANCE_INFO);
+        mMenuIcons.add(R.drawable.ic_menu_perf_info);
+        // performance - cpu
+        mMenuEntries.add(ID_PERFORMANCE_CPU_SETTINGS);
+        mMenuIcons.add(R.drawable.ic_menu_perf_cpu);
+        // performance - gpu
+        mMenuEntries.add(ID_PERFORMANCE_GPU_SETTINGS);
+        mMenuIcons.add(R.drawable.ic_menu_perf_gpu);
+        // performance - filesystem
+        mMenuEntries.add(ID_FILESYSTEM);
+        mMenuIcons.add(R.drawable.ic_storage);
+        // performance - thermal
+        if (Utils.fileExists(getString(R.string.directory_msm_thermal))
+                || Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
+            mMenuEntries.add(ID_THERMAL);
+            mMenuIcons.add(R.drawable.ic_heat);
+        }
+        // performance - extras
+        mMenuEntries.add(ID_PERFORMANCE_EXTRA);
+        mMenuIcons.add(R.drawable.ic_menu_perf_extras);
+
+        // header - tools
+        mMenuEntries.add(R.string.tools);
+        mMenuIcons.add(-1);
+        // tools - tasker
+        mMenuEntries.add(ID_TOOLS_TASKER);
+        mMenuIcons.add(R.drawable.ic_menu_tasker);
+        // tools - flasher
+        mMenuEntries.add(ID_TOOLS_FLASHER);
+        mMenuIcons.add(R.drawable.ic_menu_flash);
+        // tools - more
+        mMenuEntries.add(ID_TOOLS_MORE);
+        mMenuIcons.add(R.drawable.ic_menu_code);
+    }
 
     //==============================================================================================
     // Overridden Methods
@@ -203,11 +227,10 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         // setup touch mode
         MainActivity.setSwipeOnContent(PreferenceHelper.getBoolean("swipe_on_content", false));
 
+        // setup menu list
+        setupMenuLists();
         final MenuListArrayAdapter mAdapter = new MenuListArrayAdapter(
-                this,
-                R.layout.menu_main_list_item,
-                MENU_ENTRIES,
-                MENU_ICONS);
+                this, R.layout.menu_main_list_item, mMenuEntries, mMenuIcons);
         menuList.setAdapter(mAdapter);
         menuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         menuList.setOnItemClickListener(this);
@@ -418,6 +441,18 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
+            case ID_FILESYSTEM:
+                if (!onResume) mCurrentFragment = new FilesystemFragment();
+                mTitle = mFragmentTitle = R.string.filesystem;
+                mSubFragmentTitle = -1;
+                break;
+            //--------------------------------------------------------------------------------------
+            case ID_THERMAL:
+                if (!onResume) mCurrentFragment = new ThermalFragment();
+                mTitle = mFragmentTitle = R.string.thermal;
+                mSubFragmentTitle = -1;
+                break;
+            //--------------------------------------------------------------------------------------
             case ID_PERFORMANCE_EXTRA:
                 if (!onResume) mCurrentFragment = new ExtrasFragment();
                 mTitle = mFragmentTitle = R.string.extras;
@@ -431,10 +466,6 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
                 if (!onResume) mCurrentFragment = new UksmFragment();
                 mTitle = mSubFragmentTitle = R.string.uksm;
                 break;
-            case ID_THERMAL:
-                if (!onResume) mCurrentFragment = new ThermalFragment();
-                mTitle = mSubFragmentTitle = R.string.thermal;
-                break;
             case ID_VOLTAGE:
                 if (!onResume) mCurrentFragment = new VoltageFragment();
                 mTitle = mSubFragmentTitle = R.string.voltage_control;
@@ -442,10 +473,6 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
             case ID_ENTROPY:
                 if (!onResume) mCurrentFragment = new EntropyFragment();
                 mTitle = mSubFragmentTitle = R.string.entropy;
-                break;
-            case ID_FILESYSTEM:
-                if (!onResume) mCurrentFragment = new FilesystemFragment();
-                mTitle = mSubFragmentTitle = R.string.filesystem;
                 break;
             case ID_IOSCHED_TUNING:
                 if (!onResume) mCurrentFragment = new IoSchedConfigFragment();
