@@ -36,6 +36,7 @@ import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
+import org.namelessrom.devicecontrol.actions.extras.PnPMgrAction;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
@@ -71,9 +72,11 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
     private CustomPreference mGovernorTuning;
 
     private CustomTogglePreference mMpDecision;
+    private CustomTogglePreference mPnPMgr;
     private CustomListPreference mCpuQuietGov;
 
     private static final int ID_MPDECISION = 200;
+    private static final int ID_PNPMGR = 201;
     //----------------------------------------------------------------------------------------------
 
     private SwitchCompat mStatusHide;
@@ -124,10 +127,11 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
         final PreferenceCategory hotplugging = (PreferenceCategory) findPreference("hotplugging");
         getPreferenceScreen().removePreference(hotplugging);
 
-        if (Utils.fileExists(getString(R.string.directory_intelli_plug))
+        if (Utils.fileExists(MpDecisionAction.MPDECISION_PATH)
+                || Utils.fileExists(PnPMgrAction.PNPMGR_PATH)
+                || Utils.fileExists(getString(R.string.directory_intelli_plug))
                 || Utils.fileExists(getString(R.string.directory_mako_hotplug))
-                || Utils.fileExists(getString(R.string.file_cpu_quiet_base))
-                || Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
+                || Utils.fileExists(getString(R.string.file_cpu_quiet_base))) {
             getPreferenceScreen().addPreference(hotplugging);
             addPreferencesFromResource(R.xml.cpu_hotplugging);
             setupHotpluggingPreferences();
@@ -146,6 +150,13 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
             Utils.getCommandResult(this, ID_MPDECISION, "pgrep mpdecision 2> /dev/null;");
         } else {
             getPreferenceScreen().removePreference(mMpDecision);
+        }
+
+        mPnPMgr = (CustomTogglePreference) findPreference("pnpmgr");
+        if (Utils.fileExists(PnPMgrAction.PNPMGR_PATH)) {
+            Utils.getCommandResult(this, ID_PNPMGR, "pgrep pnpmgr 2> /dev/null;");
+        } else {
+            getPreferenceScreen().removePreference(mPnPMgr);
         }
 
         //------------------------------------------------------------------------------------------
@@ -271,6 +282,10 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
             final boolean value = (Boolean) o;
             new MpDecisionAction(value ? "1" : "0", true).triggerAction();
             return true;
+        } else if (preference == mPnPMgr) {
+            final boolean value = (Boolean) o;
+            new PnPMgrAction(value ? "1" : "0", true).triggerAction();
+            return true;
         } else if (preference == mCpuQuietGov) {
             final String path = Application.get().getString(R.string.file_cpu_quiet_cur_gov);
             final String value = String.valueOf(o);
@@ -303,8 +318,11 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
                         mMpDecision.setOnPreferenceChangeListener(this);
                     }
                     break;
-                default:
-                    break;
+                case ID_PNPMGR:
+                    if (mPnPMgr != null) {
+                        mPnPMgr.setChecked(!TextUtils.isEmpty(shellOutput.output));
+                        mPnPMgr.setOnPreferenceChangeListener(this);
+                    }
             }
         }
     }
