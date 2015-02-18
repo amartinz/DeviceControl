@@ -134,7 +134,7 @@ public class DialogHelper {
                         Utils.writeValue(path, newProgress);
 
                         PreferenceHelper.setBootup(
-                                new DataItem(category, pref.getKey(), path, newProgress));
+                                new DataItem(category, pref.getKey(), path, newProgress, true));
                     }
                 }).show();
     }

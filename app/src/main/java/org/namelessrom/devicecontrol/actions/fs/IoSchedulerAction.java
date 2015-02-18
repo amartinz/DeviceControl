@@ -69,7 +69,7 @@ public class IoSchedulerAction extends BaseAction {
             sb.append(Utils.getWriteCommand(ioPath, value));
             if (bootup) {
                 PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS,
-                        "io" + (c++), ioPath, value));
+                        "io" + (c++), ioPath, value, true));
             }
         }
 

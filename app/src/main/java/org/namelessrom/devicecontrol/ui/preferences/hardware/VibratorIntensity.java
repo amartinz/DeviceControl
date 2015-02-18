@@ -180,7 +180,7 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
         if (positiveResult) {
             PreferenceHelper.setBootup(new DataItem(
                     DatabaseHandler.CATEGORY_DEVICE, "vibrator_tuning",
-                    path, String.valueOf(percentToStrength(mSeekBar.getProgress()))));
+                    path, String.valueOf(percentToStrength(mSeekBar.getProgress())), true));
         } else {
             Utils.runRootCommand(Utils.getWriteCommand(path, String.valueOf(mOriginalValue)));
         }

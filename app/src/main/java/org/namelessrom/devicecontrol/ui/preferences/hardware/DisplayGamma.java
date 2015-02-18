@@ -167,7 +167,7 @@ public class DisplayGamma extends DialogPreference {
                 for (final String path : DisplayGammaCalibration.get().getPaths(i)) {
                     PreferenceHelper.setBootup(new DataItem(
                             DatabaseHandler.CATEGORY_DEVICE, DisplayGammaCalibration.TAG + i,
-                            path, DisplayGammaCalibration.get().getCurGamma(i)));
+                            path, DisplayGammaCalibration.get().getCurGamma(i), true));
                 }
             }
         } else if (mOriginalColors != null) {

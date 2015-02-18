@@ -133,7 +133,7 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
         }
 
         @Override protected List<TaskerItem> doInBackground(final Void... voids) {
-            return DatabaseHandler.getInstance().getAllTaskerItems("");
+            return DatabaseHandler.getInstance(getActivity()).getAllTaskerItems("");
         }
 
         @Override protected void onPostExecute(final List<TaskerItem> result) {

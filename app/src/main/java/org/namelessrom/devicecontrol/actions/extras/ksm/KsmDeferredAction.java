@@ -67,7 +67,8 @@ public class KsmDeferredAction extends BaseAction {
         final String path = Application.get().getString(R.string.file_ksm_deferred);
         if (bootup) {
             PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_EXTRAS, "ksm_deferred", path, value));
+                    new DataItem(DatabaseHandler.CATEGORY_EXTRAS, "ksm_deferred", path, value,
+                            true));
         }
 
         Utils.runRootCommand(Utils.getWriteCommand(path, value));

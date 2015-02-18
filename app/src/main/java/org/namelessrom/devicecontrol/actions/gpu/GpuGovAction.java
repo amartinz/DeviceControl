@@ -65,7 +65,7 @@ public class GpuGovAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_GPU, "gpu_gov",
-                    GpuUtils.get().getGpuGovPath(), value));
+                    GpuUtils.get().getGpuGovPath(), value, true));
         }
 
         Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.get().getGpuGovPath(), value));

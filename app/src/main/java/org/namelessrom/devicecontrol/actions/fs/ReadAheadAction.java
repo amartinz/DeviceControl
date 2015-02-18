@@ -69,7 +69,7 @@ public class ReadAheadAction extends BaseAction {
             sb.append(Utils.getWriteCommand(readAheadPath, value));
             if (bootup) {
                 PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS,
-                        "readahead" + (c++), readAheadPath, value));
+                        "readahead" + (c++), readAheadPath, value, true));
             }
         }
 

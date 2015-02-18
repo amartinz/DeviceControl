@@ -292,7 +292,7 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
             Utils.runRootCommand(Utils.getWriteCommand(path, value));
             PreferenceHelper.setBootup(new DataItem(
                     DatabaseHandler.CATEGORY_EXTRAS, mCpuQuietGov.getKey(),
-                    path, value));
+                    path, value, true));
             mCpuQuietGov.setSummary(value);
             return true;
         }

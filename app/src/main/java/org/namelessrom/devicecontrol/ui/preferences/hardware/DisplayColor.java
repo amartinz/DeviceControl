@@ -119,7 +119,7 @@ public class DisplayColor extends DialogPreference {
             PreferenceHelper.setBootup(new DataItem(
                     DatabaseHandler.CATEGORY_DEVICE, DisplayColorCalibration.TAG,
                     DisplayColorCalibration.get().getPath(),
-                    DisplayColorCalibration.get().getCurColors()));
+                    DisplayColorCalibration.get().getCurColors(), true));
         } else if (mOriginalColors != null) {
             DisplayColorCalibration.get().setColors(mOriginalColors);
         }

@@ -65,7 +65,7 @@ public class Gpu3dScalingAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_GPU,
-                    "3d_scaling", GpuUtils.FILE_3D_SCALING, value));
+                    "3d_scaling", GpuUtils.FILE_3D_SCALING, value, true));
         }
 
         Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.FILE_3D_SCALING, value));

@@ -65,7 +65,7 @@ public class KsmPagesAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS,
-                    "ksm_pages_to_scan", KsmUtils.KSM_PAGES_TO_SCAN, value));
+                    "ksm_pages_to_scan", KsmUtils.KSM_PAGES_TO_SCAN, value, true));
         }
 
         Utils.runRootCommand(Utils.getWriteCommand(KsmUtils.KSM_PAGES_TO_SCAN, value));

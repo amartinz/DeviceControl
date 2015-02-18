@@ -176,7 +176,7 @@ public class AddTaskActivity extends BaseActivity implements SetupDataCallbacks 
                 final int currentItem = mViewPager.getCurrentItem();
                 final Page currentPage = mPageList.get(currentItem);
                 if (currentPage.getId() == R.string.setup_complete) {
-                    DatabaseHandler.getInstance()
+                    DatabaseHandler.getInstance(AddTaskActivity.this)
                             .updateOrInsertTaskerItem(mSetupData.getSetupData());
                     finishSetup();
                 } else {

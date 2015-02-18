@@ -122,13 +122,15 @@ public class AwesomeEditTextPreference extends CustomEditTextPreference {
                     Utils.writeValue(mPaths[i], value);
                     if (mStartUp) {
                         PreferenceHelper.setBootup(new DataItem(
-                                mCategory, getKey() + String.valueOf(i), mPaths[i], value));
+                                mCategory, getKey() + String.valueOf(i), mPaths[i], value,
+                                true));
                     }
                 }
             } else {
                 Utils.writeValue(mPath, value);
                 if (mStartUp) {
-                    PreferenceHelper.setBootup(new DataItem(mCategory, getKey(), mPath, value));
+                    PreferenceHelper.setBootup(new DataItem(mCategory, getKey(), mPath, value,
+                            true));
                 }
             }
             initValue();

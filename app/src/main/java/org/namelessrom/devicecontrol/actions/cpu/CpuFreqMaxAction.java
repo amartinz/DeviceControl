@@ -73,7 +73,7 @@ public class CpuFreqMaxAction extends BaseAction {
             sb.append(Utils.getWriteCommand(path, value));
             if (bootup) {
                 PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                        "cpu_max" + i, CpuUtils.get().getMaxCpuFrequencyPath(i), value));
+                        "cpu_max" + i, CpuUtils.get().getMaxCpuFrequencyPath(i), value, true));
             }
         }
 

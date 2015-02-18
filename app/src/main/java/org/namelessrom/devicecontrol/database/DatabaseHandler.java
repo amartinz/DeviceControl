@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -36,17 +37,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants {
-
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 11;
     private static final String DATABASE_NAME = "DeviceControl.db";
 
-    private static final String KEY_ID = "id";
-    private static final String KEY_CATEGORY = "category";
-    private static final String KEY_NAME = "name";
-    private static final String KEY_FILENAME = "filename";
-    private static final String KEY_TRIGGER = "trigger";
-    private static final String KEY_VALUE = "value";
-    private static final String KEY_ENABLED = "enabled";
+    public static final String KEY_ID = "id";
+    public static final String KEY_CATEGORY = "category";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_FILENAME = "filename";
+    public static final String KEY_TRIGGER = "trigger";
+    public static final String KEY_VALUE = "value";
+    public static final String KEY_ENABLED = "enabled";
 
     public static final String TABLE_BOOTUP = "boot_up";
     public static final String TABLE_DC = "devicecontrol";
@@ -60,7 +60,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
 
     private static final String CREATE_BOOTUP_TABLE = "CREATE TABLE " + TABLE_BOOTUP + '('
             + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CATEGORY + " TEXT," + KEY_NAME + " TEXT,"
-            + KEY_FILENAME + " TEXT," + KEY_VALUE + " TEXT)";
+            + KEY_FILENAME + " TEXT," + KEY_VALUE + " TEXT," + KEY_ENABLED + " TEXT)";
     private static final String DROP_BOOTUP_TABLE = "DROP TABLE IF EXISTS " + TABLE_BOOTUP;
 
     private static final String CREATE_DEVICE_CONTROL_TABLE = "CREATE TABLE " + TABLE_DC + '('
@@ -77,16 +77,11 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
 
     private DatabaseHandler(final Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        try {
-            sDb = getWritableDatabase();
-        } catch (SQLiteException sqle) {
-            Logger.wtf(this, "Could not get writable database.", sqle);
-        }
     }
 
-    public static synchronized DatabaseHandler getInstance() {
+    public static synchronized DatabaseHandler getInstance(final Context context) {
         if (sDatabaseHandler == null) {
-            sDatabaseHandler = new DatabaseHandler(Application.get());
+            sDatabaseHandler = new DatabaseHandler(context);
         }
         return sDatabaseHandler;
     }
@@ -105,6 +100,15 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         db.execSQL(CREATE_BOOTUP_TABLE);
         db.execSQL(CREATE_DEVICE_CONTROL_TABLE);
         db.execSQL(CREATE_TASKER_TABLE);
+    }
+
+    @Override public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        try {
+            sDb = getWritableDatabase();
+        } catch (SQLiteException sqle) {
+            Logger.wtf(this, "Could not get writable database.", sqle);
+        }
     }
 
     @Override
@@ -145,6 +149,14 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
                     KEY_ID, KEY_CATEGORY, KEY_NAME, KEY_VALUE, KEY_ENABLED,
                     KEY_ID, KEY_CATEGORY, KEY_NAME, KEY_VALUE, KEY_ENABLED));
             db.execSQL("DROP TABLE tmp;");
+            currentVersion = 9;
+        }
+
+        if (currentVersion < 11) {
+            final String alterFormat = "ALTER TABLE %s ADD COLUMN %s TEXT NOT NULL;";
+            // add enabled column
+            db.execSQL(String.format(alterFormat, TABLE_BOOTUP, KEY_ENABLED));
+            currentVersion = 11;
         }
 
         if (currentVersion != DATABASE_VERSION) {
@@ -192,8 +204,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         return result;
     }
 
-    public boolean insertOrUpdate(final String name, final String value,
-            final String tableName) {
+    public boolean insertOrUpdate(final String name, final String value, final String tableName) {
         if (sDb == null) return false;
 
         final ContentValues values = new ContentValues();
@@ -206,16 +217,16 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
     }
 
     public boolean updateBootup(final DataItem item) {
-        if (sDb == null) return false;
-
         final ContentValues values = new ContentValues(5);
-        values.put(KEY_CATEGORY, item.getCategory());
-        values.put(KEY_NAME, item.getName());
-        values.put(KEY_FILENAME, item.getFileName());
-        values.put(KEY_VALUE, item.getValue());
+        values.put(KEY_CATEGORY, item._category);
+        values.put(KEY_NAME, item._name);
+        values.put(KEY_FILENAME, item._filename);
+        values.put(KEY_VALUE, item._value);
+        values.put(KEY_ENABLED, item._enabled ? 1 : 0);
 
-        sDb.delete(TABLE_BOOTUP, KEY_NAME + " = ?", new String[]{ item.getName() });
-        sDb.insert(TABLE_BOOTUP, null, values);
+        final Uri uri = Uri.parse(BootupContentProvider.CONTENT_URI + "/" + item._name);
+        Application.get().getContentResolver().delete(uri, null, null);
+        Application.get().getContentResolver().insert(uri, values);
         return true;
     }
 
@@ -233,11 +244,13 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
             DataItem item;
             do {
                 item = new DataItem();
-                item.setID(Utils.parseInt(cursor.getString(0)));
-                item.setCategory(cursor.getString(1));
-                item.setName(cursor.getString(2));
-                item.setFileName(cursor.getString(3));
-                item.setValue(cursor.getString(4));
+                item._id = Utils.parseInt(cursor.getString(0));
+                item._category = cursor.getString(1);
+                item._name = cursor.getString(2);
+                item._filename = cursor.getString(3);
+                item._value = cursor.getString(4);
+                item._enabled = cursor.getInt(5) == 1;
+
                 itemList.add(item);
             } while (cursor.moveToNext());
         }

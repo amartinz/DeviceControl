@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.editor;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
@@ -150,15 +151,15 @@ public class SysctlFragment extends AttachPreferenceFragment implements DeviceCo
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
-    public static String restore() {
+    public static String restore(final Context context) {
         final StringBuilder sbCmd = new StringBuilder();
 
-        final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
-                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_SYSCTL);
+        final List<DataItem> items = DatabaseHandler.getInstance(context)
+                .getAllItems(DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_SYSCTL);
         String name, value;
         for (final DataItem item : items) {
-            name = item.getFileName();
-            value = item.getValue();
+            name = item._filename;
+            value = item._value;
             sbCmd.append(Utils.getWriteCommand(name, value));
         }
 

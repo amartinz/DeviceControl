@@ -132,7 +132,7 @@ public class BootupService extends IntentService implements DeviceConstants {
             //==================================================================================
             Logger.i(this, "----- DEVICE START -----");
             if (PreferenceHelper.getBoolean(SOB_DEVICE, false)) {
-                cmd = DeviceFeatureFragment.restore();
+                cmd = DeviceFeatureFragment.restore(mContext);
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
             }
@@ -143,21 +143,21 @@ public class BootupService extends IntentService implements DeviceConstants {
             //==================================================================================
             Logger.i(this, "----- CPU START -----");
             if (PreferenceHelper.getBoolean(SOB_CPU, false)) {
-                cmd = CpuUtils.get().restore();
+                cmd = CpuUtils.get().restore(mContext);
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
             }
             Logger.i(this, "----- CPU END -----");
             Logger.i(this, "----- GPU START -----");
             if (PreferenceHelper.getBoolean(SOB_GPU, false)) {
-                cmd = GpuUtils.get().restore();
+                cmd = GpuUtils.get().restore(mContext);
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
             }
             Logger.i(this, "----- GPU END -----");
             Logger.i(this, "----- EXTRAS START -----");
             if (PreferenceHelper.getBoolean(SOB_EXTRAS, false)) {
-                cmd = DeviceFeatureKernelFragment.restore();
+                cmd = DeviceFeatureKernelFragment.restore(mContext);
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
             }
@@ -176,7 +176,7 @@ public class BootupService extends IntentService implements DeviceConstants {
             Logger.i(this, "----- TOOLS START -----");
             if (PreferenceHelper.getBoolean(SOB_SYSCTL, false)) {
                 if (new File("/system/etc/sysctl.conf").exists()) {
-                    cmd = SysctlFragment.restore();
+                    cmd = SysctlFragment.restore(mContext);
                     Logger.v(this, cmd);
                     sbCmd.append(cmd);
                     sbCmd.append("busybox sysctl -p;\n");

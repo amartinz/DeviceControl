@@ -65,7 +65,7 @@ public class GpuFreqMaxAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_GPU, "gpu_max",
-                    GpuUtils.get().getGpuFreqMaxPath(), value));
+                    GpuUtils.get().getGpuFreqMaxPath(), value, true));
         }
 
         Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.get().getGpuFreqMaxPath(), value));

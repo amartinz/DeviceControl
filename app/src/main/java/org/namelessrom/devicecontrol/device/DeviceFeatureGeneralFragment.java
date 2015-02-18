@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.device;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -134,7 +135,7 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             if (mAwesomeGloveMode != null || !isHtsSupported()) {
                 category.removePreference(mGloveMode);
             } else {
-                final String value = DatabaseHandler.getInstance()
+                final String value = DatabaseHandler.getInstance(getActivity())
                         .getValueByName(mGloveMode.getKey(), DatabaseHandler.TABLE_BOOTUP);
                 final boolean enableGlove = (value != null && value.equals("1"));
 
@@ -275,7 +276,7 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             enableHts(value);
             PreferenceHelper.setBootup(
                     new DataItem(DatabaseHandler.CATEGORY_DEVICE, mGloveMode.getKey(),
-                            mGloveMode.getKey(), (value ? "1" : "0"))
+                            mGloveMode.getKey(), (value ? "1" : "0"), true)
             );
             return true;
         } else if (preference == mAwesomeGloveMode) {
@@ -333,16 +334,16 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
     // Methods
     //==============================================================================================
 
-    public static String restore() {
+    public static String restore(final Context context) {
         final StringBuilder sbCmd = new StringBuilder();
 
-        final List<DataItem> items = DatabaseHandler.getInstance()
+        final List<DataItem> items = DatabaseHandler.getInstance(context)
                 .getAllItems(DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_DEVICE);
 
         String filename, value;
         for (final DataItem item : items) {
-            filename = item.getFileName();
-            value = item.getValue();
+            filename = item._filename;
+            value = item._value;
             if ("input_glove_mode".equals(filename)) {
                 final String mode = ("1".equals(value) ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
                 sbCmd.append(Utils.getWriteCommand(COMMAND_PATH, mode));

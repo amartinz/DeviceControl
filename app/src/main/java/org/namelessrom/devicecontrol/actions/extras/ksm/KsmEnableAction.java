@@ -67,7 +67,8 @@ public class KsmEnableAction extends BaseAction {
         final String path = Application.get().getString(R.string.file_ksm_run);
         if (bootup) {
             PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_EXTRAS, "ksm_run", path, value));
+                    new DataItem(DatabaseHandler.CATEGORY_EXTRAS, "ksm_run", path, value,
+                            true));
         }
 
         Utils.runRootCommand(Utils.getWriteCommand(path, value));

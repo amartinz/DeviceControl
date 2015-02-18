@@ -108,13 +108,15 @@ public class AwesomeListPreference extends CustomListPreference {
                     Utils.writeValue(mPaths[i], value);
                     if (startUp) {
                         PreferenceHelper.setBootup(new DataItem(
-                                category, getKey() + String.valueOf(i), mPaths[i], value));
+                                category, getKey() + String.valueOf(i), mPaths[i], value,
+                                true));
                     }
                 }
             } else {
                 Utils.writeValue(mPath, value);
                 if (startUp) {
-                    PreferenceHelper.setBootup(new DataItem(category, getKey(), mPath, value));
+                    PreferenceHelper.setBootup(new DataItem(category, getKey(), mPath, value,
+                            true));
                 }
             }
         }

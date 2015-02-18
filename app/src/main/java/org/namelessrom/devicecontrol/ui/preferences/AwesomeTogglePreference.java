@@ -149,14 +149,14 @@ public class AwesomeTogglePreference extends CustomTogglePreference {
                     if (mStartUp) {
                         PreferenceHelper.setBootup(new DataItem(
                                 mCategory, getKey() + String.valueOf(i), mPaths[i],
-                                (isChecked ? mValueChecked : mValueNotChecked)));
+                                (isChecked ? mValueChecked : mValueNotChecked), true));
                     }
                 }
             } else {
                 Utils.writeValue(mPath, (isChecked ? mValueChecked : mValueNotChecked));
                 if (mStartUp) {
                     PreferenceHelper.setBootup(new DataItem(mCategory, getKey(), mPath,
-                            (isChecked ? mValueChecked : mValueNotChecked)));
+                            (isChecked ? mValueChecked : mValueNotChecked), true));
                 }
             }
         }

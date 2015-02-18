@@ -122,14 +122,14 @@ public class AwesomeSeekBarPreference extends SeekBarPreference {
                     if (startUp) {
                         PreferenceHelper.setBootup(new DataItem(
                                 category, getKey() + String.valueOf(i), mPaths[i],
-                                String.valueOf(value)));
+                                String.valueOf(value), true));
                     }
                 }
             } else {
                 Utils.writeValue(mPath, String.valueOf(value));
                 if (startUp) {
                     PreferenceHelper.setBootup(new DataItem(category, getKey(), mPath,
-                            String.valueOf(value)));
+                            String.valueOf(value), true));
                 }
             }
         }

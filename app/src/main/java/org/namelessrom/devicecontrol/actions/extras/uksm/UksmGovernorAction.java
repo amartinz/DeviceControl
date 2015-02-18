@@ -65,7 +65,7 @@ public class UksmGovernorAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS,
-                    "uksm_governor", UksmUtils.UKSM_CPU_GOV, value));
+                    "uksm_governor", UksmUtils.UKSM_CPU_GOV, value, true));
         }
 
         Utils.runRootCommand(Utils.getWriteCommand(UksmUtils.UKSM_CPU_GOV, value));

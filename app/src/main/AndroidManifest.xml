@@ -22,7 +22,8 @@
 
     <!-- currently broken, reenable once fixed -->
     <!--uses-sdk tools:node="replace" /-->
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="21" />
+    <uses-sdk android:minSdkVersion="14"
+        android:targetSdkVersion="21" />
 
     <!-- Internet / Networking -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -49,8 +50,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- Power -->
-    <uses-permission android:name="android.permission.REBOOT" tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.DEVICE_POWER" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.REBOOT"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.DEVICE_POWER"
+        tools:ignore="ProtectedPermissions" />
 
     <uses-feature android:name="org.namelessrom.android"
         android:required="false" />
@@ -225,6 +228,12 @@
             android:label="@string/reboot"
             android:launchMode="singleInstance"
             android:theme="@style/CustomDialog" />
+
+        <!-- Providers -->
+        <provider
+            android:name=".database.BootupContentProvider"
+            android:authorities="org.namelessrom.devicecontrol.contentprovider"
+            android:exported="false" />
     </application>
 
 </manifest>

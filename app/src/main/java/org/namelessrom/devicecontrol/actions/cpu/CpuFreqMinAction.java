@@ -73,7 +73,7 @@ public class CpuFreqMinAction extends BaseAction {
             sb.append(Utils.getWriteCommand(path, value));
             if (bootup) {
                 PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                        "cpu_min" + i, CpuUtils.get().getMinCpuFrequencyPath(i), value));
+                        "cpu_min" + i, CpuUtils.get().getMinCpuFrequencyPath(i), value, true));
             }
         }
 

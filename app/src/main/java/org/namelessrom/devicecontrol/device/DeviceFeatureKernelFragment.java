@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.device;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -224,7 +225,7 @@ public class DeviceFeatureKernelFragment extends CustomPreferenceFragment implem
             Utils.writeValue(TCP_CONGESTION_CONTROL, value);
             PreferenceHelper.setBootup(new DataItem(
                     DatabaseHandler.CATEGORY_EXTRAS,
-                    mTcpCongestion.getKey(), TCP_CONGESTION_CONTROL, value));
+                    mTcpCongestion.getKey(), TCP_CONGESTION_CONTROL, value, true));
             preference.setSummary(value);
             return true;
         }
@@ -236,15 +237,15 @@ public class DeviceFeatureKernelFragment extends CustomPreferenceFragment implem
     // Methods
     //==============================================================================================
 
-    public static String restore() {
+    public static String restore(final Context context) {
         final StringBuilder sbCmd = new StringBuilder();
 
-        final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
-                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_EXTRAS);
+        final List<DataItem> items = DatabaseHandler.getInstance(context)
+                .getAllItems(DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_EXTRAS);
         String name, value;
         for (final DataItem item : items) {
-            name = item.getFileName();
-            value = item.getValue();
+            name = item._filename;
+            value = item._value;
 
             if (MpDecisionAction.MPDECISION_PATH.equals(name)) {
                 new MpDecisionAction(value, false).triggerAction();

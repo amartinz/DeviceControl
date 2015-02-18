@@ -48,7 +48,7 @@ public class MpDecisionAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS, getName(),
-                    MPDECISION_PATH, value));
+                    MPDECISION_PATH, value, true));
         }
 
         Utils.runRootCommand(enableMpDecision(TextUtils.equals("1", value)));

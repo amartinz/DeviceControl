@@ -52,7 +52,7 @@ public class Application extends android.app.Application implements DeviceConsta
 
         Application.sInstance = this;
 
-        DatabaseHandler.getInstance();
+        DatabaseHandler.getInstance(this);
         Logger.setEnabled(PreferenceHelper.getBoolean(EXTENSIVE_LOGGING, false));
 
         if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.debug=1")) {

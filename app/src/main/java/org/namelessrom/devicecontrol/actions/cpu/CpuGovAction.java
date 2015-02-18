@@ -74,7 +74,7 @@ public class CpuGovAction extends BaseAction {
             sb.append(Utils.getWriteCommand(path, value));
             if (bootup) {
                 PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                        "cpu_gov" + i, GovernorUtils.get().getGovernorPath(i), value));
+                        "cpu_gov" + i, GovernorUtils.get().getGovernorPath(i), value, true));
             }
         }
 

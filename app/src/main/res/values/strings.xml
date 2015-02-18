@@ -169,6 +169,7 @@
     <string name="category">Category</string>
     <string name="action">Action</string>
     <string name="value">Value</string>
+    <string name="path">Path</string>
     <string name="fstrim_title">Automatic FStrimming</string>
     <string name="fstrim_summary">FStrim is used to discard (or \"trim\") blocks which are not in use by the filesystem.\nThis can improve performance and reduce lags.</string>
     <string name="fstrim_interval_title">FStrim interval</string>

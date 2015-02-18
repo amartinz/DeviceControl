@@ -65,7 +65,7 @@ public class KsmSleepAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS,
-                    "ksm_sleep", KsmUtils.KSM_SLEEP, value));
+                    "ksm_sleep", KsmUtils.KSM_SLEEP, value, true));
         }
 
         Utils.runRootCommand(Utils.getWriteCommand(KsmUtils.KSM_SLEEP, value));

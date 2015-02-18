@@ -251,13 +251,13 @@ public class GpuUtils {
         return false;
     }
 
-    @NonNull public String restore() {
+    @NonNull public String restore(final Context context) {
         final StringBuilder sbCmd = new StringBuilder();
 
-        final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
-                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_GPU);
+        final List<DataItem> items = DatabaseHandler.getInstance(context)
+                .getAllItems(DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_GPU);
         for (final DataItem item : items) {
-            sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
+            sbCmd.append(Utils.getWriteCommand(item._filename, item._value));
         }
 
         return sbCmd.toString();

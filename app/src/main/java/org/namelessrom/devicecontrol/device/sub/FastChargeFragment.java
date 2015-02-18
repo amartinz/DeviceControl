@@ -162,7 +162,8 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
             Utils.writeValue(FC_FORCE, value);
             mForceFastCharge.setSummary(getForceSummary(Utils.readOneLine(FC_FORCE)));
             PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_DEVICE, "force_fast_charge", FC_FORCE, value));
+                    DatabaseHandler.CATEGORY_DEVICE, "force_fast_charge", FC_FORCE, value,
+                    true));
             return true;
         } else if (mFailsafe == preference) {
             final boolean value = (Boolean) newValue;
@@ -200,7 +201,7 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
             mAcLevel.setSummary(currentValue);
             mAcLevel.setText(currentValue);
             PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_DEVICE, "ac_level", FC_AC_LEVEL, value));
+                    DatabaseHandler.CATEGORY_DEVICE, "ac_level", FC_AC_LEVEL, value, true));
             return true;
         } else if (mUsbLevel == preference) {
             final String value = String.valueOf(newValue);
@@ -209,7 +210,7 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
             mUsbLevel.setSummary(currentValue);
             mUsbLevel.setText(currentValue);
             PreferenceHelper.setBootup(new DataItem
-                    (DatabaseHandler.CATEGORY_DEVICE, "usb_level", FC_USB_LEVEL, value));
+                    (DatabaseHandler.CATEGORY_DEVICE, "usb_level", FC_USB_LEVEL, value, true));
             return true;
         }
 

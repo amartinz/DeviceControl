@@ -48,7 +48,7 @@ public class PnPMgrAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS, getName(),
-                    PNPMGR_PATH, value));
+                    PNPMGR_PATH, value, true));
         }
 
         Utils.runRootCommand(enablePnPMgr(TextUtils.equals("1", value)));

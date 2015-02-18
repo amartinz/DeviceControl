@@ -65,7 +65,7 @@ public class GpuFreqMinAction extends BaseAction {
 
         if (bootup) {
             PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_GPU, "gpu_min",
-                    GpuUtils.get().getGpuFreqMinPath(), value));
+                    GpuUtils.get().getGpuFreqMinPath(), value, true));
         }
 
         Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.get().getGpuFreqMinPath(), value));

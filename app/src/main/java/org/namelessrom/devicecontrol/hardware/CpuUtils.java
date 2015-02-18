@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.hardware;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -178,16 +179,16 @@ public class CpuUtils {
         return numOfCpu;
     }
 
-    public String restore() {
+    public String restore(final Context context) {
         final StringBuilder sbCmd = new StringBuilder();
 
-        final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
-                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_CPU);
+        final List<DataItem> items = DatabaseHandler.getInstance(context)
+                .getAllItems(DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_CPU);
         String tmpString;
         int tmpInt;
         for (final DataItem item : items) {
             tmpInt = -1;
-            tmpString = item.getName();
+            tmpString = item._name;
             if (tmpString != null && !tmpString.contains("io")) {
                 try {
                     tmpInt = Utils.parseInt(
@@ -203,7 +204,7 @@ public class CpuUtils {
                     sbCmd.append(Utils.getWriteCommand(path, "1"));
                 }
             }
-            sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
+            sbCmd.append(Utils.getWriteCommand(item._filename, item._value));
         }
 
         return sbCmd.toString();

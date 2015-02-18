@@ -76,7 +76,7 @@ public class TaskerAdapter extends RecyclerView.Adapter<TaskerAdapter.TaskerView
         holder.enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 item.enabled = isChecked;
-                DatabaseHandler.getInstance().updateOrInsertTaskerItem(item);
+                DatabaseHandler.getInstance(mActivity).updateOrInsertTaskerItem(item);
             }
         });
 
@@ -104,7 +104,7 @@ public class TaskerAdapter extends RecyclerView.Adapter<TaskerAdapter.TaskerView
                 alert.setPositiveButton(android.R.string.yes,
                         new DialogInterface.OnClickListener() {
                             @Override public void onClick(DialogInterface d, int b) {
-                                DatabaseHandler.getInstance().deleteTaskerItem(item);
+                                DatabaseHandler.getInstance(mActivity).deleteTaskerItem(item);
                                 mTasks.remove(item);
                                 d.dismiss();
                                 notifyDataSetChanged();

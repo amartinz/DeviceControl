@@ -176,7 +176,7 @@ public class GovernorFragment extends AttachPreferenceFragment implements Device
                 final String name = p.getTitle().toString();
                 final String key = p.getKey();
                 PreferenceHelper.setBootup(new DataItem(
-                        DatabaseHandler.CATEGORY_CPU, name, key, value));
+                        DatabaseHandler.CATEGORY_CPU, name, key, value, true));
 
                 return null;
             }

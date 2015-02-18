@@ -37,20 +37,26 @@ public class ScreenReceiver extends BroadcastReceiver {
         if (action != null && !action.isEmpty()) {
             Logger.i(this, String.format("action: %s", action));
             if (Intent.ACTION_SCREEN_ON.equals(action)) {
-                new Worker().execute(ActionProcessor.TRIGGER_SCREEN_ON);
+                new Worker(context).execute(ActionProcessor.TRIGGER_SCREEN_ON);
             } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
-                new Worker().execute(ActionProcessor.TRIGGER_SCREEN_OFF);
+                new Worker(context).execute(ActionProcessor.TRIGGER_SCREEN_OFF);
             }
         }
     }
 
     private class Worker extends AsyncTask<String, Void, Void> {
+        private final Context mContext;
+
+        public Worker(final Context context) {
+            mContext = context;
+        }
+
         @Override
         protected Void doInBackground(String... params) {
             final String trigger = params[0];
             Logger.v(this, "ScreenReceiver: %s", trigger);
 
-            final List<TaskerItem> itemList = DatabaseHandler.getInstance()
+            final List<TaskerItem> itemList = DatabaseHandler.getInstance(mContext)
                     .getAllTaskerItemsByTrigger(trigger);
 
             Logger.v(this, "Trigger: %s | Items: %s", trigger, itemList.size());
