@@ -23,6 +23,12 @@
         android:summary="@string/mpdecision_summary"
         android:defaultValue="false" />
 
+    <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
+        android:key="pnpmgr"
+        android:title="@string/pnpmgr"
+        android:summary="@string/mpdecision_summary"
+        android:defaultValue="false" />
+
     <org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory
         android:key="intelli_plug"
         android:title="@string/intelli_plug"

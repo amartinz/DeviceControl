@@ -41,6 +41,7 @@
     <string name="menu_minus" translatable="false">-25mV</string>
     <string name="unknown" translatable="false">---</string>
     <string name="mpdecision" translatable="false">MPDecision</string>
+    <string name="pnpmgr" translatable="false">PnPmgr</string>
     <string name="submit_confirm_button" translatable="false">@string/finish</string>
     <string name="lcd_density_default" translatable="false">480</string>
     <string name="sysctl_vm" translatable="false">SysCtl / VM</string>
