@@ -26,10 +26,11 @@
         android:id="@+id/toolbar"
         layout="@layout/actionbar_toolbar" />
 
-    <it.neokree.materialtabs.MaterialTabHost
+    <com.astuetz.PagerSlidingTabStrip
         android:id="@+id/tabHost"
         android:layout_width="match_parent"
-        android:layout_height="48dp" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorAccent" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
