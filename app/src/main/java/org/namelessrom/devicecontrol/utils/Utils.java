@@ -43,6 +43,7 @@ import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -97,9 +98,9 @@ public class Utils implements DeviceConstants {
                     if (s.contains(prop)) return s.replace(prop + '=', "");
                 }
             } finally {
-                if (br != null) br.close();
-                if (isr != null) isr.close();
-                if (fis != null) fis.close();
+                Utils.closeQuietly(br);
+                Utils.closeQuietly(isr);
+                Utils.closeQuietly(fis);
             }
         }
 
@@ -121,9 +122,9 @@ public class Utils implements DeviceConstants {
                 sb.append(line).append('\n');
             }
         } finally {
-            if (br != null) br.close();
-            if (reader != null) reader.close();
-            if (htmlStream != null) htmlStream.close();
+            Utils.closeQuietly(br);
+            Utils.closeQuietly(reader);
+            Utils.closeQuietly(htmlStream);
         }
 
         return sb.toString();
@@ -148,11 +149,14 @@ public class Utils implements DeviceConstants {
                     final String value = brBuffer.readLine();
                     return ((trim && value != null) ? value.trim() : value);
                 } finally {
-                    brBuffer.close();
+                    Utils.closeQuietly(brBuffer);
                 }
             } catch (Exception e) {
+                Logger.e(TAG, "could not read file: " + sFile, e);
                 return readFileViaShell(sFile, true);
             }
+        } else {
+            Logger.w(TAG, "File does not exist or is not readable -> %s", sFile);
         }
         return null;
     }
@@ -180,9 +184,11 @@ public class Utils implements DeviceConstants {
             } catch (Exception e) {
                 return readFileViaShell(sFile, true);
             } finally {
-                if (brBuffer != null) try { brBuffer.close(); } catch (Exception ignored) { }
-                if (reader != null) try { reader.close(); } catch (Exception ignored) { }
+                Utils.closeQuietly(brBuffer);
+                Utils.closeQuietly(reader);
             }
+        } else {
+            Logger.w(TAG, "File does not exist or is not readable -> %s", sFile);
         }
         return null;
     }
@@ -213,7 +219,7 @@ public class Utils implements DeviceConstants {
                 try {
                     fw.write(value);
                 } finally {
-                    fw.close();
+                    Utils.closeQuietly(fw);
                 }
             } catch (IOException ignored) {
                 writeValueViaShell(filename, value);
@@ -244,7 +250,13 @@ public class Utils implements DeviceConstants {
         if (TextUtils.isEmpty(filename) || TextUtils.equals("-", filename)) {
             return false;
         }
-        return new File(filename).exists();
+
+        if (!new File(filename).exists()) {
+            // try via shell
+            final String result = getCommandResult(String.format("busybox ls %s", filename), "-");
+            return (!TextUtils.isEmpty(result) && !TextUtils.equals("-", filename));
+        }
+        return true;
     }
 
     /**
@@ -356,9 +368,9 @@ public class Utils implements DeviceConstants {
         return new CMDProcessor().su.runWaitFor(command).success();
     }
 
-    public static String getCommandResult(final String command, final String def) {
+    public static String getCommandResult(final String command, final String defaultValue) {
         final String result = new CMDProcessor().su.runWaitFor(command).stdout;
-        return (TextUtils.isEmpty(result) ? def : result);
+        return (TextUtils.isEmpty(result) ? defaultValue : result);
     }
 
     public static void runRootCommand(final String command) {
@@ -614,5 +626,12 @@ public class Utils implements DeviceConstants {
         final Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
         return DateFormat.format("dd-MM-yyyy", cal).toString();
+    }
+
+    public static void closeQuietly(final Closeable closeable) {
+        if (closeable == null) return;
+        try {
+            closeable.close();
+        } catch (IOException ignored) { }
     }
 }

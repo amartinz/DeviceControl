@@ -127,7 +127,12 @@ public class CpuUtils {
         String tmp = Utils.readOneLine(Application.get().getString(R.string.file_thermal_cpu));
         if (!TextUtils.isEmpty(tmp) && !tmp.trim().isEmpty()) {
             int temp;
-            try { temp = Utils.parseInt(tmp); } catch (Exception e) { return -1; }
+            try {
+                temp = Utils.parseInt(tmp);
+            } catch (Exception e) {
+                Logger.e(this, "could not read cpu temperature", e);
+                return -1;
+            }
             temp = (temp < 0 ? 0 : temp);
             temp = (temp > 100 ? 100 : temp);
             return temp;
