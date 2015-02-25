@@ -407,7 +407,7 @@
     <string name="sensor_temperature">Temperature</string>
     <string name="sensor_pressure">Pressure</string>
     <string name="sensor_pressure_note">Note: values can be in %1$s or %2$s depending on the manufacturers implementation</string>
-    <string name="sensor_relative_humitidy">Relative humitidy</string>
+    <string name="sensor_relative_humitidy">Relative humidity</string>
     <string name="sensor_accelerometer">Accelerometer (including gravity)</string>
     <string name="sensor_accelerometer_linear">Accelerometer linear (excluding gravity)</string>
     <string name="sensor_gravity">Gravity</string>
