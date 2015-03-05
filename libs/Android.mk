@@ -2,7 +2,7 @@ LOCAL_PATH:= $(call my-dir)
 
 #===================================================================
 include $(CLEAR_VARS)
-LOCAL_SRC_FILES := pollfish_4.0.2.jar
+LOCAL_SRC_FILES := pollfish_4.0.3.jar
 LOCAL_MODULE := pollfish-sdk
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := JAVA_LIBRARIES
