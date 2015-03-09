@@ -50,8 +50,7 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class VoltageFragment extends AttachPreferenceFragment implements
-        DeviceConstants {
+public class VoltageFragment extends AttachPreferenceFragment {
 
     private static final String PREF_UV = "pref_uv";
     private static final String PREF_VDD = "pref_vdd";
@@ -63,7 +62,7 @@ public class VoltageFragment extends AttachPreferenceFragment implements
 
     private boolean isVdd = false;
 
-    @Override protected int getFragmentId() { return ID_VOLTAGE; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_VOLTAGE; }
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

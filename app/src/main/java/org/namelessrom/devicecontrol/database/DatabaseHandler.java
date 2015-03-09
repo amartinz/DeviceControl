@@ -35,7 +35,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants {
+public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 9;
     private static final String DATABASE_NAME = "DeviceControl.db";
@@ -160,9 +160,12 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         // TODO: a more grateful way?
         wipeDb(db);
         try {
-            //noinspection ResultOfMethodCallIgnored
-            new File(Application.get().getFilesDirectory() + DC_DOWNGRADE).createNewFile();
-        } catch (Exception ignored) { }
+            final File downgradeFile = new File(Application.get().getFilesDirectory(),
+                    DeviceConstants.DC_DOWNGRADE);
+            Logger.d(this, "creating downgrade file -> %s", downgradeFile.createNewFile());
+        } catch (Exception e) {
+            Logger.e(this, "could not create downgrade file", e);
+        }
     }
 
     private void wipeDb(final SQLiteDatabase db) {

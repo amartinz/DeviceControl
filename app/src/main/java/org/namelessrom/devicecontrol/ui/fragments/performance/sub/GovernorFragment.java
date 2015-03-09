@@ -47,13 +47,12 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.File;
 
-public class GovernorFragment extends AttachPreferenceFragment implements DeviceConstants,
-        GovernorUtils.GovernorListener {
+public class GovernorFragment extends AttachPreferenceFragment implements GovernorUtils.GovernorListener {
 
     private PreferenceCategory mCategory;
     private Context mContext;
 
-    @Override protected int getFragmentId() { return ID_GOVERNOR_TUNABLE; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_GOVERNOR_TUNABLE; }
 
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

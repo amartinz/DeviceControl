@@ -41,9 +41,7 @@ import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KsmFragment extends AttachPreferenceFragment
-        implements DeviceConstants,
-        Preference.OnPreferenceChangeListener {
+public class KsmFragment extends AttachPreferenceFragment implements Preference.OnPreferenceChangeListener {
 
     //----------------------------------------------------------------------------------------------
     private PreferenceScreen mRoot;
@@ -59,7 +57,7 @@ public class KsmFragment extends AttachPreferenceFragment
     private CustomPreference mPagesToScan;
     private CustomPreference mSleep;
 
-    @Override protected int getFragmentId() { return ID_KSM; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_KSM; }
 
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

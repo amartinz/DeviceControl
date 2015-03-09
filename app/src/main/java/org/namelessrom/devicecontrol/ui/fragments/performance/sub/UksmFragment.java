@@ -62,9 +62,7 @@ sleep_times
 thrash_threshold
  */
 
-public class UksmFragment extends AttachPreferenceFragment
-        implements DeviceConstants,
-        Preference.OnPreferenceChangeListener {
+public class UksmFragment extends AttachPreferenceFragment implements Preference.OnPreferenceChangeListener {
 
     //----------------------------------------------------------------------------------------------
     private PreferenceScreen mRoot;
@@ -80,7 +78,7 @@ public class UksmFragment extends AttachPreferenceFragment
     private CustomPreference mSleep;
     private CustomListPreference mCpuGovernor;
 
-    @Override protected int getFragmentId() { return ID_UKSM; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_UKSM; }
 
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

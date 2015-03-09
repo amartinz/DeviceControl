@@ -28,12 +28,12 @@ import org.namelessrom.devicecontrol.ui.views.CpuStateView;
 import org.namelessrom.devicecontrol.ui.views.DeviceStatusView;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class InformationFragment extends AttachFragment implements DeviceConstants {
+public class InformationFragment extends AttachFragment {
 
     private DeviceStatusView mDeviceStats;
     private CpuStateView mCpuStates;
 
-    @Override protected int getFragmentId() { return ID_PERFORMANCE_INFO; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_PERFORMANCE_INFO; }
 
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
