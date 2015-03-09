@@ -17,6 +17,7 @@
 <resources>
     <!-- App -->
     <string name="support">Support</string>
+    <string name="translate">Translate</string>
     <string name="donate_">Donate</string>
 
     <string name="donate_value">Donate %s</string>

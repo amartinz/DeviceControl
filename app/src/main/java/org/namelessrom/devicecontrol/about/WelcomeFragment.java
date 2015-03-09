@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol.about;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.DonationActivity;
+import org.namelessrom.devicecontrol.utils.AppHelper;
+import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 public class WelcomeFragment extends Fragment {
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -36,6 +39,16 @@ public class WelcomeFragment extends Fragment {
 
         final TextView details = (TextView) view.findViewById(R.id.detailsTxtView);
         details.setText(getString(R.string.welcome_message, getString(R.string.app_name)));
+
+        final Drawable translateDrawable = getResources().getDrawable(R.drawable.ic_translate);
+        final Button translateButton = (Button) view.findViewById(R.id.translateButton);
+        translateButton.setCompoundDrawablesWithIntrinsicBounds(
+                DrawableHelper.applyAccentColorFilter(translateDrawable), null, null, null);
+        translateButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                AppHelper.viewInBrowser("https://translate.nameless-rom.org");
+            }
+        });
 
         final Button donateButton = (Button) view.findViewById(R.id.donateButton);
         donateButton.setText(
