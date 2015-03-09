@@ -18,7 +18,6 @@
 package org.namelessrom.devicecontrol;
 
 import android.os.Build;
-import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 import com.stericson.roottools.RootTools;
@@ -97,20 +96,20 @@ public class Device {
 
     private String getRuntime() {
         // check the vm lib
-        String tmp = Utils.getCommandResult("getprop persist.sys.dalvik.vm.lib", "-");
-        if (TextUtils.equals(tmp, "-")) {
-            // if we do not get a result, try falling back to the new property (API 21+)
-            tmp = Utils.getCommandResult("getprop persist.sys.dalvik.vm.lib.2", "-");
+        String tmp = Utils.getCommandResult("getprop persist.sys.dalvik.vm.lib.2", "-");
+        if ("-".equals(tmp)) {
+            // if we do not get a result, try falling back to the old property
+            tmp = Utils.getCommandResult("getprop persist.sys.dalvik.vm.lib", "-");
         }
 
-        if (TextUtils.equals(tmp, "-")) {
+        if ("-".equals(tmp)) {
             // if we still did not get a result, lets cheat a bit.
             // we know that ART starts with vm version 2.x
             tmp = vmVersion.startsWith("1") ? "libdvm.so" : "libart.so";
         }
 
-        final String runtime = TextUtils.equals(tmp, "libdvm.so")
-                ? "Dalvik" : TextUtils.equals(tmp, "libart.so") ? "ART" : "-";
+        final String runtime =
+                "libdvm.so".equals(tmp) ? "Dalvik" : "libart.so".equals(tmp) ? "ART" : "-";
         tmp = String.format("%s (%s)", runtime, tmp);
 
         return tmp;

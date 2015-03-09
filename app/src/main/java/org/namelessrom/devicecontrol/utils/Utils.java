@@ -358,12 +358,12 @@ public class Utils implements DeviceConstants {
         return new CMDProcessor().su.runWaitFor(command).stdout;
     }
 
-    public static boolean getCommandResult(final String command) {
-        return new CMDProcessor().su.runWaitFor(command).success();
-    }
-
     public static String getCommandResult(final String command, final String def) {
-        final String result = new CMDProcessor().su.runWaitFor(command).stdout;
+        String result = new CMDProcessor().su.runWaitFor(command).stdout;
+        if (result == null) {
+            return def;
+        }
+        result = result.trim();
         return (TextUtils.isEmpty(result) ? def : result);
     }
 
@@ -389,7 +389,7 @@ public class Utils implements DeviceConstants {
                 }
             }
         } catch (Exception e) {
-            Logger.v(Utils.class, "runRootCommand: " + e.getMessage());
+            Logger.v(Utils.class, "runRootCommand", e);
         }
     }
 
