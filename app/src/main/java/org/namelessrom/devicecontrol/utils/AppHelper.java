@@ -21,6 +21,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.IPackageDataObserver;
+import android.content.pm.IPackageDeleteObserver;
 import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -126,6 +127,16 @@ public class AppHelper {
         }
 
         Utils.runRootCommand(cmdPrefix + internal + external);
+    }
+
+    public static void uninstallPackage(PackageManager pm, String pkg) {
+        try {
+            final Method m = pm.getClass().getDeclaredMethod("deletePackage",
+                    String.class, IPackageDeleteObserver.class, int.class);
+            m.invoke(pm, pkg, null, /* DELETE_ALL_USERS */ 2);
+        } catch (Exception e) {
+            Logger.e(TAG, "could not call deletePackage via reflection", e);
+        }
     }
 
     /**

@@ -428,19 +428,23 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
     }
 
     private void uninstall() {
+        // try via native package manager api
+        AppHelper.uninstallPackage(mPm, mAppItem.getPackageName());
+
         // build our command
         final StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("pm uninstall %s;", mAppItem.getPackageName()));
+
         if (mAppItem.isSystemApp()) {
             sb.append("busybox mount -o rw,remount /system;");
-        } else {
-            sb.append(String.format("pm uninstall %s;", mAppItem.getPackageName()));
         }
 
+        sb.append(String.format("rm -rf %s;", mAppItem.getApplicationInfo().publicSourceDir));
         sb.append(String.format("rm -rf %s;", mAppItem.getApplicationInfo().sourceDir));
         sb.append(String.format("rm -rf %s;", mAppItem.getApplicationInfo().dataDir));
 
         if (mAppItem.isSystemApp()) {
-            sb.append(String.format("pm uninstall %s;", mAppItem.getPackageName()));
             sb.append("busybox mount -o ro,remount /system;");
         }
 
@@ -607,7 +611,13 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                 break;
             }
             case DIALOG_TYPE_UNINSTALL: {
-                message = getString(R.string.uninstall_msg, mAppItem.getLabel());
+                if (mAppItem.isSystemApp()) {
+                    message = String.format("%s\n\n%s",
+                            getString(R.string.uninstall_msg, mAppItem.getLabel()),
+                            getString(R.string.uninstall_msg_system_app));
+                } else {
+                    message = getString(R.string.uninstall_msg, mAppItem.getLabel());
+                }
                 positiveButton = android.R.string.yes;
                 break;
             }

@@ -303,6 +303,7 @@
     <string name="uninstall">Uninstall</string>
     <string name="uninstalling">Uninstalling…</string>
     <string name="uninstall_msg">Do you really want to uninstall \"%s\"?\nThis action can not be undone!</string>
+    <string name="uninstall_msg_system_app">Uninstalling system apps may require a reboot!</string>
     <string name="uninstall_success">Successfully uninstalled \"%s\"</string>
     <string name="sunlight_enhancement">Sunlight enhancement</string>
     <string name="sunlight_enhancement_summary">Enhance display brightness and readability under bright sunlight</string>
