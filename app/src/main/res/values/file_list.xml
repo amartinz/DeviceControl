@@ -221,26 +221,31 @@
 
     <!-- Display color calibration -->
     <string-array name="hardware_display_color_calibration_paths" translatable="false">
+        <item>/sys/class/graphics/fb0/rgb</item>
         <item>/sys/devices/platform/kcal_ctrl.0/kcal</item>
         <item>/sys/class/misc/gammacontrol/tuner</item>
         <item>/sys/devices/platform/mdp.524801/kcal</item>
     </string-array>
     <string-array name="hardware_display_color_calibration_ctrls" translatable="false">
+        <item>-</item>
         <item>/sys/devices/platform/kcal_ctrl.0/kcal_ctrl</item>
         <item>-</item>
         <item>-</item>
     </string-array>
     <string-array name="hardware_display_color_calibration_max" translatable="false">
+        <item>32768</item>
         <item>255</item>
         <item>120</item>
         <item>255</item>
     </string-array>
     <string-array name="hardware_display_color_calibration_min" translatable="false">
+        <item>255</item>
         <item>0</item>
         <item>0</item>
         <item>0</item>
     </string-array>
     <string-array name="hardware_display_color_calibration_defs" translatable="false">
+        <item>32768</item>
         <item>max</item>
         <item>60</item>
         <item>max</item>
