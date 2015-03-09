@@ -67,6 +67,8 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
 
     private CustomListPreference mMax;
     private CustomListPreference mMin;
+    private CustomTogglePreference mCpuLock;
+
     private CustomListPreference mGovernor;
     private CustomPreference mGovernorTuning;
 
@@ -114,6 +116,10 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
 
         mMin = (CustomListPreference) findPreference("pref_min");
         mMin.setOnPreferenceChangeListener(this);
+
+        mCpuLock = (CustomTogglePreference) findPreference("cpu_lock_freq");
+        mCpuLock.setChecked(PreferenceHelper.getBoolean(mCpuLock.getKey()));
+        mCpuLock.setOnPreferenceChangeListener(this);
 
         mGovernor = (CustomListPreference) findPreference("pref_governor");
         mGovernor.setOnPreferenceChangeListener(this);
@@ -259,6 +265,10 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
             mMin.setSummary(CpuUtils.toMhz(selected));
 
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MIN, selected, true);
+            return true;
+        } else if (preference == mCpuLock) {
+            final boolean value = (Boolean) o;
+            PreferenceHelper.setBoolean(mCpuLock.getKey(), value);
             return true;
         } else if (preference == mGovernor) {
             final String selected = String.valueOf(o);

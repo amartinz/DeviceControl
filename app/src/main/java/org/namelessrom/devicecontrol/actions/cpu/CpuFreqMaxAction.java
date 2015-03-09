@@ -63,8 +63,10 @@ public class CpuFreqMaxAction extends BaseAction {
             return;
         }
 
+        final boolean lockFreq = PreferenceHelper.getBoolean("cpu_lock_freq");
+
         final int cpus = CpuUtils.get().getNumOfCpus();
-        final StringBuilder sb = new StringBuilder(cpus * 2);
+        final StringBuilder sb = new StringBuilder(lockFreq ? cpus * 3 : cpus * 2);
 
         String path;
         for (int i = 0; i < cpus; i++) {
@@ -74,6 +76,9 @@ public class CpuFreqMaxAction extends BaseAction {
             if (bootup) {
                 PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
                         "cpu_max" + i, CpuUtils.get().getMaxCpuFrequencyPath(i), value));
+            }
+            if (lockFreq) {
+                sb.append(Utils.lockFile(path));
             }
         }
 

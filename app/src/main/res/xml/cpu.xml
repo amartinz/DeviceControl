@@ -28,6 +28,11 @@
             android:key="pref_min"
             android:title="@string/cpu_freq_min" />
 
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
+            android:key="cpu_lock_freq"
+            android:title="@string/cpu_lock_freq"
+            android:summary="@string/cpu_lock_freq_summary" />
+
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
