@@ -65,13 +65,13 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.appmanager.permissions.AppSecurityPermissions;
 import org.namelessrom.devicecontrol.objects.AppItem;
-import org.namelessrom.devicecontrol.objects.PackageObserver;
+import org.namelessrom.devicecontrol.objects.PackageStatsObserver;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 
-public class AppDetailsActivity extends BaseActivity implements PackageObserver.OnPackageStatsListener, View.OnClickListener {
+public class AppDetailsActivity extends BaseActivity implements PackageStatsObserver.OnPackageStatsListener, View.OnClickListener {
     public static final String ARG_FROM_ACTIVITY = "arg_from_activity";
     public static final String ARG_PACKAGE_NAME = "arg_package_name";
 
@@ -313,7 +313,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
         mUninstall.setEnabled(!TextUtils
                 .equals(Application.get().getPackageName(), mAppItem.getPackageName()));
 
-        AppHelper.getSize(this, mAppItem.getPackageName());
+        AppHelper.getSize(mPm, this, mAppItem.getPackageName());
         refreshAppControls();
         invalidateOptionsMenu();
     }
@@ -393,14 +393,12 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
     }
 
     private void clearAppData() {
-        // TODO: clear external data as well
-        AppHelper.clearData(mAppItem.getPackageName());
+        AppHelper.clearData(mPm, mAppItem.getPackageName());
         mHandler.postDelayed(mClearRunnable, 500);
     }
 
     private void clearAppCache() {
-        // TODO: clear external cache as well
-        AppHelper.clearCache(mAppItem.getPackageName());
+        AppHelper.clearCache(mPm, mAppItem.getPackageName());
         mHandler.postDelayed(mClearRunnable, 500);
     }
 
@@ -589,7 +587,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageObserver.
     private final Runnable mClearRunnable = new Runnable() {
         @Override public void run() {
             try {
-                AppHelper.getSize(AppDetailsActivity.this, mAppItem.getPackageName());
+                AppHelper.getSize(mPm, AppDetailsActivity.this, mAppItem.getPackageName());
             } catch (Exception e) { Logger.e(this, "AppHelper.getSize(): " + e); }
         }
     };

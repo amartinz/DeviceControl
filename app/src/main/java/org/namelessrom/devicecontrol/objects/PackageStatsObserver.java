@@ -14,13 +14,13 @@ import org.namelessrom.devicecontrol.Logger;
  * Usually we just have to override onGetStatsCompleted but my android studio instance is
  * going crazy and produces apps, which crash at onTransact...
  */
-public class PackageObserver extends IPackageStatsObserver.Stub {
+public class PackageStatsObserver extends IPackageStatsObserver.Stub {
 
     private static final String DESCRIPTOR = "android.content.pm.IPackageStatsObserver";
 
     private OnPackageStatsListener packageStatsListener;
 
-    public PackageObserver(final OnPackageStatsListener listener) {
+    public PackageStatsObserver(final OnPackageStatsListener listener) {
         packageStatsListener = listener;
     }
 

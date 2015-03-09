@@ -20,12 +20,15 @@ package org.namelessrom.devicecontrol.utils;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.IPackageDataObserver;
 import android.content.pm.IPackageStatsObserver;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Environment;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.objects.PackageObserver;
+import org.namelessrom.devicecontrol.objects.PackageStatsObserver;
 
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
@@ -38,7 +41,7 @@ import static org.namelessrom.devicecontrol.utils.constants.DeviceConstants.ID_P
  * Helper class for application interactions like cleaning the cache
  */
 public class AppHelper {
-
+    private static final String TAG = "AppHelper";
     private static final String DONATE_URL =
             "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZSN2SW53JJQJY";
 
@@ -50,15 +53,15 @@ public class AppHelper {
      *
      * @param pkg The package name of the application
      */
-    public static void getSize(final PackageObserver.OnPackageStatsListener l, final String pkg) {
+    public static void getSize(final PackageManager pm,
+            final PackageStatsObserver.OnPackageStatsListener l, final String pkg) {
         try {
-            final Method getPackageSizeInfo = Application.get().getPackageManager()
-                    .getClass()
-                    .getMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
-
-            getPackageSizeInfo.invoke(Application.get().getPackageManager(),
-                    pkg, new PackageObserver(l));
-        } catch (Exception e) { Logger.e(AppHelper.class, "AppHelper.getSize()", e); }
+            final Method getPackageSizeInfo = pm.getClass().getMethod("getPackageSizeInfo",
+                    String.class, IPackageStatsObserver.class);
+            getPackageSizeInfo.invoke(pm, pkg, new PackageStatsObserver(l));
+        } catch (Exception e) {
+            Logger.e(AppHelper.class, "AppHelper.getSize()", e);
+        }
     }
 
     /**
@@ -66,9 +69,8 @@ public class AppHelper {
      *
      * @param pkg The package name of the application
      */
-    public static void clearCache(final String pkg) {
-        final String base = "rm -rf /data/data/" + pkg;
-        Utils.runRootCommand(base + "/app_*/*;" + base + "/cache/*;");
+    public static void clearCache(final PackageManager pm, final String pkg) {
+        deleteCacheOrData(pm, pkg, true);
     }
 
     /**
@@ -76,10 +78,54 @@ public class AppHelper {
      *
      * @param pkg The package name of the application
      */
-    public static void clearData(final String pkg) {
-        final String base = "rm -rf /data/data/" + pkg;
-        Utils.runRootCommand("pkill -TERM " + pkg + ';' + base + "/app_*;" + base + "/cache/;"
-                + base + "/databases/;" + base + "/files/;" + base + "/shared_prefs/;");
+    public static void clearData(final PackageManager pm, final String pkg) {
+        deleteCacheOrData(pm, pkg, false);
+    }
+
+    private static void deleteCacheOrData(PackageManager pm, String pkg, boolean clearCache) {
+        // internal (/data)
+        final String internal;
+        // external (/sdcard/Android)
+        final String external;
+        final String method;
+        final String cmdPrefix;
+
+        final String internalBase = String.format("rm -rf /data/data/%s", pkg);
+        final String externalBase = String.format("rm -rf %s/Android/data/%s",
+                Environment.getExternalStorageDirectory().getAbsolutePath(), pkg);
+
+        if (clearCache) {
+            // 3 x base
+            final String dirs = "%s/app_*/*;%s/cache/*;%s/code_cache/*;";
+            method = "deleteApplicationCacheFiles";
+            cmdPrefix = "";
+
+            internal = String.format(dirs, internalBase, internalBase, internalBase);
+            external = String.format(dirs, externalBase, externalBase, externalBase);
+        } else {
+            // 5 x base
+            final String dirs = "%s/app_*;%s/cache;%s/databases;%s/files;%s/shared_prefs;";
+            method = "clearApplicationUserData";
+            cmdPrefix = String.format("pkill -TERM %s;", pkg);
+
+            internal = String.format(dirs, internalBase, internalBase, internalBase, internalBase,
+                    internalBase);
+            external = String.format(dirs, externalBase, externalBase, externalBase, externalBase,
+                    externalBase);
+        }
+
+        Logger.d(TAG, "internal -> %s", internal);
+        Logger.d(TAG, "external -> %s", external);
+
+        try {
+            final Method m = pm.getClass().getDeclaredMethod(method,
+                    String.class, IPackageDataObserver.class);
+            m.invoke(pm, pkg, null);
+        } catch (Exception e) {
+            Logger.e(TAG, "could not call " + method + " via reflection", e);
+        }
+
+        Utils.runRootCommand(cmdPrefix + internal + external);
     }
 
     /**

@@ -42,6 +42,9 @@
     <!-- Device Information -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- Application permissions -->
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+    <uses-permission android:name="android.permission.DELETE_CACHE_FILES" />
+    <uses-permission android:name="android.permission.DELETE_PACKAGES" />
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
     <!--suppress DeprecatedClassUsageInspection -->
     <uses-permission android:name="android.permission.GET_TASKS" />
