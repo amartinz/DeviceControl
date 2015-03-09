@@ -30,9 +30,8 @@ import android.widget.TextView;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.utils.AppHelper;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 /**
  * Dummy Activity, used as Launcher.
@@ -78,7 +77,7 @@ public class DummyLauncher extends BaseActivity {
             }
         });
 
-        if (PreferenceHelper.getBoolean(DeviceConstants.SKIP_CHECKS, false)) {
+        if (DeviceConfiguration.get(this).skipChecks) {
             startActivity();
         } else {
             new CheckTools().execute();

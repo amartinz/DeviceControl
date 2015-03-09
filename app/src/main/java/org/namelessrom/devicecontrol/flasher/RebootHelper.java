@@ -33,13 +33,12 @@ import android.widget.EditText;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.configuration.FlasherConfiguration;
 import org.namelessrom.devicecontrol.flasher.recovery.RecoveryInfo;
 import org.namelessrom.devicecontrol.utils.IOUtils;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class RebootHelper implements DeviceConstants {
+public class RebootHelper {
 
     private RecoveryHelper mRecoveryHelper;
 
@@ -191,10 +190,10 @@ public class RebootHelper implements DeviceConstants {
     private void reboot(final Context context, final String[] items, final boolean wipeData,
             final boolean wipeCaches, final String backupFolder, final String backupOptions) {
         final int[] recoveries;
-        final int flashType = PreferenceHelper.getInt(PREF_RECOVERY_TYPE, RECOVERY_TYPE_BOTH);
-        if (RECOVERY_TYPE_CWM == flashType) {
+        final int flashType = FlasherConfiguration.get(context).recoveryType;
+        if (FlasherConfiguration.RECOVERY_TYPE_CWM == flashType) {
             recoveries = new int[]{ RecoveryInfo.CWM_BASED };
-        } else if (RECOVERY_TYPE_OPEN == flashType) {
+        } else if (FlasherConfiguration.RECOVERY_TYPE_OPEN == flashType) {
             recoveries = new int[]{ RecoveryInfo.TWRP_BASED };
         } else {
             recoveries = new int[]{ RecoveryInfo.CWM_BASED, RecoveryInfo.TWRP_BASED };

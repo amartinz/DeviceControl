@@ -38,9 +38,8 @@ import org.namelessrom.devicecontrol.objects.MemoryInfo;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class DeviceInformationGeneralFragment extends PreferenceFragment implements DeviceConstants {
+public class DeviceInformationGeneralFragment extends PreferenceFragment {
 
     private static final String KEY_PLATFORM_VERSION = "platform_version";
     private static final String KEY_ANDROID_ID = "android_id";
@@ -118,7 +117,9 @@ public class DeviceInformationGeneralFragment extends PreferenceFragment impleme
                         cpuAbi + String.valueOf(i + 1), Build.SUPPORTED_ABIS[i]);
             }
         } else {
+            //noinspection deprecation
             addPreference(category, "cpu_abi", cpuAbi, Build.CPU_ABI);
+            //noinspection deprecation
             addPreference(category, "cpu_abi2", cpuAbi + "2", Build.CPU_ABI2);
         }
         new CpuInfoTask(category).execute();

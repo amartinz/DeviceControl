@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.ui.fragments.performance.sub;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -30,8 +31,10 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.configuration.ExtraConfiguration;
 import org.namelessrom.devicecontrol.hardware.ExtraUtils;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
@@ -39,16 +42,13 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceProgressFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntropyFragment extends AttachPreferenceProgressFragment implements DeviceConstants,
-        Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener {
+public class EntropyFragment extends AttachPreferenceProgressFragment implements Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener {
     private static final String URL_RNG =
             "http://sourceforge.net/projects/namelessrom/files/romextras/binaries/rngd/download";
     private static final File RNGD = new File(Application.get().getFilesDirectory(), "rngd");
@@ -60,7 +60,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
     private CustomTogglePreference mRngActive;
     private CustomTogglePreference mRngStartup;
 
-    @Override protected int getFragmentId() { return ID_ENTROPY; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_ENTROPY; }
 
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,8 +90,8 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
         }
 
         // category = (PreferenceCategory) findPreference("rng");
-        mRngStartup = (CustomTogglePreference) findPreference("rng_startup");
-        mRngStartup.setChecked(PreferenceHelper.getBoolean("rng_startup", false));
+        mRngStartup = (CustomTogglePreference) findPreference(ExtraConfiguration.RNG_STARTUP);
+        mRngStartup.setChecked(ExtraConfiguration.get(getActivity()).rngStartup);
         mRngStartup.setOnPreferenceChangeListener(this);
 
 
@@ -114,8 +114,8 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
             mWriteWakeupThreshold.writeValue(value);
             return true;
         } else if (mRngStartup == preference) {
-            final boolean value = (Boolean) o;
-            PreferenceHelper.setBoolean("rng_startup", value);
+            ExtraConfiguration.get(getActivity()).rngStartup = (Boolean) o;
+            ExtraConfiguration.get(getActivity()).saveConfiguration(getActivity());
             return true;
         } else if (mRngActive == preference) {
             if (!RNGD.exists()) {
@@ -194,7 +194,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
     public void onShellOutput(final ShellOutput shellOutput) {
         if (shellOutput == null) return;
 
-        if (shellOutput.id == ID_PGREP) {
+        if (shellOutput.id == DeviceConstants.ID_PGREP) {
             if (mRngActive != null) {
                 final boolean isActive =
                         shellOutput.output != null && !shellOutput.output.isEmpty();
@@ -210,8 +210,8 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
         }
     }
 
-    public static String restore() {
-        if (PreferenceHelper.getBoolean("rng_startup", false)) {
+    public static String restore(final Context context) {
+        if (ExtraConfiguration.get(context).rngStartup) {
             return String.format("%s -P;\n", RNGD.getAbsolutePath());
         }
         return "";
