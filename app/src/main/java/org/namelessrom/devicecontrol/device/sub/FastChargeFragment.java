@@ -31,10 +31,9 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.DeviceConstants;
 
-public class FastChargeFragment extends AttachPreferenceFragment implements DeviceConstants,
-        Preference.OnPreferenceChangeListener {
+public class FastChargeFragment extends AttachPreferenceFragment implements Preference.OnPreferenceChangeListener {
     private static final String FC_BASE = "/sys/kernel/fast_charge";
     private static final String FC_FORCE = FC_BASE + "/force_fast_charge";
     private static final String FC_AC_LEVELS = FC_BASE + "/ac_levels";
@@ -53,7 +52,7 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Devi
     private CustomPreference mUsbLevelsValid;
     private CustomEditTextPreference mUsbLevel;
 
-    @Override protected int getFragmentId() { return ID_FAST_CHARGE; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_FAST_CHARGE; }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

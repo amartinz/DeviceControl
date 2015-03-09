@@ -26,16 +26,19 @@ import android.os.StrictMode;
 
 import com.stericson.roottools.RootTools;
 
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.configuration.ExtraConfiguration;
+import org.namelessrom.devicecontrol.configuration.FlasherConfiguration;
+import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
+import org.namelessrom.devicecontrol.configuration.WebServerConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
 import java.io.File;
 
-public class Application extends android.app.Application implements DeviceConstants {
+public class Application extends android.app.Application {
 
     public static final Handler HANDLER = new Handler();
 
@@ -49,11 +52,10 @@ public class Application extends android.app.Application implements DeviceConsta
 
     @Override public void onCreate() {
         super.onCreate();
-
         Application.sInstance = this;
 
-        DatabaseHandler.getInstance();
-        Logger.setEnabled(PreferenceHelper.getBoolean(EXTENSIVE_LOGGING, false));
+        // force enable logger until we hit the user preference
+        Logger.setEnabled(true);
 
         if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.debug=1")) {
             // setup thread policy
@@ -88,11 +90,23 @@ public class Application extends android.app.Application implements DeviceConsta
             RootTools.debugMode = true;
         }
 
+        // initialize database
+        DatabaseHandler.getInstance();
+
+        // load configurations
+        DeviceConfiguration.get(this);
+        ExtraConfiguration.get(this);
+        FlasherConfiguration.get(this);
+        TaskerConfiguration.get(this);
+        WebServerConfiguration.get(this);
+
+        Logger.setEnabled(DeviceConfiguration.get(this).extensiveLogging);
+
         IS_NAMELESS = Utils.isNameless();
         Logger.v(this, String.format("is nameless: %s", IS_NAMELESS));
 
-        final boolean showLauncher =
-                PreferenceHelper.getBoolean(SHOW_LAUNCHER, true) || !Application.IS_NAMELESS;
+        final boolean showLauncher = !Application.IS_NAMELESS
+                || DeviceConfiguration.get(this).showLauncher;
         toggleLauncherIcon(showLauncher);
     }
 
@@ -173,7 +187,7 @@ public class Application extends android.app.Application implements DeviceConsta
 
     public boolean isDarkTheme() {
         if (sIsDarkTheme == -1) {
-            sIsDarkTheme = PreferenceHelper.getBoolean("dark_theme", false) ? 1 : 0;
+            sIsDarkTheme = DeviceConfiguration.get(this).darkTheme ? 1 : 0;
         }
         return (sIsDarkTheme == 1);
     }
@@ -182,7 +196,9 @@ public class Application extends android.app.Application implements DeviceConsta
         sIsDarkTheme = isDark ? 1 : 0;
         sAccentColor = -1;
         sPrimaryColor = -1;
-        PreferenceHelper.setBoolean("dark_theme", isDark);
+
+        DeviceConfiguration.get(this).darkTheme = isDark;
+        DeviceConfiguration.get(this).saveConfiguration(this);
         return this;
     }
 }

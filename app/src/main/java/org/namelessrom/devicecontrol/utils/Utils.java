@@ -35,12 +35,13 @@ import com.stericson.roottools.execution.CommandCapture;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.DeviceConstants;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -60,7 +61,8 @@ import java.util.Locale;
 
 import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
 
-public class Utils implements DeviceConstants {
+public class Utils {
+    private static final String TAG = "Utils";
 
     private static final String[] BLACKLIST =
             Application.get().getStringArray(R.array.file_black_list);
@@ -293,7 +295,7 @@ public class Utils implements DeviceConstants {
      */
     public static void setupDirectories() {
         final String basePath = Application.get().getFilesDirectory();
-        final String[] dirList = new String[]{ basePath + DC_LOG_DIR };
+        final String[] dirList = new String[]{ basePath + DeviceConstants.DC_LOG_DIR };
         File dir;
         for (final String s : dirList) {
             dir = new File(s);
@@ -471,7 +473,7 @@ public class Utils implements DeviceConstants {
     }
 
     public static boolean startTaskerService() {
-        if (!PreferenceHelper.getBoolean(USE_TASKER)) return false;
+        if (!TaskerConfiguration.get(Application.get()).enabled) return false;
 
         boolean enabled = false;
         final List<TaskerItem> taskerItemList = DatabaseHandler.getInstance().getAllTaskerItems("");
@@ -631,6 +633,21 @@ public class Utils implements DeviceConstants {
         try {
             closeable.close();
         } catch (IOException ignored) { }
+    }
+
+    public static boolean writeToFile(final File file, final String content) {
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter(file, false);
+            fw.write(content);
+            fw.flush();
+            return true;
+        } catch (IOException ioe) {
+            Logger.e(TAG, "could not write to file", ioe);
+            return false;
+        } finally {
+            closeQuietly(fw);
+        }
     }
 
 }
