@@ -22,6 +22,7 @@ import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.configuration.WebServerConfiguration;
 import org.namelessrom.devicecontrol.services.WebServerService;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.HtmlHelper;
@@ -111,14 +112,7 @@ public class ServerWrapper {
         mServer.get("/(?s).*", mainCallback);
         Logger.v(this, "[!] Setup route: /");
 
-        final String portString = PreferenceHelper.getString("wfm_port", "8080");
-        int port;
-        try {
-            port = Utils.parseInt(portString);
-        } catch (Exception e) {
-            port = 8080;
-        }
-        mServerSocket = mServer.listen(port);
+        mServerSocket = mServer.listen(WebServerConfiguration.get(mService).port);
 
         mService.setNotification(null);
     }
@@ -184,7 +178,7 @@ public class ServerWrapper {
             Logger.v(this, "filePath: " + filePath);
             File file;
             String sdRoot;
-            if (PreferenceHelper.getBoolean("wfm_root", false)) {
+            if (WebServerConfiguration.get(mService).root) {
                 file = new File("/");
                 sdRoot = "";
             } else {
@@ -337,16 +331,17 @@ public class ServerWrapper {
     }
 
     private boolean isAuthenticated(final AsyncHttpServerRequest req) {
-        final boolean isAuth = !PreferenceHelper.getBoolean("wfm_auth", true);
+        final WebServerConfiguration configuration = WebServerConfiguration.get(mService);
+        final boolean isAuth = !configuration.useAuth;
         if (req.getHeaders().hasAuthorization() && !isAuth) {
             final String auth = req.getHeaders().getHeaders().get("Authorization");
             if (auth != null && !auth.isEmpty()) {
                 final String[] parts = new String(Base64.decode(auth.replace("Basic", "").trim(),
                         Base64.DEFAULT)).split(":");
                 return parts[0] != null
-                        && parts[0].equals(PreferenceHelper.getString("wfm_username", "root"))
                         && parts[1] != null
-                        && parts[1].equals(PreferenceHelper.getString("wfm_password", "toor"));
+                        && parts[0].equals(configuration.username)
+                        && parts[1].equals(configuration.password);
             }
         }
         return isAuth;

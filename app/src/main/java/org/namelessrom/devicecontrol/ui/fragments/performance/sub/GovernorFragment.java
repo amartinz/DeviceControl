@@ -43,17 +43,16 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.DeviceConstants;
 
 import java.io.File;
 
-public class GovernorFragment extends AttachPreferenceFragment implements DeviceConstants,
-        GovernorUtils.GovernorListener {
+public class GovernorFragment extends AttachPreferenceFragment implements GovernorUtils.GovernorListener {
 
     private PreferenceCategory mCategory;
     private Context mContext;
 
-    @Override protected int getFragmentId() { return ID_GOVERNOR_TUNABLE; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_GOVERNOR_TUNABLE; }
 
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

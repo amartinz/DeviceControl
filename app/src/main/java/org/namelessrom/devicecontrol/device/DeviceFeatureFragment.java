@@ -21,7 +21,7 @@ import android.support.v4.app.Fragment;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.views.AttachViewPagerFragment;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.DeviceConstants;
 
 import java.util.ArrayList;
 

@@ -32,16 +32,14 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.ui.fragments.SobDialogFragment;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class MainPreferencesFragment extends PreferenceFragment
-        implements Preference.OnPreferenceChangeListener, DeviceConstants {
+public class MainPreferencesFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
     //==============================================================================================
     // App
@@ -76,28 +74,31 @@ public class MainPreferencesFragment extends PreferenceFragment
         super.onCreate(bundle);
         addPreferencesFromResource(R.xml._device_control);
 
-        mExtensiveLogging = (CustomTogglePreference) findPreference(EXTENSIVE_LOGGING);
+        final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
+
+        mExtensiveLogging = (CustomTogglePreference) findPreference(
+                DeviceConfiguration.EXTENSIVE_LOGGING);
         if (mExtensiveLogging != null) {
-            mExtensiveLogging.setChecked(PreferenceHelper.getBoolean(EXTENSIVE_LOGGING));
+            mExtensiveLogging.setChecked(configuration.extensiveLogging);
             mExtensiveLogging.setOnPreferenceChangeListener(this);
         }
 
         PreferenceCategory category = (PreferenceCategory) findPreference("prefs_general");
         mSetOnBoot = (CustomPreference) findPreference("prefs_set_on_boot");
 
-        mShowLauncher = (CustomTogglePreference) findPreference(SHOW_LAUNCHER);
+        mShowLauncher = (CustomTogglePreference) findPreference(DeviceConfiguration.SHOW_LAUNCHER);
         if (mShowLauncher != null) {
             if (Application.IS_NAMELESS) {
-                mShowLauncher.setChecked(PreferenceHelper.getBoolean(SHOW_LAUNCHER, true));
+                mShowLauncher.setChecked(configuration.showLauncher);
                 mShowLauncher.setOnPreferenceChangeListener(this);
             } else {
                 category.removePreference(mShowLauncher);
             }
         }
 
-        mSkipChecks = (CustomTogglePreference) findPreference(SKIP_CHECKS);
+        mSkipChecks = (CustomTogglePreference) findPreference(DeviceConfiguration.SKIP_CHECKS);
         if (mSkipChecks != null) {
-            mSkipChecks.setChecked(PreferenceHelper.getBoolean(SKIP_CHECKS));
+            mSkipChecks.setChecked(configuration.skipChecks);
             mSkipChecks.setOnPreferenceChangeListener(this);
         }
 
@@ -105,25 +106,26 @@ public class MainPreferencesFragment extends PreferenceFragment
 
         if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.secret=1")) {
             mMonkeyPref = new CustomTogglePreference(getActivity());
-            mMonkeyPref.setKey("monkey");
+            mMonkeyPref.setKey(DeviceConfiguration.MONKEY);
             mMonkeyPref.setTitle(R.string.become_a_monkey);
             mMonkeyPref.setSummaryOn(R.string.is_monkey);
             mMonkeyPref.setSummaryOff(R.string.no_monkey);
-            mMonkeyPref.setChecked(PreferenceHelper.getBoolean("monkey", false));
+            mMonkeyPref.setChecked(DeviceConfiguration.get(getActivity()).monkey);
             mMonkeyPref.setOnPreferenceChangeListener(this);
             category.addPreference(mMonkeyPref);
         }
 
-        mDarkTheme = (CustomTogglePreference) findPreference("dark_theme");
+        mDarkTheme = (CustomTogglePreference) findPreference(DeviceConfiguration.DARK_THEME);
         mDarkTheme.setChecked(Application.get().isDarkTheme());
         mDarkTheme.setOnPreferenceChangeListener(this);
 
-        mSwipeOnContent = (CustomTogglePreference) findPreference("swipe_on_content");
-        mSwipeOnContent.setChecked(PreferenceHelper.getBoolean(mSwipeOnContent.getKey()));
+        mSwipeOnContent =
+                (CustomTogglePreference) findPreference(DeviceConfiguration.SWIPE_ON_CONTENT);
+        mSwipeOnContent.setChecked(configuration.swipeOnContent);
         mSwipeOnContent.setOnPreferenceChangeListener(this);
 
-        mShowPollfish = (CustomTogglePreference) findPreference("show_pollfish");
-        mShowPollfish.setChecked(PreferenceHelper.getBoolean(mShowPollfish.getKey(), false));
+        mShowPollfish = (CustomTogglePreference) findPreference(DeviceConfiguration.SHOW_POLLFISH);
+        mShowPollfish.setChecked(configuration.showPollfish);
         mShowPollfish.setOnPreferenceChangeListener(this);
 
         setupVersionPreference();
@@ -155,7 +157,10 @@ public class MainPreferencesFragment extends PreferenceFragment
     @Override public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (mShowPollfish == preference) {
             final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(mShowPollfish.getKey(), value);
+
+            DeviceConfiguration.get(getActivity()).showPollfish = value;
+            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
+
             if (value) {
                 PollFish.show();
             } else {
@@ -165,29 +170,42 @@ public class MainPreferencesFragment extends PreferenceFragment
             return true;
         } else if (mExtensiveLogging == preference) {
             final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(EXTENSIVE_LOGGING, value);
+
+            DeviceConfiguration.get(getActivity()).extensiveLogging = value;
+            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
+
             Logger.setEnabled(value);
             mExtensiveLogging.setChecked(value);
             return true;
         } else if (mShowLauncher == preference) {
             final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(SHOW_LAUNCHER, value);
+
+            DeviceConfiguration.get(getActivity()).showLauncher = value;
+            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
+
             Application.get().toggleLauncherIcon(value);
             mShowLauncher.setChecked(value);
             return true;
         } else if (mSkipChecks == preference) {
             final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(SKIP_CHECKS, value);
+
+            DeviceConfiguration.get(getActivity()).skipChecks = value;
+            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
+
             mSkipChecks.setChecked(value);
             return true;
         } else if (mMonkeyPref == preference) {
             final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean("monkey", value);
+            DeviceConfiguration.get(getActivity()).monkey = value;
+            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
             mMonkeyPref.setChecked(value);
             return true;
         } else if (mSwipeOnContent == preference) {
             final boolean value = (Boolean) newValue;
-            PreferenceHelper.setBoolean(mSwipeOnContent.getKey(), value);
+
+            DeviceConfiguration.get(getActivity()).swipeOnContent = value;
+            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
+
             mSwipeOnContent.setChecked(value);
 
             // update the menu

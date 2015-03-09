@@ -25,7 +25,6 @@ import android.support.annotation.NonNull;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -35,7 +34,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class CpuStateMonitor implements DeviceConstants {
+public class CpuStateMonitor {
 
     private final ArrayList<CpuState> mStates = new ArrayList<>();
 

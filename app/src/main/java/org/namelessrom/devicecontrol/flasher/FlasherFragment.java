@@ -42,19 +42,18 @@ import org.namelessrom.devicecontrol.ui.adapters.FlasherAdapter;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.DeviceConstants;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class FlasherFragment extends AttachFragment implements DeviceConstants,
-        RequestFileActivity.RequestFileCallback {
+public class FlasherFragment extends AttachFragment implements RequestFileActivity.RequestFileCallback {
     private RecyclerView mRecyclerView;
     private FlashCard mFlashCard;
 
     public ArrayList<File> mFiles = new ArrayList<>();
 
-    @Override protected int getFragmentId() { return ID_TOOLS_FLASHER; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_TOOLS_FLASHER; }
 
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
