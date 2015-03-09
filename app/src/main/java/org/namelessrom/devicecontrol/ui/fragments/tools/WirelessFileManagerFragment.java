@@ -22,20 +22,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.Preference;
 
+import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.configuration.WebServerConfiguration;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
 import org.namelessrom.devicecontrol.services.WebServerService;
 import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 
-public class WirelessFileManagerFragment extends AttachPreferenceFragment
-        implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
-
+public class WirelessFileManagerFragment extends AttachPreferenceFragment implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
     private CustomTogglePreference mWirelessFileManager;
     private CustomTogglePreference mBrowseRoot;
     private CustomEditTextPreference mPort;
@@ -59,34 +58,35 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.tools_wireless_file_manager);
 
+        final WebServerConfiguration configuration = WebServerConfiguration.get(getActivity());
         String tmp;
 
         mWirelessFileManager = (CustomTogglePreference) findPreference("wireless_file_manager");
         updateWebServerPreference();
         mWirelessFileManager.setOnPreferenceClickListener(this);
 
-        mBrowseRoot = (CustomTogglePreference) findPreference("wfm_root");
-        mBrowseRoot.setChecked(PreferenceHelper.getBoolean(mBrowseRoot.getKey(), false));
+        mBrowseRoot = (CustomTogglePreference) findPreference(WebServerConfiguration.ROOT);
+        mBrowseRoot.setChecked(configuration.root);
         mBrowseRoot.setOnPreferenceChangeListener(this);
 
-        mPort = (CustomEditTextPreference) findPreference("wfm_port");
-        tmp = PreferenceHelper.getString(mPort.getKey(), "8080");
+        mPort = (CustomEditTextPreference) findPreference(WebServerConfiguration.PORT);
+        tmp = String.valueOf(configuration.port);
         mPort.setSummary(tmp);
         mPort.setText(tmp);
         mPort.setOnPreferenceChangeListener(this);
 
-        mUseAuth = (CustomTogglePreference) findPreference("wfm_auth");
-        mUseAuth.setChecked(PreferenceHelper.getBoolean(mUseAuth.getKey(), true));
+        mUseAuth = (CustomTogglePreference) findPreference(WebServerConfiguration.USE_AUTH);
+        mUseAuth.setChecked(configuration.useAuth);
         mUseAuth.setOnPreferenceChangeListener(this);
 
-        mUsername = (CustomEditTextPreference) findPreference("wfm_username");
-        tmp = PreferenceHelper.getString(mUsername.getKey(), "root");
+        mUsername = (CustomEditTextPreference) findPreference(WebServerConfiguration.USERNAME);
+        tmp = configuration.username;
         mUsername.setSummary(tmp);
         mUsername.setText(tmp);
         mUsername.setOnPreferenceChangeListener(this);
 
-        mPassword = (CustomEditTextPreference) findPreference("wfm_password");
-        tmp = PreferenceHelper.getString(mPassword.getKey(), "toor");
+        mPassword = (CustomEditTextPreference) findPreference(WebServerConfiguration.PASSWORD);
+        tmp = configuration.password;
         mPassword.setSummary("******");
         mPassword.setText(tmp);
         mPassword.setOnPreferenceChangeListener(this);
@@ -94,28 +94,39 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
 
     @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
         if (mBrowseRoot == preference) {
-            PreferenceHelper.setBoolean(mBrowseRoot.getKey(), (Boolean) o);
+            WebServerConfiguration.get(getActivity()).root = (Boolean) o;
+            WebServerConfiguration.get(getActivity()).saveConfiguration(getActivity());
             return true;
         } else if (mPort == preference) {
             final String value = String.valueOf(o);
-            PreferenceHelper.setString(mPort.getKey(), value);
+
+            WebServerConfiguration.get(getActivity()).port = Utils.parseInt(value, 8080);
+            WebServerConfiguration.get(getActivity()).saveConfiguration(getActivity());
+
             mPort.setText(value);
             mPort.setSummary(value);
             return true;
         } else if (mUseAuth == preference) {
-            PreferenceHelper.setBoolean(mUseAuth.getKey(), (Boolean) o);
+            WebServerConfiguration.get(getActivity()).useAuth = (Boolean) o;
+            WebServerConfiguration.get(getActivity()).saveConfiguration(getActivity());
             return true;
         } else if (mUsername == preference) {
             final String value = String.valueOf(o);
+
+            WebServerConfiguration.get(getActivity()).username = value;
+            WebServerConfiguration.get(getActivity()).saveConfiguration(getActivity());
+
             mUsername.setText(value);
             mUsername.setSummary(value);
-            PreferenceHelper.setString(mUsername.getKey(), value);
             return true;
         } else if (mPassword == preference) {
             final String value = String.valueOf(o);
+
+            WebServerConfiguration.get(getActivity()).password = value;
+            WebServerConfiguration.get(getActivity()).saveConfiguration(getActivity());
+
             mPassword.setText(value);
             mPassword.setSummary("******");
-            PreferenceHelper.setString(mPassword.getKey(), value);
             return true;
         }
 
@@ -153,7 +164,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
         final String text;
         if (isRunning) {
             final String ip = NetworkInfo.getAnyIpAddress();
-            final String port = PreferenceHelper.getString("wfn_port", "8080");
+            final String port = String.valueOf(WebServerConfiguration.get(getActivity()).port);
             text = getString(R.string.web_server_running, String.format("http://%s:%s", ip, port));
         } else {
             text = getString(R.string.web_server_not_running);

@@ -19,9 +19,11 @@ package org.namelessrom.devicecontrol.actions.cpu;
 
 import android.text.TextUtils;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
@@ -63,7 +65,7 @@ public class CpuFreqMinAction extends BaseAction {
             return;
         }
 
-        final boolean lockFreq = PreferenceHelper.getBoolean("cpu_lock_freq");
+        final boolean lockFreq = DeviceConfiguration.get(Application.get()).perfCpuLock;
 
         final int cpus = CpuUtils.get().getNumOfCpus();
         final StringBuilder sb = new StringBuilder(lockFreq ? cpus * 3 : cpus * 2);

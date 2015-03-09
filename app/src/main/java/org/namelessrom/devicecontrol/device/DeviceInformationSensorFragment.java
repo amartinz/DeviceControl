@@ -31,13 +31,12 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class DeviceInformationSensorFragment extends PreferenceFragment implements DeviceConstants {
+public class DeviceInformationSensorFragment extends PreferenceFragment {
 
     @Override public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

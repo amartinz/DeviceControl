@@ -22,33 +22,33 @@ import android.view.LayoutInflater;
 import android.widget.RadioGroup;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.configuration.FlasherConfiguration;
 
 public class FlashOptionCard extends BaseCard {
 
-    public FlashOptionCard(Context context) {
+    public FlashOptionCard(final Context context) {
         super(context);
         LayoutInflater.from(context)
                 .inflate(R.layout.merge_card_flasher_option, getContainer(), true);
 
-        final int recoveryType = PreferenceHelper.getInt(DeviceConstants.PREF_RECOVERY_TYPE,
-                DeviceConstants.RECOVERY_TYPE_OPEN);
+        final int recoveryType = FlasherConfiguration.get(context).recoveryType;
         final RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radio_recovery_group);
-        radioGroup.check(recoveryType == DeviceConstants.RECOVERY_TYPE_OPEN
+        radioGroup.check(recoveryType == FlasherConfiguration.RECOVERY_TYPE_OPEN
                 ? R.id.radio_recovery_openrecovery : R.id.radio_recovery_cwm);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
                 final int id = group.getCheckedRadioButtonId();
                 switch (id) {
                     case R.id.radio_recovery_cwm: {
-                        PreferenceHelper.setInt(DeviceConstants.PREF_RECOVERY_TYPE,
-                                DeviceConstants.RECOVERY_TYPE_CWM);
+                        FlasherConfiguration.get(context).recoveryType =
+                                FlasherConfiguration.RECOVERY_TYPE_CWM;
+                        FlasherConfiguration.get(context).saveConfiguration(context);
                         break;
                     }
                     case R.id.radio_recovery_openrecovery: {
-                        PreferenceHelper.setInt(DeviceConstants.PREF_RECOVERY_TYPE,
-                                DeviceConstants.RECOVERY_TYPE_OPEN);
+                        FlasherConfiguration.get(context).recoveryType =
+                                FlasherConfiguration.RECOVERY_TYPE_OPEN;
+                        FlasherConfiguration.get(context).saveConfiguration(context);
                         break;
                     }
                 }

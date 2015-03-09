@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol.ui.fragments.performance.sub;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,21 +42,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.configuration.ExtraConfiguration;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
-public class VoltageFragment extends AttachPreferenceFragment implements
-        DeviceConstants {
-
-    private static final String PREF_UV = "pref_uv";
-    private static final String PREF_VDD = "pref_vdd";
-
+public class VoltageFragment extends AttachPreferenceFragment {
     private PreferenceCategory mCategory;
     private String[] mNames;
     private String[] mValues;
@@ -63,7 +59,7 @@ public class VoltageFragment extends AttachPreferenceFragment implements
 
     private boolean isVdd = false;
 
-    @Override protected int getFragmentId() { return ID_VOLTAGE; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_VOLTAGE; }
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,14 +135,16 @@ public class VoltageFragment extends AttachPreferenceFragment implements
                         execute.append(Utils.getWriteCommand(VoltageUtils.VDD_TABLE_FILE, value));
                     }
                     Utils.runRootCommand(execute.toString());
-                    PreferenceHelper.setString(PREF_VDD, sb.toString().trim());
+                    ExtraConfiguration.get(getActivity()).vdd = sb.toString().trim();
+                    ExtraConfiguration.get(getActivity()).saveConfiguration(getActivity());
                 } else {
                     for (int i = 0; i < count; i++) {
                         pref = (CustomPreference) mCategory.getPreference(i);
                         mValues[i] = pref.getKey();
                     }
                     final String table = buildTable(mValues);
-                    PreferenceHelper.setString(PREF_UV, table);
+                    ExtraConfiguration.get(getActivity()).uv = table;
+                    ExtraConfiguration.get(getActivity()).saveConfiguration(getActivity());
                     Utils.writeValue(VoltageUtils.UV_TABLE_FILE, table);
                 }
                 mButtonLayout.setVisibility(View.GONE);
@@ -335,11 +333,11 @@ public class VoltageFragment extends AttachPreferenceFragment implements
         return sb.toString();
     }
 
-    public static String restore() {
+    public static String restore(final Context context) {
         final StringBuilder restore = new StringBuilder();
 
         if (Utils.fileExists(VoltageUtils.VDD_TABLE_FILE)) {
-            final String value = PreferenceHelper.getString(PREF_VDD, "");
+            final String value = ExtraConfiguration.get(context).vdd;
             Logger.v(VoltageFragment.class, "VDD Table: " + value);
 
             if (!value.isEmpty()) {
@@ -349,7 +347,7 @@ public class VoltageFragment extends AttachPreferenceFragment implements
                 }
             }
         } else if (Utils.fileExists(VoltageUtils.UV_TABLE_FILE)) {
-            final String value = PreferenceHelper.getString(PREF_UV, "");
+            final String value = ExtraConfiguration.get(context).uv;
             Logger.v(VoltageFragment.class, "UV Table: " + value);
 
             if (!value.isEmpty()) {

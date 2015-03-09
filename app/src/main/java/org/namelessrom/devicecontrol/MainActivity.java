@@ -43,7 +43,10 @@ import com.pollfish.constants.Position;
 import com.pollfish.main.PollFish;
 import com.stericson.roottools.RootTools;
 
+import org.namelessrom.devicecontrol.about.AboutFragment;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
+import org.namelessrom.devicecontrol.appmanager.AppListFragment;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.device.DeviceFeatureFragment;
 import org.namelessrom.devicecontrol.device.DeviceInformationFragment;
@@ -55,7 +58,6 @@ import org.namelessrom.devicecontrol.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
-import org.namelessrom.devicecontrol.about.AboutFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.FilesystemFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.GpuSettingsFragment;
@@ -68,21 +70,17 @@ import org.namelessrom.devicecontrol.ui.fragments.performance.sub.KsmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.UksmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.ui.fragments.preferences.PreferencesFragment;
-import org.namelessrom.devicecontrol.appmanager.AppListFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.TaskerFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.WirelessFileManagerFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.proprietary.Configuration;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity implements DeviceConstants,
-        AdapterView.OnItemClickListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     //==============================================================================================
     // Fields
@@ -111,31 +109,31 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         mMenuEntries.add(R.string.device);
         mMenuIcons.add(-1);
         // device - information
-        mMenuEntries.add(ID_DEVICE_INFORMATION);
+        mMenuEntries.add(DeviceConstants.ID_DEVICE_INFORMATION);
         mMenuIcons.add(R.drawable.ic_device_info);
         // device - features
-        mMenuEntries.add(ID_FEATURES);
+        mMenuEntries.add(DeviceConstants.ID_FEATURES);
         mMenuIcons.add(R.drawable.ic_developer_mode);
 
         // header - performance
         mMenuEntries.add(R.string.performance);
         mMenuIcons.add(-1);
         // performance - information
-        mMenuEntries.add(ID_PERFORMANCE_INFO);
+        mMenuEntries.add(DeviceConstants.ID_PERFORMANCE_INFO);
         mMenuIcons.add(R.drawable.ic_menu_perf_info);
         // performance - cpu
-        mMenuEntries.add(ID_PERFORMANCE_CPU_SETTINGS);
+        mMenuEntries.add(DeviceConstants.ID_PERFORMANCE_CPU_SETTINGS);
         mMenuIcons.add(R.drawable.ic_memory);
         // performance - gpu
-        mMenuEntries.add(ID_PERFORMANCE_GPU_SETTINGS);
+        mMenuEntries.add(DeviceConstants.ID_PERFORMANCE_GPU_SETTINGS);
         mMenuIcons.add(R.drawable.ic_display);
         // performance - filesystem
-        mMenuEntries.add(ID_FILESYSTEM);
+        mMenuEntries.add(DeviceConstants.ID_FILESYSTEM);
         mMenuIcons.add(R.drawable.ic_storage);
         // performance - thermal
         if (Utils.fileExists(getString(R.string.directory_msm_thermal))
                 || Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
-            mMenuEntries.add(ID_THERMAL);
+            mMenuEntries.add(DeviceConstants.ID_THERMAL);
             mMenuIcons.add(R.drawable.ic_heat);
         }
 
@@ -143,13 +141,13 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         mMenuEntries.add(R.string.tools);
         mMenuIcons.add(-1);
         // tools - tasker
-        mMenuEntries.add(ID_TOOLS_TASKER);
+        mMenuEntries.add(DeviceConstants.ID_TOOLS_TASKER);
         mMenuIcons.add(R.drawable.ic_extension);
         // tools - flasher
-        mMenuEntries.add(ID_TOOLS_FLASHER);
+        mMenuEntries.add(DeviceConstants.ID_TOOLS_FLASHER);
         mMenuIcons.add(R.drawable.ic_flash);
         // tools - more
-        mMenuEntries.add(ID_TOOLS_MORE);
+        mMenuEntries.add(DeviceConstants.ID_TOOLS_MORE);
         mMenuIcons.add(R.drawable.ic_widgets);
     }
 
@@ -159,11 +157,10 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
 
     @Override protected void onResume() {
         super.onResume();
-        final String pollFishApiKey = Configuration.getPollfishApiKeyDc();
-        if (!TextUtils.equals("---", pollFishApiKey)
-                && PreferenceHelper.getBoolean("show_pollfish", false)) {
+        final String pfApiKey = Configuration.getPollfishApiKeyDc();
+        if (!TextUtils.equals("---", pfApiKey) && DeviceConfiguration.get(this).showPollfish) {
             Logger.v(this, "PollFish.init()");
-            PollFish.init(this, pollFishApiKey, Position.BOTTOM_RIGHT, 30);
+            PollFish.init(this, pfApiKey, Position.BOTTOM_RIGHT, 30);
         }
     }
 
@@ -221,7 +218,7 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         sSlidingMenu.setMenu(v);
 
         // setup touch mode
-        MainActivity.setSwipeOnContent(PreferenceHelper.getBoolean("swipe_on_content", false));
+        MainActivity.setSwipeOnContent(DeviceConfiguration.get(this).swipeOnContent);
 
         // setup menu list
         setupMenuLists();
@@ -231,12 +228,12 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         menuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         menuList.setOnItemClickListener(this);
 
-        loadFragmentPrivate(ID_ABOUT, false);
+        loadFragmentPrivate(DeviceConstants.ID_ABOUT, false);
         getSupportFragmentManager().executePendingTransactions();
 
         Utils.startTaskerService();
 
-        final String downgradePath = getFilesDir() + DC_DOWNGRADE;
+        final String downgradePath = getFilesDir() + DeviceConstants.DC_DOWNGRADE;
         if (Utils.fileExists(downgradePath)) {
             if (!new File(downgradePath).delete()) {
                 Logger.wtf(this, "Could not delete downgrade indicator file!");
@@ -244,8 +241,9 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
             Toast.makeText(this, R.string.downgraded, Toast.LENGTH_LONG).show();
         }
 
-        if (PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
-            PreferenceHelper.setBoolean(DC_FIRST_START, false);
+        if (DeviceConfiguration.get(this).dcFirstStart) {
+            DeviceConfiguration.get(this).dcFirstStart = false;
+            DeviceConfiguration.get(this).saveConfiguration(this);
         }
     }
 
@@ -253,10 +251,10 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         final int id = v.getId();
         switch (id) {
             case R.id.menu_prefs:
-                loadFragmentPrivate(ID_PREFERENCES, false);
+                loadFragmentPrivate(DeviceConstants.ID_PREFERENCES, false);
                 break;
             case R.id.menu_about:
-                loadFragmentPrivate(ID_ABOUT, false);
+                loadFragmentPrivate(DeviceConstants.ID_ABOUT, false);
                 break;
         }
     }
@@ -389,125 +387,125 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         switch (i) {
             default: // slip through...
                 //--------------------------------------------------------------------------------------
-            case ID_ABOUT:
+            case DeviceConstants.ID_ABOUT:
                 if (!onResume) mCurrentFragment = new AboutFragment();
                 mTitle = mFragmentTitle = R.string.app_name;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_DEVICE_INFORMATION:
+            case DeviceConstants.ID_DEVICE_INFORMATION:
                 if (!onResume) mCurrentFragment = new DeviceInformationFragment();
                 mTitle = mFragmentTitle = R.string.device;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_FEATURES:
+            case DeviceConstants.ID_FEATURES:
                 if (!onResume) mCurrentFragment = new DeviceFeatureFragment();
                 mTitle = mFragmentTitle = R.string.features;
                 mSubFragmentTitle = -1;
                 break;
-            case ID_FAST_CHARGE:
+            case DeviceConstants.ID_FAST_CHARGE:
                 if (!onResume) mCurrentFragment = new FastChargeFragment();
                 mTitle = mSubFragmentTitle = R.string.fast_charge;
                 break;
-            case ID_SOUND_CONTROL:
+            case DeviceConstants.ID_SOUND_CONTROL:
                 if (!onResume) mCurrentFragment = new SoundControlFragment();
                 mTitle = mSubFragmentTitle = R.string.sound_control;
                 break;
-            case ID_KSM:
+            case DeviceConstants.ID_KSM:
                 if (!onResume) mCurrentFragment = new KsmFragment();
                 mTitle = mSubFragmentTitle = R.string.ksm;
                 break;
-            case ID_UKSM:
+            case DeviceConstants.ID_UKSM:
                 if (!onResume) mCurrentFragment = new UksmFragment();
                 mTitle = mSubFragmentTitle = R.string.uksm;
                 break;
-            case ID_VOLTAGE:
+            case DeviceConstants.ID_VOLTAGE:
                 if (!onResume) mCurrentFragment = new VoltageFragment();
                 mTitle = mSubFragmentTitle = R.string.voltage_control;
                 break;
-            case ID_ENTROPY:
+            case DeviceConstants.ID_ENTROPY:
                 if (!onResume) mCurrentFragment = new EntropyFragment();
                 mTitle = mSubFragmentTitle = R.string.entropy;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_PERFORMANCE_INFO:
+            case DeviceConstants.ID_PERFORMANCE_INFO:
                 if (!onResume) mCurrentFragment = new InformationFragment();
                 mTitle = mFragmentTitle = R.string.information;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_PERFORMANCE_CPU_SETTINGS:
+            case DeviceConstants.ID_PERFORMANCE_CPU_SETTINGS:
                 if (!onResume) mCurrentFragment = new CpuSettingsFragment();
                 mTitle = mFragmentTitle = R.string.cpusettings;
                 mSubFragmentTitle = -1;
                 break;
-            case ID_GOVERNOR_TUNABLE:
+            case DeviceConstants.ID_GOVERNOR_TUNABLE:
                 if (!onResume) mCurrentFragment = new GovernorFragment();
                 mTitle = mSubFragmentTitle = R.string.cpu_governor_tuning;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_PERFORMANCE_GPU_SETTINGS:
+            case DeviceConstants.ID_PERFORMANCE_GPU_SETTINGS:
                 if (!onResume) mCurrentFragment = new GpuSettingsFragment();
                 mTitle = mFragmentTitle = R.string.gpusettings;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_FILESYSTEM:
+            case DeviceConstants.ID_FILESYSTEM:
                 if (!onResume) mCurrentFragment = new FilesystemFragment();
                 mTitle = mFragmentTitle = R.string.filesystem;
                 mSubFragmentTitle = -1;
                 break;
-            case ID_IOSCHED_TUNING:
+            case DeviceConstants.ID_IOSCHED_TUNING:
                 if (!onResume) mCurrentFragment = new IoSchedConfigFragment();
                 mTitle = mSubFragmentTitle = R.string.io;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_THERMAL:
+            case DeviceConstants.ID_THERMAL:
                 if (!onResume) mCurrentFragment = new ThermalFragment();
                 mTitle = mFragmentTitle = R.string.thermal;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_TOOLS_TASKER:
+            case DeviceConstants.ID_TOOLS_TASKER:
                 if (!onResume) mCurrentFragment = new TaskerFragment();
                 mTitle = mFragmentTitle = R.string.tasker;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_TOOLS_FLASHER:
+            case DeviceConstants.ID_TOOLS_FLASHER:
                 if (!onResume) mCurrentFragment = new FlasherFragment();
                 mTitle = mFragmentTitle = R.string.flasher;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_TOOLS_MORE:
+            case DeviceConstants.ID_TOOLS_MORE:
                 if (!onResume) mCurrentFragment = new ToolsMoreFragment();
                 mTitle = mFragmentTitle = R.string.more;
                 mSubFragmentTitle = -1;
                 break;
-            case ID_TOOLS_VM:
+            case DeviceConstants.ID_TOOLS_VM:
                 if (!onResume) mCurrentFragment = new SysctlFragment();
                 mTitle = mSubFragmentTitle = R.string.sysctl_vm;
                 break;
-            case ID_TOOLS_EDITORS_VM:
+            case DeviceConstants.ID_TOOLS_EDITORS_VM:
                 if (!onResume) mCurrentFragment = new SysctlEditorFragment();
                 mTitle = mSubFragmentTitle = R.string.sysctl_vm;
                 break;
-            case ID_TOOLS_EDITORS_BUILD_PROP:
+            case DeviceConstants.ID_TOOLS_EDITORS_BUILD_PROP:
                 if (!onResume) mCurrentFragment = new BuildPropEditorFragment();
                 mTitle = mSubFragmentTitle = R.string.buildprop;
                 break;
-            case ID_TOOLS_APP_MANAGER:
+            case DeviceConstants.ID_TOOLS_APP_MANAGER:
                 if (!onResume) mCurrentFragment = new AppListFragment();
                 mTitle = mSubFragmentTitle = R.string.app_manager;
                 break;
-            case ID_TOOLS_WIRELESS_FM:
+            case DeviceConstants.ID_TOOLS_WIRELESS_FM:
                 if (!onResume) mCurrentFragment = new WirelessFileManagerFragment();
                 mTitle = mSubFragmentTitle = R.string.wireless_file_manager;
                 break;
             //--------------------------------------------------------------------------------------
-            case ID_PREFERENCES:
+            case DeviceConstants.ID_PREFERENCES:
                 if (!onResume) mCurrentFragment = new PreferencesFragment();
                 mTitle = mFragmentTitle = R.string.preferences;
                 mSubFragmentTitle = -1;

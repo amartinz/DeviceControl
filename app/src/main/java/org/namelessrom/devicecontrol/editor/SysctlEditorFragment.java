@@ -49,15 +49,14 @@ import org.namelessrom.devicecontrol.ui.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.DeviceConstants;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SysctlEditorFragment extends AttachFragment implements DeviceConstants,
-        AdapterView.OnItemClickListener, ShellOutput.OnShellOutputListener {
+public class SysctlEditorFragment extends AttachFragment implements AdapterView.OnItemClickListener, ShellOutput.OnShellOutputListener {
 
     //==============================================================================================
     // Fields
@@ -82,7 +81,7 @@ public class SysctlEditorFragment extends AttachFragment implements DeviceConsta
     // Overridden Methods
     //==============================================================================================
 
-    @Override protected int getFragmentId() { return ID_TOOLS_EDITORS_VM; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_TOOLS_EDITORS_VM; }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
