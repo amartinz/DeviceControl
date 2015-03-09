@@ -65,7 +65,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants {
 
         // if the user hit refresh
         if (id == R.id.menu_action_refresh) {
-            loadApps();
+            loadApps(true);
             return true;
         }
 
@@ -92,7 +92,7 @@ public class AppListFragment extends AttachFragment implements DeviceConstants {
 
     @Override public void onResume() {
         super.onResume();
-        loadApps();
+        loadApps(false);
     }
 
     private void invalidateOptionsMenu() {
@@ -101,27 +101,31 @@ public class AppListFragment extends AttachFragment implements DeviceConstants {
         }
     }
 
-    private void loadApps() {
+    private void loadApps(boolean animate) {
         if (mIsLoading) return;
 
         mIsLoading = true;
-        mProgressContainer.setAlpha(0f);
         mProgressContainer.setVisibility(View.VISIBLE);
 
-        final ObjectAnimator anim = ObjectAnimator.ofFloat(mProgressContainer, "alpha", 0f, 1f);
-        anim.addListener(new Animator.AnimatorListener() {
-            @Override public void onAnimationStart(Animator animation) { }
+        if (animate) {
+            final ObjectAnimator anim = ObjectAnimator.ofFloat(mProgressContainer, "alpha", 0f, 1f);
+            anim.addListener(new Animator.AnimatorListener() {
+                @Override public void onAnimationStart(Animator animation) { }
 
-            @Override public void onAnimationEnd(Animator animation) {
-                new LoadApps().execute();
-            }
+                @Override public void onAnimationEnd(Animator animation) {
+                    new LoadApps().execute();
+                }
 
-            @Override public void onAnimationCancel(Animator animation) { }
+                @Override public void onAnimationCancel(Animator animation) { }
 
-            @Override public void onAnimationRepeat(Animator animation) { }
-        });
-        anim.setDuration(ANIM_DURATION);
-        anim.start();
+                @Override public void onAnimationRepeat(Animator animation) { }
+            });
+            anim.setDuration(ANIM_DURATION);
+            anim.start();
+        } else {
+            mProgressContainer.setAlpha(1f);
+            new LoadApps().execute();
+        }
     }
 
     private class LoadApps extends AsyncTask<Void, Void, List<AppItem>> {
@@ -144,16 +148,16 @@ public class AppListFragment extends AttachFragment implements DeviceConstants {
         }
 
         @Override protected void onPostExecute(final List<AppItem> appItems) {
-            if (appItems != null) {
-                final AppListAdapter adapter = new AppListAdapter(getActivity(), appItems);
-                mRecyclerView.setAdapter(adapter);
-            }
-
             final ObjectAnimator anim = ObjectAnimator.ofFloat(mProgressContainer, "alpha", 1f, 0f);
             anim.addListener(new Animator.AnimatorListener() {
                 @Override public void onAnimationStart(Animator animation) { }
 
                 @Override public void onAnimationEnd(Animator animation) {
+                    if (appItems != null) {
+                        final AppListAdapter adapter = new AppListAdapter(getActivity(), appItems);
+                        mRecyclerView.setAdapter(adapter);
+                    }
+
                     mProgressContainer.setVisibility(View.GONE);
                     mIsLoading = false;
                 }
