@@ -128,6 +128,16 @@ public class AppHelper {
         Utils.runRootCommand(cmdPrefix + internal + external);
     }
 
+    public static void uninstallPackage(PackageManager pm, String pkg) {
+        try {
+            final Method m = pm.getClass().getDeclaredMethod("deletePackage",
+                    String.class, IPackageDataObserver.class, Integer.class);
+            m.invoke(pm, pkg, null, /* DELETE_ALL_USERS */ 2);
+        } catch (Exception e) {
+            Logger.e(TAG, "could not call deletePackage via reflection", e);
+        }
+    }
+
     /**
      * KILL IT!
      *
