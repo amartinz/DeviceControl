@@ -29,9 +29,9 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.DeviceConstants;
 
-public class ToolsMoreFragment extends AttachPreferenceFragment implements DeviceConstants {
+public class ToolsMoreFragment extends AttachPreferenceFragment {
     private CustomPreference mMediaScan;
 
     private CustomPreference mBuildProp;
@@ -39,7 +39,7 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
     private CustomPreference mAppManager;
     private CustomPreference mWirelessFileManager;
 
-    @Override protected int getFragmentId() { return ID_TOOLS_MORE; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_TOOLS_MORE; }
 
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +63,13 @@ public class ToolsMoreFragment extends AttachPreferenceFragment implements Devic
         if (mMediaScan == preference) {
             startMediaScan();
         } else if (mAppManager == preference) {
-            MainActivity.loadFragment(getActivity(), ID_TOOLS_APP_MANAGER);
+            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_TOOLS_APP_MANAGER);
         } else if (mWirelessFileManager == preference) {
-            MainActivity.loadFragment(getActivity(), ID_TOOLS_WIRELESS_FM);
+            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_TOOLS_WIRELESS_FM);
         } else if (mBuildProp == preference) {
-            MainActivity.loadFragment(getActivity(), ID_TOOLS_EDITORS_BUILD_PROP);
+            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_TOOLS_EDITORS_BUILD_PROP);
         } else if (mSysctlVm == preference) {
-            MainActivity.loadFragment(getActivity(), ID_TOOLS_VM);
+            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_TOOLS_VM);
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);

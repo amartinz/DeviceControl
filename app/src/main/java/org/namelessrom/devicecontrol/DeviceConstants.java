@@ -15,18 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.utils.constants;
+package org.namelessrom.devicecontrol;
 
 import org.namelessrom.devicecontrol.R;
 
 import java.io.File;
 
-public interface DeviceConstants {
-
-    //==============================================================================================
-    // Fields
-    //==============================================================================================
-    public static final String TAG = "DeviceControl";
+public class DeviceConstants {
 
     //==============================================================================================
     // IDs
@@ -62,34 +57,6 @@ public interface DeviceConstants {
     public static final int ID_PREFERENCES = R.string.preferences;
     public static final int ID_ABOUT = R.string.about;
     //----------------------------------------------------------------------------------------------
-
-    //==============================================================================================
-    // Actions
-    //==============================================================================================
-    public static final String ACTION_TASKER_FSTRIM = "action_tasker_fstrim";
-
-    //==============================================================================================
-    // Tasker
-    //==============================================================================================
-    public static final String FSTRIM = "fstrim";
-    public static final String FSTRIM_INTERVAL = "fstrim_interval";
-
-    //==============================================================================================
-    // Etc
-    //==============================================================================================
-    public static final String USE_TASKER = "use_tasker";
-
-    //----------------------------------------------------------------------------------------------
-    public static final String EXTENSIVE_LOGGING = "extensive_logging";
-    public static final String DC_FIRST_START = "dc_first_start";
-    public static final String SHOW_LAUNCHER = "show_launcher";
-    public static final String SKIP_CHECKS = "skip_checks";
-
-    //----------------------------------------------------------------------------------------------
-    public static final String PREF_RECOVERY_TYPE = "pref_recovery_type";
-    public static final int RECOVERY_TYPE_BOTH = 0;
-    public static final int RECOVERY_TYPE_CWM = 1;
-    public static final int RECOVERY_TYPE_OPEN = 2;
 
     //==============================================================================================
     // Directories

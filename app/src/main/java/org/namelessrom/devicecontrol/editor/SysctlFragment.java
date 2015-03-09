@@ -30,11 +30,11 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.DialogHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.DeviceConstants;
 
 import java.util.List;
 
-public class SysctlFragment extends AttachPreferenceFragment implements DeviceConstants {
+public class SysctlFragment extends AttachPreferenceFragment {
 
     //==============================================================================================
     private static final String PREF_DIRTY_RATIO = "pref_dirty_ratio";
@@ -64,7 +64,7 @@ public class SysctlFragment extends AttachPreferenceFragment implements DeviceCo
     private CustomPreference mSwappiness;
     private CustomPreference mVfs;
 
-    @Override protected int getFragmentId() { return ID_TOOLS_VM; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_TOOLS_VM; }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,7 +94,7 @@ public class SysctlFragment extends AttachPreferenceFragment implements DeviceCo
     @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
             @NonNull final Preference preference) {
         if (preference == mFullEditor) {
-            MainActivity.loadFragment(getActivity(), ID_TOOLS_EDITORS_VM);
+            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_TOOLS_EDITORS_VM);
             return true;
         } else if (preference == mDirtyRatio) {
             final String title = getString(R.string.dirty_ratio_title);

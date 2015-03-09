@@ -25,12 +25,15 @@ import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.DeviceConstants;
 
-import java.io.File;
 import java.io.FileOutputStream;
 
-public class FstrimService extends IntentService implements DeviceConstants {
+public class FstrimService extends IntentService {
+    //==============================================================================================
+    // Actions
+    //==============================================================================================
+    public static final String ACTION_TASKER_FSTRIM = "action_tasker_fstrim";
 
     //==============================================================================================
     // Overridden Methods
@@ -62,13 +65,7 @@ public class FstrimService extends IntentService implements DeviceConstants {
         protected Void doInBackground(Void... params) {
             Logger.i(this, "FSTRIM RUNNING");
             try {
-                final File filesDir = getFilesDir();
-                String path;
-                if (filesDir != null && filesDir.exists()) {
-                    path = filesDir.getPath() + DC_LOG_FILE_FSTRIM;
-                } else {
-                    path = "/data/data/" + getPackageName() + "files" + DC_LOG_FILE_FSTRIM;
-                }
+                String path = getFilesDir().getAbsolutePath() + DeviceConstants.DC_LOG_FILE_FSTRIM;
 
                 final FileOutputStream fos = new FileOutputStream(path);
                 final String sb = "date;\n"

@@ -31,11 +31,13 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
@@ -53,7 +55,6 @@ import org.namelessrom.devicecontrol.ui.views.CpuCoreView;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,8 +62,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class CpuSettingsFragment extends AttachPreferenceFragment implements DeviceConstants,
-        Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener,
+public class CpuSettingsFragment extends AttachPreferenceFragment implements Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener,
         CpuUtils.CoreListener, CpuUtils.FrequencyListener, GovernorUtils.GovernorListener {
 
     private CustomListPreference mMax;
@@ -81,7 +81,7 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
     private SwitchCompat mStatusHide;
     private LinearLayout mCpuInfo;
 
-    @Override protected int getFragmentId() { return ID_PERFORMANCE_CPU_SETTINGS; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_PERFORMANCE_CPU_SETTINGS; }
 
     @Override public void onResume() {
         super.onResume();
@@ -117,8 +117,8 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
         mMin = (CustomListPreference) findPreference("pref_min");
         mMin.setOnPreferenceChangeListener(this);
 
-        mCpuLock = (CustomTogglePreference) findPreference("cpu_lock_freq");
-        mCpuLock.setChecked(PreferenceHelper.getBoolean(mCpuLock.getKey()));
+        mCpuLock = (CustomTogglePreference) findPreference(DeviceConfiguration.CPU_LOCK_FREQ);
+        mCpuLock.setChecked(DeviceConfiguration.get(getActivity()).perfCpuLock);
         mCpuLock.setOnPreferenceChangeListener(this);
 
         mGovernor = (CustomListPreference) findPreference("pref_governor");
@@ -267,8 +267,8 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MIN, selected, true);
             return true;
         } else if (preference == mCpuLock) {
-            final boolean value = (Boolean) o;
-            PreferenceHelper.setBoolean(mCpuLock.getKey(), value);
+            DeviceConfiguration.get(getActivity()).perfCpuLock = (Boolean) o;
+            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
             return true;
         } else if (preference == mGovernor) {
             final String selected = String.valueOf(o);
@@ -298,7 +298,7 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
     @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
             @NonNull final Preference preference) {
         if (preference == mGovernorTuning) {
-            MainActivity.loadFragment(getActivity(), ID_GOVERNOR_TUNABLE);
+            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_GOVERNOR_TUNABLE);
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -335,10 +335,11 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
                     CpuCoreMonitor.getInstance(getActivity()).stop();
                     mCpuInfo.setVisibility(View.GONE);
                 }
-                updateSharedPrefs("pref_show_cpu_info", b ? "1" : "0");
+                DeviceConfiguration.get(getActivity()).perfCpuInfo = b;
+                DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
             }
         });
-        mStatusHide.setChecked(PreferenceHelper.getString("pref_show_cpu_info", "1").equals("1"));
+        mStatusHide.setChecked(DeviceConfiguration.get(getActivity()).perfCpuInfo);
         if (mStatusHide.isChecked()) {
             mCpuInfo.setVisibility(View.VISIBLE);
         } else {
@@ -420,8 +421,5 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
         return rowView;
     }
 
-    private void updateSharedPrefs(final String var, final String value) {
-        PreferenceHelper.setString(var, value);
-    }
 }
 

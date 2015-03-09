@@ -23,9 +23,8 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
 import org.namelessrom.devicecontrol.receivers.ScreenReceiver;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 public class TaskerService extends Service {
 
@@ -42,7 +41,7 @@ public class TaskerService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        if (!PreferenceHelper.getBoolean(DeviceConstants.USE_TASKER)) {
+        if (!TaskerConfiguration.get(this).enabled) {
             stopSelf();
             return START_NOT_STICKY;
         }
