@@ -425,4 +425,6 @@
     <string name="steps">Steps</string>
     <string name="far">Far</string>
     <string name="near">Near</string>
+    <string name="cpu_lock_freq">Lock frequencies</string>
+    <string name="cpu_lock_freq_summary">Tries to prevent modifying frequencies\nThis may not always work on some devices!</string>
 </resources>

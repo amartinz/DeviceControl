@@ -437,8 +437,12 @@ public class Utils implements DeviceConstants {
     }
 
     public static String getWriteCommand(final String path, final String value) {
-        return String.format("chmod 644 %s;\n", path) +
+        return String.format("busybox chmod 644 %s;\n", path) +
                 String.format("busybox echo \"%s\" > %s;\n", value, path);
+    }
+
+    public static String lockFile(String path) {
+        return String.format("busybox chmod 444 %s;", path);
     }
 
     public static void disableComponent(final String packageName, final String componentName) {
@@ -628,4 +632,5 @@ public class Utils implements DeviceConstants {
             closeable.close();
         } catch (IOException ignored) { }
     }
+
 }
