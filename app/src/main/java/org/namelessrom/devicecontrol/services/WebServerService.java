@@ -31,9 +31,9 @@ import com.koushikdutta.async.AsyncServerSocket;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.configuration.WebServerConfiguration;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
 import org.namelessrom.devicecontrol.net.ServerWrapper;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 public class WebServerService extends Service {
     public static final int NOTIFICATION_ONGOING = 7861;
@@ -61,7 +61,7 @@ public class WebServerService extends Service {
         if (mServerWrapper != null) {
             final String port = ((getServerSocket() != null)
                     ? String.valueOf(getServerSocket().getLocalPort())
-                    : PreferenceHelper.getString("wfn_port", "8080"));
+                    : String.valueOf(WebServerConfiguration.get(this).port));
             text = getString(R.string.web_server_running,
                     "http://" + NetworkInfo.getAnyIpAddress() + ":" + port);
         } else {

@@ -29,12 +29,11 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.objects.CpuCore;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CpuCoreMonitor implements DeviceConstants {
+public class CpuCoreMonitor {
 
     private static final int CPU_COUNT = CpuUtils.get().getNumOfCpus();
 

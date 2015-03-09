@@ -24,16 +24,15 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeSeekBarPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.DeviceConstants;
 
-public class SoundControlFragment extends AttachPreferenceFragment implements DeviceConstants,
-        Preference.OnPreferenceChangeListener {
+public class SoundControlFragment extends AttachPreferenceFragment implements Preference.OnPreferenceChangeListener {
 
     private AwesomeSeekBarPreference mMicrophone;
     private AwesomeSeekBarPreference mSpeaker;
     private AwesomeSeekBarPreference mVolume;
 
-    @Override protected int getFragmentId() { return ID_SOUND_CONTROL; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_SOUND_CONTROL; }
 
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

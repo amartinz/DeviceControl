@@ -31,7 +31,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 
 import java.util.ArrayList;
 
@@ -48,7 +48,7 @@ public abstract class AttachViewPagerFragment extends AttachFragment {
 
     @Override public void onPause() {
         super.onPause();
-        MainActivity.setSwipeOnContent(PreferenceHelper.getBoolean("swipe_on_content", false));
+        MainActivity.setSwipeOnContent(DeviceConfiguration.get(getActivity()).swipeOnContent);
     }
 
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
