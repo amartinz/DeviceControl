@@ -22,30 +22,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:paddingLeft="20dip"
-        android:paddingRight="20dip"
-        android:paddingBottom="20dip">
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp">
 
         <TextView
             android:id="@+id/color_red_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/red"
-            android:paddingTop="10dip" />
+            android:paddingTop="10dp" />
 
         <TextView
             android:id="@+id/color_red_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:paddingTop="10dip" />
+            android:paddingTop="10dp" />
 
         <SeekBar
             android:id="@+id/color_red_seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/color_red_text"
-            android:paddingTop="2dip" />
+            android:paddingTop="2dp" />
 
         <TextView
             android:id="@+id/color_green_text"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/color_red_seekbar"
             android:text="@string/green"
-            android:paddingTop="10dip" />
+            android:paddingTop="10dp" />
 
         <TextView
             android:id="@+id/color_green_value"
@@ -61,14 +61,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/color_red_seekbar"
             android:layout_alignParentRight="true"
-            android:paddingTop="10dip" />
+            android:paddingTop="10dp" />
 
         <SeekBar
             android:id="@+id/color_green_seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/color_green_text"
-            android:paddingTop="2dip" />
+            android:paddingTop="2dp" />
 
         <TextView
             android:id="@+id/color_blue_text"
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/color_green_seekbar"
             android:text="@string/blue"
-            android:paddingTop="10dip" />
+            android:paddingTop="10dp" />
 
         <TextView
             android:id="@+id/color_blue_value"
@@ -84,22 +84,22 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/color_green_seekbar"
             android:layout_alignParentRight="true"
-            android:paddingTop="10dip" />
+            android:paddingTop="10dp" />
 
         <SeekBar
             android:id="@+id/color_blue_seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/color_blue_text"
-            android:paddingTop="2dip" />
+            android:paddingTop="2dp" />
 
         <ImageView
             android:id="@+id/black_scale_picture_color"
             android:src="@drawable/color_tuning_preview"
             android:layout_width="match_parent"
-            android:layout_height="40dip"
+            android:layout_height="40dp"
             android:layout_below="@id/color_blue_seekbar"
-            android:paddingTop="20dip" />
+            android:paddingTop="20dp" />
 
     </RelativeLayout>
 </ScrollView>

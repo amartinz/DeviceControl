@@ -69,13 +69,6 @@ public class DisplayColor extends DialogPreference {
         setDialogLayoutResource(R.layout.preference_display_color_calibration);
     }
 
-    @Override protected void onPrepareDialogBuilder(final AlertDialog.Builder builder) {
-        builder.setNeutralButton(R.string.defaults_button,
-                new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialog, int which) { }
-                });
-    }
-
     @Override protected void onBindDialogView(@NonNull final View view) {
         super.onBindDialogView(view);
 

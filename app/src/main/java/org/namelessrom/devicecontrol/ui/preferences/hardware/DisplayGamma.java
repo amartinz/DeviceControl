@@ -75,13 +75,6 @@ public class DisplayGamma extends DialogPreference {
         setDialogLayoutResource(R.layout.preference_display_gamma_calibration);
     }
 
-    @Override protected void onPrepareDialogBuilder(final AlertDialog.Builder builder) {
-        builder.setNeutralButton(R.string.defaults_button,
-                new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialog, int which) { }
-                });
-    }
-
     @SuppressLint("CommitPrefEdits") @Override protected void onBindDialogView(@NonNull View view) {
         super.onBindDialogView(view);
 
