@@ -30,6 +30,8 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import java.util.Arrays;
+
 /**
  * Automatically handles reading to files to automatically set the value,
  * writing to files on preference change, even with multiple files,
@@ -71,10 +73,11 @@ public class AwesomeTogglePreference extends CustomTogglePreference {
     private void init(final Context context, final AttributeSet attrs) {
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AwesomePreference);
 
-        int filePath = -1, filePathList = -1;
+        int filePath = -1, filePathList = -1, fileValue = -1;
         if (a != null) {
             filePath = a.getResourceId(R.styleable.AwesomePreference_filePath, -1);
             filePathList = a.getResourceId(R.styleable.AwesomePreference_filePathList, -1);
+            fileValue = a.getResourceId(R.styleable.AwesomePreference_fileValue, -1);
             mCategory = a.getString(R.styleable.AwesomePreference_category);
             mStartUp = a.getBoolean(R.styleable.AwesomePreference_startup, true);
             mMultiFile = a.getBoolean(R.styleable.AwesomePreference_multifile, false);
@@ -96,6 +99,15 @@ public class AwesomeTogglePreference extends CustomTogglePreference {
         } else {
             mPath = "";
             mPaths = null;
+        }
+
+        if (!TextUtils.isEmpty(mPath) && filePathList != -1 && fileValue != -1) {
+            final int index = Arrays.asList(res.getStringArray(filePathList)).indexOf(mPath);
+            final String[] values = res.getStringArray(fileValue)[index].split(";");
+            mValueChecked = values[0];
+            mValueNotChecked = values[1];
+            Logger.d(this, "mValueChecked -> %s\nmValueNotChecked -> %s",
+                    mValueChecked, mValueNotChecked);
         }
 
         if (mCategory == null || mCategory.isEmpty()) {

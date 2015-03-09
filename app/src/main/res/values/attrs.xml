@@ -19,6 +19,7 @@
     <declare-styleable name="AwesomePreference">
         <attr name="filePath" format="reference" />
         <attr name="filePathList" format="reference" />
+        <attr name="fileValue" format="reference" />
         <attr name="category" format="string" />
         <attr name="startup" format="boolean" />
         <attr name="multifile" format="boolean" />

@@ -78,13 +78,24 @@
         <item>@string/file_msm_thermal_cc</item>
     </string-array>
     <string-array name="files_knock_on" translatable="false">
+        <item>/proc/touchpanel/double_tap_enable</item>
         <item>/sys/devices/virtual/input/lge_touch/touch_gesture</item>
         <item>/sys/devices/virtual/input/lge_touch/lpwg_notify</item>
-        <item>/proc/touchpanel/double_tap_enable</item>
         <item>/sys/devices/virtual/input/clearpad/wakeup_gesture</item>
         <item>/sys/devices/virtual/htc_sensorhub/sensor_hub/tap2wake</item>
         <item>/sys/devices/i2c-3/3-004b/knock_on</item>
         <item>/sys/devices/f9927000.i2c/i2c-5/5-005d/wakeup_gesture</item>
+        <item>/sys/bus/i2c/devices/1-004a/tsp</item>
+    </string-array>
+    <string-array name="files_knock_on_values" translatable="false">
+        <item>"1;0"</item>
+        <item>"1;0"</item>
+        <item>"1;0"</item>
+        <item>"1;0"</item>
+        <item>"1;0"</item>
+        <item>"1;0"</item>
+        <item>"1;0"</item>
+        <item>"auto;off"</item>
     </string-array>
     <string-array name="files_lcd_power_reduce" translatable="false">
         <item>/sys/class/lcd/panel/power_reduce</item>

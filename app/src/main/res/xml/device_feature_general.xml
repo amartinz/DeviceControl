@@ -38,7 +38,8 @@
             android:summary="@string/knock_on_summary"
             android:title="@string/knock_on"
             dc:category="device"
-            dc:filePathList="@array/files_knock_on" />
+            dc:filePathList="@array/files_knock_on"
+            dc:fileValue="@array/files_knock_on_values"/>
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
