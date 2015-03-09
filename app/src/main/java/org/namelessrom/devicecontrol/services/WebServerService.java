@@ -28,6 +28,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.koushikdutta.async.AsyncServerSocket;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
@@ -77,6 +78,7 @@ public class WebServerService extends Service {
                 .setContentText(text)
                 .setOngoing(true)
                 .setSmallIcon(R.drawable.ic_wifi)
+                .setColor(Application.get().getAccentColor())
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
         addNotificationStopButton(builder);

@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol.ui.views;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
@@ -87,7 +88,8 @@ public class CpuStateView extends LinearLayout implements CpuUtils.StateListener
                 refreshData();
             }
         });
-        mRefresh.setImageDrawable(DrawableHelper.applyAccentColorFilter( R.drawable.ic_refresh));
+        final Drawable refreshDrawable = getResources().getDrawable(R.drawable.ic_refresh).mutate();
+        mRefresh.setImageDrawable(DrawableHelper.applyAccentColorFilter(refreshDrawable));
 
         refreshData();
     }
