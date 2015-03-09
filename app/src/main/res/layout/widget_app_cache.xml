@@ -27,8 +27,8 @@
         android:layout_height="wrap_content"
         tools:text="@string/app" />
 
-    <View
-        style="@style/StandardDivider"
+    <Space
+        android:layout_height="wrap_content"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_marginLeft="10dp"

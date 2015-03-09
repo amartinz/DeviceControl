@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 public class PermissionItemView extends LinearLayout implements View.OnClickListener {
     AppSecurityPermissions.MyPermissionGroupInfo mGroup;
@@ -34,7 +35,7 @@ public class PermissionItemView extends LinearLayout implements View.OnClickList
         PackageManager pm = getContext().getPackageManager();
         Drawable icon = null;
         if (first) {
-            icon = grp.loadGroupIcon(pm);
+            icon = DrawableHelper.applyAccentColorFilter(grp.loadGroupIcon(pm));
         }
         CharSequence label = perm.mLabel;
 

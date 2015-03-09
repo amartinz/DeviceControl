@@ -99,10 +99,10 @@ public class ActionProcessor {
 
     public static Drawable getImageForCategory(final String category) {
         if (TextUtils.equals(CATEGORY_CPU, category)) {
-            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_menu_perf_cpu);
+            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_memory);
         }
         if (TextUtils.equals(CATEGORY_GPU, category)) {
-            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_menu_perf_gpu);
+            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_display);
         }
         if (TextUtils.equals(CATEGORY_EXTRAS, category)) {
             return DrawableHelper.applyAccentColorFilter(R.drawable.ic_developer_mode);

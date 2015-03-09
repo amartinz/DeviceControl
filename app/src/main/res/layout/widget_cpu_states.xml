@@ -38,7 +38,7 @@ Copyright (C) 2012  James Roberts
 
         <ImageView
             android:id="@+id/ui_refresh"
-            android:src="@drawable/ic_action_refresh"
+            android:src="@drawable/ic_refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/listSeparatorTextViewStyle"
@@ -53,7 +53,7 @@ Copyright (C) 2012  James Roberts
         android:padding="7dp"
         android:textSize="25sp" />
 
-    <View style="@style/StandardDivider" />
+    <Space android:layout_width="match_parent" android:layout_height="10dp" />
 
     <TextView
         style="?android:attr/listSeparatorTextViewStyle"

@@ -21,8 +21,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingLeft="5dp"
-    tools:background="@android:color/black">
+    android:paddingLeft="5dp">
 
     <ImageView
         android:id="@+id/image"
@@ -31,7 +30,7 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:scaleType="fitCenter"
-        tools:src="@drawable/ic_menu_perf_cpu" />
+        tools:src="@drawable/ic_memory" />
 
     <TextView
         android:id="@android:id/text1"
@@ -44,7 +43,6 @@
         android:fontFamily="@string/font_light"
         android:textSize="16sp"
         android:textColor="?themeColorInvert"
-        tools:text="@string/cpusettings"
-        tools:textColor="@android:color/white" />
+        tools:text="@string/cpusettings" />
 
 </LinearLayout>

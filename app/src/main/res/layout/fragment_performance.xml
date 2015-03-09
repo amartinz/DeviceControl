@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <View style="@style/StandardDivider" />
+        <Space android:layout_width="match_parent" android:layout_height="10dp" />
 
         <org.namelessrom.devicecontrol.ui.views.CpuStateView
             android:id="@+id/cpu_states"

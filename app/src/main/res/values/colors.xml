@@ -16,11 +16,11 @@
 -->
 <resources>
     <!-- Accents -->
-    <color name="accent">@color/pallete_indigo_600</color>
-    <color name="dark_background">#1b2327</color>
-    <color name="dark_menu">#ff132125</color>
+    <color name="accent">@color/pallete_blue_500</color>
+    <color name="dark_background">#ff374046</color>
+    <color name="dark_menu">#ff2e353a</color>
     <color name="darker_menu">#ff21272b</color>
-    <color name="dark_primary_dark">@color/pallete_indigo_800</color>
+    <color name="dark_primary_dark">@color/pallete_blue_700</color>
     <!-- Accents light -->
     <color name="accent_light">@color/palette_teal_500</color>
     <color name="light_background">#ffe7e7e7</color>
@@ -34,8 +34,8 @@
     <color name="palette_blue_800">#ff1565c0</color>
     <color name="pallete_blue_grey_500">#ff607D8B</color>
     <color name="pallete_blue_grey_700">#ff455A64</color>
-    <color name="pallete_indigo_600">#3949AB</color>
-    <color name="pallete_indigo_800">#283593</color>
+    <color name="pallete_blue_500">#2196F3</color>
+    <color name="pallete_blue_700">#1976D2</color>
     <color name="palette_orange">#fff5a816</color>
     <color name="palette_teal_500">#ff009688</color>
     <color name="palette_teal_700">#ff00796B</color>

@@ -29,11 +29,11 @@ import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.monitors.CpuStateMonitor;
+import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -87,8 +87,7 @@ public class CpuStateView extends LinearLayout implements CpuUtils.StateListener
                 refreshData();
             }
         });
-        mRefresh.setImageResource(Application.get().isDarkTheme()
-                ? R.drawable.ic_action_refresh : R.drawable.ic_action_refresh_dark);
+        mRefresh.setImageDrawable(DrawableHelper.applyAccentColorFilter( R.drawable.ic_refresh));
 
         refreshData();
     }

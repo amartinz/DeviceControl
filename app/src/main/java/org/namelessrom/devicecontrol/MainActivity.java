@@ -125,10 +125,10 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         mMenuIcons.add(R.drawable.ic_menu_perf_info);
         // performance - cpu
         mMenuEntries.add(ID_PERFORMANCE_CPU_SETTINGS);
-        mMenuIcons.add(R.drawable.ic_menu_perf_cpu);
+        mMenuIcons.add(R.drawable.ic_memory);
         // performance - gpu
         mMenuEntries.add(ID_PERFORMANCE_GPU_SETTINGS);
-        mMenuIcons.add(R.drawable.ic_menu_perf_gpu);
+        mMenuIcons.add(R.drawable.ic_display);
         // performance - filesystem
         mMenuEntries.add(ID_FILESYSTEM);
         mMenuIcons.add(R.drawable.ic_storage);
