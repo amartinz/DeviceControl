@@ -66,7 +66,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
         mWirelessFileManager.setOnPreferenceClickListener(this);
 
         mBrowseRoot = (CustomTogglePreference) findPreference("wfm_root");
-        mBrowseRoot.setChecked(PreferenceHelper.getBoolean(mBrowseRoot.getKey(), false));
+        mBrowseRoot.setChecked(PreferenceHelper.getBoolean(mBrowseRoot.getKey()));
         mBrowseRoot.setOnPreferenceChangeListener(this);
 
         mPort = (CustomEditTextPreference) findPreference("wfm_port");
@@ -76,7 +76,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment
         mPort.setOnPreferenceChangeListener(this);
 
         mUseAuth = (CustomTogglePreference) findPreference("wfm_auth");
-        mUseAuth.setChecked(PreferenceHelper.getBoolean(mUseAuth.getKey(), true));
+        mUseAuth.setChecked(PreferenceHelper.getBoolean(mUseAuth.getKey()));
         mUseAuth.setOnPreferenceChangeListener(this);
 
         mUsername = (CustomEditTextPreference) findPreference("wfm_username");

@@ -36,6 +36,7 @@ import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.device.sensors.BaseSensor;
 import org.namelessrom.devicecontrol.device.sensors.environment.AmbientTemperatureSensor;
 import org.namelessrom.devicecontrol.device.sensors.environment.LightSensor;
@@ -53,7 +54,6 @@ import org.namelessrom.devicecontrol.device.sensors.position.GeomagneticRotation
 import org.namelessrom.devicecontrol.device.sensors.position.MagneticFieldSensor;
 import org.namelessrom.devicecontrol.device.sensors.position.MagneticFieldUncalibratedSensor;
 import org.namelessrom.devicecontrol.device.sensors.position.ProximitySensor;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 import java.util.ArrayList;
 
@@ -236,7 +236,7 @@ public class SensorActivity extends BaseActivity {
 
     @Override protected void onPause() {
         super.onPause();
-        MainActivity.setSwipeOnContent(PreferenceHelper.getBoolean("swipe_on_content", false));
+        MainActivity.setSwipeOnContent(DeviceConfiguration.get(this).swipeOnContent);
 
         // unregister all sensors
         for (final BaseSensor sensor : mSensorList) {

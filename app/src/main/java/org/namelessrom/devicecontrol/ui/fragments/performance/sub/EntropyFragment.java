@@ -91,7 +91,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
 
         // category = (PreferenceCategory) findPreference("rng");
         mRngStartup = (CustomTogglePreference) findPreference("rng_startup");
-        mRngStartup.setChecked(PreferenceHelper.getBoolean("rng_startup", false));
+        mRngStartup.setChecked(PreferenceHelper.getBoolean("rng_startup"));
         mRngStartup.setOnPreferenceChangeListener(this);
 
 
@@ -211,7 +211,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
     }
 
     public static String restore() {
-        if (PreferenceHelper.getBoolean("rng_startup", false)) {
+        if (PreferenceHelper.getBoolean("rng_startup")) {
             return String.format("%s -P;\n", RNGD.getAbsolutePath());
         }
         return "";

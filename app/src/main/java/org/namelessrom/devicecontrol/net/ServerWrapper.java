@@ -184,7 +184,7 @@ public class ServerWrapper {
             Logger.v(this, "filePath: " + filePath);
             File file;
             String sdRoot;
-            if (PreferenceHelper.getBoolean("wfm_root", false)) {
+            if (PreferenceHelper.getBoolean("wfm_root")) {
                 file = new File("/");
                 sdRoot = "";
             } else {
@@ -337,7 +337,7 @@ public class ServerWrapper {
     }
 
     private boolean isAuthenticated(final AsyncHttpServerRequest req) {
-        final boolean isAuth = !PreferenceHelper.getBoolean("wfm_auth", true);
+        final boolean isAuth = !PreferenceHelper.getBoolean("wfm_auth");
         if (req.getHeaders().hasAuthorization() && !isAuth) {
             final String auth = req.getHeaders().getHeaders().get("Authorization");
             if (auth != null && !auth.isEmpty()) {
