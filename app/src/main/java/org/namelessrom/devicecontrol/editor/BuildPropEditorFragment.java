@@ -47,14 +47,13 @@ import org.namelessrom.devicecontrol.ui.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
+import org.namelessrom.devicecontrol.DeviceConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class BuildPropEditorFragment extends AttachFragment implements DeviceConstants,
-        AdapterView.OnItemClickListener, ShellOutput.OnShellOutputListener {
+public class BuildPropEditorFragment extends AttachFragment implements AdapterView.OnItemClickListener, ShellOutput.OnShellOutputListener {
 
     //==============================================================================================
     // Fields
@@ -75,7 +74,7 @@ public class BuildPropEditorFragment extends AttachFragment implements DeviceCon
     // Overridden Methods
     //==============================================================================================
 
-    @Override protected int getFragmentId() { return ID_TOOLS_EDITORS_BUILD_PROP; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_TOOLS_EDITORS_BUILD_PROP; }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

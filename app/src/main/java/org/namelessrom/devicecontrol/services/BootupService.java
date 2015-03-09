@@ -27,22 +27,22 @@ import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.device.DeviceFeatureFragment;
 import org.namelessrom.devicecontrol.device.DeviceFeatureKernelFragment;
+import org.namelessrom.devicecontrol.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;
-import org.namelessrom.devicecontrol.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.File;
 
-public class BootupService extends IntentService implements DeviceConstants {
+public class BootupService extends IntentService {
     private static final Object lockObject = new Object();
 
     public static final String SOB_SYSCTL = "sob_sysctl";
@@ -89,7 +89,8 @@ public class BootupService extends IntentService implements DeviceConstants {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            if (PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
+            final DeviceConfiguration configuration = DeviceConfiguration.get(mContext);
+            if (configuration.dcFirstStart) {
                 Logger.i(this, "First start not completed, exiting");
                 return null;
             }
@@ -108,10 +109,10 @@ public class BootupService extends IntentService implements DeviceConstants {
             //==================================================================================
             // Tasker
             //==================================================================================
-            if (PreferenceHelper.getBoolean(FSTRIM, false)) {
+            if (TaskerConfiguration.get(mContext).fstrimEnabled) {
                 Logger.v(this, "Scheduling Tasker - FSTRIM");
                 AlarmHelper.setAlarmFstrim(mContext,
-                        PreferenceHelper.getInt(FSTRIM_INTERVAL, 480));
+                        TaskerConfiguration.get(mContext).fstrimInterval);
             }
 
             //==================================================================================
@@ -131,7 +132,7 @@ public class BootupService extends IntentService implements DeviceConstants {
             // Device
             //==================================================================================
             Logger.i(this, "----- DEVICE START -----");
-            if (PreferenceHelper.getBoolean(SOB_DEVICE, false)) {
+            if (configuration.sobDevice) {
                 cmd = DeviceFeatureFragment.restore();
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
@@ -142,29 +143,29 @@ public class BootupService extends IntentService implements DeviceConstants {
             // Performance
             //==================================================================================
             Logger.i(this, "----- CPU START -----");
-            if (PreferenceHelper.getBoolean(SOB_CPU, false)) {
+            if (configuration.sobCpu) {
                 cmd = CpuUtils.get().restore();
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
             }
             Logger.i(this, "----- CPU END -----");
             Logger.i(this, "----- GPU START -----");
-            if (PreferenceHelper.getBoolean(SOB_GPU, false)) {
+            if (configuration.sobGpu) {
                 cmd = GpuUtils.get().restore();
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
             }
             Logger.i(this, "----- GPU END -----");
             Logger.i(this, "----- EXTRAS START -----");
-            if (PreferenceHelper.getBoolean(SOB_EXTRAS, false)) {
+            if (configuration.sobExtras) {
                 cmd = DeviceFeatureKernelFragment.restore();
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
             }
             Logger.i(this, "----- EXTRAS END -----");
             Logger.i(this, "----- VOLTAGE START -----");
-            if (PreferenceHelper.getBoolean(SOB_VOLTAGE, false)) {
-                cmd = VoltageFragment.restore();
+            if (configuration.sobVoltage) {
+                cmd = VoltageFragment.restore(mContext);
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
             }
@@ -174,7 +175,7 @@ public class BootupService extends IntentService implements DeviceConstants {
             // Tools
             //==================================================================================
             Logger.i(this, "----- TOOLS START -----");
-            if (PreferenceHelper.getBoolean(SOB_SYSCTL, false)) {
+            if (configuration.sobSysctl) {
                 if (new File("/system/etc/sysctl.conf").exists()) {
                     cmd = SysctlFragment.restore();
                     Logger.v(this, cmd);
@@ -183,7 +184,7 @@ public class BootupService extends IntentService implements DeviceConstants {
                 }
             }
 
-            cmd = EntropyFragment.restore();
+            cmd = EntropyFragment.restore(mContext);
             if (!TextUtils.isEmpty(cmd)) {
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);

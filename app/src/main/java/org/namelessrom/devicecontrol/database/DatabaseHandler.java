@@ -27,15 +27,15 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants {
+public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 9;
     private static final String DATABASE_NAME = "DeviceControl.db";
@@ -157,12 +157,14 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
         Log.e("DeviceControl", "onDowngrade"
                 + " | oldVersion: " + String.valueOf(oldVersion)
                 + " | newVersion: " + String.valueOf(newVersion));
-        // TODO: a more grateful way?
         wipeDb(db);
         try {
-            //noinspection ResultOfMethodCallIgnored
-            new File(Application.get().getFilesDirectory() + DC_DOWNGRADE).createNewFile();
-        } catch (Exception ignored) { }
+            final File downgradeFile = new File(Application.get().getFilesDirectory(),
+                    DeviceConstants.DC_DOWNGRADE);
+            Logger.d(this, "creating downgrade file -> %s", downgradeFile.createNewFile());
+        } catch (Exception e) {
+            Logger.e(this, "could not create downgrade file", e);
+        }
     }
 
     private void wipeDb(final SQLiteDatabase db) {
@@ -244,13 +246,6 @@ public class DatabaseHandler extends SQLiteOpenHelper implements DeviceConstants
 
         cursor.close();
         return itemList;
-    }
-
-    public boolean deleteItemByName(final String name, final String tableName) {
-        if (sDb == null) return false;
-
-        sDb.delete(tableName, KEY_NAME + " = ?", new String[]{ name });
-        return true;
     }
 
     //----------------------------------------------------------------------------------------------
