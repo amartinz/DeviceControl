@@ -43,7 +43,10 @@ import com.pollfish.constants.Position;
 import com.pollfish.main.PollFish;
 import com.stericson.roottools.RootTools;
 
+import org.namelessrom.devicecontrol.about.AboutFragment;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
+import org.namelessrom.devicecontrol.appmanager.AppListFragment;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.device.DeviceFeatureFragment;
 import org.namelessrom.devicecontrol.device.DeviceInformationFragment;
@@ -55,7 +58,6 @@ import org.namelessrom.devicecontrol.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
-import org.namelessrom.devicecontrol.about.AboutFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.FilesystemFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.GpuSettingsFragment;
@@ -68,12 +70,10 @@ import org.namelessrom.devicecontrol.ui.fragments.performance.sub.KsmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.UksmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;
 import org.namelessrom.devicecontrol.ui.fragments.preferences.PreferencesFragment;
-import org.namelessrom.devicecontrol.appmanager.AppListFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.TaskerFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.ui.fragments.tools.WirelessFileManagerFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.proprietary.Configuration;
@@ -159,11 +159,10 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
 
     @Override protected void onResume() {
         super.onResume();
-        final String pollFishApiKey = Configuration.getPollfishApiKeyDc();
-        if (!TextUtils.equals("---", pollFishApiKey)
-                && PreferenceHelper.getBoolean("show_pollfish", false)) {
+        final String pfApiKey = Configuration.getPollfishApiKeyDc();
+        if (!TextUtils.equals("---", pfApiKey) && DeviceConfiguration.get(this).showPollfish) {
             Logger.v(this, "PollFish.init()");
-            PollFish.init(this, pollFishApiKey, Position.BOTTOM_RIGHT, 30);
+            PollFish.init(this, pfApiKey, Position.BOTTOM_RIGHT, 30);
         }
     }
 
@@ -221,7 +220,7 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
         sSlidingMenu.setMenu(v);
 
         // setup touch mode
-        MainActivity.setSwipeOnContent(PreferenceHelper.getBoolean("swipe_on_content", false));
+        MainActivity.setSwipeOnContent(DeviceConfiguration.get(this).swipeOnContent);
 
         // setup menu list
         setupMenuLists();
@@ -244,8 +243,9 @@ public class MainActivity extends BaseActivity implements DeviceConstants,
             Toast.makeText(this, R.string.downgraded, Toast.LENGTH_LONG).show();
         }
 
-        if (PreferenceHelper.getBoolean(DC_FIRST_START, true)) {
-            PreferenceHelper.setBoolean(DC_FIRST_START, false);
+        if (DeviceConfiguration.get(this).dcFirstStart) {
+            DeviceConfiguration.get(this).dcFirstStart = false;
+            DeviceConfiguration.get(this).saveConfiguration(this);
         }
     }
 

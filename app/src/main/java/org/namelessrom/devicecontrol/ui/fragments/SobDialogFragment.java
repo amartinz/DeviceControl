@@ -8,9 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
-import org.namelessrom.devicecontrol.services.BootupService;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
@@ -49,37 +48,52 @@ public class SobDialogFragment extends DialogFragment {
                 new DialogInterface.OnMultiChoiceClickListener() {
                     @Override public void onClick(final DialogInterface dialogInterface,
                             final int item, final boolean isChecked) {
-                        PreferenceHelper.setBoolean(getKey(entries.get(item)), isChecked);
+                        setChecked(item, isChecked);
                     }
                 });
-        builder.setCancelable(true);
-        builder.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override public void onClick(DialogInterface dialogInterface, int i) { }
+        builder.setCancelable(false);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialogInterface, int i) {
+                DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
+            }
         });
 
         return builder.create();
     }
 
     private boolean isChecked(final int entry) {
-        return PreferenceHelper.getBoolean(getKey(entry), false);
-    }
-
-    private String getKey(final int entry) {
         switch (entry) {
             case R.string.device:
-                return BootupService.SOB_DEVICE;
+                return DeviceConfiguration.get(getActivity()).sobDevice;
             case R.string.cpusettings:
-                return BootupService.SOB_CPU;
+                return DeviceConfiguration.get(getActivity()).sobCpu;
             case R.string.gpusettings:
-                return BootupService.SOB_GPU;
+                return DeviceConfiguration.get(getActivity()).sobGpu;
             case R.string.extras:
-                return BootupService.SOB_EXTRAS;
+                return DeviceConfiguration.get(getActivity()).sobExtras;
             case R.string.sysctl_vm:
-                return BootupService.SOB_SYSCTL;
+                return DeviceConfiguration.get(getActivity()).sobSysctl;
             case R.string.voltage_control:
-                return BootupService.SOB_VOLTAGE;
+                return DeviceConfiguration.get(getActivity()).sobVoltage;
             default:
-                return "-";
+                return false;
+        }
+    }
+
+    private void setChecked(final int entry, final boolean checked) {
+        switch (entry) {
+            case 0:
+                DeviceConfiguration.get(getActivity()).sobDevice = checked;
+            case 1:
+                DeviceConfiguration.get(getActivity()).sobCpu = checked;
+            case 2:
+                DeviceConfiguration.get(getActivity()).sobGpu = checked;
+            case 3:
+                DeviceConfiguration.get(getActivity()).sobExtras = checked;
+            case 4:
+                DeviceConfiguration.get(getActivity()).sobSysctl = checked;
+            case 5:
+                DeviceConfiguration.get(getActivity()).sobVoltage = checked;
         }
     }
 }

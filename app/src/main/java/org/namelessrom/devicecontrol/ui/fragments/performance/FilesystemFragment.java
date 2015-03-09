@@ -28,6 +28,7 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
+import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
@@ -36,7 +37,6 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 
@@ -102,15 +102,16 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
         }
 
         final boolean canBrickEmmc = Emmc.get().canBrick();
-        mFstrim = (CustomTogglePreference) findPreference(FSTRIM);
+        mFstrim = (CustomTogglePreference) findPreference(TaskerConfiguration.FSTRIM);
         if (canBrickEmmc) {
             mFstrim.setEnabled(false);
         } else {
-            mFstrim.setChecked(PreferenceHelper.getBoolean(FSTRIM));
+            mFstrim.setChecked(TaskerConfiguration.get(getActivity()).fstrimEnabled);
             mFstrim.setOnPreferenceChangeListener(this);
         }
 
-        mFstrimInterval = (CustomListPreference) findPreference(FSTRIM_INTERVAL);
+        mFstrimInterval =
+                (CustomListPreference) findPreference(TaskerConfiguration.FSTRIM_INTERVAL);
         if (canBrickEmmc) {
             mFstrimInterval.setEnabled(false);
         } else {
@@ -151,7 +152,10 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
             return true;
         } else if (mFstrim == preference) {
             final boolean value = (Boolean) o;
-            PreferenceHelper.setBoolean(FSTRIM, value);
+
+            TaskerConfiguration.get(getActivity()).fstrimEnabled = value;
+            TaskerConfiguration.get(getActivity()).saveConfiguration(getActivity());
+
             if (value) {
                 AlarmHelper.setAlarmFstrim(getActivity(),
                         parseFstrim(mFstrimInterval.getValue()));
@@ -164,7 +168,10 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
         } else if (mFstrimInterval == preference) {
             final String value = String.valueOf(o);
             final int realValue = parseFstrim(value);
-            PreferenceHelper.setInt(FSTRIM_INTERVAL, realValue);
+
+            TaskerConfiguration.get(getActivity()).fstrimInterval = realValue;
+            TaskerConfiguration.get(getActivity()).saveConfiguration(getActivity());
+
             if (mFstrim.isChecked()) {
                 AlarmHelper.setAlarmFstrim(getActivity(), realValue);
             }
@@ -277,7 +284,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements Devi
     private int getFstrim() {
         int position;
 
-        final int value = PreferenceHelper.getInt(FSTRIM_INTERVAL, 480);
+        final int value = TaskerConfiguration.get(getActivity()).fstrimInterval;
         switch (value) {
             case 5:
                 position = 0;

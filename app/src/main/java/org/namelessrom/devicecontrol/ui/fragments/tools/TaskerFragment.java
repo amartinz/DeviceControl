@@ -37,12 +37,12 @@ import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ObservableScrollView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.ui.adapters.TaskerAdapter;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.utils.constants.DeviceConstants;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
@@ -106,12 +106,12 @@ public class TaskerFragment extends AttachFragment implements DeviceConstants {
         final View v;
         if (toggle != null && (v = toggle.getActionView()) != null) {
             final SwitchCompat sw = (SwitchCompat) v.findViewById(R.id.ab_switch);
-            sw.setChecked(PreferenceHelper.getBoolean(USE_TASKER, false));
+            sw.setChecked(TaskerConfiguration.get(getActivity()).enabled);
             sw.setOnCheckedChangeListener(
                     new CompoundButton.OnCheckedChangeListener() {
                         @Override public void onCheckedChanged(final CompoundButton b,
                                 final boolean isChecked) {
-                            PreferenceHelper.setBoolean(USE_TASKER, isChecked);
+                            TaskerConfiguration.get(getActivity()).enabled = isChecked;
                             Utils.toggleComponent(new ComponentName(getActivity().getPackageName(),
                                     TaskerService.class.getName()), !isChecked);
                             if (isChecked) {

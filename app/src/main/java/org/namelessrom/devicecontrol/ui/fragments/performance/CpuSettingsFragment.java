@@ -36,6 +36,7 @@ import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
@@ -118,7 +119,7 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
         mMin.setOnPreferenceChangeListener(this);
 
         mCpuLock = (CustomTogglePreference) findPreference("cpu_lock_freq");
-        mCpuLock.setChecked(PreferenceHelper.getBoolean(mCpuLock.getKey()));
+        mCpuLock.setChecked(DeviceConfiguration.get(getActivity()).perfCpuLock);
         mCpuLock.setOnPreferenceChangeListener(this);
 
         mGovernor = (CustomListPreference) findPreference("pref_governor");
@@ -268,7 +269,8 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
             return true;
         } else if (preference == mCpuLock) {
             final boolean value = (Boolean) o;
-            PreferenceHelper.setBoolean(mCpuLock.getKey(), value);
+            DeviceConfiguration.get(getActivity()).perfCpuLock = value;
+            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
             return true;
         } else if (preference == mGovernor) {
             final String selected = String.valueOf(o);
@@ -335,10 +337,11 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
                     CpuCoreMonitor.getInstance(getActivity()).stop();
                     mCpuInfo.setVisibility(View.GONE);
                 }
-                updateSharedPrefs("pref_show_cpu_info", b ? "1" : "0");
+                DeviceConfiguration.get(getActivity()).perfCpuInfo = b;
+                DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
             }
         });
-        mStatusHide.setChecked(PreferenceHelper.getString("pref_show_cpu_info", "1").equals("1"));
+        mStatusHide.setChecked(DeviceConfiguration.get(getActivity()).perfCpuInfo);
         if (mStatusHide.isChecked()) {
             mCpuInfo.setVisibility(View.VISIBLE);
         } else {
@@ -420,8 +423,5 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Dev
         return rowView;
     }
 
-    private void updateSharedPrefs(final String var, final String value) {
-        PreferenceHelper.setString(var, value);
-    }
 }
 
