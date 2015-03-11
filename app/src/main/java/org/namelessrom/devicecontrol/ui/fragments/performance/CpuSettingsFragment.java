@@ -37,12 +37,13 @@ import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
-import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.monitors.CpuCoreMonitor;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory;
@@ -52,7 +53,6 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.ui.views.CpuCoreView;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -285,9 +285,9 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Pre
             final String path = Application.get().getString(R.string.file_cpu_quiet_cur_gov);
             final String value = String.valueOf(o);
             Utils.runRootCommand(Utils.getWriteCommand(path, value));
-            PreferenceHelper.setBootup(new DataItem(
+            BootupConfiguration.setBootup(getActivity(), new BootupItem(
                     DatabaseHandler.CATEGORY_EXTRAS, mCpuQuietGov.getKey(),
-                    path, value));
+                    path, value, true));
             mCpuQuietGov.setSummary(value);
             return true;
         }

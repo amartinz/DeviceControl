@@ -15,54 +15,50 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.tasker;
+package org.namelessrom.devicecontrol.objects;
 
 import android.support.annotation.NonNull;
 
-import java.io.Serializable;
-
-public class TaskerItem implements Comparable<TaskerItem>, Serializable {
+public class BootupItem implements Comparable<BootupItem> {
     public String category;
     public String name;
-    public String trigger;
+    public String filename;
     public String value;
     public boolean enabled;
 
-    public TaskerItem() { }
+    public BootupItem() { }
 
-    public TaskerItem(final String category, final String name, final String trigger,
+    public BootupItem(final String category, final String name, final String filename,
             final String value, final boolean enabled) {
         this.category = category;
         this.name = name;
         this.value = value;
-        this.trigger = trigger;
+        this.filename = filename;
         this.enabled = enabled;
     }
 
     @Override public boolean equals(Object otherItem) {
-        return otherItem instanceof TaskerItem
-                && this.category.equals(((TaskerItem) otherItem).category)
-                && this.name.equals(((TaskerItem) otherItem).name)
-                && this.trigger.equals(((TaskerItem) otherItem).trigger)
-                && this.value.equals(((TaskerItem) otherItem).value);
-        // we do not check enabled to be able to detect items when adding new tasks
-        //      && this.enabled == ((TaskerItem) otherItem).enabled;
+        return otherItem instanceof BootupItem
+                && this.category.equals(((BootupItem) otherItem).category)
+                && this.name.equals(((BootupItem) otherItem).name)
+                && this.filename.equals(((BootupItem) otherItem).filename);
+        // we do not check enabled or value to be able to detect items when adding new bootup items
+        //      && this.value.equals(((BootupItem) otherItem).value);
+        //      && this.enabled == ((BootupItem) otherItem).enabled;
     }
 
     @Override public String toString() {
-        return String.format("category: %s | name: %s | value: %s | trigger: %s | enabled: %s",
-                category, name, value, trigger, enabled);
+        return String.format("category: %s | name: %s | value: %s | filename: %s | enabled: %s",
+                category, name, value, filename, enabled);
     }
 
 
-    @Override public int compareTo(@NonNull TaskerItem another) {
+    @Override public int compareTo(@NonNull BootupItem another) {
         // TODO: different comparables and allow use to switch listing
-        int i = this.trigger.compareToIgnoreCase(another.trigger);
-        if (i != 0) return i;
-
-        i = this.category.compareToIgnoreCase(another.category);
+        int i = this.category.compareToIgnoreCase(another.category);
         if (i != 0) return i;
 
         return this.name.compareToIgnoreCase(another.name);
     }
+
 }

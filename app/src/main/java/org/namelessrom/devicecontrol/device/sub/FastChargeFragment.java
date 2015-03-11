@@ -23,14 +23,14 @@ import android.preference.PreferenceScreen;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class FastChargeFragment extends AttachPreferenceFragment implements Preference.OnPreferenceChangeListener {
@@ -160,8 +160,8 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Pref
             final String value = String.valueOf(newValue);
             Utils.writeValue(FC_FORCE, value);
             mForceFastCharge.setSummary(getForceSummary(Utils.readOneLine(FC_FORCE)));
-            PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_DEVICE, "force_fast_charge", FC_FORCE, value));
+            BootupConfiguration.setBootup(getActivity(), new BootupItem(
+                    DatabaseHandler.CATEGORY_DEVICE, "force_fast_charge", FC_FORCE, value, true));
             return true;
         } else if (mFailsafe == preference) {
             final boolean value = (Boolean) newValue;
@@ -198,8 +198,8 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Pref
             final String currentValue = Utils.readOneLine(FC_AC_LEVEL);
             mAcLevel.setSummary(currentValue);
             mAcLevel.setText(currentValue);
-            PreferenceHelper.setBootup(new DataItem(
-                    DatabaseHandler.CATEGORY_DEVICE, "ac_level", FC_AC_LEVEL, value));
+            BootupConfiguration.setBootup(getActivity(), new BootupItem(
+                    DatabaseHandler.CATEGORY_DEVICE, "ac_level", FC_AC_LEVEL, value, true));
             return true;
         } else if (mUsbLevel == preference) {
             final String value = String.valueOf(newValue);
@@ -207,8 +207,8 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Pref
             final String currentValue = Utils.readOneLine(FC_USB_LEVEL);
             mUsbLevel.setSummary(currentValue);
             mUsbLevel.setText(currentValue);
-            PreferenceHelper.setBootup(new DataItem
-                    (DatabaseHandler.CATEGORY_DEVICE, "usb_level", FC_USB_LEVEL, value));
+            BootupConfiguration.setBootup(getActivity(), new BootupItem(
+                    DatabaseHandler.CATEGORY_DEVICE, "usb_level", FC_USB_LEVEL, value, true));
             return true;
         }
 

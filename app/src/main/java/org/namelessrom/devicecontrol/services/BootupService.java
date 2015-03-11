@@ -27,6 +27,7 @@ import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
 import org.namelessrom.devicecontrol.device.DeviceFeatureFragment;
@@ -57,6 +58,7 @@ public class BootupService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent == null) {
             stopSelf();
+            return;
         }
         new BootTask(this).execute();
     }
@@ -98,6 +100,12 @@ public class BootupService extends IntentService {
                 return null;
             }
 
+            int size = BootupConfiguration.get(mContext).loadConfiguration(mContext).items.size();
+            if (size == 0) {
+                Logger.v(this, "No bootup items");
+                return null;
+            }
+
             //==================================================================================
             // Tasker
             //==================================================================================
@@ -125,7 +133,7 @@ public class BootupService extends IntentService {
             //==================================================================================
             Logger.i(this, "----- DEVICE START -----");
             if (configuration.sobDevice) {
-                cmd = DeviceFeatureFragment.restore();
+                cmd = DeviceFeatureFragment.restore(mContext);
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
             }
@@ -136,27 +144,28 @@ public class BootupService extends IntentService {
             //==================================================================================
             Logger.i(this, "----- CPU START -----");
             if (configuration.sobCpu) {
-                cmd = CpuUtils.get().restore();
+                cmd = CpuUtils.get().restore(mContext);
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
             }
             Logger.i(this, "----- CPU END -----");
             Logger.i(this, "----- GPU START -----");
             if (configuration.sobGpu) {
-                cmd = GpuUtils.get().restore();
+                cmd = GpuUtils.get().restore(mContext);
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
             }
             Logger.i(this, "----- GPU END -----");
             Logger.i(this, "----- EXTRAS START -----");
             if (configuration.sobExtras) {
-                cmd = DeviceFeatureKernelFragment.restore();
+                cmd = DeviceFeatureKernelFragment.restore(mContext);
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
             }
             Logger.i(this, "----- EXTRAS END -----");
             Logger.i(this, "----- VOLTAGE START -----");
             if (configuration.sobVoltage) {
+                // TODO: convert to bootup
                 cmd = VoltageFragment.restore(mContext);
                 Logger.v(this, cmd);
                 sbCmd.append(cmd);
@@ -169,7 +178,7 @@ public class BootupService extends IntentService {
             Logger.i(this, "----- TOOLS START -----");
             if (configuration.sobSysctl) {
                 if (new File("/system/etc/sysctl.conf").exists()) {
-                    cmd = SysctlFragment.restore();
+                    cmd = SysctlFragment.restore(mContext);
                     Logger.v(this, cmd);
                     sbCmd.append(cmd);
                     sbCmd.append("busybox sysctl -p;\n");

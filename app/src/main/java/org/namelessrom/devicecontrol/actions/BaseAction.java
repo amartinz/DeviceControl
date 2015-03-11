@@ -1,5 +1,9 @@
 package org.namelessrom.devicecontrol.actions;
 
+import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.objects.BootupItem;
+
 /**
  * Created by alex on 16.10.14.
  */
@@ -48,6 +52,13 @@ public abstract class BaseAction {
         return String.format(
                 "category: %s | name: %s | trigger: %s | value: %s | bootup: %s",
                 getCategory(), getName(), getTrigger(), getValue(), getBootup());
+    }
+
+    public void setBootup(String filename) {
+        if (getBootup()) {
+            BootupConfiguration.setBootup(Application.get(),
+                    new BootupItem(getCategory(), getName(), filename, getValue(), true));
+        }
     }
 
 }

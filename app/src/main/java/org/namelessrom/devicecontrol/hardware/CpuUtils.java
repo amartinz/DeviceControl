@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.hardware;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -28,9 +29,10 @@ import com.stericson.roottools.execution.Shell;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.monitors.CpuStateMonitor;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -183,16 +185,17 @@ public class CpuUtils {
         return numOfCpu;
     }
 
-    public String restore() {
+    public String restore(Context context) {
         final StringBuilder sbCmd = new StringBuilder();
 
-        final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
-                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_CPU);
+        final ArrayList<BootupItem> items = BootupConfiguration.get(context)
+                .getItemsByCategory(DatabaseHandler.CATEGORY_CPU);
+
         String tmpString;
         int tmpInt;
-        for (final DataItem item : items) {
+        for (final BootupItem item : items) {
             tmpInt = -1;
-            tmpString = item.getName();
+            tmpString = item.name;
             if (tmpString != null && !tmpString.contains("io")) {
                 try {
                     tmpInt = Utils.parseInt(
@@ -208,7 +211,7 @@ public class CpuUtils {
                     sbCmd.append(Utils.getWriteCommand(path, "1"));
                 }
             }
-            sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
+            sbCmd.append(Utils.getWriteCommand(item.filename, item.value));
         }
 
         return sbCmd.toString();
