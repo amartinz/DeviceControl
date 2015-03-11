@@ -21,6 +21,7 @@ import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 
 public class PreferenceHelper {
 
@@ -42,13 +43,5 @@ public class PreferenceHelper {
         final String value = DatabaseHandler.getInstance()
                 .getValueByName(name, DatabaseHandler.TABLE_DC);
         return (TextUtils.isEmpty(value) ? defaultValue : value.equals("1"));
-    }
-
-    public static String getBootupValue(final String name) {
-        return DatabaseHandler.getInstance().getValueByName(name, DatabaseHandler.TABLE_BOOTUP);
-    }
-
-    public static void setBootup(final DataItem dataItem) {
-        DatabaseHandler.getInstance().updateBootup(dataItem);
     }
 }

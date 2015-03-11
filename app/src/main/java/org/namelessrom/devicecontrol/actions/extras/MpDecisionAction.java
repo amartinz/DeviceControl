@@ -5,9 +5,6 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
-import org.namelessrom.devicecontrol.database.DataItem;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class MpDecisionAction extends BaseAction {
@@ -46,10 +43,7 @@ public class MpDecisionAction extends BaseAction {
             return;
         }
 
-        if (bootup) {
-            PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS, getName(),
-                    MPDECISION_PATH, value));
-        }
+        setBootup(MPDECISION_PATH);
 
         Utils.runRootCommand(enableMpDecision(TextUtils.equals("1", value)));
     }

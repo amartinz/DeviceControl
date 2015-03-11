@@ -22,10 +22,7 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
-import org.namelessrom.devicecontrol.database.DataItem;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.KsmUtils;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class KsmPagesAction extends BaseAction {
@@ -63,10 +60,7 @@ public class KsmPagesAction extends BaseAction {
             return;
         }
 
-        if (bootup) {
-            PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS,
-                    "ksm_pages_to_scan", KsmUtils.KSM_PAGES_TO_SCAN, value));
-        }
+        setBootup(KsmUtils.KSM_PAGES_TO_SCAN);
 
         Utils.runRootCommand(Utils.getWriteCommand(KsmUtils.KSM_PAGES_TO_SCAN, value));
     }

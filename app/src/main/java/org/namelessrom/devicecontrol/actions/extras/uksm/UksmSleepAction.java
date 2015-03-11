@@ -63,10 +63,7 @@ public class UksmSleepAction extends BaseAction {
             return;
         }
 
-        if (bootup) {
-            PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS,
-                    "uksm_sleep", UksmUtils.UKSM_SLEEP, value));
-        }
+        setBootup(UksmUtils.UKSM_SLEEP);
 
         Utils.runRootCommand(Utils.getWriteCommand(UksmUtils.UKSM_SLEEP, value));
     }

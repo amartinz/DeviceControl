@@ -24,8 +24,8 @@ import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.DataItem;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 /**
@@ -107,14 +107,15 @@ public class AwesomeListPreference extends CustomListPreference {
                 for (int i = 0; i < length; i++) {
                     Utils.writeValue(mPaths[i], value);
                     if (startUp) {
-                        PreferenceHelper.setBootup(new DataItem(
-                                category, getKey() + String.valueOf(i), mPaths[i], value));
+                        BootupConfiguration.setBootup(getContext(), new BootupItem(
+                                category, getKey() + String.valueOf(i), mPaths[i], value, true));
                     }
                 }
             } else {
                 Utils.writeValue(mPath, value);
                 if (startUp) {
-                    PreferenceHelper.setBootup(new DataItem(category, getKey(), mPath, value));
+                    BootupConfiguration.setBootup(getContext(),
+                            new BootupItem(category, getKey(), mPath, value, true));
                 }
             }
         }

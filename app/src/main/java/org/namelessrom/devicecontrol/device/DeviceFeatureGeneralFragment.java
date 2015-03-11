@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.device;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -26,10 +27,11 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.DisplayColorCalibration;
 import org.namelessrom.devicecontrol.hardware.DisplayGammaCalibration;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
@@ -39,14 +41,13 @@ import org.namelessrom.devicecontrol.ui.preferences.hardware.DisplayColor;
 import org.namelessrom.devicecontrol.ui.preferences.hardware.DisplayGamma;
 import org.namelessrom.devicecontrol.ui.preferences.hardware.VibratorIntensity;
 import org.namelessrom.devicecontrol.ui.views.CustomPreferenceFragment;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment implements Preference.OnPreferenceClickListener, ShellOutput.OnShellOutputListener {
 
@@ -134,8 +135,8 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             if (mAwesomeGloveMode != null || !isHtsSupported()) {
                 category.removePreference(mGloveMode);
             } else {
-                final String value = DatabaseHandler.getInstance()
-                        .getValueByName(mGloveMode.getKey(), DatabaseHandler.TABLE_BOOTUP);
+                final String value = BootupConfiguration.get(getActivity())
+                        .getItemByName(mGloveMode.getKey()).value;
                 final boolean enableGlove = (value != null && value.equals("1"));
 
                 enableHts(enableGlove);
@@ -273,10 +274,9 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
         if (preference == mGloveMode && mGloveMode.isEnabled()) {
             final boolean value = (Boolean) o;
             enableHts(value);
-            PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_DEVICE, mGloveMode.getKey(),
-                            mGloveMode.getKey(), (value ? "1" : "0"))
-            );
+            BootupConfiguration.setBootup(getActivity(),
+                    new BootupItem(DatabaseHandler.CATEGORY_DEVICE, mGloveMode.getKey(),
+                            mGloveMode.getKey(), (value ? "1" : "0"), true));
             return true;
         } else if (preference == mAwesomeGloveMode) {
             mAwesomeGloveMode.writeValue((Boolean) o);
@@ -333,21 +333,18 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
     // Methods
     //==============================================================================================
 
-    public static String restore() {
+    public static String restore(Context context) {
         final StringBuilder sbCmd = new StringBuilder();
 
-        final List<DataItem> items = DatabaseHandler.getInstance()
-                .getAllItems(DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_DEVICE);
+        final ArrayList<BootupItem> items = BootupConfiguration.get(context)
+                .getItemsByCategory(DatabaseHandler.CATEGORY_DEVICE);
 
-        String filename, value;
-        for (final DataItem item : items) {
-            filename = item.getFileName();
-            value = item.getValue();
-            if ("input_glove_mode".equals(filename)) {
-                final String mode = ("1".equals(value) ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
+        for (final BootupItem item : items) {
+            if ("input_glove_mode".equals(item.filename)) {
+                String mode = ("1".equals(item.value) ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
                 sbCmd.append(Utils.getWriteCommand(COMMAND_PATH, mode));
             } else {
-                sbCmd.append(Utils.getWriteCommand(filename, value));
+                sbCmd.append(Utils.getWriteCommand(item.filename, item.value));
             }
         }
 

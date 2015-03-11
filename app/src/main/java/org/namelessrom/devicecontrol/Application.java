@@ -26,6 +26,7 @@ import android.os.StrictMode;
 
 import com.stericson.roottools.RootTools;
 
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.configuration.ExtraConfiguration;
 import org.namelessrom.devicecontrol.configuration.FlasherConfiguration;
@@ -94,6 +95,7 @@ public class Application extends android.app.Application {
         DatabaseHandler.getInstance();
 
         // load configurations
+        BootupConfiguration.get(this);
         DeviceConfiguration.get(this);
         ExtraConfiguration.get(this);
         FlasherConfiguration.get(this);

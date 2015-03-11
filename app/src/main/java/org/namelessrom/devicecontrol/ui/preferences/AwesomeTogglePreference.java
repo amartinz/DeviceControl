@@ -25,8 +25,8 @@ import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.DataItem;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.PreferenceUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -137,7 +137,7 @@ public class AwesomeTogglePreference extends CustomTogglePreference {
 
     public void setupSummary() {
         if (!isSupported()) {
-            Logger.v(this, "setupTitle -> not supported");
+            Logger.v(this, "setupSummary -> not supported");
             return;
         }
         final Integer summary = PreferenceUtils.getSummary(Utils.getFileName(mPath));
@@ -159,16 +159,17 @@ public class AwesomeTogglePreference extends CustomTogglePreference {
                 for (int i = 0; i < length; i++) {
                     Utils.writeValue(mPaths[i], (isChecked ? mValueChecked : mValueNotChecked));
                     if (mStartUp) {
-                        PreferenceHelper.setBootup(new DataItem(
-                                mCategory, getKey() + String.valueOf(i), mPaths[i],
-                                (isChecked ? mValueChecked : mValueNotChecked)));
+                        BootupConfiguration.setBootup(getContext(), new BootupItem(mCategory,
+                                getKey() + String.valueOf(i), mPaths[i],
+                                (isChecked ? mValueChecked : mValueNotChecked), true));
                     }
                 }
             } else {
                 Utils.writeValue(mPath, (isChecked ? mValueChecked : mValueNotChecked));
                 if (mStartUp) {
-                    PreferenceHelper.setBootup(new DataItem(mCategory, getKey(), mPath,
-                            (isChecked ? mValueChecked : mValueNotChecked)));
+                    BootupConfiguration.setBootup(getContext(),
+                            new BootupItem(mCategory, getKey(), mPath,
+                                    (isChecked ? mValueChecked : mValueNotChecked), true));
                 }
             }
         }

@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.editor;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
@@ -25,14 +26,15 @@ import android.support.annotation.NonNull;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.DialogHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class SysctlFragment extends AttachPreferenceFragment {
 
@@ -150,16 +152,14 @@ public class SysctlFragment extends AttachPreferenceFragment {
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
-    public static String restore() {
+    public static String restore(Context context) {
         final StringBuilder sbCmd = new StringBuilder();
 
-        final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
-                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_SYSCTL);
-        String name, value;
-        for (final DataItem item : items) {
-            name = item.getFileName();
-            value = item.getValue();
-            sbCmd.append(Utils.getWriteCommand(name, value));
+        final ArrayList<BootupItem> items = BootupConfiguration.get(context)
+                .getItemsByCategory(DatabaseHandler.CATEGORY_SYSCTL);
+
+        for (final BootupItem item : items) {
+            sbCmd.append(Utils.getWriteCommand(item.name, item.value));
         }
 
         return sbCmd.toString();

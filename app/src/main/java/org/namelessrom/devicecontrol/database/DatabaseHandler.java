@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.database;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -179,6 +178,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // All CRUD(Create, Read, Update, Delete) Operations
     //==============================================================================================
 
+    /**
+     * @deprecated
+     */
     @Nullable public String getValueByName(final String name, final String tableName) {
         if (sDb == null) return null;
 
@@ -195,20 +197,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    public boolean updateBootup(final DataItem item) {
-        if (sDb == null) return false;
-
-        final ContentValues values = new ContentValues(5);
-        values.put(KEY_CATEGORY, item.getCategory());
-        values.put(KEY_NAME, item.getName());
-        values.put(KEY_FILENAME, item.getFileName());
-        values.put(KEY_VALUE, item.getValue());
-
-        sDb.delete(TABLE_BOOTUP, KEY_NAME + " = ?", new String[]{ item.getName() });
-        sDb.insert(TABLE_BOOTUP, null, values);
-        return true;
-    }
-
+    /**
+     * @deprecated
+     */
     public List<DataItem> getAllItems(final String tableName, final String category) {
         final List<DataItem> itemList = new ArrayList<>();
         if (sDb == null) return itemList;
