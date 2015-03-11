@@ -209,6 +209,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return true;
     }
 
+    /**
+     * @deprecated
+     */
     public List<DataItem> getAllItems(final String tableName, final String category) {
         final List<DataItem> itemList = new ArrayList<>();
         if (sDb == null) return itemList;

@@ -19,13 +19,14 @@ package org.namelessrom.devicecontrol.actions.gpu;
 
 import android.text.TextUtils;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
-import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class Gpu3dScalingAction extends BaseAction {
@@ -63,10 +64,7 @@ public class Gpu3dScalingAction extends BaseAction {
             return;
         }
 
-        if (bootup) {
-            PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_GPU,
-                    "3d_scaling", GpuUtils.FILE_3D_SCALING, value));
-        }
+        setBootup(GpuUtils.FILE_3D_SCALING);
 
         Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.FILE_3D_SCALING, value));
     }

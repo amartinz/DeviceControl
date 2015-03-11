@@ -19,14 +19,15 @@ package org.namelessrom.devicecontrol.actions.cpu;
 
 import android.text.TextUtils;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
-import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class CpuGovAction extends BaseAction {
@@ -67,16 +68,18 @@ public class CpuGovAction extends BaseAction {
         final int cpus = CpuUtils.get().getNumOfCpus();
         final StringBuilder sb = new StringBuilder(cpus * 2);
 
+        final BootupConfiguration configuration = BootupConfiguration.get(Application.get());
         String path;
         for (int i = 0; i < cpus; i++) {
             sb.append(CpuUtils.get().onlineCpu(i));
             path = GovernorUtils.get().getGovernorPath(i);
             sb.append(Utils.getWriteCommand(path, value));
             if (bootup) {
-                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                        "cpu_gov" + i, GovernorUtils.get().getGovernorPath(i), value));
+                configuration.addItem(new BootupItem(DatabaseHandler.CATEGORY_CPU,
+                        "cpu_gov" + i, GovernorUtils.get().getGovernorPath(i), value, true));
             }
         }
+        configuration.saveConfiguration(Application.get());
 
         Utils.runRootCommand(sb.toString());
     }
