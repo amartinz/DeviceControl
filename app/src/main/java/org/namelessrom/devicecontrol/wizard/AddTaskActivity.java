@@ -102,6 +102,7 @@ public class AddTaskActivity extends BaseActivity implements SetupDataCallbacks 
         Logger.v(this, "TaskerItem: %s", item == null ? "null" : item.toString());
         if (item != null) {
             mSetupData.setSetupData(item);
+            toolbar.setTitle(R.string.edit_task);
         }
         if (mSetupData.getSetupData() == null) {
             mSetupData.setSetupData(new TaskerItem());
