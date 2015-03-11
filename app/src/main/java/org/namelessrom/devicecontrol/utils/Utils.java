@@ -37,7 +37,6 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.tasker.TaskerItem;

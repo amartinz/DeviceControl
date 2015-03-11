@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.device;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -28,20 +29,20 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
-import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.KsmUtils;
 import org.namelessrom.devicecontrol.hardware.UksmUtils;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.CustomPreferenceFragment;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class DeviceFeatureKernelFragment extends CustomPreferenceFragment implements Preference.OnPreferenceClickListener {
     //==============================================================================================
@@ -222,9 +223,9 @@ public class DeviceFeatureKernelFragment extends CustomPreferenceFragment implem
         } else if (preference == mTcpCongestion) {
             final String value = String.valueOf(o);
             Utils.writeValue(TCP_CONGESTION_CONTROL, value);
-            PreferenceHelper.setBootup(new DataItem(
+            BootupConfiguration.setBootup(getActivity(), new BootupItem(
                     DatabaseHandler.CATEGORY_EXTRAS,
-                    mTcpCongestion.getKey(), TCP_CONGESTION_CONTROL, value));
+                    mTcpCongestion.getKey(), TCP_CONGESTION_CONTROL, value, true));
             preference.setSummary(value);
             return true;
         }
@@ -236,20 +237,17 @@ public class DeviceFeatureKernelFragment extends CustomPreferenceFragment implem
     // Methods
     //==============================================================================================
 
-    public static String restore() {
+    public static String restore(Context context) {
         final StringBuilder sbCmd = new StringBuilder();
 
-        final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
-                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_EXTRAS);
-        String name, value;
-        for (final DataItem item : items) {
-            name = item.getFileName();
-            value = item.getValue();
+        final ArrayList<BootupItem> items = BootupConfiguration.get(context)
+                .getItemsByCategory(DatabaseHandler.CATEGORY_EXTRAS);
 
-            if (MpDecisionAction.MPDECISION_PATH.equals(name)) {
-                new MpDecisionAction(value, false).triggerAction();
+        for (final BootupItem item : items) {
+            if (MpDecisionAction.MPDECISION_PATH.equals(item.name)) {
+                new MpDecisionAction(item.value, false).triggerAction();
             } else {
-                sbCmd.append(Utils.getWriteCommand(name, value));
+                sbCmd.append(Utils.getWriteCommand(item.name, item.value));
             }
         }
 

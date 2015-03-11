@@ -23,11 +23,11 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
-import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class CpuFreqMinAction extends BaseAction {
@@ -70,19 +70,21 @@ public class CpuFreqMinAction extends BaseAction {
         final int cpus = CpuUtils.get().getNumOfCpus();
         final StringBuilder sb = new StringBuilder(lockFreq ? cpus * 3 : cpus * 2);
 
+        final BootupConfiguration configuration = BootupConfiguration.get(Application.get());
         String path;
         for (int i = 0; i < cpus; i++) {
             sb.append(CpuUtils.get().onlineCpu(i));
             path = CpuUtils.get().getMinCpuFrequencyPath(i);
             sb.append(Utils.getWriteCommand(path, value));
             if (bootup) {
-                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_CPU,
-                        "cpu_min" + i, CpuUtils.get().getMinCpuFrequencyPath(i), value));
+                configuration.addItem(new BootupItem(DatabaseHandler.CATEGORY_CPU,
+                        "cpu_min" + i, CpuUtils.get().getMinCpuFrequencyPath(i), value, true));
             }
             if (lockFreq) {
                 sb.append(Utils.lockFile(path));
             }
         }
+        configuration.saveConfiguration(Application.get());
 
         Utils.runRootCommand(sb.toString());
     }

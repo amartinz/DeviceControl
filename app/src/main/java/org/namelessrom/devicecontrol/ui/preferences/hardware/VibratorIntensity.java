@@ -35,9 +35,9 @@ import android.widget.TextView;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class VibratorIntensity extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
@@ -155,7 +155,8 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
         mOriginalValue = Utils.readOneLine(path);
 
         // Restore percent value from SharedPreferences object
-        final String value = PreferenceHelper.getBootupValue("vibrator_tuning");
+        final String value = BootupConfiguration.get(getContext())
+                .getItemByName("vibrator_tuning").value;
         final int percent = strengthToPercent(value != null
                 ? Utils.parseInt(mOriginalValue) : defValue);
         Logger.v(this, "value: %s, percent: %s", value, percent);
@@ -178,9 +179,9 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
     @Override protected void onDialogClosed(final boolean positiveResult) {
         super.onDialogClosed(positiveResult);
         if (positiveResult) {
-            PreferenceHelper.setBootup(new DataItem(
+            BootupConfiguration.setBootup(getContext(), new BootupItem(
                     DatabaseHandler.CATEGORY_DEVICE, "vibrator_tuning",
-                    path, String.valueOf(percentToStrength(mSeekBar.getProgress()))));
+                    path, String.valueOf(percentToStrength(mSeekBar.getProgress())), true));
         } else {
             Utils.runRootCommand(Utils.getWriteCommand(path, String.valueOf(mOriginalValue)));
         }

@@ -22,10 +22,7 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
-import org.namelessrom.devicecontrol.database.DataItem;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.UksmUtils;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class UksmGovernorAction extends BaseAction {
@@ -63,10 +60,7 @@ public class UksmGovernorAction extends BaseAction {
             return;
         }
 
-        if (bootup) {
-            PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS,
-                    "uksm_governor", UksmUtils.UKSM_CPU_GOV, value));
-        }
+        setBootup(UksmUtils.UKSM_CPU_GOV);
 
         Utils.runRootCommand(Utils.getWriteCommand(UksmUtils.UKSM_CPU_GOV, value));
     }

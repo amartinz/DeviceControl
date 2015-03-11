@@ -19,13 +19,14 @@ package org.namelessrom.devicecontrol.actions.fs;
 
 import android.text.TextUtils;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
-import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class ReadAheadAction extends BaseAction {
@@ -68,8 +69,9 @@ public class ReadAheadAction extends BaseAction {
         for (final String readAheadPath : IoUtils.READ_AHEAD_PATH) {
             sb.append(Utils.getWriteCommand(readAheadPath, value));
             if (bootup) {
-                PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_EXTRAS,
-                        "readahead" + (c++), readAheadPath, value));
+                BootupConfiguration.setBootup(Application.get(),
+                        new BootupItem(DatabaseHandler.CATEGORY_EXTRAS,
+                                "readahead" + (c++), readAheadPath, value, true));
             }
         }
 

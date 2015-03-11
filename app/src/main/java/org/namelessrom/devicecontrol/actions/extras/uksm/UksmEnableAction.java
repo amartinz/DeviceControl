@@ -24,9 +24,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
-import org.namelessrom.devicecontrol.database.DataItem;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class UksmEnableAction extends BaseAction {
@@ -65,10 +62,7 @@ public class UksmEnableAction extends BaseAction {
         }
 
         final String path = Application.get().getString(R.string.file_uksm_run);
-        if (bootup) {
-            PreferenceHelper.setBootup(
-                    new DataItem(DatabaseHandler.CATEGORY_EXTRAS, "uksm_run", path, value));
-        }
+        setBootup(path);
 
         Utils.runRootCommand(Utils.getWriteCommand(path, value));
     }

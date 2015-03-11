@@ -22,10 +22,7 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
-import org.namelessrom.devicecontrol.database.DataItem;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class GpuFreqMinAction extends BaseAction {
@@ -63,10 +60,7 @@ public class GpuFreqMinAction extends BaseAction {
             return;
         }
 
-        if (bootup) {
-            PreferenceHelper.setBootup(new DataItem(DatabaseHandler.CATEGORY_GPU, "gpu_min",
-                    GpuUtils.get().getGpuFreqMinPath(), value));
-        }
+        setBootup(GpuUtils.get().getGpuFreqMinPath());
 
         Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.get().getGpuFreqMinPath(), value));
     }
