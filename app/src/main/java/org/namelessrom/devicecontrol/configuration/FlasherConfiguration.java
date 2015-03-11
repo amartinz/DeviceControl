@@ -26,7 +26,7 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 /**
  * Flasher configuration which auto serializes itself to a file
  */
-public class FlasherConfiguration extends BaseConfiguration {
+public class FlasherConfiguration extends BaseConfiguration<FlasherConfiguration> {
     public static final String PREF_RECOVERY_TYPE = "pref_recovery_type";
     public static final int RECOVERY_TYPE_BOTH = 0;
     public static final int RECOVERY_TYPE_CWM = 1;
@@ -71,15 +71,22 @@ public class FlasherConfiguration extends BaseConfiguration {
         return true;
     }
 
-    @Override public void loadConfiguration(Context context) {
+    @Override public FlasherConfiguration loadConfiguration(Context context) {
         final FlasherConfiguration config =
-                (FlasherConfiguration) loadRawConfiguration(context, FlasherConfiguration.class);
+                loadRawConfiguration(context, FlasherConfiguration.class);
         if (config == null) {
-            return;
+            return this;
         }
 
         this.recoveryType = config.recoveryType;
 
         this.migrationLevel = config.migrationLevel;
+
+        return this;
+    }
+
+    @Override public FlasherConfiguration saveConfiguration(Context context) {
+        saveConfigurationInternal(context);
+        return this;
     }
 }

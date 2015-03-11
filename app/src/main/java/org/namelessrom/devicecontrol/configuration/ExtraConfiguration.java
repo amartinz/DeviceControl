@@ -26,7 +26,7 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 /**
  * Extra configuration which auto serializes itself to a file
  */
-public class ExtraConfiguration extends BaseConfiguration {
+public class ExtraConfiguration extends BaseConfiguration<ExtraConfiguration> {
     public static final String RNG_STARTUP = "rng_startup";
 
     public boolean rngStartup;
@@ -74,11 +74,10 @@ public class ExtraConfiguration extends BaseConfiguration {
         return true;
     }
 
-    @Override public void loadConfiguration(Context context) {
-        final ExtraConfiguration config =
-                (ExtraConfiguration) loadRawConfiguration(context, ExtraConfiguration.class);
+    @Override public ExtraConfiguration loadConfiguration(Context context) {
+        final ExtraConfiguration config = loadRawConfiguration(context, ExtraConfiguration.class);
         if (config == null) {
-            return;
+            return this;
         }
 
         this.rngStartup = config.rngStartup;
@@ -87,5 +86,12 @@ public class ExtraConfiguration extends BaseConfiguration {
         this.vdd = config.vdd;
 
         this.migrationLevel = config.migrationLevel;
+
+        return this;
+    }
+
+    @Override public ExtraConfiguration saveConfiguration(Context context) {
+        saveConfigurationInternal(context);
+        return this;
     }
 }

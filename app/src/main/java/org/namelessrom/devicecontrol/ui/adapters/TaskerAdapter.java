@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,24 +35,27 @@ import android.widget.TextView;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.database.TaskerItem;
+import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
+import org.namelessrom.devicecontrol.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
+import java.util.Collections;
 import java.util.List;
 
 public class TaskerAdapter extends RecyclerView.Adapter<TaskerAdapter.TaskerViewHolder> {
     private Activity mActivity;
     private List<TaskerItem> mTasks;
 
-    public TaskerAdapter(final Activity activity, final List<TaskerItem> tasks) {
+    public TaskerAdapter(final Activity activity, @NonNull final List<TaskerItem> tasks) {
         mActivity = activity;
         mTasks = tasks;
+
+        Collections.sort(mTasks);
     }
 
     @Override public int getItemCount() {
-        return mTasks == null ? 0 : mTasks.size();
+        return mTasks.size();
     }
 
     @Override public TaskerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -75,8 +79,10 @@ public class TaskerAdapter extends RecyclerView.Adapter<TaskerAdapter.TaskerView
         holder.enabled.setChecked(item.enabled);
         holder.enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                TaskerConfiguration configuration = TaskerConfiguration.get(mActivity);
+                configuration.deleteItem(item);
                 item.enabled = isChecked;
-                DatabaseHandler.getInstance().updateOrInsertTaskerItem(item);
+                configuration.addItem(item).saveConfiguration(mActivity);
             }
         });
 
@@ -104,7 +110,9 @@ public class TaskerAdapter extends RecyclerView.Adapter<TaskerAdapter.TaskerView
                 alert.setPositiveButton(android.R.string.yes,
                         new DialogInterface.OnClickListener() {
                             @Override public void onClick(DialogInterface d, int b) {
-                                DatabaseHandler.getInstance().deleteTaskerItem(item);
+                                TaskerConfiguration.get(mActivity)
+                                        .deleteItem(item)
+                                        .saveConfiguration(mActivity);
                                 mTasks.remove(item);
                                 d.dismiss();
                                 notifyDataSetChanged();

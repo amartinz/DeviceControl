@@ -29,6 +29,7 @@ import android.util.Log;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
@@ -194,19 +195,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
     }
 
-    public boolean insertOrUpdate(final String name, final String value,
-            final String tableName) {
-        if (sDb == null) return false;
-
-        final ContentValues values = new ContentValues();
-        values.put(KEY_NAME, name);
-        values.put(KEY_VALUE, value);
-
-        sDb.delete(tableName, KEY_NAME + " = ?", new String[]{ name });
-        sDb.insert(tableName, null, values);
-        return true;
-    }
-
     public boolean updateBootup(final DataItem item) {
         if (sDb == null) return false;
 
@@ -251,6 +239,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //----------------------------------------------------------------------------------------------
     // Tasker
     //----------------------------------------------------------------------------------------------
+
+    /**
+     * @deprecated
+     */
     public List<TaskerItem> getAllTaskerItems(final String category) {
         final List<TaskerItem> itemList = new ArrayList<>();
         if (sDb == null) return itemList;
@@ -265,7 +257,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             TaskerItem item;
             do {
                 item = new TaskerItem();
-                item.id = Utils.parseInt(cursor.getString(0));
+                // id is unused
+                // item.id = Utils.parseInt(cursor.getString(0));
                 item.category = cursor.getString(1);
                 item.name = cursor.getString(2);
                 item.trigger = cursor.getString(3);
@@ -278,63 +271,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         cursor.close();
         return itemList;
-    }
-
-    public List<TaskerItem> getAllTaskerItemsByTrigger(final String trigger) {
-        final List<TaskerItem> itemList = new ArrayList<>();
-        if (sDb == null) return itemList;
-
-        final String selectQuery = "SELECT * FROM " + TABLE_TASKER + (trigger.isEmpty()
-                ? ""
-                : " WHERE " + KEY_TRIGGER + " = '" + trigger + '\'');
-
-        final Cursor cursor = sDb.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            TaskerItem item;
-            do {
-                item = new TaskerItem();
-                item.id = Utils.parseInt(cursor.getString(0));
-                item.category = cursor.getString(1);
-                item.name = cursor.getString(2);
-                item.trigger = cursor.getString(3);
-                item.value = cursor.getString(4);
-                final String enabled = cursor.getString(5);
-                item.enabled = (enabled != null && enabled.equals("1"));
-                itemList.add(item);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        return itemList;
-    }
-
-    public int updateOrInsertTaskerItem(final TaskerItem item) {
-        if (sDb == null) return -1;
-
-        final ContentValues values = new ContentValues();
-        values.put(KEY_CATEGORY, item.category);
-        values.put(KEY_NAME, item.name);
-        values.put(KEY_VALUE, item.value);
-        values.put(KEY_TRIGGER, item.trigger);
-        values.put(KEY_ENABLED, (item.enabled ? "1" : "0"));
-
-        final int rowsAffected = sDb.update(TABLE_TASKER, values, KEY_ID + " = ?",
-                new String[]{ String.valueOf(item.id) });
-
-        if (rowsAffected <= 0) {
-            sDb.insert(TABLE_TASKER, null, values);
-            return 1;
-        }
-
-        return rowsAffected;
-    }
-
-    public boolean deleteTaskerItem(final TaskerItem item) {
-        if (sDb == null) return false;
-
-        sDb.delete(TABLE_TASKER, KEY_ID + " = ?", new String[]{ String.valueOf(item.id) });
-        return true;
     }
 
 }

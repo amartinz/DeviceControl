@@ -26,7 +26,7 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 /**
  * Web server configuration which auto serializes itself to a file
  */
-public class WebServerConfiguration extends BaseConfiguration {
+public class WebServerConfiguration extends BaseConfiguration<WebServerConfiguration> {
     public static final String ROOT = "wfm_root";
     public static final String PORT = "wfm_port";
 
@@ -83,12 +83,11 @@ public class WebServerConfiguration extends BaseConfiguration {
         return true;
     }
 
-    @Override public void loadConfiguration(Context context) {
+    @Override public WebServerConfiguration loadConfiguration(Context context) {
         final WebServerConfiguration config =
-                (WebServerConfiguration) loadRawConfiguration(context,
-                        WebServerConfiguration.class);
+                loadRawConfiguration(context, WebServerConfiguration.class);
         if (config == null) {
-            return;
+            return this;
         }
 
         this.root = config.root;
@@ -99,5 +98,12 @@ public class WebServerConfiguration extends BaseConfiguration {
         this.password = config.password;
 
         this.migrationLevel = config.migrationLevel;
+
+        return this;
+    }
+
+    @Override public WebServerConfiguration saveConfiguration(Context context) {
+        saveConfigurationInternal(context);
+        return this;
     }
 }

@@ -32,11 +32,13 @@ import org.namelessrom.devicecontrol.configuration.FlasherConfiguration;
 import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
 import org.namelessrom.devicecontrol.configuration.WebServerConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class Application extends android.app.Application {
 

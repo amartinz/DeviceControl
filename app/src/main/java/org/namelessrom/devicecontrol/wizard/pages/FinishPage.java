@@ -25,7 +25,7 @@ import android.widget.ListView;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.TaskerItem;
+import org.namelessrom.devicecontrol.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.wizard.setup.Page;
 import org.namelessrom.devicecontrol.wizard.setup.SetupDataCallbacks;
 import org.namelessrom.devicecontrol.wizard.ui.ReviewAdapter;
