@@ -64,7 +64,6 @@ public class BootupService extends IntentService {
 
     @Override
     public void onDestroy() {
-        DatabaseHandler.tearDown();
         synchronized (lockObject) {
             Logger.i(this, "closing shells");
             try {
@@ -80,12 +79,6 @@ public class BootupService extends IntentService {
         private final Context mContext;
 
         private BootTask(Context c) { mContext = c; }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            stopSelf();
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {

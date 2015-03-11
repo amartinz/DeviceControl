@@ -20,15 +20,21 @@ package org.namelessrom.devicecontrol.utils;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
 
 /**
  * Helps with ddddddrawwabllessr5hhwr5hbwb
  */
 public class DrawableHelper {
 
-    public static Drawable applyColorFilter(final Drawable drawable, final int color) {
+    @Nullable public static Drawable applyColorFilter(final Drawable drawable, final int color) {
+        if (drawable == null) {
+            Logger.w("DrawableHelper", "drawable is null!");
+            return null;
+        }
         final LightingColorFilter lightingColorFilter = new LightingColorFilter(Color.BLACK, color);
         drawable.setColorFilter(lightingColorFilter);
         return drawable;

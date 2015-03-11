@@ -52,14 +52,21 @@ public class RotationVectorSensor extends BaseSensor {
     }
 
     @Override public void onSensorChanged(SensorEvent event) {
-        if (mValue == null || event.values[0] > Integer.MAX_VALUE) {
+        if (mValue == null || event.values.length < 3 || event.values[0] > Integer.MAX_VALUE) {
             return;
         }
 
         final float x = event.values[0];
         final float y = event.values[1];
         final float z = event.values[2];
-        final float scalar = event.values[3];
+
+        // on some devices in the wild the scalar value does not exist
+        final float scalar;
+        if (event.values.length >= 4) {
+            scalar = event.values[3];
+        } else {
+            scalar = 0f;
+        }
         mValue.post(new Runnable() {
             @Override public void run() {
                 mValue.setText(String.format("x: %s\ny: %s\nz: %s\nscalar: %s", x, y, z, scalar));
