@@ -17,8 +17,6 @@
  */
 package org.namelessrom.devicecontrol;
 
-import org.namelessrom.devicecontrol.R;
-
 import java.io.File;
 
 public class DeviceConstants {

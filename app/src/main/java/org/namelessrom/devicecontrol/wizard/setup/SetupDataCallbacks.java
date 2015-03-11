@@ -17,7 +17,7 @@
 
 package org.namelessrom.devicecontrol.wizard.setup;
 
-import org.namelessrom.devicecontrol.database.TaskerItem;
+import org.namelessrom.devicecontrol.tasker.TaskerItem;
 
 public interface SetupDataCallbacks {
     void onPageLoaded(Page page);

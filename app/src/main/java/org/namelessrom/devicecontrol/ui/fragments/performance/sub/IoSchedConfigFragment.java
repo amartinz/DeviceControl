@@ -2,12 +2,12 @@ package org.namelessrom.devicecontrol.ui.fragments.performance.sub;
 
 import android.os.Bundle;
 
+import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.DeviceConstants;
 
 public class IoSchedConfigFragment extends AttachPreferenceFragment {
     @Override protected int getFragmentId() {
