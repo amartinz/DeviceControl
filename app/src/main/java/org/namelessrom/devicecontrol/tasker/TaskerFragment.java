@@ -15,9 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments.tools;
+package org.namelessrom.devicecontrol.tasker;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,15 +37,13 @@ import android.widget.CompoundButton;
 import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ObservableScrollView;
 
+import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.ui.adapters.TaskerAdapter;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
 
 import java.util.List;
@@ -134,7 +133,8 @@ public class TaskerFragment extends AttachFragment {
         }
 
         @Override protected List<TaskerItem> doInBackground(final Void... voids) {
-            return DatabaseHandler.getInstance().getAllTaskerItems("");
+            final Context context = getActivity();
+            return TaskerConfiguration.get(context).loadConfiguration(context).items;
         }
 
         @Override protected void onPostExecute(final List<TaskerItem> result) {

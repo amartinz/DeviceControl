@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 
+import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.database.DataItem;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
@@ -31,7 +32,6 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.DeviceConstants;
 
 public class FastChargeFragment extends AttachPreferenceFragment implements Preference.OnPreferenceChangeListener {
     private static final String FC_BASE = "/sys/kernel/fast_charge";

@@ -21,7 +21,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorManager;
 import android.os.Build;
 import android.widget.TextView;
 

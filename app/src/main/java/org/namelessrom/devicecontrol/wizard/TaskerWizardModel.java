@@ -21,7 +21,7 @@ package org.namelessrom.devicecontrol.wizard;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
-import org.namelessrom.devicecontrol.database.TaskerItem;
+import org.namelessrom.devicecontrol.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;

@@ -33,15 +33,15 @@ import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.database.TaskerItem;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.services.TaskerService;
+import org.namelessrom.devicecontrol.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
-import org.namelessrom.devicecontrol.DeviceConstants;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -196,15 +196,10 @@ public class Utils {
     }
 
     public static String readFileViaShell(final String filePath, final boolean useSu) {
-        return readFileViaShell(filePath, useSu, false);
-    }
-
-    public static String readFileViaShell(final String filePath, final boolean useSu,
-            final boolean trim) {
         final String command = String.format("cat %s;", filePath);
-        final String result = useSu ? CMDProcessor.runSuCommand(command).getStdout()
+        return useSu
+                ? CMDProcessor.runSuCommand(command).getStdout()
                 : CMDProcessor.runShellCommand(command).getStdout();
-        return ((trim && result != null) ? result.trim() : result);
     }
 
     /**

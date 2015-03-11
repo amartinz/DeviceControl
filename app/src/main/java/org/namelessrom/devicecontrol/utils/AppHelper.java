@@ -35,8 +35,8 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
 import static org.namelessrom.devicecontrol.DeviceConstants.ID_PGREP;
+import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
 
 /**
  * Helper class for application interactions like cleaning the cache
