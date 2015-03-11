@@ -47,10 +47,6 @@ public class StepSensor extends BaseSensor {
         return mSensor;
     }
 
-    @Override public int getSensorDelay() {
-        return SensorManager.SENSOR_DELAY_FASTEST;
-    }
-
     public StepSensor(final Context context) {
         super(context);
         getInflater().inflate(R.layout.merge_sensor_data_single, getDataContainer(), true);
