@@ -66,4 +66,29 @@ public class DeviceConstants {
     public static final String DC_LOG_FILE_FSTRIM = DC_LOG_DIR + File.separator + "fstrim.log";
     //==============================================================================================
     public static final String DC_DOWNGRADE = File.separator + ".downgraded";
+
+    //==============================================================================================
+    // Donations
+    //==============================================================================================
+    /** Donation  2€ **/
+    public static final String SKU_DONATION_1 = "donation_1";
+    /** Donation  5€ **/
+    public static final String SKU_DONATION_2 = "donation_2";
+    /** Donation 10€ **/
+    public static final String SKU_DONATION_3 = "donation_3";
+    /** Donation 20€ **/
+    public static final String SKU_DONATION_4 = "donation_4";
+    /** Donation 50€ **/
+    public static final String SKU_DONATION_5 = "donation_5";
+
+    /** Donation, subscription  2€ **/
+    public static final String SUB_DONATION_1 = "donation_sub_1";
+    /** Donation, subscription  5€ **/
+    public static final String SUB_DONATION_2 = "donation_sub_2";
+    /** Donation, subscription 10€ **/
+    public static final String SUB_DONATION_3 = "donation_sub_3";
+    /** Donation, subscription 20€ **/
+    public static final String SUB_DONATION_4 = "donation_sub_4";
+    /** Donation, subscription 50€ **/
+    public static final String SUB_DONATION_5 = "donation_sub_5";
 }

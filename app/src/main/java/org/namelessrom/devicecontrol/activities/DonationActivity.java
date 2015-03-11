@@ -29,11 +29,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
-import com.anjlab.android.iab.v3.Constants;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
+import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.proprietary.Configuration;
@@ -109,19 +109,29 @@ public class DonationActivity extends BaseActivity implements BillingProcessor.I
                 switch (radioButtonId) {
                     default:
                     case R.id.radioDonation1:
-                        productId = useSub ? Constants.SUB_DONATION_1 : Constants.SKU_DONATION_1;
+                        productId = useSub
+                                ? DeviceConstants.SUB_DONATION_1
+                                : DeviceConstants.SKU_DONATION_1;
                         break;
                     case R.id.radioDonation2:
-                        productId = useSub ? Constants.SUB_DONATION_2 : Constants.SKU_DONATION_2;
+                        productId = useSub
+                                ? DeviceConstants.SUB_DONATION_2
+                                : DeviceConstants.SKU_DONATION_2;
                         break;
                     case R.id.radioDonation3:
-                        productId = useSub ? Constants.SUB_DONATION_3 : Constants.SKU_DONATION_3;
+                        productId = useSub
+                                ? DeviceConstants.SUB_DONATION_3
+                                : DeviceConstants.SKU_DONATION_3;
                         break;
                     case R.id.radioDonation4:
-                        productId = useSub ? Constants.SUB_DONATION_4 : Constants.SKU_DONATION_4;
+                        productId = useSub
+                                ? DeviceConstants.SUB_DONATION_4
+                                : DeviceConstants.SKU_DONATION_4;
                         break;
                     case R.id.radioDonation5:
-                        productId = useSub ? Constants.SUB_DONATION_5 : Constants.SKU_DONATION_5;
+                        productId = useSub
+                                ? DeviceConstants.SUB_DONATION_5
+                                : DeviceConstants.SKU_DONATION_5;
                         break;
                 }
                 if (useSub) {
