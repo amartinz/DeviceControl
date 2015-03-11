@@ -41,11 +41,11 @@ public class TaskerItem implements Comparable<TaskerItem>, Serializable {
 
     @Override public boolean equals(Object otherItem) {
         return otherItem instanceof TaskerItem
-                && this.category.equals(((TaskerItem) otherItem).category)
-                && this.name.equals(((TaskerItem) otherItem).name)
                 && this.trigger.equals(((TaskerItem) otherItem).trigger)
-                && this.value.equals(((TaskerItem) otherItem).value);
-        // we do not check enabled to be able to detect items when adding new tasks
+                && this.category.equals(((TaskerItem) otherItem).category)
+                && this.name.equals(((TaskerItem) otherItem).name);
+        // we do not check value and enabled to be able to detect items when adding new tasks
+        //      && this.value.equals(((TaskerItem) otherItem).value)
         //      && this.enabled == ((TaskerItem) otherItem).enabled;
     }
 
