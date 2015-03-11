@@ -27,7 +27,7 @@ import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 /**
  * Device configuration which auto serializes itself to a file
  */
-public class DeviceConfiguration extends BaseConfiguration {
+public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> {
     // TODO: get rid of all these strings after migration
     public static final String SHOW_LAUNCHER = "show_launcher";
     public static final String EXTENSIVE_LOGGING = "extensive_logging";
@@ -119,11 +119,10 @@ public class DeviceConfiguration extends BaseConfiguration {
         return true;
     }
 
-    @Override public void loadConfiguration(Context context) {
-        final DeviceConfiguration config =
-                (DeviceConfiguration) loadRawConfiguration(context, DeviceConfiguration.class);
+    @Override public DeviceConfiguration loadConfiguration(Context context) {
+        final DeviceConfiguration config = loadRawConfiguration(context, DeviceConfiguration.class);
         if (config == null) {
-            return;
+            return this;
         }
 
         this.dcFirstStart = config.dcFirstStart;
@@ -149,5 +148,12 @@ public class DeviceConfiguration extends BaseConfiguration {
         this.monkey = config.monkey;
 
         this.migrationLevel = config.migrationLevel;
+
+        return this;
+    }
+
+    @Override public DeviceConfiguration saveConfiguration(Context context) {
+        saveConfigurationInternal(context);
+        return this;
     }
 }

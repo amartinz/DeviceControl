@@ -26,9 +26,7 @@ import org.namelessrom.devicecontrol.configuration.WebServerConfiguration;
 import org.namelessrom.devicecontrol.services.WebServerService;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.HtmlHelper;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 import org.namelessrom.devicecontrol.utils.SortHelper;
-import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.DataInputStream;
 import java.io.File;

@@ -30,15 +30,17 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 
-public abstract class BaseConfiguration {
+public abstract class BaseConfiguration<T> {
 
     protected abstract String getConfigurationFile();
 
     protected abstract boolean migrateFromDatabase(Context context);
 
-    public abstract void loadConfiguration(Context context);
+    public abstract T loadConfiguration(Context context);
 
-    public void saveConfiguration(Context context) {
+    public abstract T saveConfiguration(Context context);
+
+    protected void saveConfigurationInternal(Context context) {
         final String base = context.getApplicationContext().getFilesDir().getAbsolutePath();
         final File configurationFile = new File(base, getConfigurationFile());
 
@@ -48,7 +50,7 @@ public abstract class BaseConfiguration {
         Utils.writeToFile(configurationFile, config);
     }
 
-    @Nullable protected Object loadRawConfiguration(Context context, Class clazz) {
+    @Nullable protected T loadRawConfiguration(Context context, Class<T> clazz) {
         final String base = context.getApplicationContext().getFilesDir().getAbsolutePath();
         final File configurationFile = new File(base, getConfigurationFile());
 

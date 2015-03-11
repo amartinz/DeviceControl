@@ -37,8 +37,8 @@ import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.database.TaskerItem;
+import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
+import org.namelessrom.devicecontrol.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.wizard.setup.AbstractSetupData;
 import org.namelessrom.devicecontrol.wizard.setup.Page;
 import org.namelessrom.devicecontrol.wizard.setup.PageList;
@@ -176,8 +176,11 @@ public class AddTaskActivity extends BaseActivity implements SetupDataCallbacks 
                 final int currentItem = mViewPager.getCurrentItem();
                 final Page currentPage = mPageList.get(currentItem);
                 if (currentPage.getId() == R.string.setup_complete) {
-                    DatabaseHandler.getInstance()
-                            .updateOrInsertTaskerItem(mSetupData.getSetupData());
+                    final TaskerItem item = mSetupData.getSetupData();
+                    TaskerConfiguration.get(AddTaskActivity.this)
+                            .deleteItem(item)
+                            .addItem(item)
+                            .saveConfiguration(AddTaskActivity.this);
                     finishSetup();
                 } else {
                     mViewPager.setCurrentItem(currentItem + 1, true);

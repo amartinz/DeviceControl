@@ -35,6 +35,7 @@ import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ObservableScrollView;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.RequestFileActivity;
@@ -42,7 +43,6 @@ import org.namelessrom.devicecontrol.ui.adapters.FlasherAdapter;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.DeviceConstants;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -20,7 +20,7 @@ package org.namelessrom.devicecontrol.wizard.setup;
 import android.content.Context;
 import android.os.Bundle;
 
-import org.namelessrom.devicecontrol.database.TaskerItem;
+import org.namelessrom.devicecontrol.tasker.TaskerItem;
 
 import java.util.ArrayList;
 

@@ -24,8 +24,8 @@ import android.os.AsyncTask;
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.DeviceConstants;
+import org.namelessrom.devicecontrol.Logger;
 
 import java.io.FileOutputStream;
 

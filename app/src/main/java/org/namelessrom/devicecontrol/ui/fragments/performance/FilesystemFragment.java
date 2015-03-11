@@ -24,6 +24,7 @@ import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
@@ -38,7 +39,6 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.DeviceConstants;
 
 public class FilesystemFragment extends AttachPreferenceFragment implements IoUtils.IoSchedulerListener, Preference.OnPreferenceChangeListener {
 

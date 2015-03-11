@@ -20,11 +20,11 @@ package org.namelessrom.devicecontrol.device.sub;
 import android.os.Bundle;
 import android.preference.Preference;
 
+import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeSeekBarPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.DeviceConstants;
 
 public class SoundControlFragment extends AttachPreferenceFragment implements Preference.OnPreferenceChangeListener {
 
