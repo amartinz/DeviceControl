@@ -33,15 +33,15 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import static android.opengl.GLES20.GL_EXTENSIONS;
 import static android.opengl.GLES20.GL_RENDERER;
@@ -251,13 +251,14 @@ public class GpuUtils {
         return false;
     }
 
-    @NonNull public String restore() {
+    @NonNull public String restore(Context context) {
         final StringBuilder sbCmd = new StringBuilder();
 
-        final List<DataItem> items = DatabaseHandler.getInstance().getAllItems(
-                DatabaseHandler.TABLE_BOOTUP, DatabaseHandler.CATEGORY_GPU);
-        for (final DataItem item : items) {
-            sbCmd.append(Utils.getWriteCommand(item.getFileName(), item.getValue()));
+        final ArrayList<BootupItem> items = BootupConfiguration.get(context)
+                .getItemsByCategory(DatabaseHandler.CATEGORY_GPU);
+
+        for (final BootupItem item : items) {
+            sbCmd.append(Utils.getWriteCommand(item.filename, item.value));
         }
 
         return sbCmd.toString();

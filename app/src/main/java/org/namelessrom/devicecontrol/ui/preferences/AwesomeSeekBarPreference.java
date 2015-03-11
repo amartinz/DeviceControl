@@ -24,8 +24,8 @@ import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.DataItem;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 /**
@@ -120,16 +120,16 @@ public class AwesomeSeekBarPreference extends SeekBarPreference {
                 for (int i = 0; i < length; i++) {
                     Utils.writeValue(mPaths[i], String.valueOf(value));
                     if (startUp) {
-                        PreferenceHelper.setBootup(new DataItem(
-                                category, getKey() + String.valueOf(i), mPaths[i],
-                                String.valueOf(value)));
+                        BootupConfiguration.setBootup(getContext(),
+                                new BootupItem(category, getKey() + String.valueOf(i),
+                                        mPaths[i], String.valueOf(value), true));
                     }
                 }
             } else {
                 Utils.writeValue(mPath, String.valueOf(value));
                 if (startUp) {
-                    PreferenceHelper.setBootup(new DataItem(category, getKey(), mPath,
-                            String.valueOf(value)));
+                    BootupConfiguration.setBootup(getContext(),
+                            new BootupItem(category, getKey(), mPath, String.valueOf(value), true));
                 }
             }
         }

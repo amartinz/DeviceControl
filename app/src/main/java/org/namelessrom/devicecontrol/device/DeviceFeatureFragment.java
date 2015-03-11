@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.device;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
@@ -42,8 +43,8 @@ public class DeviceFeatureFragment extends AttachViewPagerFragment {
         return new ViewPagerAdapter(getChildFragmentManager(), fragments, titles);
     }
 
-    public static String restore() {
+    public static String restore(Context context) {
         // TODO: redo the whole restore on bootup stuff
-        return DeviceFeatureGeneralFragment.restore();
+        return DeviceFeatureGeneralFragment.restore(context);
     }
 }

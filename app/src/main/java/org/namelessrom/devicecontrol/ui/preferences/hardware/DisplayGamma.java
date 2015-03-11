@@ -37,10 +37,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.database.DataItem;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.DisplayGammaCalibration;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 
 /**
  * Special preference type that allows configuration of Gamma settings
@@ -156,13 +156,15 @@ public class DisplayGamma extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
+            final BootupConfiguration config = BootupConfiguration.get(getContext());
             for (int i = 0; i < mNumberOfControls; i++) {
                 for (final String path : DisplayGammaCalibration.get().getPaths(i)) {
-                    PreferenceHelper.setBootup(new DataItem(
+                    config.addItem(new BootupItem(
                             DatabaseHandler.CATEGORY_DEVICE, DisplayGammaCalibration.TAG + i,
-                            path, DisplayGammaCalibration.get().getCurGamma(i)));
+                            path, DisplayGammaCalibration.get().getCurGamma(i), true));
                 }
             }
+            config.saveConfiguration(getContext());
         } else if (mOriginalColors != null) {
             for (int i = 0; i < mNumberOfControls; i++) {
                 DisplayGammaCalibration.get().setGamma(i, mOriginalColors[i]);
