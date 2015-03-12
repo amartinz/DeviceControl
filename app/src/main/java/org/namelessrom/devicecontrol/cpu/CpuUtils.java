@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.hardware;
+package org.namelessrom.devicecontrol.cpu;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -31,7 +31,7 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.hardware.monitors.CpuStateMonitor;
+import org.namelessrom.devicecontrol.cpu.monitors.CpuStateMonitor;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.utils.Utils;

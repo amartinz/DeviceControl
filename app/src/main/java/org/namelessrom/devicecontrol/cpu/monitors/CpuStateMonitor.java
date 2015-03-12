@@ -17,13 +17,13 @@
  * You should have received a copy of the GNU General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.namelessrom.devicecontrol.hardware.monitors;
+package org.namelessrom.devicecontrol.cpu.monitors;
 
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.BufferedReader;

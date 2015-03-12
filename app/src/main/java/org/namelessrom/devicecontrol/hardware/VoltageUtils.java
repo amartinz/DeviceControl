@@ -17,6 +17,8 @@
  */
 package org.namelessrom.devicecontrol.hardware;
 
+import org.namelessrom.devicecontrol.cpu.CpuUtils;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;

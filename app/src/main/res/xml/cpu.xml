@@ -47,6 +47,11 @@
             android:key="pref_governor_tuning"
             android:title="@string/cpu_governor_tuning" />
 
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
+            android:key="cpu_lock_gov"
+            android:title="@string/cpu_lock_gov"
+            android:summary="@string/cpu_lock_gov_summary" />
+
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory

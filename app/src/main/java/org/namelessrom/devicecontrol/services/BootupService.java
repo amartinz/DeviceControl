@@ -33,7 +33,7 @@ import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
 import org.namelessrom.devicecontrol.device.DeviceFeatureFragment;
 import org.namelessrom.devicecontrol.device.DeviceFeatureKernelFragment;
 import org.namelessrom.devicecontrol.editor.SysctlFragment;
-import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.VoltageFragment;

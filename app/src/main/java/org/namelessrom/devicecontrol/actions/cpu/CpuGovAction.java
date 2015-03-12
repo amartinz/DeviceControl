@@ -24,8 +24,9 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -65,6 +66,8 @@ public class CpuGovAction extends BaseAction {
             return;
         }
 
+        final boolean lockGov = DeviceConfiguration.get(Application.get()).perfCpuGovLock;
+
         final int cpus = CpuUtils.get().getNumOfCpus();
         final StringBuilder sb = new StringBuilder(cpus * 2);
 
@@ -77,6 +80,9 @@ public class CpuGovAction extends BaseAction {
             if (bootup) {
                 configuration.addItem(new BootupItem(DatabaseHandler.CATEGORY_CPU,
                         "cpu_gov" + i, GovernorUtils.get().getGovernorPath(i), value, true));
+            }
+            if (lockGov) {
+                sb.append(Utils.lockFile(path));
             }
         }
         configuration.saveConfiguration(Application.get());

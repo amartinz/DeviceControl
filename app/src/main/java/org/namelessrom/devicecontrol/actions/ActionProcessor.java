@@ -39,7 +39,7 @@ import org.namelessrom.devicecontrol.actions.gpu.Gpu3dScalingAction;
 import org.namelessrom.devicecontrol.actions.gpu.GpuFreqMaxAction;
 import org.namelessrom.devicecontrol.actions.gpu.GpuFreqMinAction;
 import org.namelessrom.devicecontrol.actions.gpu.GpuGovAction;
-import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.hardware.IoUtils;

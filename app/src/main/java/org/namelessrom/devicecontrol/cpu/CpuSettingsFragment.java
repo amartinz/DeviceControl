@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.fragments.performance;
+package org.namelessrom.devicecontrol.cpu;
 
 import android.os.Bundle;
 import android.preference.Preference;
@@ -40,9 +40,8 @@ import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.database.DatabaseHandler;
-import org.namelessrom.devicecontrol.hardware.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
-import org.namelessrom.devicecontrol.hardware.monitors.CpuCoreMonitor;
+import org.namelessrom.devicecontrol.cpu.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
@@ -71,6 +70,7 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Pre
 
     private CustomListPreference mGovernor;
     private CustomPreference mGovernorTuning;
+    private CustomTogglePreference mCpuGovLock;
 
     private CustomTogglePreference mMpDecision;
     private CustomListPreference mCpuQuietGov;
@@ -125,6 +125,10 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Pre
         mGovernor.setOnPreferenceChangeListener(this);
 
         mGovernorTuning = (CustomPreference) findPreference("pref_governor_tuning");
+
+        mCpuGovLock = (CustomTogglePreference) findPreference(DeviceConfiguration.CPU_LOCK_GOV);
+        mCpuGovLock.setChecked(DeviceConfiguration.get(getActivity()).perfCpuGovLock);
+        mCpuGovLock.setOnPreferenceChangeListener(this);
 
         // get hold of hotplugging and remove it, to add it back later if supported
         final PreferenceCategory hotplugging = (PreferenceCategory) findPreference("hotplugging");
@@ -276,6 +280,10 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Pre
             mGovernor.setSummary(selected);
 
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_GOVERNOR, selected, true);
+            return true;
+        } else if (preference == mCpuGovLock) {
+            DeviceConfiguration.get(getActivity()).perfCpuGovLock = (Boolean) o;
+            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
             return true;
         } else if (preference == mMpDecision) {
             final boolean value = (Boolean) o;

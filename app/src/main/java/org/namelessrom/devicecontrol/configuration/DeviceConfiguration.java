@@ -38,6 +38,7 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
     public static final String MONKEY = "monkey";
     public static final String SHOW_POLLFISH = "show_pollfish";
     public static final String CPU_LOCK_FREQ = "cpu_lock_freq";
+    public static final String CPU_LOCK_GOV = "cpu_lock_gov";
     public static final String CPU_SHOW_INFO = "pref_show_cpu_info";
 
     public boolean dcFirstStart;
@@ -58,6 +59,7 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
     public boolean extensiveLogging;
 
     public boolean perfCpuLock;
+    public boolean perfCpuGovLock;
     public boolean perfCpuInfo;
 
     public boolean monkey;
@@ -143,6 +145,7 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
         this.extensiveLogging = config.extensiveLogging;
 
         this.perfCpuLock = config.perfCpuLock;
+        this.perfCpuGovLock = config.perfCpuGovLock;
         this.perfCpuInfo = config.perfCpuInfo;
 
         this.monkey = config.monkey;

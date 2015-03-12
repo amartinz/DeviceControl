@@ -35,7 +35,7 @@ import com.daimajia.numberprogressbar.NumberProgressBar;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.hardware.CpuUtils;
+import org.namelessrom.devicecontrol.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class DeviceStatusView extends LinearLayout {

@@ -32,8 +32,8 @@ import com.daimajia.numberprogressbar.NumberProgressBar;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.hardware.CpuUtils;
-import org.namelessrom.devicecontrol.hardware.monitors.CpuStateMonitor;
+import org.namelessrom.devicecontrol.cpu.CpuUtils;
+import org.namelessrom.devicecontrol.cpu.monitors.CpuStateMonitor;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import java.io.IOException;
