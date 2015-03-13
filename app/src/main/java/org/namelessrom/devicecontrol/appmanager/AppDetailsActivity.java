@@ -51,11 +51,11 @@ import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.Legend;
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
 
@@ -269,8 +269,8 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         mCacheGraph.setDrawHoleEnabled(true);
         mCacheGraph.setTransparentCircleRadius(65f);
 
-        mCacheGraph.setDrawXValues(false);
-        mCacheGraph.setDrawYValues(false);
+        mCacheGraph.setDrawSliceText(false);
+        mCacheGraph.setDrawMarkerViews(false);
         mCacheGraph.setDrawCenterText(true);
 
         mCacheGraph.setTouchEnabled(false);
@@ -279,7 +279,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                 ? R.color.dark_background : R.color.light_background;
         mCacheGraph.setBackgroundResource(color);
 
-        mCacheGraph.invalidate();
+        mCacheGraph.animateXY(1000, 1000);
     }
 
     private void refreshAppDetails() {
@@ -555,6 +555,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
             dataSet.setColors(ColorTemplate.createColors(ColorTemplate.VORDIPLOM_COLORS));
 
             final PieData data = new PieData(textList, dataSet);
+            data.getDataSet().setDrawValues(false);
             mCacheGraph.setData(data);
 
             mCacheGraph.highlightValues(null);
@@ -572,7 +573,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
             l.setTextColor(color);
 
             // we are ready
-            mCacheGraph.animateXY(700, 700);
+            mCacheGraph.animateXY(1000, 1000);
         }
     }
 
