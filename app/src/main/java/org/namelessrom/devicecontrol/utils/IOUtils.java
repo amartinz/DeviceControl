@@ -106,7 +106,7 @@ public class IOUtils {
                     }
                 } else if (s.startsWith("/devices/platform")) {
                     String[] lineElements = s.split(" ");
-                    if (lineElements[1] != null) continue;
+                    if (lineElements[1] == null) continue;
                     String element = lineElements[1];
 
                     if (element.contains(":")) {

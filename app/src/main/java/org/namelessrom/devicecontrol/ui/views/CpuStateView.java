@@ -64,11 +64,11 @@ public class CpuStateView extends LinearLayout implements CpuUtils.StateListener
     }
 
     public void onResume() {
-
+        Logger.d(this, "onResume");
     }
 
     public void onPause() {
-
+        Logger.d(this, "onPause");
     }
 
     private void createViews(final Context context) {
@@ -88,7 +88,10 @@ public class CpuStateView extends LinearLayout implements CpuUtils.StateListener
                 refreshData();
             }
         });
-        final Drawable refreshDrawable = getResources().getDrawable(R.drawable.ic_refresh).mutate();
+        Drawable refreshDrawable = getResources().getDrawable(R.drawable.ic_refresh);
+        if (refreshDrawable != null) {
+            refreshDrawable = refreshDrawable.mutate();
+        }
         mRefresh.setImageDrawable(DrawableHelper.applyAccentColorFilter(refreshDrawable));
 
         refreshData();

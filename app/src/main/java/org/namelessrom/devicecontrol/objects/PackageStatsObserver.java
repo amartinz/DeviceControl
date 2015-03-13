@@ -24,8 +24,6 @@ public class PackageStatsObserver extends IPackageStatsObserver.Stub {
         packageStatsListener = listener;
     }
 
-    @Override public IBinder asBinder() { return super.asBinder(); }
-
     @Override public boolean onTransact(int code, Parcel data, Parcel reply, int flags)
             throws RemoteException {
         switch (code) {
@@ -61,7 +59,7 @@ public class PackageStatsObserver extends IPackageStatsObserver.Stub {
     }
 
     public interface OnPackageStatsListener {
-        public void onPackageStats(final PackageStats packageStats);
+        void onPackageStats(final PackageStats packageStats);
     }
 
 }

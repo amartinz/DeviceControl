@@ -138,7 +138,8 @@ public class DisplayGamma extends DialogPreference {
                     final String defaultKey = "display_gamma_default_" + index;
                     // this key is guaranteed to be present, as we have
                     // created it in onBindDialogView()
-                    final String[] defaultColors = prefs.getString(defaultKey, null).split(" ");
+                    final String pref = prefs.getString(defaultKey, null);
+                    final String[] defaultColors = pref != null ? pref.split(" ") : mOriginalColors;
 
                     for (int color = 0; color < BAR_COLORS.length; color++) {
                         mSeekBars[index][color].setGamma(Integer.valueOf(defaultColors[color]));

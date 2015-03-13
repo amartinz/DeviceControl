@@ -47,7 +47,7 @@ public class RequestFileActivity extends Activity {
     private static final int REQUEST_PICK_FILE_TWO = 204;
 
     public interface RequestFileCallback extends Serializable {
-        public void fileRequested(String filePath);
+        void fileRequested(String filePath);
     }
 
     private static RequestFileCallback sCallback;

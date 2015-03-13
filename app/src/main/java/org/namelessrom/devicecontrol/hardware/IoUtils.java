@@ -54,7 +54,7 @@ public class IoUtils {
     }
 
     public interface IoSchedulerListener {
-        public void onIoScheduler(final IoScheduler ioScheduler);
+        void onIoScheduler(final IoScheduler ioScheduler);
     }
 
     private static IoUtils sInstance;

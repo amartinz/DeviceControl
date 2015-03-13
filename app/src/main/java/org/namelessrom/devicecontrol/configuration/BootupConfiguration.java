@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol.configuration;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.database.DataItem;
@@ -112,7 +113,7 @@ public class BootupConfiguration extends BaseConfiguration<BootupConfiguration> 
         return filteredItems;
     }
 
-    public BootupItem getItemByName(String name) {
+    @Nullable public BootupItem getItemByName(String name) {
         for (final BootupItem item : items) {
             if (item != null && name.equals(item.name)) {
                 return item;

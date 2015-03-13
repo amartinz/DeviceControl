@@ -262,7 +262,7 @@ public class StepPagerStrip extends View {
         // TODO: Set content description appropriately
     }
 
-    public static interface OnPageSelectedListener {
+    public interface OnPageSelectedListener {
         void onPageStripSelected(int position);
     }
 

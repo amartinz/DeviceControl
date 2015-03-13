@@ -28,7 +28,7 @@ public class ShellOutput {
     }
 
     public interface OnShellOutputListener {
-        public void onShellOutput(final ShellOutput shellOutput);
+        void onShellOutput(final ShellOutput shellOutput);
     }
 
 }

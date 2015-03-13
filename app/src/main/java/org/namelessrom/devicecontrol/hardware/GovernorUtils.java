@@ -68,7 +68,7 @@ public class GovernorUtils {
     }
 
     public interface GovernorListener {
-        public void onGovernor(@NonNull final Governor governor);
+        void onGovernor(@NonNull final Governor governor);
     }
 
     private static GovernorUtils sInstance;

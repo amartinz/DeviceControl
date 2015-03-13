@@ -18,7 +18,7 @@
 package org.namelessrom.devicecontrol.wizard.setup;
 
 public interface PageNode {
-    public Page findPage(String key);
+    Page findPage(String key);
 
-    public Page findPage(int id);
+    Page findPage(int id);
 }

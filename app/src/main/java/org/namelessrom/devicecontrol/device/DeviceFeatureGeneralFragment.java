@@ -134,8 +134,9 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             if (awesomeGloveMode != null || !isHtsSupported()) {
                 category.removePreference(mGloveMode);
             } else {
-                final String value = BootupConfiguration.get(getActivity())
-                        .getItemByName(mGloveMode.getKey()).value;
+                final BootupItem bootupItem =  BootupConfiguration.get(getActivity())
+                        .getItemByName(mGloveMode.getKey());
+                final String value = (bootupItem != null ? bootupItem.value : null);
                 final boolean enableGlove = (value != null && value.equals("1"));
 
                 enableHts(enableGlove);

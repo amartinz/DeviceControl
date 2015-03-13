@@ -155,8 +155,9 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
         mOriginalValue = Utils.readOneLine(path);
 
         // Restore percent value from SharedPreferences object
-        final String value = BootupConfiguration.get(getContext())
-                .getItemByName("vibrator_tuning").value;
+        final BootupItem item = BootupConfiguration.get(getContext())
+                .getItemByName("vibrator_tuning");
+        final String value = (item != null) ? item.value : null;
         final int percent = strengthToPercent(value != null
                 ? Utils.parseInt(mOriginalValue) : defValue);
         Logger.v(this, "value: %s, percent: %s", value, percent);

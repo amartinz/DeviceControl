@@ -87,15 +87,15 @@ public class CpuUtils {
     }
 
     public interface FrequencyListener {
-        public void onFrequency(@NonNull final Frequency cpuFreq);
+        void onFrequency(@NonNull final Frequency cpuFreq);
     }
 
     public interface CoreListener {
-        public void onCores(@NonNull final Cores cores);
+        void onCores(@NonNull final Cores cores);
     }
 
     public interface StateListener {
-        public void onStates(@NonNull final State states);
+        void onStates(@NonNull final State states);
     }
 
     private static CpuUtils sInstance;

@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -57,6 +58,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
 
@@ -594,9 +596,11 @@ public class Utils {
         });
     }
 
+    @SuppressLint("SimpleDateFormat")
     public static String getDateAndTime() {
         final Date date = new Date(System.currentTimeMillis());
         final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd.HH.mm.ss");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         return simpleDateFormat.format(date);
     }
 

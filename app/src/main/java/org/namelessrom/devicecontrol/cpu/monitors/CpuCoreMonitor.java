@@ -143,7 +143,7 @@ public class CpuCoreMonitor {
                     String max, current;
                     for (int i = 0; i < CPU_COUNT; i++) {
                         try {
-                            max = parts[i + mult + 0];
+                            max = parts[i + mult];
                             current = parts[i + mult + 1];
                             tmp = new CpuCore(
                                     mActivity.getString(

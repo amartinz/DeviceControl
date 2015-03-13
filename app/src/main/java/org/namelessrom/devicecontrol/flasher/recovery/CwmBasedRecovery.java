@@ -20,6 +20,7 @@
 
 package org.namelessrom.devicecontrol.flasher.recovery;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Environment;
 import android.os.storage.StorageManager;
@@ -81,6 +82,7 @@ public class CwmBasedRecovery extends RecoveryInfo {
         return commands.toArray(new String[commands.size()]);
     }
 
+    @SuppressLint("SdCardPath")
     private String internalStorage() {
         if (Environment.getExternalStorageDirectory() == null) {
             return "sdcard";
