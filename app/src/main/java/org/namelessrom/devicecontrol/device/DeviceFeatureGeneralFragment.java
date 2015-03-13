@@ -61,30 +61,9 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
     // Input
     //==============================================================================================
     private CustomTogglePreference mGloveMode;
-    private AwesomeTogglePreference mAwesomeGloveMode;
-    private AwesomeTogglePreference mKnockOn;
-    private AwesomeTogglePreference mResetOnSuspend;
-
-    //==============================================================================================
-    // Lights
-    //==============================================================================================
-    private AwesomeTogglePreference mBacklightKey;
-    private AwesomeTogglePreference mBacklightNotification;
-    private AwesomeTogglePreference mKeyboardBacklight;
-
-    //==============================================================================================
-    // Display
-    //==============================================================================================
-    private AwesomeTogglePreference mLcdPowerReduce;
-    private AwesomeTogglePreference mLcdSunlightEnhancement;
-    private AwesomeTogglePreference mLcdColorEnhancement;
 
     private AwesomeListPreference mPanelColor;
 
-    //==============================================================================================
-    // Extras
-    //==============================================================================================
-    private AwesomeTogglePreference mLoggerMode;
     private CustomPreference mFastCharge;
     private CustomPreference mSoundControl;
 
@@ -100,7 +79,8 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
         final PreferenceScreen preferenceScreen = getPreferenceScreen();
 
         PreferenceCategory category = (PreferenceCategory) findPreference("input_gestures");
-        mKnockOn = (AwesomeTogglePreference) findPreference("knockon_gesture_enable");
+        AwesomeTogglePreference mKnockOn =
+                (AwesomeTogglePreference) findPreference("knockon_gesture_enable");
         if (mKnockOn.isSupported()) {
             try {
                 mKnockOn.initValue();
@@ -108,6 +88,15 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             mKnockOn.setOnPreferenceChangeListener(this);
         } else {
             category.removePreference(mKnockOn);
+        }
+
+        AwesomeTogglePreference mSweepToWake =
+                (AwesomeTogglePreference) findPreference("sweep_to_wake");
+        if (mSweepToWake.isSupported()) {
+            mSweepToWake.initValue();
+            mSweepToWake.setOnPreferenceChangeListener(this);
+        } else {
+            category.removePreference(mSweepToWake);
         }
 
         if (category.getPreferenceCount() == 0) {
@@ -120,7 +109,8 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             category.removePreference(pref);
         }
 
-        mAwesomeGloveMode = (AwesomeTogglePreference) findPreference("input_glove_mode_aw");
+        AwesomeTogglePreference mAwesomeGloveMode =
+                (AwesomeTogglePreference) findPreference("input_glove_mode_aw");
         if (mAwesomeGloveMode.isSupported()) {
             mAwesomeGloveMode.initValue();
             mAwesomeGloveMode.setOnPreferenceChangeListener(this);
@@ -144,7 +134,8 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             }
         } catch (Exception exc) { category.removePreference(mGloveMode); }
 
-        mResetOnSuspend = (AwesomeTogglePreference) findPreference("input_reset_on_suspend");
+        AwesomeTogglePreference mResetOnSuspend =
+                (AwesomeTogglePreference) findPreference("input_reset_on_suspend");
         if (mResetOnSuspend.isSupported()) {
             mResetOnSuspend.initValue();
             mResetOnSuspend.setOnPreferenceChangeListener(this);
@@ -159,7 +150,8 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
         // LIGHTS
 
         category = (PreferenceCategory) findPreference("touchkey");
-        mBacklightKey = (AwesomeTogglePreference) findPreference("touchkey_light");
+        AwesomeTogglePreference mBacklightKey =
+                (AwesomeTogglePreference) findPreference("touchkey_light");
         if (mBacklightKey.isSupported()) {
             mBacklightKey.initValue();
             mBacklightKey.setOnPreferenceChangeListener(this);
@@ -167,7 +159,8 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             category.removePreference(mBacklightKey);
         }
 
-        mBacklightNotification = (AwesomeTogglePreference) findPreference("touchkey_bln");
+        AwesomeTogglePreference mBacklightNotification =
+                (AwesomeTogglePreference) findPreference("touchkey_bln");
         if (mBacklightNotification.isSupported()) {
             mBacklightNotification.initValue();
             mBacklightNotification.setOnPreferenceChangeListener(this);
@@ -175,7 +168,8 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             category.removePreference(mBacklightNotification);
         }
 
-        mKeyboardBacklight = (AwesomeTogglePreference) findPreference("keyboard_light");
+        AwesomeTogglePreference mKeyboardBacklight =
+                (AwesomeTogglePreference) findPreference("keyboard_light");
         if (mKeyboardBacklight.isSupported()) {
             mKeyboardBacklight.initValue();
             mKeyboardBacklight.setOnPreferenceChangeListener(this);
@@ -210,7 +204,8 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             category.removePreference(mPanelColor);
         }
 
-        mLcdPowerReduce = (AwesomeTogglePreference) findPreference("lcd_power_reduce");
+        AwesomeTogglePreference mLcdPowerReduce =
+                (AwesomeTogglePreference) findPreference("lcd_power_reduce");
         if (mLcdPowerReduce.isSupported()) {
             mLcdPowerReduce.initValue();
             mLcdPowerReduce.setOnPreferenceChangeListener(this);
@@ -218,7 +213,7 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             category.removePreference(mLcdPowerReduce);
         }
 
-        mLcdSunlightEnhancement =
+        AwesomeTogglePreference mLcdSunlightEnhancement =
                 (AwesomeTogglePreference) findPreference("lcd_sunlight_enhancement");
         if (mLcdSunlightEnhancement.isSupported()) {
             mLcdSunlightEnhancement.initValue();
@@ -227,7 +222,8 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             category.removePreference(mLcdSunlightEnhancement);
         }
 
-        mLcdColorEnhancement = (AwesomeTogglePreference) findPreference("lcd_color_enhancement");
+        AwesomeTogglePreference mLcdColorEnhancement =
+                (AwesomeTogglePreference) findPreference("lcd_color_enhancement");
         if (mLcdColorEnhancement.isSupported()) {
             mLcdColorEnhancement.initValue();
             mLcdColorEnhancement.setOnPreferenceChangeListener(this);
@@ -240,7 +236,8 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
         }
 
         category = (PreferenceCategory) findPreference("extras");
-        mLoggerMode = (AwesomeTogglePreference) findPreference("logger_mode");
+        AwesomeTogglePreference mLoggerMode =
+                (AwesomeTogglePreference) findPreference("logger_mode");
         if (mLoggerMode.isSupported()) {
             mLoggerMode.initValue(true);
             mLoggerMode.setOnPreferenceChangeListener(this);
@@ -278,38 +275,11 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
                     new BootupItem(DatabaseHandler.CATEGORY_DEVICE, mGloveMode.getKey(),
                             mGloveMode.getKey(), (value ? "1" : "0"), true));
             return true;
-        } else if (preference == mAwesomeGloveMode) {
-            mAwesomeGloveMode.writeValue((Boolean) o);
-            return true;
-        } else if (preference == mResetOnSuspend) {
-            mResetOnSuspend.writeValue((Boolean) o);
-            return true;
-        } else if (preference == mKnockOn) {
-            mKnockOn.writeValue((Boolean) o);
-            return true;
-        } else if (preference == mBacklightKey) {
-            mBacklightKey.writeValue((Boolean) o);
-            return true;
-        } else if (preference == mBacklightNotification) {
-            mBacklightNotification.writeValue((Boolean) o);
-            return true;
-        } else if (preference == mKeyboardBacklight) {
-            mKeyboardBacklight.writeValue((Boolean) o);
+        } else if (preference instanceof AwesomeTogglePreference) {
+            ((AwesomeTogglePreference) preference).writeValue((Boolean) o);
             return true;
         } else if (preference == mPanelColor) {
             mPanelColor.writeValue(String.valueOf(o));
-            return true;
-        } else if (preference == mLcdPowerReduce) {
-            mLcdPowerReduce.writeValue((Boolean) o);
-            return true;
-        } else if (preference == mLcdSunlightEnhancement) {
-            mLcdSunlightEnhancement.writeValue((Boolean) o);
-            return true;
-        } else if (preference == mLcdColorEnhancement) {
-            mLcdColorEnhancement.writeValue((Boolean) o);
-            return true;
-        } else if (mLoggerMode == preference) {
-            mLoggerMode.writeValue((Boolean) o);
             return true;
         }
 
@@ -356,7 +326,7 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
     private static final String GLOVE_MODE_ENABLE = GLOVE_MODE + ",1";
     private static final String GLOVE_MODE_DISABLE = GLOVE_MODE + ",0";
 
-    public void enableHts(final boolean enable) {
+    private void enableHts(final boolean enable) {
         if (mGloveMode != null) mGloveMode.setEnabled(false);
         final String mode = (enable ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
         Utils.getCommandResult(this, Utils.getWriteCommand(COMMAND_PATH, mode) +

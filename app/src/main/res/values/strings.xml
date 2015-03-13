@@ -193,6 +193,7 @@
     <string name="gestures">Gestures</string>
     <string name="knock_on">Knock on</string>
     <string name="knock_on_summary">Double tap on the screen to turn it on</string>
+    <string name="sweep_to_wake">Sweep to wake</string>
     <string name="five_minutes">5 Minutes</string>
     <string name="ten_minutes">10 Minutes</string>
     <string name="twenty_minutes">20 Minutes</string>

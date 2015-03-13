@@ -39,7 +39,14 @@
             android:title="@string/knock_on"
             dc:category="device"
             dc:filePathList="@array/files_knock_on"
-            dc:fileValue="@array/files_knock_on_values"/>
+            dc:fileValue="@array/files_knock_on_values" />
+
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+            android:defaultValue="false"
+            android:key="sweep_to_wake"
+            android:title="@string/sweep_to_wake"
+            dc:category="device"
+            dc:filePathList="@array/files_sweep_to_wake" />
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
