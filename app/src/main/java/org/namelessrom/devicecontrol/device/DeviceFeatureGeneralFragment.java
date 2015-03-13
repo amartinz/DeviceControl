@@ -90,13 +90,22 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             category.removePreference(mKnockOn);
         }
 
-        AwesomeTogglePreference mSweepToWake =
+        AwesomeTogglePreference sweepToWake =
                 (AwesomeTogglePreference) findPreference("sweep_to_wake");
-        if (mSweepToWake.isSupported()) {
-            mSweepToWake.initValue();
-            mSweepToWake.setOnPreferenceChangeListener(this);
+        if (sweepToWake.isSupported()) {
+            sweepToWake.initValue();
+            sweepToWake.setOnPreferenceChangeListener(this);
         } else {
-            category.removePreference(mSweepToWake);
+            category.removePreference(sweepToWake);
+        }
+
+        AwesomeTogglePreference sweepToVolume =
+                (AwesomeTogglePreference) findPreference("sweep_to_volume");
+        if (sweepToVolume.isSupported()) {
+            sweepToVolume.initValue();
+            sweepToVolume.setOnPreferenceChangeListener(this);
+        } else {
+            category.removePreference(sweepToVolume);
         }
 
         if (category.getPreferenceCount() == 0) {
@@ -109,20 +118,20 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             category.removePreference(pref);
         }
 
-        AwesomeTogglePreference mAwesomeGloveMode =
+        AwesomeTogglePreference awesomeGloveMode =
                 (AwesomeTogglePreference) findPreference("input_glove_mode_aw");
-        if (mAwesomeGloveMode.isSupported()) {
-            mAwesomeGloveMode.initValue();
-            mAwesomeGloveMode.setOnPreferenceChangeListener(this);
+        if (awesomeGloveMode.isSupported()) {
+            awesomeGloveMode.initValue();
+            awesomeGloveMode.setOnPreferenceChangeListener(this);
         } else {
-            category.removePreference(mAwesomeGloveMode);
-            mAwesomeGloveMode = null;
+            category.removePreference(awesomeGloveMode);
+            awesomeGloveMode = null;
         }
 
         mGloveMode = (CustomTogglePreference) findPreference("input_glove_mode");
         try {
             // if we have already added a glove mode preference, remove it too
-            if (mAwesomeGloveMode != null || !isHtsSupported()) {
+            if (awesomeGloveMode != null || !isHtsSupported()) {
                 category.removePreference(mGloveMode);
             } else {
                 final String value = BootupConfiguration.get(getActivity())
@@ -134,13 +143,13 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             }
         } catch (Exception exc) { category.removePreference(mGloveMode); }
 
-        AwesomeTogglePreference mResetOnSuspend =
+        AwesomeTogglePreference resetOnSuspend =
                 (AwesomeTogglePreference) findPreference("input_reset_on_suspend");
-        if (mResetOnSuspend.isSupported()) {
-            mResetOnSuspend.initValue();
-            mResetOnSuspend.setOnPreferenceChangeListener(this);
+        if (resetOnSuspend.isSupported()) {
+            resetOnSuspend.initValue();
+            resetOnSuspend.setOnPreferenceChangeListener(this);
         } else {
-            category.removePreference(mResetOnSuspend);
+            category.removePreference(resetOnSuspend);
         }
 
         if (category.getPreferenceCount() == 0) {
@@ -150,31 +159,31 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
         // LIGHTS
 
         category = (PreferenceCategory) findPreference("touchkey");
-        AwesomeTogglePreference mBacklightKey =
+        AwesomeTogglePreference backlightKey =
                 (AwesomeTogglePreference) findPreference("touchkey_light");
-        if (mBacklightKey.isSupported()) {
-            mBacklightKey.initValue();
-            mBacklightKey.setOnPreferenceChangeListener(this);
+        if (backlightKey.isSupported()) {
+            backlightKey.initValue();
+            backlightKey.setOnPreferenceChangeListener(this);
         } else {
-            category.removePreference(mBacklightKey);
+            category.removePreference(backlightKey);
         }
 
-        AwesomeTogglePreference mBacklightNotification =
+        AwesomeTogglePreference backlightNotification =
                 (AwesomeTogglePreference) findPreference("touchkey_bln");
-        if (mBacklightNotification.isSupported()) {
-            mBacklightNotification.initValue();
-            mBacklightNotification.setOnPreferenceChangeListener(this);
+        if (backlightNotification.isSupported()) {
+            backlightNotification.initValue();
+            backlightNotification.setOnPreferenceChangeListener(this);
         } else {
-            category.removePreference(mBacklightNotification);
+            category.removePreference(backlightNotification);
         }
 
-        AwesomeTogglePreference mKeyboardBacklight =
+        AwesomeTogglePreference keyboardBacklight =
                 (AwesomeTogglePreference) findPreference("keyboard_light");
-        if (mKeyboardBacklight.isSupported()) {
-            mKeyboardBacklight.initValue();
-            mKeyboardBacklight.setOnPreferenceChangeListener(this);
+        if (keyboardBacklight.isSupported()) {
+            keyboardBacklight.initValue();
+            keyboardBacklight.setOnPreferenceChangeListener(this);
         } else {
-            category.removePreference(mKeyboardBacklight);
+            category.removePreference(keyboardBacklight);
         }
 
         if (category.getPreferenceCount() == 0) {
@@ -204,31 +213,31 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             category.removePreference(mPanelColor);
         }
 
-        AwesomeTogglePreference mLcdPowerReduce =
+        AwesomeTogglePreference lcdPowerReduce =
                 (AwesomeTogglePreference) findPreference("lcd_power_reduce");
-        if (mLcdPowerReduce.isSupported()) {
-            mLcdPowerReduce.initValue();
-            mLcdPowerReduce.setOnPreferenceChangeListener(this);
+        if (lcdPowerReduce.isSupported()) {
+            lcdPowerReduce.initValue();
+            lcdPowerReduce.setOnPreferenceChangeListener(this);
         } else {
-            category.removePreference(mLcdPowerReduce);
+            category.removePreference(lcdPowerReduce);
         }
 
-        AwesomeTogglePreference mLcdSunlightEnhancement =
+        AwesomeTogglePreference lcdSunlightEnhancement =
                 (AwesomeTogglePreference) findPreference("lcd_sunlight_enhancement");
-        if (mLcdSunlightEnhancement.isSupported()) {
-            mLcdSunlightEnhancement.initValue();
-            mLcdSunlightEnhancement.setOnPreferenceChangeListener(this);
+        if (lcdSunlightEnhancement.isSupported()) {
+            lcdSunlightEnhancement.initValue();
+            lcdSunlightEnhancement.setOnPreferenceChangeListener(this);
         } else {
-            category.removePreference(mLcdSunlightEnhancement);
+            category.removePreference(lcdSunlightEnhancement);
         }
 
-        AwesomeTogglePreference mLcdColorEnhancement =
+        AwesomeTogglePreference lcdColorEnhancement =
                 (AwesomeTogglePreference) findPreference("lcd_color_enhancement");
-        if (mLcdColorEnhancement.isSupported()) {
-            mLcdColorEnhancement.initValue();
-            mLcdColorEnhancement.setOnPreferenceChangeListener(this);
+        if (lcdColorEnhancement.isSupported()) {
+            lcdColorEnhancement.initValue();
+            lcdColorEnhancement.setOnPreferenceChangeListener(this);
         } else {
-            category.removePreference(mLcdColorEnhancement);
+            category.removePreference(lcdColorEnhancement);
         }
 
         if (category.getPreferenceCount() == 0) {
@@ -236,13 +245,13 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
         }
 
         category = (PreferenceCategory) findPreference("extras");
-        AwesomeTogglePreference mLoggerMode =
+        AwesomeTogglePreference loggerMode =
                 (AwesomeTogglePreference) findPreference("logger_mode");
-        if (mLoggerMode.isSupported()) {
-            mLoggerMode.initValue(true);
-            mLoggerMode.setOnPreferenceChangeListener(this);
+        if (loggerMode.isSupported()) {
+            loggerMode.initValue(true);
+            loggerMode.setOnPreferenceChangeListener(this);
         } else {
-            category.removePreference(mLoggerMode);
+            category.removePreference(loggerMode);
         }
 
         if (category.getPreferenceCount() == 0) {

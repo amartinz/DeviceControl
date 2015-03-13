@@ -105,6 +105,9 @@
         <item>/sys/android_touch/sweep2wake</item>
         <item>/proc/touchpanel/sweep_wake_enable</item>
     </string-array>
+    <string-array name="files_sweep_to_volume" translatable="false">
+        <item>/proc/touchpanel/sweep_vol_enable</item>
+    </string-array>
     <string-array name="files_lcd_power_reduce" translatable="false">
         <item>/sys/class/lcd/panel/power_reduce</item>
         <item>/sys/class/graphics/fb0/cabc</item>

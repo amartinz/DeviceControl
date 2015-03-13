@@ -48,6 +48,13 @@
             dc:category="device"
             dc:filePathList="@array/files_sweep_to_wake" />
 
+        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+            android:defaultValue="false"
+            android:key="sweep_to_volume"
+            android:title="@string/sweep_to_volume"
+            dc:category="device"
+            dc:filePathList="@array/files_sweep_to_volume" />
+
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
