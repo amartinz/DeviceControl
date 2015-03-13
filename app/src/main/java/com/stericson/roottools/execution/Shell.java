@@ -43,8 +43,9 @@ import java.util.concurrent.TimeoutException;
 public class Shell {
 
     private final Process proc;
-    private final BufferedReader in;
-    private final OutputStreamWriter out;
+    private final BufferedReader inputStream;
+    private final BufferedReader errorStream;
+    private final OutputStreamWriter outputStream;
     private final List<Command> commands = new ArrayList<>();
 
     //indicates whether or not to close the shell
@@ -75,13 +76,14 @@ public class Shell {
         RootTools.log("Starting shell: " + cmd);
 
         proc = new ProcessBuilder(cmd).redirectErrorStream(true).start();
-        in = new BufferedReader(new InputStreamReader(proc.getInputStream(), "UTF-8"));
-        out = new OutputStreamWriter(proc.getOutputStream(), "UTF-8");
+        inputStream = new BufferedReader(new InputStreamReader(proc.getInputStream(), "UTF-8"));
+        errorStream = new BufferedReader(new InputStreamReader(proc.getErrorStream(), "UTF-8"));
+        outputStream = new OutputStreamWriter(proc.getOutputStream(), "UTF-8");
 
         /**
          * Thread responsible for carrying out the requested operations
          */
-        final Worker worker = new Worker(proc, in, out);
+        final Worker worker = new Worker(proc, inputStream, outputStream);
         worker.start();
 
         try {
@@ -104,8 +106,9 @@ public class Shell {
                     proc.destroy();
                 } catch (Exception ignored) { }
 
-                closeQuietly(in);
-                closeQuietly(out);
+                closeQuietly(inputStream);
+                closeQuietly(errorStream);
+                closeQuietly(outputStream);
 
                 throw new TimeoutException(error);
             }
@@ -118,8 +121,9 @@ public class Shell {
                     proc.destroy();
                 } catch (Exception ignored) { }
 
-                closeQuietly(in);
-                closeQuietly(out);
+                closeQuietly(inputStream);
+                closeQuietly(errorStream);
+                closeQuietly(outputStream);
 
                 throw new RootDeniedException("Root Access Denied");
             }
@@ -325,10 +329,10 @@ public class Shell {
                         cmd.startExecution();
                         RootTools.log("Executing: " + cmd.getCommand());
 
-                        out.write(cmd.getCommand());
+                        outputStream.write(cmd.getCommand());
                         String line = "\necho " + token + ' ' + totalExecuted + " $?\n";
-                        out.write(line);
-                        out.flush();
+                        outputStream.write(line);
+                        outputStream.flush();
                         write++;
                         totalExecuted++;
                     } else if (close) {
@@ -336,8 +340,8 @@ public class Shell {
                          * close the thread, the shell is closing.
                          */
                         isExecuting = false;
-                        out.write("\nexit 0\n");
-                        out.flush();
+                        outputStream.write("\nexit 0\n");
+                        outputStream.flush();
                         RootTools.log("Closing shell");
                         return;
                     }
@@ -346,7 +350,7 @@ public class Shell {
                 RootTools.log(e.getMessage(), 2, e);
             } finally {
                 write = 0;
-                closeQuietly(out);
+                closeQuietly(outputStream);
             }
         }
     };
@@ -371,13 +375,13 @@ public class Shell {
 
                 while (!close) {
                     isReading = false;
-                    String line = in.readLine();
+                    String outputLine = inputStream.readLine();
                     isReading = true;
 
                     /**
                      * If we recieve EOF then the shell closed
                      */
-                    if (line == null) { break; }
+                    if (outputLine == null) { break; }
 
                     if (command == null) {
                         if (read >= commands.size()) {
@@ -393,24 +397,23 @@ public class Shell {
                      *
                      * if the token is present then the command has finished execution.
                      */
-                    int pos = line.indexOf(token);
+                    int pos = outputLine.indexOf(token);
 
 
                     if (pos == -1) {
                         /**
                          * send the output for the implementer to process
                          */
-                        command.output(command.id, line);
-                    }
-                    if (pos > 0) {
+                        command.output(command.id, outputLine);
+                    } else if (pos > 0) {
                         /**
                          * token is suffix of output, send output part to implementer
                          */
-                        command.output(command.id, line.substring(0, pos));
+                        command.output(command.id, outputLine.substring(0, pos));
                     }
                     if (pos >= 0) {
-                        line = line.substring(pos);
-                        String fields[] = line.split(" ");
+                        outputLine = outputLine.substring(pos);
+                        String fields[] = outputLine.split(" ");
 
                         if (fields.length >= 2 && fields[1] != null) {
                             int id = 0;
@@ -426,6 +429,7 @@ public class Shell {
                             } catch (NumberFormatException ignored) { }
 
                             if (id == totalRead) {
+                                processErrors(command);
                                 command.setExitCode(exitCode);
                                 command.commandFinished();
                                 command = null;
@@ -443,8 +447,9 @@ public class Shell {
                     proc.destroy();
                 } catch (Exception ignored) { }
 
-                closeQuietly(out);
-                closeQuietly(in);
+                closeQuietly(outputStream);
+                closeQuietly(errorStream);
+                closeQuietly(inputStream);
 
                 while (read < commands.size()) {
                     if (command == null) { command = commands.get(read); }
@@ -465,6 +470,28 @@ public class Shell {
             }
         }
     };
+
+    public void processErrors(Command command) {
+        try {
+            while (errorStream.ready() && command != null) {
+                String line = errorStream.readLine();
+
+                /**
+                 * If we recieve EOF then the shell closed?
+                 */
+                if (line == null) {
+                    break;
+                }
+
+                /**
+                 * send the output for the implementer to process
+                 */
+                command.output(command.id, line);
+            }
+        } catch (Exception e) {
+            RootTools.log(e.getMessage(), 2, e);
+        }
+    }
 
     public static void runRootCommand(final Command command)
             throws IOException, TimeoutException, RootDeniedException {
