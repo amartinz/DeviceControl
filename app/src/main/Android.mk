@@ -55,6 +55,16 @@ LOCAL_CERTIFICATE       := platform
 LOCAL_PRIVILEGED_MODULE := true
 LOCAL_MODULE_TAGS       := optional
 
+CHECK_COMPAT := false
+ifeq ($(CHECK_COMPAT),true)
+  LOCAL_SDK_VERSION := current
+  LOCAL_SRC_FILES   += \
+          aidl/android/content/pm/IPackageDataObserver.aidl \
+          aidl/android/content/pm/IPackageDeleteObserver.aidl \
+          aidl/android/content/pm/IPackageStatsObserver.aidl \
+
+endif
+
 include $(BUILD_PACKAGE)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
