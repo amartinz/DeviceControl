@@ -22,7 +22,7 @@
 
     <!-- currently broken, reenable once fixed -->
     <!--uses-sdk tools:node="replace" /-->
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="21" />
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="21" tools:ignore="GradleOverrides,OldTargetApi" />
 
     <!-- Internet / Networking -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -43,8 +43,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- Application permissions -->
     <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
-    <uses-permission android:name="android.permission.DELETE_CACHE_FILES" />
-    <uses-permission android:name="android.permission.DELETE_PACKAGES" />
+    <uses-permission android:name="android.permission.DELETE_CACHE_FILES" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.DELETE_PACKAGES" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
     <!--suppress DeprecatedClassUsageInspection -->
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -209,7 +209,7 @@
         </receiver>
 
         <!-- Widgets -->
-        <receiver
+        <receiver tools:ignore="ExportedReceiver"
             android:name=".ui.widgets.RebootWidget"
             android:icon="@drawable/ic_power"
             android:label="@string/reboot">
