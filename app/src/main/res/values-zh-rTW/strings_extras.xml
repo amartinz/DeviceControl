@@ -16,40 +16,9 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="permission_api_description">允許訪問和使用設備控制 API.\n這意味著應用程式可以控制設備的功能，包括操縱您的設備硬體的應用程式。</string>
   <string name="support">支援 </string>
   <string name="donate_">捐贈</string>
-  <string name="donate_message">如果你喜歡這應用程式，想要它再進一步發展並作出貢獻，請考慮捐贈\n真的會鼓勵我：） \n\n謝謝你 ！</string>
   <string name="show_pollfish">啟動 Pollfish</string>
-  <string name="performance_settings_warning_title">風險警告</string>
-  <string name="performance_settings_warning_header">警告！</string>
-  <string name="build_prop_mods">修改 Build.prop</string>
-  <string name="switches">開關</string>
-  <string name="buildprop_title">修改 build.prop（需要重新開機)</string>
-  <string name="buildprop_settings_warning">這些設置是實驗性的，對他們所做的任何更改都可能導致不穩定、 崩潰、 資料丟失或硬體故障。</string>
-  <string name="nonprop_cat_title">init.d 腳本相關修改</string>
-  <string name="wifi_scan_interval_title">Wifi 掃描間隔</string>
-  <string name="wifi_scan_alt_summary">Wifi 掃描間隔: %s</string>
-  <string name="max_events_title">Windows 管理器每秒最大事件</string>
-  <string name="ring_delay_title">電話鈴聲延遲</string>
-  <string name="ring_delay_alt_summary">來電延遲： %s</string>
-  <string name="vm_heapsize_title">Dalvik 緩存大小</string>
-  <string name="vm_heapsize_alt_summary">Dalvik 緩存大小: %s</string>
-  <string name="fast_up_title">HSUPA 上傳速度限制</string>
-  <string name="prox_delay_title">距離感測器延遲</string>
-  <string name="prox_delay_alt_summary">設置距離感測器為: %s</string>
-  <string name="sleep_title">PM 睡眠模式</string>
-  <string name="sleep_summary">修改夜間睡眠策略</string>
-  <string name="sleep_alt_summary">當前的睡眠模式： %s</string>
-  <string name="jit_title">JIT編譯器</string>
-  <string name="jit_summary">啟用/禁用 JIT 編譯器</string>
-  <string name="tcp_stack_title">優化TCP協議棧</string>
-  <string name="tcp_stack_summary">修改緩衝區大小來獲得更好的性能</string>
-  <string name="gpu_acceleration">GPU 加速</string>
-  <string name="gpu_acceleration_summary">啟用 GPU 控制硬體加速 而不是使用 CPU</string>
-  <string name="lcd_density">改變液晶密度</string>
-  <string name="lcd_density_summary">設置您所需的液晶顯示密度</string>
-  <string name="lcd_density_alt_summary">螢幕密度： %s</string>
   <string name="task_type">任務類型</string>
   <string name="event_based">基於事件</string>
   <string name="next">下一個</string>

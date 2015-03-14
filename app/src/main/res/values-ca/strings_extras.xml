@@ -16,44 +16,6 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="permission_api_description">Permet a l\'aplicació l\'accés i ús del Device Control de l\'API.\nAixò vol dir que l\'aplicació pot controlar característiques del dispositiu, incloent manipulació en el hardware del dispositiu.</string>
-  <string name="performance_settings_warning_title">Procedir amb Precaució</string>
-  <string name="performance_settings_warning_header">Perill</string>
-  <string name="build_prop_mods">Modificacions del build.prop</string>
-  <string name="switches">Interruptors</string>
-  <string name="buildprop_title">Modificacions del build.prop (es requereix reinici)</string>
-  <string name="buildprop_settings_warning">Aquests ajustaments són per a experimentació i els canvis en ells tenen el potencial de causar inestabilitat, accidents, fallades de hardware o pèrdua de dades.</string>
-  <string name="nonprop_cat_title">Modificacions que impliquen l\'script init.d</string>
-  <string name="wifi_scan_interval_title">Interval d\'escaneig Wifi</string>
-  <string name="wifi_scan_interval_summary">El temps entre escaneigs wifi quan cap punt d\'accés emmagatzemat estigui disponible</string>
-  <string name="wifi_scan_alt_summary">Temps entre els escaneigs wifi: %s</string>
-  <string name="max_events_title">Màxim d\'esdeveniments per l\'administrador de Windows per segon</string>
-  <string name="max_events_summary">Aquest és el valor de temps d\'execució que controla el nombre d\'esdeveniments que el sistema permetrà durant un segon</string>
-  <string name="max_events_alt_summary">Nombre màxim d\'events del Sistema: %s</string>
-  <string name="ring_delay_title">Retard en el timbre del telèfon</string>
-  <string name="ring_delay_summary">Quantitat de temps des que el sistema registra una trucada telefònica entrant fins el timbre</string>
-  <string name="ring_delay_alt_summary">Demora en la Crida entrant: %s</string>
-  <string name="vm_heapsize_title">Heapsize en cache Dalvik</string>
-  <string name="vm_heapsize_summary">Controla la mida de la memòria cache a la qual Dalvik VM tindrà accés</string>
-  <string name="vm_heapsize_alt_summary">Mida de la memòria cache de Dalvik VM: %s</string>
-  <string name="fast_up_title">Hack de velocitat en la pujada HSUPA</string>
-  <string name="fast_up_summary">*PERILL* Si canvia aquest valor s\'afegiran els valors necessaris al seu build.prop si no estan ja presents</string>
-  <string name="fast_up_alt_summary">Pujada ràpida es trobara activa: %s</string>
-  <string name="prox_delay_title">Retard del sensor de Proximitat</string>
-  <string name="prox_delay_summary">Controlar la demora, per quan la pantalla s\'encendrà de nou durant una trucada i per quan s\'allunyi el telèfon del cap</string>
-  <string name="prox_delay_alt_summary">Sensor de Proximitat a: %s</string>
-  <string name="sleep_title">Mode de Somni PM</string>
-  <string name="sleep_summary">Modificació de la Política de l\'hora de somni de la nit</string>
-  <string name="sleep_alt_summary">Mode de Somni actual: %s</string>
-  <string name="jit_title">Just en el moment del Compilador</string>
-  <string name="jit_summary">Habilita/Deshabilita el Compilador JIT</string>
-  <string name="tcp_stack_title">Optimitzar l\'Apilament del TCP</string>
-  <string name="tcp_stack_summary">Modificar el tamany de la memòria intermèdia per a un millor rendiment</string>
-  <string name="gpu_acceleration">Acceleració de la GPU</string>
-  <string name="gpu_acceleration_summary">Activar l\'acceleració per hardware en què la GPU controla la UI en lloc de la CPU</string>
-  <string name="lcd_density">Canviar la densitat de la pantalla LCD</string>
-  <string name="lcd_density_summary">Establir la densitat desitjada del LCD</string>
-  <string name="lcd_density_alt_summary">Densitat de la pantalla: %s</string>
   <string name="task_type">Tipus de tasca</string>
   <string name="event_based">Event basat</string>
   <string name="next">Següent</string>

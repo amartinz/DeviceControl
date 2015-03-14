@@ -15,19 +15,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">Nome Versione: %s</string>
   <string name="app_version_code">Codice Versione: %s</string>
-  <string name="app_welcome">Benvenuti a %s</string>
-  <string name="welcome_message">Per iniziare, scorri il menu di sinistra o premi il pulsante in alto a sinistra!\n\nSe una funzionalità non è supportata dal tuo dispositivo, sì nasconderà automaticamente!\nLe funzionalità supportate dipendono dal dispositivo in uso e dalla ROM e dal kernel che stai usando.\n\nSe nessuna funzionalità è supportata, prova ad usare un kernel personalizzato!\n\nNotare che occorrerà un dispositivo con permessi di root per godere di tutte le funzionalità di %s!</string>
   <string name="app_warning_root">Notare che %s richiede i permessi di root per funzionare completamente!</string>
   <string name="app_warning_busybox">Nota che %s richiede una BusyBox per funzionare completamente!</string>
   <string name="app_warning_busybox_note">BusyBox è richiesto perchè non tutti i sistemi forniscono le stesse funzionalità, questo può comportare bug e instabilità.\n\nBusyBox è uniforme e funziona allo stesso modo su tutti i sistemi.</string>
   <string name="start_wizard">Avvia la procedura guidata</string>
   <string name="get_busybox">Installa BusyBox</string>
   <string name="more_information">Ulteriori informazioni</string>
-  <string name="checking_root">Controllo di root...</string>
-  <string name="checking_busybox">Controllo di busybox&#8230;</string>
   <string name="exit">Esci</string>
   <string name="close">Chiudi</string>
   <string name="message_loading">Caricamento, attendere prego&#8230;</string>
@@ -214,9 +210,13 @@
   <string name="downgraded">Il Database è stato cancellato a causa di un downgrade!</string>
   <string name="media_scan_trigger">Avvia scansione media</string>
   <string name="media_scan_summary">Avvia manualmente una scansione multimediale, nel caso in cui il telefono sia collegato via MTP e nuovi file non sono visibili.</string>
+  <string name="force_stop">Arresto forzato</string>
+  <string name="app_details">Dettagli dell\'applicazione</string>
   <string name="clear_cache">Pulisci la cache</string>
   <string name="clear_data">Cancella i dati</string>
   <string name="total">Totale</string>
+  <string name="app">Applicazione</string>
+  <string name="ext_app">Applicazione esterna</string>
   <string name="data">Dati</string>
   <string name="ext_data">Dati esterni</string>
   <string name="ext_media">Supporti esterni</string>
@@ -243,9 +243,7 @@
   <string name="deferred_timer_summary">Non svegliare la CPU per attività KSM per risparmiare la batteria</string>
   <string name="wfm_root">Naviga in modalità root</string>
   <string name="wfm_port">Porta del web server</string>
-  <string name="start_wfm">Il server non è in funzione\nPremi per avviare il server.</string>
-  <string name="starting_wfm">Il server è in fase di avvio...</string>
-  <string name="stop_wfm">Server in esecuzione a %s\nPremi per fermare il server.</string>
+  <string name="stop">Stop</string>
   <string name="authentication">Autenticazione</string>
   <string name="wfm_auth">Usa autenticazione</string>
   <string name="wfm_auth_summary">Il nome utente predefinito è \"root\" e la password è \"toor\"</string>
@@ -268,7 +266,6 @@
   <string name="flash_warning">Siete in procinto di eseguire l\'installazione!\nSe continui, il dispositivo si riavvierà in recovery e installerà gli elementi selezionati.\n\nVuoi procedere?</string>
   <string name="both">Entrambi</string>
   <string name="pick_file">Seleziona un file</string>
-  <string name="something_went_wrong">Mi dispiace ma qualcosa è andato storto!\nRiprova per favore!</string>
   <string name="recovery">Recovery</string>
   <string name="bootloader">Bootloader</string>
   <string name="reboot">Riavvio</string>

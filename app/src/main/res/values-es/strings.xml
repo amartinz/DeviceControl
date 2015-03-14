@@ -15,13 +15,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">Nombre de la versión: %s</string>
   <string name="app_version_code">Código de la versión: %s</string>
   <string name="app_warning_busybox">¡Por favor tenga en cuenta que %s necesita de BusyBox para poder trabajar correctamente!</string>
   <string name="get_busybox">Instalar BusyBox</string>
-  <string name="checking_root">Comprobación de root...</string>
-  <string name="checking_busybox">Comprobación de busybox...</string>
   <string name="exit">Salir</string>
   <string name="close">Cerrar</string>
   <string name="message_loading">Cargando, por favor espere&#8230;</string>
@@ -89,7 +87,6 @@
   <string name="power_efficient_work">Eficiencia energética en la cola de trabajo</string>
   <string name="power_efficient_work_summary">Permite que el trabajo sea reprogramado en un núcleo que ya esté despierto.</string>
   <string name="powersaving_sched_mc_title">Programador de Energía</string>
-  <string name="powersaving_sched_mc_0">0 - Desactivar</string>
   <string name="powersaving_sched_mc_1">1 - Equilibrado</string>
   <string name="powersaving_sched_mc_2">2 - Agresivo</string>
   <string name="intelli_plug_eco">Modo Eco</string>
@@ -175,7 +172,6 @@
   <string name="delete_property_message">%s será eliminado.\n\n¿Continuar?</string>
   <string name="name">Nombre</string>
   <string name="presets">Ajustes Predeterminados</string>
-  <string name="gestures">Gestos</string>
   <string name="knock_on">Llamar a</string>
   <string name="five_minutes">5 Minutos</string>
   <string name="ten_minutes">10 Minutos</string>
@@ -214,16 +210,12 @@
   <string name="pages_volatile">Páginas volátiles</string>
   <string name="enable_ksm">Activar KSM</string>
   <string name="reduce_memory_increase_cpu_load">Puede reducir el uso de la memoria a costa de un mayor uso de la potencia de la CPU</string>
-  <string name="uksm_cpu_governor">Governor de la CPU</string>
   <string name="pages_to_scan">Páginas que escanear</string>
   <string name="sleep_between_scans">Descansos entre las escaneos (ms)</string>
   <string name="deferred_timer">Temporizador diferido de tiempo</string>
   <string name="deferred_timer_summary">No despertar a la CPU con actividades KSM para ahorrar batería</string>
   <string name="wfm_root">Buscador en modo root</string>
   <string name="wfm_port">Puerto del servidor Web</string>
-  <string name="start_wfm">El servidor no está funcionando\nPulse para conectar el servidor.</string>
-  <string name="starting_wfm">El servidor se esta iniciando...</string>
-  <string name="stop_wfm">El servidor está funcionando en la %s\nPulse para detener el servidor.</string>
   <string name="authentication">Autentificación</string>
   <string name="wfm_auth">Usar la autentificación</string>
   <string name="wfm_auth_summary">El nombre de usuario por defecto es \"root\" y la contraseña es \"toor\"</string>

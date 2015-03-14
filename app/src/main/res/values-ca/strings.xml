@@ -15,13 +15,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">Nom de la versió: %s</string>
   <string name="app_version_code">Codi de la versió: %s</string>
   <string name="app_warning_busybox">Tinga en compte que %s requereix de BusyBox per a funcionar completament!</string>
   <string name="get_busybox">Instal·lar BusyBox</string>
-  <string name="checking_root">Comprovació de root...</string>
-  <string name="checking_busybox">Comprovació de busybox...</string>
   <string name="exit">Sortir</string>
   <string name="close">Tancar</string>
   <string name="message_loading">Carregant, sisplau esperi&#8230;</string>
@@ -220,9 +218,6 @@
   <string name="deferred_timer_summary">No despertar a la CPU amb activitats KSM per estalviar bateria</string>
   <string name="wfm_root">Cercador en manera root</string>
   <string name="wfm_port">Port del servidor Web</string>
-  <string name="start_wfm">El servidor no està funcionant\nPremi per connectar el servidor.</string>
-  <string name="starting_wfm">El servidor s\'aquesta iniciant...</string>
-  <string name="stop_wfm">El servidor està funcionant en la %s\nPremi per detenir el servidor.</string>
   <string name="authentication">Autenticació</string>
   <string name="wfm_auth">Usar l\'autenticació</string>
   <string name="wfm_auth_summary">El nom d\'usuari per defecte és \"root\" i la contrasenya és \"toor\"</string>

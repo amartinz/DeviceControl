@@ -16,44 +16,6 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="permission_api_description">Permite a la aplicación el acceso y uso del Device Control de la API.\nEsto significa que la aplicación puede controlar características del dispositivo, incluyendo manipulación en el hardware del dispositivo.</string>
-  <string name="performance_settings_warning_title">Proceder con Precaución</string>
-  <string name="performance_settings_warning_header">Peligro</string>
-  <string name="build_prop_mods">Modificaciones del build.prop</string>
-  <string name="switches">Interruptores</string>
-  <string name="buildprop_title">Modificaciones del build.prop (se requiere reinicio)</string>
-  <string name="buildprop_settings_warning">Estos ajustes son para experimentación y los cambios realizados en ellos tienen el potencial de causar inestabilidad, accidentes, fallos de hardware o pérdida de datos.</string>
-  <string name="nonprop_cat_title">Modificaciones que implican al script init.d</string>
-  <string name="wifi_scan_interval_title">Intervalo de escaneo Wifi</string>
-  <string name="wifi_scan_interval_summary">El tiempo entre escaneos wifi cuando ningún punto de acceso almacenado esté disponible</string>
-  <string name="wifi_scan_alt_summary">Tiempo entre los escaneos wifi: %s</string>
-  <string name="max_events_title">Máximo de eventos para el administrador de Windows por segundo</string>
-  <string name="max_events_summary">Este es el valor de tiempo de ejecución que controla el número de eventos que el sistema permitirá durante un segundo</string>
-  <string name="max_events_alt_summary">Número máximo de eventos del Sistema: %s</string>
-  <string name="ring_delay_title">Retardo en el timbre del teléfono</string>
-  <string name="ring_delay_summary">Cantidad de tiempo desde que el sistema registra una llamada telefónica entrante hasta el timbre</string>
-  <string name="ring_delay_alt_summary">Demora en la Llamada entrante: %s</string>
-  <string name="vm_heapsize_title">Heapsize en cache Dalvik</string>
-  <string name="vm_heapsize_summary">Controla el tamaño de la cache a la que Dalvik VM tendra acceso</string>
-  <string name="vm_heapsize_alt_summary">Tamaño de la cache de Dalvik VM: %s</string>
-  <string name="fast_up_title">Hack de velocidad en la subida HSUPA</string>
-  <string name="fast_up_summary">*PELIGRO* Si cambia este valor se añadirán los valores necesarios a su build.prop si no están ya presentes</string>
-  <string name="fast_up_alt_summary">Subida rápida se encontrara activa: %s</string>
-  <string name="prox_delay_title">Retardo del sensor de Próximidad</string>
-  <string name="prox_delay_summary">Controlar la demora, para cuando la pantalla se encendera de nuevo durante una llamada y para cuando se aleje el teléfono de la cabeza</string>
-  <string name="prox_delay_alt_summary">Sensor de Proximidad a: %s</string>
-  <string name="sleep_title">Modo de Sueño PM</string>
-  <string name="sleep_summary">Modificación de la Politica de la hora de sueño de la noche</string>
-  <string name="sleep_alt_summary">Modo de Sueño actual: %s</string>
-  <string name="jit_title">Justo al tiempo del Compilador</string>
-  <string name="jit_summary">Habilitar/Deshabilitar el Compilador JIT</string>
-  <string name="tcp_stack_title">Optimizar el Apilamiento del TCP</string>
-  <string name="tcp_stack_summary">Modificar el tamaño del búfer para un mejor rendimiento</string>
-  <string name="gpu_acceleration">Aceleración de la GPU</string>
-  <string name="gpu_acceleration_summary">Activar la aceleración por hardware en la que la GPU controla la UI en lugar de la CPU</string>
-  <string name="lcd_density">Cambiar la densidad de la pantalla LCD</string>
-  <string name="lcd_density_summary">Establecer la densidad deseada del LCD</string>
-  <string name="lcd_density_alt_summary">Densidad de la pantalla: %s</string>
   <string name="task_type">Tipo de tarea</string>
   <string name="event_based">Evento basado</string>
   <string name="next">Próximo</string>

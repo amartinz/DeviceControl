@@ -15,19 +15,16 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">Nom de version: %s</string>
   <string name="app_version_code">Code version: %s</string>
-  <string name="app_welcome">Bienvenue sur %s</string>
-  <string name="welcome_message">Pour commencer, faites glisser le menu de gauche ou appuyez sur le boutton situé en haut à gauche !\n\nLes fonctionnalités non supportées par votre appareil seront automatiquement masquées !\nLeurs compatibilités dépendent de la ROM et du kernel que vous utilisez.\n\nSi aucune fonction n\'est prise en charge, essayez un kernel personnalisé !\n\nNotez que votre système doit être rooté afin de pouvoir profiter de toutes les possibilités qu\'offre %s !</string>
+  <string name="welcome">Bienvenue</string>
   <string name="app_warning_root">Notez que %s exige un système rooté pour fonctionner pleinement !</string>
   <string name="app_warning_busybox">Veuillez noter que %s exige BusyBox pour fonctionner pleinement !</string>
   <string name="app_warning_busybox_note">Busybox est nécessaire car les différents systèmes ne fournissent pas les mêmes outils, ce qui peut entraîner des bugs et de l\'instabilité. \n\nBusybox est universel et fonctionne de la même manière sur tous les appareils.</string>
   <string name="start_wizard">Assistant de démarrage</string>
   <string name="get_busybox">Installer BusyBox</string>
   <string name="more_information">Plus d\'informations</string>
-  <string name="checking_root">Vérification du root&#8230;</string>
-  <string name="checking_busybox">Vérification de busybox&#8230;</string>
   <string name="exit">Sortir</string>
   <string name="close">Fermer</string>
   <string name="message_loading">Chargement, veuillez patienter&#8230;</string>
@@ -214,9 +211,13 @@
   <string name="downgraded">La base de données a été effacée en raison du downgrade!</string>
   <string name="media_scan_trigger">Déclencher le scan média</string>
   <string name="media_scan_summary">Déclencher manuellement un scan média, si votre téléphone est connecté via MTP et les nouveaux fichiers sont non visibles.</string>
+  <string name="force_stop">Forcer l\'arrêt </string>
+  <string name="app_details">Détails de l\'application</string>
   <string name="clear_cache">Vider le cache</string>
   <string name="clear_data">Effacer les données</string>
   <string name="total">Total</string>
+  <string name="app">Application</string>
+  <string name="ext_app">Application externe</string>
   <string name="data">Données</string>
   <string name="ext_data">Données externes</string>
   <string name="ext_media">Média Externe</string>
@@ -243,9 +244,6 @@
   <string name="deferred_timer_summary">Ne pas réveiller le CPU pour les activités KSM afin d\'économiser la batterie</string>
   <string name="wfm_root">Naviguer en mode root</string>
   <string name="wfm_port">Port du serveur Web</string>
-  <string name="start_wfm">Le serveur n\'est pas en cours d\'exécution\nAppuyer pour démarrer le serveur.</string>
-  <string name="starting_wfm">Le serveur se celle-ci en entamant...</string>
-  <string name="stop_wfm">Serveur tourne à %s\nAppuyer pour arrêter le serveur.</string>
   <string name="authentication">Authentification</string>
   <string name="wfm_auth">Utiliser l\'authentification</string>
   <string name="wfm_auth_summary">Le nom d\'utilisateur par défaut est \"root\" et le mot de passe est \"toor\"</string>
@@ -268,7 +266,6 @@
   <string name="flash_warning">Vous êtes sur le point de flash!\nPour continuer, votre appareil va redémarrer en mode recovery et flash le zip.\n\nVoulez-vous continuer?</string>
   <string name="both">Tous les deux</string>
   <string name="pick_file">Choisissez un fichier</string>
-  <string name="something_went_wrong">L\'opération ne s\'est pas déroulée correctement !\nVeuillez réessayer !</string>
   <string name="recovery">Recovery</string>
   <string name="bootloader">Bootloader</string>
   <string name="reboot">Redémarrer</string>
@@ -382,4 +379,10 @@
   <string name="arch">Architecture</string>
   <string name="string_default">Par défaut</string>
   <string name="touch_boost">Boost tactile</string>
+  <string name="permissions">Autorisations</string>
+  <string name="motion">Mouvement</string>
+  <string name="power_usage">Consommation d\'énergie</string>
+  <string name="steps">Pas</string>
+  <string name="far">Éloigné</string>
+  <string name="near">Proche</string>
 </resources>

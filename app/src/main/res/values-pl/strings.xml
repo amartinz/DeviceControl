@@ -15,16 +15,13 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">Nazwa wersji: %s</string>
   <string name="app_version_code">Kod wersji: %s</string>
-  <string name="app_welcome">Witamy w %s</string>
   <string name="app_warning_root">Należy pamiętać, że to %s wymaga zakorzenione urządzenie, aby w pełni działał!</string>
   <string name="app_warning_busybox">Pamiętaj, że %s wymaga BusyBox aby działać prawidłowo!</string>
   <string name="start_wizard">Rozpocznij konfigurację</string>
   <string name="get_busybox">Zainstaluj BusyBox</string>
-  <string name="checking_root">Sprawdzam root\'a&#8230;</string>
-  <string name="checking_busybox">Sprawdzam busybox&#8230;</string>
   <string name="exit">Wyjdź</string>
   <string name="close">Zamknij</string>
   <string name="message_loading">Trwa ładowanie, proszę czekać&#8230;</string>
@@ -226,9 +223,7 @@
   <string name="deferred_timer_summary">Nie wykorzystuj mocy procesora do przeprowadzenia czynności KSM w celu oszczędności baterii.</string>
   <string name="wfm_root">Przeglądaj z uprawnieniami roota</string>
   <string name="wfm_port">Port serwera sieci Web</string>
-  <string name="start_wfm">Serwer wyłączony\nDotknij, aby go uruchomić.</string>
-  <string name="starting_wfm">Serwer jest włączany&#8230;</string>
-  <string name="stop_wfm">Serwer jest uruchomiony na %s\nDotknij, aby go wyłączyć.</string>
+  <string name="stop">Zatrzymaj</string>
   <string name="authentication">Uwierzytelnianie</string>
   <string name="wfm_auth">Użyj uwierzytelnienia</string>
   <string name="wfm_auth_summary">Domyślna nazwa użytkownika to \"root\", a hasło \"toor\".</string>
@@ -251,7 +246,6 @@
   <string name="flash_warning">Zamierzasz zaflaszować wybrany plik!\nGdy kontynuujesz, twoje urządzenie uruchomi się ponownie w trybie recovery i zaflaszuje wybrany plik.\n\nCzy chcesz kontynuować?</string>
   <string name="both">Obydwa</string>
   <string name="pick_file">Wybierz plik</string>
-  <string name="something_went_wrong">Przepraszamy, ale coś poszło nie tak!\nSpróbuj ponownie!</string>
   <string name="recovery">Uruchom w trybie Recovery</string>
   <string name="bootloader">Uruchom w trybie Bootloader</string>
   <string name="reboot">Uruchom ponownie</string>

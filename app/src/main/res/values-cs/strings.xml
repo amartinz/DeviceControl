@@ -15,13 +15,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">Název verze: %s</string>
   <string name="app_version_code">Číslo verze: %s</string>
   <string name="app_warning_busybox">Vezměte prosím na vědomí, že %s vyžaduje BusyBox pro svou správnou činnost!</string>
   <string name="get_busybox">Instalovat BusyBox</string>
-  <string name="checking_root">Kontroluji oprávnění root&#8230;</string>
-  <string name="checking_busybox">Kontroluji přítomnost busybox&#8230;</string>
   <string name="exit">Konec</string>
   <string name="close">Zavřít</string>
   <string name="message_loading">Načítání, počkejte prosím...</string>
@@ -220,9 +218,6 @@
   <string name="deferred_timer_summary">Neprobuzovat CPU pro aktivity KSM a šetřit tak baterii</string>
   <string name="wfm_root">Prohlížení v módu root</string>
   <string name="wfm_port">Port web serveru</string>
-  <string name="start_wfm">Server není spuštěn\nStiskněte pro spuštění serveru.</string>
-  <string name="starting_wfm">Server se spouští&#8230;</string>
-  <string name="stop_wfm">Server je spuštěn na %s\nStiskněte pro zastavení serveru.</string>
   <string name="authentication">Ověření</string>
   <string name="wfm_auth">Použít ověření</string>
   <string name="wfm_auth_summary">Výchozí uživatelské jméno je \"root\" a heslo je \"toor\"</string>

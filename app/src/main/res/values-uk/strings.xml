@@ -15,13 +15,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">Версія: %s</string>
   <string name="app_version_code">Код версії: %s</string>
   <string name="app_warning_busybox">Будь ласка, зверніть увагу, що %s потрібно BusyBox для повноцінної роботи!</string>
   <string name="get_busybox">Встановити BusyBox</string>
-  <string name="checking_root">Перевірка на root-прав&#8230;</string>
-  <string name="checking_busybox">Перевірка busybox&#8230;</string>
   <string name="exit">Вихід</string>
   <string name="close">Закрити</string>
   <string name="message_loading">Завантаження, зачекайте&#8230;</string>
@@ -207,9 +205,6 @@
   <string name="deferred_timer_summary">Не будити процесор для діяльності KSM заради збереження заряду акумулятора</string>
   <string name="wfm_root">Перегляд в режимі суперкористувача</string>
   <string name="wfm_port">Порт веб-сервера</string>
-  <string name="start_wfm">Сервер не запущений\nНатисніть для запуску сервера.</string>
-  <string name="starting_wfm">Запуск сервера&#8230;</string>
-  <string name="stop_wfm">Сервер працює на %s\nНатисніть щоб зупинити сервер.</string>
   <string name="authentication">Авторизація</string>
   <string name="wfm_auth">Використовувати авторизацію</string>
   <string name="wfm_auth_summary">Ім\'я користувача за замовчуванням - «root», пароль - «toor»</string>
@@ -231,7 +226,6 @@
   <string name="flash_warning">Ви маєте намір оновити ПЗ!\nВ разі згоди, пристрій перезавантажиться в режим відновлення і оновить вибрані елементи.\n\nБажаєте продовжити?</string>
   <string name="both">Обидва</string>
   <string name="pick_file">Вибрати файл</string>
-  <string name="something_went_wrong">Вибачте, але щось пішло не так! \nБудь-ласка спробувати ще раз!</string>
   <string name="recovery">Режим відновлення</string>
   <string name="bootloader">Завантажувач</string>
   <string name="reboot">Перезавантажити</string>

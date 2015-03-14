@@ -15,19 +15,18 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">Versienaam: %s</string>
   <string name="app_version_code">Versiecode: %s</string>
-  <string name="app_welcome">Welkom bij %s</string>
-  <string name="welcome_message">Om te beginnen, veeg het menu aan de linkerzijde tevoorschijn of druk op de knop linksonder!\n\nAls een functie niet ondersteund wordt voor uw apparaat, dan wordt het automatisch verborgen!\nOndersteunde functies hangt van het apparaat, de ROM en de kernel die u gebruikt.\n\nAls u geen enkele ondersteunde functie heeft, probeer dan alstublieft een aangepaste kernel!\n\nOpmerking, u heeft een geroot apparaat nodig om elke functie te kunnen gebruiken van %s!</string>
+  <string name="welcome">Welkom</string>
+  <string name="welcome_message">Om te beginnen, veeg het menu aan de linkerzijde tevoorschijn of druk op de knop linksboven!\n\nAls een functie niet ondersteund wordt voor uw apparaat, dan wordt het automatisch verborgen!\nOndersteunde functies hangt van het apparaat, de ROM en de kernel af die u gebruikt.\n\nAls u geen enkele ondersteunde functie heeft, probeer dan alstublieft een aangepaste kernel!\n\nOpmerking, u heeft een geroot apparaat nodig om elke functie te kunnen gebruiken van %s!</string>
   <string name="app_warning_root">Houd er rekening mee dat %s een geroot apparaat vereist om volledig te werken!</string>
   <string name="app_warning_busybox">Houd er rekening mee dat %s vereist dat BusyBox volledig werkt!</string>
   <string name="app_warning_busybox_note">BusyBox is vereist omdat niet elk systeem dezelfde set hulpprogramma\'s aanbiedt, dit kan tot fouten leiden en instabiliteit veroorzaken.\n\nBusyBox is uniform en werkt hetzelfde op elk apparaat.</string>
   <string name="start_wizard">Wizard starten</string>
   <string name="get_busybox">Installeer BusyBox</string>
   <string name="more_information">Meer informatie</string>
-  <string name="checking_root">Checken voor root&#8230;</string>
-  <string name="checking_busybox">Checken voor busybox&#8230;</string>
+  <string name="checking_requirements">Controleren op eisen&#8230;</string>
   <string name="exit">Afsluiten</string>
   <string name="close">Sluit</string>
   <string name="message_loading">Laden, gelieve te wachten&#8230;</string>
@@ -44,6 +43,7 @@
   <string name="no_tweaks_message">Sorry, maar uw apparaat heeft geen ondersteunde functies</string>
   <string name="gov_tweaks">Aanpasbare waarden: %s</string>
   <string name="no_gov_tweaks_message">Sorry, maar deze governor heeft geen instelbare waarden</string>
+  <string name="no_io_tweaks_message">Sorry maar deze I/O scheduler heeft geen aanpasbare waardes</string>
   <string name="home">Thuis</string>
   <string name="device">Apparaat</string>
   <string name="features">Functies</string>
@@ -110,6 +110,7 @@
   <string name="cpu_governor">CPU governor</string>
   <string name="cpu_governor_tuning">CPU governor instellen</string>
   <string name="io">In-/uitvoerscheduler</string>
+  <string name="configure_format">Configureer %s</string>
   <string name="sob">Automatisch toepassen bij het opstarten</string>
   <string name="core">Kern</string>
   <string name="core_offline">Offline</string>
@@ -214,9 +215,14 @@
   <string name="downgraded">Database is gewist wegens een downgrade!</string>
   <string name="media_scan_trigger">Trigger media scan</string>
   <string name="media_scan_summary">Trigger handmatig een scan van de media, in het geval u uw telefoon heeft aangesloten via MTP en nieuwe bestanden niet zichtbaar zijn.</string>
+  <string name="media_scan_triggered">Media scan is geactiveerd, dit kan een tijdje duren!</string>
+  <string name="force_stop">Geforceerd stoppen</string>
+  <string name="app_details">Toepassings details</string>
   <string name="clear_cache">Cache wissen</string>
   <string name="clear_data">Gegevens wissen</string>
   <string name="total">Totaal</string>
+  <string name="app">Toepassing</string>
+  <string name="ext_app">Externe toepassing</string>
   <string name="data">Gegevens</string>
   <string name="ext_data">Externe gegevens</string>
   <string name="ext_media">Externe media</string>
@@ -243,9 +249,9 @@
   <string name="deferred_timer_summary">Om batterij te besparen. Gebruik de CPU niet voor KSM activiteiten</string>
   <string name="wfm_root">Bladeren in root modus</string>
   <string name="wfm_port">Web server poort</string>
-  <string name="start_wfm">Server is niet gestart\nDruk om de server te starten.</string>
-  <string name="starting_wfm">Server is aan het opstarten&#8230;</string>
-  <string name="stop_wfm">Server is gestart om %s\nDruk om de server te stoppen.</string>
+  <string name="web_server_not_running">Server is niet gestart</string>
+  <string name="web_server_running">Server draait op %s</string>
+  <string name="stop">Stop</string>
   <string name="authentication">Authenticatie</string>
   <string name="wfm_auth">Gebruik authenticatie</string>
   <string name="wfm_auth_summary">Standaard gebruikersnaam is \"root\" and password is \"toor\"</string>
@@ -268,7 +274,6 @@
   <string name="flash_warning">Je gaat zo flashen!\nAls je doorgaat, zal uw apparaat opnieuw opstarten naar de recovery en zal de geselecteerde items worden geflashed.\n\nWilt u doorgaan?</string>
   <string name="both">Beide</string>
   <string name="pick_file">Kies een bestand</string>
-  <string name="something_went_wrong">Sorry, maar iets misgegaan!\nProbeer het opnieuw!</string>
   <string name="recovery">Recovery</string>
   <string name="bootloader">Bootloader</string>
   <string name="reboot">Herstarten</string>
@@ -343,6 +348,7 @@
   <string name="hardware_display_gamma_calibration_desc_one">Rood,Groen,Blauw</string>
   <string name="install_info">De volgende bestanden zullen worden geïnstalleerd.\n\nU kunt meer zip bestanden toevoegen door te klikken op de knop \"Bestand Toevoegen\".</string>
   <string name="select_actions">Selecteer de acties die u zou willen uitvoeren</string>
+  <string name="select_recovery">Selecteer uw herstel variant</string>
   <string name="backup">Back-up</string>
   <string name="wipe_data">Gegevens wissen</string>
   <string name="wipe_caches">Wis Cache &amp; Dalvik</string>
@@ -382,4 +388,39 @@
   <string name="arch">Architectuur</string>
   <string name="string_default">Standaard</string>
   <string name="touch_boost">Aanraking versterken</string>
+  <string name="permissions">Rechten</string>
+  <string name="security_settings_desc">Deze app kan het toegang krijgen tot het volgende op uw apparaten:</string>
+  <string name="join_two_items"><xliff:g id="first_item">%1$s</xliff:g> en <xliff:g id="second_item">%2$s</xliff:g></string>
+  <string name="join_many_items_last"><xliff:g id="all_but_last_item">%1$s</xliff:g> en <xliff:g id="last_item">%2$s</xliff:g></string>
+  <string name="security_settings_desc_multi" product="default">Deze app kan toegang krijgen tot de volgende zaken op uw telefoon. Om prestaties te verbeteren en geheugenverbruik te verminderen, zijn sommige van deze machtigingen beschikbaar voor <xliff:g id="base_app_name">%1$s</xliff:g> omdat het wordt uitgevoerd in hetzelfde proces als <xliff:g id="additional_apps_list">%2$s</xliff:g>:</string>
+  <string name="no_permissions">Geen vereiste machtigingen</string>
+  <string name="perm_costs_money">Dit kan u geld kosten</string>
+  <string name="perms_new_perm_prefix"><font size="12" fgcolor="#ff33b5e5">NIEUW: </font></string>
+  <string name="perms_description_app">Aangeboden door <xliff:g id="app_name">%1$s</xliff:g>.</string>
+  <string name="environment">Omgeving</string>
+  <string name="motion">Beweging</string>
+  <string name="position">Positie</string>
+  <string name="sensor_information">Sensor informatie weergeven</string>
+  <string name="sensor_information_summary">Gedetailleerde informatie bekijken over uw sensoren</string>
+  <string name="sensor_light">Licht</string>
+  <string name="sensor_temperature">Temperatuur</string>
+  <string name="sensor_pressure">Druk</string>
+  <string name="sensor_pressure_note">Opmerking: waarden kunnen in %1$s of %2$s afhankelijk van de uitvoering van de fabrikanten</string>
+  <string name="sensor_relative_humitidy">Relatieve vochtigheid</string>
+  <string name="sensor_accelerometer">Versnellingsmeter (inbegrepen de zwaartekracht)</string>
+  <string name="sensor_accelerometer_linear">Versnellingsmeter lineair (met uitzondering van de zwaartekracht)</string>
+  <string name="sensor_gravity">Zwaartekracht</string>
+  <string name="sensor_rotation_vector">Rotatie vector</string>
+  <string name="sensor_gyroscope">Gyroscoop</string>
+  <string name="sensor_gyroscope_uncalibrated">Gyroscoop (ongekalibreerd)</string>
+  <string name="sensor_step">Stappenteller</string>
+  <string name="sensor_proximity">Nabijheidssensor</string>
+  <string name="sensor_magnetic_field">Magnetisch veld</string>
+  <string name="sensor_magnetic_field_uncalibrated">Magnetische veld (ongekalibreerd)</string>
+  <string name="sensor_geomagnetic_rotation_vector">Geomagnetische rotatie vector</string>
+  <string name="sensor_game_rotation_vector">Spel rotatie vector</string>
+  <string name="power_usage">Energieverbruik</string>
+  <string name="steps">Stappen</string>
+  <string name="far">Ver</string>
+  <string name="near">Dichtbij</string>
 </resources>

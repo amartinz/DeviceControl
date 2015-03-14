@@ -15,19 +15,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">NomeVersão: %s</string>
   <string name="app_version_code">CódigoVersão: %s</string>
-  <string name="app_welcome">Bem-vindo ao %s</string>
-  <string name="welcome_message">Para começar, percorrer o menu da esquerda ou pressione o botão na parte superior esquerda! \n\nIf um recurso não é suportado pelo seu aparelho, ele automaticamente fica oculto! \nSupported características dependem do dispositivo que você está usando e o ROM e o kernel que você está running.\n\nIf você tem recursos não suportados, por favor, tente usar um kernel personalizado! \n\nPlease nota, que precisa de um dispositivo com root para desfrutar de todas as características de %s!</string>
   <string name="app_warning_root">Por favor, note que %s requer um dispositivo com root para funcionar plenamente!</string>
   <string name="app_warning_busybox">Por favor observe que %s necessita um BusyBox para total funcionamento!</string>
   <string name="app_warning_busybox_note">BusyBox é necessária porque nem todos os sistemas fornecem o mesmo conjunto de ferramentas, o que pode levar a erros e instabilidade.\n\nBusyBox é uniforme e funciona da mesma forma em todos os dispositivos.</string>
   <string name="start_wizard">Iniciar assistente</string>
   <string name="get_busybox">Instalar BusyBox</string>
   <string name="more_information">Mais informações</string>
-  <string name="checking_root">Verificando o root&#8230;</string>
-  <string name="checking_busybox">Verificando do busybox&#8230;</string>
   <string name="exit">Sair</string>
   <string name="close">Fechar</string>
   <string name="message_loading">Carregando, por favor, aguarde...</string>
@@ -214,9 +210,13 @@
   <string name="downgraded">Base de dados tem apagado devido um downgrade!</string>
   <string name="media_scan_trigger">Iniciar scan media</string>
   <string name="media_scan_summary">Iniciar manual media scan, no caso você ter seu telefone conectado via MTP e novos arquivos não estão visiveis.</string>
+  <string name="force_stop">Forçar paragem</string>
+  <string name="app_details">Detalhes da aplicação</string>
   <string name="clear_cache">Limpar cache</string>
   <string name="clear_data">Limpar dados</string>
   <string name="total">Total</string>
+  <string name="app">Aplicação</string>
+  <string name="ext_app">Aplicação externa</string>
   <string name="data">Dados</string>
   <string name="ext_data">Dados externos</string>
   <string name="ext_media">Mídia externa</string>
@@ -243,9 +243,7 @@
   <string name="deferred_timer_summary">Não acorde CPU para atividades KSM para conservar a bateria</string>
   <string name="wfm_root">Navegar em modo root</string>
   <string name="wfm_port">Porta do servidor Web</string>
-  <string name="start_wfm">Servidor não está executando\nPressione para iniciar o servidor.</string>
-  <string name="starting_wfm">Servidor está iniciando&#8230;</string>
-  <string name="stop_wfm">Servidor está sendo executado em %s\nPressione para parar o servidor.</string>
+  <string name="stop">Parar</string>
   <string name="authentication">Autenticação</string>
   <string name="wfm_auth">Use a autenticação</string>
   <string name="wfm_auth_summary">Nome de usuário padrão é \"root\" e senha é \"toor\"</string>
@@ -268,7 +266,6 @@
   <string name="flash_warning">Estas a ponto de flashear!\nCuando continue, seu dispositivo reiniciasse-se no recovery e flasheara os objectos seleccionados.\n\nQueres proceder?</string>
   <string name="both">Ambos</string>
   <string name="pick_file">Escolha um arquivo</string>
-  <string name="something_went_wrong">Desculpe, mas algo deu errado!\nPor favor tente novamente!</string>
   <string name="recovery">Recuperação</string>
   <string name="bootloader">Bootloader</string>
   <string name="reboot">Reiniciar</string>

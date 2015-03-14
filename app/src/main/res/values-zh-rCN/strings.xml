@@ -15,19 +15,18 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">版本名称：%s</string>
   <string name="app_version_code">版本号: %s</string>
-  <string name="app_welcome">欢迎使用 %s</string>
-  <string name="welcome_message">开始使用，请从屏幕左侧滑出菜单或点击左上角的按钮！ \n\n您的设备所不支持的功能将自动隐藏 ！ \n所能使用的功能取决于您正使用的设备以及该设备运行的系统和内核。\n\n如果找不到有功能支持，请尝试使用第三方内核 ！ \n\n请注意，您的设备需要获得root权限才能使用 %s 的所有功能 ！</string>
+  <string name="welcome">欢迎</string>
+  <string name="welcome_message">请从屏幕左侧滑出菜单或点击左上角的按钮以开始使用！\n\n您的设备所不支持的功能将自动隐藏 ！\n所能使用的功能取决于您正使用的设备以及该设备运行的系统和内核。\n\n如果找不到有功能支持，请尝试使用第三方内核 ！\n\n请注意，您的设备需要获得root权限才能使用 %s 的所有功能 ！</string>
   <string name="app_warning_root">请注意，%s 需要设备具有root权限才能完全工作 ！</string>
   <string name="app_warning_busybox">请注意，%s需要BusyBox才能完整工作！</string>
   <string name="app_warning_busybox_note">由于并不是所有系统也提供同样的工具，而这有可能会导致错误和不稳定，所以需要安装 BusyBox。\n\nBusyBox 在每个设备上的工作原理都统一的。</string>
   <string name="start_wizard">启动向导</string>
   <string name="get_busybox">安装 BusyBox</string>
   <string name="more_information">详细信息</string>
-  <string name="checking_root">正在检查root...</string>
-  <string name="checking_busybox">正在检查 BusyBox...</string>
+  <string name="checking_requirements">检查要求&#8230;</string>
   <string name="exit">退出</string>
   <string name="close">关闭</string>
   <string name="message_loading">加载中，请稍后&#8230;&#8230;</string>
@@ -44,6 +43,7 @@
   <string name="no_tweaks_message">抱歉，您的设备不支持这些功能</string>
   <string name="gov_tweaks">可调值： %s</string>
   <string name="no_gov_tweaks_message">抱歉，这个调节器没有可调节的值</string>
+  <string name="no_io_tweaks_message">抱歉这个I/O scheduler不可调</string>
   <string name="home">首页</string>
   <string name="device">设备</string>
   <string name="features">功能</string>
@@ -99,6 +99,7 @@
   <string name="power_efficient_work">电源高效工作队列</string>
   <string name="power_efficient_work_summary">允许重新调度已唤醒核心的工作进程。</string>
   <string name="powersaving_sched_mc_title">电源调度</string>
+  <string name="powersaving_sched_mc_0">0-禁用</string>
   <string name="powersaving_sched_mc_1">1-平衡</string>
   <string name="powersaving_sched_mc_2">2-激进的</string>
   <string name="intelli_plug_eco">Eco模式</string>
@@ -109,6 +110,7 @@
   <string name="cpu_governor">CPU调节器</string>
   <string name="cpu_governor_tuning">CPU调节器微调</string>
   <string name="io">I/O 调度器</string>
+  <string name="configure_format">配置 %s</string>
   <string name="sob">在启动自动应用</string>
   <string name="core">核心</string>
   <string name="core_offline">脱机</string>
@@ -159,6 +161,7 @@
   <string name="tasker">任务管理</string>
   <string name="tasklist">任务列表</string>
   <string name="tasklist_summary">新建，修改，启用或禁用任务。</string>
+  <string name="list_empty">没有任何设置，要添加吗</string>
   <string name="add_task">添加任务</string>
   <string name="edit_task">编辑任务</string>
   <string name="delete_task">删除任务</string>
@@ -212,9 +215,14 @@
   <string name="downgraded">数据库因为降级的缘故被清空了！</string>
   <string name="media_scan_trigger">触发媒体扫描</string>
   <string name="media_scan_summary">在您的设备通过MTP连接电脑后出现新文件不可见的情况下，点击触发媒体扫描。</string>
+  <string name="media_scan_triggered">媒体扫描已开始，可这能需要一点时间</string>
+  <string name="force_stop">强行停止</string>
+  <string name="app_details">应用详情</string>
   <string name="clear_cache">清除缓存</string>
   <string name="clear_data">清除数据</string>
   <string name="total">总计</string>
+  <string name="app">应用</string>
+  <string name="ext_app">外部应用</string>
   <string name="data">数据</string>
   <string name="ext_data">外部数据</string>
   <string name="ext_media">外部媒体</string>
@@ -227,20 +235,23 @@
   <string name="pages_shared">已共享的页面</string>
   <string name="pages_sharing">可以共享的页面</string>
   <string name="pages_unshared">非共享的页面</string>
+  <string name="pages_volatile">不稳定的页面</string>
   <string name="enable_ksm">启用 KSM</string>
   <string name="reduce_memory_increase_cpu_load">能够减少内存的使用量，但也增加了cpu 负荷</string>
   <string name="enable_uksm">启用 UKSM</string>
   <string name="uksm_cpu_governor">CPU调节器</string>
   <string name="pages_scanned">已扫描页面</string>
+  <string name="hash_strength">哈希强度</string>
+  <string name="sleep_times">睡眠时间</string>
   <string name="pages_to_scan">要扫描的页数</string>
   <string name="sleep_between_scans">扫描间隔 (毫秒)</string>
   <string name="deferred_timer">延迟定时器</string>
   <string name="deferred_timer_summary">禁止 KSM 进程唤醒 CPU 以节省电量</string>
   <string name="wfm_root">以root模式浏览</string>
   <string name="wfm_port">Web 服务器端口</string>
-  <string name="start_wfm">服务未启动\n点击启动服务器。</string>
-  <string name="starting_wfm">服务器正在启动......</string>
-  <string name="stop_wfm">服务器运行在 %s\n点击停止服务。</string>
+  <string name="web_server_not_running">服务器未运行</string>
+  <string name="web_server_running">服务器正运行在%s</string>
+  <string name="stop">停止</string>
   <string name="authentication">身份验证</string>
   <string name="wfm_auth">使用身份验证</string>
   <string name="wfm_auth_summary">默认的用户名是“root\"，密码是\"toor\"</string>
@@ -264,7 +275,6 @@
   <string name="flash_warning">即将刷入！如果继续，您的设备将启动到recovery 并将刷入所选的项目。\n\n 您要继续吗？</string>
   <string name="both">两者</string>
   <string name="pick_file">选择文件</string>
-  <string name="something_went_wrong">出错了 ！ \n请再试一次 ！</string>
   <string name="recovery">Recovery</string>
   <string name="bootloader">Bootloader</string>
   <string name="reboot">重启</string>
@@ -337,10 +347,13 @@
   <string name="display_gamma_calibration">伽玛校正</string>
   <string name="display_gamma_calibration_summary">调整伽玛值</string>
   <string name="hardware_display_gamma_calibration_desc_one">红，绿，蓝</string>
+  <string name="install_info">以下更新准备安装.\n\n点击\"添加文件\"按钮以添加更多zip包.</string>
   <string name="select_actions">选择希望执行的操作</string>
+  <string name="select_recovery">选择你的recovery种类</string>
   <string name="backup">备份</string>
   <string name="wipe_data">清除数据</string>
   <string name="wipe_caches">清除 Cache &amp; Dalvik</string>
+  <string name="no_additional_info">无附加信息</string>
   <string name="install_title">选择要安装的文件</string>
   <string name="install_now">立即安装</string>
   <string name="file_not_found">无法添加文件</string>
@@ -361,7 +374,54 @@
   <string name="emmc_can_brick_true">您的 eMMC 已知将会造成问题</string>
   <string name="emmc_can_brick_false">您的 eMMC 应该是安全的 ！</string>
   <string name="press_learn_more">按下以了解更多</string>
+  <string name="setup_welcome">欢迎来到任务设置</string>
+  <string name="setup_welcome_text">在后续页面，您将能够设置任务.\n\n任务默认处于禁用状态，你需要勾选每个任务右侧的复选框来激活 .\n\n要激活任务管理，请打开任务列表页右上角开关。</string>
+  <string name="setup_trigger">设置触发器</string>
+  <string name="setup_category">设置类别</string>
+  <string name="setup_action">安装操作</string>
+  <string name="setup_value">设置值</string>
   <string name="setup_complete">设置完成</string>
+  <string name="screen_off">关闭屏幕</string>
+  <string name="screen_on">点亮屏幕</string>
   <string name="cpu">处理器</string>
+  <string name="input_reset_on_suspend">悬停时重设</string>
+  <string name="input_reset_on_suspend_summary">悬停时重设输入设备以解决误触及无响应等触摸板问题</string>
+  <string name="arch">架构</string>
   <string name="string_default">默认</string>
+  <string name="touch_boost">触摸增强</string>
+  <string name="permissions">权限</string>
+  <string name="security_settings_desc">这个app可以访问您的设备上的一下内容：</string>
+  <string name="join_two_items"><xliff:g id="first_item">%1$s</xliff:g> 和 <xliff:g id="second_item">%2$s</xliff:g></string>
+  <string name="join_many_items_last"><xliff:g id="all_but_last_item">%1$s</xliff:g> 和 <xliff:g id="last_item">%2$s</xliff:g></string>
+  <string name="security_settings_desc_multi" product="default">此应用可访问您手机上的以下内容。为了提高性能和减少内存使用量， <xliff:g id="base_app_name">%1$s</xliff:g>可获得其中的部分权限，因为它与<xliff:g id="additional_apps_list">%2$s</xliff:g>:运行在同一进程中。</string>
+  <string name="no_permissions">无需任何权限</string>
+  <string name="perm_costs_money">这可能会产生费用</string>
+  <string name="perms_new_perm_prefix"><font size="12" fgcolor="#ff33b5e5"> 新：</font></string>
+  <string name="perms_description_app">由 <xliff:g id="app_name">%1$s </xliff:g> 提供。</string>
+  <string name="environment">环境</string>
+  <string name="motion">运动</string>
+  <string name="position">位置</string>
+  <string name="sensor_information">显示传感器信息</string>
+  <string name="sensor_information_summary">查看有关您的传感器的详细信息</string>
+  <string name="sensor_light">亮度</string>
+  <string name="sensor_temperature">温度</string>
+  <string name="sensor_pressure">气压</string>
+  <string name="sensor_pressure_note">注：值可以是 %1$s 或 %2$s，具体取决于芯片制造商</string>
+  <string name="sensor_relative_humitidy">现对湿度</string>
+  <string name="sensor_accelerometer">加速度计 （包括重力）</string>
+  <string name="sensor_accelerometer_linear">线性加速度计 （不包括重力）</string>
+  <string name="sensor_gravity">重力</string>
+  <string name="sensor_rotation_vector">旋转矢量</string>
+  <string name="sensor_gyroscope">陀螺仪</string>
+  <string name="sensor_gyroscope_uncalibrated">陀螺仪 （未校准）</string>
+  <string name="sensor_step">计步器</string>
+  <string name="sensor_proximity">距离感应器</string>
+  <string name="sensor_magnetic_field">磁场</string>
+  <string name="sensor_magnetic_field_uncalibrated">磁场 （未校准）</string>
+  <string name="sensor_geomagnetic_rotation_vector">地磁旋转矢量</string>
+  <string name="sensor_game_rotation_vector">游戏旋转矢量</string>
+  <string name="power_usage">用电量</string>
+  <string name="steps">步</string>
+  <string name="far">远</string>
+  <string name="near">近</string>
 </resources>

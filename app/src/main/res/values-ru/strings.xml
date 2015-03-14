@@ -15,13 +15,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">Версия: %s</string>
   <string name="app_version_code">Номер версии: %s</string>
   <string name="app_warning_busybox">Учтите, что %s требует BusyBox для полноценной работы!</string>
   <string name="get_busybox">Установить BusyBox</string>
-  <string name="checking_root">Запрос прав суперпользователя&#8230;</string>
-  <string name="checking_busybox">Проверка busybox&#8230;</string>
   <string name="exit">Выход</string>
   <string name="close">Закрыть</string>
   <string name="message_loading">Загрузка, пожалуйста, подождите&#8230;</string>
@@ -91,7 +89,6 @@
   <string name="power_efficient_work">Энергоэффективная очередь задач</string>
   <string name="power_efficient_work_summary">Позволяет задачам быть перенесёнными на уже включенное ядро.</string>
   <string name="powersaving_sched_mc_title">Планировщик питания</string>
-  <string name="powersaving_sched_mc_0">0 - отключен</string>
   <string name="powersaving_sched_mc_1">1 - сбалансированный</string>
   <string name="powersaving_sched_mc_2">2 - агрессивный</string>
   <string name="intelli_plug_eco">Эко-режим</string>
@@ -178,7 +175,6 @@
   <string name="delete_property_message">%s будет удалено.\n\nПродолжить?</string>
   <string name="name">Имя</string>
   <string name="presets">Шаблоны</string>
-  <string name="gestures">Жесты</string>
   <string name="knock_on">Включение постукиванием</string>
   <string name="knock_on_summary">Дважды нажмите на экран, чтобы включить его</string>
   <string name="five_minutes">5 минут</string>
@@ -218,16 +214,13 @@
   <string name="pages_volatile">Необъединяемых страниц</string>
   <string name="enable_ksm">Включить KSM</string>
   <string name="reduce_memory_increase_cpu_load">Может снизить использование памяти, но также использует немного больше мощности процессора</string>
-  <string name="uksm_cpu_governor">Схема питания процессора</string>
   <string name="pages_to_scan">Страниц для сканирования</string>
   <string name="sleep_between_scans">Период между сканированием (в миллисекундах)</string>
   <string name="deferred_timer">Отсроченный таймер</string>
   <string name="deferred_timer_summary">Не будить процессор для деятельности KSM ради сохранения заряда аккумулятора</string>
   <string name="wfm_root">Просмотр в режиме суперпользователя</string>
   <string name="wfm_port">Порт веб-сервера</string>
-  <string name="start_wfm">Сервер не запущен\nНажмите для запуска сервера.</string>
-  <string name="starting_wfm">Сервер запускается&#8230;</string>
-  <string name="stop_wfm">Сервер запущен на %s\nНажмите для остановки сервера.</string>
+  <string name="stop">Остановить</string>
   <string name="authentication">Авторизация</string>
   <string name="wfm_auth">Использовать авторизацию</string>
   <string name="wfm_auth_summary">Имя пользователя по умолчанию — «root», пароль — «toor»</string>
@@ -249,7 +242,6 @@
   <string name="flash_warning">Вы собираетесь обновить ПО!\nВ случае согласия, устройство перезагрузится в режим восстановления и обновит выбранные элементы\n\nЖелаете продолжить?</string>
   <string name="both">Оба</string>
   <string name="pick_file">Выбрать файл</string>
-  <string name="something_went_wrong">Извините, но что-то пошло не так!\nПожалуйста попробуйте еще раз!</string>
   <string name="recovery">Режим восстановления</string>
   <string name="bootloader">Загрузчик</string>
   <string name="reboot">Перезагрузка</string>
@@ -261,7 +253,6 @@
   <string name="user_interface">Интерфейс</string>
   <string name="swipe_on_content">Свайп по контенту</string>
   <string name="swipe_on_content_summary">Перейти в меню при свайпе по контенту</string>
-  <string name="gpu_vendor">Производитель видеочипа</string>
   <string name="gpu_renderer">Обработка видеочипом</string>
   <string name="opengl_version">Версия OpenGL</string>
   <string name="opengl_extensions">Расширения OpenGL</string>
@@ -288,8 +279,10 @@
   <string name="type">Тип</string>
   <string name="tags">Теги</string>
   <string name="sensors">Датчики</string>
+  <string name="memory">Память</string>
   <string name="system">Система</string>
   <string name="emmc_date">Дата</string>
   <string name="setup_complete">Установка завершена</string>
+  <string name="cpu">Процессор</string>
   <string name="string_default">По умолчанию</string>
 </resources>

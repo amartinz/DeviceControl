@@ -15,10 +15,10 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">Versions-Name: %s</string>
   <string name="app_version_code">Versions-Code: %s</string>
-  <string name="app_welcome">Willkommen bei %s</string>
+  <string name="welcome">Herzlich Willkommen</string>
   <string name="welcome_message">Um zu starten, wische das Menü aus der linken Seite heraus oder drücke auf die linke obere Ecke!\n\nFalls eine Funktion von deinem Gerät nicht unterstützt wird, wird sie automatisch ausgeblendet!\nUnterstützte Funktionen sind abhängig von dem Gerät, der ROM und dem Kernel, den du benutzt.\n\nFalls du keine unterstützten Funktionen hast, versuche einen Custom-Kernel zu benutzen!\n\nBitte beachte, dass Root-Rechte benötigt werden, damit du %s in vollen Zügen genießen kannst!</string>
   <string name="app_warning_root">Bitte beachte, dass %s ein Gerät mit Root-Rechten benötigt, um richtig zu funktionieren!</string>
   <string name="app_warning_busybox">Bitte beachte, dass %s eine BusyBox erfordert, um vollständig zu funktionieren!</string>
@@ -26,8 +26,7 @@
   <string name="start_wizard">Assistenten starten</string>
   <string name="get_busybox">BusyBox installieren</string>
   <string name="more_information">Weitere Informationen</string>
-  <string name="checking_root">Root-Rechte werden überprüft&#8230;</string>
-  <string name="checking_busybox">Busybox wird überprüft&#8230;</string>
+  <string name="checking_requirements">Überprüfe Abhängigkeiten&#8230;</string>
   <string name="exit">Beenden</string>
   <string name="close">Schließen</string>
   <string name="message_loading">Lade, bitte warten&#8230;</string>
@@ -44,6 +43,7 @@
   <string name="no_tweaks_message">Tut uns leid, aber das Gerät unterstützt keine dieser Funktionen</string>
   <string name="gov_tweaks">Veränderbare Werte: %s</string>
   <string name="no_gov_tweaks_message">Tut uns leid, aber dieser Governor hat keine einstellbaren Werte</string>
+  <string name="no_io_tweaks_message">Entschuldigung, aber dieser I/O Scheduler hat keine einstellbaren Werte</string>
   <string name="home">Startseite</string>
   <string name="device">Gerät</string>
   <string name="features">Besonderheiten</string>
@@ -110,6 +110,7 @@
   <string name="cpu_governor">CPU Governor</string>
   <string name="cpu_governor_tuning">CPU Governor Tuning</string>
   <string name="io">I/O-Scheduler</string>
+  <string name="configure_format">Konfigurieren von %s</string>
   <string name="sob">Automatisch beim Systemstart anwenden</string>
   <string name="core">Kern</string>
   <string name="core_offline">Offline</string>
@@ -193,6 +194,8 @@
   <string name="gestures">Gesten</string>
   <string name="knock_on">Knock On</string>
   <string name="knock_on_summary">Aufwecken durch doppeltes Tippen auf den Bildschirm</string>
+  <string name="sweep_to_wake">Wischen zum Aufwecken</string>
+  <string name="sweep_to_volume">Wischen zum Läutstärke anpassen</string>
   <string name="five_minutes">5 Minuten</string>
   <string name="ten_minutes">10 Minuten</string>
   <string name="twenty_minutes">20 Minuten</string>
@@ -214,9 +217,14 @@
   <string name="downgraded">Datenbank wurde aufgrund eines Downgrades gelöscht!</string>
   <string name="media_scan_trigger">Media-Scanner auslösen</string>
   <string name="media_scan_summary">Löst einen Media-Scan aus, für den Fall, dass du dein Gerät über MTP angeschlossen hast und neue Dateien nicht sichtbar sind.</string>
+  <string name="media_scan_triggered">Media Scan ausgelöst, dies kann eine Weile dauern!</string>
+  <string name="force_stop">Beenden erzwingen</string>
+  <string name="app_details">Anwendungsdetails</string>
   <string name="clear_cache">Cache leeren</string>
   <string name="clear_data">Daten löschen</string>
   <string name="total">Gesamt</string>
+  <string name="app">Anwendung</string>
+  <string name="ext_app">Externe Anwendung</string>
   <string name="data">Daten</string>
   <string name="ext_data">Externe Daten</string>
   <string name="ext_media">Externe Medien</string>
@@ -243,9 +251,9 @@
   <string name="deferred_timer_summary">CPU für KSM-Aktivitäten nicht reaktivieren, um Batterie zu sparen</string>
   <string name="wfm_root">Im Root-Modus durchsuchen</string>
   <string name="wfm_port">Webserver-Port</string>
-  <string name="start_wfm">Server läuft nicht\nDrücken, um den Server zu starten.</string>
-  <string name="starting_wfm">Server wird gestartet&#8230;</string>
-  <string name="stop_wfm">Server läuft auf %s\nDrücken, um den Server zu beenden.</string>
+  <string name="web_server_not_running">Server läuft nicht</string>
+  <string name="web_server_running">Server läuft auf %s</string>
+  <string name="stop">Stopp</string>
   <string name="authentication">Authentifizierung</string>
   <string name="wfm_auth">Authentifizierung benutzen</string>
   <string name="wfm_auth_summary">Standard Benutzername ist \"root\" und das Passwort ist \"toor\"</string>
@@ -268,7 +276,7 @@
   <string name="flash_warning">Wenn du fortfährst, wird das Gerät in die Recovery booten und die ausgewählten Elemente flashen.\n\nMöchtest du wirklich fortfahren?</string>
   <string name="both">Beide</string>
   <string name="pick_file">Datei wählen</string>
-  <string name="something_went_wrong">Entschuldigung, aber etwas ging schief!\nBitte versuche es erneut!</string>
+  <string name="something_went_wrong">Entschuldigung, aber etwas ging schief!</string>
   <string name="recovery">Recovery</string>
   <string name="bootloader">Bootloader</string>
   <string name="reboot">Neu starten</string>
@@ -298,6 +306,7 @@
   <string name="uninstall">Deinstallieren</string>
   <string name="uninstalling">Deinstallieren&#8230;</string>
   <string name="uninstall_msg">Soll \"%s\" wirklich deinstalliert werden?\nDiese Aktion kann nicht rückgängig gemacht werden!</string>
+  <string name="uninstall_msg_system_app">Systemanwendungen deinstallieren kann einen Neustart benötigen!</string>
   <string name="uninstall_success">\"%s\" erfolgreich deinstalliert</string>
   <string name="sunlight_enhancement">Verbesserung bei Sonnenlicht</string>
   <string name="sunlight_enhancement_summary">Lesbarkeit des Displays bei grellem Sonnenlicht verbessern</string>
@@ -343,6 +352,7 @@
   <string name="hardware_display_gamma_calibration_desc_one">Rot,Grün,Blau</string>
   <string name="install_info">Die folgende(n) Datei(en) sind bereit zur Installation.\n\nSie können mehr komprimierte Dateien (.zip) über die \"Datei hinzufügen\" Taste hinzufügen.</string>
   <string name="select_actions">Wählen Sie die Aktionen aus, die Sie ausführen möchten</string>
+  <string name="select_recovery">Wählen Sie Ihre Recovery-Variante</string>
   <string name="backup">Datensicherung</string>
   <string name="wipe_data">Daten löschen</string>
   <string name="wipe_caches">Cache &amp; Dalvik löschen</string>
@@ -382,4 +392,39 @@
   <string name="arch">Architektur</string>
   <string name="string_default">Standard</string>
   <string name="touch_boost">Berührungs-Boost</string>
+  <string name="permissions">Berechtigungen</string>
+  <string name="security_settings_desc">Diese App kann auf die folgenden Funktionen ihres Gerätes zugreifen:</string>
+  <string name="join_two_items"><xliff:g id="first_item">%1$s</xliff:g> und <xliff:g id="second_item">%2$s</xliff:g></string>
+  <string name="join_many_items_last"><xliff:g id="all_but_last_item">%1$s</xliff:g> und <xliff:g id="last_item">%2$s</xliff:g></string>
+  <string name="security_settings_desc_multi" product="default">Diese App kann auf die folgenden Funktionen ihres Gerätes zugreifen. Um die Leistung zu verbessern und die Speicherauslastung zu verringern, hat <xliff:g id="base_app_name">%1$s</xliff:g> einige dieser Berechtigungen, weil es im selben Prozess wie <xliff:g id="additional_apps_list">%2$s</xliff:g> ausgeführt wird:</string>
+  <string name="no_permissions">Keine Berechtigungen erforderlich</string>
+  <string name="perm_costs_money">Hierfür können Gebühren anfallen</string>
+  <string name="perms_new_perm_prefix"><font size="12" fgcolor="#ff33b5e5">Neu: </font></string>
+  <string name="perms_description_app">Zur Verfügung gestellt von <xliff:g id="app_name">%1$s</xliff:g>.</string>
+  <string name="environment">Umgebung</string>
+  <string name="motion">Bewegung</string>
+  <string name="position">Position</string>
+  <string name="sensor_information">Sensorinformationen anzeigen</string>
+  <string name="sensor_information_summary">Zeigt detaillierte Sensorinformationen von ihrem Gerät an</string>
+  <string name="sensor_light">Licht</string>
+  <string name="sensor_temperature">Temperatur</string>
+  <string name="sensor_pressure">Luftdruck</string>
+  <string name="sensor_pressure_note">Hinweis: die Werte können in %1$s oder %2$s angegeben sein, abhängig von der Implementation des Herstellers</string>
+  <string name="sensor_relative_humitidy">Relative Luftfeuchtigkeit</string>
+  <string name="sensor_accelerometer">Beschleunigungsmesser (einschließlich Schwerkraft)</string>
+  <string name="sensor_accelerometer_linear">Beschleunigungsmesser (ausgenommen Schwerkraft)</string>
+  <string name="sensor_gravity">Schwerkraft</string>
+  <string name="sensor_rotation_vector">Dreh-Vektor</string>
+  <string name="sensor_gyroscope">Gyroskop</string>
+  <string name="sensor_gyroscope_uncalibrated">Gyroskop (unkalibriert)</string>
+  <string name="sensor_step">Schrittzähler</string>
+  <string name="sensor_proximity">Annäherungssensor</string>
+  <string name="sensor_magnetic_field">Magnetfeld</string>
+  <string name="sensor_magnetic_field_uncalibrated">Magnetfeld (unkalibriert)</string>
+  <string name="sensor_geomagnetic_rotation_vector">Geomagnetischer Dreh-Vektor</string>
+  <string name="sensor_game_rotation_vector">Spiel Dreh-Vektor</string>
+  <string name="power_usage">Stromverbrauch</string>
+  <string name="steps">Schritte</string>
+  <string name="far">Weit</string>
+  <string name="near">Nah</string>
 </resources>

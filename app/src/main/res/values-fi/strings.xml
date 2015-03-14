@@ -15,17 +15,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-  <string name="support">Destek</string>
-  <string name="donate_">Bağış Yap</string>
-  <string name="show_pollfish">Pollfish i etkinleştir</string>
-  <string name="show_pollfish_summary">Sağ alt köşede küçük bir simgeyi etkinleştirir. Tarafınızca yapılan her anket büyümemize yardım etmektedir. Devre dışı bırakmak isterseniz çekinmeyin tabi ki :)</string>
-  <string name="task_type">Görev türü</string>
-  <string name="event_based">Olay tabanlı</string>
-  <string name="next">Sonraki</string>
-  <string name="prev">Önceki</string>
-  <string name="review">İnceleme</string>
-  <string name="finish">Bitiş</string>
-  <string name="submit_confirm_message">Devam etmek istiyor musunuz?</string>
-  <string name="edit">Düzenle</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="gestures">Eleet</string>
+  <string name="stop">Pysäytä</string>
+  <string name="gpu_renderer">GPU renderöijä</string>
+  <string name="opengl_version">OpenGL versio</string>
+  <string name="opengl_extensions">OpenGL laajennukset</string>
+  <string name="memory">Muisti</string>
 </resources>

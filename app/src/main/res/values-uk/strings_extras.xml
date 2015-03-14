@@ -16,44 +16,6 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="permission_api_description">Дозволяє додатку доступ і використання API Device Control.\nЦе означає, що додаток може контролювати функції пристрою, включаючи управління обладнанням вашого пристрою.</string>
-  <string name="performance_settings_warning_title">Будьте обережні</string>
-  <string name="performance_settings_warning_header">Увага</string>
-  <string name="build_prop_mods">Модифікації Build.prop</string>
-  <string name="switches">Перемикачі</string>
-  <string name="buildprop_title">Модифікації build.prop (необхідне перезавантаження)</string>
-  <string name="buildprop_settings_warning">Це експериментальні налаштування і їх зміна може призвести до нестабільної роботи пристрою, збоїв в роботі, втрати даних або апаратних помилок.</string>
-  <string name="nonprop_cat_title">Моди з участю скрипта init.d</string>
-  <string name="wifi_scan_interval_title">Інтервал сканування WiFi</string>
-  <string name="wifi_scan_interval_summary">Час коли будуть видимі зіскановані wifi точки, які не були збережені</string>
-  <string name="wifi_scan_alt_summary">Час між скануваннями wifi: %s</string>
-  <string name="max_events_title">Максимальне число подій Диспетчера вікон в секунду</string>
-  <string name="max_events_summary">Це значення контролює число дозволених системою подій в секунду</string>
-  <string name="max_events_alt_summary">Максимальна кількість системних подій: %s</string>
-  <string name="ring_delay_title">Затримка дзвінка телефону</string>
-  <string name="ring_delay_summary">Кількість часу з моменту реєстрації системою вхідного телефонного виклику до дзвінка</string>
-  <string name="ring_delay_alt_summary">Затримка вхідного дзвінка: %s</string>
-  <string name="vm_heapsize_title">Розмір Dalvik-кешу</string>
-  <string name="vm_heapsize_summary">Контролює розмір кешу, до якого у Dalvik VM є доступ</string>
-  <string name="vm_heapsize_alt_summary">Розмір кешу Dalvik VM: %s</string>
-  <string name="fast_up_title">Хак швидкості завантаження HSUPA</string>
-  <string name="fast_up_summary">*УВАГА* Якщо ви зміните це значення, то у ваш build.prop будуть додані необхідні значення, якщо вони ще не містяться там</string>
-  <string name="fast_up_alt_summary">Активоване швидке завантаження даних: %s</string>
-  <string name="prox_delay_title">Затримка сенсора наближення</string>
-  <string name="prox_delay_summary">Контролює затримки, коли ваш екран буде піднесений до вашої голови під час дзвінка та забраний</string>
-  <string name="prox_delay_alt_summary">Встановити сенсор наближення на: %s</string>
-  <string name="sleep_title">Режим сну PM</string>
-  <string name="sleep_summary">Змінити політику сну в нічний час</string>
-  <string name="sleep_alt_summary">Поточний Режим Сну: %s</string>
-  <string name="jit_title">Компілятор JIT</string>
-  <string name="jit_summary">Вмикання/вимикання компілятора JIT</string>
-  <string name="tcp_stack_title">Оптимізувати групу TCP</string>
-  <string name="tcp_stack_summary">Змінює розмір буфера для кращої продуктивності</string>
-  <string name="gpu_acceleration">Прискорення GPU</string>
-  <string name="gpu_acceleration_summary">Активує апаратне прискорення де GPU управляє UI замість CPU</string>
-  <string name="lcd_density">Змінити щільність LCD</string>
-  <string name="lcd_density_summary">Встановіть бажану щільність LCD</string>
-  <string name="lcd_density_alt_summary">Щільність екрану: %s</string>
   <string name="task_type">Тип завдання</string>
   <string name="event_based">На основі подій</string>
   <string name="next">Наступна</string>

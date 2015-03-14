@@ -16,44 +16,6 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="permission_api_description">Разрешает приложению доступ и использование API Device Control.\nЭто означает, что приложение может контролировать функции устройства, в том числе управлять оборудованием вашего устройства.</string>
-  <string name="performance_settings_warning_title">Продолжайте с осторожностью</string>
-  <string name="performance_settings_warning_header">Внимание</string>
-  <string name="build_prop_mods">Модификации build.prop</string>
-  <string name="switches">Переключатели</string>
-  <string name="buildprop_title">Модификации build.prop (требуется перезагрузка)</string>
-  <string name="buildprop_settings_warning">Эти параметры предназначены для экспериментов, любые внесенные в них изменения способны вызвать нестабильность, ошибки, потерю данных и сбои оборудования.</string>
-  <string name="nonprop_cat_title">Модификации с участием скрипта init.d</string>
-  <string name="wifi_scan_interval_title">Период сканирования Wifi</string>
-  <string name="wifi_scan_interval_summary">Время между сканированиями wifi когда сохранённые точки доступа недоступны</string>
-  <string name="wifi_scan_alt_summary">Время между сканированиями wifi: %s</string>
-  <string name="max_events_title">Максимальное число событий диспетчера окон в секунду</string>
-  <string name="max_events_summary">Это значение контролирует число позволенных системой событий в секунду</string>
-  <string name="max_events_alt_summary">Максимальное количество системных событий: %s</string>
-  <string name="ring_delay_title">Задержка звонка телефона</string>
-  <string name="ring_delay_summary">Количество времени с момента регистрации системой входящего телефонного вызова до звонка</string>
-  <string name="ring_delay_alt_summary">Задержка входящего вызова: %s</string>
-  <string name="vm_heapsize_title">Размер кучи кэша Dalvik</string>
-  <string name="vm_heapsize_summary">Это контролирует размер кэша, к которому Dalvik VM имеет доступ</string>
-  <string name="vm_heapsize_alt_summary">Размер кэша Dalvik VM: %s</string>
-  <string name="fast_up_title">Хак скорости передачи данных HSUPA</string>
-  <string name="fast_up_summary">*ВНИМАНИЕ* Если вы измените это значение, то в ваш build.prop будут добавлены необходимые значения, если они ещё не содержатся там</string>
-  <string name="fast_up_alt_summary">Активированный режим быстрой передачи данных: %s</string>
-  <string name="prox_delay_title">Задержка датчика близости</string>
-  <string name="prox_delay_summary">Управляет задержкой включения экрана во время звонка при отстранении телефона от головы</string>
-  <string name="prox_delay_alt_summary">Датчик близости установлен на: %s</string>
-  <string name="sleep_title">Режим сна</string>
-  <string name="sleep_summary">Изменить политику ночного сна</string>
-  <string name="sleep_alt_summary">Текущий режим сна: %s</string>
-  <string name="jit_title">Динамический компилятор</string>
-  <string name="jit_summary">Включает/выключает динамический компилятор</string>
-  <string name="tcp_stack_title">Оптимизировать стек TCP</string>
-  <string name="tcp_stack_summary">Изменить размер буфера для лучшей производительности</string>
-  <string name="gpu_acceleration">Ускорение видеочипом</string>
-  <string name="gpu_acceleration_summary">Использовать аппаратное ускорение, чтобы видеочип контролировал интерфейс вместо процессора</string>
-  <string name="lcd_density">Изменить плотность экрана</string>
-  <string name="lcd_density_summary">Установите желаемую плотность экрана</string>
-  <string name="lcd_density_alt_summary">Плотность экрана: %s</string>
   <string name="task_type">Тип задачи</string>
   <string name="event_based">На основе события</string>
   <string name="next">Дальше</string>

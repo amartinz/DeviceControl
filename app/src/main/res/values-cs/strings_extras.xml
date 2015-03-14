@@ -16,44 +16,6 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-  <string name="permission_api_description">Povolit aplikaci přístup a použítí Device Control API.\nTo znamená že aplikace může ovládat funkce zařízení, včetně manipulace s hardwarem vašeho zařízení.</string>
-  <string name="performance_settings_warning_title">Postupujte s opatrností</string>
-  <string name="performance_settings_warning_header">Varování</string>
-  <string name="build_prop_mods">Modifikace Build.prop</string>
-  <string name="switches">Přepínače</string>
-  <string name="buildprop_title">Modifikace build.prop (je vyžadován restart)</string>
-  <string name="buildprop_settings_warning">Tyto nastavení jsou experimentální a jakákoliv jejich změna může způsobit nestabilitu, pády, ztrátu dat nebo selhání hardwaru.</string>
-  <string name="nonprop_cat_title">Modifikace zahrnující init.d skript</string>
-  <string name="wifi_scan_interval_title">Interval hledání Wifi sítí</string>
-  <string name="wifi_scan_interval_summary">Čas mezi hledáním wifi sítí, když není dostupný žádný z uložených přípojných bodů</string>
-  <string name="wifi_scan_alt_summary">Čas mezi hledáním wifi sítí: %s</string>
-  <string name="max_events_title">Maximální počet událostí za sekundu správce oken</string>
-  <string name="max_events_summary">Tato hodnota udává počet událostí, které systém povolí za jednu sekundu</string>
-  <string name="max_events_alt_summary">Maximální počet systémových událostí: %s</string>
-  <string name="ring_delay_title">Zpoždění vyzvánění telefonu</string>
-  <string name="ring_delay_summary">Časový interval od zaregistrování příchozího hovoru do začátku vyzvánění</string>
-  <string name="ring_delay_alt_summary">Zpoždění příchozího hovoru: %s</string>
-  <string name="vm_heapsize_title">Dalvik cache heapsize</string>
-  <string name="vm_heapsize_summary">Kontroluje velikost cache, ke které má Dalvik VM přístup</string>
-  <string name="vm_heapsize_alt_summary">Velikost Dalvik VM cache: %s</string>
-  <string name="fast_up_title">Hack rychlosti odesílání dat HSUPA</string>
-  <string name="fast_up_summary">*VAROVÁNÍ*  Pokud změníte tuto hodnotu budou přidány potřebné hodnoty do vašeho build.prop, pokud tam již nejsou přítomny</string>
-  <string name="fast_up_alt_summary">Nalezené aktivní rychlé odesílání dat: %s</string>
-  <string name="prox_delay_title">Zpoždění senzoru přiblížení</string>
-  <string name="prox_delay_summary">Ovládá zpoždění, kdy se obrazovka znovu zapne, když telefonujete a oddálíte telefon od svojí hlavy</string>
-  <string name="prox_delay_alt_summary">Senzor přiblížení nastaven na: %s</string>
-  <string name="sleep_title">Klidový režim</string>
-  <string name="sleep_summary">Upravuje politiku klidového režimu</string>
-  <string name="sleep_alt_summary">Aktuální klidový režim: %s</string>
-  <string name="jit_title">Just In Time Compiler</string>
-  <string name="jit_summary">Povolit/Zakázat JIT Compiler</string>
-  <string name="tcp_stack_title">Optimalizovat TCP Stack</string>
-  <string name="tcp_stack_summary">Modifikuje velikost vyrovnávací paměti pro lepší výkon</string>
-  <string name="gpu_acceleration">GPU akcelerace</string>
-  <string name="gpu_acceleration_summary">Povolit hardwarovou akceleraci kde GPU řídí vykreslování UI namísto CPU</string>
-  <string name="lcd_density">Změnit LCD density</string>
-  <string name="lcd_density_summary">Nastavte požadovanou hodnotu LCD density</string>
-  <string name="lcd_density_alt_summary">LCD density: %s</string>
   <string name="task_type">Typ úlohy</string>
   <string name="event_based">Na základě události</string>
   <string name="next">Další</string>

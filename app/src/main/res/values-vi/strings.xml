@@ -15,19 +15,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">Tên phiên bản: %s</string>
   <string name="app_version_code">Mã phiên bản: %s</string>
-  <string name="app_welcome">Chào mừng tới %s</string>
-  <string name="welcome_message">Để bắt đầu, vuốt từ mép trái màn hình hoặc bấm nút ở đầu phía bên trái!\n\nNếu có một tính năng mà máy của bạn không hỗ trợ, nó sẽ tự động bị ẩn đi!\nCác chức năng hỗ trợ phụ thuộc vào máy của bạn, ROM và Kernel  đang chạy.\n\n Nếu không có các chức năng hỗ trợ,  thử sử dụng một một Custom Kernel khác !\n\nLưu ý, máy của bạn cần được root để sử dụng tất cả các chức năng %s!</string>
   <string name="app_warning_root">Xin lưu ý  %s máy cần được root để có thể hoạt động đủ chức năngt!</string>
   <string name="app_warning_busybox">Xin lưu ý rằng %s yêu cầu BusyBox để hoạt động đầy đủ!</string>
   <string name="app_warning_busybox_note">Cần có phần mềm BusyBox, vì không phải mọi hệ thống đều cung cấp cùng một bộ công cụ như vậy,  việc đó có thể dẫn đến lỗi  và mất ổn định hệ thống.\n\nBusyBox có thể hoạt động như nhau trên mọi thiết bị.</string>
   <string name="start_wizard">Khởi đầu phần hướng dẫn</string>
   <string name="get_busybox">Cài đặt BusyBox</string>
   <string name="more_information">Thông tin chi tiết</string>
-  <string name="checking_root">Đang kiểm tra quyền root&#8230;</string>
-  <string name="checking_busybox">Đang kiểm tra Busybox&#8230;</string>
   <string name="exit">Thoát</string>
   <string name="close">Đóng</string>
   <string name="message_loading">Đang tải, vui lòng đợi&#8230;</string>
@@ -214,9 +210,13 @@
   <string name="downgraded">Cơ sở dữ liệu sẽ bị xóa do xuống cấp!</string>
   <string name="media_scan_trigger">Kích hoạt tìm kiếm tập tin truyền thông</string>
   <string name="media_scan_summary">Kích hoạt thủ công  tìm kiếm tập tin truyền thông, trong trường hợp máy của bạn kết nối bằng phương thức MTP và các tập tin mới không hiển thị.</string>
+  <string name="force_stop">Buộc dừng</string>
+  <string name="app_details">Chi tiếtứng dụng</string>
   <string name="clear_cache">Xóa bộ nhớ đệm</string>
   <string name="clear_data">Xóa dữ liệu</string>
   <string name="total">Tổng cộng</string>
+  <string name="app">Ứng dụng</string>
+  <string name="ext_app">Ứng dụng ngoài</string>
   <string name="data">Dữ liệu</string>
   <string name="ext_data">Dữ liệu ngoài</string>
   <string name="ext_media">Dữ liệu truyền thông bên ngoài</string>
@@ -243,9 +243,7 @@
   <string name="deferred_timer_summary">Không bật CPU khi KSM kích hoạt để tiết kiệm pin</string>
   <string name="wfm_root">Duyệt ở chế độ root</string>
   <string name="wfm_port">Cổng web máy chủ</string>
-  <string name="start_wfm">Server không hoạt động\nNhấn để khởi động server.</string>
-  <string name="starting_wfm">Server đang khởi động...</string>
-  <string name="stop_wfm">Server đang chạy %s\nNhấn để ngưng server.</string>
+  <string name="stop">Ngừng</string>
   <string name="authentication">Xác thực</string>
   <string name="wfm_auth">Xác thực sử dụng</string>
   <string name="wfm_auth_summary">Tên người dùng mặc định là \"root\" và mật khẩu là \"toor\"</string>
@@ -268,7 +266,6 @@
   <string name="flash_warning">Bắt đầu cài!\nKhi cài, máy sẽ khởi động vào recovery và cài đặt item đã chọn.\n\nBạn có muốn tiến hành?</string>
   <string name="both">Cả hai</string>
   <string name="pick_file">Chọn một tập tin</string>
-  <string name="something_went_wrong">Xin lỗi, vì đã có lỗi!\nHãy thử lại!</string>
   <string name="recovery">Recovery</string>
   <string name="bootloader">Bootloader</string>
   <string name="reboot">Khởi động lại</string>

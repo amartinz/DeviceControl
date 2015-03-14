@@ -15,17 +15,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">版本名稱： %s</string>
   <string name="app_version_code">版本號: %s</string>
-  <string name="app_welcome">歡迎使用 %s</string>
   <string name="app_warning_root">請注意，%s 需要設備ROOT的完全工作 ！</string>
   <string name="app_warning_busybox">請注意，%s 需要 BusyBox 完全工作 ！</string>
   <string name="start_wizard">啟動精靈</string>
   <string name="get_busybox">安裝 BusyBox</string>
   <string name="more_information">更多資訊</string>
-  <string name="checking_root">正在檢查ROOT...</string>
-  <string name="checking_busybox">正在檢查busybox...</string>
   <string name="exit">退出</string>
   <string name="close">關閉</string>
   <string name="message_loading">正在載入，請稍後......</string>
@@ -89,8 +86,6 @@
   <string name="show_launcher">顯示啟動器圖示</string>
   <string name="debugging">除錯</string>
   <string name="version">版本</string>
-  <string name="tasker">Tasker</string>
-  <string name="tasklist">工作清單</string>
   <string name="tasklist_summary">安裝、 修改、 啟用或禁用任務。</string>
   <string name="add_task">新增任務</string>
   <string name="edit_task">編輯任務</string>
@@ -110,7 +105,7 @@
   <string name="delete_property">刪除屬性</string>
   <string name="name">名稱</string>
   <string name="presets">預設</string>
-  <string name="gestures">手勢</string>
+  <string name="gestures">手勢設定</string>
   <string name="knock_on_summary">按兩下將螢幕打開</string>
   <string name="five_minutes">5 分鐘</string>
   <string name="ten_minutes">10 分鐘</string>
@@ -140,9 +135,9 @@
   <string name="cache">快取記憶體</string>
   <string name="applying_wait">應用中，請稍候...</string>
   <string name="full_scans">完全掃描</string>
+  <string name="stop">停止</string>
   <string name="username">使用者名稱</string>
   <string name="password">密碼</string>
-  <string name="entropy">熵</string>
   <string name="rng">亂數產生器</string>
   <string name="rng_active">使用亂數產生器</string>
   <string name="install_rng">下載並安裝亂數產生器</string>
@@ -164,17 +159,14 @@
   <string name="opengl_extensions">OpenGL 擴展</string>
   <string name="shader_version">著色器版本</string>
   <string name="getting_information">獲取資訊</string>
-  <string name="health">健康</string>
   <string name="good">良好</string>
   <string name="dead">電池耗盡</string>
-  <string name="over_voltage">過電壓</string>
   <string name="overheat">過熱</string>
   <string name="uninstall">移除</string>
   <string name="uninstalling">正在移除...</string>
   <string name="color_enhancement">色彩增強</string>
   <string name="dark_theme">深色主題</string>
   <string name="android_id">Android id</string>
-  <string name="runtime">運行時間</string>
   <string name="type">類型</string>
   <string name="tags">標籤</string>
   <string name="sensors">感應器</string>
@@ -182,16 +174,13 @@
   <string name="speaker">揚聲器</string>
   <string name="headphones">耳機</string>
   <string name="sound_control">聲音控制</string>
-  <string name="model">型號</string>
   <string name="manufacturer">製造商</string>
   <string name="product">產品</string>
-  <string name="build_date">生成日期</string>
   <string name="processor">處理器</string>
   <string name="kernel">內核</string>
   <string name="hardware">硬體</string>
   <string name="toolchain">工具鏈</string>
   <string name="memory">記憶體</string>
-  <string name="free">可用記憶體</string>
   <string name="cached">緩存</string>
   <string name="display_color_calibration">顏色校準</string>
   <string name="display_color_calibration_summary">校準螢幕顏色</string>
@@ -219,7 +208,6 @@
   <string name="emmc_date">日期</string>
   <string name="emmc_can_brick">問題</string>
   <string name="press_learn_more">點擊瞭解更多&#8230;</string>
-  <string name="setup_welcome">歡迎使用Tasker設定</string>
   <string name="setup_complete">設定完成</string>
   <string name="screen_off">關閉螢幕</string>
   <string name="screen_on">開啟螢幕</string>

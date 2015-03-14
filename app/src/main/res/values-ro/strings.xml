@@ -15,18 +15,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">Nume versiune: %s</string>
   <string name="app_version_code">Cod versiune: %s</string>
-  <string name="app_welcome">Bine ati venit la %s</string>
-  <string name="welcome_message">Pentru a începe, glisați meniul din stânga sau apăsaţi butonul din partea superioară stânga!\n\nDacă o caracteristică nu este acceptată de dispozitiv, acesta este ascunsă automat!\nCaracteristicile suportate depinde de dispozitivul, de ROM-ul şi kernel-ul pe care le utilizați.\n\nDacă nu ai caracteristici suportate, vă rugăm să utilizaţi un kernel customizat!\n\nRețineți că aveți nevoie de un dispozitiv cu root ca să vă bucurați de toate caracteristicile ale %s!</string>
   <string name="app_warning_root">Vă rugăm să reţineţi că %s necesită un dispozitiv cu root ca  să lucreze complet!</string>
   <string name="app_warning_busybox">Reţineţi că %s are nevoie de BusyBox pentru a funcţiona pe deplin!</string>
+  <string name="app_warning_busybox_note">BusyBox este necesar, deoarece nu fiecare sistem oferă acelaşi set de instrumente, ceea ce poate duce la bug-uri şi instabilitate.\n\nBusyBox este uniform şi funcţionează la fel pe orice dispozitiv.</string>
   <string name="start_wizard">Pornirea expertului</string>
   <string name="get_busybox">Instalează BusyBox</string>
   <string name="more_information">Mai multe informaţii</string>
-  <string name="checking_root">Se verifică accesul root&#8230;</string>
-  <string name="checking_busybox">Se verifică busybox&#8230;</string>
   <string name="exit">Ieșire</string>
   <string name="close">Închide</string>
   <string name="message_loading">Se încarcă, va rugăm așteptați&#8230;</string>
@@ -64,6 +61,7 @@
   <string name="deep_sleep">\"Deep Sleep\"</string>
   <string name="device_information">Informații despre dispozitiv</string>
   <string name="hotplugging">Hotplugging</string>
+  <string name="mpdecision_summary">Ar trebui deactivat dacă folosiți un hotplugger personalizat </string>
   <string name="thermal">Conductor Termic</string>
   <string name="core_control">Control Nucleu</string>
   <string name="core_control_summary">Dezactivează nucleurile cpu dacă temperatura limită este atinsă</string>
@@ -162,6 +160,8 @@
   <string name="add_task">Adauga sarcina</string>
   <string name="edit_task">Editare sarcina</string>
   <string name="delete_task">Ștergere sarcina</string>
+  <string name="delete_task_question">Într-adevăr doriţi să ştergeţi activitatea selectată?</string>
+  <string name="trigger">Declanşare</string>
   <string name="category">Categorie</string>
   <string name="action">Acţiune</string>
   <string name="value">Valoare</string>
@@ -202,6 +202,7 @@
   <string name="on">Activat</string>
   <string name="off">Off</string>
   <string name="menu">Meniu</string>
+  <string name="about">Despre</string>
   <string name="preferences">Preferinţe</string>
   <string name="become_a_monkey">Transformă-te într-o maimuţă</string>
   <string name="is_monkey">Stai, ești serios?\nEști destul de inteligent pentru o maimuţă.\nNu că ar fi ele proaste dar...\nDeci, săriţi peste acest lucru.</string>
@@ -209,9 +210,13 @@
   <string name="downgraded">Baza de date a fost ștearsă din cauza retrogradării!</string>
   <string name="media_scan_trigger">Activați scanarea de mass-media</string>
   <string name="media_scan_summary">Declanșează manual o scanare de media, în cazul în care ai telefonul conectat în modul MTP și fișierele noi nu sunt vizibile.</string>
+  <string name="force_stop">Oprire forțată</string>
+  <string name="app_details">Detaliile aplicației</string>
   <string name="clear_cache">Goliţi Cache-ul</string>
   <string name="clear_data">Ștergeți datele</string>
   <string name="total">Toate</string>
+  <string name="app">Aplicaţie</string>
+  <string name="ext_app">Aplicaţie externă</string>
   <string name="data">Date</string>
   <string name="ext_data">Date externe</string>
   <string name="ext_media">Media externă</string>
@@ -227,16 +232,18 @@
   <string name="pages_volatile">Pagini volatile</string>
   <string name="enable_ksm">Activează KSM</string>
   <string name="reduce_memory_increase_cpu_load">Poate reduce folosirea memoriei dar folosește CPU mai mult</string>
+  <string name="enable_uksm">Activează UKSM</string>
   <string name="uksm_cpu_governor">Guvernator CPU</string>
+  <string name="pages_scanned">Pagini scanate</string>
+  <string name="hash_strength">Puterea hash</string>
+  <string name="sleep_times">Timpi de temporizare</string>
   <string name="pages_to_scan">Pagini de scanat</string>
   <string name="sleep_between_scans">Pauză intre scanări (ms)</string>
   <string name="deferred_timer">Timp întârziere</string>
   <string name="deferred_timer_summary">Nu trezi CPU pentru activităţi KSM, economisește bateria</string>
   <string name="wfm_root">Căutați în modul root</string>
   <string name="wfm_port">Portul serverului Web</string>
-  <string name="start_wfm">Serverul nu funcționează\nApasă pentru a porni serverul.</string>
-  <string name="starting_wfm">Serverul pornește...</string>
-  <string name="stop_wfm">Server rulează la %s\nApasă pentru a opri serverul.</string>
+  <string name="stop">Oprire</string>
   <string name="authentication">Autentificare</string>
   <string name="wfm_auth">Utilizare autentificare</string>
   <string name="wfm_auth_summary">Nume utilizator implicit este \"root\" si parola este \"toor\"</string>
@@ -259,7 +266,6 @@
   <string name="flash_warning">Ești pe cale să flash-uiești!\nÎn continuare, dispozitivul tău va reporni în modul de recuperare și va flash-ui elementele selectate.\n\nDoriți să continuați?</string>
   <string name="both">Ambele</string>
   <string name="pick_file">Alege un fişier</string>
-  <string name="something_went_wrong">Ne pare rău dar ceva nu a funcționat!\nVă rugăm să încercaţi din nou!</string>
   <string name="recovery">Mod Recuperare</string>
   <string name="bootloader">Bootloader</string>
   <string name="reboot">Repornire</string>
@@ -267,6 +273,7 @@
   <string name="shutdown">Închidere</string>
   <string name="warning_data_corruption">Poate cauza corupția datelor dacă este activată</string>
   <string name="warning_data_corruption_invert">Poate cauza corupția datelor dacă este dezactivată</string>
+  <string name="data_integrity_decreased_performance">Asigură integritatea datelor, dar scade performanța</string>
   <string name="read_ahead">Citește înainte</string>
   <string name="filesystem">Sistemul de fișiere</string>
   <string name="user_interface">Interfață</string>
@@ -353,7 +360,13 @@
   <string name="remove_file_summary">Doriţi să ștergeţi fişierul din listă?\n\n%s</string>
   <string name="emmc_rev">Revizuirea</string>
   <string name="emmc_date">Data</string>
+  <string name="emmc_can_brick">Probleme</string>
+  <string name="emmc_can_brick_true">eMMC-ul dumneavoastră este cunoscut de a provoca probleme!</string>
+  <string name="emmc_can_brick_false">eMMC-ul dumneavoastră ar trebui să fie în siguranţă!</string>
   <string name="press_learn_more">Apăsaţi pentru a afla mai multe...</string>
+  <string name="setup_welcome">Bine ați venit la configurare managerului de sarcini</string>
+  <string name="setup_welcome_text">În următoarele pagini veți putea să creați o sarcină.\n\nSarcinile sunt dezactivate în mod implicit, va trebui să bifaţi caseta de selectare în dreptul fiecărui element pentru al activa.\n\nPentru a activa managerul de sarcini, va trebui să puneți comutatorul în partea de sus pe poziția pornit.</string>
+  <string name="setup_trigger">Declanșator de instalare</string>
   <string name="setup_category">Configurare categorie</string>
   <string name="setup_action">Acțiunea de configurare</string>
   <string name="setup_value">Valoarea de configurare</string>
@@ -361,5 +374,9 @@
   <string name="screen_off">Ecran oprit</string>
   <string name="screen_on">Ecran pornit</string>
   <string name="cpu">Procesor</string>
+  <string name="input_reset_on_suspend">Resetare în timpul suspendări</string>
+  <string name="input_reset_on_suspend_summary">Resetarea dispozitivului de intrare la suspendare pentru a ocoli problemele panoului de atingere cum ar fi atingeri fără răspuns sau fantomă</string>
+  <string name="arch">Arhitectură</string>
   <string name="string_default">Implicit</string>
+  <string name="touch_boost">Mărire impuls de atingere</string>
 </resources>
