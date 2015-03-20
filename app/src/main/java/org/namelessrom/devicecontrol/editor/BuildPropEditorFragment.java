@@ -17,13 +17,10 @@
  */
 package org.namelessrom.devicecontrol.editor;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,7 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -51,9 +48,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
-public class BuildPropEditorFragment extends AttachFragment implements AdapterView.OnItemClickListener, ShellOutput.OnShellOutputListener {
+public class BuildPropEditorFragment extends AttachFragment implements AdapterView.OnItemClickListener, ShellOutput.OnShellOutputListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     //==============================================================================================
     // Fields
@@ -63,12 +59,9 @@ public class BuildPropEditorFragment extends AttachFragment implements AdapterVi
 
     private ListView mListView;
     private LinearLayout mLoadingView;
-    private LinearLayout mEmptyView;
-    private RelativeLayout mTools;
 
     private PropAdapter mAdapter = null;
-    private EditText mFilter = null;
-    private final List<Prop> mProps = new ArrayList<>();
+    private final ArrayList<Prop> mProps = new ArrayList<>();
 
     //==============================================================================================
     // Overridden Methods
@@ -106,26 +99,9 @@ public class BuildPropEditorFragment extends AttachFragment implements AdapterVi
         });
 
         mLoadingView = (LinearLayout) view.findViewById(R.id.loading);
-        mEmptyView = (LinearLayout) view.findViewById(R.id.nofiles);
-        mTools = (RelativeLayout) view.findViewById(R.id.tools);
-        mFilter = (EditText) view.findViewById(R.id.filter);
-        mFilter.addTextChangedListener(new TextWatcher() {
-            @Override public void afterTextChanged(final Editable s) { }
 
-            @Override public void beforeTextChanged(final CharSequence s, final int start,
-                    final int count, final int after) { }
-
-            @Override public void onTextChanged(final CharSequence s, final int start,
-                    final int before, final int count) {
-                if (mAdapter != null) {
-                    final Editable filter = mFilter.getText();
-                    mAdapter.getFilter().filter(filter != null ? filter.toString() : "");
-                }
-            }
-        });
-
-        mListView.setVisibility(View.GONE);
-        mTools.setVisibility(View.GONE);
+        final LinearLayout emptyView = (LinearLayout) view.findViewById(R.id.nofiles);
+        mListView.setEmptyView(emptyView);
 
         return view;
     }
@@ -133,6 +109,17 @@ public class BuildPropEditorFragment extends AttachFragment implements AdapterVi
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_editor, menu);
 
+        // setup search
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = searchItem != null
+                ? (SearchView) searchItem.getActionView()
+                : null;
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(this);
+            searchView.setOnCloseListener(this);
+        }
+
+        // remove unused items
         menu.removeItem(R.id.menu_action_apply);
         menu.removeItem(R.id.menu_action_toggle);
 
@@ -148,6 +135,20 @@ public class BuildPropEditorFragment extends AttachFragment implements AdapterVi
             }
         }
 
+        return false;
+    }
+
+    @Override public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override public boolean onQueryTextChange(String s) {
+        mAdapter.filter(s);
+        return true;
+    }
+
+    @Override public boolean onClose() {
+        mAdapter.filter(null);
         return false;
     }
 
@@ -212,15 +213,9 @@ public class BuildPropEditorFragment extends AttachFragment implements AdapterVi
         Collections.sort(mProps);
 
         mLoadingView.setVisibility(View.GONE);
-        if (mProps.isEmpty()) {
-            mEmptyView.setVisibility(View.VISIBLE);
-        } else {
-            mEmptyView.setVisibility(View.GONE);
-            mListView.setVisibility(View.VISIBLE);
-            mTools.setVisibility(View.VISIBLE);
-            mAdapter = new PropAdapter(activity, mProps);
-            mListView.setAdapter(mAdapter);
-        }
+
+        mAdapter = new PropAdapter(activity, mProps);
+        mListView.setAdapter(mAdapter);
     }
 
     //==============================================================================================

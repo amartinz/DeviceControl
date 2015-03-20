@@ -431,4 +431,5 @@
     <string name="cpu_lock_freq_summary">Tries to prevent modifying frequencies\nThis may not always work on some devices!</string>
     <string name="cpu_lock_gov">Lock governors</string>
     <string name="cpu_lock_gov_summary">Tries to prevent modifying governors\nThis may not always work on some devices!</string>
+    <string name="no_items_found">No items found…</string>
 </resources>

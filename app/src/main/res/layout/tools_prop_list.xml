@@ -14,74 +14,44 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ListView
+        android:id="@+id/proplist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fastScrollEnabled="true" />
+
     <LinearLayout
-        android:id="@+id/loading"
+        android:id="@+id/nofiles"
+        android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="@string/no_items_found" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/loading"
+        android:background="?attr/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/message_loading" />
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/nofiles"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal|top"
-        android:paddingTop="50dp"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView"
-            android:layout_gravity="center_horizontal"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/proplist"
-        android:layout_above="@id/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:layout_gravity="top"
-        android:fastScrollEnabled="true" />
-
-    <RelativeLayout
-        android:id="@id/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:elevation="4dp">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/filter"
-            android:inputType="text"
-            android:hint="@string/filter"
-            android:layout_gravity="center_vertical|left"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_marginTop="20dp" />
-
-    </RelativeLayout>
 
 </RelativeLayout>

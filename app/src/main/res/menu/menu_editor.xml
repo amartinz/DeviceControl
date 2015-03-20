@@ -14,13 +14,19 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- General -->
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_action_search"
+        android:title="@string/filter"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.SearchView" />
 
     <!-- Build.prop -->
-
     <item
         android:id="@+id/menu_action_add"
         android:icon="@drawable/ic_action_add"
@@ -28,12 +34,10 @@
         app:showAsAction="ifRoom" />
 
     <!-- VM & Sysctl -->
-
     <item
         android:id="@+id/menu_action_apply"
-        android:icon="@drawable/ic_action_apply"
         android:title="@string/apply"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/menu_action_toggle"
