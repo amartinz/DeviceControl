@@ -19,31 +19,34 @@
 package org.namelessrom.devicecontrol.ui.adapters;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.objects.Prop;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 public class PropAdapter extends ArrayAdapter<Prop> {
     private final Context mContext;
-    private final List<Prop> mProps;
-    private static Filter mFilter;
+    private final ArrayList<Prop> mProps;
+    private ArrayList<Prop> mFiltered;
 
-    public PropAdapter(Context context, List<Prop> objects) {
+    public PropAdapter(Context context, ArrayList<Prop> objects) {
         super(context, R.layout.list_item_prop, objects);
         mContext = context;
-        mProps = objects;
+        mFiltered = objects;
+
+        // save original items
+        mProps = new ArrayList<>(mFiltered);
     }
 
-    public Prop getItem(final int i) { return mProps.get(i); }
+    public Prop getItem(final int i) { return mFiltered.get(i); }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -59,7 +62,7 @@ public class PropAdapter extends ArrayAdapter<Prop> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        final Prop p = mProps.get(position);
+        final Prop p = mFiltered.get(position);
         if (p != null) {
             if (viewHolder.pp != null) {
                 viewHolder.pp.setText(p.getName());
@@ -72,12 +75,22 @@ public class PropAdapter extends ArrayAdapter<Prop> {
         return convertView;
     }
 
-    @Override
-    public Filter getFilter() {
-        if (mFilter == null) {
-            mFilter = new AppFilter(mProps);
+    public void filter(String query) {
+        mFiltered.clear();
+        mFiltered.addAll(mProps);
+
+        query = (query != null ? query.trim().toLowerCase() : null);
+        if (!TextUtils.isEmpty(query)) {
+            Iterator<Prop> iterator = mFiltered.iterator();
+            while (iterator.hasNext()) {
+                Prop prop = iterator.next();
+                if (!prop.getName().toLowerCase().contains(query)) {
+                    iterator.remove();
+                }
+            }
         }
-        return mFilter;
+
+        notifyDataSetChanged();
     }
 
     private static final class ViewHolder {
@@ -87,49 +100,6 @@ public class PropAdapter extends ArrayAdapter<Prop> {
         private ViewHolder(final View rootView) {
             pp = (TextView) rootView.findViewById(R.id.prop);
             pv = (TextView) rootView.findViewById(R.id.pval);
-        }
-    }
-
-    private class AppFilter extends Filter {
-        private final List<Prop> sourceObjects;
-
-        public AppFilter(List<Prop> props) {
-            sourceObjects = new ArrayList<>();
-            synchronized (this) {
-                sourceObjects.addAll(props);
-            }
-        }
-
-        @Override
-        protected FilterResults performFiltering(final CharSequence chars) {
-            final String filterSeq = chars.toString().toLowerCase();
-            final FilterResults result = new FilterResults();
-            if (filterSeq.length() > 0) {
-                final List<Prop> filter = new ArrayList<>();
-                for (final Prop o : mProps) {
-                    if (o.getName().toLowerCase().contains(filterSeq)) { filter.add(o); }
-                }
-                result.count = filter.size();
-                result.values = filter;
-            } else {
-                synchronized (this) {
-                    result.values = sourceObjects;
-                    result.count = sourceObjects.size();
-                }
-            }
-            return result;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            @SuppressWarnings("unchecked")
-            final List<Prop> filtered = (List<Prop>) results.values;
-            notifyDataSetChanged();
-            clear();
-            if (filtered != null) {
-                for (final Prop aFiltered : filtered) add(aFiltered);
-            }
-            notifyDataSetInvalidated();
         }
     }
 }
