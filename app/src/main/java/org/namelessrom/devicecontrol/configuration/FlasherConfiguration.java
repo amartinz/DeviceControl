@@ -58,9 +58,10 @@ public class FlasherConfiguration extends BaseConfiguration<FlasherConfiguration
 
     @Override protected boolean migrateFromDatabase(Context context) {
         if (MIGRATION_LEVEL_CURRENT == migrationLevel) {
-            Logger.i(this, "already up to date :)");
             return false;
         }
+
+        Logger.i(this, "migrating: %s -> %s", migrationLevel, MIGRATION_LEVEL_CURRENT);
 
         recoveryType = PreferenceHelper.getInt(PREF_RECOVERY_TYPE, RECOVERY_TYPE_OPEN);
 

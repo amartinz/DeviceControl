@@ -69,9 +69,10 @@ public class TaskerConfiguration extends BaseConfiguration<TaskerConfiguration> 
 
     @Override protected boolean migrateFromDatabase(Context context) {
         if (MIGRATION_LEVEL_CURRENT == migrationLevel) {
-            Logger.i(this, "already up to date :)");
             return false;
         }
+
+        Logger.i(this, "migrating: %s -> %s", migrationLevel, MIGRATION_LEVEL_CURRENT);
 
         if (migrationLevel < 1) {
             enabled = PreferenceHelper.getBoolean(USE_TASKER, false);

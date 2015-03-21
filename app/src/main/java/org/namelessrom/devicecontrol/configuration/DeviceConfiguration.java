@@ -88,9 +88,10 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
 
     @Override protected boolean migrateFromDatabase(Context context) {
         if (MIGRATION_LEVEL_CURRENT == migrationLevel) {
-            Logger.i(this, "already up to date :)");
             return false;
         }
+
+        Logger.i(this, "migrating: %s -> %s", migrationLevel, MIGRATION_LEVEL_CURRENT);
 
         dcFirstStart = PreferenceHelper.getBoolean(DC_FIRST_START, false);
         swipeOnContent = PreferenceHelper.getBoolean(SWIPE_ON_CONTENT, false);

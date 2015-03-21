@@ -104,12 +104,24 @@ public class Application extends android.app.Application {
 
         Logger.setEnabled(DeviceConfiguration.get(this).extensiveLogging);
 
+        dumpInformation();
+
         IS_NAMELESS = Utils.isNameless();
         Logger.v(this, String.format("is nameless: %s", IS_NAMELESS));
 
         final boolean showLauncher = !Application.IS_NAMELESS
                 || DeviceConfiguration.get(this).showLauncher;
         toggleLauncherIcon(showLauncher);
+    }
+
+    private void dumpInformation() {
+        if (!Logger.getEnabled()) {
+            return;
+        }
+
+        final Resources res = getResources();
+        final int gmsVersion = res.getInteger(R.integer.google_play_services_version);
+        Logger.i(this, "Google Play Services -> %s", gmsVersion);
     }
 
 

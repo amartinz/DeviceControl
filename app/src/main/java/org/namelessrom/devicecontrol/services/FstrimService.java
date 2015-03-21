@@ -19,7 +19,6 @@ package org.namelessrom.devicecontrol.services;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.AsyncTask;
 
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
@@ -30,76 +29,48 @@ import org.namelessrom.devicecontrol.Logger;
 import java.io.FileOutputStream;
 
 public class FstrimService extends IntentService {
-    //==============================================================================================
-    // Actions
-    //==============================================================================================
     public static final String ACTION_TASKER_FSTRIM = "action_tasker_fstrim";
-
-    //==============================================================================================
-    // Overridden Methods
-    //==============================================================================================
 
     public FstrimService() { super("FstrimService"); }
 
     @Override
     protected void onHandleIntent(final Intent intent) {
-        if (intent != null) {
-            final String action = intent.getAction();
-
-            if (action != null) {
-                if (action.equals(ACTION_TASKER_FSTRIM)) {
-                    new FstrimTask().execute();
-                }
-            }
-        } else {
-            stopSelf();
+        if (intent == null || !ACTION_TASKER_FSTRIM.equals(intent.getAction())) {
+            return;
         }
-    }
+        Logger.i(this, "FSTRIM RUNNING");
 
-    //================
-    // Runnable
-    //================
-    private class FstrimTask extends AsyncTask<Void, Void, Void> {
+        final String path = getFilesDir().getAbsolutePath() + DeviceConstants.DC_LOG_FILE_FSTRIM;
+        final FileOutputStream fos;
+        try {
+            fos = new FileOutputStream(path);
+            final String cmd = "date;"
+                    + "busybox fstrim -v /system;"
+                    + "busybox fstrim -v /data;"
+                    + "busybox fstrim -v /cache;";
 
-        @Override
-        protected Void doInBackground(Void... params) {
-            Logger.i(this, "FSTRIM RUNNING");
-            try {
-                String path = getFilesDir().getAbsolutePath() + DeviceConstants.DC_LOG_FILE_FSTRIM;
+            final CommandCapture comm = new CommandCapture(0, cmd) {
+                @Override
+                public void commandOutput(int id, String line) {
+                    Logger.v(this, "Result: " + line);
+                    try {
+                        fos.write((line + '\n').getBytes());
+                    } catch (Exception ignored) { }
+                }
 
-                final FileOutputStream fos = new FileOutputStream(path);
-                final String sb = "date;\n"
-                        + "busybox fstrim -v /system;\n"
-                        + "busybox fstrim -v /data;\n"
-                        + "busybox fstrim -v /cache;\n";
+                @Override
+                public void commandCompleted(int id, int exitcode) {
+                    try {
+                        fos.write("\n\n".getBytes());
+                        fos.flush();
+                        fos.close();
+                    } catch (Exception ignored) { }
+                }
+            };
 
-                final CommandCapture comm = new CommandCapture(0, sb) {
-
-                    @Override
-                    public void commandOutput(int id, String line) {
-                        Logger.v(this, "Result: " + line);
-                        try {
-                            fos.write((line + '\n').getBytes());
-                        } catch (Exception ignored) { }
-                    }
-
-                    @Override
-                    public void commandCompleted(int id, int exitcode) {
-                        try {
-                            fos.write("\n\n".getBytes());
-                            fos.flush();
-                            fos.close();
-                        } catch (Exception ignored) { }
-                    }
-                };
-
-                RootTools.getShell(true).add(comm);
-            } catch (Exception exc) {
-                Logger.e(this, "Fstrim error: " + exc.getLocalizedMessage());
-            }
-            Logger.i(this, "FSTRIM RAN");
-
-            return null;
+            RootTools.getShell(true).add(comm);
+        } catch (Exception e) {
+            Logger.e(this, "Error running fstrim", e);
         }
     }
 
