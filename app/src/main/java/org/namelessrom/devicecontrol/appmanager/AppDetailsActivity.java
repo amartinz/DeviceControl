@@ -19,6 +19,7 @@ package org.namelessrom.devicecontrol.appmanager;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -98,6 +99,8 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
     private PieChart mCacheGraph;
     private LinearLayout mCacheInfo;
 
+    private Toast mToast;
+
     @Override protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
@@ -130,7 +133,11 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         mAppDetailsError = findViewById(R.id.app_details_error);
 
         mAppContainer = (LinearLayout) findViewById(R.id.item_app);
+
+        // allow to launch app via pressing on the icon
         mAppIcon = (ImageView) findViewById(R.id.app_icon);
+        mAppIcon.setOnClickListener(this);
+
         mAppLabel = (TextView) findViewById(R.id.app_label);
         mAppPackage = (TextView) findViewById(R.id.app_package);
         mAppVersion = (TextView) findViewById(R.id.app_version);
@@ -257,6 +264,25 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
             }
             case R.id.clear_data: {
                 clearAppData();
+                break;
+            }
+            case R.id.app_icon: {
+                Intent i = getPackageManager().getLaunchIntentForPackage(mAppItem.getPackageName());
+                if (i != null) {
+                    try {
+                        startActivity(i);
+                        return;
+                    } catch (ActivityNotFoundException anfe) {
+                        Logger.e(this, "Could not launch activity", anfe);
+                    }
+                }
+
+                if (mToast != null) {
+                    mToast.cancel();
+                }
+                mToast = Toast.makeText(this, R.string.could_not_launch_activity,
+                        Toast.LENGTH_SHORT);
+                mToast.show();
                 break;
             }
         }
