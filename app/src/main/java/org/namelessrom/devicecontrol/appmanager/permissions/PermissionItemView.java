@@ -35,7 +35,10 @@ public class PermissionItemView extends LinearLayout implements View.OnClickList
         PackageManager pm = getContext().getPackageManager();
         Drawable icon = null;
         if (first) {
-            icon = DrawableHelper.applyAccentColorFilter(grp.loadGroupIcon(pm).mutate());
+            icon = grp.loadGroupIcon(pm);
+            if (icon != null) {
+                icon = DrawableHelper.applyAccentColorFilter(icon.mutate());
+            }
         }
         CharSequence label = perm.mLabel;
 
