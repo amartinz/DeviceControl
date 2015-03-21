@@ -99,7 +99,6 @@
   <string name="power_efficient_work_summary">Modifiering tillåts på aktiverad kärna</string>
   <string name="powersaving_sched_mc_title">Strömschema
 </string>
-  <string name="powersaving_sched_mc_0">0 - Inaktiverad</string>
   <string name="powersaving_sched_mc_1">1 - Balanserad</string>
   <string name="powersaving_sched_mc_2">2 - Aggressiv</string>
   <string name="intelli_plug_eco">Eco-läge</string>

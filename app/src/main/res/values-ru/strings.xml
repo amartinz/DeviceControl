@@ -220,7 +220,6 @@
   <string name="deferred_timer_summary">Не будить процессор для деятельности KSM ради сохранения заряда аккумулятора</string>
   <string name="wfm_root">Просмотр в режиме суперпользователя</string>
   <string name="wfm_port">Порт веб-сервера</string>
-  <string name="stop">Остановить</string>
   <string name="authentication">Авторизация</string>
   <string name="wfm_auth">Использовать авторизацию</string>
   <string name="wfm_auth_summary">Имя пользователя по умолчанию — «root», пароль — «toor»</string>
@@ -253,10 +252,6 @@
   <string name="user_interface">Интерфейс</string>
   <string name="swipe_on_content">Свайп по контенту</string>
   <string name="swipe_on_content_summary">Перейти в меню при свайпе по контенту</string>
-  <string name="gpu_renderer">Обработка видеочипом</string>
-  <string name="opengl_version">Версия OpenGL</string>
-  <string name="opengl_extensions">Расширения OpenGL</string>
-  <string name="shader_version">Версия шейдеров</string>
   <string name="getting_information">Получение информации</string>
   <string name="health">Состояние</string>
   <string name="good">Хорошее</string>
@@ -279,10 +274,8 @@
   <string name="type">Тип</string>
   <string name="tags">Теги</string>
   <string name="sensors">Датчики</string>
-  <string name="memory">Память</string>
   <string name="system">Система</string>
   <string name="emmc_date">Дата</string>
   <string name="setup_complete">Установка завершена</string>
-  <string name="cpu">Процессор</string>
   <string name="string_default">По умолчанию</string>
 </resources>

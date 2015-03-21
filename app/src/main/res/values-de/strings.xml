@@ -427,4 +427,8 @@
   <string name="steps">Schritte</string>
   <string name="far">Weit</string>
   <string name="near">Nah</string>
+  <string name="cpu_lock_freq">Sperre Frequenzen</string>
+  <string name="cpu_lock_freq_summary">Probiert das Modifizieren der Frequenzen zu verhindern\nDies funktioniert möglicherweise nicht auf allen Geräten!</string>
+  <string name="cpu_lock_gov">Sperre Governors</string>
+  <string name="cpu_lock_gov_summary">Probiert das Modifizieren der Governors zu verhindern\nDies funktioniert möglicherweise nicht auf allen Geräten!</string>
 </resources>

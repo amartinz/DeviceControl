@@ -233,7 +233,6 @@
   <string name="enable_ksm">Abilita KSM</string>
   <string name="reduce_memory_increase_cpu_load">Può ridurre l\'utilizzo della memoria, ma utilizza anche un po\' più di potenza della CPU</string>
   <string name="enable_uksm">Attiva UKSM</string>
-  <string name="uksm_cpu_governor">Governor CPU</string>
   <string name="pages_scanned">Pagine controllate</string>
   <string name="hash_strength">Forza dell\'hash</string>
   <string name="sleep_times">Tempi di riposo</string>
@@ -243,7 +242,6 @@
   <string name="deferred_timer_summary">Non svegliare la CPU per attività KSM per risparmiare la batteria</string>
   <string name="wfm_root">Naviga in modalità root</string>
   <string name="wfm_port">Porta del web server</string>
-  <string name="stop">Stop</string>
   <string name="authentication">Autenticazione</string>
   <string name="wfm_auth">Usa autenticazione</string>
   <string name="wfm_auth_summary">Il nome utente predefinito è \"root\" e la password è \"toor\"</string>
@@ -279,11 +277,6 @@
   <string name="user_interface">Interfaccia</string>
   <string name="swipe_on_content">Swipe su contenuto</string>
   <string name="swipe_on_content_summary">Attiva o disattiva il menu quando viene eseguito uno swipe sull\'intero contenuto</string>
-  <string name="gpu_vendor">Fornitore GPU</string>
-  <string name="gpu_renderer">Renderer GPU</string>
-  <string name="opengl_version">Versione OpenGL</string>
-  <string name="opengl_extensions">Estensioni OpenGL</string>
-  <string name="shader_version">Versione shader</string>
   <string name="getting_information">Ottieni informazione</string>
   <string name="health">Salute</string>
   <string name="good">Buona</string>
@@ -323,7 +316,6 @@
   <string name="hardware">Hardware</string>
   <string name="toolchain">Toolchain</string>
   <string name="host">Host</string>
-  <string name="memory">Memoria</string>
   <string name="free">Gratis</string>
   <string name="cached">Nella cache</string>
   <string name="display_color_calibration">Calibrazione del colore</string>
@@ -354,7 +346,6 @@
   <string name="alert_reboot_more_message">Il tuo dispositivo si riavvierà ed installerà i file.</string>
   <string name="alert_backup_space_title">Spazio rimanente</string>
   <string name="alert_backup_space_message">C\'è meno di %sGB di spazio libero sulla SD interna. Vuoi continuare con il backup?</string>
-  <string name="alert_backup_title">Backup</string>
   <string name="alert_backup_message">Specificare il nome del backup (i caratteri vietati saranno rimossi).\n\nLe seguenti opzioni funzioneranno solo in recovery basate su OpenRecovery.</string>
   <string name="remove_file_title">Rimuovi file</string>
   <string name="remove_file_summary">Vuoi rimuovere il file dalla lista?\n\n%s</string>
@@ -373,7 +364,6 @@
   <string name="setup_complete">Il setup è completo</string>
   <string name="screen_off">Spegni schermo</string>
   <string name="screen_on">Accendi schermo</string>
-  <string name="cpu">CPU</string>
   <string name="input_reset_on_suspend">resetta dopo la sospensione</string>
   <string name="input_reset_on_suspend_summary">ripristina il dispositivo di input durante la sospensione per risolvere problemi del pannello touch come tocchi fantasma e irresponsibilità</string>
   <string name="arch">Architettura</string>
