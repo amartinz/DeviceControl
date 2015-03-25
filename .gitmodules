@@ -1,0 +1,3 @@
+[submodule "libs/mpandroidchart"]
+	path = libs/mpandroidchart
+	url = https://github.com/NamelessRom/android_external_mpandroidchart

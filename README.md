@@ -33,6 +33,21 @@ Third party libraries
 * [RootTools](https://github.com/Stericson/RootTools)
 * [SlidingMenu](https://github.com/jfeinstein10/slidingmenu)
 
+Contribution
+-------
+To get the sources you need to clone this repository together with its submodules.
+
+```
+git clone --recursive https://github.com/Evisceration/android_packages_apps_DeviceControl
+```
+
+In case you want to start working on the sources in an android source tree, you need to manually initialize the submodules.
+
+```
+git submodule init
+git submodule update
+```
+
 Developed by
 -------
 [Alexander "Evisceration" Martinz][2]
