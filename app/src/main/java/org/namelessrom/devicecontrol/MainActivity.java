@@ -351,7 +351,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     }
 
     @Override protected void onDestroy() {
-        DatabaseHandler.tearDown();
         synchronized (lockObject) {
             Logger.i(this, "closing shells");
             try {

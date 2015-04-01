@@ -20,9 +20,6 @@ package org.namelessrom.devicecontrol.configuration;
 
 import android.content.Context;
 
-import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-
 /**
  * Flasher configuration which auto serializes itself to a file
  */
@@ -34,15 +31,10 @@ public class FlasherConfiguration extends BaseConfiguration<FlasherConfiguration
 
     public int recoveryType;
 
-    public int migrationLevel;
-
-    private static final int MIGRATION_LEVEL_CURRENT = 1;
-
     private static FlasherConfiguration sInstance;
 
     private FlasherConfiguration(Context context) {
         loadConfiguration(context);
-        migrateFromDatabase(context);
     }
 
     public static FlasherConfiguration get(Context context) {
@@ -56,22 +48,6 @@ public class FlasherConfiguration extends BaseConfiguration<FlasherConfiguration
         return "flasher_configuration.json";
     }
 
-    @Override protected boolean migrateFromDatabase(Context context) {
-        if (MIGRATION_LEVEL_CURRENT == migrationLevel) {
-            return false;
-        }
-
-        Logger.i(this, "migrating: %s -> %s", migrationLevel, MIGRATION_LEVEL_CURRENT);
-
-        recoveryType = PreferenceHelper.getInt(PREF_RECOVERY_TYPE, RECOVERY_TYPE_OPEN);
-
-        // always bump if we need to further migrate
-        migrationLevel = MIGRATION_LEVEL_CURRENT;
-
-        saveConfiguration(context);
-        return true;
-    }
-
     @Override public FlasherConfiguration loadConfiguration(Context context) {
         final FlasherConfiguration config =
                 loadRawConfiguration(context, FlasherConfiguration.class);
@@ -80,8 +56,6 @@ public class FlasherConfiguration extends BaseConfiguration<FlasherConfiguration
         }
 
         this.recoveryType = config.recoveryType;
-
-        this.migrationLevel = config.migrationLevel;
 
         return this;
     }

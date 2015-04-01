@@ -20,9 +20,6 @@ package org.namelessrom.devicecontrol.configuration;
 
 import android.content.Context;
 
-import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-
 /**
  * Web server configuration which auto serializes itself to a file
  */
@@ -41,15 +38,10 @@ public class WebServerConfiguration extends BaseConfiguration<WebServerConfigura
     public String username = "root";
     public String password = "toor";
 
-    public int migrationLevel;
-
-    private static final int MIGRATION_LEVEL_CURRENT = 1;
-
     private static WebServerConfiguration sInstance;
 
     private WebServerConfiguration(Context context) {
         loadConfiguration(context);
-        migrateFromDatabase(context);
     }
 
     public static WebServerConfiguration get(Context context) {
@@ -61,27 +53,6 @@ public class WebServerConfiguration extends BaseConfiguration<WebServerConfigura
 
     @Override protected String getConfigurationFile() {
         return "webserver_configuration.json";
-    }
-
-    @Override protected boolean migrateFromDatabase(Context context) {
-        if (MIGRATION_LEVEL_CURRENT == migrationLevel) {
-            return false;
-        }
-
-        Logger.i(this, "migrating: %s -> %s", migrationLevel, MIGRATION_LEVEL_CURRENT);
-
-        root = PreferenceHelper.getBoolean(ROOT, false);
-        port = PreferenceHelper.getInt(PORT, 8080);
-
-        useAuth = PreferenceHelper.getBoolean(USE_AUTH, true);
-        username = "root";
-        password = "toor";
-
-        // always bump if we need to further migrate
-        migrationLevel = MIGRATION_LEVEL_CURRENT;
-
-        saveConfiguration(context);
-        return true;
     }
 
     @Override public WebServerConfiguration loadConfiguration(Context context) {
@@ -97,8 +68,6 @@ public class WebServerConfiguration extends BaseConfiguration<WebServerConfigura
         this.useAuth = config.useAuth;
         this.username = config.username;
         this.password = config.password;
-
-        this.migrationLevel = config.migrationLevel;
 
         return this;
     }

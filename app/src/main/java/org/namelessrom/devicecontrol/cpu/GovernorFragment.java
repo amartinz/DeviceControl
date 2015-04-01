@@ -39,7 +39,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
@@ -176,7 +176,7 @@ public class GovernorFragment extends AttachPreferenceFragment implements Govern
                 final String name = p.getTitle().toString();
                 final String key = p.getKey();
                 BootupConfiguration.setBootup(Application.get(), new BootupItem(
-                        DatabaseHandler.CATEGORY_CPU, name, key, value, true));
+                        ConfigConstants.CATEGORY_CPU, name, key, value, true));
 
                 return null;
             }

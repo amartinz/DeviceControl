@@ -20,9 +20,6 @@ package org.namelessrom.devicecontrol.configuration;
 
 import android.content.Context;
 
-import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-
 /**
  * Extra configuration which auto serializes itself to a file
  */
@@ -34,15 +31,10 @@ public class ExtraConfiguration extends BaseConfiguration<ExtraConfiguration> {
     public String uv;
     public String vdd;
 
-    public int migrationLevel;
-
-    private static final int MIGRATION_LEVEL_CURRENT = 1;
-
     private static ExtraConfiguration sInstance;
 
     private ExtraConfiguration(Context context) {
         loadConfiguration(context);
-        migrateFromDatabase(context);
     }
 
     public static ExtraConfiguration get(Context context) {
@@ -56,25 +48,6 @@ public class ExtraConfiguration extends BaseConfiguration<ExtraConfiguration> {
         return "extra_configuration.json";
     }
 
-    @Override protected boolean migrateFromDatabase(Context context) {
-        if (MIGRATION_LEVEL_CURRENT == migrationLevel) {
-            return false;
-        }
-
-        Logger.i(this, "migrating: %s -> %s", migrationLevel, MIGRATION_LEVEL_CURRENT);
-
-        rngStartup = PreferenceHelper.getBoolean(RNG_STARTUP, false);
-
-        uv = "";
-        vdd = "";
-
-        // always bump if we need to further migrate
-        migrationLevel = MIGRATION_LEVEL_CURRENT;
-
-        saveConfiguration(context);
-        return true;
-    }
-
     @Override public ExtraConfiguration loadConfiguration(Context context) {
         final ExtraConfiguration config = loadRawConfiguration(context, ExtraConfiguration.class);
         if (config == null) {
@@ -85,8 +58,6 @@ public class ExtraConfiguration extends BaseConfiguration<ExtraConfiguration> {
 
         this.uv = config.uv;
         this.vdd = config.vdd;
-
-        this.migrationLevel = config.migrationLevel;
 
         return this;
     }

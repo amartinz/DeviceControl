@@ -38,7 +38,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.hardware.DisplayGammaCalibration;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 
@@ -161,7 +161,7 @@ public class DisplayGamma extends DialogPreference {
             for (int i = 0; i < mNumberOfControls; i++) {
                 for (final String path : DisplayGammaCalibration.get().getPaths(i)) {
                     config.addItem(new BootupItem(
-                            DatabaseHandler.CATEGORY_DEVICE, DisplayGammaCalibration.TAG + i,
+                            ConfigConstants.CATEGORY_DEVICE, DisplayGammaCalibration.TAG + i,
                             path, DisplayGammaCalibration.get().getCurGamma(i), true));
                 }
             }

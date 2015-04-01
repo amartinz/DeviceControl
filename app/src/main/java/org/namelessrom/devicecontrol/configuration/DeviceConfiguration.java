@@ -20,10 +20,6 @@ package org.namelessrom.devicecontrol.configuration;
 
 import android.content.Context;
 
-import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.services.BootupService;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
-
 /**
  * Device configuration which auto serializes itself to a file
  */
@@ -64,15 +60,10 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
 
     public boolean monkey;
 
-    public int migrationLevel;
-
-    private static final int MIGRATION_LEVEL_CURRENT = 1;
-
     private static DeviceConfiguration sInstance;
 
     private DeviceConfiguration(Context context) {
         loadConfiguration(context);
-        migrateFromDatabase(context);
     }
 
     public static DeviceConfiguration get(Context context) {
@@ -84,42 +75,6 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
 
     @Override protected String getConfigurationFile() {
         return "device_configuration.json";
-    }
-
-    @Override protected boolean migrateFromDatabase(Context context) {
-        if (MIGRATION_LEVEL_CURRENT == migrationLevel) {
-            return false;
-        }
-
-        Logger.i(this, "migrating: %s -> %s", migrationLevel, MIGRATION_LEVEL_CURRENT);
-
-        dcFirstStart = PreferenceHelper.getBoolean(DC_FIRST_START, false);
-        swipeOnContent = PreferenceHelper.getBoolean(SWIPE_ON_CONTENT, false);
-
-        sobDevice = PreferenceHelper.getBoolean(BootupService.SOB_DEVICE, false);
-        sobCpu = PreferenceHelper.getBoolean(BootupService.SOB_CPU, false);
-        sobGpu = PreferenceHelper.getBoolean(BootupService.SOB_GPU, false);
-        sobExtras = PreferenceHelper.getBoolean(BootupService.SOB_EXTRAS, false);
-        sobSysctl = PreferenceHelper.getBoolean(BootupService.SOB_SYSCTL, false);
-        sobVoltage = PreferenceHelper.getBoolean(BootupService.SOB_VOLTAGE, false);
-
-        darkTheme = PreferenceHelper.getBoolean(DARK_THEME, false);
-        showPollfish = PreferenceHelper.getBoolean(SHOW_POLLFISH, false);
-
-        showLauncher = PreferenceHelper.getBoolean(SHOW_LAUNCHER, true);
-        skipChecks = PreferenceHelper.getBoolean(SKIP_CHECKS, false);
-        extensiveLogging = PreferenceHelper.getBoolean(EXTENSIVE_LOGGING, false);
-
-        perfCpuLock = PreferenceHelper.getBoolean(CPU_LOCK_FREQ, false);
-        perfCpuInfo = PreferenceHelper.getBoolean(CPU_SHOW_INFO, false);
-
-        monkey = PreferenceHelper.getBoolean(MONKEY, false);
-
-        // always bump if we need to further migrate
-        migrationLevel = MIGRATION_LEVEL_CURRENT;
-
-        saveConfiguration(context);
-        return true;
     }
 
     @Override public DeviceConfiguration loadConfiguration(Context context) {
@@ -150,8 +105,6 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
         this.perfCpuInfo = config.perfCpuInfo;
 
         this.monkey = config.monkey;
-
-        this.migrationLevel = config.migrationLevel;
 
         return this;
     }

@@ -91,9 +91,6 @@ public class Application extends android.app.Application {
             RootTools.debugMode = true;
         }
 
-        // initialize database
-        DatabaseHandler.getInstance();
-
         // load configurations
         BootupConfiguration.get(this);
         DeviceConfiguration.get(this);
@@ -122,13 +119,6 @@ public class Application extends android.app.Application {
         final Resources res = getResources();
         final int gmsVersion = res.getInteger(R.integer.google_play_services_version);
         Logger.i(this, "Google Play Services -> %s", gmsVersion);
-    }
-
-
-    @Override public void onTerminate() {
-        // do some placebo :P
-        DatabaseHandler.tearDown();
-        super.onTerminate();
     }
 
     public static Application get() { return Application.sInstance; }

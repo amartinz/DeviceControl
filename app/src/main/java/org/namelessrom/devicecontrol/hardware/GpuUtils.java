@@ -34,7 +34,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -255,7 +255,7 @@ public class GpuUtils {
         final StringBuilder sbCmd = new StringBuilder();
 
         final ArrayList<BootupItem> items = BootupConfiguration.get(context)
-                .getItemsByCategory(DatabaseHandler.CATEGORY_GPU);
+                .getItemsByCategory(ConfigConstants.CATEGORY_GPU);
 
         for (final BootupItem item : items) {
             sbCmd.append(Utils.getWriteCommand(item.filename, item.value));
