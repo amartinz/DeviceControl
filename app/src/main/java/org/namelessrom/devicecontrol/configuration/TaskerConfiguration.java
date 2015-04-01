@@ -22,9 +22,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.tasker.TaskerItem;
-import org.namelessrom.devicecontrol.utils.PreferenceHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,8 +31,6 @@ import java.util.Iterator;
  * Tasker configuration which auto serializes itself to a file
  */
 public class TaskerConfiguration extends BaseConfiguration<TaskerConfiguration> {
-    public static final String USE_TASKER = "use_tasker";
-
     public static final String FSTRIM = "fstrim";
     public static final String FSTRIM_INTERVAL = "fstrim_interval";
 
@@ -43,17 +39,12 @@ public class TaskerConfiguration extends BaseConfiguration<TaskerConfiguration> 
     public boolean fstrimEnabled;
     public int fstrimInterval = 480;
 
-    public int migrationLevel;
-
     public ArrayList<TaskerItem> items;
-
-    private static final int MIGRATION_LEVEL_CURRENT = 2;
 
     private static TaskerConfiguration sInstance;
 
     private TaskerConfiguration(Context context) {
         loadConfiguration(context);
-        migrateFromDatabase(context);
     }
 
     public static TaskerConfiguration get(Context context) {
@@ -67,33 +58,6 @@ public class TaskerConfiguration extends BaseConfiguration<TaskerConfiguration> 
         return "tasker_configuration.json";
     }
 
-    @Override protected boolean migrateFromDatabase(Context context) {
-        if (MIGRATION_LEVEL_CURRENT == migrationLevel) {
-            return false;
-        }
-
-        Logger.i(this, "migrating: %s -> %s", migrationLevel, MIGRATION_LEVEL_CURRENT);
-
-        if (migrationLevel < 1) {
-            enabled = PreferenceHelper.getBoolean(USE_TASKER, false);
-
-            fstrimEnabled = PreferenceHelper.getBoolean(FSTRIM, false);
-            fstrimInterval = PreferenceHelper.getInt(FSTRIM_INTERVAL, 480);
-
-            migrationLevel = 1;
-        }
-
-        if (migrationLevel < 2) {
-            items = new ArrayList<>(DatabaseHandler.getInstance().getAllTaskerItems(""));
-
-            // always bump if we need to further migrate
-            migrationLevel = MIGRATION_LEVEL_CURRENT;
-        }
-
-        saveConfiguration(context);
-        return true;
-    }
-
     @Override public TaskerConfiguration loadConfiguration(Context context) {
         final TaskerConfiguration config = loadRawConfiguration(context, TaskerConfiguration.class);
         if (config == null) {
@@ -104,8 +68,6 @@ public class TaskerConfiguration extends BaseConfiguration<TaskerConfiguration> 
 
         this.fstrimEnabled = config.fstrimEnabled;
         this.fstrimInterval = config.fstrimInterval;
-
-        this.migrationLevel = config.migrationLevel;
 
         this.items = config.items;
 

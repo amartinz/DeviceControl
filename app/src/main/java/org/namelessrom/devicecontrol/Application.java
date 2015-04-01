@@ -32,7 +32,6 @@ import org.namelessrom.devicecontrol.configuration.ExtraConfiguration;
 import org.namelessrom.devicecontrol.configuration.FlasherConfiguration;
 import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
 import org.namelessrom.devicecontrol.configuration.WebServerConfiguration;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.wizard.AddTaskActivity;
@@ -91,9 +90,6 @@ public class Application extends android.app.Application {
             RootTools.debugMode = true;
         }
 
-        // initialize database
-        DatabaseHandler.getInstance();
-
         // load configurations
         BootupConfiguration.get(this);
         DeviceConfiguration.get(this);
@@ -122,13 +118,6 @@ public class Application extends android.app.Application {
         final Resources res = getResources();
         final int gmsVersion = res.getInteger(R.integer.google_play_services_version);
         Logger.i(this, "Google Play Services -> %s", gmsVersion);
-    }
-
-
-    @Override public void onTerminate() {
-        // do some placebo :P
-        DatabaseHandler.tearDown();
-        super.onTerminate();
     }
 
     public static Application get() { return Application.sInstance; }

@@ -24,8 +24,8 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -77,7 +77,7 @@ public class CpuFreqMaxAction extends BaseAction {
             path = CpuUtils.get().getMaxCpuFrequencyPath(i);
             sb.append(Utils.getWriteCommand(path, value));
             if (bootup) {
-                configuration.addItem(new BootupItem(DatabaseHandler.CATEGORY_CPU,
+                configuration.addItem(new BootupItem(ConfigConstants.CATEGORY_CPU,
                         "cpu_max" + i, CpuUtils.get().getMaxCpuFrequencyPath(i), value, true));
             }
             if (lockFreq) {

@@ -47,7 +47,8 @@ import org.namelessrom.devicecontrol.about.AboutFragment;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.appmanager.AppListFragment;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
+import org.namelessrom.devicecontrol.cpu.CpuSettingsFragment;
+import org.namelessrom.devicecontrol.cpu.GovernorFragment;
 import org.namelessrom.devicecontrol.device.DeviceFeatureFragment;
 import org.namelessrom.devicecontrol.device.DeviceInformationFragment;
 import org.namelessrom.devicecontrol.device.sub.FastChargeFragment;
@@ -59,13 +60,11 @@ import org.namelessrom.devicecontrol.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
-import org.namelessrom.devicecontrol.cpu.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.FilesystemFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.GpuSettingsFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.InformationFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.ThermalFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.EntropyFragment;
-import org.namelessrom.devicecontrol.cpu.GovernorFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.IoSchedConfigFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.KsmFragment;
 import org.namelessrom.devicecontrol.ui.fragments.performance.sub.UksmFragment;
@@ -351,7 +350,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     }
 
     @Override protected void onDestroy() {
-        DatabaseHandler.tearDown();
         synchronized (lockObject) {
             Logger.i(this, "closing shells");
             try {

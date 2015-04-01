@@ -34,8 +34,6 @@ public abstract class BaseConfiguration<T> {
 
     protected abstract String getConfigurationFile();
 
-    protected abstract boolean migrateFromDatabase(Context context);
-
     public abstract T loadConfiguration(Context context);
 
     public abstract T saveConfiguration(Context context);

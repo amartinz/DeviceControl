@@ -38,8 +38,8 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
-import org.namelessrom.devicecontrol.database.DatabaseHandler;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.cpu.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.objects.BootupItem;
@@ -294,7 +294,7 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Pre
             final String value = String.valueOf(o);
             Utils.runRootCommand(Utils.getWriteCommand(path, value));
             BootupConfiguration.setBootup(getActivity(), new BootupItem(
-                    DatabaseHandler.CATEGORY_EXTRAS, mCpuQuietGov.getKey(),
+                    ConfigConstants.CATEGORY_EXTRAS, mCpuQuietGov.getKey(),
                     path, value, true));
             mCpuQuietGov.setSummary(value);
             return true;
