@@ -86,3 +86,6 @@
 
 # pollfish
 -keep class com.pollfish.** { *; }
+
+# mpchartlib
+-keep class com.github.mikephil.charting.** { *; }
