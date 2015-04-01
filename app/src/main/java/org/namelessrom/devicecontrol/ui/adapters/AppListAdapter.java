@@ -30,7 +30,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.appmanager.AppDetailsActivity;
+import org.namelessrom.devicecontrol.modules.appmanager.AppDetailsActivity;
 import org.namelessrom.devicecontrol.objects.AppItem;
 
 import java.util.List;

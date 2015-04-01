@@ -22,7 +22,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.tasker.TaskerItem;
+import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
 
 import java.util.ArrayList;
 import java.util.Iterator;

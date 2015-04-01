@@ -21,7 +21,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/themeColor"
-    tools:context="org.namelessrom.devicecontrol.wizard.AddTaskActivity">
+    tools:context="org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -32,7 +32,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <org.namelessrom.devicecontrol.wizard.ui.StepPagerStrip
+        <org.namelessrom.devicecontrol.modules.wizard.ui.StepPagerStrip
             android:id="@+id/strip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

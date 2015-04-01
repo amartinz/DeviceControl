@@ -98,7 +98,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".appmanager.AppDetailsActivity"
+            android:name=".modules.appmanager.AppDetailsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_details"
             android:launchMode="singleTask"
@@ -150,7 +150,7 @@
                 android:value="org.namelessrom.devicecontrol.MainActivity" />
         </activity>
         <activity
-            android:name=".wizard.AddTaskActivity"
+            android:name=".modules.wizard.AddTaskActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/add_task"
             android:launchMode="singleTask"
@@ -162,7 +162,7 @@
         </activity>
         <!-- Device activities -->
         <activity
-            android:name=".device.SensorActivity"
+            android:name=".modules.device.SensorActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/sensors"
             android:launchMode="singleTask"

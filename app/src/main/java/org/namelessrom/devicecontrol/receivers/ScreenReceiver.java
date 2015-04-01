@@ -25,7 +25,7 @@ import android.os.AsyncTask;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
-import org.namelessrom.devicecontrol.tasker.TaskerItem;
+import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
 
 import java.util.List;
 
