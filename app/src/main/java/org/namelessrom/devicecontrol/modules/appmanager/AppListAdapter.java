@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,17 +33,22 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.objects.AppItem;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
     private final Resources res = Application.get().getResources();
 
     /* package */ final Activity mActivity;
-    private final List<AppItem> mAppList;
+    private final ArrayList<AppItem> mAppList;
+    private ArrayList<AppItem> mFiltered;
 
-    public AppListAdapter(final Activity activity, final List<AppItem> appList) {
-        this.mActivity = activity;
-        this.mAppList = appList;
+    public AppListAdapter(final Activity activity, final ArrayList<AppItem> appList) {
+        mActivity = activity;
+        mFiltered = appList;
+
+        // save original items
+        mAppList = new ArrayList<>(mFiltered);
     }
 
     public final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -90,7 +96,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         }
     }
 
-    @Override public int getItemCount() { return mAppList.size(); }
+    @Override public int getItemCount() { return mFiltered.size(); }
 
     @Override public ViewHolder onCreateViewHolder(final ViewGroup parent, final int type) {
         final int resId;
@@ -104,8 +110,26 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     }
 
     @Override public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        final AppItem appItem = mAppList.get(position);
+        final AppItem appItem = mFiltered.get(position);
         viewHolder.bind(appItem);
+    }
+
+    public void filter(String query) {
+        mFiltered.clear();
+        mFiltered.addAll(mAppList);
+
+        query = (query != null ? query.trim().toLowerCase() : null);
+        if (!TextUtils.isEmpty(query)) {
+            Iterator<AppItem> iterator = mFiltered.iterator();
+            while (iterator.hasNext()) {
+                AppItem appItem = iterator.next();
+                if (!appItem.getLabel().toLowerCase().contains(query)) {
+                    iterator.remove();
+                }
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
 }

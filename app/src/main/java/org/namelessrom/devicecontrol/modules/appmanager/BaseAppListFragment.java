@@ -33,6 +33,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
@@ -45,8 +46,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class BaseAppListFragment extends AttachFragment {
+public abstract class BaseAppListFragment extends AttachFragment implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
     private static final int ANIM_DURATION = 350;
+
+    private AppListAdapter mAdapter;
 
     private RecyclerView mRecyclerView;
     private TextView mEmptyView;
@@ -57,8 +60,35 @@ public abstract class BaseAppListFragment extends AttachFragment {
     @Override protected int getFragmentId() { return DeviceConstants.ID_TOOLS_APP_MANAGER; }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_app_list, menu);
+
+        // setup search
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = searchItem != null
+                ? (SearchView) searchItem.getActionView()
+                : null;
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(this);
+            searchView.setOnCloseListener(this);
+        }
+
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_refresh, menu);
+    }
+
+    @Override public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override public boolean onQueryTextChange(String s) {
+        mAdapter.filter(s);
+        updateVisibility(mAdapter.getItemCount() <= 0);
+        return true;
+    }
+
+    @Override public boolean onClose() {
+        mAdapter.filter(null);
+        updateVisibility(mAdapter.getItemCount() <= 0);
+        return false;
     }
 
     @Override public boolean onOptionsItemSelected(final MenuItem item) {
@@ -131,12 +161,17 @@ public abstract class BaseAppListFragment extends AttachFragment {
         }
     }
 
+    private void updateVisibility(boolean isEmpty) {
+        mRecyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        mEmptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+    }
+
     protected abstract boolean isFiltered(ApplicationInfo applicationInfo);
 
-    private class LoadApps extends AsyncTask<Void, Void, List<AppItem>> {
-        @Override protected List<AppItem> doInBackground(Void... params) {
+    private class LoadApps extends AsyncTask<Void, Void, ArrayList<AppItem>> {
+        @Override protected ArrayList<AppItem> doInBackground(Void... params) {
             final PackageManager pm = getActivity().getPackageManager();
-            final List<AppItem> appList = new ArrayList<>();
+            final ArrayList<AppItem> appList = new ArrayList<>();
             final List<PackageInfo> pkgInfos = pm.getInstalledPackages(0);
 
             for (final PackageInfo pkgInfo : pkgInfos) {
@@ -152,19 +187,19 @@ public abstract class BaseAppListFragment extends AttachFragment {
             return appList;
         }
 
-        @Override protected void onPostExecute(final List<AppItem> appItems) {
+        @Override protected void onPostExecute(final ArrayList<AppItem> appItems) {
             final ObjectAnimator anim = ObjectAnimator.ofFloat(mProgressContainer, "alpha", 1f, 0f);
             anim.addListener(new Animator.AnimatorListener() {
                 @Override public void onAnimationStart(Animator animation) {
                     final boolean isEmpty = (appItems == null || appItems.size() <= 0);
-                    mRecyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
-                    mEmptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+                    updateVisibility(isEmpty);
                 }
 
                 @Override public void onAnimationEnd(Animator animation) {
                     if (appItems != null) {
                         final AppListAdapter adapter = new AppListAdapter(getActivity(), appItems);
                         mRecyclerView.setAdapter(adapter);
+                        mAdapter = adapter;
                     }
 
                     mProgressContainer.setVisibility(View.GONE);
