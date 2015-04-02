@@ -3,4 +3,4 @@
 	url = https://github.com/NamelessRom/android_external_mpandroidchart
 [submodule "libs/AndroidSwipeLayout"]
 	path = libs/AndroidSwipeLayout
-	url = https://github.com/Evisceration/AndroidSwipeLayout
+	url = https://github.com/NamelessRom/android_external_AndroidSwipeLayout
