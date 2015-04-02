@@ -329,9 +329,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                 : Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
         mAppLabel.setTextColor(color);
 
-        final String version = String.format("%s (%s)",
-                mAppItem.getPackageInfo().versionName, mAppItem.getPackageInfo().versionCode);
-        mAppVersion.setText(version);
+        mAppVersion.setText(mAppItem.getVersion());
 
         setupPermissionsView();
 
