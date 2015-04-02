@@ -29,31 +29,31 @@ public class DeviceConstants {
     //==============================================================================================
     // Fragments
     //==============================================================================================
-    public static final int ID_DEVICE_INFORMATION = R.string.device_information;
-    public static final int ID_FEATURES = R.string.features;
+    public static final int ID_DEVICE_INFORMATION = 100000;
+    public static final int ID_FEATURES = 200000;
     public static final int ID_FAST_CHARGE = ID_FEATURES + 1000;
     public static final int ID_SOUND_CONTROL = ID_FEATURES + 1100;
     public static final int ID_KSM = ID_FEATURES + 1200;
     public static final int ID_UKSM = ID_FEATURES + 1300;
     public static final int ID_VOLTAGE = ID_FEATURES + 1400;
     public static final int ID_ENTROPY = ID_FEATURES + 1500;
-    public static final int ID_PERFORMANCE_INFO = R.string.information;
-    public static final int ID_PERFORMANCE_CPU_SETTINGS = R.string.cpusettings;
+    public static final int ID_PERFORMANCE_INFO = 300000;
+    public static final int ID_PERFORMANCE_CPU_SETTINGS = 400000;
     public static final int ID_GOVERNOR_TUNABLE = ID_PERFORMANCE_CPU_SETTINGS + 1000;
-    public static final int ID_PERFORMANCE_GPU_SETTINGS = R.string.gpusettings;
-    public static final int ID_FILESYSTEM = R.string.filesystem;
+    public static final int ID_PERFORMANCE_GPU_SETTINGS = 500000;
+    public static final int ID_FILESYSTEM = 600000;
     public static final int ID_IOSCHED_TUNING = ID_FILESYSTEM + 1000;
-    public static final int ID_THERMAL = R.string.thermal;
-    public static final int ID_TOOLS_APP_MANAGER = R.string.app_manager;
-    public static final int ID_TOOLS_TASKER = R.string.tasker;
-    public static final int ID_TOOLS_FLASHER = R.string.flasher;
-    public static final int ID_TOOLS_MORE = R.string.more;
+    public static final int ID_THERMAL = 700000;
+    public static final int ID_TOOLS_APP_MANAGER = 800000;
+    public static final int ID_TOOLS_TASKER = 900000;
+    public static final int ID_TOOLS_FLASHER = 1000000;
+    public static final int ID_TOOLS_MORE = 1100000;
     public static final int ID_TOOLS_VM = ID_TOOLS_MORE + 1000;
     public static final int ID_TOOLS_EDITORS_VM = ID_TOOLS_MORE + 1020;
     public static final int ID_TOOLS_EDITORS_BUILD_PROP = ID_TOOLS_MORE + 1100;
     public static final int ID_TOOLS_WIRELESS_FM = ID_TOOLS_MORE + 1300;
-    public static final int ID_PREFERENCES = R.string.preferences;
-    public static final int ID_ABOUT = R.string.about;
+    public static final int ID_PREFERENCES = 8000000;
+    public static final int ID_ABOUT = 9000000;
     //----------------------------------------------------------------------------------------------
 
     //==============================================================================================
@@ -62,31 +62,49 @@ public class DeviceConstants {
     public static final String DC_LOG_DIR = File.separator + "Logs";
     //==============================================================================================
     public static final String DC_LOG_FILE_FSTRIM = DC_LOG_DIR + File.separator + "fstrim.log";
-    //==============================================================================================
-    public static final String DC_DOWNGRADE = File.separator + ".downgraded";
 
     //==============================================================================================
     // Donations
     //==============================================================================================
-    /** Donation  2€ **/
+    /**
+     * Donation  2€ *
+     */
     public static final String SKU_DONATION_1 = "donation_1";
-    /** Donation  5€ **/
+    /**
+     * Donation  5€ *
+     */
     public static final String SKU_DONATION_2 = "donation_2";
-    /** Donation 10€ **/
+    /**
+     * Donation 10€ *
+     */
     public static final String SKU_DONATION_3 = "donation_3";
-    /** Donation 20€ **/
+    /**
+     * Donation 20€ *
+     */
     public static final String SKU_DONATION_4 = "donation_4";
-    /** Donation 50€ **/
+    /**
+     * Donation 50€ *
+     */
     public static final String SKU_DONATION_5 = "donation_5";
 
-    /** Donation, subscription  2€ **/
+    /**
+     * Donation, subscription  2€ *
+     */
     public static final String SUB_DONATION_1 = "donation_sub_1";
-    /** Donation, subscription  5€ **/
+    /**
+     * Donation, subscription  5€ *
+     */
     public static final String SUB_DONATION_2 = "donation_sub_2";
-    /** Donation, subscription 10€ **/
+    /**
+     * Donation, subscription 10€ *
+     */
     public static final String SUB_DONATION_3 = "donation_sub_3";
-    /** Donation, subscription 20€ **/
+    /**
+     * Donation, subscription 20€ *
+     */
     public static final String SUB_DONATION_4 = "donation_sub_4";
-    /** Donation, subscription 50€ **/
+    /**
+     * Donation, subscription 50€ *
+     */
     public static final String SUB_DONATION_5 = "donation_sub_5";
 }

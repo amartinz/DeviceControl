@@ -37,26 +37,26 @@ public class MenuListArrayAdapter extends BaseAdapter {
 
     private final Context mContext;
     private final int mLayoutResourceId;
-    private final ArrayList<Integer> mTitles;
-    private final ArrayList<Integer> mIcons;
+    private final ArrayList<MenuItem> mItems;
 
     public MenuListArrayAdapter(final Context context, final int layoutResourceId,
-            final ArrayList<Integer> titles, final ArrayList<Integer> icons) {
+            final ArrayList<MenuItem> items) {
         mContext = context;
         mLayoutResourceId = layoutResourceId;
-        mTitles = titles;
-        mIcons = icons;
+        mItems = items;
     }
 
-    @Override public int getCount() { return mTitles.size(); }
+    @Override public int getCount() { return mItems.size(); }
 
-    @Override public Object getItem(final int position) { return mTitles.get(position); }
+    @Override public Object getItem(final int position) { return mItems.get(position); }
 
     @Override public long getItemId(final int arg0) { return 0; }
 
     @Override public int getViewTypeCount() { return 2; }
 
-    @Override public int getItemViewType(final int pos) { return (mIcons.get(pos) == -1) ? 1 : 0; }
+    @Override public int getItemViewType(final int pos) {
+        return (mItems.get(pos).icon == -1) ? 1 : 0;
+    }
 
     @Override public boolean isEnabled(final int pos) { return getItemViewType(pos) != 1; }
 
@@ -99,11 +99,10 @@ public class MenuListArrayAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) v.getTag();
         }
 
-        final int titleResId = mTitles.get(position);
         if (type == 0) {
-            viewHolder.title.setText(titleResId);
+            viewHolder.title.setText(mItems.get(position).title);
 
-            final int imageRes = mIcons.get(position);
+            final int imageRes = mItems.get(position).icon;
             if (imageRes == 0) {
                 viewHolder.image.setVisibility(View.INVISIBLE);
             } else {
@@ -114,12 +113,24 @@ public class MenuListArrayAdapter extends BaseAdapter {
                 }
             }
         } else if (type == 1) {
-            viewHolder.header.setText(titleResId);
+            viewHolder.header.setText(mItems.get(position).title);
             viewHolder.header.setClickable(false);
             viewHolder.header.setTextColor(Application.get().getAccentColor());
         }
 
         return v;
+    }
+
+    public static class MenuItem {
+        public final int id;
+        public final int title;
+        public final int icon;
+
+        public MenuItem(int id, int title, int icon) {
+            this.id = id;
+            this.title = title;
+            this.icon = icon;
+        }
     }
 
 }
