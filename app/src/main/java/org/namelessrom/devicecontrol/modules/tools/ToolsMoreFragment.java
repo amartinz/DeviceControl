@@ -36,7 +36,6 @@ public class ToolsMoreFragment extends AttachPreferenceFragment {
 
     private CustomPreference mBuildProp;
     private CustomPreference mSysctlVm;
-    private CustomPreference mAppManager;
     private CustomPreference mWirelessFileManager;
 
     @Override protected int getFragmentId() { return DeviceConstants.ID_TOOLS_MORE; }
@@ -47,7 +46,6 @@ public class ToolsMoreFragment extends AttachPreferenceFragment {
 
         mMediaScan = (CustomPreference) findPreference("media_scan");
 
-        mAppManager = (CustomPreference) findPreference("app_manager");
         mWirelessFileManager = (CustomPreference) findPreference("wireless_file_manager");
 
         mBuildProp = (CustomPreference) findPreference("build_prop");
@@ -62,9 +60,7 @@ public class ToolsMoreFragment extends AttachPreferenceFragment {
 
         if (mMediaScan == preference) {
             startMediaScan();
-        } else if (mAppManager == preference) {
-            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_TOOLS_APP_MANAGER);
-        } else if (mWirelessFileManager == preference) {
+        } if (mWirelessFileManager == preference) {
             MainActivity.loadFragment(getActivity(), DeviceConstants.ID_TOOLS_WIRELESS_FM);
         } else if (mBuildProp == preference) {
             MainActivity.loadFragment(getActivity(), DeviceConstants.ID_TOOLS_EDITORS_BUILD_PROP);

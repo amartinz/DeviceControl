@@ -139,6 +139,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         // header - tools
         mMenuEntries.add(R.string.tools);
         mMenuIcons.add(-1);
+        // tools - app manager
+        mMenuEntries.add(DeviceConstants.ID_TOOLS_APP_MANAGER);
+        mMenuIcons.add(R.drawable.ic_android);
         // tools - tasker
         mMenuEntries.add(DeviceConstants.ID_TOOLS_TASKER);
         mMenuIcons.add(R.drawable.ic_extension);
@@ -465,6 +468,12 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
+            case DeviceConstants.ID_TOOLS_APP_MANAGER:
+                if (!onResume) mCurrentFragment = new AppListFragment();
+                mTitle = mFragmentTitle = R.string.app_manager;
+                mSubFragmentTitle = -1;
+                break;
+            //--------------------------------------------------------------------------------------
             case DeviceConstants.ID_TOOLS_TASKER:
                 if (!onResume) mCurrentFragment = new TaskerFragment();
                 mTitle = mFragmentTitle = R.string.tasker;
@@ -493,10 +502,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             case DeviceConstants.ID_TOOLS_EDITORS_BUILD_PROP:
                 if (!onResume) mCurrentFragment = new BuildPropEditorFragment();
                 mTitle = mSubFragmentTitle = R.string.buildprop;
-                break;
-            case DeviceConstants.ID_TOOLS_APP_MANAGER:
-                if (!onResume) mCurrentFragment = new AppListFragment();
-                mTitle = mSubFragmentTitle = R.string.app_manager;
                 break;
             case DeviceConstants.ID_TOOLS_WIRELESS_FM:
                 if (!onResume) mCurrentFragment = new WirelessFileManagerFragment();

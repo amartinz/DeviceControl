@@ -17,11 +17,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-        android:icon="@drawable/ic_android"
-        android:key="app_manager"
-        android:title="@string/app_manager" />
-
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
         android:icon="@drawable/ic_wifi"
         android:key="wireless_file_manager"
         android:title="@string/wireless_file_manager" />
