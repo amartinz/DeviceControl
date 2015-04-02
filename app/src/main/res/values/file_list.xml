@@ -88,6 +88,7 @@
         <item>/sys/bus/i2c/devices/1-004a/tsp</item>
         <item>/sys/devices/virtual/input/lge_touch/dt_wake_enabled</item>
         <item>/sys/android_touch/doubletap2wake</item>
+        <item>/sys/kernel/touchscreen/double_tap_enable</item>
     </string-array>
     <string-array name="files_knock_on_values" translatable="false">
         <item>"1;0"</item>
