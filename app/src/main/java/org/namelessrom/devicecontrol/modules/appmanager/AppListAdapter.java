@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.ui.adapters;
+package org.namelessrom.devicecontrol.modules.appmanager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -30,7 +30,6 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.modules.appmanager.AppDetailsActivity;
 import org.namelessrom.devicecontrol.objects.AppItem;
 
 import java.util.List;
@@ -52,6 +51,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         private final ImageView appIcon;
         private final TextView appLabel;
         private final TextView packageName;
+        private final TextView appVersion;
 
         private AppItem mAppItem;
 
@@ -62,6 +62,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             appIcon = (ImageView) v.findViewById(R.id.app_icon);
             appLabel = (TextView) v.findViewById(R.id.app_label);
             packageName = (TextView) v.findViewById(R.id.app_package);
+            appVersion = (TextView) v.findViewById(R.id.app_version);
 
             rootView.setOnClickListener(this);
         }
@@ -72,6 +73,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             appIcon.setImageDrawable(appItem.getIcon());
             appLabel.setText(appItem.getLabel());
             packageName.setText(appItem.getPackageName());
+            appVersion.setText(appItem.getVersion());
 
             final int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
             appLabel.setTextColor(appItem.isSystemApp()
@@ -91,8 +93,14 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     @Override public int getItemCount() { return mAppList.size(); }
 
     @Override public ViewHolder onCreateViewHolder(final ViewGroup parent, final int type) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_app, parent, false));
+        final int resId;
+        if (Application.get().isDarkTheme()) {
+            resId = R.layout.card_app_item_dark;
+        } else {
+            resId = R.layout.card_app_item_light;
+        }
+        final View view = LayoutInflater.from(parent.getContext()).inflate(resId, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override public void onBindViewHolder(final ViewHolder viewHolder, final int position) {

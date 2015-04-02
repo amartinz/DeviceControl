@@ -51,6 +51,10 @@ public class AppItem {
 
     public String getPackageName() { return pkgInfo.packageName; }
 
+    public String getVersion() {
+        return String.format("%s (%s)", pkgInfo.versionName, pkgInfo.versionCode);
+    }
+
     public boolean isSystemApp() {
         final int mask = (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP);
         return ((appInfo.flags & mask) != 0);
