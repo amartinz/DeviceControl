@@ -213,7 +213,6 @@
     <string name="become_a_monkey">Become a monkey</string>
     <string name="is_monkey">Wait, are you serious?\nYou are pretty smart for a monkey.\nNot that they are stupid but…\nWell, lets skip this.</string>
     <string name="no_monkey">Not a monkey? *Sigh* :(</string>
-    <string name="downgraded">Database got wiped due a downgrade!</string>
     <string name="media_scan_trigger">Trigger media scan</string>
     <string name="media_scan_summary">Manuall trigger a media scan, in case you have your phone connected via MTP and new files are not visible.</string>
     <string name="media_scan_triggered">Media scan triggered, this may take a while!</string>

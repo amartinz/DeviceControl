@@ -235,14 +235,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         Utils.startTaskerService();
 
-        final String downgradePath = getFilesDir() + DeviceConstants.DC_DOWNGRADE;
-        if (Utils.fileExists(downgradePath)) {
-            if (!new File(downgradePath).delete()) {
-                Logger.wtf(this, "Could not delete downgrade indicator file!");
-            }
-            Toast.makeText(this, R.string.downgraded, Toast.LENGTH_LONG).show();
-        }
-
         if (DeviceConfiguration.get(this).dcFirstStart) {
             DeviceConfiguration.get(this).dcFirstStart = false;
             DeviceConfiguration.get(this).saveConfiguration(this);
@@ -262,7 +254,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     }
 
     @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        loadFragmentPrivate((Integer) adapterView.getItemAtPosition(i), false);
+        final int id = (Integer) adapterView.getItemAtPosition(i);
+        Logger.d(this, "onItemClick -> %s", id);
+        loadFragmentPrivate(id, false);
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {

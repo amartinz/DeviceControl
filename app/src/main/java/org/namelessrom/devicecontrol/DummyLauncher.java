@@ -94,9 +94,14 @@ public class DummyLauncher extends BaseActivity {
     }
 
     private void startActivity() {
-        startActivity(new Intent(DummyLauncher.this, MainActivity.class)
-                .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION));
+        final Intent i = new Intent(DummyLauncher.this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
+        startActivity(i);
+        overridePendingTransition(0, 0);
         finish();
+        overridePendingTransition(0, 0);
+
     }
 
     private class CheckTools extends AsyncTask<Void, Void, Device> {
