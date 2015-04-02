@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class AppListFragment extends AttachViewPagerFragment {
 
-    @Override protected int getFragmentId() { return DeviceConstants.ID_PREFERENCES; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_TOOLS_APP_MANAGER; }
 
     @Override public ViewPagerAdapter getPagerAdapter() {
         final ArrayList<Fragment> fragments = new ArrayList<>(3);
