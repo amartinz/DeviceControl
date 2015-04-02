@@ -28,9 +28,9 @@ import android.support.v7.widget.Toolbar;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
-import org.namelessrom.devicecontrol.objects.FlashItem;
 import org.namelessrom.devicecontrol.modules.filepicker.FilePickerFragment;
 import org.namelessrom.devicecontrol.modules.filepicker.FilePickerListener;
+import org.namelessrom.devicecontrol.objects.FlashItem;
 
 import java.io.File;
 import java.util.Locale;

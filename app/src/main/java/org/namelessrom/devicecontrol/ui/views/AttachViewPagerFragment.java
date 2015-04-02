@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +35,7 @@ import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import java.util.ArrayList;
 
 public abstract class AttachViewPagerFragment extends AttachFragment {
+    private NoSwipeViewPager mViewPager;
 
     @Override protected int getFragmentId() {
         return 0;
@@ -51,17 +51,21 @@ public abstract class AttachViewPagerFragment extends AttachFragment {
         MainActivity.setSwipeOnContent(DeviceConfiguration.get(getActivity()).swipeOnContent);
     }
 
+    public NoSwipeViewPager getViewPager() {
+        return mViewPager;
+    }
+
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
 
         final ViewPagerAdapter adapter = getPagerAdapter();
-        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(3);
+        mViewPager = (NoSwipeViewPager) view.findViewById(R.id.viewpager);
+        mViewPager.setAdapter(adapter);
+        mViewPager.setOffscreenPageLimit(3);
 
         final PagerSlidingTabStrip tabHost = (PagerSlidingTabStrip) view.findViewById(R.id.tabHost);
-        tabHost.setViewPager(viewPager);
+        tabHost.setViewPager(mViewPager);
 
         return view;
     }

@@ -18,15 +18,8 @@
 package org.namelessrom.devicecontrol.modules.appmanager;
 
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 
 import org.namelessrom.devicecontrol.objects.AppItem;
-import org.namelessrom.devicecontrol.utils.SortHelper;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class UserAppListFragment extends BaseAppListFragment {
 

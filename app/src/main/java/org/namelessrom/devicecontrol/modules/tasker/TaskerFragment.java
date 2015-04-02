@@ -40,10 +40,10 @@ import com.melnykov.fab.ObservableScrollView;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
+import org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity;
 
 import java.util.List;
 
