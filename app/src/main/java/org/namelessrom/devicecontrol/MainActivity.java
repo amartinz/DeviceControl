@@ -76,7 +76,6 @@ import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.proprietary.Configuration;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
@@ -100,57 +99,66 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     private int mFragmentTitle = R.string.home;
     private int mSubFragmentTitle = -1;
 
-    private final ArrayList<Integer> mMenuEntries = new ArrayList<>();
-    private final ArrayList<Integer> mMenuIcons = new ArrayList<>();
+    private ArrayList<MenuListArrayAdapter.MenuItem> setupMenuLists() {
+        final ArrayList<MenuListArrayAdapter.MenuItem> menuItems = new ArrayList<>();
 
-    private void setupMenuLists() {
         // header - device
-        mMenuEntries.add(R.string.device);
-        mMenuIcons.add(-1);
+        menuItems.add(new MenuListArrayAdapter.MenuItem(-1, R.string.device, -1));
         // device - information
-        mMenuEntries.add(DeviceConstants.ID_DEVICE_INFORMATION);
-        mMenuIcons.add(R.drawable.ic_device_info);
+        menuItems.add(new MenuListArrayAdapter.MenuItem(
+                DeviceConstants.ID_DEVICE_INFORMATION, R.string.device_information,
+                R.drawable.ic_device_info));
         // device - features
-        mMenuEntries.add(DeviceConstants.ID_FEATURES);
-        mMenuIcons.add(R.drawable.ic_developer_mode);
+        menuItems.add(new MenuListArrayAdapter.MenuItem(
+                DeviceConstants.ID_FEATURES, R.string.features,
+                R.drawable.ic_developer_mode));
 
         // header - performance
-        mMenuEntries.add(R.string.performance);
-        mMenuIcons.add(-1);
+        menuItems.add(new MenuListArrayAdapter.MenuItem(-1, R.string.performance, -1));
         // performance - information
-        mMenuEntries.add(DeviceConstants.ID_PERFORMANCE_INFO);
-        mMenuIcons.add(R.drawable.ic_menu_perf_info);
+        menuItems.add(new MenuListArrayAdapter.MenuItem(
+                DeviceConstants.ID_PERFORMANCE_INFO, R.string.information,
+                R.drawable.ic_menu_perf_info));
         // performance - cpu
-        mMenuEntries.add(DeviceConstants.ID_PERFORMANCE_CPU_SETTINGS);
-        mMenuIcons.add(R.drawable.ic_memory);
+        menuItems.add(new MenuListArrayAdapter.MenuItem(
+                DeviceConstants.ID_PERFORMANCE_CPU_SETTINGS, R.string.cpusettings,
+                R.drawable.ic_memory));
         // performance - gpu
-        mMenuEntries.add(DeviceConstants.ID_PERFORMANCE_GPU_SETTINGS);
-        mMenuIcons.add(R.drawable.ic_display);
+        menuItems.add(new MenuListArrayAdapter.MenuItem(
+                DeviceConstants.ID_PERFORMANCE_GPU_SETTINGS, R.string.gpusettings,
+                R.drawable.ic_display));
         // performance - filesystem
-        mMenuEntries.add(DeviceConstants.ID_FILESYSTEM);
-        mMenuIcons.add(R.drawable.ic_storage);
+        menuItems.add(new MenuListArrayAdapter.MenuItem(
+                DeviceConstants.ID_FILESYSTEM, R.string.filesystem,
+                R.drawable.ic_storage));
         // performance - thermal
         if (Utils.fileExists(getString(R.string.directory_msm_thermal))
                 || Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
-            mMenuEntries.add(DeviceConstants.ID_THERMAL);
-            mMenuIcons.add(R.drawable.ic_heat);
+            menuItems.add(new MenuListArrayAdapter.MenuItem(
+                    DeviceConstants.ID_THERMAL, R.string.thermal,
+                    R.drawable.ic_heat));
         }
 
         // header - tools
-        mMenuEntries.add(R.string.tools);
-        mMenuIcons.add(-1);
+        menuItems.add(new MenuListArrayAdapter.MenuItem(-1, R.string.tools, -1));
         // tools - app manager
-        mMenuEntries.add(DeviceConstants.ID_TOOLS_APP_MANAGER);
-        mMenuIcons.add(R.drawable.ic_android);
+        menuItems.add(new MenuListArrayAdapter.MenuItem(
+                DeviceConstants.ID_TOOLS_APP_MANAGER, R.string.app_manager,
+                R.drawable.ic_android));
         // tools - tasker
-        mMenuEntries.add(DeviceConstants.ID_TOOLS_TASKER);
-        mMenuIcons.add(R.drawable.ic_extension);
+        menuItems.add(new MenuListArrayAdapter.MenuItem(
+                DeviceConstants.ID_TOOLS_TASKER, R.string.tasker,
+                R.drawable.ic_extension));
         // tools - flasher
-        mMenuEntries.add(DeviceConstants.ID_TOOLS_FLASHER);
-        mMenuIcons.add(R.drawable.ic_flash);
+        menuItems.add(new MenuListArrayAdapter.MenuItem(
+                DeviceConstants.ID_TOOLS_FLASHER, R.string.flasher,
+                R.drawable.ic_flash));
         // tools - more
-        mMenuEntries.add(DeviceConstants.ID_TOOLS_MORE);
-        mMenuIcons.add(R.drawable.ic_widgets);
+        menuItems.add(new MenuListArrayAdapter.MenuItem(
+                DeviceConstants.ID_TOOLS_MORE, R.string.more,
+                R.drawable.ic_widgets));
+
+        return menuItems;
     }
 
     //==============================================================================================
@@ -223,10 +231,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         MainActivity.setSwipeOnContent(DeviceConfiguration.get(this).swipeOnContent);
 
         // setup menu list
-        setupMenuLists();
-        final MenuListArrayAdapter mAdapter = new MenuListArrayAdapter(
-                this, R.layout.menu_main_list_item, mMenuEntries, mMenuIcons);
-        menuList.setAdapter(mAdapter);
+        final ArrayList<MenuListArrayAdapter.MenuItem> menuItems = setupMenuLists();
+        final MenuListArrayAdapter adapter = new MenuListArrayAdapter(
+                this, R.layout.menu_main_list_item, menuItems);
+        menuList.setAdapter(adapter);
         menuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         menuList.setOnItemClickListener(this);
 
@@ -254,9 +262,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     }
 
     @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        final int id = (Integer) adapterView.getItemAtPosition(i);
-        Logger.d(this, "onItemClick -> %s", id);
-        loadFragmentPrivate(id, false);
+        final MenuListArrayAdapter.MenuItem item =
+                (MenuListArrayAdapter.MenuItem) adapterView.getItemAtPosition(i);
+        Logger.d(this, "onItemClick -> %s", item.id);
+        loadFragmentPrivate(item.id, false);
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {

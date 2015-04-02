@@ -24,6 +24,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -46,7 +47,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class BaseAppListFragment extends AttachFragment implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+public abstract class BaseAppListFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
     private static final int ANIM_DURATION = 350;
 
     private AppListAdapter mAdapter;
@@ -56,8 +57,6 @@ public abstract class BaseAppListFragment extends AttachFragment implements Sear
     private LinearLayout mProgressContainer;
 
     private boolean mIsLoading;
-
-    @Override protected int getFragmentId() { return DeviceConstants.ID_TOOLS_APP_MANAGER; }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_app_list, menu);
