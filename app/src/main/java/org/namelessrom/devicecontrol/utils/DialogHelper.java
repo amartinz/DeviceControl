@@ -35,6 +35,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.objects.BootupItem;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 public class DialogHelper {
 
