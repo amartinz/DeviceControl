@@ -18,6 +18,8 @@
 package org.namelessrom.devicecontrol.modules.appmanager;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -28,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
@@ -43,9 +46,15 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     private final ArrayList<AppItem> mAppList;
     private ArrayList<AppItem> mFiltered;
 
-    public AppListAdapter(final Activity activity, final ArrayList<AppItem> appList) {
+    private final AppItem.UninstallListener mListener;
+
+    private Toast mToast;
+
+    public AppListAdapter(final Activity activity, final ArrayList<AppItem> appList,
+            final AppItem.UninstallListener listener) {
         mActivity = activity;
         mFiltered = appList;
+        mListener = listener;
 
         // save original items
         mAppList = new ArrayList<>(mFiltered);
@@ -54,6 +63,10 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     public final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final View rootView;
         private final View container;
+
+        private final ImageView actionOpen;
+        private final ImageView actionUninstall;
+
         private final ImageView appIcon;
         private final TextView appLabel;
         private final TextView packageName;
@@ -64,6 +77,12 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         public ViewHolder(final View v) {
             super(v);
             rootView = v;
+
+            actionOpen = (ImageView) v.findViewById(R.id.app_open);
+            actionOpen.setOnClickListener(this);
+            actionUninstall = (ImageView) v.findViewById(R.id.app_uninstall);
+            actionUninstall.setOnClickListener(this);
+
             container = v.findViewById(R.id.app_details_container);
             appIcon = (ImageView) v.findViewById(R.id.app_icon);
             appLabel = (TextView) v.findViewById(R.id.app_label);
@@ -86,13 +105,63 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                     ? res.getColor(R.color.red_middle) : color);
             container.setBackgroundResource(appItem.isEnabled()
                     ? android.R.color.transparent : R.color.darker_gray);
+
+            actionOpen.setVisibility(appItem.isEnabled() ? View.VISIBLE : View.GONE);
         }
 
         @Override public void onClick(View v) {
-            final Intent intent = new Intent(mActivity, AppDetailsActivity.class);
-            intent.putExtra(AppDetailsActivity.ARG_FROM_ACTIVITY, true);
-            intent.putExtra(AppDetailsActivity.ARG_PACKAGE_NAME, mAppItem.getPackageName());
-            mActivity.startActivity(intent);
+            final int id = v.getId();
+            switch (id) {
+                case R.id.app_open: {
+                    final Toast toast = mAppItem.launchActivity(mActivity);
+                    if (toast == null) {
+                        break;
+                    }
+
+                    if (mToast != null) {
+                        mToast.cancel();
+                    }
+                    mToast = toast;
+                    mToast.show();
+                    break;
+                }
+                case R.id.app_uninstall: {
+                    final String message;
+                    if (mAppItem.isSystemApp()) {
+                        message = String.format("%s\n\n%s",
+                                mActivity.getString(R.string.uninstall_msg, mAppItem.getLabel()),
+                                mActivity.getString(R.string.uninstall_msg_system_app));
+                    } else {
+                        message = mActivity.getString(R.string.uninstall_msg, mAppItem.getLabel());
+                    }
+
+                    new AlertDialog.Builder(mActivity)
+                            .setMessage(message)
+                            .setNegativeButton(android.R.string.cancel,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                            .setPositiveButton(android.R.string.yes,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            mAppItem.uninstall(mActivity, mListener);
+                                        }
+                                    })
+                            .show();
+                    break;
+                }
+                default: {
+                    final Intent intent = new Intent(mActivity, AppDetailsActivity.class);
+                    intent.putExtra(AppDetailsActivity.ARG_FROM_ACTIVITY, true);
+                    intent.putExtra(AppDetailsActivity.ARG_PACKAGE_NAME, mAppItem.getPackageName());
+                    mActivity.startActivity(intent);
+                    break;
+                }
+            }
         }
     }
 

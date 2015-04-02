@@ -140,4 +140,8 @@
         <attr name="pstsTextAlpha" format="float" />
         <attr name="pstsTextSelectedAlpha" format="float" />
     </declare-styleable>
+    <!-- ForegroundImageView -->
+    <declare-styleable name="ForegroundImageView">
+        <attr name="android:foreground"/>
+    </declare-styleable>
 </resources>

@@ -37,10 +37,8 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.objects.AppItem;
-import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.SortHelper;
 
 import java.util.ArrayList;
@@ -196,7 +194,13 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
 
                 @Override public void onAnimationEnd(Animator animation) {
                     if (appItems != null) {
-                        final AppListAdapter adapter = new AppListAdapter(getActivity(), appItems);
+                        AppItem.UninstallListener listener = new AppItem.UninstallListener() {
+                            @Override public void OnUninstallComplete() {
+                                loadApps(true);
+                            }
+                        };
+                        final AppListAdapter adapter =
+                                new AppListAdapter(getActivity(), appItems, listener);
                         mRecyclerView.setAdapter(adapter);
                         mAdapter = adapter;
                     }

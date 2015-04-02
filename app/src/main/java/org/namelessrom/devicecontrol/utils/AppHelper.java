@@ -17,7 +17,10 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.IPackageDataObserver;
@@ -25,10 +28,14 @@ import android.content.pm.IPackageDeleteObserver;
 import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
+import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.objects.PackageStatsObserver;
 
 import java.lang.reflect.Method;

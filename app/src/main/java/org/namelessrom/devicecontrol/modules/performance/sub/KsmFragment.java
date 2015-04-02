@@ -35,7 +35,7 @@ import org.namelessrom.devicecontrol.hardware.KsmUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.utils.DialogHelper;
+import org.namelessrom.devicecontrol.ui.dialogs.DialogHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;

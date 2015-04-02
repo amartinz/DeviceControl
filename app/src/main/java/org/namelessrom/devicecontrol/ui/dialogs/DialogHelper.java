@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.utils;
+package org.namelessrom.devicecontrol.ui.dialogs;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -35,6 +35,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.objects.BootupItem;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 public class DialogHelper {
 

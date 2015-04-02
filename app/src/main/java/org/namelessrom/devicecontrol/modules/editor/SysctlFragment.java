@@ -31,7 +31,7 @@ import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.utils.DialogHelper;
+import org.namelessrom.devicecontrol.ui.dialogs.DialogHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
