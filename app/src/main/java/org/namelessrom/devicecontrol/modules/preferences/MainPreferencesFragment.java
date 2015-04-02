@@ -142,7 +142,7 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
                     title = getString(R.string.app_version_name, pInfo.versionName);
                     summary = getString(R.string.app_version_code, pInfo.versionCode);
                 } else {
-                    throw new Exception("pm not null");
+                    throw new Exception("pm is null");
                 }
             } catch (Exception ignored) {
                 title = getString(R.string.app_version_name, getString(R.string.unknown));

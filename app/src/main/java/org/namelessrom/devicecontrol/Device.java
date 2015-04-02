@@ -79,10 +79,10 @@ public class Device {
     }
 
     public void update() {
-        // check root
-        final boolean binaryExists = RootTools.isRootAvailable()
-                || new File("/system/bin/su").exists()
+        // check root for common locations, then via roottools and as last resort the SuperSU ones
+        final boolean binaryExists = new File("/system/bin/su").exists()
                 || new File("/system/xbin/su").exists()
+                || RootTools.isRootAvailable()
                 || new File("/system/bin/.ext/.su").exists()
                 || new File("/system/xbin/sugote").exists();
         hasRoot = binaryExists && RootTools.isAccessGiven();

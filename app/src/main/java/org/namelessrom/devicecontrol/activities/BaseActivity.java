@@ -28,10 +28,11 @@ import org.namelessrom.devicecontrol.R;
 public abstract class BaseActivity extends ActionBarActivity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         final boolean isDarkTheme = Application.get().isDarkTheme();
         setTheme(isDarkTheme ? R.style.AppTheme_Dark : R.style.AppTheme_Light);
+
+        super.onCreate(savedInstanceState);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // WTF! IRIS506Q android version "unknown"
             try {

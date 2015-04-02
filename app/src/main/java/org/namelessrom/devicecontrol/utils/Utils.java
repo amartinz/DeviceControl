@@ -38,9 +38,9 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
+import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.services.TaskerService;
-import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 
 import java.io.BufferedReader;
@@ -552,9 +552,9 @@ public class Utils {
 
     public static void restartActivity(final Activity activity) {
         if (activity == null) return;
-        activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         activity.finish();
-        activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         activity.startActivity(activity.getIntent());
     }
 

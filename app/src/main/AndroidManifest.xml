@@ -154,7 +154,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/add_task"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Light"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
