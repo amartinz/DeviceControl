@@ -26,8 +26,8 @@ import com.stericson.roottools.execution.Shell;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
+import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 
 import java.util.ArrayList;

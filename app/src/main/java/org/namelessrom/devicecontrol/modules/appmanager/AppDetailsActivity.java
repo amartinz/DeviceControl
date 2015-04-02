@@ -18,8 +18,6 @@
 package org.namelessrom.devicecontrol.modules.appmanager;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -28,7 +26,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -68,7 +65,6 @@ import org.namelessrom.devicecontrol.modules.appmanager.permissions.AppSecurityP
 import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.objects.PackageStatsObserver;
 import org.namelessrom.devicecontrol.utils.AppHelper;
-import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -267,21 +263,15 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                 break;
             }
             case R.id.app_icon: {
-                Intent i = getPackageManager().getLaunchIntentForPackage(mAppItem.getPackageName());
-                if (i != null) {
-                    try {
-                        startActivity(i);
-                        return;
-                    } catch (ActivityNotFoundException anfe) {
-                        Logger.e(this, "Could not launch activity", anfe);
-                    }
+                final Toast toast = mAppItem.launchActivity(this);
+                if (toast == null) {
+                    break;
                 }
 
                 if (mToast != null) {
                     mToast.cancel();
                 }
-                mToast = Toast.makeText(this, R.string.could_not_launch_activity,
-                        Toast.LENGTH_SHORT);
+                mToast = toast;
                 mToast.show();
                 break;
             }
@@ -451,61 +441,6 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         } catch (Exception ignored) { /* ignored */ }
     }
 
-    private void uninstall() {
-        // try via native package manager api
-        AppHelper.uninstallPackage(mPm, mAppItem.getPackageName());
-
-        // build our command
-        final StringBuilder sb = new StringBuilder();
-
-        sb.append(String.format("pm uninstall %s;", mAppItem.getPackageName()));
-
-        if (mAppItem.isSystemApp()) {
-            sb.append("busybox mount -o rw,remount /system;");
-        }
-
-        sb.append(String.format("rm -rf %s;", mAppItem.getApplicationInfo().publicSourceDir));
-        sb.append(String.format("rm -rf %s;", mAppItem.getApplicationInfo().sourceDir));
-        sb.append(String.format("rm -rf %s;", mAppItem.getApplicationInfo().dataDir));
-
-        if (mAppItem.isSystemApp()) {
-            sb.append("busybox mount -o ro,remount /system;");
-        }
-
-        final String cmd = sb.toString();
-        Logger.v(this, cmd);
-
-        // create the dialog (will not be shown for a long amount of time though)
-        final ProgressDialog dialog;
-        dialog = new ProgressDialog(this);
-        dialog.setTitle(R.string.uninstalling);
-        dialog.setMessage(getString(R.string.applying_wait));
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setCancelable(false);
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override protected void onPreExecute() {
-                dialog.show();
-            }
-
-            @Override protected Void doInBackground(Void... voids) {
-                Utils.runRootCommand(cmd, true);
-                return null;
-            }
-
-            @Override protected void onPostExecute(Void aVoid) {
-                dialog.dismiss();
-                Toast.makeText(AppDetailsActivity.this,
-                        getString(R.string.uninstall_success, mAppItem.getLabel()),
-                        Toast.LENGTH_SHORT).show();
-                mAppItem = null;
-                finish();
-
-            }
-        }.execute();
-    }
-
     private void updateAppEnabled() {
         if (mAppItem == null) {
             return;
@@ -661,7 +596,13 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                                         break;
                                     }
                                     case DIALOG_TYPE_UNINSTALL: {
-                                        uninstall();
+                                        mAppItem.uninstall(AppDetailsActivity.this,
+                                                new AppItem.UninstallListener() {
+                                                    @Override public void OnUninstallComplete() {
+                                                        mAppItem = null;
+                                                        AppDetailsActivity.this.finish();
+                                                    }
+                                                });
                                         break;
                                     }
                                     default: {

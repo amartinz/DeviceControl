@@ -2,7 +2,6 @@ package org.namelessrom.devicecontrol.objects;
 
 import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageStats;
-import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
 

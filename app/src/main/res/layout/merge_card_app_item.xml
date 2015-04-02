@@ -24,49 +24,92 @@
     android:layout_gravity="center_vertical"
     android:gravity="center">
 
-    <ImageView
-        android:id="@+id/app_icon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_margin="@dimen/app_margin"
-        tools:src="@mipmap/ic_launcher_devicecontrol" />
+    <com.daimajia.swipe.SwipeLayout
+        android:id="@+id/test_swipe_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/app_margin"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/app_label"
+            <org.namelessrom.devicecontrol.ui.views.ForegroundImageView
+                android:id="@+id/app_open"
+                android:src="@drawable/ic_app_open"
+                android:layout_width="match_parent"
+                android:background="?colorAccent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:layout_height="match_parent" />
+
+            <org.namelessrom.devicecontrol.ui.views.ForegroundImageView
+                android:id="@+id/app_uninstall"
+                android:src="@drawable/ic_app_uninstall"
+                android:layout_width="match_parent"
+                android:background="?colorAccent"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:fontFamily="@string/font_condensed"
-            android:textSize="18sp"
-            tools:text="@string/app_name" />
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/app_package"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:ellipsize="marquee"
-            android:fontFamily="@string/font_light"
-            android:textSize="14sp"
-            tools:text="org.namelessrom.devicecontrol" />
+            <ImageView
+                android:id="@+id/app_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="@dimen/app_margin"
+                tools:src="@mipmap/ic_launcher_devicecontrol" />
 
-        <TextView
-            android:id="@+id/app_version"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:ellipsize="marquee"
-            android:fontFamily="@string/font_light"
-            android:textSize="14sp"
-            tools:text="98 (0.7.3-dev)" />
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/app_margin"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/app_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@string/font_condensed"
+                    android:textSize="18sp"
+                    tools:text="@string/app_name" />
+
+                <TextView
+                    android:id="@+id/app_package"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@string/font_light"
+                    android:textSize="14sp"
+                    tools:text="org.namelessrom.devicecontrol" />
+
+                <TextView
+                    android:id="@+id/app_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@string/font_light"
+                    android:textSize="14sp"
+                    tools:text="98 (0.7.3-dev)" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.daimajia.swipe.SwipeLayout>
 
 </LinearLayout>

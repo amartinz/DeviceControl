@@ -32,9 +32,9 @@ import org.namelessrom.devicecontrol.configuration.ExtraConfiguration;
 import org.namelessrom.devicecontrol.configuration.FlasherConfiguration;
 import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
 import org.namelessrom.devicecontrol.configuration.WebServerConfiguration;
+import org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity;
 
 import java.io.File;
 

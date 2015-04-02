@@ -36,8 +36,8 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
-import org.namelessrom.devicecontrol.utils.DrawableHelper;
 import org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity;
+import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import java.util.Collections;
 import java.util.List;
