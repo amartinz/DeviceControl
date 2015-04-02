@@ -32,6 +32,14 @@ LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../frameworks/support/v7/appc
 
 LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../frameworks/support/v7/cardview/res
 
+## AndroidSwipeLayout
+
+library_src_files  := ../../../../../../external/AndroidSwipeLayout/library/src/main/java
+LOCAL_SRC_FILES    += $(call all-java-files-under, $(library_src_files))
+LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/AndroidSwipeLayout/library/src/main/res
+
+######
+
 ## MPAndroidChart
 
 library_src_files := ../../../../../../external/mpandroidchart/MPChartLib/src
@@ -45,6 +53,7 @@ LOCAL_AAPT_FLAGS := \
     --extra-packages android.support.v7.cardview \
     --extra-packages com.google.android.gms \
     --extra-packages org.namelessrom.proprietary \
+    --extra-packages com.daimajia.swipe \
 
 ######
 
