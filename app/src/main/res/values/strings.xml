@@ -360,6 +360,8 @@
     <string name="install_title">Choose files to install</string>
     <string name="install_now">Install now</string>
     <string name="file_not_found">Unable to add file</string>
+    <string name="disabled">Disabled</string>
+    <string name="user">User</string>
     <string name="system">System</string>
     <string name="boot">Boot</string>
     <string name="alert_reboot_install_title">Install file(s)</string>

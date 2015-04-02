@@ -38,7 +38,7 @@ public class AppItem {
         this.label = label;
         this.icon = icon;
 
-        enabled = (appInfo != null && appInfo.enabled);
+        this.enabled = (appInfo != null && appInfo.enabled);
     }
 
     public String getLabel() { return label; }
@@ -56,11 +56,19 @@ public class AppItem {
     }
 
     public boolean isSystemApp() {
+        return isSystemApp(appInfo);
+    }
+
+    public static boolean isSystemApp(ApplicationInfo applicationInfo) {
         final int mask = (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP);
-        return ((appInfo.flags & mask) != 0);
+        return ((applicationInfo.flags & mask) != 0);
     }
 
     public boolean isEnabled() { return enabled; }
+
+    public static boolean isEnabled(ApplicationInfo applicationInfo) {
+        return (applicationInfo != null && applicationInfo.enabled);
+    }
 
     public void setEnabled(final boolean enabled) { this.enabled = enabled; }
 
