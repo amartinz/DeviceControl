@@ -32,7 +32,7 @@ import java.util.Iterator;
  * Bootup configuration which auto serializes itself to a file
  */
 public class BootupConfiguration extends BaseConfiguration<BootupConfiguration> {
-    public ArrayList<BootupItem> items;
+    public ArrayList<BootupItem> items = new ArrayList<>();
 
     private static BootupConfiguration sInstance;
 
@@ -57,7 +57,7 @@ public class BootupConfiguration extends BaseConfiguration<BootupConfiguration> 
             return this;
         }
 
-        this.items = config.items;
+        this.items = config.items != null ? config.items : new ArrayList<BootupItem>();
 
         return this;
     }
