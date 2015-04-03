@@ -134,7 +134,7 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Pre
         final PreferenceCategory hotplugging = (PreferenceCategory) findPreference("hotplugging");
         getPreferenceScreen().removePreference(hotplugging);
 
-        if (Utils.fileExists(getString(R.string.directory_intelli_plug))
+        if (Utils.fileExists(getResources().getStringArray(R.array.directories_intelli_plug))
                 || Utils.fileExists(getString(R.string.directory_mako_hotplug))
                 || Utils.fileExists(getString(R.string.file_cpu_quiet_base))
                 || Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {

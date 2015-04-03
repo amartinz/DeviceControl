@@ -27,10 +27,10 @@
     <string name="file_cpu_quiet_avail_gov" translatable="false">/sys/devices/system/cpu/cpuquiet/available_governors</string>
     <string name="file_cpu_quiet_cur_gov" translatable="false">/sys/devices/system/cpu/cpuquiet/current_governor</string>
     <!-- Intelli-Plug -->
-    <string name="directory_intelli_plug" translatable="false">/sys/module/intelli_plug/parameters/</string>
-    <string name="file_intelli_plug_active" translatable="false">/sys/module/intelli_plug/parameters/intelli_plug_active</string>
-    <string name="file_eco_mode_active" translatable="false">/sys/module/intelli_plug/parameters/eco_mode_active</string>
-    <string name="file_intelli_plug_suspend" translatable="false">/sys/kernel/intelliplug/sleep_active_status</string>
+    <string-array name="directories_intelli_plug" translatable="false">
+        <item>/sys/module/intelli_plug/parameters/</item>
+        <item>/sys/kernel/intelli_plug/</item>
+    </string-array>
     <!-- Intelli-Thermal -->
     <string name="file_intelli_thermal_base" translatable="false">/sys/module/msm_intelli_thermal/</string>
     <string name="file_intelli_thermal" translatable="false">/sys/module/msm_intelli_thermal/parameters/enabled</string>

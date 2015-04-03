@@ -26,7 +26,7 @@
     <org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory
         android:key="intelli_plug"
         android:title="@string/intelli_plug"
-        dc:filePath="@string/directory_intelli_plug" />
+        dc:filePathList="@array/directories_intelli_plug" />
 
     <org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory
         android:key="mako_hotplug"
