@@ -110,7 +110,12 @@ public class DeviceStatusView extends LinearLayout {
         ((TextView) view.findViewById(R.id.ui_device_value)).setText(value);
         ((TextView) view.findViewById(R.id.ui_device_bar_left)).setText(barLeft);
         ((TextView) view.findViewById(R.id.ui_device_bar_right)).setText(barRight);
-        ((NumberProgressBar) view.findViewById(R.id.ui_device_bar)).setProgress(progress);
+
+        // TODO: Fahrenheit
+        final NumberProgressBar numberProgressBar =
+                (NumberProgressBar) view.findViewById(R.id.ui_device_bar);
+        numberProgressBar.setSuffix("°C");
+        numberProgressBar.setProgress(progress);
 
         parent.addView(view);
         return view;
