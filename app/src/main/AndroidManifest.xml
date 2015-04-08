@@ -22,7 +22,7 @@
 
     <!-- currently broken, reenable once fixed -->
     <!--uses-sdk tools:node="replace" /-->
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="21" tools:ignore="GradleOverrides,OldTargetApi" />
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="22" tools:ignore="GradleOverrides,OldTargetApi" />
 
     <!-- Internet / Networking -->
     <uses-permission android:name="android.permission.INTERNET" />
