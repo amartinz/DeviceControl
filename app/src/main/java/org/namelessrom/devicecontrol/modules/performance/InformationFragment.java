@@ -19,6 +19,9 @@ package org.namelessrom.devicecontrol.modules.performance;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -35,6 +38,11 @@ public class InformationFragment extends AttachFragment {
 
     @Override protected int getFragmentId() { return DeviceConstants.ID_PERFORMANCE_INFO; }
 
+    @Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_performance, container, false);
@@ -43,6 +51,26 @@ public class InformationFragment extends AttachFragment {
         mCpuStates = (CpuStateView) v.findViewById(R.id.cpu_states);
 
         return v;
+    }
+
+    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_refresh, menu);
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        final int id = item.getItemId();
+
+        switch (id) {
+            case R.id.menu_action_refresh: {
+                if (mCpuStates != null) {
+                    mCpuStates.refreshData();
+                }
+                return true;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override public void onResume() {

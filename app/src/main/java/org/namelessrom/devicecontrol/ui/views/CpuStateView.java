@@ -18,13 +18,11 @@
 package org.namelessrom.devicecontrol.ui.views;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,7 +32,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuStateMonitor;
-import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,23 +78,10 @@ public class CpuStateView extends LinearLayout implements CpuUtils.StateListener
         mStatesWarning = (TextView) view.findViewById(R.id.ui_states_warning);
         mTotalStateTime = (TextView) view.findViewById(R.id.ui_total_state_time);
 
-        final ImageView mRefresh = (ImageView) view.findViewById(R.id.ui_refresh);
-        mRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                refreshData();
-            }
-        });
-        Drawable refreshDrawable = getResources().getDrawable(R.drawable.ic_refresh);
-        if (refreshDrawable != null) {
-            refreshDrawable = refreshDrawable.mutate();
-        }
-        mRefresh.setImageDrawable(DrawableHelper.applyAccentColorFilter(refreshDrawable));
-
         refreshData();
     }
 
-    private void refreshData() { new CpuStateUpdater().execute(); }
+    public void refreshData() { new CpuStateUpdater().execute(); }
 
     private class CpuStateUpdater extends AsyncTask<Void, Void, Void> {
 
