@@ -50,7 +50,6 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
     public boolean darkTheme;
     public boolean showPollfish;
 
-    public boolean showLauncher = true;
     public boolean skipChecks;
     public boolean extensiveLogging;
 
@@ -96,7 +95,6 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
         this.darkTheme = config.darkTheme;
         this.showPollfish = config.showPollfish;
 
-        this.showLauncher = config.showLauncher;
         this.skipChecks = config.skipChecks;
         this.extensiveLogging = config.extensiveLogging;
 

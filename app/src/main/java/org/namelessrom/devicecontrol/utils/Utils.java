@@ -443,19 +443,6 @@ public class Utils {
         return String.format("busybox chmod 444 %s;", path);
     }
 
-    public static void disableComponent(final String packageName, final String componentName) {
-        toggleComponent(packageName, componentName, true);
-    }
-
-    public static void enableComponent(final String packageName, final String componentName) {
-        toggleComponent(packageName, componentName, false);
-    }
-
-    public static void toggleComponent(final String packageName, final String componentName,
-            final boolean disable) {
-        toggleComponent(new ComponentName(packageName, componentName), disable);
-    }
-
     public static void toggleComponent(final ComponentName component, final boolean disable) {
         final PackageManager pm = Application.get().getPackageManager();
         if (pm != null) {

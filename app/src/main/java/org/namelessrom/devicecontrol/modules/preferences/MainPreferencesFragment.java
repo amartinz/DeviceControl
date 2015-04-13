@@ -49,7 +49,6 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
     // General
     //==============================================================================================
     private CustomPreference mSetOnBoot;
-    private CustomTogglePreference mShowLauncher;
     private CustomTogglePreference mSkipChecks;
 
     //==============================================================================================
@@ -82,26 +81,14 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
             mExtensiveLogging.setOnPreferenceChangeListener(this);
         }
 
-        PreferenceCategory category = (PreferenceCategory) findPreference("prefs_general");
         mSetOnBoot = (CustomPreference) findPreference("prefs_set_on_boot");
-
-        mShowLauncher = (CustomTogglePreference) findPreference(DeviceConfiguration.SHOW_LAUNCHER);
-        if (mShowLauncher != null) {
-            if (Application.IS_NAMELESS) {
-                mShowLauncher.setChecked(configuration.showLauncher);
-                mShowLauncher.setOnPreferenceChangeListener(this);
-            } else {
-                category.removePreference(mShowLauncher);
-            }
-        }
-
         mSkipChecks = (CustomTogglePreference) findPreference(DeviceConfiguration.SKIP_CHECKS);
         if (mSkipChecks != null) {
             mSkipChecks.setChecked(configuration.skipChecks);
             mSkipChecks.setOnPreferenceChangeListener(this);
         }
 
-        category = (PreferenceCategory) findPreference("prefs_app");
+        PreferenceCategory category = (PreferenceCategory) findPreference("prefs_app");
 
         if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.secret=1")) {
             mMonkeyPref = new CustomTogglePreference(getActivity());
@@ -175,15 +162,6 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
 
             Logger.setEnabled(value);
             mExtensiveLogging.setChecked(value);
-            return true;
-        } else if (mShowLauncher == preference) {
-            final boolean value = (Boolean) newValue;
-
-            DeviceConfiguration.get(getActivity()).showLauncher = value;
-            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
-
-            Application.get().toggleLauncherIcon(value);
-            mShowLauncher.setChecked(value);
             return true;
         } else if (mSkipChecks == preference) {
             final boolean value = (Boolean) newValue;

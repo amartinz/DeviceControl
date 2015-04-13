@@ -18,7 +18,7 @@
 package org.namelessrom.devicecontrol;
 
 import android.annotation.SuppressLint;
-import android.content.pm.PackageManager;
+import android.content.ComponentName;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Handler;
@@ -39,10 +39,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.io.File;
 
 public class Application extends android.app.Application {
-
     public static final Handler HANDLER = new Handler();
-
-    public static boolean IS_NAMELESS = false;
 
     private static Application sInstance;
 
@@ -102,12 +99,14 @@ public class Application extends android.app.Application {
 
         dumpInformation();
 
-        IS_NAMELESS = Utils.isNameless();
-        Logger.v(this, String.format("is nameless: %s", IS_NAMELESS));
+        boolean isNameless = Utils.isNameless();
+        Logger.v(this, String.format("is nameless: %s", isNameless));
 
-        final boolean showLauncher = !Application.IS_NAMELESS
-                || DeviceConfiguration.get(this).showLauncher;
-        toggleLauncherIcon(showLauncher);
+        if (isNameless) {
+            ComponentName c = new ComponentName(getPackageName(), DummyLauncher.class.getName());
+            Utils.toggleComponent(c, false);
+            Logger.v(this, "Force toggled on launcher icon for backwards compatibility with n-2.0");
+        }
     }
 
     private void dumpInformation() {
@@ -128,32 +127,6 @@ public class Application extends android.app.Application {
             return tmp.getPath();
         } else {
             return "/data/data/" + Application.get().getPackageName();
-        }
-    }
-
-    public void toggleLauncherIcon(final boolean showLauncher) {
-        if (Application.IS_NAMELESS) {
-            final String pkg = "com.android.settings";
-            final Resources res;
-            try {
-                res = getPackageManager().getResourcesForApplication(pkg);
-            } catch (PackageManager.NameNotFoundException exc) {
-                Logger.e(this, "You dont have settings? That's weird.", exc);
-                Utils.enableComponent(getPackageName(), DummyLauncher.class.getName());
-                return;
-            }
-
-            if (!showLauncher
-                    && (res != null && res.getIdentifier("device_control", "string", pkg) > 0)) {
-                Logger.v(this, "Implemented into system and showLauncher is not set!");
-                Utils.disableComponent(getPackageName(), DummyLauncher.class.getName());
-            } else {
-                Logger.v(this, "Implemented into system and showLauncher is set!");
-                Utils.enableComponent(getPackageName(), DummyLauncher.class.getName());
-            }
-        } else {
-            Logger.v(this, "Not implemented into system!");
-            Utils.enableComponent(getPackageName(), DummyLauncher.class.getName());
         }
     }
 

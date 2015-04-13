@@ -26,11 +26,6 @@
             android:title="@string/reapply_on_boot" />
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
-            android:key="show_launcher"
-            android:summary="@string/show_launcher_summary"
-            android:title="@string/show_launcher" />
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="skip_checks"
             android:summary="@string/skip_checks_summary"
             android:title="@string/skip_checks" />

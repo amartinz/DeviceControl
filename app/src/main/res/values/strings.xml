@@ -150,8 +150,6 @@
     <string name="hot">Hot</string>
     <string name="logger_mode">Enable logcat</string>
     <string name="logger_mode_summary">Uncheck to remove any logs from logcat</string>
-    <string name="show_launcher">Show launcher icon</string>
-    <string name="show_launcher_summary">Hides/unhides the launcher icon</string>
     <string name="debugging">Debugging</string>
     <string name="extensive_logging">Extensive logging</string>
     <string name="reapply_on_boot">Reapply on boot</string>
