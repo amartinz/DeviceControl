@@ -88,4 +88,6 @@
 -keep class com.pollfish.** { *; }
 
 # mpchartlib
--keep class com.github.mikephil.charting.animation.ChartAnimator { *; }
+-keep public class com.github.mikephil.charting.animation.* {
+    public protected *;
+}
