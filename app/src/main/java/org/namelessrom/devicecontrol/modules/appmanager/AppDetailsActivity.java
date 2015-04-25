@@ -75,6 +75,8 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
     private static final int DIALOG_TYPE_DISABLE = 0;
     private static final int DIALOG_TYPE_UNINSTALL = 1;
 
+    private static final int ANIM_DUR = 1000;
+
     private static final Handler mHandler = new Handler();
     private final PackageManager mPm = Application.get().getPackageManager();
 
@@ -295,7 +297,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                 ? R.color.dark_background : R.color.light_background;
         mCacheGraph.setBackgroundResource(color);
 
-        mCacheGraph.animateXY(1000, 1000);
+        mCacheGraph.animateXY(ANIM_DUR, ANIM_DUR);
     }
 
     private void refreshAppDetails() {
