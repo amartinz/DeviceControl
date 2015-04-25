@@ -315,9 +315,7 @@ public class ServerWrapper {
         mServer.get("/api/device", new HttpServerRequestCallback() {
             @Override public void onRequest(final AsyncHttpServerRequest req,
                     final AsyncHttpServerResponse res) {
-                final Device device = Device.get();
-                device.update();
-                final String result = new Gson().toJson(device);
+                final String result = Device.get().update().toString();
                 res.send(result);
             }
         });

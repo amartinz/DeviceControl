@@ -33,5 +33,17 @@
   "IS_ROOTED": "Is rooted",
   "SU_VERSION": "Superuser version",
   "HAS_BUSYBOX": "BusyBox installed",
-  "NO_INFORMATION_AVAILABLE": "No information available!"
+  "HARDWARE": "Hardware",
+  "SCREEN_DIMENSIONS": "Screen dimensions",
+  "SUPPORTED_ABIS": "Supported ABIs",
+  "MEMORY": "Memory",
+  "TOTAL": "Total",
+  "CACHED": "Cached",
+  "FREE": "Free",
+  "PROCESSOR": "Processor",
+  "TYPE": "Type",
+  "FEATURES": "Features",
+  "NO_INFORMATION_AVAILABLE": "No information available!",
+  "64_BIT": "64-bit",
+  "BOGOMIPS": "Bogomips"
 }

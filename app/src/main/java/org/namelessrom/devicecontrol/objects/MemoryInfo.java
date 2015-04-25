@@ -25,36 +25,33 @@ import org.namelessrom.devicecontrol.utils.Utils;
  * Provides information about the device's memory
  */
 public class MemoryInfo {
-
     public static final int TYPE_B = 0;
     public static final int TYPE_KB = 1;
     public static final int TYPE_MB = 2;
 
-    private static MemoryInfo sInstance;
+    private static final String MEMTOTAL = "MemTotal:";
+    private static final String MEMCACHED = "Cached:";
+    private static final String MEMFREE = "MemFree:";
 
-    public static long memoryTotal;
-    public static long memoryFree;
-    public static long memoryCached;
+    public int type;
+    public long memoryTotal;
+    public long memoryCached;
+    public long memoryFree; // TODO: rework as android calculates free memory differently
 
-    private MemoryInfo() { }
-
-    public static MemoryInfo getInstance() {
-        if (sInstance == null) {
-            sInstance = new MemoryInfo();
-        }
-        return sInstance;
-    }
+    public MemoryInfo() { }
 
     @Override public String toString() {
         return String.format("memoryTotal: %s, memoryFree: %s, memoryCached: %s",
                 memoryTotal, memoryFree, memoryCached);
     }
 
-    public long[] readMemory() {
-        return readMemory(TYPE_B);
+    public long[] feedWithInformation(int type) {
+        return readMemory(type);
     }
 
     public long[] readMemory(final int type) {
+        this.type = type;
+
         final String input = Utils.readFile("/proc/meminfo");
         if (!TextUtils.isEmpty(input)) {
             final String[] parts = input.split("\n");
@@ -90,22 +87,26 @@ public class MemoryInfo {
         return new long[]{ memoryTotal, memoryFree, memoryCached };
     }
 
+    public static String getAsMb(final long data) {
+        return String.format("%s MB", data);
+    }
+
     private long checkMemory(String s) {
         if (s != null && !s.isEmpty()) {
             s = s.replace("kB", "");
 
-            if (s.startsWith("MemTotal:")) {
-                s = s.replace("MemTotal:", "").trim();
+            if (s.startsWith(MEMTOTAL)) {
+                s = s.replace(MEMTOTAL, "").trim();
                 memoryTotal = parseLong(s);
                 return memoryTotal;
-            } else if (s.startsWith("MemFree:")) {
-                s = s.replace("MemFree:", "").trim();
-                memoryFree = parseLong(s);
-                return memoryFree;
-            } else if (s.startsWith("Cached:")) {
-                s = s.replace("Cached:", "").trim();
+            } else if (s.startsWith(MEMCACHED)) {
+                s = s.replace(MEMCACHED, "").trim();
                 memoryCached = parseLong(s);
                 return memoryCached;
+            } else if (s.startsWith(MEMFREE)) {
+                s = s.replace(MEMFREE, "").trim();
+                memoryFree = parseLong(s);
+                return memoryFree;
             }
         }
 

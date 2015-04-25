@@ -41,6 +41,8 @@ import java.io.File;
 public class Application extends android.app.Application {
     public static final Handler HANDLER = new Handler();
 
+    private static final String PROP_BUILD = "ro.nameless.debug=1";
+
     private static Application sInstance;
 
     private static int sAccentColor = -1;
@@ -54,7 +56,7 @@ public class Application extends android.app.Application {
         // force enable logger until we hit the user preference
         Logger.setEnabled(true);
 
-        if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.debug=1")) {
+        if (Utils.existsInFile(Scripts.BUILD_PROP, PROP_BUILD)) {
             // setup thread policy
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectAll()
@@ -107,6 +109,9 @@ public class Application extends android.app.Application {
             Utils.toggleComponent(c, false);
             Logger.v(this, "Force toggled on launcher icon for backwards compatibility with n-2.0");
         }
+
+        // preload device
+        Logger.i(this, "Preloading device...\n%s", Device.get().update().toString());
     }
 
     private void dumpInformation() {
