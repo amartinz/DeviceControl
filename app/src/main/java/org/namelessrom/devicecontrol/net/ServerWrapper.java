@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import com.koushikdutta.async.AsyncServerSocket;
 import com.koushikdutta.async.callback.CompletedCallback;
 import com.koushikdutta.async.http.WebSocket;
-import com.koushikdutta.async.http.libcore.RequestHeaders;
 import com.koushikdutta.async.http.server.AsyncHttpServer;
 import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
@@ -119,20 +118,18 @@ public class ServerWrapper {
         @Override public void onRequest(final AsyncHttpServerRequest req,
                 final AsyncHttpServerResponse res) {
             if (isStopped) {
-                res.responseCode(404);
+                res.code(404);
                 res.end();
             }
             if (!isAuthenticated(req)) {
-                res.getHeaders().getHeaders()
-                        .add("WWW-Authenticate", "Basic realm=\"DeviceControl\"");
-                res.responseCode(401);
+                res.getHeaders().add("WWW-Authenticate", "Basic realm=\"DeviceControl\"");
+                res.code(401);
                 res.end();
                 return;
             }
-            Logger.v(this, "[+] Received connection from: %s", req.getHeaders().getUserAgent());
+            Logger.v(this, "[+] Received connection from: %s", req.getHeaders().get("User-Agent"));
             final String path = remapPath(req.getPath());
-            res.getHeaders().getHeaders()
-                    .set("Content-Type", ContentTypes.getInstance().getContentType(path));
+            res.getHeaders().set("Content-Type", ContentTypes.getInstance().getContentType(path));
 
             final InputStream is = HtmlHelper.loadPath(path);
             if (is != null) {
@@ -154,15 +151,13 @@ public class ServerWrapper {
         @Override public void onRequest(final AsyncHttpServerRequest req,
                 final AsyncHttpServerResponse res) {
             if (isStopped) {
-                res.responseCode(404);
+                res.code(404);
                 res.end();
                 return;
             }
             if (!isAuthenticated(req)) {
-                res.getHeaders()
-                        .getHeaders()
-                        .add("WWW-Authenticate", "Basic realm=\"DeviceControl\"");
-                res.responseCode(401);
+                res.getHeaders().add("WWW-Authenticate", "Basic realm=\"DeviceControl\"");
+                res.code(401);
                 res.end();
                 return;
             }
@@ -277,16 +272,16 @@ public class ServerWrapper {
 
     private void setupWebSockets() {
         mServer.websocket("/live", new AsyncHttpServer.WebSocketRequestCallback() {
-            @Override public void onConnected(final WebSocket webSocket, RequestHeaders headers) {
-                _sockets.add(webSocket);
+            @Override public void onConnected(final WebSocket socket, AsyncHttpServerRequest req) {
+                _sockets.add(socket);
                 if (_sockets.size() == 1) {
                     // first client connected, register receivers
                     registerReceivers();
                 }
 
-                webSocket.setClosedCallback(new CompletedCallback() {
+                socket.setClosedCallback(new CompletedCallback() {
                     @Override public void onCompleted(final Exception ex) {
-                        _sockets.remove(webSocket);
+                        _sockets.remove(socket);
                         if (_sockets.size() == 0) {
                             // No client left, unregister to save battery
                             unregisterReceivers();
@@ -294,7 +289,7 @@ public class ServerWrapper {
                     }
                 });
 
-                webSocket.setStringCallback(new WebSocket.StringCallback() {
+                socket.setStringCallback(new WebSocket.StringCallback() {
                     @Override public void onStringAvailable(final String s) {
                         Logger.v(this, s);
                         //noinspection StatementWithEmptyBody
@@ -304,7 +299,7 @@ public class ServerWrapper {
                     }
                 });
 
-                webSocket.send(ACTION_CONNECTED);
+                socket.send(ACTION_CONNECTED);
             }
         });
     }
@@ -331,16 +326,14 @@ public class ServerWrapper {
     private boolean isAuthenticated(final AsyncHttpServerRequest req) {
         final WebServerConfiguration configuration = WebServerConfiguration.get(mService);
         final boolean isAuth = !configuration.useAuth;
-        if (req.getHeaders().hasAuthorization() && !isAuth) {
-            final String auth = req.getHeaders().getHeaders().get("Authorization");
-            if (auth != null && !auth.isEmpty()) {
-                final String[] parts = new String(Base64.decode(auth.replace("Basic", "").trim(),
-                        Base64.DEFAULT)).split(":");
-                return parts[0] != null
-                        && parts[1] != null
-                        && parts[0].equals(configuration.username)
-                        && parts[1].equals(configuration.password);
-            }
+        final String authHeader = req.getHeaders().get("Authorization");
+        if (!isAuth && !TextUtils.isEmpty(authHeader)) {
+            final String[] parts = new String(Base64.decode(authHeader.replace("Basic", "").trim(),
+                    Base64.DEFAULT)).split(":");
+            return parts[0] != null
+                    && parts[1] != null
+                    && parts[0].equals(configuration.username)
+                    && parts[1].equals(configuration.password);
         }
         return isAuth;
     }
