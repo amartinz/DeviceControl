@@ -26,6 +26,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 public class ForegroundImageView extends ImageView {
     private Drawable foreground;
@@ -52,7 +53,7 @@ public class ForegroundImageView extends ImageView {
      * @param drawableResId The drawable resource to be drawn on top of the children.
      */
     public void setForegroundResource(int drawableResId) {
-        setForeground(getContext().getResources().getDrawable(drawableResId));
+        setForeground(DrawableHelper.getDrawable(drawableResId));
     }
 
     /**

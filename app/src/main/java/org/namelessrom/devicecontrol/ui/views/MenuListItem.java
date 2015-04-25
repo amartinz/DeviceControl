@@ -57,7 +57,7 @@ public class MenuListItem extends LinearLayout {
         title.setText(titleRes);
 
         final ImageView image = (ImageView) view.findViewById(R.id.image);
-        final Drawable icon = getResources().getDrawable(imageRes);
+        final Drawable icon = DrawableHelper.getDrawable(imageRes);
         if (!isInEditMode()) {
             DrawableHelper.applyAccentColorFilter(icon);
         }

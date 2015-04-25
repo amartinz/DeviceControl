@@ -41,7 +41,7 @@ public class BillingProcessor extends BillingBase {
 	 * Callback methods where billing events are reported.
 	 * Apps must implement one of these to construct a BillingProcessor.
 	 */
-	public static interface IBillingHandler {
+	public interface IBillingHandler {
 		void onProductPurchased(String productId, TransactionDetails details);
 
 		void onPurchaseHistoryRestored();

@@ -40,7 +40,7 @@ public class WelcomeFragment extends Fragment {
         final TextView details = (TextView) view.findViewById(R.id.detailsTxtView);
         details.setText(getString(R.string.welcome_message, getString(R.string.app_name)));
 
-        final Drawable translateDrawable = getResources().getDrawable(R.drawable.ic_translate);
+        final Drawable translateDrawable = DrawableHelper.getDrawable(R.drawable.ic_translate);
         final Button translateButton = (Button) view.findViewById(R.id.translateButton);
         translateButton.setCompoundDrawablesWithIntrinsicBounds(
                 DrawableHelper.applyAccentColorFilter(translateDrawable), null, null, null);

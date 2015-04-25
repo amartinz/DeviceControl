@@ -29,63 +29,63 @@ public interface MaterialMenu {
      *
      * @param state new icon state
      */
-    public void setState(IconState state);
+    void setState(IconState state);
 
     /**
      * Return current icon state
      *
      * @return icon state
      */
-    public IconState getState();
+    IconState getState();
 
     /**
      * Animate icon to given state.
      *
      * @param state new icon state
      */
-    public void animateState(IconState state);
+    void animateState(IconState state);
 
     /**
      * Animate icon to given state and draw touch circle
      *
      * @param state new icon state
      */
-    public void animatePressedState(IconState state);
+    void animatePressedState(IconState state);
 
     /**
      * Set color of icon
      *
      * @param color new icon color
      */
-    public void setColor(int color);
+    void setColor(int color);
 
     /**
      * Set duration of transformation animations
      *
      * @param duration new animation duration
      */
-    public void setTransformationDuration(int duration);
+    void setTransformationDuration(int duration);
 
     /**
      * Set duration of pressed state circle animation
      *
      * @param duration new animation duration
      */
-    public void setPressedDuration(int duration);
+    void setPressedDuration(int duration);
 
     /**
      * Set interpolator for transformation animations
      *
      * @param interpolator new interpolator
      */
-    public void setInterpolator(Interpolator interpolator);
+    void setInterpolator(Interpolator interpolator);
 
     /**
      * Enable RTL layout. Flips all icons horizontally
      *
      * @param rtlEnabled true to enable RTL layout
      */
-    public void setRTLEnabled(boolean rtlEnabled);
+    void setRTLEnabled(boolean rtlEnabled);
 
     /**
      * Manually set a transformation value for an {@link com.balysv.materialmenu.MaterialMenuDrawable.AnimationState}
@@ -94,11 +94,11 @@ public interface MaterialMenu {
      * @param value          between {@link com.balysv.materialmenu.MaterialMenuDrawable#TRANSFORMATION_START} and
      *                       {@link com.balysv.materialmenu.MaterialMenuDrawable#TRANSFORMATION_END}.
      */
-    public void setTransformationOffset(MaterialMenuDrawable.AnimationState animationState,
+    void setTransformationOffset(MaterialMenuDrawable.AnimationState animationState,
             float value);
 
     /**
      * @return {@link MaterialMenuDrawable} to be used for the menu
      */
-    public MaterialMenuDrawable getDrawable();
+    MaterialMenuDrawable getDrawable();
 }

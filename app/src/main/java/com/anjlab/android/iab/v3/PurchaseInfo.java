@@ -30,7 +30,7 @@ import java.util.Date;
 public class PurchaseInfo {
 
     public enum PurchaseState {
-        PurchasedSuccessfully, Canceled, Refunded, SubscriptionExpired;
+        PurchasedSuccessfully, Canceled, Refunded, SubscriptionExpired
     }
 
     public final String responseData;

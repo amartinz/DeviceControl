@@ -28,6 +28,7 @@ import android.widget.AbsListView;
 import android.widget.ImageButton;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 /**
  * Android Google+ like floating action button which reacts on the attached list view scrolling events.
@@ -132,9 +133,9 @@ public class FloatingActionButton extends ImageButton {
         shapeDrawable.getPaint().setColor(color);
 
         if (mShadow && !hasLollipopApi()) {
-            Drawable shadowDrawable =
-                    getResources().getDrawable(mType == TYPE_NORMAL ? R.drawable.fab_shadow
-                            : R.drawable.fab_shadow_mini);
+            Drawable shadowDrawable = DrawableHelper.getDrawable(mType == TYPE_NORMAL
+                    ? R.drawable.fab_shadow
+                    : R.drawable.fab_shadow_mini);
             LayerDrawable layerDrawable =
                     new LayerDrawable(new Drawable[]{ shadowDrawable, shapeDrawable });
             layerDrawable.setLayerInset(1, mShadowSize, mShadowSize, mShadowSize, mShadowSize);

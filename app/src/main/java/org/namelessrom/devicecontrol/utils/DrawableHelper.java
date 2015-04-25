@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol.utils;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.Nullable;
 
 import org.namelessrom.devicecontrol.Application;
@@ -30,7 +31,7 @@ import org.namelessrom.devicecontrol.Logger;
  */
 public class DrawableHelper {
 
-    @Nullable public static Drawable applyColorFilter(final Drawable drawable, final int color) {
+    @Nullable public static Drawable applyColorFilter(Drawable drawable, int color) {
         if (drawable == null) {
             Logger.w("DrawableHelper", "drawable is null!");
             return null;
@@ -40,13 +41,22 @@ public class DrawableHelper {
         return drawable;
     }
 
-    public static Drawable applyAccentColorFilter(final int drawableRes) {
-        return applyColorFilter(Application.get().getResources()
-                .getDrawable(drawableRes), Application.get().getAccentColor());
+    @Nullable public static Drawable applyAccentColorFilter(int drawableRes) {
+        Drawable drawable = getDrawable(drawableRes);
+        return applyColorFilter(drawable, Application.get().getAccentColor());
     }
 
-    public static Drawable applyAccentColorFilter(final Drawable drawable) {
+    @Nullable public static Drawable applyAccentColorFilter(Drawable drawable) {
         return applyColorFilter(drawable, Application.get().getAccentColor());
+    }
+
+    @Nullable public static Drawable getDrawable(int drawableRes) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return Application.get().getDrawable(drawableRes);
+        }
+
+        //noinspection deprecation
+        return Application.get().getResources().getDrawable(drawableRes);
     }
 
 }

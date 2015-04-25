@@ -28,6 +28,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
@@ -53,11 +54,11 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
     private static final float HALF_TRANSP = 0.5f;
 
     public interface CustomTabProvider {
-        public View getCustomTabView(ViewGroup parent, int position);
+        View getCustomTabView(ViewGroup parent, int position);
     }
 
     public interface OnTabReselectedListener {
-        public void onTabReselected(int position);
+        void onTabReselected(int position);
     }
 
     // @formatter:off
@@ -394,6 +395,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
             View view = tabsContainer.getChildAt(0);
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                //noinspection deprecation
                 getViewTreeObserver().removeGlobalOnLayoutListener(this);
             } else {
                 getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -596,7 +598,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         }
 
         @Override
-        public void writeToParcel(Parcel dest, int flags) {
+        public void writeToParcel(@NonNull Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             dest.writeInt(currentPosition);
         }

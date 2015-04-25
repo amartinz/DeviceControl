@@ -119,7 +119,7 @@ public class CustomViewAbove extends ViewGroup {
          *                             position.
          * @param positionOffsetPixels Value in pixels indicating the offset from position.
          */
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
+        void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
 
         /**
          * This method will be invoked when a new page becomes selected. Animation is not
@@ -127,7 +127,7 @@ public class CustomViewAbove extends ViewGroup {
          *
          * @param position Position index of the new selected page.
          */
-        public void onPageSelected(int position);
+        void onPageSelected(int position);
 
     }
 
@@ -305,7 +305,7 @@ public class CustomViewAbove extends ViewGroup {
     float distanceInfluenceForSnapDuration(float f) {
         f -= 0.5f; // center the values about 0.
         f *= 0.3f * Math.PI / 2.0f;
-        return FloatMath.sin(f);
+        return (float) Math.sin(f);
     }
 
     public int getDestScrollX(int page) {

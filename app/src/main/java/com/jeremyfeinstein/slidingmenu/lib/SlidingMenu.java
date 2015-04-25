@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import com.jeremyfeinstein.slidingmenu.lib.CustomViewAbove.OnPageChangeListener;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import java.lang.reflect.Method;
 
@@ -99,7 +100,7 @@ public class SlidingMenu extends RelativeLayout {
         /**
          * On open.
          */
-        public void onOpen();
+        void onOpen();
     }
 
     /**
@@ -118,7 +119,7 @@ public class SlidingMenu extends RelativeLayout {
         /**
          * On opened.
          */
-        public void onOpened();
+        void onOpened();
     }
 
     /**
@@ -137,7 +138,7 @@ public class SlidingMenu extends RelativeLayout {
         /**
          * On close.
          */
-        public void onClose();
+        void onClose();
     }
 
     /**
@@ -156,7 +157,7 @@ public class SlidingMenu extends RelativeLayout {
         /**
          * On closed.
          */
-        public void onClosed();
+        void onClosed();
     }
 
     /**
@@ -170,7 +171,7 @@ public class SlidingMenu extends RelativeLayout {
          * @param canvas      the canvas
          * @param percentOpen the percent open
          */
-        public void transformCanvas(Canvas canvas, float percentOpen);
+        void transformCanvas(Canvas canvas, float percentOpen);
     }
 
     /**
@@ -774,7 +775,7 @@ public class SlidingMenu extends RelativeLayout {
      * @param resId the resource ID of the new shadow drawable
      */
     public void setShadowDrawable(int resId) {
-        setShadowDrawable(getContext().getResources().getDrawable(resId));
+        setShadowDrawable(DrawableHelper.getDrawable(resId));
     }
 
     /**
@@ -792,7 +793,7 @@ public class SlidingMenu extends RelativeLayout {
      * @param resId the resource ID of the new shadow drawable
      */
     public void setSecondaryShadowDrawable(int resId) {
-        setSecondaryShadowDrawable(getContext().getResources().getDrawable(resId));
+        setSecondaryShadowDrawable(DrawableHelper.getDrawable(resId));
     }
 
     /**

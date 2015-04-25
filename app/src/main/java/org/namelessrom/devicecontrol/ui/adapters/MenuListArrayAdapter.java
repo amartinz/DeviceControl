@@ -106,7 +106,7 @@ public class MenuListArrayAdapter extends BaseAdapter {
             if (imageRes == 0) {
                 viewHolder.image.setVisibility(View.INVISIBLE);
             } else {
-                final Drawable icon = mContext.getResources().getDrawable(imageRes);
+                final Drawable icon = DrawableHelper.getDrawable(imageRes);
                 if (icon != null) {
                     DrawableHelper.applyAccentColorFilter(icon);
                     viewHolder.image.setImageDrawable(icon);

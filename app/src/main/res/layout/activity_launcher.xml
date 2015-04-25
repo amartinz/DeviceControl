@@ -50,32 +50,22 @@
         android:id="@+id/launcher_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_below="@+id/toolbar"
-        android:visibility="invisible">
+        android:orientation="vertical"
+        android:visibility="invisible"
+        tools:visibility="visible">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/launcher_status"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginTop="24dp"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:src="@mipmap/ic_launcher_devicecontrol" />
-
-            <TextView
-                android:id="@+id/launcher_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="64dp"
-                android:paddingRight="64dp"
-                android:textSize="16sp" />
-
-        </LinearLayout>
+            android:drawableTop="@mipmap/ic_launcher_devicecontrol"
+            android:paddingLeft="64dp"
+            android:paddingRight="64dp"
+            android:textSize="16sp"
+            tools:text="@string/app_warning_root" />
 
         <include layout="@layout/include_button_bar" />
 
