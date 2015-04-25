@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 public class KernelInfo {
     public String version;
     public String host;
-    public String gcc;
+    public String toolchain;
     public String revision;
     public String extras;
     public String date;
@@ -40,15 +40,16 @@ public class KernelInfo {
         // initialize all with null
         version = null;
         host = null;
-        gcc = null;
+        toolchain = null;
         revision = null;
         extras = null;
         date = null;
     }
 
     @Override public String toString() {
-        return String.format("version: %s, host: %s, gcc: %s, revision: %s, extras: %s, date: %s",
-                version, host, gcc, revision, extras, date);
+        return String.format(
+                "version: %s, host: %s, toolchain: %s, revision: %s, extras: %s, date: %s",
+                version, host, toolchain, revision, extras, date);
     }
 
     public boolean feedWithInformation() {
@@ -60,7 +61,7 @@ public class KernelInfo {
 
         // Example (see tests for more):
         // Linux version 3.0.31-g6fb96c9 (android-build@xxx.xxx.xxx.xxx.com) \
-        //     (gcc version 4.6.x-xxx 20120106 (prerelease) (GCC) ) #1 SMP PREEMPT \
+        //     (toolchain version 4.6.x-xxx 20120106 (prerelease) (GCC) ) #1 SMP PREEMPT \
         //     Thu Jun 28 11:02:39 PDT 2012
 
         final String PROC_VERSION_REGEX =
@@ -72,12 +73,8 @@ public class KernelInfo {
                         "((Sun|Mon|Tue|Wed|Thu|Fri|Sat).+)"; /* group 6: "Thu Jun 28 11:02:39 PDT 2012" */
 
         final Matcher m = Pattern.compile(PROC_VERSION_REGEX).matcher(rawKernelVersion);
-        if (!m.matches()) {
-            Logger.e(this, "Regex did not match on /proc/version: " + rawKernelVersion);
-            return false;
-        } else if (m.groupCount() < 6) {
-            Logger.e(this,
-                    "Regex match on /proc/version only returned " + m.groupCount() + " groups");
+        if (!m.matches() || m.groupCount() < 6) {
+            Logger.e(this, "Regex does not match!");
             return false;
         }
 
@@ -87,8 +84,8 @@ public class KernelInfo {
         host = m.group(2);
         if (host != null) host = host.trim();
 
-        gcc = m.group(3);
-        if (gcc != null) gcc = gcc.substring(1, gcc.length() - 2).trim();
+        toolchain = m.group(3);
+        if (toolchain != null) toolchain = toolchain.substring(1, toolchain.length() - 2).trim();
 
         revision = m.group(4);
         if (revision != null) revision = revision.trim();

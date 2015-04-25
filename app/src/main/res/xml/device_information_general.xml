@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+<!--  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -16,32 +16,38 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Platform -->
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="platform"
         android:title="@string/platform_information" />
 
+    <!-- Runtime -->
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="runtime"
         android:title="@string/runtime" />
 
+    <!-- Device information -->
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="device_information"
         android:title="@string/device_information" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="emmc"
-        android:title="@string/emmc" />
-
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="processor"
-        android:title="@string/processor" />
-
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="kernel"
-        android:title="@string/kernel" />
-
+    <!-- Memory -->
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="memory"
         android:title="@string/memory" />
 
+    <!-- Processor -->
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+        android:key="processor"
+        android:title="@string/processor" />
+
+    <!-- Kernel -->
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+        android:key="kernel"
+        android:title="@string/kernel" />
+
+    <!-- eMMC -->
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+        android:key="emmc"
+        android:title="@string/emmc" />
 </PreferenceScreen>

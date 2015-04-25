@@ -17,14 +17,21 @@
  */
 package org.namelessrom.devicecontrol;
 
+import android.content.res.Resources;
 import android.os.Build;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.stericson.roottools.RootTools;
 
+import org.namelessrom.devicecontrol.objects.CpuInfo;
+import org.namelessrom.devicecontrol.objects.KernelInfo;
+import org.namelessrom.devicecontrol.objects.MemoryInfo;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Device {
     @SerializedName("platform_version") public final String platformVersion;
@@ -36,17 +43,27 @@ public class Device {
     @SerializedName("vm_library") public final String vmLibrary;
     @SerializedName("vm_version") public final String vmVersion;
 
-    @SerializedName("android_id") public final String androidId;
-    @SerializedName("device_manufacturer") public final String manufacturer;
-    @SerializedName("device_model") public final String model;
-    @SerializedName("device_product") public final String product;
-    @SerializedName("device_board") public final String board;
-    @SerializedName("device_bootloader") public final String bootloader;
-    @SerializedName("device_radio_version") public final String radio;
+    @SerializedName("screen_width") public final int screenWidth;
+    @SerializedName("screen_height") public final int screenHeight;
 
-    @SerializedName("device_has_busybox") public boolean hasBusyBox;
-    @SerializedName("device_has_root") public boolean hasRoot;
-    @SerializedName("device_su_version") public String suVersion;
+    @SerializedName("is_64_bit") public final boolean deviceIs64Bit;
+    @SerializedName("supported_abis") public final String deviceSupportedAbis;
+
+    @SerializedName("android_id") public final String androidId;
+    @SerializedName("manufacturer") public final String manufacturer;
+    @SerializedName("model") public final String model;
+    @SerializedName("product") public final String product;
+    @SerializedName("board") public final String board;
+    @SerializedName("bootloader") public final String bootloader;
+    @SerializedName("radio_version") public final String radio;
+
+    @SerializedName("cpuinfo") public final CpuInfo cpuInfo;
+    @SerializedName("kernelinfo") public final KernelInfo kernelInfo;
+    @SerializedName("memoryinfo") public final MemoryInfo memoryInfo;
+
+    @SerializedName("has_busybox") public boolean hasBusyBox;
+    @SerializedName("has_root") public boolean hasRoot;
+    @SerializedName("su_version") public String suVersion;
 
     private static final Device sInstance = new Device();
 
@@ -60,6 +77,26 @@ public class Device {
         vmVersion = System.getProperty("java.vm.version", "-");
         vmLibrary = getRuntime();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            deviceIs64Bit = Build.SUPPORTED_64_BIT_ABIS.length != 0;
+            String abis = "";
+            int length = Build.SUPPORTED_ABIS.length;
+            for (int i = 0; i < length; i++) {
+                abis += Build.SUPPORTED_ABIS[i];
+                if (i + 1 != length) {
+                    abis += ", ";
+                }
+            }
+            deviceSupportedAbis = abis;
+        } else {
+            deviceIs64Bit = false;
+            deviceSupportedAbis = String.format("%s, %s", Build.CPU_ABI, Build.CPU_ABI2);
+        }
+
+        final Resources res = Application.get().getResources();
+        screenWidth = res.getDisplayMetrics().widthPixels;
+        screenHeight = res.getDisplayMetrics().heightPixels;
+
         androidId = Utils.getAndroidId();
         manufacturer = Build.MANUFACTURER;
         model = Build.MODEL;
@@ -72,13 +109,22 @@ public class Device {
         hasBusyBox = false;
         hasRoot = false;
         suVersion = "-";
+
+        cpuInfo = new CpuInfo();
+        cpuInfo.feedWithInformation();
+
+        kernelInfo = new KernelInfo();
+        kernelInfo.feedWithInformation();
+
+        memoryInfo = new MemoryInfo();
+        memoryInfo.feedWithInformation(MemoryInfo.TYPE_MB);
     }
 
     public static Device get() {
         return sInstance;
     }
 
-    public void update() {
+    public Device update() {
         // check root for common locations, then via roottools and as last resort the SuperSU ones
         final boolean binaryExists = new File("/system/bin/su").exists()
                 || new File("/system/xbin/su").exists()
@@ -92,6 +138,20 @@ public class Device {
 
         // check busybox
         hasBusyBox = RootTools.isBusyboxAvailable();
+
+        // update memory as cached / free may change
+        memoryInfo.feedWithInformation(MemoryInfo.TYPE_MB);
+
+        return this;
+    }
+
+    public List<String> deviceAbisAsList() {
+        final ArrayList<String> list = new ArrayList<>();
+        final String[] abis = deviceSupportedAbis.split(",");
+        for (final String abi : abis) {
+            list.add(abi.trim());
+        }
+        return list;
     }
 
     private String getRuntime() {
@@ -113,5 +173,9 @@ public class Device {
         tmp = String.format("%s (%s)", runtime, tmp);
 
         return tmp;
+    }
+
+    @Override public String toString() {
+        return new Gson().toJson(this, Device.class);
     }
 }
