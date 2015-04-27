@@ -17,23 +17,50 @@
  */
 package org.namelessrom.devicecontrol.receivers;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.support.v4.app.NotificationCompat;
 
+import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.services.BootupService;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class BootUpReceiver extends BroadcastReceiver {
+    private static final int NOTIFICATION_ID = 1000;
 
     @Override
-    public void onReceive(final Context context, final Intent intent) {
-        final Intent bootup = new Intent(context, BootupService.class);
-        context.startService(bootup);
-        Log.i("DeviceControl", "Service Started: BootUpService");
-
+    public void onReceive(final Context ctx, final Intent intent) {
         Utils.startTaskerService();
+
+        int size = BootupConfiguration.get(ctx).loadConfiguration(ctx).items.size();
+        if (size == 0) {
+            Logger.v(this, "No bootup items, not showing notification");
+            return;
+        }
+
+        Intent i = new Intent(ctx, BootupService.class);
+        PendingIntent pi = PendingIntent.getService(ctx, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
+        builder.setContentTitle(ctx.getString(R.string.app_name))
+                .setContentText(ctx.getString(R.string.bootup_restoration_content))
+                .setOngoing(true)
+                .setSmallIcon(R.drawable.ic_bootup_restore)
+                .setColor(Application.get().getAccentColor())
+                .setContentIntent(pi)
+                .setAutoCancel(true);
+        Notification notification = builder.build();
+
+        NotificationManager notificationManager =
+                (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID, notification);
     }
 
 }

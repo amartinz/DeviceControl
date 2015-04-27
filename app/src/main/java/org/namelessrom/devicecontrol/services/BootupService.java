@@ -45,13 +45,6 @@ import java.io.File;
 public class BootupService extends IntentService {
     private static final Object lockObject = new Object();
 
-    public static final String SOB_SYSCTL = "sob_sysctl";
-    public static final String SOB_CPU = "sob_cpu";
-    public static final String SOB_GPU = "sob_gpu";
-    public static final String SOB_EXTRAS = "sob_extras";
-    public static final String SOB_DEVICE = "sob_device";
-    public static final String SOB_VOLTAGE = "sob_voltage";
-
     public BootupService() { super("BootUpService"); }
 
     @Override
