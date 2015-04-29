@@ -241,7 +241,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         loadFragmentPrivate(DeviceConstants.ID_ABOUT, false);
         getSupportFragmentManager().executePendingTransactions();
 
-        Utils.startTaskerService();
+        Utils.startTaskerService(this);
 
         if (DeviceConfiguration.get(this).dcFirstStart) {
             DeviceConfiguration.get(this).dcFirstStart = false;

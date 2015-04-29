@@ -69,7 +69,7 @@ public class TaskerConfiguration extends BaseConfiguration<TaskerConfiguration> 
         this.fstrimEnabled = config.fstrimEnabled;
         this.fstrimInterval = config.fstrimInterval;
 
-        this.items = config.items;
+        this.items = config.items != null ? config.items : new ArrayList<TaskerItem>();
 
         return this;
     }

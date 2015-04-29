@@ -24,6 +24,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
@@ -37,9 +38,18 @@ public class BootUpReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context ctx, final Intent intent) {
-        Utils.startTaskerService();
+        if (intent == null) {
+            return;
+        }
 
-        int size = BootupConfiguration.get(ctx).loadConfiguration(ctx).items.size();
+        final String action = intent.getAction();
+        if (TextUtils.isEmpty(action) || !Intent.ACTION_BOOT_COMPLETED.equals(action)) {
+            return;
+        }
+
+        Utils.startTaskerService(ctx);
+
+        int size = BootupConfiguration.get(ctx).items.size();
         if (size == 0) {
             Logger.v(this, "No bootup items, not showing notification");
             return;
@@ -53,7 +63,6 @@ public class BootUpReceiver extends BroadcastReceiver {
                 .setContentText(ctx.getString(R.string.bootup_restoration_content))
                 .setOngoing(true)
                 .setSmallIcon(R.drawable.ic_bootup_restore)
-                .setColor(Application.get().getAccentColor())
                 .setContentIntent(pi)
                 .setAutoCancel(true);
         Notification notification = builder.build();

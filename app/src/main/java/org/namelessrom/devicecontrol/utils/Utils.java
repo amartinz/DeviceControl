@@ -455,11 +455,11 @@ public class Utils {
         }
     }
 
-    public static boolean startTaskerService() {
-        if (!TaskerConfiguration.get(Application.get()).enabled) return false;
+    public static boolean startTaskerService(Context context) {
+        if (!TaskerConfiguration.get(context).enabled) return false;
 
         boolean enabled = false;
-        final List<TaskerItem> taskerItemList = TaskerConfiguration.get(Application.get()).items;
+        final List<TaskerItem> taskerItemList = TaskerConfiguration.get(context).items;
         for (final TaskerItem item : taskerItemList) {
             if (item.enabled) {
                 enabled = true;
@@ -467,21 +467,21 @@ public class Utils {
             }
         }
 
-        final Intent tasker = new Intent(Application.get(), TaskerService.class);
+        final Intent tasker = new Intent(context, TaskerService.class);
         if (enabled) {
             tasker.setAction(TaskerService.ACTION_START);
         } else {
             tasker.setAction(TaskerService.ACTION_STOP);
         }
-        Application.get().startService(tasker);
+        context.startService(tasker);
 
         return enabled;
     }
 
-    public static void stopTaskerService() {
-        final Intent tasker = new Intent(Application.get(), TaskerService.class);
+    public static void stopTaskerService(Context context) {
+        final Intent tasker = new Intent(context, TaskerService.class);
         tasker.setAction(TaskerService.ACTION_STOP);
-        Application.get().startService(tasker);
+        context.startService(tasker);
     }
 
     public static boolean isEnabled(String s, final boolean contains) {

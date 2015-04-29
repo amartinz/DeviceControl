@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.modules.tasker;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -103,20 +104,21 @@ public class TaskerFragment extends AttachFragment {
         final MenuItem toggle = menu.findItem(R.id.menu_action_toggle);
         final View v;
         if (toggle != null && (v = toggle.getActionView()) != null) {
+            final Activity activity = getActivity();
             final SwitchCompat sw = (SwitchCompat) v.findViewById(R.id.ab_switch);
-            sw.setChecked(TaskerConfiguration.get(getActivity()).enabled);
+            sw.setChecked(TaskerConfiguration.get(activity).enabled);
             sw.setOnCheckedChangeListener(
                     new CompoundButton.OnCheckedChangeListener() {
                         @Override public void onCheckedChanged(final CompoundButton b,
                                 final boolean isChecked) {
-                            TaskerConfiguration.get(getActivity()).enabled = isChecked;
-                            TaskerConfiguration.get(getActivity()).saveConfiguration(getActivity());
-                            Utils.toggleComponent(new ComponentName(getActivity().getPackageName(),
+                            TaskerConfiguration.get(activity).enabled = isChecked;
+                            TaskerConfiguration.get(activity).saveConfiguration(activity);
+                            Utils.toggleComponent(new ComponentName(activity.getPackageName(),
                                     TaskerService.class.getName()), !isChecked);
                             if (isChecked) {
-                                Utils.startTaskerService();
+                                Utils.startTaskerService(activity);
                             } else {
-                                Utils.stopTaskerService();
+                                Utils.stopTaskerService(activity);
                             }
                         }
                     }
