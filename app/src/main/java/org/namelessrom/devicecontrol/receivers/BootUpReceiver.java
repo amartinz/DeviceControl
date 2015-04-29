@@ -63,6 +63,7 @@ public class BootUpReceiver extends BroadcastReceiver {
                 .setContentText(ctx.getString(R.string.bootup_restoration_content))
                 .setOngoing(true)
                 .setSmallIcon(R.drawable.ic_bootup_restore)
+                .setColor(ctx.getResources().getColor(R.color.accent_light))
                 .setContentIntent(pi)
                 .setAutoCancel(true);
         Notification notification = builder.build();
