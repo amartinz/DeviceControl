@@ -69,8 +69,8 @@ public class Utils {
             Application.get().getStringArray(R.array.file_black_list);
     private static final String[] ENABLED_STATES = { "Y", "TRUE", "1", "255" };
 
-    public static boolean isNameless() {
-        return Application.get().getPackageManager().hasSystemFeature("org.namelessrom.android")
+    public static boolean isNameless(Context context) {
+        return context.getPackageManager().hasSystemFeature("org.namelessrom.android")
                 || existsInFile(Scripts.BUILD_PROP, "ro.nameless.version");
     }
 

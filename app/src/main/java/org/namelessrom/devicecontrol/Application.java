@@ -26,12 +26,7 @@ import android.os.StrictMode;
 
 import com.stericson.roottools.RootTools;
 
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
-import org.namelessrom.devicecontrol.configuration.ExtraConfiguration;
-import org.namelessrom.devicecontrol.configuration.FlasherConfiguration;
-import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
-import org.namelessrom.devicecontrol.configuration.WebServerConfiguration;
 import org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -89,19 +84,11 @@ public class Application extends android.app.Application {
             RootTools.debugMode = true;
         }
 
-        // load configurations
-        BootupConfiguration.get(this);
-        DeviceConfiguration.get(this);
-        ExtraConfiguration.get(this);
-        FlasherConfiguration.get(this);
-        TaskerConfiguration.get(this);
-        WebServerConfiguration.get(this);
-
         Logger.setEnabled(DeviceConfiguration.get(this).extensiveLogging);
 
         dumpInformation();
 
-        boolean isNameless = Utils.isNameless();
+        boolean isNameless = Utils.isNameless(this);
         Logger.v(this, String.format("is nameless: %s", isNameless));
 
         if (isNameless) {
@@ -178,8 +165,10 @@ public class Application extends android.app.Application {
         sAccentColor = -1;
         sPrimaryColor = -1;
 
-        DeviceConfiguration.get(this).darkTheme = isDark;
-        DeviceConfiguration.get(this).saveConfiguration(this);
+        DeviceConfiguration deviceConfiguration = DeviceConfiguration.get(this);
+        deviceConfiguration.darkTheme = isDark;
+        deviceConfiguration.saveConfiguration(this);
+
         return this;
     }
 }
