@@ -111,7 +111,7 @@ public class Application extends android.app.Application {
         }
 
         // preload device
-        Logger.i(this, "Preloading device...\n%s", Device.get().update().toString());
+        Logger.i(this, "Preloading device...\n%s", Device.get().toString());
     }
 
     private void dumpInformation() {
