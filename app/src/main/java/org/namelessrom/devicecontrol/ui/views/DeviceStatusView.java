@@ -26,6 +26,7 @@ import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -93,7 +94,7 @@ public class DeviceStatusView extends LinearLayout {
     };
 
     private void createViews(final Context context) {
-        final View view = inflate(context, R.layout.widget_device_stats, this);
+        final View view = LayoutInflater.from(context).inflate(R.layout.widget_device_stats, this);
 
         mDeviceInfo = (LinearLayout) view.findViewById(R.id.ui_device_stats_view);
 

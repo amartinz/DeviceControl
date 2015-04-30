@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,7 +45,7 @@ public class MenuListItem extends LinearLayout {
     }
 
     private void createViews(final Context context, final AttributeSet attrs) {
-        final View view = inflate(context, R.layout.menu_main_list_item, this);
+        final View view = LayoutInflater.from(context).inflate(R.layout.menu_main_list_item, this);
 
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MenuListItem);
         final int titleRes = a.getResourceId(
