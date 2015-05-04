@@ -19,6 +19,9 @@
 package org.namelessrom.devicecontrol.configuration;
 
 import android.content.Context;
+import android.text.TextUtils;
+
+import com.stericson.roottools.execution.Shell;
 
 /**
  * Device configuration which auto serializes itself to a file
@@ -36,6 +39,7 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
     public static final String CPU_LOCK_FREQ = "cpu_lock_freq";
     public static final String CPU_LOCK_GOV = "cpu_lock_gov";
     public static final String CPU_SHOW_INFO = "pref_show_cpu_info";
+    public static final String SU_SHELL_CONTEXT = "su_shell_context";
 
     public boolean dcFirstStart;
     public boolean swipeOnContent;
@@ -59,10 +63,13 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
 
     public boolean monkey;
 
+    public String suShellContext;
+
     private static DeviceConfiguration sInstance;
 
     private DeviceConfiguration(Context context) {
         loadConfiguration(context);
+        ensureDefaults();
     }
 
     public static DeviceConfiguration get(Context context) {
@@ -104,7 +111,15 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
 
         this.monkey = config.monkey;
 
+        this.suShellContext = config.suShellContext;
+
         return this;
+    }
+
+    private void ensureDefaults() {
+        if (TextUtils.isEmpty(suShellContext)) {
+            suShellContext = Shell.CONTEXT_NORMAL;
+        }
     }
 
     @Override public DeviceConfiguration saveConfiguration(Context context) {

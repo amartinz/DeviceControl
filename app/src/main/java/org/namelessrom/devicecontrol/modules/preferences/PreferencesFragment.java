@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,11 +30,13 @@ public class PreferencesFragment extends AttachViewPagerFragment {
     @Override protected int getFragmentId() { return DeviceConstants.ID_PREFERENCES; }
 
     @Override public ViewPagerAdapter getPagerAdapter() {
-        final ArrayList<Fragment> fragments = new ArrayList<>(1);
-        final ArrayList<CharSequence> titles = new ArrayList<>(1);
+        final ArrayList<CharSequence> titles = new ArrayList<>(2);
+        final ArrayList<Fragment> fragments = new ArrayList<>(2);
 
-        fragments.add(new MainPreferencesFragment());
         titles.add(getString(R.string.general));
+        fragments.add(new MainPreferencesFragment());
+        titles.add(getString(R.string.advanced));
+        fragments.add(new AdvancedPreferencesFragment());
 
         return new ViewPagerAdapter(getChildFragmentManager(), fragments, titles);
     }

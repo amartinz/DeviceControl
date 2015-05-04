@@ -22,10 +22,13 @@
  */
 package com.stericson.roottools.execution;
 
+import android.text.TextUtils;
+
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.exceptions.RootDeniedException;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.BufferedReader;
@@ -70,12 +73,29 @@ public class Shell {
     private int totalRead = 0;
     private boolean isCleaning = false;
 
+    public static final String CONTEXT_NORMAL = "normal";
+
+    private String shellContext = CONTEXT_NORMAL;
+
     //private constructor responsible for opening/constructing the shell
-    private Shell(final String cmd) throws IOException, TimeoutException, RootDeniedException {
+    private Shell(String cmd) throws IOException, TimeoutException, RootDeniedException {
+        String extra = null;
+        if ("su".equals(cmd)) {
+            shellContext = DeviceConfiguration.get(Application.get()).suShellContext;
+
+            if (!CONTEXT_NORMAL.equals(shellContext)) {
+                extra = String.format("--context %s", shellContext);
+            }
+        }
 
         RootTools.log("Starting shell: " + cmd);
+        RootTools.log("Context: " + shellContext);
 
-        proc = new ProcessBuilder(cmd).redirectErrorStream(true).start();
+        if (!TextUtils.isEmpty(extra)) {
+            proc = new ProcessBuilder(cmd, extra).redirectErrorStream(true).start();
+        } else {
+            proc = new ProcessBuilder(cmd).redirectErrorStream(true).start();
+        }
         inputStream = new BufferedReader(new InputStreamReader(proc.getInputStream(), "UTF-8"));
         errorStream = new BufferedReader(new InputStreamReader(proc.getErrorStream(), "UTF-8"));
         outputStream = new OutputStreamWriter(proc.getOutputStream(), "UTF-8");

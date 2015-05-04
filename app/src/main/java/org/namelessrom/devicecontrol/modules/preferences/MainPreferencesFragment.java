@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@ import android.support.v4.preference.PreferenceFragment;
 import com.pollfish.main.PollFish;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
@@ -63,23 +62,11 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
     //==============================================================================================
     private CustomTogglePreference mShowPollfish;
 
-    //==============================================================================================
-    // Debug
-    //==============================================================================================
-    private CustomTogglePreference mExtensiveLogging;
-
     @Override public void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
-        addPreferencesFromResource(R.xml._device_control);
+        addPreferencesFromResource(R.xml._device_control_main);
 
         final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
-
-        mExtensiveLogging = (CustomTogglePreference) findPreference(
-                DeviceConfiguration.EXTENSIVE_LOGGING);
-        if (mExtensiveLogging != null) {
-            mExtensiveLogging.setChecked(configuration.extensiveLogging);
-            mExtensiveLogging.setOnPreferenceChangeListener(this);
-        }
 
         mSetOnBoot = (CustomPreference) findPreference("prefs_set_on_boot");
         mSkipChecks = (CustomTogglePreference) findPreference(DeviceConfiguration.SKIP_CHECKS);
@@ -153,15 +140,6 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
                 PollFish.hide();
             }
             mShowPollfish.setChecked(value);
-            return true;
-        } else if (mExtensiveLogging == preference) {
-            final boolean value = (Boolean) newValue;
-
-            DeviceConfiguration.get(getActivity()).extensiveLogging = value;
-            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
-
-            Logger.setEnabled(value);
-            mExtensiveLogging.setChecked(value);
             return true;
         } else if (mSkipChecks == preference) {
             final boolean value = (Boolean) newValue;

@@ -88,4 +88,27 @@
         <item>8192</item>
     </string-array>
 
+    <string-array name="su_shell_context_entries" translatable="false">
+        <item>@string/normal</item>
+        <item>@string/init</item>
+        <item>@string/su</item>
+        <item>@string/shell</item>
+        <item>@string/system_server</item>
+        <item>@string/system_app</item>
+        <item>@string/platform_app</item>
+        <item>@string/untrusted_app</item>
+        <item>@string/recovery</item>
+    </string-array>
+    <string-array name="su_shell_context_values" translatable="false">
+        <item>normal</item>
+        <item>u:r:init:s0</item>
+        <item>u:r:su:s0</item>
+        <item>u:r:shell:s0</item>
+        <item>u:r:system_server:s0</item>
+        <item>u:r:system_app:s0</item>
+        <item>u:r:platform_app:s0</item>
+        <item>u:r:untrusted_app:s0</item>
+        <item>u:r:recovery:s0</item>
+    </string-array>
+
 </resources>

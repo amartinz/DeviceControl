@@ -32,6 +32,7 @@
     <string name="action_press_again">Press once again to exit!</string>
     <string name="defaults_button">Reset to default</string>
     <string name="general">General</string>
+    <string name="advanced">Advanced</string>
     <string name="others">Others</string>
     <string name="help">Help</string>
     <string name="more">More…</string>
@@ -152,6 +153,9 @@
     <string name="logger_mode_summary">Uncheck to remove any logs from logcat</string>
     <string name="debugging">Debugging</string>
     <string name="extensive_logging">Extensive logging</string>
+    <string name="shell">Shell</string>
+    <string name="su_shell_context">Shell context</string>
+    <string name="su_shell_context_summary">The context under which Device Control should run its commands.\nThe default value is <xliff:g id="value" example="Normal">\"%s\"</xliff:g>.\nCurrent value: <xliff:g id="value" example="System app">\"%s\"</xliff:g></string>
     <string name="reapply_on_boot">Reapply on boot</string>
     <string name="reapply_on_boot_summary">Choose the settings you want to restore when the device boots up</string>
     <string name="version">Version</string>
@@ -435,4 +439,10 @@
     <string name="bootup_restoration_content">Press to start bootup restoration</string>
     <string name="selinux_enforcing">Enforcing</string>
     <string name="selinux_permissive">Permissive</string>
+    <string name="init">Init (highest init context)</string>
+    <string name="su">SU</string>
+    <string name="system_server">System server</string>
+    <string name="system_app">System app</string>
+    <string name="platform_app">Platform app</string>
+    <string name="untrusted_app">Untrusted app</string>
 </resources>

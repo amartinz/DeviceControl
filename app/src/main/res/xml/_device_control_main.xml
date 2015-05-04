@@ -54,18 +54,8 @@
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="show_pollfish"
-            android:title="@string/show_pollfish"
-            android:summary="@string/show_pollfish_summary" />
-
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
-
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="prefs_debug"
-        android:title="@string/debugging">
-
-        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
-            android:key="extensive_logging"
-            android:title="@string/extensive_logging" />
+            android:summary="@string/show_pollfish_summary"
+            android:title="@string/show_pollfish" />
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
