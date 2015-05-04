@@ -93,6 +93,9 @@ public class BootupService extends IntentService {
                 return null;
             }
 
+            // patch sepolicy
+            Utils.patchSEPolicy();
+
             int size = BootupConfiguration.get(mContext).loadConfiguration(mContext).items.size();
             if (size == 0) {
                 Logger.v(this, "No bootup items");

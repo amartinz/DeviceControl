@@ -629,4 +629,12 @@ public class Utils {
         }
     }
 
+    public static void patchSEPolicy() {
+        String cmd = "";
+
+        // supolicy --live "allow untrusted_app proc_touchpanel dir { search }"
+        cmd += "supolicy --live \"allow untrusted_app proc_touchpanel dir { search }\";\n";
+
+        runRootCommand(cmd);
+    }
 }

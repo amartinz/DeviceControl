@@ -247,6 +247,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             DeviceConfiguration.get(this).dcFirstStart = false;
             DeviceConfiguration.get(this).saveConfiguration(this);
         }
+
+        // patch sepolicy
+        Utils.patchSEPolicy();
     }
 
     @Override public void onClick(final View v) {
