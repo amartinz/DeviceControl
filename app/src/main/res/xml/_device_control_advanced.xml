@@ -36,6 +36,10 @@
             android:key="extensive_logging"
             android:title="@string/extensive_logging" />
 
+        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
+            android:key="debug_strict_mode"
+            android:title="@string/debug_strict_mode" />
+
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

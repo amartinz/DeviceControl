@@ -40,6 +40,7 @@ public class AdvancedPreferencesFragment extends PreferenceFragment implements P
     //==============================================================================================
     // Debug
     //==============================================================================================
+    private CustomTogglePreference mDebugStrictMode;
     private CustomTogglePreference mExtensiveLogging;
 
     @Override public void onCreate(final Bundle bundle) {
@@ -55,6 +56,11 @@ public class AdvancedPreferencesFragment extends PreferenceFragment implements P
         mShellContext.setSummary(summary);
         mShellContext.setValue(configuration.suShellContext);
         mShellContext.setOnPreferenceChangeListener(this);
+
+        mDebugStrictMode = (CustomTogglePreference) findPreference(
+                DeviceConfiguration.DEBUG_STRICT_MODE);
+        mDebugStrictMode.setChecked(configuration.debugStrictMode);
+        mDebugStrictMode.setOnPreferenceChangeListener(this);
 
         mExtensiveLogging = (CustomTogglePreference) findPreference(
                 DeviceConfiguration.EXTENSIVE_LOGGING);
@@ -87,6 +93,15 @@ public class AdvancedPreferencesFragment extends PreferenceFragment implements P
 
             Logger.setEnabled(value);
             mExtensiveLogging.setChecked(value);
+            return true;
+        } else if (mDebugStrictMode == preference) {
+            final boolean value = (Boolean) newValue;
+
+            DeviceConfiguration.get(activity).debugStrictMode = value;
+            DeviceConfiguration.get(activity).saveConfiguration(activity);
+
+            Logger.setStrictModeEnabled(value);
+            mDebugStrictMode.setChecked(value);
             return true;
         }
 

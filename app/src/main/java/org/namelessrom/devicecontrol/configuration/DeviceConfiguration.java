@@ -29,6 +29,7 @@ import com.stericson.roottools.execution.Shell;
 public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> {
     // TODO: get rid of all these strings after migration
     public static final String SHOW_LAUNCHER = "show_launcher";
+    public static final String DEBUG_STRICT_MODE = "debug_strict_mode";
     public static final String EXTENSIVE_LOGGING = "extensive_logging";
     public static final String DC_FIRST_START = "dc_first_start";
     public static final String SKIP_CHECKS = "skip_checks";
@@ -55,6 +56,7 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
     public boolean showPollfish;
 
     public boolean skipChecks;
+    public boolean debugStrictMode;
     public boolean extensiveLogging;
 
     public boolean perfCpuLock;
@@ -103,6 +105,7 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
         this.showPollfish = config.showPollfish;
 
         this.skipChecks = config.skipChecks;
+        this.debugStrictMode = config.debugStrictMode;
         this.extensiveLogging = config.extensiveLogging;
 
         this.perfCpuLock = config.perfCpuLock;

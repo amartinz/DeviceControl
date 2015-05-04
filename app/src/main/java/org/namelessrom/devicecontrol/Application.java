@@ -20,23 +20,15 @@ package org.namelessrom.devicecontrol;
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Handler;
-import android.os.StrictMode;
-
-import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
-import org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity;
-import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 
 public class Application extends android.app.Application {
     public static final Handler HANDLER = new Handler();
-
-    private static final String PROP_BUILD = "ro.nameless.debug=1";
 
     private static Application sInstance;
 
@@ -51,40 +43,13 @@ public class Application extends android.app.Application {
         // force enable logger until we hit the user preference
         Logger.setEnabled(true);
 
-        if (Utils.existsInFile(Scripts.BUILD_PROP, PROP_BUILD)) {
-            // setup thread policy
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                    .detectAll()
-                    .detectCustomSlowCalls()
-                    .detectDiskReads()
-                    .detectDiskWrites()
-                    .detectNetwork()
-                    .penaltyLog()
-                    .penaltyFlashScreen()
-                    .build());
+        DeviceConfiguration deviceConfiguration = DeviceConfiguration.get(this);
 
-            // setup vm policy
-            final StrictMode.VmPolicy.Builder vmpolicy = new StrictMode.VmPolicy.Builder();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                vmpolicy.detectLeakedRegistrationObjects();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    vmpolicy.detectFileUriExposure();
-                }
-            }
-            vmpolicy
-                    .detectAll()
-                    .detectActivityLeaks()
-                    .detectLeakedClosableObjects()
-                    .detectLeakedSqlLiteObjects()
-                    .setClassInstanceLimit(AddTaskActivity.class, 100)
-                    .penaltyLog();
-            StrictMode.setVmPolicy(vmpolicy.build());
-
-            // enable debug mode at root tools
-            RootTools.debugMode = true;
+        if (deviceConfiguration.debugStrictMode) {
+            Logger.setStrictModeEnabled(true);
         }
 
-        Logger.setEnabled(DeviceConfiguration.get(this).extensiveLogging);
+        Logger.setEnabled(deviceConfiguration.extensiveLogging);
 
         dumpInformation();
 

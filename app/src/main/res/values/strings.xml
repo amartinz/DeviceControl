@@ -153,6 +153,7 @@
     <string name="logger_mode_summary">Uncheck to remove any logs from logcat</string>
     <string name="debugging">Debugging</string>
     <string name="extensive_logging">Extensive logging</string>
+    <string name="debug_strict_mode">Enable strict mode</string>
     <string name="shell">Shell</string>
     <string name="su_shell_context">Shell context</string>
     <string name="su_shell_context_summary">The context under which Device Control should run its commands.\nThe default value is <xliff:g id="value" example="Normal">\"%s\"</xliff:g>.\nCurrent value: <xliff:g id="value" example="System app">\"%s\"</xliff:g></string>

@@ -19,7 +19,11 @@
 
 package org.namelessrom.devicecontrol;
 
+import android.os.Build;
+import android.os.StrictMode;
 import android.util.Log;
+
+import com.stericson.roottools.RootTools;
 
 /**
  * A Logging utility
@@ -28,7 +32,12 @@ public class Logger {
 
     private static boolean DEBUG = false;
 
-    public static synchronized void setEnabled(final boolean enable) { DEBUG = enable; }
+    public static synchronized void setEnabled(final boolean enable) {
+        DEBUG = enable;
+
+        // TODO: configurable?
+        setRootToolsLogEnabled(enable);
+    }
 
     public static boolean getEnabled() { return DEBUG; }
 
@@ -120,4 +129,41 @@ public class Logger {
         return String.format("--> %s", String.format(msg, objects));
     }
 
+    public static void setStrictModeEnabled(boolean enabled) {
+        StrictMode.ThreadPolicy.Builder threadBuilder = new StrictMode.ThreadPolicy.Builder();
+        StrictMode.VmPolicy.Builder vmBuilder = new StrictMode.VmPolicy.Builder();
+
+        if (enabled) {
+            threadBuilder
+                    .detectAll()
+                    .detectCustomSlowCalls()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()
+                    .penaltyLog()
+                    .penaltyFlashScreen();
+
+            vmBuilder
+                    .detectAll()
+                    .detectActivityLeaks()
+                    .detectLeakedClosableObjects()
+                    .detectLeakedSqlLiteObjects()
+                    .penaltyLog();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                vmBuilder.detectLeakedRegistrationObjects();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                    vmBuilder.detectFileUriExposure();
+                }
+            }
+        }
+
+        StrictMode.setThreadPolicy(threadBuilder.build());
+        StrictMode.setVmPolicy(vmBuilder.build());
+    }
+
+    public static void setRootToolsLogEnabled(boolean enabled) {
+        // enable debug mode at root tools
+        RootTools.debugMode = enabled;
+    }
 }
