@@ -43,7 +43,9 @@ public class BootUpReceiver extends BroadcastReceiver {
         }
 
         final String action = intent.getAction();
-        if (TextUtils.isEmpty(action) || !Intent.ACTION_BOOT_COMPLETED.equals(action)) {
+        if (TextUtils.isEmpty(action)
+                || !Intent.ACTION_BOOT_COMPLETED.equals(action)
+                || !"android.intent.action.QUICKBOOT_POWERON".equals(action)) {
             return;
         }
 
