@@ -433,4 +433,6 @@
     <string name="no_items_found">No items found…</string>
     <string name="could_not_launch_activity">Could not launch activity</string>
     <string name="bootup_restoration_content">Press to start bootup restoration</string>
+    <string name="selinux_enforcing">Enforcing</string>
+    <string name="selinux_permissive">Permissive</string>
 </resources>

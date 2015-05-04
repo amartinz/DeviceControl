@@ -19,6 +19,7 @@ package org.namelessrom.devicecontrol;
 
 import android.content.res.Resources;
 import android.os.Build;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -64,6 +65,7 @@ public class Device {
     @SerializedName("has_busybox") public boolean hasBusyBox;
     @SerializedName("has_root") public boolean hasRoot;
     @SerializedName("su_version") public String suVersion;
+    @SerializedName("selinux_enforcing") public boolean isSELinuxEnforcing;
 
     private static final Device sInstance = new Device();
 
@@ -109,6 +111,7 @@ public class Device {
         hasBusyBox = false;
         hasRoot = false;
         suVersion = "-";
+        isSELinuxEnforcing = isSELinuxEnforcing(); // ehm, alright, if you say so...
 
         cpuInfo = new CpuInfo();
         cpuInfo.feedWithInformation();
@@ -138,6 +141,9 @@ public class Device {
 
         // check busybox
         hasBusyBox = RootTools.isBusyboxAvailable();
+
+        // selinux can be toggled when in development mode, so do not cache it
+        isSELinuxEnforcing = isSELinuxEnforcing(); // ehm, alright, if you say so...
 
         // update memory as cached / free may change
         memoryInfo.feedWithInformation(MemoryInfo.TYPE_MB);
@@ -173,6 +179,22 @@ public class Device {
         tmp = String.format("%s (%s)", runtime, tmp);
 
         return tmp;
+    }
+
+    private boolean isSELinuxEnforcing() {
+        // We know about a 4.2 release, which has enforcing selinux
+        if (Build.VERSION.SDK_INT >= 17) {
+            String enforcing = Utils.readOneLine("/sys/fs/selinux/enforce");
+
+            // 4.4+ builds (should) be enforcing by default
+            if (TextUtils.isEmpty(enforcing)) {
+                isSELinuxEnforcing = (Build.VERSION.SDK_INT >= 19);
+            } else {
+                isSELinuxEnforcing = Utils.isEnabled(enforcing, false);
+            }
+        }
+
+        return isSELinuxEnforcing;
     }
 
     @Override public String toString() {

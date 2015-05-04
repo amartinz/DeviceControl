@@ -87,6 +87,8 @@ public class DeviceInformationGeneralFragment extends PreferenceFragment {
         addPreference(category, "device_board", R.string.board, device.board);
         addPreference(category, "device_bootloader", R.string.bootloader, device.bootloader);
         addPreference(category, "device_radio_version", R.string.radio_version, device.radio);
+        addPreference(category, "device_selinux", R.string.selinux, device.isSELinuxEnforcing ?
+                getString(R.string.selinux_enforcing) : getString(R.string.selinux_permissive));
 
         // Memory
         category = (CustomPreferenceCategory) findPreference("memory");

@@ -145,18 +145,20 @@ public class Utils {
 
     @Nullable public static String readOneLine(final String sFile, final boolean trim) {
         if (fileExists(sFile)) {
-            BufferedReader brBuffer;
+            FileReader fileReader = null;
+            BufferedReader brBuffer = null;
             try {
-                brBuffer = new BufferedReader(new FileReader(sFile), 512);
-                try {
-                    final String value = brBuffer.readLine();
-                    return ((trim && value != null) ? value.trim() : value);
-                } finally {
-                    Utils.closeQuietly(brBuffer);
-                }
+                fileReader = new FileReader(sFile);
+                brBuffer = new BufferedReader(fileReader, 512);
+
+                final String value = brBuffer.readLine();
+                return ((trim && value != null) ? value.trim() : value);
             } catch (Exception e) {
                 Logger.e(TAG, "could not read file: " + sFile, e);
                 return readFileViaShell(sFile, true);
+            } finally {
+                Utils.closeQuietly(brBuffer);
+                Utils.closeQuietly(fileReader);
             }
         } else {
             Logger.w(TAG, "File does not exist or is not readable -> %s", sFile);

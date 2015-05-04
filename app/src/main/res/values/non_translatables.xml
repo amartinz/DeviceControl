@@ -53,6 +53,7 @@
     <string name="entropy_read_wakeup_threshold" translatable="false">read_wakeup_threshold</string>
     <string name="entropy_write_wakeup_threshold" translatable="false">write_wakeup_threshold</string>
     <string name="mmc_software_crc" translatable="false">Software CRC</string>
+    <string name="selinux" translatable="false">SELinux</string>
     <!-- Dalvik -->
     <string name="dirty_ratio_title" translatable="false">Dirty ratio</string>
     <string name="dirty_background_title" translatable="false">Dirty background ratio</string>
