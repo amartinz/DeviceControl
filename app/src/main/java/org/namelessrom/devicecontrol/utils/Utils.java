@@ -47,6 +47,7 @@ import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -154,7 +155,11 @@ public class Utils {
                 final String value = brBuffer.readLine();
                 return ((trim && value != null) ? value.trim() : value);
             } catch (Exception e) {
-                Logger.e(TAG, "could not read file: " + sFile, e);
+                if (e instanceof FileNotFoundException) {
+                    Logger.w(TAG, "file exists but can not be read, trying with root");
+                } else {
+                    Logger.e(TAG, "could not read file: " + sFile, e);
+                }
                 return readFileViaShell(sFile, true);
             } finally {
                 Utils.closeQuietly(brBuffer);
