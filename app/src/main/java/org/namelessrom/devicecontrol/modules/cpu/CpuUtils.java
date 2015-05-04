@@ -284,10 +284,14 @@ public class CpuUtils {
     }
 
     @NonNull public String onlineCpu(final int cpu) {
+        // protect against onlining core 0
+        if (cpu == 0) {
+            return "";
+        }
+
         final StringBuilder sb = new StringBuilder();
         final String pathOnline = getOnlinePath(cpu);
         if (!pathOnline.isEmpty()) {
-            sb.append(Utils.getWriteCommand(pathOnline, "0"));
             sb.append(Utils.getWriteCommand(pathOnline, "1"));
         }
         return sb.toString();
