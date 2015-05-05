@@ -61,9 +61,6 @@ public class Application extends android.app.Application {
             Utils.toggleComponent(c, false);
             Logger.v(this, "Force toggled on launcher icon for backwards compatibility with n-2.0");
         }
-
-        // preload device
-        Logger.i(this, "Preloading device...\n%s", Device.get().toString());
     }
 
     private void dumpInformation() {
