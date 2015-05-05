@@ -6,14 +6,18 @@ android {
 
     signingConfigs {
         release {
-            def Properties localProps = new Properties()
-            localProps.load(new FileInputStream(file('../local.properties')))
-            def Properties keyProps = new Properties()
-            keyProps.load(new FileInputStream(file(localProps['keystore'])))
-            storeFile file(keyProps["store"])
-            storePassword keyProps["storePass"]
-            keyAlias keyProps["alias"]
-            keyPassword keyProps["pass"]
+            def String localProps = System.getenv('SIGNING_PROP_FILE')
+            if (localProps == null) {
+                logger.quiet('Not signing the build!')
+            } else {
+                logger.quiet('Signing the build, prop file: ' + localProps)
+                def Properties keyProps = new Properties()
+                keyProps.load(new FileInputStream(file(localProps)))
+                storeFile file(keyProps["store"])
+                storePassword keyProps["storePass"]
+                keyAlias keyProps["alias"]
+                keyPassword keyProps["pass"]
+            }
         }
     }
 
@@ -68,7 +72,7 @@ dependencies {
     // MPChartLib inherits support-v13
     compile project(':libs:mpandroidchart:MPChartLib')
     // AndroidSwipeLayout inherits recyclerview
-    compile project( ':libs:AndroidSwipeLayout:library')
+    compile project(':libs:AndroidSwipeLayout:library')
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.android.support:cardview-v7:22.1.1'
     compile 'com.google.android.gms:play-services:7.3.0'
