@@ -34,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
@@ -214,6 +215,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         final ListView menuList = (ListView) v.findViewById(R.id.navbarlist);
         final LinearLayout menuContainer = (LinearLayout) v.findViewById(R.id.menu_container);
         // setup our static items
+        ((TextView) v.findViewById(R.id.menu_header_tv)).setText(Device.get().getModelString());
         menuContainer.findViewById(R.id.menu_prefs).setOnClickListener(this);
         menuContainer.findViewById(R.id.menu_about).setOnClickListener(this);
 
@@ -243,9 +245,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         Utils.startTaskerService(this);
 
-        if (DeviceConfiguration.get(this).dcFirstStart) {
-            DeviceConfiguration.get(this).dcFirstStart = false;
-            DeviceConfiguration.get(this).saveConfiguration(this);
+        DeviceConfiguration deviceConfiguration = DeviceConfiguration.get(this);
+        if (deviceConfiguration.dcFirstStart) {
+            deviceConfiguration.dcFirstStart = false;
+            deviceConfiguration.saveConfiguration(this);
         }
 
         // patch sepolicy

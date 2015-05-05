@@ -16,10 +16,37 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?themeMenu"
     android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/menu_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/themeMenuFooter"
+        android:clickable="true"
+        android:elevation="4dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:id="@+id/menu_header_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@string/font_light"
+            android:text="@string/app_name"
+            android:textColor="?themeColorInvert"
+            android:textSize="16sp"
+            tools:text="OPPO Find7 (find7)" />
+
+    </FrameLayout>
 
     <ListView
         android:id="@+id/navbarlist"
@@ -31,26 +58,26 @@
 
     <LinearLayout
         android:id="@+id/menu_container"
-        android:background="?attr/themeMenuFooter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/themeMenuFooter"
+        android:elevation="6dp"
         android:orientation="vertical"
-        android:paddingBottom="10dp"
-        android:elevation="6dp">
+        android:paddingBottom="10dp">
 
         <org.namelessrom.devicecontrol.ui.views.MenuListItem
             android:id="@+id/menu_prefs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menuItemTitle="@string/preferences"
-            app:menuItemImage="@drawable/ic_settings" />
+            app:menuItemImage="@drawable/ic_settings"
+            app:menuItemTitle="@string/preferences" />
 
         <org.namelessrom.devicecontrol.ui.views.MenuListItem
             android:id="@+id/menu_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menuItemTitle="@string/about"
-            app:menuItemImage="@drawable/ic_info" />
+            app:menuItemImage="@drawable/ic_info"
+            app:menuItemTitle="@string/about" />
 
     </LinearLayout>
 

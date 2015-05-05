@@ -53,6 +53,7 @@ public class Device {
     @SerializedName("android_id") public final String androidId;
     @SerializedName("manufacturer") public final String manufacturer;
     @SerializedName("model") public final String model;
+    @SerializedName("device") public final String device;
     @SerializedName("product") public final String product;
     @SerializedName("board") public final String board;
     @SerializedName("bootloader") public final String bootloader;
@@ -102,6 +103,7 @@ public class Device {
         androidId = Utils.getAndroidId();
         manufacturer = Build.MANUFACTURER;
         model = Build.MODEL;
+        device = Build.DEVICE;
         product = Build.PRODUCT;
         board = Build.BOARD;
         bootloader = Build.BOOTLOADER;
@@ -179,6 +181,14 @@ public class Device {
         tmp = String.format("%s (%s)", runtime, tmp);
 
         return tmp;
+    }
+
+    /**
+     * @return A string, formatted as - manufacturer model (device) <br/>
+     * Example: OPPO Find7 (find7)
+     */
+    public String getModelString() {
+        return String.format("%s %s (%s)", manufacturer, model, device);
     }
 
     private boolean isSELinuxEnforcing() {

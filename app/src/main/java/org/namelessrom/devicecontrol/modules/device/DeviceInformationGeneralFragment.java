@@ -82,6 +82,7 @@ public class DeviceInformationGeneralFragment extends PreferenceFragment {
         // TODO: save / restore / check --> ANDROID ID
         addPreference(category, KEY_ANDROID_ID, R.string.android_id, device.androidId);
         addPreference(category, "device_manufacturer", R.string.manufacturer, device.manufacturer);
+        addPreference(category, "device_device", R.string.device, device.device);
         addPreference(category, "device_model", R.string.model, device.model);
         addPreference(category, "device_product", R.string.product, device.product);
         addPreference(category, "device_board", R.string.board, device.board);

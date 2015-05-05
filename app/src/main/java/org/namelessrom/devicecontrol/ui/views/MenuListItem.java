@@ -57,12 +57,12 @@ public class MenuListItem extends LinearLayout {
         final TextView title = (TextView) view.findViewById(android.R.id.text1);
         title.setText(titleRes);
 
-        final ImageView image = (ImageView) view.findViewById(R.id.image);
-        final Drawable icon = DrawableHelper.getDrawable(imageRes);
         if (!isInEditMode()) {
+            final ImageView image = (ImageView) view.findViewById(R.id.image);
+            final Drawable icon = DrawableHelper.getDrawable(imageRes);
             DrawableHelper.applyAccentColorFilter(icon);
+            image.setImageDrawable(icon);
         }
-        image.setImageDrawable(icon);
     }
 
 }
