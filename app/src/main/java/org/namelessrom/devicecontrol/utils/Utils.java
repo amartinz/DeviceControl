@@ -634,11 +634,16 @@ public class Utils {
         }
     }
 
-    public static void patchSEPolicy() {
+    public static void patchSEPolicy(Context context) {
         String cmd = "";
 
         // supolicy --live "allow untrusted_app proc_touchpanel dir { search }"
         cmd += "supolicy --live \"allow untrusted_app proc_touchpanel dir { search }\";\n";
+
+        if (!Utils.isNameless(context)) {
+            // supolicy --live "allow platform_app proc_touchpanel dir { search }"
+            cmd += "supolicy --live \"allow platform_app proc_touchpanel dir { search }\";\n";
+        }
 
         runRootCommand(cmd);
     }

@@ -249,7 +249,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         }
 
         // patch sepolicy
-        Utils.patchSEPolicy();
+        Utils.patchSEPolicy(this);
     }
 
     @Override public void onClick(final View v) {
