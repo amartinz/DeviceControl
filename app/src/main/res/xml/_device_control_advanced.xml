@@ -16,15 +16,20 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
+        android:key="skip_checks"
+        android:summary="@string/skip_checks_summary"
+        android:title="@string/skip_checks" />
+
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="prefs_shell"
         android:title="@string/shell">
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
-            android:key="su_shell_context"
-            android:title="@string/su_shell_context"
             android:entries="@array/su_shell_context_entries"
-            android:entryValues="@array/su_shell_context_values"/>
+            android:entryValues="@array/su_shell_context_values"
+            android:key="su_shell_context"
+            android:title="@string/su_shell_context" />
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 

@@ -31,6 +31,7 @@ import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 
 public class AdvancedPreferencesFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
+    private CustomTogglePreference mSkipChecks;
 
     //==============================================================================================
     // Shell
@@ -48,6 +49,12 @@ public class AdvancedPreferencesFragment extends PreferenceFragment implements P
         addPreferencesFromResource(R.xml._device_control_advanced);
 
         final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
+
+        mSkipChecks = (CustomTogglePreference) findPreference(DeviceConfiguration.SKIP_CHECKS);
+        if (mSkipChecks != null) {
+            mSkipChecks.setChecked(configuration.skipChecks);
+            mSkipChecks.setOnPreferenceChangeListener(this);
+        }
 
         mShellContext = (CustomListPreference) findPreference(DeviceConfiguration.SU_SHELL_CONTEXT);
         mShellContext.setValueIndex(mShellContext.findIndexOfValue(configuration.suShellContext));
@@ -71,7 +78,15 @@ public class AdvancedPreferencesFragment extends PreferenceFragment implements P
     @Override public boolean onPreferenceChange(Preference preference, Object newValue) {
         final Activity activity = getActivity();
 
-        if (mShellContext == preference) {
+        if (mSkipChecks == preference) {
+            final boolean value = (Boolean) newValue;
+
+            DeviceConfiguration.get(activity).skipChecks = value;
+            DeviceConfiguration.get(activity).saveConfiguration(activity);
+
+            mSkipChecks.setChecked(value);
+            return true;
+        } else if (mShellContext == preference) {
             final String value = String.valueOf(newValue);
 
             String summary = getString(R.string.su_shell_context_summary,

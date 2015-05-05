@@ -25,11 +25,6 @@
             android:summary="@string/reapply_on_boot_summary"
             android:title="@string/reapply_on_boot" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
-            android:key="skip_checks"
-            android:summary="@string/skip_checks_summary"
-            android:title="@string/skip_checks" />
-
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory

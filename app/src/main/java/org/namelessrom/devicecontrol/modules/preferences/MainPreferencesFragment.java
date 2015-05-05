@@ -48,7 +48,6 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
     // General
     //==============================================================================================
     private CustomPreference mSetOnBoot;
-    private CustomTogglePreference mSkipChecks;
 
     //==============================================================================================
     // Interface
@@ -69,11 +68,6 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
         final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
 
         mSetOnBoot = (CustomPreference) findPreference("prefs_set_on_boot");
-        mSkipChecks = (CustomTogglePreference) findPreference(DeviceConfiguration.SKIP_CHECKS);
-        if (mSkipChecks != null) {
-            mSkipChecks.setChecked(configuration.skipChecks);
-            mSkipChecks.setOnPreferenceChangeListener(this);
-        }
 
         PreferenceCategory category = (PreferenceCategory) findPreference("prefs_app");
 
@@ -140,14 +134,6 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
                 PollFish.hide();
             }
             mShowPollfish.setChecked(value);
-            return true;
-        } else if (mSkipChecks == preference) {
-            final boolean value = (Boolean) newValue;
-
-            DeviceConfiguration.get(getActivity()).skipChecks = value;
-            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
-
-            mSkipChecks.setChecked(value);
             return true;
         } else if (mMonkeyPref == preference) {
             final boolean value = (Boolean) newValue;
