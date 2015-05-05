@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,11 +30,13 @@ public class AboutFragment extends AttachViewPagerFragment {
     @Override protected int getFragmentId() { return DeviceConstants.ID_ABOUT; }
 
     @Override public ViewPagerAdapter getPagerAdapter() {
-        final ArrayList<Fragment> fragments = new ArrayList<>(3);
-        final ArrayList<CharSequence> titles = new ArrayList<>(3);
+        final ArrayList<Fragment> fragments = new ArrayList<>(4);
+        final ArrayList<CharSequence> titles = new ArrayList<>(4);
 
         titles.add(getString(R.string.welcome));
         fragments.add(new WelcomeFragment());
+        titles.add(getString(R.string.community));
+        fragments.add(new CommunityFragment());
         titles.add(getString(R.string.licenses));
         fragments.add(new LicenseFragment());
         titles.add(getString(R.string.privacy));

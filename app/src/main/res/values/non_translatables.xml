@@ -99,4 +99,7 @@
     <!-- Donation -->
     <string name="google_play">Google Play</string>
     <string name="paypal" translatable="false">PayPal</string>
+    <!-- URLs -->
+    <string name="non_google_plus_community_url" translatable="false">https://plus.google.com/u/0/communities/102835551008778372596</string>
+    <string name="non_beta_url" translatable="false">https://play.google.com/apps/testing/org.namelessrom.devicecontrol</string>
 </resources>

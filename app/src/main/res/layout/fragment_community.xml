@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+<!--  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -17,9 +17,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
-    android:fillViewport="true"
     android:scrollbarStyle="outsideOverlay">
 
     <LinearLayout
@@ -28,27 +28,26 @@
         android:orientation="vertical">
 
         <TextView
-            android:textSize="30sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
             android:fontFamily="@string/font_bold"
+            android:gravity="center"
+            android:text="@string/community"
             android:textAlignment="center"
-            android:text="@string/welcome"
-            android:gravity="center" />
+            android:textSize="30sp" />
 
         <TextView
-            android:textSize="16sp"
-            android:gravity="center"
-            android:id="@+id/detailsTxtView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="30dp"
-            android:text="@string/welcome_message"
             android:layout_gravity="center_horizontal"
             android:fontFamily="@string/font_light"
-            android:textAlignment="center" />
+            android:gravity="center"
+            android:paddingTop="30dp"
+            android:text="@string/community_message"
+            android:textAlignment="center"
+            android:textSize="16sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -60,24 +59,23 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button style="?android:borderlessButtonStyle"
-                android:id="@+id/translateButton"
+            <Button android:id="@+id/betaTestButton"
+                style="?android:borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/translate"
-                android:textColor="?attr/colorAccent"
-                android:drawableLeft="@drawable/ic_translate" />
+                android:text="@string/join_beta_test"
+                android:textColor="?attr/colorAccent" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <Button style="?android:borderlessButtonStyle"
-                android:id="@+id/donateButton"
+            <Button android:id="@+id/communityButton"
+                style="?android:borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/donate_"
+                android:text="@string/view_community"
                 android:textColor="?attr/colorAccent" />
 
         </LinearLayout>
