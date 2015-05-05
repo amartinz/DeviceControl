@@ -27,6 +27,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 
+// XXX: DO NOT USE ROOT HERE! NEVER!
 public class Application extends android.app.Application {
     public static final Handler HANDLER = new Handler();
 
