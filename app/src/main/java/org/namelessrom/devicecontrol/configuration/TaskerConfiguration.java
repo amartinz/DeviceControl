@@ -39,7 +39,7 @@ public class TaskerConfiguration extends BaseConfiguration<TaskerConfiguration> 
     public boolean fstrimEnabled;
     public int fstrimInterval = 480;
 
-    public ArrayList<TaskerItem> items;
+    public ArrayList<TaskerItem> items = new ArrayList<>();
 
     private static TaskerConfiguration sInstance;
 
