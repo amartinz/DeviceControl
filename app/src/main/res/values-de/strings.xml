@@ -33,6 +33,7 @@
   <string name="action_press_again">Drücke erneut zum Beenden!</string>
   <string name="defaults_button">Standards wiederherstellen</string>
   <string name="general">Allgemein</string>
+  <string name="advanced">Erweitert</string>
   <string name="others">Sonstiges</string>
   <string name="help">Hilfe</string>
   <string name="more">Mehr&#8230;</string>
@@ -153,6 +154,10 @@
   <string name="logger_mode_summary">Entferne den Hacken, um den Logcat zu deaktivieren</string>
   <string name="debugging">Debugging</string>
   <string name="extensive_logging">Umfangreiche Protokollierung</string>
+  <string name="debug_strict_mode">Strikten Modus aktivieren</string>
+  <string name="shell">Shell</string>
+  <string name="su_shell_context">Shell Kontext</string>
+  <string name="su_shell_context_summary">Der Kontext, unter welchem Device Control Befehle ausführt.\nDer Standardwert ist <xliff:g id="value" example="Normal">\"%s\"</xliff:g>.\nAktueller Wert: <xliff:g id="value" example="System app">\"%s\"</xliff:g></string>
   <string name="reapply_on_boot">Beim Starten anwenden</string>
   <string name="reapply_on_boot_summary">Wähle die Einstellungen, welche wiederhergestellt werden, wenn das Gerät startet</string>
   <string name="version">Version</string>
@@ -432,4 +437,17 @@
   <string name="cpu_lock_gov_summary">Probiert das Modifizieren der Governors zu verhindern\nDies funktioniert möglicherweise nicht auf allen Geräten!</string>
   <string name="no_items_found">Keine Einträge gefunden&#8230;</string>
   <string name="could_not_launch_activity">Anwendung konnte nicht gestartet werden</string>
+  <string name="bootup_restoration_content">Drücken, um die Neustart-Wiederherstellung auszuführen</string>
+  <string name="selinux_enforcing">Strikt</string>
+  <string name="selinux_permissive">Moderat</string>
+  <string name="init">Init (höchste Init-Kontext)</string>
+  <string name="su">SU</string>
+  <string name="system_server">Systemserver</string>
+  <string name="system_app">System-App</string>
+  <string name="platform_app">Plattform-App</string>
+  <string name="untrusted_app">Nicht vertrauenswürdige App</string>
+  <string name="community">Community</string>
+  <string name="community_message">Wenn Sie Hilfe benötigen, Anregungen, Ideen und Funktionswünsche haben oder einfach nur diskutieren wollen, können Sie unserer <b>Google+ Community</b> beitreten.\n\nWenn Sie der Community beitreten, können Sie auch an BETA Tests teilnehmen.\nBETA Veröffentlichungen können instabil sein, aber dafür bekommen Sie häufigere Updates mit den neuesten Funktionen und Fehlerbehebungen.</string>
+  <string name="join_beta_test">BETA beitreten</string>
+  <string name="view_community">Community öffnen</string>
 </resources>
