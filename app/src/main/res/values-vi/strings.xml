@@ -207,7 +207,6 @@
   <string name="become_a_monkey">Trở thành khỉ</string>
   <string name="is_monkey">Chờ đã, bạn nghiêm túc chứ?\nĐối với một con khỉ bạn khá thông minh.\nKhông ngốc như chúng nhưng...\nVậy, hãy bỏ qua việc này,</string>
   <string name="no_monkey">Không phải là khỉ chứ?*Sigh* :(</string>
-  <string name="downgraded">Cơ sở dữ liệu sẽ bị xóa do xuống cấp!</string>
   <string name="media_scan_trigger">Kích hoạt tìm kiếm tập tin truyền thông</string>
   <string name="media_scan_summary">Kích hoạt thủ công  tìm kiếm tập tin truyền thông, trong trường hợp máy của bạn kết nối bằng phương thức MTP và các tập tin mới không hiển thị.</string>
   <string name="force_stop">Buộc dừng</string>

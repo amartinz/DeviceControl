@@ -87,7 +87,6 @@
   <string name="power_efficient_work">Energetický úsporná pracovní fronta</string>
   <string name="power_efficient_work_summary">Umožňuje přeplánovat úlohu na jádro, které už je probuzeno.</string>
   <string name="powersaving_sched_mc_title">Plánovač Napájení</string>
-  <string name="powersaving_sched_mc_0">0 - Zakázáno</string>
   <string name="powersaving_sched_mc_1">1 - Vyvážený</string>
   <string name="powersaving_sched_mc_2">2 - Agresivní</string>
   <string name="intelli_plug_eco">Eco režim</string>
@@ -190,7 +189,6 @@
   <string name="become_a_monkey">Stát se opicí</string>
   <string name="is_monkey">Počkat, to jako vážně?\nJste příliš chytří na to, aby jste byli opice.\nNe že by byly hloupé ale&#8230;\nNo, raději to přeskočme.</string>
   <string name="no_monkey">Nejste opice? *Sigh* :(</string>
-  <string name="downgraded">Databáze byla vymazána kvůli přestupu na nižší verzi!</string>
   <string name="media_scan_trigger">Spouštěč skenování médií</string>
   <string name="media_scan_summary">Ruční spouštění skenování médií, pro případ že váš telefon je připojen přes MTP a soubory nejsou viditelné.</string>
   <string name="clear_cache">Vymazat cache</string>

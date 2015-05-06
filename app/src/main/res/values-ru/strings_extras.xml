@@ -16,9 +16,19 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+  <string name="support">Поддерживать</string>
+  <string name="translate">Переводчик</string>
+  <string name="donate_">Пожертвовать</string>
+  <string name="donate_value">Пожертвовать %s</string>
+  <string name="donate_subscription">Воспользоваться подпиской</string>
+  <string name="donate_subscription_note">Примечание: Подписка оплачивается ежемесячно!</string>
+  <string name="donate_via">Пожертвовать через %s</string>
+  <string name="donate_paypal_message">Вы будете перенаправлены на PayPal.</string>
+  <string name="show_pollfish">Показать Pollfish</string>
+  <string name="show_pollfish_summary">Активировать небольшую иконку в правом нижнем углу. Каждый пройденный Вами опрос помогает нам развиваться. Никто не запрещает Вам отключить эту опцию. :)</string>
   <string name="task_type">Тип задачи</string>
   <string name="event_based">На основе события</string>
-  <string name="next">Дальше</string>
+  <string name="next">Следующий</string>
   <string name="prev">Назад</string>
   <string name="review">Обзор</string>
   <string name="finish">Закончить</string>

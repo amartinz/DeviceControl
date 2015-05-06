@@ -190,7 +190,6 @@
   <string name="become_a_monkey">Converteix-te en un mico</string>
   <string name="is_monkey">Espera, de debò?\nEts molt intel·ligent per a un mico.\nNo és que siguin ximples però...\nBé, podem ometre això.</string>
   <string name="no_monkey">No és un mico? *Sospir* :(</string>
-  <string name="downgraded">La base de dades serà esborrada a causa del downgrade!</string>
   <string name="media_scan_trigger">Disparador de l\'anàlisi de mitjans</string>
   <string name="media_scan_summary">Disparador manual desencadenés una exploració dels mitjans, en cas de tenir el telèfon connectat via MTP, els nous arxius no seran visibles.</string>
   <string name="clear_cache">Netejar la cache</string>
