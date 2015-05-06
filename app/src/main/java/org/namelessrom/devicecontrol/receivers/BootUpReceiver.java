@@ -24,9 +24,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
-import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
@@ -38,17 +36,6 @@ public class BootUpReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context ctx, final Intent intent) {
-        if (intent == null) {
-            return;
-        }
-
-        final String action = intent.getAction();
-        if (TextUtils.isEmpty(action)
-                || (!Intent.ACTION_BOOT_COMPLETED.equals(action)
-                && !"android.intent.action.QUICKBOOT_POWERON".equals(action))) {
-            return;
-        }
-
         Utils.startTaskerService(ctx);
 
         int size = BootupConfiguration.get(ctx).items.size();
