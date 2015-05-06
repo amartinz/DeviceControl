@@ -146,8 +146,6 @@
   <string name="hot">Nóng</string>
   <string name="logger_mode">Sử dụng Logcat</string>
   <string name="logger_mode_summary">Bỏ chọn để loại bỏ bất kỳ bản ghi từ logcat</string>
-  <string name="show_launcher">Hiện biểu tượng trên màn hình chính</string>
-  <string name="show_launcher_summary">Hiện/ẩn các biểu tượng trên màn hình chính</string>
   <string name="debugging">Gỡ lỗi</string>
   <string name="extensive_logging">Mở rộng bản ghi</string>
   <string name="reapply_on_boot">Áp dụng lại khi khởi động</string>
@@ -207,7 +205,6 @@
   <string name="become_a_monkey">Trở thành khỉ</string>
   <string name="is_monkey">Chờ đã, bạn nghiêm túc chứ?\nĐối với một con khỉ bạn khá thông minh.\nKhông ngốc như chúng nhưng...\nVậy, hãy bỏ qua việc này,</string>
   <string name="no_monkey">Không phải là khỉ chứ?*Sigh* :(</string>
-  <string name="downgraded">Cơ sở dữ liệu sẽ bị xóa do xuống cấp!</string>
   <string name="media_scan_trigger">Kích hoạt tìm kiếm tập tin truyền thông</string>
   <string name="media_scan_summary">Kích hoạt thủ công  tìm kiếm tập tin truyền thông, trong trường hợp máy của bạn kết nối bằng phương thức MTP và các tập tin mới không hiển thị.</string>
   <string name="force_stop">Buộc dừng</string>

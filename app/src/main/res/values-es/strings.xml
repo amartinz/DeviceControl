@@ -136,8 +136,6 @@
   <string name="hot">Caliente</string>
   <string name="logger_mode">Habilitar Logcat</string>
   <string name="logger_mode_summary">Desmarque para eliminar cualquier registro del logcat</string>
-  <string name="show_launcher">Mostrar icono del launcher</string>
-  <string name="show_launcher_summary">Ocultar/mostrar el icono del launcher</string>
   <string name="debugging">Depuración</string>
   <string name="extensive_logging">Activación del registro Extensivo</string>
   <string name="reapply_on_boot">Vuelva a aplicar en el arranque</string>
@@ -189,7 +187,6 @@
   <string name="become_a_monkey">Conviertete en un mono</string>
   <string name="is_monkey">Espera, ¿en serio?\nEres muy inteligente para un mono.\nNo es que sean tontos pero...\nBueno, podemos omitir esto.</string>
   <string name="no_monkey">¿No es un mono? *Suspiro* :(</string>
-  <string name="downgraded">¡La base de datos será borrada debido al downgrade!</string>
   <string name="media_scan_trigger">Disparador del análisis de medios</string>
   <string name="media_scan_summary">Disparador manual desencadenara una exploración de los medios, en caso de tener el teléfono conectado vía MTP, los nuevos archivos no serán visibles.</string>
   <string name="clear_cache">Limpiar la cache</string>

@@ -149,8 +149,6 @@
   <string name="warm">Varm</string>
   <string name="logger_mode">Aktivera logcat</string>
   <string name="logger_mode_summary">Avmarkera för att ta bort alla loggar från logcat</string>
-  <string name="show_launcher">Visa hemskärmsikon</string>
-  <string name="show_launcher_summary">Visa/dölj hemskärmsikon</string>
   <string name="debugging">Felsöknings läge</string>
   <string name="extensive_logging">Avancerad loggning</string>
   <string name="reapply_on_boot">Återaktivera vid omstart</string>

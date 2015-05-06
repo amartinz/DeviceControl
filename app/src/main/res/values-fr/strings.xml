@@ -147,8 +147,6 @@
   <string name="hot">Très chaud</string>
   <string name="logger_mode">Activer Logcat</string>
   <string name="logger_mode_summary">Décochez pour supprimer tous les journaux de logcat</string>
-  <string name="show_launcher">Afficher l\'icône du lanceur</string>
-  <string name="show_launcher_summary">Masque/affiche l\'icône du lanceur</string>
   <string name="debugging">Débogage</string>
   <string name="extensive_logging">Journalisation étendue</string>
   <string name="reapply_on_boot">Réappliquer au démarrage</string>
@@ -208,7 +206,6 @@
   <string name="become_a_monkey">Devenir un singe</string>
   <string name="is_monkey">Attendez, vous êtes sérieux? \nVous êtes assez intelligent pour un singe. \nNon pas qu\'ils soient stupides mais...\nBien, passons ceci.</string>
   <string name="no_monkey">Pas un singe? *Soupir*:(</string>
-  <string name="downgraded">La base de données a été effacée en raison du downgrade!</string>
   <string name="media_scan_trigger">Déclencher le scan média</string>
   <string name="media_scan_summary">Déclencher manuellement un scan média, si votre téléphone est connecté via MTP et les nouveaux fichiers sont non visibles.</string>
   <string name="force_stop">Forcer l\'arrêt </string>

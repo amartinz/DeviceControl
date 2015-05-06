@@ -151,8 +151,6 @@
   <string name="hot">Heiß</string>
   <string name="logger_mode">Aktiviere Logcat</string>
   <string name="logger_mode_summary">Entferne den Hacken, um den Logcat zu deaktivieren</string>
-  <string name="show_launcher">Zeige Icon in App-Übersicht</string>
-  <string name="show_launcher_summary">Zeigt/versteckt das Icon</string>
   <string name="debugging">Debugging</string>
   <string name="extensive_logging">Umfangreiche Protokollierung</string>
   <string name="reapply_on_boot">Beim Starten anwenden</string>
@@ -214,7 +212,6 @@
   <string name="become_a_monkey">Werde ein Affe</string>
   <string name="is_monkey">Warte, ist das dein Ernst?\nDu bist ziemlich clever für einen Affen.\nNicht dass sie dumm wären, aber...\nWie auch immer, lass uns das Thema wechseln.</string>
   <string name="no_monkey">Kein Affe? *seufz* :(</string>
-  <string name="downgraded">Datenbank wurde aufgrund eines Downgrades gelöscht!</string>
   <string name="media_scan_trigger">Media-Scanner auslösen</string>
   <string name="media_scan_summary">Löst einen Media-Scan aus, für den Fall, dass du dein Gerät über MTP angeschlossen hast und neue Dateien nicht sichtbar sind.</string>
   <string name="media_scan_triggered">Media Scan ausgelöst, dies kann eine Weile dauern!</string>
@@ -360,6 +357,8 @@
   <string name="install_title">Wählen Sie die zu installierenden Dateien</string>
   <string name="install_now">Jetzt installieren</string>
   <string name="file_not_found">Fehler beim Hinzufügen der Datei</string>
+  <string name="disabled">Deaktiviert</string>
+  <string name="user">Benutzer</string>
   <string name="system">System</string>
   <string name="boot">Boot</string>
   <string name="alert_reboot_install_title">Installiere Datei(en)</string>
@@ -431,4 +430,6 @@
   <string name="cpu_lock_freq_summary">Probiert das Modifizieren der Frequenzen zu verhindern\nDies funktioniert möglicherweise nicht auf allen Geräten!</string>
   <string name="cpu_lock_gov">Sperre Governors</string>
   <string name="cpu_lock_gov_summary">Probiert das Modifizieren der Governors zu verhindern\nDies funktioniert möglicherweise nicht auf allen Geräten!</string>
+  <string name="no_items_found">Keine Einträge gefunden&#8230;</string>
+  <string name="could_not_launch_activity">Anwendung konnte nicht gestartet werden</string>
 </resources>

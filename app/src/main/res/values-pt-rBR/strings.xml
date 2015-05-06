@@ -24,6 +24,7 @@
   <string name="start_wizard">Iniciar assistente</string>
   <string name="get_busybox">Instalar BusyBox</string>
   <string name="more_information">Mais informações</string>
+  <string name="checking_requirements">A verificar requisitos...</string>
   <string name="exit">Sair</string>
   <string name="close">Fechar</string>
   <string name="message_loading">Carregando, por favor, aguarde...</string>
@@ -40,6 +41,7 @@
   <string name="no_tweaks_message">Desculpe, mas o seu dispositivo não tem nenhuma característica suportada</string>
   <string name="gov_tweaks">Valores para alterar: %s</string>
   <string name="no_gov_tweaks_message">Desculpe, mas este governor não tem valores ajustáveis</string>
+  <string name="no_io_tweaks_message">Desculpe, mas esta I/O Agendador possui valores não ajustáveis</string>
   <string name="home">Inicio</string>
   <string name="device">Dispositivo</string>
   <string name="features">Características</string>
@@ -106,6 +108,7 @@
   <string name="cpu_governor">Governador de CPU</string>
   <string name="cpu_governor_tuning">Ajustes do governador da CPU</string>
   <string name="io">Planificador E/S</string>
+  <string name="configure_format">Configurar %s</string>
   <string name="sob">Aplicar automaticamente na inicialização</string>
   <string name="core">Núcleo</string>
   <string name="core_offline">Off-line</string>
@@ -146,8 +149,6 @@
   <string name="hot">Quente</string>
   <string name="logger_mode">Habilitar Logcat</string>
   <string name="logger_mode_summary">Desmarque para remover qualquer registo do logcat</string>
-  <string name="show_launcher">Mostrar ícone do launcher</string>
-  <string name="show_launcher_summary">Esconde/mostra o ícone do launcher</string>
   <string name="debugging">Depuração</string>
   <string name="extensive_logging">Ativação de registro extensivo</string>
   <string name="reapply_on_boot">Reaplicar na inicialização</string>
@@ -189,6 +190,8 @@
   <string name="gestures">Gestos</string>
   <string name="knock_on">Toque On</string>
   <string name="knock_on_summary">Duplo toque na tela para ligá-la</string>
+  <string name="sweep_to_wake">Deslize para acordar</string>
+  <string name="sweep_to_volume">Deslize para ajustar o volume</string>
   <string name="five_minutes">5 Minutos</string>
   <string name="ten_minutes">10 Minutos</string>
   <string name="twenty_minutes">20 Minutos</string>
@@ -207,9 +210,9 @@
   <string name="become_a_monkey">Tornar-se um macaco</string>
   <string name="is_monkey">Espera, você está falando sério? \nVocê é muito inteligente para ser um macaco. \nNão que eles sejam estúpidos, but...\nBem, podemos ignorar isto.</string>
   <string name="no_monkey">Não é um macaco? * Suspiro * :(</string>
-  <string name="downgraded">Base de dados tem apagado devido um downgrade!</string>
   <string name="media_scan_trigger">Iniciar scan media</string>
   <string name="media_scan_summary">Iniciar manual media scan, no caso você ter seu telefone conectado via MTP e novos arquivos não estão visiveis.</string>
+  <string name="media_scan_triggered">O scan de media foi ativado, poderá levar algum tempo!</string>
   <string name="force_stop">Forçar paragem</string>
   <string name="app_details">Detalhes da aplicação</string>
   <string name="clear_cache">Limpar cache</string>
@@ -243,6 +246,8 @@
   <string name="deferred_timer_summary">Não acorde CPU para atividades KSM para conservar a bateria</string>
   <string name="wfm_root">Navegar em modo root</string>
   <string name="wfm_port">Porta do servidor Web</string>
+  <string name="web_server_not_running">O servidor está inativo</string>
+  <string name="web_server_running">O servidor está a funcionar a %s</string>
   <string name="stop">Parar</string>
   <string name="authentication">Autenticação</string>
   <string name="wfm_auth">Use a autenticação</string>
@@ -266,6 +271,7 @@
   <string name="flash_warning">Estas a ponto de flashear!\nCuando continue, seu dispositivo reiniciasse-se no recovery e flasheara os objectos seleccionados.\n\nQueres proceder?</string>
   <string name="both">Ambos</string>
   <string name="pick_file">Escolha um arquivo</string>
+  <string name="something_went_wrong">Desculpe mas algo correu mal!</string>
   <string name="recovery">Recuperação</string>
   <string name="bootloader">Bootloader</string>
   <string name="reboot">Reiniciar</string>
@@ -295,6 +301,7 @@
   <string name="uninstall">Desinstalar</string>
   <string name="uninstalling">Desinstalando&#8230;</string>
   <string name="uninstall_msg">Você quer realmente desinstalar \"%s\"?\nEssa ação não pode ser desfeita!</string>
+  <string name="uninstall_msg_system_app">Desinstalar aplicativos do sistema poderá exigir uma reinicialização!</string>
   <string name="uninstall_success">Desinstalado com sucesso \"%s\"</string>
   <string name="sunlight_enhancement">Realçar com luz solar</string>
   <string name="sunlight_enhancement_summary">Realça o brilho da tela e a legibilidade sobre o brilho da luz solar</string>
@@ -340,6 +347,7 @@
   <string name="hardware_display_gamma_calibration_desc_one">Vermelho, verde, azul</string>
   <string name="install_info">As seguintes atualizações estão prontas para ser instaladas.\n\nPode adicionar mais zips ao clicar no botão \"Adicionar ficheiro\".</string>
   <string name="select_actions">Selecione as ações que gostaria de executar</string>
+  <string name="select_recovery">Selecione a sua \"recovery\"</string>
   <string name="backup">Cópia de segurança</string>
   <string name="wipe_data">Apagar dados</string>
   <string name="wipe_caches">Apagar Cache &amp; Dalvik</string>
@@ -347,6 +355,7 @@
   <string name="install_title">Escolher arquivos para instalar</string>
   <string name="install_now">Instalar agora</string>
   <string name="file_not_found">Não foi possível adicionar o ficheiro</string>
+  <string name="disabled">Desativado</string>
   <string name="system">Sistema</string>
   <string name="boot">Inicialização</string>
   <string name="alert_reboot_install_title">Instalar o ficheiro(s)</string>
@@ -379,4 +388,44 @@
   <string name="arch">Arquitectura</string>
   <string name="string_default">Padrão</string>
   <string name="touch_boost">Aumento do toque</string>
+  <string name="permissions">Permissões</string>
+  <string name="security_settings_desc">Este aplicativo pode acessar aos seguintes nos seus dispositivos:</string>
+  <string name="join_two_items"><xliff:g id="first_item">%1$s</xliff:g> e <xliff:g id="second_item">%2$s</xliff:g></string>
+  <string name="join_many_items_last"><xliff:g id="all_but_last_item">%1$s</xliff:g> e <xliff:g id="last_item">%2$s</xliff:g></string>
+  <string name="security_settings_desc_multi" product="default">Este aplicativo pode aceder o seguinte no seu telefone. Para melhorar o desempenho e reduzir uso de memória, algumas destas permissões estão disponíveis para <xliff:g id="base_app_name">%1$s</xliff:g> porque corre no mesmo processo como <xliff:g id="additional_apps_list">%2$s</xliff:g>:</string>
+  <string name="no_permissions">Não são necessárias permissões</string>
+  <string name="perm_costs_money">isto poderá estar sujeito a custos</string>
+  <string name="perms_new_perm_prefix"><font size="12" fgcolor="#ff33b5e5">NOVO: </font></string>
+  <string name="perms_description_app">Fornecido por <xliff:g id="app_name">%1$s</xliff:g>.</string>
+  <string name="environment">Ambiente</string>
+  <string name="motion">Movimento</string>
+  <string name="position">Posição</string>
+  <string name="sensor_information">Mostra a informação do sensor</string>
+  <string name="sensor_information_summary">Exibir informações detalhadas sobre os sensores</string>
+  <string name="sensor_light">Luz</string>
+  <string name="sensor_temperature">Temperatura</string>
+  <string name="sensor_pressure">Pressão</string>
+  <string name="sensor_pressure_note">Nota: os valores podem ser em %1$s ou %2$s dependendo da implementação de fabricantes</string>
+  <string name="sensor_relative_humitidy">Humidade relativa</string>
+  <string name="sensor_accelerometer">Acelerômetro (incluindo a gravidade)</string>
+  <string name="sensor_accelerometer_linear">Acelerômetro linear (excluindo a gravidade)</string>
+  <string name="sensor_gravity">Gravidade</string>
+  <string name="sensor_rotation_vector">Vetor de rotação</string>
+  <string name="sensor_gyroscope">Giroscópio</string>
+  <string name="sensor_gyroscope_uncalibrated">Giroscópio (não calibrado)</string>
+  <string name="sensor_step">Contador de passos</string>
+  <string name="sensor_proximity">Proximidade</string>
+  <string name="sensor_magnetic_field">Campo magnético</string>
+  <string name="sensor_magnetic_field_uncalibrated">Campo magnético (não calibrado)</string>
+  <string name="sensor_geomagnetic_rotation_vector">Vetor de rotação geomagnético</string>
+  <string name="sensor_game_rotation_vector">Vetor de rotação de jogo</string>
+  <string name="power_usage">Utilização de energia</string>
+  <string name="steps">Passos</string>
+  <string name="far">Longe</string>
+  <string name="near">Perto</string>
+  <string name="cpu_lock_freq">Frequências de bloqueio</string>
+  <string name="cpu_lock_freq_summary">Tenta impedir a modificação das frequencies\nIsto  pode não funcionar em alguns dispositivos!</string>
+  <string name="cpu_lock_gov">Governadores de bloqueio</string>
+  <string name="cpu_lock_gov_summary">Tenta impedir a modificação de governors\nIsto pode não funcionar em alguns dispositivos!</string>
+  <string name="no_items_found">Nenhum item encontrado...</string>
 </resources>

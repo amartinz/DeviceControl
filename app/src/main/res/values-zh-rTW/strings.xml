@@ -53,7 +53,6 @@
   <string name="hotplugging">熱插拔</string>
   <string name="fast_charge_0">0-禁用</string>
   <string name="fast_charge_1_old">1-啟用</string>
-  <string name="powersaving_sched_mc_0">0-禁用</string>
   <string name="intelli_plug_eco">Eco 模式</string>
   <string name="cpusettings">CPU 設置</string>
   <string name="current_speed">當前速度</string>
@@ -83,7 +82,6 @@
   <string name="warm">暖色</string>
   <string name="hot">熱</string>
   <string name="logger_mode">啟用 logcat</string>
-  <string name="show_launcher">顯示啟動器圖示</string>
   <string name="debugging">除錯</string>
   <string name="version">版本</string>
   <string name="tasklist_summary">安裝、 修改、 啟用或禁用任務。</string>
@@ -105,7 +103,6 @@
   <string name="delete_property">刪除屬性</string>
   <string name="name">名稱</string>
   <string name="presets">預設</string>
-  <string name="gestures">手勢設定</string>
   <string name="knock_on_summary">按兩下將螢幕打開</string>
   <string name="five_minutes">5 分鐘</string>
   <string name="ten_minutes">10 分鐘</string>
@@ -136,7 +133,6 @@
   <string name="applying_wait">應用中，請稍候...</string>
   <string name="full_scans">完全掃描</string>
   <string name="uksm_cpu_governor">CPU 管理</string>
-  <string name="stop">停止</string>
   <string name="username">使用者名稱</string>
   <string name="password">密碼</string>
   <string name="rng">亂數產生器</string>
@@ -154,11 +150,6 @@
   <string name="read_ahead">預讀</string>
   <string name="filesystem">檔案系統</string>
   <string name="user_interface">介面</string>
-  <string name="gpu_vendor">GPU 供應商</string>
-  <string name="gpu_renderer">GPU 渲染器</string>
-  <string name="opengl_version">OpenGL 版本</string>
-  <string name="opengl_extensions">OpenGL 擴展</string>
-  <string name="shader_version">著色器版本</string>
   <string name="getting_information">獲取資訊</string>
   <string name="good">良好</string>
   <string name="dead">電池耗盡</string>
@@ -181,7 +172,6 @@
   <string name="kernel">內核</string>
   <string name="hardware">硬體</string>
   <string name="toolchain">工具鏈</string>
-  <string name="memory">記憶體</string>
   <string name="cached">緩存</string>
   <string name="display_color_calibration">顏色校準</string>
   <string name="display_color_calibration_summary">校準螢幕顏色</string>
@@ -197,6 +187,7 @@
   <string name="install_title">選擇要安裝的檔</string>
   <string name="install_now">立即安裝</string>
   <string name="file_not_found">無法添加檔案</string>
+  <string name="disabled">禁用</string>
   <string name="system">系統</string>
   <string name="boot">啟動</string>
   <string name="alert_reboot_one_message">您的設備將重新開機並安裝該檔。</string>
@@ -212,7 +203,6 @@
   <string name="setup_complete">設定已完成</string>
   <string name="screen_off">關閉螢幕</string>
   <string name="screen_on">開啟螢幕</string>
-  <string name="cpu">CPU</string>
   <string name="arch">硬體平台</string>
   <string name="string_default">預設</string>
   <string name="touch_boost">觸摸加速</string>

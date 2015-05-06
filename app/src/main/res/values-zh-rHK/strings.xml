@@ -83,7 +83,6 @@
   <string name="warm">暖色</string>
   <string name="hot">熱</string>
   <string name="logger_mode">啟用 logcat</string>
-  <string name="show_launcher">顯示啟動器圖示</string>
   <string name="debugging">除錯</string>
   <string name="version">版本</string>
   <string name="tasklist_summary">安裝、 修改、 啟用或禁用任務。</string>
@@ -196,6 +195,7 @@
   <string name="install_title">選擇要安裝的檔</string>
   <string name="install_now">立即安裝</string>
   <string name="file_not_found">無法添加檔案</string>
+  <string name="disabled">禁用</string>
   <string name="system">系統</string>
   <string name="boot">啟動</string>
   <string name="alert_reboot_one_message">您的設備將重新開機並安裝該檔。</string>
@@ -211,7 +211,6 @@
   <string name="setup_complete">設定完成</string>
   <string name="screen_off">關閉螢幕</string>
   <string name="screen_on">開啟螢幕</string>
-  <string name="cpu">CPU</string>
   <string name="arch">硬體平台</string>
   <string name="string_default">預設</string>
   <string name="touch_boost">觸摸加速</string>

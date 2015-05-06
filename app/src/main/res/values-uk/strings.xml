@@ -88,7 +88,6 @@
   <string name="lcd_power_reduce_summary">Інтелектуально змінює яскравість підсвітки і збільшує автономність.</string>
   <string name="power_efficient_work">Енергоефективна робоча черга</string>
   <string name="power_efficient_work_summary">Дозволяє перенести роботу на ядро яке вже пробуджене.</string>
-  <string name="powersaving_sched_mc_0">0 - Вимкнено</string>
   <string name="powersaving_sched_mc_1">1 - Збалансований</string>
   <string name="powersaving_sched_mc_2">2 - Агресивний</string>
   <string name="cpusettings">Налаштування процесора</string>
@@ -130,8 +129,6 @@
   <string name="hot">Гарячий</string>
   <string name="logger_mode">Ввімкнути Logcat</string>
   <string name="logger_mode_summary">Зніміть прапорець, щоб видалити будь-які записи з logcat</string>
-  <string name="show_launcher">Показувати значок запуску</string>
-  <string name="show_launcher_summary">Ховає/відображає значок запуску</string>
   <string name="debugging">Налагодження</string>
   <string name="extensive_logging">Обширне журналювання</string>
   <string name="reapply_on_boot">Застосовувати під час завантаження</string>
@@ -164,7 +161,6 @@
   <string name="delete_property_message">%s буде знищена.\n\nПродовжити?</string>
   <string name="name">Ім’я</string>
   <string name="presets">Шаблони</string>
-  <string name="gestures">Жести</string>
   <string name="knock_on">Включення постукуванням</string>
   <string name="knock_on_summary">Подвійне натискання на екрані, щоб увімкнути його</string>
   <string name="five_minutes">5 хвилин</string>
@@ -182,7 +178,6 @@
   <string name="preferences">Параметри</string>
   <string name="become_a_monkey">Стати мавпою</string>
   <string name="no_monkey">Не мавпа? * Зітхнув* :(</string>
-  <string name="downgraded">База даних стерта через пониження версії!</string>
   <string name="media_scan_trigger">Запустити сканування медіафайлів</string>
   <string name="media_scan_summary">Вручну запустити сканування медіафайлів, на випадок, якщо ваш телефон підключений по MTP і нові файли не відображаються.</string>
   <string name="clear_cache">Очистити кеш</string>
@@ -237,11 +232,6 @@
   <string name="user_interface">Інтерфейс</string>
   <string name="swipe_on_content">Проведіть по змісту</string>
   <string name="swipe_on_content_summary">Перейти в меню при зсуві вмісту</string>
-  <string name="gpu_vendor">Виробник відеочіпа</string>
-  <string name="gpu_renderer">Візуалізатор зображення</string>
-  <string name="opengl_version">Версія OpenGL</string>
-  <string name="opengl_extensions">Доповнення OpenGL</string>
-  <string name="shader_version">Версія шейдерів</string>
   <string name="getting_information">Отримання інформації</string>
   <string name="health">Стан</string>
   <string name="good">Добре</string>
