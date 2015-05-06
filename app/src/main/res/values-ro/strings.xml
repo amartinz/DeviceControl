@@ -207,7 +207,6 @@
   <string name="become_a_monkey">Transformă-te într-o maimuţă</string>
   <string name="is_monkey">Stai, ești serios?\nEști destul de inteligent pentru o maimuţă.\nNu că ar fi ele proaste dar...\nDeci, săriţi peste acest lucru.</string>
   <string name="no_monkey">Nu ești maimuţă? :(</string>
-  <string name="downgraded">Baza de date a fost ștearsă din cauza retrogradării!</string>
   <string name="media_scan_trigger">Activați scanarea de mass-media</string>
   <string name="media_scan_summary">Declanșează manual o scanare de media, în cazul în care ai telefonul conectat în modul MTP și fișierele noi nu sunt vizibile.</string>
   <string name="force_stop">Oprire forțată</string>

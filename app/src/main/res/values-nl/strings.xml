@@ -194,6 +194,8 @@
   <string name="gestures">Gebaren</string>
   <string name="knock_on">Knock on</string>
   <string name="knock_on_summary">Dubbeltikken om het scherm in te schakelen</string>
+  <string name="sweep_to_wake">Vegen om te wekken</string>
+  <string name="sweep_to_volume">Vegen om volume aan te passen</string>
   <string name="five_minutes">5 minuten</string>
   <string name="ten_minutes">10 minuten</string>
   <string name="twenty_minutes">20 minuten</string>
@@ -212,7 +214,6 @@
   <string name="become_a_monkey">Word een aap</string>
   <string name="is_monkey">Wacht, bent u serieus? \nU bent vrij slim voor een aap. \nNiet dat zij stom zijn...\nMaar...laten we dit overslaan.</string>
   <string name="no_monkey">Niet een aap? *Sigh* :(</string>
-  <string name="downgraded">Database is gewist wegens een downgrade!</string>
   <string name="media_scan_trigger">Trigger media scan</string>
   <string name="media_scan_summary">Trigger handmatig een scan van de media, in het geval u uw telefoon heeft aangesloten via MTP en nieuwe bestanden niet zichtbaar zijn.</string>
   <string name="media_scan_triggered">Media scan is geactiveerd, dit kan een tijdje duren!</string>
@@ -274,6 +275,7 @@
   <string name="flash_warning">Je gaat zo flashen!\nAls je doorgaat, zal uw apparaat opnieuw opstarten naar de recovery en zal de geselecteerde items worden geflashed.\n\nWilt u doorgaan?</string>
   <string name="both">Beide</string>
   <string name="pick_file">Kies een bestand</string>
+  <string name="something_went_wrong">Sorry, maar er is iets misgegaan!</string>
   <string name="recovery">Recovery</string>
   <string name="bootloader">Bootloader</string>
   <string name="reboot">Herstarten</string>
@@ -303,6 +305,7 @@
   <string name="uninstall">Deïnstalleren</string>
   <string name="uninstalling">Verwijderen&#8230;</string>
   <string name="uninstall_msg">Wilt u echt \"%s\" deïnstalleren?\nDeze actie kan niet ongedaan worden gemaakt!</string>
+  <string name="uninstall_msg_system_app">Verwijderen van systeem apps kan een herstart vereisen!</string>
   <string name="uninstall_success">Succesvol \"%s\" gedeïnstalleerd</string>
   <string name="sunlight_enhancement">Zonlicht verbetering</string>
   <string name="sunlight_enhancement_summary">Helderheid van het scherm en leesbaarheid verbeteren bij fel zonlicht</string>
@@ -356,6 +359,7 @@
   <string name="install_title">Kies bestanden om te installeren</string>
   <string name="install_now">Nu installeren</string>
   <string name="file_not_found">Kan bestand niet toevoegen</string>
+  <string name="disabled">Uitgeschakeld</string>
   <string name="system">Systeem</string>
   <string name="boot">Opstarten</string>
   <string name="alert_reboot_install_title">Installeer bestand(en)</string>
@@ -423,4 +427,9 @@
   <string name="steps">Stappen</string>
   <string name="far">Ver</string>
   <string name="near">Dichtbij</string>
+  <string name="cpu_lock_freq">Frequenties vastzetten</string>
+  <string name="cpu_lock_freq_summary">Probeert om te voorkomen dat frequenties worden aangepast\nDit werkt niet op sommige apparaten!</string>
+  <string name="cpu_lock_gov">Governors vastzetten</string>
+  <string name="cpu_lock_gov_summary">Probeert om te voorkomen dat governors worden aangepast\nDit werkt niet op sommige apparaten!</string>
+  <string name="no_items_found">Geen items gevonden&#8230;</string>
 </resources>

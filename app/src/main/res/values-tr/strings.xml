@@ -17,17 +17,8 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="privacy">Gizlilik</string>
-  <string name="gestures">Hareketler</string>
-  <string name="stop">Dur</string>
   <string name="user_interface">Arayüz</string>
-  <string name="gpu_vendor">GPU sağlayıcı</string>
-  <string name="gpu_renderer">GPU Oluşturucu</string>
-  <string name="opengl_version">OpenGL sürümü</string>
-  <string name="opengl_extensions">OpenGL uzantısı</string>
-  <string name="shader_version">Shader versiyonu</string>
-  <string name="memory">Hafıza</string>
   <string name="system">Sistem</string>
   <string name="emmc_date">Tarih</string>
-  <string name="cpu">İşlemci</string>
   <string name="string_default">Varsayılan</string>
 </resources>

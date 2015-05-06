@@ -18,6 +18,10 @@
 <resources>
   <string name="support">Wsparcie</string>
   <string name="donate_">Wsparcie finansowe</string>
+  <string name="donate_value">Przekaż darowiznę %s</string>
+  <string name="donate_subscription">Użyj subskrypcji</string>
+  <string name="donate_subscription_note">Uwaga: Subskrypcje są miesięczne!</string>
+  <string name="donate_paypal_message">To przekieruje Cię do systemu PayPal w celu wykonania darowizny.</string>
   <string name="show_pollfish">Aktywacja Pollfish</string>
   <string name="show_pollfish_summary">Aktywuje małą ikonę w prawym dolnym rogu. Dla każdego podjęte badania pomagają nam w rozwoju. Czuć wolny wobec dezaktywować, oczywiście :)</string>
   <string name="task_type">Typ zadania</string>

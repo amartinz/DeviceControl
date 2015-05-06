@@ -17,6 +17,7 @@
 -->
 <resources>
   <string name="support">支持</string>
+  <string name="translate">翻译</string>
   <string name="donate_">捐赠</string>
   <string name="donate_value">捐赠%s</string>
   <string name="donate_subscription">使用订阅</string>

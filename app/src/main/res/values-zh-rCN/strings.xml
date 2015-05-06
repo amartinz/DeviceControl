@@ -194,6 +194,8 @@
   <string name="gestures">手势操作</string>
   <string name="knock_on">敲击</string>
   <string name="knock_on_summary">双击屏幕开启</string>
+  <string name="sweep_to_wake">轻扫以唤醒</string>
+  <string name="sweep_to_volume">扫描要调整音量</string>
   <string name="five_minutes">5 分钟</string>
   <string name="ten_minutes">10 分钟</string>
   <string name="twenty_minutes">20 分钟</string>
@@ -212,7 +214,6 @@
   <string name="become_a_monkey">变猴</string>
   <string name="is_monkey">等等，你确定？你是开玩笑吗。或许 他们是错误的，不过&#8230;&#8230;可以跳过这个。</string>
   <string name="no_monkey">不是一直猴？唉 : (</string>
-  <string name="downgraded">数据库因为降级的缘故被清空了！</string>
   <string name="media_scan_trigger">触发媒体扫描</string>
   <string name="media_scan_summary">在您的设备通过MTP连接电脑后出现新文件不可见的情况下，点击触发媒体扫描。</string>
   <string name="media_scan_triggered">媒体扫描已开始，可这能需要一点时间</string>
@@ -275,6 +276,7 @@
   <string name="flash_warning">即将刷入！如果继续，您的设备将启动到recovery 并将刷入所选的项目。\n\n 您要继续吗？</string>
   <string name="both">两者</string>
   <string name="pick_file">选择文件</string>
+  <string name="something_went_wrong">抱歉，但事情出了错 ！</string>
   <string name="recovery">Recovery</string>
   <string name="bootloader">Bootloader</string>
   <string name="reboot">重启</string>
@@ -304,6 +306,7 @@
   <string name="uninstall">卸载</string>
   <string name="uninstalling">正在卸载...</string>
   <string name="uninstall_msg">你真的想要卸载\"%s\"吗?\n此操作不能撤消 ！</string>
+  <string name="uninstall_msg_system_app">卸载系统应用程序可能需要重新启动 ！</string>
   <string name="uninstall_success">成功卸载\"%s\"</string>
   <string name="sunlight_enhancement">日光增强</string>
   <string name="sunlight_enhancement_summary">在强光下提高显示亮度和可读性</string>
@@ -357,6 +360,7 @@
   <string name="install_title">选择要安装的文件</string>
   <string name="install_now">立即安装</string>
   <string name="file_not_found">无法添加文件</string>
+  <string name="disabled">禁用</string>
   <string name="system">系统</string>
   <string name="boot">启动</string>
   <string name="alert_reboot_install_title">安装文件</string>
@@ -424,4 +428,9 @@
   <string name="steps">步</string>
   <string name="far">远</string>
   <string name="near">近</string>
+  <string name="cpu_lock_freq">锁定频率</string>
+  <string name="cpu_lock_freq_summary">试图阻止修改频率\n可能在某些设备上不起作用！</string>
+  <string name="cpu_lock_gov">锁定调速器</string>
+  <string name="cpu_lock_gov_summary">试图阻止更改调速器\n可能在某些设备不工作！</string>
+  <string name="no_items_found">无此项目......</string>
 </resources>

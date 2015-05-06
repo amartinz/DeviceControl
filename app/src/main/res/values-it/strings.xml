@@ -207,7 +207,6 @@
   <string name="become_a_monkey">Diventa una scimmia</string>
   <string name="is_monkey">Aspetta, fai sul serio? \nSei piuttosto intelligente per essere una scimmia. \nNon che siano stupide ma...\nBeh, saltiamo questo passaggio.</string>
   <string name="no_monkey">Non sei una scimmia? * Sigh * :(</string>
-  <string name="downgraded">Il Database è stato cancellato a causa di un downgrade!</string>
   <string name="media_scan_trigger">Avvia scansione media</string>
   <string name="media_scan_summary">Avvia manualmente una scansione multimediale, nel caso in cui il telefono sia collegato via MTP e nuovi file non sono visibili.</string>
   <string name="force_stop">Arresto forzato</string>

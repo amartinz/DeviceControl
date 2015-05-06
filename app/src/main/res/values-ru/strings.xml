@@ -22,7 +22,7 @@
   <string name="get_busybox">Установить BusyBox</string>
   <string name="exit">Выход</string>
   <string name="close">Закрыть</string>
-  <string name="message_loading">Загрузка, пожалуйста, подождите&#8230;</string>
+  <string name="message_loading">Загрузка, пожалуйста подождите&#8230;</string>
   <string name="action_press_again">Нажмите ещё раз для выхода!</string>
   <string name="defaults_button">Сбросить к настройкам по умолчанию</string>
   <string name="general">Общее</string>
@@ -99,6 +99,7 @@
   <string name="cpu_governor">Схема питания процессора</string>
   <string name="cpu_governor_tuning">Настройки схемы питания процессора</string>
   <string name="io">Планировщик ввода/вывода</string>
+  <string name="configure_format">Настройка %s</string>
   <string name="sob">Применить автоматически при загрузке</string>
   <string name="core">Ядро</string>
   <string name="core_offline">Отключено</string>
@@ -112,6 +113,7 @@
   <string name="gpu_governor">Схема питания видеочипа</string>
   <string name="gpusettings">Параметры видеочипа</string>
   <string name="gpu_freq_max">Максимальная частота видеочипа</string>
+  <string name="gpu_freq_min">Минимальная частота процессора</string>
   <string name="gpu_3d_scaling">Трёхмерное масштабирование видеочипа</string>
   <string name="gpu_3d_scaling_summary">Трёхмерное масштабирование видеочипа разумно управляет частотой видеочипа</string>
   <string name="touchkey">Сенсорная кнопка</string>
@@ -193,7 +195,6 @@
   <string name="become_a_monkey">Стать обезьяной</string>
   <string name="is_monkey">Подождите, вы серьезно?\nВы очень умны для обезьяны.\nНе то, чтобы они глупы, но...\nЛадно, давайте пропустим это.</string>
   <string name="no_monkey">Не обезьяна? *вздохнул* :(</string>
-  <string name="downgraded">База данных стёрта из-за понижения версии!</string>
   <string name="media_scan_trigger">Запустить сканирование медиафайлов</string>
   <string name="media_scan_summary">Вручную запустить сканирование медиафайлов, на случай, если ваш телефон подключен по MTP и новые файлы не видны.</string>
   <string name="clear_cache">Очистить кэш</string>
@@ -214,6 +215,7 @@
   <string name="pages_volatile">Необъединяемых страниц</string>
   <string name="enable_ksm">Включить KSM</string>
   <string name="reduce_memory_increase_cpu_load">Может снизить использование памяти, но также использует немного больше мощности процессора</string>
+  <string name="uksm_cpu_governor">Схема питания процессора</string>
   <string name="pages_to_scan">Страниц для сканирования</string>
   <string name="sleep_between_scans">Период между сканированием (в миллисекундах)</string>
   <string name="deferred_timer">Отсроченный таймер</string>
@@ -252,6 +254,11 @@
   <string name="user_interface">Интерфейс</string>
   <string name="swipe_on_content">Свайп по контенту</string>
   <string name="swipe_on_content_summary">Перейти в меню при свайпе по контенту</string>
+  <string name="gpu_vendor">Производитель видеочипа</string>
+  <string name="gpu_renderer">Обработка видеочипом</string>
+  <string name="opengl_version">Версия OpenGL</string>
+  <string name="opengl_extensions">Расширения OpenGL</string>
+  <string name="shader_version">Версия шейдеров</string>
   <string name="getting_information">Получение информации</string>
   <string name="health">Состояние</string>
   <string name="good">Хорошее</string>
@@ -274,6 +281,7 @@
   <string name="type">Тип</string>
   <string name="tags">Теги</string>
   <string name="sensors">Датчики</string>
+  <string name="disabled">Отключена</string>
   <string name="system">Система</string>
   <string name="emmc_date">Дата</string>
   <string name="setup_complete">Установка завершена</string>

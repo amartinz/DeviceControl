@@ -17,6 +17,7 @@
 -->
 <resources>
   <string name="support">Ondersteuning</string>
+  <string name="translate">Vertalen</string>
   <string name="donate_">Doneer</string>
   <string name="donate_value">Doneren %s</string>
   <string name="donate_subscription">Gebruik abonnement</string>

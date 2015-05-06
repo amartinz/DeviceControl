@@ -18,8 +18,10 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="gestures">Eleet</string>
   <string name="stop">Pysäytä</string>
-  <string name="gpu_renderer">GPU renderöijä</string>
   <string name="opengl_version">OpenGL versio</string>
   <string name="opengl_extensions">OpenGL laajennukset</string>
   <string name="memory">Muisti</string>
+  <string name="backup">Varmuuskopio</string>
+  <string name="disabled">Poistettu käytöstä</string>
+  <string name="no_items_found">Kohteita ei löytynyt&#8230;</string>
 </resources>

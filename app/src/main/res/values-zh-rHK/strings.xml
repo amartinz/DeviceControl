@@ -196,6 +196,7 @@
   <string name="install_title">選擇要安裝的檔</string>
   <string name="install_now">立即安裝</string>
   <string name="file_not_found">無法添加檔案</string>
+  <string name="disabled">禁用</string>
   <string name="system">系統</string>
   <string name="boot">啟動</string>
   <string name="alert_reboot_one_message">您的設備將重新開機並安裝該檔。</string>
