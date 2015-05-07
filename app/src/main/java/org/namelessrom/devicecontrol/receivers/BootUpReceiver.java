@@ -26,7 +26,6 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;

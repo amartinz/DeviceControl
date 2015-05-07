@@ -8,6 +8,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v7-cardview \
     android-support-v7-recyclerview \
     ion \
+    customLogger \
     nameless-proprietary \
     play \
     pollfish-sdk \

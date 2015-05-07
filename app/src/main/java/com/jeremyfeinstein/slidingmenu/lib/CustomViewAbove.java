@@ -11,7 +11,6 @@ import android.support.v4.view.VelocityTrackerCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.util.AttributeSet;
-import android.util.FloatMath;
 import android.util.Log;
 import android.view.FocusFinder;
 import android.view.KeyEvent;
