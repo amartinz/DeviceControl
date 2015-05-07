@@ -1,3 +1,4 @@
 include ':app'
+include ':libs:logger'
 include ':libs:mpandroidchart:MPChartLib'
 include ':libs:AndroidSwipeLayout:library'

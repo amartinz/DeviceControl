@@ -4,3 +4,6 @@
 [submodule "libs/AndroidSwipeLayout"]
 	path = libs/AndroidSwipeLayout
 	url = https://github.com/NamelessRom/android_external_AndroidSwipeLayout
+[submodule "libs/logger"]
+	path = libs/logger
+	url = https://github.com/Evisceration/logger.git
