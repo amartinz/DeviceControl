@@ -78,14 +78,18 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
     }
 
     @Override public boolean onQueryTextChange(String s) {
-        mAdapter.filter(s);
-        updateVisibility(mAdapter.getItemCount() <= 0);
+        if (mAdapter != null) {
+            mAdapter.filter(s);
+            updateVisibility(mAdapter.getItemCount() <= 0);
+        }
         return true;
     }
 
     @Override public boolean onClose() {
-        mAdapter.filter(null);
-        updateVisibility(mAdapter.getItemCount() <= 0);
+        if (mAdapter != null) {
+            mAdapter.filter(null);
+            updateVisibility(mAdapter.getItemCount() <= 0);
+        }
         return false;
     }
 
