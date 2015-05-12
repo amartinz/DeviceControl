@@ -27,6 +27,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceCategory;
 import android.support.annotation.NonNull;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -340,7 +341,7 @@ public class VoltageFragment extends AttachPreferenceFragment {
             final String value = ExtraConfiguration.get(context).vdd;
             Logger.v(VoltageFragment.class, "VDD Table: " + value);
 
-            if (!value.isEmpty()) {
+            if (!TextUtils.isEmpty(value)) {
                 final String[] values = value.split("XXX");
                 for (final String s : values) {
                     restore.append(Utils.getWriteCommand(VoltageUtils.VDD_TABLE_FILE, s));
@@ -350,13 +351,13 @@ public class VoltageFragment extends AttachPreferenceFragment {
             final String value = ExtraConfiguration.get(context).uv;
             Logger.v(VoltageFragment.class, "UV Table: " + value);
 
-            if (!value.isEmpty()) {
+            if (!TextUtils.isEmpty(value)) {
                 restore.append(Utils.getWriteCommand(VoltageUtils.UV_TABLE_FILE, value));
             }
         }
 
         final String cmd = restore.toString();
-        if (!cmd.isEmpty()) {
+        if (!TextUtils.isEmpty(cmd)) {
             return cmd;
         } else {
             return "echo 'No UV to restore';\n";
