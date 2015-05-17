@@ -18,9 +18,6 @@
 package org.namelessrom.devicecontrol.modules.cpu;
 
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
@@ -45,12 +42,9 @@ import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
-import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.ui.preferences.AutoEditTextPreference;
+import org.namelessrom.devicecontrol.ui.preferences.AutoSwitchPreference;
+import org.namelessrom.devicecontrol.ui.views.AttachMaterialPreferenceFragment;
 import org.namelessrom.devicecontrol.ui.views.CpuCoreView;
 import org.namelessrom.devicecontrol.utils.PreferenceUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -61,25 +55,35 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class CpuSettingsFragment extends AttachPreferenceFragment implements Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener,
-        CpuUtils.CoreListener, CpuUtils.FrequencyListener, GovernorUtils.GovernorListener {
+import alexander.martinz.libs.materialpreferences.MaterialListPreference;
+import alexander.martinz.libs.materialpreferences.MaterialPreference;
+import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
+import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 
-    private CustomListPreference mMax;
-    private CustomListPreference mMin;
-    private CustomTogglePreference mCpuLock;
+public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implements ShellOutput.OnShellOutputListener,
+        CpuUtils.CoreListener, CpuUtils.FrequencyListener, GovernorUtils.GovernorListener,
+        MaterialPreference.MaterialPreferenceChangeListener, MaterialPreference.MaterialPreferenceClickListener {
 
-    private CustomListPreference mGovernor;
-    private CustomPreference mGovernorTuning;
-    private CustomTogglePreference mCpuGovLock;
+    private MaterialListPreference mMax;
+    private MaterialListPreference mMin;
+    private MaterialSwitchPreference mCpuLock;
 
-    private CustomTogglePreference mMpDecision;
-    private CustomListPreference mCpuQuietGov;
+    private MaterialListPreference mGovernor;
+    private MaterialPreference mGovernorTuning;
+    private MaterialSwitchPreference mCpuGovLock;
+
+    private MaterialSwitchPreference mMpDecision;
+    private MaterialListPreference mCpuQuietGov;
 
     private static final int ID_MPDECISION = 200;
     //----------------------------------------------------------------------------------------------
 
     private SwitchCompat mStatusHide;
     private LinearLayout mCpuInfo;
+
+    @Override protected int getLayoutResourceId() {
+        return R.layout.preferences_cpu;
+    }
 
     @Override protected int getFragmentId() { return DeviceConstants.ID_PERFORMANCE_CPU_SETTINGS; }
 
@@ -107,153 +111,184 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Pre
         }
     }
 
-    @Override public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.cpu);
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        mMax = (CustomListPreference) findPreference("pref_max");
+        mMax = (MaterialListPreference) view.findViewById(R.id.cpu_pref_max);
         mMax.setOnPreferenceChangeListener(this);
 
-        mMin = (CustomListPreference) findPreference("pref_min");
+        mMin = (MaterialListPreference) view.findViewById(R.id.cpu_pref_min);
         mMin.setOnPreferenceChangeListener(this);
 
-        mCpuLock = (CustomTogglePreference) findPreference(DeviceConfiguration.CPU_LOCK_FREQ);
-        mCpuLock.setChecked(DeviceConfiguration.get(getActivity()).perfCpuLock);
+        mCpuLock = (MaterialSwitchPreference) view.findViewById(R.id.cpu_pref_cpu_lock);
+        mCpuLock.getSwitch().setChecked(DeviceConfiguration.get(getActivity()).perfCpuLock);
         mCpuLock.setOnPreferenceChangeListener(this);
 
-        mGovernor = (CustomListPreference) findPreference("pref_governor");
+        mGovernor = (MaterialListPreference) view.findViewById(R.id.cpu_pref_governor);
         mGovernor.setOnPreferenceChangeListener(this);
 
-        mGovernorTuning = (CustomPreference) findPreference("pref_governor_tuning");
+        mGovernorTuning = (MaterialPreference) view.findViewById(R.id.cpu_pref_governor_tuning);
+        mGovernorTuning.setOnPreferenceClickListener(this);
 
-        mCpuGovLock = (CustomTogglePreference) findPreference(DeviceConfiguration.CPU_LOCK_GOV);
-        mCpuGovLock.setChecked(DeviceConfiguration.get(getActivity()).perfCpuGovLock);
+        mCpuGovLock = (MaterialSwitchPreference) view.findViewById(R.id.cpu_pref_gov_lock);
+        mCpuGovLock.getSwitch().setChecked(DeviceConfiguration.get(getActivity()).perfCpuGovLock);
         mCpuGovLock.setOnPreferenceChangeListener(this);
-
-        // get hold of hotplugging and remove it, to add it back later if supported
-        final PreferenceCategory hotplugging = (PreferenceCategory) findPreference("hotplugging");
-        getPreferenceScreen().removePreference(hotplugging);
 
         if (Utils.fileExists(getResources().getStringArray(R.array.directories_intelli_plug))
                 || Utils.fileExists(getString(R.string.directory_mako_hotplug))
                 || Utils.fileExists(getString(R.string.file_cpu_quiet_base))
                 || Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
-            getPreferenceScreen().addPreference(hotplugging);
-            addPreferencesFromResource(R.xml.cpu_hotplugging);
             setupHotpluggingPreferences();
         }
+
+        // compensate mpdecision's madness
+        mMax.postDelayed(new Runnable() {
+            @Override public void run() {
+                CpuUtils.get().getCpuFreq(CpuSettingsFragment.this);
+                mMin.postDelayed(new Runnable() {
+                    @Override public void run() {
+                        CpuUtils.get().getCpuFreq(CpuSettingsFragment.this);
+                    }
+                }, 300);
+            }
+        }, 300);
+        mGovernor.postDelayed(new Runnable() {
+            @Override public void run() {
+                GovernorUtils.get().getGovernor(CpuSettingsFragment.this);
+            }
+        }, 300);
     }
 
     private void setupHotpluggingPreferences() {
-        AwesomePreferenceCategory awCategory;
-        PreferenceCategory category;
+        MaterialPreferenceCategory category = null;
+        AutoSwitchPreference togglePref;
+        AutoEditTextPreference editPref;
+        String[] paths;
+        String path;
 
         //------------------------------------------------------------------------------------------
         // General
         //------------------------------------------------------------------------------------------
-        mMpDecision = (CustomTogglePreference) findPreference("mpdecision");
-        if (Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
+        boolean mpdecision = Utils.fileExists(MpDecisionAction.MPDECISION_PATH);
+        boolean cpuQuiet = Utils.fileExists(getString(R.string.file_cpu_quiet_base))
+                && Utils.fileExists(getString(R.string.file_cpu_quiet_avail_gov))
+                && Utils.fileExists(getString(R.string.file_cpu_quiet_cur_gov));
+        boolean hotplug = mpdecision || cpuQuiet;
+        if (hotplug) {
+            category = createPreferenceCategory("hotplugging", getString(R.string.hotplugging));
+            addPreference(category);
+        }
+
+        if (mpdecision) {
+            mMpDecision = createSwitchPreference(false, "mpdecision",
+                    getString(R.string.mpdecision), getString(R.string.mpdecision_summary), false);
+            category.addPreference(mMpDecision);
             Utils.getCommandResult(this, ID_MPDECISION, "pgrep mpdecision 2> /dev/null;");
-        } else {
-            getPreferenceScreen().removePreference(mMpDecision);
+        }
+
+        if (cpuQuiet) {
+            final String[] govs = Utils.readOneLine(
+                    getString(R.string.file_cpu_quiet_avail_gov)).split(" ");
+            final String gov = Utils.readOneLine(getString(R.string.file_cpu_quiet_cur_gov));
+            mCpuQuietGov = new MaterialListPreference(getActivity());
+            mCpuQuietGov.setKey("pref_cpu_quiet_governor");
+            mCpuQuietGov.setTitle(getString(R.string.cpu_quiet));
+            mCpuQuietGov.setAdapter(mCpuQuietGov.createAdapter(govs, govs));
+            mCpuQuietGov.setValue(gov);
+            category.addPreference(mCpuQuietGov);
+            mCpuQuietGov.setOnPreferenceChangeListener(this);
         }
 
         //------------------------------------------------------------------------------------------
         // Intelli-Plug
         //------------------------------------------------------------------------------------------
-        awCategory = (AwesomePreferenceCategory) findPreference("intelli_plug");
-        if (awCategory.isSupported()) {
-            final String path = awCategory.getPath();
-            AwesomeTogglePreference togglePref;
+        paths = getResources().getStringArray(R.array.directories_intelli_plug);
+        path = Utils.checkPaths(paths);
+        if (!TextUtils.isEmpty(path)) {
+            category = createPreferenceCategory("intelli_plug", getString(R.string.intelli_plug));
+            addPreference(category);
+
             // setup intelli plug toggle
             if (Utils.fileExists(path + "intelli_plug_active")) {
-                togglePref = PreferenceUtils.addAwesomeTogglePreference(getActivity(),
-                        "intelli_plug_", "", "extras", path, "intelli_plug_active", awCategory,
-                        this);
-                if (togglePref != null) {
-                    togglePref.setupTitle();
-                }
+                togglePref = new AutoSwitchPreference(getActivity());
+                togglePref.setAsCard(false);
+                togglePref.init(getActivity());
+                togglePref.setKey("intelli_plug_intelli_plug_active");
+                togglePref.setTitle(getString(R.string.enable));
+                togglePref.setPath(path + "intelli_plug_active");
+                togglePref.initValue();
+                category.addPreference(togglePref);
             }
             // setup touch boost toggle
             if (Utils.fileExists(path + "touch_boost_active")) {
-                togglePref = PreferenceUtils.addAwesomeTogglePreference(
-                        getActivity(), "intelli_plug_", "", "extras", path,
-                        "touch_boost_active", awCategory, this);
-                if (togglePref != null) {
-                    togglePref.setupTitle();
-                }
+                togglePref = new AutoSwitchPreference(getActivity());
+                togglePref.setAsCard(false);
+                togglePref.init(getActivity());
+                togglePref.setKey("intelli_plug_touch_boost_active");
+                togglePref.setTitle(getString(R.string.touch_boost));
+                togglePref.setPath(path + "touch_boost_active");
+                togglePref.initValue();
+                category.addPreference(togglePref);
             }
             // add the other files
             final String[] files = Utils.listFiles(path, false);
             for (final String file : files) {
                 final int type = PreferenceUtils.getType(file);
                 if (PreferenceUtils.TYPE_EDITTEXT == type) {
-                    PreferenceUtils.addAwesomeEditTextPreference(getActivity(), "intelli_plug_",
-                            "extras", path, file, awCategory, this);
+                    editPref = new AutoEditTextPreference(getActivity());
+                    editPref.setAsCard(false);
+                    editPref.init(getActivity());
+                    editPref.setKey("intelli_plug_" + file);
+                    editPref.setTitle(file);
+                    editPref.setPath(path + file);
+                    editPref.initValue();
+                    category.addPreference(editPref);
                 }
             }
         }
-        removeIfEmpty(getPreferenceScreen(), awCategory);
 
-        awCategory = (AwesomePreferenceCategory) findPreference("mako_hotplug");
-        if (awCategory.isSupported()) {
-            final String path = awCategory.getPath();
+        path = Utils.checkPath(getString(R.string.directory_mako_hotplug));
+        if (!TextUtils.isEmpty(path)) {
+            category = createPreferenceCategory("mako_hotplug", getString(R.string.mako_hotplug));
+            addPreference(category);
+
             // setup mako_hotplug toggle
             if (Utils.fileExists(path + "enabled")) {
-                AwesomeTogglePreference togglePref = PreferenceUtils.addAwesomeTogglePreference(
-                        getActivity(), "mako_", "", "extras", path, "enabled", awCategory, this);
-                if (togglePref != null) {
-                    togglePref.setupTitle();
-                }
+                togglePref = new AutoSwitchPreference(getActivity());
+                togglePref.setAsCard(false);
+                togglePref.init(getActivity());
+                togglePref.setKey("mako_enabled");
+                togglePref.setTitle(getString(R.string.enable));
+                togglePref.setPath(path + "enabled");
+                togglePref.initValue();
+                category.addPreference(togglePref);
             }
             final String[] files = Utils.listFiles(path, true);
             for (final String file : files) {
                 final int type = PreferenceUtils.getType(file);
                 if (PreferenceUtils.TYPE_EDITTEXT == type) {
-                    PreferenceUtils.addAwesomeEditTextPreference(getActivity(), "mako_",
-                            "extras", path, file, awCategory, this);
+                    editPref = new AutoEditTextPreference(getActivity());
+                    editPref.setAsCard(false);
+                    editPref.init(getActivity());
+                    editPref.setKey("mako_" + file);
+                    editPref.setTitle(file);
+                    editPref.setPath(path + file);
+                    editPref.initValue();
+                    category.addPreference(editPref);
                 }
             }
         }
-        removeIfEmpty(getPreferenceScreen(), awCategory);
 
-        //------------------------------------------------------------------------------------------
-        // CPUquiet
-        //------------------------------------------------------------------------------------------
-        category = (PreferenceCategory) findPreference("cpu_quiet");
-        if (Utils.fileExists(Application.get().getString(R.string.file_cpu_quiet_base))
-                && Utils.fileExists(Application.get().getString(R.string.file_cpu_quiet_avail_gov))
-                && Utils.fileExists(Application.get().getString(R.string.file_cpu_quiet_cur_gov))) {
-            final String[] govs = Utils.readOneLine(
-                    Application.get().getString(R.string.file_cpu_quiet_avail_gov)).split(" ");
-            final String gov = Utils.readOneLine(
-                    Application.get().getString(R.string.file_cpu_quiet_cur_gov));
-            mCpuQuietGov = new CustomListPreference(getActivity());
-            mCpuQuietGov.setKey("pref_cpu_quiet_governor");
-            mCpuQuietGov.setTitle(R.string.governor);
-            mCpuQuietGov.setEntries(govs);
-            mCpuQuietGov.setEntryValues(govs);
-            mCpuQuietGov.setValue(gov);
-            mCpuQuietGov.setSummary(gov);
-            mCpuQuietGov.setOnPreferenceChangeListener(this);
-            category.addPreference(mCpuQuietGov);
-        }
-        removeIfEmpty(getPreferenceScreen(), category);
-
-        isSupported(getPreferenceScreen(), getActivity());
     }
 
-    @Override public boolean onPreferenceChange(Preference preference, Object o) {
+    @Override public boolean onPreferenceChanged(MaterialPreference preference, Object o) {
         if (preference == mMax) {
             final String selected = String.valueOf(o);
             final String other = String.valueOf(mMin.getValue());
             final boolean updateOther = Utils.parseInt(selected) < Utils.parseInt(other);
             if (updateOther) {
                 mMin.setValue(selected);
-                mMin.setSummary(CpuUtils.toMhz(selected));
             }
-            mMax.setValue(selected);
-            mMax.setSummary(CpuUtils.toMhz(selected));
 
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MAX, selected, true);
             return true;
@@ -263,10 +298,7 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Pre
             final boolean updateOther = Utils.parseInt(selected) > Utils.parseInt(other);
             if (updateOther) {
                 mMax.setValue(selected);
-                mMax.setSummary(CpuUtils.toMhz(selected));
             }
-            mMin.setValue(selected);
-            mMin.setSummary(CpuUtils.toMhz(selected));
 
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MIN, selected, true);
             return true;
@@ -276,9 +308,6 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Pre
             return true;
         } else if (preference == mGovernor) {
             final String selected = String.valueOf(o);
-            mGovernor.setValue(selected);
-            mGovernor.setSummary(selected);
-
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_GOVERNOR, selected, true);
             return true;
         } else if (preference == mCpuGovLock) {
@@ -296,20 +325,18 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Pre
             BootupConfiguration.setBootup(getActivity(), new BootupItem(
                     ConfigConstants.CATEGORY_EXTRAS, mCpuQuietGov.getKey(),
                     path, value, true));
-            mCpuQuietGov.setSummary(value);
             return true;
         }
 
-        return super.onPreferenceChange(preference, o);
+        return false;
     }
 
-    @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
-            @NonNull final Preference preference) {
+    @Override public boolean onPreferenceClicked(MaterialPreference preference) {
         if (preference == mGovernorTuning) {
             MainActivity.loadFragment(getActivity(), DeviceConstants.ID_GOVERNOR_TUNABLE);
             return true;
         }
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
+        return false;
     }
 
     public void onShellOutput(final ShellOutput shellOutput) {
@@ -329,8 +356,10 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Pre
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup root, Bundle savedState) {
         setHasOptionsMenu(true);
-        final View view = inflater.inflate(R.layout.fragment_cpu_settings, root, false);
 
+        // inflate the parent layout
+        final View view = super.onCreateView(inflater, root, savedState);
+        assert view != null; // we know it because we return it
         mCpuInfo = (LinearLayout) view.findViewById(R.id.cpu_info);
 
         mStatusHide = (SwitchCompat) view.findViewById(R.id.cpu_info_hide);
@@ -338,7 +367,8 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Pre
             @Override public void onCheckedChanged(final CompoundButton button, final boolean b) {
                 if (b) {
                     mCpuInfo.setVisibility(View.VISIBLE);
-                    CpuCoreMonitor.getInstance(getActivity()).start(CpuSettingsFragment.this, 1000);
+                    CpuCoreMonitor.getInstance(getActivity())
+                            .start(CpuSettingsFragment.this, 1000);
                 } else {
                     CpuCoreMonitor.getInstance(getActivity()).stop();
                     mCpuInfo.setVisibility(View.GONE);
@@ -380,26 +410,22 @@ public class CpuSettingsFragment extends AttachPreferenceFragment implements Pre
             entries.add(CpuUtils.toMhz(mAvailableFreq));
         }
 
-        mMax.setEntries(entries.toArray(new String[entries.size()]));
-        mMax.setEntryValues(mAvailableFrequencies);
-        mMax.setValue(cpuFreq.maximum);
-        mMax.setSummary(CpuUtils.toMhz(cpuFreq.maximum));
+        final String[] entryArray = entries.toArray(new String[entries.size()]);
+
+        mMax.setAdapter(mMax.createAdapter(entryArray, mAvailableFrequencies));
+        mMax.setValue(CpuUtils.toMhz(cpuFreq.maximum));
         mMax.setEnabled(true);
 
-        mMin.setEntries(entries.toArray(new String[entries.size()]));
-        mMin.setEntryValues(mAvailableFrequencies);
-        mMin.setValue(cpuFreq.minimum);
-        mMin.setSummary(CpuUtils.toMhz(cpuFreq.minimum));
+        mMin.setAdapter(mMin.createAdapter(entryArray, mAvailableFrequencies));
+        mMin.setValue(CpuUtils.toMhz(cpuFreq.minimum));
         mMin.setEnabled(true);
 
         entries.clear();
     }
 
     @Override public void onGovernor(@NonNull final GovernorUtils.Governor governor) {
-        mGovernor.setEntries(governor.available);
-        mGovernor.setEntryValues(governor.available);
+        mGovernor.setAdapter(mGovernor.createAdapter(governor.available, governor.available));
         mGovernor.setValue(governor.current);
-        mGovernor.setSummary(governor.current);
         mGovernor.setEnabled(true);
     }
 
