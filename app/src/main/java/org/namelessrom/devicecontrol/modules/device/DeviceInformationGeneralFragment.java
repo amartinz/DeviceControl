@@ -17,54 +17,50 @@
  */
 package org.namelessrom.devicecontrol.modules.device;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceScreen;
-import android.support.annotation.NonNull;
-import android.support.v4.preference.PreferenceFragment;
 import android.text.TextUtils;
+import android.view.View;
 
 import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.objects.MemoryInfo;
-import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.List;
 
-public class DeviceInformationGeneralFragment extends PreferenceFragment {
+import alexander.martinz.libs.materialpreferences.MaterialPreference;
+import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
+import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 
-    private static final String KEY_PLATFORM_VERSION = "platform_version";
-    private static final String KEY_ANDROID_ID = "android_id";
-
+public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
     private long[] mHits = new long[3];
     private boolean mEasterEggStarted = false;
 
-    //==============================================================================================
-    // Overridden Methods
-    //==============================================================================================
+    @Override protected int getLayoutResourceId() {
+        return R.layout.preferences_device_information_general;
+    }
+
+    public DeviceInformationGeneralFragment() { }
 
     @Override public void onResume() {
         super.onResume();
         mEasterEggStarted = false;
     }
 
-    @Override public void onActivityCreated(final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        addPreferencesFromResource(R.xml.device_information_general);
-
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         final Device device = Device.get();
 
         // Platform
-        CustomPreferenceCategory category = (CustomPreferenceCategory) findPreference("platform");
+        MaterialPreferenceCategory category =
+                (MaterialPreferenceCategory) view.findViewById(R.id.cat_platform);
 
-        addPreference(category, KEY_PLATFORM_VERSION, R.string.version, device.platformVersion)
-                .setSelectable(true); // selectable because of the easter egg
+        addPreference(category, "platform_version", R.string.version, device.platformVersion)
+                .setOnPreferenceClickListener(this); // selectable because of the easter egg
         addPreference(category, "platform_id", R.string.build_id, device.platformId);
         addPreference(category, "platform_type", R.string.type, device.platformType);
         addPreference(category, "platform_tags", R.string.tags, device.platformTags);
@@ -72,15 +68,15 @@ public class DeviceInformationGeneralFragment extends PreferenceFragment {
                 device.platformBuildType);
 
         // Runtime
-        category = (CustomPreferenceCategory) findPreference("runtime");
+        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_runtime);
         addPreference(category, "vm_library", R.string.type, device.vmLibrary);
         addPreference(category, "vm_version", R.string.version, device.vmVersion);
 
         // Device
-        category = (CustomPreferenceCategory) findPreference("device_information");
+        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_device_information);
 
         // TODO: save / restore / check --> ANDROID ID
-        addPreference(category, KEY_ANDROID_ID, R.string.android_id, device.androidId);
+        addPreference(category, "android_id", R.string.android_id, device.androidId);
         addPreference(category, "device_manufacturer", R.string.manufacturer, device.manufacturer);
         addPreference(category, "device_device", R.string.device, device.device);
         addPreference(category, "device_model", R.string.model, device.model);
@@ -92,7 +88,7 @@ public class DeviceInformationGeneralFragment extends PreferenceFragment {
                 getString(R.string.selinux_enforcing) : getString(R.string.selinux_permissive));
 
         // Memory
-        category = (CustomPreferenceCategory) findPreference("memory");
+        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_memory);
         addPreference(category, "memory_total", R.string.total,
                 MemoryInfo.getAsMb(device.memoryInfo.memoryTotal));
         addPreference(category, "memory_cached", R.string.cached,
@@ -101,7 +97,7 @@ public class DeviceInformationGeneralFragment extends PreferenceFragment {
                 MemoryInfo.getAsMb(device.memoryInfo.memoryFree));
 
         // Processor
-        category = (CustomPreferenceCategory) findPreference("processor");
+        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_processor);
 
         final int bitResId = device.deviceIs64Bit ? R.string.bit_64 : R.string.bit_32;
         addPreference(category, "cpu_bit", R.string.arch, getString(bitResId));
@@ -125,7 +121,7 @@ public class DeviceInformationGeneralFragment extends PreferenceFragment {
         addPreference(category, "cpu_bogomips", R.string.bogomips, device.cpuInfo.bogomips);
 
         // Kernel
-        category = (CustomPreferenceCategory) findPreference("kernel");
+        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_kernel);
         addPreference(category, "kernel_version", R.string.version,
                 String.format("%s %s", device.kernelInfo.version, device.kernelInfo.revision));
         addPreference(category, "kernel_extras", R.string.extras, device.kernelInfo.extras);
@@ -134,7 +130,7 @@ public class DeviceInformationGeneralFragment extends PreferenceFragment {
         addPreference(category, "kernel_host", R.string.host, device.kernelInfo.host);
 
         // eMMC
-        category = (CustomPreferenceCategory) findPreference("emmc");
+        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_emmc);
         addPreference(category, "emmc_name", R.string.name, Emmc.get().getName());
         addPreference(category, "emmc_cid", R.string.emmc_cid, Emmc.get().getCid());
         addPreference(category, "emmc_mid", R.string.emmc_mid, Emmc.get().getMid());
@@ -144,17 +140,20 @@ public class DeviceInformationGeneralFragment extends PreferenceFragment {
                 ? getString(R.string.emmc_can_brick_true)
                 : getString(R.string.emmc_can_brick_false);
         tmp = String.format("%s\n%s", tmp, getString(R.string.press_learn_more));
-        addPreference(category, "emmc_can_brick", R.string.emmc_can_brick, tmp).setSelectable(true);
+        addPreference(category, "emmc_can_brick", R.string.emmc_can_brick, tmp)
+                .setOnPreferenceClickListener(this);
     }
 
-    private CustomPreference addPreference(final PreferenceCategory category, final String key,
-            final int titleResId, final String summary) {
+    private MaterialPreference addPreference(final MaterialPreferenceCategory category,
+            final String key, final int titleResId, final String summary) {
         return addPreference(category, key, getString(titleResId), summary);
     }
 
-    private CustomPreference addPreference(final PreferenceCategory category, final String key,
-            final String title, final String summary) {
-        final CustomPreference preference = new CustomPreference(getActivity());
+    private MaterialPreference addPreference(final MaterialPreferenceCategory category,
+            final String key, final String title, final String summary) {
+        final Context context = getActivity();
+        final MaterialPreference preference = new MaterialPreference(context);
+        preference.init(context);
         preference.setKey(key);
         preference.setTitle(title);
         preference.setSummary(TextUtils.isEmpty(summary) ? getString(R.string.unknown) : summary);
@@ -162,10 +161,9 @@ public class DeviceInformationGeneralFragment extends PreferenceFragment {
         return preference;
     }
 
-    @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
-            @NonNull final Preference preference) {
-        final String key = preference.getKey();
-        if (!mEasterEggStarted && TextUtils.equals(KEY_PLATFORM_VERSION, key)) {
+    @Override public boolean onPreferenceClicked(MaterialPreference materialPreference) {
+        final String key = materialPreference.getKey();
+        if (!mEasterEggStarted && "platform_version".equals(key)) {
             System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
             mHits[mHits.length - 1] = SystemClock.uptimeMillis();
             if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
@@ -173,12 +171,11 @@ public class DeviceInformationGeneralFragment extends PreferenceFragment {
                 mEasterEggStarted = true;
             }
             return true;
-        } else if (TextUtils.equals("emmc_can_brick", key)) {
+        } else if ("emmc_can_brick".equals(key)) {
             AppHelper.viewInBrowser(Emmc.BRICK_INFO_URL);
             return true;
         }
 
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
+        return false;
     }
-
 }

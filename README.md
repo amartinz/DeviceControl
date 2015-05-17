@@ -18,6 +18,11 @@ Try it out:
   <img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" />
 </a>
 
+Used libraries
+-------
+
+* [MaterialPreferences](https://github.com/Evisceration/MaterialPreferences)
+
 Third party libraries
 -------
 

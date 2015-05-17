@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Platform -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_platform"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:prefKey="platform"
+        app:prefTitle="@string/platform_information" />
+
+    <!-- Runtime -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_runtime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:prefKey="runtime"
+        app:prefTitle="@string/runtime" />
+
+    <!-- Device information -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_device_information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:prefKey="device_information"
+        app:prefTitle="@string/device_information" />
+
+    <!-- Memory -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_memory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:prefKey="memory"
+        app:prefTitle="@string/memory" />
+
+    <!-- Processor -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_processor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:prefKey="processor"
+        app:prefTitle="@string/processor" />
+
+    <!-- Kernel -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_kernel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:prefKey="kernel"
+        app:prefTitle="@string/kernel" />
+
+    <!-- eMMC -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_emmc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:prefKey="emmc"
+        app:prefTitle="@string/emmc" />
+
+</LinearLayout>

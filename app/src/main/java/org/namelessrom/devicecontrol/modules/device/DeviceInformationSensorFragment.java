@@ -22,31 +22,39 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceScreen;
-import android.support.v4.preference.PreferenceFragment;
 import android.text.TextUtils;
+import android.view.View;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class DeviceInformationSensorFragment extends PreferenceFragment {
+import alexander.martinz.libs.materialpreferences.MaterialPreference;
+import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
+import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 
-    @Override public void onActivityCreated(final Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        addPreferencesFromResource(R.xml.device_information_sensor);
+public class DeviceInformationSensorFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
+
+    @Override protected int getLayoutResourceId() {
+        return R.layout.preferences_device_information_sensor;
+    }
+
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         final SensorManager sensorManager =
                 (SensorManager) Application.get().getSystemService(Context.SENSOR_SERVICE);
 
+        final MaterialPreference sensorTest =
+                (MaterialPreference) view.findViewById(R.id.sensor_test);
+        sensorTest.setOnPreferenceClickListener(this);
+
         // Sensors
-        PreferenceCategory category = (PreferenceCategory) findPreference("sensors");
+        final MaterialPreferenceCategory category =
+                (MaterialPreferenceCategory) view.findViewById(R.id.cat_sensors);
 
         // we need an array list to be able to sort it, a normal list throws
         // java.lang.UnsupportedOperationException when sorting
@@ -58,31 +66,28 @@ public class DeviceInformationSensorFragment extends PreferenceFragment {
         for (final Sensor s : sensorList) {
             addPreference(category, "", s.getName(), s.getVendor());
         }
-
-        if (category.getPreferenceCount() == 0) {
-            getPreferenceScreen().removePreference(category);
-        }
     }
 
-    @Override public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
-            Preference preference) {
-        final String key = preference.getKey();
-        if ("sensor_test".equals(key)) {
-            final Intent intent = new Intent(getActivity(), SensorActivity.class);
-            startActivity(intent);
-        }
-
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
-    }
-
-    private CustomPreference addPreference(final PreferenceCategory category, final String key,
-            final String title, final String summary) {
-        final CustomPreference preference = new CustomPreference(getActivity());
+    private MaterialPreference addPreference(final MaterialPreferenceCategory category,
+            final String key, final String title, final String summary) {
+        final Context context = getActivity();
+        final MaterialPreference preference = new MaterialPreference(context);
+        preference.init(context);
         preference.setKey(key);
         preference.setTitle(title);
         preference.setSummary(TextUtils.isEmpty(summary) ? getString(R.string.unknown) : summary);
         category.addPreference(preference);
         return preference;
+    }
+
+    @Override public boolean onPreferenceClicked(MaterialPreference preference) {
+        final String key = preference.getKey();
+        if ("sensor_test".equals(key)) {
+            final Intent intent = new Intent(getActivity(), SensorActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return false;
     }
 
     private class SortIgnoreCase implements Comparator<Sensor> {

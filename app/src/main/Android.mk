@@ -39,6 +39,12 @@ library_src_files  := ../../../../../../external/AndroidSwipeLayout/library/src/
 LOCAL_SRC_FILES    += $(call all-java-files-under, $(library_src_files))
 LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/AndroidSwipeLayout/library/src/main/res
 
+## MaterialPreferences
+
+library_src_files  := ../../../../../../external/evisceration/MaterialPreferences/library/src/main/java
+LOCAL_SRC_FILES    += $(call all-java-files-under, $(library_src_files))
+LOCAL_RESOURCE_DIR += $(LOCAL_PATH)/../../../../../../external/evisceration/MaterialPreferences/library/src/main/res
+
 ######
 
 ## MPAndroidChart
@@ -50,6 +56,7 @@ LOCAL_SRC_FILES   += $(call all-java-files-under, $(library_src_files))
 
 LOCAL_AAPT_FLAGS := \
     --auto-add-overlay \
+    --extra-packages alexander.martinz.libs.materialpreferences \
     --extra-packages android.support.v7.appcompat \
     --extra-packages android.support.v7.cardview \
     --extra-packages com.google.android.gms \
