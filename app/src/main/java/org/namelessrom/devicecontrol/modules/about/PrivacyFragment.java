@@ -24,8 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.theme.AppResources;
 
 public class PrivacyFragment extends Fragment {
 
@@ -36,7 +36,7 @@ public class PrivacyFragment extends Fragment {
         final WebView wv = (WebView) view.findViewById(R.id.dialog_help_webview);
         wv.getSettings().setTextZoom(90);
 
-        final String url = Application.get().isDarkTheme()
+        final String url = AppResources.get().isDarkTheme()
                 ? "file:///android_asset/privacy_dark.html"
                 : "file:///android_asset/privacy.html";
         wv.loadUrl(url);

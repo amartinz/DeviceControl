@@ -34,11 +34,11 @@ import android.widget.LinearLayout;
 import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ObservableScrollView;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.RequestFileActivity;
+import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.ui.adapters.FlasherAdapter;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.IOUtils;
@@ -107,7 +107,7 @@ public class FlasherFragment extends AttachFragment implements RequestFileActivi
         mFiles.add(file);
         mRecyclerView.setAdapter(new FlasherAdapter(this, mFiles));
         mFlashCard.install.setEnabled(true);
-        mFlashCard.install.setTextColor(Application.get().getAccentColor());
+        mFlashCard.install.setTextColor(AppResources.get().getAccentColor());
     }
 
     @Override public void fileRequested(String filePath) {
@@ -142,8 +142,8 @@ public class FlasherFragment extends AttachFragment implements RequestFileActivi
                 final boolean isEnabled = mFiles.size() > 0;
                 mFlashCard.install.setEnabled(isEnabled);
                 mFlashCard.install.setTextColor(isEnabled
-                        ? Application.get().getAccentColor()
-                        : Application.get().getColor(android.R.color.darker_gray));
+                        ? AppResources.get().getAccentColor()
+                        : getActivity().getResources().getColor(android.R.color.darker_gray));
             }
         });
         alert.show();

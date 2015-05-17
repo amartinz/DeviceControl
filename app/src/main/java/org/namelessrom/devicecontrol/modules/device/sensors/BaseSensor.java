@@ -23,15 +23,16 @@ import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 public abstract class BaseSensor extends LinearLayout implements SensorEventListener {
@@ -57,8 +58,8 @@ public abstract class BaseSensor extends LinearLayout implements SensorEventList
     }
 
     public Drawable getSensorImage() {
-        final int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
-        final Drawable drawable = getResources().getDrawable(getImageResourceId());
+        final int color = AppResources.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
+        final Drawable drawable = ContextCompat.getDrawable(getContext(), getImageResourceId());
         return DrawableHelper.applyColorFilter(drawable, color);
     }
 
@@ -76,7 +77,7 @@ public abstract class BaseSensor extends LinearLayout implements SensorEventList
         mInflater = LayoutInflater.from(context);
 
         final int resId;
-        if (Application.get().isDarkTheme()) {
+        if (AppResources.get().isDarkTheme()) {
             resId = R.layout.card_install_dark;
         } else {
             resId = R.layout.card_install_light;

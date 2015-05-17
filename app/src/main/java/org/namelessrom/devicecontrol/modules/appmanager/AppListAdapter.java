@@ -35,6 +35,7 @@ import android.widget.Toast;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.objects.AppItem;
+import org.namelessrom.devicecontrol.theme.AppResources;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -100,7 +101,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             packageName.setText(appItem.getPackageName());
             appVersion.setText(appItem.getVersion());
 
-            final int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
+            final int color = AppResources.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
             appLabel.setTextColor(appItem.isSystemApp()
                     ? res.getColor(R.color.red_middle) : color);
             container.setBackgroundResource(appItem.isEnabled()
@@ -169,7 +170,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
 
     @Override public ViewHolder onCreateViewHolder(final ViewGroup parent, final int type) {
         final int resId;
-        if (Application.get().isDarkTheme()) {
+        if (AppResources.get().isDarkTheme()) {
             resId = R.layout.card_app_item_dark;
         } else {
             resId = R.layout.card_app_item_light;

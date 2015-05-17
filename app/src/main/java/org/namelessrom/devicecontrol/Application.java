@@ -33,10 +33,6 @@ public class Application extends android.app.Application {
 
     private static Application sInstance;
 
-    private static int sAccentColor = -1;
-    private static int sPrimaryColor = -1;
-    private static int sIsDarkTheme = -1;
-
     @Override public void onCreate() {
         super.onCreate();
         Application.sInstance = this;
@@ -93,45 +89,4 @@ public class Application extends android.app.Application {
         return getResources().getStringArray(resId);
     }
 
-    public int getAccentColor() {
-        if (sAccentColor == -1) {
-            sAccentColor = isDarkTheme()
-                    ? getColor(R.color.accent)
-                    : getColor(R.color.accent_light);
-        }
-        return sAccentColor;
-    }
-
-    public int getPrimaryColor() {
-        if (sPrimaryColor == -1) {
-            sPrimaryColor = isDarkTheme()
-                    ? getColor(R.color.dark_primary_dark)
-                    : getColor(R.color.light_primary_dark);
-        }
-        return sPrimaryColor;
-    }
-
-    public Application setAccentColor(final int color) {
-        sAccentColor = color;
-        return this;
-    }
-
-    public boolean isDarkTheme() {
-        if (sIsDarkTheme == -1) {
-            sIsDarkTheme = DeviceConfiguration.get(this).darkTheme ? 1 : 0;
-        }
-        return (sIsDarkTheme == 1);
-    }
-
-    public Application setDarkTheme(final boolean isDark) {
-        sIsDarkTheme = isDark ? 1 : 0;
-        sAccentColor = -1;
-        sPrimaryColor = -1;
-
-        DeviceConfiguration deviceConfiguration = DeviceConfiguration.get(this);
-        deviceConfiguration.darkTheme = isDark;
-        deviceConfiguration.saveConfiguration(this);
-
-        return this;
-    }
 }

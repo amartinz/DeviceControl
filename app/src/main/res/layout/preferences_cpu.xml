@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Core status -->
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_core_stats_root"
+        style="@style/CardView.Light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="4dp"
+        card_view:contentPadding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="4dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/cpu_info_hide"
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="@string/core_status"
+                android:textColor="?colorAccent" />
+
+            <LinearLayout
+                android:id="@+id/cpu_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:animateLayoutChanges="false"
+                android:orientation="vertical"
+                android:paddingLeft="10dp" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <!-- Core limits -->
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+        android:id="@+id/core_limits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:prefKey="core_limits"
+        app:prefTitle="@string/core_limits">
+
+        <alexander.martinz.libs.materialpreferences.MaterialListPreference
+            android:id="@+id/cpu_pref_max"
+            style="@style/MaterialPreferences.Default"
+            app:prefKey="pref_max"
+            app:prefTitle="@string/cpu_freq_max" />
+
+        <alexander.martinz.libs.materialpreferences.MaterialListPreference
+            android:id="@+id/cpu_pref_min"
+            style="@style/MaterialPreferences.Default"
+            app:prefKey="pref_min"
+            app:prefTitle="@string/cpu_freq_min" />
+
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/cpu_pref_cpu_lock"
+            style="@style/MaterialPreferences.Default"
+            app:prefDefaultValue="false"
+            app:prefKey="cpu_lock_freq"
+            app:prefSummary="@string/cpu_lock_freq_summary"
+            app:prefTitle="@string/cpu_lock_freq" />
+
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
+
+    <!-- Governor -->
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+        android:id="@+id/cpu_cat_gov"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:prefKey="governor"
+        app:prefTitle="@string/governor">
+
+        <alexander.martinz.libs.materialpreferences.MaterialListPreference
+            android:id="@+id/cpu_pref_governor"
+            style="@style/MaterialPreferences.Default"
+            app:prefKey="pref_governor"
+            app:prefTitle="@string/cpu_governor" />
+
+        <alexander.martinz.libs.materialpreferences.MaterialPreference
+            android:id="@+id/cpu_pref_governor_tuning"
+            style="@style/MaterialPreferences.Default"
+            app:prefTitle="@string/cpu_governor_tuning" />
+
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/cpu_pref_gov_lock"
+            style="@style/MaterialPreferences.Default"
+            app:prefDefaultValue="false"
+            app:prefKey="cpu_lock_gov"
+            app:prefSummary="@string/cpu_lock_gov_summary"
+            app:prefTitle="@string/cpu_lock_gov" />
+
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
+
+</LinearLayout>

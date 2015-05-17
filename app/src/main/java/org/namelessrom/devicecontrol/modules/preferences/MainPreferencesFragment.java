@@ -32,6 +32,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.utils.Scripts;
@@ -83,7 +84,7 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
         }
 
         mDarkTheme = (CustomTogglePreference) findPreference(DeviceConfiguration.DARK_THEME);
-        mDarkTheme.setChecked(Application.get().isDarkTheme());
+        mDarkTheme.setChecked(AppResources.get().isDarkTheme());
         mDarkTheme.setOnPreferenceChangeListener(this);
 
         mSwipeOnContent =
@@ -154,13 +155,13 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
             return true;
         } else if (mDarkTheme == preference) {
             final boolean isDark = (Boolean) newValue;
-            Application.get().setDarkTheme(isDark);
+            AppResources.get().setDarkTheme(isDark);
             mDarkTheme.setChecked(isDark);
 
             if (isDark) {
-                Application.get().setAccentColor(getResources().getColor(R.color.accent));
+                AppResources.get().setAccentColor(getResources().getColor(R.color.accent));
             } else {
-                Application.get().setAccentColor(getResources().getColor(R.color.accent_light));
+                AppResources.get().setAccentColor(getResources().getColor(R.color.accent_light));
             }
 
             // restart the activity to apply new theme
