@@ -75,8 +75,8 @@ dependencies {
     compile project(':libs:AndroidSwipeLayout:library')
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.android.support:cardview-v7:22.1.1'
-    compile 'com.github.Evisceration:logger:1.0.0'
-    compile 'com.github.Evisceration:MaterialPreferences:0.1.4'
+    compile 'com.github.Evisceration:logger:1.0.1'
+    compile 'com.github.Evisceration:MaterialPreferences:0.1.5'
     compile 'com.google.android.gms:play-services:7.3.0'
     compile 'com.koushikdutta.ion:ion:2.1.3'
 }
