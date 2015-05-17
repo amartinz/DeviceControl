@@ -17,11 +17,14 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.util.TypedValue;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
@@ -57,6 +60,13 @@ public class DrawableHelper {
 
         //noinspection deprecation
         return Application.get().getResources().getDrawable(drawableRes);
+    }
+
+    public static int getSelectableBackgroundResId(Context context) {
+        TypedValue outValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+        return outValue.resourceId;
     }
 
 }
