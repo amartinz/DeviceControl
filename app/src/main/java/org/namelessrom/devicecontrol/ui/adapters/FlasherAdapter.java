@@ -24,9 +24,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.flasher.FlasherFragment;
+import org.namelessrom.devicecontrol.theme.AppResources;
 
 import java.io.File;
 import java.util.List;
@@ -46,7 +46,7 @@ public class FlasherAdapter extends RecyclerView.Adapter<FlasherAdapter.TaskerVi
 
     @Override public TaskerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final int resId;
-        if (Application.get().isDarkTheme()) {
+        if (AppResources.get().isDarkTheme()) {
             resId = R.layout.card_flash_item_dark;
         } else {
             resId = R.layout.card_flash_item_light;

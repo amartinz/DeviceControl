@@ -7,8 +7,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.theme.AppResources;
 
 public class CustomPreferenceCategory extends PreferenceCategory {
 
@@ -29,10 +29,10 @@ public class CustomPreferenceCategory extends PreferenceCategory {
     @Override protected void onBindView(@NonNull final View view) {
         super.onBindView(view);
         final TextView title = (TextView) view.findViewById(android.R.id.title);
-        title.setTextColor(Application.get().getAccentColor());
+        title.setTextColor(AppResources.get().getAccentColor());
 
         final View separator = view.findViewById(R.id.category_separator);
-        separator.setBackgroundColor(Application.get().getAccentColor());
+        separator.setBackgroundColor(AppResources.get().getAccentColor());
     }
 
     @Override public boolean isPersistent() { return false; }

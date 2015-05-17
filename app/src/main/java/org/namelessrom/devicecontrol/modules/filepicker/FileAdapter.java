@@ -17,8 +17,9 @@
  */
 package org.namelessrom.devicecontrol.modules.filepicker;
 
-import android.content.res.Resources;
+import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,9 +28,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.objects.FlashItem;
+import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.SortHelper;
 
@@ -40,7 +41,7 @@ import java.util.Date;
 
 public class FileAdapter extends BaseAdapter {
 
-    private final Resources resources = Application.get().getResources();
+    private final Context context;
 
     private ArrayList<File> files;
 
@@ -49,8 +50,9 @@ public class FileAdapter extends BaseAdapter {
 
     private FilePickerListener listener;
 
-    public FileAdapter(final FilePickerListener filePickerListener) {
-        listener = filePickerListener;
+    public FileAdapter(Context context, FilePickerListener filePickerListener) {
+        this.context = context;
+        this.listener = filePickerListener;
     }
 
     public void setFiles(final ArrayList<File> files) {
@@ -91,8 +93,7 @@ public class FileAdapter extends BaseAdapter {
     @Override public View getView(final int position, View v, final ViewGroup parent) {
         final ViewHolder viewHolder;
         if (v == null) {
-            v = LayoutInflater.from(Application.get())
-                    .inflate(R.layout.list_item_file, parent, false);
+            v = LayoutInflater.from(context).inflate(R.layout.list_item_file, parent, false);
             assert (v != null);
             viewHolder = new ViewHolder(v);
             v.setTag(viewHolder);
@@ -118,27 +119,32 @@ public class FileAdapter extends BaseAdapter {
             }
         });
 
-        int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
+        int color = AppResources.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
 
         viewHolder.name.setText(file.getName());
 
         if (isDirectory) {
             viewHolder.icon
-                    .setImageDrawable(resources.getDrawable(R.drawable.ic_folder));
+                    .setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_folder));
             viewHolder.info.setText(String.valueOf(new Date(file.lastModified())));
         } else {
-            viewHolder.icon.setImageDrawable(resources.getDrawable(R.drawable.ic_file));
+            viewHolder.icon
+                    .setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_file));
             viewHolder.info.setText(String.valueOf(new Date(file.lastModified())) + " | "
-                    + Formatter.formatFileSize(Application.get(), file.length()));
+                    + Formatter.formatFileSize(context, file.length()));
 
             // Color the list entry if a filetype is set, to make searching easier
-            color = ContentTypes.isFiletypeMatching(file, fileType)
-                    ? ((colorResId > 0) ? colorResId : resources.getColor(R.color.blueish_strong))
-                    : color;
+            if (ContentTypes.isFiletypeMatching(file, fileType)) {
+                if (colorResId > 0) {
+                    color = colorResId;
+                } else {
+                    color = context.getResources().getColor(R.color.grass);
+                }
+            }
         }
 
         viewHolder.name.setTextColor(color);
-        viewHolder.info.setTextColor(resources.getColor(R.color.grass));
+        viewHolder.info.setTextColor(context.getResources().getColor(R.color.blueish_strong));
         viewHolder.icon.setColorFilter(Color.parseColor("#FFFFFF"));
         viewHolder.icon.setColorFilter(color);
 

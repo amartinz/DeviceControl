@@ -22,8 +22,8 @@ import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.theme.AppResources;
 
 public abstract class BaseCard extends LinearLayout {
     private FrameLayout mContainer;
@@ -31,7 +31,7 @@ public abstract class BaseCard extends LinearLayout {
     public BaseCard(final Context context) {
         super(context, null);
         final int resId;
-        if (Application.get().isDarkTheme()) {
+        if (AppResources.get().isDarkTheme()) {
             resId = R.layout.card_install_dark;
         } else {
             resId = R.layout.card_install_light;

@@ -32,11 +32,11 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
 import org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity;
+import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import java.util.Collections;
@@ -59,7 +59,7 @@ public class TaskerAdapter extends RecyclerView.Adapter<TaskerAdapter.TaskerView
 
     @Override public TaskerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final int resId;
-        if (Application.get().isDarkTheme()) {
+        if (AppResources.get().isDarkTheme()) {
             resId = R.layout.card_tasker_dark;
         } else {
             resId = R.layout.card_tasker_light;

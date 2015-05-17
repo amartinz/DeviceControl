@@ -64,6 +64,7 @@ import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.modules.appmanager.permissions.AppSecurityPermissions;
 import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.objects.PackageStatsObserver;
+import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
 import java.util.ArrayList;
@@ -293,7 +294,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
 
         mCacheGraph.setTouchEnabled(false);
 
-        final int color = Application.get().isDarkTheme()
+        final int color = AppResources.get().isDarkTheme()
                 ? R.color.dark_background : R.color.light_background;
         mCacheGraph.setBackgroundResource(color);
 
@@ -318,7 +319,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
 
         final int color = mAppItem.isSystemApp()
                 ? getResources().getColor(R.color.red_middle)
-                : Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
+                : AppResources.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
         mAppLabel.setTextColor(color);
 
         mAppVersion.setText(mAppItem.getVersion());
@@ -530,7 +531,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
             l.setXEntrySpace(7f);
             l.setYEntrySpace(5f);
 
-            final int color = Application.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
+            final int color = AppResources.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
             l.setTextColor(color);
 
             // we are ready

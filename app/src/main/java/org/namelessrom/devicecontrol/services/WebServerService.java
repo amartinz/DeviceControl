@@ -28,12 +28,12 @@ import android.support.v4.app.NotificationCompat;
 
 import com.koushikdutta.async.AsyncServerSocket;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.WebServerConfiguration;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
 import org.namelessrom.devicecontrol.net.ServerWrapper;
+import org.namelessrom.devicecontrol.theme.AppResources;
 
 public class WebServerService extends Service {
     public static final int NOTIFICATION_ONGOING = 7861;
@@ -78,7 +78,7 @@ public class WebServerService extends Service {
                 .setContentText(text)
                 .setOngoing(true)
                 .setSmallIcon(R.drawable.ic_wifi)
-                .setColor(Application.get().getAccentColor())
+                .setColor(AppResources.get().getAccentColor())
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
         addNotificationStopButton(builder);

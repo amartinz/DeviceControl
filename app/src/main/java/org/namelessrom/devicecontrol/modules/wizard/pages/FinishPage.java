@@ -22,7 +22,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
@@ -30,6 +29,7 @@ import org.namelessrom.devicecontrol.modules.wizard.setup.Page;
 import org.namelessrom.devicecontrol.modules.wizard.setup.SetupDataCallbacks;
 import org.namelessrom.devicecontrol.modules.wizard.ui.ReviewAdapter;
 import org.namelessrom.devicecontrol.modules.wizard.ui.SetupPageFragment;
+import org.namelessrom.devicecontrol.theme.AppResources;
 
 import java.util.ArrayList;
 
@@ -85,7 +85,7 @@ public class FinishPage extends Page {
         }
 
         @Override protected int getLayoutResource() {
-            if (Application.get().isDarkTheme()) {
+            if (AppResources.get().isDarkTheme()) {
                 return R.layout.wizard_page_list_dark;
             }
             return R.layout.wizard_page_list_light;

@@ -52,7 +52,7 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // TODO: restore instance state
-        mFileAdapter = new FileAdapter(this);
+        mFileAdapter = new FileAdapter(getActivity(), this);
 
         // hardcoded to zip for our usage
         fileType = "zip";

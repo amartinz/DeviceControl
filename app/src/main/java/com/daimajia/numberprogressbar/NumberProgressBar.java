@@ -13,8 +13,8 @@ import android.view.View;
 
 import com.koushikdutta.ion.ProgressCallback;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.theme.AppResources;
 
 /**
  * Created by daimajia on 14-4-30.
@@ -200,7 +200,7 @@ public class NumberProgressBar extends View implements ProgressCallback {
         if (isInEditMode()) {
             defaultColor = default_reached_color;
         } else {
-            defaultColor = Application.get().getAccentColor();
+            defaultColor = AppResources.get().getAccentColor();
         }
 
         mReachedBarColor = attributes.getColor(R.styleable.NumberProgressBar_progress_reached_color, defaultColor);
