@@ -18,22 +18,12 @@
 package org.namelessrom.devicecontrol.modules.cpu;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceCategory;
 import android.support.annotation.NonNull;
-import android.text.InputType;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager.LayoutParams;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.view.View;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
@@ -42,38 +32,44 @@ import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
-import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.ui.views.AttachMaterialPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 
-public class GovernorFragment extends AttachPreferenceFragment implements GovernorUtils.GovernorListener {
+import alexander.martinz.libs.materialpreferences.MaterialEditTextPreference;
+import alexander.martinz.libs.materialpreferences.MaterialPreference;
+import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 
-    private PreferenceCategory mCategory;
-    private Context mContext;
+public class GovernorFragment extends AttachMaterialPreferenceFragment implements GovernorUtils.GovernorListener {
+    private MaterialPreferenceCategory mCategory;
 
     @Override protected int getFragmentId() { return DeviceConstants.ID_GOVERNOR_TUNABLE; }
 
-    @Override public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.governor);
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mCategory = new MaterialPreferenceCategory(getActivity());
+        mCategory.init(getActivity());
+        mCategory.setKey("key_gov_category");
+        addPreference(mCategory);
 
-        mCategory = (PreferenceCategory) findPreference("key_gov_category");
-        mContext = getActivity();
-
-        GovernorUtils.get().getGovernor(this);
+        mCategory.post(new Runnable() {
+            @Override public void run() {
+                GovernorUtils.get().getGovernor(GovernorFragment.this);
+            }
+        });
     }
 
     @Override public void onGovernor(@NonNull final GovernorUtils.Governor governor) {
-        if (new File("/sys/devices/system/cpu/cpufreq/" + governor.current).exists()) {
-            mCategory.setTitle(getString(R.string.gov_tweaks, governor.current));
-            new addPreferences().execute(governor.current);
-        } else {
-            getPreferenceScreen().removeAll();
+        final File governorDir = new File("/sys/devices/system/cpu/cpufreq/" + governor.current);
+        boolean hasTunables = governorDir.exists();
+        if (!hasTunables) {
+            mCategory.setTitle(getString(R.string.no_gov_tweaks_message));
+            return;
         }
 
-        isSupported(getPreferenceScreen(), mContext, R.string.no_gov_tweaks_message);
+        mCategory.setTitle(getString(R.string.gov_tweaks, governor.current));
+        new AddPreferences(getActivity(), governorDir).execute();
     }
 
     @Override public boolean onOptionsItemSelected(final MenuItem item) {
@@ -92,97 +88,68 @@ public class GovernorFragment extends AttachPreferenceFragment implements Govern
         return false;
     }
 
-    private class addPreferences extends AsyncTask<String, Void, Void> {
+    private class AddPreferences extends AsyncTask<Void, Void, Void> implements MaterialPreference.MaterialPreferenceChangeListener {
+        private Context mContext;
+        private File mGovernorDir;
 
-        @Override protected Void doInBackground(String... params) {
-            if (mCategory.getPreferenceCount() != 0) {
-                mCategory.removeAll();
+        public AddPreferences(Context context, File governorDir) {
+            mContext = context;
+            mGovernorDir = governorDir;
+        }
+
+        @Override protected Void doInBackground(Void... params) {
+            if (!mGovernorDir.exists()) {
+                return null;
             }
-            final String currentGovernor = params[0];
-            final File f = new File("/sys/devices/system/cpu/cpufreq/" + currentGovernor);
-            if (f.exists()) {
-                final File[] files = f.listFiles();
-                for (final File file : files) {
-                    final String fileName = file.getName();
+            final File[] files = mGovernorDir.listFiles();
+            for (final File file : files) {
+                final String fileName = file.getName();
 
-                    // Do not try to read boostpulse
-                    if ("boostpulse".equals(fileName)) {
-                        continue;
-                    }
-
-                    final String filePath = file.getAbsolutePath();
-                    final String fileContent = Utils.readOneLine(filePath).trim()
-                            .replaceAll("\n", "");
-                    final CustomPreference pref = new CustomPreference(mContext);
-                    pref.setTitle(fileName);
-                    pref.setSummary(fileContent);
-                    pref.setKey(filePath);
-                    mCategory.addPreference(pref);
-                    pref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                        @Override
-                        public boolean onPreferenceClick(final Preference p) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                            LinearLayout ll = new LinearLayout(mContext);
-                            ll.setLayoutParams(new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                    LinearLayout.LayoutParams.MATCH_PARENT));
-                            final EditText et = new EditText(mContext);
-                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.MATCH_PARENT,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT);
-                            params.setMargins(40, 40, 40, 40);
-                            params.gravity = Gravity.CENTER;
-                            String val = p.getSummary().toString();
-                            et.setLayoutParams(params);
-                            et.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-                            et.setGravity(Gravity.CENTER_HORIZONTAL);
-                            et.setText(val);
-                            ll.addView(et);
-                            builder.setView(ll);
-                            builder.setPositiveButton(android.R.string.ok,
-                                    new DialogInterface.OnClickListener() {
-
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            String value = et.getText().toString();
-                                            p.setSummary(value);
-                                            Utils.writeValue(p.getKey(), value);
-                                            updateBootupListDb(p, value);
-                                        }
-                                    }
-                            );
-                            final AlertDialog dialog = builder.create();
-                            dialog.show();
-                            final Window window = dialog.getWindow();
-                            window.setLayout(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                            return true;
-                        }
-
-                    });
+                // Do not try to read boostpulse
+                if ("boostpulse".equals(fileName)) {
+                    continue;
                 }
+
+                final String filePath = file.getAbsolutePath();
+                final String fileContent = Utils.readOneLine(filePath).trim().replaceAll("\n", "");
+                final MaterialEditTextPreference pref = new MaterialEditTextPreference(mContext);
+                pref.setAsCard(false);
+                pref.init(mContext);
+                pref.setKey(filePath);
+                pref.setTitle(fileName);
+                pref.setValue(fileContent);
+                mCategory.post(new Runnable() {
+                    @Override public void run() {
+                        mCategory.addPreference(pref);
+                        pref.setOnPreferenceChangeListener(AddPreferences.this);
+                    }
+                });
             }
 
             return null;
         }
 
+        @Override
+        public boolean onPreferenceChanged(MaterialPreference materialPreference, Object o) {
+            final String value = String.valueOf(o);
+            Utils.writeValue(materialPreference.getKey(), value);
+            updateBootupListDb(materialPreference, value);
+            return false;
+        }
     }
 
-    private static void updateBootupListDb(final Preference p, final String value) {
+    private static void updateBootupListDb(final MaterialPreference p, final String value) {
 
-        class updateListDb extends AsyncTask<String, Void, Void> {
-
+        new AsyncTask<String, Void, Void>() {
             @Override protected Void doInBackground(String... params) {
-                final String name = p.getTitle().toString();
+                final String name = p.getTitle();
                 final String key = p.getKey();
                 BootupConfiguration.setBootup(Application.get(), new BootupItem(
                         ConfigConstants.CATEGORY_CPU, name, key, value, true));
-
                 return null;
             }
 
-        }
-        new updateListDb().execute();
+        }.execute();
     }
 
 }
