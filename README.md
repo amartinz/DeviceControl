@@ -41,18 +41,9 @@ Third party libraries
 
 Contribution
 -------
-To get the sources you need to clone this repository together with its submodules.
+Contribution is accepted via [Gerrit Code Review](https://gerrit.nameless-rom.org/#/admin/projects/Evisceration/android_packages_apps_DeviceControl).
 
-```
-git clone --recursive https://github.com/Evisceration/android_packages_apps_DeviceControl
-```
-
-In case you want to start working on the sources in an android source tree, you need to manually initialize the submodules.
-
-```
-git submodule init
-git submodule update
-```
+Note that pull requests on GitHub will be discussed and afterwards uploaded to above Gerrit Code Review, as GitHub is just a mirror for Gerrit.
 
 Developed by
 -------
