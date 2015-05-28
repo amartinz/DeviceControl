@@ -1,8 +1,4 @@
 include ':app'
-include ':libs:mpandroidchart:MPChartLib'
-include ':libs:AndroidSwipeLayout:library'
 
-def String localProps = System.getenv('USE_LOCAL_MATERIALPREFERENCES_SOURCES')
-if (localProps != null) {
-    include ':locallibs:MaterialPreferences:library'
-}
+// only uncomment if the path exists
+//include ':locallibs:MaterialPreferences:library'
