@@ -128,10 +128,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_PERFORMANCE_GPU_SETTINGS, R.string.gpusettings,
                 R.drawable.ic_display));
-        // performance - filesystem
-        menuItems.add(new MenuListArrayAdapter.MenuItem(
-                DeviceConstants.ID_FILESYSTEM, R.string.filesystem,
-                R.drawable.ic_storage));
         // performance - thermal
         if (Utils.fileExists(getString(R.string.directory_msm_thermal))
                 || Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
@@ -139,6 +135,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                     DeviceConstants.ID_THERMAL, R.string.thermal,
                     R.drawable.ic_heat));
         }
+        // performance - filesystem
+        menuItems.add(new MenuListArrayAdapter.MenuItem(
+                DeviceConstants.ID_FILESYSTEM, R.string.filesystem,
+                R.drawable.ic_storage));
 
         // header - tools
         menuItems.add(new MenuListArrayAdapter.MenuItem(-1, R.string.tools, -1));
