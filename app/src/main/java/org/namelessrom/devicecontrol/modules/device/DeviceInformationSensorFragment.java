@@ -27,14 +27,13 @@ import android.view.View;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.theme.AppResources;
+import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
-import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 
 public class DeviceInformationSensorFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
@@ -54,9 +53,8 @@ public class DeviceInformationSensorFragment extends MaterialSupportPreferenceFr
         sensorTest.setOnPreferenceClickListener(this);
 
         // Sensors
-        final MaterialPreferenceCategory category =
-                (MaterialPreferenceCategory) view.findViewById(R.id.cat_sensors);
-        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
+        final CustomPreferenceCategoryMaterial category =
+                (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_sensors);
 
         // we need an array list to be able to sort it, a normal list throws
         // java.lang.UnsupportedOperationException when sorting
@@ -70,7 +68,7 @@ public class DeviceInformationSensorFragment extends MaterialSupportPreferenceFr
         }
     }
 
-    private MaterialPreference addPreference(final MaterialPreferenceCategory category,
+    private MaterialPreference addPreference(final CustomPreferenceCategoryMaterial category,
             final String key, final String title, final String summary) {
         final Context context = getActivity();
         final MaterialPreference preference = new MaterialPreference(context);

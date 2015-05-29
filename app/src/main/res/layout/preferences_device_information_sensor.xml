@@ -14,7 +14,7 @@
         app:prefTitle="@string/sensor_information" />
 
     <!-- Lists sensors, entries dynamically added -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_sensors"
         style="@style/MaterialPreferences.Default"
         app:prefKey="sensors"

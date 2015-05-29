@@ -27,14 +27,13 @@ import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.objects.MemoryInfo;
-import org.namelessrom.devicecontrol.theme.AppResources;
+import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.List;
 
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
-import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 
 public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
@@ -57,10 +56,8 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
         final Device device = Device.get();
 
         // Platform
-        MaterialPreferenceCategory category =
-                (MaterialPreferenceCategory) view.findViewById(R.id.cat_platform);
-        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
-
+        CustomPreferenceCategoryMaterial category =
+                (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_platform);
         addPreference(category, "platform_version", R.string.version, device.platformVersion)
                 .setOnPreferenceClickListener(this); // selectable because of the easter egg
         addPreference(category, "platform_id", R.string.build_id, device.platformId);
@@ -70,16 +67,13 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
                 device.platformBuildType);
 
         // Runtime
-        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_runtime);
-        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
-
+        category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_runtime);
         addPreference(category, "vm_library", R.string.type, device.vmLibrary);
         addPreference(category, "vm_version", R.string.version, device.vmVersion);
 
         // Device
-        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_device_information);
-        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
-
+        category =
+                (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_device_information);
         // TODO: save / restore / check --> ANDROID ID
         addPreference(category, "android_id", R.string.android_id, device.androidId);
         addPreference(category, "device_manufacturer", R.string.manufacturer, device.manufacturer);
@@ -93,9 +87,7 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
                 getString(R.string.selinux_enforcing) : getString(R.string.selinux_permissive));
 
         // Memory
-        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_memory);
-        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
-
+        category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_memory);
         addPreference(category, "memory_total", R.string.total,
                 MemoryInfo.getAsMb(device.memoryInfo.memoryTotal));
         addPreference(category, "memory_cached", R.string.cached,
@@ -104,9 +96,7 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
                 MemoryInfo.getAsMb(device.memoryInfo.memoryFree));
 
         // Processor
-        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_processor);
-        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
-
+        category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_processor);
         final int bitResId = device.deviceIs64Bit ? R.string.bit_64 : R.string.bit_32;
         addPreference(category, "cpu_bit", R.string.arch, getString(bitResId));
 
@@ -129,9 +119,7 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
         addPreference(category, "cpu_bogomips", R.string.bogomips, device.cpuInfo.bogomips);
 
         // Kernel
-        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_kernel);
-        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
-
+        category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_kernel);
         addPreference(category, "kernel_version", R.string.version,
                 String.format("%s %s", device.kernelInfo.version, device.kernelInfo.revision));
         addPreference(category, "kernel_extras", R.string.extras, device.kernelInfo.extras);
@@ -140,9 +128,7 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
         addPreference(category, "kernel_host", R.string.host, device.kernelInfo.host);
 
         // eMMC
-        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_emmc);
-        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
-
+        category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_emmc);
         addPreference(category, "emmc_name", R.string.name, Emmc.get().getName());
         addPreference(category, "emmc_cid", R.string.emmc_cid, Emmc.get().getCid());
         addPreference(category, "emmc_mid", R.string.emmc_mid, Emmc.get().getMid());
@@ -156,12 +142,12 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
                 .setOnPreferenceClickListener(this);
     }
 
-    private MaterialPreference addPreference(final MaterialPreferenceCategory category,
+    private MaterialPreference addPreference(final CustomPreferenceCategoryMaterial category,
             final String key, final int titleResId, final String summary) {
         return addPreference(category, key, getString(titleResId), summary);
     }
 
-    private MaterialPreference addPreference(final MaterialPreferenceCategory category,
+    private MaterialPreference addPreference(final CustomPreferenceCategoryMaterial category,
             final String key, final String title, final String summary) {
         final Context context = getActivity();
         final MaterialPreference preference = new MaterialPreference(context);

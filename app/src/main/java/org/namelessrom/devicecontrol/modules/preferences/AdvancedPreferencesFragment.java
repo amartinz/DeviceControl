@@ -30,7 +30,6 @@ import org.namelessrom.devicecontrol.theme.AppResources;
 
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
-import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 
@@ -55,10 +54,6 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
         mSkipChecks.setChecked(configuration.skipChecks);
         mSkipChecks.setOnPreferenceChangeListener(this);
 
-        MaterialPreferenceCategory category =
-                (MaterialPreferenceCategory) view.findViewById(R.id.cat_prefs_shell);
-        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
-
         mShellContext = (MaterialListPreference) view.findViewById(R.id.prefs_su_shell_context);
         mShellContext.setValue(configuration.suShellContext);
         String summary = getString(R.string.su_shell_context_summary,
@@ -67,8 +62,6 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
         mShellContext.setValue(configuration.suShellContext);
         mShellContext.setOnPreferenceChangeListener(this);
 
-        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_prefs_debug);
-        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
         mDebugStrictMode =
                 (MaterialSwitchPreference) view.findViewById(R.id.prefs_debug_strict_mode);
         mDebugStrictMode.setChecked(configuration.debugStrictMode);

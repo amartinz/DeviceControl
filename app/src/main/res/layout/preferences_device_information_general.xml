@@ -6,49 +6,49 @@
     android:orientation="vertical">
 
     <!-- Platform -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_platform"
         style="@style/MaterialPreferences.Default"
         app:prefKey="platform"
         app:prefTitle="@string/platform_information" />
 
     <!-- Runtime -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_runtime"
         style="@style/MaterialPreferences.Default"
         app:prefKey="runtime"
         app:prefTitle="@string/runtime" />
 
     <!-- Device information -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_device_information"
         style="@style/MaterialPreferences.Default"
         app:prefKey="device_information"
         app:prefTitle="@string/device_information" />
 
     <!-- Memory -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_memory"
         style="@style/MaterialPreferences.Default"
         app:prefKey="memory"
         app:prefTitle="@string/memory" />
 
     <!-- Processor -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_processor"
         style="@style/MaterialPreferences.Default"
         app:prefKey="processor"
         app:prefTitle="@string/processor" />
 
     <!-- Kernel -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_kernel"
         style="@style/MaterialPreferences.Default"
         app:prefKey="kernel"
         app:prefTitle="@string/kernel" />
 
     <!-- eMMC -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_emmc"
         style="@style/MaterialPreferences.Default"
         app:prefKey="emmc"

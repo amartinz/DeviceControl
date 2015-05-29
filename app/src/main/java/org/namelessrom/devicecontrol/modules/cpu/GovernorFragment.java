@@ -18,7 +18,6 @@
 package org.namelessrom.devicecontrol.modules.cpu;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -32,6 +31,7 @@ import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
+import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
 import org.namelessrom.devicecontrol.ui.views.AttachMaterialPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -39,16 +39,15 @@ import java.io.File;
 
 import alexander.martinz.libs.materialpreferences.MaterialEditTextPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
-import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 
 public class GovernorFragment extends AttachMaterialPreferenceFragment implements GovernorUtils.GovernorListener {
-    private MaterialPreferenceCategory mCategory;
+    private CustomPreferenceCategoryMaterial mCategory;
 
     @Override protected int getFragmentId() { return DeviceConstants.ID_GOVERNOR_TUNABLE; }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mCategory = new MaterialPreferenceCategory(getActivity());
+        mCategory = new CustomPreferenceCategoryMaterial(getActivity());
         mCategory.init(getActivity());
         mCategory.setKey("key_gov_category");
         addPreference(mCategory);
@@ -89,11 +88,11 @@ public class GovernorFragment extends AttachMaterialPreferenceFragment implement
     }
 
     private class AddPreferences extends AsyncTask<Void, Void, Void> implements MaterialPreference.MaterialPreferenceChangeListener {
-        private Context mContext;
+        private Activity mActivity;
         private File mGovernorDir;
 
-        public AddPreferences(Context context, File governorDir) {
-            mContext = context;
+        public AddPreferences(Activity activity, File governorDir) {
+            mActivity = activity;
             mGovernorDir = governorDir;
         }
 
@@ -112,16 +111,21 @@ public class GovernorFragment extends AttachMaterialPreferenceFragment implement
 
                 final String filePath = file.getAbsolutePath();
                 final String fileContent = Utils.readOneLine(filePath).trim().replaceAll("\n", "");
-                final MaterialEditTextPreference pref = new MaterialEditTextPreference(mContext);
-                pref.setAsCard(false);
-                pref.init(mContext);
-                pref.setKey(filePath);
-                pref.setTitle(fileName);
-                pref.setValue(fileContent);
-                mCategory.post(new Runnable() {
+                mActivity.runOnUiThread(new Runnable() {
                     @Override public void run() {
-                        mCategory.addPreference(pref);
-                        pref.setOnPreferenceChangeListener(AddPreferences.this);
+                        final MaterialEditTextPreference pref =
+                                new MaterialEditTextPreference(mActivity);
+                        pref.setAsCard(false);
+                        pref.init(mActivity);
+                        pref.setKey(filePath);
+                        pref.setTitle(fileName);
+                        pref.setValue(fileContent);
+                        mCategory.post(new Runnable() {
+                            @Override public void run() {
+                                mCategory.addPreference(pref);
+                                pref.setOnPreferenceChangeListener(AddPreferences.this);
+                            }
+                        });
                     }
                 });
             }
@@ -139,17 +143,25 @@ public class GovernorFragment extends AttachMaterialPreferenceFragment implement
     }
 
     private static void updateBootupListDb(final MaterialPreference p, final String value) {
+        new BootupTask(p.getTitle(), p.getKey(), value).execute();
+    }
 
-        new AsyncTask<String, Void, Void>() {
-            @Override protected Void doInBackground(String... params) {
-                final String name = p.getTitle();
-                final String key = p.getKey();
-                BootupConfiguration.setBootup(Application.get(), new BootupItem(
-                        ConfigConstants.CATEGORY_CPU, name, key, value, true));
-                return null;
-            }
+    private static class BootupTask extends AsyncTask<String, Void, Void> {
+        private final String name;
+        private final String key;
+        private final String value;
 
-        }.execute();
+        public BootupTask(String name, String key, String value) {
+            this.name = name;
+            this.key = key;
+            this.value = value;
+        }
+
+        @Override protected Void doInBackground(String... params) {
+            BootupConfiguration.setBootup(Application.get(), new BootupItem(
+                    ConfigConstants.CATEGORY_CPU, name, key, value, true));
+            return null;
+        }
     }
 
 }

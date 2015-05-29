@@ -21,7 +21,7 @@
     android:orientation="vertical">
 
     <!-- General -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_prefs_general"
         style="@style/MaterialPreferences.Default"
         app:prefTitle="@string/general">
@@ -33,10 +33,10 @@
             app:prefSummary="@string/reapply_on_boot_summary"
             app:prefTitle="@string/reapply_on_boot" />
 
-    </alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
 
     <!-- Interface -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_prefs_interface"
         style="@style/MaterialPreferences.Default"
         app:prefTitle="@string/user_interface">
@@ -55,10 +55,10 @@
             app:prefSummary="@string/swipe_on_content_summary"
             app:prefTitle="@string/swipe_on_content" />
 
-    </alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
 
     <!-- Support -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_prefs_support"
         style="@style/MaterialPreferences.Default"
         app:prefTitle="@string/support">
@@ -70,7 +70,7 @@
             app:prefSummary="@string/show_pollfish_summary"
             app:prefTitle="@string/show_pollfish" />
 
-    </alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
 
     <!-- Version -->
     <alexander.martinz.libs.materialpreferences.MaterialPreference

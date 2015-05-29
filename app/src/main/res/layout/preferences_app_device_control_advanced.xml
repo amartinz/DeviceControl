@@ -29,7 +29,7 @@
         app:prefTitle="@string/skip_checks" />
 
     <!-- Shell -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_prefs_shell"
         style="@style/MaterialPreferences.Default"
         app:prefTitle="@string/shell">
@@ -41,10 +41,10 @@
             app:prefEntryValues="@array/su_shell_context_values"
             app:prefTitle="@string/su_shell_context" />
 
-    </alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
 
     <!-- Debug -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_prefs_debug"
         style="@style/MaterialPreferences.Default"
         app:prefTitle="@string/debugging">
@@ -59,7 +59,7 @@
             style="@style/MaterialPreferences.Default"
             app:prefTitle="@string/debug_strict_mode" />
 
-    </alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory>
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
 
 </LinearLayout>
 

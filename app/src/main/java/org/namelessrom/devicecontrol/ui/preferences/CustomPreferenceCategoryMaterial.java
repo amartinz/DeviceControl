@@ -36,7 +36,7 @@ public class CustomPreferenceCategoryMaterial extends MaterialPreferenceCategory
             return false;
         }
 
-        getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
+        getCardView().setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
 
         return true;
     }

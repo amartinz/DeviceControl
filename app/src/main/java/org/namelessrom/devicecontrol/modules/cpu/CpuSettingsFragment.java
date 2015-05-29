@@ -130,7 +130,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         assert view != null;
 
         final CardView cardView = (CardView) view.findViewById(R.id.card_core_stats_root);
-        cardView.setBackgroundColor(AppResources.get().getCardBackgroundColor());
+        cardView.setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
 
         mCpuInfo = (LinearLayout) view.findViewById(R.id.cpu_info);
 

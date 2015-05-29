@@ -21,6 +21,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.CardView;
 import android.view.View;
 
 import com.pollfish.main.PollFish;
@@ -33,7 +34,6 @@ import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
-import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 
@@ -54,15 +54,8 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         super.onViewCreated(view, savedInstanceState);
         final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
 
-        MaterialPreferenceCategory category =
-                (MaterialPreferenceCategory) view.findViewById(R.id.cat_prefs_general);
-        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
-
         mSetOnBoot = (MaterialPreference) view.findViewById(R.id.prefs_set_on_boot);
         mSetOnBoot.setOnPreferenceClickListener(this);
-
-        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_prefs_interface);
-        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
 
         mDarkTheme = (MaterialSwitchPreference) view.findViewById(R.id.prefs_dark_theme);
         mDarkTheme.setChecked(AppResources.get().isDarkTheme());
@@ -71,9 +64,6 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         mSwipeOnContent = (MaterialSwitchPreference) view.findViewById(R.id.prefs_swipe_on_content);
         mSwipeOnContent.setChecked(configuration.swipeOnContent);
         mSwipeOnContent.setOnPreferenceChangeListener(this);
-
-        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_prefs_support);
-        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
 
         mShowPollfish = (MaterialSwitchPreference) view.findViewById(R.id.prefs_show_pollfish);
         mShowPollfish.setChecked(configuration.showPollfish);
@@ -85,7 +75,8 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
     private void setupVersionPreference(View view) {
         MaterialPreference version = (MaterialPreference) view.findViewById(R.id.prefs_version);
         if (version != null) {
-            version.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
+            ((CardView) version.getCardView())
+                    .setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
 
             String title;
             String summary;
