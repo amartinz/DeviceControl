@@ -26,6 +26,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -36,7 +37,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
@@ -54,8 +54,6 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     private ArrayList<AppItem> mFiltered;
 
     private final AppItem.UninstallListener mListener;
-
-    private Toast mToast;
 
     public AppListAdapter(final Activity activity, final ArrayList<AppItem> appList,
             final AppItem.UninstallListener listener) {
@@ -132,16 +130,11 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             final int id = v.getId();
             switch (id) {
                 case R.id.app_open: {
-                    final Toast toast = mAppItem.launchActivity(mActivity);
-                    if (toast == null) {
-                        break;
+                    final boolean success = mAppItem.launchActivity(mActivity);
+                    if (!success) {
+                        Snackbar.make(actionOpen, R.string.could_not_launch_activity,
+                                Snackbar.LENGTH_SHORT).show();
                     }
-
-                    if (mToast != null) {
-                        mToast.cancel();
-                    }
-                    mToast = toast;
-                    mToast.show();
                     break;
                 }
                 case R.id.app_uninstall: {

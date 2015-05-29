@@ -347,7 +347,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         // if nothing matched by now, we do not have any fragments in the BackStack, nor we have
         // the menu open. in that case lets detect a double back press and exit the activity
         if (mBackPressed + 2000 > System.currentTimeMillis()) {
-            if (mToast != null) { mToast.cancel(); }
+            if (mToast != null) {
+                mToast.cancel();
+            }
             finish();
         } else {
             mToast = Toast.makeText(getBaseContext(),

@@ -86,22 +86,22 @@ public class AppItem {
 
     public void setEnabled(final boolean enabled) { this.enabled = enabled; }
 
-    public Toast launchActivity(Activity activity) {
+    public boolean launchActivity(Activity activity) {
         return AppItem.launchActivity(activity, this);
     }
 
-    public static Toast launchActivity(Activity activity, AppItem appItem) {
+    public static boolean launchActivity(Activity activity, AppItem appItem) {
         Intent i = activity.getPackageManager().getLaunchIntentForPackage(appItem.getPackageName());
         if (i != null) {
             try {
                 activity.startActivity(i);
-                return null;
+                return true;
             } catch (ActivityNotFoundException anfe) {
                 Logger.e(appItem.getPackageName(), "Could not launch activity", anfe);
             }
         }
 
-        return Toast.makeText(activity, R.string.could_not_launch_activity, Toast.LENGTH_SHORT);
+        return false;
     }
 
     public void uninstall(Activity activity, UninstallListener listener) {

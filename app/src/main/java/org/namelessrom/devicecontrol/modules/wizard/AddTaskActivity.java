@@ -206,7 +206,9 @@ public class AddTaskActivity extends BaseActivity implements SetupDataCallbacks 
 
     private void shouldExit() {
         if (mBackPressed + 2000 > System.currentTimeMillis()) {
-            if (mToast != null) { mToast.cancel(); }
+            if (mToast != null) {
+                mToast.cancel();
+            }
             finish();
         } else {
             mToast = Toast.makeText(getBaseContext(),

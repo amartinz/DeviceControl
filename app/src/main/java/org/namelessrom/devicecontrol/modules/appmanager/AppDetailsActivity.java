@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewCompat;
@@ -45,7 +46,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.github.mikephil.charting.charts.PieChart;
@@ -97,8 +97,6 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
 
     private PieChart mCacheGraph;
     private LinearLayout mCacheInfo;
-
-    private Toast mToast;
 
     @Override protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
@@ -266,16 +264,11 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                 break;
             }
             case R.id.app_icon: {
-                final Toast toast = mAppItem.launchActivity(this);
-                if (toast == null) {
-                    break;
+                final boolean success = mAppItem.launchActivity(this);
+                if (!success) {
+                    Snackbar.make(mAppIcon, R.string.could_not_launch_activity,
+                            Snackbar.LENGTH_SHORT).show();
                 }
-
-                if (mToast != null) {
-                    mToast.cancel();
-                }
-                mToast = toast;
-                mToast.show();
                 break;
             }
         }

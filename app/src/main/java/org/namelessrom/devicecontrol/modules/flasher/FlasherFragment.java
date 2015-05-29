@@ -22,6 +22,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -113,7 +114,7 @@ public class FlasherFragment extends AttachFragment implements RequestFileActivi
     @Override public void fileRequested(String filePath) {
         Logger.v(this, "fileRequested --> %s", filePath);
         if (TextUtils.isEmpty(filePath)) {
-            Utils.showToast(getActivity(), R.string.file_not_found);
+            Snackbar.make(mRecyclerView, R.string.file_not_found, Snackbar.LENGTH_SHORT);
         } else {
             if (filePath.startsWith("null")) {
                 filePath = filePath.replaceFirst("null", IOUtils.get().getPrimarySdCard());

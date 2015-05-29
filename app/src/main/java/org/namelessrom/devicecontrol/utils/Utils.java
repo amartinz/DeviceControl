@@ -572,18 +572,6 @@ public class Utils {
                 Application.get().getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
-    public static void showToast(final Context context, final int resourceId) {
-        showToast(context, Application.get().getString(resourceId));
-    }
-
-    public static void showToast(final Context context, final String string) {
-        Application.HANDLER.post(new Runnable() {
-            @Override public void run() {
-                Toast.makeText(context, string, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
     @SuppressLint("SimpleDateFormat")
     public static String getDateAndTime() {
         final Date date = new Date(System.currentTimeMillis());
