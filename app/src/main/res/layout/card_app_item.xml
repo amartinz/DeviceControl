@@ -14,18 +14,22 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout
+<android.support.v7.widget.CardView
+    android:id="@+id/card_view"
+    style="@style/CardView.Light"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:layout_margin="5dp"
     android:minHeight="72dp"
-    android:layout_gravity="center_vertical"
-    android:gravity="center">
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="4dp"
+    card_view:contentPadding="5dp">
 
     <com.daimajia.swipe.SwipeLayout
-        android:id="@+id/test_swipe_swipe"
+        android:id="@+id/swipelayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -36,31 +40,33 @@
 
             <org.namelessrom.devicecontrol.ui.views.ForegroundImageView
                 android:id="@+id/app_open"
-                android:src="@drawable/ic_app_open"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="?colorAccent"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
-                android:layout_height="match_parent" />
+                android:src="@drawable/ic_app_open" />
 
             <org.namelessrom.devicecontrol.ui.views.ForegroundImageView
                 android:id="@+id/app_uninstall"
-                android:src="@drawable/ic_app_uninstall"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="?colorAccent"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
-                android:layout_height="match_parent" />
+                android:src="@drawable/ic_app_uninstall" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/app_details_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
             android:minHeight="72dp"
             android:orientation="horizontal">
 
@@ -68,17 +74,17 @@
                 android:id="@+id/app_icon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_margin="@dimen/app_margin"
                 android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/app_margin"
                 tools:src="@mipmap/ic_launcher_devicecontrol" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/app_margin"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/app_margin">
 
                 <TextView
                     android:id="@+id/app_label"
@@ -114,4 +120,4 @@
 
     </com.daimajia.swipe.SwipeLayout>
 
-</LinearLayout>
+</android.support.v7.widget.CardView>

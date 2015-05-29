@@ -17,18 +17,24 @@
  */
 package org.namelessrom.devicecontrol.modules.appmanager;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,8 +68,8 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     }
 
     public final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final View rootView;
-        private final View container;
+        private final CardView cardView;
+        private final LinearLayout container;
 
         private final ImageView actionOpen;
         private final ImageView actionUninstall;
@@ -77,20 +83,31 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
 
         public ViewHolder(final View v) {
             super(v);
-            rootView = v;
+            cardView = (CardView) v.findViewById(R.id.card_view);
+
+            container = (LinearLayout) v.findViewById(R.id.app_details_container);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                container.setOnTouchListener(new View.OnTouchListener() {
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        v.getBackground().setHotspot(event.getX(), event.getY());
+                        return false;
+                    }
+                });
+            }
 
             actionOpen = (ImageView) v.findViewById(R.id.app_open);
             actionOpen.setOnClickListener(this);
             actionUninstall = (ImageView) v.findViewById(R.id.app_uninstall);
             actionUninstall.setOnClickListener(this);
 
-            container = v.findViewById(R.id.app_details_container);
             appIcon = (ImageView) v.findViewById(R.id.app_icon);
             appLabel = (TextView) v.findViewById(R.id.app_label);
             packageName = (TextView) v.findViewById(R.id.app_package);
             appVersion = (TextView) v.findViewById(R.id.app_version);
 
-            rootView.setOnClickListener(this);
+            v.setOnClickListener(this);
         }
 
         public void bind(final AppItem appItem) {
@@ -101,11 +118,12 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             packageName.setText(appItem.getPackageName());
             appVersion.setText(appItem.getVersion());
 
-            final int color = AppResources.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
+            int color = AppResources.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
             appLabel.setTextColor(appItem.isSystemApp()
                     ? res.getColor(R.color.red_middle) : color);
-            container.setBackgroundResource(appItem.isEnabled()
-                    ? android.R.color.transparent : R.color.darker_gray);
+
+            color = appItem.isEnabled() ? android.R.color.transparent : R.color.darker_gray;
+            cardView.setForeground(new ColorDrawable(mActivity.getResources().getColor(color)));
 
             actionOpen.setVisibility(appItem.isEnabled() ? View.VISIBLE : View.GONE);
         }
@@ -169,14 +187,10 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     @Override public int getItemCount() { return mFiltered.size(); }
 
     @Override public ViewHolder onCreateViewHolder(final ViewGroup parent, final int type) {
-        final int resId;
-        if (AppResources.get().isDarkTheme()) {
-            resId = R.layout.card_app_item_dark;
-        } else {
-            resId = R.layout.card_app_item_light;
-        }
-        final View view = LayoutInflater.from(parent.getContext()).inflate(resId, parent, false);
-        return new ViewHolder(view);
+        final CardView cardView = (CardView) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_app_item, parent, false);
+        cardView.setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
+        return new ViewHolder(cardView);
     }
 
     @Override public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
