@@ -35,7 +35,7 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
     public static final String SKIP_CHECKS = "skip_checks";
     public static final String SWIPE_ON_CONTENT = "swipe_on_content";
     public static final String DARK_THEME = "dark_theme";
-    public static final String MONKEY = "monkey";
+    @Deprecated public static final String MONKEY = "monkey";
     public static final String SHOW_POLLFISH = "show_pollfish";
     public static final String CPU_LOCK_FREQ = "cpu_lock_freq";
     public static final String CPU_LOCK_GOV = "cpu_lock_gov";
