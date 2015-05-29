@@ -27,10 +27,10 @@ Third party libraries
 -------
 
 * [android-support-v13](http://developer.android.com/tools/extras/support-library.html)
+* [android-support-design](http://developer.android.com/tools/extras/support-library.html)
 * [android-appcompat-v7](http://developer.android.com/tools/extras/support-library.html)
 * [android-recyclerview-v7](http://developer.android.com/tools/extras/support-library.html)
 * [AndroidSwipeLayout](https://github.com/daimajia/AndroidSwipeLayout)
-* [FloatingActionButton](https://github.com/makovkastar/FloatingActionButton)
 * [ion](https://github.com/koush/ion)
 * [Material-Menu](https://github.com/balysv/material-menu)
 * [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)

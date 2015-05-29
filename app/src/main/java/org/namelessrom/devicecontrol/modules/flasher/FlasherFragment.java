@@ -22,6 +22,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,9 +33,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.melnykov.fab.FloatingActionButton;
-import com.melnykov.fab.ObservableScrollView;
-
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
@@ -43,7 +41,6 @@ import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.ui.adapters.FlasherAdapter;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.IOUtils;
-import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -78,12 +75,6 @@ public class FlasherFragment extends AttachFragment implements RequestFileActivi
                 }
             }
         });
-
-        final ObservableScrollView scrollView = (ObservableScrollView)
-                v.findViewById(R.id.cards_layout_container);
-        if (scrollView != null) {
-            fabAdd.attachToScrollView(scrollView);
-        }
 
         return v;
     }

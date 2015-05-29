@@ -14,23 +14,24 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/main_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.melnykov.fab.ObservableScrollView
+    <ScrollView
         android:id="@+id/cards_layout_container"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/file_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
@@ -41,20 +42,17 @@
 
         </LinearLayout>
 
-    </com.melnykov.fab.ObservableScrollView>
+    </ScrollView>
 
-    <com.melnykov.fab.FloatingActionButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_margin="16dp"
+        android:elevation="4dp"
         android:src="@drawable/ic_action_add"
-        fab:fab_type="normal"
-        fab:fab_shadow="true"
-        fab:fab_colorNormal="?attr/colorAccent"
-        fab:fab_colorPressed="?attr/colorPrimaryDark"
-        fab:fab_colorRipple="?attr/colorPrimaryDark" />
+        app:fabSize="normal"
+        app:layout_anchor="@id/main_content"
+        app:layout_anchorGravity="bottom|right|end" />
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
