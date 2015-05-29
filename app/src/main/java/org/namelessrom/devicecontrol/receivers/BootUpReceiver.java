@@ -29,6 +29,7 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.services.BootupService;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -49,6 +50,14 @@ public class BootUpReceiver extends BroadcastReceiver {
         }
 
         Utils.startTaskerService(ctx);
+
+        DeviceConfiguration deviceConfig = DeviceConfiguration.get(ctx).loadConfiguration(ctx);
+        boolean isBootup = deviceConfig.sobCpu || deviceConfig.sobDevice || deviceConfig.sobExtras
+                || deviceConfig.sobGpu || deviceConfig.sobSysctl || deviceConfig.sobVoltage;
+        if (!isBootup) {
+            Logger.v(this, "User does not want to restore settings on bootup");
+            return;
+        }
 
         int size = BootupConfiguration.get(ctx).items.size();
         if (size == 0) {
