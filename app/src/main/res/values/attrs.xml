@@ -101,17 +101,6 @@
             <enum name="invisible" value="1" />
         </attr>
     </declare-styleable>
-    <!-- Floating action button -->
-    <declare-styleable name="FloatingActionButton">
-        <attr name="fab_colorPressed" format="color" />
-        <attr name="fab_colorNormal" format="color" />
-        <attr name="fab_colorRipple" format="color" />
-        <attr name="fab_shadow" format="boolean" />
-        <attr name="fab_type" format="enum">
-            <enum name="normal" value="0" />
-            <enum name="mini" value="1" />
-        </attr>
-    </declare-styleable>
     <!-- PagerSlidingTabStrip -->
     <declare-styleable name="PagerSlidingTabStrip">
         <attr name="pstsIndicatorColor" format="color" />

@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,9 +35,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-
-import com.melnykov.fab.FloatingActionButton;
-import com.melnykov.fab.ObservableScrollView;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
@@ -78,12 +76,6 @@ public class TaskerFragment extends AttachFragment {
                 }
             }
         });
-
-        final ObservableScrollView scrollView = (ObservableScrollView)
-                v.findViewById(R.id.cards_layout_container);
-        if (scrollView != null) {
-            fabAdd.attachToScrollView(scrollView);
-        }
 
         return v;
     }
