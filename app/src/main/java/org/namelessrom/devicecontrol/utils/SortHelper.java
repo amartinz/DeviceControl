@@ -17,7 +17,7 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import org.namelessrom.devicecontrol.objects.AppItem;
+import org.namelessrom.devicecontrol.modules.appmanager.AppItem;
 
 import java.io.File;
 import java.text.Collator;

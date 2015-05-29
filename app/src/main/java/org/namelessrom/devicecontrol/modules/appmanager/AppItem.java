@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.objects;
+package org.namelessrom.devicecontrol.modules.appmanager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -35,9 +35,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 public class AppItem {
     private final PackageInfo pkgInfo;
     private final ApplicationInfo appInfo;
-
     private final String label;
-    private final Drawable icon;
 
     private boolean enabled = false;
 
@@ -45,19 +43,16 @@ public class AppItem {
         void OnUninstallComplete();
     }
 
-    public AppItem(final PackageInfo info, final String label, final Drawable icon) {
+    public AppItem(final PackageInfo info, final String label) {
         this.pkgInfo = info;
         this.appInfo = info.applicationInfo;
 
         this.label = label;
-        this.icon = icon;
 
         this.enabled = (appInfo != null && appInfo.enabled);
     }
 
     public String getLabel() { return label; }
-
-    public Drawable getIcon() { return icon; }
 
     public PackageInfo getPackageInfo() { return pkgInfo; }
 
