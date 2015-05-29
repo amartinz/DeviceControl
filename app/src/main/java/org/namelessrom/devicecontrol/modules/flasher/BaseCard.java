@@ -18,25 +18,23 @@
 package org.namelessrom.devicecontrol.modules.flasher;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.theme.AppResources;
 
-public abstract class BaseCard extends LinearLayout {
+public abstract class BaseCard extends FrameLayout {
     private FrameLayout mContainer;
 
     public BaseCard(final Context context) {
         super(context, null);
-        final int resId;
-        if (AppResources.get().isDarkTheme()) {
-            resId = R.layout.card_install_dark;
-        } else {
-            resId = R.layout.card_install_light;
-        }
-        LayoutInflater.from(context).inflate(resId, this, true);
+        CardView cardView = (CardView) LayoutInflater.from(context)
+                .inflate(R.layout.card_with_container, this, false);
+        cardView.setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
+        super.addView(cardView);
+
         mContainer = (FrameLayout) findViewById(R.id.layout_container);
     }
 

@@ -58,14 +58,11 @@ public class TaskerAdapter extends RecyclerView.Adapter<TaskerAdapter.TaskerView
     }
 
     @Override public TaskerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final int resId;
-        if (AppResources.get().isDarkTheme()) {
-            resId = R.layout.card_tasker_dark;
-        } else {
-            resId = R.layout.card_tasker_light;
-        }
-        final View v = LayoutInflater.from(parent.getContext()).inflate(resId, parent, false);
-        return new TaskerViewHolder(v);
+        final CardView cardView = (CardView) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_tasker, parent, false);
+        cardView.setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
+
+        return new TaskerViewHolder(cardView);
     }
 
     @Override public void onBindViewHolder(TaskerViewHolder holder, int position) {

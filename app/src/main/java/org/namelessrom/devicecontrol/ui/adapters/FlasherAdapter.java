@@ -31,7 +31,7 @@ import org.namelessrom.devicecontrol.theme.AppResources;
 import java.io.File;
 import java.util.List;
 
-public class FlasherAdapter extends RecyclerView.Adapter<FlasherAdapter.TaskerViewHolder> {
+public class FlasherAdapter extends RecyclerView.Adapter<FlasherAdapter.FlashViewHolder> {
     private final FlasherFragment mFragment;
     private List<File> mFiles;
 
@@ -44,18 +44,15 @@ public class FlasherAdapter extends RecyclerView.Adapter<FlasherAdapter.TaskerVi
         return mFiles == null ? 0 : mFiles.size();
     }
 
-    @Override public TaskerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final int resId;
-        if (AppResources.get().isDarkTheme()) {
-            resId = R.layout.card_flash_item_dark;
-        } else {
-            resId = R.layout.card_flash_item_light;
-        }
-        final View v = LayoutInflater.from(parent.getContext()).inflate(resId, parent, false);
-        return new TaskerViewHolder(v);
+    @Override public FlashViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        final CardView cardView = (CardView) LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_flash_item, parent, false);
+        cardView.setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
+
+        return new FlashViewHolder(cardView);
     }
 
-    @Override public void onBindViewHolder(TaskerViewHolder holder, int position) {
+    @Override public void onBindViewHolder(FlashViewHolder holder, int position) {
         final File file = mFiles.get(position);
 
         holder.name.setText(file.getName());
@@ -66,11 +63,11 @@ public class FlasherAdapter extends RecyclerView.Adapter<FlasherAdapter.TaskerVi
         });
     }
 
-    public static class TaskerViewHolder extends RecyclerView.ViewHolder {
+    public static class FlashViewHolder extends RecyclerView.ViewHolder {
         public final CardView cardView;
         public final TextView name;
 
-        public TaskerViewHolder(final View view) {
+        public FlashViewHolder(final View view) {
             super(view);
             cardView = (CardView) view;
             name = (TextView) cardView.findViewById(R.id.file_name);

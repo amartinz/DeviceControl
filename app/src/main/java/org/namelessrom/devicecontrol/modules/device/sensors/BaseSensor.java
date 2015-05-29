@@ -24,6 +24,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -76,14 +77,9 @@ public abstract class BaseSensor extends LinearLayout implements SensorEventList
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         mInflater = LayoutInflater.from(context);
 
-        final int resId;
-        if (AppResources.get().isDarkTheme()) {
-            resId = R.layout.card_install_dark;
-        } else {
-            resId = R.layout.card_install_light;
-        }
+        CardView cardView = (CardView) mInflater.inflate(R.layout.card_with_container, this, true);
+        cardView.setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
 
-        mInflater.inflate(resId, this, true);
         final FrameLayout container = (FrameLayout) findViewById(R.id.layout_container);
 
         mInflater.inflate(R.layout.item_sensor, container, true);
