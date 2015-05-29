@@ -64,7 +64,7 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
 
     @Override public void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
-        addPreferencesFromResource(R.xml._device_control_main);
+        addPreferencesFromResource(R.xml.a_device_control_main);
 
         final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
 

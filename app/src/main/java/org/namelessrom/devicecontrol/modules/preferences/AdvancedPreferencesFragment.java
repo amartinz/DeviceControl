@@ -46,7 +46,7 @@ public class AdvancedPreferencesFragment extends PreferenceFragment implements P
 
     @Override public void onCreate(final Bundle bundle) {
         super.onCreate(bundle);
-        addPreferencesFromResource(R.xml._device_control_advanced);
+        addPreferencesFromResource(R.xml.a_device_control_advanced);
 
         final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
 
