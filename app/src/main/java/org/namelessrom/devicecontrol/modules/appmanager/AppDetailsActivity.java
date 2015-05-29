@@ -43,7 +43,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -62,7 +61,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.modules.appmanager.permissions.AppSecurityPermissions;
-import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.objects.PackageStatsObserver;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -87,7 +85,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
     private View mAppDetailsError;
 
     private LinearLayout mAppContainer;
-    private ImageView mAppIcon;
+    private AppIconImageView mAppIcon;
     private TextView mAppLabel;
     private TextView mAppPackage;
     private TextView mAppVersion;
@@ -132,7 +130,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         mAppContainer = (LinearLayout) findViewById(R.id.item_app);
 
         // allow to launch app via pressing on the icon
-        mAppIcon = (ImageView) findViewById(R.id.app_icon);
+        mAppIcon = (AppIconImageView) findViewById(R.id.app_icon);
         mAppIcon.setOnClickListener(this);
 
         mAppLabel = (TextView) findViewById(R.id.app_label);
@@ -167,9 +165,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                 info = mPm.getPackageInfo(packageName, 0);
             } catch (Exception ignored) { }
             if (info != null && info.applicationInfo != null) {
-                mAppItem = new AppItem(info,
-                        String.valueOf(info.applicationInfo.loadLabel(mPm)),
-                        info.applicationInfo.loadIcon(mPm));
+                mAppItem = new AppItem(info, String.valueOf(info.applicationInfo.loadLabel(mPm)));
             }
         }
 
@@ -304,7 +300,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         mAppDetailsContainer.setVisibility(View.VISIBLE);
         mAppDetailsError.setVisibility(View.GONE);
 
-        mAppIcon.setImageDrawable(mAppItem.getIcon());
+        mAppIcon.loadImage(mAppItem, null);
         mAppLabel.setText(mAppItem.getLabel());
         mAppPackage.setText(mAppItem.getPackageName());
         mAppContainer.setBackgroundResource(mAppItem.isEnabled()

@@ -19,7 +19,9 @@ package org.namelessrom.devicecontrol;
 
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.res.Resources;
+import android.os.Environment;
 import android.os.Handler;
 
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
@@ -27,11 +29,34 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 
+import uk.co.senab.bitmapcache.BitmapLruCache;
+
 // XXX: DO NOT USE ROOT HERE! NEVER!
 public class Application extends android.app.Application {
     public static final Handler HANDLER = new Handler();
 
+    private static final String sExternalStoragePath = String.format("%s/%s",
+            Environment.getExternalStorageDirectory(), "DeviceControl");
+    private static final File sExternalStorageDir = new File(sExternalStoragePath);
+
     private static Application sInstance;
+
+    private BitmapLruCache mCache;
+
+    public static Application get() {
+        return Application.sInstance;
+    }
+
+    public static Application getApplication(Context context) {
+        return (Application) context.getApplicationContext();
+    }
+
+    @Override public void onLowMemory() {
+        super.onLowMemory();
+        if (mCache != null) {
+            mCache.trimMemory();
+        }
+    }
 
     @Override public void onCreate() {
         super.onCreate();
@@ -39,6 +64,8 @@ public class Application extends android.app.Application {
 
         // force enable logger until we hit the user preference
         Logger.setEnabled(true);
+
+        buildCache();
 
         DeviceConfiguration deviceConfiguration = DeviceConfiguration.get(this);
 
@@ -60,6 +87,22 @@ public class Application extends android.app.Application {
         }
     }
 
+    private void buildCache() {
+        final File cacheLocation;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            cacheLocation = new File(sExternalStorageDir, "bitmapCache");
+        } else {
+            cacheLocation = new File(getFilesDir(), "bitmapCache");
+        }
+        cacheLocation.mkdirs();
+
+        BitmapLruCache.Builder builder = new BitmapLruCache.Builder(this);
+        builder.setMemoryCacheEnabled(true).setMemoryCacheMaxSizeUsingHeapSize(0.25f);
+        builder.setDiskCacheEnabled(true).setDiskCacheLocation(cacheLocation);
+
+        mCache = builder.build();
+    }
+
     private void dumpInformation() {
         if (!Logger.getEnabled()) {
             return;
@@ -70,7 +113,9 @@ public class Application extends android.app.Application {
         Logger.i(this, "Google Play Services -> %s", gmsVersion);
     }
 
-    public static Application get() { return Application.sInstance; }
+    public BitmapLruCache getBitmapCache() {
+        return mCache;
+    }
 
     @SuppressLint("SdCardPath") public String getFilesDirectory() {
         final File tmp = getFilesDir();

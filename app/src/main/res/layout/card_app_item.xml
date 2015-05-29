@@ -70,7 +70,7 @@
             android:minHeight="72dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <org.namelessrom.devicecontrol.modules.appmanager.AppIconImageView
                 android:id="@+id/app_icon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"

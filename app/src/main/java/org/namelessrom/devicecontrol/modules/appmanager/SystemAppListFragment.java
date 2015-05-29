@@ -19,8 +19,6 @@ package org.namelessrom.devicecontrol.modules.appmanager;
 
 import android.content.pm.ApplicationInfo;
 
-import org.namelessrom.devicecontrol.objects.AppItem;
-
 public class SystemAppListFragment extends BaseAppListFragment {
 
     @Override protected boolean isFiltered(ApplicationInfo applicationInfo) {

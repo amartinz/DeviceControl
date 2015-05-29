@@ -37,3 +37,4 @@ build/
 # Others
 .DS_Store
 .navigation
+*.hprof

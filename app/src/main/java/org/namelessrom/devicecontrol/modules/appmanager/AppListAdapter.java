@@ -38,19 +38,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.theme.AppResources;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
-    private final Resources res = Application.get().getResources();
+    private final Resources res;
 
-    /* package */ final Activity mActivity;
-    private final ArrayList<AppItem> mAppList;
+    private final Activity mActivity;
+    private ArrayList<AppItem> mAppList;
     private ArrayList<AppItem> mFiltered;
 
     private final AppItem.UninstallListener mListener;
@@ -63,6 +61,16 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
 
         // save original items
         mAppList = new ArrayList<>(mFiltered);
+
+        res = mActivity.getResources();
+    }
+
+    public void refill(ArrayList<AppItem> appItems) {
+        mFiltered = appItems;
+        mAppList.clear();
+        mAppList.addAll(mFiltered);
+
+        notifyDataSetChanged();
     }
 
     public final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -72,12 +80,12 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         private final ImageView actionOpen;
         private final ImageView actionUninstall;
 
-        private final ImageView appIcon;
+        private final AppIconImageView appIcon;
         private final TextView appLabel;
         private final TextView packageName;
         private final TextView appVersion;
 
-        private AppItem mAppItem;
+        private AppItem appItem;
 
         public ViewHolder(final View v) {
             super(v);
@@ -100,7 +108,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             actionUninstall = (ImageView) v.findViewById(R.id.app_uninstall);
             actionUninstall.setOnClickListener(this);
 
-            appIcon = (ImageView) v.findViewById(R.id.app_icon);
+            appIcon = (AppIconImageView) v.findViewById(R.id.app_icon);
             appLabel = (TextView) v.findViewById(R.id.app_label);
             packageName = (TextView) v.findViewById(R.id.app_package);
             appVersion = (TextView) v.findViewById(R.id.app_version);
@@ -109,9 +117,11 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         }
 
         public void bind(final AppItem appItem) {
-            mAppItem = appItem;
+            this.appItem = appItem;
 
-            appIcon.setImageDrawable(appItem.getIcon());
+            // do not load the image here, we load it in onViewAttachedToWindow()
+            // appIcon.loadImage(appItem, null);
+
             appLabel.setText(appItem.getLabel());
             packageName.setText(appItem.getPackageName());
             appVersion.setText(appItem.getVersion());
@@ -130,7 +140,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             final int id = v.getId();
             switch (id) {
                 case R.id.app_open: {
-                    final boolean success = mAppItem.launchActivity(mActivity);
+                    final boolean success = appItem.launchActivity(mActivity);
                     if (!success) {
                         Snackbar.make(actionOpen, R.string.could_not_launch_activity,
                                 Snackbar.LENGTH_SHORT).show();
@@ -139,12 +149,12 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                 }
                 case R.id.app_uninstall: {
                     final String message;
-                    if (mAppItem.isSystemApp()) {
+                    if (appItem.isSystemApp()) {
                         message = String.format("%s\n\n%s",
-                                mActivity.getString(R.string.uninstall_msg, mAppItem.getLabel()),
+                                mActivity.getString(R.string.uninstall_msg, appItem.getLabel()),
                                 mActivity.getString(R.string.uninstall_msg_system_app));
                     } else {
-                        message = mActivity.getString(R.string.uninstall_msg, mAppItem.getLabel());
+                        message = mActivity.getString(R.string.uninstall_msg, appItem.getLabel());
                     }
 
                     new AlertDialog.Builder(mActivity)
@@ -160,7 +170,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                                     new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            mAppItem.uninstall(mActivity, mListener);
+                                            appItem.uninstall(mActivity, mListener);
                                         }
                                     })
                             .show();
@@ -169,7 +179,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                 default: {
                     final Intent intent = new Intent(mActivity, AppDetailsActivity.class);
                     intent.putExtra(AppDetailsActivity.ARG_FROM_ACTIVITY, true);
-                    intent.putExtra(AppDetailsActivity.ARG_PACKAGE_NAME, mAppItem.getPackageName());
+                    intent.putExtra(AppDetailsActivity.ARG_PACKAGE_NAME, appItem.getPackageName());
                     mActivity.startActivity(intent);
                     break;
                 }
@@ -178,6 +188,11 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     }
 
     @Override public int getItemCount() { return mFiltered.size(); }
+
+    @Override public void onViewAttachedToWindow(ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        holder.appIcon.loadImage(holder.appItem, null);
+    }
 
     @Override public ViewHolder onCreateViewHolder(final ViewGroup parent, final int type) {
         final CardView cardView = (CardView) LayoutInflater.from(parent.getContext())

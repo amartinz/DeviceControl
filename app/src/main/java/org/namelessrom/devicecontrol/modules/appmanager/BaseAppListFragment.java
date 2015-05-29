@@ -39,7 +39,6 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.objects.AppItem;
 import org.namelessrom.devicecontrol.utils.SortHelper;
 
 import java.util.ArrayList;
@@ -181,8 +180,7 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
                     continue;
                 }
                 appList.add(new AppItem(pkgInfo,
-                        String.valueOf(pkgInfo.applicationInfo.loadLabel(pm)),
-                        pkgInfo.applicationInfo.loadIcon(pm)));
+                        String.valueOf(pkgInfo.applicationInfo.loadLabel(pm))));
             }
             Collections.sort(appList, SortHelper.sAppComparator);
 
@@ -204,10 +202,15 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
                                 loadApps(true);
                             }
                         };
-                        final AppListAdapter adapter =
-                                new AppListAdapter(getActivity(), appItems, listener);
-                        mRecyclerView.setAdapter(adapter);
-                        mAdapter = adapter;
+
+                        if (mAdapter == null) {
+                            final AppListAdapter adapter =
+                                    new AppListAdapter(getActivity(), appItems, listener);
+                            mRecyclerView.setAdapter(adapter);
+                            mAdapter = adapter;
+                        } else {
+                            mAdapter.refill(appItems);
+                        }
                     }
 
                     mProgressContainer.setVisibility(View.GONE);

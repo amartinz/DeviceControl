@@ -64,7 +64,7 @@
                     android:gravity="center_vertical"
                     tools:background="@color/darker_gray">
 
-                    <ImageView
+                    <org.namelessrom.devicecontrol.modules.appmanager.AppIconImageView
                         android:id="@+id/app_icon"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
