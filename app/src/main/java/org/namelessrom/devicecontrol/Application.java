@@ -24,6 +24,8 @@ import android.content.res.Resources;
 import android.os.Environment;
 import android.os.Handler;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -60,6 +62,8 @@ public class Application extends android.app.Application {
 
     @Override public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
+
         Application.sInstance = this;
 
         // force enable logger until we hit the user preference
