@@ -27,6 +27,7 @@ import android.view.View;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.theme.AppResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,11 +56,12 @@ public class DeviceInformationSensorFragment extends MaterialSupportPreferenceFr
         // Sensors
         final MaterialPreferenceCategory category =
                 (MaterialPreferenceCategory) view.findViewById(R.id.cat_sensors);
+        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
 
         // we need an array list to be able to sort it, a normal list throws
         // java.lang.UnsupportedOperationException when sorting
-        final ArrayList<Sensor> sensorList = new ArrayList<>(
-                sensorManager.getSensorList(Sensor.TYPE_ALL));
+        final ArrayList<Sensor> sensorList =
+                new ArrayList<>(sensorManager.getSensorList(Sensor.TYPE_ALL));
 
         Collections.sort(sensorList, new SortIgnoreCase());
 
