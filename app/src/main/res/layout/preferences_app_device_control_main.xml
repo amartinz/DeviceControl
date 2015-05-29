@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- General -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_prefs_general"
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/general">
+
+        <alexander.martinz.libs.materialpreferences.MaterialPreference
+            android:id="@+id/prefs_set_on_boot"
+            style="@style/MaterialPreferences.Default"
+            app:prefKey="prefs_set_on_boot"
+            app:prefSummary="@string/reapply_on_boot_summary"
+            app:prefTitle="@string/reapply_on_boot" />
+
+    </alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory>
+
+    <!-- Interface -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_prefs_interface"
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/user_interface">
+
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/prefs_dark_theme"
+            style="@style/MaterialPreferences.Default"
+            app:prefKey="dark_theme"
+            app:prefSummary="@string/dark_theme_summary"
+            app:prefTitle="@string/dark_theme" />
+
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/prefs_swipe_on_content"
+            style="@style/MaterialPreferences.Default"
+            app:prefKey="swipe_on_content"
+            app:prefSummary="@string/swipe_on_content_summary"
+            app:prefTitle="@string/swipe_on_content" />
+
+    </alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory>
+
+    <!-- Support -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_prefs_support"
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/support">
+
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/prefs_show_pollfish"
+            style="@style/MaterialPreferences.Default"
+            app:prefKey="show_pollfish"
+            app:prefSummary="@string/show_pollfish_summary"
+            app:prefTitle="@string/show_pollfish" />
+
+    </alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory>
+
+    <!-- Version -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreference
+        android:id="@+id/prefs_version"
+        style="@style/MaterialPreferences.Default"
+        app:prefAsCard="true"
+        app:prefKey="prefs_version"
+        app:prefSummary="@string/empty"
+        app:prefTitle="@string/empty" />
+
+</LinearLayout>
+

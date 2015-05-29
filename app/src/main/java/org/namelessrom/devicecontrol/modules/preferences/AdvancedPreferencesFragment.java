@@ -19,63 +19,68 @@ package org.namelessrom.devicecontrol.modules.preferences;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.support.v4.preference.PreferenceFragment;
+import android.view.View;
 
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
-import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
+import org.namelessrom.devicecontrol.theme.AppResources;
 
-public class AdvancedPreferencesFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
-    private CustomTogglePreference mSkipChecks;
+import alexander.martinz.libs.materialpreferences.MaterialListPreference;
+import alexander.martinz.libs.materialpreferences.MaterialPreference;
+import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
+import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
+import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 
-    //==============================================================================================
-    // Shell
-    //==============================================================================================
-    private CustomListPreference mShellContext;
+public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceChangeListener {
+    private MaterialSwitchPreference mSkipChecks;
 
-    //==============================================================================================
-    // Debug
-    //==============================================================================================
-    private CustomTogglePreference mDebugStrictMode;
-    private CustomTogglePreference mExtensiveLogging;
+    private MaterialListPreference mShellContext;
 
-    @Override public void onCreate(final Bundle bundle) {
-        super.onCreate(bundle);
-        addPreferencesFromResource(R.xml.a_device_control_advanced);
+    private MaterialSwitchPreference mDebugStrictMode;
+    private MaterialSwitchPreference mExtensiveLogging;
 
+    @Override protected int getLayoutResourceId() {
+        return R.layout.preferences_app_device_control_advanced;
+    }
+
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
 
-        mSkipChecks = (CustomTogglePreference) findPreference(DeviceConfiguration.SKIP_CHECKS);
-        if (mSkipChecks != null) {
-            mSkipChecks.setChecked(configuration.skipChecks);
-            mSkipChecks.setOnPreferenceChangeListener(this);
-        }
+        mSkipChecks = (MaterialSwitchPreference) view.findViewById(R.id.prefs_skip_checks);
+        mSkipChecks.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
+        mSkipChecks.setChecked(configuration.skipChecks);
+        mSkipChecks.setOnPreferenceChangeListener(this);
 
-        mShellContext = (CustomListPreference) findPreference(DeviceConfiguration.SU_SHELL_CONTEXT);
-        mShellContext.setValueIndex(mShellContext.findIndexOfValue(configuration.suShellContext));
+        MaterialPreferenceCategory category =
+                (MaterialPreferenceCategory) view.findViewById(R.id.cat_prefs_shell);
+        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
+
+        mShellContext = (MaterialListPreference) view.findViewById(R.id.prefs_su_shell_context);
+        mShellContext.setValue(configuration.suShellContext);
         String summary = getString(R.string.su_shell_context_summary,
-                getString(R.string.normal), mShellContext.getEntry());
+                getString(R.string.normal), mShellContext.getValue());
         mShellContext.setSummary(summary);
         mShellContext.setValue(configuration.suShellContext);
         mShellContext.setOnPreferenceChangeListener(this);
 
-        mDebugStrictMode = (CustomTogglePreference) findPreference(
-                DeviceConfiguration.DEBUG_STRICT_MODE);
+        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_prefs_debug);
+        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
+        mDebugStrictMode =
+                (MaterialSwitchPreference) view.findViewById(R.id.prefs_debug_strict_mode);
         mDebugStrictMode.setChecked(configuration.debugStrictMode);
         mDebugStrictMode.setOnPreferenceChangeListener(this);
 
-        mExtensiveLogging = (CustomTogglePreference) findPreference(
-                DeviceConfiguration.EXTENSIVE_LOGGING);
+        mExtensiveLogging =
+                (MaterialSwitchPreference) view.findViewById(R.id.prefs_extensive_logging);
         mExtensiveLogging.setChecked(configuration.extensiveLogging);
         mExtensiveLogging.setOnPreferenceChangeListener(this);
     }
 
-    @Override public boolean onPreferenceChange(Preference preference, Object newValue) {
+    @Override public boolean onPreferenceChanged(MaterialPreference preference, Object newValue) {
         final Activity activity = getActivity();
 
         if (mSkipChecks == preference) {

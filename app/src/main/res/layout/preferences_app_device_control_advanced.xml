@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Skip checks -->
+    <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+        android:id="@+id/prefs_skip_checks"
+        style="@style/MaterialPreferences.Default"
+        app:prefAsCard="true"
+        app:prefSummary="@string/skip_checks_summary"
+        app:prefTitle="@string/skip_checks" />
+
+    <!-- Shell -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_prefs_shell"
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/shell">
+
+        <alexander.martinz.libs.materialpreferences.MaterialListPreference
+            android:id="@+id/prefs_su_shell_context"
+            style="@style/MaterialPreferences.Default"
+            app:prefEntries="@array/su_shell_context_entries"
+            app:prefEntryValues="@array/su_shell_context_values"
+            app:prefTitle="@string/su_shell_context" />
+
+    </alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory>
+
+    <!-- Debug -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_prefs_debug"
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/debugging">
+
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/prefs_extensive_logging"
+            style="@style/MaterialPreferences.Default"
+            app:prefTitle="@string/extensive_logging" />
+
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/prefs_debug_strict_mode"
+            style="@style/MaterialPreferences.Default"
+            app:prefTitle="@string/debug_strict_mode" />
+
+    </alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory>
+
+</LinearLayout>
+

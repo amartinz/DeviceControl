@@ -20,11 +20,8 @@ package org.namelessrom.devicecontrol.modules.preferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceScreen;
-import android.support.annotation.NonNull;
-import android.support.v4.preference.PreferenceFragment;
+import android.support.v4.app.FragmentManager;
+import android.view.View;
 
 import com.pollfish.main.PollFish;
 
@@ -33,75 +30,63 @@ import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.theme.AppResources;
-import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
-import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-public class MainPreferencesFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
+import alexander.martinz.libs.materialpreferences.MaterialPreference;
+import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
+import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
+import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 
-    //==============================================================================================
-    // App
-    //==============================================================================================
-    private CustomTogglePreference mMonkeyPref;
+public class MainPreferencesFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceChangeListener, MaterialPreference.MaterialPreferenceClickListener {
+    private MaterialPreference mSetOnBoot;
 
-    //==============================================================================================
-    // General
-    //==============================================================================================
-    private CustomPreference mSetOnBoot;
-
-    //==============================================================================================
-    // Interface
-    //==============================================================================================
-    private CustomTogglePreference mSwipeOnContent;
+    private MaterialSwitchPreference mSwipeOnContent;
     // TODO: more customization
-    private CustomTogglePreference mDarkTheme;
+    private MaterialSwitchPreference mDarkTheme;
 
-    //==============================================================================================
-    // Support
-    //==============================================================================================
-    private CustomTogglePreference mShowPollfish;
+    private MaterialSwitchPreference mShowPollfish;
 
-    @Override public void onCreate(final Bundle bundle) {
-        super.onCreate(bundle);
-        addPreferencesFromResource(R.xml.a_device_control_main);
+    @Override protected int getLayoutResourceId() {
+        return R.layout.preferences_app_device_control_main;
+    }
 
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
 
-        mSetOnBoot = (CustomPreference) findPreference("prefs_set_on_boot");
+        MaterialPreferenceCategory category =
+                (MaterialPreferenceCategory) view.findViewById(R.id.cat_prefs_general);
+        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
 
-        PreferenceCategory category = (PreferenceCategory) findPreference("prefs_app");
+        mSetOnBoot = (MaterialPreference) view.findViewById(R.id.prefs_set_on_boot);
+        mSetOnBoot.setOnPreferenceClickListener(this);
 
-        if (Utils.existsInFile(Scripts.BUILD_PROP, "ro.nameless.secret=1")) {
-            mMonkeyPref = new CustomTogglePreference(getActivity());
-            mMonkeyPref.setKey(DeviceConfiguration.MONKEY);
-            mMonkeyPref.setTitle(R.string.become_a_monkey);
-            mMonkeyPref.setSummaryOn(R.string.is_monkey);
-            mMonkeyPref.setSummaryOff(R.string.no_monkey);
-            mMonkeyPref.setChecked(DeviceConfiguration.get(getActivity()).monkey);
-            mMonkeyPref.setOnPreferenceChangeListener(this);
-            category.addPreference(mMonkeyPref);
-        }
+        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_prefs_interface);
+        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
 
-        mDarkTheme = (CustomTogglePreference) findPreference(DeviceConfiguration.DARK_THEME);
+        mDarkTheme = (MaterialSwitchPreference) view.findViewById(R.id.prefs_dark_theme);
         mDarkTheme.setChecked(AppResources.get().isDarkTheme());
         mDarkTheme.setOnPreferenceChangeListener(this);
 
-        mSwipeOnContent =
-                (CustomTogglePreference) findPreference(DeviceConfiguration.SWIPE_ON_CONTENT);
+        mSwipeOnContent = (MaterialSwitchPreference) view.findViewById(R.id.prefs_swipe_on_content);
         mSwipeOnContent.setChecked(configuration.swipeOnContent);
         mSwipeOnContent.setOnPreferenceChangeListener(this);
 
-        mShowPollfish = (CustomTogglePreference) findPreference(DeviceConfiguration.SHOW_POLLFISH);
+        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_prefs_support);
+        category.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
+
+        mShowPollfish = (MaterialSwitchPreference) view.findViewById(R.id.prefs_show_pollfish);
         mShowPollfish.setChecked(configuration.showPollfish);
         mShowPollfish.setOnPreferenceChangeListener(this);
 
-        setupVersionPreference();
+        setupVersionPreference(view);
     }
 
-    private void setupVersionPreference() {
-        final CustomPreference mVersion = (CustomPreference) findPreference("prefs_version");
-        if (mVersion != null) {
+    private void setupVersionPreference(View view) {
+        MaterialPreference version = (MaterialPreference) view.findViewById(R.id.prefs_version);
+        if (version != null) {
+            version.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
+
             String title;
             String summary;
             try {
@@ -117,12 +102,12 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
                 title = getString(R.string.app_version_name, getString(R.string.unknown));
                 summary = getString(R.string.app_version_code, getString(R.string.unknown));
             }
-            mVersion.setTitle(title);
-            mVersion.setSummary(summary);
+            version.setTitle(title);
+            version.setSummary(summary);
         }
     }
 
-    @Override public boolean onPreferenceChange(Preference preference, Object newValue) {
+    @Override public boolean onPreferenceChanged(MaterialPreference preference, Object newValue) {
         if (mShowPollfish == preference) {
             final boolean value = (Boolean) newValue;
 
@@ -135,12 +120,6 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
                 PollFish.hide();
             }
             mShowPollfish.setChecked(value);
-            return true;
-        } else if (mMonkeyPref == preference) {
-            final boolean value = (Boolean) newValue;
-            DeviceConfiguration.get(getActivity()).monkey = value;
-            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
-            mMonkeyPref.setChecked(value);
             return true;
         } else if (mSwipeOnContent == preference) {
             final boolean value = (Boolean) newValue;
@@ -172,15 +151,13 @@ public class MainPreferencesFragment extends PreferenceFragment implements Prefe
         return false;
     }
 
-    @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
-            @NonNull final Preference preference) {
+    @Override public boolean onPreferenceClicked(MaterialPreference preference) {
         if (mSetOnBoot == preference) {
-            new SobDialogFragment()
-                    .show(getActivity().getSupportFragmentManager(), "sob_dialog_fragment");
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            new SobDialogFragment().show(fragmentManager, "sob_dialog_fragment");
             return true;
         }
 
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
+        return false;
     }
-
 }
