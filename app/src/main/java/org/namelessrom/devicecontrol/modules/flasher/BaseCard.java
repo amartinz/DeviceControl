@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol.modules.flasher;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import org.namelessrom.devicecontrol.R;
@@ -30,10 +31,10 @@ public abstract class BaseCard extends FrameLayout {
 
     public BaseCard(final Context context) {
         super(context, null);
-        CardView cardView = (CardView) LayoutInflater.from(context)
-                .inflate(R.layout.card_with_container, this, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.card_with_container, this, false);
+        CardView cardView = (CardView) v.findViewById(R.id.card_view_root);
         cardView.setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
-        super.addView(cardView);
+        super.addView(v);
 
         mContainer = (FrameLayout) findViewById(R.id.layout_container);
     }

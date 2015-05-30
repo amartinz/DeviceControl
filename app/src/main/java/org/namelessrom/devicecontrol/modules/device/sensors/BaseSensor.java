@@ -26,6 +26,7 @@ import android.hardware.SensorManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,7 +37,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
-public abstract class BaseSensor extends LinearLayout implements SensorEventListener {
+public abstract class BaseSensor extends FrameLayout implements SensorEventListener {
     private SensorManager mSensorManager;
     private LayoutInflater mInflater;
 
@@ -77,8 +78,10 @@ public abstract class BaseSensor extends LinearLayout implements SensorEventList
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         mInflater = LayoutInflater.from(context);
 
-        CardView cardView = (CardView) mInflater.inflate(R.layout.card_with_container, this, true);
+        View v = LayoutInflater.from(context).inflate(R.layout.card_with_container, this, false);
+        CardView cardView = (CardView) v.findViewById(R.id.card_view_root);
         cardView.setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
+        super.addView(v);
 
         final FrameLayout container = (FrameLayout) findViewById(R.id.layout_container);
 
