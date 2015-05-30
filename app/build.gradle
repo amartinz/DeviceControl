@@ -9,6 +9,7 @@ android {
             def String localProps = System.getenv('SIGNING_PROP_FILE')
             if (localProps == null) {
                 logger.quiet('Not signing the build!')
+                storeFile file("debug.keystore")
             } else {
                 logger.quiet('Signing the build!')
                 def Properties keyProps = new Properties()
@@ -25,7 +26,13 @@ android {
         applicationId 'org.namelessrom.devicecontrol'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        signingConfig signingConfigs.release
+
+        def String localProps = System.getenv('SIGNING_PROP_FILE')
+        if (localProps == null) {
+            signingConfig signingConfigs.debug
+        } else {
+            signingConfig signingConfigs.release
+        }
     }
 
     buildTypes {
