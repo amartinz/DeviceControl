@@ -75,8 +75,7 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
     private void setupVersionPreference(View view) {
         MaterialPreference version = (MaterialPreference) view.findViewById(R.id.prefs_version);
         if (version != null) {
-            ((CardView) version.getCardView())
-                    .setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
+            version.setBackgroundColor(AppResources.get().getCardBackgroundColor());
 
             String title;
             String summary;
