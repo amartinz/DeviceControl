@@ -51,7 +51,7 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
         final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
 
         mSkipChecks = (MaterialSwitchPreference) view.findViewById(R.id.prefs_skip_checks);
-        applyCardBackground(mSkipChecks);
+        mSkipChecks.setBackgroundColor(AppResources.get().getCardBackgroundColor());
         mSkipChecks.setChecked(configuration.skipChecks);
         mSkipChecks.setOnPreferenceChangeListener(this);
 
@@ -72,15 +72,6 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
                 (MaterialSwitchPreference) view.findViewById(R.id.prefs_extensive_logging);
         mExtensiveLogging.setChecked(configuration.extensiveLogging);
         mExtensiveLogging.setOnPreferenceChangeListener(this);
-    }
-
-    private void applyCardBackground(MaterialPreference preference) {
-        View card = preference.getCardView();
-        if (card instanceof CardView) {
-            ((CardView) card).setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
-        } else {
-            card.setBackgroundColor(AppResources.get().getCardBackgroundColor());
-        }
     }
 
     @Override public boolean onPreferenceChanged(MaterialPreference preference, Object newValue) {

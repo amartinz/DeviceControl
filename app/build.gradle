@@ -106,7 +106,10 @@ dependencies {
     if (!useLocalMaterial || isPlatformBuild) {
         logger.quiet('MaterialPrefernces -> release version')
         // the version code equals the release tag OR the shortcode of the commit to use
-        compile 'com.github.Evisceration:MaterialPreferences:f2328e2da2'
+        compile('com.github.Evisceration:MaterialPreferences:0.1.6') {
+            exclude group: 'com.google.android', module: 'appcompat-v7'
+            exclude group: 'com.google.android', module: 'cardview-v7'
+        }
     } else {
         logger.quiet('MaterialPrefernces -> local sources')
         compile(project(':locallibs:MaterialPreferences:library')) {
