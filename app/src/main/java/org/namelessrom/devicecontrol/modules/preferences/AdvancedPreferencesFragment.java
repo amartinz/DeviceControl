@@ -19,6 +19,7 @@ package org.namelessrom.devicecontrol.modules.preferences;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.View;
 
 import com.stericson.roottools.RootTools;
@@ -50,7 +51,7 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
         final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
 
         mSkipChecks = (MaterialSwitchPreference) view.findViewById(R.id.prefs_skip_checks);
-        mSkipChecks.getCardView().setBackgroundColor(AppResources.get().getCardBackgroundColor());
+        applyCardBackground(mSkipChecks);
         mSkipChecks.setChecked(configuration.skipChecks);
         mSkipChecks.setOnPreferenceChangeListener(this);
 
@@ -71,6 +72,15 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
                 (MaterialSwitchPreference) view.findViewById(R.id.prefs_extensive_logging);
         mExtensiveLogging.setChecked(configuration.extensiveLogging);
         mExtensiveLogging.setOnPreferenceChangeListener(this);
+    }
+
+    private void applyCardBackground(MaterialPreference preference) {
+        View card = preference.getCardView();
+        if (card instanceof CardView) {
+            ((CardView) card).setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
+        } else {
+            card.setBackgroundColor(AppResources.get().getCardBackgroundColor());
+        }
     }
 
     @Override public boolean onPreferenceChanged(MaterialPreference preference, Object newValue) {
