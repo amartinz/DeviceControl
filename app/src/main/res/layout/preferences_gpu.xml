@@ -14,16 +14,21 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/gpusettings">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="gpu_opengl"
-        android:title="@string/gpu_opengl" />
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+        android:id="@+id/cat_gpu_opengl"
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/gpu_opengl" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
-        android:key="gpu"
-        android:title="@string/gpu" />
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+        android:id="@+id/cat_gpu"
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/gpu" />
 
-</PreferenceScreen>
+</LinearLayout>
 
