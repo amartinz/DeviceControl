@@ -17,6 +17,9 @@
  */
 package org.namelessrom.devicecontrol.activities;
 
+import android.app.ActivityManager.TaskDescription;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -40,6 +43,14 @@ public abstract class BaseActivity extends ActionBarActivity {
             } catch (Exception e) {
                 Log.e("BaseActivity", "get a stone and throw it at your device vendor", e);
             }
+
+            // color recents tab
+            final Bitmap appIcon = BitmapFactory.decodeResource(getResources(),
+                    R.mipmap.ic_launcher_devicecontrol);
+
+            final TaskDescription taskDescription = new TaskDescription(String.valueOf(getTitle()),
+                    appIcon, AppResources.get().getAccentColor());
+            setTaskDescription(taskDescription);
         }
     }
 

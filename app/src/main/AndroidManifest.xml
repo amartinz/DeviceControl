@@ -14,7 +14,8 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="org.namelessrom.devicecontrol"
     android:installLocation="auto"
@@ -56,11 +57,9 @@
     <uses-permission android:name="android.permission.REBOOT" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.DEVICE_POWER" tools:ignore="ProtectedPermissions" />
 
-    <uses-feature android:name="org.namelessrom.android"
-        android:required="false" />
+    <uses-feature android:name="org.namelessrom.android" android:required="false" />
 
-    <uses-feature android:name="android.hardware.location.gps"
-        android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
 
     <application
         android:name=".Application"
@@ -78,6 +77,7 @@
             android:name=".DummyLauncher"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:enabled="true"
+            android:excludeFromRecents="true"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -103,8 +103,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_details"
             android:launchMode="singleTask"
-            android:taskAffinity=""
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:taskAffinity="">
             <intent-filter>
                 <action android:name="android.settings.APPLICATION_DETAILS_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -119,8 +119,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/donate_"
             android:launchMode="singleTask"
-            android:taskAffinity=""
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:taskAffinity="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.namelessrom.devicecontrol.MainActivity" />
@@ -128,6 +128,7 @@
         <activity
             android:name=".activities.RequestFileActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:excludeFromRecents="true"
             android:label="@string/pick_file"
             android:parentActivityName=".MainActivity">
             <meta-data
@@ -166,8 +167,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/sensors"
             android:launchMode="singleTask"
-            android:taskAffinity=""
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:taskAffinity="">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.namelessrom.devicecontrol.MainActivity" />
@@ -188,9 +189,9 @@
             android:exported="false" />
         <service
             android:name=".services.WebServerService"
-            android:process=":webservice"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:process=":webservice" />
 
         <!-- Broadcast Receivers -->
         <receiver android:name=".receivers.BootUpReceiver">
@@ -210,10 +211,10 @@
         </receiver>
 
         <!-- Widgets -->
-        <receiver tools:ignore="ExportedReceiver"
-            android:name=".ui.widgets.RebootWidget"
+        <receiver android:name=".ui.widgets.RebootWidget"
             android:icon="@drawable/ic_power"
-            android:label="@string/reboot">
+            android:label="@string/reboot"
+            tools:ignore="ExportedReceiver">
             <intent-filter>
                 <action android:name="org.namelessrom.devicecontrol.widgets.showrebootdialog" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
