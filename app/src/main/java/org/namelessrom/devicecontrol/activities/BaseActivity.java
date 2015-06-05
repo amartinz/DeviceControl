@@ -22,13 +22,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.theme.AppResources;
 
-public abstract class BaseActivity extends ActionBarActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         final boolean isDarkTheme = AppResources.get().isDarkTheme();
