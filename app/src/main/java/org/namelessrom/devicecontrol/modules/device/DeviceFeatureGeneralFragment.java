@@ -320,6 +320,9 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
                 .getItemsByCategory(ConfigConstants.CATEGORY_DEVICE);
 
         for (final BootupItem item : items) {
+            if (!item.enabled) {
+                continue;
+            }
             if ("input_glove_mode".equals(item.filename)) {
                 String mode = ("1".equals(item.value) ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
                 sbCmd.append(Utils.getWriteCommand(COMMAND_PATH, mode));

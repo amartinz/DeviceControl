@@ -194,6 +194,9 @@ public class CpuUtils {
         String tmpString;
         int tmpInt;
         for (final BootupItem item : items) {
+            if (!item.enabled) {
+                continue;
+            }
             tmpInt = -1;
             tmpString = item.name;
             if (tmpString != null && !tmpString.contains("io")) {

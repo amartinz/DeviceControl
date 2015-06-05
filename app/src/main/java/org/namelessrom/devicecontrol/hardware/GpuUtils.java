@@ -258,6 +258,9 @@ public class GpuUtils {
                 .getItemsByCategory(ConfigConstants.CATEGORY_GPU);
 
         for (final BootupItem item : items) {
+            if (!item.enabled) {
+                continue;
+            }
             sbCmd.append(Utils.getWriteCommand(item.filename, item.value));
         }
 

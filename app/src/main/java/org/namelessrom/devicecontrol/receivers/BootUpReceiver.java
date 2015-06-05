@@ -31,6 +31,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.services.BootupService;
+import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class BootUpReceiver extends BroadcastReceiver {
@@ -73,7 +74,7 @@ public class BootUpReceiver extends BroadcastReceiver {
                 .setContentText(ctx.getString(R.string.bootup_restoration_content))
                 .setOngoing(true)
                 .setSmallIcon(R.drawable.ic_bootup_restore)
-                .setColor(ctx.getResources().getColor(R.color.accent_light))
+                .setColor(AppResources.get().getAccentColor())
                 .setContentIntent(pi)
                 .setAutoCancel(true);
         Notification notification = builder.build();

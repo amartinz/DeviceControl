@@ -244,6 +244,9 @@ public class DeviceFeatureKernelFragment extends CustomPreferenceFragment implem
                 .getItemsByCategory(ConfigConstants.CATEGORY_EXTRAS);
 
         for (final BootupItem item : items) {
+            if (!item.enabled) {
+                continue;
+            }
             if (MpDecisionAction.MPDECISION_PATH.equals(item.name)) {
                 new MpDecisionAction(item.value, false).triggerAction();
             } else {

@@ -159,6 +159,9 @@ public class SysctlFragment extends AttachPreferenceFragment {
                 .getItemsByCategory(ConfigConstants.CATEGORY_SYSCTL);
 
         for (final BootupItem item : items) {
+            if (!item.enabled) {
+                continue;
+            }
             sbCmd.append(Utils.getWriteCommand(item.name, item.value));
         }
 
