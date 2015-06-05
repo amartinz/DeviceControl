@@ -458,4 +458,6 @@
     <string name="automated_restoration_delay">Delay restoration</string>
     <string name="automated_restoration_delay_summary">Delay automated restoration by the set value</string>
     <string name="notification">Notification</string>
+    <string name="bootup_items">Bootup items</string>
+    <string name="bootup_category_no_items">Category does not contain any bootup items!</string>
 </resources>

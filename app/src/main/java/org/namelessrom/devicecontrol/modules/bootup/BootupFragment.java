@@ -30,11 +30,13 @@ public class BootupFragment extends AttachViewPagerFragment {
     @Override protected int getFragmentId() { return DeviceConstants.ID_TOOLS_BOOTUP_RESTORATION; }
 
     @Override public ViewPagerAdapter getPagerAdapter() {
-        final ArrayList<CharSequence> titles = new ArrayList<>(1);
-        final ArrayList<Fragment> fragments = new ArrayList<>(1);
+        final ArrayList<CharSequence> titles = new ArrayList<>(2);
+        final ArrayList<Fragment> fragments = new ArrayList<>(2);
 
         titles.add(getString(R.string.general));
         fragments.add(new MainBootupFragment());
+        titles.add(getString(R.string.bootup_items));
+        fragments.add(new BootupItemListFragment());
 
         return new ViewPagerAdapter(getChildFragmentManager(), fragments, titles);
     }

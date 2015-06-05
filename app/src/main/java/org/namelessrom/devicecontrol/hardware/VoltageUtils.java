@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol.hardware;
 
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -46,6 +47,11 @@ public class VoltageUtils {
     //==============================================================================================
     // Methods
     //==============================================================================================
+    public static boolean isSupported() {
+        return Utils.fileExists(VoltageUtils.UV_TABLE_FILE)
+                || Utils.fileExists(VoltageUtils.VDD_TABLE_FILE);
+    }
+
     public String[] getUvValues(final boolean getName) throws IOException {
         final ArrayList<String> valueList = new ArrayList<>();
         FileInputStream fstream = null;
