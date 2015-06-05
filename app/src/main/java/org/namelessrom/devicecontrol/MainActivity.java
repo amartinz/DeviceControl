@@ -49,6 +49,7 @@ import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.modules.about.AboutFragment;
 import org.namelessrom.devicecontrol.modules.appmanager.AppListFragment;
+import org.namelessrom.devicecontrol.modules.bootup.BootupFragment;
 import org.namelessrom.devicecontrol.modules.cpu.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.modules.cpu.GovernorFragment;
 import org.namelessrom.devicecontrol.modules.device.DeviceFeatureFragment;
@@ -142,6 +143,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         // header - tools
         menuItems.add(new MenuListArrayAdapter.MenuItem(-1, R.string.tools, -1));
+        // tools - bootup restoration
+        menuItems.add(new MenuListArrayAdapter.MenuItem(
+                DeviceConstants.ID_TOOLS_BOOTUP_RESTORATION, R.string.bootup_restoration,
+                R.drawable.ic_bootup_restore));
         // tools - app manager
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_TOOLS_APP_MANAGER, R.string.app_manager,
@@ -476,6 +481,12 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             case DeviceConstants.ID_THERMAL:
                 if (!onResume) mCurrentFragment = new ThermalFragment();
                 mTitle = mFragmentTitle = R.string.thermal;
+                mSubFragmentTitle = -1;
+                break;
+            //--------------------------------------------------------------------------------------
+            case DeviceConstants.ID_TOOLS_BOOTUP_RESTORATION:
+                if (!onResume) mCurrentFragment = new BootupFragment();
+                mTitle = mFragmentTitle = R.string.bootup_restoration;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------

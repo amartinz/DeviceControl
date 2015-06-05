@@ -20,21 +20,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- General -->
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
-        android:id="@+id/cat_prefs_general"
-        style="@style/MaterialPreferences.Default"
-        app:prefTitle="@string/general">
-
-        <alexander.martinz.libs.materialpreferences.MaterialPreference
-            android:id="@+id/prefs_set_on_boot"
-            style="@style/MaterialPreferences.Default"
-            app:prefKey="prefs_set_on_boot"
-            app:prefSummary="@string/reapply_on_boot_summary"
-            app:prefTitle="@string/reapply_on_boot" />
-
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
-
     <!-- Interface -->
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_prefs_interface"

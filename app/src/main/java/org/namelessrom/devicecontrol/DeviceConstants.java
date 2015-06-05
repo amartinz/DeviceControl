@@ -52,6 +52,7 @@ public class DeviceConstants {
     public static final int ID_TOOLS_EDITORS_VM = ID_TOOLS_MORE + 1020;
     public static final int ID_TOOLS_EDITORS_BUILD_PROP = ID_TOOLS_MORE + 1100;
     public static final int ID_TOOLS_WIRELESS_FM = ID_TOOLS_MORE + 1300;
+    public static final int ID_TOOLS_BOOTUP_RESTORATION = 1200000;
     public static final int ID_PREFERENCES = 8000000;
     public static final int ID_ABOUT = 9000000;
     //----------------------------------------------------------------------------------------------

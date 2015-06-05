@@ -20,8 +20,6 @@ package org.namelessrom.devicecontrol.modules.preferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.CardView;
 import android.view.View;
 
 import com.pollfish.main.PollFish;
@@ -37,9 +35,7 @@ import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 
-public class MainPreferencesFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceChangeListener, MaterialPreference.MaterialPreferenceClickListener {
-    private MaterialPreference mSetOnBoot;
-
+public class MainPreferencesFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceChangeListener {
     private MaterialSwitchPreference mSwipeOnContent;
     // TODO: more customization
     private MaterialSwitchPreference mDarkTheme;
@@ -53,9 +49,6 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
-
-        mSetOnBoot = (MaterialPreference) view.findViewById(R.id.prefs_set_on_boot);
-        mSetOnBoot.setOnPreferenceClickListener(this);
 
         mDarkTheme = (MaterialSwitchPreference) view.findViewById(R.id.prefs_dark_theme);
         mDarkTheme.setChecked(AppResources.get().isDarkTheme());
@@ -141,13 +134,4 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         return false;
     }
 
-    @Override public boolean onPreferenceClicked(MaterialPreference preference) {
-        if (mSetOnBoot == preference) {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            new SobDialogFragment().show(fragmentManager, "sob_dialog_fragment");
-            return true;
-        }
-
-        return false;
-    }
 }
