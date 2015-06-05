@@ -29,7 +29,6 @@ import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.hardware.KsmUtils;
 import org.namelessrom.devicecontrol.hardware.UksmUtils;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
@@ -223,7 +222,7 @@ public class DeviceFeatureKernelFragment extends CustomPreferenceFragment implem
             final String value = String.valueOf(o);
             Utils.writeValue(TCP_CONGESTION_CONTROL, value);
             BootupConfiguration.setBootup(getActivity(), new BootupItem(
-                    ConfigConstants.CATEGORY_EXTRAS,
+                    BootupConfiguration.CATEGORY_EXTRAS,
                     mTcpCongestion.getKey(), TCP_CONGESTION_CONTROL, value, true));
             preference.setSummary(value);
             return true;
@@ -238,7 +237,7 @@ public class DeviceFeatureKernelFragment extends CustomPreferenceFragment implem
 
     public static String restore(BootupConfiguration config) {
         final ArrayList<BootupItem> items = config
-                .getItemsByCategory(ConfigConstants.CATEGORY_EXTRAS);
+                .getItemsByCategory(BootupConfiguration.CATEGORY_EXTRAS);
         if (items.size() == 0) {
             return "";
         }

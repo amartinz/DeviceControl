@@ -20,14 +20,15 @@ package org.namelessrom.devicecontrol.modules.bootup;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -42,32 +43,47 @@ public class BootupItemListFragment extends MaterialSupportPreferenceFragment im
         final Activity activity = getActivity();
         final BootupConfiguration configuration = BootupConfiguration.get(activity);
         ArrayList<BootupItem> items;
+        String path;
 
         // CPU
-        items = configuration.getItemsByCategory(ConfigConstants.CATEGORY_CPU);
+        items = configuration.getItemsByCategory(BootupConfiguration.CATEGORY_CPU);
         addCategory(activity, getString(R.string.cpu), items);
 
         // GPU
-        items = configuration.getItemsByCategory(ConfigConstants.CATEGORY_GPU);
+        items = configuration.getItemsByCategory(BootupConfiguration.CATEGORY_GPU);
         addCategory(activity, getString(R.string.gpu), items);
 
         // Device
-        items = configuration.getItemsByCategory(ConfigConstants.CATEGORY_DEVICE);
+        items = configuration.getItemsByCategory(BootupConfiguration.CATEGORY_DEVICE);
         addCategory(activity, getString(R.string.device), items);
 
         // SysCtl
-        items = configuration.getItemsByCategory(ConfigConstants.CATEGORY_SYSCTL);
+        items = configuration.getItemsByCategory(BootupConfiguration.CATEGORY_SYSCTL);
         addCategory(activity, getString(R.string.sysctl_vm), items);
-
-        // Extras
-        items = configuration.getItemsByCategory(ConfigConstants.CATEGORY_EXTRAS);
-        addCategory(activity, getString(R.string.extras), items);
 
         // Voltage
         if (VoltageUtils.isSupported()) {
-            items = configuration.getItemsByCategory(ConfigConstants.CATEGORY_VOLTAGE);
+            items = configuration.getItemsByCategory(BootupConfiguration.CATEGORY_VOLTAGE);
             addCategory(activity, getString(R.string.voltage), items);
         }
+
+        // intelli plug
+        path = Utils.checkPaths(getResources().getStringArray(R.array.directories_intelli_plug));
+        if (!TextUtils.isEmpty(path)) {
+            items = configuration.getItemsByCategory(BootupConfiguration.CATEGORY_INTELLI_HOTPLUG);
+            addCategory(activity, getString(R.string.intelli_plug), items);
+        }
+
+        // mako hotplug
+        path = Utils.checkPath(getString(R.string.directory_mako_hotplug));
+        if (!TextUtils.isEmpty(path)) {
+            items = configuration.getItemsByCategory(BootupConfiguration.CATEGORY_MAKO_HOTPLUG);
+            addCategory(activity, getString(R.string.mako_hotplug), items);
+        }
+
+        // Extras
+        items = configuration.getItemsByCategory(BootupConfiguration.CATEGORY_EXTRAS);
+        addCategory(activity, getString(R.string.extras), items);
     }
 
     private CustomPreferenceCategoryMaterial addCategory(Context context, String title,

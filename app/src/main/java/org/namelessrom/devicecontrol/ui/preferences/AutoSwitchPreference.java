@@ -49,6 +49,8 @@ public class AutoSwitchPreference extends MaterialSwitchPreference {
     private String mPath;
     private String[] mPaths;
 
+    private String mCategory = BootupConfiguration.CATEGORY_EXTRAS;
+
     public AutoSwitchPreference(final Context context) {
         super(context);
     }
@@ -127,6 +129,14 @@ public class AutoSwitchPreference extends MaterialSwitchPreference {
         }
     }
 
+    public void setCategory(String category) {
+        mCategory = category;
+    }
+
+    public String getCategory() {
+        return mCategory;
+    }
+
     public String getPath() {
         return mPath;
     }
@@ -181,7 +191,7 @@ public class AutoSwitchPreference extends MaterialSwitchPreference {
             for (int i = 0; i < length; i++) {
                 Utils.writeValue(mPaths[i], (isChecked ? mValueChecked : mValueNotChecked));
                 if (mStartup) {
-                    BootupConfiguration.setBootup(getContext(), new BootupItem("default",
+                    BootupConfiguration.setBootup(getContext(), new BootupItem(mCategory,
                             getKey() + String.valueOf(i), mPaths[i],
                             (isChecked ? mValueChecked : mValueNotChecked), true));
                 }
@@ -190,7 +200,7 @@ public class AutoSwitchPreference extends MaterialSwitchPreference {
             Utils.writeValue(mPath, (isChecked ? mValueChecked : mValueNotChecked));
             if (mStartup) {
                 BootupConfiguration.setBootup(getContext(),
-                        new BootupItem("default", getKey(), mPath,
+                        new BootupItem(mCategory, getKey(), mPath,
                                 (isChecked ? mValueChecked : mValueNotChecked), true));
             }
         }

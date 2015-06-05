@@ -28,7 +28,6 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
@@ -159,7 +158,7 @@ public class GovernorFragment extends AttachMaterialPreferenceFragment implement
 
         @Override protected Void doInBackground(String... params) {
             BootupConfiguration.setBootup(Application.get(), new BootupItem(
-                    ConfigConstants.CATEGORY_CPU, name, key, value, true));
+                    BootupConfiguration.CATEGORY_CPU, name, key, value, true));
             return null;
         }
     }

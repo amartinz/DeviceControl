@@ -24,7 +24,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -70,7 +69,7 @@ public class IoSchedulerAction extends BaseAction {
             sb.append(Utils.getWriteCommand(ioPath, value));
             if (bootup) {
                 BootupConfiguration.setBootup(Application.get(),
-                        new BootupItem(ConfigConstants.CATEGORY_EXTRAS,
+                        new BootupItem(BootupConfiguration.CATEGORY_EXTRAS,
                                 "io" + (c++), ioPath, value, true));
             }
         }

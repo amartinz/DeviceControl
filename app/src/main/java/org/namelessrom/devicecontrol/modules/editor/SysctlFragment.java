@@ -26,7 +26,6 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
@@ -101,50 +100,50 @@ public class SysctlFragment extends AttachPreferenceFragment {
             final String title = getString(R.string.dirty_ratio_title);
             final int currentProgress = Utils.parseInt(Utils.readOneLine(DIRTY_RATIO_PATH));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0,
-                    100, preference, DIRTY_RATIO_PATH, ConfigConstants.CATEGORY_SYSCTL);
+                    100, preference, DIRTY_RATIO_PATH, BootupConfiguration.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mDirtyBackground) {
             final String title = getString(R.string.dirty_background_title);
             final int currentProgress = Utils.parseInt(Utils.readOneLine(DIRTY_BACKGROUND_PATH));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 100,
-                    preference, DIRTY_BACKGROUND_PATH, ConfigConstants.CATEGORY_SYSCTL);
+                    preference, DIRTY_BACKGROUND_PATH, BootupConfiguration.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mDirtyExpireCentisecs) {
             final String title = getString(R.string.dirty_expire_title);
             final int currentProgress = Utils.parseInt(Utils.readOneLine(DIRTY_EXPIRE_PATH));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 5000,
-                    preference, DIRTY_EXPIRE_PATH, ConfigConstants.CATEGORY_SYSCTL);
+                    preference, DIRTY_EXPIRE_PATH, BootupConfiguration.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mDirtyWriteback) {
             final String title = getString(R.string.dirty_writeback_title);
             final int currentProgress = Utils.parseInt(Utils.readOneLine(DIRTY_WRITEBACK_PATH));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 5000,
-                    preference, DIRTY_WRITEBACK_PATH, ConfigConstants.CATEGORY_SYSCTL);
+                    preference, DIRTY_WRITEBACK_PATH, BootupConfiguration.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mMinFreeK) {
             final String title = getString(R.string.min_free_title);
             final int currentProgress = Utils.parseInt(Utils.readOneLine(MIN_FREE_PATH));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 8192,
-                    preference, MIN_FREE_PATH, ConfigConstants.CATEGORY_SYSCTL);
+                    preference, MIN_FREE_PATH, BootupConfiguration.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mOvercommit) {
             final String title = getString(R.string.overcommit_title);
             final int currentProgress = Utils.parseInt(Utils.readOneLine(OVERCOMMIT_PATH));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 100,
-                    preference, OVERCOMMIT_PATH, ConfigConstants.CATEGORY_SYSCTL);
+                    preference, OVERCOMMIT_PATH, BootupConfiguration.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mSwappiness) {
             final String title = getString(R.string.swappiness_title);
             final int currentProgress = Utils.parseInt(Utils.readOneLine(SWAPPINESS_PATH));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 100,
-                    preference, SWAPPINESS_PATH, ConfigConstants.CATEGORY_SYSCTL);
+                    preference, SWAPPINESS_PATH, BootupConfiguration.CATEGORY_SYSCTL);
             return true;
         } else if (preference == mVfs) {
             final String title = getString(R.string.vfs_title);
             final int currentProgress =
                     Utils.parseInt(Utils.readOneLine(VFS_CACHE_PRESSURE_PATH));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 0, 200,
-                    preference, VFS_CACHE_PRESSURE_PATH, ConfigConstants.CATEGORY_SYSCTL);
+                    preference, VFS_CACHE_PRESSURE_PATH, BootupConfiguration.CATEGORY_SYSCTL);
             return true;
         }
 
@@ -153,7 +152,7 @@ public class SysctlFragment extends AttachPreferenceFragment {
 
     public static String restore(BootupConfiguration config) {
         final ArrayList<BootupItem> items = config
-                .getItemsByCategory(ConfigConstants.CATEGORY_SYSCTL);
+                .getItemsByCategory(BootupConfiguration.CATEGORY_SYSCTL);
         if (items.size() == 0) {
             return "";
         }

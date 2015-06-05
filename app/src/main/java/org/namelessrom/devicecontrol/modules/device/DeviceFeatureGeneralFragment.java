@@ -27,7 +27,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.hardware.DisplayColorCalibration;
 import org.namelessrom.devicecontrol.hardware.DisplayGammaCalibration;
 import org.namelessrom.devicecontrol.objects.BootupItem;
@@ -281,7 +280,7 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             final boolean value = (Boolean) o;
             enableHts(value);
             BootupConfiguration.setBootup(getActivity(),
-                    new BootupItem(ConfigConstants.CATEGORY_DEVICE, mGloveMode.getKey(),
+                    new BootupItem(BootupConfiguration.CATEGORY_DEVICE, mGloveMode.getKey(),
                             mGloveMode.getKey(), (value ? "1" : "0"), true));
             return true;
         } else if (preference instanceof AwesomeTogglePreference) {
@@ -314,7 +313,7 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
 
     public static String restore(BootupConfiguration config) {
         final ArrayList<BootupItem> items = config
-                .getItemsByCategory(ConfigConstants.CATEGORY_DEVICE);
+                .getItemsByCategory(BootupConfiguration.CATEGORY_DEVICE);
         if (items.size() == 0) {
             return "";
         }

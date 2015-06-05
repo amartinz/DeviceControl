@@ -35,10 +35,12 @@ import org.namelessrom.devicecontrol.modules.device.DeviceFeatureKernelFragment;
 import org.namelessrom.devicecontrol.modules.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.VoltageFragment;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class BootupService extends IntentService {
     private static final Object lockObject = new Object();
@@ -176,6 +178,16 @@ public class BootupService extends IntentService {
         }
         Logger.i(this, "----- TOOLS END -----");
 
+        Logger.i(this, "----- SPECIAL START -----");
+        cmd = restoreCategory(bootupConfiguration, BootupConfiguration.CATEGORY_INTELLI_HOTPLUG);
+        Logger.v(this, cmd);
+        sbCmd.append(cmd);
+
+        cmd = restoreCategory(bootupConfiguration, BootupConfiguration.CATEGORY_MAKO_HOTPLUG);
+        Logger.v(this, cmd);
+        sbCmd.append(cmd);
+        Logger.i(this, "----- SPECIAL END -----");
+
         //==================================================================================
         // Execute
         //==================================================================================
@@ -184,5 +196,22 @@ public class BootupService extends IntentService {
             Utils.runRootCommand(cmd);
         }
         Logger.i(this, "Bootup Done!");
+    }
+
+    private String restoreCategory(BootupConfiguration config, String category) {
+        final ArrayList<BootupItem> items = config.getItemsByCategory(category);
+        if (items.size() == 0) {
+            return "";
+        }
+
+        final StringBuilder sbCmd = new StringBuilder();
+        for (final BootupItem item : items) {
+            if (!item.enabled) {
+                continue;
+            }
+            sbCmd.append(Utils.getWriteCommand(item.filename, item.value));
+        }
+
+        return sbCmd.toString();
     }
 }

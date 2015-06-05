@@ -24,7 +24,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
@@ -79,7 +78,7 @@ public class CpuFreqMinAction extends BaseAction {
             path = CpuUtils.get().getMinCpuFrequencyPath(i);
             sb.append(Utils.getWriteCommand(path, value));
             if (bootup) {
-                configuration.addItem(new BootupItem(ConfigConstants.CATEGORY_CPU,
+                configuration.addItem(new BootupItem(BootupConfiguration.CATEGORY_CPU,
                         "cpu_min" + i, CpuUtils.get().getMinCpuFrequencyPath(i), value, true));
             }
             if (lockFreq) {

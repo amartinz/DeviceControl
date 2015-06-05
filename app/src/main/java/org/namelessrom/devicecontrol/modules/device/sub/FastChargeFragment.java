@@ -24,7 +24,6 @@ import android.preference.PreferenceScreen;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
@@ -161,7 +160,7 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Pref
             Utils.writeValue(FC_FORCE, value);
             mForceFastCharge.setSummary(getForceSummary(Utils.readOneLine(FC_FORCE)));
             BootupConfiguration.setBootup(getActivity(), new BootupItem(
-                    ConfigConstants.CATEGORY_DEVICE, "force_fast_charge", FC_FORCE, value, true));
+                    BootupConfiguration.CATEGORY_DEVICE, "force_fast_charge", FC_FORCE, value, true));
             return true;
         } else if (mFailsafe == preference) {
             final boolean value = (Boolean) newValue;
@@ -199,7 +198,7 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Pref
             mAcLevel.setSummary(currentValue);
             mAcLevel.setText(currentValue);
             BootupConfiguration.setBootup(getActivity(), new BootupItem(
-                    ConfigConstants.CATEGORY_DEVICE, "ac_level", FC_AC_LEVEL, value, true));
+                    BootupConfiguration.CATEGORY_DEVICE, "ac_level", FC_AC_LEVEL, value, true));
             return true;
         } else if (mUsbLevel == preference) {
             final String value = String.valueOf(newValue);
@@ -208,7 +207,7 @@ public class FastChargeFragment extends AttachPreferenceFragment implements Pref
             mUsbLevel.setSummary(currentValue);
             mUsbLevel.setText(currentValue);
             BootupConfiguration.setBootup(getActivity(), new BootupItem(
-                    ConfigConstants.CATEGORY_DEVICE, "usb_level", FC_USB_LEVEL, value, true));
+                    BootupConfiguration.CATEGORY_DEVICE, "usb_level", FC_USB_LEVEL, value, true));
             return true;
         }
 

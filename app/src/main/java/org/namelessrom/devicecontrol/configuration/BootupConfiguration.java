@@ -32,6 +32,16 @@ import java.util.Iterator;
  * Bootup configuration which auto serializes itself to a file
  */
 public class BootupConfiguration extends BaseConfiguration<BootupConfiguration> {
+    public static final String CATEGORY_DEVICE = "device";
+    public static final String CATEGORY_CPU = "cpu";
+    public static final String CATEGORY_GPU = "gpu";
+    public static final String CATEGORY_EXTRAS = "extras";
+    public static final String CATEGORY_SYSCTL = "sysctl";
+    public static final String CATEGORY_VOLTAGE = "voltage";
+
+    public static final String CATEGORY_INTELLI_HOTPLUG = "intelli_hotplug";
+    public static final String CATEGORY_MAKO_HOTPLUG = "mako_hotplug";
+
     public ArrayList<BootupItem> items = new ArrayList<>();
     public boolean isEnabled;
 

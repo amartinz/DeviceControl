@@ -19,21 +19,19 @@ package org.namelessrom.devicecontrol.objects;
 
 import android.support.annotation.NonNull;
 
-import org.namelessrom.devicecontrol.R;
-
 public class BootupItem implements Comparable<BootupItem> {
     public String category;
     public String name;
     public String filename;
     public String value;
     public boolean enabled;
-    public int titleResId = R.string.unknown;
+    public int titleResId = -1;
 
     public BootupItem() { }
 
     public BootupItem(String category, String name, String filename, String value,
             boolean enabled) {
-        this(category, R.string.unknown, name, filename, value, enabled);
+        this(category, -1, name, filename, value, enabled);
     }
 
     public BootupItem(String category, int titleResId, String name, String filename, String value,

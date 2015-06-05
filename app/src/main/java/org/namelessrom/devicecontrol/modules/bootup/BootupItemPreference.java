@@ -31,9 +31,16 @@ public class BootupItemPreference extends MaterialSwitchPreference {
         this.bootupItem = item;
 
         setKey(item.name);
-        setTitle(context.getString(item.titleResId));
         setSummary(String.format("%s\n%s", item.filename, item.value));
         setChecked(item.enabled);
+
+        String title;
+        if (item.titleResId != -1) {
+            title = context.getString(item.titleResId);
+        } else {
+            title = item.name;
+        }
+        setTitle(title);
 
         return this;
     }

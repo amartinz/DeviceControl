@@ -47,7 +47,6 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.configuration.ExtraConfiguration;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
@@ -155,8 +154,8 @@ public class VoltageFragment extends AttachPreferenceFragment {
                 }
 
                 BootupConfiguration.setBootup(getActivity(), new BootupItem(
-                        ConfigConstants.CATEGORY_VOLTAGE, ConfigConstants.CATEGORY_VOLTAGE,
-                        ConfigConstants.CATEGORY_VOLTAGE, ConfigConstants.CATEGORY_VOLTAGE, false));
+                        BootupConfiguration.CATEGORY_VOLTAGE, BootupConfiguration.CATEGORY_VOLTAGE,
+                        BootupConfiguration.CATEGORY_VOLTAGE, BootupConfiguration.CATEGORY_VOLTAGE, false));
 
                 mButtonLayout.setVisibility(View.GONE);
                 list.bringToFront();
@@ -352,7 +351,7 @@ public class VoltageFragment extends AttachPreferenceFragment {
         }
 
         final ArrayList<BootupItem> bootupItems = config
-                .getItemsByCategory(ConfigConstants.CATEGORY_VOLTAGE);
+                .getItemsByCategory(BootupConfiguration.CATEGORY_VOLTAGE);
         if (bootupItems.size() == 0) {
             return "";
         }

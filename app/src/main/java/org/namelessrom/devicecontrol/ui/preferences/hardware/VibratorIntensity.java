@@ -36,7 +36,6 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -181,7 +180,7 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
         super.onDialogClosed(positiveResult);
         if (positiveResult) {
             BootupConfiguration.setBootup(getContext(), new BootupItem(
-                    ConfigConstants.CATEGORY_DEVICE, "vibrator_tuning",
+                    BootupConfiguration.CATEGORY_DEVICE, "vibrator_tuning",
                     path, String.valueOf(percentToStrength(mSeekBar.getProgress())), true));
         } else {
             Utils.runRootCommand(Utils.getWriteCommand(path, String.valueOf(mOriginalValue)));

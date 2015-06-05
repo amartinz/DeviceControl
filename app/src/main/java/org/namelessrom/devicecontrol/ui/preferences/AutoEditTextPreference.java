@@ -43,6 +43,8 @@ public class AutoEditTextPreference extends MaterialEditTextPreference {
     private String mPath;
     private String[] mPaths;
 
+    private String mCategory = BootupConfiguration.CATEGORY_EXTRAS;
+
     public AutoEditTextPreference(Context context) {
         super(context);
     }
@@ -98,6 +100,14 @@ public class AutoEditTextPreference extends MaterialEditTextPreference {
         }
     }
 
+    public void setCategory(String category) {
+        mCategory = category;
+    }
+
+    public String getCategory() {
+        return mCategory;
+    }
+
     public String getPath() { return mPath; }
 
     public boolean isSupported() {
@@ -143,14 +153,14 @@ public class AutoEditTextPreference extends MaterialEditTextPreference {
                 Utils.writeValue(mPaths[i], value);
                 if (mStartup) {
                     BootupConfiguration.setBootup(getContext(), new BootupItem(
-                            "default", getKey() + String.valueOf(i), mPaths[i], value, true));
+                            mCategory, getKey() + String.valueOf(i), mPaths[i], value, true));
                 }
             }
         } else {
             Utils.writeValue(mPath, value);
             if (mStartup) {
                 BootupConfiguration.setBootup(getContext(),
-                        new BootupItem("default", getKey(), mPath, value, true));
+                        new BootupItem(mCategory, getKey(), mPath, value, true));
             }
         }
 

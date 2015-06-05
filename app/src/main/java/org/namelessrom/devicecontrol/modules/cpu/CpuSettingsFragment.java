@@ -42,7 +42,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuCoreMonitor;
@@ -318,6 +317,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                 togglePref = new AutoSwitchPreference(getActivity());
                 togglePref.setAsCard(false);
                 togglePref.init(getActivity());
+                togglePref.setCategory(BootupConfiguration.CATEGORY_INTELLI_HOTPLUG);
                 togglePref.setKey("intelli_plug_intelli_plug_active");
                 togglePref.setTitle(getString(R.string.enable));
                 togglePref.setPath(path + "intelli_plug_active");
@@ -329,6 +329,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                 togglePref = new AutoSwitchPreference(getActivity());
                 togglePref.setAsCard(false);
                 togglePref.init(getActivity());
+                togglePref.setCategory(BootupConfiguration.CATEGORY_INTELLI_HOTPLUG);
                 togglePref.setKey("intelli_plug_touch_boost_active");
                 togglePref.setTitle(getString(R.string.touch_boost));
                 togglePref.setPath(path + "touch_boost_active");
@@ -343,6 +344,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                     editPref = new AutoEditTextPreference(getActivity());
                     editPref.setAsCard(false);
                     editPref.init(getActivity());
+                    editPref.setCategory(BootupConfiguration.CATEGORY_INTELLI_HOTPLUG);
                     editPref.setKey("intelli_plug_" + file);
                     editPref.setTitle(file);
                     editPref.setPath(path + file);
@@ -363,6 +365,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                 togglePref = new AutoSwitchPreference(getActivity());
                 togglePref.setAsCard(false);
                 togglePref.init(getActivity());
+                togglePref.setCategory(BootupConfiguration.CATEGORY_MAKO_HOTPLUG);
                 togglePref.setKey("mako_enabled");
                 togglePref.setTitle(getString(R.string.enable));
                 togglePref.setPath(path + "enabled");
@@ -376,6 +379,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                     editPref = new AutoEditTextPreference(getActivity());
                     editPref.setAsCard(false);
                     editPref.init(getActivity());
+                    editPref.setCategory(BootupConfiguration.CATEGORY_MAKO_HOTPLUG);
                     editPref.setKey("mako_" + file);
                     editPref.setTitle(file);
                     editPref.setPath(path + file);
@@ -440,7 +444,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             final String value = String.valueOf(o);
             Utils.runRootCommand(Utils.getWriteCommand(path, value));
             BootupConfiguration.setBootup(getActivity(), new BootupItem(
-                    ConfigConstants.CATEGORY_EXTRAS, mCpuQuietGov.getKey(),
+                    BootupConfiguration.CATEGORY_EXTRAS, mCpuQuietGov.getKey(),
                     path, value, true));
             return true;
         }
