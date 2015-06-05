@@ -111,4 +111,17 @@
         <item>u:r:recovery:s0</item>
     </string-array>
 
+    <string-array name="automated_restoration_delay_entries" translatable="false">
+        <item>@string/none</item>
+        <item>@string/fifteen_seconds</item>
+        <item>@string/thirty_seconds</item>
+        <item>@string/one_minute</item>
+    </string-array>
+    <string-array name="automated_restoration_delay_values" translatable="false">
+        <item>0</item>
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+    </string-array>
+
 </resources>

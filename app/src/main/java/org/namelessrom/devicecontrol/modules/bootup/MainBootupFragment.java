@@ -18,17 +18,25 @@
 package org.namelessrom.devicecontrol.modules.bootup;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.modules.preferences.SobDialogFragment;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.theme.AppResources;
+import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
+import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
+import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 
-public class MainBootupFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
-    private MaterialPreference mSetOnBoot;
+public class MainBootupFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceChangeListener {
+    private MaterialSwitchPreference mBootupEnabled;
+
+    private MaterialPreferenceCategory mCatAutomatedRestoration;
+    private MaterialSwitchPreference mAutomatedRestorationEnabled;
+    private MaterialListPreference mAutomatedRestorationDelay;
 
     @Override protected int getLayoutResourceId() {
         return R.layout.preferences_bootup_restoration_main;
@@ -37,17 +45,72 @@ public class MainBootupFragment extends MaterialSupportPreferenceFragment implem
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mSetOnBoot = (MaterialPreference) view.findViewById(R.id.prefs_set_on_boot);
-        mSetOnBoot.setOnPreferenceClickListener(this);
+        final BootupConfiguration configuration = BootupConfiguration.get(getActivity());
+
+        mBootupEnabled = (MaterialSwitchPreference) view.findViewById(R.id.prefs_bootup_enabled);
+        mBootupEnabled.setBackgroundColor(AppResources.get().getCardBackgroundColor());
+        mBootupEnabled.setChecked(configuration.isEnabled);
+        mBootupEnabled.setOnPreferenceChangeListener(this);
+
+        mCatAutomatedRestoration =
+                (MaterialPreferenceCategory) view.findViewById(R.id.cat_bootup_automated);
+        mAutomatedRestorationEnabled =
+                (MaterialSwitchPreference) view.findViewById(R.id.prefs_bootup_automated_enabled);
+        mAutomatedRestorationEnabled.setChecked(configuration.isAutomatedRestoration);
+        mAutomatedRestorationEnabled.setOnPreferenceChangeListener(this);
+
+        mAutomatedRestorationDelay =
+                (MaterialListPreference) view.findViewById(R.id.prefs_bootup_automated_delay);
+        mAutomatedRestorationDelay.setSpinnerTextViewColor(AppResources.get().getAccentColor());
+        // TODO: fix library
+        mAutomatedRestorationDelay
+                .setValue(String.valueOf(configuration.automatedRestorationDelay));
+        mAutomatedRestorationDelay.setOnPreferenceChangeListener(this);
+
+        updateCategories();
     }
 
-    @Override public boolean onPreferenceClicked(MaterialPreference preference) {
-        if (mSetOnBoot == preference) {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            new SobDialogFragment().show(fragmentManager, "sob_dialog_fragment");
-            return true;
+    private void updateCategories() {
+        mCatAutomatedRestoration.setEnabled(mBootupEnabled.isChecked());
+
+        boolean automatedRestoration = mAutomatedRestorationEnabled.isChecked();
+        mAutomatedRestorationEnabled.setSummary(automatedRestoration
+                ? getString(R.string.automated_restoration_on)
+                : getString(R.string.automated_restoration_off));
+
+        mAutomatedRestorationDelay.setEnabled(automatedRestoration);
+    }
+
+    @Override public boolean onPreferenceChanged(MaterialPreference preference, Object o) {
+        final BootupConfiguration configuration = BootupConfiguration.get(getActivity());
+        boolean handled = false;
+
+        if (mBootupEnabled == preference) {
+            boolean value = (Boolean) o;
+            configuration.isEnabled = value;
+            mBootupEnabled.setChecked(value);
+            handled = true;
+        } else if (mAutomatedRestorationEnabled == preference) {
+            boolean value = (Boolean) o;
+            configuration.isAutomatedRestoration = value;
+            mAutomatedRestorationEnabled.setChecked(value);
+            handled = true;
+        } else if (mAutomatedRestorationDelay == preference) {
+            int value;
+            try {
+                value = Utils.parseInt(String.valueOf(o), 0);
+            } catch (NumberFormatException nfe) {
+                value = 0;
+            }
+            configuration.automatedRestorationDelay = value;
+            handled = true;
         }
 
+        if (handled) {
+            configuration.saveConfiguration(getActivity());
+            updateCategories();
+            return true;
+        }
         return false;
     }
 }

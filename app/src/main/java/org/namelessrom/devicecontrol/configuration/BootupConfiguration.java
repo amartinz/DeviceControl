@@ -33,6 +33,10 @@ import java.util.Iterator;
  */
 public class BootupConfiguration extends BaseConfiguration<BootupConfiguration> {
     public ArrayList<BootupItem> items = new ArrayList<>();
+    public boolean isEnabled;
+
+    public boolean isAutomatedRestoration;
+    public int automatedRestorationDelay;
 
     private static BootupConfiguration sInstance;
 
@@ -58,6 +62,10 @@ public class BootupConfiguration extends BaseConfiguration<BootupConfiguration> 
         }
 
         this.items = config.items != null ? config.items : new ArrayList<BootupItem>();
+        this.isEnabled = config.isEnabled;
+
+        this.isAutomatedRestoration = config.isAutomatedRestoration;
+        this.automatedRestorationDelay = config.automatedRestorationDelay;
 
         return this;
     }

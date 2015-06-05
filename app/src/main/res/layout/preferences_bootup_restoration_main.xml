@@ -20,13 +20,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <alexander.martinz.libs.materialpreferences.MaterialPreference
-        android:id="@+id/prefs_set_on_boot"
+    <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+        android:id="@+id/prefs_bootup_enabled"
         style="@style/MaterialPreferences.Default"
         app:prefAsCard="true"
-        app:prefKey="prefs_set_on_boot"
-        app:prefSummary="@string/reapply_on_boot_summary"
-        app:prefTitle="@string/reapply_on_boot" />
+        app:prefSummary="@string/bootup_enabled_summary"
+        app:prefTitle="@string/bootup_enabled" />
+
+    <!-- automated restoration -->
+    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+        android:id="@+id/cat_bootup_automated"
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/automated_restoration">
+
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/prefs_bootup_automated_enabled"
+            style="@style/MaterialPreferences.Default"
+            app:prefSummary="@string/automated_restoration_off"
+            app:prefTitle="@string/automated_restoration" />
+
+        <alexander.martinz.libs.materialpreferences.MaterialListPreference
+            android:id="@+id/prefs_bootup_automated_delay"
+            style="@style/MaterialPreferences.Default"
+            app:prefEntries="@array/automated_restoration_delay_entries"
+            app:prefEntryValues="@array/automated_restoration_delay_values"
+            app:prefSummary="@string/automated_restoration_delay_summary"
+            app:prefTitle="@string/automated_restoration_delay" />
+
+    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
 
 </LinearLayout>
 

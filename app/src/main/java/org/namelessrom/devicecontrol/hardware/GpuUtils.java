@@ -251,12 +251,13 @@ public class GpuUtils {
         return false;
     }
 
-    @NonNull public String restore(Context context) {
+    @NonNull public String restore(BootupConfiguration config) {
+        final ArrayList<BootupItem> items = config.getItemsByCategory(ConfigConstants.CATEGORY_GPU);
+        if (items.size() == 0) {
+            return "";
+        }
+
         final StringBuilder sbCmd = new StringBuilder();
-
-        final ArrayList<BootupItem> items = BootupConfiguration.get(context)
-                .getItemsByCategory(ConfigConstants.CATEGORY_GPU);
-
         for (final BootupItem item : items) {
             if (!item.enabled) {
                 continue;

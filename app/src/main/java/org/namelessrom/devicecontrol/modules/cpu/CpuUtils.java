@@ -185,11 +185,13 @@ public class CpuUtils {
         return numOfCpu;
     }
 
-    public String restore(Context context) {
-        final StringBuilder sbCmd = new StringBuilder();
+    public String restore(BootupConfiguration config) {
+        final ArrayList<BootupItem> items = config.getItemsByCategory(ConfigConstants.CATEGORY_CPU);
 
-        final ArrayList<BootupItem> items = BootupConfiguration.get(context)
-                .getItemsByCategory(ConfigConstants.CATEGORY_CPU);
+        if (items.size() == 0) {
+            return "";
+        }
+        final StringBuilder sbCmd = new StringBuilder();
 
         String tmpString;
         int tmpInt;

@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.modules.editor;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
@@ -152,12 +151,14 @@ public class SysctlFragment extends AttachPreferenceFragment {
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
-    public static String restore(Context context) {
-        final StringBuilder sbCmd = new StringBuilder();
-
-        final ArrayList<BootupItem> items = BootupConfiguration.get(context)
+    public static String restore(BootupConfiguration config) {
+        final ArrayList<BootupItem> items = config
                 .getItemsByCategory(ConfigConstants.CATEGORY_SYSCTL);
+        if (items.size() == 0) {
+            return "";
+        }
 
+        final StringBuilder sbCmd = new StringBuilder();
         for (final BootupItem item : items) {
             if (!item.enabled) {
                 continue;

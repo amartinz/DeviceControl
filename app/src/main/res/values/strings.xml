@@ -156,9 +156,9 @@
     <string name="debug_strict_mode">Enable strict mode</string>
     <string name="shell">Shell</string>
     <string name="su_shell_context">Shell context</string>
-    <string name="su_shell_context_summary">The context under which Device Control should run its commands.\nThe default value is <xliff:g id="value" example="Normal">\"%s\"</xliff:g>.\nCurrent value: <xliff:g id="value" example="System app">\"%s\"</xliff:g></string>
-    <string name="reapply_on_boot">Reapply on boot</string>
-    <string name="reapply_on_boot_summary">Choose the settings you want to restore when the device boots up</string>
+    <string name="su_shell_context_summary">The context under which Device Control should run its commands.\nThe default value is <xliff:g example="Normal" id="value">\"%s\"</xliff:g>.\nCurrent value: <xliff:g example="System app" id="value">\"%s\"</xliff:g></string>
+    <string name="bootup_enabled">Reapply on boot</string>
+    <string name="bootup_enabled_summary">If disabled bootup restoration will not run when the device is starting</string>
     <string name="version">Version</string>
     <string name="tasker">Tasker</string>
     <string name="tasklist">Task list</string>
@@ -198,6 +198,10 @@
     <string name="knock_on_summary">Double tap on the screen to turn it on</string>
     <string name="sweep_to_wake">Sweep to wake</string>
     <string name="sweep_to_volume">Sweep to adjust volume</string>
+    <string name="none">None</string>
+    <string name="fifteen_seconds">15 seconds</string>
+    <string name="thirty_seconds">30 seconds</string>
+    <string name="one_minute">1 Minute</string>
     <string name="five_minutes">5 Minutes</string>
     <string name="ten_minutes">10 Minutes</string>
     <string name="twenty_minutes">20 Minutes</string>
@@ -400,7 +404,7 @@
     <string name="security_settings_desc_multi" product="default">This app can access the following on your phone. In order to improve performance and reduce memory usage, some of these permissions are available to <xliff:g id="base_app_name">%1$s</xliff:g> because it runs in the same process as <xliff:g id="additional_apps_list">%2$s</xliff:g>:</string>
     <string name="no_permissions">No permissions required</string>
     <string name="perm_costs_money">this may cost you money</string>
-    <string name="perms_new_perm_prefix"><font size="12" fgcolor="#ff33b5e5">NEW: </font></string>
+    <string name="perms_new_perm_prefix"><font fgcolor="#ff33b5e5" size="12">NEW: </font></string>
     <string name="perms_description_app">Provided by <xliff:g id="app_name">%1$s</xliff:g>.</string>
     <string name="environment">Environment</string>
     <string name="motion">Motion</string>
@@ -448,4 +452,10 @@
     <string name="join_beta_test">Join BETA</string>
     <string name="view_community">View Community</string>
     <string name="bootup_restoration">Bootup restoration</string>
+    <string name="automated_restoration">Automated restoration</string>
+    <string name="automated_restoration_on">Bootup restoration will be started automatically when the device is starting</string>
+    <string name="automated_restoration_off">A notification will be shown when the device is starting to trigger restoration manually</string>
+    <string name="automated_restoration_delay">Delay restoration</string>
+    <string name="automated_restoration_delay_summary">Delay automated restoration by the set value</string>
+    <string name="notification">Notification</string>
 </resources>

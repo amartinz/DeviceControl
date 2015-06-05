@@ -24,4 +24,5 @@ public class ConfigConstants {
     public static final String CATEGORY_GPU = "gpu";
     public static final String CATEGORY_EXTRAS = "extras";
     public static final String CATEGORY_SYSCTL = "sysctl";
+    public static final String CATEGORY_VOLTAGE = "voltage";
 }

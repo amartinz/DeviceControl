@@ -29,7 +29,6 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.services.BootupService;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -52,22 +51,29 @@ public class BootUpReceiver extends BroadcastReceiver {
 
         Utils.startTaskerService(ctx);
 
-        DeviceConfiguration deviceConfig = DeviceConfiguration.get(ctx).loadConfiguration(ctx);
-        boolean isBootup = deviceConfig.sobCpu || deviceConfig.sobDevice || deviceConfig.sobExtras
-                || deviceConfig.sobGpu || deviceConfig.sobSysctl || deviceConfig.sobVoltage;
+        BootupConfiguration bootupConfig = BootupConfiguration.get(ctx);
+        boolean isBootup = bootupConfig.isEnabled;
         if (!isBootup) {
             Logger.v(this, "User does not want to restore settings on bootup");
             return;
         }
 
-        int size = BootupConfiguration.get(ctx).items.size();
+        int size = bootupConfig.items.size();
         if (size == 0) {
-            Logger.v(this, "No bootup items, not showing notification");
+            Logger.v(this, "No bootup items, not starting bootup restoration");
             return;
         }
 
-        Intent i = new Intent(ctx, BootupService.class);
-        PendingIntent pi = PendingIntent.getService(ctx, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        final Intent bootupRestorationIntent = new Intent(ctx, BootupService.class);
+
+        if (bootupConfig.isAutomatedRestoration) {
+            ctx.startService(bootupRestorationIntent);
+            Logger.v(this, "Starting automated bootup restoration");
+            return;
+        }
+
+        final PendingIntent pi = PendingIntent.getService(ctx, 0, bootupRestorationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
 
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
         builder.setContentTitle(ctx.getString(R.string.app_name))
@@ -77,9 +83,9 @@ public class BootUpReceiver extends BroadcastReceiver {
                 .setColor(AppResources.get().getAccentColor())
                 .setContentIntent(pi)
                 .setAutoCancel(true);
-        Notification notification = builder.build();
+        final Notification notification = builder.build();
 
-        NotificationManager notificationManager =
+        final NotificationManager notificationManager =
                 (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFICATION_ID, notification);
     }
