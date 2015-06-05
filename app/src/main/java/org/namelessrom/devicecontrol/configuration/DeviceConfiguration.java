@@ -27,30 +27,8 @@ import com.stericson.roottools.execution.Shell;
  * Device configuration which auto serializes itself to a file
  */
 public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> {
-    // TODO: get rid of all these strings after migration
-    public static final String SHOW_LAUNCHER = "show_launcher";
-    public static final String DEBUG_STRICT_MODE = "debug_strict_mode";
-    public static final String EXTENSIVE_LOGGING = "extensive_logging";
-    public static final String DC_FIRST_START = "dc_first_start";
-    public static final String SKIP_CHECKS = "skip_checks";
-    public static final String SWIPE_ON_CONTENT = "swipe_on_content";
-    public static final String DARK_THEME = "dark_theme";
-    @Deprecated public static final String MONKEY = "monkey";
-    public static final String SHOW_POLLFISH = "show_pollfish";
-    public static final String CPU_LOCK_FREQ = "cpu_lock_freq";
-    public static final String CPU_LOCK_GOV = "cpu_lock_gov";
-    public static final String CPU_SHOW_INFO = "pref_show_cpu_info";
-    public static final String SU_SHELL_CONTEXT = "su_shell_context";
-
     public boolean dcFirstStart;
     public boolean swipeOnContent;
-
-    public boolean sobDevice;
-    public boolean sobCpu;
-    public boolean sobGpu;
-    public boolean sobExtras;
-    public boolean sobSysctl;
-    public boolean sobVoltage;
 
     public boolean darkTheme;
     public boolean showPollfish;
@@ -93,13 +71,6 @@ public class DeviceConfiguration extends BaseConfiguration<DeviceConfiguration> 
 
         this.dcFirstStart = config.dcFirstStart;
         this.swipeOnContent = config.swipeOnContent;
-
-        this.sobDevice = config.sobDevice;
-        this.sobCpu = config.sobCpu;
-        this.sobGpu = config.sobGpu;
-        this.sobExtras = config.sobExtras;
-        this.sobSysctl = config.sobSysctl;
-        this.sobVoltage = config.sobVoltage;
 
         this.darkTheme = config.darkTheme;
         this.showPollfish = config.showPollfish;

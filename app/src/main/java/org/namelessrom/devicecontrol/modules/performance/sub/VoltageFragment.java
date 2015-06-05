@@ -46,11 +46,16 @@ import android.widget.ListView;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.configuration.ConfigConstants;
 import org.namelessrom.devicecontrol.configuration.ExtraConfiguration;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
+import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
+
+import java.util.ArrayList;
 
 public class VoltageFragment extends AttachPreferenceFragment {
     private PreferenceCategory mCategory;
@@ -148,6 +153,11 @@ public class VoltageFragment extends AttachPreferenceFragment {
                     ExtraConfiguration.get(getActivity()).saveConfiguration(getActivity());
                     Utils.writeValue(VoltageUtils.UV_TABLE_FILE, table);
                 }
+
+                BootupConfiguration.setBootup(getActivity(), new BootupItem(
+                        ConfigConstants.CATEGORY_VOLTAGE, ConfigConstants.CATEGORY_VOLTAGE,
+                        ConfigConstants.CATEGORY_VOLTAGE, ConfigConstants.CATEGORY_VOLTAGE, false));
+
                 mButtonLayout.setVisibility(View.GONE);
                 list.bringToFront();
             }
@@ -334,10 +344,25 @@ public class VoltageFragment extends AttachPreferenceFragment {
         return sb.toString();
     }
 
-    public static String restore(final Context context) {
-        final StringBuilder restore = new StringBuilder();
+    public static String restore(final Context context, BootupConfiguration config) {
+        final boolean hasVdd = Utils.fileExists(VoltageUtils.VDD_TABLE_FILE);
+        final boolean hasUv = Utils.fileExists(VoltageUtils.UV_TABLE_FILE);
+        if (!hasVdd && !hasUv) {
+            return "";
+        }
 
-        if (Utils.fileExists(VoltageUtils.VDD_TABLE_FILE)) {
+        final ArrayList<BootupItem> bootupItems = config
+                .getItemsByCategory(ConfigConstants.CATEGORY_VOLTAGE);
+        if (bootupItems.size() == 0) {
+            return "";
+        }
+        final BootupItem voltageBootupItem = bootupItems.get(0);
+        if (voltageBootupItem == null || !voltageBootupItem.enabled) {
+            return "";
+        }
+
+        final StringBuilder restore = new StringBuilder();
+        if (hasVdd) {
             final String value = ExtraConfiguration.get(context).vdd;
             Logger.v(VoltageFragment.class, "VDD Table: " + value);
 
@@ -347,7 +372,7 @@ public class VoltageFragment extends AttachPreferenceFragment {
                     restore.append(Utils.getWriteCommand(VoltageUtils.VDD_TABLE_FILE, s));
                 }
             }
-        } else if (Utils.fileExists(VoltageUtils.UV_TABLE_FILE)) {
+        } else if (hasUv) {
             final String value = ExtraConfiguration.get(context).uv;
             Logger.v(VoltageFragment.class, "UV Table: " + value);
 
@@ -356,12 +381,7 @@ public class VoltageFragment extends AttachPreferenceFragment {
             }
         }
 
-        final String cmd = restore.toString();
-        if (!TextUtils.isEmpty(cmd)) {
-            return cmd;
-        } else {
-            return "echo 'No UV to restore';\n";
-        }
+        return restore.toString();
     }
 
 }

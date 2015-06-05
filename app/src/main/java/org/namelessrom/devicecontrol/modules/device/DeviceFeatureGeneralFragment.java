@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.modules.device;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -134,7 +133,7 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             if (awesomeGloveMode != null || !isHtsSupported()) {
                 category.removePreference(mGloveMode);
             } else {
-                final BootupItem bootupItem =  BootupConfiguration.get(getActivity())
+                final BootupItem bootupItem = BootupConfiguration.get(getActivity())
                         .getItemByName(mGloveMode.getKey());
                 final String value = (bootupItem != null ? bootupItem.value : null);
                 final boolean enableGlove = (value != null && value.equals("1"));
@@ -313,12 +312,14 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
     // Methods
     //==============================================================================================
 
-    public static String restore(Context context) {
-        final StringBuilder sbCmd = new StringBuilder();
-
-        final ArrayList<BootupItem> items = BootupConfiguration.get(context)
+    public static String restore(BootupConfiguration config) {
+        final ArrayList<BootupItem> items = config
                 .getItemsByCategory(ConfigConstants.CATEGORY_DEVICE);
+        if (items.size() == 0) {
+            return "";
+        }
 
+        final StringBuilder sbCmd = new StringBuilder();
         for (final BootupItem item : items) {
             if (!item.enabled) {
                 continue;

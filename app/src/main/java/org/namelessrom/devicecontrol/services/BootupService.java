@@ -89,10 +89,15 @@ public class BootupService extends IntentService {
         // patch sepolicy
         Utils.patchSEPolicy(this);
 
-        int size = BootupConfiguration.get(this).loadConfiguration(this).items.size();
-        if (size == 0) {
-            Logger.v(this, "No bootup items");
-            return;
+        final BootupConfiguration bootupConfiguration = BootupConfiguration.get(this);
+
+        int delay = bootupConfiguration.automatedRestorationDelay;
+        if (delay != 0) {
+            Logger.v(this, "Delaying bootup restoration by %s seconds", delay);
+            try {
+                Thread.sleep(delay * 1000);
+            } catch (Exception ignored) { }
+            Logger.v(this, "Done sleeping, starting the actual work");
         }
 
         //==================================================================================
@@ -120,57 +125,48 @@ public class BootupService extends IntentService {
         // Device
         //==================================================================================
         Logger.i(this, "----- DEVICE START -----");
-        if (configuration.sobDevice) {
-            cmd = DeviceFeatureFragment.restore(this);
-            Logger.v(this, cmd);
-            sbCmd.append(cmd);
-        }
+        cmd = DeviceFeatureFragment.restore(bootupConfiguration);
+        Logger.v(this, cmd);
+        sbCmd.append(cmd);
         Logger.i(this, "----- DEVICE END -----");
 
         //==================================================================================
         // Performance
         //==================================================================================
         Logger.i(this, "----- CPU START -----");
-        if (configuration.sobCpu) {
-            cmd = CpuUtils.get().restore(this);
-            Logger.v(this, cmd);
-            sbCmd.append(cmd);
-        }
+        cmd = CpuUtils.get().restore(bootupConfiguration);
+        Logger.v(this, cmd);
+        sbCmd.append(cmd);
         Logger.i(this, "----- CPU END -----");
+
         Logger.i(this, "----- GPU START -----");
-        if (configuration.sobGpu) {
-            cmd = GpuUtils.get().restore(this);
-            Logger.v(this, cmd);
-            sbCmd.append(cmd);
-        }
+        cmd = GpuUtils.get().restore(bootupConfiguration);
+        Logger.v(this, cmd);
+        sbCmd.append(cmd);
         Logger.i(this, "----- GPU END -----");
+
         Logger.i(this, "----- EXTRAS START -----");
-        if (configuration.sobExtras) {
-            cmd = DeviceFeatureKernelFragment.restore(this);
-            Logger.v(this, cmd);
-            sbCmd.append(cmd);
-        }
+        cmd = DeviceFeatureKernelFragment.restore(bootupConfiguration);
+        Logger.v(this, cmd);
+        sbCmd.append(cmd);
         Logger.i(this, "----- EXTRAS END -----");
+
         Logger.i(this, "----- VOLTAGE START -----");
-        if (configuration.sobVoltage) {
-            // TODO: convert to bootup
-            cmd = VoltageFragment.restore(this);
-            Logger.v(this, cmd);
-            sbCmd.append(cmd);
-        }
+        // TODO: FULLY convert to bootup
+        cmd = VoltageFragment.restore(this, bootupConfiguration);
+        Logger.v(this, cmd);
+        sbCmd.append(cmd);
         Logger.i(this, "----- VOLTAGE END -----");
 
         //==================================================================================
         // Tools
         //==================================================================================
         Logger.i(this, "----- TOOLS START -----");
-        if (configuration.sobSysctl) {
-            if (new File("/system/etc/sysctl.conf").exists()) {
-                cmd = SysctlFragment.restore(this);
-                Logger.v(this, cmd);
-                sbCmd.append(cmd);
-                sbCmd.append("busybox sysctl -p;\n");
-            }
+        cmd = SysctlFragment.restore(bootupConfiguration);
+        Logger.v(this, cmd);
+        sbCmd.append(cmd);
+        if (new File("/system/etc/sysctl.conf").exists()) {
+            sbCmd.append("busybox sysctl -p;\n");
         }
 
         cmd = EntropyFragment.restore(this);
