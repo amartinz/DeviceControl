@@ -75,10 +75,17 @@ public class BootUpReceiver extends BroadcastReceiver {
         final PendingIntent pi = PendingIntent.getService(ctx, 0, bootupRestorationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
+        final String title = ctx.getString(R.string.app_name);
+        final String content = ctx.getString(R.string.bootup_restoration_content);
+
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
-        builder.setContentTitle(ctx.getString(R.string.app_name))
-                .setContentText(ctx.getString(R.string.bootup_restoration_content))
-                .setOngoing(true)
+        final NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle();
+        style.bigText(content);
+
+        builder.setContentTitle(title)
+                .setContentText(content)
+                .setStyle(style)
+                .setOngoing(false)
                 .setSmallIcon(R.drawable.ic_bootup_restore)
                 .setColor(AppResources.get().getAccentColor())
                 .setContentIntent(pi)
