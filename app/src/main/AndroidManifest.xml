@@ -19,8 +19,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.namelessrom.devicecontrol"
     android:installLocation="auto"
-    android:versionCode="121"
-    android:versionName="0.8.3">
+    android:versionCode="122"
+    android:versionName="0.8.4">
 
     <!-- currently broken, reenable once fixed -->
     <!--uses-sdk tools:node="replace" /-->
