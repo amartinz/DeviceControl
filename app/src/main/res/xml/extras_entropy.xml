@@ -52,7 +52,7 @@
 
         <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
             android:key="rng_startup"
-            android:title="@string/reapply_on_boot" />
+            android:title="@string/bootup_enabled" />
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
 
