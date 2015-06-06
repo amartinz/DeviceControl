@@ -53,8 +53,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.stericson.roottools.RootTools;
-import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
@@ -408,30 +406,6 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         mHandler.postDelayed(mClearRunnable, 500);
     }
 
-    private void disable() {
-        if (mAppItem == null) return;
-
-        String cmd;
-        if (mAppItem.isEnabled()) {
-            cmd = "pm disable " + mAppItem.getPackageName() + " 2> /dev/null";
-        } else {
-            cmd = "pm enable " + mAppItem.getPackageName() + " 2> /dev/null";
-        }
-
-        final CommandCapture commandCapture = new CommandCapture(0, cmd) {
-            @Override public void commandTerminated(int id, String reason) {
-                updateAppEnabled();
-            }
-
-            @Override public void commandCompleted(int id, int exitcode) {
-                updateAppEnabled();
-            }
-        };
-
-        try {
-            RootTools.getShell(true).add(commandCapture);
-        } catch (Exception ignored) { /* ignored */ }
-    }
 
     private void updateAppEnabled() {
         if (mAppItem == null) {
@@ -584,7 +558,12 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (type) {
                                     case DIALOG_TYPE_DISABLE: {
-                                        disable();
+                                        mAppItem.disableOrEnable(
+                                                new AppItem.DisableEnableListener() {
+                                                    @Override public void OnDisabledOrEnabled() {
+                                                        updateAppEnabled();
+                                                    }
+                                                });
                                         break;
                                     }
                                     case DIALOG_TYPE_UNINSTALL: {

@@ -19,42 +19,57 @@ package org.namelessrom.devicecontrol.modules.appmanager;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.squareup.leakcanary.RefWatcher;
+
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.ui.views.CustomRecyclerView;
 import org.namelessrom.devicecontrol.utils.SortHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class BaseAppListFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
-    private static final int ANIM_DURATION = 350;
+public abstract class BaseAppListFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnCloseListener, View.OnClickListener {
+    private static final int ANIM_DURATION = 450;
 
     private AppListAdapter mAdapter;
 
-    private RecyclerView mRecyclerView;
+    private CustomRecyclerView mRecyclerView;
     private TextView mEmptyView;
     private LinearLayout mProgressContainer;
 
+    private final ArrayList<AppItem> mSelectedApps = new ArrayList<>();
+    private HorizontalScrollView mAppListBar;
+
     private boolean mIsLoading;
+
+    public interface AppSelectedListener {
+        void onAppSelected(String packageName, ArrayList<AppItem> selectedApps);
+    }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_app_list, menu);
@@ -108,9 +123,14 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_app_list, container, false);
-        mRecyclerView = (RecyclerView) rootView.findViewById(android.R.id.list);
+        mRecyclerView = (CustomRecyclerView) rootView.findViewById(android.R.id.list);
         mEmptyView = (TextView) rootView.findViewById(android.R.id.empty);
         mProgressContainer = (LinearLayout) rootView.findViewById(R.id.progressContainer);
+
+        mAppListBar = (HorizontalScrollView) rootView.findViewById(R.id.app_bar);
+        rootView.findViewById(R.id.app_bar_uninstall).setOnClickListener(this);
+        rootView.findViewById(R.id.app_bar_enable).setOnClickListener(this);
+        rootView.findViewById(R.id.app_bar_disable).setOnClickListener(this);
         return rootView;
     }
 
@@ -129,9 +149,158 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
         loadApps(false);
     }
 
+    @Override public void onDestroy() {
+        RefWatcher refWatcher = Application.getRefWatcher(getActivity());
+        refWatcher.watch(this);
+        super.onDestroy();
+    }
+
     private void invalidateOptionsMenu() {
         if (getActivity() != null) {
             getActivity().invalidateOptionsMenu();
+        }
+    }
+
+    @Override public void onClick(View v) {
+        final int id = v.getId();
+        switch (id) {
+            case R.id.app_bar_uninstall:
+            case R.id.app_bar_enable:
+            case R.id.app_bar_disable: {
+                showActionDialog(id);
+                break;
+            }
+        }
+    }
+
+    private void showActionDialog(final int type) {
+        int title;
+        String message;
+
+        switch (type) {
+            default:
+            case R.id.app_bar_uninstall: {
+                title = R.string.uninstall;
+                message = getString(R.string.uninstall_msg_multi, mSelectedApps.size());
+                break;
+            }
+            case R.id.app_bar_enable: {
+                title = R.string.enable;
+                message = getString(R.string.enable_msg_multi, mSelectedApps.size());
+                break;
+            }
+            case R.id.app_bar_disable: {
+                title = R.string.disable;
+                message = getString(R.string.disable_msg_multi, mSelectedApps.size());
+                break;
+            }
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                showProcessingDialog(type);
+            }
+        });
+        builder.show();
+    }
+
+    private void showProcessingDialog(final int type) {
+        int titleResId;
+        int messageResId;
+
+        switch (type) {
+            default:
+            case R.id.app_bar_uninstall: {
+                titleResId = R.string.uninstall;
+                messageResId = R.string.uninstall_msg_multi_action;
+                break;
+            }
+            case R.id.app_bar_enable: {
+                titleResId = R.string.enable;
+                messageResId = R.string.enable_msg_multi_action;
+                break;
+            }
+            case R.id.app_bar_disable: {
+                titleResId = R.string.disable;
+                messageResId = R.string.disable_msg_multi_action;
+                break;
+            }
+        }
+
+        new ProcessTask(getActivity(), type, titleResId, messageResId, mSelectedApps).execute();
+    }
+
+    private class ProcessTask extends AsyncTask<Void, Integer, Void> {
+        private final Activity activity;
+        private final int type;
+        private final int messageResId;
+        private final ArrayList<AppItem> selectedApps;
+        private final int length;
+        private final ProgressDialog progressDialog;
+
+        public ProcessTask(Activity activity, int type, int titleResId, int messageResId,
+                ArrayList<AppItem> selectedApps) {
+            this.activity = activity;
+            this.type = type;
+            this.messageResId = messageResId;
+            this.selectedApps = selectedApps;
+            this.length = this.selectedApps.size();
+
+            progressDialog = new ProgressDialog(this.activity);
+            progressDialog.setTitle(titleResId);
+            progressDialog.setMessage(activity.getString(messageResId, 0, this.length));
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setMax(this.length);
+            progressDialog.setProgress(0);
+        }
+
+        @Override protected void onPreExecute() {
+            progressDialog.show();
+        }
+
+        @Override protected void onProgressUpdate(Integer... values) {
+            // increase current app counter by one as we deliver indexes
+            final int currentApp = values[0] + 1;
+            progressDialog.setMessage(activity.getString(messageResId, currentApp, this.length));
+            progressDialog.setProgress(currentApp);
+        }
+
+        @Override protected Void doInBackground(Void... params) {
+            for (int i = 0; i < this.length; i++) {
+                publishProgress(i);
+                AppItem appItem = selectedApps.get(i);
+                switch (type) {
+                    case R.id.app_bar_uninstall: {
+                        appItem.uninstall(activity, null, false);
+                        break;
+                    }
+                    case R.id.app_bar_enable: {
+                        appItem.enable(null);
+                        break;
+                    }
+                    case R.id.app_bar_disable: {
+                        appItem.disable(null);
+                        break;
+                    }
+                }
+            }
+
+            // wait for 750 ms to let everything update its state
+            try {
+                Thread.sleep(750);
+            } catch (Exception ignored) { }
+            return null;
+        }
+
+        @Override protected void onPostExecute(Void aVoid) {
+            progressDialog.hide();
+            loadApps(true);
+            Snackbar.make(BaseAppListFragment.this.mAppListBar, R.string.action_completed,
+                    Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -197,15 +366,9 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
 
                 @Override public void onAnimationEnd(Animator animation) {
                     if (appItems != null) {
-                        AppItem.UninstallListener listener = new AppItem.UninstallListener() {
-                            @Override public void OnUninstallComplete() {
-                                loadApps(true);
-                            }
-                        };
-
                         if (mAdapter == null) {
-                            final AppListAdapter adapter =
-                                    new AppListAdapter(getActivity(), appItems, listener);
+                            final AppListAdapter adapter = new AppListAdapter(getActivity(),
+                                    appItems, mUninstallListener, mAppSelectedListener);
                             mRecyclerView.setAdapter(adapter);
                             mAdapter = adapter;
                         } else {
@@ -227,5 +390,23 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
             invalidateOptionsMenu();
         }
     }
+
+    private final AppItem.UninstallListener mUninstallListener = new AppItem.UninstallListener() {
+        @Override public void OnUninstallComplete() {
+            loadApps(true);
+        }
+    };
+
+    private final AppSelectedListener mAppSelectedListener = new AppSelectedListener() {
+        @Override public void onAppSelected(String packageName, ArrayList<AppItem> selectedApps) {
+            mSelectedApps.clear();
+            mSelectedApps.addAll(selectedApps);
+            if (mSelectedApps.size() == 0) {
+                mAppListBar.setVisibility(View.GONE);
+            } else {
+                mAppListBar.setVisibility(View.VISIBLE);
+            }
+        }
+    };
 
 }

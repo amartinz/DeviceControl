@@ -23,9 +23,11 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.widget.Toast;
+
+import com.stericson.roottools.RootTools;
+import com.stericson.roottools.execution.CommandCapture;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
@@ -38,6 +40,10 @@ public class AppItem {
     private final String label;
 
     private boolean enabled = false;
+
+    public interface DisableEnableListener {
+        void OnDisabledOrEnabled();
+    }
 
     public interface UninstallListener {
         void OnUninstallComplete();
@@ -99,12 +105,57 @@ public class AppItem {
         return false;
     }
 
+    public void disable(final DisableEnableListener listener) {
+        disableOrEnable(String.format("pm disable %s 2> /dev/null", pkgInfo.packageName), listener);
+    }
+
+    public void enable(final DisableEnableListener listener) {
+        disableOrEnable(String.format("pm enable %s 2> /dev/null", pkgInfo.packageName), listener);
+    }
+
+    public void disableOrEnable(final DisableEnableListener listener) {
+        if (enabled) {
+            disable(listener);
+            return;
+        }
+        enable(listener);
+    }
+
+    private void disableOrEnable(String cmd, final DisableEnableListener listener) {
+        final CommandCapture commandCapture = new CommandCapture(0, cmd) {
+            @Override public void commandTerminated(int id, String reason) {
+                if (listener != null) {
+                    listener.OnDisabledOrEnabled();
+                }
+            }
+
+            @Override public void commandCompleted(int id, int exitcode) {
+                if (listener != null) {
+                    listener.OnDisabledOrEnabled();
+                }
+            }
+        };
+
+        try {
+            RootTools.getShell(true).add(commandCapture);
+        } catch (Exception ignored) { /* ignored */ }
+    }
+
     public void uninstall(Activity activity, UninstallListener listener) {
         AppItem.uninstall(activity, this, listener);
     }
 
+    public void uninstall(Activity activity, UninstallListener listener, boolean withFeedback) {
+        AppItem.uninstall(activity, this, listener, withFeedback);
+    }
+
     public static void uninstall(final Activity activity, final AppItem appItem,
             final UninstallListener listener) {
+        uninstall(activity, appItem, listener, true);
+    }
+
+    public static void uninstall(final Activity activity, final AppItem appItem,
+            final UninstallListener listener, final boolean withFeedback) {
         // try via native package manager api
         AppHelper.uninstallPackage(activity.getPackageManager(), appItem.getPackageName());
 
@@ -129,33 +180,50 @@ public class AppItem {
         Logger.v(appItem.getPackageName(), cmd);
 
         // create the dialog (will not be shown for a long amount of time though)
-        final ProgressDialog dialog;
-        dialog = new ProgressDialog(activity);
-        dialog.setTitle(R.string.uninstalling);
-        dialog.setMessage(activity.getString(R.string.applying_wait));
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setCancelable(false);
+        if (withFeedback) {
+            final ProgressDialog dialog;
+            dialog = new ProgressDialog(activity);
+            dialog.setTitle(R.string.uninstalling);
+            dialog.setMessage(activity.getString(R.string.applying_wait));
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setCancelable(false);
+
+            new AsyncTask<Void, Void, Void>() {
+                @Override protected void onPreExecute() {
+                    dialog.show();
+                }
+
+                @Override protected Void doInBackground(Void... voids) {
+                    Utils.runRootCommand(cmd, true);
+                    return null;
+                }
+
+                @Override protected void onPostExecute(Void aVoid) {
+                    dialog.dismiss();
+                    Toast.makeText(activity,
+                            activity.getString(R.string.uninstall_success, appItem.getLabel()),
+                            Toast.LENGTH_SHORT).show();
+                    if (listener != null) {
+                        listener.OnUninstallComplete();
+                    }
+                }
+            }.execute();
+            return;
+        }
 
         new AsyncTask<Void, Void, Void>() {
-            @Override protected void onPreExecute() {
-                dialog.show();
-            }
-
             @Override protected Void doInBackground(Void... voids) {
                 Utils.runRootCommand(cmd, true);
                 return null;
             }
 
             @Override protected void onPostExecute(Void aVoid) {
-                dialog.dismiss();
-                Toast.makeText(activity,
-                        activity.getString(R.string.uninstall_success, appItem.getLabel()),
-                        Toast.LENGTH_SHORT).show();
                 if (listener != null) {
                     listener.OnUninstallComplete();
                 }
             }
         }.execute();
+
     }
 
 }

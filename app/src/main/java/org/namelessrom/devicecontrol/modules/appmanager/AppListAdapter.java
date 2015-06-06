@@ -34,6 +34,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,16 +53,23 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     private ArrayList<AppItem> mAppList;
     private ArrayList<AppItem> mFiltered;
 
-    private final AppItem.UninstallListener mListener;
+    private final AppItem.UninstallListener mUninstallListener;
+    private final BaseAppListFragment.AppSelectedListener mAppSelectedListener;
 
-    public AppListAdapter(final Activity activity, final ArrayList<AppItem> appList,
-            final AppItem.UninstallListener listener) {
+    private final ArrayList<AppItem> mSelectedApps;
+
+    public AppListAdapter(Activity activity, ArrayList<AppItem> appList,
+            AppItem.UninstallListener uninstallListener,
+            BaseAppListFragment.AppSelectedListener appSelectedListener) {
         mActivity = activity;
         mFiltered = appList;
-        mListener = listener;
+        mUninstallListener = uninstallListener;
+        mAppSelectedListener = appSelectedListener;
 
         // save original items
         mAppList = new ArrayList<>(mFiltered);
+
+        mSelectedApps = new ArrayList<>();
 
         res = mActivity.getResources();
     }
@@ -69,11 +78,16 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         mFiltered = appItems;
         mAppList.clear();
         mAppList.addAll(mFiltered);
+        mSelectedApps.clear();
+
+        if (mAppSelectedListener != null) {
+            mAppSelectedListener.onAppSelected("refreshing", mSelectedApps);
+        }
 
         notifyDataSetChanged();
     }
 
-    public final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, View.OnLongClickListener {
         private final CardView cardView;
         private final LinearLayout container;
 
@@ -84,6 +98,8 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         private final TextView appLabel;
         private final TextView packageName;
         private final TextView appVersion;
+
+        private final CheckBox appSelector;
 
         private AppItem appItem;
 
@@ -102,6 +118,8 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                     }
                 });
             }
+            // TODO: fixup sliding layout lib
+            // container.setOnLongClickListener(this);
 
             actionOpen = (ImageView) v.findViewById(R.id.app_open);
             actionOpen.setOnClickListener(this);
@@ -112,6 +130,9 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             appLabel = (TextView) v.findViewById(R.id.app_label);
             packageName = (TextView) v.findViewById(R.id.app_package);
             appVersion = (TextView) v.findViewById(R.id.app_version);
+
+            appSelector = (CheckBox) v.findViewById(R.id.app_selector);
+            appSelector.setOnCheckedChangeListener(this);
 
             v.setOnClickListener(this);
         }
@@ -134,6 +155,8 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             cardView.setForeground(new ColorDrawable(mActivity.getResources().getColor(color)));
 
             actionOpen.setVisibility(appItem.isEnabled() ? View.VISIBLE : View.GONE);
+
+            appSelector.setChecked(mSelectedApps.contains(appItem));
         }
 
         @Override public void onClick(View v) {
@@ -170,13 +193,17 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                                     new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            appItem.uninstall(mActivity, mListener);
+                                            appItem.uninstall(mActivity, mUninstallListener);
                                         }
                                     })
                             .show();
                     break;
                 }
                 default: {
+                    if (mSelectedApps.size() != 0) {
+                        appSelector.toggle();
+                        return;
+                    }
                     final Intent intent = new Intent(mActivity, AppDetailsActivity.class);
                     intent.putExtra(AppDetailsActivity.ARG_FROM_ACTIVITY, true);
                     intent.putExtra(AppDetailsActivity.ARG_PACKAGE_NAME, appItem.getPackageName());
@@ -184,6 +211,27 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                     break;
                 }
             }
+        }
+
+        @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            final String packageName = appItem.getPackageName();
+            if (isChecked) {
+                mSelectedApps.add(appItem);
+            } else {
+                mSelectedApps.remove(appItem);
+            }
+
+            if (mAppSelectedListener != null) {
+                mAppSelectedListener.onAppSelected(packageName, mSelectedApps);
+            }
+        }
+
+        @Override public boolean onLongClick(View v) {
+            if (mSelectedApps.size() != 0) {
+                return true;
+            }
+            appSelector.toggle();
+            return true;
         }
     }
 
