@@ -24,6 +24,9 @@ import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.support.v4.preference.PreferenceFragment;
 
+import com.squareup.leakcanary.RefWatcher;
+
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
@@ -42,6 +45,12 @@ public abstract class CustomPreferenceFragment extends PreferenceFragment implem
         }
 
         return false;
+    }
+
+    @Override public void onDestroy() {
+        RefWatcher refWatcher = Application.getRefWatcher(getActivity());
+        refWatcher.watch(this);
+        super.onDestroy();
     }
 
     public void removeIfEmpty(final PreferenceScreen root, final PreferenceGroup preferenceGroup) {

@@ -92,4 +92,11 @@ public class InformationFragment extends AttachFragment {
             mCpuStates.onPause();
         }
     }
+
+    @Override public void onDestroy() {
+        if (mCpuStates != null) {
+            mCpuStates.onDestroy();
+        }
+        super.onDestroy();
+    }
 }

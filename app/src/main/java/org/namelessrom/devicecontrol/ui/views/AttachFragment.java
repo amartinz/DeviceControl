@@ -22,6 +22,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
 
+import com.squareup.leakcanary.RefWatcher;
+
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.listeners.OnSectionAttachedListener;
@@ -67,11 +70,17 @@ public abstract class AttachFragment extends Fragment implements OnBackPressedLi
         return super.onCreateAnimation(transit, enter, nextAnim);
     }
 
+    @Override public void onDestroy() {
+        RefWatcher refWatcher = Application.getRefWatcher(getActivity());
+        refWatcher.watch(this);
+        super.onDestroy();
+    }
+
     /*
-     * whether we should show the burger on a back action.
-     * defaults to true, set to false to show an arrow
-     * possible use case when to set it to false: sub fragment navigation
-     */
+         * whether we should show the burger on a back action.
+         * defaults to true, set to false to show an arrow
+         * possible use case when to set it to false: sub fragment navigation
+         */
     @Override public boolean showBurger() { return true; }
 
     @Override public boolean onBackPressed() { return false; }

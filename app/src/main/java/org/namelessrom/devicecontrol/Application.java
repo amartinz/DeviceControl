@@ -25,6 +25,7 @@ import android.os.Environment;
 import android.os.Handler;
 
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -45,12 +46,18 @@ public class Application extends android.app.Application {
 
     private BitmapLruCache mCache;
 
+    private RefWatcher mRefWatcher;
+
     public static Application get() {
         return Application.sInstance;
     }
 
     public static Application getApplication(Context context) {
         return (Application) context.getApplicationContext();
+    }
+
+    public static RefWatcher getRefWatcher(Context context) {
+        return getApplication(context).mRefWatcher;
     }
 
     @Override public void onLowMemory() {
@@ -62,7 +69,7 @@ public class Application extends android.app.Application {
 
     @Override public void onCreate() {
         super.onCreate();
-        LeakCanary.install(this);
+        mRefWatcher = LeakCanary.install(this);
 
         Application.sInstance = this;
 

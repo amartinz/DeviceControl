@@ -21,6 +21,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.animation.Animation;
 
+import com.squareup.leakcanary.RefWatcher;
+
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
@@ -28,7 +31,6 @@ import org.namelessrom.devicecontrol.listeners.OnSectionAttachedListener;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
-import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 
 public abstract class AttachMaterialPreferenceFragment extends MaterialSupportPreferenceFragment implements OnBackPressedListener {
 
@@ -68,6 +70,12 @@ public abstract class AttachMaterialPreferenceFragment extends MaterialSupportPr
             return a;
         }
         return super.onCreateAnimation(transit, enter, nextAnim);
+    }
+
+    @Override public void onDestroy() {
+        RefWatcher refWatcher = Application.getRefWatcher(getActivity());
+        refWatcher.watch(this);
+        super.onDestroy();
     }
 
     /*
