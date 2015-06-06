@@ -24,7 +24,6 @@
   <string name="donate_via">Faire un don via %s</string>
   <string name="donate_paypal_message">Cela vous redirigera vers PayPal pour terminer le don.</string>
   <string name="show_pollfish">Activer Pollfish</string>
-  <string name="show_pollfish_summary">Ajoute une petite icône en bas à droite. Avec chaque questionnaire rempli, vous nous aidez à nous développer. Vous pouvez toujours désactiver la fonctionnalité, bien sûr :)</string>
   <string name="task_type">Type de tâche</string>
   <string name="event_based">Événement basé</string>
   <string name="next">Suivant</string>

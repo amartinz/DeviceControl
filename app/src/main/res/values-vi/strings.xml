@@ -148,8 +148,6 @@
   <string name="logger_mode_summary">Bỏ chọn để loại bỏ bất kỳ bản ghi từ logcat</string>
   <string name="debugging">Gỡ lỗi</string>
   <string name="extensive_logging">Mở rộng bản ghi</string>
-  <string name="reapply_on_boot">Áp dụng lại khi khởi động</string>
-  <string name="reapply_on_boot_summary">Chọn các thiết lập bạn muốn khôi phục khi máy khởi động</string>
   <string name="version">Phiên bản</string>
   <string name="tasker">Tác vụ</string>
   <string name="tasklist">Danh sách tác vụ</string>
@@ -202,9 +200,6 @@
   <string name="menu">Menu</string>
   <string name="about">Tự giới thiệu</string>
   <string name="preferences">Tùy chỉnh cá nhân</string>
-  <string name="become_a_monkey">Trở thành khỉ</string>
-  <string name="is_monkey">Chờ đã, bạn nghiêm túc chứ?\nĐối với một con khỉ bạn khá thông minh.\nKhông ngốc như chúng nhưng...\nVậy, hãy bỏ qua việc này,</string>
-  <string name="no_monkey">Không phải là khỉ chứ?*Sigh* :(</string>
   <string name="media_scan_trigger">Kích hoạt tìm kiếm tập tin truyền thông</string>
   <string name="media_scan_summary">Kích hoạt thủ công  tìm kiếm tập tin truyền thông, trong trường hợp máy của bạn kết nối bằng phương thức MTP và các tập tin mới không hiển thị.</string>
   <string name="force_stop">Buộc dừng</string>
@@ -372,7 +367,6 @@
   <string name="screen_on">Bật màn hình</string>
   <string name="cpu">CPU</string>
   <string name="input_reset_on_suspend">Khởi động tạm treo</string>
-  <string name="input_reset_on_suspend_summary">Khởi động thiết bị đầu vào khi có lỗi bóng ma hay không đáp ứng</string>
   <string name="arch">Kiến trúc</string>
   <string name="string_default">Mặc định</string>
   <string name="touch_boost">Tăng độ nhay cảm ứng</string>

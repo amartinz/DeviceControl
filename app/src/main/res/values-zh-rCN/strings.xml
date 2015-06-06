@@ -153,8 +153,6 @@
   <string name="logger_mode_summary">取消选中以删除所有日志</string>
   <string name="debugging">调试</string>
   <string name="extensive_logging">大量的日志记录</string>
-  <string name="reapply_on_boot">启动时重新应用</string>
-  <string name="reapply_on_boot_summary">选择您想要在设备启动时恢复的设置</string>
   <string name="version">版本</string>
   <string name="tasker">任务管理</string>
   <string name="tasklist">任务列表</string>
@@ -209,9 +207,6 @@
   <string name="menu">菜单</string>
   <string name="about">关于</string>
   <string name="preferences">首选项</string>
-  <string name="become_a_monkey">变猴</string>
-  <string name="is_monkey">等等，你确定？你是开玩笑吗。或许 他们是错误的，不过&#8230;&#8230;可以跳过这个。</string>
-  <string name="no_monkey">不是一直猴？唉 : (</string>
   <string name="media_scan_trigger">触发媒体扫描</string>
   <string name="media_scan_summary">在您的设备通过MTP连接电脑后出现新文件不可见的情况下，点击触发媒体扫描。</string>
   <string name="media_scan_triggered">媒体扫描已开始，可这能需要一点时间</string>
@@ -387,7 +382,6 @@
   <string name="screen_on">点亮屏幕</string>
   <string name="cpu">处理器</string>
   <string name="input_reset_on_suspend">悬停时重设</string>
-  <string name="input_reset_on_suspend_summary">悬停时重设输入设备以解决误触及无响应等触摸板问题</string>
   <string name="arch">架构</string>
   <string name="string_default">默认</string>
   <string name="touch_boost">触摸增强</string>
@@ -398,7 +392,6 @@
   <string name="security_settings_desc_multi" product="default">此应用可访问您手机上的以下内容。为了提高性能和减少内存使用量， <xliff:g id="base_app_name">%1$s</xliff:g>可获得其中的部分权限，因为它与<xliff:g id="additional_apps_list">%2$s</xliff:g>:运行在同一进程中。</string>
   <string name="no_permissions">无需任何权限</string>
   <string name="perm_costs_money">这可能会产生费用</string>
-  <string name="perms_new_perm_prefix"><font size="12" fgcolor="#ff33b5e5"> 新：</font></string>
   <string name="perms_description_app">由 <xliff:g id="app_name">%1$s </xliff:g> 提供。</string>
   <string name="environment">环境</string>
   <string name="motion">运动</string>
@@ -431,4 +424,5 @@
   <string name="cpu_lock_gov">锁定调速器</string>
   <string name="cpu_lock_gov_summary">试图阻止更改调速器\n可能在某些设备不工作！</string>
   <string name="no_items_found">无此项目......</string>
+  <string name="notification">通知</string>
 </resources>

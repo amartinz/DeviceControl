@@ -142,8 +142,6 @@
   <string name="logger_mode_summary">Снимите флажок, чтобы удалить любые записи из logcat</string>
   <string name="debugging">Отладка</string>
   <string name="extensive_logging">Активное журналирование</string>
-  <string name="reapply_on_boot">Применять вновь при загрузке</string>
-  <string name="reapply_on_boot_summary">Выберите настройки, которые вы хотите восстановить, когда устройство загрузится</string>
   <string name="version">Версия</string>
   <string name="tasker">Планировщик</string>
   <string name="tasklist">Список задач</string>
@@ -190,9 +188,6 @@
   <string name="off">Выключено</string>
   <string name="menu">Меню</string>
   <string name="preferences">Настройки</string>
-  <string name="become_a_monkey">Стать обезьяной</string>
-  <string name="is_monkey">Подождите, вы серьезно?\nВы очень умны для обезьяны.\nНе то, чтобы они глупы, но...\nЛадно, давайте пропустим это.</string>
-  <string name="no_monkey">Не обезьяна? *вздохнул* :(</string>
   <string name="media_scan_trigger">Запустить сканирование медиафайлов</string>
   <string name="media_scan_summary">Вручную запустить сканирование медиафайлов, на случай, если ваш телефон подключен по MTP и новые файлы не видны.</string>
   <string name="clear_cache">Очистить кэш</string>
@@ -284,4 +279,5 @@
   <string name="emmc_date">Дата</string>
   <string name="setup_complete">Установка завершена</string>
   <string name="string_default">По умолчанию</string>
+  <string name="notification">Уведомление</string>
 </resources>

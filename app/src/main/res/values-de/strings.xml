@@ -157,9 +157,6 @@
   <string name="debug_strict_mode">Strikten Modus aktivieren</string>
   <string name="shell">Shell</string>
   <string name="su_shell_context">Shell Kontext</string>
-  <string name="su_shell_context_summary">Der Kontext, unter welchem Device Control Befehle ausführt.\nDer Standardwert ist <xliff:g id="value" example="Normal">\"%s\"</xliff:g>.\nAktueller Wert: <xliff:g id="value" example="System app">\"%s\"</xliff:g></string>
-  <string name="reapply_on_boot">Beim Starten anwenden</string>
-  <string name="reapply_on_boot_summary">Wähle die Einstellungen, welche wiederhergestellt werden, wenn das Gerät startet</string>
   <string name="version">Version</string>
   <string name="tasker">Tasker</string>
   <string name="tasklist">Aufgaben-Liste</string>
@@ -214,9 +211,6 @@
   <string name="menu">Menü</string>
   <string name="about">Über uns</string>
   <string name="preferences">Einstellungen</string>
-  <string name="become_a_monkey">Werde ein Affe</string>
-  <string name="is_monkey">Warte, ist das dein Ernst?\nDu bist ziemlich clever für einen Affen.\nNicht dass sie dumm wären, aber...\nWie auch immer, lass uns das Thema wechseln.</string>
-  <string name="no_monkey">Kein Affe? *seufz* :(</string>
   <string name="media_scan_trigger">Media-Scanner auslösen</string>
   <string name="media_scan_summary">Löst einen Media-Scan aus, für den Fall, dass du dein Gerät über MTP angeschlossen hast und neue Dateien nicht sichtbar sind.</string>
   <string name="media_scan_triggered">Media Scan ausgelöst, dies kann eine Weile dauern!</string>
@@ -392,7 +386,6 @@
   <string name="screen_on">Bildschirm an</string>
   <string name="cpu">CPU</string>
   <string name="input_reset_on_suspend">Automatisches Zurücksetzen</string>
-  <string name="input_reset_on_suspend_summary">Der Touchscreen wird zurückgesetzt, wenn das Display ausgeschalten wird, um Probleme wie Geister-Berührungen und schlechte Reaktionsfähigkeit zu beheben</string>
   <string name="arch">Architektur</string>
   <string name="string_default">Standard</string>
   <string name="touch_boost">Berührungs-Boost</string>
@@ -403,7 +396,6 @@
   <string name="security_settings_desc_multi" product="default">Diese App kann auf die folgenden Funktionen ihres Gerätes zugreifen. Um die Leistung zu verbessern und die Speicherauslastung zu verringern, hat <xliff:g id="base_app_name">%1$s</xliff:g> einige dieser Berechtigungen, weil es im selben Prozess wie <xliff:g id="additional_apps_list">%2$s</xliff:g> ausgeführt wird:</string>
   <string name="no_permissions">Keine Berechtigungen erforderlich</string>
   <string name="perm_costs_money">Hierfür können Gebühren anfallen</string>
-  <string name="perms_new_perm_prefix"><font size="12" fgcolor="#ff33b5e5">Neu: </font></string>
   <string name="perms_description_app">Zur Verfügung gestellt von <xliff:g id="app_name">%1$s</xliff:g>.</string>
   <string name="environment">Umgebung</string>
   <string name="motion">Bewegung</string>
@@ -450,4 +442,5 @@
   <string name="community_message">Wenn Sie Hilfe benötigen, Anregungen, Ideen und Funktionswünsche haben oder einfach nur diskutieren wollen, können Sie unserer <b>Google+ Community</b> beitreten.\n\nWenn Sie der Community beitreten, können Sie auch an BETA Tests teilnehmen.\nBETA Veröffentlichungen können instabil sein, aber dafür bekommen Sie häufigere Updates mit den neuesten Funktionen und Fehlerbehebungen.</string>
   <string name="join_beta_test">BETA beitreten</string>
   <string name="view_community">Community öffnen</string>
+  <string name="notification">Benachrichtigung</string>
 </resources>

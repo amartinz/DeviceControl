@@ -25,7 +25,6 @@
   <string name="donate_via">Doar via %s</string>
   <string name="donate_paypal_message">Isto redirecionará para o PayPal para completar a doação.</string>
   <string name="show_pollfish">Ativar Pollfish</string>
-  <string name="show_pollfish_summary">Ativa um pequeno ícone no canto inferior direito. Para cada pesquisa feita está a ajudar-nos a crescer. Sinta-se livre para desativá-lo, é claro :)</string>
   <string name="task_type">Tipo de tarefa</string>
   <string name="event_based">Evento baseado</string>
   <string name="next">Próximo</string>

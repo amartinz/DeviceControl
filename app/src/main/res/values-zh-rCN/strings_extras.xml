@@ -25,7 +25,6 @@
   <string name="donate_via">通过 %s 捐赠</string>
   <string name="donate_paypal_message">这会将您重定向到 PayPal 来完成捐赠。</string>
   <string name="show_pollfish">激活 Pollfish</string>
-  <string name="show_pollfish_summary">在右下角激活一个小图标。每个问卷的回答帮助我们进步。您也可以随时停用它:)</string>
   <string name="task_type">任务类型</string>
   <string name="event_based">基于事件的</string>
   <string name="next">下一步</string>

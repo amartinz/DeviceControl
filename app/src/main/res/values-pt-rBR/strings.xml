@@ -151,8 +151,6 @@
   <string name="logger_mode_summary">Desmarque para remover qualquer registo do logcat</string>
   <string name="debugging">Depuração</string>
   <string name="extensive_logging">Ativação de registro extensivo</string>
-  <string name="reapply_on_boot">Reaplicar na inicialização</string>
-  <string name="reapply_on_boot_summary">Escolha as configurações que você deseja restaurar quando o dispositivo é inicializado</string>
   <string name="version">Versão</string>
   <string name="tasker">Tarefa</string>
   <string name="tasklist">Lista de tarefas</string>
@@ -207,9 +205,6 @@
   <string name="menu">Menu</string>
   <string name="about">Sobre</string>
   <string name="preferences">Preferências</string>
-  <string name="become_a_monkey">Tornar-se um macaco</string>
-  <string name="is_monkey">Espera, você está falando sério? \nVocê é muito inteligente para ser um macaco. \nNão que eles sejam estúpidos, but...\nBem, podemos ignorar isto.</string>
-  <string name="no_monkey">Não é um macaco? * Suspiro * :(</string>
   <string name="media_scan_trigger">Iniciar scan media</string>
   <string name="media_scan_summary">Iniciar manual media scan, no caso você ter seu telefone conectado via MTP e novos arquivos não estão visiveis.</string>
   <string name="media_scan_triggered">O scan de media foi ativado, poderá levar algum tempo!</string>
@@ -384,7 +379,6 @@
   <string name="screen_on">Ligar ecrã</string>
   <string name="cpu">CPU</string>
   <string name="input_reset_on_suspend">Reíniciar em suspensão</string>
-  <string name="input_reset_on_suspend_summary">Redefinir o dispositivo de entrada quando suspende, para resolver problemas como a apatia ou toques fantasma</string>
   <string name="arch">Arquitectura</string>
   <string name="string_default">Padrão</string>
   <string name="touch_boost">Aumento do toque</string>
@@ -395,7 +389,6 @@
   <string name="security_settings_desc_multi" product="default">Este aplicativo pode aceder o seguinte no seu telefone. Para melhorar o desempenho e reduzir uso de memória, algumas destas permissões estão disponíveis para <xliff:g id="base_app_name">%1$s</xliff:g> porque corre no mesmo processo como <xliff:g id="additional_apps_list">%2$s</xliff:g>:</string>
   <string name="no_permissions">Não são necessárias permissões</string>
   <string name="perm_costs_money">isto poderá estar sujeito a custos</string>
-  <string name="perms_new_perm_prefix"><font size="12" fgcolor="#ff33b5e5">NOVO: </font></string>
   <string name="perms_description_app">Fornecido por <xliff:g id="app_name">%1$s</xliff:g>.</string>
   <string name="environment">Ambiente</string>
   <string name="motion">Movimento</string>
@@ -428,4 +421,5 @@
   <string name="cpu_lock_gov">Governadores de bloqueio</string>
   <string name="cpu_lock_gov_summary">Tenta impedir a modificação de governors\nIsto pode não funcionar em alguns dispositivos!</string>
   <string name="no_items_found">Nenhum item encontrado...</string>
+  <string name="notification">Notificação</string>
 </resources>

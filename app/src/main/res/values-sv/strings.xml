@@ -151,8 +151,6 @@
   <string name="logger_mode_summary">Avmarkera för att ta bort alla loggar från logcat</string>
   <string name="debugging">Felsöknings läge</string>
   <string name="extensive_logging">Avancerad loggning</string>
-  <string name="reapply_on_boot">Återaktivera vid omstart</string>
-  <string name="reapply_on_boot_summary">Välj de inställningar som du vill återställa vid uppstart</string>
   <string name="version">Version</string>
   <string name="tasker">Aktiveteshanterare</string>
   <string name="tasklist">Aktivitetslistan</string>
@@ -204,9 +202,7 @@
   <string name="menu">Meny</string>
   <string name="about">Om</string>
   <string name="preferences">Inställningar</string>
-  <string name="become_a_monkey">Bli en apa</string>
-  <string name="is_monkey">Vänta, är du seriös?\nDu är ganska smart för en apa.\nIInte för att de är dumma ment...\nMen ändå, glömd detta.</string>
-  <string name="no_monkey">Inte en apa? *Sigh* :(</string>
   <string name="uksm_cpu_governor">CPU-guvernör</string>
   <string name="stop">Stopp</string>
+  <string name="notification">Notification</string>
 </resources>

@@ -99,7 +99,6 @@
   <string name="power_efficient_work">Energiezuinige Werkwachtrij</string>
   <string name="power_efficient_work_summary">Laat toe om het werk opnieuw te plannen op een kern die is al wakker.</string>
   <string name="powersaving_sched_mc_title">Power scheduler</string>
-  <string name="powersaving_sched_mc_0">0 - Uitgeschakeld</string>
   <string name="powersaving_sched_mc_1">1 - Gebalanceerd</string>
   <string name="powersaving_sched_mc_2">2 - Agressief</string>
   <string name="intelli_plug_eco">Eco-modus</string>
@@ -153,8 +152,6 @@
   <string name="logger_mode_summary">Uitvinken om logs te verwijderen uit logcat</string>
   <string name="debugging">Foutopsporing</string>
   <string name="extensive_logging">Uitgebreide logboekregistratie</string>
-  <string name="reapply_on_boot">Opnieuw toepassen bij opstarten</string>
-  <string name="reapply_on_boot_summary">Kies de instellingen die u terugzetten wilt wanneer het apparaat opstart</string>
   <string name="version">Versie</string>
   <string name="tasker">Taakbeheer</string>
   <string name="tasklist">Taaklijst</string>
@@ -209,9 +206,6 @@
   <string name="menu">Menu</string>
   <string name="about">Informatie</string>
   <string name="preferences">Voorkeuren</string>
-  <string name="become_a_monkey">Word een aap</string>
-  <string name="is_monkey">Wacht, bent u serieus? \nU bent vrij slim voor een aap. \nNiet dat zij stom zijn...\nMaar...laten we dit overslaan.</string>
-  <string name="no_monkey">Niet een aap? *Sigh* :(</string>
   <string name="media_scan_trigger">Trigger media scan</string>
   <string name="media_scan_summary">Trigger handmatig een scan van de media, in het geval u uw telefoon heeft aangesloten via MTP en nieuwe bestanden niet zichtbaar zijn.</string>
   <string name="media_scan_triggered">Media scan is geactiveerd, dit kan een tijdje duren!</string>
@@ -386,7 +380,6 @@
   <string name="screen_on">Scherm aan</string>
   <string name="cpu">CPU</string>
   <string name="input_reset_on_suspend">Reset op sluimerstand</string>
-  <string name="input_reset_on_suspend_summary">Reset het invoerapparaat tijdens de sluimerstand om problemen zoals \"ghost touches\" en het niet-reageren van het touchpaneel te omzeilen</string>
   <string name="arch">Architectuur</string>
   <string name="string_default">Standaard</string>
   <string name="touch_boost">Aanraking versterken</string>
@@ -397,7 +390,6 @@
   <string name="security_settings_desc_multi" product="default">Deze app kan toegang krijgen tot de volgende zaken op uw telefoon. Om prestaties te verbeteren en geheugenverbruik te verminderen, zijn sommige van deze machtigingen beschikbaar voor <xliff:g id="base_app_name">%1$s</xliff:g> omdat het wordt uitgevoerd in hetzelfde proces als <xliff:g id="additional_apps_list">%2$s</xliff:g>:</string>
   <string name="no_permissions">Geen vereiste machtigingen</string>
   <string name="perm_costs_money">Dit kan u geld kosten</string>
-  <string name="perms_new_perm_prefix"><font size="12" fgcolor="#ff33b5e5">NIEUW: </font></string>
   <string name="perms_description_app">Aangeboden door <xliff:g id="app_name">%1$s</xliff:g>.</string>
   <string name="environment">Omgeving</string>
   <string name="motion">Beweging</string>
@@ -430,4 +422,5 @@
   <string name="cpu_lock_gov">Governors vastzetten</string>
   <string name="cpu_lock_gov_summary">Probeert om te voorkomen dat governors worden aangepast\nDit werkt niet op sommige apparaten!</string>
   <string name="no_items_found">Geen items gevonden&#8230;</string>
+  <string name="notification">Melding</string>
 </resources>

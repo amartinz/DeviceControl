@@ -95,7 +95,6 @@
   <string name="power_efficient_work">Coda di lavoro energeticamente efficiente</string>
   <string name="power_efficient_work_summary">Permette al lavoro di essere riprogrammato su di un core che è già sveglio.</string>
   <string name="powersaving_sched_mc_title">Schedulatore alimentazione</string>
-  <string name="powersaving_sched_mc_0">0 - Disabilitato</string>
   <string name="powersaving_sched_mc_1">1 - Bilanciato</string>
   <string name="powersaving_sched_mc_2">2 - Aggressivo</string>
   <string name="intelli_plug_eco">Modalità Eco</string>
@@ -148,8 +147,6 @@
   <string name="logger_mode_summary">Deselezionare questa opzione per rimuovere eventuali registri da logcat</string>
   <string name="debugging">Debugging</string>
   <string name="extensive_logging">Registrazione estesa</string>
-  <string name="reapply_on_boot">Riapplicare all\'avvio</string>
-  <string name="reapply_on_boot_summary">Scegli le impostazioni che desideri ripristinare quando il dispositivo viene avviato</string>
   <string name="version">Versione</string>
   <string name="tasker">Tasker</string>
   <string name="tasklist">Elenco attività</string>
@@ -184,7 +181,6 @@
   <string name="delete_property_message">%s sarà eliminata.\n\nContinuare?</string>
   <string name="name">Nome</string>
   <string name="presets">Preset</string>
-  <string name="gestures">Gesti</string>
   <string name="knock_on">Knock On</string>
   <string name="knock_on_summary">Doppio tap sullo schermo per accenderlo</string>
   <string name="five_minutes">5 minuti</string>
@@ -202,9 +198,6 @@
   <string name="menu">Menu</string>
   <string name="about">Info</string>
   <string name="preferences">Impostazioni</string>
-  <string name="become_a_monkey">Diventa una scimmia</string>
-  <string name="is_monkey">Aspetta, fai sul serio? \nSei piuttosto intelligente per essere una scimmia. \nNon che siano stupide ma...\nBeh, saltiamo questo passaggio.</string>
-  <string name="no_monkey">Non sei una scimmia? * Sigh * :(</string>
   <string name="media_scan_trigger">Avvia scansione media</string>
   <string name="media_scan_summary">Avvia manualmente una scansione multimediale, nel caso in cui il telefono sia collegato via MTP e nuovi file non sono visibili.</string>
   <string name="force_stop">Arresto forzato</string>
@@ -362,7 +355,6 @@
   <string name="screen_off">Spegni schermo</string>
   <string name="screen_on">Accendi schermo</string>
   <string name="input_reset_on_suspend">resetta dopo la sospensione</string>
-  <string name="input_reset_on_suspend_summary">ripristina il dispositivo di input durante la sospensione per risolvere problemi del pannello touch come tocchi fantasma e irresponsibilità</string>
   <string name="arch">Architettura</string>
   <string name="string_default">Predefinito</string>
   <string name="touch_boost">Touch boost</string>

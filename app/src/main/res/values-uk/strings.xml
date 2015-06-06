@@ -131,8 +131,6 @@
   <string name="logger_mode_summary">Зніміть прапорець, щоб видалити будь-які записи з logcat</string>
   <string name="debugging">Налагодження</string>
   <string name="extensive_logging">Обширне журналювання</string>
-  <string name="reapply_on_boot">Застосовувати під час завантаження</string>
-  <string name="reapply_on_boot_summary">Виберіть налаштування, які ви хочете відновити під час завантаження пристрою</string>
   <string name="version">Версія</string>
   <string name="tasker">Планувальник</string>
   <string name="tasklist">Список завдань</string>
@@ -176,8 +174,6 @@
   <string name="off">Вимкнено</string>
   <string name="menu">Меню</string>
   <string name="preferences">Параметри</string>
-  <string name="become_a_monkey">Стати мавпою</string>
-  <string name="no_monkey">Не мавпа? * Зітхнув* :(</string>
   <string name="media_scan_trigger">Запустити сканування медіафайлів</string>
   <string name="media_scan_summary">Вручну запустити сканування медіафайлів, на випадок, якщо ваш телефон підключений по MTP і нові файли не відображаються.</string>
   <string name="clear_cache">Очистити кеш</string>

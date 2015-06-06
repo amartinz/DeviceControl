@@ -145,8 +145,6 @@
   <string name="logger_mode_summary">Usuń zaznaczenie, aby usunąć wszelkie dzienniki z logcat</string>
   <string name="debugging">Debugowanie</string>
   <string name="extensive_logging">Szczegółowe rejestrowanie</string>
-  <string name="reapply_on_boot">Zastosuj pownownie przy uruchamianiu urządzenia</string>
-  <string name="reapply_on_boot_summary">Wybierz ustawienia, które chcesz przywrócić podczas następnego uruchomienia</string>
   <string name="version">Wersja</string>
   <string name="tasker">Tasker</string>
   <string name="tasklist">Lista zadań</string>
@@ -198,9 +196,6 @@
   <string name="menu">Menu</string>
   <string name="about">O mnie</string>
   <string name="preferences">Preferencje</string>
-  <string name="become_a_monkey">Zostań małpą</string>
-  <string name="is_monkey">Na serio?\nJesteś dość mądry jak na małpę.\nNo nie żeby małpy były głupie ale...\nNo dobra, dajmy spokój.</string>
-  <string name="no_monkey">Nie jesteś małpą? *Ehhh* :(</string>
   <string name="media_scan_trigger">Uruchom skanowanie mediów</string>
   <string name="media_scan_summary">Ręcznie włącza skanowanie mediów, w przypadku gdy telefon podłączony jest jako MTP i nie widzisz nowych plików</string>
   <string name="media_scan_triggered">Uruchomiono skanowanie mediów, to może chwilę potrwać!</string>

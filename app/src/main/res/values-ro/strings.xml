@@ -148,8 +148,6 @@
   <string name="logger_mode_summary">Debifaţi pentru a elimina log-urile din logcat</string>
   <string name="debugging">Depanare</string>
   <string name="extensive_logging">Logare extensiva</string>
-  <string name="reapply_on_boot">Aplicaţi din nou la pornire</string>
-  <string name="reapply_on_boot_summary">Alegeţi setările pe care doriţi să le restauraţi atunci când dispozitivul repornește</string>
   <string name="version">Versiunea</string>
   <string name="tasker">Manager sarcini</string>
   <string name="tasklist">Listă de activități</string>
@@ -184,7 +182,6 @@
   <string name="delete_property_message">%s va fi șters.\n\nContinuați?</string>
   <string name="name">nume</string>
   <string name="presets">Presetări</string>
-  <string name="gestures">Gesturi</string>
   <string name="knock_on">Ciocănire Pornită</string>
   <string name="knock_on_summary">Atingeţi ecranul de două ori pentru al activa</string>
   <string name="five_minutes">5 minute</string>
@@ -202,9 +199,6 @@
   <string name="menu">Meniu</string>
   <string name="about">Despre</string>
   <string name="preferences">Preferinţe</string>
-  <string name="become_a_monkey">Transformă-te într-o maimuţă</string>
-  <string name="is_monkey">Stai, ești serios?\nEști destul de inteligent pentru o maimuţă.\nNu că ar fi ele proaste dar...\nDeci, săriţi peste acest lucru.</string>
-  <string name="no_monkey">Nu ești maimuţă? :(</string>
   <string name="media_scan_trigger">Activați scanarea de mass-media</string>
   <string name="media_scan_summary">Declanșează manual o scanare de media, în cazul în care ai telefonul conectat în modul MTP și fișierele noi nu sunt vizibile.</string>
   <string name="force_stop">Oprire forțată</string>
@@ -372,7 +366,6 @@
   <string name="screen_on">Ecran pornit</string>
   <string name="cpu">Procesor</string>
   <string name="input_reset_on_suspend">Resetare în timpul suspendări</string>
-  <string name="input_reset_on_suspend_summary">Resetarea dispozitivului de intrare la suspendare pentru a ocoli problemele panoului de atingere cum ar fi atingeri fără răspuns sau fantomă</string>
   <string name="arch">Arhitectură</string>
   <string name="string_default">Implicit</string>
   <string name="touch_boost">Mărire impuls de atingere</string>

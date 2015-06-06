@@ -24,7 +24,6 @@
   <string name="donate_via">Donera via %s</string>
   <string name="donate_paypal_message">Detta kommer att omdirigera dig till PayPal för att slutföra donationen.</string>
   <string name="show_pollfish">Aktivera Pollfish</string>
-  <string name="show_pollfish_summary">Aktiverar en liten ikon längst ned till höger. För varje gjord undersökning hjälpa du oss att växa. Känn dig fri att avaktivera den, naturligtvis :)</string>
   <string name="task_type">Aktivitetstyp</string>
   <string name="event_based">Händelsebaserade</string>
   <string name="next">Nästa</string>

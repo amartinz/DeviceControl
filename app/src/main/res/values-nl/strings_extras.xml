@@ -25,7 +25,6 @@
   <string name="donate_via">Doneren via %s</string>
   <string name="donate_paypal_message">Dit zal u omleiden naar PayPal om de donatie te voltooien.</string>
   <string name="show_pollfish">Pollfish activeren</string>
-  <string name="show_pollfish_summary">Hiermee activeert u een klein pictogram rechts onderaan. Voor elke genomen enquête helpt u ons om te groeien. Voelt u uiteraard vrij om dit te deactiveren :)</string>
   <string name="task_type">Taaktype</string>
   <string name="event_based">Gebaseerd op gebeurtenis</string>
   <string name="next">Volgende</string>

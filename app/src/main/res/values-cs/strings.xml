@@ -138,7 +138,6 @@
   <string name="logger_mode_summary">Zrušte zaškrtnutí pro vymazání všech logů z logcat</string>
   <string name="debugging">Debugging (Ladění a hledání chyb)</string>
   <string name="extensive_logging">Rozsáhlé logování</string>
-  <string name="reapply_on_boot">Nastav při bootu</string>
   <string name="version">Verze</string>
   <string name="tasker">Tasker</string>
   <string name="tasklist">Seznam úloh</string>
@@ -184,9 +183,6 @@
   <string name="off">Vypnout</string>
   <string name="menu">Menu</string>
   <string name="preferences">Předvolby</string>
-  <string name="become_a_monkey">Stát se opicí</string>
-  <string name="is_monkey">Počkat, to jako vážně?\nJste příliš chytří na to, aby jste byli opice.\nNe že by byly hloupé ale&#8230;\nNo, raději to přeskočme.</string>
-  <string name="no_monkey">Nejste opice? *Sigh* :(</string>
   <string name="media_scan_trigger">Spouštěč skenování médií</string>
   <string name="media_scan_summary">Ruční spouštění skenování médií, pro případ že váš telefon je připojen přes MTP a soubory nejsou viditelné.</string>
   <string name="clear_cache">Vymazat cache</string>

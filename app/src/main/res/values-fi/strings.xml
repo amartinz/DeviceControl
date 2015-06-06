@@ -24,4 +24,5 @@
   <string name="backup">Varmuuskopio</string>
   <string name="disabled">Poistettu käytöstä</string>
   <string name="no_items_found">Kohteita ei löytynyt&#8230;</string>
+  <string name="notification">Ilmoitus</string>
 </resources>
