@@ -32,6 +32,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewCompat;
@@ -46,7 +47,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -119,10 +119,10 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(adapter);
 
-        final PagerSlidingTabStrip tabHost = (PagerSlidingTabStrip) findViewById(R.id.tabHost);
+        final TabLayout tabHost = (TabLayout) findViewById(R.id.tabHost);
         // TODO: make it visible once used
         tabHost.setVisibility(View.GONE);
-        //tabHost.setViewPager(viewPager);
+        //tabHost.setupWithViewPager(viewPager);
 
         mAppDetailsContainer = findViewById(R.id.app_details_container);
         mAppDetailsError = findViewById(R.id.app_details_error);

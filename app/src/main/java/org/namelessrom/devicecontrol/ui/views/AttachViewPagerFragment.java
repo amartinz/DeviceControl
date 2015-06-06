@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol.ui.views;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -25,8 +26,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-
-import com.astuetz.PagerSlidingTabStrip;
 
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
@@ -64,8 +63,8 @@ public abstract class AttachViewPagerFragment extends AttachFragment {
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(3);
 
-        final PagerSlidingTabStrip tabHost = (PagerSlidingTabStrip) view.findViewById(R.id.tabHost);
-        tabHost.setViewPager(mViewPager);
+        final TabLayout tabHost = (TabLayout) view.findViewById(R.id.tabHost);
+        tabHost.setupWithViewPager(mViewPager);
 
         return view;
     }

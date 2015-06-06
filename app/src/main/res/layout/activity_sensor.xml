@@ -15,21 +15,27 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="org.namelessrom.devicecontrol.modules.device.SensorActivity">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/actionbar_toolbar" />
 
-    <com.astuetz.PagerSlidingTabStrip
+    <android.support.design.widget.TabLayout
         android:id="@+id/tabHost"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorAccent" />
+        android:background="?attr/colorPrimaryDark"
+        android:elevation="2dp"
+        app:tabIndicatorColor="@android:color/white"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/tab_color_selected"
+        app:tabTextColor="@color/tab_color_normal" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

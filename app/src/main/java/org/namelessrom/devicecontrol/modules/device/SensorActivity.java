@@ -22,6 +22,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -29,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
@@ -89,8 +89,8 @@ public class SensorActivity extends BaseActivity {
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
 
-        final PagerSlidingTabStrip tabHost = (PagerSlidingTabStrip) findViewById(R.id.tabHost);
-        tabHost.setViewPager(viewPager);
+        final TabLayout tabHost = (TabLayout) findViewById(R.id.tabHost);
+        tabHost.setupWithViewPager(viewPager);
 
         // Environment
         final View environmentRoot = findViewById(R.id.environment_layout);

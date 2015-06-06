@@ -35,7 +35,6 @@ Third party libraries
 * [Material-Menu](https://github.com/balysv/material-menu)
 * [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
 * [NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
-* [PagerSlidingTabStrip](https://github.com/jpardogo/PagerSlidingTabStrip)
 * [RootTools](https://github.com/Stericson/RootTools)
 * [SlidingMenu](https://github.com/jfeinstein10/slidingmenu)
 

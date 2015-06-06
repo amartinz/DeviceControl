@@ -79,4 +79,7 @@
     <!-- etc -->
     <color name="perms_costs_money">#fff4511e</color>
     <color name="background_tab_pressed">#1AFFFFFF</color>
+
+    <color name="tab_color_normal">#b3ffffff</color>
+    <color name="tab_color_selected">#ffffff</color>
 </resources>

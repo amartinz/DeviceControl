@@ -102,4 +102,5 @@ public class AppResources {
     public static LayoutInflater getThemeLayoutInflater(Context context, LayoutInflater inflater) {
         return inflater.cloneInContext(getContextThemeWrapper(context));
     }
+
 }
