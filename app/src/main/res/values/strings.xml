@@ -178,8 +178,13 @@
     <string name="fstrim_interval_summary">Choose interval for automatic FStrimming.</string>
     <string name="enable">Enable</string>
     <string name="enable_msg">%s will be enabled.\n\nContinue?</string>
+    <string name="enable_msg_multi">%s app(s) will be enabled.\n(If any app is already enabled, nothing will happen)\n\nContinue?</string>
+    <string name="enable_msg_multi_action">Enabling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
     <string name="disable">Disable</string>
     <string name="disable_msg">%s will be disabled.\n\nContinue?</string>
+    <string name="disable_msg_multi">%s app(s) will be disabled.\n(If any app is already disabled, nothing will happen)\n\nContinue?</string>
+    <string name="disable_msg_multi_action">Disabling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
+    <string name="action_completed">Action completed successfully!</string>
     <string name="vm_settings">Dalvik settings</string>
     <string name="full_editor">Press to load full editor</string>
     <string name="toggle_vm_sysctl">Toggle SysCtl / VM</string>
@@ -308,6 +313,8 @@
     <string name="uninstall">Uninstall</string>
     <string name="uninstalling">Uninstalling…</string>
     <string name="uninstall_msg">Do you really want to uninstall \"%s\"?\nThis action can not be undone!</string>
+    <string name="uninstall_msg_multi">Do you really want to uninstall %s app(s)?\nThis action can not be undone!</string>
+    <string name="uninstall_msg_multi_action">Uninstalling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
     <string name="uninstall_msg_system_app">Uninstalling system apps may require a reboot!</string>
     <string name="uninstall_success">Successfully uninstalled \"%s\"</string>
     <string name="sunlight_enhancement">Sunlight enhancement</string>

@@ -56,6 +56,10 @@ public class AppIconImageView extends CacheableImageView {
 
     public AppIconImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        if (isInEditMode()) {
+            mCache = null;
+            return;
+        }
         mCache = Application.getApplication(context).getBitmapCache();
     }
 

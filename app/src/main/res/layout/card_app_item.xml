@@ -116,6 +116,13 @@
                     tools:text="98 (0.7.3-dev)" />
             </LinearLayout>
 
+            <CheckBox
+                android:id="@+id/app_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="2dp" />
+
         </LinearLayout>
 
     </com.daimajia.swipe.SwipeLayout>
