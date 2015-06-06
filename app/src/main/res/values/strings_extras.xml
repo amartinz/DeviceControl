@@ -29,7 +29,7 @@
     <string name="donate_paypal_message">This will redirect you to PayPal to complete the donation.</string>
 
     <string name="show_pollfish">Activate Pollfish</string>
-    <string name="show_pollfish_summary">Activates a small icon at the bottom right. For every taken survey you help us to grow. Feel free to deactivate it, of course :)</string>
+    <string name="show_pollfish_summary">For every taken survey you help us to grow. Feel free to deactivate it, of course :)</string>
     <!-- Wizard -->
     <string name="task_type">Task type</string>
     <string name="event_based">Event based</string>
