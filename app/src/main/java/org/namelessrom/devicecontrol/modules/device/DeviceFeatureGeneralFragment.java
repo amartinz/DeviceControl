@@ -47,7 +47,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment implements Preference.OnPreferenceClickListener, ShellOutput.OnShellOutputListener {
+public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment implements Preference.OnPreferenceClickListener {
 
     private static final String FC_PATH = "/sys/kernel/fast_charge";
 
@@ -64,6 +64,16 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
 
     private CustomPreference mFastCharge;
     private CustomPreference mSoundControl;
+
+    private final ShellOutput.OnShellOutputListener mShellOutputListener =
+            new ShellOutput.OnShellOutputListener() {
+                @Override public void onShellOutput(final ShellOutput output) {
+                    if (output == null || mGloveMode == null) return;
+
+                    mGloveMode.setChecked(output.output.contains(GLOVE_MODE_ENABLE));
+                    mGloveMode.setEnabled(true);
+                }
+            };
 
     //==============================================================================================
     // Overridden Methods
@@ -342,15 +352,8 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
     private void enableHts(final boolean enable) {
         if (mGloveMode != null) mGloveMode.setEnabled(false);
         final String mode = (enable ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
-        Utils.getCommandResult(this, Utils.getWriteCommand(COMMAND_PATH, mode) +
+        Utils.getCommandResult(mShellOutputListener, Utils.getWriteCommand(COMMAND_PATH, mode) +
                 Utils.getReadCommand("/sys/class/sec/tsp/cmd_result"));
-    }
-
-    @Override public void onShellOutput(final ShellOutput output) {
-        if (output == null || mGloveMode == null) return;
-
-        mGloveMode.setChecked(output.output.contains(GLOVE_MODE_ENABLE));
-        mGloveMode.setEnabled(true);
     }
 
     /**

@@ -34,23 +34,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CpuCoreMonitor {
-
     private static final int CPU_COUNT = CpuUtils.get().getNumOfCpus();
 
     private static CpuCoreMonitor cpuFrequencyMonitor;
-    private static Shell mShell;
-    private static Activity mActivity;
-    private static int mInterval;
+    private Shell mShell;
+    private Activity mActivity;
 
-    private static boolean isStarted = false;
+    private boolean isStarted = false;
 
-    private static final Object mLock = new Object();
+    private final Object mLock = new Object();
 
-    private static CpuUtils.CoreListener mListener;
+    private CpuUtils.CoreListener mListener;
+    private int mInterval;
+
+    private final List<CpuCore> mCoreList = new ArrayList<>(CPU_COUNT);
 
     private CpuCoreMonitor(final Activity activity) {
         openShell();
         mActivity = activity;
+
+        final String core = mActivity.getString(R.string.core);
+        for (int i = 0; i < CPU_COUNT; i++) {
+            String coreString = String.format("%s %s:", core, String.valueOf(i));
+            mCoreList.add(new CpuCore(coreString, "0", "0", "0"));
+        }
     }
 
     public static CpuCoreMonitor getInstance(final Activity activity) {
@@ -60,9 +67,11 @@ public class CpuCoreMonitor {
         return cpuFrequencyMonitor;
     }
 
-    public void start(final CpuUtils.CoreListener listener) { start(listener, 2000); }
+    public CpuCoreMonitor start(final CpuUtils.CoreListener listener) {
+        return start(listener, 2000);
+    }
 
-    public void start(final CpuUtils.CoreListener listener, final int interval) {
+    public CpuCoreMonitor start(final CpuUtils.CoreListener listener, final int interval) {
         mListener = listener;
         mInterval = interval;
         if (!isStarted) {
@@ -72,13 +81,22 @@ public class CpuCoreMonitor {
         } else {
             Logger.i(this, "updated interval: " + String.valueOf(mInterval));
         }
+
+        return cpuFrequencyMonitor;
     }
 
-    public void stop() {
+    public CpuCoreMonitor stop() {
         mListener = null;
         isStarted = false;
         Application.HANDLER.removeCallbacks(mUpdater);
         Logger.v(this, "stopped!");
+
+        return cpuFrequencyMonitor;
+    }
+
+    public void destroy() {
+        mActivity = null;
+        cpuFrequencyMonitor = null;
     }
 
     private final Runnable mUpdater = new Runnable() {
@@ -137,38 +155,31 @@ public class CpuCoreMonitor {
 
                 if (mActivity != null) {
                     final String[] parts = output.split(" ");
-                    final List<CpuCore> mCoreList = new ArrayList<>(CPU_COUNT);
                     int mult = 0;
-                    CpuCore tmp;
-                    String max, current;
                     for (int i = 0; i < CPU_COUNT; i++) {
+                        CpuCore cpuCore;
                         try {
-                            max = parts[i + mult];
-                            current = parts[i + mult + 1];
-                            tmp = new CpuCore(
-                                    mActivity.getString(
-                                            R.string.core) + ' ' + String.valueOf(i) + ':',
-                                    max,
-                                    current,
-                                    parts[i + mult + 2]
-                            );
-                        } catch (IndexOutOfBoundsException iob) {
-                            tmp = new CpuCore(mActivity.getString(
-                                    R.string.core) + ' ' + String.valueOf(i) + ':',
-                                    "0",
-                                    "0",
-                                    "0"
-                            );
+                            cpuCore = mCoreList.get(i);
+                        } catch (IndexOutOfBoundsException iobe) {
+                            cpuCore = new CpuCore(String.format("%s %s:",
+                                    mActivity.getString(R.string.core), String.valueOf(i)),
+                                    "0", "0", "0");
                         }
-                        mCoreList.add(tmp);
+                        try {
+                            cpuCore.setCurrent(parts[i + mult])
+                                    .setMax(parts[i + mult + 1])
+                                    .setGovernor(parts[i + mult + 2]);
+                        } catch (IndexOutOfBoundsException iob) {
+                            cpuCore.setCurrent("0").setMax("0").setGovernor("0");
+                        }
                         mult += 2;
                     }
 
-                    if (mListener != null) {
-                        Application.HANDLER.post(new Runnable() {
+                    if (mListener != null && mActivity != null) {
+                        mActivity.runOnUiThread(new Runnable() {
                             @Override public void run() {
                                 if (mListener != null) {
-                                    mListener.onCores(new CpuUtils.Cores(mCoreList));
+                                    mListener.onCores(mCoreList);
                                 }
                             }
                         });

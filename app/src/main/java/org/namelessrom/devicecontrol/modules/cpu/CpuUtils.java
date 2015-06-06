@@ -68,12 +68,6 @@ public class CpuUtils {
         }
     }
 
-    public static class Cores {
-        public final List<CpuCore> list;
-
-        public Cores(final List<CpuCore> coreList) { list = coreList; }
-    }
-
     public static class State {
         public final List<CpuStateMonitor.CpuState> states;
         public final long totalTime;
@@ -89,7 +83,7 @@ public class CpuUtils {
     }
 
     public interface CoreListener {
-        void onCores(@NonNull final Cores cores);
+        void onCores(@NonNull final List<CpuCore> cores);
     }
 
     public interface StateListener {
@@ -184,7 +178,8 @@ public class CpuUtils {
     }
 
     public String restore(BootupConfiguration config) {
-        final ArrayList<BootupItem> items = config.getItemsByCategory(BootupConfiguration.CATEGORY_CPU);
+        final ArrayList<BootupItem> items =
+                config.getItemsByCategory(BootupConfiguration.CATEGORY_CPU);
 
         if (items.size() == 0) {
             return "";

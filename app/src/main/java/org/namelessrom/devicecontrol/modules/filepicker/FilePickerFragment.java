@@ -21,6 +21,9 @@ import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.View;
 
+import com.squareup.leakcanary.RefWatcher;
+
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.activities.FilePickerActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
@@ -35,8 +38,7 @@ import java.util.ArrayList;
 /**
  * A class for picking a file
  */
-public class FilePickerFragment extends ListFragment implements OnBackPressedListener,
-        ShellOutput.OnShellOutputListener, FilePickerListener {
+public class FilePickerFragment extends ListFragment implements OnBackPressedListener, FilePickerListener {
 
     private static final int ID_GET_FILES = 100;
 
@@ -48,6 +50,33 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
     private String fileType = "";
 
     private FileAdapter mFileAdapter;
+
+    private ShellOutput.OnShellOutputListener mShellOutputListener =
+            new ShellOutput.OnShellOutputListener() {
+                @Override public void onShellOutput(final ShellOutput shellOutput) {
+                    if (shellOutput == null) return;
+                    switch (shellOutput.id) {
+                        case ID_GET_FILES:
+                            final String[] output = shellOutput.output.split("\n");
+                            final ArrayList<File> fileList = new ArrayList<>(output.length);
+                            if (!currentPath.equals(root)) {
+                                fileList.add(new File(currentPath + File.separator + "../"));
+                            }
+                            for (final String s : output) {
+                                if (s.isEmpty()) continue;
+                                fileList.add(new File(currentPath + File.separator + s));
+                            }
+                            mFileAdapter.setFiles(fileList);
+                            if (getListAdapter() == null) {
+                                setListAdapter(mFileAdapter);
+                            } else {
+                                mFileAdapter.notifyDataSetChanged();
+                                getListView().setSelectionAfterHeaderView();
+                            }
+                            break;
+                    }
+                }
+            };
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -65,7 +94,8 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
         if (isBreadcrumb) {
             breadcrumbs.add(path);
         }
-        Utils.getCommandResult(this, ID_GET_FILES, String.format("ls %s", path), true);
+        Utils.getCommandResult(mShellOutputListener, ID_GET_FILES, String.format("ls %s", path),
+                true);
     }
 
     @Override public void onFilePicked(final File f) {
@@ -88,30 +118,6 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
         }
     }
 
-    @Override public void onShellOutput(final ShellOutput shellOutput) {
-        if (shellOutput == null) return;
-        switch (shellOutput.id) {
-            case ID_GET_FILES:
-                final String[] output = shellOutput.output.split("\n");
-                final ArrayList<File> fileList = new ArrayList<>(output.length);
-                if (!currentPath.equals(root)) {
-                    fileList.add(new File(currentPath + File.separator + "../"));
-                }
-                for (final String s : output) {
-                    if (s.isEmpty()) continue;
-                    fileList.add(new File(currentPath + File.separator + s));
-                }
-                mFileAdapter.setFiles(fileList);
-                if (getListAdapter() == null) {
-                    setListAdapter(mFileAdapter);
-                } else {
-                    mFileAdapter.notifyDataSetChanged();
-                    getListView().setSelectionAfterHeaderView();
-                }
-                break;
-        }
-    }
-
     @Override public boolean onBackPressed() {
         if (!currentPath.equals(root)) {
             if (!breadcrumbs.isEmpty() && breadcrumbs.get(breadcrumbs.size() - 1) != null) {
@@ -121,6 +127,12 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
             return true;
         }
         return false;
+    }
+
+    @Override public void onDestroy() {
+        RefWatcher refWatcher = Application.getRefWatcher(getActivity());
+        refWatcher.watch(this);
+        super.onDestroy();
     }
 
     @Override public boolean showBurger() { return false; }

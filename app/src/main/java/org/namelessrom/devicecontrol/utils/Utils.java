@@ -28,7 +28,6 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.widget.Toast;
 
 import com.stericson.roottools.RootTools;
 import com.stericson.roottools.execution.CommandCapture;
@@ -421,11 +420,12 @@ public class Utils {
             @Override
             public void commandCompleted(int id, int exitcode) {
                 final String result = sb.toString();
-                Logger.v(Utils.class,
-                        String.format("Shell output: %s", result));
+                Logger.v(Utils.class, String.format("Shell output: %s", result));
                 Application.HANDLER.post(new Runnable() {
                     @Override public void run() {
-                        listener.onShellOutput(new ShellOutput(ID, sb.toString()));
+                        if (listener != null) {
+                            listener.onShellOutput(new ShellOutput(ID, sb.toString()));
+                        }
                     }
                 });
             }

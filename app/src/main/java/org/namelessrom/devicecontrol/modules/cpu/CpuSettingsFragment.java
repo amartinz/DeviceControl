@@ -68,9 +68,8 @@ import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 
-public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implements ShellOutput.OnShellOutputListener,
-        CpuUtils.CoreListener, CpuUtils.FrequencyListener, GovernorUtils.GovernorListener,
-        MaterialPreference.MaterialPreferenceChangeListener, MaterialPreference.MaterialPreferenceClickListener {
+public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implements CpuUtils.CoreListener, CpuUtils.FrequencyListener,
+        GovernorUtils.GovernorListener, MaterialPreference.MaterialPreferenceChangeListener, MaterialPreference.MaterialPreferenceClickListener {
 
     private MaterialListPreference mMax;
     private MaterialListPreference mMin;
@@ -88,6 +87,25 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
 
     private SwitchCompat mStatusHide;
     private LinearLayout mCpuInfo;
+
+    private final ShellOutput.OnShellOutputListener mShellOutputListener =
+            new ShellOutput.OnShellOutputListener() {
+                @Override public void onShellOutput(final ShellOutput shellOutput) {
+                    if (shellOutput != null) {
+                        switch (shellOutput.id) {
+                            case ID_MPDECISION:
+                                if (mMpDecision != null) {
+                                    mMpDecision.setChecked(!TextUtils.isEmpty(shellOutput.output));
+                                    mMpDecision.setOnPreferenceChangeListener(
+                                            CpuSettingsFragment.this);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            };
 
     @Override protected int getLayoutResourceId() {
         return R.layout.preferences_cpu;
@@ -109,12 +127,16 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         CpuCoreMonitor.getInstance(getActivity()).stop();
     }
 
-    @Override public void onCores(@NonNull final CpuUtils.Cores cores) {
-        final List<CpuCore> coreList = cores.list;
-        if (coreList != null && !coreList.isEmpty()) {
-            final int count = coreList.size();
+    @Override public void onDestroy() {
+        CpuCoreMonitor.getInstance(getActivity()).stop().destroy();
+        super.onDestroy();
+    }
+
+    @Override public void onCores(@NonNull final List<CpuCore> cores) {
+        final int count = cores.size();
+        if (count != 0) {
             for (int i = 0; i < count; i++) {
-                generateRow(i, coreList.get(i));
+                generateRow(i, cores.get(i));
             }
         }
     }
@@ -283,7 +305,8 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             mMpDecision = createSwitchPreference(false, "mpdecision",
                     getString(R.string.mpdecision), getString(R.string.mpdecision_summary), false);
             category.addPreference(mMpDecision);
-            Utils.getCommandResult(this, ID_MPDECISION, "pgrep mpdecision 2> /dev/null;");
+            Utils.getCommandResult(mShellOutputListener, ID_MPDECISION,
+                    "pgrep mpdecision 2> /dev/null;");
         }
 
         if (cpuQuiet) {
@@ -460,21 +483,6 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         return false;
     }
 
-    public void onShellOutput(final ShellOutput shellOutput) {
-        if (shellOutput != null) {
-            switch (shellOutput.id) {
-                case ID_MPDECISION:
-                    if (mMpDecision != null) {
-                        mMpDecision.setChecked(!TextUtils.isEmpty(shellOutput.output));
-                        mMpDecision.setOnPreferenceChangeListener(this);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
     @Override public void onFrequency(@NonNull final CpuUtils.Frequency cpuFreq) {
         final String[] mAvailableFrequencies = cpuFreq.available;
         Arrays.sort(mAvailableFrequencies, new Comparator<String>() {
@@ -520,16 +528,16 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         }
 
         if (rowView instanceof CpuCoreView) {
-            final boolean isOffline = cpuCore.mCoreCurrent == 0;
+            final boolean isOffline = cpuCore.current == 0;
 
-            ((CpuCoreView) rowView).core.setText(cpuCore.mCore);
+            ((CpuCoreView) rowView).core.setText(cpuCore.core);
             ((CpuCoreView) rowView).freq.setText(isOffline
                     ? getString(R.string.core_offline)
-                    : CpuUtils.toMhz(String.valueOf(cpuCore.mCoreCurrent))
-                    + " / " + CpuUtils.toMhz(String.valueOf(cpuCore.mCoreMax))
-                    + " [" + cpuCore.mCoreGov + ']');
-            ((CpuCoreView) rowView).bar.setMax(cpuCore.mCoreMax);
-            ((CpuCoreView) rowView).bar.setProgress(cpuCore.mCoreCurrent);
+                    : CpuUtils.toMhz(String.valueOf(cpuCore.current))
+                    + " / " + CpuUtils.toMhz(String.valueOf(cpuCore.max))
+                    + " [" + cpuCore.governor + ']');
+            ((CpuCoreView) rowView).bar.setMax(cpuCore.max);
+            ((CpuCoreView) rowView).bar.setProgress(cpuCore.current);
         }
 
         return rowView;

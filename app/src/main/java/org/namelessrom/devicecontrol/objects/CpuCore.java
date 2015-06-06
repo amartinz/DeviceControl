@@ -17,25 +17,45 @@
  */
 package org.namelessrom.devicecontrol.objects;
 
+import android.text.TextUtils;
+
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class CpuCore {
+    public String core;
+    public int max;
+    public int current;
+    public String governor;
 
-    public final String mCore;
-    public final int mCoreMax;
-    public final int mCoreCurrent;
-    public final String mCoreGov;
+    public CpuCore(String core, String current, String max, String governor) {
+        setCore(core);
+        setCurrent(current);
+        setMax(max);
+        setGovernor(governor);
+    }
 
-    public CpuCore(final String core, final String coreCurrent,
-            final String coreMax, final String coreGov) {
-        mCore = ((core != null && !core.isEmpty()) ? core : "0");
-        mCoreMax = Utils.tryParse(coreMax, 0);
-        mCoreCurrent = Utils.tryParse(coreCurrent, 0);
-        mCoreGov = ((coreGov != null && !coreGov.isEmpty()) ? coreGov : "0");
+    public CpuCore setCore(String core) {
+        this.core = (!TextUtils.isEmpty(core) ? core : "0");
+        return this;
+    }
+
+    public CpuCore setCurrent(String current) {
+        this.current = Utils.tryParse(current, 0);
+        return this;
+    }
+
+    public CpuCore setMax(String max) {
+        this.max = Utils.tryParse(max, 0);
+        return this;
+    }
+
+    public CpuCore setGovernor(String governor) {
+        this.governor = (!TextUtils.isEmpty(governor) ? governor : "0");
+        return this;
     }
 
     @Override public String toString() {
         return String.format("core: %s | max: %s | current: %s | gov: %s",
-                mCore, mCoreMax, mCoreCurrent, mCoreGov);
+                core, max, current, governor);
     }
 }
