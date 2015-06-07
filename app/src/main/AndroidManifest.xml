@@ -22,8 +22,6 @@
     android:versionCode="122"
     android:versionName="0.8.4">
 
-    <!-- currently broken, reenable once fixed -->
-    <!--uses-sdk tools:node="replace" /-->
     <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="22" tools:ignore="GradleOverrides,OldTargetApi" />
 
     <!-- Internet / Networking -->
@@ -48,7 +46,7 @@
     <uses-permission android:name="android.permission.DELETE_CACHE_FILES" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.DELETE_PACKAGES" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
-    <!--suppress DeprecatedClassUsageInspection -->
+    <!-- suppress DeprecatedClassUsageInspection -->
     <uses-permission android:name="android.permission.GET_TASKS" />
     <!-- Location -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -57,9 +55,12 @@
     <uses-permission android:name="android.permission.REBOOT" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.DEVICE_POWER" tools:ignore="ProtectedPermissions" />
 
-    <uses-feature android:name="org.namelessrom.android" android:required="false" />
-
-    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+    <uses-feature
+        android:name="org.namelessrom.android"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="false" />
 
     <application
         android:name=".Application"
@@ -69,15 +70,14 @@
         android:label="@string/app_name"
         android:supportsRtl="false"
         android:theme="@style/AppTheme.Light">
-
-        <meta-data android:name="com.google.android.gms.version"
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".DummyLauncher"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:enabled="true"
-            android:excludeFromRecents="true"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -99,6 +99,21 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".modules.appmanager.AppManagerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_manager"
+            android:launchMode="singleTask"
+            android:parentActivityName=".MainActivity"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.settings.MANAGE_APPLICATIONS_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.namelessrom.devicecontrol.MainActivity" />
+        </activity>
+        <activity
             android:name=".modules.appmanager.AppDetailsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_details"
@@ -107,9 +122,12 @@
             android:taskAffinity="">
             <intent-filter>
                 <action android:name="android.settings.APPLICATION_DETAILS_SETTINGS" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="package" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.namelessrom.devicecontrol.MainActivity" />
@@ -145,8 +163,10 @@
                 <action android:name="android.intent.action.GET_CONTENT" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="application/zip" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.namelessrom.devicecontrol.MainActivity" />
@@ -211,7 +231,8 @@
         </receiver>
 
         <!-- Widgets -->
-        <receiver android:name=".ui.widgets.RebootWidget"
+        <receiver
+            android:name=".ui.widgets.RebootWidget"
             android:icon="@drawable/ic_power"
             android:label="@string/reboot"
             tools:ignore="ExportedReceiver">
