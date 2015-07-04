@@ -25,6 +25,7 @@
   <string name="donate_via">Пожертвовать через %s</string>
   <string name="donate_paypal_message">Вы будете перенаправлены на PayPal.</string>
   <string name="show_pollfish">Показать Pollfish</string>
+  <string name="show_pollfish_summary">Каждый выполненный вами опрос помогает нам расти. Не стесняйтесь, чтобы отключить его, конечно :)</string>
   <string name="task_type">Тип задачи</string>
   <string name="event_based">На основе события</string>
   <string name="next">Следующий</string>

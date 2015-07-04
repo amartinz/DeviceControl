@@ -157,6 +157,8 @@
   <string name="debug_strict_mode">Strikten Modus aktivieren</string>
   <string name="shell">Shell</string>
   <string name="su_shell_context">Shell Kontext</string>
+  <string name="su_shell_context_summary">Der Kontext unter dem Device Control Befehle ausführen sollte.\nDer Standardwert ist <xliff:g example="Normal" id="value">\"%s\"</xliff:g>.\nMomentaner Wert: <xliff:g example="System app" id="value">\"%s\"</xliff:g></string>
+  <string name="bootup_enabled">Beim Starten anwenden</string>
   <string name="version">Version</string>
   <string name="tasker">Tasker</string>
   <string name="tasklist">Aufgaben-Liste</string>
@@ -176,8 +178,11 @@
   <string name="fstrim_interval_summary">Wähle das Intervall für automatisches Fstrimming.</string>
   <string name="enable">Aktivieren</string>
   <string name="enable_msg">%s wird aktiviert.\n\nFortfahren?</string>
+  <string name="enable_msg_multi_action">Aktiviere Anwendung <xliff:g example="10" id="value">%d</xliff:g> von <xliff:g example="71" id="value">%d</xliff:g></string>
   <string name="disable">Deaktivieren</string>
   <string name="disable_msg">%s wird deaktiviert.\n\nFortfahren?</string>
+  <string name="disable_msg_multi_action">Deaktiviere Anwendung <xliff:g example="10" id="value">%d</xliff:g> von <xliff:g example="71" id="value">%d</xliff:g></string>
+  <string name="action_completed">Aktion erfolgreich abgeschlossen!</string>
   <string name="vm_settings">Dalvik-Einstellungen</string>
   <string name="full_editor">Drücke, um den vollständigen Editor zu laden</string>
   <string name="toggle_vm_sysctl">Wechsel zwischen SysCtl / VM</string>
@@ -196,6 +201,10 @@
   <string name="knock_on_summary">Aufwecken durch doppeltes Tippen auf den Bildschirm</string>
   <string name="sweep_to_wake">Wischen zum Aufwecken</string>
   <string name="sweep_to_volume">Wischen zum Läutstärke anpassen</string>
+  <string name="none">Keine</string>
+  <string name="fifteen_seconds">15 Sekunden</string>
+  <string name="thirty_seconds">30 Sekunden</string>
+  <string name="one_minute">1 Minute</string>
   <string name="five_minutes">5 Minuten</string>
   <string name="ten_minutes">10 Minuten</string>
   <string name="twenty_minutes">20 Minuten</string>
@@ -302,6 +311,8 @@
   <string name="uninstall">Deinstallieren</string>
   <string name="uninstalling">Deinstallieren&#8230;</string>
   <string name="uninstall_msg">Soll \"%s\" wirklich deinstalliert werden?\nDiese Aktion kann nicht rückgängig gemacht werden!</string>
+  <string name="uninstall_msg_multi">Wollen Sie wirklich %s Anwendung(en) deinstallieren? \nDiese Aktion kann nicht rückgängig gemacht werden!</string>
+  <string name="uninstall_msg_multi_action">Deinstalliere Anwendung <xliff:g example="10" id="value">%d</xliff:g> von <xliff:g example="71" id="value">%d</xliff:g></string>
   <string name="uninstall_msg_system_app">Systemanwendungen deinstallieren kann einen Neustart benötigen!</string>
   <string name="uninstall_success">\"%s\" erfolgreich deinstalliert</string>
   <string name="sunlight_enhancement">Verbesserung bei Sonnenlicht</string>
@@ -396,6 +407,7 @@
   <string name="security_settings_desc_multi" product="default">Diese App kann auf die folgenden Funktionen ihres Gerätes zugreifen. Um die Leistung zu verbessern und die Speicherauslastung zu verringern, hat <xliff:g id="base_app_name">%1$s</xliff:g> einige dieser Berechtigungen, weil es im selben Prozess wie <xliff:g id="additional_apps_list">%2$s</xliff:g> ausgeführt wird:</string>
   <string name="no_permissions">Keine Berechtigungen erforderlich</string>
   <string name="perm_costs_money">Hierfür können Gebühren anfallen</string>
+  <string name="perms_new_perm_prefix"><font fgcolor="#ff33b5e5" size="12">NEU: </font></string>
   <string name="perms_description_app">Zur Verfügung gestellt von <xliff:g id="app_name">%1$s</xliff:g>.</string>
   <string name="environment">Umgebung</string>
   <string name="motion">Bewegung</string>

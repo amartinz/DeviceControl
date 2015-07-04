@@ -25,6 +25,7 @@
   <string name="donate_via">Spenden via %s</string>
   <string name="donate_paypal_message">Dies leitet Sie zu PayPal weiter, um die Spende abzuschließen.</string>
   <string name="show_pollfish">Pollfish aktivieren</string>
+  <string name="show_pollfish_summary">Mit jeder durchgeführten Umfrage helfen Sie uns besser zu werden. Wenn Sie möchten, können Sie Umfragen natürlich deaktivieren :)</string>
   <string name="task_type">Aufgabentyp</string>
   <string name="event_based">Ereignis basierent</string>
   <string name="next">Weiter</string>

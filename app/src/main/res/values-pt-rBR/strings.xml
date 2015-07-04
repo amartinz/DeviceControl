@@ -325,7 +325,6 @@
   <string name="hardware">Hardware</string>
   <string name="toolchain">Ferramentas</string>
   <string name="host">Servidor</string>
-  <string name="memory">Memória</string>
   <string name="free">Livre</string>
   <string name="cached">Em cache</string>
   <string name="display_color_calibration">Calibração de cores</string>
@@ -350,7 +349,6 @@
   <string name="install_title">Escolher arquivos para instalar</string>
   <string name="install_now">Instalar agora</string>
   <string name="file_not_found">Não foi possível adicionar o ficheiro</string>
-  <string name="disabled">Desativado</string>
   <string name="system">Sistema</string>
   <string name="boot">Inicialização</string>
   <string name="alert_reboot_install_title">Instalar o ficheiro(s)</string>
@@ -358,7 +356,6 @@
   <string name="alert_reboot_more_message">Seu dispositivo irá reiniciar e instalar o ficheiro.</string>
   <string name="alert_backup_space_title">Espaço livre</string>
   <string name="alert_backup_space_message">Há menos  %sGB de espaço no cartão SD interno. Deseja continuar com o backup?</string>
-  <string name="alert_backup_title">Cópia de segurança</string>
   <string name="alert_backup_message">Especifique o nome do backup (caracteres ilegais serão removidos).\n\nAs seguintes opções só funcionaram no OpenRecovery com base em recuperações.</string>
   <string name="remove_file_title">Remover ficheiro</string>
   <string name="remove_file_summary">Deseja remover o ficheiro da lista?\n\n%s</string>

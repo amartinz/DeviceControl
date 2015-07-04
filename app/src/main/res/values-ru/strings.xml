@@ -18,14 +18,20 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_version_name">Версия: %s</string>
   <string name="app_version_code">Номер версии: %s</string>
+  <string name="app_warning_root">Заметьте, что %s требует root-прав для использования всех возможностей!</string>
   <string name="app_warning_busybox">Учтите, что %s требует BusyBox для полноценной работы!</string>
+  <string name="app_warning_busybox_note">Busybox требуется потому, что набор системных инструментов может различаться - это может привести к ошибкам и нестабильной работе устройства.\n\nBusybox универсален и одинаково работает на всех устройствах.</string>
+  <string name="start_wizard">Запуск мастера</string>
   <string name="get_busybox">Установить BusyBox</string>
+  <string name="more_information">Подробнее</string>
+  <string name="checking_requirements">Проверка требований&#8230;</string>
   <string name="exit">Выход</string>
   <string name="close">Закрыть</string>
   <string name="message_loading">Загрузка, пожалуйста подождите&#8230;</string>
   <string name="action_press_again">Нажмите ещё раз для выхода!</string>
   <string name="defaults_button">Сбросить к настройкам по умолчанию</string>
   <string name="general">Общее</string>
+  <string name="advanced">Расширенный</string>
   <string name="others">Другие</string>
   <string name="help">Справка</string>
   <string name="more">Больше&#8230;</string>
@@ -34,7 +40,9 @@
   <string name="toast_settings_applied">Успешно применено!</string>
   <string name="no_tweaks_available">Нет доступных настроек</string>
   <string name="no_tweaks_message">Извините, но ваше устройство не имеет ни одной поддерживаемой функции</string>
+  <string name="gov_tweaks">Настраиваемых значений: %s</string>
   <string name="no_gov_tweaks_message">Извините, но эта схема питания не имеет настраиваемых параметров</string>
+  <string name="no_io_tweaks_message">Извините, но у этого планировщика I/O нет настраиваемых значений</string>
   <string name="home">Главная</string>
   <string name="device">Устройство</string>
   <string name="features">Возможности</string>
@@ -236,6 +244,7 @@
   <string name="flash_warning">Вы собираетесь обновить ПО!\nВ случае согласия, устройство перезагрузится в режим восстановления и обновит выбранные элементы\n\nЖелаете продолжить?</string>
   <string name="both">Оба</string>
   <string name="pick_file">Выбрать файл</string>
+  <string name="something_went_wrong">Извините, но что-то пошло не так!</string>
   <string name="recovery">Режим восстановления</string>
   <string name="bootloader">Загрузчик</string>
   <string name="reboot">Перезагрузка</string>
@@ -274,10 +283,8 @@
   <string name="type">Тип</string>
   <string name="tags">Теги</string>
   <string name="sensors">Датчики</string>
-  <string name="disabled">Отключена</string>
   <string name="system">Система</string>
   <string name="emmc_date">Дата</string>
   <string name="setup_complete">Установка завершена</string>
   <string name="string_default">По умолчанию</string>
-  <string name="notification">Уведомление</string>
 </resources>
