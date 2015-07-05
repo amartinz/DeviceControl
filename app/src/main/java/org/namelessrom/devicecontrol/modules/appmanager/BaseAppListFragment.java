@@ -51,6 +51,7 @@ import org.namelessrom.devicecontrol.utils.SortHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 public abstract class BaseAppListFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnCloseListener, View.OnClickListener {
@@ -62,7 +63,7 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
     private TextView mEmptyView;
     private LinearLayout mProgressContainer;
 
-    private final ArrayList<AppItem> mSelectedApps = new ArrayList<>();
+    private final HashSet<AppItem> mSelectedApps = new HashSet<>();
     private HorizontalScrollView mAppListBar;
 
     private boolean mIsLoading;
@@ -238,12 +239,12 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
         private final Activity activity;
         private final int type;
         private final int messageResId;
-        private final ArrayList<AppItem> selectedApps;
+        private final HashSet<AppItem> selectedApps;
         private final int length;
         private final ProgressDialog progressDialog;
 
         public ProcessTask(Activity activity, int type, int titleResId, int messageResId,
-                ArrayList<AppItem> selectedApps) {
+                HashSet<AppItem> selectedApps) {
             this.activity = activity;
             this.type = type;
             this.messageResId = messageResId;
@@ -270,9 +271,9 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
         }
 
         @Override protected Void doInBackground(Void... params) {
-            for (int i = 0; i < this.length; i++) {
-                publishProgress(i);
-                AppItem appItem = selectedApps.get(i);
+            int counter = 0;
+            for (AppItem appItem : selectedApps) {
+                publishProgress(counter);
                 switch (type) {
                     case R.id.app_bar_uninstall: {
                         appItem.uninstall(activity, null, false);
@@ -287,6 +288,7 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
                         break;
                     }
                 }
+                counter++;
             }
 
             // wait for 750 ms to let everything update its state
