@@ -24,7 +24,7 @@ import android.os.AsyncTask;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
-import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
+import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
 
 import java.util.List;
@@ -37,27 +37,20 @@ public class ScreenReceiver extends BroadcastReceiver {
         if (action != null && !action.isEmpty()) {
             Logger.i(this, String.format("action: %s", action));
             if (Intent.ACTION_SCREEN_ON.equals(action)) {
-                new Worker(context).execute(ActionProcessor.TRIGGER_SCREEN_ON);
+                new Worker().execute(ActionProcessor.TRIGGER_SCREEN_ON);
             } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
-                new Worker(context).execute(ActionProcessor.TRIGGER_SCREEN_OFF);
+                new Worker().execute(ActionProcessor.TRIGGER_SCREEN_OFF);
             }
         }
     }
 
     private class Worker extends AsyncTask<String, Void, Void> {
-        private Context mContext;
-
-        public Worker(Context context) {
-            mContext = context;
-        }
-
         @Override
         protected Void doInBackground(String... params) {
             final String trigger = params[0];
             Logger.v(this, "Trigger: %s", trigger);
 
-            final List<TaskerItem> itemList = TaskerConfiguration.get(mContext)
-                    .loadConfiguration(mContext)
+            final List<TaskerItem> itemList = TaskerConfig.get()
                     .getItemsByTrigger(trigger);
 
             Logger.v(this, "Items: %s", itemList.size());

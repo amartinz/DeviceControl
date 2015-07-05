@@ -29,9 +29,9 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
-import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
+import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
@@ -101,16 +101,16 @@ public class FilesystemFragment extends AttachPreferenceFragment implements IoUt
         }
 
         final boolean canBrickEmmc = Emmc.get().canBrick();
-        mFstrim = (CustomTogglePreference) findPreference(TaskerConfiguration.FSTRIM);
+        mFstrim = (CustomTogglePreference) findPreference(TaskerConfig.FSTRIM);
         if (canBrickEmmc) {
             mFstrim.setEnabled(false);
         } else {
-            mFstrim.setChecked(TaskerConfiguration.get(getActivity()).fstrimEnabled);
+            mFstrim.setChecked(TaskerConfig.get().fstrimEnabled);
             mFstrim.setOnPreferenceChangeListener(this);
         }
 
         mFstrimInterval =
-                (CustomListPreference) findPreference(TaskerConfiguration.FSTRIM_INTERVAL);
+                (CustomListPreference) findPreference(TaskerConfig.FSTRIM_INTERVAL);
         if (canBrickEmmc) {
             mFstrimInterval.setEnabled(false);
         } else {
@@ -152,8 +152,8 @@ public class FilesystemFragment extends AttachPreferenceFragment implements IoUt
         } else if (mFstrim == preference) {
             final boolean value = (Boolean) o;
 
-            TaskerConfiguration.get(getActivity()).fstrimEnabled = value;
-            TaskerConfiguration.get(getActivity()).saveConfiguration(getActivity());
+            TaskerConfig.get().fstrimEnabled = value;
+            TaskerConfig.get().save();
 
             if (value) {
                 AlarmHelper.setAlarmFstrim(getActivity(),
@@ -168,8 +168,8 @@ public class FilesystemFragment extends AttachPreferenceFragment implements IoUt
             final String value = String.valueOf(o);
             final int realValue = parseFstrim(value);
 
-            TaskerConfiguration.get(getActivity()).fstrimInterval = realValue;
-            TaskerConfiguration.get(getActivity()).saveConfiguration(getActivity());
+            TaskerConfig.get().fstrimInterval = realValue;
+            TaskerConfig.get().save();
 
             if (mFstrim.isChecked()) {
                 AlarmHelper.setAlarmFstrim(getActivity(), realValue);
@@ -283,7 +283,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements IoUt
     private int getFstrim() {
         int position;
 
-        final int value = TaskerConfiguration.get(getActivity()).fstrimInterval;
+        final int value = TaskerConfig.get().fstrimInterval;
         switch (value) {
             case 5:
                 position = 0;

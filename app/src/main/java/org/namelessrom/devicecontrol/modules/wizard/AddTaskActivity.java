@@ -37,7 +37,7 @@ import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
-import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
+import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.modules.wizard.setup.AbstractSetupData;
 import org.namelessrom.devicecontrol.modules.wizard.setup.Page;
@@ -115,7 +115,7 @@ public class AddTaskActivity extends BaseActivity implements SetupDataCallbacks 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.app_margin));
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 mStepPagerStrip.setCurrentPage(position);
@@ -178,10 +178,7 @@ public class AddTaskActivity extends BaseActivity implements SetupDataCallbacks 
                 final Page currentPage = mPageList.get(currentItem);
                 if (currentPage.getId() == R.string.setup_complete) {
                     final TaskerItem item = mSetupData.getSetupData();
-                    TaskerConfiguration.get(AddTaskActivity.this)
-                            .deleteItem(item)
-                            .addItem(item)
-                            .saveConfiguration(AddTaskActivity.this);
+                    TaskerConfig.get().deleteItem(item).addItem(item).save();
                     finishSetup();
                 } else {
                     mViewPager.setCurrentItem(currentItem + 1, true);

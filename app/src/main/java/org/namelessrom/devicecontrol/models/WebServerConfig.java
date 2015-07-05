@@ -40,8 +40,13 @@ public class WebServerConfig {
     public String username = "root";
     public String password = "toor";
 
+    private transient static WebServerConfig instance;
+
     public static WebServerConfig get() {
-        return Paper.get(NAME, new WebServerConfig());
+        if (instance == null) {
+            instance = Paper.get(NAME, new WebServerConfig());
+        }
+        return instance;
     }
 
     public WebServerConfig save() {

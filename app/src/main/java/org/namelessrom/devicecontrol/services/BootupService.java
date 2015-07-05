@@ -27,7 +27,7 @@ import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
 import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
-import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
+import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.modules.device.DeviceFeatureFragment;
@@ -105,9 +105,10 @@ public class BootupService extends IntentService {
         //==================================================================================
         // Tasker
         //==================================================================================
-        if (TaskerConfiguration.get(this).fstrimEnabled) {
+        TaskerConfig taskerConfig = TaskerConfig.get();
+        if (taskerConfig.fstrimEnabled) {
             Logger.v(this, "Scheduling Tasker - FSTRIM");
-            AlarmHelper.setAlarmFstrim(this, TaskerConfiguration.get(this).fstrimInterval);
+            AlarmHelper.setAlarmFstrim(this, taskerConfig.fstrimInterval);
         }
 
         //==================================================================================

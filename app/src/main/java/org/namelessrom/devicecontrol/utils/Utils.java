@@ -36,7 +36,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
+import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.services.TaskerService;
@@ -463,10 +463,13 @@ public class Utils {
     }
 
     public static boolean startTaskerService(Context context) {
-        if (!TaskerConfiguration.get(context).enabled) return false;
+        TaskerConfig taskerConfig = TaskerConfig.get();
+        if (!taskerConfig.enabled) {
+            return false;
+        }
 
         boolean enabled = false;
-        final List<TaskerItem> taskerItemList = TaskerConfiguration.get(context).items;
+        final List<TaskerItem> taskerItemList = taskerConfig.items;
         for (final TaskerItem item : taskerItemList) {
             if (item.enabled) {
                 enabled = true;

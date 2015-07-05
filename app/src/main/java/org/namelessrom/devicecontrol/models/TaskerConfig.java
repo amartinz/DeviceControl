@@ -16,9 +16,8 @@
  *
  */
 
-package org.namelessrom.devicecontrol.configuration;
+package org.namelessrom.devicecontrol.models;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.Logger;
@@ -27,12 +26,16 @@ import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import io.paperdb.Paper;
+
 /**
  * Tasker configuration which auto serializes itself to a file
  */
-public class TaskerConfiguration extends BaseConfiguration<TaskerConfiguration> {
-    public static final String FSTRIM = "fstrim";
-    public static final String FSTRIM_INTERVAL = "fstrim_interval";
+public class TaskerConfig {
+    protected transient static final String NAME = "TaskerConfig";
+
+    public transient static final String FSTRIM = "fstrim";
+    public transient static final String FSTRIM_INTERVAL = "fstrim_interval";
 
     public boolean enabled;
 
@@ -41,41 +44,17 @@ public class TaskerConfiguration extends BaseConfiguration<TaskerConfiguration> 
 
     public ArrayList<TaskerItem> items = new ArrayList<>();
 
-    private static TaskerConfiguration sInstance;
+    private transient static TaskerConfig instance;
 
-    private TaskerConfiguration(Context context) {
-        loadConfiguration(context);
-    }
-
-    public static TaskerConfiguration get(Context context) {
-        if (sInstance == null) {
-            sInstance = new TaskerConfiguration(context);
+    public static TaskerConfig get() {
+        if (instance == null) {
+            instance = Paper.get(NAME, new TaskerConfig());
         }
-        return sInstance;
+        return instance;
     }
 
-    @Override protected String getConfigurationFile() {
-        return "tasker_configuration.json";
-    }
-
-    @Override public TaskerConfiguration loadConfiguration(Context context) {
-        final TaskerConfiguration config = loadRawConfiguration(context, TaskerConfiguration.class);
-        if (config == null) {
-            return this;
-        }
-
-        this.enabled = config.enabled;
-
-        this.fstrimEnabled = config.fstrimEnabled;
-        this.fstrimInterval = config.fstrimInterval;
-
-        this.items = config.items != null ? config.items : new ArrayList<TaskerItem>();
-
-        return this;
-    }
-
-    @Override public TaskerConfiguration saveConfiguration(Context context) {
-        saveConfigurationInternal(context);
+    public TaskerConfig save() {
+        Paper.put(NAME, TaskerConfig.this);
         return this;
     }
 
@@ -91,14 +70,14 @@ public class TaskerConfiguration extends BaseConfiguration<TaskerConfiguration> 
         return filteredItems;
     }
 
-    public synchronized TaskerConfiguration addItem(@NonNull TaskerItem taskerItem) {
+    public synchronized TaskerConfig addItem(@NonNull TaskerItem taskerItem) {
         items.add(taskerItem);
         Logger.d(this, "added item -> %s", taskerItem.toString());
 
         return this;
     }
 
-    public TaskerConfiguration deleteItem(@NonNull TaskerItem taskerItem) {
+    public TaskerConfig deleteItem(@NonNull TaskerItem taskerItem) {
         final Iterator<TaskerItem> iterator = items.iterator();
         while (iterator.hasNext()) {
             TaskerItem item = iterator.next();

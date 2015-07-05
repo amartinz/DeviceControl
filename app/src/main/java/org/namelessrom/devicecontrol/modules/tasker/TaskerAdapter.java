@@ -34,7 +34,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
-import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
+import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
@@ -43,8 +43,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class TaskerAdapter extends RecyclerView.Adapter<TaskerAdapter.TaskerViewHolder> {
-    private Activity mActivity;
-    private List<TaskerItem> mTasks;
+    private final Activity mActivity;
+    private final List<TaskerItem> mTasks;
 
     public TaskerAdapter(final Activity activity, @NonNull final List<TaskerItem> tasks) {
         mActivity = activity;
@@ -75,10 +75,10 @@ public class TaskerAdapter extends RecyclerView.Adapter<TaskerAdapter.TaskerView
         holder.enabled.setChecked(item.enabled);
         holder.enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                TaskerConfiguration configuration = TaskerConfiguration.get(mActivity);
-                configuration.deleteItem(item);
+                TaskerConfig taskerConfig = TaskerConfig.get();
+                taskerConfig.deleteItem(item);
                 item.enabled = isChecked;
-                configuration.addItem(item).saveConfiguration(mActivity);
+                taskerConfig.addItem(item).save();
             }
         });
 
@@ -106,9 +106,7 @@ public class TaskerAdapter extends RecyclerView.Adapter<TaskerAdapter.TaskerView
                 alert.setPositiveButton(android.R.string.yes,
                         new DialogInterface.OnClickListener() {
                             @Override public void onClick(DialogInterface d, int b) {
-                                TaskerConfiguration.get(mActivity)
-                                        .deleteItem(item)
-                                        .saveConfiguration(mActivity);
+                                TaskerConfig.get().deleteItem(item).save();
                                 mTasks.remove(item);
                                 d.dismiss();
                                 notifyDataSetChanged();

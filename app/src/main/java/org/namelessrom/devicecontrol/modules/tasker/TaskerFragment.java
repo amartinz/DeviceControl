@@ -19,7 +19,6 @@ package org.namelessrom.devicecontrol.modules.tasker;
 
 import android.app.Activity;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,7 +37,7 @@ import android.widget.CompoundButton;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.TaskerConfiguration;
+import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity;
 import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.ui.views.AttachFragment;
@@ -98,13 +97,14 @@ public class TaskerFragment extends AttachFragment {
         if (toggle != null && (v = toggle.getActionView()) != null) {
             final Activity activity = getActivity();
             final SwitchCompat sw = (SwitchCompat) v.findViewById(R.id.ab_switch);
-            sw.setChecked(TaskerConfiguration.get(activity).enabled);
+            sw.setChecked(TaskerConfig.get().enabled);
             sw.setOnCheckedChangeListener(
                     new CompoundButton.OnCheckedChangeListener() {
                         @Override public void onCheckedChanged(final CompoundButton b,
                                 final boolean isChecked) {
-                            TaskerConfiguration.get(activity).enabled = isChecked;
-                            TaskerConfiguration.get(activity).saveConfiguration(activity);
+                            TaskerConfig taskerConfig = TaskerConfig.get();
+                            taskerConfig.enabled = isChecked;
+                            taskerConfig.save();
                             Utils.toggleComponent(new ComponentName(activity.getPackageName(),
                                     TaskerService.class.getName()), !isChecked);
                             if (isChecked) {
@@ -126,8 +126,7 @@ public class TaskerFragment extends AttachFragment {
         }
 
         @Override protected List<TaskerItem> doInBackground(final Void... voids) {
-            final Context context = getActivity();
-            return TaskerConfiguration.get(context).loadConfiguration(context).items;
+            return TaskerConfig.get().items;
         }
 
         @Override protected void onPostExecute(final List<TaskerItem> result) {
