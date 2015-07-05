@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.ui.views;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 
 import org.namelessrom.devicecontrol.MainActivity;
+import org.namelessrom.devicecontrol.MainActivityCallbacks;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 
@@ -42,12 +44,19 @@ public abstract class AttachViewPagerFragment extends AttachFragment {
 
     @Override public void onResume() {
         super.onResume();
-        MainActivity.setSwipeOnContent(false);
+        setSwipeOnContent(false);
     }
 
     @Override public void onPause() {
         super.onPause();
-        MainActivity.setSwipeOnContent(DeviceConfig.get().swipeOnContent);
+        setSwipeOnContent(DeviceConfig.get().swipeOnContent);
+    }
+
+    private void setSwipeOnContent(boolean swipeOnContent) {
+        final Activity activity = getActivity();
+        if (activity instanceof MainActivityCallbacks) {
+            ((MainActivityCallbacks) activity).setSwipeOnContent(swipeOnContent);
+        }
     }
 
     public NoSwipeViewPager getViewPager() {

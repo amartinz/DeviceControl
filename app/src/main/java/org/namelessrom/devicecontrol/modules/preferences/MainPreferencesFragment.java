@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.modules.preferences;
 
+import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ import android.view.View;
 import com.pollfish.main.PollFish;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.MainActivity;
+import org.namelessrom.devicecontrol.MainActivityCallbacks;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.theme.AppResources;
@@ -113,7 +114,10 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             mSwipeOnContent.setChecked(value);
 
             // update the menu
-            MainActivity.setSwipeOnContent(value);
+            final Activity activity = getActivity();
+            if (activity instanceof MainActivityCallbacks) {
+                ((MainActivityCallbacks) activity).setSwipeOnContent(value);
+            }
             return true;
         } else if (mDarkTheme == preference) {
             final boolean isDark = (Boolean) newValue;

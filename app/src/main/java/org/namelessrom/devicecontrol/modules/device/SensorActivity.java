@@ -33,10 +33,8 @@ import android.widget.LinearLayout;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
-import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
-import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.modules.device.sensors.BaseSensor;
 import org.namelessrom.devicecontrol.modules.device.sensors.environment.AmbientTemperatureSensor;
 import org.namelessrom.devicecontrol.modules.device.sensors.environment.LightSensor;
@@ -236,7 +234,6 @@ public class SensorActivity extends BaseActivity {
 
     @Override protected void onPause() {
         super.onPause();
-        MainActivity.setSwipeOnContent(DeviceConfig.get().swipeOnContent);
 
         // unregister all sensors
         for (final BaseSensor sensor : mSensorList) {
@@ -246,8 +243,6 @@ public class SensorActivity extends BaseActivity {
 
     @Override protected void onResume() {
         super.onResume();
-        // do not allow swiping to open menu with viewpagers
-        MainActivity.setSwipeOnContent(false);
 
         // lock current orientation
         switch (getResources().getConfiguration().orientation) {

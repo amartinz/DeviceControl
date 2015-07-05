@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 
 import org.namelessrom.devicecontrol.MainActivity;
+import org.namelessrom.devicecontrol.MainActivityCallbacks;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.listeners.OnSectionAttachedListener;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -43,8 +44,9 @@ public abstract class AttachPreferenceFragment extends CustomPreferenceFragment 
     @Override public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (MainActivity.sSlidingMenu != null && MainActivity.sSlidingMenu.isMenuShowing()) {
-            MainActivity.sSlidingMenu.toggle(true);
+        final Activity activity = getActivity();
+        if (activity instanceof MainActivityCallbacks) {
+            ((MainActivityCallbacks) activity).toggleSlidingMenuIfShowing();
         }
     }
 

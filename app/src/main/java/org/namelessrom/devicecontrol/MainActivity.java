@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,8 +45,8 @@ import com.pollfish.main.PollFish;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
-import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
+import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.modules.about.AboutFragment;
 import org.namelessrom.devicecontrol.modules.appmanager.AppListFragment;
 import org.namelessrom.devicecontrol.modules.bootup.BootupFragment;
@@ -80,7 +80,7 @@ import org.namelessrom.proprietary.Configuration;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener, MainActivityCallbacks {
 
     //==============================================================================================
     // Fields
@@ -90,8 +90,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     private static long mBackPressed;
     private Toast mToast;
 
-    public static SlidingMenu sSlidingMenu;
-    public static MaterialMenuIconToolbar sMaterialMenu;
+    private SlidingMenu slidingMenu;
+    private MaterialMenuIconToolbar materialMenu;
 
     public static boolean sDisableFragmentAnimations;
 
@@ -192,7 +192,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 if (mSubFragmentTitle == -1) {
-                    sSlidingMenu.toggle(true);
+                    if (slidingMenu != null) {
+                        slidingMenu.toggle(true);
+                    }
                 } else {
                     onCustomBackPressed(true);
                 }
@@ -200,12 +202,12 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         });
 
         // setup material menu icon
-        sMaterialMenu =
+        materialMenu =
                 new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
                     @Override public int getToolbarViewId() { return R.id.toolbar; }
                 };
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            sMaterialMenu.setNeverDrawTouch(true);
+            materialMenu.setNeverDrawTouch(true);
         }
 
         Utils.setupDirectories();
@@ -226,18 +228,18 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         menuContainer.findViewById(R.id.menu_prefs).setOnClickListener(this);
         menuContainer.findViewById(R.id.menu_about).setOnClickListener(this);
 
-        sSlidingMenu = new SlidingMenu(this);
-        sSlidingMenu.setMode(SlidingMenu.LEFT);
-        sSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
-        sSlidingMenu.setShadowDrawable(R.drawable.shadow_left);
-        sSlidingMenu.setBehindWidthRes(R.dimen.slidingmenu_offset);
-        sSlidingMenu.setFadeEnabled(true);
-        sSlidingMenu.setFadeDegree(0.45f);
-        sSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        sSlidingMenu.setMenu(v);
+        slidingMenu = new SlidingMenu(this);
+        slidingMenu.setMode(SlidingMenu.LEFT);
+        slidingMenu.setShadowWidthRes(R.dimen.shadow_width);
+        slidingMenu.setShadowDrawable(R.drawable.shadow_left);
+        slidingMenu.setBehindWidthRes(R.dimen.slidingmenu_offset);
+        slidingMenu.setFadeEnabled(true);
+        slidingMenu.setFadeDegree(0.45f);
+        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        slidingMenu.setMenu(v);
 
         // setup touch mode
-        MainActivity.setSwipeOnContent(DeviceConfig.get().swipeOnContent);
+        setSwipeOnContent(DeviceConfig.get().swipeOnContent);
 
         // setup menu list
         final ArrayList<MenuListArrayAdapter.MenuItem> menuItems = setupMenuLists();
@@ -288,11 +290,11 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
     @Override protected void onPostCreate(final Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        sMaterialMenu.syncState(savedInstanceState);
+        materialMenu.syncState(savedInstanceState);
     }
 
     @Override protected void onSaveInstanceState(@NonNull final Bundle outState) {
-        sMaterialMenu.onSaveInstanceState(outState);
+        materialMenu.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
 
@@ -300,8 +302,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         Logger.v(this, "onCustomBackPressed(%s)", animatePressed);
 
         // toggle menu if it is showing and return
-        if (sSlidingMenu.isMenuShowing()) {
-            sSlidingMenu.toggle(true);
+        if (slidingMenu.isMenuShowing()) {
+            slidingMenu.toggle(true);
             return;
         }
 
@@ -328,9 +330,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
             // we can separate actionbar back actions and back key presses
             if (animatePressed) {
-                sMaterialMenu.animatePressedState(iconState);
+                materialMenu.animatePressedState(iconState);
             } else {
-                sMaterialMenu.animateState(iconState);
+                materialMenu.animateState(iconState);
             }
 
             // after animating, go further
@@ -576,7 +578,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             iconState = MaterialMenuDrawable.IconState.BURGER;
         }
 
-        sMaterialMenu.animateState(iconState);
+        materialMenu.animateState(iconState);
     }
 
     private void restoreActionBar() {
@@ -586,11 +588,17 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         }
     }
 
-    public static void setSwipeOnContent(final boolean swipeOnContent) {
-        if (sSlidingMenu == null) return;
+    @Override public void toggleSlidingMenuIfShowing() {
+        if (slidingMenu != null && slidingMenu.isMenuShowing()) {
+            slidingMenu.toggle(true);
+        }
+    }
 
-        sSlidingMenu.setTouchModeAbove(swipeOnContent
-                ? SlidingMenu.TOUCHMODE_FULLSCREEN : SlidingMenu.TOUCHMODE_MARGIN);
+    @Override public void setSwipeOnContent(boolean swipeOnContent) {
+        if (slidingMenu != null) {
+            slidingMenu.setTouchModeAbove(swipeOnContent
+                    ? SlidingMenu.TOUCHMODE_FULLSCREEN : SlidingMenu.TOUCHMODE_MARGIN);
+        }
     }
 
 }
