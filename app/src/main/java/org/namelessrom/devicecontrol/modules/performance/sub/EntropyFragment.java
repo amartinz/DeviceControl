@@ -34,7 +34,7 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.ExtraConfiguration;
+import org.namelessrom.devicecontrol.models.ExtraConfig;
 import org.namelessrom.devicecontrol.hardware.ExtraUtils;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
@@ -90,8 +90,8 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
         }
 
         // category = (PreferenceCategory) findPreference("rng");
-        mRngStartup = (CustomTogglePreference) findPreference(ExtraConfiguration.RNG_STARTUP);
-        mRngStartup.setChecked(ExtraConfiguration.get(getActivity()).rngStartup);
+        mRngStartup = (CustomTogglePreference) findPreference(ExtraConfig.RNG_STARTUP);
+        mRngStartup.setChecked(ExtraConfig.get().rngStartup);
         mRngStartup.setOnPreferenceChangeListener(this);
 
 
@@ -114,8 +114,8 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
             mWriteWakeupThreshold.writeValue(value);
             return true;
         } else if (mRngStartup == preference) {
-            ExtraConfiguration.get(getActivity()).rngStartup = (Boolean) o;
-            ExtraConfiguration.get(getActivity()).saveConfiguration(getActivity());
+            ExtraConfig.get().rngStartup = (Boolean) o;
+            ExtraConfig.get().save();
             return true;
         } else if (mRngActive == preference) {
             if (!RNGD.exists()) {
@@ -210,8 +210,8 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
         }
     }
 
-    public static String restore(final Context context) {
-        if (ExtraConfiguration.get(context).rngStartup) {
+    public static String restore() {
+        if (ExtraConfig.get().rngStartup) {
             return String.format("%s -P;\n", RNGD.getAbsolutePath());
         }
         return "";

@@ -47,8 +47,8 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.ExtraConfiguration;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
+import org.namelessrom.devicecontrol.models.ExtraConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
@@ -140,22 +140,23 @@ public class VoltageFragment extends AttachPreferenceFragment {
                         execute.append(Utils.getWriteCommand(VoltageUtils.VDD_TABLE_FILE, value));
                     }
                     Utils.runRootCommand(execute.toString());
-                    ExtraConfiguration.get(getActivity()).vdd = sb.toString().trim();
-                    ExtraConfiguration.get(getActivity()).saveConfiguration(getActivity());
+                    ExtraConfig.get().vdd = sb.toString().trim();
+                    ExtraConfig.get().save();
                 } else {
                     for (int i = 0; i < count; i++) {
                         pref = (CustomPreference) mCategory.getPreference(i);
                         mValues[i] = pref.getKey();
                     }
                     final String table = buildTable(mValues);
-                    ExtraConfiguration.get(getActivity()).uv = table;
-                    ExtraConfiguration.get(getActivity()).saveConfiguration(getActivity());
+                    ExtraConfig.get().uv = table;
+                    ExtraConfig.get().save();
                     Utils.writeValue(VoltageUtils.UV_TABLE_FILE, table);
                 }
 
                 BootupConfiguration.setBootup(getActivity(), new BootupItem(
                         BootupConfiguration.CATEGORY_VOLTAGE, BootupConfiguration.CATEGORY_VOLTAGE,
-                        BootupConfiguration.CATEGORY_VOLTAGE, BootupConfiguration.CATEGORY_VOLTAGE, false));
+                        BootupConfiguration.CATEGORY_VOLTAGE, BootupConfiguration.CATEGORY_VOLTAGE,
+                        false));
 
                 mButtonLayout.setVisibility(View.GONE);
                 list.bringToFront();
@@ -343,7 +344,7 @@ public class VoltageFragment extends AttachPreferenceFragment {
         return sb.toString();
     }
 
-    public static String restore(final Context context, BootupConfiguration config) {
+    public static String restore(BootupConfiguration config) {
         final boolean hasVdd = Utils.fileExists(VoltageUtils.VDD_TABLE_FILE);
         final boolean hasUv = Utils.fileExists(VoltageUtils.UV_TABLE_FILE);
         if (!hasVdd && !hasUv) {
@@ -362,7 +363,7 @@ public class VoltageFragment extends AttachPreferenceFragment {
 
         final StringBuilder restore = new StringBuilder();
         if (hasVdd) {
-            final String value = ExtraConfiguration.get(context).vdd;
+            final String value = ExtraConfig.get().vdd;
             Logger.v(VoltageFragment.class, "VDD Table: " + value);
 
             if (!TextUtils.isEmpty(value)) {
@@ -371,8 +372,8 @@ public class VoltageFragment extends AttachPreferenceFragment {
                     restore.append(Utils.getWriteCommand(VoltageUtils.VDD_TABLE_FILE, s));
                 }
             }
-        } else if (hasUv) {
-            final String value = ExtraConfiguration.get(context).uv;
+        } else {
+            final String value = ExtraConfig.get().uv;
             Logger.v(VoltageFragment.class, "UV Table: " + value);
 
             if (!TextUtils.isEmpty(value)) {

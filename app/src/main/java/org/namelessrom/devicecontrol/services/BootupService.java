@@ -42,6 +42,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.io.File;
 import java.util.ArrayList;
 
+import io.paperdb.Paper;
+
 public class BootupService extends IntentService {
     private static final Object lockObject = new Object();
 
@@ -71,6 +73,8 @@ public class BootupService extends IntentService {
     }
 
     private void startBootupRestoration() {
+        Paper.init(this);
+
         final DeviceConfiguration configuration = DeviceConfiguration.get(this);
         if (configuration.dcFirstStart) {
             Logger.i(this, "First start not completed, exiting");
@@ -156,7 +160,7 @@ public class BootupService extends IntentService {
 
         Logger.i(this, "----- VOLTAGE START -----");
         // TODO: FULLY convert to bootup
-        cmd = VoltageFragment.restore(this, bootupConfiguration);
+        cmd = VoltageFragment.restore(bootupConfiguration);
         Logger.v(this, cmd);
         sbCmd.append(cmd);
         Logger.i(this, "----- VOLTAGE END -----");
@@ -172,7 +176,7 @@ public class BootupService extends IntentService {
             sbCmd.append("busybox sysctl -p;\n");
         }
 
-        cmd = EntropyFragment.restore(this);
+        cmd = EntropyFragment.restore();
         if (!TextUtils.isEmpty(cmd)) {
             Logger.v(this, cmd);
             sbCmd.append(cmd);
