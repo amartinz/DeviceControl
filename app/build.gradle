@@ -124,9 +124,10 @@ dependencies {
     def boolean isPlatformBuild = (propPlatformBuild != null)
 
     if (!useLocalMaterial || isPlatformBuild) {
+    //if (false) {
         logger.quiet('MaterialPrefernces -> release version')
         // the version code equals the release tag OR the shortcode of the commit to use
-        compile('com.github.Evisceration:MaterialPreferences:850f83df01') {
+        compile('com.github.Evisceration:MaterialPreferences:0.1.8') {
             exclude group: 'com.google.android', module: 'appcompat-v7'
             exclude group: 'com.google.android', module: 'cardview-v7'
         }
