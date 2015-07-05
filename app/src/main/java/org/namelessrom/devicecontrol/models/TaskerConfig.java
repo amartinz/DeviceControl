@@ -32,7 +32,7 @@ import io.paperdb.Paper;
  * Tasker configuration which auto serializes itself to a file
  */
 public class TaskerConfig {
-    protected transient static final String NAME = "TaskerConfig";
+    private transient static final String NAME = "TaskerConfig";
 
     public transient static final String FSTRIM = "fstrim";
     public transient static final String FSTRIM_INTERVAL = "fstrim_interval";

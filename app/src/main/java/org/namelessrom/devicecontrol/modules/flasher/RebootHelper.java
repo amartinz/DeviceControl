@@ -33,7 +33,7 @@ import android.widget.EditText;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.FlasherConfiguration;
+import org.namelessrom.devicecontrol.models.FlasherConfig;
 import org.namelessrom.devicecontrol.modules.flasher.recovery.RecoveryInfo;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -190,10 +190,10 @@ public class RebootHelper {
     private void reboot(final Context context, final String[] items, final boolean wipeData,
             final boolean wipeCaches, final String backupFolder, final String backupOptions) {
         final int[] recoveries;
-        final int flashType = FlasherConfiguration.get(context).recoveryType;
-        if (FlasherConfiguration.RECOVERY_TYPE_CWM == flashType) {
+        final int flashType = FlasherConfig.get().recoveryType;
+        if (FlasherConfig.RECOVERY_TYPE_CWM == flashType) {
             recoveries = new int[]{ RecoveryInfo.CWM_BASED };
-        } else if (FlasherConfiguration.RECOVERY_TYPE_OPEN == flashType) {
+        } else if (FlasherConfig.RECOVERY_TYPE_OPEN == flashType) {
             recoveries = new int[]{ RecoveryInfo.TWRP_BASED };
         } else {
             recoveries = new int[]{ RecoveryInfo.CWM_BASED, RecoveryInfo.TWRP_BASED };

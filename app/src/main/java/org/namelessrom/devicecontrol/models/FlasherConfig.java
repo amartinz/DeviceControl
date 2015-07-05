@@ -21,36 +21,29 @@ package org.namelessrom.devicecontrol.models;
 import io.paperdb.Paper;
 
 /**
- * Web server configuration which auto serializes itself to a file
+ * Flasher configuration which auto serializes itself to a file
  */
-public class WebServerConfig {
-    private transient static final String NAME = "WebServerConfig";
+public class FlasherConfig {
+    private transient static final String NAME = "FlasherConfig";
 
-    public transient static final String ROOT = "wfm_root";
-    public transient static final String PORT = "wfm_port";
+    public transient static final String PREF_RECOVERY_TYPE = "pref_recovery_type";
+    public transient static final int RECOVERY_TYPE_BOTH = 0;
+    public transient static final int RECOVERY_TYPE_CWM = 1;
+    public transient static final int RECOVERY_TYPE_OPEN = 2;
 
-    public transient static final String USE_AUTH = "wfm_auth";
-    public transient static final String USERNAME = "wfm_username";
-    public transient static final String PASSWORD = "wfm_password";
+    public int recoveryType;
 
-    public boolean root;
-    public int port = 8080;
+    private transient static FlasherConfig instance;
 
-    public boolean useAuth = true;
-    public String username = "root";
-    public String password = "toor";
-
-    private transient static WebServerConfig instance;
-
-    public static WebServerConfig get() {
+    public static FlasherConfig get() {
         if (instance == null) {
-            instance = Paper.get(NAME, new WebServerConfig());
+            instance = Paper.get(NAME, new FlasherConfig());
         }
         return instance;
     }
 
-    public WebServerConfig save() {
-        Paper.put(NAME, WebServerConfig.this);
+    public FlasherConfig save() {
+        Paper.put(NAME, FlasherConfig.this);
         return this;
     }
 
