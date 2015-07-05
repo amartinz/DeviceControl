@@ -94,8 +94,9 @@ public class IOUtils {
             for (final String s : output) {
                 if (s.startsWith("dev_mount")) {
                     String[] lineElements = s.split(" ");
-                    if (lineElements[2] == null) continue;
+                    if (lineElements.length < 3) continue;
                     String element = lineElements[2];
+                    if (element == null) continue;
 
                     if (element.contains(":")) {
                         element = element.substring(0, element.indexOf(":"));
@@ -106,8 +107,9 @@ public class IOUtils {
                     }
                 } else if (s.startsWith("/devices/platform")) {
                     String[] lineElements = s.split(" ");
-                    if (lineElements[1] == null) continue;
+                    if (lineElements.length < 2) continue;
                     String element = lineElements[1];
+                    if (element == null) continue;
 
                     if (element.contains(":")) {
                         element = element.substring(0, element.indexOf(":"));
