@@ -32,7 +32,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.DisplayColorCalibration;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -108,8 +108,8 @@ public class DisplayColor extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
-            BootupConfiguration.setBootup(getContext(), new BootupItem(
-                    BootupConfiguration.CATEGORY_DEVICE, DisplayColorCalibration.TAG,
+            BootupConfig.setBootup(new BootupItem(
+                    BootupConfig.CATEGORY_DEVICE, DisplayColorCalibration.TAG,
                     DisplayColorCalibration.get().getPath(),
                     DisplayColorCalibration.get().getCurColors(), true));
         } else if (mOriginalColors != null) {

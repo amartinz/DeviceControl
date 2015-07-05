@@ -33,7 +33,7 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -250,8 +250,8 @@ public class GpuUtils {
         return false;
     }
 
-    @NonNull public String restore(BootupConfiguration config) {
-        final ArrayList<BootupItem> items = config.getItemsByCategory(BootupConfiguration.CATEGORY_GPU);
+    @NonNull public String restore(BootupConfig config) {
+        final ArrayList<BootupItem> items = config.getItemsByCategory(BootupConfig.CATEGORY_GPU);
         if (items.size() == 0) {
             return "";
         }

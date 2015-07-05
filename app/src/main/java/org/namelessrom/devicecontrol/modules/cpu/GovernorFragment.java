@@ -24,10 +24,9 @@ import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.view.View;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
@@ -157,8 +156,8 @@ public class GovernorFragment extends AttachMaterialPreferenceFragment implement
         }
 
         @Override protected Void doInBackground(String... params) {
-            BootupConfiguration.setBootup(Application.get(), new BootupItem(
-                    BootupConfiguration.CATEGORY_CPU, name, key, value, true));
+            BootupConfig.setBootup(new BootupItem(
+                    BootupConfig.CATEGORY_CPU, name, key, value, true));
             return null;
         }
     }

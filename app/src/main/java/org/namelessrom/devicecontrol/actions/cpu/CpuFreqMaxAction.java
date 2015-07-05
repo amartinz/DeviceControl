@@ -19,11 +19,10 @@ package org.namelessrom.devicecontrol.actions.cpu;
 
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
@@ -69,7 +68,7 @@ public class CpuFreqMaxAction extends BaseAction {
         final int cpus = CpuUtils.get().getNumOfCpus();
         final StringBuilder sb = new StringBuilder(lockFreq ? cpus * 3 : cpus * 2);
 
-        final BootupConfiguration configuration = BootupConfiguration.get(Application.get());
+        final BootupConfig configuration = BootupConfig.get();
         String path;
         for (int i = 0; i < cpus; i++) {
             if (i != 0) {
@@ -78,14 +77,14 @@ public class CpuFreqMaxAction extends BaseAction {
             path = CpuUtils.get().getMaxCpuFrequencyPath(i);
             sb.append(Utils.getWriteCommand(path, value));
             if (bootup) {
-                configuration.addItem(new BootupItem(BootupConfiguration.CATEGORY_CPU,
+                configuration.addItem(new BootupItem(BootupConfig.CATEGORY_CPU,
                         "cpu_max" + i, CpuUtils.get().getMaxCpuFrequencyPath(i), value, true));
             }
             if (lockFreq) {
                 sb.append(Utils.lockFile(path));
             }
         }
-        configuration.saveConfiguration(Application.get());
+        configuration.save();
 
         Utils.runRootCommand(sb.toString());
     }

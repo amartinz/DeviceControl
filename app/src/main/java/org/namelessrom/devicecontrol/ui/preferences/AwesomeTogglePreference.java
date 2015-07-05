@@ -25,7 +25,7 @@ import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.PreferenceUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -159,7 +159,7 @@ public class AwesomeTogglePreference extends CustomTogglePreference {
                 for (int i = 0; i < length; i++) {
                     Utils.writeValue(mPaths[i], (isChecked ? mValueChecked : mValueNotChecked));
                     if (mStartUp) {
-                        BootupConfiguration.setBootup(getContext(), new BootupItem(mCategory,
+                        BootupConfig.setBootup(new BootupItem(mCategory,
                                 getKey() + String.valueOf(i), mPaths[i],
                                 (isChecked ? mValueChecked : mValueNotChecked), true));
                     }
@@ -167,7 +167,7 @@ public class AwesomeTogglePreference extends CustomTogglePreference {
             } else {
                 Utils.writeValue(mPath, (isChecked ? mValueChecked : mValueNotChecked));
                 if (mStartUp) {
-                    BootupConfiguration.setBootup(getContext(),
+                    BootupConfig.setBootup(
                             new BootupItem(mCategory, getKey(), mPath,
                                     (isChecked ? mValueChecked : mValueNotChecked), true));
                 }

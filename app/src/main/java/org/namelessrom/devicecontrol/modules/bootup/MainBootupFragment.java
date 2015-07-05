@@ -21,7 +21,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -45,7 +45,7 @@ public class MainBootupFragment extends MaterialSupportPreferenceFragment implem
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final BootupConfiguration configuration = BootupConfiguration.get(getActivity());
+        final BootupConfig configuration = BootupConfig.get();
 
         mBootupEnabled = (MaterialSwitchPreference) view.findViewById(R.id.prefs_bootup_enabled);
         mBootupEnabled.setBackgroundColor(AppResources.get().getCardBackgroundColor());
@@ -81,7 +81,7 @@ public class MainBootupFragment extends MaterialSupportPreferenceFragment implem
     }
 
     @Override public boolean onPreferenceChanged(MaterialPreference preference, Object o) {
-        final BootupConfiguration configuration = BootupConfiguration.get(getActivity());
+        final BootupConfig configuration = BootupConfig.get();
         boolean handled = false;
 
         if (mBootupEnabled == preference) {
@@ -106,7 +106,7 @@ public class MainBootupFragment extends MaterialSupportPreferenceFragment implem
         }
 
         if (handled) {
-            configuration.saveConfiguration(getActivity());
+            configuration.save();
             updateCategories();
             return true;
         }

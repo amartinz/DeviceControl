@@ -37,7 +37,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.DisplayGammaCalibration;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 
@@ -156,15 +156,15 @@ public class DisplayGamma extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
-            final BootupConfiguration config = BootupConfiguration.get(getContext());
+            final BootupConfig config = BootupConfig.get();
             for (int i = 0; i < mNumberOfControls; i++) {
                 for (final String path : DisplayGammaCalibration.get().getPaths(i)) {
                     config.addItem(new BootupItem(
-                            BootupConfiguration.CATEGORY_DEVICE, DisplayGammaCalibration.TAG + i,
+                            BootupConfig.CATEGORY_DEVICE, DisplayGammaCalibration.TAG + i,
                             path, DisplayGammaCalibration.get().getCurGamma(i), true));
                 }
             }
-            config.saveConfiguration(getContext());
+            config.save();
         } else if (mOriginalColors != null) {
             for (int i = 0; i < mNumberOfControls; i++) {
                 DisplayGammaCalibration.get().setGamma(i, mOriginalColors[i]);
@@ -266,7 +266,6 @@ public class DisplayGamma extends DialogPreference {
     private class GammaSeekBar implements SeekBar.OnSeekBarChangeListener {
         private int mControlIndex;
         private int mColorIndex;
-        private int mOriginal;
         private int mMin;
         private SeekBar mSeekBar;
         private TextView mValue;

@@ -26,7 +26,7 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.DisplayColorCalibration;
 import org.namelessrom.devicecontrol.hardware.DisplayGammaCalibration;
 import org.namelessrom.devicecontrol.objects.BootupItem;
@@ -142,7 +142,7 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             if (awesomeGloveMode != null || !isHtsSupported()) {
                 category.removePreference(mGloveMode);
             } else {
-                final BootupItem bootupItem = BootupConfiguration.get(getActivity())
+                final BootupItem bootupItem = BootupConfig.get()
                         .getItemByName(mGloveMode.getKey());
                 final String value = (bootupItem != null ? bootupItem.value : null);
                 final boolean enableGlove = (value != null && value.equals("1"));
@@ -289,8 +289,8 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
         if (preference == mGloveMode && mGloveMode.isEnabled()) {
             final boolean value = (Boolean) o;
             enableHts(value);
-            BootupConfiguration.setBootup(getActivity(),
-                    new BootupItem(BootupConfiguration.CATEGORY_DEVICE, mGloveMode.getKey(),
+            BootupConfig.setBootup(
+                    new BootupItem(BootupConfig.CATEGORY_DEVICE, mGloveMode.getKey(),
                             mGloveMode.getKey(), (value ? "1" : "0"), true));
             return true;
         } else if (preference instanceof AwesomeTogglePreference) {
@@ -321,9 +321,9 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
     // Methods
     //==============================================================================================
 
-    public static String restore(BootupConfiguration config) {
+    public static String restore(BootupConfig config) {
         final ArrayList<BootupItem> items = config
-                .getItemsByCategory(BootupConfiguration.CATEGORY_DEVICE);
+                .getItemsByCategory(BootupConfig.CATEGORY_DEVICE);
         if (items.size() == 0) {
             return "";
         }

@@ -28,7 +28,7 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.KsmUtils;
 import org.namelessrom.devicecontrol.hardware.UksmUtils;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
@@ -221,8 +221,8 @@ public class DeviceFeatureKernelFragment extends CustomPreferenceFragment implem
         } else if (preference == mTcpCongestion) {
             final String value = String.valueOf(o);
             Utils.writeValue(TCP_CONGESTION_CONTROL, value);
-            BootupConfiguration.setBootup(getActivity(), new BootupItem(
-                    BootupConfiguration.CATEGORY_EXTRAS,
+            BootupConfig.setBootup(new BootupItem(
+                    BootupConfig.CATEGORY_EXTRAS,
                     mTcpCongestion.getKey(), TCP_CONGESTION_CONTROL, value, true));
             preference.setSummary(value);
             return true;
@@ -235,9 +235,9 @@ public class DeviceFeatureKernelFragment extends CustomPreferenceFragment implem
     // Methods
     //==============================================================================================
 
-    public static String restore(BootupConfiguration config) {
+    public static String restore(BootupConfig config) {
         final ArrayList<BootupItem> items = config
-                .getItemsByCategory(BootupConfiguration.CATEGORY_EXTRAS);
+                .getItemsByCategory(BootupConfig.CATEGORY_EXTRAS);
         if (items.size() == 0) {
             return "";
         }

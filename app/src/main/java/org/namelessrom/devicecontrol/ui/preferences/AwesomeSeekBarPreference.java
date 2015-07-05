@@ -24,7 +24,7 @@ import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -120,7 +120,7 @@ public class AwesomeSeekBarPreference extends SeekBarPreference {
                 for (int i = 0; i < length; i++) {
                     Utils.writeValue(mPaths[i], String.valueOf(value));
                     if (startUp) {
-                        BootupConfiguration.setBootup(getContext(),
+                        BootupConfig.setBootup(
                                 new BootupItem(category, getKey() + String.valueOf(i),
                                         mPaths[i], String.valueOf(value), true));
                     }
@@ -128,7 +128,7 @@ public class AwesomeSeekBarPreference extends SeekBarPreference {
             } else {
                 Utils.writeValue(mPath, String.valueOf(value));
                 if (startUp) {
-                    BootupConfiguration.setBootup(getContext(),
+                    BootupConfig.setBootup(
                             new BootupItem(category, getKey(), mPath, String.valueOf(value), true));
                 }
             }

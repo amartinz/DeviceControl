@@ -18,7 +18,6 @@
 package org.namelessrom.devicecontrol.modules.performance.sub;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,7 +45,7 @@ import android.widget.ListView;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
 import org.namelessrom.devicecontrol.models.ExtraConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
@@ -153,9 +152,9 @@ public class VoltageFragment extends AttachPreferenceFragment {
                     Utils.writeValue(VoltageUtils.UV_TABLE_FILE, table);
                 }
 
-                BootupConfiguration.setBootup(getActivity(), new BootupItem(
-                        BootupConfiguration.CATEGORY_VOLTAGE, BootupConfiguration.CATEGORY_VOLTAGE,
-                        BootupConfiguration.CATEGORY_VOLTAGE, BootupConfiguration.CATEGORY_VOLTAGE,
+                BootupConfig.setBootup(new BootupItem(
+                        BootupConfig.CATEGORY_VOLTAGE, BootupConfig.CATEGORY_VOLTAGE,
+                        BootupConfig.CATEGORY_VOLTAGE, BootupConfig.CATEGORY_VOLTAGE,
                         false));
 
                 mButtonLayout.setVisibility(View.GONE);
@@ -344,7 +343,7 @@ public class VoltageFragment extends AttachPreferenceFragment {
         return sb.toString();
     }
 
-    public static String restore(BootupConfiguration config) {
+    public static String restore(BootupConfig config) {
         final boolean hasVdd = Utils.fileExists(VoltageUtils.VDD_TABLE_FILE);
         final boolean hasUv = Utils.fileExists(VoltageUtils.UV_TABLE_FILE);
         if (!hasVdd && !hasUv) {
@@ -352,7 +351,7 @@ public class VoltageFragment extends AttachPreferenceFragment {
         }
 
         final ArrayList<BootupItem> bootupItems = config
-                .getItemsByCategory(BootupConfiguration.CATEGORY_VOLTAGE);
+                .getItemsByCategory(BootupConfig.CATEGORY_VOLTAGE);
         if (bootupItems.size() == 0) {
             return "";
         }

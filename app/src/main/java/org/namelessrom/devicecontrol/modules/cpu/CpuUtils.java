@@ -28,7 +28,7 @@ import com.stericson.roottools.execution.Shell;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuStateMonitor;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.objects.CpuCore;
@@ -177,9 +177,9 @@ public class CpuUtils {
         return numOfCpu;
     }
 
-    public String restore(BootupConfiguration config) {
+    public String restore(BootupConfig config) {
         final ArrayList<BootupItem> items =
-                config.getItemsByCategory(BootupConfiguration.CATEGORY_CPU);
+                config.getItemsByCategory(BootupConfig.CATEGORY_CPU);
 
         if (items.size() == 0) {
             return "";

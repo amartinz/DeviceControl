@@ -24,7 +24,7 @@ import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -121,14 +121,14 @@ public class AwesomeEditTextPreference extends CustomEditTextPreference {
                 for (int i = 0; i < length; i++) {
                     Utils.writeValue(mPaths[i], value);
                     if (mStartUp) {
-                        BootupConfiguration.setBootup(getContext(), new BootupItem(
+                        BootupConfig.setBootup(new BootupItem(
                                 mCategory, getKey() + String.valueOf(i), mPaths[i], value, true));
                     }
                 }
             } else {
                 Utils.writeValue(mPath, value);
                 if (mStartUp) {
-                    BootupConfiguration.setBootup(getContext(),
+                    BootupConfig.setBootup(
                             new BootupItem(mCategory, getKey(), mPath, value, true));
                 }
             }

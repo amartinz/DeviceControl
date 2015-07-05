@@ -28,10 +28,12 @@ import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.services.BootupService;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.Utils;
+
+import io.paperdb.Paper;
 
 public class BootUpReceiver extends BroadcastReceiver {
     private static final int NOTIFICATION_ID = 1000;
@@ -49,9 +51,23 @@ public class BootUpReceiver extends BroadcastReceiver {
             return;
         }
 
+        startBootupStuffs(ctx);
+    }
+
+    private void startBootupStuffs(final Context ctx) {
+        Thread thread = new Thread(new Runnable() {
+            @Override public void run() {
+                startBootupStuffsAsync(ctx);
+            }
+        });
+        thread.start();
+    }
+
+    private void startBootupStuffsAsync(Context ctx) {
+        Paper.init(ctx);
         Utils.startTaskerService(ctx);
 
-        BootupConfiguration bootupConfig = BootupConfiguration.get(ctx);
+        BootupConfig bootupConfig = BootupConfig.get();
         boolean isBootup = bootupConfig.isEnabled;
         if (!isBootup) {
             Logger.v(this, "User does not want to restore settings on bootup");

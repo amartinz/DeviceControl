@@ -25,7 +25,7 @@ import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
@@ -95,9 +95,9 @@ public class BootupService extends IntentService {
         // patch sepolicy
         Utils.patchSEPolicy(this);
 
-        final BootupConfiguration bootupConfiguration = BootupConfiguration.get(this);
+        final BootupConfig bootupConfig = BootupConfig.get();
 
-        int delay = bootupConfiguration.automatedRestorationDelay;
+        int delay = bootupConfig.automatedRestorationDelay;
         if (delay != 0) {
             Logger.v(this, "Delaying bootup restoration by %s seconds", delay);
             try {
@@ -132,7 +132,7 @@ public class BootupService extends IntentService {
         // Device
         //==================================================================================
         Logger.i(this, "----- DEVICE START -----");
-        cmd = DeviceFeatureFragment.restore(bootupConfiguration);
+        cmd = DeviceFeatureFragment.restore(bootupConfig);
         Logger.v(this, cmd);
         sbCmd.append(cmd);
         Logger.i(this, "----- DEVICE END -----");
@@ -141,26 +141,26 @@ public class BootupService extends IntentService {
         // Performance
         //==================================================================================
         Logger.i(this, "----- CPU START -----");
-        cmd = CpuUtils.get().restore(bootupConfiguration);
+        cmd = CpuUtils.get().restore(bootupConfig);
         Logger.v(this, cmd);
         sbCmd.append(cmd);
         Logger.i(this, "----- CPU END -----");
 
         Logger.i(this, "----- GPU START -----");
-        cmd = GpuUtils.get().restore(bootupConfiguration);
+        cmd = GpuUtils.get().restore(bootupConfig);
         Logger.v(this, cmd);
         sbCmd.append(cmd);
         Logger.i(this, "----- GPU END -----");
 
         Logger.i(this, "----- EXTRAS START -----");
-        cmd = DeviceFeatureKernelFragment.restore(bootupConfiguration);
+        cmd = DeviceFeatureKernelFragment.restore(bootupConfig);
         Logger.v(this, cmd);
         sbCmd.append(cmd);
         Logger.i(this, "----- EXTRAS END -----");
 
         Logger.i(this, "----- VOLTAGE START -----");
         // TODO: FULLY convert to bootup
-        cmd = VoltageFragment.restore(bootupConfiguration);
+        cmd = VoltageFragment.restore(bootupConfig);
         Logger.v(this, cmd);
         sbCmd.append(cmd);
         Logger.i(this, "----- VOLTAGE END -----");
@@ -169,7 +169,7 @@ public class BootupService extends IntentService {
         // Tools
         //==================================================================================
         Logger.i(this, "----- TOOLS START -----");
-        cmd = SysctlFragment.restore(bootupConfiguration);
+        cmd = SysctlFragment.restore(bootupConfig);
         Logger.v(this, cmd);
         sbCmd.append(cmd);
         if (new File("/system/etc/sysctl.conf").exists()) {
@@ -184,11 +184,11 @@ public class BootupService extends IntentService {
         Logger.i(this, "----- TOOLS END -----");
 
         Logger.i(this, "----- SPECIAL START -----");
-        cmd = restoreCategory(bootupConfiguration, BootupConfiguration.CATEGORY_INTELLI_HOTPLUG);
+        cmd = restoreCategory(bootupConfig, BootupConfig.CATEGORY_INTELLI_HOTPLUG);
         Logger.v(this, cmd);
         sbCmd.append(cmd);
 
-        cmd = restoreCategory(bootupConfiguration, BootupConfiguration.CATEGORY_MAKO_HOTPLUG);
+        cmd = restoreCategory(bootupConfig, BootupConfig.CATEGORY_MAKO_HOTPLUG);
         Logger.v(this, cmd);
         sbCmd.append(cmd);
         Logger.i(this, "----- SPECIAL END -----");
@@ -203,7 +203,7 @@ public class BootupService extends IntentService {
         Logger.i(this, "Bootup Done!");
     }
 
-    private String restoreCategory(BootupConfiguration config, String category) {
+    private String restoreCategory(BootupConfig config, String category) {
         final ArrayList<BootupItem> items = config.getItemsByCategory(category);
         if (items.size() == 0) {
             return "";

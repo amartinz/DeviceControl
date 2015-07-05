@@ -17,8 +17,7 @@
  */
 package org.namelessrom.devicecontrol.actions;
 
-import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 
 public abstract class BaseAction {
@@ -70,7 +69,7 @@ public abstract class BaseAction {
 
     public void setBootup(String filename) {
         if (getBootup()) {
-            BootupConfiguration.setBootup(Application.get(),
+            BootupConfig.setBootup(
                     new BootupItem(getCategory(), getName(), filename, getValue(), true));
         }
     }

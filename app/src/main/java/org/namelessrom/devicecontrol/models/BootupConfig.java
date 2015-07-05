@@ -16,9 +16,8 @@
  *
  */
 
-package org.namelessrom.devicecontrol.configuration;
+package org.namelessrom.devicecontrol.models;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -28,19 +27,23 @@ import org.namelessrom.devicecontrol.objects.BootupItem;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import io.paperdb.Paper;
+
 /**
  * Bootup configuration which auto serializes itself to a file
  */
-public class BootupConfiguration extends BaseConfiguration<BootupConfiguration> {
-    public static final String CATEGORY_DEVICE = "device";
-    public static final String CATEGORY_CPU = "cpu";
-    public static final String CATEGORY_GPU = "gpu";
-    public static final String CATEGORY_EXTRAS = "extras";
-    public static final String CATEGORY_SYSCTL = "sysctl";
-    public static final String CATEGORY_VOLTAGE = "voltage";
+public class BootupConfig {
+    private transient static final String NAME = "BootupConfig";
 
-    public static final String CATEGORY_INTELLI_HOTPLUG = "intelli_hotplug";
-    public static final String CATEGORY_MAKO_HOTPLUG = "mako_hotplug";
+    public transient static final String CATEGORY_DEVICE = "device";
+    public transient static final String CATEGORY_CPU = "cpu";
+    public transient static final String CATEGORY_GPU = "gpu";
+    public transient static final String CATEGORY_EXTRAS = "extras";
+    public transient static final String CATEGORY_SYSCTL = "sysctl";
+    public transient static final String CATEGORY_VOLTAGE = "voltage";
+
+    public transient static final String CATEGORY_INTELLI_HOTPLUG = "intelli_hotplug";
+    public transient static final String CATEGORY_MAKO_HOTPLUG = "mako_hotplug";
 
     public ArrayList<BootupItem> items = new ArrayList<>();
     public boolean isEnabled;
@@ -48,40 +51,17 @@ public class BootupConfiguration extends BaseConfiguration<BootupConfiguration> 
     public boolean isAutomatedRestoration;
     public int automatedRestorationDelay;
 
-    private static BootupConfiguration sInstance;
+    private transient static BootupConfig instance;
 
-    private BootupConfiguration(Context context) {
-        loadConfiguration(context);
-    }
-
-    public static BootupConfiguration get(Context context) {
-        if (sInstance == null) {
-            sInstance = new BootupConfiguration(context);
+    public static BootupConfig get() {
+        if (instance == null) {
+            instance = Paper.get(NAME, new BootupConfig());
         }
-        return sInstance;
+        return instance;
     }
 
-    @Override protected String getConfigurationFile() {
-        return "bootup_configuration.json";
-    }
-
-    @Override public BootupConfiguration loadConfiguration(Context context) {
-        final BootupConfiguration config = loadRawConfiguration(context, BootupConfiguration.class);
-        if (config == null) {
-            return this;
-        }
-
-        this.items = config.items != null ? config.items : new ArrayList<BootupItem>();
-        this.isEnabled = config.isEnabled;
-
-        this.isAutomatedRestoration = config.isAutomatedRestoration;
-        this.automatedRestorationDelay = config.automatedRestorationDelay;
-
-        return this;
-    }
-
-    @Override public BootupConfiguration saveConfiguration(Context context) {
-        saveConfigurationInternal(context);
+    public BootupConfig save() {
+        Paper.put(NAME, BootupConfig.this);
         return this;
     }
 
@@ -93,7 +73,6 @@ public class BootupConfiguration extends BaseConfiguration<BootupConfiguration> 
                 filteredItems.add(item);
             }
         }
-
         return filteredItems;
     }
 
@@ -103,19 +82,17 @@ public class BootupConfiguration extends BaseConfiguration<BootupConfiguration> 
                 return item;
             }
         }
-
         return null;
     }
 
-    public synchronized BootupConfiguration addItem(@NonNull BootupItem bootupItem) {
+    public synchronized BootupConfig addItem(@NonNull BootupItem bootupItem) {
         deleteItem(bootupItem);
         items.add(bootupItem);
         Logger.d(this, "added item -> %s", bootupItem.toString());
-
         return this;
     }
 
-    public BootupConfiguration deleteItem(@NonNull BootupItem bootupItem) {
+    public BootupConfig deleteItem(@NonNull BootupItem bootupItem) {
         final Iterator<BootupItem> iterator = items.iterator();
         while (iterator.hasNext()) {
             BootupItem item = iterator.next();
@@ -124,16 +101,14 @@ public class BootupConfiguration extends BaseConfiguration<BootupConfiguration> 
                 Logger.d(this, "removed item -> %s", item.toString());
             }
         }
-
         return this;
     }
 
-    public static synchronized BootupConfiguration setBootup(Context context,
-            @NonNull BootupItem item) {
-        final BootupConfiguration config = BootupConfiguration.get(context);
+    public static synchronized BootupConfig setBootup(@NonNull BootupItem item) {
+        final BootupConfig config = BootupConfig.get();
         config.deleteItem(item);
         config.addItem(item);
-        config.saveConfiguration(context);
+        config.save();
         return config;
     }
 }

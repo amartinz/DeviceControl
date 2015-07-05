@@ -31,7 +31,7 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.UksmUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
@@ -190,7 +190,7 @@ public class UksmFragment extends AttachPreferenceFragment implements Preference
             final String title = String.valueOf(mSleep.getTitle());
             final int currentProgress = Utils.parseInt(Utils.readOneLine(UksmUtils.UKSM_SLEEP));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 50,
-                    1000, preference, UksmUtils.UKSM_SLEEP, BootupConfiguration.CATEGORY_EXTRAS);
+                    1000, preference, UksmUtils.UKSM_SLEEP, BootupConfig.CATEGORY_EXTRAS);
             return true;
         }
 

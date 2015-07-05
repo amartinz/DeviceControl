@@ -24,7 +24,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -43,7 +43,7 @@ public class AutoEditTextPreference extends MaterialEditTextPreference {
     private String mPath;
     private String[] mPaths;
 
-    private String mCategory = BootupConfiguration.CATEGORY_EXTRAS;
+    private String mCategory = BootupConfig.CATEGORY_EXTRAS;
 
     public AutoEditTextPreference(Context context) {
         super(context);
@@ -152,14 +152,14 @@ public class AutoEditTextPreference extends MaterialEditTextPreference {
             for (int i = 0; i < length; i++) {
                 Utils.writeValue(mPaths[i], value);
                 if (mStartup) {
-                    BootupConfiguration.setBootup(getContext(), new BootupItem(
+                    BootupConfig.setBootup(new BootupItem(
                             mCategory, getKey() + String.valueOf(i), mPaths[i], value, true));
                 }
             }
         } else {
             Utils.writeValue(mPath, value);
             if (mStartup) {
-                BootupConfiguration.setBootup(getContext(),
+                BootupConfig.setBootup(
                         new BootupItem(mCategory, getKey(), mPath, value, true));
             }
         }

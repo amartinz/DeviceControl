@@ -30,7 +30,7 @@ import android.view.MenuItem;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.KsmUtils;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
@@ -175,13 +175,13 @@ public class KsmFragment extends AttachPreferenceFragment implements Preference.
             final int currentProgress =
                     Utils.parseInt(Utils.readOneLine(KsmUtils.KSM_PAGES_TO_SCAN));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 1,
-                    1024, preference, KsmUtils.KSM_PAGES_TO_SCAN, BootupConfiguration.CATEGORY_EXTRAS);
+                    1024, preference, KsmUtils.KSM_PAGES_TO_SCAN, BootupConfig.CATEGORY_EXTRAS);
             return true;
         } else if (mSleep == preference) {
             final String title = String.valueOf(mSleep.getTitle());
             final int currentProgress = Utils.parseInt(Utils.readOneLine(KsmUtils.KSM_SLEEP));
             DialogHelper.openSeekbarDialog(getActivity(), currentProgress, title, 50,
-                    5000, preference, KsmUtils.KSM_SLEEP, BootupConfiguration.CATEGORY_EXTRAS);
+                    5000, preference, KsmUtils.KSM_SLEEP, BootupConfig.CATEGORY_EXTRAS);
             return true;
         }
 
