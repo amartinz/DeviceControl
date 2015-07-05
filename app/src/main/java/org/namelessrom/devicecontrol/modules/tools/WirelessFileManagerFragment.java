@@ -24,7 +24,7 @@ import android.preference.Preference;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.WebServerConfiguration;
+import org.namelessrom.devicecontrol.models.WebServerConfig;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
 import org.namelessrom.devicecontrol.services.WebServerService;
 import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
@@ -45,6 +45,8 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment implem
 
     private final Handler mHandler = new Handler();
 
+    private WebServerConfig webServerConfig;
+
     @Override protected int getFragmentId() { return DeviceConstants.ID_TOOLS_WIRELESS_FM; }
 
     @Override public void onResume() {
@@ -58,63 +60,59 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment implem
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.tools_wireless_file_manager);
 
-        final WebServerConfiguration configuration = WebServerConfiguration.get(getActivity());
-        String tmp;
+        webServerConfig = WebServerConfig.get();
 
         mWirelessFileManager = (CustomTogglePreference) findPreference("wireless_file_manager");
         updateWebServerPreference();
         mWirelessFileManager.setOnPreferenceClickListener(this);
 
-        mBrowseRoot = (CustomTogglePreference) findPreference(WebServerConfiguration.ROOT);
-        mBrowseRoot.setChecked(configuration.root);
+        mBrowseRoot = (CustomTogglePreference) findPreference(WebServerConfig.ROOT);
+        mBrowseRoot.setChecked(webServerConfig.root);
         mBrowseRoot.setOnPreferenceChangeListener(this);
 
-        mPort = (CustomEditTextPreference) findPreference(WebServerConfiguration.PORT);
-        tmp = String.valueOf(configuration.port);
-        mPort.setSummary(tmp);
-        mPort.setText(tmp);
+        mPort = (CustomEditTextPreference) findPreference(WebServerConfig.PORT);
+        mPort.setSummary(String.valueOf(webServerConfig.port));
+        mPort.setText(String.valueOf(webServerConfig.port));
         mPort.setOnPreferenceChangeListener(this);
 
-        mUseAuth = (CustomTogglePreference) findPreference(WebServerConfiguration.USE_AUTH);
-        mUseAuth.setChecked(configuration.useAuth);
+        mUseAuth = (CustomTogglePreference) findPreference(WebServerConfig.USE_AUTH);
+        mUseAuth.setChecked(webServerConfig.useAuth);
         mUseAuth.setOnPreferenceChangeListener(this);
 
-        mUsername = (CustomEditTextPreference) findPreference(WebServerConfiguration.USERNAME);
-        tmp = configuration.username;
-        mUsername.setSummary(tmp);
-        mUsername.setText(tmp);
+        mUsername = (CustomEditTextPreference) findPreference(WebServerConfig.USERNAME);
+        mUsername.setSummary(webServerConfig.username);
+        mUsername.setText(webServerConfig.username);
         mUsername.setOnPreferenceChangeListener(this);
 
-        mPassword = (CustomEditTextPreference) findPreference(WebServerConfiguration.PASSWORD);
-        tmp = configuration.password;
+        mPassword = (CustomEditTextPreference) findPreference(WebServerConfig.PASSWORD);
         mPassword.setSummary("******");
-        mPassword.setText(tmp);
+        mPassword.setText(webServerConfig.password);
         mPassword.setOnPreferenceChangeListener(this);
     }
 
     @Override public boolean onPreferenceChange(final Preference preference, final Object o) {
         if (mBrowseRoot == preference) {
-            WebServerConfiguration.get(getActivity()).root = (Boolean) o;
-            WebServerConfiguration.get(getActivity()).saveConfiguration(getActivity());
+            webServerConfig.root = (Boolean) o;
+            webServerConfig.save();
             return true;
         } else if (mPort == preference) {
             final String value = String.valueOf(o);
 
-            WebServerConfiguration.get(getActivity()).port = Utils.parseInt(value, 8080);
-            WebServerConfiguration.get(getActivity()).saveConfiguration(getActivity());
+            webServerConfig.port = Utils.parseInt(value, 8080);
+            webServerConfig.save();
 
             mPort.setText(value);
             mPort.setSummary(value);
             return true;
         } else if (mUseAuth == preference) {
-            WebServerConfiguration.get(getActivity()).useAuth = (Boolean) o;
-            WebServerConfiguration.get(getActivity()).saveConfiguration(getActivity());
+            webServerConfig.useAuth = (Boolean) o;
+            webServerConfig.save();
             return true;
         } else if (mUsername == preference) {
             final String value = String.valueOf(o);
 
-            WebServerConfiguration.get(getActivity()).username = value;
-            WebServerConfiguration.get(getActivity()).saveConfiguration(getActivity());
+            webServerConfig.username = value;
+            webServerConfig.save();
 
             mUsername.setText(value);
             mUsername.setSummary(value);
@@ -122,8 +120,8 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment implem
         } else if (mPassword == preference) {
             final String value = String.valueOf(o);
 
-            WebServerConfiguration.get(getActivity()).password = value;
-            WebServerConfiguration.get(getActivity()).saveConfiguration(getActivity());
+            webServerConfig.password = value;
+            webServerConfig.save();
 
             mPassword.setText(value);
             mPassword.setSummary("******");
@@ -164,7 +162,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment implem
         final String text;
         if (isRunning) {
             final String ip = NetworkInfo.getAnyIpAddress();
-            final String port = String.valueOf(WebServerConfiguration.get(getActivity()).port);
+            final String port = String.valueOf(WebServerConfig.get().port);
             text = getString(R.string.web_server_running, String.format("http://%s:%s", ip, port));
         } else {
             text = getString(R.string.web_server_not_running);

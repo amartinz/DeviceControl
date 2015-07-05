@@ -15,45 +15,62 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest
+    package="org.namelessrom.devicecontrol"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.namelessrom.devicecontrol"
     android:installLocation="auto"
     android:versionCode="122"
     android:versionName="0.8.4">
 
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="22" tools:ignore="GradleOverrides,OldTargetApi" />
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="22"
+        tools:ignore="OldTargetApi" />
 
     <!-- Internet / Networking -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <!-- Location -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <!-- In-App purchases -->
     <uses-permission android:name="com.android.vending.BILLING" />
+
     <!-- Read / Write -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <!-- Boot Up -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <!-- Vibration -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <!-- SuperUser -->
-    <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
+
     <!-- Device Information -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- Application permissions -->
-    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
-    <uses-permission android:name="android.permission.DELETE_CACHE_FILES" tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.DELETE_PACKAGES" tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+
+    <!-- SuperUser -->
+    <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
+
     <!-- suppress DeprecatedClassUsageInspection -->
     <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <!-- Application permissions -->
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+    <uses-permission android:name="android.permission.DELETE_CACHE_FILES"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.DELETE_PACKAGES"
+        tools:ignore="ProtectedPermissions" />
+
     <!-- Power -->
-    <uses-permission android:name="android.permission.REBOOT" tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.DEVICE_POWER" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.REBOOT"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.DEVICE_POWER"
+        tools:ignore="ProtectedPermissions" />
 
     <uses-feature
         android:name="org.namelessrom.android"

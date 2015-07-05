@@ -30,7 +30,7 @@ import com.koushikdutta.async.AsyncServerSocket;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.WebServerConfiguration;
+import org.namelessrom.devicecontrol.models.WebServerConfig;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
 import org.namelessrom.devicecontrol.net.ServerWrapper;
 import org.namelessrom.devicecontrol.theme.AppResources;
@@ -61,7 +61,7 @@ public class WebServerService extends Service {
         if (mServerWrapper != null) {
             final String port = ((getServerSocket() != null)
                     ? String.valueOf(getServerSocket().getLocalPort())
-                    : String.valueOf(WebServerConfiguration.get(this).port));
+                    : String.valueOf(WebServerConfig.get().port));
             text = getString(R.string.web_server_running,
                     "http://" + NetworkInfo.getAnyIpAddress() + ":" + port);
         } else {

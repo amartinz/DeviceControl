@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     signingConfigs {
         release {
@@ -24,8 +24,6 @@ android {
 
     defaultConfig {
         applicationId 'org.namelessrom.devicecontrol'
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
 
         def String localProps = System.getenv('SIGNING_PROP_FILE')
         if (localProps == null) {
@@ -110,6 +108,10 @@ dependencies {
 
     // see https://www.pollfish.com/android
     compile 'com.pollfish:pollfish:4.1.0:googleplayRelease@aar'
+
+    // see https://github.com/pilgr/Paper
+    //compile 'io.paperdb:paperdb:0.9'
+    compile 'com.github.Evisceration:Paper:6ad14da863'
 
     // see https://github.com/Evisceration/MaterialPreferences
     // MATERIAL PREFERENCES START

@@ -21,7 +21,7 @@ import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.configuration.WebServerConfiguration;
+import org.namelessrom.devicecontrol.models.WebServerConfig;
 import org.namelessrom.devicecontrol.services.WebServerService;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.HtmlHelper;
@@ -51,6 +51,8 @@ public class ServerWrapper {
 
     private final WebServerService mService;
 
+    private WebServerConfig webServerConfig;
+
     public ServerWrapper(final WebServerService service) {
         mService = service;
     }
@@ -77,8 +79,17 @@ public class ServerWrapper {
     }
 
     public void createServer() {
+        Thread thread = new Thread(new Runnable() {
+            @Override public void run() {
+                createServerAsync();
+            }
+        });
+        thread.start();
+    }
+
+    private void createServerAsync() {
         if (mServer != null) return;
-        registerReceivers();
+        webServerConfig = WebServerConfig.get();
 
         mServer = new AsyncHttpServer();
         Logger.v(this, "[!] Server created");
@@ -109,9 +120,11 @@ public class ServerWrapper {
         mServer.get("/(?s).*", mainCallback);
         Logger.v(this, "[!] Setup route: /");
 
-        mServerSocket = mServer.listen(WebServerConfiguration.get(mService).port);
+        mServerSocket = mServer.listen(WebServerConfig.get().port);
 
         mService.setNotification(null);
+
+        registerReceivers();
     }
 
     private final HttpServerRequestCallback mainCallback = new HttpServerRequestCallback() {
@@ -171,7 +184,7 @@ public class ServerWrapper {
             Logger.v(this, "filePath: " + filePath);
             File file;
             String sdRoot;
-            if (WebServerConfiguration.get(mService).root) {
+            if (webServerConfig.root) {
                 file = new File("/");
                 sdRoot = "";
             } else {
@@ -322,16 +335,15 @@ public class ServerWrapper {
     }
 
     private boolean isAuthenticated(final AsyncHttpServerRequest req) {
-        final WebServerConfiguration configuration = WebServerConfiguration.get(mService);
-        final boolean isAuth = !configuration.useAuth;
+        final boolean isAuth = !webServerConfig.useAuth;
         final String authHeader = req.getHeaders().get("Authorization");
         if (!isAuth && !TextUtils.isEmpty(authHeader)) {
             final String[] parts = new String(Base64.decode(authHeader.replace("Basic", "").trim(),
                     Base64.DEFAULT)).split(":");
             return parts[0] != null
                     && parts[1] != null
-                    && parts[0].equals(configuration.username)
-                    && parts[1].equals(configuration.password);
+                    && parts[0].equals(webServerConfig.username)
+                    && parts[1].equals(webServerConfig.password);
         }
         return isAuth;
     }

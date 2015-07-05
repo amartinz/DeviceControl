@@ -62,6 +62,7 @@
 # Also save some stuff from us
 -keep class org.namelessrom.devicecontrol.objects.**
 -keep class org.namelessrom.devicecontrol.modules.wizard.**
+-keep class org.namelessrom.devicecontrol.models.**
 
 # Do not break our reflection voodoo
 -keep class android.content.pm.IPackageStatsObserver
@@ -91,3 +92,12 @@
 -keep public class com.github.mikephil.charting.animation.* {
     public protected *;
 }
+
+# Paper
+-keep class io.paperdb.** { *; }
+-keep class com.esotericsoftware.** { *; }
+-dontwarn com.esotericsoftware.**
+-keep class de.javakaffee.kryoserializers.** { *; }
+-dontwarn de.javakaffee.kryoserializers.**
+-keep class org.objenesis.** { *; }
+-dontwarn org.objenesis.**

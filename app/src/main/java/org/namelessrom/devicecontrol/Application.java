@@ -32,6 +32,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 
+import io.paperdb.Paper;
 import uk.co.senab.bitmapcache.BitmapLruCache;
 
 // XXX: DO NOT USE ROOT HERE! NEVER!
@@ -71,6 +72,7 @@ public class Application extends android.app.Application {
         super.onCreate();
         mRefWatcher = LeakCanary.install(this);
 
+        Paper.init(this);
         Application.sInstance = this;
 
         // force enable logger until we hit the user preference
