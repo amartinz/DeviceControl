@@ -85,6 +85,9 @@
     public static final ** CREATOR;
 }
 
+# android support design
+-keepclassmembers class android.support.design.widget.FloatingActionButton$Behavior { public <init>(); }
+
 # pollfish
 -keep class com.pollfish.** { *; }
 
