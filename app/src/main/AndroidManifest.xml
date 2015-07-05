@@ -25,9 +25,12 @@
     <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="22" tools:ignore="GradleOverrides,OldTargetApi" />
 
     <!-- Internet / Networking -->
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Location -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- In-App purchases -->
     <uses-permission android:name="com.android.vending.BILLING" />
     <!-- Read / Write -->
@@ -48,9 +51,6 @@
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
     <!-- suppress DeprecatedClassUsageInspection -->
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- Location -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- Power -->
     <uses-permission android:name="android.permission.REBOOT" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.DEVICE_POWER" tools:ignore="ProtectedPermissions" />

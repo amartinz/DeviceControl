@@ -133,13 +133,13 @@ public class Device {
         // check root for common locations, then via roottools and as last resort the SuperSU ones
         final boolean binaryExists = new File("/system/bin/su").exists()
                 || new File("/system/xbin/su").exists()
-                || RootTools.isRootAvailable()
                 || new File("/system/bin/.ext/.su").exists()
-                || new File("/system/xbin/sugote").exists();
+                || new File("/system/xbin/sugote").exists()
+                || RootTools.isRootAvailable();
         hasRoot = binaryExists && RootTools.isAccessGiven();
 
         // get su version
-        suVersion = Utils.getCommandResult("su -v", "-");
+        suVersion = hasRoot ? Utils.getCommandResult("su -v", "-") : "-";
 
         // check busybox
         hasBusyBox = RootTools.isBusyboxAvailable();

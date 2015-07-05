@@ -173,10 +173,12 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
     @Override protected void onResume() {
         super.onResume();
-        final String pfApiKey = Configuration.getPollfishApiKeyDc();
-        if (!TextUtils.equals("---", pfApiKey) && DeviceConfiguration.get(this).showPollfish) {
-            Logger.v(this, "PollFish.init()");
-            PollFish.init(this, pfApiKey, Position.BOTTOM_RIGHT, 30);
+        if (DeviceConfiguration.get(this).showPollfish) {
+            final String pfApiKey = Configuration.getPollfishApiKeyDc();
+            if (!TextUtils.equals("---", pfApiKey)) {
+                Logger.v(this, "PollFish.init()");
+                PollFish.init(this, pfApiKey, Position.BOTTOM_RIGHT, 30);
+            }
         }
     }
 
