@@ -39,6 +39,7 @@
             style="@style/MaterialPreferences.Default"
             app:prefEntries="@array/su_shell_context_entries"
             app:prefEntryValues="@array/su_shell_context_values"
+            app:prefPlaceOnBottom="true"
             app:prefTitle="@string/su_shell_context" />
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
