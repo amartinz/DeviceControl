@@ -29,7 +29,7 @@ import android.view.animation.Animation;
 
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.models.DeviceConfig;
 
 import java.util.ArrayList;
 
@@ -47,7 +47,7 @@ public abstract class AttachViewPagerFragment extends AttachFragment {
 
     @Override public void onPause() {
         super.onPause();
-        MainActivity.setSwipeOnContent(DeviceConfiguration.get(getActivity()).swipeOnContent);
+        MainActivity.setSwipeOnContent(DeviceConfig.get().swipeOnContent);
     }
 
     public NoSwipeViewPager getViewPager() {

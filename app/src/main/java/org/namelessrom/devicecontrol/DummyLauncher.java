@@ -30,7 +30,7 @@ import android.widget.TextView;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
-import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
 /**
@@ -77,11 +77,7 @@ public class DummyLauncher extends BaseActivity {
             }
         });
 
-        if (DeviceConfiguration.get(this).skipChecks) {
-            startActivity();
-        } else {
-            new CheckTools().execute();
-        }
+        new CheckTools().execute();
     }
 
     private void updateStatus(final String text) {
@@ -105,8 +101,14 @@ public class DummyLauncher extends BaseActivity {
     }
 
     private class CheckTools extends AsyncTask<Void, Void, Device> {
+        private boolean skip;
 
         @Override protected Device doInBackground(Void... params) {
+            skip = DeviceConfig.get().skipChecks;
+            if (skip) {
+                return null;
+            }
+
             final Device device = Device.get();
 
             updateStatus(getString(R.string.checking_requirements));
@@ -120,7 +122,7 @@ public class DummyLauncher extends BaseActivity {
         }
 
         @Override protected void onPostExecute(final Device device) {
-            if (device.hasRoot && device.hasBusyBox) {
+            if (skip || device == null || (device.hasRoot && device.hasBusyBox)) {
                 startActivity();
                 return;
             }

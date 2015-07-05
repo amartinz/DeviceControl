@@ -42,8 +42,8 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
+import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.objects.CpuCore;
@@ -155,7 +155,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
 
         mCpuInfo = (LinearLayout) view.findViewById(R.id.cpu_info);
 
-        final DeviceConfiguration deviceConfiguration = DeviceConfiguration.get(activity);
+        final DeviceConfig deviceConfig = DeviceConfig.get();
         mStatusHide = (SwitchCompat) view.findViewById(R.id.cpu_info_hide);
         mStatusHide.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(final CompoundButton button, final boolean b) {
@@ -166,11 +166,11 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                     CpuCoreMonitor.getInstance(activity).stop();
                     mCpuInfo.setVisibility(View.GONE);
                 }
-                deviceConfiguration.perfCpuInfo = b;
-                deviceConfiguration.saveConfiguration(activity);
+                deviceConfig.perfCpuInfo = b;
+                deviceConfig.save();
             }
         });
-        mStatusHide.setChecked(deviceConfiguration.perfCpuInfo);
+        mStatusHide.setChecked(deviceConfig.perfCpuInfo);
         if (mStatusHide.isChecked()) {
             mCpuInfo.setVisibility(View.VISIBLE);
         } else {
@@ -211,7 +211,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         mMin.setOnPreferenceChangeListener(this);
 
         mCpuLock = (MaterialSwitchPreference) view.findViewById(R.id.cpu_pref_cpu_lock);
-        mCpuLock.getSwitch().setChecked(deviceConfiguration.perfCpuLock);
+        mCpuLock.getSwitch().setChecked(deviceConfig.perfCpuLock);
         mCpuLock.setOnPreferenceChangeListener(this);
 
         final CustomPreferenceCategoryMaterial governor =
@@ -235,7 +235,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         mGovernorTuning.setOnPreferenceClickListener(this);
 
         mCpuGovLock = (MaterialSwitchPreference) view.findViewById(R.id.cpu_pref_gov_lock);
-        mCpuGovLock.getSwitch().setChecked(deviceConfiguration.perfCpuGovLock);
+        mCpuGovLock.getSwitch().setChecked(deviceConfig.perfCpuGovLock);
         mCpuGovLock.setOnPreferenceChangeListener(this);
 
         if (Utils.fileExists(getResources().getStringArray(R.array.directories_intelli_plug))
@@ -447,16 +447,16 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MIN, selected, true);
             return true;
         } else if (preference == mCpuLock) {
-            DeviceConfiguration.get(getActivity()).perfCpuLock = (Boolean) o;
-            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
+            DeviceConfig.get().perfCpuLock = (Boolean) o;
+            DeviceConfig.get().save();
             return true;
         } else if (preference == mGovernor) {
             final String selected = String.valueOf(o);
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_GOVERNOR, selected, true);
             return true;
         } else if (preference == mCpuGovLock) {
-            DeviceConfiguration.get(getActivity()).perfCpuGovLock = (Boolean) o;
-            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
+            DeviceConfig.get().perfCpuGovLock = (Boolean) o;
+            DeviceConfig.get().save();
             return true;
         } else if (preference == mMpDecision) {
             final boolean value = (Boolean) o;

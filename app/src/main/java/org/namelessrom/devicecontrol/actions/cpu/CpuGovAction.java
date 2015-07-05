@@ -24,7 +24,7 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
@@ -65,7 +65,7 @@ public class CpuGovAction extends BaseAction {
             return;
         }
 
-        final boolean lockGov = DeviceConfiguration.get(Application.get()).perfCpuGovLock;
+        final boolean lockGov = DeviceConfig.get().perfCpuGovLock;
 
         final int cpus = CpuUtils.get().getNumOfCpus();
         final StringBuilder sb = new StringBuilder(cpus * 2);

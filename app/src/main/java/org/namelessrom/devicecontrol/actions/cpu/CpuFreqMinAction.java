@@ -24,7 +24,7 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -64,7 +64,7 @@ public class CpuFreqMinAction extends BaseAction {
             return;
         }
 
-        final boolean lockFreq = DeviceConfiguration.get(Application.get()).perfCpuLock;
+        final boolean lockFreq = DeviceConfig.get().perfCpuLock;
 
         final int cpus = CpuUtils.get().getNumOfCpus();
         final StringBuilder sb = new StringBuilder(lockFreq ? cpus * 3 : cpus * 2);

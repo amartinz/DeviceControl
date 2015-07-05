@@ -28,7 +28,7 @@ import com.stericson.roottools.RootTools;
 import com.stericson.roottools.exceptions.RootDeniedException;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.BufferedReader;
@@ -81,7 +81,7 @@ public class Shell {
     private Shell(String cmd) throws IOException, TimeoutException, RootDeniedException {
         String extra = null;
         if ("su".equals(cmd)) {
-            shellContext = DeviceConfiguration.get(Application.get()).suShellContext;
+            shellContext = DeviceConfig.get().suShellContext;
 
             if (!CONTEXT_NORMAL.equals(shellContext)) {
                 extra = String.format("--context %s", shellContext);

@@ -26,7 +26,7 @@ import com.stericson.roottools.RootTools;
 import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.configuration.BootupConfiguration;
-import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
@@ -75,7 +75,7 @@ public class BootupService extends IntentService {
     private void startBootupRestoration() {
         Paper.init(this);
 
-        final DeviceConfiguration configuration = DeviceConfiguration.get(this);
+        final DeviceConfig configuration = DeviceConfig.get();
         if (configuration.dcFirstStart) {
             Logger.i(this, "First start not completed, exiting");
             return;

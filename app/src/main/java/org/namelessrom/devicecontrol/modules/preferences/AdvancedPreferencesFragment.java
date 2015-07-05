@@ -17,16 +17,14 @@
  */
 package org.namelessrom.devicecontrol.modules.preferences;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.view.View;
 
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.theme.AppResources;
 
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;
@@ -48,7 +46,7 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
+        final DeviceConfig configuration = DeviceConfig.get();
 
         mSkipChecks = (MaterialSwitchPreference) view.findViewById(R.id.prefs_skip_checks);
         mSkipChecks.setBackgroundColor(AppResources.get().getCardBackgroundColor());
@@ -75,13 +73,13 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
     }
 
     @Override public boolean onPreferenceChanged(MaterialPreference preference, Object newValue) {
-        final Activity activity = getActivity();
+        final DeviceConfig deviceConfig = DeviceConfig.get();
 
         if (mSkipChecks == preference) {
             final boolean value = (Boolean) newValue;
 
-            DeviceConfiguration.get(activity).skipChecks = value;
-            DeviceConfiguration.get(activity).saveConfiguration(activity);
+            deviceConfig.skipChecks = value;
+            deviceConfig.save();
 
             mSkipChecks.setChecked(value);
             return true;
@@ -92,8 +90,8 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
                     getString(R.string.normal), value);
             mShellContext.setSummary(summary);
 
-            DeviceConfiguration.get(activity).suShellContext = value;
-            DeviceConfiguration.get(activity).saveConfiguration(activity);
+            deviceConfig.suShellContext = value;
+            deviceConfig.save();
 
             // reopen shells to switch context
             reopenShells();
@@ -102,8 +100,8 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
         } else if (mExtensiveLogging == preference) {
             final boolean value = (Boolean) newValue;
 
-            DeviceConfiguration.get(activity).extensiveLogging = value;
-            DeviceConfiguration.get(activity).saveConfiguration(activity);
+            deviceConfig.extensiveLogging = value;
+            deviceConfig.save();
 
             Logger.setEnabled(value);
             mExtensiveLogging.setChecked(value);
@@ -111,8 +109,8 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
         } else if (mDebugStrictMode == preference) {
             final boolean value = (Boolean) newValue;
 
-            DeviceConfiguration.get(activity).debugStrictMode = value;
-            DeviceConfiguration.get(activity).saveConfiguration(activity);
+            deviceConfig.debugStrictMode = value;
+            deviceConfig.save();
 
             Logger.setStrictModeEnabled(value);
             mDebugStrictMode.setChecked(value);

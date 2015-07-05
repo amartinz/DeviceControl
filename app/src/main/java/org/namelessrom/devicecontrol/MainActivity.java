@@ -45,7 +45,7 @@ import com.pollfish.main.PollFish;
 import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
-import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.modules.about.AboutFragment;
 import org.namelessrom.devicecontrol.modules.appmanager.AppListFragment;
@@ -173,7 +173,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
     @Override protected void onResume() {
         super.onResume();
-        if (DeviceConfiguration.get(this).showPollfish) {
+        if (DeviceConfig.get().showPollfish) {
             final String pfApiKey = Configuration.getPollfishApiKeyDc();
             if (!TextUtils.equals("---", pfApiKey)) {
                 Logger.v(this, "PollFish.init()");
@@ -237,7 +237,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         sSlidingMenu.setMenu(v);
 
         // setup touch mode
-        MainActivity.setSwipeOnContent(DeviceConfiguration.get(this).swipeOnContent);
+        MainActivity.setSwipeOnContent(DeviceConfig.get().swipeOnContent);
 
         // setup menu list
         final ArrayList<MenuListArrayAdapter.MenuItem> menuItems = setupMenuLists();
@@ -252,10 +252,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         Utils.startTaskerService(this);
 
-        DeviceConfiguration deviceConfiguration = DeviceConfiguration.get(this);
-        if (deviceConfiguration.dcFirstStart) {
-            deviceConfiguration.dcFirstStart = false;
-            deviceConfiguration.saveConfiguration(this);
+        DeviceConfig deviceConfig = DeviceConfig.get();
+        if (deviceConfig.dcFirstStart) {
+            deviceConfig.dcFirstStart = false;
+            deviceConfig.save();
         }
 
         // patch sepolicy

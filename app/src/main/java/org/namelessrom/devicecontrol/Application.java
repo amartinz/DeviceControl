@@ -27,7 +27,7 @@ import android.os.Handler;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
-import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
@@ -80,13 +80,26 @@ public class Application extends android.app.Application {
 
         buildCache();
 
-        DeviceConfiguration deviceConfiguration = DeviceConfiguration.get(this);
+        setupEverything();
+    }
 
-        if (deviceConfiguration.debugStrictMode) {
+    private void setupEverything() {
+        Thread thread = new Thread(new Runnable() {
+            @Override public void run() {
+                setupEverythingAsync();
+            }
+        });
+        thread.start();
+    }
+
+    private void setupEverythingAsync() {
+        DeviceConfig deviceConfig = DeviceConfig.get();
+
+        if (deviceConfig.debugStrictMode) {
             Logger.setStrictModeEnabled(true);
         }
 
-        Logger.setEnabled(deviceConfiguration.extensiveLogging);
+        Logger.setEnabled(deviceConfig.extensiveLogging);
 
         dumpInformation();
 
@@ -107,6 +120,7 @@ public class Application extends android.app.Application {
         } else {
             cacheLocation = new File(getFilesDir(), "bitmapCache");
         }
+        //noinspection ResultOfMethodCallIgnored
         cacheLocation.mkdirs();
 
         BitmapLruCache.Builder builder = new BitmapLruCache.Builder(this);

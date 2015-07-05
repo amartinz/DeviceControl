@@ -27,7 +27,7 @@ import com.pollfish.main.PollFish;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -48,7 +48,7 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final DeviceConfiguration configuration = DeviceConfiguration.get(getActivity());
+        final DeviceConfig configuration = DeviceConfig.get();
 
         mDarkTheme = (MaterialSwitchPreference) view.findViewById(R.id.prefs_dark_theme);
         mDarkTheme.setChecked(AppResources.get().isDarkTheme());
@@ -94,8 +94,8 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         if (mShowPollfish == preference) {
             final boolean value = (Boolean) newValue;
 
-            DeviceConfiguration.get(getActivity()).showPollfish = value;
-            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
+            DeviceConfig.get().showPollfish = value;
+            DeviceConfig.get().save();
 
             if (value) {
                 PollFish.show();
@@ -107,8 +107,8 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         } else if (mSwipeOnContent == preference) {
             final boolean value = (Boolean) newValue;
 
-            DeviceConfiguration.get(getActivity()).swipeOnContent = value;
-            DeviceConfiguration.get(getActivity()).saveConfiguration(getActivity());
+            DeviceConfig.get().swipeOnContent = value;
+            DeviceConfig.get().save();
 
             mSwipeOnContent.setChecked(value);
 

@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.configuration.DeviceConfiguration;
+import org.namelessrom.devicecontrol.models.DeviceConfig;
 
 public class AppResources {
     private static AppResources sInstance;
@@ -48,7 +48,7 @@ public class AppResources {
 
     public boolean isDarkTheme() {
         if (isDarkTheme == -1) {
-            isDarkTheme = DeviceConfiguration.get(Application.get()).darkTheme ? 1 : 0;
+            isDarkTheme = DeviceConfig.get().darkTheme ? 1 : 0;
         }
         return (isDarkTheme == 1);
     }
@@ -56,9 +56,9 @@ public class AppResources {
     public AppResources setDarkTheme(boolean isDark) {
         isDarkTheme = isDark ? 1 : 0;
 
-        DeviceConfiguration deviceConfiguration = DeviceConfiguration.get(Application.get());
-        deviceConfiguration.darkTheme = isDark;
-        deviceConfiguration.saveConfiguration(Application.get());
+        DeviceConfig deviceConfig = DeviceConfig.get();
+        deviceConfig.darkTheme = isDark;
+        deviceConfig.save();
 
         sInstance = new AppResources();
 
