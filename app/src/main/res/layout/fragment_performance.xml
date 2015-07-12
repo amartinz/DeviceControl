@@ -26,15 +26,18 @@
         <org.namelessrom.devicecontrol.ui.views.DeviceStatusView
             android:id="@+id/device_stats"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp" />
 
-        <Space android:layout_width="match_parent" android:layout_height="10dp" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
         <org.namelessrom.devicecontrol.ui.views.CpuStateView
             android:id="@+id/cpu_states"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp" />
 
     </LinearLayout>
 </ScrollView>

@@ -18,11 +18,15 @@
 package org.namelessrom.devicecontrol.ui.views;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +38,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public abstract class AttachViewPagerFragment extends AttachFragment {
     private NoSwipeViewPager mViewPager;
@@ -92,16 +97,35 @@ public abstract class AttachViewPagerFragment extends AttachFragment {
     public class ViewPagerAdapter extends FragmentPagerAdapter {
         private final ArrayList<Fragment> fragments;
         private final ArrayList<CharSequence> titles;
+        private final ArrayList<Drawable> icons;
 
         public ViewPagerAdapter(final FragmentManager fm, final ArrayList<Fragment> fragments,
                 final ArrayList<CharSequence> titles) {
+            this(fm, fragments, titles, null);
+        }
+
+        public ViewPagerAdapter(final FragmentManager fm, final ArrayList<Fragment> fragments,
+                final ArrayList<CharSequence> titles, final ArrayList<Drawable> icons) {
             super(fm);
             this.fragments = fragments;
             this.titles = titles;
+            this.icons = icons;
         }
 
         @Override public CharSequence getPageTitle(final int position) {
-            return titles.get(position);
+            if (icons == null) {
+                final CharSequence title = titles.get(position);
+                return (title != null ? title.toString().toUpperCase(Locale.getDefault()) : null);
+            }
+
+            SpannableStringBuilder sb = new SpannableStringBuilder(" ");
+
+            Drawable drawable = icons.get(position);
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            ImageSpan imageSpan = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
+            sb.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            return sb;
         }
 
         @Override public Fragment getItem(final int position) {

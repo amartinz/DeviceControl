@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.modules.device;
+package org.namelessrom.devicecontrol.modules.device.info;
 
 import android.support.v4.app.Fragment;
 

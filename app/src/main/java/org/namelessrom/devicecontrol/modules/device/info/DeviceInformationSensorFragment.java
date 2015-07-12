@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.modules.device;
+package org.namelessrom.devicecontrol.modules.device.info;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +27,7 @@ import android.view.View;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.modules.device.SensorActivity;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
 
 import java.util.ArrayList;

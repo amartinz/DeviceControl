@@ -66,4 +66,12 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="AppTheme.CustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/AppTheme.CustomTabTextAppearance</item>
+    </style>
+
+    <style name="AppTheme.CustomTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+
 </resources>

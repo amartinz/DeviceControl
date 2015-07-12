@@ -28,7 +28,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class IOUtils {
@@ -203,5 +205,13 @@ public class IOUtils {
     public boolean folderExists(String path) {
         File f = new File(path);
         return f.exists() && f.isDirectory();
+    }
+
+    public static void closeQuietly(Closeable c) {
+        if (c != null) {
+            try {
+                c.close();
+            } catch (IOException shitHappens) { }
+        }
     }
 }

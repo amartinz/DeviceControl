@@ -53,7 +53,8 @@ import org.namelessrom.devicecontrol.modules.bootup.BootupFragment;
 import org.namelessrom.devicecontrol.modules.cpu.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.modules.cpu.GovernorFragment;
 import org.namelessrom.devicecontrol.modules.device.DeviceFeatureFragment;
-import org.namelessrom.devicecontrol.modules.device.DeviceInformationFragment;
+import org.namelessrom.devicecontrol.modules.device.info.DeviceInformationFragment;
+import org.namelessrom.devicecontrol.modules.device.stats.StatisticsFragment;
 import org.namelessrom.devicecontrol.modules.device.sub.FastChargeFragment;
 import org.namelessrom.devicecontrol.modules.device.sub.SoundControlFragment;
 import org.namelessrom.devicecontrol.modules.editor.BuildPropEditorFragment;
@@ -62,7 +63,6 @@ import org.namelessrom.devicecontrol.modules.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.modules.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.modules.performance.FilesystemFragment;
 import org.namelessrom.devicecontrol.modules.performance.GpuSettingsFragment;
-import org.namelessrom.devicecontrol.modules.performance.InformationFragment;
 import org.namelessrom.devicecontrol.modules.performance.ThermalFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.IoSchedConfigFragment;
@@ -110,6 +110,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_DEVICE_INFORMATION, R.string.device_information,
                 R.drawable.ic_device_info));
+        // device - statistics
+        menuItems.add(new MenuListArrayAdapter.MenuItem(
+                DeviceConstants.ID_DEVICE_STATISTICS, R.string.statistics,
+                R.drawable.ic_chart));
         // device - features
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_FEATURES, R.string.features,
@@ -117,10 +121,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         // header - performance
         menuItems.add(new MenuListArrayAdapter.MenuItem(-1, R.string.performance, -1));
-        // performance - information
-        menuItems.add(new MenuListArrayAdapter.MenuItem(
-                DeviceConstants.ID_PERFORMANCE_INFO, R.string.information,
-                R.drawable.ic_menu_perf_info));
         // performance - cpu
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_PERFORMANCE_CPU_SETTINGS, R.string.cpusettings,
@@ -450,9 +450,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 mTitle = mSubFragmentTitle = R.string.entropy;
                 break;
             //--------------------------------------------------------------------------------------
-            case DeviceConstants.ID_PERFORMANCE_INFO:
-                if (!onResume) mCurrentFragment = new InformationFragment();
-                mTitle = mFragmentTitle = R.string.information;
+            case DeviceConstants.ID_DEVICE_STATISTICS:
+                if (!onResume) mCurrentFragment = new StatisticsFragment();
+                mTitle = mFragmentTitle = R.string.statistics;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------

@@ -18,21 +18,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingRight="10dp"
-    android:paddingLeft="10dp">
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
     <TextView
-        style="?android:attr/listSeparatorTextViewStyle"
-        android:layout_width="match_parent"
+        style="@style/MaterialPreferences.PreferenceCategoryTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/device_information" />
+        android:text="@string/device_information"
+        android:textColor="?colorAccent" />
 
     <LinearLayout
         android:id="@+id/ui_device_stats_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp" />
 
 </LinearLayout>

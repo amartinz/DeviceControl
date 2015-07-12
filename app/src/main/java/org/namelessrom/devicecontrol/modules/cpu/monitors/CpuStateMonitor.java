@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
+import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.BufferedReader;
@@ -35,7 +36,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class CpuStateMonitor {
-
     private final ArrayList<CpuState> mStates = new ArrayList<>();
 
     private static CpuStateMonitor mCpuStateMonitor;
@@ -84,9 +84,9 @@ public class CpuStateMonitor {
             mStates.clear();
             readInStates(br);
         } finally {
-            if (br != null) br.close();
-            if (ir != null) ir.close();
-            if (is != null) is.close();
+            IOUtils.closeQuietly(br);
+            IOUtils.closeQuietly(ir);
+            IOUtils.closeQuietly(is);
         }
 
         final long deepSleep = ((SystemClock.elapsedRealtime() - SystemClock.uptimeMillis()) / 10);

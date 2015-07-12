@@ -1,6 +1,8 @@
 package org.namelessrom.devicecontrol.theme;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 
@@ -18,6 +20,10 @@ public class AppResources {
 
     private int cardBackgroundColor;
 
+    private int textColorPlain;
+
+    private Typeface robotoCondensed;
+
     private AppResources() {
         final boolean isDark = isDarkTheme();
 
@@ -32,6 +38,8 @@ public class AppResources {
         this.primaryColor = isDark
                 ? getColor(R.color.dark_primary_dark)
                 : getColor(R.color.light_primary_dark);
+
+        this.textColorPlain = isDark ? Color.WHITE : Color.BLACK;
     }
 
     public static AppResources get() {
@@ -92,6 +100,15 @@ public class AppResources {
         return cardBackgroundColor;
     }
 
+    public AppResources setTextColorPlain(int textColorPlain) {
+        this.textColorPlain = textColorPlain;
+        return this;
+    }
+
+    public int getTextColorPlain() {
+        return textColorPlain;
+    }
+
     public static ContextThemeWrapper getContextThemeWrapper(Context context) {
         final int themeId = AppResources.get().isDarkTheme()
                 ? R.style.AppTheme_Dark
@@ -101,6 +118,14 @@ public class AppResources {
 
     public static LayoutInflater getThemeLayoutInflater(Context context, LayoutInflater inflater) {
         return inflater.cloneInContext(getContextThemeWrapper(context));
+    }
+
+    public Typeface getRobotoCondensed() {
+        if (robotoCondensed == null) {
+            robotoCondensed = Typeface.createFromAsset(Application.get().getAssets(),
+                    "RobotoCondensed-Regular.ttf");
+        }
+        return robotoCondensed;
     }
 
 }

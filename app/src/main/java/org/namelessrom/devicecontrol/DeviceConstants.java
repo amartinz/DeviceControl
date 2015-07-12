@@ -37,7 +37,7 @@ public class DeviceConstants {
     public static final int ID_UKSM = ID_FEATURES + 1300;
     public static final int ID_VOLTAGE = ID_FEATURES + 1400;
     public static final int ID_ENTROPY = ID_FEATURES + 1500;
-    public static final int ID_PERFORMANCE_INFO = 300000;
+    public static final int ID_DEVICE_STATISTICS = 300000;
     public static final int ID_PERFORMANCE_CPU_SETTINGS = 400000;
     public static final int ID_GOVERNOR_TUNABLE = ID_PERFORMANCE_CPU_SETTINGS + 1000;
     public static final int ID_PERFORMANCE_GPU_SETTINGS = 500000;

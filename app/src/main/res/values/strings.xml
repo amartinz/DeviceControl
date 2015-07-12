@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+<!--  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@
     <string name="home">Home</string>
     <string name="device">Device</string>
     <string name="features">Features</string>
+    <string name="statistics">Statistics</string>
     <string name="performance">Performance</string>
     <string name="information">Information</string>
     <string name="extras">Extras</string>
@@ -58,11 +59,11 @@
     <string name="privacy">Privacy</string>
     <string name="graphics">Graphics</string>
     <string name="display">Display</string>
-    <string name="time_in_state">Time in state</string>
+    <string name="frequency_distribution">Frequency distribution</string>
     <string name="unused_cpu_states">Unused cpu states</string>
     <string name="total_state_time">Total state time</string>
     <string name="no_states_file_found">No states file found.</string>
-    <string name="deep_sleep">\"Deep sleep\"</string>
+    <string name="deep_sleep">Deep sleep</string>
     <string name="device_information">Device information</string>
     <string name="hotplugging">Hotplugging</string>
     <string name="mpdecision_summary">Should be deactivated if you use a custom hotplugger</string>
@@ -467,4 +468,7 @@
     <string name="notification">Notification</string>
     <string name="bootup_items">Bootup items</string>
     <string name="bootup_category_no_items">Category does not contain any bootup items!</string>
+    <string name="time_since_boot">Uptime: <xliff:g example="1:42:59" id="value">%s</xliff:g></string>
+    <string name="no_data_available">No data available!</string>
+    <string name="cpu_state_standby">Standby</string>
 </resources>
