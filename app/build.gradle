@@ -84,12 +84,11 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
 
-    compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'com.android.support:cardview-v7:22.2.0'
-    compile 'com.android.support:design:22.2.0'
-    compile 'com.android.support:recyclerview-v7:22.2.0'
-    compile 'com.android.support:support-v13:22.2.0'
-    compile 'com.google.android.gms:play-services:7.5.0'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:cardview-v7:22.2.1'
+    compile 'com.android.support:design:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.android.support:support-v13:22.2.1'
 
     // see https://github.com/Evisceration/AndroidSwipeLayout
     compile('com.github.Evisceration:AndroidSwipeLayout:6544102') {
@@ -108,6 +107,7 @@ dependencies {
 
     // see https://www.pollfish.com/android
     compile 'com.pollfish:pollfish:4.1.0:googleplayRelease@aar'
+    compile 'com.google.android.gms:play-services-ads:7.5.0'
 
     // see https://github.com/pilgr/Paper
     //compile 'io.paperdb:paperdb:0.9'
