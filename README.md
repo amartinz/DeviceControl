@@ -31,7 +31,7 @@ Third party libraries
 * [android-support-design](http://developer.android.com/tools/extras/support-library.html)
 * [android-appcompat-v7](http://developer.android.com/tools/extras/support-library.html)
 * [android-recyclerview-v7](http://developer.android.com/tools/extras/support-library.html)
-* [AndroidSwipeLayout](https://github.com/daimajia/AndroidSwipeLayout)
+* [BottomSheet](https://github.com/Kennyc1012/BottomSheet)
 * [ion](https://github.com/koush/ion)
 * [Material-Menu](https://github.com/balysv/material-menu)
 * [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)

@@ -31,17 +31,23 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+
+import com.kennyc.bottomsheet.BottomSheet;
+import com.kennyc.bottomsheet.BottomSheetListener;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.theme.AppResources;
+import org.namelessrom.devicecontrol.utils.MenuHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -87,12 +93,9 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    public final class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, View.OnLongClickListener {
+    public final class ViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnLongClickListener {
         private final CardView cardView;
         private final LinearLayout container;
-
-        private final ImageView actionOpen;
-        private final ImageView actionUninstall;
 
         private final AppIconImageView appIcon;
         private final TextView appLabel;
@@ -111,20 +114,25 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 container.setOnTouchListener(new View.OnTouchListener() {
                     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
+                    @Override public boolean onTouch(View v, MotionEvent event) {
                         v.getBackground().setHotspot(event.getX(), event.getY());
                         return false;
                     }
                 });
             }
-            // TODO: fixup sliding layout lib
-            // container.setOnLongClickListener(this);
-
-            actionOpen = (ImageView) v.findViewById(R.id.app_open);
-            actionOpen.setOnClickListener(this);
-            actionUninstall = (ImageView) v.findViewById(R.id.app_uninstall);
-            actionUninstall.setOnClickListener(this);
+            container.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    if (mSelectedApps.size() != 0) {
+                        appSelector.toggle();
+                        return;
+                    }
+                    final Intent intent = new Intent(mActivity, AppDetailsActivity.class);
+                    intent.putExtra(AppDetailsActivity.ARG_FROM_ACTIVITY, true);
+                    intent.putExtra(AppDetailsActivity.ARG_PACKAGE_NAME, appItem.getPackageName());
+                    mActivity.startActivity(intent);
+                }
+            });
+            container.setOnLongClickListener(this);
 
             appIcon = (AppIconImageView) v.findViewById(R.id.app_icon);
             appLabel = (TextView) v.findViewById(R.id.app_label);
@@ -133,8 +141,6 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
 
             appSelector = (CheckBox) v.findViewById(R.id.app_selector);
             appSelector.setOnCheckedChangeListener(this);
-
-            v.setOnClickListener(this);
         }
 
         public void bind(final AppItem appItem) {
@@ -148,69 +154,12 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             appVersion.setText(appItem.getVersion());
 
             int color = AppResources.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
-            appLabel.setTextColor(appItem.isSystemApp()
-                    ? res.getColor(R.color.red_middle) : color);
+            appLabel.setTextColor(appItem.isSystemApp() ? res.getColor(R.color.red_middle) : color);
 
             color = appItem.isEnabled() ? android.R.color.transparent : R.color.darker_gray;
             cardView.setForeground(new ColorDrawable(mActivity.getResources().getColor(color)));
 
-            actionOpen.setVisibility(appItem.isEnabled() ? View.VISIBLE : View.GONE);
-
             appSelector.setChecked(mSelectedApps.contains(appItem));
-        }
-
-        @Override public void onClick(View v) {
-            final int id = v.getId();
-            switch (id) {
-                case R.id.app_open: {
-                    final boolean success = appItem.launchActivity(mActivity);
-                    if (!success) {
-                        Snackbar.make(actionOpen, R.string.could_not_launch_activity,
-                                Snackbar.LENGTH_SHORT).show();
-                    }
-                    break;
-                }
-                case R.id.app_uninstall: {
-                    final String message;
-                    if (appItem.isSystemApp()) {
-                        message = String.format("%s\n\n%s",
-                                mActivity.getString(R.string.uninstall_msg, appItem.getLabel()),
-                                mActivity.getString(R.string.uninstall_msg_system_app));
-                    } else {
-                        message = mActivity.getString(R.string.uninstall_msg, appItem.getLabel());
-                    }
-
-                    new AlertDialog.Builder(mActivity)
-                            .setMessage(message)
-                            .setNegativeButton(android.R.string.cancel,
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    })
-                            .setPositiveButton(android.R.string.yes,
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            appItem.uninstall(mActivity, mUninstallListener);
-                                        }
-                                    })
-                            .show();
-                    break;
-                }
-                default: {
-                    if (mSelectedApps.size() != 0) {
-                        appSelector.toggle();
-                        return;
-                    }
-                    final Intent intent = new Intent(mActivity, AppDetailsActivity.class);
-                    intent.putExtra(AppDetailsActivity.ARG_FROM_ACTIVITY, true);
-                    intent.putExtra(AppDetailsActivity.ARG_PACKAGE_NAME, appItem.getPackageName());
-                    mActivity.startActivity(intent);
-                    break;
-                }
-            }
         }
 
         @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -227,12 +176,62 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         }
 
         @Override public boolean onLongClick(View v) {
-            if (mSelectedApps.size() != 0) {
-                return true;
+            final BottomSheet.Builder builder = new BottomSheet.Builder(mActivity);
+            builder.setTitle(appItem.getLabel()).setListener(appBottomSheetListener);
+
+            final Menu menu = MenuHelper.inflateMenu(mActivity, R.menu.sheet_app_item);
+            if (!appItem.isEnabled()) {
+                menu.removeItem(R.id.sheet_open);
             }
-            appSelector.toggle();
+
+            builder.setMenu(menu).show();
             return true;
         }
+
+        private final BottomSheetListener appBottomSheetListener = new BottomSheetListener() {
+            @Override public void onSheetShown() { }
+
+            @Override public void onSheetItemSelected(MenuItem item) {
+                final int id = item.getItemId();
+                switch (id) {
+                    case R.id.sheet_open: {
+                        final boolean success = appItem.launchActivity(mActivity);
+                        if (!success) {
+                            Snackbar.make(container, R.string.could_not_launch_activity, Snackbar.LENGTH_SHORT).show();
+                        }
+                        break;
+                    }
+                    case R.id.sheet_uninstall: {
+                        final String message;
+                        if (appItem.isSystemApp()) {
+                            final String label = mActivity.getString(R.string.uninstall_msg, appItem.getLabel());
+                            message = String.format("%s\n\n%s", label, mActivity.getString(R.string.uninstall_msg_system_app));
+                        } else {
+                            message = mActivity.getString(R.string.uninstall_msg, appItem.getLabel());
+                        }
+
+                        new AlertDialog.Builder(mActivity)
+                                .setMessage(message)
+                                .setNegativeButton(android.R.string.cancel,
+                                        new DialogInterface.OnClickListener() {
+                                            @Override public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                .setPositiveButton(android.R.string.yes,
+                                        new DialogInterface.OnClickListener() {
+                                            @Override public void onClick(DialogInterface dialog, int which) {
+                                                appItem.uninstall(mActivity, mUninstallListener);
+                                            }
+                                        })
+                                .show();
+                        break;
+                    }
+                }
+            }
+
+            @Override public void onSheetDismissed() { }
+        };
     }
 
     @Override public int getItemCount() { return mFiltered.size(); }
@@ -260,7 +259,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
 
         query = (query != null ? query.trim().toLowerCase() : null);
         if (!TextUtils.isEmpty(query)) {
-            Iterator<AppItem> iterator = mFiltered.iterator();
+            final Iterator<AppItem> iterator = mFiltered.iterator();
             while (iterator.hasNext()) {
                 AppItem appItem = iterator.next();
                 if (!appItem.getLabel().toLowerCase().contains(query)) {

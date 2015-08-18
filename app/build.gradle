@@ -82,6 +82,8 @@ android {
 dependencies {
     compile fileTree(dir: '../libs', include: ['*.jar'])
 
+    compile project(':modules:BottomSheet:library')
+
     // see https://github.com/Evisceration/logger
     compile project(':modules:logger:library')
 
@@ -97,12 +99,6 @@ dependencies {
     compile 'com.android.support:design:22.2.1'
     compile 'com.android.support:recyclerview-v7:22.2.1'
     compile 'com.android.support:support-v13:22.2.1'
-
-    // see https://github.com/Evisceration/AndroidSwipeLayout
-    compile('com.github.Evisceration:AndroidSwipeLayout:6544102') {
-        exclude group: 'com.google.android', module: 'recyclerview-v7'
-        exclude group: 'com.google.android', module: 'support-v4'
-    }
 
     // see https://github.com/PhilJay/MPAndroidChart
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'

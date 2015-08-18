@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sheet_open"
+        android:icon="@drawable/ic_open_in_new_grey_600_24dp"
+        android:title="@string/open" />
+    <item
+        android:id="@+id/sheet_uninstall"
+        android:icon="@drawable/ic_delete_grey_600_24dp"
+        android:title="@string/uninstall" />
+</menu>

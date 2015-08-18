@@ -467,4 +467,5 @@
     <string name="notification">Notification</string>
     <string name="bootup_items">Bootup items</string>
     <string name="bootup_category_no_items">Category does not contain any bootup items!</string>
+    <string name="open">Open</string>
 </resources>

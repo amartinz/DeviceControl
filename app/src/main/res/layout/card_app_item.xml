@@ -30,103 +30,67 @@
     card_view:cardElevation="4dp"
     card_view:contentPadding="5dp">
 
-    <com.daimajia.swipe.SwipeLayout
-        android:id="@+id/swipelayout"
+    <LinearLayout
+        android:id="@+id/app_details_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:minHeight="72dp"
+        android:orientation="horizontal">
+
+        <org.namelessrom.devicecontrol.modules.appmanager.AppIconImageView
+            android:id="@+id/app_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/app_margin"
+            tools:src="@mipmap/ic_launcher_devicecontrol" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/app_margin">
 
-            <org.namelessrom.devicecontrol.ui.views.ForegroundImageView
-                android:id="@+id/app_open"
+            <TextView
+                android:id="@+id/app_label"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?colorAccent"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:src="@drawable/ic_app_open" />
-
-            <org.namelessrom.devicecontrol.ui.views.ForegroundImageView
-                android:id="@+id/app_uninstall"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?colorAccent"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:src="@drawable/ic_app_uninstall" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/app_details_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:minHeight="72dp"
-            android:orientation="horizontal">
-
-            <org.namelessrom.devicecontrol.modules.appmanager.AppIconImageView
-                android:id="@+id/app_icon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="@dimen/app_margin"
-                tools:src="@mipmap/ic_launcher_devicecontrol" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/app_margin">
-
-                <TextView
-                    android:id="@+id/app_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="marquee"
-                    android:fontFamily="@string/font_condensed"
-                    android:textSize="17sp"
-                    tools:text="@string/app_name" />
-
-                <TextView
-                    android:id="@+id/app_package"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:ellipsize="marquee"
-                    android:fontFamily="@string/font_light"
-                    android:textSize="13sp"
-                    tools:text="org.namelessrom.devicecontrol" />
-
-                <TextView
-                    android:id="@+id/app_version"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:ellipsize="marquee"
-                    android:fontFamily="@string/font_light"
-                    android:textSize="12sp"
-                    tools:text="98 (0.7.3-dev)" />
-            </LinearLayout>
-
-            <CheckBox
-                android:id="@+id/app_selector"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="4dp" />
+                android:ellipsize="marquee"
+                android:fontFamily="@string/font_condensed"
+                android:textSize="17sp"
+                tools:text="@string/app_name" />
 
+            <TextView
+                android:id="@+id/app_package"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="marquee"
+                android:fontFamily="@string/font_light"
+                android:textSize="13sp"
+                tools:text="org.namelessrom.devicecontrol" />
+
+            <TextView
+                android:id="@+id/app_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="marquee"
+                android:fontFamily="@string/font_light"
+                android:textSize="12sp"
+                tools:text="98 (0.7.3-dev)" />
         </LinearLayout>
 
-    </com.daimajia.swipe.SwipeLayout>
+        <CheckBox
+            android:id="@+id/app_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="4dp" />
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>
