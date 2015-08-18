@@ -324,8 +324,8 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
 
     private void setupPermissionsView() {
         final LinearLayout permissionsView = (LinearLayout) findViewById(R.id.permissions_section);
-        final boolean unsupported = Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN;
-        if (unsupported) {
+        final boolean supported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
+        if (!supported) {
             permissionsView.setVisibility(View.GONE);
             return;
         }

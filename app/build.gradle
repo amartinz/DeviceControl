@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "23.0.0"
 
     signingConfigs {
         release {
@@ -24,6 +24,8 @@ android {
 
     defaultConfig {
         applicationId 'org.namelessrom.devicecontrol'
+        minSdkVersion 14
+        targetSdkVersion 22
 
         def String localProps = System.getenv('SIGNING_PROP_FILE')
         if (localProps == null) {

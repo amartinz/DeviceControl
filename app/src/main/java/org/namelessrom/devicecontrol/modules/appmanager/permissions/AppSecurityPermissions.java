@@ -16,6 +16,7 @@
 */
 package org.namelessrom.devicecontrol.modules.appmanager.permissions;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -54,6 +55,7 @@ import java.util.Set;
  * view by instantiating AppSecurityPermissions and invoking getPermissionsView.
  * <p/>
  */
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 public class AppSecurityPermissions {
     public static final int WHICH_PERSONAL = 1 << 0;
     public static final int WHICH_DEVICE = 1 << 1;
@@ -317,8 +319,7 @@ public class AppSecurityPermissions {
 
     private PermissionItemView getPermissionItemView(MyPermissionGroupInfo grp,
             MyPermissionInfo perm, boolean first) {
-        final boolean oldApi = Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR1;
-        final boolean costsMoney = !oldApi && (perm.flags & PermissionInfo.FLAG_COSTS_MONEY) != 0;
+        final boolean costsMoney = (perm.flags & PermissionInfo.FLAG_COSTS_MONEY) != 0;
         PermissionItemView permView = (PermissionItemView) mInflater.inflate(
                 costsMoney ? R.layout.app_permission_item_money : R.layout.app_permission_item,
                 null, false);
@@ -331,8 +332,9 @@ public class AppSecurityPermissions {
         final int base = pInfo.protectionLevel & PermissionInfo.PROTECTION_MASK_BASE;
         final boolean isNormal = (base == PermissionInfo.PROTECTION_NORMAL);
         final boolean isDangerous = (base == PermissionInfo.PROTECTION_DANGEROUS);
-        final boolean isRequired =
-                ((newReqFlags & PackageInfo.REQUESTED_PERMISSION_REQUIRED) != 0);
+        // TODO: recheck
+        //final boolean isRequired =
+        //        ((newReqFlags & PackageInfo.REQUESTED_PERMISSION_REQUIRED) != 0);
         final boolean isDevelopment =
                 ((pInfo.protectionLevel & PermissionInfo.PROTECTION_FLAG_DEVELOPMENT) != 0);
         final boolean wasGranted =
@@ -342,7 +344,7 @@ public class AppSecurityPermissions {
 
         // Dangerous and normal permissions are always shown to the user if the permission
         // is required, or it was previously granted
-        if ((isNormal || isDangerous) && (isRequired || wasGranted || isGranted)) {
+        if ((isNormal || isDangerous) && (/*isRequired || */wasGranted || isGranted)) {
             return true;
         }
 

@@ -43,7 +43,7 @@ public class AppResources {
     }
 
     private int getColor(int colorResId) {
-        return Application.get().getColor(colorResId);
+        return Application.get().getColorApplication(colorResId);
     }
 
     public boolean isDarkTheme() {

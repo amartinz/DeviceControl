@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.net;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 
-import org.apache.http.conn.util.InetAddressUtils;
 import org.namelessrom.devicecontrol.Application;
 
 import java.math.BigInteger;
@@ -30,6 +29,7 @@ import java.net.UnknownHostException;
 import java.nio.ByteOrder;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Helper class for network informations like getting the ip address of the device
@@ -38,7 +38,9 @@ public class NetworkInfo {
 
     public static String getAnyIpAddress() {
         String ip = getWifiIp();
-        if (ip.equals("0.0.0.0")) ip = getIpAddress(true);
+        if ("0.0.0.0".equals(ip)) {
+            ip = getIpAddress(true);
+        }
         return ip;
     }
 
@@ -69,15 +71,19 @@ public class NetworkInfo {
         } catch (Exception e) {
             interfaces = null;
         }
-        if (interfaces == null) return "0.0.0.0";
+        if (interfaces == null) {
+            return "0.0.0.0";
+        }
         for (NetworkInterface intf : interfaces) {
             final List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
             for (final InetAddress addr : addrs) {
                 if (!addr.isLoopbackAddress()) {
                     final String sAddr = addr.getHostAddress().toUpperCase();
-                    boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr);
+                    boolean isIPv4 = isIPv4Address(sAddr);
                     if (useIPv4) {
-                        if (isIPv4) { return sAddr; }
+                        if (isIPv4) {
+                            return sAddr;
+                        }
                     } else {
                         if (!isIPv4) {
                             final int delim = sAddr.indexOf('%'); // drop ip6 port suffix
@@ -88,6 +94,13 @@ public class NetworkInfo {
             }
         }
         return "0.0.0.0";
+    }
+
+    private static final Pattern IPV4_PATTERN = Pattern.compile(
+            "^(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3}$");
+
+    public static boolean isIPv4Address(final String input) {
+        return IPV4_PATTERN.matcher(input).matches();
     }
 
 }

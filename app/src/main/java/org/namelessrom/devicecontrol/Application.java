@@ -153,7 +153,9 @@ public class Application extends android.app.Application {
         }
     }
 
-    public int getColor(final int resId) {
+    public int getColorApplication(final int resId) {
+        // TODO: use ContextCompat once targetSdk is 23
+        //return ContextCompat.getColor(this, resId);
         return getResources().getColor(resId);
     }
 
