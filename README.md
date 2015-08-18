@@ -21,6 +21,7 @@ Try it out:
 Used libraries
 -------
 
+* [logger](https://github.com/Evisceration/logger)
 * [MaterialPreferences](https://github.com/Evisceration/MaterialPreferences)
 
 Third party libraries
@@ -41,9 +42,15 @@ Third party libraries
 
 Contribution
 -------
-Contribution is accepted via [Gerrit Code Review](https://gerrit.nameless-rom.org/#/admin/projects/Evisceration/android_packages_apps_DeviceControl).
+This project contains submodules, which you need to fetch as well.
 
-Note that pull requests on GitHub will be discussed and afterwards uploaded to above Gerrit Code Review, as GitHub is just a mirror for Gerrit.
+    git clone --recursive https://github.com/Evisceration/DeviceControl
+
+In case you cloned it already and need to fetch the submodules, issue the following
+
+    git submodule update --init --recursive
+
+Pull requests are welcome :)
 
 Developed by
 -------

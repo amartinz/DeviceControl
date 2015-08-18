@@ -1,4 +1,4 @@
 include ':app'
 
-// only uncomment if the path exists
-//include ':locallibs:MaterialPreferences:library'
+include ':modules:logger:library'
+include ':modules:MaterialPreferences:library'
