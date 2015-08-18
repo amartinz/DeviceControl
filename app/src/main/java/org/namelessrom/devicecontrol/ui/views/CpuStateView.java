@@ -72,8 +72,7 @@ public class CpuStateView extends LinearLayout implements CpuUtils.StateListener
     }
 
     public void onDestroy() {
-        RefWatcher refWatcher = Application.getRefWatcher(getContext());
-        refWatcher.watch(this);
+        Application.installRefWatcher(this);
     }
 
     private void createViews(final Context context) {

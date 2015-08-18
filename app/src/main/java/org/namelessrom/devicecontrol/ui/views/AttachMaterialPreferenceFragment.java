@@ -75,8 +75,7 @@ public abstract class AttachMaterialPreferenceFragment extends MaterialSupportPr
     }
 
     @Override public void onDestroy() {
-        RefWatcher refWatcher = Application.getRefWatcher(getActivity());
-        refWatcher.watch(this);
+        Application.installRefWatcher(this);
         super.onDestroy();
     }
 

@@ -48,8 +48,7 @@ public abstract class CustomPreferenceFragment extends PreferenceFragment implem
     }
 
     @Override public void onDestroy() {
-        RefWatcher refWatcher = Application.getRefWatcher(getActivity());
-        refWatcher.watch(this);
+        Application.installRefWatcher(this);
         super.onDestroy();
     }
 

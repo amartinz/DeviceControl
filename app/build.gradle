@@ -71,7 +71,14 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
 
-    productFlavors { }
+    productFlavors {
+        normal {
+            buildConfigField "boolean", "USE_LEAK_CANARY", "true"
+        }
+        noLeakCanary {
+            buildConfigField "boolean", "USE_LEAK_CANARY", "false"
+        }
+    }
 
     packagingOptions {
         exclude '.readme'

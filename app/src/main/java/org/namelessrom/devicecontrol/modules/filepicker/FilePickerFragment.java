@@ -130,8 +130,7 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
     }
 
     @Override public void onDestroy() {
-        RefWatcher refWatcher = Application.getRefWatcher(getActivity());
-        refWatcher.watch(this);
+        Application.installRefWatcher(this);
         super.onDestroy();
     }
 
