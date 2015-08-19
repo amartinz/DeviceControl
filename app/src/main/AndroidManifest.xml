@@ -52,6 +52,7 @@
 
     <!-- suppress DeprecatedClassUsageInspection -->
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.REAL_GET_TASKS" />
 
     <!-- Application permissions -->
     <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
