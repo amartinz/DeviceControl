@@ -110,6 +110,9 @@ dependencies {
     // see https://github.com/PhilJay/MPAndroidChart
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
 
+    // see https://github.com/google/gson
+    compile 'com.google.code.gson:gson:2.3'
+
     // see https://github.com/koush/ion
     compile 'com.koushikdutta.ion:ion:2.1.6'
 
