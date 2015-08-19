@@ -17,14 +17,11 @@
  */
 package org.namelessrom.devicecontrol.modules.appmanager;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.View;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.views.AttachViewPagerFragment;
-import org.namelessrom.devicecontrol.ui.views.NoSwipeViewPager;
 
 import java.util.ArrayList;
 
@@ -48,11 +45,4 @@ public class AppListFragment extends AttachViewPagerFragment {
         return new ViewPagerAdapter(getChildFragmentManager(), fragments, titles);
     }
 
-    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        final NoSwipeViewPager viewPager = getViewPager();
-        if (viewPager != null) {
-            viewPager.setAllowSwipe(false);
-        }
-    }
 }
