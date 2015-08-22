@@ -88,22 +88,21 @@ public class WebServerService extends Service {
     private void addNotificationStopButton(final NotificationCompat.Builder builder) {
         final Intent stop = new Intent(this, WebServerService.class);
         stop.setAction(WebServerService.ACTION_STOP);
-        final PendingIntent stopIntent =
-                PendingIntent.getService(this, 0, stop, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.addAction(android.R.drawable.ic_menu_close_clear_cancel, getString(R.string.stop),
-                stopIntent);
+        final PendingIntent stopIntent = PendingIntent.getService(this, 0, stop, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.addAction(android.R.drawable.ic_menu_close_clear_cancel, getString(R.string.stop), stopIntent);
     }
 
     public void setNotification(Notification notification) {
         final NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notification == null) notification = getNotification();
+        if (notification == null) {
+            notification = getNotification();
+        }
         notificationManager.notify(NOTIFICATION_ONGOING, notification);
     }
 
     public void cancelNotification() {
-        final NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(NOTIFICATION_ONGOING);
     }
 

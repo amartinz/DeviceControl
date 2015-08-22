@@ -22,19 +22,19 @@ import android.net.wifi.WifiManager;
 
 import org.namelessrom.devicecontrol.Application;
 
-import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-import java.net.UnknownHostException;
-import java.nio.ByteOrder;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import alexander.martinz.libs.logger.Logger;
 
 /**
  * Helper class for network informations like getting the ip address of the device
  */
 public class NetworkInfo {
+    private static final String TAG = NetworkInfo.class.getSimpleName();
 
     public static String getAnyIpAddress() {
         String ip = getWifiIp();
@@ -45,23 +45,13 @@ public class NetworkInfo {
     }
 
     public static String getWifiIp() {
-        final WifiManager wifiManager = (WifiManager) Application.get()
-                .getSystemService(Context.WIFI_SERVICE);
+        final WifiManager wifiManager = (WifiManager) Application.get().getSystemService(Context.WIFI_SERVICE);
         int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
-        if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
-            ipAddress = Integer.reverseBytes(ipAddress);
-        }
 
-        final byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
-
-        String ipAddressString;
-        try {
-            ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
-        } catch (UnknownHostException ex) {
-            ipAddressString = "0.0.0.0";
-        }
-
-        return ipAddressString;
+        final String formattedIp = String.format("%d.%d.%d.%d",
+                (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+        Logger.v(TAG, "formattedIp (wifi) -> %s", formattedIp);
+        return formattedIp;
     }
 
     public static String getIpAddress(final boolean useIPv4) {

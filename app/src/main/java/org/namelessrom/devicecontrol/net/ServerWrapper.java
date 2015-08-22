@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import alexander.martinz.libs.hardware.utils.IoUtils;
+
 /**
  * A wrapper for the AsyncHttpServer
  */
@@ -69,7 +71,7 @@ public class ServerWrapper {
             mServerSocket = null;
         }
         for (final WebSocket socket : _sockets) {
-            if (socket == null) continue;
+            if (socket == null) { continue; }
             socket.send(ACTION_TERMINATING);
             socket.close();
         }
@@ -79,16 +81,19 @@ public class ServerWrapper {
     }
 
     public void createServer() {
-        Thread thread = new Thread(new Runnable() {
+        /*Thread thread = new Thread(new Runnable() {
             @Override public void run() {
                 createServerAsync();
             }
         });
-        thread.start();
+        thread.start();*/
+        createServerAsync();
     }
 
     private void createServerAsync() {
-        if (mServer != null) return;
+        if (mServer != null) {
+            return;
+        }
         webServerConfig = WebServerConfig.get();
 
         mServer = new AsyncHttpServer();
@@ -107,8 +112,9 @@ public class ServerWrapper {
         Logger.v(this, "[!] Setup route: /license");
 
         mServer.get("/files", new HttpServerRequestCallback() {
-            @Override public void onRequest(final AsyncHttpServerRequest req,
-                    final AsyncHttpServerResponse res) { res.redirect("/files/"); }
+            @Override public void onRequest(final AsyncHttpServerRequest req, final AsyncHttpServerResponse res) {
+                res.redirect("/files/");
+            }
         });
         mServer.get("/files/(?s).*", filesCallback);
         Logger.v(this, "[!] Setup route: /files/(?s).*");
@@ -128,16 +134,8 @@ public class ServerWrapper {
     }
 
     private final HttpServerRequestCallback mainCallback = new HttpServerRequestCallback() {
-        @Override public void onRequest(final AsyncHttpServerRequest req,
-                final AsyncHttpServerResponse res) {
-            if (isStopped) {
-                res.code(404);
-                res.end();
-            }
-            if (!isAuthenticated(req)) {
-                res.getHeaders().add("WWW-Authenticate", "Basic realm=\"DeviceControl\"");
-                res.code(401);
-                res.end();
+        @Override public void onRequest(final AsyncHttpServerRequest req, final AsyncHttpServerResponse res) {
+            if (!shouldPass(req, res)) {
                 return;
             }
             Logger.v(this, "[+] Received connection from: %s", req.getHeaders().get("User-Agent"));
@@ -146,14 +144,13 @@ public class ServerWrapper {
 
             final InputStream is = HtmlHelper.loadPath(path);
             if (is != null) {
-                final DataInputStream dis = new DataInputStream(is);
                 try {
-                    res.sendStream(dis, dis.available());
+                    res.sendStream(is, is.available());
                     return;
                 } catch (IOException ioe) {
                     Logger.e(this, "Error!", ioe);
                 } finally {
-                    try { dis.close(); } catch (IOException ignored) { }
+                    IoUtils.closeQuietly(is);
                 }
             }
             res.send(HtmlHelper.loadPathAsString(path));
@@ -161,17 +158,8 @@ public class ServerWrapper {
     };
 
     private final HttpServerRequestCallback filesCallback = new HttpServerRequestCallback() {
-        @Override public void onRequest(final AsyncHttpServerRequest req,
-                final AsyncHttpServerResponse res) {
-            if (isStopped) {
-                res.code(404);
-                res.end();
-                return;
-            }
-            if (!isAuthenticated(req)) {
-                res.getHeaders().add("WWW-Authenticate", "Basic realm=\"DeviceControl\"");
-                res.code(401);
-                res.end();
+        @Override public void onRequest(final AsyncHttpServerRequest req, final AsyncHttpServerResponse res) {
+            if (!shouldPass(req, res)) {
                 return;
             }
             if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -222,22 +210,19 @@ public class ServerWrapper {
                 if (directories.size() > 0) {
                     Collections.sort(directories, SortHelper.sFileComparator);
                     for (final File f : directories) {
-                        fileEntries.add(new FileEntry(f.getName(),
-                                f.getAbsolutePath().replace(sdRoot, ""), true));
+                        fileEntries.add(new FileEntry(f.getName(), f.getAbsolutePath().replace(sdRoot, ""), true));
                     }
                 }
                 if (files.size() > 0) {
                     Collections.sort(files, SortHelper.sFileComparator);
                     for (final File f : files) {
-                        fileEntries.add(new FileEntry(f.getName(),
-                                f.getAbsolutePath().replace(sdRoot, ""), false));
+                        fileEntries.add(new FileEntry(f.getName(), f.getAbsolutePath().replace(sdRoot, ""), false));
                     }
                 }
 
                 res.send(new Gson().toJson(fileEntries));
             } else {
-                final String contentType = ContentTypes.getInstance()
-                        .getContentType(file.getAbsolutePath());
+                final String contentType = ContentTypes.getInstance().getContentType(file.getAbsolutePath());
                 Logger.v(this, "Requested file: %s", file.getName());
                 Logger.v(this, "Content-Type: %s", contentType);
                 res.setContentType(contentType);
@@ -247,11 +232,25 @@ public class ServerWrapper {
     };
 
     private final HttpServerRequestCallback informationCallback = new HttpServerRequestCallback() {
-        @Override public void onRequest(final AsyncHttpServerRequest req,
-                final AsyncHttpServerResponse res) {
+        @Override public void onRequest(final AsyncHttpServerRequest req, final AsyncHttpServerResponse res) {
 
         }
     };
+
+    private boolean shouldPass(final AsyncHttpServerRequest req, final AsyncHttpServerResponse res) {
+        if (isStopped) {
+            res.code(404);
+            res.end();
+            return false;
+        }
+        if (!isAuthenticated(req)) {
+            res.getHeaders().add("WWW-Authenticate", "Basic realm=\"DeviceControl\"");
+            res.code(401);
+            res.end();
+            return false;
+        }
+        return true;
+    }
 
     private String remapPath(final String path) {
         if (TextUtils.equals("/", path)) {
@@ -261,26 +260,20 @@ public class ServerWrapper {
     }
 
     private void setupFonts() {
+        final Context context = mService.getApplicationContext();
+
         // Bootstrap glyphicons
-        mServer.directory(Application.get(), "/fonts/glyphicons-halflings-regular.eot",
-                "fonts/glyphicons-halflings-regular.eot");
-        mServer.directory(Application.get(), "/fonts/glyphicons-halflings-regular.svg",
-                "fonts/glyphicons-halflings-regular.svg");
-        mServer.directory(Application.get(), "/fonts/glyphicons-halflings-regular.ttf",
-                "fonts/glyphicons-halflings-regular.ttf");
-        mServer.directory(Application.get(), "/fonts/glyphicons-halflings-regular.woff",
-                "fonts/glyphicons-halflings-regular.woff");
+        mServer.directory(context, "/fonts/glyphicons-halflings-regular.eot", "fonts/glyphicons-halflings-regular.eot");
+        mServer.directory(context, "/fonts/glyphicons-halflings-regular.svg", "fonts/glyphicons-halflings-regular.svg");
+        mServer.directory(context, "/fonts/glyphicons-halflings-regular.ttf", "fonts/glyphicons-halflings-regular.ttf");
+        mServer.directory(context, "/fonts/glyphicons-halflings-regular.woff", "fonts/glyphicons-halflings-regular.woff");
+
         // FontAwesome
-        mServer.directory(Application.get(), "/fonts/FontAwesome.otf",
-                "fonts/FontAwesome.otf");
-        mServer.directory(Application.get(), "/fonts/fontawesome-webfont.eot",
-                "fonts/fontawesome-webfont.eot");
-        mServer.directory(Application.get(), "/fonts/fontawesome-webfont.svg",
-                "fonts/fontawesome-webfont.svg");
-        mServer.directory(Application.get(), "/fonts/fontawesome-webfont.ttf",
-                "fonts/fontawesome-webfont.ttf");
-        mServer.directory(Application.get(), "/fonts/fontawesome-webfont.woff",
-                "fonts/fontawesome-webfont.woff");
+        mServer.directory(context, "/fonts/FontAwesome.otf", "fonts/FontAwesome.otf");
+        mServer.directory(context, "/fonts/fontawesome-webfont.eot", "fonts/fontawesome-webfont.eot");
+        mServer.directory(context, "/fonts/fontawesome-webfont.svg", "fonts/fontawesome-webfont.svg");
+        mServer.directory(context, "/fonts/fontawesome-webfont.ttf", "fonts/fontawesome-webfont.ttf");
+        mServer.directory(context, "/fonts/fontawesome-webfont.woff", "fonts/fontawesome-webfont.woff");
     }
 
     private void setupWebSockets() {
@@ -326,9 +319,9 @@ public class ServerWrapper {
         });
 
         mServer.get("/api/device", new HttpServerRequestCallback() {
-            @Override public void onRequest(final AsyncHttpServerRequest req,
-                    final AsyncHttpServerResponse res) {
+            @Override public void onRequest(final AsyncHttpServerRequest req, final AsyncHttpServerResponse res) {
                 final String result = Device.get(mService).update().toString();
+                Logger.v(this, result);
                 res.send(result);
             }
         });
@@ -338,12 +331,11 @@ public class ServerWrapper {
         final boolean isAuth = !webServerConfig.useAuth;
         final String authHeader = req.getHeaders().get("Authorization");
         if (!isAuth && !TextUtils.isEmpty(authHeader)) {
-            final String[] parts = new String(Base64.decode(authHeader.replace("Basic", "").trim(),
-                    Base64.DEFAULT)).split(":");
+            final String[] parts = new String(Base64.decode(authHeader.replace("Basic", "").trim(), Base64.DEFAULT)).split(":");
             return parts[0] != null
-                    && parts[1] != null
-                    && parts[0].equals(webServerConfig.username)
-                    && parts[1].equals(webServerConfig.password);
+                   && parts[1] != null
+                   && parts[0].equals(webServerConfig.username)
+                   && parts[1].equals(webServerConfig.password);
         }
         return isAuth;
     }
@@ -353,8 +345,7 @@ public class ServerWrapper {
             Logger.wtf(this, "mService is null!");
             return;
         }
-        final Intent sticky = mService.registerReceiver(mBatteryReceiver,
-                new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        final Intent sticky = mService.registerReceiver(mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         // try to preload battery level
         if (sticky != null) {
             mBatteryReceiver.onReceive(mService, sticky);
@@ -373,13 +364,12 @@ public class ServerWrapper {
 
     private final BroadcastReceiver mBatteryReceiver = new BroadcastReceiver() {
         @Override public void onReceive(Context context, Intent intent) {
-            final String batteryLevel = String.format("batteryLevel|%s",
-                    intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 1));
-            final String batteryCharging = String.format("batteryCharging|%s",
+            final String level = String.format("batteryLevel|%s", intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 1));
+            final String charging = String.format("batteryCharging|%s",
                     intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0) != 0 ? "1" : "0");
             for (final WebSocket socket : _sockets) {
-                socket.send(batteryLevel);
-                socket.send(batteryCharging);
+                socket.send(level);
+                socket.send(charging);
             }
         }
     };
