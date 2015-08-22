@@ -53,18 +53,16 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final Device device = Device.get();
+        final Device device = Device.get(getActivity());
 
         // Platform
-        CustomPreferenceCategoryMaterial category =
-                (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_platform);
+        CustomPreferenceCategoryMaterial category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_platform);
         addPreference(category, "platform_version", R.string.version, device.platformVersion)
                 .setOnPreferenceClickListener(this); // selectable because of the easter egg
         addPreference(category, "platform_id", R.string.build_id, device.platformId);
         addPreference(category, "platform_type", R.string.type, device.platformType);
         addPreference(category, "platform_tags", R.string.tags, device.platformTags);
-        addPreference(category, "platform_build_date", R.string.build_date,
-                device.platformBuildType);
+        addPreference(category, "platform_build_date", R.string.build_date, device.platformBuildType);
 
         // Runtime
         category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_runtime);
@@ -83,17 +81,14 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
         addPreference(category, "device_board", R.string.board, device.board);
         addPreference(category, "device_bootloader", R.string.bootloader, device.bootloader);
         addPreference(category, "device_radio_version", R.string.radio_version, device.radio);
-        addPreference(category, "device_selinux", R.string.selinux, device.isSELinuxEnforcing ?
-                getString(R.string.selinux_enforcing) : getString(R.string.selinux_permissive));
+        addPreference(category, "device_selinux", R.string.selinux, device.isSELinuxEnforcing
+                ? getString(R.string.selinux_enforcing) : getString(R.string.selinux_permissive));
 
         // Memory
         category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_memory);
-        addPreference(category, "memory_total", R.string.total,
-                MemoryInfo.getAsMb(device.memoryInfo.memoryTotal));
-        addPreference(category, "memory_cached", R.string.cached,
-                MemoryInfo.getAsMb(device.memoryInfo.memoryCached));
-        addPreference(category, "memory_free", R.string.free,
-                MemoryInfo.getAsMb(device.memoryInfo.memoryFree));
+        addPreference(category, "memory_total", R.string.total, MemoryInfo.getAsMb(device.memoryInfo.memoryTotal));
+        addPreference(category, "memory_cached", R.string.cached, MemoryInfo.getAsMb(device.memoryInfo.memoryCached));
+        addPreference(category, "memory_free", R.string.free, MemoryInfo.getAsMb(device.memoryInfo.memoryFree));
 
         // Processor
         category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_processor);
@@ -134,12 +129,9 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
         addPreference(category, "emmc_mid", R.string.emmc_mid, Emmc.get().getMid());
         addPreference(category, "emmc_rev", R.string.emmc_rev, Emmc.get().getRev());
         addPreference(category, "emmc_date", R.string.emmc_date, Emmc.get().getDate());
-        String tmp = Emmc.get().canBrick()
-                ? getString(R.string.emmc_can_brick_true)
-                : getString(R.string.emmc_can_brick_false);
+        String tmp = Emmc.get().canBrick() ? getString(R.string.emmc_can_brick_true) : getString(R.string.emmc_can_brick_false);
         tmp = String.format("%s\n%s", tmp, getString(R.string.press_learn_more));
-        addPreference(category, "emmc_can_brick", R.string.emmc_can_brick, tmp)
-                .setOnPreferenceClickListener(this);
+        addPreference(category, "emmc_can_brick", R.string.emmc_can_brick, tmp).setOnPreferenceClickListener(this);
     }
 
     private MaterialPreference addPreference(final CustomPreferenceCategoryMaterial category,

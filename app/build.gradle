@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "23.0.0"
 
     signingConfigs {
@@ -25,7 +25,7 @@ android {
     defaultConfig {
         applicationId 'org.namelessrom.devicecontrol'
         minSdkVersion 14
-        targetSdkVersion 22
+        targetSdkVersion 23
 
         def String localProps = System.getenv('SIGNING_PROP_FILE')
         if (localProps == null) {
@@ -84,12 +84,21 @@ android {
         exclude '.readme'
     }
 
+    // until all third party packages got updated
+    useLibrary 'org.apache.http.legacy'
+
 }
 
 dependencies {
     compile fileTree(dir: '../libs', include: ['*.jar'])
 
     compile project(':modules:BottomSheet:library')
+    compile(project(':modules:ExecutionLibrary:library')) {
+        exclude group: 'com.github.Evisceration', module: 'logger'
+    }
+    compile(project(':modules:HardwareLibrary:library')) {
+        exclude group: 'com.github.Evisceration', module: 'logger'
+    }
 
     // see https://github.com/Evisceration/logger
     compile project(':modules:logger:library')
@@ -101,11 +110,11 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3.1'
 
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:cardview-v7:22.2.1'
-    compile 'com.android.support:design:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
-    compile 'com.android.support:support-v13:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:cardview-v7:23.0.0'
+    compile 'com.android.support:design:23.0.0'
+    compile 'com.android.support:recyclerview-v7:23.0.0'
+    compile 'com.android.support:support-v13:23.0.0'
 
     // see https://github.com/PhilJay/MPAndroidChart
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
@@ -118,7 +127,7 @@ dependencies {
 
     // see https://www.pollfish.com/android
     compile 'com.pollfish:pollfish:4.1.0:googleplayRelease@aar'
-    compile 'com.google.android.gms:play-services-ads:7.5.0'
+    compile 'com.google.android.gms:play-services-ads:7.8.0'
 
     // see https://github.com/pilgr/Paper
     //compile 'io.paperdb:paperdb:0.9'

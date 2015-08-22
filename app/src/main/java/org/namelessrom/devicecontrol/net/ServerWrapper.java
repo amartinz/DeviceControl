@@ -328,7 +328,7 @@ public class ServerWrapper {
         mServer.get("/api/device", new HttpServerRequestCallback() {
             @Override public void onRequest(final AsyncHttpServerRequest req,
                     final AsyncHttpServerResponse res) {
-                final String result = Device.get().update().toString();
+                final String result = Device.get(mService).update().toString();
                 res.send(result);
             }
         });

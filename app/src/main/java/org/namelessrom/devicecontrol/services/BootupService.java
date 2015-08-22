@@ -82,12 +82,12 @@ public class BootupService extends IntentService {
         }
 
         // Update information about the device, to see whether we fulfill all requirements
-        Device.get().update();
+        final Device device = Device.get(this).update();
 
         //==================================================================================
         // No Root, No Friends, That's Life ...
         //==================================================================================
-        if (!Device.get().hasRoot || !Device.get().hasBusyBox) {
+        if (!device.hasRoot || !device.hasBusyBox) {
             Logger.e(this, "No Root, No Friends, That's Life ...");
             return;
         }

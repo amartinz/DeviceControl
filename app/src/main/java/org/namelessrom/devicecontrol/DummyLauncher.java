@@ -17,10 +17,12 @@
  */
 package org.namelessrom.devicecontrol;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -54,6 +56,8 @@ public class DummyLauncher extends BaseActivity {
         super.onCreate(bundle);
         setContentView(R.layout.activity_launcher);
 
+        final Context context = this;
+
         mProgressLayout = (RelativeLayout) findViewById(R.id.launcher_progress);
         mProgressStatus = (TextView) findViewById(R.id.launcher_progress_status);
 
@@ -62,11 +66,10 @@ public class DummyLauncher extends BaseActivity {
         mAction = (Button) findViewById(R.id.btn_left);
         mAction.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                if (!Device.get().hasRoot) {
-                    final String url = String.format("https://www.google.com/#q=how+to+root+%s",
-                            Device.get().model);
+                if (!Device.get(context).hasRoot) {
+                    final String url = String.format("https://www.google.com/#q=how+to+root+%s", Device.get(context).model);
                     AppHelper.viewInBrowser(url);
-                } else if (!Device.get().hasBusyBox) {
+                } else if (!Device.get(context).hasBusyBox) {
                     RootTools.offerBusyBox();
                 }
             }
@@ -83,7 +86,9 @@ public class DummyLauncher extends BaseActivity {
     private void updateStatus(final String text) {
         mHandler.post(new Runnable() {
             @Override public void run() {
-                if (mProgressStatus == null) return;
+                if (mProgressStatus == null) {
+                    return;
+                }
                 mProgressStatus.setText(text);
             }
         });
@@ -97,7 +102,6 @@ public class DummyLauncher extends BaseActivity {
         overridePendingTransition(0, 0);
         finish();
         overridePendingTransition(0, 0);
-
     }
 
     private class CheckTools extends AsyncTask<Void, Void, Device> {
@@ -109,7 +113,7 @@ public class DummyLauncher extends BaseActivity {
                 return null;
             }
 
-            final Device device = Device.get();
+            final Device device = Device.get(DummyLauncher.this);
 
             updateStatus(getString(R.string.checking_requirements));
             device.update();
@@ -121,8 +125,8 @@ public class DummyLauncher extends BaseActivity {
             return device;
         }
 
-        @Override protected void onPostExecute(final Device device) {
-            if (skip || device == null || (device.hasRoot && device.hasBusyBox)) {
+        @Override protected void onPostExecute(@NonNull final Device device) {
+            if (skip || (device.hasRoot && device.hasBusyBox)) {
                 startActivity();
                 return;
             }
@@ -132,8 +136,7 @@ public class DummyLauncher extends BaseActivity {
 
             if (device.hasRoot) {
                 final String status = getString(R.string.app_warning_busybox,
-                        getString(R.string.app_name)) + "\n\n" +
-                        getString(R.string.app_warning_busybox_note);
+                        getString(R.string.app_name)) + "\n\n" + getString(R.string.app_warning_busybox_note);
                 mStatus.setText(status);
                 mAction.setText(R.string.get_busybox);
             } else {

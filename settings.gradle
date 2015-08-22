@@ -1,5 +1,7 @@
 include ':app'
 
 include ':modules:BottomSheet:library'
+include ':modules:ExecutionLibrary:library'
+include ':modules:HardwareLibrary:library'
 include ':modules:logger:library'
 include ':modules:MaterialPreferences:library'

@@ -24,6 +24,7 @@ import android.content.res.Resources;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -160,9 +161,7 @@ public class Application extends android.app.Application {
     }
 
     public int getColorApplication(final int resId) {
-        // TODO: use ContextCompat once targetSdk is 23
-        //return ContextCompat.getColor(this, resId);
-        return getResources().getColor(resId);
+        return ContextCompat.getColor(this, resId);
     }
 
     public String[] getStringArray(final int resId) {
