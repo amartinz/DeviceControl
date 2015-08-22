@@ -42,8 +42,6 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.squareup.leakcanary.RefWatcher;
-
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.views.CustomRecyclerView;
@@ -77,9 +75,7 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
 
         // setup search
         final MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = searchItem != null
-                ? (SearchView) searchItem.getActionView()
-                : null;
+        final SearchView searchView = (searchItem != null ? (SearchView) searchItem.getActionView() : null);
         if (searchView != null) {
             searchView.setOnQueryTextListener(this);
             searchView.setOnCloseListener(this);
@@ -109,10 +105,7 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
     }
 
     @Override public boolean onOptionsItemSelected(final MenuItem item) {
-        // get the id of our item
         final int id = item.getItemId();
-
-        // if the user hit refresh
         if (id == R.id.menu_action_refresh) {
             loadApps(true);
             return true;
@@ -196,7 +189,7 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
             }
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title);
         builder.setMessage(message);
         builder.setNegativeButton(android.R.string.cancel, null);
@@ -242,8 +235,7 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
         private final int length;
         private final ProgressDialog progressDialog;
 
-        public ProcessTask(Activity activity, int type, int titleResId, int messageResId,
-                HashSet<AppItem> selectedApps) {
+        public ProcessTask(Activity activity, int type, int titleResId, int messageResId, HashSet<AppItem> selectedApps) {
             this.activity = activity;
             this.type = type;
             this.messageResId = messageResId;
@@ -300,36 +292,41 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
         @Override protected void onPostExecute(Void aVoid) {
             progressDialog.hide();
             loadApps(true);
-            Snackbar.make(BaseAppListFragment.this.mAppListBar, R.string.action_completed,
-                    Snackbar.LENGTH_LONG).show();
+            Snackbar.make(BaseAppListFragment.this.mAppListBar, R.string.action_completed, Snackbar.LENGTH_LONG).show();
         }
     }
 
-    private void loadApps(boolean animate) {
-        if (mIsLoading) return;
+    public void loadApps(final boolean animate) {
+        if (mIsLoading) {
+            return;
+        }
 
         mIsLoading = true;
-        mProgressContainer.setVisibility(View.VISIBLE);
+        mProgressContainer.post(new Runnable() {
+            @Override public void run() {
+                mProgressContainer.setVisibility(View.VISIBLE);
 
-        if (animate) {
-            final ObjectAnimator anim = ObjectAnimator.ofFloat(mProgressContainer, "alpha", 0f, 1f);
-            anim.addListener(new Animator.AnimatorListener() {
-                @Override public void onAnimationStart(Animator animation) { }
+                if (animate) {
+                    final ObjectAnimator anim = ObjectAnimator.ofFloat(mProgressContainer, "alpha", 0f, 1f);
+                    anim.addListener(new Animator.AnimatorListener() {
+                        @Override public void onAnimationStart(Animator animation) { }
 
-                @Override public void onAnimationEnd(Animator animation) {
+                        @Override public void onAnimationEnd(Animator animation) {
+                            new LoadApps().execute();
+                        }
+
+                        @Override public void onAnimationCancel(Animator animation) { }
+
+                        @Override public void onAnimationRepeat(Animator animation) { }
+                    });
+                    anim.setDuration(ANIM_DURATION);
+                    anim.start();
+                } else {
+                    mProgressContainer.setAlpha(1f);
                     new LoadApps().execute();
                 }
-
-                @Override public void onAnimationCancel(Animator animation) { }
-
-                @Override public void onAnimationRepeat(Animator animation) { }
-            });
-            anim.setDuration(ANIM_DURATION);
-            anim.start();
-        } else {
-            mProgressContainer.setAlpha(1f);
-            new LoadApps().execute();
-        }
+            }
+        });
     }
 
     private void updateVisibility(boolean isEmpty) {
@@ -368,7 +365,7 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
                 @Override public void onAnimationEnd(Animator animation) {
                     if (appItems != null) {
                         if (mAdapter == null) {
-                            final AppListAdapter adapter = new AppListAdapter(getActivity(),
+                            final AppListAdapter adapter = new AppListAdapter(getActivity(), BaseAppListFragment.this,
                                     appItems, mUninstallListener, mAppSelectedListener);
                             mRecyclerView.setAdapter(adapter);
                             mAdapter = adapter;

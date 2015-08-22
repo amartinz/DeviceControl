@@ -39,7 +39,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.kennyc.bottomsheet.BottomSheet;
@@ -56,6 +55,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     private final Resources res;
 
     private final Activity mActivity;
+    private final BaseAppListFragment mBaseAppListFragment;
     private ArrayList<AppItem> mAppList;
     private ArrayList<AppItem> mFiltered;
 
@@ -64,10 +64,10 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
 
     private final ArrayList<AppItem> mSelectedApps;
 
-    public AppListAdapter(Activity activity, ArrayList<AppItem> appList,
-            AppItem.UninstallListener uninstallListener,
-            BaseAppListFragment.AppSelectedListener appSelectedListener) {
+    public AppListAdapter(Activity activity, BaseAppListFragment baseAppListFragment, ArrayList<AppItem> appList,
+            AppItem.UninstallListener uninstallListener, BaseAppListFragment.AppSelectedListener appSelectedListener) {
         mActivity = activity;
+        mBaseAppListFragment = baseAppListFragment;
         mFiltered = appList;
         mUninstallListener = uninstallListener;
         mAppSelectedListener = appSelectedListener;
@@ -182,7 +182,10 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                     .setMenuItemTintColor(AppResources.get().getAccentColor());
 
             final Menu menu = MenuHelper.inflateMenu(mActivity, R.menu.sheet_app_item);
-            if (!appItem.isEnabled()) {
+            if (appItem.isEnabled()) {
+                menu.removeItem(R.id.sheet_enable);
+            } else {
+                menu.removeItem(R.id.sheet_disable);
                 menu.removeItem(R.id.sheet_open);
             }
 
@@ -201,6 +204,14 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                         if (!success) {
                             Snackbar.make(container, R.string.could_not_launch_activity, Snackbar.LENGTH_SHORT).show();
                         }
+                        break;
+                    }
+                    case R.id.sheet_enable: {
+                        appItem.enable(mDisableEnableListener);
+                        break;
+                    }
+                    case R.id.sheet_disable: {
+                        appItem.disable(mDisableEnableListener);
                         break;
                     }
                     case R.id.sheet_uninstall: {
@@ -235,6 +246,14 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             @Override public void onSheetDismissed() { }
         };
     }
+
+    private final AppItem.DisableEnableListener mDisableEnableListener = new AppItem.DisableEnableListener() {
+        @Override public void OnDisabledOrEnabled() {
+            if (mBaseAppListFragment != null) {
+                mBaseAppListFragment.loadApps(true);
+            }
+        }
+    };
 
     @Override public int getItemCount() { return mFiltered.size(); }
 
