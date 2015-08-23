@@ -19,7 +19,7 @@ package org.namelessrom.devicecontrol.base;
 
 import android.support.v4.app.Fragment;
 
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
     /** @return true when handled, false when not handled */
     public boolean onActionBarHomeClicked() {

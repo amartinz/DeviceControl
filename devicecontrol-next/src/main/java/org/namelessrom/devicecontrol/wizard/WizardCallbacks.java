@@ -15,10 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.namelessrom.devicecontrol.base;
+package org.namelessrom.devicecontrol.wizard;
 
-import android.support.v7.app.AppCompatActivity;
+public class WizardCallbacks {
+    public void onSetupStarted() { }
 
-public abstract class BaseActivity extends AppCompatActivity {
-    public abstract void replaceFragment(BaseFragment fragment, String backStackTag);
+    public void onNextPage() { }
+
+    public void onPreviousPage() { }
+
+    public void onSetupDone(final boolean isAborted) { }
 }

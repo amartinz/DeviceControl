@@ -34,6 +34,8 @@ import android.widget.ImageView;
 import org.namelessrom.devicecontrol.base.BaseActivity;
 import org.namelessrom.devicecontrol.base.BaseFragment;
 import org.namelessrom.devicecontrol.modules.home.HomeFragment;
+import org.namelessrom.devicecontrol.wizard.WizardCallbacks;
+import org.namelessrom.devicecontrol.wizard.firstlaunch.FirstLaunchWizard;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private Toolbar mToolbar;
@@ -45,6 +47,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private MenuItem mPreviousMenuItem;
 
     private BaseFragment mCurrentFragment;
+
+    private FirstLaunchWizard mFirstLaunchWizard;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,12 +69,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         setupDrawerItems();
 
-        // TODO: setup first launch, root checks etc
+        if (FirstLaunchWizard.isFirstLaunch(this)) {
+            mFirstLaunchWizard = FirstLaunchWizard.create(mWizardCallbacks);
+            replaceFragment(mFirstLaunchWizard, null);
+        } else {
+            setup();
+        }
+    }
+
+    private void setup() {
+        // TODO: root checks, etc
         unlockMenu();
         replaceFragment(new HomeFragment(), -1, null);
     }
 
     @Override public void onBackPressed() {
+        if (mFirstLaunchWizard != null && mFirstLaunchWizard.isSetupActive) {
+            mFirstLaunchWizard.onPreviousPage();
+            return;
+        }
         if (mCurrentFragment != null && mCurrentFragment.onBackPressed()) {
             return;
         }
@@ -131,6 +148,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mNavigationView.invalidate();
     }
 
+    @Override public void replaceFragment(BaseFragment fragment, String backStackTag) {
+        replaceFragment(fragment, -1, backStackTag);
+    }
+
     public void replaceFragment(BaseFragment fragment, @MenuRes int menuId, String backStackTag) {
         if (menuId != -1) {
             checkMenuItem(menuId);
@@ -165,4 +186,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         }
     }
+
+    private final WizardCallbacks mWizardCallbacks = new WizardCallbacks() {
+        @Override public void onSetupStarted() {
+            mFirstLaunchWizard.isSetupActive = true;
+        }
+
+        @Override public void onSetupDone(boolean isAborted) {
+            mFirstLaunchWizard.isSetupActive = false;
+
+            setup();
+        }
+    };
 }

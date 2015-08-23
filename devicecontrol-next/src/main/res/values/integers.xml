@@ -15,13 +15,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <resources>
-    <string name="drawer_title_home">Home</string>
-
-    <!-- Wizard -->
-    <string name="wizard_finish">Finish</string>
-    <string name="wizard_next">Next</string>
-    <string name="wizard_previous">Previous</string>
-    <string name="wizard_skip">Skip</string>
+    <integer name="animation_time">400</integer>
+    <integer name="animation_time_half">200</integer>
 </resources>

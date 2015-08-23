@@ -17,11 +17,5 @@
   -->
 
 <resources>
-    <string name="drawer_title_home">Home</string>
-
-    <!-- Wizard -->
-    <string name="wizard_finish">Finish</string>
-    <string name="wizard_next">Next</string>
-    <string name="wizard_previous">Previous</string>
-    <string name="wizard_skip">Skip</string>
+    <string name="pref_first_launch">first_launch</string>
 </resources>

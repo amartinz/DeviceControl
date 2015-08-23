@@ -15,10 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.namelessrom.devicecontrol.base;
+package org.namelessrom.devicecontrol.wizard;
 
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 
-public abstract class BaseActivity extends AppCompatActivity {
-    public abstract void replaceFragment(BaseFragment fragment, String backStackTag);
+public abstract class WizardPage {
+
+    protected abstract Fragment getWizardFragment();
+
 }
