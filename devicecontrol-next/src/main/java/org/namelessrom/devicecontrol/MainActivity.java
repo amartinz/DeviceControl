@@ -194,6 +194,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         @Override public void onSetupDone(boolean isAborted) {
             mFirstLaunchWizard.isSetupActive = false;
+            FirstLaunchWizard.setFirstLaunchDone(MainActivity.this, true);
 
             setup();
         }

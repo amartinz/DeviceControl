@@ -24,4 +24,6 @@
 
     <color name="drawer_icon">#FFFFFF</color>
     <color name="drawer_text">#FFFFFF</color>
+
+    <color name="text_normal">#FFFFFF</color>
 </resources>

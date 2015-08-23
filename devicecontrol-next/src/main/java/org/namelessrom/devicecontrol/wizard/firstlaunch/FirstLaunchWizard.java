@@ -37,14 +37,14 @@ public class FirstLaunchWizard extends WizardManager<FirstLaunchWizard> {
 
     @SuppressLint("CommitPrefEdits") public static void setFirstLaunchDone(@NonNull Context context, boolean firstLaunchDone) {
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        preferences.edit().putBoolean(context.getString(R.string.pref_first_launch), firstLaunchDone).commit();
+        preferences.edit().putBoolean(context.getString(R.string.pref_first_launch), !firstLaunchDone).commit();
     }
 
     public static FirstLaunchWizard create(@NonNull WizardCallbacks callbacks) {
         return new FirstLaunchWizard()
                 .setCallbacks(callbacks)
                 .addPage(new FirstLaunchWelcomePage())
-                .addPage(new FirstLaunchWelcomePage())
-                .addPage(new FirstLaunchWelcomePage());
+                // TODO: add more pages as we have more configuration to offer
+                .addPage(new FirstLaunchFinishPage());
     }
 }

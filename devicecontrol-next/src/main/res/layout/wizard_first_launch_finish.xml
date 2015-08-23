@@ -16,15 +16,24 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
-    <string name="drawer_title_home">Home</string>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <!-- Wizard -->
-    <string name="wizard_finish">Finish</string>
-    <string name="wizard_next">Next</string>
-    <string name="wizard_previous">Previous</string>
-    <string name="wizard_skip">Skip</string>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <string name="wizard_welcome_notice">Welcome to Device Control!\n\nYou can get the most features with a rooted device.\nPlease be aware that without root the functionality is limited!\n\nReady?\nSo let\'s get you set up! :)</string>
-    <string name="wizard_finish_notice">You are all set up, thanks for your patience!\n\nIf you need help or have any questions, please do not hesitate to ask.\n\nFor now, have fun using Device Control! :)</string>
-</resources>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="20dp"
+            android:text="@string/wizard_finish_notice"
+            android:textColor="@color/text_normal"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</ScrollView>

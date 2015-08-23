@@ -27,14 +27,14 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.base.BaseFragment;
 import org.namelessrom.devicecontrol.wizard.WizardPage;
 
-public class FirstLaunchWelcomePage extends WizardPage {
+public class FirstLaunchFinishPage extends WizardPage {
     @Override protected Fragment getWizardFragment() {
-        return new FirstLaunchWelcomePage.Fragment();
+        return new FirstLaunchFinishPage.Fragment();
     }
 
     public static final class Fragment extends BaseFragment {
         @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.wizard_first_launch_welcome, container, false);
+            return inflater.inflate(R.layout.wizard_first_launch_finish, container, false);
         }
     }
 }
