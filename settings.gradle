@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':devicecontrol-next'
 
 include ':modules:ExecutionLibrary:library'
 include ':modules:HardwareLibrary:library'

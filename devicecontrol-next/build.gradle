@@ -1,0 +1,111 @@
+/*
+ * Copyright (C) 2013 - 2015 Alexander Martinz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
+
+    signingConfigs {
+        release {
+            def String localProps = System.getenv('SIGNING_PROP_FILE')
+            if (localProps == null) {
+                logger.quiet('Not signing the build!')
+                storeFile file("debug.keystore")
+            } else {
+                logger.quiet('Signing the build!')
+                def Properties keyProps = new Properties()
+                keyProps.load(new FileInputStream(file(localProps)))
+                storeFile file(keyProps["store"])
+                storePassword keyProps["storePass"]
+                keyAlias keyProps["alias"]
+                keyPassword keyProps["pass"]
+            }
+        }
+    }
+
+    defaultConfig {
+        applicationId "org.namelessrom.devicecontrol"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 130
+        versionName "0.9.0"
+
+        def String localProps = System.getenv('SIGNING_PROP_FILE')
+        if (localProps == null) {
+            signingConfig signingConfigs.debug
+        } else {
+            signingConfig signingConfigs.release
+        }
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            proguardFile 'proguard.pro'
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+        }
+        debug {
+            debuggable true
+            proguardFile 'proguard.pro'
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            applicationIdSuffix '.dev'
+            versionNameSuffix '-dev'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    lintOptions {
+        abortOnError false
+        checkAllWarnings true
+        // do not warn about translations
+        disable 'MissingTranslation', 'ExtraTranslation';
+    }
+
+    packagingOptions {
+        exclude '.readme'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: '../libs', include: ['*.jar'])
+
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:design:23.0.0'
+
+    // see https://github.com/Evisceration/logger
+    compile project(':modules:logger:library')
+
+    // see https://github.com/Evisceration/ExecutionLibrary
+    compile(project(':modules:ExecutionLibrary:library')) {
+        exclude group: 'com.github.Evisceration', module: 'logger'
+    }
+
+    // see https://github.com/Evisceration/HardwareLibrary
+    compile(project(':modules:HardwareLibrary:library')) {
+        exclude group: 'com.github.Evisceration', module: 'logger'
+    }
+}

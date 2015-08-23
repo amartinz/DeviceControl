@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2013 - 2015 Alexander Martinz
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_main"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_home"
+            android:checkable="true"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/drawer_title_home" />
+    </group>
+    <!-- More subheader -->
+    <!--<group
+        android:id="@+id/group_more"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_more_settings"
+            android:checkable="true"
+            android:title="@string/drawer_title_more_settings" />
+        <item
+            android:id="@+id/nav_item_more_contact"
+            android:checkable="true"
+            android:title="@string/drawer_title_more_contact" />
+        <item
+            android:id="@+id/nav_item_more_imprint"
+            android:checkable="true"
+            android:title="@string/drawer_title_more_imprint" />
+        <item
+            android:id="@+id/nav_item_more_about"
+            android:checkable="true"
+            android:title="@string/drawer_title_more_about" />
+    </group>-->
+</menu>

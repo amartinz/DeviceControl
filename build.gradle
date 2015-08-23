@@ -15,4 +15,9 @@ allprojects {
         jcenter()
         maven { url "https://jitpack.io" }
     }
+
+    // stfu gradle
+    tasks.withType(JavaForkOptions) {
+        jvmArgs '-Djava.awt.headless=true'
+    }
 }

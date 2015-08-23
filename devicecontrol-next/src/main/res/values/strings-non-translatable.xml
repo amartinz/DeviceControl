@@ -1,0 +1,32 @@
+<!--
+  ~ Copyright (C) 2013 - 2015 Alexander Martinz
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<resources>
+    <string name="app_name_device_control" translatable="false">Device Control [Next]</string>
+
+    <!-- fonts -->
+    <string name="font_regular">sans-serif</string>
+    <string name="font_light">sans-serif-light</string>
+    <string name="font_condensed">sans-serif-condensed</string>
+    <!-- API 17 -->
+    <string name="font_thin">sans-serif-thin</string>
+    <!-- API 21 -->
+    <string name="font_medium">sans-serif-medium</string>
+
+    <!-- dummy strings -->
+    <string name="dummy_header_title">OPPO Find7</string>
+    <string name="dummy_header_subtitle">Android 5.1.1 / 32-bit</string>
+</resources>
