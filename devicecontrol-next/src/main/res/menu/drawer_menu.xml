@@ -26,7 +26,33 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/drawer_title_home" />
     </group>
-    <!-- More subheader -->
+    <!-- information subheader -->
+    <group
+        android:id="@+id/group_information"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_info"
+            android:title="@string/drawer_title_info">
+            <menu>
+                <item
+                    android:id="@+id/nav_item_info_device"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_perm_device_info_black_24dp"
+                    android:title="@string/drawer_title_info_device" />
+            </menu>
+        </item>
+    </group>
+    <!-- performance subheader -->
+    <group
+        android:id="@+id/group_performance"
+        android:checkableBehavior="single">
+    </group>
+    <!-- tools subheader -->
+    <group
+        android:id="@+id/group_tools"
+        android:checkableBehavior="single">
+    </group>
+    <!-- more subheader -->
     <group
         android:id="@+id/group_more"
         android:checkableBehavior="single">

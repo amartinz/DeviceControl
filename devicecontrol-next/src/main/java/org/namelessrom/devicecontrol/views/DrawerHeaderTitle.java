@@ -29,6 +29,7 @@ import android.widget.TextView;
 import org.namelessrom.devicecontrol.R;
 
 import alexander.martinz.libs.hardware.device.Device;
+import alexander.martinz.libs.hardware.device.ProcessorInfo;
 
 public class DrawerHeaderTitle extends FrameLayout {
     public DrawerHeaderTitle(Context context) {
@@ -62,6 +63,7 @@ public class DrawerHeaderTitle extends FrameLayout {
         title.setText(device.getModelStringShort());
 
         final TextView subTitle = (TextView) findViewById(R.id.drawer_header_subtitle);
-        subTitle.setText(String.format("Android %s / %s", device.platformVersion, device.deviceIs64Bit ? "64-bit" : "32-bit"));
+        final String bitString = (ProcessorInfo.is64BitStatic() ? "64-bit" : "32-bit");
+        subTitle.setText(String.format("Android %s / %s", device.platformVersion, bitString));
     }
 }

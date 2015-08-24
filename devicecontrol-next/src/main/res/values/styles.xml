@@ -39,4 +39,10 @@
         <item name="contentPadding">8dp</item>
     </style>
 
+    <style name="MaterialPreferences.Default">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="prefCardBackgroundColor">@color/grey_800</item>
+    </style>
+
 </resources>

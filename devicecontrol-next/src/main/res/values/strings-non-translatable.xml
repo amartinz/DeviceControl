@@ -36,6 +36,18 @@
     <string name="non_google_plus_community_url" translatable="false">https://plus.google.com/u/0/communities/102835551008778372596</string>
     <string name="non_beta_url" translatable="false">https://play.google.com/apps/testing/org.namelessrom.devicecontrol</string>
 
+    <!-- eMMC -->
+    <string name="emmc" translatable="false">eMMC</string>
+    <string name="emmc_cid" translatable="false">CID</string>
+    <string name="emmc_mid" translatable="false">MID</string>
+
+    <!-- others -->
+    <string name="bit_32" translatable="false">32-bit</string>
+    <string name="bit_64" translatable="false">64-bit</string>
+    <string name="bogomips" translatable="false">BogoMIPS</string>
+    <string name="cpu_abi" translatable="false">CPU ABI</string>
+    <string name="selinux" translatable="false">SELinux</string>
+
     <!-- dummy strings -->
     <string name="dummy_header_title">OPPO Find7</string>
     <string name="dummy_header_subtitle">Android 5.1.1 / 32-bit</string>

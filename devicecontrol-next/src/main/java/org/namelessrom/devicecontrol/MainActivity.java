@@ -43,6 +43,7 @@ import org.namelessrom.devicecontrol.base.BaseActivity;
 import org.namelessrom.devicecontrol.base.BaseFragment;
 import org.namelessrom.devicecontrol.modules.home.DonationActivity;
 import org.namelessrom.devicecontrol.modules.home.HomeFragment;
+import org.namelessrom.devicecontrol.modules.info.DeviceFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.wizard.WizardCallbacks;
 import org.namelessrom.devicecontrol.wizard.firstlaunch.FirstLaunchWizard;
@@ -176,6 +177,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                             // the HomeFragment is the central place, never add it to the back stack
                             replaceFragment(new HomeFragment(), null);
+                        }
+                        break;
+                    }
+                    //==============================================================================
+                    case R.id.nav_item_info_device: {
+                        if (!(mCurrentFragment instanceof DeviceFragment)) {
+                            replaceFragment(new DeviceFragment(), "");
                         }
                         break;
                     }

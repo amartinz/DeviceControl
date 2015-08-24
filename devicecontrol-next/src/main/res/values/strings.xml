@@ -18,6 +18,10 @@
 
 <resources>
     <string name="drawer_title_home">Home</string>
+    <!-- info -->
+    <string name="drawer_title_info">Information</string>
+    <string name="drawer_title_info_device">@string/device</string>
+    <!-- more -->
     <string name="drawer_title_more_about">About</string>
     <string name="drawer_title_more_privacy">Privacy</string>
 
@@ -26,6 +30,53 @@
     <string name="community_message">If you need help, have feedback, ideas or feature requests or if you just want to discuss, you can join our <b>Google+ community</b>.\n\nWith joining the community, you can also participate in BETA tests.\nBETA builds can be less stable, but you will get more frequent updates with the latest features and fixes.</string>
     <string name="join_beta_test">Join BETA</string>
     <string name="view_community">View community</string>
+
+    <!-- device -->
+    <string name="device">Device</string>
+    <string name="device_information">Device information</string>
+    <string name="general">General</string>
+    <string name="sensors">Sensors</string>
+
+    <string name="name">Name</string>
+    <string name="arch">Architecture</string>
+    <string name="version">Version</string>
+    <string name="features">Features</string>
+    <string name="platform_information">Platform information</string>
+    <string name="build_id">Build id</string>
+    <string name="android_id">Android id</string>
+    <string name="runtime">Runtime</string>
+    <string name="type">Type</string>
+    <string name="tags">Tags</string>
+    <string name="model">Model</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="product">Product</string>
+    <string name="board">Board</string>
+    <string name="radio_version">Radio version</string>
+    <string name="build_date">Build date</string>
+    <string name="processor">Processor</string>
+    <string name="extras">Extras</string>
+    <string name="kernel">Kernel</string>
+    <string name="hardware">Hardware</string>
+    <string name="toolchain">Toolchain</string>
+    <string name="host">Host</string>
+    <string name="memory">Memory</string>
+    <string name="total">Total</string>
+    <string name="free">Free</string>
+    <string name="cached">Cached</string>
+    <string name="bootloader">Bootloader</string>
+    <string name="selinux_enforcing">Enforcing</string>
+    <string name="selinux_permissive">Permissive</string>
+    <string name="unknown">Unknown</string>
+    <!-- emmc -->
+    <string name="emmc_rev">Revision</string>
+    <string name="emmc_date">Date</string>
+    <string name="emmc_can_brick">Issues</string>
+    <string name="emmc_can_brick_true">Your eMMC is known to cause issues!</string>
+    <string name="emmc_can_brick_false">Your eMMC should be safe!</string>
+    <string name="press_learn_more">Press to learn more…</string>
+    <!-- sensors -->
+    <string name="sensor_information">Show sensor information</string>
+    <string name="sensor_information_summary">View detailed information about your sensors</string>
 
     <!-- wizard -->
     <string name="wizard_finish">Finish</string>

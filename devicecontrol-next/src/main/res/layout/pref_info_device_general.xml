@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2013 - 2015 Alexander Martinz
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:layoutAnimation="@anim/layout_slide_in_right"
+    android:orientation="vertical">
+
+    <!-- Platform -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_platform"
+        style="@style/MaterialPreferences.Default"
+        android:visibility="gone"
+        app:prefKey="platform"
+        app:prefTitle="@string/platform_information" />
+
+    <!-- Runtime -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_runtime"
+        style="@style/MaterialPreferences.Default"
+        android:visibility="gone"
+        app:prefKey="runtime"
+        app:prefTitle="@string/runtime" />
+
+    <!-- Device information -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_device_information"
+        style="@style/MaterialPreferences.Default"
+        android:visibility="gone"
+        app:prefKey="device_information"
+        app:prefTitle="@string/device_information" />
+
+    <!-- Memory -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_memory"
+        style="@style/MaterialPreferences.Default"
+        android:visibility="gone"
+        app:prefKey="memory"
+        app:prefTitle="@string/memory" />
+
+    <!-- Processor -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_processor"
+        style="@style/MaterialPreferences.Default"
+        android:visibility="gone"
+        app:prefKey="processor"
+        app:prefTitle="@string/processor" />
+
+    <!-- Kernel -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_kernel"
+        style="@style/MaterialPreferences.Default"
+        android:visibility="gone"
+        app:prefKey="kernel"
+        app:prefTitle="@string/kernel" />
+
+    <!-- eMMC -->
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_emmc"
+        style="@style/MaterialPreferences.Default"
+        android:visibility="gone"
+        app:prefKey="emmc"
+        app:prefTitle="@string/emmc" />
+
+</LinearLayout>
