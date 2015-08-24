@@ -16,8 +16,8 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <color name="primary">#F44336</color>
-    <color name="primary_dark">#D32F2F</color>
+    <color name="primary">#D32F2F</color>
+    <color name="primary_dark">#B71C1C</color>
     <color name="primary_light">#EF9A9A</color>
 
     <color name="accent">#448AFF</color>
