@@ -17,5 +17,8 @@
   -->
 
 <resources>
+    <!-- if true, the setup wizard is shown -->
     <string name="pref_first_launch">first_launch</string>
+    <!-- if true, pollfish is activated -->
+    <string name="pref_show_pollfish">show_pollfish</string>
 </resources>

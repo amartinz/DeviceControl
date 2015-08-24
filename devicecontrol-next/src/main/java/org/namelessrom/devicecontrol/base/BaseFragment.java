@@ -18,8 +18,10 @@
 package org.namelessrom.devicecontrol.base;
 
 import android.support.v4.app.Fragment;
+import android.view.animation.Animation;
 
 public abstract class BaseFragment extends Fragment {
+    public static boolean sDisableFragmentAnimations;
 
     /** @return true when handled, false when not handled */
     public boolean onActionBarHomeClicked() {
@@ -29,6 +31,15 @@ public abstract class BaseFragment extends Fragment {
     /** @return true when handled, false when not handled */
     public boolean onBackPressed() {
         return false;
+    }
+
+    @Override public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        if (BaseFragment.sDisableFragmentAnimations) {
+            final Animation a = new Animation() { };
+            a.setDuration(0);
+            return a;
+        }
+        return super.onCreateAnimation(transit, enter, nextAnim);
     }
 
 }

@@ -18,6 +18,7 @@
     <string name="app_name_device_control" translatable="false">Device Control [Next]</string>
 
     <!-- fonts -->
+    <string name="font_bold">sans-serif-bold</string>
     <string name="font_regular">sans-serif</string>
     <string name="font_light">sans-serif-light</string>
     <string name="font_condensed">sans-serif-condensed</string>
@@ -25,6 +26,15 @@
     <string name="font_thin">sans-serif-thin</string>
     <!-- API 21 -->
     <string name="font_medium">sans-serif-medium</string>
+
+    <!-- Donation -->
+    <string name="google_play">Google Play</string>
+    <string name="google_play_notice" translatable="false">Google Play is a trademark of Google Inc.</string>
+    <string name="paypal" translatable="false">PayPal</string>
+    <!-- URLs -->
+    <string name="non_dc_privacy_url">https://evisceration.github.io/device_control_privacy.html</string>
+    <string name="non_google_plus_community_url" translatable="false">https://plus.google.com/u/0/communities/102835551008778372596</string>
+    <string name="non_beta_url" translatable="false">https://play.google.com/apps/testing/org.namelessrom.devicecontrol</string>
 
     <!-- dummy strings -->
     <string name="dummy_header_title">OPPO Find7</string>

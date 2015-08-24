@@ -26,4 +26,7 @@
     <color name="drawer_text">#FFFFFF</color>
 
     <color name="text_normal">#FFFFFF</color>
+
+    <color name="tab_color_normal">#b3ffffff</color>
+    <color name="tab_color_selected">#ffffff</color>
 </resources>

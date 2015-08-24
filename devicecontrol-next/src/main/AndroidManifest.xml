@@ -19,10 +19,18 @@
     package="org.namelessrom.devicecontrol"
     android:installLocation="internalOnly">
 
+    <!-- Internet / Networking -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- In-App purchases -->
+    <uses-permission android:name="com.android.vending.BILLING" />
+
     <application
         android:allowBackup="true"
-        android:label="@string/app_name_device_control"
         android:icon="@mipmap/ic_launcher_devicecontrol"
+        android:label="@string/app_name_device_control"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
 
@@ -42,6 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".modules.home.DonationActivity" />
 
     </application>
 

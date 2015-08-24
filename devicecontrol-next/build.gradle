@@ -89,6 +89,9 @@ android {
     packagingOptions {
         exclude '.readme'
     }
+
+    // until all third party packages got updated
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -109,4 +112,8 @@ dependencies {
     compile(project(':modules:HardwareLibrary:library')) {
         exclude group: 'com.github.Evisceration', module: 'logger'
     }
+
+    // see https://www.pollfish.com/android
+    compile 'com.pollfish:pollfish:4.1.0:googleplayRelease@aar'
+    compile 'com.google.android.gms:play-services-ads:7.8.0'
 }

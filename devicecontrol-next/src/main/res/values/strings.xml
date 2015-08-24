@@ -18,8 +18,16 @@
 
 <resources>
     <string name="drawer_title_home">Home</string>
+    <string name="drawer_title_more_about">About</string>
+    <string name="drawer_title_more_privacy">Privacy</string>
 
-    <!-- Wizard -->
+    <!-- community -->
+    <string name="community">Community</string>
+    <string name="community_message">If you need help, have feedback, ideas or feature requests or if you just want to discuss, you can join our <b>Google+ community</b>.\n\nWith joining the community, you can also participate in BETA tests.\nBETA builds can be less stable, but you will get more frequent updates with the latest features and fixes.</string>
+    <string name="join_beta_test">Join BETA</string>
+    <string name="view_community">View community</string>
+
+    <!-- wizard -->
     <string name="wizard_finish">Finish</string>
     <string name="wizard_next">Next</string>
     <string name="wizard_previous">Previous</string>
@@ -27,4 +35,15 @@
 
     <string name="wizard_welcome_notice">Welcome to Device Control!\n\nYou can get the most features with a rooted device.\nPlease be aware that without root the functionality is limited!\n\nReady?\nSo let\'s get you set up! :)</string>
     <string name="wizard_finish_notice">You are all set up, thanks for your patience!\n\nIf you need help or have any questions, please do not hesitate to ask.\n\nFor now, have fun using Device Control! :)</string>
+
+    <!-- donation -->
+    <string name="donate_value">Donate %s</string>
+    <string name="donate_subscription">Use subscription</string>
+    <string name="donate_subscription_note">Note: Subscriptions are monthly!</string>
+    <string name="donate_via">Donate via %s</string>
+    <string name="donate_paypal_message">This will redirect you to PayPal to complete the donation.</string>
+
+    <!-- pollfish -->
+    <string name="show_pollfish">Activate Pollfish</string>
+    <string name="show_pollfish_summary">For every taken survey you help us to grow. Feel free to deactivate it, of course :)</string>
 </resources>

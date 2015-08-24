@@ -17,7 +17,27 @@
 
 package org.namelessrom.devicecontrol.modules.home;
 
-import org.namelessrom.devicecontrol.base.BaseFragment;
+import android.support.v4.app.Fragment;
 
-public class HomeFragment extends BaseFragment {
+import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.base.BaseViewPagerFragment;
+
+import java.util.ArrayList;
+
+public class HomeFragment extends BaseViewPagerFragment {
+
+    @Override public ViewPagerAdapter getPagerAdapter() {
+        final ArrayList<Fragment> fragments = new ArrayList<>(2);
+        final ArrayList<CharSequence> titles = new ArrayList<>(2);
+
+        // TODO: create a first page :P
+        //titles.add(getString(R.string.drawer_title_home));
+        //fragments.add(new HomeFragment());
+
+        titles.add(getString(R.string.community));
+        fragments.add(new CommunityFragment());
+
+        return new ViewPagerAdapter(getChildFragmentManager(), fragments, titles);
+    }
+
 }
