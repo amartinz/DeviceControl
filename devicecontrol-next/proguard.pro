@@ -76,3 +76,6 @@
 -keepnames class * implements android.os.Parcelable {
     public static final ** CREATOR;
 }
+
+# RxAndroid
+-dontwarn rx.internal.util.**

@@ -21,4 +21,7 @@
     <string name="pref_first_launch">first_launch</string>
     <!-- if true, pollfish is activated -->
     <string name="pref_show_pollfish">show_pollfish</string>
+
+    <!-- if true, logger is enabled -->
+    <string name="pref_enable_logger">enable_logger</string>
 </resources>
