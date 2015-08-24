@@ -95,6 +95,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (mDrawerRunnable != null) {
                     mDrawerRunnable.run();
                 }
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
 
             @Override public void onDrawerStateChanged(int newState) { }
@@ -154,6 +155,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override public boolean onNavigationItemSelected(final MenuItem menuItem) {
         // close drawer
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mDrawerLayout.closeDrawer(GravityCompat.START);
 
         // give the drawer 200ms to close
