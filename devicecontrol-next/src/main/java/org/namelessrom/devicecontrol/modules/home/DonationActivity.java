@@ -18,6 +18,7 @@ package org.namelessrom.devicecontrol.modules.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -72,6 +73,7 @@ public class DonationActivity extends BaseActivity implements BillingProcessor.I
 
         // setup action bar
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ViewCompat.setElevation(toolbar, 4.0f);
         setSupportActionBar(toolbar);
 
         final ActionBar actionBar = getSupportActionBar();
