@@ -29,4 +29,6 @@
 
     <color name="tab_color_normal">#b3ffffff</color>
     <color name="tab_color_selected">#ffffff</color>
+
+    <color name="grey_800">#424242</color>
 </resources>
