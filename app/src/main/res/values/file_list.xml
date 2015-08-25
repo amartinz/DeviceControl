@@ -299,6 +299,7 @@
     <string-array name="gpu_gov_path" translatable="false">
         <item>/kgsl-3d0/pwrscale/trustzone/governor</item>
         <item>/kgsl-3d0/devfreq/governor</item>
+        <item>/scaling_cur_governor</item>
         <item>/scaling_governor</item>
     </string-array>
     <string-array name="gpu_govs_avail_path" translatable="false">

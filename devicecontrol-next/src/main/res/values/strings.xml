@@ -74,6 +74,13 @@
     <string name="emmc_can_brick_true">Your eMMC is known to cause issues!</string>
     <string name="emmc_can_brick_false">Your eMMC should be safe!</string>
     <string name="press_learn_more">Press to learn more…</string>
+
+    <!-- gpu -->
+    <string name="frequency_available">Available frequencies</string>
+    <string name="frequency_current">Current frequency</string>
+    <string name="frequency_max">Maximum frequency</string>
+    <string name="frequency_min">Minimum frequency</string>
+
     <!-- sensors -->
     <string name="sensor_information">Show sensor information</string>
     <string name="sensor_information_summary">View detailed information about your sensors</string>

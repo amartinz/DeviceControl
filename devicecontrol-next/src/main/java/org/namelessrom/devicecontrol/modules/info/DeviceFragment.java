@@ -24,13 +24,20 @@ import org.namelessrom.devicecontrol.base.BaseViewPagerFragment;
 
 import java.util.ArrayList;
 
+import alexander.martinz.libs.hardware.opengl.OpenGlInformation;
+
 public class DeviceFragment extends BaseViewPagerFragment {
     @Override public ViewPagerAdapter getPagerAdapter() {
-        final ArrayList<Fragment> fragments = new ArrayList<>(2);
-        final ArrayList<CharSequence> titles = new ArrayList<>(2);
+        final ArrayList<Fragment> fragments = new ArrayList<>(3);
+        final ArrayList<CharSequence> titles = new ArrayList<>(3);
 
         fragments.add(new DeviceGeneralFragment());
         titles.add(getString(R.string.general));
+
+        if (OpenGlInformation.isOpenGLES20Supported(getActivity())) {
+            fragments.add(new DeviceGpuFragment());
+            titles.add(getString(R.string.gpu));
+        }
 
         fragments.add(new DeviceSensorFragment());
         titles.add(getString(R.string.sensors));

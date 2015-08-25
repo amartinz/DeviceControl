@@ -41,6 +41,10 @@
     <string name="emmc_cid" translatable="false">CID</string>
     <string name="emmc_mid" translatable="false">MID</string>
 
+    <!-- GPU / OpenGL -->
+    <string name="gpu" translatable="false">GPU</string>
+    <string name="opengl" translatable="false">OpenGL</string>
+
     <!-- others -->
     <string name="bit_32" translatable="false">32-bit</string>
     <string name="bit_64" translatable="false">64-bit</string>
