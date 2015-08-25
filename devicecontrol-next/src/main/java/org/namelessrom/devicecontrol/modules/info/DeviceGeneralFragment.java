@@ -23,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
@@ -207,8 +208,7 @@ public class DeviceGeneralFragment extends MaterialSupportPreferenceFragment imp
             }
             return true;
         } else if ("emmc_can_brick".equals(key)) {
-            // TODO: try that cool new chrome tabs stuff
-            AppHelper.viewInBrowser(getActivity(), EmmcInfo.BRICK_INFO_URL);
+            AppHelper.launchUrlViaTabs(getActivity(), EmmcInfo.BRICK_INFO_URL);
             return true;
         }
 

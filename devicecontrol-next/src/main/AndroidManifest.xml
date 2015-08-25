@@ -16,8 +16,11 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.namelessrom.devicecontrol"
     android:installLocation="internalOnly">
+
+    <uses-sdk tools:overrideLibrary="android.support.customtabs" />
 
     <!-- Internet / Networking -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

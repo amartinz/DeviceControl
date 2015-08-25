@@ -23,27 +23,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
 public class CommunityFragment extends Fragment {
-    @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_community, container, false);
 
         final Button betaButton = (Button) view.findViewById(R.id.betaTestButton);
         betaButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                AppHelper.viewInBrowser(v.getContext(), getString(R.string.non_beta_url));
+                AppHelper.launchUrlViaTabs(getActivity(), getString(R.string.non_beta_url));
             }
         });
 
         final Button communityButton = (Button) view.findViewById(R.id.communityButton);
         communityButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                AppHelper.viewInBrowser(v.getContext(), getString(R.string.non_google_plus_community_url));
+                AppHelper.launchUrlViaTabs(getActivity(), getString(R.string.non_google_plus_community_url));
             }
         });
+
+        final Application application = ((Application) getActivity().getApplicationContext());
+        application.getCustomTabsHelper().warmup();
 
         return view;
     }

@@ -26,6 +26,8 @@ import alexander.martinz.libs.logger.Logger;
 import rx.functions.Action1;
 
 public class Application extends android.app.Application {
+    private CustomTabsHelper mCustomTabsHelper;
+
     @Override public void onCreate() {
         super.onCreate();
         // enable until we hit the preference
@@ -41,5 +43,11 @@ public class Application extends android.app.Application {
                         Logger.d(this, "Logger enabled -> %s", Logger.getEnabled());
                     }
                 });
+
+        mCustomTabsHelper = new CustomTabsHelper(getApplicationContext());
+    }
+
+    public CustomTabsHelper getCustomTabsHelper() {
+        return mCustomTabsHelper;
     }
 }

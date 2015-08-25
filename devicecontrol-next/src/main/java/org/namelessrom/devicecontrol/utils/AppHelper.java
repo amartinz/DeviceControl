@@ -16,9 +16,13 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+
+import org.namelessrom.devicecontrol.Application;
 
 import alexander.martinz.libs.logger.Logger;
 
@@ -27,19 +31,10 @@ import alexander.martinz.libs.logger.Logger;
  */
 public class AppHelper {
     private static final String TAG = AppHelper.class.getSimpleName();
-    private static final String DONATE_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZSN2SW53JJQJY";
 
-    public static boolean startExternalDonation(final Context context) {
-        final Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(DONATE_URL));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        try {
-            context.startActivity(intent);
-            return true;
-        } catch (Exception exc) {
-            return false;
-        }
+    public static void launchUrlViaTabs(@NonNull final Activity activity, @NonNull final String url) {
+        final Application application = ((Application) activity.getApplicationContext());
+        application.getCustomTabsHelper().launchUrl(activity, url);
     }
 
     public static void viewInBrowser(Context context, String url) {

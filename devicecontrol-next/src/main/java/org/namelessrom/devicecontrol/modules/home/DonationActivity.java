@@ -37,6 +37,8 @@ import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.proprietary.Configuration;
 
 public class DonationActivity extends BaseActivity implements BillingProcessor.IBillingHandler, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+    private static final String DONATE_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZSN2SW53JJQJY";
+
     /** Donation  2€ **/
     public static final String SKU_DONATION_1 = "donation_1";
     /** Donation  5€ **/
@@ -149,7 +151,7 @@ public class DonationActivity extends BaseActivity implements BillingProcessor.I
                 }
                 break;
             case R.id.bDonatePayPal:
-                AppHelper.startExternalDonation(this);
+                AppHelper.launchUrlViaTabs(this, DONATE_URL);
                 break;
         }
     }

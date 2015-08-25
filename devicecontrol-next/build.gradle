@@ -99,6 +99,7 @@ dependencies {
 
     compile 'com.android.support:appcompat-v7:23.0.0'
     compile 'com.android.support:cardview-v7:23.0.0'
+    compile 'com.android.support:customtabs:23.0.0'
     compile 'com.android.support:design:23.0.0'
 
     // see https://github.com/Evisceration/logger

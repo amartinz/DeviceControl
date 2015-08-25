@@ -196,7 +196,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         break;
                     }
                     case R.id.nav_item_more_privacy: {
-                        AppHelper.viewInBrowser(MainActivity.this, getString(R.string.non_dc_privacy_url));
+                        AppHelper.launchUrlViaTabs(MainActivity.this, getString(R.string.non_dc_privacy_url));
                         shouldCheck = false;
                         break;
                     }
