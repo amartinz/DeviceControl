@@ -22,11 +22,21 @@ import android.preference.PreferenceManager;
 
 import com.f2prateek.rx.preferences.RxSharedPreferences;
 
+import org.namelessrom.devicecontrol.execution.ShellWriter;
+
+import java.io.File;
+
 import alexander.martinz.libs.logger.Logger;
 import rx.functions.Action1;
 
 public class Application extends android.app.Application {
+    private static final String TAG = Application.class.getSimpleName();
+
     private CustomTabsHelper mCustomTabsHelper;
+
+    public CustomTabsHelper getCustomTabsHelper() {
+        return mCustomTabsHelper;
+    }
 
     @Override public void onCreate() {
         super.onCreate();
@@ -41,13 +51,48 @@ public class Application extends android.app.Application {
                     @Override public void call(Boolean enableLogger) {
                         Logger.setEnabled(enableLogger);
                         Logger.d(this, "Logger enabled -> %s", Logger.getEnabled());
+
+                        if (Logger.getEnabled()) {
+                            testShellWriter();
+                        }
                     }
                 });
 
         mCustomTabsHelper = new CustomTabsHelper(getApplicationContext());
     }
 
-    public CustomTabsHelper getCustomTabsHelper() {
-        return mCustomTabsHelper;
+    private void testShellWriter() {
+        final File testFile = new File(getApplicationContext().getFilesDir(), "testShellWriter");
+        try {
+            testFile.createNewFile();
+        } catch (Exception ignored) { }
+        ShellWriter.with(getApplicationContext())
+                .write("test")
+                .into(testFile)
+                .start(new Action1<Boolean>() {
+                    @Override public void call(Boolean success) {
+                        Logger.v(TAG, "Could write to %s -> %s", testFile.getAbsolutePath(), success);
+                    }
+                });
+
+        final String KMSG_PATH = "/dev/kmsg";
+        ShellWriter.with(getApplicationContext())
+                .disableRoot() // expected to fail to write to /dev/kmsg without root
+                .write(String.format("%s: %s", TAG, "this is a test without root"))
+                .into(KMSG_PATH)
+                .start(new Action1<Boolean>() {
+                    @Override public void call(Boolean success) {
+                        Logger.v(this, "Could write to %s without root -> %s", KMSG_PATH, success);
+                    }
+                });
+
+        ShellWriter.with(getApplicationContext())
+                .write(String.format("%s: %s", TAG, "this is a test as root"))
+                .into(KMSG_PATH)
+                .start(new Action1<Boolean>() {
+                    @Override public void call(Boolean success) {
+                        Logger.v(this, "Could write to %s with root -> %s", KMSG_PATH, success);
+                    }
+                });
     }
 }
