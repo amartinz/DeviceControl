@@ -15,7 +15,8 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="org.namelessrom.devicecontrol"
     android:installLocation="internalOnly">
@@ -93,6 +94,9 @@
         <activity
             android:name=".modules.home.DonationActivity"
             android:label="@string/donate_heart" />
+        <activity
+            android:name=".modules.info.SensorActivity"
+            android:label="@string/sensors" />
 
     </application>
 

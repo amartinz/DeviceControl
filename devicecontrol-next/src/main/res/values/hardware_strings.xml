@@ -1,0 +1,52 @@
+<!--
+  ~ Copyright (C) 2013 - 2015 Alexander Martinz
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- TODO: contribute back translations to hardware library! -->
+    <!-- OpenGL -->
+    <string name="hardware_gpu_vendor">GPU vendor</string>
+    <string name="hardware_gpu_renderer">GPU renderer</string>
+    <string name="hardware_opengl_version">OpenGL version</string>
+    <string name="hardware_opengl_extensions">OpenGL extensions</string>
+    <string name="hardware_shader_version">Shader version</string>
+
+    <!-- Sensors -->
+    <string name="hardware_environment">Environment</string>
+    <string name="hardware_motion">Motion</string>
+    <string name="hardware_position">Position</string>
+    <string name="hardware_sensor_light">Light</string>
+    <string name="hardware_sensor_temperature">Temperature</string>
+    <string name="hardware_sensor_pressure">Pressure</string>
+    <string name="hardware_sensor_pressure_note">Note: values can be in %1$s or %2$s depending on the manufacturers implementation</string>
+    <string name="hardware_sensor_relative_humidity">Relative humidity</string>
+    <string name="hardware_sensor_accelerometer">Accelerometer (including gravity)</string>
+    <string name="hardware_sensor_accelerometer_linear">Accelerometer linear (excluding gravity)</string>
+    <string name="hardware_sensor_gravity">Gravity</string>
+    <string name="hardware_sensor_rotation_vector">Rotation vector</string>
+    <string name="hardware_sensor_gyroscope">Gyroscope</string>
+    <string name="hardware_sensor_gyroscope_uncalibrated">Gyroscope (uncalibrated)</string>
+    <string name="hardware_sensor_step">Step counter</string>
+    <string name="hardware_sensor_proximity">Proximity</string>
+    <string name="hardware_sensor_magnetic_field">Magnetic field</string>
+    <string name="hardware_sensor_magnetic_field_uncalibrated">Magnetic field (uncalibrated)</string>
+    <string name="hardware_sensor_geomagnetic_rotation_vector">Geomagnetic rotation vector</string>
+    <string name="hardware_sensor_game_rotation_vector">Game rotation vector</string>
+    <string name="hardware_power_usage">Power usage</string>
+    <string name="hardware_steps">Steps</string>
+    <string name="hardware_far">Far</string>
+    <string name="hardware_near">Near</string>
+</resources>

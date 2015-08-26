@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -32,11 +31,11 @@ import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.base.BaseActivity;
+import org.namelessrom.devicecontrol.base.BaseSubActivity;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.proprietary.Configuration;
 
-public class DonationActivity extends BaseActivity implements BillingProcessor.IBillingHandler, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class DonationActivity extends BaseSubActivity implements BillingProcessor.IBillingHandler, View.OnClickListener, RadioGroup.OnCheckedChangeListener {
     private static final String DONATE_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZSN2SW53JJQJY";
 
     /** Donation  2€ **/
@@ -100,17 +99,6 @@ public class DonationActivity extends BaseActivity implements BillingProcessor.I
         ((RadioButton) findViewById(R.id.radioDonation3)).setText(String.format(donateValue, "10€"));
         ((RadioButton) findViewById(R.id.radioDonation4)).setText(String.format(donateValue, "20€"));
         ((RadioButton) findViewById(R.id.radioDonation5)).setText(String.format(donateValue, "50€"));
-    }
-
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
-        final int id = item.getItemId();
-        switch (id) {
-            case android.R.id.home: {
-                finish();
-                return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
