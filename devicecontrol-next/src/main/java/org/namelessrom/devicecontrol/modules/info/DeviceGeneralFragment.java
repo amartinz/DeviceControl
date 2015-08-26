@@ -21,7 +21,9 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -44,6 +46,15 @@ public class DeviceGeneralFragment extends MaterialSupportPreferenceFragment imp
     private long[] mHits = new long[3];
     private boolean mEasterEggStarted = false;
 
+    private MaterialPreferenceCategory catPlatform;
+    private MaterialPreferenceCategory catRuntime;
+    private MaterialPreferenceCategory catDevice;
+    private MaterialPreferenceCategory catMemory;
+    private MaterialPreferenceCategory catProcessor;
+    private MaterialPreferenceCategory catKernel;
+    private MaterialPreferenceCategory catEmmc;
+
+
     @Override protected int getLayoutResourceId() {
         return R.layout.pref_info_device_general;
     }
@@ -53,65 +64,87 @@ public class DeviceGeneralFragment extends MaterialSupportPreferenceFragment imp
     @Override public void onResume() {
         super.onResume();
         mEasterEggStarted = false;
-    }
 
-    @Override public void onViewCreated(final View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         final Device device = Device.get(getActivity());
 
-        // Platform
-        MaterialPreferenceCategory category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_platform);
-        addPreference(category, "platform_version", R.string.version, device.platformVersion).setOnPreferenceClickListener(this);
-        addPreference(category, "platform_id", R.string.build_id, device.platformId);
-        addPreference(category, "platform_type", R.string.type, device.platformType);
-        addPreference(category, "platform_tags", R.string.tags, device.platformTags);
-        addPreference(category, "platform_build_date", R.string.build_date, device.platformBuildType);
-        category.setVisibility(View.VISIBLE);
+        setupPlatform(device);
+        setupRuntime(device);
+        setupDevice(device);
 
-        // Runtime
-        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_runtime);
-        addPreference(category, "vm_library", R.string.type, device.vmLibrary);
-        addPreference(category, "vm_version", R.string.version, device.vmVersion);
-        category.setVisibility(View.VISIBLE);
+        setupMemory();
+        setupProcessor();
+        setupKernel();
+        setupEmmc();
+    }
 
-        // Device
-        category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_device_information);
+    @Override @NonNull public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        catPlatform = (MaterialPreferenceCategory) view.findViewById(R.id.cat_platform);
+        catRuntime = (MaterialPreferenceCategory) view.findViewById(R.id.cat_runtime);
+        catDevice = (MaterialPreferenceCategory) view.findViewById(R.id.cat_device_information);
+
+        catMemory = (MaterialPreferenceCategory) view.findViewById(R.id.cat_memory);
+        catProcessor = (MaterialPreferenceCategory) view.findViewById(R.id.cat_processor);
+        catKernel = (MaterialPreferenceCategory) view.findViewById(R.id.cat_kernel);
+        catEmmc = (MaterialPreferenceCategory) view.findViewById(R.id.cat_emmc);
+
+        return view;
+    }
+
+    private void setupPlatform(@NonNull final Device device) {
+        addPreference(catPlatform, "platform_version", R.string.version, device.platformVersion)
+                .setOnPreferenceClickListener(this);
+        addPreference(catPlatform, "platform_id", R.string.build_id, device.platformId);
+        addPreference(catPlatform, "platform_type", R.string.type, device.platformType);
+        addPreference(catPlatform, "platform_tags", R.string.tags, device.platformTags);
+        addPreference(catPlatform, "platform_build_date", R.string.build_date, device.platformBuildType);
+        catPlatform.setVisibility(View.VISIBLE);
+    }
+
+    private void setupRuntime(@NonNull final Device device) {
+        addPreference(catRuntime, "vm_library", R.string.type, device.vmLibrary);
+        addPreference(catRuntime, "vm_version", R.string.version, device.vmVersion);
+        catRuntime.setVisibility(View.VISIBLE);
+    }
+
+    private void setupDevice(@NonNull final Device device) {
         // TODO: save / restore / check --> ANDROID ID
-        addPreference(category, "android_id", R.string.android_id, device.androidId);
-        addPreference(category, "device_manufacturer", R.string.manufacturer, device.manufacturer);
-        addPreference(category, "device_device", R.string.device, device.device);
-        addPreference(category, "device_model", R.string.model, device.model);
-        addPreference(category, "device_product", R.string.product, device.product);
-        addPreference(category, "device_board", R.string.board, device.board);
-        addPreference(category, "device_bootloader", R.string.bootloader, device.bootloader);
-        addPreference(category, "device_radio_version", R.string.radio_version, device.radio);
-        addPreference(category, "device_selinux", R.string.selinux, device.isSELinuxEnforcing
+        addPreference(catDevice, "android_id", R.string.android_id, device.androidId);
+        addPreference(catDevice, "device_manufacturer", R.string.manufacturer, device.manufacturer);
+        addPreference(catDevice, "device_device", R.string.device, device.device);
+        addPreference(catDevice, "device_model", R.string.model, device.model);
+        addPreference(catDevice, "device_product", R.string.product, device.product);
+        addPreference(catDevice, "device_board", R.string.board, device.board);
+        addPreference(catDevice, "device_bootloader", R.string.bootloader, device.bootloader);
+        addPreference(catDevice, "device_radio_version", R.string.radio_version, device.radio);
+        addPreference(catDevice, "device_selinux", R.string.selinux, device.isSELinuxEnforcing
                 ? getString(R.string.selinux_enforcing) : getString(R.string.selinux_permissive));
-        category.setVisibility(View.VISIBLE);
+        catDevice.setVisibility(View.VISIBLE);
+    }
 
-        // Memory
+    private void setupMemory() {
         MemoryInfo.feedWithInformation(getActivity(), MemoryInfo.TYPE_MB, new Device.MemoryInfoListener() {
             @Override public void onMemoryInfoAvailable(@NonNull final MemoryInfo memoryInfo) {
-                view.post(new Runnable() {
+                catMemory.post(new Runnable() {
                     @Override public void run() {
-                        MaterialPreferenceCategory category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_memory);
-                        addPreference(category, "memory_total", R.string.total, MemoryInfo.getAsMb(memoryInfo.total));
-                        addPreference(category, "memory_cached", R.string.cached, MemoryInfo.getAsMb(memoryInfo.cached));
-                        addPreference(category, "memory_free", R.string.free, MemoryInfo.getAsMb(memoryInfo.free));
-                        category.setVisibility(View.VISIBLE);
+                        addPreference(catMemory, "memory_total", R.string.total, MemoryInfo.getAsMb(memoryInfo.total));
+                        addPreference(catMemory, "memory_cached", R.string.cached, MemoryInfo.getAsMb(memoryInfo.cached));
+                        addPreference(catMemory, "memory_free", R.string.free, MemoryInfo.getAsMb(memoryInfo.free));
+                        catMemory.setVisibility(View.VISIBLE);
                     }
                 });
             }
         });
+    }
 
-        // Processor
+    private void setupProcessor() {
         ProcessorInfo.feedWithInformation(getActivity(), new Device.ProcessorInfoListener() {
             @Override public void onProcessorInfoAvailable(@NonNull final ProcessorInfo processorInfo) {
-                view.post(new Runnable() {
+                catProcessor.post(new Runnable() {
                     @Override public void run() {
-                        MaterialPreferenceCategory category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_processor);
                         final int bitResId = processorInfo.is64Bit ? R.string.bit_64 : R.string.bit_32;
-                        addPreference(category, "cpu_bit", R.string.arch, getString(bitResId));
+                        addPreference(catProcessor, "cpu_bit", R.string.arch, getString(bitResId));
 
                         final String cpuAbi = getString(R.string.cpu_abi);
                         final List<String> abis = processorInfo.abisAsList();
@@ -123,55 +156,55 @@ public class DeviceGeneralFragment extends MaterialSupportPreferenceFragment imp
                                 abi = String.format("cpu_abi%s", i + 1);
                                 title += String.valueOf(i + 1);
                             }
-                            addPreference(category, abi, title, abis.get(i));
+                            addPreference(catProcessor, abi, title, abis.get(i));
                         }
 
-                        addPreference(category, "cpu_hardware", R.string.hardware, processorInfo.hardware);
-                        addPreference(category, "cpu_processor", R.string.processor, processorInfo.processor);
-                        addPreference(category, "cpu_features", R.string.features, processorInfo.features);
-                        addPreference(category, "cpu_bogomips", R.string.bogomips, processorInfo.bogomips);
-                        category.setVisibility(View.VISIBLE);
+                        addPreference(catProcessor, "cpu_hardware", R.string.hardware, processorInfo.hardware);
+                        addPreference(catProcessor, "cpu_processor", R.string.processor, processorInfo.processor);
+                        addPreference(catProcessor, "cpu_features", R.string.features, processorInfo.features);
+                        addPreference(catProcessor, "cpu_bogomips", R.string.bogomips, processorInfo.bogomips);
+                        catProcessor.setVisibility(View.VISIBLE);
                     }
                 });
             }
         });
+    }
 
-        // Kernel
+    private void setupKernel() {
         KernelInfo.feedWithInformation(getActivity(), new Device.KernelInfoListener() {
             @Override public void onKernelInfoAvailable(@NonNull final KernelInfo kernelInfo) {
-                view.post(new Runnable() {
+                catKernel.post(new Runnable() {
                     @Override public void run() {
-                        MaterialPreferenceCategory category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_kernel);
-                        addPreference(category, "kernel_version", R.string.version,
+                        addPreference(catKernel, "kernel_version", R.string.version,
                                 String.format("%s %s", kernelInfo.version, kernelInfo.revision));
-                        addPreference(category, "kernel_extras", R.string.extras, kernelInfo.extras);
-                        addPreference(category, "kernel_gcc", R.string.toolchain, kernelInfo.toolchain);
-                        addPreference(category, "kernel_date", R.string.build_date, kernelInfo.date);
-                        addPreference(category, "kernel_host", R.string.host, kernelInfo.host);
-                        category.setVisibility(View.VISIBLE);
+                        addPreference(catKernel, "kernel_extras", R.string.extras, kernelInfo.extras);
+                        addPreference(catKernel, "kernel_gcc", R.string.toolchain, kernelInfo.toolchain);
+                        addPreference(catKernel, "kernel_date", R.string.build_date, kernelInfo.date);
+                        addPreference(catKernel, "kernel_host", R.string.host, kernelInfo.host);
+                        catKernel.setVisibility(View.VISIBLE);
                     }
                 });
             }
         });
+    }
 
-        // eMMC
+    private void setupEmmc() {
         EmmcInfo.feedWithInformation(getActivity(), new Device.EmmcInfoListener() {
             @Override public void onEmmcInfoAvailable(@NonNull final EmmcInfo emmcInfo) {
-                view.post(new Runnable() {
+                catEmmc.post(new Runnable() {
                     @Override public void run() {
-                        MaterialPreferenceCategory category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_emmc);
-                        addPreference(category, "emmc_name", R.string.name, emmcInfo.name);
-                        addPreference(category, "emmc_cid", R.string.emmc_cid, emmcInfo.cid);
-                        addPreference(category, "emmc_mid", R.string.emmc_mid, emmcInfo.mid);
-                        addPreference(category, "emmc_rev", R.string.emmc_rev, emmcInfo.rev);
-                        addPreference(category, "emmc_date", R.string.emmc_date, emmcInfo.date);
+                        addPreference(catEmmc, "emmc_name", R.string.name, emmcInfo.name);
+                        addPreference(catEmmc, "emmc_cid", R.string.emmc_cid, emmcInfo.cid);
+                        addPreference(catEmmc, "emmc_mid", R.string.emmc_mid, emmcInfo.mid);
+                        addPreference(catEmmc, "emmc_rev", R.string.emmc_rev, emmcInfo.rev);
+                        addPreference(catEmmc, "emmc_date", R.string.emmc_date, emmcInfo.date);
 
                         String tmp = emmcInfo.canBrick()
                                 ? getString(R.string.emmc_can_brick_true) : getString(R.string.emmc_can_brick_false);
                         tmp = String.format("%s\n%s", tmp, getString(R.string.press_learn_more));
-                        addPreference(category, "emmc_can_brick", R.string.emmc_can_brick, tmp)
+                        addPreference(catEmmc, "emmc_can_brick", R.string.emmc_can_brick, tmp)
                                 .setOnPreferenceClickListener(DeviceGeneralFragment.this);
-                        category.setVisibility(View.VISIBLE);
+                        catEmmc.setVisibility(View.VISIBLE);
                     }
                 });
             }

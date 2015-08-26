@@ -16,6 +16,6 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <integer name="animation_time">400</integer>
-    <integer name="animation_time_half">200</integer>
+    <integer name="animation_time">300</integer>
+    <integer name="animation_time_half">150</integer>
 </resources>
