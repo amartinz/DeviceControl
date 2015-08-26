@@ -25,9 +25,10 @@ import android.widget.Button;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.base.BaseFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
-public class CommunityFragment extends Fragment {
+public class CommunityFragment extends BaseFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_community, container, false);
 

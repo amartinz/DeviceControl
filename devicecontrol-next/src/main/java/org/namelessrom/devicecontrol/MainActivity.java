@@ -19,62 +19,31 @@ package org.namelessrom.devicecontrol;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.annotation.MenuRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.pollfish.constants.Position;
-import com.pollfish.main.PollFish;
-
 import org.namelessrom.devicecontrol.base.BaseActivity;
-import org.namelessrom.devicecontrol.base.BaseFragment;
 import org.namelessrom.devicecontrol.modules.home.DonationActivity;
 import org.namelessrom.devicecontrol.modules.home.HomeFragment;
 import org.namelessrom.devicecontrol.modules.info.DeviceFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.wizard.WizardCallbacks;
 import org.namelessrom.devicecontrol.wizard.firstlaunch.FirstLaunchWizard;
-import org.namelessrom.proprietary.Configuration;
-
-import alexander.martinz.libs.logger.Logger;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private Toolbar mToolbar;
 
-    private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
-
     private Runnable mDrawerRunnable;
-    // work around the support library bug
-    private MenuItem mPreviousMenuItem;
-
-    private BaseFragment mCurrentFragment;
 
     private FirstLaunchWizard mFirstLaunchWizard;
-
-    @Override protected void onResume() {
-        super.onResume();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.pref_show_pollfish), true)) {
-            final String pfApiKey = Configuration.getPollfishApiKeyDc();
-            if (!TextUtils.equals("---", pfApiKey)) {
-                Logger.v(this, "PollFish.init()");
-                PollFish.init(this, pfApiKey, Position.BOTTOM_RIGHT, 30);
-            }
-        }
-    }
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,8 +77,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        setupDrawerItems();
-
         if (FirstLaunchWizard.isFirstLaunch(this)) {
             mFirstLaunchWizard = FirstLaunchWizard.create(mWizardCallbacks);
             replaceFragment(mFirstLaunchWizard, null);
@@ -120,8 +87,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void setup() {
         // TODO: root checks, etc
+        setupDrawerItems();
         unlockMenu();
-        replaceFragment(new HomeFragment(), -1, null);
+        replaceFragment(new HomeFragment(), R.id.nav_item_home, null);
     }
 
     @Override public void onBackPressed() {
@@ -159,7 +127,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mDrawerLayout.closeDrawer(GravityCompat.START);
 
-        // give the drawer 200ms to close
+        // start action once drawer is closed
         mDrawerRunnable = new Runnable() {
             @Override public void run() {
                 boolean shouldCheck = true;
@@ -218,51 +186,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (mPreviousMenuItem != null) {
             mPreviousMenuItem.setChecked(true);
         }
-    }
-
-    @Nullable private MenuItem findMenuItem(final int menuId) {
-        if (mNavigationView == null || mNavigationView.getMenu() == null) {
-            return null;
-        }
-        return mNavigationView.getMenu().findItem(menuId);
-    }
-
-    /** Searches and checks the {@link MenuItem} if found **/
-    public void checkMenuItem(final int menuId) {
-        final MenuItem menuItem = findMenuItem(menuId);
-        if (menuItem != null) {
-            checkMenuItem(menuItem);
-        }
-    }
-
-    private void checkMenuItem(@NonNull final MenuItem menuItem) {
-        // to work around a bug in the design library we need to store the menu item and
-        // uncheck it manually everytime we check a new item
-        if (mPreviousMenuItem != null) {
-            mPreviousMenuItem.setChecked(false);
-        }
-        menuItem.setChecked(true);
-        mPreviousMenuItem = menuItem;
-
-        mNavigationView.invalidate();
-    }
-
-    @Override public void replaceFragment(BaseFragment fragment, String backStackTag) {
-        replaceFragment(fragment, -1, backStackTag);
-    }
-
-    public void replaceFragment(BaseFragment fragment, @MenuRes int menuId, String backStackTag) {
-        if (menuId != -1) {
-            checkMenuItem(menuId);
-        }
-
-        mCurrentFragment = fragment;
-        final FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-        trans.replace(R.id.fragment_container, mCurrentFragment);
-        if (backStackTag != null) {
-            trans.addToBackStack(backStackTag);
-        }
-        trans.commit();
     }
 
     public void unlockMenu() {

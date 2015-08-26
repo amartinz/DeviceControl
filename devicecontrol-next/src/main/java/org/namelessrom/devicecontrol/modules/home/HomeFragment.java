@@ -26,6 +26,10 @@ import java.util.ArrayList;
 
 public class HomeFragment extends BaseViewPagerFragment {
 
+    @Override protected int getMenuItemId() {
+        return R.id.nav_item_home;
+    }
+
     @Override public ViewPagerAdapter getPagerAdapter() {
         final ArrayList<Fragment> fragments = new ArrayList<>(2);
         final ArrayList<CharSequence> titles = new ArrayList<>(2);

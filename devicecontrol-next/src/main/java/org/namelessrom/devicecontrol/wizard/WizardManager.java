@@ -230,4 +230,5 @@ public class WizardManager<T> extends BaseFragment {
             mActivity = null;
         }
     };
+
 }

@@ -17,8 +17,12 @@
 
 package org.namelessrom.devicecontrol.base;
 
+import android.app.Activity;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
+
+import org.namelessrom.devicecontrol.MainActivity;
 
 public abstract class BaseFragment extends Fragment {
     public static boolean sDisableFragmentAnimations;
@@ -40,6 +44,41 @@ public abstract class BaseFragment extends Fragment {
             return a;
         }
         return super.onCreateAnimation(transit, enter, nextAnim);
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+
+        final BaseActivity activity = getBaseActivity();
+        if (activity != null) {
+            activity.setCurrentFragment(this);
+        }
+
+        // recheck menu item in drawer if id != -1
+        checkMenuItem();
+    }
+
+
+    @Nullable public final BaseActivity getBaseActivity() {
+        final Activity activity = getActivity();
+        if (activity instanceof BaseActivity) {
+            return (BaseActivity) activity;
+        }
+        return null;
+    }
+
+    private void checkMenuItem() {
+        final int menuItemId = getMenuItemId();
+        if (menuItemId != -1) {
+            final BaseActivity activity = getBaseActivity();
+            if (activity != null) {
+                activity.checkMenuItem(menuItemId);
+            }
+        }
+    }
+
+    protected int getMenuItemId() {
+        return -1;
     }
 
 }

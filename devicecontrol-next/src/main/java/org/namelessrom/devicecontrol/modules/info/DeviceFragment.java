@@ -27,6 +27,10 @@ import java.util.ArrayList;
 import alexander.martinz.libs.hardware.opengl.OpenGlInformation;
 
 public class DeviceFragment extends BaseViewPagerFragment {
+    @Override protected int getMenuItemId() {
+        return R.id.nav_item_info_device;
+    }
+
     @Override public ViewPagerAdapter getPagerAdapter() {
         final ArrayList<Fragment> fragments = new ArrayList<>(3);
         final ArrayList<CharSequence> titles = new ArrayList<>(3);
