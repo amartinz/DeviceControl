@@ -23,7 +23,6 @@ import android.text.TextUtils;
 import android.view.View;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -60,17 +59,17 @@ public class InfoGpuFragment extends MaterialSupportPreferenceFragment {
 
         GpuReader.getGpuInformation(getActivity(), new GpuInformationListener() {
             @Override public void onGpuInformation(@NonNull GpuInformation gpuInformation) {
-                final String freqAvail = Utils.listAsString(gpuInformation.freqAvailable);
-                if (!TextUtils.isEmpty(freqAvail)) {
-                    addPreference(gpuCategory, getString(R.string.frequency_available), freqAvail);
+                if (gpuInformation.freqAvailable != null && !gpuInformation.freqAvailable.isEmpty()) {
+                    addPreference(gpuCategory, getString(R.string.frequency_available),
+                            GpuInformation.listFrequenciesFormatted(gpuInformation.freqAvailable));
                 }
 
                 addPreference(gpuCategory, getString(R.string.frequency_max),
-                        gpuInformation.freqAsMhzReadable(gpuInformation.freqMax));
+                        gpuInformation.freqAsMhz(gpuInformation.freqMax));
                 addPreference(gpuCategory, getString(R.string.frequency_min),
-                        gpuInformation.freqAsMhzReadable(gpuInformation.freqMin));
+                        gpuInformation.freqAsMhz(gpuInformation.freqMin));
                 addPreference(gpuCategory, getString(R.string.frequency_current),
-                        gpuInformation.freqAsMhzReadable(gpuInformation.freqCur));
+                        gpuInformation.freqAsMhz(gpuInformation.freqCur));
             }
         });
     }
