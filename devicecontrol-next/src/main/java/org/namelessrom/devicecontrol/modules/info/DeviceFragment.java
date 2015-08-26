@@ -32,11 +32,14 @@ public class DeviceFragment extends BaseViewPagerFragment {
     }
 
     @Override public ViewPagerAdapter getPagerAdapter() {
-        final ArrayList<Fragment> fragments = new ArrayList<>(3);
-        final ArrayList<CharSequence> titles = new ArrayList<>(3);
+        final ArrayList<Fragment> fragments = new ArrayList<>(4);
+        final ArrayList<CharSequence> titles = new ArrayList<>(4);
 
         fragments.add(new DeviceGeneralFragment());
         titles.add(getString(R.string.general));
+
+        fragments.add(new DeviceCpuFragment());
+        titles.add(getString(R.string.cpu));
 
         if (OpenGlInformation.isOpenGLES20Supported(getActivity())) {
             fragments.add(new DeviceGpuFragment());

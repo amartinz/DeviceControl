@@ -21,9 +21,6 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-/**
- * Created by alex on 25.08.15.
- */
 public class Utils {
     @NonNull public static String listAsString(@NonNull List list) {
         if (list.isEmpty()) {

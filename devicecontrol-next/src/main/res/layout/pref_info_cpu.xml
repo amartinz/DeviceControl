@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (C) 2013 - 2015 Alexander Martinz
   ~
@@ -15,26 +16,21 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- Opens the sensor test screen on press -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreference
-        android:id="@+id/sensor_test"
-        style="@style/MaterialPreferences.Default"
-        app:prefKey="sensor_test"
-        app:prefSummary="@string/sensor_information_summary"
-        app:prefTitle="@string/sensor_information" />
-
-    <!-- Lists sensors, entries dynamically added -->
     <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
-        android:id="@+id/cat_sensors"
+        android:id="@+id/cat_processor"
         style="@style/MaterialPreferences.Default"
-        app:prefKey="sensors"
-        app:prefTitle="@string/sensors" />
+        app:prefTitle="@string/processor" />
+
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_cpu"
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/cpu" />
 
 </LinearLayout>
+

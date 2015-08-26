@@ -42,6 +42,7 @@
     <string name="emmc_mid" translatable="false">MID</string>
 
     <!-- GPU / OpenGL -->
+    <string name="cpu" translatable="false">CPU</string>
     <string name="gpu" translatable="false">GPU</string>
     <string name="opengl" translatable="false">OpenGL</string>
 

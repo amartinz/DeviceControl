@@ -17,7 +17,6 @@
 package org.namelessrom.devicecontrol.modules.info;
 
 import android.content.Context;
-import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -37,7 +36,7 @@ import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragm
 public class DeviceSensorFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
 
     @Override protected int getLayoutResourceId() {
-        return R.layout.pref_info_device_sensors;
+        return R.layout.pref_info_sensors;
     }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {

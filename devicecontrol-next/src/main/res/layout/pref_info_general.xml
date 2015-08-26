@@ -29,7 +29,6 @@
         android:id="@+id/cat_platform"
         style="@style/MaterialPreferences.Default"
         android:visibility="gone"
-        app:prefKey="platform"
         app:prefTitle="@string/platform_information" />
 
     <!-- Runtime -->
@@ -37,7 +36,6 @@
         android:id="@+id/cat_runtime"
         style="@style/MaterialPreferences.Default"
         android:visibility="gone"
-        app:prefKey="runtime"
         app:prefTitle="@string/runtime" />
 
     <!-- Device information -->
@@ -45,7 +43,6 @@
         android:id="@+id/cat_device_information"
         style="@style/MaterialPreferences.Default"
         android:visibility="gone"
-        app:prefKey="device_information"
         app:prefTitle="@string/device_information" />
 
     <!-- Memory -->
@@ -53,23 +50,13 @@
         android:id="@+id/cat_memory"
         style="@style/MaterialPreferences.Default"
         android:visibility="gone"
-        app:prefKey="memory"
         app:prefTitle="@string/memory" />
-
-    <!-- Processor -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
-        android:id="@+id/cat_processor"
-        style="@style/MaterialPreferences.Default"
-        android:visibility="gone"
-        app:prefKey="processor"
-        app:prefTitle="@string/processor" />
 
     <!-- Kernel -->
     <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
         android:id="@+id/cat_kernel"
         style="@style/MaterialPreferences.Default"
         android:visibility="gone"
-        app:prefKey="kernel"
         app:prefTitle="@string/kernel" />
 
     <!-- eMMC -->
@@ -77,7 +64,6 @@
         android:id="@+id/cat_emmc"
         style="@style/MaterialPreferences.Default"
         android:visibility="gone"
-        app:prefKey="emmc"
         app:prefTitle="@string/emmc" />
 
 </LinearLayout>

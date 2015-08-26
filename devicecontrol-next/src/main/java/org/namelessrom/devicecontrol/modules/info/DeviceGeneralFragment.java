@@ -28,8 +28,6 @@ import android.view.ViewGroup;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
-import java.util.List;
-
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.execution.ShellManager;
@@ -37,7 +35,6 @@ import alexander.martinz.libs.hardware.device.Device;
 import alexander.martinz.libs.hardware.device.EmmcInfo;
 import alexander.martinz.libs.hardware.device.KernelInfo;
 import alexander.martinz.libs.hardware.device.MemoryInfo;
-import alexander.martinz.libs.hardware.device.ProcessorInfo;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
@@ -50,13 +47,12 @@ public class DeviceGeneralFragment extends MaterialSupportPreferenceFragment imp
     private MaterialPreferenceCategory catRuntime;
     private MaterialPreferenceCategory catDevice;
     private MaterialPreferenceCategory catMemory;
-    private MaterialPreferenceCategory catProcessor;
     private MaterialPreferenceCategory catKernel;
     private MaterialPreferenceCategory catEmmc;
 
 
     @Override protected int getLayoutResourceId() {
-        return R.layout.pref_info_device_general;
+        return R.layout.pref_info_general;
     }
 
     public DeviceGeneralFragment() { }
@@ -72,7 +68,6 @@ public class DeviceGeneralFragment extends MaterialSupportPreferenceFragment imp
         setupDevice(device);
 
         setupMemory();
-        setupProcessor();
         setupKernel();
         setupEmmc();
     }
@@ -85,7 +80,6 @@ public class DeviceGeneralFragment extends MaterialSupportPreferenceFragment imp
         catDevice = (MaterialPreferenceCategory) view.findViewById(R.id.cat_device_information);
 
         catMemory = (MaterialPreferenceCategory) view.findViewById(R.id.cat_memory);
-        catProcessor = (MaterialPreferenceCategory) view.findViewById(R.id.cat_processor);
         catKernel = (MaterialPreferenceCategory) view.findViewById(R.id.cat_kernel);
         catEmmc = (MaterialPreferenceCategory) view.findViewById(R.id.cat_emmc);
 
@@ -132,38 +126,6 @@ public class DeviceGeneralFragment extends MaterialSupportPreferenceFragment imp
                         addPreference(catMemory, "memory_cached", R.string.cached, MemoryInfo.getAsMb(memoryInfo.cached));
                         addPreference(catMemory, "memory_free", R.string.free, MemoryInfo.getAsMb(memoryInfo.free));
                         catMemory.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-        });
-    }
-
-    private void setupProcessor() {
-        ProcessorInfo.feedWithInformation(getActivity(), new Device.ProcessorInfoListener() {
-            @Override public void onProcessorInfoAvailable(@NonNull final ProcessorInfo processorInfo) {
-                catProcessor.post(new Runnable() {
-                    @Override public void run() {
-                        final int bitResId = processorInfo.is64Bit ? R.string.bit_64 : R.string.bit_32;
-                        addPreference(catProcessor, "cpu_bit", R.string.arch, getString(bitResId));
-
-                        final String cpuAbi = getString(R.string.cpu_abi);
-                        final List<String> abis = processorInfo.abisAsList();
-                        final int length = abis.size();
-                        for (int i = 0; i < length; i++) {
-                            String abi = "cpu_abi";
-                            String title = cpuAbi;
-                            if (i != 0) {
-                                abi = String.format("cpu_abi%s", i + 1);
-                                title += String.valueOf(i + 1);
-                            }
-                            addPreference(catProcessor, abi, title, abis.get(i));
-                        }
-
-                        addPreference(catProcessor, "cpu_hardware", R.string.hardware, processorInfo.hardware);
-                        addPreference(catProcessor, "cpu_processor", R.string.processor, processorInfo.processor);
-                        addPreference(catProcessor, "cpu_features", R.string.features, processorInfo.features);
-                        addPreference(catProcessor, "cpu_bogomips", R.string.bogomips, processorInfo.bogomips);
-                        catProcessor.setVisibility(View.VISIBLE);
                     }
                 });
             }

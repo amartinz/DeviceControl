@@ -31,6 +31,10 @@
     <string name="join_beta_test">Join BETA</string>
     <string name="view_community">View community</string>
 
+    <!-- cpu -->
+    <string name="clock_speed">Clock speed</string>
+    <string name="cores">Cores</string>
+
     <!-- device -->
     <string name="device">Device</string>
     <string name="device_information">Device information</string>
