@@ -27,6 +27,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.f2prateek.rx.preferences.RxSharedPreferences;
 
+import org.acra.ACRA;
+import org.acra.annotation.ReportsCrashes;
 import org.namelessrom.devicecontrol.execution.ShellWriter;
 
 import java.io.File;
@@ -34,6 +36,13 @@ import java.io.File;
 import alexander.martinz.libs.logger.Logger;
 import rx.functions.Action1;
 
+@ReportsCrashes(
+        reportType = org.acra.sender.HttpSender.Type.JSON,
+        httpMethod = org.acra.sender.HttpSender.Method.PUT,
+        formUri = "https://reports.nameless-rom.org/report",
+        formUriBasicAuthLogin = "device_control_reporter",
+        formUriBasicAuthPassword = "as91amc892mca10AFaji2c08F"
+)
 public class Application extends android.app.Application {
     private static final String TAG = Application.class.getSimpleName();
 
@@ -52,6 +61,10 @@ public class Application extends android.app.Application {
 
     @Override public void onCreate() {
         super.onCreate();
+
+        // initialize crash reporting
+        ACRA.init(this);
+
         // enable until we hit the preference
         Logger.setEnabled(true);
 

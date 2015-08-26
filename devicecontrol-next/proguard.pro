@@ -16,6 +16,10 @@
 # "project.properties" file to get the path to the default "proguard-android-optimize.txt".
 -keepattributes *Annotation*
 
+# Restore some source file names and restore approximate line numbers in the stack traces,
+# otherwise the stack traces are pretty useless
+-keepattributes SourceFile,LineNumberTable
+
 # For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
 -keepclasseswithmembernames class * {
     native <methods>;
@@ -55,10 +59,6 @@
 -dontnote com.android.internal.annotations.**
 -dontnote com.google.common.annotations.**
 
-# Restore some source file names and restore approximate line numbers in the stack traces,
-# otherwise the stack traces are pretty useless
--keepattributes SourceFile,LineNumberTable
-
 # Google Play Services
 -keep class * extends java.util.ListResourceBundle {
     protected Object[][] getContents();
@@ -76,6 +76,9 @@
 -keepnames class * implements android.os.Parcelable {
     public static final ** CREATOR;
 }
+
+# ACRA
+-keep class org.acra.** { *; }
 
 # RxAndroid
 -dontwarn rx.internal.util.**
