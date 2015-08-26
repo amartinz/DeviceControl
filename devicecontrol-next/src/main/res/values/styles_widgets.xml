@@ -16,20 +16,8 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <color name="primary">#D32F2F</color>
-    <color name="primary_dark">#B71C1C</color>
-    <color name="primary_light">#EF9A9A</color>
 
-    <color name="accent">#448AFF</color>
-    <color name="accent_dark">#2962FF</color>
-
-    <color name="drawer_icon">#FFFFFF</color>
-    <color name="drawer_text">#FFFFFF</color>
-
-    <color name="text_normal">#FFFFFF</color>
-
-    <color name="tab_color_normal">#b3ffffff</color>
-    <color name="tab_color_selected">#ffffff</color>
-
-    <color name="grey_800">#424242</color>
+    <style name="AppTheme.Button.AccentDark" parent="Base.Widget.AppCompat.Button">
+        <item name="colorButtonNormal">@color/accent_dark</item>
+    </style>
 </resources>

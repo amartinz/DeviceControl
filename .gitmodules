@@ -10,3 +10,6 @@
 [submodule "modules/ExecutionLibrary"]
 	path = modules/ExecutionLibrary
 	url = https://github.com/Evisceration/ExecutionLibrary.git
+[submodule "modules/volley"]
+	path = modules/volley
+	url = https://android.googlesource.com/platform/frameworks/volley

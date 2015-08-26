@@ -18,8 +18,13 @@
 package org.namelessrom.devicecontrol;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
+import android.support.v4.util.LruCache;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
 import com.f2prateek.rx.preferences.RxSharedPreferences;
 
 import org.namelessrom.devicecontrol.execution.ShellWriter;
@@ -34,8 +39,15 @@ public class Application extends android.app.Application {
 
     private CustomTabsHelper mCustomTabsHelper;
 
+    private RequestQueue mRequestQueue;
+    private ImageLoader mImageLoader;
+
     public CustomTabsHelper getCustomTabsHelper() {
         return mCustomTabsHelper;
+    }
+
+    public ImageLoader getImageLoader() {
+        return mImageLoader;
     }
 
     @Override public void onCreate() {
@@ -57,6 +69,20 @@ public class Application extends android.app.Application {
                         }
                     }
                 });
+
+        // set up request queue for volley
+        mRequestQueue = Volley.newRequestQueue(this);
+        mImageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {
+            private final LruCache<String, Bitmap> cache = new LruCache<>(20);
+
+            @Override public Bitmap getBitmap(String url) {
+                return cache.get(url);
+            }
+
+            @Override public void putBitmap(String url, Bitmap bitmap) {
+                cache.put(url, bitmap);
+            }
+        });
 
         mCustomTabsHelper = new CustomTabsHelper(getApplicationContext());
     }

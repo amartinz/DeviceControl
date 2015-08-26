@@ -17,6 +17,12 @@
 <resources>
     <string name="app_name_device_control" translatable="false">Device Control [Next]</string>
 
+    <!-- about -->
+    <string name="about_contact">Wiesenweg 2\n9400 Wolfsberg\nAustria</string>
+    <string name="about_contact_email">%s: eviscerationls@gmail.com</string>
+    <string name="about_contact_name">Alexander Martinz</string>
+    <string name="about_contact_phone">%s: +43 680 3055943</string>
+
     <!-- fonts -->
     <string name="font_bold">sans-serif-bold</string>
     <string name="font_regular">sans-serif</string>

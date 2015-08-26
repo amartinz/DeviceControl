@@ -58,7 +58,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_item_more_about"
-            android:checkable="false"
+            android:checkable="true"
             android:title="@string/drawer_title_more_about" />
         <item
             android:id="@+id/nav_item_more_privacy"

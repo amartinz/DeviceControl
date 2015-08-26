@@ -34,6 +34,7 @@ import org.namelessrom.devicecontrol.base.BaseActivity;
 import org.namelessrom.devicecontrol.modules.home.DonationActivity;
 import org.namelessrom.devicecontrol.modules.home.HomeFragment;
 import org.namelessrom.devicecontrol.modules.info.InfoFragment;
+import org.namelessrom.devicecontrol.modules.more.AboutFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.wizard.WizardCallbacks;
 import org.namelessrom.devicecontrol.wizard.firstlaunch.FirstLaunchWizard;
@@ -157,10 +158,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     }
                     //==============================================================================
                     case R.id.nav_item_more_about: {
-                        // TODO: add real about screen
-                        final Intent intent = new Intent(MainActivity.this, DonationActivity.class);
-                        startActivity(intent);
-                        shouldCheck = false;
+                        if (!(mCurrentFragment instanceof AboutFragment)) {
+                            replaceFragment(new AboutFragment(), "");
+                        }
                         break;
                     }
                     case R.id.nav_item_more_privacy: {
