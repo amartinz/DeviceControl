@@ -41,7 +41,7 @@ import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 
-public class DeviceCpuFragment extends MaterialSupportPreferenceFragment {
+public class InfoCpuFragment extends MaterialSupportPreferenceFragment {
     private MaterialPreferenceCategory catProcessor;
     private MaterialPreferenceCategory catCpu;
 

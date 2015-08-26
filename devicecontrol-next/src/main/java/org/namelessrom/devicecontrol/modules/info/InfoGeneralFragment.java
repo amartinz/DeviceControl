@@ -39,7 +39,7 @@ import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 
-public class DeviceGeneralFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
+public class InfoGeneralFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
     private long[] mHits = new long[3];
     private boolean mEasterEggStarted = false;
 
@@ -50,26 +50,15 @@ public class DeviceGeneralFragment extends MaterialSupportPreferenceFragment imp
     private MaterialPreferenceCategory catKernel;
     private MaterialPreferenceCategory catEmmc;
 
-
     @Override protected int getLayoutResourceId() {
         return R.layout.pref_info_general;
     }
 
-    public DeviceGeneralFragment() { }
+    public InfoGeneralFragment() { }
 
     @Override public void onResume() {
         super.onResume();
         mEasterEggStarted = false;
-
-        final Device device = Device.get(getActivity());
-
-        setupPlatform(device);
-        setupRuntime(device);
-        setupDevice(device);
-
-        setupMemory();
-        setupKernel();
-        setupEmmc();
     }
 
     @Override @NonNull public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,6 +73,19 @@ public class DeviceGeneralFragment extends MaterialSupportPreferenceFragment imp
         catEmmc = (MaterialPreferenceCategory) view.findViewById(R.id.cat_emmc);
 
         return view;
+    }
+
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        final Device device = Device.get(getActivity());
+
+        setupPlatform(device);
+        setupRuntime(device);
+        setupDevice(device);
+
+        setupMemory();
+        setupKernel();
+        setupEmmc();
     }
 
     private void setupPlatform(@NonNull final Device device) {
@@ -165,7 +167,7 @@ public class DeviceGeneralFragment extends MaterialSupportPreferenceFragment imp
                                 ? getString(R.string.emmc_can_brick_true) : getString(R.string.emmc_can_brick_false);
                         tmp = String.format("%s\n%s", tmp, getString(R.string.press_learn_more));
                         addPreference(catEmmc, "emmc_can_brick", R.string.emmc_can_brick, tmp)
-                                .setOnPreferenceClickListener(DeviceGeneralFragment.this);
+                                .setOnPreferenceClickListener(InfoGeneralFragment.this);
                         catEmmc.setVisibility(View.VISIBLE);
                     }
                 });

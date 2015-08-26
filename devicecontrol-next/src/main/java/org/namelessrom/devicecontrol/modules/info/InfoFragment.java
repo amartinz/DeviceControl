@@ -26,27 +26,29 @@ import java.util.ArrayList;
 
 import alexander.martinz.libs.hardware.opengl.OpenGlInformation;
 
-public class DeviceFragment extends BaseViewPagerFragment {
+public class InfoFragment extends BaseViewPagerFragment {
+    private static final int EXPECTED_FRAGMENT_COUNT = 4;
+
     @Override protected int getMenuItemId() {
         return R.id.nav_item_info_device;
     }
 
     @Override public ViewPagerAdapter getPagerAdapter() {
-        final ArrayList<Fragment> fragments = new ArrayList<>(4);
-        final ArrayList<CharSequence> titles = new ArrayList<>(4);
+        final ArrayList<Fragment> fragments = new ArrayList<>(EXPECTED_FRAGMENT_COUNT);
+        final ArrayList<CharSequence> titles = new ArrayList<>(EXPECTED_FRAGMENT_COUNT);
 
-        fragments.add(new DeviceGeneralFragment());
+        fragments.add(new InfoGeneralFragment());
         titles.add(getString(R.string.general));
 
-        fragments.add(new DeviceCpuFragment());
+        fragments.add(new InfoCpuFragment());
         titles.add(getString(R.string.cpu));
 
         if (OpenGlInformation.isOpenGLES20Supported(getActivity())) {
-            fragments.add(new DeviceGpuFragment());
+            fragments.add(new InfoGpuFragment());
             titles.add(getString(R.string.gpu));
         }
 
-        fragments.add(new DeviceSensorFragment());
+        fragments.add(new InfoSensorFragment());
         titles.add(getString(R.string.sensors));
 
         return new ViewPagerAdapter(getChildFragmentManager(), fragments, titles);
