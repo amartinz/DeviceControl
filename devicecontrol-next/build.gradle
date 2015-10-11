@@ -20,7 +20,7 @@ apply plugin: 'com.jakewharton.hugo'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.0"
+    buildToolsVersion "23.0.1"
 
     signingConfigs {
         release {
@@ -101,10 +101,10 @@ dependencies {
     // see https://github.com/ACRA/acra
     compile 'ch.acra:acra:4.6.2'
 
-    compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'com.android.support:cardview-v7:23.0.0'
-    compile 'com.android.support:customtabs:23.0.0'
-    compile 'com.android.support:design:23.0.0'
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:cardview-v7:23.0.1'
+    compile 'com.android.support:customtabs:23.0.1'
+    compile 'com.android.support:design:23.0.1'
 
     // see https://github.com/Evisceration/logger
     compile project(':modules:logger:library')
@@ -126,11 +126,16 @@ dependencies {
 
     // see https://www.pollfish.com/android
     compile 'com.pollfish:pollfish:4.1.0:googleplayRelease@aar'
-    compile 'com.google.android.gms:play-services-ads:7.8.0'
+    compile 'com.google.android.gms:play-services-ads:8.1.0'
 
     // see https://github.com/ReactiveX/RxAndroid
     compile 'io.reactivex:rxandroid:1.0.1'
+    // see https://github.com/ReactiveX/RxJava
+    compile 'io.reactivex:rxjava:1.0.14'
 
     // see https://github.com/f2prateek/rx-preferences
     compile 'com.f2prateek.rx.preferences:rx-preferences:1.0.0'
+
+    // see https://github.com/Kennyc1012/BottomSheet
+    //compile 'com.github.Kennyc1012:BottomSheet:2.0.1'
 }
