@@ -28,9 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
-import com.squareup.leakcanary.RefWatcher;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
@@ -72,7 +70,7 @@ public class CpuStateView extends LinearLayout implements CpuUtils.StateListener
     }
 
     public void onDestroy() {
-        Application.installRefWatcher(this);
+        // nothing to be done yet
     }
 
     private void createViews(final Context context) {

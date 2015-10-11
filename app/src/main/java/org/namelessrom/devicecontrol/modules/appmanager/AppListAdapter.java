@@ -176,10 +176,8 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         }
 
         @Override public boolean onLongClick(View v) {
-            final BottomSheet.Builder builder = new BottomSheet.Builder(mActivity);
-            builder.setTitle(appItem.getLabel())
-                    .setListener(appBottomSheetListener)
-                    .setMenuItemTintColor(AppResources.get().getAccentColor());
+            final BottomSheet.Builder builder = new BottomSheet.Builder(mActivity, R.style.AppManagerBottomSheetStyle);
+            builder.setTitle(appItem.getLabel()).setListener(appBottomSheetListener);
 
             final Menu menu = MenuHelper.inflateMenu(mActivity, R.menu.sheet_app_item);
             if (appItem.isEnabled()) {
@@ -243,7 +241,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                 }
             }
 
-            @Override public void onSheetDismissed() { }
+            @Override public void onSheetDismissed(int a) { }
         };
     }
 

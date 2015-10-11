@@ -88,9 +88,6 @@
 # android support design
 -keepclassmembers class android.support.design.widget.FloatingActionButton$Behavior { public <init>(); }
 
-# pollfish
--keep class com.pollfish.** { *; }
-
 # mpchartlib
 -keep public class com.github.mikephil.charting.animation.* {
     public protected *;
@@ -104,3 +101,9 @@
 -dontwarn de.javakaffee.kryoserializers.**
 -keep class org.objenesis.** { *; }
 -dontwarn org.objenesis.**
+
+# pollfish
+-keep class com.pollfish.** { *; }
+
+# my stuff
+-keep class alexander.martinz.libs.** { *; }

@@ -23,11 +23,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -49,21 +45,12 @@ public class Application extends android.app.Application {
 
     private BitmapLruCache mCache;
 
-    private RefWatcher mRefWatcher;
-
     public static Application get() {
         return Application.sInstance;
     }
 
     public static Application getApplication(Context context) {
         return (Application) context.getApplicationContext();
-    }
-
-    public static Application installRefWatcher(@NonNull Object watchedReference) {
-        if (sInstance.mRefWatcher != null) {
-            sInstance.mRefWatcher.watch(watchedReference);
-        }
-        return sInstance;
     }
 
     @Override public void onLowMemory() {
@@ -75,9 +62,6 @@ public class Application extends android.app.Application {
 
     @Override public void onCreate() {
         super.onCreate();
-        if (BuildConfig.USE_LEAK_CANARY) {
-            mRefWatcher = LeakCanary.install(this);
-        }
 
         // force enable logger until we hit the user preference
         Logger.setEnabled(true);

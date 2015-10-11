@@ -157,9 +157,9 @@
         <item name="android:textColor">?colorAccent</item>
     </style>
 
-    <style name="MyBottomSheetStyle" parent="@style/BottomSheet">
+    <style name="AppManagerBottomSheetStyle" parent="@style/BottomSheet">
         <!-- Tints the menu item icon to the specified color -->
-        <item name="bottom_sheet_item_icon_color">@color/palette_orange</item>
+        <item name="bottom_sheet_item_icon_color">?colorAccent</item>
     </style>
 
 </resources>

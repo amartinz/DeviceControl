@@ -21,9 +21,6 @@ import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.View;
 
-import com.squareup.leakcanary.RefWatcher;
-
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.activities.FilePickerActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
@@ -54,7 +51,7 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
     private ShellOutput.OnShellOutputListener mShellOutputListener =
             new ShellOutput.OnShellOutputListener() {
                 @Override public void onShellOutput(final ShellOutput shellOutput) {
-                    if (shellOutput == null) return;
+                    if (shellOutput == null) { return; }
                     switch (shellOutput.id) {
                         case ID_GET_FILES:
                             final String[] output = shellOutput.output.split("\n");
@@ -63,7 +60,7 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
                                 fileList.add(new File(currentPath + File.separator + "../"));
                             }
                             for (final String s : output) {
-                                if (s.isEmpty()) continue;
+                                if (s.isEmpty()) { continue; }
                                 fileList.add(new File(currentPath + File.separator + s));
                             }
                             mFileAdapter.setFiles(fileList);
@@ -110,7 +107,7 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
     }
 
     @Override public void onFlashItemPicked(final FlashItem item) {
-        if (!ContentTypes.isFiletypeMatching(item.getName(), fileType)) return;
+        if (!ContentTypes.isFiletypeMatching(item.getName(), fileType)) { return; }
 
         Logger.v(this, String.format("filePicked(%s)", item.getPath()));
         if (getActivity() instanceof FilePickerActivity) {
@@ -127,11 +124,6 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
             return true;
         }
         return false;
-    }
-
-    @Override public void onDestroy() {
-        Application.installRefWatcher(this);
-        super.onDestroy();
     }
 
     @Override public boolean showBurger() { return false; }

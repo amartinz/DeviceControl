@@ -22,9 +22,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
 
-import com.squareup.leakcanary.RefWatcher;
-
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.MainActivityCallbacks;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
@@ -70,11 +67,6 @@ public abstract class AttachFragment extends Fragment implements OnBackPressedLi
             return a;
         }
         return super.onCreateAnimation(transit, enter, nextAnim);
-    }
-
-    @Override public void onDestroy() {
-        Application.installRefWatcher(this);
-        super.onDestroy();
     }
 
     /*

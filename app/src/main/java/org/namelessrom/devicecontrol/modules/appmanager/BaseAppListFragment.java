@@ -144,7 +144,6 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
     }
 
     @Override public void onDestroy() {
-        Application.installRefWatcher(this);
         super.onDestroy();
     }
 

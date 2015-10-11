@@ -4,9 +4,6 @@
 [submodule "modules/MaterialPreferences"]
 	path = modules/MaterialPreferences
 	url = https://github.com/Evisceration/MaterialPreferences
-[submodule "modules/BottomSheet"]
-	path = modules/BottomSheet
-	url = https://github.com/Evisceration/BottomSheet
 [submodule "modules/HardwareLibrary"]
 	path = modules/HardwareLibrary
 	url = https://github.com/Evisceration/HardwareLibrary.git
