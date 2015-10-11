@@ -39,9 +39,9 @@ import rx.functions.Action1;
 @ReportsCrashes(
         reportType = org.acra.sender.HttpSender.Type.JSON,
         httpMethod = org.acra.sender.HttpSender.Method.PUT,
-        formUri = "https://reports.nameless-rom.org/report",
-        formUriBasicAuthLogin = "device_control_reporter",
-        formUriBasicAuthPassword = "as91amc892mca10AFaji2c08F"
+        formUri = Constants.ACRA_REPORT_URL,
+        formUriBasicAuthLogin = Constants.ACRA_REPORT_USER,
+        formUriBasicAuthPassword = Constants.ACRA_REPORT_PASS
 )
 public class Application extends android.app.Application {
     private static final String TAG = Application.class.getSimpleName();
