@@ -38,6 +38,7 @@ import alexander.martinz.libs.hardware.device.MemoryInfo;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
+import hugo.weaving.DebugLog;
 
 public class InfoGeneralFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
     private long[] mHits = new long[3];
@@ -75,7 +76,7 @@ public class InfoGeneralFragment extends MaterialSupportPreferenceFragment imple
         return view;
     }
 
-    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    @DebugLog @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final Device device = Device.get(getActivity());
 

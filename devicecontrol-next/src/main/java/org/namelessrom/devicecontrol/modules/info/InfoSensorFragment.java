@@ -33,6 +33,7 @@ import java.util.Comparator;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
+import hugo.weaving.DebugLog;
 
 public class InfoSensorFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
 
@@ -40,7 +41,7 @@ public class InfoSensorFragment extends MaterialSupportPreferenceFragment implem
         return R.layout.pref_info_sensors;
     }
 
-    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    @DebugLog @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         final SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);

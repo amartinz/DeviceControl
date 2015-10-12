@@ -40,6 +40,7 @@ import alexander.martinz.libs.hardware.device.ProcessorInfo;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
+import hugo.weaving.DebugLog;
 
 public class InfoCpuFragment extends MaterialSupportPreferenceFragment {
     private MaterialPreferenceCategory catProcessor;
@@ -60,7 +61,7 @@ public class InfoCpuFragment extends MaterialSupportPreferenceFragment {
         return view;
     }
 
-    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    @DebugLog @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         setupProcessor();

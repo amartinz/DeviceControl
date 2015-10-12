@@ -33,6 +33,7 @@ import alexander.martinz.libs.hardware.opengl.OpenGlInformation;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
+import hugo.weaving.DebugLog;
 
 public class InfoGpuFragment extends MaterialSupportPreferenceFragment {
 
@@ -40,7 +41,7 @@ public class InfoGpuFragment extends MaterialSupportPreferenceFragment {
         return R.layout.pref_info_gpu;
     }
 
-    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    @DebugLog @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         final ArrayList<String> glesInformation = OpenGlInformation.getOpenGLESInformation();
@@ -58,18 +59,15 @@ public class InfoGpuFragment extends MaterialSupportPreferenceFragment {
         }
 
         GpuReader.getGpuInformation(getActivity(), new GpuInformationListener() {
-            @Override public void onGpuInformation(@NonNull GpuInformation gpuInformation) {
-                if (gpuInformation.freqAvailable != null && !gpuInformation.freqAvailable.isEmpty()) {
+            @Override public void onGpuInformation(@NonNull GpuInformation gpuInfo) {
+                if (gpuInfo.freqAvailable != null && !gpuInfo.freqAvailable.isEmpty()) {
                     addPreference(gpuCategory, getString(R.string.frequency_available),
-                            GpuInformation.listFrequenciesFormatted(gpuInformation.freqAvailable));
+                            GpuInformation.listFrequenciesFormatted(gpuInfo.freqAvailable));
                 }
 
-                addPreference(gpuCategory, getString(R.string.frequency_max),
-                        gpuInformation.freqAsMhz(gpuInformation.freqMax));
-                addPreference(gpuCategory, getString(R.string.frequency_min),
-                        gpuInformation.freqAsMhz(gpuInformation.freqMin));
-                addPreference(gpuCategory, getString(R.string.frequency_current),
-                        gpuInformation.freqAsMhz(gpuInformation.freqCur));
+                addPreference(gpuCategory, getString(R.string.frequency_max), gpuInfo.freqAsMhz(gpuInfo.freqMax));
+                addPreference(gpuCategory, getString(R.string.frequency_min), gpuInfo.freqAsMhz(gpuInfo.freqMin));
+                addPreference(gpuCategory, getString(R.string.frequency_current), gpuInfo.freqAsMhz(gpuInfo.freqCur));
             }
         });
     }
