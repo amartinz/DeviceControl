@@ -41,7 +41,10 @@ import rx.functions.Action1;
         httpMethod = org.acra.sender.HttpSender.Method.PUT,
         formUri = Constants.ACRA_REPORT_URL,
         formUriBasicAuthLogin = Constants.ACRA_REPORT_USER,
-        formUriBasicAuthPassword = Constants.ACRA_REPORT_PASS
+        formUriBasicAuthPassword = Constants.ACRA_REPORT_PASS,
+        // work around OkHTTP bug, which will crash when sending a crash report on shutdown.
+        // this is caused by the switch to HttpURLConnection for 6.0
+        sendReportsAtShutdown = false
 )
 public class Application extends android.app.Application {
     private static final String TAG = Application.class.getSimpleName();
@@ -63,7 +66,8 @@ public class Application extends android.app.Application {
         super.onCreate();
 
         // initialize crash reporting
-        ACRA.init(this);
+        // TODO: re-enable once key store fix got released
+        //ACRA.init(this);
 
         // enable until we hit the preference
         Logger.setEnabled(true);
