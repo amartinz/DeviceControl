@@ -17,7 +17,6 @@
 
 package org.namelessrom.devicecontrol;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -31,7 +30,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import org.namelessrom.devicecontrol.base.BaseActivity;
-import org.namelessrom.devicecontrol.modules.home.DonationActivity;
 import org.namelessrom.devicecontrol.modules.home.HomeFragment;
 import org.namelessrom.devicecontrol.modules.info.InfoFragment;
 import org.namelessrom.devicecontrol.modules.more.AboutFragment;
@@ -42,9 +40,9 @@ import org.namelessrom.devicecontrol.wizard.firstlaunch.FirstLaunchWizard;
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private Toolbar mToolbar;
 
-    private Runnable mDrawerRunnable;
-
     private FirstLaunchWizard mFirstLaunchWizard;
+
+    private Runnable mDrawerRunnable;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +62,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             @Override public void onDrawerClosed(View drawerView) {
                 if (mDrawerRunnable != null) {
-                    mDrawerRunnable.run();
+                    mDrawerLayout.post(mDrawerRunnable);
                 }
+                // unlock previously locked drawer again
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
 
@@ -90,7 +89,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // TODO: root checks, etc
         setupDrawerItems();
         unlockMenu();
-        replaceFragment(new HomeFragment(), R.id.nav_item_home, null);
+        replaceFragment(new HomeFragment(), R.id.nav_item_home, null, true);
     }
 
     @Override public void onBackPressed() {
@@ -128,11 +127,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mDrawerLayout.closeDrawer(GravityCompat.START);
 
-        // start action once drawer is closed
+        // create runnable, which will get executed once the drawer is closed
         mDrawerRunnable = new Runnable() {
             @Override public void run() {
-                boolean shouldCheck = true;
-
                 // TODO: implement every navigation item
                 final int id = menuItem.getItemId();
                 switch (id) {
@@ -165,18 +162,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     }
                     case R.id.nav_item_more_privacy: {
                         AppHelper.launchUrlViaTabs(MainActivity.this, getString(R.string.non_dc_privacy_url));
-                        shouldCheck = false;
                         break;
                     }
-                }
-
-                if (shouldCheck) {
-                    checkMenuItem(menuItem);
                 }
 
                 mDrawerRunnable = null;
             }
         };
+
         return true;
     }
 

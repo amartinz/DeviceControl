@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -41,22 +42,30 @@ public class InfoSensorFragment extends MaterialSupportPreferenceFragment implem
         return R.layout.pref_info_sensors;
     }
 
-    @DebugLog @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    @DebugLog @Override public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        final SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
 
         final MaterialPreference sensorTest = (MaterialPreference) view.findViewById(R.id.sensor_test);
         sensorTest.setOnPreferenceClickListener(this);
 
         final MaterialPreferenceCategory category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_sensors);
 
-        // we need an array list to be able to sort it, a normal list throws java.lang.UnsupportedOperationException when sorting
-        final ArrayList<Sensor> sensorList = new ArrayList<>(sensorManager.getSensorList(Sensor.TYPE_ALL));
-        Collections.sort(sensorList, new SortIgnoreCase());
-        for (final Sensor s : sensorList) {
-            addPreference(category, "", s.getName(), s.getVendor());
-        }
+        AsyncTask.execute(new Runnable() {
+            @Override public void run() {
+                final SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+
+                // we need an array list, a normal list throws java.lang.UnsupportedOperationException when sorting
+                final ArrayList<Sensor> sensorList = new ArrayList<>(sensorManager.getSensorList(Sensor.TYPE_ALL));
+                Collections.sort(sensorList, new SortIgnoreCase());
+                for (final Sensor s : sensorList) {
+                    view.post(new Runnable() {
+                        @Override public void run() {
+                            addPreference(category, "", s.getName(), s.getVendor());
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private MaterialPreference addPreference(MaterialPreferenceCategory category, String key, String title, String summary) {

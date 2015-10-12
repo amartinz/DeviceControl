@@ -17,6 +17,7 @@
 package org.namelessrom.devicecontrol.modules.info;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
@@ -76,17 +77,35 @@ public class InfoGeneralFragment extends MaterialSupportPreferenceFragment imple
         return view;
     }
 
-    @DebugLog @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    @DebugLog @Override public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final Device device = Device.get(getActivity());
 
-        setupPlatform(device);
-        setupRuntime(device);
-        setupDevice(device);
-
+        // start the async stuff before
         setupMemory();
         setupKernel();
         setupEmmc();
+
+        // and make the non async one "fake async"
+        AsyncTask.execute(new Runnable() {
+            @Override public void run() {
+                view.post(new Runnable() {
+                    @Override public void run() {
+                        setupPlatform(device);
+                    }
+                });
+                view.post(new Runnable() {
+                    @Override public void run() {
+                        setupRuntime(device);
+                    }
+                });
+                view.post(new Runnable() {
+                    @Override public void run() {
+                        setupDevice(device);
+                    }
+                });
+            }
+        });
     }
 
     private void setupPlatform(@NonNull final Device device) {
@@ -96,13 +115,11 @@ public class InfoGeneralFragment extends MaterialSupportPreferenceFragment imple
         addPreference(catPlatform, "platform_type", R.string.type, device.platformType);
         addPreference(catPlatform, "platform_tags", R.string.tags, device.platformTags);
         addPreference(catPlatform, "platform_build_date", R.string.build_date, device.platformBuildType);
-        catPlatform.setVisibility(View.VISIBLE);
     }
 
     private void setupRuntime(@NonNull final Device device) {
         addPreference(catRuntime, "vm_library", R.string.type, device.vmLibrary);
         addPreference(catRuntime, "vm_version", R.string.version, device.vmVersion);
-        catRuntime.setVisibility(View.VISIBLE);
     }
 
     private void setupDevice(@NonNull final Device device) {
@@ -117,7 +134,6 @@ public class InfoGeneralFragment extends MaterialSupportPreferenceFragment imple
         addPreference(catDevice, "device_radio_version", R.string.radio_version, device.radio);
         addPreference(catDevice, "device_selinux", R.string.selinux, device.isSELinuxEnforcing
                 ? getString(R.string.selinux_enforcing) : getString(R.string.selinux_permissive));
-        catDevice.setVisibility(View.VISIBLE);
     }
 
     private void setupMemory() {

@@ -17,6 +17,7 @@
 
 package org.namelessrom.devicecontrol.modules.info;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -41,33 +42,46 @@ public class InfoGpuFragment extends MaterialSupportPreferenceFragment {
         return R.layout.pref_info_gpu;
     }
 
-    @DebugLog @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    @DebugLog @Override public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        final ArrayList<String> glesInformation = OpenGlInformation.getOpenGLESInformation();
-        final int glesLength = glesInformation.size();
 
         final MaterialPreferenceCategory gpuCategory = (MaterialPreferenceCategory) view.findViewById(R.id.cat_gpu);
         final MaterialPreferenceCategory openGlCategory = (MaterialPreferenceCategory) view.findViewById(R.id.cat_opengl);
 
-        for (int i = 0; i < glesLength; i++) {
-            String summary = glesInformation.get(i);
-            if (!TextUtils.isEmpty(summary)) {
-                final String title = getString(OpenGlInformation.GL_STRINGS[i]);
-                addPreference(((i < 2) ? gpuCategory : openGlCategory), title, summary);
+        AsyncTask.execute(new Runnable() {
+            @Override public void run() {
+                final ArrayList<String> glesInformation = OpenGlInformation.getOpenGLESInformation();
+                final int glesLength = glesInformation.size();
+
+                for (int i = 0; i < glesLength; i++) {
+                    final String summary = glesInformation.get(i);
+                    if (!TextUtils.isEmpty(summary)) {
+                        final String title = getString(OpenGlInformation.GL_STRINGS[i]);
+                        final boolean postOnGpu = (i < 2);
+                        view.post(new Runnable() {
+                            @Override public void run() {
+                                addPreference((postOnGpu ? gpuCategory : openGlCategory), title, summary);
+                            }
+                        });
+                    }
+                }
             }
-        }
+        });
 
         GpuReader.getGpuInformation(getActivity(), new GpuInformationListener() {
-            @Override public void onGpuInformation(@NonNull GpuInformation gpuInfo) {
-                if (gpuInfo.freqAvailable != null && !gpuInfo.freqAvailable.isEmpty()) {
-                    addPreference(gpuCategory, getString(R.string.frequency_available),
-                            GpuInformation.listFrequenciesFormatted(gpuInfo.freqAvailable));
-                }
+            @Override public void onGpuInformation(@NonNull final GpuInformation gpuInfo) {
+                gpuCategory.post(new Runnable() {
+                    @Override public void run() {
+                        if (gpuInfo.freqAvailable != null && !gpuInfo.freqAvailable.isEmpty()) {
+                            addPreference(gpuCategory, getString(R.string.frequency_available),
+                                    GpuInformation.listFrequenciesFormatted(gpuInfo.freqAvailable));
+                        }
 
-                addPreference(gpuCategory, getString(R.string.frequency_max), gpuInfo.freqAsMhz(gpuInfo.freqMax));
-                addPreference(gpuCategory, getString(R.string.frequency_min), gpuInfo.freqAsMhz(gpuInfo.freqMin));
-                addPreference(gpuCategory, getString(R.string.frequency_current), gpuInfo.freqAsMhz(gpuInfo.freqCur));
+                        addPreference(gpuCategory, getString(R.string.frequency_max), gpuInfo.freqAsMhz(gpuInfo.freqMax));
+                        addPreference(gpuCategory, getString(R.string.frequency_min), gpuInfo.freqAsMhz(gpuInfo.freqMin));
+                        addPreference(gpuCategory, getString(R.string.frequency_current), gpuInfo.freqAsMhz(gpuInfo.freqCur));
+                    }
+                });
             }
         });
     }

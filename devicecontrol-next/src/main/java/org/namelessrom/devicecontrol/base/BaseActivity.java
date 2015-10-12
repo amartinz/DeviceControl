@@ -54,11 +54,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void replaceFragment(BaseFragment fragment, String backStackTag) {
-        replaceFragment(fragment, -1, backStackTag);
+        replaceFragment(fragment, backStackTag, true);
     }
 
-    public void replaceFragment(BaseFragment fragment, int menuItemId, String backStackTag) {
-        if (menuItemId != -1) {
+    public void replaceFragment(BaseFragment fragment, String backStackTag, boolean shouldCheckMenuItem) {
+        replaceFragment(fragment, -1, backStackTag, shouldCheckMenuItem);
+    }
+
+    public void replaceFragment(BaseFragment fragment, int menuItemId, String backStackTag, boolean shouldCheckMenuItem) {
+        if (shouldCheckMenuItem && menuItemId != -1) {
             checkMenuItem(menuItemId);
         }
 

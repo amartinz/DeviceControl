@@ -28,21 +28,18 @@
     <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
         android:id="@+id/cat_platform"
         style="@style/MaterialPreferences.Default"
-        android:visibility="gone"
         app:prefTitle="@string/platform_information" />
 
     <!-- Runtime -->
     <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
         android:id="@+id/cat_runtime"
         style="@style/MaterialPreferences.Default"
-        android:visibility="gone"
         app:prefTitle="@string/runtime" />
 
     <!-- Device information -->
     <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
         android:id="@+id/cat_device_information"
         style="@style/MaterialPreferences.Default"
-        android:visibility="gone"
         app:prefTitle="@string/device_information" />
 
     <!-- Memory -->
