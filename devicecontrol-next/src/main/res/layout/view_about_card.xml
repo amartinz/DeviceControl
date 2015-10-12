@@ -32,15 +32,8 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <com.android.volley.toolbox.NetworkImageView
-                android:id="@+id/about_card_image"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
-                android:layout_gravity="center"
-                android:padding="6dp"
-                android:scaleType="fitCenter" />
-
-            <LinearLayout android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -49,28 +42,40 @@
                     style="?android:attr/textAppearanceMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/about_contact_name" />
+                    android:text="@string/about_contact_name"
+                    android:textIsSelectable="true" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/about_contact" />
+                    android:text="@string/about_contact"
+                    android:textIsSelectable="true" />
 
                 <TextView
                     android:id="@+id/about_card_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="@string/about_contact_phone" />
+                    android:text="@string/about_contact_phone"
+                    android:textIsSelectable="true" />
 
                 <TextView
                     android:id="@+id/about_card_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="@string/about_contact_email" />
+                    android:text="@string/about_contact_email"
+                    android:textIsSelectable="true" />
             </LinearLayout>
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/about_card_image"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_gravity="center"
+                android:padding="6dp"
+                android:scaleType="fitCenter" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
