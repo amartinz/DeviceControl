@@ -17,6 +17,8 @@
 
 package org.namelessrom.devicecontrol;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -178,6 +180,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mPreviousMenuItem = findMenuItem(R.id.nav_item_home);
         if (mPreviousMenuItem != null) {
             mPreviousMenuItem.setChecked(true);
+        }
+
+        final MenuItem footerAppVersion = findMenuItem(R.id.nav_item_footer_version);
+        if (footerAppVersion != null) {
+            PackageInfo myInfo = null;
+            try {
+                myInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            } catch (PackageManager.NameNotFoundException ignored) { }
+            if (myInfo != null) {
+                footerAppVersion.setTitle(myInfo.versionName);
+            }
         }
     }
 

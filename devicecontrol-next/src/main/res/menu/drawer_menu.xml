@@ -65,4 +65,13 @@
             android:checkable="false"
             android:title="@string/drawer_title_more_privacy" />
     </group>
+    <!-- footer -->
+    <group
+        android:id="@+id/group_footer"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_item_footer_version"
+            android:enabled="false"
+            android:title="@string/version" />
+    </group>
 </menu>
