@@ -27,6 +27,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -188,8 +189,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             try {
                 myInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             } catch (PackageManager.NameNotFoundException ignored) { }
-            if (myInfo != null) {
+            if (myInfo != null && !TextUtils.isEmpty(myInfo.versionName)) {
                 footerAppVersion.setTitle(myInfo.versionName);
+
+                // extract the git short log from the version name
+                final String versionName = myInfo.versionName.replace("-dev", "").trim().toLowerCase();
+                if (versionName.contains("-git-")) {
+                    final String[] splitted = versionName.split("-git-");
+                    if (splitted.length == 2) {
+                        final String gitShortCode = splitted[1];
+                        footerAppVersion.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                            @Override public boolean onMenuItemClick(MenuItem item) {
+                                final String urlBase = "https://github.com/Evisceration/DeviceControl/commits/%s";
+                                AppHelper.launchUrlViaTabs(MainActivity.this, String.format(urlBase, gitShortCode));
+                                return true;
+                            }
+                        });
+                    }
+                }
             }
         }
     }
