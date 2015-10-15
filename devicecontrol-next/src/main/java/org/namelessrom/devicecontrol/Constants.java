@@ -24,4 +24,6 @@ public class Constants {
     public static final String ACRA_REPORT_URL = "https://bugs.nameless-rom.org/report";
     public static final String ACRA_REPORT_USER = "device_control_reporter";
     public static final String ACRA_REPORT_PASS = "as91amc892mca10AFaji2c08F";
+
+    public static final String GITHUB_DC_COMMIT_URL_BASE = "https://github.com/Evisceration/DeviceControl/commits/%s";
 }

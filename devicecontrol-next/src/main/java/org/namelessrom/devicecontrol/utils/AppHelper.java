@@ -32,6 +32,11 @@ import alexander.martinz.libs.logger.Logger;
 public class AppHelper {
     private static final String TAG = AppHelper.class.getSimpleName();
 
+    public static void mayLaunchUrlViaTabs(@NonNull final Activity activity, @NonNull final String url) {
+        final Application application = ((Application) activity.getApplicationContext());
+        application.getCustomTabsHelper().mayLaunchUrl(url);
+    }
+
     public static void launchUrlViaTabs(@NonNull final Activity activity, @NonNull final String url) {
         final Application application = ((Application) activity.getApplicationContext());
         application.getCustomTabsHelper().launchUrl(activity, url);

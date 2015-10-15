@@ -197,11 +197,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (versionName.contains("-git-")) {
                     final String[] splitted = versionName.split("-git-");
                     if (splitted.length == 2) {
-                        final String gitShortCode = splitted[1];
+                        final String commitUrl = String.format(Constants.GITHUB_DC_COMMIT_URL_BASE, splitted[1]);
+                        // preheat a bit
+                        AppHelper.mayLaunchUrlViaTabs(MainActivity.this, commitUrl);
                         footerAppVersion.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                             @Override public boolean onMenuItemClick(MenuItem item) {
-                                final String urlBase = "https://github.com/Evisceration/DeviceControl/commits/%s";
-                                AppHelper.launchUrlViaTabs(MainActivity.this, String.format(urlBase, gitShortCode));
+                                AppHelper.launchUrlViaTabs(MainActivity.this, commitUrl);
                                 return true;
                             }
                         });

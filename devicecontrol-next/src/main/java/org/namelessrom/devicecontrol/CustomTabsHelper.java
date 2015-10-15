@@ -85,7 +85,7 @@ public class CustomTabsHelper {
             AppHelper.viewInBrowser(activity, url);
             return;
         }
-        createBuilder(activity).build().launchUrl(activity, Uri.parse(url));
+        createBuilder(activity).enableUrlBarHiding().build().launchUrl(activity, Uri.parse(url));
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
