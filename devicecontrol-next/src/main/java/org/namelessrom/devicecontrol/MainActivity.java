@@ -30,7 +30,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 
 import org.namelessrom.devicecontrol.base.BaseActivity;
 import org.namelessrom.devicecontrol.modules.home.HomeFragment;
@@ -74,11 +73,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override public void onDrawerStateChanged(int newState) { }
         });
 
-        final ImageView drawerHeaderSettings = (ImageView) mDrawerLayout.findViewById(R.id.drawer_header_settings);
-        drawerHeaderSettings.setOnClickListener(this);
-
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        // manually inflate header layout to workaround bugs
+        final View drawerHeaderView = mNavigationView.inflateHeaderView(R.layout.drawer_header);
+        drawerHeaderView.findViewById(R.id.drawer_header_settings).setOnClickListener(this);
 
         if (FirstLaunchWizard.isFirstLaunch(this)) {
             mFirstLaunchWizard = FirstLaunchWizard.create(mWizardCallbacks);

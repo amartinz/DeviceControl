@@ -82,3 +82,8 @@
 
 # RxAndroid
 -dontwarn rx.internal.util.**
+
+### Workarounds
+
+# Google Design Library - Navigation View
+-keep class android.support.v7.widget.LinearLayoutManager { *; }
