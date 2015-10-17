@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.base.BaseFragment;
 import org.namelessrom.devicecontrol.modules.home.DonationActivity;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.views.AboutCardView;
 
 public class AboutFragment extends BaseFragment {
@@ -39,7 +38,7 @@ public class AboutFragment extends BaseFragment {
         final View view = inflater.inflate(R.layout.fragment_about, container, false);
 
         final AboutCardView aboutCardView = (AboutCardView) view.findViewById(R.id.about_card_view);
-        aboutCardView.setupAboutImageClickListener(getActivity());
+        aboutCardView.setupWithActivity(getActivity());
 
         view.findViewById(R.id.about_donate).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {

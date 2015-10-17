@@ -20,6 +20,8 @@ package org.namelessrom.devicecontrol.views;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.Spannable;
@@ -32,17 +34,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
-
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
 public class AboutCardView extends FrameLayout {
-    private static final String URL_GRAVATAR = "https://secure.gravatar.com/avatar/46b7972df351d022d2b6ae7865f7d4d5?s=500";
-    private static final String URL_GITHUB = "https://github.com/Evisceration";
-
-    private NetworkImageView mNetworkImageView;
 
     public AboutCardView(Context context) {
         super(context);
@@ -69,12 +65,6 @@ public class AboutCardView extends FrameLayout {
         final LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.view_about_card, this, true);
 
-        mNetworkImageView = (NetworkImageView) findViewById(R.id.about_card_image);
-        if (!isInEditMode()) {
-            final Application application = (Application) context.getApplicationContext();
-            mNetworkImageView.setImageUrl(URL_GRAVATAR, application.getImageLoader());
-        }
-
         final TextView email = (TextView) findViewById(R.id.about_card_email);
         email.setText(context.getString(R.string.about_contact_email, context.getString(R.string.email)));
         Linkify.addLinks(email, Linkify.EMAIL_ADDRESSES);
@@ -86,12 +76,40 @@ public class AboutCardView extends FrameLayout {
         stripUnderlines(phone);
     }
 
-    public void setupAboutImageClickListener(@NonNull final Activity activity) {
-        mNetworkImageView.setOnClickListener(new OnClickListener() {
+    public void setupWithActivity(@NonNull final Activity activity) {
+        final OnClickListener onClickListener = new OnClickListener() {
             @Override public void onClick(View v) {
-                AppHelper.launchUrlViaTabs(activity, URL_GITHUB);
+                final int id = v.getId();
+                switch (id) {
+                    case R.id.about_card_link_email: {
+                        final Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                        emailIntent.setData(Uri.fromParts("mailto", Constants.EMAIL, null));
+                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Device Control [root]");
+                        emailIntent.putExtra(Intent.EXTRA_TEXT, "");
+                        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{ Constants.EMAIL });
+                        activity.startActivity(Intent.createChooser(emailIntent, activity.getString(R.string.send_email)));
+                        break;
+                    }
+                    case R.id.about_card_link_github: {
+                        AppHelper.launchUrlViaTabs(activity, Constants.GITHUB_BASE_URL);
+                        break;
+                    }
+                    case R.id.about_card_link_googleplus: {
+                        AppHelper.launchUrlViaTabs(activity, Constants.GOOGLE_PLUS_URL);
+                        break;
+                    }
+                    case R.id.about_card_link_linkedin: {
+                        AppHelper.launchUrlViaTabs(activity, Constants.LINKEDIN_URL);
+                        break;
+                    }
+                }
             }
-        });
+        };
+
+        findViewById(R.id.about_card_link_email).setOnClickListener(onClickListener);
+        findViewById(R.id.about_card_link_github).setOnClickListener(onClickListener);
+        findViewById(R.id.about_card_link_googleplus).setOnClickListener(onClickListener);
+        findViewById(R.id.about_card_link_linkedin).setOnClickListener(onClickListener);
     }
 
     private void stripUnderlines(@NonNull final TextView textView) {

@@ -25,5 +25,12 @@ public class Constants {
     public static final String ACRA_REPORT_USER = "device_control_reporter";
     public static final String ACRA_REPORT_PASS = "as91amc892mca10AFaji2c08F";
 
-    public static final String GITHUB_DC_COMMIT_URL_BASE = "https://github.com/Evisceration/DeviceControl/commits/%s";
+    public static final String EMAIL = "eviscerationls@gmail.com";
+
+    public static final String GITHUB_BASE_URL = "https://github.com/Evisceration";
+    public static final String GITHUB_DC_COMMIT_URL_BASE = GITHUB_BASE_URL + "/DeviceControl/commits/%s";
+
+    public static final String GOOGLE_PLUS_URL = "https://plus.google.com/+AlexanderMartinz";
+
+    public static final String LINKEDIN_URL = "https://at.linkedin.com/pub/alexander-martinz/7a/231/93b";
 }

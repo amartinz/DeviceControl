@@ -17,8 +17,8 @@
   -->
 
 <android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/AppTheme.CardView.Dark"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -29,13 +29,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -68,14 +67,42 @@
                     android:text="@string/about_contact_email"
                     android:textIsSelectable="true" />
             </LinearLayout>
+        </LinearLayout>
 
-            <com.android.volley.toolbox.NetworkImageView
-                android:id="@+id/about_card_image"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
-                android:layout_gravity="center"
-                android:padding="6dp"
-                android:scaleType="fitCenter" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/about_card_link_email"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:src="@drawable/ic_about_email" />
+
+            <ImageView
+                android:id="@+id/about_card_link_github"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:src="@drawable/ic_about_github" />
+
+            <ImageView
+                android:id="@+id/about_card_link_googleplus"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:src="@drawable/ic_about_googleplus" />
+
+            <ImageView
+                android:id="@+id/about_card_link_linkedin"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="4dp"
+                android:src="@drawable/ic_about_linkedin" />
+
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
