@@ -56,6 +56,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.base.BaseActivity;
 import org.namelessrom.devicecontrol.modules.tools.appmanager.permissions.AppSecurityPermissions;
@@ -92,6 +93,8 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
 
     private PieChart mCacheGraph;
     private LinearLayout mCacheInfo;
+
+    private boolean mIsWhitelisted;
 
     @Override protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
@@ -159,6 +162,8 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         super.onResume();
         final String packageName = getTargetPackageName(getIntent());
         if (!TextUtils.isEmpty(packageName)) {
+            mIsWhitelisted = Constants.APP_MANAGER_PACKAGE_WHITE_LIST.contains(packageName);
+
             PackageInfo info = null;
             try {
                 info = mPm.getPackageInfo(packageName, 0);
@@ -198,7 +203,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                 menu.removeItem(R.id.menu_action_play_store);
             }
             // prevent disabling Device Control
-            if (getPackageName().equals(mAppItem.getPackageName())) {
+            if (mIsWhitelisted || getPackageName().equals(mAppItem.getPackageName())) {
                 menu.removeItem(R.id.menu_app_disable);
             }
 
@@ -313,7 +318,8 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         setupPermissionsView();
 
         // prevent uninstalling of Device Control
-        mUninstall.setEnabled(!TextUtils.equals(getPackageName(), mAppItem.getPackageName()));
+        mUninstall.setEnabled(!mIsWhitelisted);
+        mForceStop.setEnabled(!mIsWhitelisted);
 
         AppHelper.getSize(mPm, mAppItem.getPackageName(), this);
         refreshAppControls();
@@ -334,9 +340,8 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         securityList.removeAllViews();
         securityList.addView(asp.getPermissionsView());
 
-        // If this app is running under a shared user ID with other apps,
-        // update the description to explain this.
-        String[] packages = mPm.getPackagesForUid(mAppItem.getApplicationInfo().uid);
+        // If this app is running under a shared user ID with other apps, update the description to explain this.
+        final String[] packages = mPm.getPackagesForUid(mAppItem.getApplicationInfo().uid);
         if (packages != null && packages.length > 1) {
             final ArrayList<CharSequence> pnames = new ArrayList<>();
             for (final String pkg : packages) {
@@ -374,6 +379,11 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
     }
 
     private void refreshAppControls() {
+        if (mIsWhitelisted) {
+            // app is whitelisted, do not override the enabled states
+            return;
+        }
+
         AsyncTask.execute(new Runnable() {
             @Override public void run() {
                 final boolean isAppRunning = AppHelper.isAppRunning(AppDetailsActivity.this, mAppItem.getPackageName());
@@ -426,8 +436,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                 mAppItem.setEnabled(isEnabled);
 
                 if (mAppContainer != null) {
-                    mAppContainer.setBackgroundResource(
-                            isEnabled ? android.R.color.transparent : R.color.darker_gray);
+                    mAppContainer.setBackgroundResource(isEnabled ? android.R.color.transparent : R.color.darker_gray);
                 }
             }
         });
