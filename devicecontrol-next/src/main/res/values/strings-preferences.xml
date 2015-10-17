@@ -24,4 +24,7 @@
 
     <!-- if true, logger is enabled -->
     <string name="pref_enable_logger">enable_logger</string>
+
+    <!-- if true, cache is stored on external storage -->
+    <string name="pref_cache_external">cache_external</string>
 </resources>

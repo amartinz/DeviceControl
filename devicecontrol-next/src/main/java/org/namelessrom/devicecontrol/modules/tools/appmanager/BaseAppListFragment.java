@@ -1,0 +1,456 @@
+/*
+ *  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+package org.namelessrom.devicecontrol.modules.tools.appmanager;
+
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.SearchView;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.views.CustomRecyclerView;
+
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+
+import alexander.martinz.libs.logger.Logger;
+
+public abstract class BaseAppListFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnCloseListener, View.OnClickListener {
+    private static final int ANIM_DURATION = 450;
+
+    private AppListAdapter mAdapter;
+
+    private CustomRecyclerView mRecyclerView;
+    private TextView mEmptyView;
+    private LinearLayout mProgressContainer;
+
+    private final HashSet<AppItem> mSelectedApps = new HashSet<>();
+    private HorizontalScrollView mAppListBar;
+
+    private boolean mIsLoading;
+
+    public interface AppSelectedListener {
+        void onAppSelected(String packageName, ArrayList<AppItem> selectedApps);
+    }
+
+    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_app_list, menu);
+
+        // setup search
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(this);
+            searchView.setOnCloseListener(this);
+        }
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override public boolean onQueryTextChange(String s) {
+        if (mAdapter != null) {
+            mAdapter.filter(s);
+            updateVisibility(mAdapter.getItemCount() <= 0, false);
+        }
+        return true;
+    }
+
+    @Override public boolean onClose() {
+        if (mAdapter != null) {
+            mAdapter.filter(null);
+            updateVisibility(mAdapter.getItemCount() <= 0, false);
+        }
+        return false;
+    }
+
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
+        final int id = item.getItemId();
+        if (id == R.id.menu_action_refresh) {
+            loadApps(true);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
+        final View rootView = inflater.inflate(R.layout.fragment_app_list, container, false);
+        mRecyclerView = (CustomRecyclerView) rootView.findViewById(android.R.id.list);
+        mEmptyView = (TextView) rootView.findViewById(android.R.id.empty);
+        mProgressContainer = (LinearLayout) rootView.findViewById(R.id.progressContainer);
+
+        mAppListBar = (HorizontalScrollView) rootView.findViewById(R.id.app_bar);
+        rootView.findViewById(R.id.app_bar_uninstall).setOnClickListener(this);
+        rootView.findViewById(R.id.app_bar_enable).setOnClickListener(this);
+        rootView.findViewById(R.id.app_bar_disable).setOnClickListener(this);
+        return rootView;
+    }
+
+    @Override public void onViewCreated(final View view, final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
+
+        mRecyclerView.setHasFixedSize(true);
+
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+        loadApps(false);
+    }
+
+    @Override public void onDestroy() {
+        super.onDestroy();
+    }
+
+    private void invalidateOptionsMenu() {
+        if (getActivity() != null) {
+            getActivity().invalidateOptionsMenu();
+        }
+    }
+
+    @Override public void onClick(View v) {
+        final int id = v.getId();
+        switch (id) {
+            case R.id.app_bar_uninstall:
+            case R.id.app_bar_enable:
+            case R.id.app_bar_disable: {
+                showActionDialog(id);
+                break;
+            }
+        }
+    }
+
+    private void showActionDialog(final int type) {
+        int title;
+        String message;
+
+        final int selectedAppSize = mSelectedApps.size();
+        switch (type) {
+            default:
+            case R.id.app_bar_uninstall: {
+                title = R.string.uninstall;
+                if (selectedAppSize == 1) {
+                    message = getString(R.string.uninstall_msg, ((AppItem) mSelectedApps.toArray()[0]).getLabel());
+                } else {
+                    message = getString(R.string.uninstall_msg_multi, selectedAppSize);
+                }
+                break;
+            }
+            case R.id.app_bar_enable: {
+                title = R.string.enable;
+                if (selectedAppSize == 1) {
+                    message = getString(R.string.enable_msg, ((AppItem) mSelectedApps.toArray()[0]).getLabel());
+                } else {
+                    message = getString(R.string.enable_msg_multi, selectedAppSize);
+                }
+                break;
+            }
+            case R.id.app_bar_disable: {
+                title = R.string.disable;
+                if (selectedAppSize == 1) {
+                    message = getString(R.string.disable_msg, ((AppItem) mSelectedApps.toArray()[0]).getLabel());
+                } else {
+                    message = getString(R.string.disable_msg_multi, selectedAppSize);
+                }
+                break;
+            }
+        }
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                showProcessingDialog(type);
+            }
+        });
+        builder.show();
+    }
+
+    private void showProcessingDialog(final int type) {
+        int titleResId;
+        int messageResId;
+
+        switch (type) {
+            default:
+            case R.id.app_bar_uninstall: {
+                titleResId = R.string.uninstall;
+                messageResId = R.string.uninstall_msg_multi_action;
+                break;
+            }
+            case R.id.app_bar_enable: {
+                titleResId = R.string.enable;
+                messageResId = R.string.enable_msg_multi_action;
+                break;
+            }
+            case R.id.app_bar_disable: {
+                titleResId = R.string.disable;
+                messageResId = R.string.disable_msg_multi_action;
+                break;
+            }
+        }
+
+        new ProcessTask(getActivity(), type, titleResId, messageResId, mSelectedApps).execute();
+    }
+
+    private class ProcessTask extends AsyncTask<Void, Integer, Void> {
+        private final Activity activity;
+        private final int type;
+        private final int messageResId;
+        private final HashSet<AppItem> selectedApps;
+        private final int length;
+        private final ProgressDialog progressDialog;
+
+        public ProcessTask(Activity activity, int type, int titleResId, int messageResId, HashSet<AppItem> selectedApps) {
+            this.activity = activity;
+            this.type = type;
+            this.messageResId = messageResId;
+            this.selectedApps = selectedApps;
+            this.length = this.selectedApps.size();
+
+            progressDialog = new ProgressDialog(this.activity);
+            progressDialog.setTitle(titleResId);
+            progressDialog.setMessage(activity.getString(messageResId, 0, this.length));
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setMax(this.length);
+            progressDialog.setProgress(0);
+        }
+
+        @Override protected void onPreExecute() {
+            progressDialog.show();
+        }
+
+        @Override protected void onProgressUpdate(Integer... values) {
+            // increase current app counter by one as we deliver indexes
+            final int currentApp = values[0] + 1;
+            progressDialog.setMessage(activity.getString(messageResId, currentApp, this.length));
+            progressDialog.setProgress(currentApp);
+        }
+
+        @Override protected Void doInBackground(Void... params) {
+            int counter = 0;
+            for (AppItem appItem : selectedApps) {
+                publishProgress(counter);
+                switch (type) {
+                    case R.id.app_bar_uninstall: {
+                        appItem.uninstall(activity, null, false);
+                        break;
+                    }
+                    case R.id.app_bar_enable: {
+                        appItem.enable(null);
+                        break;
+                    }
+                    case R.id.app_bar_disable: {
+                        appItem.disable(null);
+                        break;
+                    }
+                }
+                counter++;
+
+                // add some fake sleep time to make the progress look like it is actually doing something
+                try {
+                    Thread.sleep(50);
+                } catch (Exception ignored) { }
+            }
+
+            // wait for 500 ms to let everything update its state
+            try {
+                Thread.sleep(500);
+            } catch (Exception ignored) { }
+            return null;
+        }
+
+        @Override protected void onPostExecute(Void aVoid) {
+            progressDialog.hide();
+            loadApps(true);
+            Snackbar.make(BaseAppListFragment.this.mAppListBar, R.string.action_completed, Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+    public void loadApps(final boolean animate) {
+        if (mIsLoading) {
+            return;
+        }
+
+        mIsLoading = true;
+        mProgressContainer.post(new Runnable() {
+            @Override public void run() {
+                mProgressContainer.setVisibility(View.VISIBLE);
+
+                if (animate) {
+                    final ObjectAnimator anim = ObjectAnimator.ofFloat(mProgressContainer, "alpha", 0f, 1f);
+                    anim.addListener(new Animator.AnimatorListener() {
+                        @Override public void onAnimationStart(Animator animation) { }
+
+                        @Override public void onAnimationEnd(Animator animation) {
+                            final Activity activity = getActivity();
+                            if (activity != null) {
+                                new LoadApps(activity.getPackageManager()).execute();
+                            }
+                        }
+
+                        @Override public void onAnimationCancel(Animator animation) { }
+
+                        @Override public void onAnimationRepeat(Animator animation) { }
+                    });
+                    anim.setDuration(ANIM_DURATION);
+                    anim.start();
+                } else {
+                    mProgressContainer.setAlpha(1f);
+                    new LoadApps(getActivity().getPackageManager()).execute();
+                }
+            }
+        });
+    }
+
+    private void updateVisibility(boolean isEmpty, boolean pmHasDied) {
+        mRecyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+
+        mEmptyView.setText(pmHasDied ? R.string.pm_has_died : R.string.no_items_found);
+        mEmptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+    }
+
+    protected abstract boolean isFiltered(ApplicationInfo applicationInfo);
+
+    private class LoadApps extends AsyncTask<Void, Void, ArrayList<AppItem>> {
+        private final PackageManager pm;
+        private boolean pmHasDied;
+
+        public LoadApps(@NonNull final PackageManager packageManager) {
+            pm = packageManager;
+        }
+
+        @Override protected ArrayList<AppItem> doInBackground(Void... params) {
+            final ArrayList<AppItem> appList = new ArrayList<>();
+            final List<PackageInfo> pkgInfos = new ArrayList<>();
+
+            try {
+                pkgInfos.addAll(pm.getInstalledPackages(0));
+            } catch (Exception exc) {
+                Logger.e(this, "Could not get installed packages!", exc);
+                pmHasDied = true;
+            }
+
+            for (final PackageInfo pkgInfo : pkgInfos) {
+                if (pkgInfo.applicationInfo == null || isFiltered(pkgInfo.applicationInfo)) {
+                    continue;
+                }
+                appList.add(new AppItem(pkgInfo, String.valueOf(pkgInfo.applicationInfo.loadLabel(pm))));
+            }
+            Collections.sort(appList, sAppComparator);
+
+            return appList;
+        }
+
+        @Override protected void onPostExecute(final ArrayList<AppItem> appItems) {
+            final ObjectAnimator anim = ObjectAnimator.ofFloat(mProgressContainer, "alpha", 1f, 0f);
+            anim.addListener(new Animator.AnimatorListener() {
+                @Override public void onAnimationStart(Animator animation) {
+                    final boolean isEmpty = (appItems == null || appItems.size() <= 0);
+                    updateVisibility(isEmpty, pmHasDied);
+                }
+
+                @Override public void onAnimationEnd(Animator animation) {
+                    if (appItems != null) {
+                        if (mAdapter == null) {
+                            final AppListAdapter adapter = new AppListAdapter(getActivity(), BaseAppListFragment.this,
+                                    appItems, mUninstallListener, mAppSelectedListener);
+                            mRecyclerView.setAdapter(adapter);
+                            mAdapter = adapter;
+                        } else {
+                            mAdapter.refill(appItems);
+                        }
+                    }
+
+                    mProgressContainer.setVisibility(View.GONE);
+                    mIsLoading = false;
+                }
+
+                @Override public void onAnimationCancel(Animator animation) { }
+
+                @Override public void onAnimationRepeat(Animator animation) { }
+            });
+            anim.setDuration(ANIM_DURATION);
+            anim.start();
+
+            invalidateOptionsMenu();
+        }
+    }
+
+    private final AppItem.UninstallListener mUninstallListener = new AppItem.UninstallListener() {
+        @Override public void OnUninstallComplete() {
+            loadApps(true);
+        }
+    };
+
+    private final AppSelectedListener mAppSelectedListener = new AppSelectedListener() {
+        @Override public void onAppSelected(String packageName, ArrayList<AppItem> selectedApps) {
+            mSelectedApps.clear();
+            mSelectedApps.addAll(selectedApps);
+            if (mSelectedApps.size() == 0) {
+                mAppListBar.setVisibility(View.GONE);
+            } else {
+                mAppListBar.setVisibility(View.VISIBLE);
+            }
+        }
+    };
+
+    public static final Comparator<AppItem> sAppComparator = new Comparator<AppItem>() {
+        public final int compare(final AppItem a, final AppItem b) {
+            return collator.compare(a.getLabel(), b.getLabel());
+        }
+
+        private final Collator collator = Collator.getInstance();
+    };
+
+}

@@ -15,13 +15,23 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<android.support.v7.widget.Toolbar
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?colorPrimary"
-    android:minHeight="?attr/actionBarSize"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="org.namelessrom.devicecontrol.modules.appmanager.AppManagerActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/actionbar_toolbar" />
+
+    <fragment
+        android:name="org.namelessrom.devicecontrol.modules.tools.appmanager.AppListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:tag="AppListFragment"
+        tools:layout="@layout/fragment_app_list" />
+
+</LinearLayout>

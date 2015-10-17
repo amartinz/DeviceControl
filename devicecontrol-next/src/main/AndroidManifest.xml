@@ -53,6 +53,7 @@
     <uses-permission android:name="android.permission.REAL_GET_TASKS" />
 
     <!-- Application permissions -->
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
     <uses-permission android:name="android.permission.DELETE_CACHE_FILES" tools:ignore="ProtectedPermissions" />
@@ -97,6 +98,42 @@
         <activity
             android:name=".modules.info.SensorActivity"
             android:label="@string/sensors" />
+
+        <!-- app manager -->
+        <activity
+            android:name=".modules.tools.appmanager.AppManagerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_manager"
+            android:launchMode="singleTask"
+            android:parentActivityName=".MainActivity"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.settings.MANAGE_APPLICATIONS_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.namelessrom.devicecontrol.MainActivity" />
+        </activity>
+        <activity
+            android:name=".modules.tools.appmanager.AppDetailsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_details"
+            android:launchMode="singleTask"
+            android:parentActivityName=".MainActivity"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.settings.APPLICATION_DETAILS_SETTINGS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.namelessrom.devicecontrol.MainActivity" />
+        </activity>
 
     </application>
 

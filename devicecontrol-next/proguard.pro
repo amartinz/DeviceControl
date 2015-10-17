@@ -80,10 +80,21 @@
 # ACRA
 -keep class org.acra.** { *; }
 
+# mpchartlib
+-keep public class com.github.mikephil.charting.animation.* {
+    public protected *;
+}
+
 # RxAndroid
 -dontwarn rx.internal.util.**
 
+# Do not break our reflection voodoo
+-keep class android.content.pm.IPackageStatsObserver
+
 ### Workarounds
+
+# AppCompat - SearchView
+-keep class android.support.v7.widget.SearchView { *; }
 
 # Google Design Library - Navigation View
 -keep class android.support.v7.widget.LinearLayoutManager { *; }

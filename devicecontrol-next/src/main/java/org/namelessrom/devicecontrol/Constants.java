@@ -17,6 +17,8 @@
 
 package org.namelessrom.devicecontrol;
 
+import java.util.HashSet;
+
 /**
  * Created by amartinz on 11.10.15.
  */
@@ -33,4 +35,16 @@ public class Constants {
     public static final String GOOGLE_PLUS_URL = "https://plus.google.com/+AlexanderMartinz";
 
     public static final String LINKEDIN_URL = "https://at.linkedin.com/pub/alexander-martinz/7a/231/93b";
+
+    public static final String PKG_PLAY_STORE = "com.android.vending";
+
+    // whitelisted packages have a disabled selector in the app manager
+    public static final HashSet<String> APP_MANAGER_PACKAGE_WHITE_LIST = new HashSet<>();
+
+    static {
+        APP_MANAGER_PACKAGE_WHITE_LIST.add("org.namelessrom.devicecontrol");
+        APP_MANAGER_PACKAGE_WHITE_LIST.add("org.namelessrom.devicecontrol.dev");
+        APP_MANAGER_PACKAGE_WHITE_LIST.add("org.namelessrom.devicecontrol.next");
+        APP_MANAGER_PACKAGE_WHITE_LIST.add("org.namelessrom.devicecontrol.next.dev");
+    }
 }

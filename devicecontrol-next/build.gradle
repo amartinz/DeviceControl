@@ -152,5 +152,8 @@ dependencies {
     compile 'com.f2prateek.rx.preferences:rx-preferences:1.0.0'
 
     // see https://github.com/Kennyc1012/BottomSheet
-    //compile 'com.github.Kennyc1012:BottomSheet:2.0.1'
+    compile 'com.github.Kennyc1012:BottomSheet:2.0.1'
+
+    // see https://github.com/PhilJay/MPAndroidChart
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.5'
 }

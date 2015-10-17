@@ -37,8 +37,7 @@ public abstract class BaseViewPagerFragment extends BaseFragment {
         return mViewPager;
     }
 
-    @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
+    @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.base_fragment_view_pager, container, false);
 
         final ViewPagerAdapter adapter = getPagerAdapter();

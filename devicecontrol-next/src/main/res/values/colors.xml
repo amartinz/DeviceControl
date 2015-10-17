@@ -32,4 +32,32 @@
     <color name="tab_color_selected">#ffffff</color>
 
     <color name="grey_800">#424242</color>
+
+    <!-- palette -->
+    <color name="grass">#ff2ab081</color>
+    <color name="green">#ff53a93f</color>
+    <color name="palette_blue_600">#ff1e88e5</color>
+    <color name="palette_blue_800">#ff1565c0</color>
+    <color name="pallete_blue_grey_500">#ff607D8B</color>
+    <color name="pallete_blue_grey_700">#ff455A64</color>
+    <color name="pallete_blue_500">#2196F3</color>
+    <color name="pallete_blue_700">#1976D2</color>
+    <color name="palette_orange">#fff5a816</color>
+    <color name="palette_teal_500">#ff009688</color>
+    <color name="palette_teal_700">#ff00796B</color>
+    <color name="palette_teal_900">#ff004D40</color>
+    <color name="palette_yellow">#ffafb42b</color>
+    <color name="material_blue_500">#5677fc</color>
+    <color name="material_blue_600">#4e6cef</color>
+    <!-- misc -->
+    <color name="red_bright">#ff5252</color>
+    <color name="red_middle">#dc3d24</color>
+    <color name="darker_gray">#66666666</color>
+    <color name="blueish">#63AA9C</color>
+    <color name="blueish_strong">#4EB1BA</color>
+    <color name="greenish">#50d07d</color>
+    <color name="grey">#AA242424</color>
+    <color name="orange">#FFFFBB33</color>
+
+    <color name="perms_costs_money">#fff4511e</color>
 </resources>

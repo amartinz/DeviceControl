@@ -23,7 +23,7 @@
         <item
             android:id="@+id/nav_item_home"
             android:checkable="true"
-            android:icon="@drawable/ic_home_black_24dp"
+            android:icon="@drawable/ic_home_24dp"
             android:title="@string/drawer_title_home" />
     </group>
     <!-- information subheader -->
@@ -37,7 +37,7 @@
                 <item
                     android:id="@+id/nav_item_info_device"
                     android:checkable="true"
-                    android:icon="@drawable/ic_perm_device_info_black_24dp"
+                    android:icon="@drawable/ic_perm_device_info_24dp"
                     android:title="@string/drawer_title_info_device" />
             </menu>
         </item>
@@ -51,6 +51,17 @@
     <group
         android:id="@+id/group_tools"
         android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_tools"
+            android:title="@string/drawer_title_tools">
+            <menu>
+                <item
+                    android:id="@+id/nav_item_tools_app_manager"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_adb_24dp"
+                    android:title="@string/drawer_title_tools_app_manager" />
+            </menu>
+        </item>
     </group>
     <!-- more subheader -->
     <group

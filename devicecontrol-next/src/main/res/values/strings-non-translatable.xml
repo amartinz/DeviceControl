@@ -14,7 +14,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name_device_control" translatable="false">Device Control [Next]</string>
 
     <!-- about -->
@@ -51,6 +51,10 @@
     <string name="cpu" translatable="false">CPU</string>
     <string name="gpu" translatable="false">GPU</string>
     <string name="opengl" translatable="false">OpenGL</string>
+
+    <!-- permissions -->
+    <string name="join_many_items_first" translatable="false"><xliff:g id="first_item">%1$s</xliff:g>, <xliff:g id="all_but_first_and_last_item">%2$s</xliff:g></string>
+    <string name="join_many_items_middle" translatable="false"><xliff:g id="added_item">%1$s</xliff:g>, <xliff:g id="rest_of_items">%2$s</xliff:g></string>
 
     <!-- others -->
     <string name="bit_32" translatable="false">32-bit</string>

@@ -23,7 +23,7 @@
     android:orientation="vertical"
     tools:context="org.namelessrom.devicecontrol.MainActivity">
 
-    <include layout="@layout/toolbar" />
+    <include layout="@layout/actionbar_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"

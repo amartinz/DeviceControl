@@ -16,11 +16,14 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="drawer_title_home">Home</string>
     <!-- info -->
     <string name="drawer_title_info">Information</string>
     <string name="drawer_title_info_device">@string/device</string>
+    <!-- tools -->
+    <string name="drawer_title_tools">Tools</string>
+    <string name="drawer_title_tools_app_manager" translatable="false">@string/app_manager</string>
     <!-- more -->
     <string name="drawer_title_more_about">About</string>
     <string name="drawer_title_more_privacy">Privacy</string>
@@ -113,8 +116,73 @@
     <!-- about -->
     <string name="about_device_control_text">Device Control got started as i needed a tool to easily control my custom kernel.\n\nLater i also needed some extra features, which no other app could offer or i had to use multiple different apps to achieve the functionality i wanted to have.\n\nStep by step more functionality got added into Device Control and it still keeps growing.\n\nDevice Control is open source and available for free, however if you want to support development of this app, please consider a donation.\n\nEvery donation is much appreciated and keeps me motivated :)</string>
 
+    <!-- permissions -->
+    <string name="permissions">Permissions</string>
+    <string name="no_permissions">No permissions required</string>
+    <string name="perm_costs_money">this may cost you money</string>
+    <string name="perms_new_perm_prefix"><font fgcolor="#ff33b5e5" size="12">NEW: </font></string>
+    <string name="perms_description_app">Provided by <xliff:g id="app_name">%1$s</xliff:g>.</string>
+    <string name="join_two_items"><xliff:g id="first_item">%1$s</xliff:g> and <xliff:g id="second_item">%2$s</xliff:g></string>
+    <string name="join_many_items_last"><xliff:g id="all_but_last_item">%1$s</xliff:g> and <xliff:g id="last_item">%2$s</xliff:g></string>
+    <string name="security_settings_desc">This app can access the following on your devices:</string>
+    <string name="security_settings_desc_multi" product="default">This app can access the following on your phone. In order to improve performance and reduce memory usage, some of these permissions are available to <xliff:g id="base_app_name">%1$s</xliff:g> because it runs in the same process as <xliff:g id="additional_apps_list">%2$s</xliff:g>:</string>
+
+    <!-- app manager -->
+    <string name="app_manager">App manager</string>
+    <string name="message_loading">Loading, please stand by…</string>
+    <string name="no_items_found">No items found…</string>
+
+    <string name="disabled">Disabled</string>
+    <string name="user">User</string>
+    <string name="system">System</string>
+
+    <string name="open">Open</string>
+    <string name="could_not_launch_activity">Could not launch activity</string>
+
+    <string name="app_details">Application details</string>
+    <string name="app_size">Application size</string>
+    <string name="force_stop">Force stop</string>
+    <string name="clear_cache">Clear cache</string>
+    <string name="clear_data">Clear data</string>
+
+    <string name="app">Application</string>
+    <string name="ext_app">External application</string>
+    <string name="data">Data</string>
+    <string name="ext_data">External data</string>
+    <string name="ext_media">External media</string>
+    <string name="ext_obb">External obb</string>
+    <string name="ext_cache">External cache</string>
+    <string name="ext">External</string>
+    <string name="cache">Cache</string>
+
+    <string name="enable">Enable</string>
+    <string name="enable_msg">%s will be enabled.\n\nContinue?</string>
+    <string name="enable_msg_multi">%s apps will be enabled.\n(If any app is already enabled, nothing will happen)\n\nContinue?</string>
+    <string name="enable_msg_multi_action">Enabling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
+
+    <string name="disable">Disable</string>
+    <string name="disable_msg">%s will be disabled.\n\nContinue?</string>
+    <string name="disable_msg_multi">%s apps will be disabled.\n(If any app is already disabled, nothing will happen)\n\nContinue?</string>
+    <string name="disable_msg_multi_action">Disabling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
+
+    <string name="uninstall">Uninstall</string>
+    <string name="uninstalling">Uninstalling…</string>
+    <string name="uninstall_msg">Do you really want to uninstall \"%s\"?\nThis action can not be undone!</string>
+    <string name="uninstall_msg_multi">Do you really want to uninstall %s apps?\nThis action can not be undone!</string>
+    <string name="uninstall_msg_multi_action">Uninstalling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
+    <string name="uninstall_msg_system_app">Uninstalling system apps may require a reboot!</string>
+    <string name="uninstall_success">Successfully uninstalled \"%s\"</string>
+
+    <string name="pm_has_died">Android package manager died… :/\n\nThis can happen on some devices, please try refreshing until it works.</string>
+
     <!-- etc -->
+    <string name="action_completed">Action completed successfully!</string>
+    <string name="applying_wait">Applying, please wait…</string>
     <string name="phone">Phone</string>
     <string name="email">Email</string>
     <string name="send_email">Send email…</string>
+    <string name="something_went_wrong">Sorry but something went wrong!</string>
+    <string name="filter">Filter</string>
+    <string name="refresh">Refresh</string>
+    <string name="open_play_store">View app on Google Play\u2122</string>
 </resources>

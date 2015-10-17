@@ -35,6 +35,7 @@ import org.namelessrom.devicecontrol.base.BaseActivity;
 import org.namelessrom.devicecontrol.modules.home.HomeFragment;
 import org.namelessrom.devicecontrol.modules.info.InfoFragment;
 import org.namelessrom.devicecontrol.modules.more.AboutFragment;
+import org.namelessrom.devicecontrol.modules.tools.appmanager.AppListFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.wizard.WizardCallbacks;
 import org.namelessrom.devicecontrol.wizard.firstlaunch.FirstLaunchWizard;
@@ -117,7 +118,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (mCurrentFragment != null && mCurrentFragment.onActionBarHomeClicked()) {
                     return true;
                 }
-                // only open drawer as it is ABOVE the toolbar and we can not close it that way
+                // only open drawer as it is ABOVE the actionbar_toolbar and we can not close it that way
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             }
@@ -149,14 +150,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         }
                         break;
                     }
-                    //==============================================================================
+                    //============================================================================================================
                     case R.id.nav_item_info_device: {
                         if (!(mCurrentFragment instanceof InfoFragment)) {
                             replaceFragment(new InfoFragment(), "");
                         }
                         break;
                     }
-                    //==============================================================================
+                    //============================================================================================================
+                    case R.id.nav_item_tools_app_manager: {
+                        if (!(mCurrentFragment instanceof AppListFragment)) {
+                            replaceFragment(new AppListFragment(), "");
+                        }
+                        break;
+                    }
+                    //============================================================================================================
                     case R.id.nav_item_more_about: {
                         if (!(mCurrentFragment instanceof AboutFragment)) {
                             replaceFragment(new AboutFragment(), "");

@@ -213,10 +213,7 @@ public class InfoGeneralFragment extends MaterialSupportPreferenceFragment imple
             System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
             mHits[mHits.length - 1] = SystemClock.uptimeMillis();
             if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
-                RootShell shell = ShellManager.get(getActivity()).getRootShell();
-                if (shell != null) {
-                    shell.add(new Command("am start android/com.android.internal.app.PlatLogoActivity"));
-                }
+                ShellManager.get().runRootCommand("am start android/com.android.internal.app.PlatLogoActivity");
                 mEasterEggStarted = true;
             }
             return true;

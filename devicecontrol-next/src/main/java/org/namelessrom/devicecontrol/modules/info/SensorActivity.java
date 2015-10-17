@@ -248,7 +248,7 @@ public class SensorActivity extends BaseSubActivity {
         }
     }
 
-    public class ViewPagerAdapter extends PagerAdapter {
+    private class ViewPagerAdapter extends PagerAdapter {
         private final ArrayList<String> mTitles;
 
         public ViewPagerAdapter(final ArrayList<String> titles) {

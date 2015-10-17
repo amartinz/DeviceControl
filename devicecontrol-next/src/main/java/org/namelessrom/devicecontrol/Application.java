@@ -19,6 +19,9 @@ package org.namelessrom.devicecontrol;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.v4.util.LruCache;
 
@@ -27,14 +30,15 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.f2prateek.rx.preferences.RxSharedPreferences;
 
-import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
 import org.namelessrom.devicecontrol.execution.ShellWriter;
 
 import java.io.File;
 
 import alexander.martinz.libs.logger.Logger;
+import hugo.weaving.DebugLog;
 import rx.functions.Action1;
+import uk.co.senab.bitmapcache.BitmapLruCache;
 
 @ReportsCrashes(
         reportType = org.acra.sender.HttpSender.Type.JSON,
@@ -49,10 +53,14 @@ import rx.functions.Action1;
 public class Application extends android.app.Application {
     private static final String TAG = Application.class.getSimpleName();
 
+    public static final Handler HANDLER = new Handler(Looper.getMainLooper());
+
     private CustomTabsHelper mCustomTabsHelper;
 
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
+
+    private BitmapLruCache mBitmapCache;
 
     public CustomTabsHelper getCustomTabsHelper() {
         return mCustomTabsHelper;
@@ -60,6 +68,17 @@ public class Application extends android.app.Application {
 
     public ImageLoader getImageLoader() {
         return mImageLoader;
+    }
+
+    public BitmapLruCache getBitmapCache() {
+        return mBitmapCache;
+    }
+
+    @Override public void onLowMemory() {
+        super.onLowMemory();
+        if (mBitmapCache != null) {
+            mBitmapCache.trimMemory();
+        }
     }
 
     @Override public void onCreate() {
@@ -86,6 +105,11 @@ public class Application extends android.app.Application {
                         }
                     }
                 });
+        rxPreferences.getBoolean(getString(R.string.pref_cache_external), true).asObservable().subscribe(new Action1<Boolean>() {
+            @Override public void call(Boolean useExternal) {
+                buildCache(useExternal);
+            }
+        });
 
         // set up request queue for volley
         mRequestQueue = Volley.newRequestQueue(this);
@@ -104,9 +128,27 @@ public class Application extends android.app.Application {
         mCustomTabsHelper = new CustomTabsHelper(getApplicationContext());
     }
 
+    @DebugLog private void buildCache(final boolean useExternal) {
+        final File cacheLocation;
+        if (useExternal && Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            cacheLocation = new File(getExternalFilesDir(null), "bitmapCache");
+        } else {
+            cacheLocation = new File(getFilesDir(), "bitmapCache");
+        }
+        //noinspection ResultOfMethodCallIgnored
+        cacheLocation.mkdirs();
+
+        BitmapLruCache.Builder builder = new BitmapLruCache.Builder(this);
+        builder.setMemoryCacheEnabled(true).setMemoryCacheMaxSizeUsingHeapSize(0.25f);
+        builder.setDiskCacheEnabled(true).setDiskCacheLocation(cacheLocation);
+
+        mBitmapCache = builder.build();
+    }
+
     private void testShellWriter() {
         final File testFile = new File(getApplicationContext().getFilesDir(), "testShellWriter");
         try {
+            //noinspection ResultOfMethodCallIgnored
             testFile.createNewFile();
         } catch (Exception ignored) { }
         ShellWriter.with(getApplicationContext())
