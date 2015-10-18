@@ -151,7 +151,7 @@ public class Application extends android.app.Application {
             //noinspection ResultOfMethodCallIgnored
             testFile.createNewFile();
         } catch (Exception ignored) { }
-        ShellWriter.with(getApplicationContext())
+        ShellWriter.with()
                 .write("test")
                 .into(testFile)
                 .start(new Action1<Boolean>() {
@@ -161,7 +161,7 @@ public class Application extends android.app.Application {
                 });
 
         final String KMSG_PATH = "/dev/kmsg";
-        ShellWriter.with(getApplicationContext())
+        ShellWriter.with()
                 .disableRoot() // expected to fail to write to /dev/kmsg without root
                 .write(String.format("%s: %s", TAG, "this is a test without root"))
                 .into(KMSG_PATH)
@@ -171,7 +171,7 @@ public class Application extends android.app.Application {
                     }
                 });
 
-        ShellWriter.with(getApplicationContext())
+        ShellWriter.with()
                 .write(String.format("%s: %s", TAG, "this is a test as root"))
                 .into(KMSG_PATH)
                 .start(new Action1<Boolean>() {

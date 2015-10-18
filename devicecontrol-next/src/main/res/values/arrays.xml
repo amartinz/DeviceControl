@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="fstrim_interval_entries" translatable="false">
+        <item>@string/five_minutes</item>
+        <item>@string/fifteen_minutes</item>
+        <item>@string/thirty_minutes</item>
+        <item>@string/one_hours</item>
+        <item>@string/two_hours</item>
+        <item>@string/four_hours</item>
+        <item>@string/eight_hours</item>
+    </string-array>
+
+    <string-array name="fstrim_interval_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+</resources>

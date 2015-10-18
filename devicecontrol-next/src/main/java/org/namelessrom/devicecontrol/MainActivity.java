@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.namelessrom.devicecontrol.base.BaseActivity;
+import org.namelessrom.devicecontrol.modules.controls.FileSystemFragment;
 import org.namelessrom.devicecontrol.modules.home.HomeFragment;
 import org.namelessrom.devicecontrol.modules.info.InfoFragment;
 import org.namelessrom.devicecontrol.modules.more.AboutFragment;
@@ -154,6 +155,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     case R.id.nav_item_info_device: {
                         if (!(mCurrentFragment instanceof InfoFragment)) {
                             replaceFragment(new InfoFragment(), "");
+                        }
+                        break;
+                    }
+                    //============================================================================================================
+                    case R.id.nav_item_controls_file_system: {
+                        if (!(mCurrentFragment instanceof FileSystemFragment)) {
+                            replaceFragment(new FileSystemFragment(), "");
                         }
                         break;
                     }

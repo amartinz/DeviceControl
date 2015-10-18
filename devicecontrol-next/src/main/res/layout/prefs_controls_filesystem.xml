@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_fs_io"
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/io_scheduler">
+
+        <org.namelessrom.devicecontrol.preferences.AutoListPreference
+            android:id="@+id/cat_fs_io_scheduler"
+            style="@style/MaterialPreferences.Default"
+            app:prefTitle="@string/io_scheduler" />
+
+        <alexander.martinz.libs.materialpreferences.MaterialPreference
+            android:id="@+id/cat_fs_io_config"
+            style="@style/MaterialPreferences.Default"
+            app:prefTitle="@string/io_scheduler_config" />
+
+    </alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory>
+
+    <!--alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory
+        android:id="@+id/cat_fs_fstrim"
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/fstrim">
+
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/cat_fs_fstrim_enabled"
+            style="@style/MaterialPreferences.Default"
+            app:prefSummary="@string/automatic_fstrim_summary"
+            app:prefTitle="@string/automatic_fstrim" />
+
+        <alexander.martinz.libs.materialpreferences.MaterialListPreference
+            android:id="@+id/cat_fs_fstrim_interval"
+            style="@style/MaterialPreferences.Default"
+            app:prefEntries="@array/fstrim_interval_entries"
+            app:prefEntryValues="@array/fstrim_interval_values"
+            app:prefTitle="@string/fstrim_interval" />
+
+    </alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory -->
+
+</LinearLayout>

@@ -42,10 +42,21 @@
             </menu>
         </item>
     </group>
-    <!-- performance subheader -->
+    <!-- controls subheader -->
     <group
-        android:id="@+id/group_performance"
+        android:id="@+id/group_controls"
         android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_controls"
+            android:title="@string/drawer_title_controls">
+            <menu>
+                <item
+                    android:id="@+id/nav_item_controls_file_system"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_server_24dp"
+                    android:title="@string/drawer_title_controls_file_system" />
+            </menu>
+        </item>
     </group>
     <!-- tools subheader -->
     <group

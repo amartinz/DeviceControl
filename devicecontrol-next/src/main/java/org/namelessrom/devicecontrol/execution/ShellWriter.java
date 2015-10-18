@@ -35,7 +35,6 @@ import rx.schedulers.Schedulers;
  * Created by alex on 25.08.15.
  */
 public class ShellWriter {
-    private Context context;
     private String value;
     private File file;
 
@@ -45,13 +44,12 @@ public class ShellWriter {
         return String.format("value: %s | file: %s | useRoot: %s", value, file, useRoot);
     }
 
-    private ShellWriter(@NonNull Context context) {
-        this.context = context.getApplicationContext();
+    private ShellWriter() {
         useRoot = true;
     }
 
-    public static ShellWriter with(@NonNull Context context) {
-        return new ShellWriter(context);
+    public static ShellWriter with() {
+        return new ShellWriter();
     }
 
     public ShellWriter write(@NonNull String value) {
@@ -88,8 +86,7 @@ public class ShellWriter {
                 }
 
                 // do our expensive operation
-                final boolean success = IoUtils.writeToFile(shellWriter.context, shellWriter.file, shellWriter.value,
-                        shellWriter.useRoot);
+                final boolean success = IoUtils.writeToFile(shellWriter.file, shellWriter.value, shellWriter.useRoot);
 
                 // notify the subscriber
                 subscriber.onNext(success);

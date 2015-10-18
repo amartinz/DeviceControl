@@ -38,6 +38,8 @@ public class Constants {
 
     public static final String PKG_PLAY_STORE = "com.android.vending";
 
+    public static final String IO_SCHED_CONFIG_DIR = "/sys/block/mmcblk0/queue/iosched/";
+
     // whitelisted packages have a disabled selector in the app manager
     public static final HashSet<String> APP_MANAGER_PACKAGE_WHITE_LIST = new HashSet<>();
 

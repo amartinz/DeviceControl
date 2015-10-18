@@ -62,6 +62,7 @@
     <string name="bogomips" translatable="false">BogoMIPS</string>
     <string name="cpu_abi" translatable="false">CPU ABI</string>
     <string name="selinux" translatable="false">SELinux</string>
+    <string name="fstrim">FSTRIM</string>
 
     <!-- dummy strings -->
     <string name="dummy_header_title">OPPO Find7</string>

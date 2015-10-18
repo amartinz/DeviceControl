@@ -16,6 +16,18 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
+    <!-- awesome preference -->
+    <declare-styleable name="AwesomePreference">
+        <attr name="filePath" format="reference" />
+        <attr name="filePathList" format="reference" />
+        <attr name="fileValue" format="reference" />
+        <attr name="category" format="string" />
+        <attr name="startup" format="boolean" />
+        <attr name="multifile" format="boolean" />
+        <attr name="valueChecked" format="string" />
+        <attr name="valueNotChecked" format="string" />
+    </declare-styleable>
+    <!-- foreground image view -->
     <declare-styleable name="ForegroundImageView">
         <attr name="android:foreground" />
     </declare-styleable>

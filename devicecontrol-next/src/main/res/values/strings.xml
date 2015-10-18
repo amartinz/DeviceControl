@@ -20,7 +20,10 @@
     <string name="drawer_title_home">Home</string>
     <!-- info -->
     <string name="drawer_title_info">Information</string>
-    <string name="drawer_title_info_device">@string/device</string>
+    <string name="drawer_title_info_device" translatable="false">@string/device</string>
+    <!-- controls -->
+    <string name="drawer_title_controls">Controls</string>
+    <string name="drawer_title_controls_file_system" translatable="false">@string/file_system</string>
     <!-- tools -->
     <string name="drawer_title_tools">Tools</string>
     <string name="drawer_title_tools_app_manager" translatable="false">@string/app_manager</string>
@@ -175,6 +178,30 @@
 
     <string name="pm_has_died">Android package manager died… :/\n\nThis can happen on some devices, please try refreshing until it works.</string>
 
+    <!-- filesystem -->
+    <string name="file_system">File system</string>
+    <string name="automatic_fstrim">Automatic fstrimming</string>
+    <string name="automatic_fstrim_summary">Fstrim is used to discard (or \"trim\") blocks which are not in use by the filesystem.\nThis can improve performance and reduce lags.</string>
+    <string name="fstrim_interval">Fstrim interval</string>
+    <string name="io_scheduler">I/O scheduler</string>
+    <string name="io_scheduler_config">Configuration</string>
+    <string name="io_scheduler_config_summary">Configure the %s I/O scheduler</string>
+
+    <!-- time units -->
+    <string name="none">None</string>
+    <string name="fifteen_seconds">15 seconds</string>
+    <string name="thirty_seconds">30 seconds</string>
+    <string name="one_minute">1 Minute</string>
+    <string name="five_minutes">5 Minutes</string>
+    <string name="ten_minutes">10 Minutes</string>
+    <string name="fifteen_minutes">15 Minutes</string>
+    <string name="twenty_minutes">20 Minutes</string>
+    <string name="thirty_minutes">30 Minutes</string>
+    <string name="one_hours">1 Hour</string>
+    <string name="two_hours">2 Hours</string>
+    <string name="four_hours">4 Hours</string>
+    <string name="eight_hours">8 Hours</string>
+
     <!-- etc -->
     <string name="action_completed">Action completed successfully!</string>
     <string name="applying_wait">Applying, please wait…</string>
@@ -185,4 +212,10 @@
     <string name="filter">Filter</string>
     <string name="refresh">Refresh</string>
     <string name="open_play_store">View app on Google Play\u2122</string>
+
+    <string name="no_tweaks_available">No tweaks available</string>
+    <string name="no_tweaks_message">Sorry but your device doesn\'t have any supported features</string>
+    <string name="gov_tweaks">Tweakable values: %s</string>
+    <string name="no_gov_tweaks_message">Sorry but this governor has no tunable values</string>
+    <string name="no_io_tweaks_message">Sorry but this I/O scheduler has no tunable values</string>
 </resources>
