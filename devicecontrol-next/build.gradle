@@ -71,8 +71,7 @@ android {
         debug {
             debuggable true
             proguardFile 'proguard.pro'
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
             zipAlignEnabled true
             applicationIdSuffix '.dev'
             versionNameSuffix '-dev'

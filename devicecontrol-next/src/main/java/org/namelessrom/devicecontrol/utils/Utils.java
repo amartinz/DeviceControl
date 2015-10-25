@@ -17,11 +17,18 @@
 
 package org.namelessrom.devicecontrol.utils;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import hugo.weaving.DebugLog;
+
 public class Utils {
+    @DebugLog public static boolean isNext(@NonNull Context context) {
+        return context.getPackageName().endsWith(".next");
+    }
+
     @NonNull public static String listAsString(@NonNull List list) {
         if (list.isEmpty()) {
             return "";

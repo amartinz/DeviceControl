@@ -31,6 +31,7 @@ import com.pollfish.constants.Position;
 import com.pollfish.main.PollFish;
 
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.proprietary.Configuration;
 
 import alexander.martinz.libs.logger.Logger;
@@ -44,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override protected void onResume() {
         super.onResume();
-        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.pref_show_pollfish), true)) {
+        if (!Utils.isNext(this) && PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.pref_show_pollfish), true)) {
             final String pfApiKey = Configuration.getPollfishApiKeyDc();
             if (!TextUtils.equals("---", pfApiKey)) {
                 Logger.v(this, "PollFish.init()");
