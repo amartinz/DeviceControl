@@ -20,7 +20,7 @@ apply plugin: 'com.jakewharton.hugo'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     signingConfigs {
         release {
@@ -145,14 +145,14 @@ dependencies {
     // see https://github.com/ReactiveX/RxAndroid
     compile 'io.reactivex:rxandroid:1.0.1'
     // see https://github.com/ReactiveX/RxJava
-    compile 'io.reactivex:rxjava:1.0.14'
+    compile 'io.reactivex:rxjava:1.0.15'
 
     // see https://github.com/f2prateek/rx-preferences
-    compile 'com.f2prateek.rx.preferences:rx-preferences:1.0.0'
+    compile 'com.f2prateek.rx.preferences:rx-preferences:1.0.1'
 
     // see https://github.com/Kennyc1012/BottomSheet
-    compile 'com.github.Kennyc1012:BottomSheet:2.0.1'
+    compile 'com.github.Kennyc1012:BottomSheet:2.0.3'
 
     // see https://github.com/PhilJay/MPAndroidChart
-    compile 'com.github.PhilJay:MPAndroidChart:v2.1.5'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
 }
