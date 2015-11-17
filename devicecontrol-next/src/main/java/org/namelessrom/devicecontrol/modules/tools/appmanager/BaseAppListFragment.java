@@ -22,7 +22,6 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -209,11 +208,7 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
         builder.setTitle(title);
         builder.setMessage(message);
         builder.setNegativeButton(android.R.string.cancel, null);
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override public void onClick(DialogInterface dialog, int which) {
-                showProcessingDialog(type);
-            }
-        });
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> { showProcessingDialog(type); });
         builder.show();
     }
 
@@ -323,32 +318,30 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
         }
 
         mIsLoading = true;
-        mProgressContainer.post(new Runnable() {
-            @Override public void run() {
-                mProgressContainer.setVisibility(View.VISIBLE);
+        mProgressContainer.post(() -> {
+            mProgressContainer.setVisibility(View.VISIBLE);
 
-                if (animate) {
-                    final ObjectAnimator anim = ObjectAnimator.ofFloat(mProgressContainer, "alpha", 0f, 1f);
-                    anim.addListener(new Animator.AnimatorListener() {
-                        @Override public void onAnimationStart(Animator animation) { }
+            if (animate) {
+                final ObjectAnimator anim = ObjectAnimator.ofFloat(mProgressContainer, "alpha", 0f, 1f);
+                anim.addListener(new Animator.AnimatorListener() {
+                    @Override public void onAnimationStart(Animator animation) { }
 
-                        @Override public void onAnimationEnd(Animator animation) {
-                            final Activity activity = getActivity();
-                            if (activity != null) {
-                                new LoadApps(activity.getPackageManager()).execute();
-                            }
+                    @Override public void onAnimationEnd(Animator animation) {
+                        final Activity activity = getActivity();
+                        if (activity != null) {
+                            new LoadApps(activity.getPackageManager()).execute();
                         }
+                    }
 
-                        @Override public void onAnimationCancel(Animator animation) { }
+                    @Override public void onAnimationCancel(Animator animation) { }
 
-                        @Override public void onAnimationRepeat(Animator animation) { }
-                    });
-                    anim.setDuration(ANIM_DURATION);
-                    anim.start();
-                } else {
-                    mProgressContainer.setAlpha(1f);
-                    new LoadApps(getActivity().getPackageManager()).execute();
-                }
+                    @Override public void onAnimationRepeat(Animator animation) { }
+                });
+                anim.setDuration(ANIM_DURATION);
+                anim.start();
+            } else {
+                mProgressContainer.setAlpha(1f);
+                new LoadApps(getActivity().getPackageManager()).execute();
             }
         });
     }
@@ -427,11 +420,7 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
         }
     }
 
-    private final AppItem.UninstallListener mUninstallListener = new AppItem.UninstallListener() {
-        @Override public void OnUninstallComplete() {
-            loadApps(true);
-        }
-    };
+    private final AppItem.UninstallListener mUninstallListener = () -> loadApps(true);
 
     private final AppSelectedListener mAppSelectedListener = new AppSelectedListener() {
         @Override public void onAppSelected(String packageName, ArrayList<AppItem> selectedApps) {

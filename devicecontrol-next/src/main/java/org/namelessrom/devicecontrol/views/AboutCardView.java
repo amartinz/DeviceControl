@@ -30,7 +30,6 @@ import android.text.style.URLSpan;
 import android.text.util.Linkify;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -77,31 +76,29 @@ public class AboutCardView extends FrameLayout {
     }
 
     public void setupWithActivity(@NonNull final Activity activity) {
-        final OnClickListener onClickListener = new OnClickListener() {
-            @Override public void onClick(View v) {
-                final int id = v.getId();
-                switch (id) {
-                    case R.id.about_card_link_email: {
-                        final Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                        emailIntent.setData(Uri.fromParts("mailto", Constants.EMAIL, null));
-                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Device Control [root]");
-                        emailIntent.putExtra(Intent.EXTRA_TEXT, "");
-                        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{ Constants.EMAIL });
-                        activity.startActivity(Intent.createChooser(emailIntent, activity.getString(R.string.send_email)));
-                        break;
-                    }
-                    case R.id.about_card_link_github: {
-                        AppHelper.launchUrlViaTabs(activity, Constants.GITHUB_BASE_URL);
-                        break;
-                    }
-                    case R.id.about_card_link_googleplus: {
-                        AppHelper.launchUrlViaTabs(activity, Constants.GOOGLE_PLUS_URL);
-                        break;
-                    }
-                    case R.id.about_card_link_linkedin: {
-                        AppHelper.launchUrlViaTabs(activity, Constants.LINKEDIN_URL);
-                        break;
-                    }
+        final OnClickListener onClickListener = v -> {
+            final int id = v.getId();
+            switch (id) {
+                case R.id.about_card_link_email: {
+                    final Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                    emailIntent.setData(Uri.fromParts("mailto", Constants.EMAIL, null));
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Device Control [root]");
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, "");
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{ Constants.EMAIL });
+                    activity.startActivity(Intent.createChooser(emailIntent, activity.getString(R.string.send_email)));
+                    break;
+                }
+                case R.id.about_card_link_github: {
+                    AppHelper.launchUrlViaTabs(activity, Constants.GITHUB_BASE_URL);
+                    break;
+                }
+                case R.id.about_card_link_googleplus: {
+                    AppHelper.launchUrlViaTabs(activity, Constants.GOOGLE_PLUS_URL);
+                    break;
+                }
+                case R.id.about_card_link_linkedin: {
+                    AppHelper.launchUrlViaTabs(activity, Constants.LINKEDIN_URL);
+                    break;
                 }
             }
         };

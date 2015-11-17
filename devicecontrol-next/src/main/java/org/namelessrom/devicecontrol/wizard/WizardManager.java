@@ -110,22 +110,16 @@ public class WizardManager<T> extends BaseFragment {
         final LinearLayout containerView = (LinearLayout) inflater.inflate(R.layout.wizard_page_container, container, false);
 
         mPrevious = (Button) containerView.findViewById(R.id.wizard_previous);
-        mPrevious.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                if (canDoPrevious()) {
-                    onPreviousPage();
-                } else {
-                    onSetupDone(true);
-                }
+        mPrevious.setOnClickListener(v -> {
+            if (canDoPrevious()) {
+                onPreviousPage();
+            } else {
+                onSetupDone(true);
             }
         });
 
         mNext = (Button) containerView.findViewById(R.id.wizard_next);
-        mNext.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                onNextPage();
-            }
-        });
+        mNext.setOnClickListener(v -> onNextPage());
 
         return containerView;
     }

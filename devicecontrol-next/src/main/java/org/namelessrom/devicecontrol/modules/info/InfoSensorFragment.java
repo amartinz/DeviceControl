@@ -50,20 +50,14 @@ public class InfoSensorFragment extends MaterialSupportPreferenceFragment implem
 
         final MaterialPreferenceCategory category = (MaterialPreferenceCategory) view.findViewById(R.id.cat_sensors);
 
-        AsyncTask.execute(new Runnable() {
-            @Override public void run() {
-                final SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        AsyncTask.execute(() -> {
+            final SensorManager sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
 
-                // we need an array list, a normal list throws java.lang.UnsupportedOperationException when sorting
-                final ArrayList<Sensor> sensorList = new ArrayList<>(sensorManager.getSensorList(Sensor.TYPE_ALL));
-                Collections.sort(sensorList, new SortIgnoreCase());
-                for (final Sensor s : sensorList) {
-                    view.post(new Runnable() {
-                        @Override public void run() {
-                            addPreference(category, "", s.getName(), s.getVendor());
-                        }
-                    });
-                }
+            // we need an array list, a normal list throws java.lang.UnsupportedOperationException when sorting
+            final ArrayList<Sensor> sensorList = new ArrayList<>(sensorManager.getSensorList(Sensor.TYPE_ALL));
+            Collections.sort(sensorList, new SortIgnoreCase());
+            for (final Sensor s : sensorList) {
+                view.post(() -> addPreference(category, "", s.getName(), s.getVendor()));
             }
         });
     }

@@ -28,7 +28,6 @@ import org.namelessrom.devicecontrol.execution.ShellWriter;
 
 import alexander.martinz.libs.hardware.utils.IoUtils;
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;
-import alexander.martinz.libs.materialpreferences.MaterialPreference;
 
 /**
  * Automatically handles reading to files to automatically set the value,
@@ -173,22 +172,16 @@ public class AutoListPreference extends MaterialListPreference {
         }
 
         if (mShouldReinit) {
-            postDelayed(new Runnable() {
-                @Override public void run() {
-                    initValue();
-                }
-            }, 200);
+            postDelayed(this::initValue, 200);
         }
     }
 
     public void handleSelf(boolean handleSelf) {
         MaterialPreferenceChangeListener listener = null;
         if (handleSelf) {
-            listener = new MaterialPreferenceChangeListener() {
-                @Override public boolean onPreferenceChanged(MaterialPreference pref, Object o) {
-                    writeValue(String.valueOf(o));
-                    return true;
-                }
+            listener = (pref, o) -> {
+                writeValue(String.valueOf(o));
+                return true;
             };
         }
         setOnPreferenceChangeListener(listener);

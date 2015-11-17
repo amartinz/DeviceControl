@@ -33,18 +33,11 @@ public class CommunityFragment extends BaseFragment {
         final View view = inflater.inflate(R.layout.fragment_community, container, false);
 
         final Button betaButton = (Button) view.findViewById(R.id.betaTestButton);
-        betaButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                AppHelper.launchUrlViaTabs(getActivity(), getString(R.string.non_beta_url));
-            }
-        });
+        betaButton.setOnClickListener(v -> AppHelper.launchUrlViaTabs(getActivity(), getString(R.string.non_beta_url)));
 
         final Button communityButton = (Button) view.findViewById(R.id.communityButton);
-        communityButton.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                AppHelper.launchUrlViaTabs(getActivity(), getString(R.string.non_google_plus_community_url));
-            }
-        });
+        communityButton.setOnClickListener(
+                v -> AppHelper.launchUrlViaTabs(getActivity(), getString(R.string.non_google_plus_community_url)));
 
         final Application application = ((Application) getActivity().getApplicationContext());
         application.getCustomTabsHelper().warmup();

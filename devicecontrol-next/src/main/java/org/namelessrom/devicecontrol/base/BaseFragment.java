@@ -22,8 +22,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
 
-import org.namelessrom.devicecontrol.MainActivity;
-
 public abstract class BaseFragment extends Fragment {
     public static boolean sDisableFragmentAnimations;
 

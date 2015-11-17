@@ -133,60 +133,58 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mDrawerLayout.closeDrawer(GravityCompat.START);
 
         // create runnable, which will get executed once the drawer is closed
-        mDrawerRunnable = new Runnable() {
-            @Override public void run() {
-                // TODO: implement every navigation item
-                final int id = menuItem.getItemId();
-                switch (id) {
-                    case R.id.nav_item_home: {
-                        if (!(mCurrentFragment instanceof HomeFragment)) {
-                            // clear the fragment back stack when getting back to home
-                            final FragmentManager fm = getSupportFragmentManager();
-                            if (fm.getBackStackEntryCount() > 0) {
-                                fm.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                            }
+        mDrawerRunnable = () -> {
+            // TODO: implement every navigation item
+            final int id = menuItem.getItemId();
+            switch (id) {
+                case R.id.nav_item_home: {
+                    if (!(mCurrentFragment instanceof HomeFragment)) {
+                        // clear the fragment back stack when getting back to home
+                        final FragmentManager fm = getSupportFragmentManager();
+                        if (fm.getBackStackEntryCount() > 0) {
+                            fm.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        }
 
-                            // the HomeFragment is the central place, never add it to the back stack
-                            replaceFragment(new HomeFragment(), null);
-                        }
-                        break;
+                        // the HomeFragment is the central place, never add it to the back stack
+                        replaceFragment(new HomeFragment(), null);
                     }
-                    //============================================================================================================
-                    case R.id.nav_item_info_device: {
-                        if (!(mCurrentFragment instanceof InfoFragment)) {
-                            replaceFragment(new InfoFragment(), "");
-                        }
-                        break;
-                    }
-                    //============================================================================================================
-                    case R.id.nav_item_controls_file_system: {
-                        if (!(mCurrentFragment instanceof FileSystemFragment)) {
-                            replaceFragment(new FileSystemFragment(), "");
-                        }
-                        break;
-                    }
-                    //============================================================================================================
-                    case R.id.nav_item_tools_app_manager: {
-                        if (!(mCurrentFragment instanceof AppListFragment)) {
-                            replaceFragment(new AppListFragment(), "");
-                        }
-                        break;
-                    }
-                    //============================================================================================================
-                    case R.id.nav_item_more_about: {
-                        if (!(mCurrentFragment instanceof AboutFragment)) {
-                            replaceFragment(new AboutFragment(), "");
-                        }
-                        break;
-                    }
-                    case R.id.nav_item_more_privacy: {
-                        AppHelper.launchUrlViaTabs(MainActivity.this, getString(R.string.non_dc_privacy_url));
-                        break;
-                    }
+                    break;
                 }
-
-                mDrawerRunnable = null;
+                //============================================================================================================
+                case R.id.nav_item_info_device: {
+                    if (!(mCurrentFragment instanceof InfoFragment)) {
+                        replaceFragment(new InfoFragment(), "");
+                    }
+                    break;
+                }
+                //============================================================================================================
+                case R.id.nav_item_controls_file_system: {
+                    if (!(mCurrentFragment instanceof FileSystemFragment)) {
+                        replaceFragment(new FileSystemFragment(), "");
+                    }
+                    break;
+                }
+                //============================================================================================================
+                case R.id.nav_item_tools_app_manager: {
+                    if (!(mCurrentFragment instanceof AppListFragment)) {
+                        replaceFragment(new AppListFragment(), "");
+                    }
+                    break;
+                }
+                //============================================================================================================
+                case R.id.nav_item_more_about: {
+                    if (!(mCurrentFragment instanceof AboutFragment)) {
+                        replaceFragment(new AboutFragment(), "");
+                    }
+                    break;
+                }
+                case R.id.nav_item_more_privacy: {
+                    AppHelper.launchUrlViaTabs(MainActivity.this, getString(R.string.non_dc_privacy_url));
+                    break;
+                }
             }
+
+            mDrawerRunnable = null;
         };
 
         return true;
@@ -216,11 +214,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         final String commitUrl = String.format(Constants.GITHUB_DC_COMMIT_URL_BASE, splitted[1]);
                         // preheat a bit
                         AppHelper.mayLaunchUrlViaTabs(MainActivity.this, commitUrl);
-                        footerAppVersion.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                            @Override public boolean onMenuItemClick(MenuItem item) {
-                                AppHelper.launchUrlViaTabs(MainActivity.this, commitUrl);
-                                return true;
-                            }
+                        footerAppVersion.setOnMenuItemClickListener(item -> {
+                            AppHelper.launchUrlViaTabs(MainActivity.this, commitUrl);
+                            return true;
                         });
                     }
                 }

@@ -29,8 +29,6 @@ import android.view.ViewGroup;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
-import alexander.martinz.libs.execution.Command;
-import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.execution.ShellManager;
 import alexander.martinz.libs.hardware.device.Device;
 import alexander.martinz.libs.hardware.device.EmmcInfo;
@@ -87,24 +85,10 @@ public class InfoGeneralFragment extends MaterialSupportPreferenceFragment imple
         setupEmmc();
 
         // and make the non async one "fake async"
-        AsyncTask.execute(new Runnable() {
-            @Override public void run() {
-                view.post(new Runnable() {
-                    @Override public void run() {
-                        setupPlatform(device);
-                    }
-                });
-                view.post(new Runnable() {
-                    @Override public void run() {
-                        setupRuntime(device);
-                    }
-                });
-                view.post(new Runnable() {
-                    @Override public void run() {
-                        setupDevice(device);
-                    }
-                });
-            }
+        AsyncTask.execute(() -> {
+            view.post(() -> setupPlatform(device));
+            view.post(() -> setupRuntime(device));
+            view.post(() -> setupDevice(device));
         });
     }
 
@@ -137,59 +121,43 @@ public class InfoGeneralFragment extends MaterialSupportPreferenceFragment imple
     }
 
     private void setupMemory() {
-        MemoryInfo.feedWithInformation(getActivity(), MemoryInfo.TYPE_MB, new Device.MemoryInfoListener() {
-            @Override public void onMemoryInfoAvailable(@NonNull final MemoryInfo memoryInfo) {
-                catMemory.post(new Runnable() {
-                    @Override public void run() {
-                        addPreference(catMemory, "memory_total", R.string.total, MemoryInfo.getAsMb(memoryInfo.total));
-                        addPreference(catMemory, "memory_cached", R.string.cached, MemoryInfo.getAsMb(memoryInfo.cached));
-                        addPreference(catMemory, "memory_free", R.string.free, MemoryInfo.getAsMb(memoryInfo.free));
-                        catMemory.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-        });
+        MemoryInfo.feedWithInformation(getActivity(), MemoryInfo.TYPE_MB, memoryInfo -> catMemory.post(() -> {
+            addPreference(catMemory, "memory_total", R.string.total, MemoryInfo.getAsMb(memoryInfo.total));
+            addPreference(catMemory, "memory_cached", R.string.cached, MemoryInfo.getAsMb(memoryInfo.cached));
+            addPreference(catMemory, "memory_free", R.string.free, MemoryInfo.getAsMb(memoryInfo.free));
+            catMemory.setVisibility(View.VISIBLE);
+        }));
     }
 
     private void setupKernel() {
-        KernelInfo.feedWithInformation(getActivity(), new Device.KernelInfoListener() {
-            @Override public void onKernelInfoAvailable(@NonNull final KernelInfo kernelInfo) {
-                catKernel.post(new Runnable() {
-                    @Override public void run() {
-                        addPreference(catKernel, "kernel_version", R.string.version,
-                                String.format("%s %s", kernelInfo.version, kernelInfo.revision));
-                        addPreference(catKernel, "kernel_extras", R.string.extras, kernelInfo.extras);
-                        addPreference(catKernel, "kernel_gcc", R.string.toolchain, kernelInfo.toolchain);
-                        addPreference(catKernel, "kernel_date", R.string.build_date, kernelInfo.date);
-                        addPreference(catKernel, "kernel_host", R.string.host, kernelInfo.host);
-                        catKernel.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
+        KernelInfo.feedWithInformation(getActivity(), kernelInfo -> {
+            catKernel.post(() -> {
+                addPreference(catKernel, "kernel_version", R.string.version,
+                        String.format("%s %s", kernelInfo.version, kernelInfo.revision));
+                addPreference(catKernel, "kernel_extras", R.string.extras, kernelInfo.extras);
+                addPreference(catKernel, "kernel_gcc", R.string.toolchain, kernelInfo.toolchain);
+                addPreference(catKernel, "kernel_date", R.string.build_date, kernelInfo.date);
+                addPreference(catKernel, "kernel_host", R.string.host, kernelInfo.host);
+                catKernel.setVisibility(View.VISIBLE);
+            });
         });
     }
 
     private void setupEmmc() {
-        EmmcInfo.feedWithInformation(getActivity(), new Device.EmmcInfoListener() {
-            @Override public void onEmmcInfoAvailable(@NonNull final EmmcInfo emmcInfo) {
-                catEmmc.post(new Runnable() {
-                    @Override public void run() {
-                        addPreference(catEmmc, "emmc_name", R.string.name, emmcInfo.name);
-                        addPreference(catEmmc, "emmc_cid", R.string.emmc_cid, emmcInfo.cid);
-                        addPreference(catEmmc, "emmc_mid", R.string.emmc_mid, emmcInfo.mid);
-                        addPreference(catEmmc, "emmc_rev", R.string.emmc_rev, emmcInfo.rev);
-                        addPreference(catEmmc, "emmc_date", R.string.emmc_date, emmcInfo.date);
+        EmmcInfo.feedWithInformation(getActivity(), emmcInfo -> catEmmc.post(() -> {
+            addPreference(catEmmc, "emmc_name", R.string.name, emmcInfo.name);
+            addPreference(catEmmc, "emmc_cid", R.string.emmc_cid, emmcInfo.cid);
+            addPreference(catEmmc, "emmc_mid", R.string.emmc_mid, emmcInfo.mid);
+            addPreference(catEmmc, "emmc_rev", R.string.emmc_rev, emmcInfo.rev);
+            addPreference(catEmmc, "emmc_date", R.string.emmc_date, emmcInfo.date);
 
-                        String tmp = emmcInfo.canBrick()
-                                ? getString(R.string.emmc_can_brick_true) : getString(R.string.emmc_can_brick_false);
-                        tmp = String.format("%s\n%s", tmp, getString(R.string.press_learn_more));
-                        addPreference(catEmmc, "emmc_can_brick", R.string.emmc_can_brick, tmp)
-                                .setOnPreferenceClickListener(InfoGeneralFragment.this);
-                        catEmmc.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-        });
+            String tmp = emmcInfo.canBrick()
+                    ? getString(R.string.emmc_can_brick_true) : getString(R.string.emmc_can_brick_false);
+            tmp = String.format("%s\n%s", tmp, getString(R.string.press_learn_more));
+            addPreference(catEmmc, "emmc_can_brick", R.string.emmc_can_brick, tmp)
+                    .setOnPreferenceClickListener(InfoGeneralFragment.this);
+            catEmmc.setVisibility(View.VISIBLE);
+        }));
     }
 
     private MaterialPreference addPreference(MaterialPreferenceCategory category, String key, int titleResId, String summary) {

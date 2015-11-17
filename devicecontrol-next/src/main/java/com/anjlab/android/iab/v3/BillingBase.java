@@ -53,7 +53,7 @@ class BillingBase {
 		if (sp != null) {
 			SharedPreferences.Editor spe = sp.edit();
 			spe.putString(key, value);
-			spe.commit();
+			spe.apply();
 			return true;
 		}
 		return false;
@@ -71,7 +71,7 @@ class BillingBase {
 		if (sp != null) {
 			SharedPreferences.Editor spe = sp.edit();
 			spe.putBoolean(key, value);
-			spe.commit();
+			spe.apply();
 			return true;
 		}
 		return false;

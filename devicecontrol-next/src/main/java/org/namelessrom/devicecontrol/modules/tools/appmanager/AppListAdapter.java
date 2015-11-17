@@ -17,11 +17,9 @@
  */
 package org.namelessrom.devicecontrol.modules.tools.appmanager;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -34,7 +32,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -110,12 +107,9 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
 
             container = (LinearLayout) v.findViewById(R.id.app_details_container);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                container.setOnTouchListener(new View.OnTouchListener() {
-                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-                    @Override public boolean onTouch(View v, MotionEvent event) {
-                        v.getBackground().setHotspot(event.getX(), event.getY());
-                        return false;
-                    }
+                container.setOnTouchListener((v1, event) -> {
+                    v1.getBackground().setHotspot(event.getX(), event.getY());
+                    return false;
                 });
             }
             container.setOnClickListener(new View.OnClickListener() {
@@ -226,17 +220,9 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                         new AlertDialog.Builder(mActivity)
                                 .setMessage(message)
                                 .setNegativeButton(android.R.string.cancel,
-                                        new DialogInterface.OnClickListener() {
-                                            @Override public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        })
+                                        (dialog, which) -> { dialog.dismiss(); })
                                 .setPositiveButton(android.R.string.yes,
-                                        new DialogInterface.OnClickListener() {
-                                            @Override public void onClick(DialogInterface dialog, int which) {
-                                                appItem.uninstall(mActivity, mUninstallListener);
-                                            }
-                                        })
+                                        (dialog, which) -> { appItem.uninstall(mActivity, mUninstallListener); })
                                 .show();
                         break;
                     }

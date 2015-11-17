@@ -47,12 +47,7 @@ public class PackageStatsObserver extends IPackageStatsObserver.Stub {
     }
 
     @DebugLog @Override public void onGetStatsCompleted(final PackageStats pStats, final boolean success) throws RemoteException {
-        Application.HANDLER.post(new Runnable() {
-            @Override
-            public void run() {
-                packageStatsListener.onPackageStats(pStats);
-            }
-        });
+        Application.HANDLER.post(() -> packageStatsListener.onPackageStats(pStats));
     }
 
     public interface OnPackageStatsListener {

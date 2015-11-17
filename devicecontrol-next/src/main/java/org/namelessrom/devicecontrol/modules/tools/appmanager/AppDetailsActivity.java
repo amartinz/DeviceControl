@@ -18,7 +18,6 @@
 package org.namelessrom.devicecontrol.modules.tools.appmanager;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -384,25 +383,15 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
             return;
         }
 
-        AsyncTask.execute(new Runnable() {
-            @Override public void run() {
-                final boolean isAppRunning = AppHelper.isAppRunning(AppDetailsActivity.this, mAppItem.getPackageName());
-                mForceStop.post(new Runnable() {
-                    @Override public void run() {
-                        mForceStop.setEnabled(isAppRunning);
-                    }
-                });
-            }
+        AsyncTask.execute(() -> {
+            final boolean isAppRunning = AppHelper.isAppRunning(AppDetailsActivity.this, mAppItem.getPackageName());
+            mForceStop.post(() -> mForceStop.setEnabled(isAppRunning));
         });
     }
 
     private void forceStopApp() {
         AppHelper.killProcess(this, mAppItem.getPackageName());
-        mHandler.postDelayed(new Runnable() {
-            @Override public void run() {
-                refreshAppControls();
-            }
-        }, 500);
+        mHandler.postDelayed(this::refreshAppControls, 500);
     }
 
     private void disableApp() {
@@ -428,17 +417,15 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         if (mAppItem == null) {
             return;
         }
-        runOnUiThread(new Runnable() {
-            @Override public void run() {
-                invalidateOptionsMenu();
+        runOnUiThread(() -> {
+            final boolean isEnabled = !mAppItem.isEnabled();
+            mAppItem.setEnabled(isEnabled);
 
-                final boolean isEnabled = !mAppItem.isEnabled();
-                mAppItem.setEnabled(isEnabled);
-
-                if (mAppContainer != null) {
-                    mAppContainer.setBackgroundResource(isEnabled ? android.R.color.transparent : R.color.darker_gray);
-                }
+            if (mAppContainer != null) {
+                mAppContainer.setBackgroundResource(isEnabled ? android.R.color.transparent : R.color.darker_gray);
             }
+
+            invalidateOptionsMenu();
         });
     }
 
@@ -555,37 +542,27 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         }
 
         builder.setMessage(message)
-                .setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialog, int which) {
-                        switch (type) {
-                            case DIALOG_TYPE_DISABLE: {
-                                mAppItem.disableOrEnable(new AppItem.DisableEnableListener() {
-                                    @Override public void OnDisabledOrEnabled() {
-                                        updateAppEnabled();
-                                    }
-                                });
-                                break;
-                            }
-                            case DIALOG_TYPE_UNINSTALL: {
-                                mAppItem.uninstall(AppDetailsActivity.this, new AppItem.UninstallListener() {
-                                    @Override public void OnUninstallComplete() {
-                                        mAppItem = null;
-                                        AppDetailsActivity.this.finish();
-                                    }
-                                });
-                                break;
-                            }
-                            default: {
-                                dialog.dismiss();
-                                break;
-                            }
+                .setPositiveButton(positiveButton, (dialog, which) -> {
+                    switch (type) {
+                        case DIALOG_TYPE_DISABLE: {
+                            mAppItem.disableOrEnable(this::updateAppEnabled);
+                            break;
+                        }
+                        case DIALOG_TYPE_UNINSTALL: {
+                            mAppItem.uninstall(AppDetailsActivity.this, () -> {
+                                mAppItem = null;
+                                AppDetailsActivity.this.finish();
+                            });
+                            break;
+                        }
+                        default: {
+                            dialog.dismiss();
+                            break;
                         }
                     }
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                    dialog.dismiss();
                 });
 
         builder.show();

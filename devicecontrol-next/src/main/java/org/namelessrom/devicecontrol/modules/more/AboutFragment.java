@@ -40,11 +40,9 @@ public class AboutFragment extends BaseFragment {
         final AboutCardView aboutCardView = (AboutCardView) view.findViewById(R.id.about_card_view);
         aboutCardView.setupWithActivity(getActivity());
 
-        view.findViewById(R.id.about_donate).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                final Intent intent = new Intent(getActivity(), DonationActivity.class);
-                startActivity(intent);
-            }
+        view.findViewById(R.id.about_donate).setOnClickListener(v -> {
+            final Intent intent = new Intent(getActivity(), DonationActivity.class);
+            startActivity(intent);
         });
 
         return view;

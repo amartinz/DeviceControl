@@ -28,7 +28,6 @@ import org.namelessrom.devicecontrol.execution.ShellWriter;
 
 import alexander.martinz.libs.hardware.utils.IoUtils;
 import alexander.martinz.libs.materialpreferences.MaterialEditTextPreference;
-import alexander.martinz.libs.materialpreferences.MaterialPreference;
 
 /**
  * Automatically handles reading to files to automatically set the value,
@@ -163,21 +162,15 @@ public class AutoEditTextPreference extends MaterialEditTextPreference {
             }*/
         }
 
-        postDelayed(new Runnable() {
-            @Override public void run() {
-                initValue();
-            }
-        }, 200);
+        postDelayed(AutoEditTextPreference.this::initValue, 200);
     }
 
     public void handleSelf(boolean handleSelf) {
         MaterialPreferenceChangeListener listener = null;
         if (handleSelf) {
-            listener = new MaterialPreferenceChangeListener() {
-                @Override public boolean onPreferenceChanged(MaterialPreference pref, Object o) {
-                    writeValue(String.valueOf(o));
-                    return true;
-                }
+            listener = (pref, o) -> {
+                writeValue(String.valueOf(o));
+                return true;
             };
         }
         setOnPreferenceChangeListener(listener);

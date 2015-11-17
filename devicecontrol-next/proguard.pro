@@ -91,6 +91,9 @@
 # Do not break our reflection voodoo
 -keep class android.content.pm.IPackageStatsObserver
 
+# Retrolambda
+-dontwarn java.lang.invoke.*
+
 ### Workarounds
 
 # AppCompat - SearchView

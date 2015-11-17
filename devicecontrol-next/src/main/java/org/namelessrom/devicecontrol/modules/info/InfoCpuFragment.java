@@ -27,7 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,6 @@ import java.util.List;
 import alexander.martinz.libs.hardware.cpu.CpuInformation;
 import alexander.martinz.libs.hardware.cpu.CpuInformationListener;
 import alexander.martinz.libs.hardware.cpu.CpuReader;
-import alexander.martinz.libs.hardware.device.Device;
 import alexander.martinz.libs.hardware.device.ProcessorInfo;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
@@ -45,8 +43,6 @@ import hugo.weaving.DebugLog;
 public class InfoCpuFragment extends MaterialSupportPreferenceFragment {
     private MaterialPreferenceCategory catProcessor;
     private MaterialPreferenceCategory catCpu;
-
-    private ArrayList<MaterialPreference> cpuCoreList = new ArrayList<>();
 
     @Override protected int getLayoutResourceId() {
         return R.layout.pref_info_cpu;
@@ -69,49 +65,43 @@ public class InfoCpuFragment extends MaterialSupportPreferenceFragment {
     }
 
     private void setupProcessor() {
-        ProcessorInfo.feedWithInformation(getActivity(), new Device.ProcessorInfoListener() {
-            @Override public void onProcessorInfoAvailable(@NonNull final ProcessorInfo processorInfo) {
-                catProcessor.post(new Runnable() {
-                    @Override public void run() {
-                        final int bitResId = processorInfo.is64Bit ? R.string.bit_64 : R.string.bit_32;
-                        addPreference(catProcessor, "cpu_bit", R.string.arch, getString(bitResId));
+        ProcessorInfo.feedWithInformation(getActivity(), processorInfo -> {
+            catProcessor.post(() -> {
+                final int bitResId = processorInfo.is64Bit ? R.string.bit_64 : R.string.bit_32;
+                addPreference(catProcessor, "cpu_bit", R.string.arch, getString(bitResId));
 
-                        final String cpuAbi = getString(R.string.cpu_abi);
-                        final List<String> abis = processorInfo.abisAsList();
-                        final int length = abis.size();
-                        for (int i = 0; i < length; i++) {
-                            String abi = "cpu_abi";
-                            String title = cpuAbi;
-                            if (i != 0) {
-                                abi = String.format("cpu_abi%s", i + 1);
-                                title += String.valueOf(i + 1);
-                            }
-                            addPreference(catProcessor, abi, title, abis.get(i));
-                        }
-
-                        addPreference(catProcessor, "cpu_hardware", R.string.hardware, processorInfo.hardware);
-                        addPreference(catProcessor, "cpu_processor", R.string.processor, processorInfo.processor);
-                        addPreference(catProcessor, "cpu_features", R.string.features, processorInfo.features);
-                        addPreference(catProcessor, "cpu_bogomips", R.string.bogomips, processorInfo.bogomips);
-                        catProcessor.setVisibility(View.VISIBLE);
+                final String cpuAbi = getString(R.string.cpu_abi);
+                final List<String> abis = processorInfo.abisAsList();
+                final int length = abis.size();
+                for (int i = 0; i < length; i++) {
+                    String abi = "cpu_abi";
+                    String title = cpuAbi;
+                    if (i != 0) {
+                        abi = String.format("cpu_abi%s", i + 1);
+                        title += String.valueOf(i + 1);
                     }
-                });
-            }
+                    addPreference(catProcessor, abi, title, abis.get(i));
+                }
+
+                addPreference(catProcessor, "cpu_hardware", R.string.hardware, processorInfo.hardware);
+                addPreference(catProcessor, "cpu_processor", R.string.processor, processorInfo.processor);
+                addPreference(catProcessor, "cpu_features", R.string.features, processorInfo.features);
+                addPreference(catProcessor, "cpu_bogomips", R.string.bogomips, processorInfo.bogomips);
+                catProcessor.setVisibility(View.VISIBLE);
+            });
         });
     }
 
     private void setupCpu() {
         CpuReader.getCpuInformation(getActivity(), new CpuInformationListener() {
             @Override public void onCpuInformation(@NonNull final CpuInformation cpuInformation) {
-                catCpu.post(new Runnable() {
-                    @Override public void run() {
-                        addPreference(catCpu, "cpu_core_count", R.string.cores, Integer.toString(cpuInformation.coreCount));
-                        addPreference(catCpu, "cpu_freq_avail", R.string.frequency_available,
-                                CpuInformation.listFrequenciesFormatted(cpuInformation.freqAvail));
-                        addPreference(catCpu, "cpu_freq_min_max", R.string.clock_speed, String.format("%s - %s",
-                                cpuInformation.freqAsMhz(cpuInformation.freqMin),
-                                cpuInformation.freqAsMhz(cpuInformation.freqMax)));
-                    }
+                catCpu.post(() -> {
+                    addPreference(catCpu, "cpu_core_count", R.string.cores, Integer.toString(cpuInformation.coreCount));
+                    addPreference(catCpu, "cpu_freq_avail", R.string.frequency_available,
+                            CpuInformation.listFrequenciesFormatted(cpuInformation.freqAvail));
+                    addPreference(catCpu, "cpu_freq_min_max", R.string.clock_speed, String.format("%s - %s",
+                            cpuInformation.freqAsMhz(cpuInformation.freqMin),
+                            cpuInformation.freqAsMhz(cpuInformation.freqMax)));
                 });
             }
         });

@@ -50,8 +50,7 @@ public class PermissionItemView extends LinearLayout implements View.OnClickList
         setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View v) {
+    @Override public void onClick(View v) {
         if (mGroup != null && mPerm != null) {
             if (mDialog != null) {
                 mDialog.dismiss();
@@ -69,8 +68,7 @@ public class PermissionItemView extends LinearLayout implements View.OnClickList
                 } catch (PackageManager.NameNotFoundException e) {
                     appName = mPerm.packageName;
                 }
-                builder.setMessage(getContext().getString(R.string.perms_description_app, appName)
-                                   + "\n\n" + mPerm.name);
+                builder.setMessage(getContext().getString(R.string.perms_description_app, appName) + "\n\n" + mPerm.name);
             }
             builder.setCancelable(true);
             builder.setIcon(mGroup.loadGroupIcon(pm));
@@ -79,8 +77,7 @@ public class PermissionItemView extends LinearLayout implements View.OnClickList
         }
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
+    @Override protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         if (mDialog != null) {
             mDialog.dismiss();

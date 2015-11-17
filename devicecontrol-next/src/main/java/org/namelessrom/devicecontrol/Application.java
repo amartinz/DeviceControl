@@ -105,11 +105,7 @@ public class Application extends android.app.Application {
                         }
                     }
                 });
-        rxPreferences.getBoolean(getString(R.string.pref_cache_external), true).asObservable().subscribe(new Action1<Boolean>() {
-            @Override public void call(Boolean useExternal) {
-                buildCache(useExternal);
-            }
-        });
+        rxPreferences.getBoolean(getString(R.string.pref_cache_external), true).asObservable().subscribe(this::buildCache);
 
         // set up request queue for volley
         mRequestQueue = Volley.newRequestQueue(this);
@@ -154,30 +150,18 @@ public class Application extends android.app.Application {
         ShellWriter.with()
                 .write("test")
                 .into(testFile)
-                .start(new Action1<Boolean>() {
-                    @Override public void call(Boolean success) {
-                        Logger.v(TAG, "Could write to %s -> %s", testFile.getAbsolutePath(), success);
-                    }
-                });
+                .start((success) -> Logger.v(TAG, "Could write to %s -> %s", testFile.getAbsolutePath(), success));
 
         final String KMSG_PATH = "/dev/kmsg";
         ShellWriter.with()
                 .disableRoot() // expected to fail to write to /dev/kmsg without root
                 .write(String.format("%s: %s", TAG, "this is a test without root"))
                 .into(KMSG_PATH)
-                .start(new Action1<Boolean>() {
-                    @Override public void call(Boolean success) {
-                        Logger.v(this, "Could write to %s without root -> %s", KMSG_PATH, success);
-                    }
-                });
+                .start((success) -> Logger.v(this, "Could write to %s without root -> %s", KMSG_PATH, success));
 
         ShellWriter.with()
                 .write(String.format("%s: %s", TAG, "this is a test as root"))
                 .into(KMSG_PATH)
-                .start(new Action1<Boolean>() {
-                    @Override public void call(Boolean success) {
-                        Logger.v(this, "Could write to %s with root -> %s", KMSG_PATH, success);
-                    }
-                });
+                .start((success) -> Logger.v(this, "Could write to %s with root -> %s", KMSG_PATH, success));
     }
 }
