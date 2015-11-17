@@ -30,6 +30,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.f2prateek.rx.preferences.RxSharedPreferences;
 
+import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
 import org.namelessrom.devicecontrol.execution.ShellWriter;
 
@@ -85,8 +86,7 @@ public class Application extends android.app.Application {
         super.onCreate();
 
         // initialize crash reporting
-        // TODO: re-enable once key store fix got released
-        //ACRA.init(this);
+        ACRA.init(this);
 
         // enable until we hit the preference
         Logger.setEnabled(true);
