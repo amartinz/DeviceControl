@@ -156,4 +156,7 @@ dependencies {
 
     // see https://github.com/PhilJay/MPAndroidChart
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
+
+    // see https://github.com/tbruyelle/RxPermissions
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.4.2@aar'
 }

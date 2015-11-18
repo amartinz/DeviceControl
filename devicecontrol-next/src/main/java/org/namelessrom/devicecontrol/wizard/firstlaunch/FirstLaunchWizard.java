@@ -20,9 +20,11 @@ package org.namelessrom.devicecontrol.wizard.firstlaunch;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
+import org.namelessrom.devicecontrol.BuildConfig;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.wizard.WizardCallbacks;
 import org.namelessrom.devicecontrol.wizard.WizardManager;
@@ -31,6 +33,11 @@ public class FirstLaunchWizard extends WizardManager<FirstLaunchWizard> {
     public boolean isSetupActive;
 
     public static boolean isFirstLaunch(@NonNull Context context) {
+        // always launch wizard when debugging for now
+        if (BuildConfig.DEBUG) {
+            return true;
+        }
+
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getBoolean(context.getString(R.string.pref_first_launch), true);
     }
@@ -41,10 +48,14 @@ public class FirstLaunchWizard extends WizardManager<FirstLaunchWizard> {
     }
 
     public static FirstLaunchWizard create(@NonNull WizardCallbacks callbacks) {
-        return new FirstLaunchWizard()
-                .setCallbacks(callbacks)
-                .addPage(new FirstLaunchWelcomePage())
-                // TODO: add more pages as we have more configuration to offer
-                .addPage(new FirstLaunchFinishPage());
+        final FirstLaunchWizard firstLaunchWizard = new FirstLaunchWizard().setCallbacks(callbacks);
+        firstLaunchWizard.addPage(new FirstLaunchWelcomePage());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            firstLaunchWizard.addPage(new FirstLaunchPermissionMPage());
+        }
+
+        firstLaunchWizard.addPage(new FirstLaunchFinishPage());
+        return firstLaunchWizard;
     }
 }

@@ -91,6 +91,8 @@ public class Application extends android.app.Application {
         // enable until we hit the preference
         Logger.setEnabled(true);
 
+        Logger.v(this, "Is debug build -> %s", BuildConfig.DEBUG);
+
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final RxSharedPreferences rxPreferences = RxSharedPreferences.create(sharedPreferences);
 

@@ -202,6 +202,14 @@
     <string name="four_hours">4 Hours</string>
     <string name="eight_hours">8 Hours</string>
 
+    <!-- permissions -->
+    <string name="grant">Grant</string>
+    <string name="granted">Granted</string>
+    <string name="perm_intro_title">Required permissions</string>
+    <string name="perm_intro_message">Starting with Android M (6.0), the user needs to explicitly allow permissions, else apps can not make use of them.\n\nBelow you can find the required permissions of Device Control with an explanation why they are needed.\n\nNote: If you do not grant all required permissions, some features may be limited!</string>
+    <string name="perm_storage">Storage</string>
+    <string name="perm_storage_explanation">Storage access is needed to cache files on the external storage and for file interactions to work.</string>
+
     <!-- etc -->
     <string name="action_completed">Action completed successfully!</string>
     <string name="applying_wait">Applying, please wait…</string>

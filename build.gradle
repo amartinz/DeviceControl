@@ -3,6 +3,7 @@ buildscript {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
+        maven { url "http://dl.bintray.com/tbruyelle/tbruyelle" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.5.0'
@@ -23,6 +24,7 @@ allprojects {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
+        maven { url "http://dl.bintray.com/tbruyelle/tbruyelle" }
     }
 
     // stfu gradle

@@ -16,12 +16,15 @@ public class ThemeHelper {
     private final Context mContext;
 
     private int mAccentColor;
+    private int mPrimaryColor;
     private int mCardBackgroundColor;
 
     private ThemeHelper(@NonNull final Context context) {
         mContext = context;
 
         mAccentColor = ContextCompat.getColor(mContext, R.color.accent);
+
+        mPrimaryColor = ContextCompat.getColor(mContext, R.color.primary);
 
         mCardBackgroundColor = isDarkTheme()
                 ? ContextCompat.getColor(mContext, R.color.cardview_dark_background)
@@ -47,6 +50,10 @@ public class ThemeHelper {
     public ThemeHelper setAccentColor(@ColorRes int accentColor) {
         mAccentColor = ContextCompat.getColor(mContext, accentColor);
         return this;
+    }
+
+    public int getPrimaryColor() {
+        return mPrimaryColor;
     }
 
     public int getCardBackgroundColor() {

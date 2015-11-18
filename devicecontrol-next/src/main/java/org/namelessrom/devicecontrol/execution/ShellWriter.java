@@ -77,7 +77,7 @@ public class ShellWriter {
 
     public Observable<Boolean> create() {
         final ShellWriter shellWriter = this;
-        Logger.v(this, shellWriter.toString());
+        Logger.v(shellWriter, shellWriter.toString());
         return Observable.create(new Observable.OnSubscribe<Boolean>() {
             @Override public void call(Subscriber<? super Boolean> subscriber) {
                 if (subscriber.isUnsubscribed()) {

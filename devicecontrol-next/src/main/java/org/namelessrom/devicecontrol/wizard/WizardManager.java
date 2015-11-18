@@ -44,6 +44,8 @@ public class WizardManager<T> extends BaseFragment {
     protected Button mNext;
     protected Button mPrevious;
 
+    private boolean mHasSetupStarted;
+
     public WizardManager() {
         super();
     }
@@ -76,6 +78,7 @@ public class WizardManager<T> extends BaseFragment {
     public void start() {
         if (mActivity != null) {
             if (mWizardPages == null || mWizardPages.isEmpty()) {
+                // TODO: check for 6.0 when leaving app, toggling permissions and resuming
                 throw new RuntimeException("WizardPages must not be null or empty!");
             }
             mPageIndex = -1;
@@ -126,7 +129,10 @@ public class WizardManager<T> extends BaseFragment {
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        start();
+        if (!mHasSetupStarted) {
+            start();
+            mHasSetupStarted = true;
+        }
     }
 
     public void updateButtons() {
