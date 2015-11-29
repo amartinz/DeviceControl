@@ -19,6 +19,7 @@ package org.namelessrom.devicecontrol;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.net.Uri;
@@ -85,7 +86,11 @@ public class CustomTabsHelper {
             AppHelper.viewInBrowser(activity, url);
             return;
         }
-        createBuilder(activity).enableUrlBarHiding().build().launchUrl(activity, Uri.parse(url));
+        try {
+            createBuilder(activity).enableUrlBarHiding().build().launchUrl(activity, Uri.parse(url));
+        } catch (ActivityNotFoundException anfe) {
+            Logger.e(this, "could not launch url!", anfe);
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
