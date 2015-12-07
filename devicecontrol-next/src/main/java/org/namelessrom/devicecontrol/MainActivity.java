@@ -94,7 +94,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawerHeaderSettings.setImageDrawable(DrawableHelper.tintDrawable(this, R.drawable.ic_settings_black_36dp, Color.WHITE));
         drawerHeaderSettings.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
 
-        if (FirstLaunchWizard.isFirstLaunch(this)) {
+        isFirstLaunch = FirstLaunchWizard.isFirstLaunch(this);
+        if (isFirstLaunch) {
             mFirstLaunchWizard = FirstLaunchWizard.create(mWizardCallbacks);
             replaceFragment(mFirstLaunchWizard, null);
         } else {

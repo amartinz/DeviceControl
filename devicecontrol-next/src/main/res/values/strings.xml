@@ -37,7 +37,7 @@
     <!-- community -->
     <string name="community">Community</string>
     <string name="community_message">If you need help, have feedback, ideas or feature requests or if you just want to discuss,
-        you can join our<b>Google+ community</b>.\n\nWith joining the community, you can also participate in BETA tests.\nBETA
+        you can join our <b>Google+ community</b>.\n\nWith joining the community, you can also participate in BETA tests.\nBETA
         builds can be less stable, but you will get more frequent updates with the latest features and fixes.
     </string>
     <string name="join_beta_test">Join BETA</string>

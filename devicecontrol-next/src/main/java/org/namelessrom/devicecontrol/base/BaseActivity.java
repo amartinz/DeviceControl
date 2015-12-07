@@ -17,6 +17,7 @@
 
 package org.namelessrom.devicecontrol.base;
 
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import com.pollfish.constants.Position;
 import com.pollfish.main.PollFish;
 
 import org.namelessrom.devicecontrol.BuildConfig;
+import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.proprietary.Configuration;
@@ -44,10 +46,26 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected BaseFragment mCurrentFragment;
 
+    protected boolean isFirstLaunch;
+
     @Override protected void onResume() {
         super.onResume();
-        if (!Utils.isNext(this) && PreferenceManager.getDefaultSharedPreferences(this)
-                .getBoolean(getString(R.string.pref_show_pollfish), BuildConfig.DEBUG)) {
+        initPollFish();
+    }
+
+    private void initPollFish() {
+        // only show on MainActivity
+        if (!(this instanceof MainActivity)) {
+            return;
+        }
+
+        // if this is our first launch or if this is the next app, do not show pollfish
+        if (isFirstLaunch || Utils.isNext(this)) {
+            return;
+        }
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean(getString(R.string.pref_show_pollfish), BuildConfig.DEBUG)) {
             final String pfApiKey = Configuration.getPollfishApiKeyDc();
             if (!TextUtils.equals("---", pfApiKey)) {
                 Logger.v(this, "PollFish.init()");
