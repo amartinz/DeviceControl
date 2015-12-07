@@ -17,18 +17,19 @@
 
 package org.namelessrom.devicecontrol;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.util.LruCache;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.f2prateek.rx.preferences.RxSharedPreferences;
 
 import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
@@ -38,7 +39,6 @@ import java.io.File;
 
 import alexander.martinz.libs.logger.Logger;
 import hugo.weaving.DebugLog;
-import rx.functions.Action1;
 import uk.co.senab.bitmapcache.BitmapLruCache;
 
 @ReportsCrashes(
@@ -51,8 +51,8 @@ import uk.co.senab.bitmapcache.BitmapLruCache;
         // this is caused by the switch to HttpURLConnection for 6.0
         sendReportsAtShutdown = false
 )
-public class Application extends android.app.Application {
-    private static final String TAG = Application.class.getSimpleName();
+public class DCApplication extends android.app.Application {
+    private static final String TAG = DCApplication.class.getSimpleName();
 
     public static final Handler HANDLER = new Handler(Looper.getMainLooper());
 
@@ -82,6 +82,10 @@ public class Application extends android.app.Application {
         }
     }
 
+    public static DCApplication get(@NonNull final Context context) {
+        return (DCApplication) context.getApplicationContext();
+    }
+
     @Override public void onCreate() {
         super.onCreate();
 
@@ -94,20 +98,16 @@ public class Application extends android.app.Application {
         Logger.v(this, "Is debug build -> %s", BuildConfig.DEBUG);
 
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        final RxSharedPreferences rxPreferences = RxSharedPreferences.create(sharedPreferences);
+        final boolean enableLogger = sharedPreferences.getBoolean(getString(R.string.pref_enable_logger), BuildConfig.DEBUG);
+        Logger.setEnabled(enableLogger);
+        Logger.d(this, "Logger enabled -> %s", Logger.getEnabled());
 
-        rxPreferences.getBoolean(getString(R.string.pref_enable_logger), BuildConfig.DEBUG).asObservable()
-                .subscribe(new Action1<Boolean>() {
-                    @Override public void call(Boolean enableLogger) {
-                        Logger.setEnabled(enableLogger);
-                        Logger.d(this, "Logger enabled -> %s", Logger.getEnabled());
+        if (Logger.getEnabled()) {
+            testShellWriter();
+        }
 
-                        if (Logger.getEnabled()) {
-                            testShellWriter();
-                        }
-                    }
-                });
-        rxPreferences.getBoolean(getString(R.string.pref_cache_external), true).asObservable().subscribe(this::buildCache);
+        final boolean useExternalCache = sharedPreferences.getBoolean(getString(R.string.pref_cache_external), true);
+        buildCache(useExternalCache);
 
         // set up request queue for volley
         mRequestQueue = Volley.newRequestQueue(this);

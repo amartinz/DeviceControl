@@ -17,13 +17,12 @@
 package org.namelessrom.devicecontrol.modules.home;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.DCApplication;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.base.BaseFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -39,8 +38,7 @@ public class CommunityFragment extends BaseFragment {
         communityButton.setOnClickListener(
                 v -> AppHelper.launchUrlViaTabs(getActivity(), getString(R.string.non_google_plus_community_url)));
 
-        final Application application = ((Application) getActivity().getApplicationContext());
-        application.getCustomTabsHelper().warmup();
+        DCApplication.get(getContext()).getCustomTabsHelper().warmup();
 
         return view;
     }

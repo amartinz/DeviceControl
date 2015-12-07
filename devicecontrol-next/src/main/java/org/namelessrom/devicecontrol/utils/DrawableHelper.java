@@ -17,10 +17,16 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -49,6 +55,13 @@ public class DrawableHelper {
         final ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
         return new ByteArrayInputStream(bos.toByteArray());
+    }
+
+    public static Drawable tintDrawable(@NonNull Context context, @DrawableRes int drawableResId, @ColorInt int tint) {
+        Drawable drawable = ContextCompat.getDrawable(context, drawableResId);
+        drawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(drawable, tint);
+        return drawable;
     }
 
 }

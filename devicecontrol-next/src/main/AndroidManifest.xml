@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (C) 2013 - 2015 Alexander Martinz
   ~
@@ -13,10 +14,8 @@
   ~
   ~ You should have received a copy of the GNU General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<manifest
-    package="org.namelessrom.devicecontrol"
+-->
+<manifest package="org.namelessrom.devicecontrol"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:installLocation="internalOnly">
@@ -48,7 +47,7 @@
     <!-- Device Information -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <!--suppress DeprecatedClassUsageInspection -->
+    <!-- suppress DeprecatedClassUsageInspection -->
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.REAL_GET_TASKS" />
 
@@ -69,11 +68,10 @@
     <uses-feature android:name="android.hardware.sensor" android:required="false" />
     <uses-feature android:name="android.hardware.telephony" android:required="false" />
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
-
     <uses-feature android:name="android.software.leanback" android:required="false" />
 
     <application
-        android:name=".Application"
+        android:name=".DCApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_devicecontrol"
         android:label="@string/app_name_device_control"
@@ -112,14 +110,31 @@
 
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
-
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settings"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.namelessrom.devicecontrol.MainActivity" />
         </activity>
         <activity
             android:name=".modules.home.DonationActivity"
-            android:label="@string/donate_heart" />
+            android:label="@string/donate_heart"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.namelessrom.devicecontrol.MainActivity" />
+        </activity>
         <activity
             android:name=".modules.info.SensorActivity"
-            android:label="@string/sensors" />
+            android:label="@string/sensors"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.namelessrom.devicecontrol.MainActivity" />
+        </activity>
 
         <!-- app manager -->
         <activity
@@ -131,8 +146,10 @@
             android:taskAffinity="">
             <intent-filter>
                 <action android:name="android.settings.MANAGE_APPLICATIONS_SETTINGS" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.namelessrom.devicecontrol.MainActivity" />
@@ -156,7 +173,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.namelessrom.devicecontrol.MainActivity" />
         </activity>
-
     </application>
 
 </manifest>

@@ -3,10 +3,12 @@ buildscript {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "http://dl.bintray.com/tbruyelle/tbruyelle" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-alpha1'
+        classpath 'com.android.tools.build:gradle:2.0.0-alpha2'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
 
@@ -24,6 +26,7 @@ allprojects {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "http://dl.bintray.com/tbruyelle/tbruyelle" }
     }
 

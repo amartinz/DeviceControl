@@ -27,6 +27,7 @@
     <color name="drawer_text">#FFFFFF</color>
 
     <color name="text_normal">#FFFFFF</color>
+    <color name="text_shadow">#000000</color>
 
     <color name="tab_color_normal">#b3ffffff</color>
     <color name="tab_color_selected">#ffffff</color>
@@ -60,4 +61,7 @@
     <color name="orange">#FFFFBB33</color>
 
     <color name="perms_costs_money">#fff4511e</color>
+
+    <!-- etc -->
+    <color name="black">#ff000000</color>
 </resources>

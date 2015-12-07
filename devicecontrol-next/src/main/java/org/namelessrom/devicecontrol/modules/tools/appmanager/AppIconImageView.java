@@ -25,7 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.DCApplication;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import java.io.InputStream;
@@ -60,7 +60,7 @@ public class AppIconImageView extends CacheableImageView {
             mCache = null;
             return;
         }
-        mCache = ((Application) getContext().getApplicationContext()).getBitmapCache();
+        mCache = DCApplication.get(getContext()).getBitmapCache();
     }
 
     public boolean loadImage(AppItem appItem, OnImageLoadedListener listener) {

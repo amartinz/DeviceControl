@@ -57,13 +57,18 @@ public class DrawerHeaderTitle extends FrameLayout {
         final LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.view_drawer_title, this, true);
 
-        final Device device = Device.get(context);
-
         final TextView title = (TextView) findViewById(R.id.drawer_header_title);
-        title.setText(device.getModelStringShort());
-
         final TextView subTitle = (TextView) findViewById(R.id.drawer_header_subtitle);
-        final String bitString = (ProcessorInfo.is64BitStatic() ? "64-bit" : "32-bit");
-        subTitle.setText(String.format("Android %s / %s", device.platformVersion, bitString));
+
+        if (isInEditMode()) {
+            title.setText("OPPO Find7");
+            subTitle.setText("Android 6.0 / 32-bit");
+        } else {
+            final Device device = Device.get(context);
+            title.setText(device.getModelStringShort());
+
+            final String bitString = (ProcessorInfo.is64BitStatic() ? "64-bit" : "32-bit");
+            subTitle.setText(String.format("Android %s / %s", device.platformVersion, bitString));
+        }
     }
 }

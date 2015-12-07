@@ -27,4 +27,9 @@
 
     <!-- if true, cache is stored on external storage -->
     <string name="pref_cache_external">cache_external</string>
+
+    <!-- DEBUGGING PREFERENCES -->
+
+    <!-- if true and we are in debug mode, always launch setup wizard -->
+    <string name="pref_debug_always_launch_setup">pref_always_launch_setup</string>
 </resources>

@@ -15,10 +15,22 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<resources>
-    <dimen name="app_margin">8dp</dimen>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-</resources>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.namelessrom.devicecontrol.SettingsActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/actionbar_toolbar" />
+
+    <fragment
+        class="org.namelessrom.devicecontrol.modules.more.SettingsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:tag="SettingsFragment"
+        tools:layout="@layout/fragment_settings_general" />
+
+</LinearLayout>

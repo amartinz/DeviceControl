@@ -18,8 +18,10 @@
 package org.namelessrom.devicecontrol.preferences;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
@@ -28,6 +30,8 @@ import org.namelessrom.devicecontrol.execution.ShellWriter;
 
 import alexander.martinz.libs.hardware.utils.IoUtils;
 import alexander.martinz.libs.hardware.utils.Utils;
+import alexander.martinz.libs.logger.Logger;
+import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 
 /**
@@ -35,7 +39,7 @@ import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
  * writing to files on preference change, even with multiple files,
  * handling bootup restoration.
  */
-public class AutoSwitchPreference extends MaterialSwitchPreference {
+public class AutoSwitchPreference extends MaterialSwitchPreference implements MaterialPreference.MaterialPreferenceChangeListener {
     private boolean mStartup = true;
     private boolean mMultiFile = false;
 
@@ -97,6 +101,12 @@ public class AutoSwitchPreference extends MaterialSwitchPreference {
             final String value = IoUtils.readOneLine(mPath);
             setChecked(Utils.isEnabled(value, false));
         }
+    }
+
+    public void initFromPreferences(boolean defaultValue) {
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        final boolean enabled = sharedPreferences.getBoolean(getKey(), defaultValue);
+        setChecked(enabled);
     }
 
     public void setCategory(String category) {
@@ -177,4 +187,12 @@ public class AutoSwitchPreference extends MaterialSwitchPreference {
         setOnPreferenceChangeListener(listener);
     }
 
+    @Override public boolean onPreferenceChanged(MaterialPreference preference, Object newValue) {
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        final String key = getKey();
+        final boolean value = (boolean) newValue;
+        Logger.d(this, "handleSharedPreferences: %s - %s", key, value);
+        sharedPreferences.edit().putBoolean(key, value).apply();
+        return true;
+    }
 }

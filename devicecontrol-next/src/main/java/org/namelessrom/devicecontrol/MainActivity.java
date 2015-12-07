@@ -17,8 +17,10 @@
 
 package org.namelessrom.devicecontrol;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +32,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import org.namelessrom.devicecontrol.base.BaseActivity;
 import org.namelessrom.devicecontrol.modules.controls.FileSystemFragment;
@@ -38,12 +41,13 @@ import org.namelessrom.devicecontrol.modules.info.InfoFragment;
 import org.namelessrom.devicecontrol.modules.more.AboutFragment;
 import org.namelessrom.devicecontrol.modules.tools.appmanager.AppListFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
+import org.namelessrom.devicecontrol.utils.DrawableHelper;
 import org.namelessrom.devicecontrol.wizard.WizardCallbacks;
 import org.namelessrom.devicecontrol.wizard.firstlaunch.FirstLaunchWizard;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-    private Toolbar mToolbar;
+import butterknife.ButterKnife;
 
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FirstLaunchWizard mFirstLaunchWizard;
 
     private Runnable mDrawerRunnable;
@@ -52,9 +56,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        ViewCompat.setElevation(mToolbar, 4.0f);
-        setSupportActionBar(mToolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ViewCompat.setElevation(toolbar, 4.0f);
+        setSupportActionBar(toolbar);
 
         // lock the drawer so we can only open it AFTER we are done with our checks
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -80,7 +84,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         // manually inflate header layout to workaround bugs
         final View drawerHeaderView = mNavigationView.inflateHeaderView(R.layout.drawer_header);
-        drawerHeaderView.findViewById(R.id.drawer_header_settings).setOnClickListener(this);
+
+        // set up settings drawable
+        ImageView drawerHeaderSettings = ButterKnife.findById(drawerHeaderView, R.id.drawer_header_settings);
+        drawerHeaderSettings.setImageDrawable(DrawableHelper.tintDrawable(this, R.drawable.ic_settings_black_36dp, Color.WHITE));
+        drawerHeaderSettings.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SettingsActivity.class)));
 
         if (FirstLaunchWizard.isFirstLaunch(this)) {
             mFirstLaunchWizard = FirstLaunchWizard.create(mWizardCallbacks);
@@ -230,15 +238,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-    }
-
-    @Override public void onClick(View v) {
-        final int id = v.getId();
-        switch (id) {
-            case R.id.drawer_header_settings: {
-                break;
-            }
-        }
     }
 
     private final WizardCallbacks mWizardCallbacks = new WizardCallbacks() {

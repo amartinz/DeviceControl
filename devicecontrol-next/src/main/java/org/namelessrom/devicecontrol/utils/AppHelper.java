@@ -28,7 +28,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.DCApplication;
 import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.modules.tools.appmanager.PackageStatsObserver;
 
@@ -48,13 +48,11 @@ public class AppHelper {
     private static final String TAG = AppHelper.class.getSimpleName();
 
     public static void mayLaunchUrlViaTabs(@NonNull final Activity activity, @NonNull final String url) {
-        final Application application = ((Application) activity.getApplicationContext());
-        application.getCustomTabsHelper().mayLaunchUrl(url);
+        DCApplication.get(activity).getCustomTabsHelper().mayLaunchUrl(url);
     }
 
     public static void launchUrlViaTabs(@NonNull final Activity activity, @NonNull final String url) {
-        final Application application = ((Application) activity.getApplicationContext());
-        application.getCustomTabsHelper().launchUrl(activity, url);
+        DCApplication.get(activity).getCustomTabsHelper().launchUrl(activity, url);
     }
 
     public static void viewInBrowser(Context context, String url) {

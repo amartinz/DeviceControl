@@ -33,7 +33,10 @@
 
     <!-- community -->
     <string name="community">Community</string>
-    <string name="community_message">If you need help, have feedback, ideas or feature requests or if you just want to discuss, you can join our <b>Google+ community</b>.\n\nWith joining the community, you can also participate in BETA tests.\nBETA builds can be less stable, but you will get more frequent updates with the latest features and fixes.</string>
+    <string name="community_message">If you need help, have feedback, ideas or feature requests or if you just want to discuss,
+        you can join our<b>Google+ community</b>.\n\nWith joining the community, you can also participate in BETA tests.\nBETA
+        builds can be less stable, but you will get more frequent updates with the latest features and fixes.
+    </string>
     <string name="join_beta_test">Join BETA</string>
     <string name="view_community">View community</string>
 
@@ -101,8 +104,12 @@
     <string name="wizard_previous">Previous</string>
     <string name="wizard_skip">Skip</string>
 
-    <string name="wizard_welcome_notice">Welcome to Device Control!\n\nYou can get the most features with a rooted device.\nPlease be aware that without root the functionality is limited!\n\nReady?\nSo let\'s get you set up! :)</string>
-    <string name="wizard_finish_notice">You are all set up, thanks for your patience!\n\nIf you need help or have any questions, please do not hesitate to ask.\n\nFor now, have fun using Device Control! :)</string>
+    <string name="wizard_welcome_notice">Welcome to Device Control!\n\nYou can get the most features with a rooted device.\nPlease
+        be aware that without root the functionality is limited!\n\nReady?\nSo let\'s get you set up! :)
+    </string>
+    <string name="wizard_finish_notice">You are all set up, thanks for your patience!\n\nIf you need help or have any questions,
+        please do not hesitate to ask.\n\nFor now, have fun using Device Control! :)
+    </string>
 
     <!-- donation -->
     <string name="donate_heart">Donate \u2665</string>
@@ -114,21 +121,42 @@
 
     <!-- pollfish -->
     <string name="show_pollfish">Activate Pollfish</string>
-    <string name="show_pollfish_summary">For every taken survey you help us to grow. Feel free to deactivate it, of course :)</string>
+    <string name="show_pollfish_summary">For every taken survey you help us to grow. Feel free to deactivate it, of course :)
+    </string>
 
     <!-- about -->
-    <string name="about_device_control_text">Device Control got started as i needed a tool to easily control my custom kernel.\n\nLater i also needed some extra features, which no other app could offer or i had to use multiple different apps to achieve the functionality i wanted to have.\n\nStep by step more functionality got added into Device Control and it still keeps growing.\n\nDevice Control is open source and available for free, however if you want to support development of this app, please consider a donation.\n\nEvery donation is much appreciated and keeps me motivated :)</string>
+    <string name="about_device_control_text">Device Control got started as i needed a tool to easily control my custom
+        kernel.\n\nLater i also needed some extra features, which no other app could offer or i had to use multiple different apps
+        to achieve the functionality i wanted to have.\n\nStep by step more functionality got added into Device Control and it
+        still keeps growing.\n\nDevice Control is open source and available for free, however if you want to support development
+        of this app, please consider a donation.\n\nEvery donation is much appreciated and keeps me motivated :)
+    </string>
 
     <!-- permissions -->
     <string name="permissions">Permissions</string>
     <string name="no_permissions">No permissions required</string>
     <string name="perm_costs_money">this may cost you money</string>
-    <string name="perms_new_perm_prefix"><font fgcolor="#ff33b5e5" size="12">NEW: </font></string>
-    <string name="perms_description_app">Provided by <xliff:g id="app_name">%1$s</xliff:g>.</string>
-    <string name="join_two_items"><xliff:g id="first_item">%1$s</xliff:g> and <xliff:g id="second_item">%2$s</xliff:g></string>
-    <string name="join_many_items_last"><xliff:g id="all_but_last_item">%1$s</xliff:g> and <xliff:g id="last_item">%2$s</xliff:g></string>
+    <string name="perms_new_perm_prefix">
+        <font fgcolor="#ff33b5e5" size="12">NEW:</font>
+    </string>
+    <string name="perms_description_app">Provided by<xliff:g id="app_name">%1$s</xliff:g>.
+    </string>
+    <string name="join_two_items">
+        <xliff:g id="first_item">%1$s</xliff:g>
+        and
+        <xliff:g id="second_item">%2$s</xliff:g>
+    </string>
+    <string name="join_many_items_last">
+        <xliff:g id="all_but_last_item">%1$s</xliff:g>
+        and
+        <xliff:g id="last_item">%2$s</xliff:g>
+    </string>
     <string name="security_settings_desc">This app can access the following on your devices:</string>
-    <string name="security_settings_desc_multi" product="default">This app can access the following on your phone. In order to improve performance and reduce memory usage, some of these permissions are available to <xliff:g id="base_app_name">%1$s</xliff:g> because it runs in the same process as <xliff:g id="additional_apps_list">%2$s</xliff:g>:</string>
+    <string name="security_settings_desc_multi" product="default">This app can access the following on your phone. In order to
+        improve performance and reduce memory usage, some of these permissions are available to
+        <xliff:g id="base_app_name">%1$s</xliff:g>
+        because it runs in the same process as<xliff:g id="additional_apps_list">%2$s</xliff:g>:
+    </string>
 
     <!-- app manager -->
     <string name="app_manager">App manager</string>
@@ -160,28 +188,47 @@
 
     <string name="enable">Enable</string>
     <string name="enable_msg">%s will be enabled.\n\nContinue?</string>
-    <string name="enable_msg_multi">%s apps will be enabled.\n(If any app is already enabled, nothing will happen)\n\nContinue?</string>
-    <string name="enable_msg_multi_action">Enabling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
+    <string name="enable_msg_multi">%s apps will be enabled.\n(If any app is already enabled, nothing will happen)\n\nContinue?
+    </string>
+    <string name="enable_msg_multi_action">Enabling app
+        <xliff:g example="10" id="value">%d</xliff:g>
+        of
+        <xliff:g example="71" id="value">%d</xliff:g>
+    </string>
 
     <string name="disable">Disable</string>
     <string name="disable_msg">%s will be disabled.\n\nContinue?</string>
-    <string name="disable_msg_multi">%s apps will be disabled.\n(If any app is already disabled, nothing will happen)\n\nContinue?</string>
-    <string name="disable_msg_multi_action">Disabling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
+    <string name="disable_msg_multi">%s apps will be disabled.\n(If any app is already disabled, nothing will
+        happen)\n\nContinue?
+    </string>
+    <string name="disable_msg_multi_action">Disabling app
+        <xliff:g example="10" id="value">%d</xliff:g>
+        of
+        <xliff:g example="71" id="value">%d</xliff:g>
+    </string>
 
     <string name="uninstall">Uninstall</string>
     <string name="uninstalling">Uninstalling…</string>
     <string name="uninstall_msg">Do you really want to uninstall \"%s\"?\nThis action can not be undone!</string>
     <string name="uninstall_msg_multi">Do you really want to uninstall %s apps?\nThis action can not be undone!</string>
-    <string name="uninstall_msg_multi_action">Uninstalling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
+    <string name="uninstall_msg_multi_action">Uninstalling app
+        <xliff:g example="10" id="value">%d</xliff:g>
+        of
+        <xliff:g example="71" id="value">%d</xliff:g>
+    </string>
     <string name="uninstall_msg_system_app">Uninstalling system apps may require a reboot!</string>
     <string name="uninstall_success">Successfully uninstalled \"%s\"</string>
 
-    <string name="pm_has_died">Android package manager died… :/\n\nThis can happen on some devices, please try refreshing until it works.</string>
+    <string name="pm_has_died">Android package manager died… :/\n\nThis can happen on some devices, please try refreshing until it
+        works.
+    </string>
 
     <!-- filesystem -->
     <string name="file_system">File system</string>
     <string name="automatic_fstrim">Automatic fstrimming</string>
-    <string name="automatic_fstrim_summary">Fstrim is used to discard (or \"trim\") blocks which are not in use by the filesystem.\nThis can improve performance and reduce lags.</string>
+    <string name="automatic_fstrim_summary">Fstrim is used to discard (or \"trim\") blocks which are not in use by the
+        filesystem.\nThis can improve performance and reduce lags.
+    </string>
     <string name="fstrim_interval">Fstrim interval</string>
     <string name="io_scheduler">I/O scheduler</string>
     <string name="io_scheduler_config">Configuration</string>
@@ -206,9 +253,14 @@
     <string name="grant">Grant</string>
     <string name="granted">Granted</string>
     <string name="perm_intro_title">Required permissions</string>
-    <string name="perm_intro_message">Starting with Android M (6.0), the user needs to explicitly allow permissions, else apps can not make use of them.\n\nBelow you can find the required permissions of Device Control with an explanation why they are needed.\n\nNote: If you do not grant all required permissions, some features may be limited!</string>
+    <string name="perm_intro_message">Starting with Android M (6.0), the user needs to explicitly allow permissions, else apps can
+        not make use of them.\n\nBelow you can find the required permissions of Device Control with an explanation why they are
+        needed.\n\nNote: If you do not grant all required permissions, some features may be limited!
+    </string>
     <string name="perm_storage">Storage</string>
-    <string name="perm_storage_explanation">Storage access is needed to cache files on the external storage and for file interactions to work.</string>
+    <string name="perm_storage_explanation">Storage access is needed to cache files on the external storage and for file
+        interactions to work.
+    </string>
 
     <!-- etc -->
     <string name="action_completed">Action completed successfully!</string>
@@ -222,8 +274,17 @@
     <string name="open_play_store">View app on Google Play\u2122</string>
 
     <string name="no_tweaks_available">No tweaks available</string>
-    <string name="no_tweaks_message">Sorry but your device doesn\'t have any supported features</string>
+    <string name="no_tweaks_message">Sorry but your device does not have any supported features</string>
     <string name="gov_tweaks">Tweakable values: %s</string>
     <string name="no_gov_tweaks_message">Sorry but this governor has no tunable values</string>
     <string name="no_io_tweaks_message">Sorry but this I/O scheduler has no tunable values</string>
+
+    <!-- preferences -->
+    <string name="settings">Settings</string>
+    <string name="changes_on_restart">Changes take effect on app restart</string>
+
+    <string name="debugging">Debugging</string>
+    <string name="logging">Logging</string>
+    <string name="logging_summary">Enables extended logging, not interesting for users</string>
+    <string name="always_launch_setup">Always launch setup</string>
 </resources>

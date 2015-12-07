@@ -33,13 +33,14 @@ public class FirstLaunchWizard extends WizardManager<FirstLaunchWizard> {
     public boolean isSetupActive;
 
     public static boolean isFirstLaunch(@NonNull Context context) {
-        // always launch wizard when debugging for now
-        if (BuildConfig.DEBUG) {
-            return true;
-        }
-
         final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getBoolean(context.getString(R.string.pref_first_launch), true);
+
+        // if we are debugging and enabled the preference, launch, else check if it is our first launch
+        boolean forceLaunch = false;
+        if (BuildConfig.DEBUG) {
+            forceLaunch = preferences.getBoolean(context.getString(R.string.pref_debug_always_launch_setup), false);
+        }
+        return forceLaunch || preferences.getBoolean(context.getString(R.string.pref_first_launch), true);
     }
 
     @SuppressLint("CommitPrefEdits") public static void setFirstLaunchDone(@NonNull Context context, boolean firstLaunchDone) {

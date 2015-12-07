@@ -16,6 +16,7 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'me.tatarka.retrolambda'
 
@@ -50,7 +51,7 @@ android {
 
         def String gitRevision = getGitCommitHash()
         if (gitRevision != null) {
-            versionName (versionName + '-git-' + gitRevision)
+            versionName(versionName + '-git-' + gitRevision)
         }
 
         def String localProps = System.getenv('SIGNING_PROP_FILE')
@@ -80,7 +81,7 @@ android {
     }
 
     productFlavors {
-        master { }
+        master {}
         next {
             applicationIdSuffix '.next'
         }
@@ -149,8 +150,8 @@ dependencies {
     // see https://github.com/ReactiveX/RxJava
     compile 'io.reactivex:rxjava:1.0.16'
 
-    // see https://github.com/f2prateek/rx-preferences
-    compile 'com.f2prateek.rx.preferences:rx-preferences:1.0.1'
+    // see https://github.com/tbruyelle/RxPermissions
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.5.0@aar'
 
     // see https://github.com/Kennyc1012/BottomSheet
     compile 'com.github.Kennyc1012:BottomSheet:2.0.4'
@@ -158,6 +159,7 @@ dependencies {
     // see https://github.com/PhilJay/MPAndroidChart
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
 
-    // see https://github.com/tbruyelle/RxPermissions
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.4.2@aar'
+    // see https://github.com/JakeWharton/butterknife
+    compile 'com.jakewharton:butterknife:8.0.0-SNAPSHOT'
+    apt 'com.jakewharton:butterknife-compiler:8.0.0-SNAPSHOT'
 }
