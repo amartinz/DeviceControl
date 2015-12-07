@@ -33,6 +33,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.base.BaseActivity;
 import org.namelessrom.devicecontrol.modules.controls.FileSystemFragment;
@@ -51,6 +52,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private FirstLaunchWizard mFirstLaunchWizard;
 
     private Runnable mDrawerRunnable;
+
+    private static long mBackPressed;
+    private Toast mToast;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,7 +121,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             mDrawerLayout.closeDrawer(GravityCompat.START);
             return;
         }
-        super.onBackPressed();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+            return;
+        }
+
+        // if nothing matched by now, we do not have any fragments in the BackStack, nor we have
+        // the menu open. in that case lets detect a double back press and exit the activity
+        if (mBackPressed + 2000 > System.currentTimeMillis()) {
+            if (mToast != null) {
+                mToast.cancel();
+            }
+            finish();
+        } else {
+            mToast = Toast.makeText(getBaseContext(), getString(R.string.action_press_again), Toast.LENGTH_SHORT);
+            mToast.show();
+        }
+        mBackPressed = System.currentTimeMillis();
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {

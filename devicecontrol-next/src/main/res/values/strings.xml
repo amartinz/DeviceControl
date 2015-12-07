@@ -31,6 +31,9 @@
     <string name="drawer_title_more_about">About</string>
     <string name="drawer_title_more_privacy">Privacy</string>
 
+    <!-- app -->
+    <string name="action_press_again">Press once again to exit!</string>
+
     <!-- community -->
     <string name="community">Community</string>
     <string name="community_message">If you need help, have feedback, ideas or feature requests or if you just want to discuss,
