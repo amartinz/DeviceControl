@@ -369,12 +369,16 @@ public class Utils {
     }
 
     @NonNull public static String execute(final String command, @NonNull final String def) {
+        return execute(command, def, true);
+    }
+
+    @NonNull public static String execute(final String command, @NonNull final String def, boolean newline) {
         final RootShell rootShell = ShellManager.get().getRootShell();
         if (rootShell == null) {
             return def;
         }
 
-        Command cmd = new Command(command).setOutputType(Command.OUTPUT_STRING);
+        Command cmd = new Command(command).setOutputType(newline ? Command.OUTPUT_STRING_NEWLINE : Command.OUTPUT_STRING);
         String result = rootShell.add(cmd).waitFor().getOutput();
         if (result == null) {
             return def;

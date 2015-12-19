@@ -96,29 +96,30 @@ dependencies {
     // see https://github.com/Evisceration/MaterialPreferences
     compile project(':modules:MaterialPreferences:library')
 
-    compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.android.support:cardview-v7:23.0.1'
-    compile 'com.android.support:design:23.0.1'
-    compile 'com.android.support:recyclerview-v7:23.0.1'
-    compile 'com.android.support:support-v13:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:cardview-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:support-v13:23.1.1'
 
     // see https://github.com/PhilJay/MPAndroidChart
-    compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
 
     // see https://github.com/google/gson
-    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.google.code.gson:gson:2.5'
 
     // see https://github.com/koush/ion
     compile 'com.koushikdutta.ion:ion:2.1.6'
 
     // see https://www.pollfish.com/android
     compile 'com.pollfish:pollfish:4.1.0:googleplayRelease@aar'
-    compile 'com.google.android.gms:play-services-ads:8.1.0'
+    // switch to 8.4.0 once pollfish updates
+    compile 'com.google.android.gms:play-services-ads:8.3.0'
 
     // see https://github.com/pilgr/Paper
     //compile 'io.paperdb:paperdb:0.9'
     compile 'com.github.Evisceration:Paper:6ad14da863'
 
     // see https://github.com/Kennyc1012/BottomSheet
-    compile 'com.github.Kennyc1012:BottomSheet:2.0.1'
+    compile 'com.github.Kennyc1012:BottomSheet:2.0.4'
 }

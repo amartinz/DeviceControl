@@ -98,6 +98,7 @@ public class CpuCoreMonitor {
     }
 
     public void destroy() {
+        stop();
         mActivity = null;
         cpuFrequencyMonitor = null;
     }
