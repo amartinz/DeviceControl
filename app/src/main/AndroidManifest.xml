@@ -18,9 +18,7 @@
     package="org.namelessrom.devicecontrol"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:installLocation="auto"
-    android:versionCode="125"
-    android:versionName="0.8.5.1">
+    android:installLocation="internalOnly">
 
     <!-- Internet / Networking -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -55,6 +53,7 @@
     <uses-permission android:name="android.permission.REAL_GET_TASKS" />
 
     <!-- Application permissions -->
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
     <uses-permission android:name="android.permission.DELETE_CACHE_FILES"

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     signingConfigs {
         release {
@@ -26,6 +26,8 @@ android {
         applicationId 'org.namelessrom.devicecontrol'
         minSdkVersion 14
         targetSdkVersion 23
+        versionCode 130
+        versionName "0.8.6"
 
         def String localProps = System.getenv('SIGNING_PROP_FILE')
         if (localProps == null) {
@@ -61,11 +63,6 @@ android {
         disable 'MissingTranslation', 'ExtraTranslation';
     }
 
-    dexOptions {
-        incremental false
-        javaMaxHeapSize "2048M"
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
@@ -77,7 +74,6 @@ android {
 
     // until all third party packages got updated
     useLibrary 'org.apache.http.legacy'
-
 }
 
 dependencies {

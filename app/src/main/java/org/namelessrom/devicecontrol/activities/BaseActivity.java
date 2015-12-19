@@ -37,20 +37,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            final AppResources res = AppResources.get();
             // WTF! IRIS506Q android version "unknown"
             try {
-                getWindow().setStatusBarColor(AppResources.get().getPrimaryColor());
+                getWindow().setStatusBarColor(res.getPrimaryColor());
             } catch (Exception e) {
                 Log.e("BaseActivity", "get a stone and throw it at your device vendor", e);
             }
 
             // color recents tab
-            final Bitmap appIcon = BitmapFactory.decodeResource(getResources(),
-                    R.mipmap.ic_launcher_devicecontrol);
-
-            final TaskDescription taskDescription = new TaskDescription(String.valueOf(getTitle()),
-                    appIcon, AppResources.get().getAccentColor());
-            setTaskDescription(taskDescription);
+            final Bitmap appIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher_devicecontrol);
+            final TaskDescription description = new TaskDescription(String.valueOf(getTitle()), appIcon, res.getAccentColor());
+            setTaskDescription(description);
         }
     }
 

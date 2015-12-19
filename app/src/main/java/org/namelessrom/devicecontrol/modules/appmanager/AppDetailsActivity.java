@@ -34,6 +34,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
@@ -260,8 +261,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
             case R.id.app_icon: {
                 final boolean success = mAppItem.launchActivity(this);
                 if (!success) {
-                    Snackbar.make(mAppIcon, R.string.could_not_launch_activity,
-                            Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(mAppIcon, R.string.could_not_launch_activity, Snackbar.LENGTH_SHORT).show();
                 }
                 break;
             }
@@ -281,8 +281,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
 
         mCacheGraph.setTouchEnabled(false);
 
-        final int color = AppResources.get().isDarkTheme()
-                ? R.color.dark_background : R.color.light_background;
+        final int color = AppResources.get().isDarkTheme() ? R.color.dark_background : R.color.light_background;
         mCacheGraph.setBackgroundResource(color);
 
         mCacheGraph.animateXY(ANIM_DUR, ANIM_DUR);
@@ -301,21 +300,18 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         mAppIcon.loadImage(mAppItem, null);
         mAppLabel.setText(mAppItem.getLabel());
         mAppPackage.setText(mAppItem.getPackageName());
-        mAppContainer.setBackgroundResource(mAppItem.isEnabled()
-                ? android.R.color.transparent : R.color.darker_gray);
+        mAppContainer.setBackgroundResource(mAppItem.isEnabled() ? android.R.color.transparent : R.color.darker_gray);
 
         final int color = mAppItem.isSystemApp()
-                ? getResources().getColor(R.color.red_middle)
+                ? ContextCompat.getColor(this, R.color.red_middle)
                 : AppResources.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
         mAppLabel.setTextColor(color);
-
         mAppVersion.setText(mAppItem.getVersion());
 
         setupPermissionsView();
 
         // prevent uninstalling of Device Control
-        mUninstall.setEnabled(!TextUtils
-                .equals(Application.get().getPackageName(), mAppItem.getPackageName()));
+        mUninstall.setEnabled(!TextUtils.equals(Application.get().getPackageName(), mAppItem.getPackageName()));
 
         AppHelper.getSize(mPm, this, mAppItem.getPackageName());
         refreshAppControls();
@@ -376,11 +372,11 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
     }
 
     private void refreshAppControls() {
-        mForceStop.setEnabled(AppHelper.isAppRunning(mAppItem.getPackageName()));
+        mForceStop.setEnabled(AppHelper.isAppRunning(this, mAppItem.getPackageName()));
     }
 
     private void forceStopApp() {
-        AppHelper.killProcess(mAppItem.getPackageName());
+        AppHelper.killProcess(this, mAppItem.getPackageName());
         mHandler.postDelayed(new Runnable() {
             @Override public void run() {
                 refreshAppControls();
@@ -428,12 +424,12 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
 
     @Override public void onPackageStats(final PackageStats packageStats) {
         Logger.i(this, "onAppSizeEvent()");
-        if (packageStats == null) return;
+        if (packageStats == null) { return; }
 
         final long totalSize = packageStats.codeSize + packageStats.dataSize
-                + packageStats.externalCodeSize + packageStats.externalDataSize
-                + packageStats.externalMediaSize + packageStats.externalObbSize
-                + packageStats.cacheSize + packageStats.externalCacheSize;
+                               + packageStats.externalCodeSize + packageStats.externalDataSize
+                               + packageStats.externalMediaSize + packageStats.externalObbSize
+                               + packageStats.cacheSize + packageStats.externalCacheSize;
 
         if (mCacheInfo != null) {
             mCacheInfo.removeAllViews();
@@ -523,7 +519,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
     };
 
     private void showConfirmationDialog(final int type) {
-        if (mAppItem == null) return;
+        if (mAppItem == null) { return; }
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 

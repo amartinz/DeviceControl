@@ -25,7 +25,6 @@ import com.google.gson.annotations.SerializedName;
 
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import alexander.martinz.libs.execution.ShellManager;
 import alexander.martinz.libs.hardware.device.KernelInfo;
 import alexander.martinz.libs.hardware.device.MemoryInfo;
 import alexander.martinz.libs.hardware.device.ProcessorInfo;
@@ -59,7 +58,7 @@ public class Device extends alexander.martinz.libs.hardware.device.Device {
         super.update();
 
         // get su version
-        suVersion = hasRoot ? Utils.execute("su -v", "-") : "-";
+        suVersion = hasRoot ? Utils.getRootShellResult("su -v", "-") : "-";
 
         // TODO: readd check
         hasBusyBox = true;

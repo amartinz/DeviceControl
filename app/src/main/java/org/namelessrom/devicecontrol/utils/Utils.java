@@ -327,7 +327,7 @@ public class Utils {
     }
 
     public static String[] listFiles(final String path, final String[] blacklist) {
-        final String output = execute(String.format("ls %s", path));
+        final String output = getRootShellResult(String.format("ls %s", path));
         Logger.v(Utils.class, "listFiles --> output: %s", output);
         if (TextUtils.isEmpty(output)) {
             return new String[0];
@@ -364,15 +364,15 @@ public class Utils {
         return splitted[splitted.length - 1];
     }
 
-    @NonNull public static String execute(final String command) {
-        return execute(command, "");
+    @NonNull public static String getRootShellResult(final String command) {
+        return getRootShellResult(command, "");
     }
 
-    @NonNull public static String execute(final String command, @NonNull final String def) {
-        return execute(command, def, true);
+    @NonNull public static String getRootShellResult(final String command, @NonNull final String def) {
+        return getRootShellResult(command, def, true);
     }
 
-    @NonNull public static String execute(final String command, @NonNull final String def, boolean newline) {
+    @NonNull public static String getRootShellResult(final String command, @NonNull final String def, boolean newline) {
         final RootShell rootShell = ShellManager.get().getRootShell();
         if (rootShell == null) {
             return def;
@@ -409,36 +409,29 @@ public class Utils {
         getCommandResult(listener, -1, cmd);
     }
 
-    public static void getCommandResult(final OnShellOutputListener listener, final int id,
-            final String cmd) {
+    public static void getCommandResult(final OnShellOutputListener listener, final int id, final String cmd) {
         getCommandResult(listener, id, cmd, false);
     }
 
-    public static void getCommandResult(final OnShellOutputListener listener, final int ID,
-            final String COMMAND, final boolean NEWLINE) {
-        final StringBuilder sb = new StringBuilder();
-        final Command command = new Command(COMMAND) {
-            @Override public void onCommandOutput(int id, String line) {
-                super.onCommandOutput(id, line);
-                sb.append(line);
-                if (NEWLINE) {
-                    sb.append('\n');
-                }
-            }
-
-            @Override public void onCommandCompleted(int id, int exitcode) {
+    public static void getCommandResult(final OnShellOutputListener listener, final int id, String cmd, boolean NEWLINE) {
+        final Command command = new Command(id, cmd) {
+            @Override public void onCommandCompleted(final int id, int exitcode) {
                 super.onCommandCompleted(id, exitcode);
-                final String result = sb.toString();
-                Logger.v(Utils.class, String.format("Shell output: %s", result));
+                final String result = getOutput();
                 Application.HANDLER.post(new Runnable() {
                     @Override public void run() {
                         if (listener != null) {
-                            listener.onShellOutput(new ShellOutput(ID, sb.toString()));
+                            listener.onShellOutput(new ShellOutput(id, result));
                         }
                     }
                 });
             }
         };
+        if (NEWLINE) {
+            command.setOutputType(Command.OUTPUT_STRING_NEWLINE);
+        } else {
+            command.setOutputType(Command.OUTPUT_STRING);
+        }
 
         RootShell.fireAndForget(command);
     }
@@ -448,12 +441,12 @@ public class Utils {
     }
 
     public static String getWriteCommand(final String path, final String value) {
-        return String.format("busybox chmod 644 %s;\n", path) +
-               String.format("busybox echo \"%s\" > %s;\n", value, path);
+        return String.format("chmod 644 %s;", path) +
+               String.format("echo \"%s\" > %s;", value, path);
     }
 
     public static String lockFile(String path) {
-        return String.format("busybox chmod 444 %s;", path);
+        return String.format("chmod 444 %s;", path);
     }
 
     public static void toggleComponent(final ComponentName component, final boolean disable) {

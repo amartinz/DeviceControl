@@ -79,8 +79,7 @@ public class SysctlEditorFragment extends BaseEditorFragment {
         return mAdapter;
     }
 
-    @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
+    @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
@@ -141,17 +140,14 @@ public class SysctlEditorFragment extends BaseEditorFragment {
         if (new File("/system/etc/sysctl.conf").exists()) {
             sb.append(Scripts.copyFile("/system/etc/sysctl.conf", dn + "/sysctl.conf"));
         } else {
-            sb.append("busybox echo \"# created by Device Control\n\" > ")
-                    .append(dn)
-                    .append("/sysctl.conf;\n");
+            sb.append("echo \"# created by Device Control\n\" > ").append(dn).append("/sysctl.conf;\n");
         }
 
         if (mLoadFull) {
-            sb.append("busybox echo `busybox find /proc/sys/* -type f -perm -644 |")
-                    .append(" grep -v \"vm.\"`;\n");
+            // TODO: busybox compat
+            sb.append("echo `busybox find /proc/sys/* -type f -perm -644 |").append(" grep -v \"vm.\"`;\n");
         } else {
-            sb.append("busybox echo `busybox find /proc/sys/vm/* -type f ")
-                    .append("-prune -perm -644`;\n");
+            sb.append("echo `busybox find /proc/sys/vm/* -type f ").append("-prune -perm -644`;\n");
         }
 
         Utils.getCommandResult(SysctlEditorFragment.this, -1, sb.toString());
@@ -159,43 +155,36 @@ public class SysctlEditorFragment extends BaseEditorFragment {
 
     private void makeApplyDialog() {
         final Activity activity = getActivity();
-        if (activity == null) return;
+        if (activity == null) { return; }
 
         new AlertDialog.Builder(activity)
                 .setTitle(getString(R.string.dialog_warning))
                 .setMessage(getString(R.string.dialog_warning_apply))
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                            @Override public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
                             }
                         }
                 )
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                            @Override public void onClick(DialogInterface dialogInterface, int i) {
                                 Utils.remount("/system", "rw");
                                 Utils.getCommandResult(SysctlEditorFragment.this, APPLY,
-                                        Scripts.copyFile(Application.get().getFilesDirectory() +
-                                                "/sysctl.conf", Scripts.SYSCTL)
-                                );
+                                        Scripts.copyFile(Application.get().getFilesDirectory() + "/sysctl.conf", Scripts.SYSCTL));
                                 dialogInterface.dismiss();
-                                Toast.makeText(activity,
-                                        getString(R.string.toast_settings_applied),
-                                        Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, getString(R.string.toast_settings_applied), Toast.LENGTH_SHORT).show();
                             }
                         }
                 ).show();
     }
 
-    @Override
-    public void onShellOutput(final ShellOutput shellOutput) {
+    @Override public void onShellOutput(final ShellOutput shellOutput) {
         switch (shellOutput.id) {
             case SAVE:
                 Utils.remount("/system", "ro"); // slip through to APPLY
             case APPLY:
-                Utils.runRootCommand("busybox chmod 644 /system/etc/sysctl.conf;"
-                        + "busybox sysctl -p /system/etc/sysctl.conf;");
+                Utils.runRootCommand("chmod 644 /system/etc/sysctl.conf;" +
+                                     "sysctl -p /system/etc/sysctl.conf;");
                 break;
             default:
                 Logger.v(this, "onReadPropsCompleted: " + shellOutput.output);
@@ -248,13 +237,12 @@ public class SysctlEditorFragment extends BaseEditorFragment {
 
     private void editPropDialog(final Prop p) {
         final Activity activity = getActivity();
-        if (activity == null) return;
+        if (activity == null) { return; }
 
         final String dn = Application.get().getFilesDirectory();
         String title;
 
-        final View editDialog = LayoutInflater.from(getActivity())
-                .inflate(R.layout.dialog_prop, null);
+        final View editDialog = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_prop, null);
         final EditText tv = (EditText) editDialog.findViewById(R.id.prop_value);
         final TextView tn = (TextView) editDialog.findViewById(R.id.prop_name_tv);
 
@@ -270,13 +258,11 @@ public class SysctlEditorFragment extends BaseEditorFragment {
                 .setTitle(title)
                 .setView(editDialog)
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(final DialogInterface dialog, final int which) { }
+                            @Override public void onClick(final DialogInterface dialog, final int which) { }
                         }
                 )
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog, final int which) {
+                    @Override public void onClick(final DialogInterface dialog, final int which) {
                         if (p != null) {
                             if (tv.getText() != null) {
                                 final String name = p.getName();

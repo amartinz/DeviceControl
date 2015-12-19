@@ -72,7 +72,7 @@ public class IOUtils {
         ArrayList<String> mounts = new ArrayList<>();
         ArrayList<String> vold = new ArrayList<>();
 
-        String[] output = Utils.execute("cat /proc/mounts;\n").split("\n");
+        String[] output = Utils.getRootShellResult("cat /proc/mounts;\n").split("\n");
         for (final String s : output) {
             if (s.startsWith("/dev/block/vold/")) {
                 String[] lineElements = s.split(" ");
@@ -89,7 +89,7 @@ public class IOUtils {
 
         final File fstab = findFstab();
         if (fstab != null) {
-            output = Utils.execute(String.format("cat %s;\n", fstab.getAbsolutePath()))
+            output = Utils.getRootShellResult(String.format("cat %s;\n", fstab.getAbsolutePath()))
                     .split("\n");
             for (final String s : output) {
                 //noinspection StatementWithEmptyBody
@@ -164,7 +164,7 @@ public class IOUtils {
             return file;
         }
 
-        final String fstab = Utils.execute("grep -ls \"/dev/block/\" * --include=fstab.* --exclude=fstab.goldfish");
+        final String fstab = Utils.getRootShellResult("grep -ls \"/dev/block/\" * --include=fstab.* --exclude=fstab.goldfish");
         if (!TextUtils.isEmpty(fstab)) {
             final String[] files = fstab.split("\n");
             for (final String s : files) {

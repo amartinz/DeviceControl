@@ -158,7 +158,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
                 Utils.runRootCommand(String.format("%s -P;\n", RNGD.getAbsolutePath()));
             } else {
                 Logger.v(this, "Stopping rngd");
-                AppHelper.killProcess(RNGD.getAbsolutePath());
+                AppHelper.killProcess(getActivity(), RNGD.getAbsolutePath());
             }
             AppHelper.getProcess(this, RNGD.getAbsolutePath());
             return true;

@@ -26,6 +26,7 @@ import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
@@ -34,6 +35,11 @@ import org.namelessrom.devicecontrol.objects.PackageStatsObserver;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.List;
+
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.RootShell;
+import alexander.martinz.libs.hardware.utils.ProcessManager;
+import hugo.weaving.DebugLog;
 
 import static org.namelessrom.devicecontrol.DeviceConstants.ID_PGREP;
 import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
@@ -144,8 +150,11 @@ public class AppHelper {
      *
      * @param process The name of the application / process to kill
      */
-    public static void killProcess(final String process) {
-        Utils.runRootCommand("pkill -TERM " + process);
+    public static void killProcess(Context context, @NonNull String process) {
+        final ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        am.killBackgroundProcesses(process);
+
+        RootShell.fireAndForget(new Command(String.format("pkill -TERM %s", process)));
     }
 
     /**
@@ -163,16 +172,27 @@ public class AppHelper {
      * @param pkg The package name of the application
      * @return Whether the app is running
      */
-    public static boolean isAppRunning(final String pkg) {
-        final ActivityManager aM = (ActivityManager) Application.get()
-                .getSystemService(Context.ACTIVITY_SERVICE);
-        final List<ActivityManager.RunningAppProcessInfo> procInfos = aM.getRunningAppProcesses();
-        if (procInfos != null) {
-            for (final ActivityManager.RunningAppProcessInfo procInfo : procInfos) {
-                if (procInfo.processName.equals(pkg)) {
+    @DebugLog public static boolean isAppRunning(Context context, @NonNull String pkg) {
+        final ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        final List<ActivityManager.RunningAppProcessInfo> processList = am.getRunningAppProcesses();
+        if (processList != null) {
+            for (final ActivityManager.RunningAppProcessInfo procInfo : processList) {
+                if (pkg.equals(procInfo.processName)) {
                     return true;
                 }
             }
+
+            if (processList.size() <= 1) {
+                Logger.i(TAG, "Using fallback to get process list");
+                final List<ProcessManager.Process> processes = ProcessManager.getRunningApps(context);
+                for (final ProcessManager.Process process : processes) {
+                    if (pkg.equals(process.name)) {
+                        return true;
+                    }
+                }
+            }
+        } else {
+            Logger.e(TAG, "Could not get list of running processes!");
         }
         return false;
     }
@@ -209,11 +229,11 @@ public class AppHelper {
      * @return A human readable data size
      */
     public static String convertSize(final long size) {
-        if (size <= 0) return "0 B";
+        if (size <= 0) { return "0 B"; }
         final String[] units = new String[]{ "B", "KB", "MB", "GB", "TB" };
         int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
         return new DecimalFormat("#,##0.##")
-                .format(size / Math.pow(1024, digitGroups)) + ' ' + units[digitGroups];
+                       .format(size / Math.pow(1024, digitGroups)) + ' ' + units[digitGroups];
     }
 
 

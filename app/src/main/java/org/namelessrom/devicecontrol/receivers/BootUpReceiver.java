@@ -23,8 +23,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
-import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
@@ -38,29 +38,12 @@ import io.paperdb.Paper;
 public class BootUpReceiver extends BroadcastReceiver {
     private static final int NOTIFICATION_ID = 1000;
 
-    @Override
-    public void onReceive(final Context ctx, final Intent intent) {
-        if (intent == null) {
-            return;
-        }
-
-        final String action = intent.getAction();
-        if (TextUtils.isEmpty(action)
-                || (!Intent.ACTION_BOOT_COMPLETED.equals(action)
-                && !"android.intent.action.QUICKBOOT_POWERON".equals(action))) {
-            return;
-        }
-
-        startBootupStuffs(ctx);
-    }
-
-    private void startBootupStuffs(final Context ctx) {
-        Thread thread = new Thread(new Runnable() {
+    @Override public void onReceive(final Context ctx, final Intent intent) {
+        AsyncTask.execute(new Runnable() {
             @Override public void run() {
                 startBootupStuffsAsync(ctx);
             }
         });
-        thread.start();
     }
 
     private void startBootupStuffsAsync(Context ctx) {
@@ -88,8 +71,7 @@ public class BootUpReceiver extends BroadcastReceiver {
             return;
         }
 
-        final PendingIntent pi = PendingIntent.getService(ctx, 0, bootupRestorationIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        final PendingIntent pi = PendingIntent.getService(ctx, 0, bootupRestorationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         final String title = ctx.getString(R.string.app_name);
         final String content = ctx.getString(R.string.bootup_restoration_content);
@@ -108,8 +90,7 @@ public class BootUpReceiver extends BroadcastReceiver {
                 .setAutoCancel(true);
         final Notification notification = builder.build();
 
-        final NotificationManager notificationManager =
-                (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFICATION_ID, notification);
     }
 
