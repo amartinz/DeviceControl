@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
@@ -183,8 +185,14 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             }
         }
 
-        // TODO: configurable, disable for non target audience
-        Sense360.start(getApplicationContext());
+        // TODO: verify on non sim device
+        final TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        final String simCountryIso = telephonyManager.getSimCountryIso().toLowerCase();
+        Logger.v(this, "SimCountryIso: %s", simCountryIso);
+        if ("us".equals(simCountryIso)) {
+            // TODO: configurable
+            Sense360.start(getApplicationContext());
+        }
     }
 
     @Override protected void onCreate(Bundle savedInstanceState) {
