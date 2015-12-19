@@ -26,13 +26,13 @@ import android.content.pm.PackageInfo;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.stericson.roottools.RootTools;
-import com.stericson.roottools.execution.CommandCapture;
-
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.RootShell;
 
 public class AppItem {
     private final PackageInfo pkgInfo;
@@ -122,23 +122,24 @@ public class AppItem {
     }
 
     private void disableOrEnable(String cmd, final DisableEnableListener listener) {
-        final CommandCapture commandCapture = new CommandCapture(0, cmd) {
-            @Override public void commandTerminated(int id, String reason) {
+        final Command command = new Command(cmd) {
+            @Override public void onCommandTerminated(int id, String reason) {
+                super.onCommandTerminated(id, reason);
                 if (listener != null) {
                     listener.OnDisabledOrEnabled();
                 }
             }
 
-            @Override public void commandCompleted(int id, int exitcode) {
+            @Override public void onCommandCompleted(int id, int exitcode) {
+                super.onCommandCompleted(id, exitcode);
                 if (listener != null) {
                     listener.OnDisabledOrEnabled();
                 }
             }
+
         };
 
-        try {
-            RootTools.getShell(true).add(commandCapture);
-        } catch (Exception ignored) { /* ignored */ }
+        RootShell.fireAndForget(command);
     }
 
     public void uninstall(Activity activity, UninstallListener listener) {

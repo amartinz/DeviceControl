@@ -19,10 +19,6 @@ package org.namelessrom.devicecontrol.modules.cpu.monitors;
 
 import android.app.Activity;
 
-import com.stericson.roottools.RootTools;
-import com.stericson.roottools.execution.CommandCapture;
-import com.stericson.roottools.execution.Shell;
-
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
@@ -30,8 +26,13 @@ import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.Shell;
+import alexander.martinz.libs.execution.ShellManager;
 
 public class CpuCoreMonitor {
     private static final int CPU_COUNT = CpuUtils.get().getNumOfCpus();
@@ -49,13 +50,15 @@ public class CpuCoreMonitor {
 
     private final List<CpuCore> mCoreList = new ArrayList<>(CPU_COUNT);
 
+    private final String CORE_STRING;
+
     private CpuCoreMonitor(final Activity activity) {
         openShell();
         mActivity = activity;
 
-        final String core = mActivity.getString(R.string.core);
+        CORE_STRING = mActivity.getString(R.string.core);
         for (int i = 0; i < CPU_COUNT; i++) {
-            String coreString = String.format("%s %s:", core, String.valueOf(i));
+            String coreString = String.format("%s %s:", CORE_STRING, String.valueOf(i));
             mCoreList.add(new CpuCore(coreString, "0", "0", "0"));
         }
     }
@@ -108,50 +111,69 @@ public class CpuCoreMonitor {
     };
 
     private void openShell() {
-        if (mShell == null || mShell.isClosed()) {
-            try {
-                mShell = RootTools.getShell(true);
-            } catch (Exception exc) {
-                Logger.e(this, "CpuCoreMonitor: " + exc.getMessage());
+        if (mShell == null || mShell.isClosed) {
+            final boolean shouldUseRoot = shouldUseRoot();
+            Logger.v(this, "shouldUseRoot: %s", shouldUseRoot);
+            if (shouldUseRoot) {
+                mShell = ShellManager.get().getRootShell();
+            } else {
+                mShell = ShellManager.get().getNormalShell();
             }
         }
     }
 
+    private boolean shouldUseRoot() {
+        for (int i = 0; i < CPU_COUNT; i++) {
+            final String[] paths = new String[]{
+                    CpuUtils.get().getCpuFrequencyPath(i),
+                    CpuUtils.get().getMaxCpuFrequencyPath(i),
+                    CpuUtils.get().getMinCpuFrequencyPath(i),
+                    GovernorUtils.get().getGovernorPath(i)
+            };
+            for (final String path : paths) {
+                if (!(new File(path).canRead())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private void updateStates() {
-        final String END = " 2> /dev/null;";
+        if (mShell == null) {
+            Logger.e(this, "Could not open shell!");
+            return;
+        }
+
         final StringBuilder sb = new StringBuilder();
-        // command=$(
-        sb.append("command=$(");
         for (int i = 0; i < CPU_COUNT; i++) {
             // if cpufreq directory exists ...
-            sb.append("if [ -d \"/sys/devices/system/cpu/cpu").append(String.valueOf(i))
-                    .append("/cpufreq\" ]; then ");
-            // busybox cat /path/to/cpu/frequency
-            sb.append("busybox cat ").append(CpuUtils.get().getCpuFrequencyPath(i)).append(END);
-            // busybox cat /path/to/cpu/frequency_max
-            sb.append("busybox cat ").append(CpuUtils.get().getMaxCpuFrequencyPath(i)).append(END);
-            // busybox cat /path/to/cpu/governor
-            sb.append("busybox cat ").append(GovernorUtils.get().getGovernorPath(i)).append(END);
+            sb.append("if [ -d \"/sys/devices/system/cpu/cpu").append(String.valueOf(i)).append("/cpufreq\" ]; then ");
+            // cat /path/to/cpu/frequency
+            sb.append(String.format("cat \"%s\" 2> /dev/null;", CpuUtils.get().getCpuFrequencyPath(i)));
+            sb.append("echo -n \" \";");
+            // cat /path/to/cpu/frequency_max
+            sb.append(String.format("cat \"%s\" 2> /dev/null;", CpuUtils.get().getMaxCpuFrequencyPath(i)));
+            sb.append("echo -n \" \";");
+            // cat /path/to/cpu/governor
+            sb.append(String.format("cat \"%s\" 2> /dev/null;", GovernorUtils.get().getGovernorPath(i)));
+            sb.append("echo -n \" \";");
             // ... else echo 0 for them
-            sb.append("else busybox echo \"0 0 0\"").append(END).append(" fi;");
+            sb.append("else echo \"0 0 0\" 2> /dev/null;fi;");
         }
-        // replace new lines with space
-        sb.append(");").append("echo $command | busybox tr -d \"\\n\"");
         // example output: 0 162000 1890000 interactive
         final String cmd = sb.toString();
         Logger.v(this, "cmd: " + cmd);
 
-        final StringBuilder outputCollector = new StringBuilder();
-        final CommandCapture commandCapture = new CommandCapture(0, cmd) {
-            @Override
-            public void commandOutput(int id, String line) {
-                outputCollector.append(line);
-            }
+        final Command command = new Command(cmd) {
+            @Override public void onCommandCompleted(int id, int exitCode) {
+                super.onCommandCompleted(id, exitCode);
 
-            @Override
-            public void commandCompleted(int id, int exitcode) {
-                final String output = outputCollector.toString();
-                Logger.v(this, "output: " + output);
+                String output = getOutput();
+                if (output == null) {
+                    return;
+                }
+                output = output.replace("\n", " ");
 
                 if (mActivity != null) {
                     final String[] parts = output.split(" ");
@@ -161,9 +183,7 @@ public class CpuCoreMonitor {
                         try {
                             cpuCore = mCoreList.get(i);
                         } catch (IndexOutOfBoundsException iobe) {
-                            cpuCore = new CpuCore(String.format("%s %s:",
-                                    mActivity.getString(R.string.core), String.valueOf(i)),
-                                    "0", "0", "0");
+                            cpuCore = new CpuCore(String.format("%s %s:", CORE_STRING, String.valueOf(i)), "0", "0", "0");
                         }
                         try {
                             cpuCore.setCurrent(parts[i + mult])
@@ -190,11 +210,8 @@ public class CpuCoreMonitor {
                 Application.HANDLER.postDelayed(mUpdater, mInterval);
             }
         };
-
-        openShell();
-        if (mShell != null && !mShell.isClosed() && isStarted) {
-            mShell.add(commandCapture);
-        }
+        command.setOutputType(Command.OUTPUT_STRING);
+        mShell.add(command);
     }
 
 }

@@ -22,10 +22,10 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.ShellManager;
 import alexander.martinz.libs.hardware.device.KernelInfo;
 import alexander.martinz.libs.hardware.device.MemoryInfo;
 import alexander.martinz.libs.hardware.device.ProcessorInfo;
@@ -61,8 +61,10 @@ public class Device extends alexander.martinz.libs.hardware.device.Device {
         // get su version
         suVersion = hasRoot ? Utils.execute("su -v", "-") : "-";
 
+        // TODO: readd check
+        hasBusyBox = true;
         // check busybox
-        hasBusyBox = RootTools.isBusyboxAvailable();
+        //hasBusyBox = ShellManager.isBusyboxAvailable();
 
         // update memory as cached / free may change
         MemoryInfo.feedWithInformation(mContext, MemoryInfo.TYPE_MB, memoryInfoListener);

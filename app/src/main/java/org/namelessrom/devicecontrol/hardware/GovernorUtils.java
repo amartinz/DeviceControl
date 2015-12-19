@@ -21,18 +21,19 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.stericson.roottools.RootTools;
-import com.stericson.roottools.execution.CommandCapture;
-import com.stericson.roottools.execution.Shell;
-
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.Shell;
+import alexander.martinz.libs.execution.ShellManager;
 
 /**
  * Easy interaction with governors
@@ -113,62 +114,64 @@ public class GovernorUtils {
     }
 
     @Nullable public String[] getAvailableGpuGovernors() {
-        if (TextUtils.isEmpty(GpuUtils.get().getGpuGovsAvailablePath())) return GPU_GOVS;
+        if (TextUtils.isEmpty(GpuUtils.get().getGpuGovsAvailablePath())) { return GPU_GOVS; }
         return getAvailableGovernors(true);
     }
 
     public void getGovernor(final GovernorListener listener) {
-        try {
-            final Shell mShell = RootTools.getShell(true);
-            if (mShell == null) { throw new Exception("Shell is null"); }
-
-            final StringBuilder cmd = new StringBuilder();
-            cmd.append("command=$(");
-            cmd.append("cat ").append(GOV_AVAILALBLE_PATH).append(" 2> /dev/null;");
-            cmd.append("echo -n \"[\";");
-            cmd.append("cat ").append(GOV0_CURRENT_PATH).append(" 2> /dev/null;");
-            cmd.append(");").append("echo $command | busybox tr -d \"\\n\"");
-            Logger.v(CpuUtils.class, cmd.toString());
-
-            final StringBuilder outputCollector = new StringBuilder();
-            final CommandCapture cmdCapture = new CommandCapture(0, cmd.toString()) {
-                @Override public void commandOutput(int id, String line) {
-                    outputCollector.append(line);
-                    Logger.v(CpuUtils.class, line);
-                }
-
-                @Override public void commandCompleted(int id, int exitcode) {
-                    final List<String> result =
-                            Arrays.asList(outputCollector.toString().split(" "));
-                    final List<String> tmpList = new ArrayList<>();
-                    String tmpString = "";
-
-                    if (result.size() <= 0) return;
-
-                    for (final String s : result) {
-                        if (s.isEmpty()) continue;
-                        if (s.charAt(0) == '[') {
-                            tmpString = s.substring(1, s.length());
-                        } else {
-                            tmpList.add(s);
-                        }
-                    }
-
-                    final String gov = tmpString;
-                    final String[] availGovs = tmpList.toArray(new String[tmpList.size()]);
-                    Application.HANDLER.post(new Runnable() {
-                        @Override public void run() {
-                            listener.onGovernor(new Governor(availGovs, gov));
-                        }
-                    });
-
-                }
-            };
-
-            if (mShell.isClosed()) { throw new Exception("Shell is closed"); }
-            mShell.add(cmdCapture);
-        } catch (Exception exc) {
-            Logger.v(CpuUtils.class, "Error: " + exc.getMessage());
+        final Shell shell;
+        if (new File(GOV_AVAILALBLE_PATH).canRead() && new File(GOV0_CURRENT_PATH).canRead()) {
+            shell = ShellManager.get().getNormalShell();
+        } else {
+            shell = ShellManager.get().getRootShell();
         }
+
+        if (shell == null) {
+            Logger.e(this, "Could not open shell!");
+            return;
+        }
+
+        final String cmd = String.format("cat \"%s\" 2> /dev/null;" + "echo -n \"[\";" + "cat \"%s\" 2> /dev/null;",
+                GOV_AVAILALBLE_PATH, GOV0_CURRENT_PATH);
+        final Command command = new Command(cmd) {
+            @Override public void onCommandCompleted(int id, int exitCode) {
+                super.onCommandCompleted(id, exitCode);
+
+                String output = getOutput();
+                if (output == null) {
+                    return;
+                }
+                output = output.replace("\n", "");
+
+                final List<String> result = Arrays.asList(output.split(" "));
+                if (result.isEmpty()) {
+                    return;
+                }
+
+                final List<String> tmpList = new ArrayList<>();
+                String tmpString = "";
+
+                for (final String s : result) {
+                    if (TextUtils.isEmpty(s)) {
+                        continue;
+                    }
+                    if (s.charAt(0) == '[') {
+                        tmpString = s.substring(1, s.length());
+                    } else {
+                        tmpList.add(s);
+                    }
+                }
+
+                final String gov = tmpString;
+                final String[] availGovs = tmpList.toArray(new String[tmpList.size()]);
+                Application.HANDLER.post(new Runnable() {
+                    @Override public void run() {
+                        listener.onGovernor(new Governor(availGovs, gov));
+                    }
+                });
+            }
+        };
+        command.setOutputType(Command.OUTPUT_STRING);
+        shell.add(command);
     }
 }

@@ -22,10 +22,13 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
-import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
+
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.RootShell;
 
 public class ReadAheadAction extends BaseAction {
 
@@ -73,7 +76,7 @@ public class ReadAheadAction extends BaseAction {
             }
         }
 
-        Utils.runRootCommand(sb.toString());
+        RootShell.fireAndForget(new Command(sb.toString()));
     }
 
 }

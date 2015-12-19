@@ -29,9 +29,6 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 
-import com.stericson.roottools.RootTools;
-import com.stericson.roottools.execution.CommandCapture;
-
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
@@ -48,6 +45,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.Flushable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -208,7 +206,7 @@ public class Utils {
 
     public static String readFileViaShell(final String filePath, final boolean useSu) {
         final Command command = new Command(String.format("cat %s;", filePath));
-        return useSu ? RootShell.fireAndBlock(command) : NormalShell.fireAndBlock(command);
+        return useSu ? RootShell.fireAndBlockString(command) : NormalShell.fireAndBlock(command);
     }
 
     /**
@@ -376,7 +374,7 @@ public class Utils {
             return def;
         }
 
-        Command cmd = new Command(command).setShouldCollect(true, Command.OUTPUT_STRING);
+        Command cmd = new Command(command).setOutputType(Command.OUTPUT_STRING);
         String result = rootShell.add(cmd).waitFor().getOutput();
         if (result == null) {
             return def;
@@ -386,7 +384,7 @@ public class Utils {
     }
 
     public static void runRootCommand(final String command) {
-        runRootCommand(command, false);
+        RootShell.fireAndForget(new Command(command));
     }
 
     /**
@@ -396,18 +394,10 @@ public class Utils {
      * @param wait    If true, this command is blocking until execution finished
      */
     public static void runRootCommand(final String command, final boolean wait) {
-        Logger.v("runRootCommand", "executing -> %s", command);
-        final CommandCapture comm = new CommandCapture(0, command);
-        try {
-            RootTools.getShell(true).add(comm);
-            if (wait) {
-                //noinspection StatementWithEmptyBody
-                while (comm.isExecuting()) {
-                    // wait for it
-                }
-            }
-        } catch (Exception e) {
-            Logger.v(Utils.class, "runRootCommand", e);
+        if (wait) {
+            RootShell.fireAndBlock(new Command(command));
+        } else {
+            RootShell.fireAndForget(new Command(command));
         }
     }
 
@@ -423,16 +413,17 @@ public class Utils {
     public static void getCommandResult(final OnShellOutputListener listener, final int ID,
             final String COMMAND, final boolean NEWLINE) {
         final StringBuilder sb = new StringBuilder();
-        final CommandCapture comm = new CommandCapture(0, COMMAND) {
-            @Override public void commandOutput(int id, String line) {
+        final Command command = new Command(COMMAND) {
+            @Override public void onCommandOutput(int id, String line) {
+                super.onCommandOutput(id, line);
                 sb.append(line);
                 if (NEWLINE) {
                     sb.append('\n');
                 }
             }
 
-            @Override
-            public void commandCompleted(int id, int exitcode) {
+            @Override public void onCommandCompleted(int id, int exitcode) {
+                super.onCommandCompleted(id, exitcode);
                 final String result = sb.toString();
                 Logger.v(Utils.class, String.format("Shell output: %s", result));
                 Application.HANDLER.post(new Runnable() {
@@ -444,11 +435,8 @@ public class Utils {
                 });
             }
         };
-        try {
-            RootTools.getShell(true).add(comm);
-        } catch (Exception e) {
-            Logger.v(Utils.class, "runRootCommand: " + e.getMessage());
-        }
+
+        RootShell.fireAndForget(command);
     }
 
     public static String getReadCommand(final String path) {
@@ -612,11 +600,17 @@ public class Utils {
         return DateFormat.format("dd-MM-yyyy", cal).toString();
     }
 
-    public static void closeQuietly(final Closeable closeable) {
-        if (closeable == null) { return; }
-        try {
-            closeable.close();
-        } catch (IOException ignored) { }
+    public static void closeQuietly(final Object closeable) {
+        if (closeable instanceof Flushable) {
+            try {
+                ((Flushable) closeable).flush();
+            } catch (IOException ignored) { }
+        }
+        if (closeable instanceof Closeable) {
+            try {
+                ((Closeable) closeable).close();
+            } catch (IOException ignored) { }
+        }
     }
 
     public static boolean writeToFile(final File file, final String content) {

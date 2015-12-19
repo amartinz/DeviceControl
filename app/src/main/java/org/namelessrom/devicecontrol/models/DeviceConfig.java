@@ -20,8 +20,7 @@ package org.namelessrom.devicecontrol.models;
 
 import android.text.TextUtils;
 
-import com.stericson.roottools.execution.Shell;
-
+import alexander.martinz.libs.execution.Shell;
 import io.paperdb.Paper;
 
 /**
@@ -44,7 +43,8 @@ public class DeviceConfig {
     public boolean perfCpuGovLock;
     public boolean perfCpuInfo;
 
-    public String suShellContext = Shell.CONTEXT_NORMAL;
+    // TODO: readd
+    public String suShellContext = "normal"; //Shell.CONTEXT_NORMAL;
 
     private transient static DeviceConfig instance;
 
@@ -66,7 +66,8 @@ public class DeviceConfig {
 
     private void ensureDefaults() {
         if (TextUtils.isEmpty(suShellContext)) {
-            suShellContext = Shell.CONTEXT_NORMAL;
+            // TODO: readd
+            suShellContext = "normal";//Shell.CONTEXT_NORMAL;
         }
     }
 

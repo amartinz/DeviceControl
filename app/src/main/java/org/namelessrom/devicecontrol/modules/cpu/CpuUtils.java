@@ -21,10 +21,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.stericson.roottools.RootTools;
-import com.stericson.roottools.execution.CommandCapture;
-import com.stericson.roottools.execution.Shell;
-
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
@@ -34,11 +30,16 @@ import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.Shell;
+import alexander.martinz.libs.execution.ShellManager;
 
 /**
  * Generic CPU Tasks.
@@ -216,69 +217,69 @@ public class CpuUtils {
     }
 
     public void getCpuFreq(final FrequencyListener listener) {
-        try {
-            final Shell mShell = RootTools.getShell(true);
-            if (mShell == null) { throw new Exception("Shell is null"); }
-
-            final StringBuilder cmd = new StringBuilder();
-            cmd.append("command=$(");
-            cmd.append("cat ").append(FREQ_AVAIL).append(" 2> /dev/null;");
-            cmd.append("echo -n \"[\";");
-            cmd.append("cat ").append(getMaxCpuFrequencyPath(0)).append(" 2> /dev/null;");
-            cmd.append("echo -n \"]\";");
-            cmd.append("cat ").append(getMinCpuFrequencyPath(0)).append(" 2> /dev/null;");
-            cmd.append(");").append("echo $command | busybox tr -d \"\\n\"");
-            Logger.v(CpuUtils.class, cmd.toString());
-
-            final StringBuilder outputCollector = new StringBuilder();
-            final CommandCapture cmdCapture = new CommandCapture(0, cmd.toString()) {
-                @Override
-                public void commandOutput(int id, String line) {
-                    outputCollector.append(line);
-                    Logger.v(CpuUtils.class, line);
-                }
-
-                @Override
-                public void commandCompleted(int id, int exitcode) {
-                    final List<String> result =
-                            Arrays.asList(outputCollector.toString().split(" "));
-                    final List<String> tmpList = new ArrayList<>();
-                    String tmpMax = "", tmpMin = "";
-
-                    if (result.size() <= 0) {
-                        return;
-                    }
-
-                    for (final String s : result) {
-                        if (s.isEmpty()) {
-                            continue;
-                        }
-                        if (s.charAt(0) == '[') {
-                            tmpMax = s.substring(1, s.length());
-                        } else if (s.charAt(0) == ']') {
-                            tmpMin = s.substring(1, s.length());
-                        } else {
-                            tmpList.add(s);
-                        }
-                    }
-
-                    final String max = tmpMax;
-                    final String min = tmpMin;
-                    final String[] avail = tmpList.toArray(new String[tmpList.size()]);
-                    Application.HANDLER.post(new Runnable() {
-                        @Override public void run() {
-                            listener.onFrequency(new Frequency(avail, max, min));
-                        }
-                    });
-
-                }
-            };
-
-            if (mShell.isClosed()) { throw new Exception("Shell is closed"); }
-            mShell.add(cmdCapture);
-        } catch (Exception exc) {
-            Logger.e(CpuUtils.class, "Error: " + exc.getMessage());
+        final Shell shell;
+        if (new File(FREQ_AVAIL).canRead() && new File(getMaxCpuFrequencyPath(0)).canRead()
+            && new File(getMinCpuFrequencyPath(0)).canRead()) {
+            shell = ShellManager.get().getNormalShell();
+        } else {
+            shell = ShellManager.get().getRootShell();
         }
+
+        if (shell == null) {
+            Logger.e(this, "Could not open shell!");
+            return;
+        }
+
+        final String cmd = String.format("cat \"%s\" 2> /dev/null;" +
+                                         "echo -n \"[\";"           +
+                                         "cat \"%s\" 2> /dev/null;" +
+                                         "echo -n \" ]\";"           +
+                                         "cat \"%s\" 2> /dev/null;",
+                FREQ_AVAIL, getMaxCpuFrequencyPath(0), getMinCpuFrequencyPath(0));
+        final Command command = new Command(cmd) {
+            @Override public void onCommandCompleted(int id, int exitCode) {
+                super.onCommandCompleted(id, exitCode);
+
+                String output = getOutput();
+                if (output == null) {
+                    return;
+                }
+                output = output.replace("\n", " ");
+
+                final List<String> result = Arrays.asList(output.split(" "));
+                if (result.isEmpty()) {
+                    return;
+                }
+
+                final List<String> tmpList = new ArrayList<>();
+                String tmpMax = "";
+                String tmpMin = "";
+
+                for (final String s : result) {
+                    if (TextUtils.isEmpty(s)) {
+                        continue;
+                    }
+                    if (s.charAt(0) == '[') {
+                        tmpMax = s.substring(1, s.length());
+                    } else if (s.charAt(0) == ']') {
+                        tmpMin = s.substring(1, s.length());
+                    } else {
+                        tmpList.add(s);
+                    }
+                }
+
+                final String max = tmpMax;
+                final String min = tmpMin;
+                final String[] avail = tmpList.toArray(new String[tmpList.size()]);
+                Application.HANDLER.post(new Runnable() {
+                    @Override public void run() {
+                        listener.onFrequency(new Frequency(avail, max, min));
+                    }
+                });
+            }
+        };
+        command.setOutputType(Command.OUTPUT_STRING);
+        shell.add(command);
     }
 
     @NonNull public String onlineCpu(final int cpu) {

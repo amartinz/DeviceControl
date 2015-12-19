@@ -29,8 +29,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.stericson.roottools.RootTools;
-
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -70,7 +68,8 @@ public class DummyLauncher extends BaseActivity {
                     final String url = String.format("https://www.google.com/#q=how+to+root+%s", Device.get(context).model);
                     AppHelper.viewInBrowser(url);
                 } else if (!Device.get(context).hasBusyBox) {
-                    RootTools.offerBusyBox();
+                    // TODO: readd that stuff
+                    //RootTools.offerBusyBox();
                 }
             }
         });

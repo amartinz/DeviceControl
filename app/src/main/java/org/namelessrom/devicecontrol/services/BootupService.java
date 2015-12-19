@@ -21,14 +21,12 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.stericson.roottools.RootTools;
-
 import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
-import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.modules.device.DeviceFeatureFragment;
 import org.namelessrom.devicecontrol.modules.device.DeviceFeatureKernelFragment;
@@ -42,15 +40,17 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.io.File;
 import java.util.ArrayList;
 
+import alexander.martinz.libs.execution.ShellManager;
 import io.paperdb.Paper;
 
 public class BootupService extends IntentService {
     private static final Object lockObject = new Object();
 
-    public BootupService() { super("BootupService"); }
+    public BootupService() {
+        super("BootupService");
+    }
 
-    @Override
-    protected void onHandleIntent(Intent intent) {
+    @Override protected void onHandleIntent(Intent intent) {
         if (intent == null) {
             stopSelf();
             return;
@@ -59,12 +59,11 @@ public class BootupService extends IntentService {
         startBootupRestoration();
     }
 
-    @Override
-    public void onDestroy() {
+    @Override public void onDestroy() {
         synchronized (lockObject) {
             Logger.i(this, "closing shells");
             try {
-                RootTools.closeAllShells();
+                ShellManager.get().cleanupShells();
             } catch (Exception e) {
                 Logger.e(this, String.format("onDestroy(): %s", e));
             }
@@ -84,9 +83,9 @@ public class BootupService extends IntentService {
         // Update information about the device, to see whether we fulfill all requirements
         final Device device = Device.get(this).update();
 
-        //==================================================================================
+        //========================================================================================================================
         // No Root, No Friends, That's Life ...
-        //==================================================================================
+        //========================================================================================================================
         if (!device.hasRoot || !device.hasBusyBox) {
             Logger.e(this, "No Root, No Friends, That's Life ...");
             return;
@@ -106,40 +105,38 @@ public class BootupService extends IntentService {
             Logger.v(this, "Done sleeping, starting the actual work");
         }
 
-        //==================================================================================
+        //========================================================================================================================
         // Tasker
-        //==================================================================================
+        //========================================================================================================================
         TaskerConfig taskerConfig = TaskerConfig.get();
         if (taskerConfig.fstrimEnabled) {
             Logger.v(this, "Scheduling Tasker - FSTRIM");
             AlarmHelper.setAlarmFstrim(this, taskerConfig.fstrimInterval);
         }
 
-        //==================================================================================
+        //========================================================================================================================
         // Fields For Reapplying
-        //==================================================================================
+        //========================================================================================================================
         final StringBuilder sbCmd = new StringBuilder();
         String cmd;
 
-        //==================================================================================
+        //========================================================================================================================
         // Custom Shell Command
-        //==================================================================================
-                /*sbCmd.append(PreferenceHelper.getString(CUSTOM_SHELL_COMMAND,
-                        "echo \"Hello world!\""))
-                        .append(";\n");
-                */
-        //==================================================================================
+        //========================================================================================================================
+        //sbCmd.append(PreferenceHelper.getString(CUSTOM_SHELL_COMMAND,"echo \"Hello world!\"")).append(";\n");
+                
+        //========================================================================================================================
         // Device
-        //==================================================================================
+        //========================================================================================================================
         Logger.i(this, "----- DEVICE START -----");
         cmd = DeviceFeatureFragment.restore(bootupConfig);
         Logger.v(this, cmd);
         sbCmd.append(cmd);
         Logger.i(this, "----- DEVICE END -----");
 
-        //==================================================================================
+        //========================================================================================================================
         // Performance
-        //==================================================================================
+        //========================================================================================================================
         Logger.i(this, "----- CPU START -----");
         cmd = CpuUtils.get().restore(bootupConfig);
         Logger.v(this, cmd);
@@ -165,9 +162,9 @@ public class BootupService extends IntentService {
         sbCmd.append(cmd);
         Logger.i(this, "----- VOLTAGE END -----");
 
-        //==================================================================================
+        //========================================================================================================================
         // Tools
-        //==================================================================================
+        //========================================================================================================================
         Logger.i(this, "----- TOOLS START -----");
         cmd = SysctlFragment.restore(bootupConfig);
         Logger.v(this, cmd);
@@ -193,10 +190,11 @@ public class BootupService extends IntentService {
         sbCmd.append(cmd);
         Logger.i(this, "----- SPECIAL END -----");
 
-        //==================================================================================
+        //========================================================================================================================
         // Execute
-        //==================================================================================
+        //========================================================================================================================
         cmd = sbCmd.toString();
+        Logger.v(this, "Starting bootup with cmd: %s", cmd);
         if (!cmd.isEmpty()) {
             Utils.runRootCommand(cmd);
         }

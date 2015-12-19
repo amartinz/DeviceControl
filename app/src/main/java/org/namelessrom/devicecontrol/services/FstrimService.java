@@ -20,57 +20,65 @@ package org.namelessrom.devicecontrol.services;
 import android.app.IntentService;
 import android.content.Intent;
 
-import com.stericson.roottools.RootTools;
-import com.stericson.roottools.execution.CommandCapture;
-
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.FileOutputStream;
+
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.RootShell;
 
 public class FstrimService extends IntentService {
     public static final String ACTION_TASKER_FSTRIM = "action_tasker_fstrim";
 
-    public FstrimService() { super("FstrimService"); }
+    private FileOutputStream fileOutputStream;
 
-    @Override
-    protected void onHandleIntent(final Intent intent) {
+    public FstrimService() {
+        super("FstrimService");
+    }
+
+    @Override protected void onHandleIntent(final Intent intent) {
         if (intent == null || !ACTION_TASKER_FSTRIM.equals(intent.getAction())) {
             return;
         }
         Logger.i(this, "FSTRIM RUNNING");
 
         final String path = getFilesDir().getAbsolutePath() + DeviceConstants.DC_LOG_FILE_FSTRIM;
-        final FileOutputStream fos;
+        final String cmd = "date;"
+                           + "busybox fstrim -v /system;"
+                           + "busybox fstrim -v /data;"
+                           + "busybox fstrim -v /cache;";
+
         try {
-            fos = new FileOutputStream(path);
-            final String cmd = "date;"
-                    + "busybox fstrim -v /system;"
-                    + "busybox fstrim -v /data;"
-                    + "busybox fstrim -v /cache;";
+            fileOutputStream = new FileOutputStream(path);
+        } catch (Exception ignored) { }
 
-            final CommandCapture comm = new CommandCapture(0, cmd) {
-                @Override
-                public void commandOutput(int id, String line) {
-                    Logger.v(this, "Result: " + line);
-                    try {
-                        fos.write((line + '\n').getBytes());
-                    } catch (Exception ignored) { }
+        final Command command = new Command(cmd) {
+            @Override public void onCommandOutput(int id, String line) {
+                super.onCommandOutput(id, line);
+                Logger.v(this, "Result: " + line);
+                writeLog(line);
+            }
+
+            @Override public void onCommandCompleted(int id, int exitcode) {
+                super.onCommandCompleted(id, exitcode);
+                try {
+                    writeLog("\n\n");
+                } catch (Exception ignored) { } finally {
+                    Utils.closeQuietly(fileOutputStream);
                 }
+            }
+        };
 
-                @Override
-                public void commandCompleted(int id, int exitcode) {
-                    try {
-                        fos.write("\n\n".getBytes());
-                        fos.flush();
-                        fos.close();
-                    } catch (Exception ignored) { }
-                }
-            };
+        RootShell.fireAndForget(command);
+    }
 
-            RootTools.getShell(true).add(comm);
-        } catch (Exception e) {
-            Logger.e(this, "Error running fstrim", e);
+    private void writeLog(String line) {
+        if (fileOutputStream != null) {
+            try {
+                fileOutputStream.write((line + '\n').getBytes());
+            } catch (Exception ignored) { }
         }
     }
 

@@ -608,13 +608,11 @@ public class CustomViewAbove extends ViewGroup {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-
-        if (!mEnabled) { return false; }
+        if (!mEnabled) {
+            return false;
+        }
 
         final int action = ev.getAction() & MotionEventCompat.ACTION_MASK;
-
-        if (action == MotionEvent.ACTION_DOWN) { Logger.v(TAG, "Received ACTION_DOWN"); }
-
         if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP
                 || (action != MotionEvent.ACTION_DOWN && mIsUnableToDrag)) {
             endDrag();

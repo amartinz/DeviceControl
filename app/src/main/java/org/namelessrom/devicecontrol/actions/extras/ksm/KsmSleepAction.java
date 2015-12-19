@@ -25,6 +25,9 @@ import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.hardware.KsmUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.RootShell;
+
 public class KsmSleepAction extends BaseAction {
 
     public static final String NAME = "ksm_sleep";
@@ -62,7 +65,7 @@ public class KsmSleepAction extends BaseAction {
 
         setBootup(KsmUtils.KSM_SLEEP);
 
-        Utils.runRootCommand(Utils.getWriteCommand(KsmUtils.KSM_SLEEP, value));
+        RootShell.fireAndForget(new Command(Utils.getWriteCommand(KsmUtils.KSM_SLEEP, value)));
     }
 
 }

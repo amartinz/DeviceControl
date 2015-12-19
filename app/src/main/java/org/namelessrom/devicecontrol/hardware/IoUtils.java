@@ -18,19 +18,20 @@
 package org.namelessrom.devicecontrol.hardware;
 
 import android.support.annotation.Nullable;
-
-import com.stericson.roottools.RootTools;
-import com.stericson.roottools.execution.CommandCapture;
-import com.stericson.roottools.execution.Shell;
+import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.Shell;
+import alexander.martinz.libs.execution.ShellManager;
 
 public class IoUtils {
 
@@ -90,52 +91,60 @@ public class IoUtils {
     }
 
     public void getIoScheduler(final IoSchedulerListener listener) {
-        try {
-            final Shell mShell = RootTools.getShell(true);
-            if (mShell == null) { throw new Exception("Shell is null"); }
-
-            final String cmd = "cat " + IO_SCHEDULER_PATH[0] + " 2> /dev/null;";
-
-            final StringBuilder outputCollector = new StringBuilder();
-            final CommandCapture cmdCapture = new CommandCapture(0, cmd) {
-                @Override public void commandOutput(int id, String line) {
-                    outputCollector.append(line);
-                }
-
-                @Override public void commandCompleted(int id, int exitcode) {
-                    final List<String> result =
-                            Arrays.asList(outputCollector.toString().split(" "));
-                    final List<String> tmpList = new ArrayList<>();
-                    String tmpString = "";
-
-                    if (result.size() <= 0) return;
-
-                    for (final String s : result) {
-                        if (s.isEmpty()) continue;
-                        if (s.charAt(0) == '[') {
-                            tmpString = s.substring(1, s.length() - 1);
-                            tmpList.add(tmpString);
-                        } else {
-                            tmpList.add(s);
-                        }
-                    }
-
-                    final String scheduler = tmpString;
-                    final String[] availableSchedulers =
-                            tmpList.toArray(new String[tmpList.size()]);
-                    Application.HANDLER.post(new Runnable() {
-                        @Override public void run() {
-                            listener.onIoScheduler(new IoScheduler(availableSchedulers, scheduler));
-                        }
-                    });
-
-                }
-            };
-
-            if (mShell.isClosed()) { throw new Exception("Shell is closed"); }
-            mShell.add(cmdCapture);
-        } catch (Exception exc) {
-            Logger.e(CpuUtils.class, "Error: " + exc.getMessage());
+        final Shell shell;
+        if (new File(IO_SCHEDULER_PATH[0]).canRead()) {
+            Logger.v(this, "Using normal shell!");
+            shell = ShellManager.get().getNormalShell();
+        } else {
+            Logger.v(this, "Using root shell!");
+            shell = ShellManager.get().getRootShell();
         }
+
+        if (shell == null) {
+            Logger.e(this, "Could not open shell!");
+            return;
+        }
+
+        final String cmd = String.format("cat \"%s\" 2> /dev/null;", IO_SCHEDULER_PATH[0]);
+        final Command command = new Command(cmd) {
+            @Override public void onCommandCompleted(int id, int exitCode) {
+                super.onCommandCompleted(id, exitCode);
+
+                final String output = getOutput();
+                if (output == null) {
+                    return;
+                }
+
+                final List<String> result = Arrays.asList(output.split(" "));
+                if (result.isEmpty()) {
+                    return;
+                }
+
+                final List<String> tmpList = new ArrayList<>();
+                String tmpString = "";
+
+                for (final String s : result) {
+                    if (TextUtils.isEmpty(s)) {
+                        continue;
+                    }
+                    if (s.charAt(0) == '[') {
+                        tmpString = s.substring(1, s.length() - 1);
+                        tmpList.add(tmpString);
+                    } else {
+                        tmpList.add(s);
+                    }
+                }
+
+                final String scheduler = tmpString;
+                final String[] availableSchedulers = tmpList.toArray(new String[tmpList.size()]);
+                Application.HANDLER.post(new Runnable() {
+                    @Override public void run() {
+                        listener.onIoScheduler(new IoScheduler(availableSchedulers, scheduler));
+                    }
+                });
+            }
+        };
+        command.setOutputType(Command.OUTPUT_STRING);
+        shell.add(command);
     }
 }

@@ -26,6 +26,9 @@ import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.RootShell;
+
 public class UksmEnableAction extends BaseAction {
 
     public static final String NAME = "uksm_enabled";
@@ -64,7 +67,7 @@ public class UksmEnableAction extends BaseAction {
         final String path = Application.get().getString(R.string.file_uksm_run);
         setBootup(path);
 
-        Utils.runRootCommand(Utils.getWriteCommand(path, value));
+        RootShell.fireAndForget(new Command(Utils.getWriteCommand(path, value)));
     }
 
 }

@@ -29,6 +29,9 @@ import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.RootShell;
+
 public class CpuFreqMinAction extends BaseAction {
 
     public static final String NAME = "cpu_frequency_min";
@@ -87,7 +90,7 @@ public class CpuFreqMinAction extends BaseAction {
         }
         configuration.save();
 
-        Utils.runRootCommand(sb.toString());
+        RootShell.fireAndForget(new Command(sb.toString()));
     }
 
 }

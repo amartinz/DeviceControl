@@ -42,7 +42,6 @@ import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.pollfish.constants.Position;
 import com.pollfish.main.PollFish;
-import com.stericson.roottools.RootTools;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
@@ -79,6 +78,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.proprietary.Configuration;
 
 import java.util.ArrayList;
+
+import alexander.martinz.libs.execution.ShellManager;
 
 public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener, MainActivityCallbacks {
 
@@ -375,7 +376,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         synchronized (lockObject) {
             Logger.i(this, "closing shells");
             try {
-                RootTools.closeAllShells();
+                ShellManager.get().cleanupShells();
             } catch (Exception e) {
                 Logger.e(this, String.format("onDestroy(): %s", e));
             }

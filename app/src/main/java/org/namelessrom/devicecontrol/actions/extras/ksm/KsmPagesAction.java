@@ -25,6 +25,9 @@ import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.hardware.KsmUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.RootShell;
+
 public class KsmPagesAction extends BaseAction {
 
     public static final String NAME = "ksm_pages";
@@ -62,7 +65,7 @@ public class KsmPagesAction extends BaseAction {
 
         setBootup(KsmUtils.KSM_PAGES_TO_SCAN);
 
-        Utils.runRootCommand(Utils.getWriteCommand(KsmUtils.KSM_PAGES_TO_SCAN, value));
+        RootShell.fireAndForget(new Command(Utils.getWriteCommand(KsmUtils.KSM_PAGES_TO_SCAN, value)));
     }
 
 }

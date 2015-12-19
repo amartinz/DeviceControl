@@ -27,6 +27,9 @@ import org.namelessrom.devicecontrol.hardware.IoUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.RootShell;
+
 public class IoSchedulerAction extends BaseAction {
 
     public static final String NAME = "io_scheduler";
@@ -73,7 +76,7 @@ public class IoSchedulerAction extends BaseAction {
             }
         }
 
-        Utils.runRootCommand(sb.toString());
+        RootShell.fireAndForget(new Command(sb.toString()));
     }
 
 }

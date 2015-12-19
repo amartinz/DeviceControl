@@ -20,13 +20,12 @@ package org.namelessrom.devicecontrol.modules.preferences;
 import android.os.Bundle;
 import android.view.View;
 
-import com.stericson.roottools.RootTools;
-
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.theme.AppResources;
 
+import alexander.martinz.libs.execution.ShellManager;
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
@@ -123,7 +122,7 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
     private void reopenShells() {
         Logger.i(this, "reopening shells");
         try {
-            RootTools.closeAllShells();
+            ShellManager.get().cleanupShells();
         } catch (Exception e) {
             Logger.e(this, String.format("reopenShells() -> %s", e));
         }

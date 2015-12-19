@@ -25,6 +25,9 @@ import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.hardware.UksmUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.RootShell;
+
 public class UksmGovernorAction extends BaseAction {
 
     public static final String NAME = "uksm_governor";
@@ -62,7 +65,7 @@ public class UksmGovernorAction extends BaseAction {
 
         setBootup(UksmUtils.UKSM_CPU_GOV);
 
-        Utils.runRootCommand(Utils.getWriteCommand(UksmUtils.UKSM_CPU_GOV, value));
+        RootShell.fireAndForget(new Command(Utils.getWriteCommand(UksmUtils.UKSM_CPU_GOV, value)));
     }
 
 }

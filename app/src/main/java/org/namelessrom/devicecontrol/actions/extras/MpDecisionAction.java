@@ -7,6 +7,9 @@ import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.RootShell;
+
 public class MpDecisionAction extends BaseAction {
     public static final String MPDECISION_PATH = "/system/bin/mpdecision";
 
@@ -45,11 +48,11 @@ public class MpDecisionAction extends BaseAction {
 
         setBootup(MPDECISION_PATH);
 
-        Utils.runRootCommand(enableMpDecision(TextUtils.equals("1", value)));
+        RootShell.fireAndForget(new Command(enableMpDecision(TextUtils.equals("1", value))));
     }
 
     private String enableMpDecision(final boolean enable) {
-        return (enable ? "start mpdecision 2> /dev/null;\n" : "stop mpdecision 2> /dev/null;\n");
+        return (enable ? "start mpdecision 2> /dev/null;" : "stop mpdecision 2> /dev/null;");
     }
 
 }
