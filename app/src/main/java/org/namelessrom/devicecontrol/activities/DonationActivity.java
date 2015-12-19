@@ -36,7 +36,8 @@ import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
-import org.namelessrom.proprietary.Configuration;
+
+import alexander.martinz.vendor.Configuration;
 
 public class DonationActivity extends BaseActivity implements BillingProcessor.IBillingHandler,
         View.OnClickListener, RadioGroup.OnCheckedChangeListener {
@@ -148,7 +149,7 @@ public class DonationActivity extends BaseActivity implements BillingProcessor.I
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (mBillingProcessor == null ||
-                !mBillingProcessor.handleActivityResult(requestCode, resultCode, data)) {
+            !mBillingProcessor.handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }

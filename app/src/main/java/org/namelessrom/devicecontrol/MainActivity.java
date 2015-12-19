@@ -42,6 +42,7 @@ import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.pollfish.constants.Position;
 import com.pollfish.main.PollFish;
+import com.sense360.android.quinoa.lib.Sense360;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
@@ -75,11 +76,11 @@ import org.namelessrom.devicecontrol.modules.tools.WirelessFileManagerFragment;
 import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-import org.namelessrom.proprietary.Configuration;
 
 import java.util.ArrayList;
 
 import alexander.martinz.libs.execution.ShellManager;
+import alexander.martinz.vendor.Configuration;
 
 public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener, MainActivityCallbacks {
 
@@ -181,6 +182,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 PollFish.init(this, pfApiKey, Position.BOTTOM_RIGHT, 30);
             }
         }
+
+        // TODO: configurable, disable for non target audience
+        Sense360.start(getApplicationContext());
     }
 
     @Override protected void onCreate(Bundle savedInstanceState) {

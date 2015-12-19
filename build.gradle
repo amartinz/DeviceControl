@@ -3,6 +3,7 @@ buildscript {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
+        flatDir { dirs 'aars' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.0.0-alpha3'
@@ -15,5 +16,6 @@ allprojects {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
+        flatDir { dirs 'aars' }
     }
 }

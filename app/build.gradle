@@ -77,7 +77,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: '../libs', include: ['*.jar'])
+    if (new File("modules/Vendor").exists()) {
+        compile project(':modules:Vendor')
+    } else {
+        compile 'alexander.martinz.vendor:vendor:1.0.0@aar'
+    }
 
     // see https://github.com/Evisceration/logger
     compile project(':modules:logger:library')
@@ -118,4 +122,11 @@ dependencies {
 
     // see https://github.com/Kennyc1012/BottomSheet
     compile 'com.github.Kennyc1012:BottomSheet:2.0.4'
+
+    // Sense360
+    compile 'com.sense360:sense360-quinoa:2.0.3@aar'
+    compile 'com.google.android.gms:play-services-location:8.3.0'
+    compile 'com.google.android.gms:play-services-gcm:8.3.0'
+    compile 'com.google.guava:guava:18.0'
+    compile 'com.squareup.okhttp:okhttp:2.6.0'
 }

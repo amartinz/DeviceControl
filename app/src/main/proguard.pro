@@ -51,6 +51,7 @@
 # Don't warn about those in case this app is linking against an older
 # platform version.  We know about them, and they are safe.
 -dontwarn android.support.**
+-dontwarn javax.annotation.**
 
 -dontnote com.android.internal.annotations.**
 -dontnote com.google.common.annotations.**
@@ -107,3 +108,25 @@
 
 # my stuff
 -keep class alexander.martinz.libs.** { *; }
+
+# Sense360 START
+
+## Gson exclusions
+-keepattributes Signature
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.examples.android.model.** { *; }
+## Guava exclusions
+-dontwarn sun.misc.Unsafe
+-dontwarn com.google.common.collect.MinMaxPriorityQueue
+-keepclasseswithmembers public class * {
+public static void main(java.lang.String[]);
+}
+#OKHTTP exclusions
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
+-dontwarn com.squareup.okhttp.**
+-dontwarn okio.**
+
+# Sense360 END

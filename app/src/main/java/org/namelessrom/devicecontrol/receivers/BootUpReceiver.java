@@ -26,6 +26,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
 
+import com.sense360.android.quinoa.lib.Sense360;
+
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
@@ -49,6 +51,9 @@ public class BootUpReceiver extends BroadcastReceiver {
     private void startBootupStuffsAsync(Context ctx) {
         Paper.init(ctx);
         Utils.startTaskerService(ctx);
+
+        // TODO: configurable, disable for non target audience
+        Sense360.start(ctx.getApplicationContext());
 
         BootupConfig bootupConfig = BootupConfig.get();
         boolean isBootup = bootupConfig.isEnabled;
