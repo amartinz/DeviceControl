@@ -24,7 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.BatteryManager;
-import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -40,7 +40,6 @@ import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.services.TaskerService;
-import org.namelessrom.devicecontrol.utils.cmdprocessor.CMDProcessor;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -60,6 +59,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import alexander.martinz.libs.execution.Command;
+import alexander.martinz.libs.execution.NormalShell;
+import alexander.martinz.libs.execution.RootShell;
+import alexander.martinz.libs.execution.ShellManager;
+
 import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
 
 public class Utils {
@@ -71,7 +75,7 @@ public class Utils {
 
     public static boolean isNameless(Context context) {
         return context.getPackageManager().hasSystemFeature("org.namelessrom.android")
-                || existsInFile(Scripts.BUILD_PROP, "ro.nameless.version");
+               || existsInFile(Scripts.BUILD_PROP, "ro.nameless.version");
     }
 
     public static boolean existsInFile(final String file, final String prop) {
@@ -98,7 +102,7 @@ public class Utils {
 
                 String s;
                 while ((s = br.readLine()) != null) {
-                    if (s.contains(prop)) return s.replace(prop + '=', "");
+                    if (s.contains(prop)) { return s.replace(prop + '=', ""); }
                 }
             } finally {
                 Utils.closeQuietly(br);
@@ -203,10 +207,8 @@ public class Utils {
     }
 
     public static String readFileViaShell(final String filePath, final boolean useSu) {
-        final String command = String.format("cat %s;", filePath);
-        return useSu
-                ? CMDProcessor.runSuCommand(command).getStdout()
-                : CMDProcessor.runShellCommand(command).getStdout();
+        final Command command = new Command(String.format("cat %s;", filePath));
+        return useSu ? RootShell.fireAndBlock(command) : NormalShell.fireAndBlock(command);
     }
 
     /**
@@ -264,7 +266,7 @@ public class Utils {
      * @return Whether one of the files exists or not
      */
     public static boolean fileExists(final String[] files) {
-        for (final String s : files) { if (fileExists(s)) return true; }
+        for (final String s : files) { if (fileExists(s)) { return true; } }
         return false;
     }
 
@@ -329,7 +331,9 @@ public class Utils {
     public static String[] listFiles(final String path, final String[] blacklist) {
         final String output = execute(String.format("ls %s", path));
         Logger.v(Utils.class, "listFiles --> output: %s", output);
-        if (TextUtils.isEmpty(output)) return new String[0];
+        if (TextUtils.isEmpty(output)) {
+            return new String[0];
+        }
 
         final String[] files = output.trim().split("\n");
         if (blacklist != null) {
@@ -346,24 +350,34 @@ public class Utils {
 
     public static boolean isFileBlacklisted(final String file, final String[] blacklist) {
         for (final String s : blacklist) {
-            if (TextUtils.equals(s, file)) return true;
+            if (TextUtils.equals(s, file)) {
+                return true;
+            }
         }
         return false;
     }
 
     public static String getFileName(final String path) {
-        if (TextUtils.isEmpty(path)) return "";
+        if (TextUtils.isEmpty(path)) {
+            return "";
+        }
         final String[] splitted = path.trim().split("/");
         Logger.v(Utils.class, "getFileName(%s) --> %s", path, splitted[splitted.length - 1]);
         return splitted[splitted.length - 1];
     }
 
-    public static String execute(final String command) {
-        return new CMDProcessor().su.runWaitFor(command).stdout;
+    @NonNull public static String execute(final String command) {
+        return execute(command, "");
     }
 
-    public static String getCommandResult(final String command, final String def) {
-        String result = new CMDProcessor().su.runWaitFor(command).stdout;
+    @NonNull public static String execute(final String command, @NonNull final String def) {
+        final RootShell rootShell = ShellManager.get().getRootShell();
+        if (rootShell == null) {
+            return def;
+        }
+
+        Command cmd = new Command(command).setShouldCollect(true, Command.OUTPUT_STRING);
+        String result = rootShell.add(cmd).waitFor().getOutput();
         if (result == null) {
             return def;
         }
@@ -443,7 +457,7 @@ public class Utils {
 
     public static String getWriteCommand(final String path, final String value) {
         return String.format("busybox chmod 644 %s;\n", path) +
-                String.format("busybox echo \"%s\" > %s;\n", value, path);
+               String.format("busybox echo \"%s\" > %s;\n", value, path);
     }
 
     public static String lockFile(String path) {
@@ -499,9 +513,9 @@ public class Utils {
             s = s.trim().toUpperCase();
             for (final String state : ENABLED_STATES) {
                 if (contains) {
-                    if (s.contains(state)) return true;
+                    if (s.contains(state)) { return true; }
                 } else {
-                    if (s.equals(state)) return true;
+                    if (s.equals(state)) { return true; }
                 }
             }
         }
@@ -548,7 +562,7 @@ public class Utils {
     }
 
     public static void restartActivity(final Activity activity) {
-        if (activity == null) return;
+        if (activity == null) { return; }
         activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         activity.finish();
         activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -564,15 +578,10 @@ public class Utils {
     }
 
     public static String humanReadableKiloByteCount(final long kilobytes) {
-        if (kilobytes < 1024) return kilobytes + " kB";
+        if (kilobytes < 1024) { return kilobytes + " kB"; }
         final int exp = (int) (Math.log(kilobytes) / Math.log(1024));
         return String.format("%.0f %sB", kilobytes / Math.pow(1024, exp),
                 String.valueOf("MGTPE".charAt(exp - 1)));
-    }
-
-    public static String getAndroidId() {
-        return Settings.Secure.getString(
-                Application.get().getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -589,7 +598,7 @@ public class Utils {
 
     public static int parseInt(String integer, final int def) {
         try {
-            if (integer != null) integer = integer.trim();
+            if (integer != null) { integer = integer.trim(); }
             return Integer.parseInt(integer);
         } catch (NumberFormatException exc) {
             Logger.e("Utils", String.format("parseInt(%s, %s)", integer, def), exc);
@@ -604,7 +613,7 @@ public class Utils {
     }
 
     public static void closeQuietly(final Closeable closeable) {
-        if (closeable == null) return;
+        if (closeable == null) { return; }
         try {
             closeable.close();
         } catch (IOException ignored) { }

@@ -26,13 +26,13 @@ import android.view.View;
 import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.Emmc;
-import org.namelessrom.devicecontrol.objects.MemoryInfo;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.List;
 
+import alexander.martinz.libs.hardware.device.MemoryInfo;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 
@@ -86,17 +86,17 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
 
         // Memory
         category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_memory);
-        addPreference(category, "memory_total", R.string.total, MemoryInfo.getAsMb(device.memoryInfo.memoryTotal));
-        addPreference(category, "memory_cached", R.string.cached, MemoryInfo.getAsMb(device.memoryInfo.memoryCached));
-        addPreference(category, "memory_free", R.string.free, MemoryInfo.getAsMb(device.memoryInfo.memoryFree));
+        addPreference(category, "memory_total", R.string.total, MemoryInfo.getAsMb(device.memoryInfo.total));
+        addPreference(category, "memory_cached", R.string.cached, MemoryInfo.getAsMb(device.memoryInfo.cached));
+        addPreference(category, "memory_free", R.string.free, MemoryInfo.getAsMb(device.memoryInfo.free));
 
         // Processor
         category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_processor);
-        final int bitResId = device.deviceIs64Bit ? R.string.bit_64 : R.string.bit_32;
+        final int bitResId = device.processorInfo.is64Bit ? R.string.bit_64 : R.string.bit_32;
         addPreference(category, "cpu_bit", R.string.arch, getString(bitResId));
 
         final String cpuAbi = getString(R.string.cpu_abi);
-        final List<String> abis = device.deviceAbisAsList();
+        final List<String> abis = device.processorInfo.abisAsList();
         final int length = abis.size();
         for (int i = 0; i < length; i++) {
             String abi = "cpu_abi";
@@ -108,10 +108,10 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
             addPreference(category, abi, title, abis.get(i));
         }
 
-        addPreference(category, "cpu_hardware", R.string.hardware, device.cpuInfo.hardware);
-        addPreference(category, "cpu_processor", R.string.processor, device.cpuInfo.processor);
-        addPreference(category, "cpu_features", R.string.features, device.cpuInfo.features);
-        addPreference(category, "cpu_bogomips", R.string.bogomips, device.cpuInfo.bogomips);
+        addPreference(category, "cpu_hardware", R.string.hardware, device.processorInfo.hardware);
+        addPreference(category, "cpu_processor", R.string.processor, device.processorInfo.processor);
+        addPreference(category, "cpu_features", R.string.features, device.processorInfo.features);
+        addPreference(category, "cpu_bogomips", R.string.bogomips, device.processorInfo.bogomips);
 
         // Kernel
         category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_kernel);
@@ -130,7 +130,7 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
         addPreference(category, "emmc_rev", R.string.emmc_rev, Emmc.get().getRev());
         addPreference(category, "emmc_date", R.string.emmc_date, Emmc.get().getDate());
         String tmp = Emmc.get().canBrick() ? getString(R.string.emmc_can_brick_true) : getString(R.string.emmc_can_brick_false);
-        tmp = String.format("%s\n%s", tmp, getString(R.string.press_learn_more));
+        tmp = tmp + '\n' + getString(R.string.press_learn_more);
         addPreference(category, "emmc_can_brick", R.string.emmc_can_brick, tmp).setOnPreferenceClickListener(this);
     }
 

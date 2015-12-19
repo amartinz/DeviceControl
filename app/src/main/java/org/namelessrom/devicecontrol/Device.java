@@ -18,28 +18,22 @@
 package org.namelessrom.devicecontrol;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.stericson.roottools.RootTools;
 
-import org.namelessrom.devicecontrol.objects.CpuInfo;
-import org.namelessrom.devicecontrol.objects.KernelInfo;
-import org.namelessrom.devicecontrol.objects.MemoryInfo;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import alexander.martinz.libs.hardware.device.KernelInfo;
+import alexander.martinz.libs.hardware.device.MemoryInfo;
+import alexander.martinz.libs.hardware.device.ProcessorInfo;
 
 public class Device extends alexander.martinz.libs.hardware.device.Device {
-    @SerializedName("cpuinfo") public final CpuInfo cpuInfo;
-    @SerializedName("kernelinfo") public final KernelInfo kernelInfo;
-    @SerializedName("memoryinfo") public final MemoryInfo memoryInfo;
+    @SerializedName("kernelinfo") public KernelInfo kernelInfo;
+    @SerializedName("memoryinfo") public MemoryInfo memoryInfo;
+    @SerializedName("processorinfo") public ProcessorInfo processorInfo;
 
     @SerializedName("has_busybox") public boolean hasBusyBox;
     @SerializedName("su_version") public String suVersion;
@@ -49,14 +43,9 @@ public class Device extends alexander.martinz.libs.hardware.device.Device {
     private Device(@NonNull Context context) {
         super(context);
 
-        cpuInfo = new CpuInfo();
-        cpuInfo.feedWithInformation();
-
-        kernelInfo = new KernelInfo();
-        kernelInfo.feedWithInformation();
-
-        memoryInfo = new MemoryInfo();
-        memoryInfo.feedWithInformation(MemoryInfo.TYPE_MB);
+        KernelInfo.feedWithInformation(context, kernelInfoListener);
+        MemoryInfo.feedWithInformation(context, MemoryInfo.TYPE_MB, memoryInfoListener);
+        ProcessorInfo.feedWithInformation(context, processorInfoListener);
     }
 
     public static Device get(@NonNull Context context) {
@@ -70,16 +59,34 @@ public class Device extends alexander.martinz.libs.hardware.device.Device {
         super.update();
 
         // get su version
-        suVersion = hasRoot ? Utils.getCommandResult("su -v", "-") : "-";
+        suVersion = hasRoot ? Utils.execute("su -v", "-") : "-";
 
         // check busybox
         hasBusyBox = RootTools.isBusyboxAvailable();
 
         // update memory as cached / free may change
-        memoryInfo.feedWithInformation(MemoryInfo.TYPE_MB);
+        MemoryInfo.feedWithInformation(mContext, MemoryInfo.TYPE_MB, memoryInfoListener);
 
         return this;
     }
+
+    private final KernelInfoListener kernelInfoListener = new KernelInfoListener() {
+        @Override public void onKernelInfoAvailable(@NonNull KernelInfo kernelInfo) {
+            Device.this.kernelInfo = kernelInfo;
+        }
+    };
+
+    private final MemoryInfoListener memoryInfoListener = new MemoryInfoListener() {
+        @Override public void onMemoryInfoAvailable(@NonNull MemoryInfo memoryInfo) {
+            Device.this.memoryInfo = memoryInfo;
+        }
+    };
+
+    private final ProcessorInfoListener processorInfoListener = new ProcessorInfoListener() {
+        @Override public void onProcessorInfoAvailable(@NonNull ProcessorInfo processorInfo) {
+            Device.this.processorInfo = processorInfo;
+        }
+    };
 
     @Override public String toString() {
         return new Gson().toJson(this, Device.class);

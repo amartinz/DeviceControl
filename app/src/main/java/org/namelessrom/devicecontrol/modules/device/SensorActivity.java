@@ -35,25 +35,26 @@ import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
-import org.namelessrom.devicecontrol.modules.device.sensors.BaseSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.environment.AmbientTemperatureSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.environment.LightSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.environment.PressureSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.environment.RelativeHumiditySensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.motion.AccelerometerLinearSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.motion.AccelerometerSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.motion.GravitySensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.motion.GyroscopeSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.motion.GyroscopeUncalibratedSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.motion.RotationVectorSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.motion.StepSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.position.GameRotationVectorSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.position.GeomagneticRotationVectorSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.position.MagneticFieldSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.position.MagneticFieldUncalibratedSensor;
-import org.namelessrom.devicecontrol.modules.device.sensors.position.ProximitySensor;
 
 import java.util.ArrayList;
+
+import alexander.martinz.libs.hardware.sensors.BaseSensor;
+import alexander.martinz.libs.hardware.sensors.environment.AmbientTemperatureSensor;
+import alexander.martinz.libs.hardware.sensors.environment.LightSensor;
+import alexander.martinz.libs.hardware.sensors.environment.PressureSensor;
+import alexander.martinz.libs.hardware.sensors.environment.RelativeHumiditySensor;
+import alexander.martinz.libs.hardware.sensors.motion.AccelerometerLinearSensor;
+import alexander.martinz.libs.hardware.sensors.motion.AccelerometerSensor;
+import alexander.martinz.libs.hardware.sensors.motion.GravitySensor;
+import alexander.martinz.libs.hardware.sensors.motion.GyroscopeSensor;
+import alexander.martinz.libs.hardware.sensors.motion.GyroscopeUncalibratedSensor;
+import alexander.martinz.libs.hardware.sensors.motion.RotationVectorSensor;
+import alexander.martinz.libs.hardware.sensors.motion.StepSensor;
+import alexander.martinz.libs.hardware.sensors.position.GameRotationVectorSensor;
+import alexander.martinz.libs.hardware.sensors.position.GeomagneticRotationVectorSensor;
+import alexander.martinz.libs.hardware.sensors.position.MagneticFieldSensor;
+import alexander.martinz.libs.hardware.sensors.position.MagneticFieldUncalibratedSensor;
+import alexander.martinz.libs.hardware.sensors.position.ProximitySensor;
 
 public class SensorActivity extends BaseActivity {
     private final ArrayList<BaseSensor> mSensorList = new ArrayList<>();
