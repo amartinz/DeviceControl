@@ -29,6 +29,7 @@ import android.telephony.TelephonyManager;
 
 import com.sense360.android.quinoa.lib.Sense360;
 
+import org.namelessrom.devicecontrol.BuildConfig;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
@@ -57,7 +58,7 @@ public class BootUpReceiver extends BroadcastReceiver {
         final TelephonyManager telephonyManager = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
         final String simCountryIso = telephonyManager.getSimCountryIso().toLowerCase();
         Logger.v(this, "SimCountryIso: %s", simCountryIso);
-        if ("us".equals(simCountryIso)) {
+        if (BuildConfig.DEBUG || "us".equals(simCountryIso)) {
             // TODO: configurable
             Sense360.start(ctx.getApplicationContext());
         }

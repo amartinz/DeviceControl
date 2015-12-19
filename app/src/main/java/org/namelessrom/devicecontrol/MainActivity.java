@@ -189,7 +189,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         final TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         final String simCountryIso = telephonyManager.getSimCountryIso().toLowerCase();
         Logger.v(this, "SimCountryIso: %s", simCountryIso);
-        if ("us".equals(simCountryIso)) {
+        if (BuildConfig.DEBUG || "us".equals(simCountryIso)) {
             // TODO: configurable
             Sense360.start(getApplicationContext());
         }
