@@ -17,8 +17,11 @@
  */
 package org.namelessrom.devicecontrol;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,6 +48,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.pollfish.constants.Position;
 import com.pollfish.main.PollFish;
 import com.sense360.android.quinoa.lib.Sense360;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
@@ -192,6 +196,46 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         if (BuildConfig.DEBUG || "us".equals(simCountryIso)) {
             // TODO: configurable
             Sense360.start(getApplicationContext());
+        }
+
+        // TODO: new wizard, more user friendly
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            final RxPermissions rxPermissions = RxPermissions.getInstance(this);
+
+            final boolean storage = rxPermissions.isGranted(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                    && rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            final boolean telephony = rxPermissions.isGranted(Manifest.permission.READ_PHONE_STATE);
+            final boolean location = rxPermissions.isGranted(Manifest.permission.ACCESS_COARSE_LOCATION)
+                                     && rxPermissions.isGranted(Manifest.permission.ACCESS_FINE_LOCATION);
+
+            boolean needsPermissionGrant = !storage || !telephony || !location;
+            if (needsPermissionGrant) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.dialog_permission_title);
+                builder.setMessage(R.string.dialog_permission_summary);
+                builder.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                        if (!storage) {
+                            rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe();
+                        }
+
+                        if (!telephony) {
+                            rxPermissions.request(Manifest.permission.READ_PHONE_STATE).subscribe();
+                        }
+
+                        if (!location) {
+                            rxPermissions.request(Manifest.permission.ACCESS_COARSE_LOCATION,
+                                    Manifest.permission.ACCESS_FINE_LOCATION).subscribe();
+                        }
+                    }
+                });
+                builder.show();
+            }
+
+
         }
     }
 

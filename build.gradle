@@ -3,6 +3,7 @@ buildscript {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
+        maven { url "http://dl.bintray.com/tbruyelle/tbruyelle" }
         flatDir { dirs 'aars' }
     }
     dependencies {
@@ -16,6 +17,7 @@ allprojects {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
+        maven { url "http://dl.bintray.com/tbruyelle/tbruyelle" }
         flatDir { dirs 'aars' }
     }
 }

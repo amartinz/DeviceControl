@@ -123,6 +123,13 @@ dependencies {
     // see https://github.com/Kennyc1012/BottomSheet
     compile 'com.github.Kennyc1012:BottomSheet:2.0.4'
 
+    // see https://github.com/ReactiveX/RxAndroid
+    compile 'io.reactivex:rxandroid:1.1.0'
+    // see https://github.com/ReactiveX/RxJava
+    compile 'io.reactivex:rxjava:1.1.0'
+    // see https://github.com/tbruyelle/RxPermissions
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.5.1@aar'
+
     // Sense360
     compile 'com.sense360:sense360-quinoa:2.0.3@aar'
     compile 'com.google.android.gms:play-services-location:8.3.0'

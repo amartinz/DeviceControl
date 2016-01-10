@@ -109,7 +109,10 @@
 # my stuff
 -keep class alexander.martinz.libs.** { *; }
 
-# Sense360 START
+# RxAndroid
+-dontwarn rx.internal.util.**
+
+##### Sense360 START
 
 ## Gson exclusions
 -keepattributes Signature
@@ -129,4 +132,4 @@ public static void main(java.lang.String[]);
 -dontwarn com.squareup.okhttp.**
 -dontwarn okio.**
 
-# Sense360 END
+##### Sense360 END
