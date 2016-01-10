@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -36,10 +37,6 @@ import uk.co.senab.bitmapcache.BitmapLruCache;
 // XXX: DO NOT USE ROOT HERE! NEVER!
 public class Application extends android.app.Application {
     public static final Handler HANDLER = new Handler();
-
-    private static final String sExternalStoragePath = String.format("%s/%s",
-            Environment.getExternalStorageDirectory(), "DeviceControl");
-    private static final File sExternalStorageDir = new File(sExternalStoragePath);
 
     private static Application sInstance;
 
@@ -75,12 +72,11 @@ public class Application extends android.app.Application {
     }
 
     private void setupEverything() {
-        Thread thread = new Thread(new Runnable() {
+        AsyncTask.execute(new Runnable() {
             @Override public void run() {
                 setupEverythingAsync();
             }
         });
-        thread.start();
     }
 
     private void setupEverythingAsync() {
@@ -107,14 +103,14 @@ public class Application extends android.app.Application {
     private void buildCache() {
         final File cacheLocation;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            cacheLocation = new File(sExternalStorageDir, "bitmapCache");
+            cacheLocation = new File(getExternalCacheDir(), "bitmapCache");
         } else {
             cacheLocation = new File(getFilesDir(), "bitmapCache");
         }
         //noinspection ResultOfMethodCallIgnored
-        cacheLocation.mkdirs();
+        Logger.d(this, "Setting up cache at: %s -> %s", cacheLocation.getAbsolutePath(), cacheLocation.mkdirs());
 
-        BitmapLruCache.Builder builder = new BitmapLruCache.Builder(this);
+        final BitmapLruCache.Builder builder = new BitmapLruCache.Builder(this);
         builder.setMemoryCacheEnabled(true).setMemoryCacheMaxSizeUsingHeapSize(0.25f);
         builder.setDiskCacheEnabled(true).setDiskCacheLocation(cacheLocation);
 
