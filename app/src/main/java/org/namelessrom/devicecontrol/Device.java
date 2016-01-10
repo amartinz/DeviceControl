@@ -42,9 +42,9 @@ public class Device extends alexander.martinz.libs.hardware.device.Device {
     private Device(@NonNull Context context) {
         super(context);
 
-        KernelInfo.feedWithInformation(context, kernelInfoListener);
-        MemoryInfo.feedWithInformation(context, MemoryInfo.TYPE_MB, memoryInfoListener);
-        ProcessorInfo.feedWithInformation(context, processorInfoListener);
+        KernelInfo.feedWithInformation(kernelInfoListener);
+        MemoryInfo.feedWithInformation(MemoryInfo.TYPE_MB, memoryInfoListener);
+        ProcessorInfo.feedWithInformation(processorInfoListener);
     }
 
     public static Device get(@NonNull Context context) {
@@ -66,7 +66,7 @@ public class Device extends alexander.martinz.libs.hardware.device.Device {
         //hasBusyBox = ShellManager.isBusyboxAvailable();
 
         // update memory as cached / free may change
-        MemoryInfo.feedWithInformation(mContext, MemoryInfo.TYPE_MB, memoryInfoListener);
+        MemoryInfo.feedWithInformation(MemoryInfo.TYPE_MB, memoryInfoListener);
 
         return this;
     }
