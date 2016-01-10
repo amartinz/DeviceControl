@@ -26,7 +26,7 @@ android {
         applicationId 'org.namelessrom.devicecontrol'
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 130
+        versionCode 131
         versionName "0.8.6"
 
         def String localProps = System.getenv('SIGNING_PROP_FILE')
