@@ -2,7 +2,6 @@ include ':app', ':Proprietary'
 
 include ':modules:ExecutionLibrary:library'
 include ':modules:HardwareLibrary:library'
-include ':modules:logger:library'
 include ':modules:MaterialPreferences:library'
 
 if (new File("modules/Vendor").exists()) {

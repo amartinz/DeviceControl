@@ -84,7 +84,7 @@ dependencies {
     }
 
     // see https://github.com/Evisceration/logger
-    compile project(':modules:logger:library')
+    compile 'com.github.Evisceration:logger:1.0.5'
 
     compile(project(':modules:ExecutionLibrary:library')) {
         exclude group: 'com.github.Evisceration', module: 'logger'
@@ -104,9 +104,6 @@ dependencies {
 
     // see https://github.com/PhilJay/MPAndroidChart
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
-
-    // see https://github.com/google/gson
-    compile 'com.google.code.gson:gson:2.5'
 
     // see https://github.com/koush/ion
     compile 'com.koushikdutta.ion:ion:2.1.6'

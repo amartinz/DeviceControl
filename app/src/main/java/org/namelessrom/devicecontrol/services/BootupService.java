@@ -41,6 +41,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import alexander.martinz.libs.execution.ShellManager;
+import alexander.martinz.libs.hardware.device.RootCheck;
 import io.paperdb.Paper;
 
 public class BootupService extends IntentService {
@@ -80,13 +81,10 @@ public class BootupService extends IntentService {
             return;
         }
 
-        // Update information about the device, to see whether we fulfill all requirements
-        final Device device = Device.get(this).update();
-
         //========================================================================================================================
         // No Root, No Friends, That's Life ...
         //========================================================================================================================
-        if (!device.hasRoot || !device.hasBusyBox) {
+        if (RootCheck.isRooted()) {
             Logger.e(this, "No Root, No Friends, That's Life ...");
             return;
         }

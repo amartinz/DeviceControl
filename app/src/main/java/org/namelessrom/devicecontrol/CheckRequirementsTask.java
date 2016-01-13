@@ -34,6 +34,8 @@ import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.hardware.device.RootCheck;
+
 public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
     private final Handler mHandler = new Handler(Looper.getMainLooper());
 
@@ -72,16 +74,9 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
             return true;
         }
 
-        final Device device = Device.get(mainActivity);
-        device.update();
+        hasRoot = RootCheck.isRooted();
 
-        hasRoot = device.hasRoot;
-
-        Logger.i(this, "hasRoot -> %s", device.hasRoot);
-        Logger.i(this, "suVersion -> %s", device.suVersion);
-        Logger.i(this, "hasBusyBox -> %s", device.hasBusyBox);
-
-        return (device.hasBusyBox && hasRoot);
+        return (/*device.hasBusyBox &&*/ hasRoot);
     }
 
     @Override protected void onPostExecute(Boolean isSuccess) {

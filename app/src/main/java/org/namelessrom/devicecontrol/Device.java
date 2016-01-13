@@ -19,12 +19,11 @@ package org.namelessrom.devicecontrol;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
-import org.namelessrom.devicecontrol.utils.Utils;
-
+import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.hardware.device.KernelInfo;
 import alexander.martinz.libs.hardware.device.MemoryInfo;
 import alexander.martinz.libs.hardware.device.ProcessorInfo;
@@ -58,7 +57,8 @@ public class Device extends alexander.martinz.libs.hardware.device.Device {
         super.update();
 
         // get su version
-        suVersion = hasRoot ? Utils.getRootShellResult("su -v", "-") : "-";
+        final String version = hasRoot ? RootShell.fireAndBlockString("su -v") : "-";
+        suVersion = TextUtils.isEmpty(version) ? "-" : version;
 
         // TODO: readd check
         hasBusyBox = true;
@@ -88,8 +88,4 @@ public class Device extends alexander.martinz.libs.hardware.device.Device {
             Device.this.processorInfo = processorInfo;
         }
     };
-
-    @Override public String toString() {
-        return new Gson().toJson(this, Device.class);
-    }
 }

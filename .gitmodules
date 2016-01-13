@@ -1,6 +1,3 @@
-[submodule "modules/logger"]
-	path = modules/logger
-	url = https://github.com/Evisceration/logger
 [submodule "modules/MaterialPreferences"]
 	path = modules/MaterialPreferences
 	url = https://github.com/Evisceration/MaterialPreferences
