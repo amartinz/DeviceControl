@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
+ *  Copyright (C) 2013 - 2016 Alexander "Evisceration" Martinz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -197,46 +197,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             // TODO: configurable
             Sense360.start(getApplicationContext());
         }
-
-        // TODO: new wizard, more user friendly
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            final RxPermissions rxPermissions = RxPermissions.getInstance(this);
-
-            final boolean storage = rxPermissions.isGranted(Manifest.permission.READ_EXTERNAL_STORAGE)
-                                    && rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            final boolean telephony = rxPermissions.isGranted(Manifest.permission.READ_PHONE_STATE);
-            final boolean location = rxPermissions.isGranted(Manifest.permission.ACCESS_COARSE_LOCATION)
-                                     && rxPermissions.isGranted(Manifest.permission.ACCESS_FINE_LOCATION);
-
-            boolean needsPermissionGrant = !storage || !telephony || !location;
-            if (needsPermissionGrant) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(R.string.dialog_permission_title);
-                builder.setMessage(R.string.dialog_permission_summary);
-                builder.setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-
-                        if (!storage) {
-                            rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe();
-                        }
-
-                        if (!telephony) {
-                            rxPermissions.request(Manifest.permission.READ_PHONE_STATE).subscribe();
-                        }
-
-                        if (!location) {
-                            rxPermissions.request(Manifest.permission.ACCESS_COARSE_LOCATION,
-                                    Manifest.permission.ACCESS_FINE_LOCATION).subscribe();
-                        }
-                    }
-                });
-                builder.show();
-            }
-
-
-        }
     }
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -308,16 +268,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         loadFragmentPrivate(DeviceConstants.ID_ABOUT, false);
         getSupportFragmentManager().executePendingTransactions();
 
-        Utils.startTaskerService(this);
-
-        DeviceConfig deviceConfig = DeviceConfig.get();
-        if (deviceConfig.dcFirstStart) {
-            deviceConfig.dcFirstStart = false;
-            deviceConfig.save();
-        }
-
-        // patch sepolicy
-        Utils.patchSEPolicy(this);
+        new CheckRequirementsTask(this).execute();
     }
 
     @Override public void onClick(final View v) {

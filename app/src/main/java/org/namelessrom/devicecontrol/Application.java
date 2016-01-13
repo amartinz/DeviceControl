@@ -89,15 +89,6 @@ public class Application extends android.app.Application {
         Logger.setEnabled(deviceConfig.extensiveLogging);
 
         dumpInformation();
-
-        boolean isNameless = Utils.isNameless(this);
-        Logger.v(this, String.format("is nameless: %s", isNameless));
-
-        if (isNameless) {
-            ComponentName c = new ComponentName(getPackageName(), DummyLauncher.class.getName());
-            Utils.toggleComponent(c, false);
-            Logger.v(this, "Force toggled on launcher icon for backwards compatibility with n-2.0");
-        }
     }
 
     private void buildCache() {

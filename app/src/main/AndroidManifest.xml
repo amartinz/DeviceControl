@@ -96,17 +96,6 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".DummyLauncher"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:enabled="true"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".MainActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -115,8 +104,10 @@
             <intent-filter>
                 <action android:name="org.namelessrom.devicecontrol.MainActivity" />
                 <action android:name="org.namelessrom.devicecontrol.activities.MainActivity" />
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity

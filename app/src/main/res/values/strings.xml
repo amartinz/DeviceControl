@@ -32,6 +32,8 @@
     <string name="get_busybox">Install BusyBox</string>
     <string name="more_information">More information</string>
     <string name="checking_requirements">Checking requirements…</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="missing_requirements">Missing requirements</string>
     <string name="exit">Exit</string>
     <string name="close">Close</string>
     <string name="message_loading">Loading, please stand by…</string>
@@ -536,7 +538,8 @@
     <string name="open">Open</string>
 
     <string name="dialog_permission_title">Permissions</string>
-    <string name="dialog_permission_summary">Since Android M some permissions need to get granted explicitly by the user.\n\nDevice
+    <string name="dialog_permission_summary">Since Android M some permissions need to get granted explicitly by the
+        user.\n\nDevice
         Control asks you for telephony, external storage and location permissions, to function properly.\nWithout them, some
         features like device information may break, as they are coupled to these permissions.
     </string>
