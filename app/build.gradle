@@ -26,7 +26,7 @@ android {
         applicationId 'org.namelessrom.devicecontrol'
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 131
+        versionCode 132
         versionName "0.8.6"
 
         def String localProps = System.getenv('SIGNING_PROP_FILE')
@@ -40,14 +40,14 @@ android {
     buildTypes {
         release {
             debuggable false
-            proguardFile 'src/main/proguard.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'src/main/proguard.pro'
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
         }
         debug {
             debuggable true
-            proguardFile 'src/main/proguard.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'src/main/proguard.pro'
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
