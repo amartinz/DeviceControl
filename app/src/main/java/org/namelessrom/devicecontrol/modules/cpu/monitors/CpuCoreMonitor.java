@@ -89,11 +89,12 @@ public class CpuCoreMonitor {
     }
 
     public CpuCoreMonitor stop() {
-        mListener = null;
-        isStarted = false;
-        Application.HANDLER.removeCallbacks(mUpdater);
-        Logger.v(this, "stopped!");
-
+        if (isStarted) {
+            mListener = null;
+            isStarted = false;
+            Application.HANDLER.removeCallbacks(mUpdater);
+            Logger.v(this, "stopped!");
+        }
         return cpuFrequencyMonitor;
     }
 
@@ -162,10 +163,9 @@ public class CpuCoreMonitor {
             // ... else echo 0 for them
             sb.append("else echo \"0 0 0\" 2> /dev/null;fi;");
         }
+
         // example output: 0 162000 1890000 interactive
         final String cmd = sb.toString();
-        Logger.v(this, "cmd: " + cmd);
-
         final Command command = new Command(cmd) {
             @Override public void onCommandCompleted(int id, int exitCode) {
                 super.onCommandCompleted(id, exitCode);

@@ -39,6 +39,8 @@ import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.RootShell;
+
 public class VibratorIntensity extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
 
 
@@ -182,7 +184,7 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
                     BootupConfig.CATEGORY_DEVICE, "vibrator_tuning",
                     path, String.valueOf(percentToStrength(mSeekBar.getProgress())), true));
         } else {
-            Utils.runRootCommand(Utils.getWriteCommand(path, String.valueOf(mOriginalValue)));
+            RootShell.fireAndForget(Utils.getWriteCommand(path, String.valueOf(mOriginalValue)));
         }
     }
 
@@ -201,7 +203,7 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
 
     @Override public void onStopTrackingTouch(SeekBar seekBar) {
         final String value = String.valueOf(percentToStrength(seekBar.getProgress()));
-        Utils.runRootCommand(Utils.getWriteCommand(path, value));
+        RootShell.fireAndForget(Utils.getWriteCommand(path, value));
     }
 
     /**

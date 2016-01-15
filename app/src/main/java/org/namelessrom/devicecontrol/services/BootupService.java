@@ -40,6 +40,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.io.File;
 import java.util.ArrayList;
 
+import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.execution.ShellManager;
 import alexander.martinz.libs.hardware.device.RootCheck;
 import io.paperdb.Paper;
@@ -192,9 +193,9 @@ public class BootupService extends IntentService {
         // Execute
         //========================================================================================================================
         cmd = sbCmd.toString();
-        Logger.v(this, "Starting bootup with cmd: %s", cmd);
+        Logger.v(this, "Starting bootup with cmd:\n%s", cmd);
         if (!cmd.isEmpty()) {
-            Utils.runRootCommand(cmd);
+            RootShell.fireAndForget(cmd);
         }
         Logger.i(this, "Bootup Done!");
     }

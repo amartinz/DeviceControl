@@ -31,6 +31,8 @@ import android.text.TextUtils;
 import java.io.File;
 import java.util.ArrayList;
 
+import alexander.martinz.libs.execution.RootShell;
+
 public class IOUtils {
     public static final String SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();
 
@@ -72,11 +74,12 @@ public class IOUtils {
         ArrayList<String> mounts = new ArrayList<>();
         ArrayList<String> vold = new ArrayList<>();
 
-        String[] output = Utils.getRootShellResult("cat /proc/mounts;\n").split("\n");
+        String result = RootShell.fireAndBlockString("cat /proc/mounts;");
+        String[] output = ((result != null) ? result.split("\n") : new String[0]);
         for (final String s : output) {
             if (s.startsWith("/dev/block/vold/")) {
                 String[] lineElements = s.split(" ");
-                if (lineElements[1] == null) continue;
+                if (lineElements[1] == null) { continue; }
                 String element = lineElements[1];
                 mounts.add(element);
             }
@@ -89,17 +92,17 @@ public class IOUtils {
 
         final File fstab = findFstab();
         if (fstab != null) {
-            output = Utils.getRootShellResult(String.format("cat %s;\n", fstab.getAbsolutePath()))
-                    .split("\n");
+            result = RootShell.fireAndBlockString(String.format("cat %s;", fstab.getAbsolutePath()));
+            output = ((result != null) ? result.split("\n") : new String[0]);
             for (final String s : output) {
                 //noinspection StatementWithEmptyBody
                 if (TextUtils.isEmpty(s) || s.startsWith("#")) {
                     // do nothing
                 } else if (s.startsWith("dev_mount")) {
                     String[] lineElements = s.split(" ");
-                    if (lineElements.length < 3) continue;
+                    if (lineElements.length < 3) { continue; }
                     String element = lineElements[2];
-                    if (element == null) continue;
+                    if (element == null) { continue; }
 
                     if (element.contains(":")) {
                         element = element.substring(0, element.indexOf(":"));
@@ -110,9 +113,9 @@ public class IOUtils {
                     }
                 } else if (s.startsWith("/devices/platform")) {
                     String[] lineElements = s.split(" ");
-                    if (lineElements.length < 2) continue;
+                    if (lineElements.length < 2) { continue; }
                     String element = lineElements[1];
-                    if (element == null) continue;
+                    if (element == null) { continue; }
 
                     if (element.contains(":")) {
                         element = element.substring(0, element.indexOf(":"));
@@ -137,14 +140,14 @@ public class IOUtils {
             String mount = mounts.get(i);
             File root = new File(mount);
             if (!vold.contains(mount)
-                    || (!root.exists() || !root.isDirectory() || !root.canWrite())) {
+                || (!root.exists() || !root.isDirectory() || !root.canWrite())) {
                 mounts.remove(i--);
             }
         }
 
         for (final String mount : mounts) {
             if (!mount.contains("sdcard0") && !mount.equalsIgnoreCase("/mnt/sdcard")
-                    && !mount.equalsIgnoreCase("/sdcard")) {
+                && !mount.equalsIgnoreCase("/sdcard")) {
                 sSecondarySdcard = mount;
             } else {
                 sPrimarySdcard = mount;
@@ -164,7 +167,7 @@ public class IOUtils {
             return file;
         }
 
-        final String fstab = Utils.getRootShellResult("grep -ls \"/dev/block/\" * --include=fstab.* --exclude=fstab.goldfish");
+        String fstab = RootShell.fireAndBlockString("grep -ls \"/dev/block/\" * --include=fstab.* --exclude=fstab.goldfish");
         if (!TextUtils.isEmpty(fstab)) {
             final String[] files = fstab.split("\n");
             for (final String s : files) {

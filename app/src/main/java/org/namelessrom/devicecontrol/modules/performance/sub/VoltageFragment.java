@@ -45,8 +45,8 @@ import android.widget.ListView;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.models.ExtraConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
@@ -54,6 +54,8 @@ import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
+
+import alexander.martinz.libs.execution.RootShell;
 
 public class VoltageFragment extends AttachPreferenceFragment {
     private PreferenceCategory mCategory;
@@ -138,7 +140,7 @@ public class VoltageFragment extends AttachPreferenceFragment {
                         sb.append(value).append("XXX");
                         execute.append(Utils.getWriteCommand(VoltageUtils.VDD_TABLE_FILE, value));
                     }
-                    Utils.runRootCommand(execute.toString());
+                    RootShell.fireAndForget(execute.toString());
                     ExtraConfig.get().vdd = sb.toString().trim();
                     ExtraConfig.get().save();
                 } else {

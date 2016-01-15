@@ -26,7 +26,7 @@ android {
         applicationId 'org.namelessrom.devicecontrol'
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 132
+        versionCode 133
         versionName "0.8.6"
 
         def String localProps = System.getenv('SIGNING_PROP_FILE')
@@ -86,12 +86,8 @@ dependencies {
     // see https://github.com/Evisceration/logger
     compile 'com.github.Evisceration:logger:1.0.5'
 
-    compile(project(':modules:ExecutionLibrary:library')) {
-        exclude group: 'com.github.Evisceration', module: 'logger'
-    }
-    compile(project(':modules:HardwareLibrary:library')) {
-        exclude group: 'com.github.Evisceration', module: 'logger'
-    }
+    compile project(':modules:ExecutionLibrary:library')
+    compile project(':modules:HardwareLibrary:library')
 
     // see https://github.com/Evisceration/MaterialPreferences
     compile project(':modules:MaterialPreferences:library')
@@ -111,14 +107,14 @@ dependencies {
     // see https://www.pollfish.com/android
     compile 'com.pollfish:pollfish:4.1.0:googleplayRelease@aar'
     // switch to 8.4.0 once pollfish updates
-    compile 'com.google.android.gms:play-services-ads:8.3.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
 
     // see https://github.com/pilgr/Paper
     //compile 'io.paperdb:paperdb:0.9'
     compile 'com.github.Evisceration:Paper:6ad14da863'
 
     // see https://github.com/Kennyc1012/BottomSheet
-    compile 'com.github.Kennyc1012:BottomSheet:2.0.4'
+    compile 'com.github.Kennyc1012:BottomSheet:2.0.7'
 
     // see https://github.com/ReactiveX/RxAndroid
     compile 'io.reactivex:rxandroid:1.1.0'
@@ -129,8 +125,8 @@ dependencies {
 
     // Sense360
     compile 'com.sense360:sense360-quinoa:2.0.3@aar'
-    compile 'com.google.android.gms:play-services-location:8.3.0'
-    compile 'com.google.android.gms:play-services-gcm:8.3.0'
+    compile 'com.google.android.gms:play-services-location:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.google.guava:guava:18.0'
     compile 'com.squareup.okhttp:okhttp:2.6.0'
 }

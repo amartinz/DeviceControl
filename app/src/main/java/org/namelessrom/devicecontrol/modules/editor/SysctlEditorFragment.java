@@ -48,6 +48,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import alexander.martinz.libs.execution.RootShell;
+
 public class SysctlEditorFragment extends BaseEditorFragment {
 
     //==============================================================================================
@@ -183,8 +185,7 @@ public class SysctlEditorFragment extends BaseEditorFragment {
             case SAVE:
                 Utils.remount("/system", "ro"); // slip through to APPLY
             case APPLY:
-                Utils.runRootCommand("chmod 644 /system/etc/sysctl.conf;" +
-                                     "sysctl -p /system/etc/sysctl.conf;");
+                RootShell.fireAndForget("chmod 644 /system/etc/sysctl.conf;sysctl -p /system/etc/sysctl.conf;");
                 break;
             default:
                 Logger.v(this, "onReadPropsCompleted: " + shellOutput.output);

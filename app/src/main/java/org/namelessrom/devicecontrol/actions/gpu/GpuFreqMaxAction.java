@@ -25,6 +25,8 @@ import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.RootShell;
+
 public class GpuFreqMaxAction extends BaseAction {
 
     public static final String NAME = "gpu_frequency_max";
@@ -62,7 +64,7 @@ public class GpuFreqMaxAction extends BaseAction {
 
         setBootup(GpuUtils.get().getGpuFreqMaxPath());
 
-        Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.get().getGpuFreqMaxPath(), value));
+        RootShell.fireAndForget(Utils.getWriteCommand(GpuUtils.get().getGpuFreqMaxPath(), value));
     }
 
 }

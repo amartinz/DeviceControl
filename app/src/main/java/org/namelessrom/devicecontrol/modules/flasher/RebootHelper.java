@@ -38,6 +38,8 @@ import org.namelessrom.devicecontrol.modules.flasher.recovery.RecoveryInfo;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.RootShell;
+
 public class RebootHelper {
 
     private RecoveryHelper mRecoveryHelper;
@@ -219,7 +221,7 @@ public class RebootHelper {
 
             final String cmd = String.format("mkdir -p /cache/recovery/;\necho '%s' > '%s';\n",
                     sb.toString(), file);
-            Utils.runRootCommand(cmd, true);
+            RootShell.fireAndBlock(cmd);
             Utils.setPermissions(file, "0644", android.os.Process.myUid(), 2001);
         }
 
@@ -227,7 +229,7 @@ public class RebootHelper {
             ((PowerManager) context.getSystemService(Activity.POWER_SERVICE)).reboot("recovery");
         } catch (Exception exc) {
             Logger.e(this, "can not reboot using power manager", exc);
-            Utils.runRootCommand("reboot recovery;\n");
+            RootShell.fireAndForget("sync;reboot recovery;\n");
         }
     }
 }

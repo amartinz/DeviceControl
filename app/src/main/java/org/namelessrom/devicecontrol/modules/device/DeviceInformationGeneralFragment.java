@@ -28,10 +28,10 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
 import org.namelessrom.devicecontrol.utils.AppHelper;
-import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.List;
 
+import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.hardware.device.MemoryInfo;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
@@ -157,7 +157,7 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
             System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
             mHits[mHits.length - 1] = SystemClock.uptimeMillis();
             if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
-                Utils.runRootCommand("am start android/com.android.internal.app.PlatLogoActivity");
+                RootShell.fireAndForget("am start android/com.android.internal.app.PlatLogoActivity");
                 mEasterEggStarted = true;
             }
             return true;

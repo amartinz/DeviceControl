@@ -22,6 +22,8 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.RootShell;
+
 public class DisplayGammaCalibration {
     public static final String TAG = "display_gamma_calibration";
 
@@ -94,9 +96,11 @@ public class DisplayGammaCalibration {
 
     public void setGamma(final int control, final String gamma) {
         final String[] split = gamma.split(" ");
+        final StringBuilder sb = new StringBuilder();
         for (int i = 0; i < paths.length; i++) {
-            Utils.runRootCommand(Utils.getWriteCommand(paths[i], split[i]));
+            sb.append(Utils.getWriteCommand(paths[i], split[i]));
         }
+        RootShell.fireAndForget(sb.toString());
     }
 
     public String[] getDescriptors() { return descriptors; }

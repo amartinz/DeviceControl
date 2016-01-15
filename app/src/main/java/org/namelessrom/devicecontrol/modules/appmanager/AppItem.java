@@ -195,7 +195,7 @@ public class AppItem {
                 }
 
                 @Override protected Void doInBackground(Void... voids) {
-                    Utils.runRootCommand(cmd, true);
+                    RootShell.fireAndBlock(cmd);
                     return null;
                 }
 
@@ -214,7 +214,7 @@ public class AppItem {
 
         new AsyncTask<Void, Void, Void>() {
             @Override protected Void doInBackground(Void... voids) {
-                Utils.runRootCommand(cmd, true);
+                RootShell.fireAndBlock(cmd);
                 return null;
             }
 

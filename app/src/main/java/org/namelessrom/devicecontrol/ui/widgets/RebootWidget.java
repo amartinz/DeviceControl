@@ -33,7 +33,8 @@ import android.widget.RemoteViews;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.Utils;
+
+import alexander.martinz.libs.execution.RootShell;
 
 public class RebootWidget extends AppWidgetProvider {
 
@@ -63,7 +64,7 @@ public class RebootWidget extends AppWidgetProvider {
     }
 
     @Override public void onReceive(@NonNull final Context context, @NonNull final Intent intent) {
-        if (TextUtils.isEmpty(intent.getAction())) return;
+        if (TextUtils.isEmpty(intent.getAction())) { return; }
 
         if (intent.getAction().equals(SHOW_POPUP_DIALOG_REBOOT_ACTION)) {
             final Intent popUpIntent = new Intent(context, RebootDialogActivity.class);
@@ -105,27 +106,35 @@ public class RebootWidget extends AppWidgetProvider {
         }
 
         @Override public void onClick(DialogInterface dialogInterface, int item) {
+            final String cmd;
             switch (item) {
                 case 0: // shutdown
-                    Utils.runRootCommand("reboot -p");
+                    cmd = "reboot -p";
                     break;
                 case 1: // normal
-                    Utils.runRootCommand("reboot");
+                    cmd = "reboot";
                     break;
                 case 2: // "hot" reboot
-                    Utils.runRootCommand("pkill -TERM zygote");
+                    cmd = "pkill -TERM zygote";
                     break;
                 case 3: // recovery
-                    Utils.runRootCommand("reboot recovery");
+                    cmd = "reboot recovery";
                     break;
                 case 4: // bootloader
-                    Utils.runRootCommand("reboot bootloader");
+                    cmd = "reboot bootloader";
+                    break;
+                default: // not handled
+                    cmd = "";
                     break;
             }
 
+            if (!TextUtils.isEmpty(cmd)) {
+                RootShell.fireAndForget(String.format("sync;%s;", cmd));
+            }
+
             // close dialog and finish
-            dialogInterface.dismiss();
             finish();
+            dialogInterface.dismiss();
         }
     }
 

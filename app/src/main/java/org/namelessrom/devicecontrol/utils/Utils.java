@@ -24,10 +24,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.BatteryManager;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
@@ -51,16 +49,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.NormalShell;
 import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.execution.ShellManager;
 
 import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
 
@@ -240,7 +235,7 @@ public class Utils {
      * @param value    The value to write
      */
     private static void writeValueViaShell(final String filename, final String value) {
-        runRootCommand(Utils.getWriteCommand(filename, value));
+        RootShell.fireAndForget(Utils.getWriteCommand(filename, value));
     }
 
     /**
@@ -327,7 +322,7 @@ public class Utils {
     }
 
     public static String[] listFiles(final String path, final String[] blacklist) {
-        final String output = getRootShellResult(String.format("ls %s", path));
+        final String output = RootShell.fireAndBlockStringNewline(String.format("ls %s", path));
         Logger.v(Utils.class, "listFiles --> output: %s", output);
         if (TextUtils.isEmpty(output)) {
             return new String[0];
@@ -362,47 +357,6 @@ public class Utils {
         final String[] splitted = path.trim().split("/");
         Logger.v(Utils.class, "getFileName(%s) --> %s", path, splitted[splitted.length - 1]);
         return splitted[splitted.length - 1];
-    }
-
-    @NonNull public static String getRootShellResult(final String command) {
-        return getRootShellResult(command, "");
-    }
-
-    @NonNull public static String getRootShellResult(final String command, @NonNull final String def) {
-        return getRootShellResult(command, def, true);
-    }
-
-    @NonNull public static String getRootShellResult(final String command, @NonNull final String def, boolean newline) {
-        final RootShell rootShell = ShellManager.get().getRootShell();
-        if (rootShell == null) {
-            return def;
-        }
-
-        Command cmd = new Command(command).setOutputType(newline ? Command.OUTPUT_STRING_NEWLINE : Command.OUTPUT_STRING);
-        String result = rootShell.add(cmd).waitFor().getOutput();
-        if (result == null) {
-            return def;
-        }
-        result = result.trim();
-        return (TextUtils.isEmpty(result) ? def : result);
-    }
-
-    public static void runRootCommand(final String command) {
-        RootShell.fireAndForget(new Command(command));
-    }
-
-    /**
-     * Runs a shell command with root (super user) rights
-     *
-     * @param command The command to run
-     * @param wait    If true, this command is blocking until execution finished
-     */
-    public static void runRootCommand(final String command, final boolean wait) {
-        if (wait) {
-            RootShell.fireAndBlock(new Command(command));
-        } else {
-            RootShell.fireAndForget(new Command(command));
-        }
     }
 
     public static void getCommandResult(final OnShellOutputListener listener, final String cmd) {
@@ -537,13 +491,12 @@ public class Utils {
     }
 
     public static void remount(final String path, final String mode) {
-        runRootCommand(String.format("busybox mount -o %s,remount %s", mode, path));
+        RootShell.fireAndForget(String.format("busybox mount -o %s,remount %s", mode, path));
     }
 
     public static String setPermissions(final String path, final String mask,
             final int user, final int group) {
-        return String.format(
-                "busybox chown %s.%s %s;busybox chmod %s %s;", user, group, path, mask, path);
+        return String.format("busybox chown %s.%s %s;busybox chmod %s %s;", user, group, path, mask, path);
     }
 
     public static void restartActivity(final Activity activity) {
@@ -591,12 +544,6 @@ public class Utils {
         }
     }
 
-    public static String getDate(final long time) {
-        final Calendar cal = Calendar.getInstance(Locale.ENGLISH);
-        cal.setTimeInMillis(time);
-        return DateFormat.format("dd-MM-yyyy", cal).toString();
-    }
-
     public static void closeQuietly(final Object closeable) {
         if (closeable instanceof Flushable) {
             try {
@@ -610,32 +557,17 @@ public class Utils {
         }
     }
 
-    public static boolean writeToFile(final File file, final String content) {
-        FileWriter fw = null;
-        try {
-            fw = new FileWriter(file, false);
-            fw.write(content);
-            fw.flush();
-            return true;
-        } catch (IOException ioe) {
-            Logger.e(TAG, "could not write to file", ioe);
-            return false;
-        } finally {
-            closeQuietly(fw);
-        }
-    }
-
     public static void patchSEPolicy(Context context) {
-        String cmd = "";
+        StringBuilder sb = new StringBuilder();
 
         // supolicy --live "allow untrusted_app proc_touchpanel dir { search }"
-        cmd += "supolicy --live \"allow untrusted_app proc_touchpanel dir { search }\";\n";
+        sb.append("supolicy --live \"allow untrusted_app proc_touchpanel dir { search }\";");
 
         if (!Utils.isNameless(context)) {
             // supolicy --live "allow platform_app proc_touchpanel dir { search }"
-            cmd += "supolicy --live \"allow platform_app proc_touchpanel dir { search }\";\n";
+            sb.append("supolicy --live \"allow platform_app proc_touchpanel dir { search }\";");
         }
 
-        runRootCommand(cmd);
+        RootShell.fireAndForget(sb.toString());
     }
 }

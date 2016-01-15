@@ -41,8 +41,8 @@ import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
-import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.objects.BootupItem;
@@ -64,6 +64,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
@@ -128,7 +129,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
     }
 
     @Override public void onDestroy() {
-        CpuCoreMonitor.getInstance(getActivity()).stop().destroy();
+        CpuCoreMonitor.getInstance(getActivity()).destroy();
         super.onDestroy();
     }
 
@@ -239,9 +240,9 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         mCpuGovLock.setOnPreferenceChangeListener(this);
 
         if (Utils.fileExists(getResources().getStringArray(R.array.directories_intelli_plug))
-                || Utils.fileExists(getString(R.string.directory_mako_hotplug))
-                || Utils.fileExists(getString(R.string.file_cpu_quiet_base))
-                || Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
+            || Utils.fileExists(getString(R.string.directory_mako_hotplug))
+            || Utils.fileExists(getString(R.string.file_cpu_quiet_base))
+            || Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
             setupHotpluggingPreferences();
         }
 
@@ -292,8 +293,8 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         //------------------------------------------------------------------------------------------
         boolean mpdecision = Utils.fileExists(MpDecisionAction.MPDECISION_PATH);
         boolean cpuQuiet = Utils.fileExists(getString(R.string.file_cpu_quiet_base))
-                && Utils.fileExists(getString(R.string.file_cpu_quiet_avail_gov))
-                && Utils.fileExists(getString(R.string.file_cpu_quiet_cur_gov));
+                           && Utils.fileExists(getString(R.string.file_cpu_quiet_avail_gov))
+                           && Utils.fileExists(getString(R.string.file_cpu_quiet_cur_gov));
         boolean hotplug = mpdecision || cpuQuiet;
         if (hotplug) {
             category = createCustomPreferenceCategoryMaterial("hotplugging",
@@ -305,8 +306,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             mMpDecision = createSwitchPreference(false, "mpdecision",
                     getString(R.string.mpdecision), getString(R.string.mpdecision_summary), false);
             category.addPreference(mMpDecision);
-            Utils.getCommandResult(mShellOutputListener, ID_MPDECISION,
-                    "pgrep mpdecision 2> /dev/null;");
+            Utils.getCommandResult(mShellOutputListener, ID_MPDECISION, "pgrep mpdecision 2> /dev/null;");
         }
 
         if (cpuQuiet) {
@@ -465,7 +465,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         } else if (preference == mCpuQuietGov) {
             final String path = Application.get().getString(R.string.file_cpu_quiet_cur_gov);
             final String value = String.valueOf(o);
-            Utils.runRootCommand(Utils.getWriteCommand(path, value));
+            RootShell.fireAndForget(Utils.getWriteCommand(path, value));
             BootupConfig.setBootup(new BootupItem(
                     BootupConfig.CATEGORY_EXTRAS, mCpuQuietGov.getKey(),
                     path, value, true));
@@ -518,11 +518,13 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
     }
 
     public View generateRow(final int core, final CpuCore cpuCore) {
-        if (!isAdded() || mCpuInfo == null) { return null; }
-        Logger.v(this, String.format("generateRow(%s);", cpuCore.toString()));
+        if (!isAdded() || mCpuInfo == null) {
+            return null;
+        }
 
         View rowView = mCpuInfo.getChildAt(core);
         if (rowView == null) {
+            Logger.v(this, String.format("generateRow(%s);", cpuCore.toString()));
             rowView = new CpuCoreView(getActivity());
             mCpuInfo.addView(rowView);
         }
@@ -534,8 +536,8 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             ((CpuCoreView) rowView).freq.setText(isOffline
                     ? getString(R.string.core_offline)
                     : CpuUtils.toMhz(String.valueOf(cpuCore.current))
-                    + " / " + CpuUtils.toMhz(String.valueOf(cpuCore.max))
-                    + " [" + cpuCore.governor + ']');
+                      + " / " + CpuUtils.toMhz(String.valueOf(cpuCore.max))
+                      + " [" + cpuCore.governor + ']');
             ((CpuCoreView) rowView).bar.setMax(cpuCore.max);
             ((CpuCoreView) rowView).bar.setProgress(cpuCore.current);
         }

@@ -24,6 +24,8 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.RootShell;
+
 public class DisplayColorCalibration {
     public static final String TAG = "display_color_calibration";
 
@@ -53,10 +55,10 @@ public class DisplayColorCalibration {
                 // our control path, optional
                 ctrl = ctrls[i];
                 if (TextUtils.isEmpty(ctrl)
-                        // check if we disabled it
-                        || TextUtils.equals(ctrl, "-")
-                        // check if it exists
-                        || !Utils.fileExists(ctrl)) {
+                    // check if we disabled it
+                    || TextUtils.equals(ctrl, "-")
+                    // check if it exists
+                    || !Utils.fileExists(ctrl)) {
                     ctrl = null;
                 }
 
@@ -105,8 +107,10 @@ public class DisplayColorCalibration {
         if (!TextUtils.isEmpty(ctrl)) {
             sb.append(Utils.getWriteCommand(ctrl, "1"));
         }
-        Utils.runRootCommand(sb.toString());
+        RootShell.fireAndForget(sb.toString());
     }
 
-    public String getPath() { return path; }
+    public String getPath() {
+        return path;
+    }
 }

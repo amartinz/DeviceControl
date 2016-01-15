@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.modules.performance.sub;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -34,8 +33,8 @@ import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.models.ExtraConfig;
 import org.namelessrom.devicecontrol.hardware.ExtraUtils;
+import org.namelessrom.devicecontrol.models.ExtraConfig;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
@@ -47,6 +46,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import alexander.martinz.libs.execution.RootShell;
 
 public class EntropyFragment extends AttachPreferenceProgressFragment implements Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener {
     private static final String URL_RNG =
@@ -155,7 +156,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
 
             if ((Boolean) o) {
                 Logger.v(this, "Starting rngd");
-                Utils.runRootCommand(String.format("%s -P;\n", RNGD.getAbsolutePath()));
+                RootShell.fireAndForget(String.format("%s -P;\n", RNGD.getAbsolutePath()));
             } else {
                 Logger.v(this, "Stopping rngd");
                 AppHelper.killProcess(getActivity(), RNGD.getAbsolutePath());
@@ -192,7 +193,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
     }
 
     public void onShellOutput(final ShellOutput shellOutput) {
-        if (shellOutput == null) return;
+        if (shellOutput == null) { return; }
 
         if (shellOutput.id == DeviceConstants.ID_PGREP) {
             if (mRngActive != null) {

@@ -31,6 +31,8 @@ import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.RootShell;
+
 public class ToolsMoreFragment extends AttachPreferenceFragment {
     private CustomPreference mMediaScan;
 
@@ -74,9 +76,9 @@ public class ToolsMoreFragment extends AttachPreferenceFragment {
     private void startMediaScan() {
         mMediaScan.setSummary(R.string.media_scan_triggered);
         final String format = "am broadcast -a android.intent.action.MEDIA_MOUNTED -d file://%s";
-        Utils.runRootCommand(String.format(format, IOUtils.get().getPrimarySdCard()));
+        RootShell.fireAndForget(String.format(format, IOUtils.get().getPrimarySdCard()));
         if (!TextUtils.isEmpty(IOUtils.get().getSecondarySdCard())) {
-            Utils.runRootCommand(String.format(format, IOUtils.get().getSecondarySdCard()));
+            RootShell.fireAndForget(String.format(format, IOUtils.get().getSecondarySdCard()));
         }
     }
 

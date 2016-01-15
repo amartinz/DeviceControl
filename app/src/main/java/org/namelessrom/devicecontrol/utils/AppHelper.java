@@ -132,7 +132,7 @@ public class AppHelper {
             Logger.e(TAG, "could not call " + method + " via reflection", e);
         }
 
-        Utils.runRootCommand(cmdPrefix + internal + external);
+        RootShell.fireAndForget(String.format("%s%s%s", cmdPrefix, internal, external));
     }
 
     public static void uninstallPackage(PackageManager pm, String pkg) {

@@ -25,6 +25,8 @@ import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.RootShell;
+
 public class Gpu3dScalingAction extends BaseAction {
 
     public static final String NAME = "3d_scaling";
@@ -62,7 +64,7 @@ public class Gpu3dScalingAction extends BaseAction {
 
         setBootup(GpuUtils.FILE_3D_SCALING);
 
-        Utils.runRootCommand(Utils.getWriteCommand(GpuUtils.FILE_3D_SCALING, value));
+        RootShell.fireAndForget(Utils.getWriteCommand(GpuUtils.FILE_3D_SCALING, value));
     }
 
 }
