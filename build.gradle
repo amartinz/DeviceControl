@@ -7,7 +7,7 @@ buildscript {
         flatDir { dirs 'aars' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-alpha3'
+        classpath 'com.android.tools.build:gradle:2.0.0-alpha5'
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
     }
