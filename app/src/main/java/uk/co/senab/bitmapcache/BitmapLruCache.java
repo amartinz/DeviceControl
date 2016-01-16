@@ -73,7 +73,7 @@ public class BitmapLruCache {
      * Builder#setRecyclePolicy(RecyclePolicy)
      * Builder.setRecyclePolicy()} method.
      */
-    public static enum RecyclePolicy {
+    public enum RecyclePolicy {
         /**
          * The Bitmap is never recycled automatically.
          */

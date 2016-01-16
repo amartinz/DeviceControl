@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import com.google.gson.annotations.SerializedName;
 
 import alexander.martinz.libs.execution.RootShell;
+import alexander.martinz.libs.execution.binaries.BusyBox;
 import alexander.martinz.libs.hardware.device.KernelInfo;
 import alexander.martinz.libs.hardware.device.MemoryInfo;
 import alexander.martinz.libs.hardware.device.ProcessorInfo;
@@ -60,10 +61,8 @@ public class Device extends alexander.martinz.libs.hardware.device.Device {
         final String version = hasRoot ? RootShell.fireAndBlockString("su -v") : "-";
         suVersion = TextUtils.isEmpty(version) ? "-" : version;
 
-        // TODO: readd check
-        hasBusyBox = true;
         // check busybox
-        //hasBusyBox = ShellManager.isBusyboxAvailable();
+       // hasBusyBox = BusyBox.isAvailable();
 
         // update memory as cached / free may change
         MemoryInfo.feedWithInformation(MemoryInfo.TYPE_MB, memoryInfoListener);

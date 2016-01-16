@@ -34,7 +34,7 @@ import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import alexander.martinz.libs.hardware.device.RootCheck;
+import alexander.martinz.libs.execution.RootCheck;
 
 public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
     private final Handler mHandler = new Handler(Looper.getMainLooper());

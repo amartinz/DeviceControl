@@ -21,7 +21,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.models.BootupConfig;
@@ -42,7 +41,7 @@ import java.util.ArrayList;
 
 import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.execution.ShellManager;
-import alexander.martinz.libs.hardware.device.RootCheck;
+import alexander.martinz.libs.execution.RootCheck;
 import io.paperdb.Paper;
 
 public class BootupService extends IntentService {
