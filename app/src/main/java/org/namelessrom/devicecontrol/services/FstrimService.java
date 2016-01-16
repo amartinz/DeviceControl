@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.RootShell;
+import alexander.martinz.libs.execution.binaries.BusyBox;
 
 public class FstrimService extends IntentService {
     public static final String ACTION_TASKER_FSTRIM = "action_tasker_fstrim";
@@ -46,9 +47,9 @@ public class FstrimService extends IntentService {
 
         final String path = getFilesDir().getAbsolutePath() + DeviceConstants.DC_LOG_FILE_FSTRIM;
         final String cmd = "date;"
-                           + "busybox fstrim -v /system;"
-                           + "busybox fstrim -v /data;"
-                           + "busybox fstrim -v /cache;";
+                           + BusyBox.callBusyBoxApplet("fstrim", "-v /cache;")
+                           + BusyBox.callBusyBoxApplet("fstrim", "-v /data;")
+                           + BusyBox.callBusyBoxApplet("fstrim", "-v /system;");
 
         try {
             fileOutputStream = new FileOutputStream(path);

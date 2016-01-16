@@ -56,6 +56,7 @@ import java.util.TimeZone;
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.NormalShell;
 import alexander.martinz.libs.execution.RootShell;
+import alexander.martinz.libs.execution.binaries.BusyBox;
 
 import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
 
@@ -491,16 +492,22 @@ public class Utils {
     }
 
     public static void remount(final String path, final String mode) {
-        RootShell.fireAndForget(String.format("busybox mount -o %s,remount %s", mode, path));
+        final String args = String.format("-o %s,remount %s;", mode, path);
+        final String cmd = BusyBox.callBusyBoxApplet("mount", args);
+        // we need to wait for the remount to be done
+        RootShell.fireAndBlock(cmd);
     }
 
-    public static String setPermissions(final String path, final String mask,
-            final int user, final int group) {
-        return String.format("busybox chown %s.%s %s;busybox chmod %s %s;", user, group, path, mask, path);
+    public static String setPermissions(final String path, final String mask, final int user, final int group) {
+        final String chownArgs = String.format("%s.%s %s;", user, group, path);
+        final String chmodArgs = String.format("%s %s;", mask, path);
+        return BusyBox.callBusyBoxApplet("chown", chownArgs) + BusyBox.callBusyBoxApplet("chmod", chmodArgs);
     }
 
     public static void restartActivity(final Activity activity) {
-        if (activity == null) { return; }
+        if (activity == null) {
+            return;
+        }
         activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         activity.finish();
         activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

@@ -33,6 +33,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.RootShell;
+import alexander.martinz.libs.execution.binaries.BusyBox;
 
 public class AppItem {
     private final PackageInfo pkgInfo;
@@ -166,7 +167,7 @@ public class AppItem {
         sb.append(String.format("pm uninstall %s;", appItem.getPackageName()));
 
         if (appItem.isSystemApp()) {
-            sb.append("busybox mount -o rw,remount /system;");
+            sb.append(BusyBox.callBusyBoxApplet("mount", "-o rw,remount /system;"));
         }
 
         sb.append(String.format("rm -rf %s;", appItem.getApplicationInfo().publicSourceDir));
@@ -174,7 +175,7 @@ public class AppItem {
         sb.append(String.format("rm -rf %s;", appItem.getApplicationInfo().dataDir));
 
         if (appItem.isSystemApp()) {
-            sb.append("busybox mount -o ro,remount /system;");
+            sb.append(BusyBox.callBusyBoxApplet("mount", "-o ro,remount /system;"));
         }
 
         final String cmd = sb.toString();

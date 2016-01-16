@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -49,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import alexander.martinz.libs.execution.RootShell;
+import alexander.martinz.libs.execution.binaries.BusyBox;
 
 public class SysctlEditorFragment extends BaseEditorFragment {
 
@@ -146,10 +148,17 @@ public class SysctlEditorFragment extends BaseEditorFragment {
         }
 
         if (mLoadFull) {
-            // TODO: busybox compat
-            sb.append("echo `busybox find /proc/sys/* -type f -perm -644 |").append(" grep -v \"vm.\"`;\n");
+            String findCmd = BusyBox.callBusyBoxApplet("find", "/proc/sys/* -type f -perm -644");
+            findCmd = TextUtils.isEmpty(findCmd) ? "" : findCmd;
+            String grepCmd = BusyBox.callBusyBoxApplet("grep", "-v \"vm.\"");
+            grepCmd = TextUtils.isEmpty(grepCmd) ? "" : grepCmd;
+            final String cmd = String.format("echo `%s | %s`;\n", findCmd, grepCmd);
+            sb.append(cmd);
         } else {
-            sb.append("echo `busybox find /proc/sys/vm/* -type f ").append("-prune -perm -644`;\n");
+            String findCmd = BusyBox.callBusyBoxApplet("find", "/proc/sys/vm/* -type f -prune -perm -644");
+            findCmd = TextUtils.isEmpty(findCmd) ? "" : findCmd;
+            final String cmd = String.format("echo `%s`;\n", findCmd);
+            sb.append(cmd);
         }
 
         Utils.getCommandResult(SysctlEditorFragment.this, -1, sb.toString());

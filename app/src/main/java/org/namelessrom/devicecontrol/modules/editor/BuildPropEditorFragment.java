@@ -48,6 +48,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import alexander.martinz.libs.execution.binaries.BusyBox;
+
 public class BuildPropEditorFragment extends BaseEditorFragment {
 
     //==============================================================================================
@@ -130,7 +132,9 @@ public class BuildPropEditorFragment extends BaseEditorFragment {
     }
 
     @Override public void onItemClick(AdapterView<?> parent, View view, int position, long row) {
-        if (mAdapter == null) return;
+        if (mAdapter == null) {
+            return;
+        }
 
         final Prop p = mAdapter.getItem(position);
         if (p != null) {
@@ -144,11 +148,12 @@ public class BuildPropEditorFragment extends BaseEditorFragment {
     public void onShellOutput(final ShellOutput shellOutput) {
         switch (shellOutput.id) {
             case SAVE:
-                Utils.remount("/system", "ro");
-                break;
             case REMOVE:
                 Utils.remount("/system", "ro");
-                if (mAdapter != null) mAdapter.notifyDataSetChanged();
+                Collections.sort(mProps);
+                if (mAdapter != null) {
+                    mAdapter.notifyDataSetChanged();
+                }
                 break;
             default:
                 Logger.v(this, "onReadPropsCompleted: " + shellOutput.output);
@@ -204,20 +209,21 @@ public class BuildPropEditorFragment extends BaseEditorFragment {
     //==============================================================================================
     // Dialogs
     //==============================================================================================
+    private boolean mSpinnerHelper;
 
     private void editBuildPropDialog(final Prop p) {
         final Activity activity = getActivity();
-        if (activity == null) return;
+        if (activity == null) {
+            return;
+        }
 
-        final View editDialog = LayoutInflater.from(getActivity())
-                .inflate(R.layout.dialog_build_prop, null, false);
+        final View editDialog = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_build_prop, null, false);
         final TextView tvName = (TextView) editDialog.findViewById(R.id.prop_name_tv);
         final EditText etName = (EditText) editDialog.findViewById(R.id.prop_name);
         final EditText etValue = (EditText) editDialog.findViewById(R.id.prop_value);
         final Spinner sp = (Spinner) editDialog.findViewById(R.id.preset_spinner);
         final LinearLayout lpresets = (LinearLayout) editDialog.findViewById(R.id.prop_presets);
-        final ArrayAdapter<CharSequence> vAdapter =
-                new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item);
+        final ArrayAdapter<CharSequence> vAdapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item);
         vAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         vAdapter.clear();
 
@@ -240,7 +246,7 @@ public class BuildPropEditorFragment extends BaseEditorFragment {
             }
             tvName.setText(p.getName());
             etName.setText(p.getName());
-            etName.setVisibility(EditText.GONE);
+            etName.setVisibility(View.GONE);
             etValue.setText(p.getVal());
         } else {
             title = getString(R.string.add_property);
@@ -253,9 +259,16 @@ public class BuildPropEditorFragment extends BaseEditorFragment {
             lpresets.setVisibility(View.VISIBLE);
             etName.setVisibility(View.VISIBLE);
         }
+
+        // fuuuu, stupid spinner bugs
+        mSpinnerHelper = false;
         sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override public void onItemSelected(AdapterView<?> parentView, View selectedItemView,
-                    int position, long id) {
+            @Override public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if (!mSpinnerHelper) {
+                    mSpinnerHelper = true;
+                    return;
+                }
+
                 final Object item = sp.getSelectedItem();
                 if (item != null) {
                     etValue.setText(item.toString().trim());
@@ -264,6 +277,7 @@ public class BuildPropEditorFragment extends BaseEditorFragment {
 
             @Override public void onNothingSelected(AdapterView<?> parentView) { }
         });
+
         new AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setView(editDialog)
@@ -275,39 +289,42 @@ public class BuildPropEditorFragment extends BaseEditorFragment {
                         }
                 )
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (p != null) {
-                            if (etValue.getText() != null) {
-                                final String name = p.getName();
-                                final String value = etValue.getText().toString().trim();
-                                p.setVal(value);
-                                Utils.remount("/system", "rw");
-                                Utils.getCommandResult(BuildPropEditorFragment.this, SAVE,
-                                        Scripts.addOrUpdate(name, value));
-                            }
-                        } else {
-                            if (etValue.getText() != null && etName.getText() != null) {
-                                final String name = etName.getText().toString().trim();
-                                if (name.length() > 0) {
-                                    final String value = etValue.getText().toString().trim();
-                                    mProps.add(new Prop(name, value));
-                                    Utils.remount("/system", "rw");
-                                    Utils.getCommandResult(BuildPropEditorFragment.this, SAVE,
-                                            Scripts.addOrUpdate(name, value));
-                                }
-                            }
+                    @Override public void onClick(DialogInterface dialog, int which) {
+                        if (etValue.getText() == null) {
+                            return;
                         }
 
-                        Collections.sort(mProps);
-                        if (mAdapter != null) mAdapter.notifyDataSetChanged();
+                        final String name;
+                        final String value;
+
+                        if (p != null) {
+                            name = p.getName();
+                            value = etValue.getText().toString().trim();
+                            p.setVal(value);
+                        } else {
+                            if (etName.getText() == null) {
+                                return;
+                            }
+                            name = etName.getText().toString().trim();
+                            if (name.length() <= 0) {
+                                return;
+                            }
+                            value = etValue.getText().toString().trim();
+                            mProps.add(new Prop(name, value));
+                        }
+
+                        final String addCmd = Scripts.addOrUpdate(name, value);
+                        final String cmd = BusyBox.callBusyBoxApplet("mount", "-o rw,remount /system;") + addCmd;
+                        Utils.getCommandResult(BuildPropEditorFragment.this, SAVE, cmd);
                     }
                 }).show();
     }
 
     private void makeDialog(final int title, final String msg, final Prop prop) {
         final Activity activity = getActivity();
-        if (activity == null) return;
+        if (activity == null) {
+            return;
+        }
 
         new AlertDialog.Builder(activity)
                 .setTitle(title)
@@ -323,9 +340,11 @@ public class BuildPropEditorFragment extends BaseEditorFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Utils.remount("/system", "rw");
-                        Utils.getCommandResult(BuildPropEditorFragment.this, REMOVE,
-                                Scripts.removeProperty(prop.getName()));
-                        if (mAdapter != null) mAdapter.remove(prop);
+                        final String cmd = Scripts.removeProperty(prop.getName());
+                        Utils.getCommandResult(BuildPropEditorFragment.this, REMOVE, cmd);
+                        if (mAdapter != null) {
+                            mAdapter.remove(prop);
+                        }
                     }
                 }).show();
     }

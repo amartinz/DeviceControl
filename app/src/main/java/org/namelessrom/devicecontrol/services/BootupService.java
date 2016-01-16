@@ -39,9 +39,10 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.io.File;
 import java.util.ArrayList;
 
+import alexander.martinz.libs.execution.RootCheck;
 import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.execution.ShellManager;
-import alexander.martinz.libs.execution.RootCheck;
+import alexander.martinz.libs.execution.binaries.BusyBox;
 import io.paperdb.Paper;
 
 public class BootupService extends IntentService {
@@ -122,7 +123,7 @@ public class BootupService extends IntentService {
         // Custom Shell Command
         //========================================================================================================================
         //sbCmd.append(PreferenceHelper.getString(CUSTOM_SHELL_COMMAND,"echo \"Hello world!\"")).append(";\n");
-                
+
         //========================================================================================================================
         // Device
         //========================================================================================================================
@@ -168,7 +169,7 @@ public class BootupService extends IntentService {
         Logger.v(this, cmd);
         sbCmd.append(cmd);
         if (new File("/system/etc/sysctl.conf").exists()) {
-            sbCmd.append("busybox sysctl -p;\n");
+            sbCmd.append(BusyBox.callBusyBoxApplet("sysctl", "-p;"));
         }
 
         cmd = EntropyFragment.restore();

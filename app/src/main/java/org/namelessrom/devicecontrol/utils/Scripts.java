@@ -17,6 +17,8 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
+import alexander.martinz.libs.execution.binaries.BusyBox;
+
 /**
  * Defines and runs Scripts.
  */
@@ -25,10 +27,10 @@ public class Scripts {
     public static final String BUILD_PROP = "/system/build.prop";
     public static final String SYSCTL = "/system/etc/sysctl.conf";
 
-    public static final String APPEND_CMD = "echo \"%s=%s\" >> %s;";
-    public static final String COPY_CMD = "busybox cp %s %s;";
-    public static final String KILL_PROP_CMD = "busybox sed -i \"/%s/D\" %s;";
-    public static final String REPLACE_CMD = "busybox sed -i \"/%s/ c %<s=%s\" %s;";
+    private static final String APPEND_CMD = "echo \"%s=%s\" >> %s;";
+    private static final String COPY_CMD = "cp %s %s;";
+    private static String KILL_PROP_CMD;
+    private static String REPLACE_CMD;
 
     public static String copyFile(final String source, final String destination) {
         return String.format(COPY_CMD, source, destination);
@@ -40,6 +42,12 @@ public class Scripts {
 
     public static String addOrUpdate(final String property, final String value, final String file) {
         if (Utils.existsInFile(file, property)) {
+            if (REPLACE_CMD == null) {
+                REPLACE_CMD = BusyBox.callBusyBoxApplet("sed", "-i \"/%s/ c %<s=%s\" %s;");
+            }
+            if (REPLACE_CMD == null) {
+                return "";
+            }
             return String.format(REPLACE_CMD, property, value, file);
         } else {
             return String.format(APPEND_CMD, property, value, file);
@@ -52,6 +60,12 @@ public class Scripts {
 
     public static String removeProperty(final String property, final String file) {
         if (Utils.existsInFile(file, property)) {
+            if (KILL_PROP_CMD == null) {
+                KILL_PROP_CMD = BusyBox.callBusyBoxApplet("sed", "-i \"/%s/D\" %s;");
+            }
+            if (KILL_PROP_CMD == null) {
+                return "";
+            }
             return String.format(KILL_PROP_CMD, property, file);
         }
         return "";
