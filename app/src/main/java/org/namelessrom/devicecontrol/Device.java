@@ -34,9 +34,6 @@ public class Device extends alexander.martinz.libs.hardware.device.Device {
     @SerializedName("memoryinfo") public MemoryInfo memoryInfo;
     @SerializedName("processorinfo") public ProcessorInfo processorInfo;
 
-    @SerializedName("has_busybox") public boolean hasBusyBox;
-    @SerializedName("su_version") public String suVersion;
-
     private static Device sInstance;
 
     private Device(@NonNull Context context) {
@@ -56,13 +53,6 @@ public class Device extends alexander.martinz.libs.hardware.device.Device {
 
     public Device update() {
         super.update();
-
-        // get su version
-        final String version = hasRoot ? RootShell.fireAndBlockString("su -v") : "-";
-        suVersion = TextUtils.isEmpty(version) ? "-" : version;
-
-        // check busybox
-        hasBusyBox = BusyBox.isAvailable();
 
         // update memory as cached / free may change
         MemoryInfo.feedWithInformation(MemoryInfo.TYPE_MB, memoryInfoListener);
