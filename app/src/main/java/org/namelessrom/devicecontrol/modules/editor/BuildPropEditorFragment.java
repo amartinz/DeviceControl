@@ -196,7 +196,9 @@ public class BuildPropEditorFragment extends BaseEditorFragment {
             } else {
                 prop = new Prop(pp[0].trim(), "");
             }
-            mProps.add(prop);
+            if (!mProps.contains(prop)) {
+                mProps.add(prop);
+            }
         }
         Collections.sort(mProps);
 

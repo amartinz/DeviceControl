@@ -388,7 +388,7 @@ public class Utils {
             command.setOutputType(Command.OUTPUT_STRING);
         }
 
-        RootShell.fireAndForget(command);
+        RootShell.fireAndBlock(command);
     }
 
     public static String getReadCommand(final String path) {
