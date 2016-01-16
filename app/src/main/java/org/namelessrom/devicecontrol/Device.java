@@ -62,7 +62,7 @@ public class Device extends alexander.martinz.libs.hardware.device.Device {
         suVersion = TextUtils.isEmpty(version) ? "-" : version;
 
         // check busybox
-       // hasBusyBox = BusyBox.isAvailable();
+        hasBusyBox = BusyBox.isAvailable();
 
         // update memory as cached / free may change
         MemoryInfo.feedWithInformation(MemoryInfo.TYPE_MB, memoryInfoListener);

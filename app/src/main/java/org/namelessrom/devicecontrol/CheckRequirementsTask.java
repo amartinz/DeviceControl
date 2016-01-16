@@ -35,6 +35,7 @@ import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.RootCheck;
+import alexander.martinz.libs.execution.binaries.BusyBox;
 
 public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
     private final Handler mHandler = new Handler(Looper.getMainLooper());
@@ -75,8 +76,9 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
         }
 
         hasRoot = RootCheck.isRooted();
+        final boolean hasBusyBox = BusyBox.isAvailable();
 
-        return (/*device.hasBusyBox &&*/ hasRoot);
+        return (hasRoot && hasBusyBox);
     }
 
     @Override protected void onPostExecute(Boolean isSuccess) {
@@ -127,8 +129,7 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
                     String url = String.format("https://www.google.com/#q=how+to+root+%s", Device.get(mainActivity).model);
                     AppHelper.viewInBrowser(url);
                 } else {
-                    // TODO: readd that stuff
-                    //RootTools.offerBusyBox();
+                    BusyBox.offerBusyBox(mainActivity);
                 }
             }
         });
