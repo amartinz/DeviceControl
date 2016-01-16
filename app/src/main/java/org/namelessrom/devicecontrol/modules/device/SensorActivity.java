@@ -23,6 +23,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -35,6 +36,7 @@ import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
+import org.namelessrom.devicecontrol.theme.AppResources;
 
 import java.util.ArrayList;
 
@@ -90,6 +92,17 @@ public class SensorActivity extends BaseActivity {
 
         final TabLayout tabHost = (TabLayout) findViewById(R.id.tabHost);
         tabHost.setupWithViewPager(viewPager);
+
+        // tint the icons
+        final int iconTint = AppResources.get().getAccentColor();
+        BaseSensor.setIconTintGlobal(iconTint);
+
+        // and set the background
+        final boolean isDarkTheme = AppResources.get().isDarkTheme();
+        final int backgroundColor = isDarkTheme
+                ? ContextCompat.getColor(this, R.color.cardview_dark_background)
+                : ContextCompat.getColor(this, R.color.cardview_light_background);
+        BaseSensor.setBackgroundColorGlobal(backgroundColor);
 
         // Environment
         final View environmentRoot = findViewById(R.id.environment_layout);
