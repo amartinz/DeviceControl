@@ -26,7 +26,7 @@ android {
         applicationId 'org.namelessrom.devicecontrol'
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 135
+        versionCode 136
         versionName '0.8.6.3'
 
         def String gitRevision = getGitCommitHash()
