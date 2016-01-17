@@ -31,6 +31,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 
+import alexander.martinz.libs.execution.ShellLogger;
 import io.paperdb.Paper;
 import uk.co.senab.bitmapcache.BitmapLruCache;
 
@@ -60,15 +61,18 @@ public class Application extends android.app.Application {
     @Override public void onCreate() {
         super.onCreate();
 
-        // force enable logger until we hit the user preference
-        Logger.setEnabled(true);
+        if (Application.sInstance == null) {
+            // force enable logger until we hit the user preference
+            Logger.setEnabled(true);
+            ShellLogger.DEBUG = true;
 
-        Application.sInstance = this;
-        Paper.init(this);
+            Application.sInstance = this;
+            Paper.init(this);
 
-        buildCache();
+            buildCache();
 
-        setupEverything();
+            setupEverything();
+        }
     }
 
     private void setupEverything() {
@@ -87,6 +91,7 @@ public class Application extends android.app.Application {
         }
 
         Logger.setEnabled(deviceConfig.extensiveLogging);
+        ShellLogger.DEBUG = deviceConfig.extensiveLogging;
 
         dumpInformation();
     }

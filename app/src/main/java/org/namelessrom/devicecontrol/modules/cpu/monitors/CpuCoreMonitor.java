@@ -113,7 +113,7 @@ public class CpuCoreMonitor {
     };
 
     private void openShell() {
-        if (mShell == null || mShell.isClosed) {
+        if (mShell == null || mShell.isClosed()) {
             final boolean shouldUseRoot = shouldUseRoot();
             Logger.v(this, "shouldUseRoot: %s", shouldUseRoot);
             if (shouldUseRoot) {

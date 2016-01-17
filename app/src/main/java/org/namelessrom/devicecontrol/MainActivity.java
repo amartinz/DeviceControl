@@ -17,11 +17,8 @@
  */
 package org.namelessrom.devicecontrol;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,7 +45,6 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.pollfish.constants.Position;
 import com.pollfish.main.PollFish;
 import com.sense360.android.quinoa.lib.Sense360;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
@@ -108,6 +104,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     private int mTitle = R.string.home;
     private int mFragmentTitle = R.string.home;
     private int mSubFragmentTitle = -1;
+
+    private CheckRequirementsTask mCheckRequirementsTask;
 
     private ArrayList<MenuListArrayAdapter.MenuItem> setupMenuLists() {
         final ArrayList<MenuListArrayAdapter.MenuItem> menuItems = new ArrayList<>();
@@ -268,7 +266,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         loadFragmentPrivate(DeviceConstants.ID_ABOUT, false);
         getSupportFragmentManager().executePendingTransactions();
 
-        new CheckRequirementsTask(this).execute();
+        mCheckRequirementsTask = new CheckRequirementsTask(this);
+        mCheckRequirementsTask.execute();
     }
 
     @Override public void onClick(final View v) {
@@ -387,6 +386,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             } catch (Exception e) {
                 Logger.e(this, String.format("onDestroy(): %s", e));
             }
+        }
+        if (mCheckRequirementsTask != null) {
+            mCheckRequirementsTask.destroy();
         }
         super.onDestroy();
     }

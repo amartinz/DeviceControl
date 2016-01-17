@@ -35,6 +35,7 @@ import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.RootCheck;
+import alexander.martinz.libs.execution.ShellHelper;
 import alexander.martinz.libs.execution.binaries.BusyBox;
 
 public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
@@ -44,6 +45,7 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
     private final boolean skipChecks;
 
     private final ProgressDialog progressDialog;
+    private AlertDialog alertDialog;
 
     private boolean hasRoot;
 
@@ -75,8 +77,8 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
             return true;
         }
 
-        hasRoot = RootCheck.isRooted();
-        final boolean hasBusyBox = BusyBox.isAvailable();
+        hasRoot = RootCheck.isRooted(true);
+        final boolean hasBusyBox = BusyBox.isAvailable(true);
 
         return (hasRoot && hasBusyBox);
     }
@@ -133,7 +135,9 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
                 }
             }
         });
-        builder.show();
+
+        alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private String getString(@StringRes final int resId) {
@@ -192,4 +196,12 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
         }
     }
 
+    public void destroy() {
+        if (alertDialog != null) {
+            alertDialog.dismiss();
+        }
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
 }
