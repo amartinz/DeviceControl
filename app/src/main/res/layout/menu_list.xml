@@ -62,8 +62,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/themeMenuFooter"
         android:elevation="6dp"
-        android:orientation="vertical"
-        android:paddingBottom="10dp">
+        android:orientation="vertical">
 
         <org.namelessrom.devicecontrol.ui.views.MenuListItem
             android:id="@+id/menu_prefs"
@@ -78,6 +77,18 @@
             android:layout_height="wrap_content"
             app:menuItemImage="@drawable/ic_info"
             app:menuItemTitle="@string/about" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0.2"
+            android:background="?colorAccent" />
+
+        <org.namelessrom.devicecontrol.ui.views.MenuListItem
+            android:id="@+id/menu_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menuItemTitle="@string/unknown" />
 
     </LinearLayout>
 

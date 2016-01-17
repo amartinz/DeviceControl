@@ -31,6 +31,9 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 public class MenuListItem extends LinearLayout {
+    private TextView mTitle;
+    private ImageView mImage;
+
     public MenuListItem(final Context context) {
         this(context, null);
     }
@@ -48,21 +51,33 @@ public class MenuListItem extends LinearLayout {
         final View view = LayoutInflater.from(context).inflate(R.layout.menu_main_list_item, this);
 
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MenuListItem);
-        final int titleRes = a.getResourceId(
-                R.styleable.MenuListItem_menuItemTitle, R.string.empty);
-        final int imageRes = a.getResourceId(
-                R.styleable.MenuListItem_menuItemImage, R.drawable.transparent);
+        final int titleRes = a.getResourceId(R.styleable.MenuListItem_menuItemTitle, R.string.empty);
+        final int imageRes = a.getResourceId(R.styleable.MenuListItem_menuItemImage, R.drawable.transparent);
         a.recycle();
 
-        final TextView title = (TextView) view.findViewById(android.R.id.text1);
-        title.setText(titleRes);
+        mTitle = (TextView) view.findViewById(android.R.id.text1);
+        mTitle.setText(titleRes);
 
         if (!isInEditMode()) {
-            final ImageView image = (ImageView) view.findViewById(R.id.image);
+            mImage = (ImageView) view.findViewById(R.id.image);
             final Drawable icon = DrawableHelper.getDrawable(imageRes);
             DrawableHelper.applyAccentColorFilter(icon);
-            image.setImageDrawable(icon);
+            mImage.setImageDrawable(icon);
         }
+    }
+
+    public MenuListItem setTitle(String title) {
+        if (mTitle != null) {
+            mTitle.setText(title);
+        }
+        return this;
+    }
+
+    public MenuListItem setImage(Drawable image) {
+        if (mImage != null) {
+            mImage.setImageDrawable(image);
+        }
+        return this;
     }
 
 }

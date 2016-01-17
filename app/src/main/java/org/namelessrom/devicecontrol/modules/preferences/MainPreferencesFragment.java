@@ -18,14 +18,11 @@
 package org.namelessrom.devicecontrol.modules.preferences;
 
 import android.app.Activity;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 
 import com.pollfish.main.PollFish;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.MainActivityCallbacks;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
@@ -62,33 +59,6 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         mShowPollfish = (MaterialSwitchPreference) view.findViewById(R.id.prefs_show_pollfish);
         mShowPollfish.setChecked(configuration.showPollfish);
         mShowPollfish.setOnPreferenceChangeListener(this);
-
-        setupVersionPreference(view);
-    }
-
-    private void setupVersionPreference(View view) {
-        MaterialPreference version = (MaterialPreference) view.findViewById(R.id.prefs_version);
-        if (version != null) {
-            version.setBackgroundColor(AppResources.get().getCardBackgroundColor());
-
-            String title;
-            String summary;
-            try {
-                final PackageManager pm = Application.get().getPackageManager();
-                if (pm != null) {
-                    final PackageInfo pInfo = pm.getPackageInfo(getActivity().getPackageName(), 0);
-                    title = getString(R.string.app_version_name, pInfo.versionName);
-                    summary = getString(R.string.app_version_code, pInfo.versionCode);
-                } else {
-                    throw new Exception("pm is null");
-                }
-            } catch (Exception ignored) {
-                title = getString(R.string.app_version_name, getString(R.string.unknown));
-                summary = getString(R.string.app_version_code, getString(R.string.unknown));
-            }
-            version.setTitle(title);
-            version.setSummary(summary);
-        }
     }
 
     @Override public boolean onPreferenceChanged(MaterialPreference preference, Object newValue) {

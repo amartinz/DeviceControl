@@ -27,7 +27,12 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 135
-        versionName "0.8.6.2"
+        versionName '0.8.6.3'
+
+        def String gitRevision = getGitCommitHash()
+        if (gitRevision != null) {
+            versionName(versionName + '-git-' + gitRevision)
+        }
 
         def String localProps = System.getenv('SIGNING_PROP_FILE')
         if (localProps == null) {

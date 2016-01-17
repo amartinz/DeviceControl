@@ -57,14 +57,5 @@
 
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
 
-    <!-- Version -->
-    <alexander.martinz.libs.materialpreferences.MaterialPreference
-        android:id="@+id/prefs_version"
-        style="@style/MaterialPreferences.Default"
-        app:prefAsCard="true"
-        app:prefKey="prefs_version"
-        app:prefSummary="@string/empty"
-        app:prefTitle="@string/empty" />
-
 </LinearLayout>
 

@@ -21,3 +21,23 @@ allprojects {
         flatDir { dirs 'aars' }
     }
 }
+
+def getGitCommitHash() {
+    def gitFolder = "$projectDir/.git/"
+    if (!new File(gitFolder + "HEAD").exists()) {
+        return null
+    }
+
+    // how many characters we extract from the hash
+    def takeFromHash = 6
+
+    def head = new File(gitFolder + "HEAD").text.split(":")
+    def isCommit = (head.length == 1)
+
+    if (isCommit) {
+        return head[0].trim().take(takeFromHash)
+    }
+
+    def refHead = new File(gitFolder + head[1].trim())
+    return refHead.text.trim().take(takeFromHash)
+}

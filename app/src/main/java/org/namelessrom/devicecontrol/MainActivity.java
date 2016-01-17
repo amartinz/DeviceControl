@@ -19,6 +19,8 @@ package org.namelessrom.devicecontrol;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -76,6 +78,7 @@ import org.namelessrom.devicecontrol.modules.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.modules.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.modules.tools.WirelessFileManagerFragment;
 import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
+import org.namelessrom.devicecontrol.ui.views.MenuListItem;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -217,10 +220,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         });
 
         // setup material menu icon
-        materialMenu =
-                new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
-                    @Override public int getToolbarViewId() { return R.id.toolbar; }
-                };
+        materialMenu = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
+            @Override public int getToolbarViewId() { return R.id.toolbar; }
+        };
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             materialMenu.setNeverDrawTouch(true);
         }
@@ -242,6 +244,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         ((TextView) v.findViewById(R.id.menu_header_tv)).setText(Device.get(this).getModelString());
         menuContainer.findViewById(R.id.menu_prefs).setOnClickListener(this);
         menuContainer.findViewById(R.id.menu_about).setOnClickListener(this);
+
+        final MenuListItem menuVersion = (MenuListItem) menuContainer.findViewById(R.id.menu_version);
+        setupMenuVersion(menuVersion);
 
         slidingMenu = new SlidingMenu(this);
         slidingMenu.setMode(SlidingMenu.LEFT);
@@ -268,6 +273,32 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         mCheckRequirementsTask = new CheckRequirementsTask(this);
         mCheckRequirementsTask.execute();
+    }
+
+    private void setupMenuVersion(MenuListItem menuVersion) {
+        PackageInfo myInfo = null;
+        try {
+            myInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException ignored) { }
+        if (myInfo != null && !TextUtils.isEmpty(myInfo.versionName)) {
+            menuVersion.setTitle(myInfo.versionName);
+
+            // extract the git short log from the version name
+            final String versionName = myInfo.versionName.replace("-dev", "").trim().toLowerCase();
+            if (versionName.contains("-git-")) {
+                final String[] splitted = versionName.split("-git-");
+                if (splitted.length == 2) {
+                    final String commitUrl = String.format(Constants.GITHUB_DC_COMMIT_URL_BASE, splitted[1]);
+                    // preheat a bit
+                    ((Application) getApplicationContext()).getCustomTabsHelper().mayLaunchUrl(commitUrl);
+                    menuVersion.setOnClickListener(new View.OnClickListener() {
+                        @Override public void onClick(View v) {
+                            ((Application) getApplicationContext()).getCustomTabsHelper().launchUrl(MainActivity.this, commitUrl);
+                        }
+                    });
+                }
+            }
+        }
     }
 
     @Override public void onClick(final View v) {
