@@ -290,10 +290,14 @@ public class AppHelper {
     }
 
     public static void viewInBrowser(final String url) {
+        viewInBrowser(Application.get(), url);
+    }
+
+    public static void viewInBrowser(final Context context, final String url) {
         final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
-            Application.get().startActivity(i);
+            context.startActivity(i);
         } catch (Exception e) {
             Logger.e(AppHelper.class, "viewInBrowser", e);
         }

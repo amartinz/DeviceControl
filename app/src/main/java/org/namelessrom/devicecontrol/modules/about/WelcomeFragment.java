@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.modules.about;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -27,12 +28,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.DonationActivity;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 public class WelcomeFragment extends Fragment {
+    private static final String URL_TRANSLATION = "https://translate.nameless-rom.org";
+
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_about, container, false);
@@ -46,7 +50,8 @@ public class WelcomeFragment extends Fragment {
                 DrawableHelper.applyAccentColorFilter(translateDrawable), null, null, null);
         translateButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                AppHelper.viewInBrowser("https://translate.nameless-rom.org");
+                final Activity activity = getActivity();
+                ((Application) activity.getApplicationContext()).getCustomTabsHelper().launchUrl(activity, URL_TRANSLATION);
             }
         });
 

@@ -27,6 +27,7 @@ import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 
 import org.namelessrom.devicecontrol.models.DeviceConfig;
+import org.namelessrom.devicecontrol.utils.CustomTabsHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
@@ -42,6 +43,8 @@ public class Application extends android.app.Application {
     private static Application sInstance;
 
     private BitmapLruCache mCache;
+
+    private CustomTabsHelper mCustomTabsHelper;
 
     public static Application get() {
         return Application.sInstance;
@@ -70,6 +73,8 @@ public class Application extends android.app.Application {
             Paper.init(this);
 
             buildCache();
+
+            mCustomTabsHelper = new CustomTabsHelper(sInstance);
 
             setupEverything();
         }
@@ -125,6 +130,10 @@ public class Application extends android.app.Application {
 
     public BitmapLruCache getBitmapCache() {
         return mCache;
+    }
+
+    public CustomTabsHelper getCustomTabsHelper() {
+        return mCustomTabsHelper;
     }
 
     @SuppressLint("SdCardPath") public String getFilesDirectory() {

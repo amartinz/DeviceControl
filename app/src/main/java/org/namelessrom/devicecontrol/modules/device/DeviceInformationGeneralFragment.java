@@ -17,17 +17,18 @@
  */
 package org.namelessrom.devicecontrol.modules.device;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.View;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 
 import java.util.List;
 
@@ -162,7 +163,8 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
             }
             return true;
         } else if ("emmc_can_brick".equals(key)) {
-            AppHelper.viewInBrowser(Emmc.BRICK_INFO_URL);
+            final Activity activity = getActivity();
+            ((Application) activity.getApplicationContext()).getCustomTabsHelper().launchUrl(activity, Emmc.BRICK_INFO_URL);
             return true;
         }
 

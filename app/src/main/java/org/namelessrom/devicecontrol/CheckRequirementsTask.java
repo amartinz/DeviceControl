@@ -32,7 +32,6 @@ import android.text.TextUtils;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import org.namelessrom.devicecontrol.models.DeviceConfig;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.RootCheck;
@@ -170,7 +169,7 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
             @Override public void onClick(DialogInterface dialog, int which) {
                 if (!hasRoot) {
                     String url = String.format("https://www.google.com/#q=how+to+root+%s", Device.get(mainActivity).model);
-                    AppHelper.viewInBrowser(url);
+                    ((Application) mainActivity.getApplicationContext()).getCustomTabsHelper().launchUrl(mainActivity, url);
                 } else {
                     BusyBox.offerBusyBox(mainActivity);
                 }
