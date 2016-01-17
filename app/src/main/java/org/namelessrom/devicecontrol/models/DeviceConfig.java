@@ -43,6 +43,8 @@ public class DeviceConfig {
     public boolean perfCpuGovLock;
     public boolean perfCpuInfo;
 
+    public boolean ignoreDialogWarningSuVersion;
+
     // TODO: readd
     public String suShellContext = "normal"; //Shell.CONTEXT_NORMAL;
 

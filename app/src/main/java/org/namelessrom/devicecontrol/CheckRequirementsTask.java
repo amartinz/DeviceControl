@@ -27,6 +27,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.StringRes;
+import android.text.TextUtils;
 
 import com.tbruyelle.rxpermissions.RxPermissions;
 
@@ -35,10 +36,9 @@ import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.RootCheck;
-import alexander.martinz.libs.execution.ShellHelper;
 import alexander.martinz.libs.execution.binaries.BusyBox;
 
-public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
+public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
     private final Handler mHandler = new Handler(Looper.getMainLooper());
 
     private final MainActivity mainActivity;
@@ -46,8 +46,11 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
 
     private final ProgressDialog progressDialog;
     private AlertDialog alertDialog;
+    private AlertDialog permissionDialog;
 
     private boolean hasRoot;
+    private boolean hasBusyBox;
+    private String suVersion;
 
     public CheckRequirementsTask(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
@@ -72,47 +75,85 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
         }
     }
 
-    @Override protected Boolean doInBackground(Void... params) {
+    @Override protected Void doInBackground(Void... params) {
         if (skipChecks) {
-            return true;
+            return null;
         }
 
         hasRoot = RootCheck.isRooted(true);
-        final boolean hasBusyBox = BusyBox.isAvailable(true);
+        if (hasRoot) {
+            suVersion = RootCheck.getSuVersion(true);
+        }
+        hasBusyBox = BusyBox.isAvailable(true);
 
-        return (hasRoot && hasBusyBox);
+        return null;
     }
 
-    @Override protected void onPostExecute(Boolean isSuccess) {
+    @Override protected void onPostExecute(Void result) {
         mHandler.removeCallbacks(showDialogRunnable);
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
 
-        if (isSuccess) {
-            Utils.startTaskerService(mainActivity);
-
-            DeviceConfig deviceConfig = DeviceConfig.get();
-            if (deviceConfig.dcFirstStart) {
-                deviceConfig.dcFirstStart = false;
-                deviceConfig.save();
+        if (hasRoot && hasBusyBox) {
+            if (!TextUtils.isEmpty(suVersion) && !"-".equals(suVersion)) {
+                if (!suVersion.toUpperCase().contains("SUPERSU")) {
+                    final DeviceConfig deviceConfig = DeviceConfig.get();
+                    if (!deviceConfig.ignoreDialogWarningSuVersion) {
+                        alertDialog = showSuVersionWarning(mainActivity, suVersion);
+                        alertDialog.show();
+                        return;
+                    }
+                }
             }
-
-            // patch sepolicy
-            Utils.patchSEPolicy(mainActivity);
-
-            showPermissionDialog(mainActivity);
+            letsGetItStarted(mainActivity);
             return;
         }
 
+        alertDialog = buildRequirementsDialog(hasRoot);
+        alertDialog.show();
+    }
+
+    private String getString(@StringRes final int resId) {
+        return mainActivity.getString(resId);
+    }
+
+    private String getString(@StringRes final int resId, Object... objects) {
+        return mainActivity.getString(resId, objects);
+    }
+
+    private final Runnable showDialogRunnable = new Runnable() {
+        @Override public void run() {
+            if (progressDialog != null) {
+                progressDialog.show();
+            }
+        }
+    };
+
+    private void letsGetItStarted(MainActivity mainActivity) {
+        Utils.startTaskerService(mainActivity);
+
+        DeviceConfig deviceConfig = DeviceConfig.get();
+        if (deviceConfig.dcFirstStart) {
+            deviceConfig.dcFirstStart = false;
+            deviceConfig.save();
+        }
+
+        // patch sepolicy
+        Utils.patchSEPolicy(mainActivity);
+
+        permissionDialog = showPermissionDialog(mainActivity);
+    }
+
+    private AlertDialog buildRequirementsDialog(final boolean hasRoot) {
         final String statusText;
         final String actionText;
         if (!hasRoot) {
             statusText = getString(R.string.app_warning_root, getString(R.string.app_name));
             actionText = getString(R.string.more_information);
         } else {
-            statusText =                                     getString(R.string.app_warning_busybox,
-                    getString(R.string.app_name)) + "\n\n" + getString(R.string.app_warning_busybox_note);
+            statusText = getString(R.string.app_warning_busybox, getString(R.string.app_name)) + "\n\n"
+                         + getString(R.string.app_warning_busybox_note);
             actionText = getString(R.string.get_busybox);
         }
 
@@ -135,28 +176,33 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
                 }
             }
         });
-
-        alertDialog = builder.create();
-        alertDialog.show();
+        return builder.create();
     }
 
-    private String getString(@StringRes final int resId) {
-        return mainActivity.getString(resId);
-    }
+    private AlertDialog showSuVersionWarning(final MainActivity mainActivity, String suVersion) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
+        builder.setTitle(R.string.dialog_warning);
+        builder.setMessage(getString(R.string.dialog_warning_suversion, suVersion));
+        builder.setNegativeButton(R.string.dialog_action_never_show_again, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                final DeviceConfig deviceConfig = DeviceConfig.get();
+                deviceConfig.ignoreDialogWarningSuVersion = true;
+                deviceConfig.save();
 
-    private String getString(@StringRes final int resId, Object... objects) {
-        return mainActivity.getString(resId, objects);
-    }
-
-    private final Runnable showDialogRunnable = new Runnable() {
-        @Override public void run() {
-            if (progressDialog != null) {
-                progressDialog.show();
+                dialog.dismiss();
+                letsGetItStarted(mainActivity);
             }
-        }
-    };
+        });
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                letsGetItStarted(mainActivity);
+            }
+        });
+        return builder.create();
+    }
 
-    private void showPermissionDialog(final Context context) {
+    private AlertDialog showPermissionDialog(final Context context) {
         // TODO: new wizard, more user friendly
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             final RxPermissions rxPermissions = RxPermissions.getInstance(context);
@@ -191,9 +237,10 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
                         }
                     }
                 });
-                builder.show();
+                return builder.show();
             }
         }
+        return null;
     }
 
     public void destroy() {
@@ -202,6 +249,9 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Boolean> {
         }
         if (progressDialog != null) {
             progressDialog.dismiss();
+        }
+        if (permissionDialog != null) {
+            permissionDialog.dismiss();
         }
     }
 }
