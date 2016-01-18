@@ -121,7 +121,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
             final String pfApiKey = Configuration.getPollfishApiKeyDc();
             if (!TextUtils.equals("---", pfApiKey)) {
                 Logger.v(this, "PollFish.init()");
-                PollFish.init(this, pfApiKey, Position.BOTTOM_RIGHT, 30);
+                PollFish.init(this, pfApiKey, Position.BOTTOM_RIGHT, 50);
             }
         }
 
