@@ -20,19 +20,24 @@ package org.namelessrom.devicecontrol.ui.widgets;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import alexander.martinz.libs.execution.RootShell;
 
@@ -46,15 +51,12 @@ public class RebootWidget extends AppWidgetProvider {
 
         final int[] allWidgetInstancesIds = appWidgetManager.getAppWidgetIds(widget);
         for (int widgetId : allWidgetInstancesIds) {
-            final RemoteViews remoteViews = new RemoteViews(
-                    context.getPackageName(), R.layout.widget_reboot);
+            final RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_reboot);
 
             final Intent intent = new Intent(context, RebootWidget.class);
             intent.setAction(SHOW_POPUP_DIALOG_REBOOT_ACTION);
 
-            final PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                    context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
+            final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             remoteViews.setOnClickPendingIntent(R.id.widget_reboot_image, pendingIntent);
 
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
@@ -75,8 +77,19 @@ public class RebootWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
     }
 
-    public static class RebootDialogActivity extends Activity
-            implements DialogInterface.OnClickListener {
+    public static class RebootDialogActivity extends Activity implements DialogInterface.OnClickListener {
+        private AlertDialog chooserDialog;
+        private ProgressDialog rebootDialog;
+
+        @Override protected void onDestroy() {
+            if (chooserDialog != null) {
+                chooserDialog.dismiss();
+            }
+            if (rebootDialog != null) {
+                rebootDialog.dismiss();
+            }
+            super.onDestroy();
+        }
 
         @Override protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -89,20 +102,24 @@ public class RebootWidget extends AppWidgetProvider {
                     Application.get().getString(R.string.bootloader),
             };
 
+            final Drawable powerDrawable = ContextCompat.getDrawable(this, R.drawable.ic_power_settings_new_white_24dp).mutate();
+            final int powerColor = ContextCompat.getColor(this, R.color.accent_light);
+            DrawableHelper.applyColorFilter(powerDrawable, powerColor);
+
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setCancelable(false);
+            builder.setIcon(powerDrawable);
+            builder.setTitle(R.string.widget_power);
             builder.setItems(rebootOptions, this);
-            builder.setNegativeButton(android.R.string.cancel,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                            finish();
-                        }
-                    });
+            builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    finish();
+                }
+            });
 
-            final AlertDialog dialog = builder.create();
-            dialog.show();
+            chooserDialog = builder.create();
+            chooserDialog.show();
         }
 
         @Override public void onClick(DialogInterface dialogInterface, int item) {
@@ -127,14 +144,40 @@ public class RebootWidget extends AppWidgetProvider {
                     cmd = "";
                     break;
             }
+            dialogInterface.dismiss();
 
             if (!TextUtils.isEmpty(cmd)) {
-                RootShell.fireAndForget(String.format("sync;%s;", cmd));
+                final String rebootCmd = String.format("sync;%s;", cmd);
+                showRebootDialog(rebootCmd);
+                return;
             }
 
             // close dialog and finish
             finish();
-            dialogInterface.dismiss();
+        }
+
+        private void showRebootDialog(final String rebootCmd) {
+            rebootDialog = new ProgressDialog(this);
+            rebootDialog.setTitle(R.string.rebooting);
+            rebootDialog.setMessage(getString(R.string.please_wait));
+            rebootDialog.setCancelable(false);
+            rebootDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+            new AsyncTask<Void, Void, Void>() {
+                @Override protected void onPreExecute() {
+                    rebootDialog.show();
+                }
+
+                @Override protected Void doInBackground(Void... params) {
+                    RootShell.fireAndBlock(rebootCmd);
+                    return null;
+                }
+
+                @Override protected void onPostExecute(Void aVoid) {
+                    rebootDialog.dismiss();
+                    finish();
+                }
+            }.execute();
         }
     }
 

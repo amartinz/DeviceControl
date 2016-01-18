@@ -259,9 +259,10 @@
 
         <activity
             android:name=".ui.widgets.RebootWidget$RebootDialogActivity"
-            android:label="@string/reboot"
+            android:label="@string/widget_power"
             android:launchMode="singleInstance"
-            android:theme="@style/CustomDialog" />
+            android:theme="@style/CustomDialog"
+            android:excludeFromRecents="true" />
     </application>
 
 </manifest>

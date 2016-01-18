@@ -17,8 +17,6 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -26,8 +24,9 @@ import android.graphics.LightingColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
-import android.util.TypedValue;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
@@ -42,7 +41,7 @@ import java.io.InputStream;
  */
 public class DrawableHelper {
 
-    @Nullable public static Drawable applyColorFilter(Drawable drawable, int color) {
+    @Nullable public static Drawable applyColorFilter(Drawable drawable, @ColorInt int color) {
         if (drawable == null) {
             Logger.w("DrawableHelper", "drawable is null!");
             return null;
@@ -52,7 +51,7 @@ public class DrawableHelper {
         return drawable;
     }
 
-    @Nullable public static Drawable applyAccentColorFilter(int drawableRes) {
+    @Nullable public static Drawable applyAccentColorFilter(@DrawableRes int drawableRes) {
         Drawable drawable = getDrawable(drawableRes);
         return applyColorFilter(drawable, AppResources.get().getAccentColor());
     }
@@ -61,20 +60,13 @@ public class DrawableHelper {
         return applyColorFilter(drawable, AppResources.get().getAccentColor());
     }
 
-    @Nullable public static Drawable getDrawable(int drawableRes) {
+    @Nullable public static Drawable getDrawable(@DrawableRes int drawableRes) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return Application.get().getDrawable(drawableRes);
         }
 
         //noinspection deprecation
         return Application.get().getResources().getDrawable(drawableRes);
-    }
-
-    public static int getSelectableBackgroundResId(Context context) {
-        TypedValue outValue = new TypedValue();
-        Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
-        return outValue.resourceId;
     }
 
     public static Bitmap drawableToBitmap(Drawable drawable) {

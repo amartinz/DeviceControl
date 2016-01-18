@@ -323,6 +323,7 @@
     <string name="reboot">Reboot</string>
     <string name="hot_reboot">Hot reboot</string>
     <string name="shutdown">Shutdown</string>
+    <string name="rebooting">Rebooting</string>
     <string name="warning_data_corruption">May cause data corruption if enabled</string>
     <string name="warning_data_corruption_invert">May cause data corruption if disabled</string>
     <string name="data_integrity_decreased_performance">Ensures data integrity but decreases performance</string>
@@ -545,4 +546,5 @@
         Control asks you for telephony, external storage and location permissions, to function properly.\nWithout them, some
         features like device information may break, as they are coupled to these permissions.
     </string>
+    <string name="widget_power">Reboot / Shutdown</string>
 </resources>
