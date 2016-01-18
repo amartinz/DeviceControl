@@ -96,6 +96,12 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
     }
 
     @Override protected void onPostExecute(Void result) {
+        // actually skip that stuff
+        if (skipChecks) {
+            letsGetItStarted(mainActivity);
+            return;
+        }
+
         mHandler.removeCallbacks(showDialogRunnable);
         if (progressDialog != null) {
             progressDialog.dismiss();
@@ -174,6 +180,7 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
         builder.setTitle(R.string.missing_requirements);
+        builder.setCancelable(false);
         builder.setMessage(statusText);
         builder.setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
