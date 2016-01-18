@@ -34,7 +34,7 @@ import org.namelessrom.devicecontrol.activities.DonationActivity;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 public class WelcomeFragment extends Fragment {
-    private static final String URL_TRANSLATION = "https://translate.nameless-rom.org";
+    private static final String URL_TRANSLATION = "https://crowdin.com/project/devicecontrol";
 
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
             final Bundle savedInstanceState) {
