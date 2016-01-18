@@ -376,16 +376,21 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
     }
 
     @Override public void shouldLoadFragment(final int id, final boolean onResume) {
-        // close drawer
-        mDrawerLayout.closeDrawer(GravityCompat.START);
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            // close drawer
+            mDrawerLayout.closeDrawer(GravityCompat.START);
 
-        mDrawerRunnable = new Runnable() {
-            @Override public void run() {
-                loadFragmentPrivate(id, onResume);
+            mDrawerRunnable = new Runnable() {
+                @Override public void run() {
+                    loadFragmentPrivate(id, onResume);
 
-                mDrawerRunnable = null;
-            }
-        };
+                    mDrawerRunnable = null;
+                }
+            };
+            return;
+        }
+
+        loadFragmentPrivate(id, onResume);
     }
 
     private void loadFragmentPrivate(final int i, final boolean onResume) {
