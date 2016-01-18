@@ -124,12 +124,10 @@ public class FileAdapter extends BaseAdapter {
         viewHolder.name.setText(file.getName());
 
         if (isDirectory) {
-            viewHolder.icon
-                    .setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_folder));
+            viewHolder.icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_folder_black_24dp));
             viewHolder.info.setText(String.valueOf(new Date(file.lastModified())));
         } else {
-            viewHolder.icon
-                    .setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_file));
+            viewHolder.icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_insert_drive_file_black_24dp));
             viewHolder.info.setText(String.valueOf(new Date(file.lastModified())) + " | "
                     + Formatter.formatFileSize(context, file.length()));
 

@@ -21,9 +21,9 @@
 
     <ImageView
         android:id="@+id/widget_reboot_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@drawable/shape_widget_background"
-        android:src="@drawable/ic_power" />
+        android:src="@drawable/ic_power_settings_new_white_24dp" />
 
 </LinearLayout>

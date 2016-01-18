@@ -97,7 +97,7 @@ public class BootUpReceiver extends BroadcastReceiver {
                 .setContentText(content)
                 .setStyle(style)
                 .setOngoing(false)
-                .setSmallIcon(R.drawable.ic_bootup_restore)
+                .setSmallIcon(R.drawable.ic_settings_backup_restore_black_24dp)
                 .setColor(AppResources.get().getAccentColor())
                 .setContentIntent(pi)
                 .setAutoCancel(true);

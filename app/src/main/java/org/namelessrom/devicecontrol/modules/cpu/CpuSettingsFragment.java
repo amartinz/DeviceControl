@@ -186,7 +186,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             generateRow(i, tmpCore);
         }
 
-        Drawable refreshDrawable = ContextCompat.getDrawable(activity, R.drawable.ic_refresh);
+        Drawable refreshDrawable = ContextCompat.getDrawable(activity, R.drawable.ic_refresh_white_24dp);
         refreshDrawable = DrawableHelper.applyAccentColorFilter(refreshDrawable.mutate());
 
         final CustomPreferenceCategoryMaterial coreLimits =

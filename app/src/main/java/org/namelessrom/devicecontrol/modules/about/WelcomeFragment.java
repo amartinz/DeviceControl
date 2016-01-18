@@ -31,7 +31,6 @@ import android.widget.TextView;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.DonationActivity;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 public class WelcomeFragment extends Fragment {
@@ -44,7 +43,7 @@ public class WelcomeFragment extends Fragment {
         final TextView details = (TextView) view.findViewById(R.id.detailsTxtView);
         details.setText(getString(R.string.welcome_message, getString(R.string.app_name)));
 
-        final Drawable translateDrawable = DrawableHelper.getDrawable(R.drawable.ic_translate);
+        final Drawable translateDrawable = DrawableHelper.getDrawable(R.drawable.ic_translate_black_24dp);
         final Button translateButton = (Button) view.findViewById(R.id.translateButton);
         translateButton.setCompoundDrawablesWithIntrinsicBounds(
                 DrawableHelper.applyAccentColorFilter(translateDrawable), null, null, null);
@@ -55,9 +54,10 @@ public class WelcomeFragment extends Fragment {
             }
         });
 
+        final Drawable donateDrawable = DrawableHelper.getDrawable(R.drawable.ic_favorite_black_24dp);
         final Button donateButton = (Button) view.findViewById(R.id.donateButton);
-        donateButton.setText(
-                String.format("%s %s", getString(R.string.donate_), getString(R.string.heart)));
+        donateButton.setCompoundDrawablesWithIntrinsicBounds(
+                null, null, DrawableHelper.applyAccentColorFilter(donateDrawable), null);
         donateButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 final Intent intent = new Intent(getActivity(), DonationActivity.class);

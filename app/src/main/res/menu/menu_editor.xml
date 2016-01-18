@@ -21,7 +21,7 @@
     <!-- General -->
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/ic_action_search"
+        android:icon="@drawable/ic_search_white_24dp"
         android:title="@string/filter"
         app:showAsAction="always"
         app:actionViewClass="android.widget.SearchView" />
@@ -29,7 +29,7 @@
     <!-- Build.prop -->
     <item
         android:id="@+id/menu_action_add"
-        android:icon="@drawable/ic_action_add"
+        android:icon="@drawable/ic_add_circle_outline_white_24dp"
         android:title="@string/add_property"
         app:showAsAction="ifRoom" />
 

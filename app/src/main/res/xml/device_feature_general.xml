@@ -18,13 +18,13 @@
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-        android:icon="@drawable/ic_battery"
+        android:icon="@drawable/ic_flash_on_black_24dp"
         android:key="fast_charge"
         android:summary="@string/fast_charge_summary"
         android:title="@string/fast_charge" />
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
-        android:icon="@drawable/ic_general_sound"
+        android:icon="@drawable/ic_equalizer_black_24dp"
         android:key="sound_control"
         android:title="@string/sound_control" />
 

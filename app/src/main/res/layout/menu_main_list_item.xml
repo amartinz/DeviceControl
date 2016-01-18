@@ -30,7 +30,7 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:scaleType="fitCenter"
-        tools:src="@drawable/ic_memory" />
+        tools:src="@drawable/ic_memory_black_24dp" />
 
     <TextView
         android:id="@android:id/text1"

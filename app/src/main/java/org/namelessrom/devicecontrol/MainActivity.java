@@ -118,22 +118,22 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         // device - information
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_DEVICE_INFORMATION, R.string.device_information,
-                R.drawable.ic_device_info));
+                R.drawable.ic_perm_device_information_black_24dp));
         // device - features
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_FEATURES, R.string.features,
-                R.drawable.ic_developer_mode));
+                R.drawable.ic_developer_mode_black_24dp));
 
         // header - performance
         menuItems.add(new MenuListArrayAdapter.MenuItem(-1, R.string.performance, -1));
         // performance - information
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_PERFORMANCE_INFO, R.string.information,
-                R.drawable.ic_menu_perf_info));
+                R.drawable.ic_developer_board_black_24dp));
         // performance - cpu
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_PERFORMANCE_CPU_SETTINGS, R.string.cpusettings,
-                R.drawable.ic_memory));
+                R.drawable.ic_memory_black_24dp));
         // performance - gpu
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_PERFORMANCE_GPU_SETTINGS, R.string.gpusettings,
@@ -143,35 +143,36 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             || Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
             menuItems.add(new MenuListArrayAdapter.MenuItem(
                     DeviceConstants.ID_THERMAL, R.string.thermal,
-                    R.drawable.ic_heat));
+                    R.drawable.ic_whatshot_black_24dp));
         }
         // performance - filesystem
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_FILESYSTEM, R.string.filesystem,
-                R.drawable.ic_storage));
+                R.drawable.ic_storage_black_24dp));
 
         // header - tools
         menuItems.add(new MenuListArrayAdapter.MenuItem(-1, R.string.tools, -1));
         // tools - bootup restoration
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_TOOLS_BOOTUP_RESTORATION, R.string.bootup_restoration,
-                R.drawable.ic_bootup_restore));
+                R.drawable.ic_settings_backup_restore_black_24dp));
         // tools - app manager
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_TOOLS_APP_MANAGER, R.string.app_manager,
-                R.drawable.ic_android));
+                R.drawable.ic_android_black_24dp));
         // tools - tasker
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_TOOLS_TASKER, R.string.tasker,
-                R.drawable.ic_extension));
+                // TODO: better icon
+                R.drawable.ic_extension_black_24dp));
         // tools - flasher
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_TOOLS_FLASHER, R.string.flasher,
-                R.drawable.ic_flash));
+                R.drawable.ic_flash_on_black_24dp));
         // tools - more
         menuItems.add(new MenuListArrayAdapter.MenuItem(
                 DeviceConstants.ID_TOOLS_MORE, R.string.more,
-                R.drawable.ic_widgets));
+                R.drawable.ic_build_black_24dp));
 
         return menuItems;
     }

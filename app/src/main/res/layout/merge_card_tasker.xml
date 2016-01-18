@@ -35,7 +35,7 @@
             android:id="@+id/task_image"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            tools:src="@drawable/ic_memory" />
+            tools:src="@drawable/ic_memory_black_24dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -244,7 +244,7 @@
         <!-- Widgets -->
         <receiver
             android:name=".ui.widgets.RebootWidget"
-            android:icon="@drawable/ic_power"
+            android:icon="@drawable/ic_power_settings_new_white_24dp"
             android:label="@string/reboot"
             tools:ignore="ExportedReceiver">
             <intent-filter>

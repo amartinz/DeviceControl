@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol.ui.views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,12 +59,12 @@ public class MenuListItem extends LinearLayout {
         mTitle = (TextView) view.findViewById(android.R.id.text1);
         mTitle.setText(titleRes);
 
+        mImage = (ImageView) view.findViewById(R.id.image);
+        final Drawable icon = ContextCompat.getDrawable(getContext(), imageRes);
         if (!isInEditMode()) {
-            mImage = (ImageView) view.findViewById(R.id.image);
-            final Drawable icon = DrawableHelper.getDrawable(imageRes);
             DrawableHelper.applyAccentColorFilter(icon);
-            mImage.setImageDrawable(icon);
         }
+        mImage.setImageDrawable(icon);
     }
 
     public MenuListItem setTitle(String title) {

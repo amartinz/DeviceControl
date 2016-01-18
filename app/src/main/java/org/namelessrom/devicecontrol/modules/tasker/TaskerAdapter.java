@@ -93,8 +93,7 @@ public class TaskerAdapter extends RecyclerView.Adapter<TaskerAdapter.TaskerView
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override public boolean onLongClick(View view) {
                 final AlertDialog.Builder alert = new AlertDialog.Builder(mActivity);
-                alert.setIcon(
-                        DrawableHelper.applyAccentColorFilter(R.drawable.ic_delete));
+                alert.setIcon(DrawableHelper.applyAccentColorFilter(R.drawable.ic_delete_black_24dp));
                 alert.setTitle(R.string.delete_task);
                 alert.setMessage(mActivity.getString(R.string.delete_task_question));
                 alert.setNegativeButton(android.R.string.cancel,

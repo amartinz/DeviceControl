@@ -68,14 +68,14 @@
             android:id="@+id/menu_prefs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menuItemImage="@drawable/ic_settings"
+            app:menuItemImage="@drawable/ic_settings_black_24dp"
             app:menuItemTitle="@string/preferences" />
 
         <org.namelessrom.devicecontrol.ui.views.MenuListItem
             android:id="@+id/menu_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menuItemImage="@drawable/ic_info"
+            app:menuItemImage="@drawable/ic_info_outline_black_24dp"
             app:menuItemTitle="@string/about" />
 
         <View

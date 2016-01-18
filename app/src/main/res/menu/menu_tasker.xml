@@ -20,7 +20,7 @@
     <item
         android:id="@+id/menu_action_toggle"
         android:title="@string/enable"
-        app:actionLayout="@layout/ab_switch"
+        app:actionLayout="@layout/actionbar_switch"
         app:showAsAction="always" />
 
 </menu>

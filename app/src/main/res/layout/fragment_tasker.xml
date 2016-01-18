@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:elevation="4dp"
-        android:src="@drawable/ic_action_add"
+        android:src="@drawable/ic_add_white_24dp"
         app:fabSize="normal"
         app:layout_anchor="@id/main_content"
         app:layout_anchorGravity="bottom|right|end" />

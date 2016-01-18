@@ -77,7 +77,7 @@ public class WebServerService extends Service {
         builder.setContentTitle(title)
                 .setContentText(text)
                 .setOngoing(true)
-                .setSmallIcon(R.drawable.ic_wifi)
+                .setSmallIcon(R.drawable.ic_wifi_tethering_black_24dp)
                 .setColor(AppResources.get().getAccentColor())
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);

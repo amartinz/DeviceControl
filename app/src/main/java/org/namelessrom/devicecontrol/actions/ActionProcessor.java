@@ -99,20 +99,20 @@ public class ActionProcessor {
 
     public static Drawable getImageForCategory(final String category) {
         if (TextUtils.equals(CATEGORY_CPU, category)) {
-            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_memory);
+            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_memory_black_24dp);
         }
         if (TextUtils.equals(CATEGORY_GPU, category)) {
             return DrawableHelper.applyAccentColorFilter(R.drawable.ic_display);
         }
         if (TextUtils.equals(CATEGORY_EXTRAS, category)) {
-            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_developer_mode);
+            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_developer_mode_black_24dp);
         }
         if (TextUtils.equals(CATEGORY_FS, category)) {
-            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_storage);
+            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_storage_black_24dp);
         }
 
         // return the extras one by default
-        return DrawableHelper.applyAccentColorFilter(R.drawable.ic_developer_mode);
+        return DrawableHelper.applyAccentColorFilter(R.drawable.ic_developer_mode_black_24dp);
     }
 
     public static class Entry {
