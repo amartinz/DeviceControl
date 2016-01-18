@@ -21,23 +21,24 @@ Try it out:
 Used libraries
 -------
 
+* [ExecutionLibrary](https://github.com/Evisceration/ExecutionLibrary)
+* [HardwareLibrary](https://github.com/Evisceration/HardwareLibrary)
 * [logger](https://github.com/Evisceration/logger)
 * [MaterialPreferences](https://github.com/Evisceration/MaterialPreferences)
 
 Third party libraries
 -------
 
-* [android-support-v13](http://developer.android.com/tools/extras/support-library.html)
-* [android-support-design](http://developer.android.com/tools/extras/support-library.html)
-* [android-appcompat-v7](http://developer.android.com/tools/extras/support-library.html)
-* [android-recyclerview-v7](http://developer.android.com/tools/extras/support-library.html)
+* [Android Support Libraries](http://developer.android.com/tools/extras/support-library.html)
 * [BottomSheet](https://github.com/Kennyc1012/BottomSheet)
 * [ion](https://github.com/koush/ion)
 * [Material-Menu](https://github.com/balysv/material-menu)
 * [MPAndroidChart](https://github.com/PhilJay/MPAndroidChart)
 * [NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
 * [Paper](https://github.com/pilgr/Paper)
-* [RootTools](https://github.com/Stericson/RootTools)
+* [RxAndroid](https://github.com/ReactiveX/RxAndroid)
+* [RxJava](https://github.com/ReactiveX/RxJava)
+* [RxPermissions](https://github.com/tbruyelle/RxPermissions)
 * [SlidingMenu](https://github.com/jfeinstein10/slidingmenu)
 
 Contribution
@@ -54,12 +55,12 @@ Pull requests are welcome :)
 
 Developed by
 -------
-[Alexander "Evisceration" Martinz][2]
+[Alexander Martinz][2]
 
 License
 -------
 
-    Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
+    Copyright (C) 2013 - 2016 Alexander Martinz
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
