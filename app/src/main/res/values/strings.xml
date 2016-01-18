@@ -504,4 +504,8 @@
     <string name="finish">Finish</string>
     <string name="submit_confirm_message">Do you want to proceed?</string>
     <string name="edit">Edit</string>
+
+    <string name="cleared_cache">Cleared cache!</string>
+    <string name="cleared_data">Cleared data!</string>
+    <string name="force_stopped_app">Force stopped app!</string>
 </resources>

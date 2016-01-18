@@ -372,11 +372,12 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
     }
 
     private void refreshAppControls() {
-        mForceStop.setEnabled(AppHelper.isAppRunning(this, mAppItem.getPackageName()));
+        mForceStop.setEnabled(mAppItem.isRunning(this));
     }
 
     private void forceStopApp() {
-        AppHelper.killProcess(this, mAppItem.getPackageName());
+        mAppItem.forceStop(this);
+        Snackbar.make(mAppContainer, R.string.force_stopped_app, Snackbar.LENGTH_SHORT).show();
         mHandler.postDelayed(new Runnable() {
             @Override public void run() {
                 refreshAppControls();
@@ -392,16 +393,17 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         showConfirmationDialog(DIALOG_TYPE_UNINSTALL);
     }
 
-    private void clearAppData() {
-        AppHelper.clearData(mPm, mAppItem.getPackageName());
-        mHandler.postDelayed(mClearRunnable, 500);
-    }
-
     private void clearAppCache() {
-        AppHelper.clearCache(mPm, mAppItem.getPackageName());
+        mAppItem.clearCache(this);
+        Snackbar.make(mAppContainer, R.string.cleared_cache, Snackbar.LENGTH_SHORT).show();
         mHandler.postDelayed(mClearRunnable, 500);
     }
 
+    private void clearAppData() {
+        mAppItem.clearData(this);
+        Snackbar.make(mAppContainer, R.string.cleared_data, Snackbar.LENGTH_SHORT).show();
+        mHandler.postDelayed(mClearRunnable, 500);
+    }
 
     private void updateAppEnabled() {
         if (mAppItem == null) {
@@ -434,24 +436,15 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         if (mCacheInfo != null) {
             mCacheInfo.removeAllViews();
 
-            mCacheInfo.addView(addCacheWidget(R.string.total,
-                    AppHelper.convertSize(totalSize)));
-            mCacheInfo.addView(addCacheWidget(R.string.app,
-                    AppHelper.convertSize(packageStats.codeSize)));
-            mCacheInfo.addView(addCacheWidget(R.string.ext_app,
-                    AppHelper.convertSize(packageStats.externalCodeSize)));
-            mCacheInfo.addView(addCacheWidget(R.string.data,
-                    AppHelper.convertSize(packageStats.dataSize)));
-            mCacheInfo.addView(addCacheWidget(R.string.ext_data,
-                    AppHelper.convertSize(packageStats.externalDataSize)));
-            mCacheInfo.addView(addCacheWidget(R.string.ext_media,
-                    AppHelper.convertSize(packageStats.externalMediaSize)));
-            mCacheInfo.addView(addCacheWidget(R.string.ext_obb,
-                    AppHelper.convertSize(packageStats.externalObbSize)));
-            mCacheInfo.addView(addCacheWidget(R.string.cache,
-                    AppHelper.convertSize(packageStats.cacheSize)));
-            mCacheInfo.addView(addCacheWidget(R.string.ext_cache,
-                    AppHelper.convertSize(packageStats.externalCacheSize)));
+            mCacheInfo.addView(addCacheWidget(R.string.total, AppHelper.convertSize(totalSize)));
+            mCacheInfo.addView(addCacheWidget(R.string.app, AppHelper.convertSize(packageStats.codeSize)));
+            mCacheInfo.addView(addCacheWidget(R.string.ext_app, AppHelper.convertSize(packageStats.externalCodeSize)));
+            mCacheInfo.addView(addCacheWidget(R.string.data, AppHelper.convertSize(packageStats.dataSize)));
+            mCacheInfo.addView(addCacheWidget(R.string.ext_data, AppHelper.convertSize(packageStats.externalDataSize)));
+            mCacheInfo.addView(addCacheWidget(R.string.ext_media, AppHelper.convertSize(packageStats.externalMediaSize)));
+            mCacheInfo.addView(addCacheWidget(R.string.ext_obb, AppHelper.convertSize(packageStats.externalObbSize)));
+            mCacheInfo.addView(addCacheWidget(R.string.cache, AppHelper.convertSize(packageStats.cacheSize)));
+            mCacheInfo.addView(addCacheWidget(R.string.ext_cache, AppHelper.convertSize(packageStats.externalCacheSize)));
         }
 
         if (mCacheGraph != null) {
@@ -465,8 +458,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
             sliceList.add(new Entry(packageStats.dataSize + packageStats.externalDataSize, 1));
             // External ------------------------------------------------------------------------
             textList.add(getString(R.string.ext));
-            sliceList.add(new Entry(
-                    packageStats.externalMediaSize + packageStats.externalObbSize, 2));
+            sliceList.add(new Entry(packageStats.externalMediaSize + packageStats.externalObbSize, 2));
             // Cache -------------------------------------------------------------------------------
             textList.add(getString(R.string.cache));
             sliceList.add(new Entry(packageStats.cacheSize + packageStats.externalCacheSize, 3));
@@ -481,8 +473,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
 
             mCacheGraph.highlightValues(null);
 
-            mCacheGraph.setCenterText(String.format("%s\n%s", getString(R.string.total),
-                    AppHelper.convertSize(totalSize)));
+            mCacheGraph.setCenterText(String.format("%s\n%s", getString(R.string.total), AppHelper.convertSize(totalSize)));
 
             // setup legend
             final Legend l = mCacheGraph.getLegend();
@@ -514,12 +505,16 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         @Override public void run() {
             try {
                 AppHelper.getSize(mPm, AppDetailsActivity.this, mAppItem.getPackageName());
-            } catch (Exception e) { Logger.e(this, "AppHelper.getSize(): " + e); }
+            } catch (Exception e) {
+                Logger.e(this, "AppHelper.getSize(): " + e);
+            }
         }
     };
 
     private void showConfirmationDialog(final int type) {
-        if (mAppItem == null) { return; }
+        if (mAppItem == null) {
+            return;
+        }
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -527,8 +522,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         final int positiveButton;
         switch (type) {
             case DIALOG_TYPE_DISABLE: {
-                message = getString(mAppItem.isEnabled()
-                        ? R.string.disable_msg : R.string.enable_msg, mAppItem.getLabel());
+                message = getString(mAppItem.isEnabled() ? R.string.disable_msg : R.string.enable_msg, mAppItem.getLabel());
                 positiveButton = mAppItem.isEnabled() ? R.string.disable : R.string.enable;
                 break;
             }

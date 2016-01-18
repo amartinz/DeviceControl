@@ -68,7 +68,7 @@
                 <item
                     android:id="@+id/nav_item_controls_graphics"
                     android:checkable="true"
-                    android:icon="@drawable/ic_display"
+                    android:icon="@drawable/ic_dvr_black_24dp"
                     android:title="@string/drawer_title_controls_graphics" />
                 <item
                     android:id="@+id/nav_item_controls_file_system"

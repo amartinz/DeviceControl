@@ -20,16 +20,17 @@ package org.namelessrom.devicecontrol.modules.appmanager;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
-import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.RootShell;
@@ -143,6 +144,22 @@ public class AppItem {
         RootShell.fireAndForget(command);
     }
 
+    public boolean isRunning(Context context) {
+        return AppItem.isRunning(context, this);
+    }
+
+    public static boolean isRunning(Context context, AppItem appItem) {
+        return AppHelper.isAppRunning(context, appItem.getPackageName());
+    }
+
+    public void forceStop(Context context) {
+        AppItem.forceStop(context, this);
+    }
+
+    public static void forceStop(Context context, AppItem appItem) {
+        AppHelper.killProcess(context, appItem.getPackageName());
+    }
+
     public void uninstall(Activity activity, UninstallListener listener) {
         AppItem.uninstall(activity, this, listener);
     }
@@ -151,8 +168,25 @@ public class AppItem {
         AppItem.uninstall(activity, this, listener, withFeedback);
     }
 
-    public static void uninstall(final Activity activity, final AppItem appItem,
-            final UninstallListener listener) {
+    public void clearCache(Context context) {
+        AppItem.clearCache(context, this);
+    }
+
+    public static void clearCache(Context context, AppItem appItem) {
+        final PackageManager packageManager = context.getPackageManager();
+        AppHelper.clearCache(packageManager, appItem.getPackageName());
+    }
+
+    public void clearData(Context context) {
+        AppItem.clearData(context, this);
+    }
+
+    public static void clearData(Context context, AppItem appItem) {
+        final PackageManager packageManager = context.getPackageManager();
+        AppHelper.clearData(packageManager, appItem.getPackageName());
+    }
+
+    public static void uninstall(final Activity activity, final AppItem appItem, final UninstallListener listener) {
         uninstall(activity, appItem, listener, true);
     }
 

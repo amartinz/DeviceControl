@@ -102,7 +102,7 @@ public class ActionProcessor {
             return DrawableHelper.applyAccentColorFilter(R.drawable.ic_memory_black_24dp);
         }
         if (TextUtils.equals(CATEGORY_GPU, category)) {
-            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_display);
+            return DrawableHelper.applyAccentColorFilter(R.drawable.ic_dvr_black_24dp);
         }
         if (TextUtils.equals(CATEGORY_EXTRAS, category)) {
             return DrawableHelper.applyAccentColorFilter(R.drawable.ic_developer_mode_black_24dp);

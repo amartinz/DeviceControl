@@ -36,8 +36,8 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.RootShell;
+import alexander.martinz.libs.execution.binaries.BusyBox;
 import alexander.martinz.libs.hardware.utils.ProcessManager;
 import hugo.weaving.DebugLog;
 
@@ -115,18 +115,15 @@ public class AppHelper {
             method = "clearApplicationUserData";
             cmdPrefix = String.format("pkill -TERM %s;", pkg);
 
-            internal = String.format(dirs, internalBase, internalBase, internalBase, internalBase,
-                    internalBase);
-            external = String.format(dirs, externalBase, externalBase, externalBase, externalBase,
-                    externalBase);
+            internal = String.format(dirs, internalBase, internalBase, internalBase, internalBase, internalBase);
+            external = String.format(dirs, externalBase, externalBase, externalBase, externalBase, externalBase);
         }
 
         Logger.d(TAG, "internal -> %s", internal);
         Logger.d(TAG, "external -> %s", external);
 
         try {
-            final Method m = pm.getClass().getDeclaredMethod(method,
-                    String.class, IPackageDataObserver.class);
+            final Method m = pm.getClass().getDeclaredMethod(method, String.class, IPackageDataObserver.class);
             m.invoke(pm, pkg, null);
         } catch (Exception e) {
             Logger.e(TAG, "could not call " + method + " via reflection", e);
@@ -154,7 +151,7 @@ public class AppHelper {
         final ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         am.killBackgroundProcesses(process);
 
-        RootShell.fireAndForget(new Command(String.format("pkill -TERM %s", process)));
+        RootShell.fireAndForget(BusyBox.callBusyBoxApplet("pkill", String.format("-TERM %s;", process)));
     }
 
     /**

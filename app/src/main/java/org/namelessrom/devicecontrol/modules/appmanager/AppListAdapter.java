@@ -47,6 +47,7 @@ import com.kennyc.bottomsheet.BottomSheetListener;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.theme.AppResources;
+import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.MenuHelper;
 
 import java.util.ArrayList;
@@ -179,8 +180,12 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             final Menu menu = MenuHelper.inflateMenu(mActivity, R.menu.sheet_app_item);
             if (appItem.isEnabled()) {
                 menu.removeItem(R.id.sheet_enable);
+                if (!appItem.isRunning(mActivity)) {
+                    menu.removeItem(R.id.sheet_force_stop);
+                }
             } else {
                 menu.removeItem(R.id.sheet_disable);
+                menu.removeItem(R.id.sheet_force_stop);
                 menu.removeItem(R.id.sheet_open);
             }
 
@@ -201,12 +206,27 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                         }
                         break;
                     }
+                    case R.id.sheet_force_stop: {
+                        AppHelper.killProcess(mActivity, appItem.getPackageName());
+                        Snackbar.make(container, R.string.force_stopped_app, Snackbar.LENGTH_SHORT).show();
+                        break;
+                    }
                     case R.id.sheet_enable: {
                         appItem.enable(mDisableEnableListener);
                         break;
                     }
                     case R.id.sheet_disable: {
                         appItem.disable(mDisableEnableListener);
+                        break;
+                    }
+                    case R.id.sheet_clear_cache: {
+                        appItem.clearCache(mActivity);
+                        Snackbar.make(container, R.string.cleared_cache, Snackbar.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case R.id.sheet_clear_data: {
+                        appItem.clearData(mActivity);
+                        Snackbar.make(container, R.string.cleared_data, Snackbar.LENGTH_SHORT).show();
                         break;
                     }
                     case R.id.sheet_uninstall: {
