@@ -22,7 +22,10 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.DeviceConstants;
@@ -83,11 +86,19 @@ public class ToolsMoreFragment extends AttachPreferenceFragment {
     }
 
     private void startMediaScan() {
-        mMediaScan.setSummary(R.string.media_scan_triggered);
-        final String format = "am broadcast -a android.intent.action.MEDIA_MOUNTED -d file://%s";
-        RootShell.fireAndForget(String.format(format, IOUtils.get().getPrimarySdCard()));
+        final String format = "am broadcast -a android.intent.action.MEDIA_MOUNTED -d file://%s;";
+        final StringBuilder sb = new StringBuilder();
+        sb.append(String.format(format, IOUtils.get().getPrimarySdCard()));
         if (!TextUtils.isEmpty(IOUtils.get().getSecondarySdCard())) {
-            RootShell.fireAndForget(String.format(format, IOUtils.get().getSecondarySdCard()));
+            sb.append(String.format(format, IOUtils.get().getSecondarySdCard()));
+        }
+        RootShell.fireAndForget(sb.toString());
+
+        final View view = tryToGetAnyView();
+        if (view != null) {
+            Snackbar.make(view, R.string.media_scan_triggered, Snackbar.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), R.string.media_scan_triggered, Toast.LENGTH_LONG).show();
         }
     }
 

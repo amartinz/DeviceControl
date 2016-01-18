@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol.ui.views;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.view.animation.Animation;
 
 import org.namelessrom.devicecontrol.ActivityCallbacks;
@@ -99,6 +100,17 @@ public abstract class AttachPreferenceFragment extends CustomPreferenceFragment 
                 activity.checkMenuItem(menuItemId);
             }
         }
+    }
+
+    public View tryToGetAnyView() {
+        View view = getView();
+        if (view == null) {
+            view = getListView();
+        }
+        if (view == null) {
+            view = getActivity().getWindow().getDecorView();
+        }
+        return view;
     }
 
 }
