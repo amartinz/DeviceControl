@@ -60,15 +60,16 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
         mShellContext.setValue(configuration.suShellContext);
         mShellContext.setOnPreferenceChangeListener(this);
 
-        mDebugStrictMode =
-                (MaterialSwitchPreference) view.findViewById(R.id.prefs_debug_strict_mode);
+        mDebugStrictMode = (MaterialSwitchPreference) view.findViewById(R.id.prefs_debug_strict_mode);
         mDebugStrictMode.setChecked(configuration.debugStrictMode);
         mDebugStrictMode.setOnPreferenceChangeListener(this);
 
-        mExtensiveLogging =
-                (MaterialSwitchPreference) view.findViewById(R.id.prefs_extensive_logging);
+        mExtensiveLogging = (MaterialSwitchPreference) view.findViewById(R.id.prefs_extensive_logging);
         mExtensiveLogging.setChecked(configuration.extensiveLogging);
         mExtensiveLogging.setOnPreferenceChangeListener(this);
+
+        // XXX: investigate if needed
+        view.findViewById(R.id.cat_prefs_shell).setVisibility(View.GONE);
     }
 
     @Override public boolean onPreferenceChanged(MaterialPreference preference, Object newValue) {

@@ -33,13 +33,6 @@
             app:prefSummary="@string/light_theme_summary"
             app:prefTitle="@string/light_theme" />
 
-        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
-            android:id="@+id/prefs_swipe_on_content"
-            style="@style/MaterialPreferences.Default"
-            app:prefKey="swipe_on_content"
-            app:prefSummary="@string/swipe_on_content_summary"
-            app:prefTitle="@string/swipe_on_content" />
-
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
 
     <!-- Support -->
