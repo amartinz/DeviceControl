@@ -15,6 +15,26 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="drawer_title_home" translatable="false">@string/home</string>
+    <!-- info -->
+    <string name="drawer_title_info" translatable="false">@string/information</string>
+    <string name="drawer_title_info_device" translatable="false">@string/device</string>
+    <string name="drawer_title_info_performance" translatable="false">@string/performance</string>
+    <!-- controls -->
+    <string name="drawer_title_controls">Controls</string>
+    <string name="drawer_title_controls_device" translatable="false">@string/device</string>
+    <string name="drawer_title_controls_processor" translatable="false">@string/processor</string>
+    <string name="drawer_title_controls_graphics" translatable="false">@string/graphics</string>
+    <string name="drawer_title_controls_file_system" translatable="false">@string/file_system</string>
+    <string name="drawer_title_controls_thermal" translatable="false">@string/thermal</string>
+    <!-- tools -->
+    <string name="drawer_title_tools" translatable="false">@string/tools</string>
+    <string name="drawer_title_tools_bootup_restoration" translatable="false">@string/bootup_restoration</string>
+    <string name="drawer_title_tools_app_manager" translatable="false">@string/app_manager</string>
+    <string name="drawer_title_tools_tasker" translatable="false">@string/tasker</string>
+    <string name="drawer_title_tools_flasher" translatable="false">@string/flasher</string>
+    <string name="drawer_title_tools_more" translatable="false">@string/more</string>
+
     <!-- Fonts -->
     <string name="font_bold" translatable="false">sans-serif-bold</string>
     <string name="font_condensed" translatable="false">sans-serif-condensed</string>

@@ -197,7 +197,7 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
     private AlertDialog showSuVersionWarning(final MainActivity mainActivity, String suVersion) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
         builder.setTitle(R.string.dialog_warning);
-        builder.setMessage(getString(R.string.dialog_warning_suversion, suVersion));
+        builder.setMessage(getString(R.string.dialog_warning_su_version, suVersion));
         builder.setNegativeButton(R.string.dialog_action_never_show_again, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
                 final DeviceConfig deviceConfig = DeviceConfig.get();

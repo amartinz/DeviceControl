@@ -3,7 +3,7 @@
     <item
         android:id="@+id/sheet_open"
         android:icon="@drawable/ic_launch_black_24dp"
-        android:title="@string/open" />
+        android:title="@string/launch_app" />
     <item
         android:id="@+id/sheet_enable"
         android:icon="@drawable/ic_visibility_black_24dp"

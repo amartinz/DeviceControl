@@ -34,10 +34,10 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
@@ -297,8 +297,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                            && Utils.fileExists(getString(R.string.file_cpu_quiet_cur_gov));
         boolean hotplug = mpdecision || cpuQuiet;
         if (hotplug) {
-            category = createCustomPreferenceCategoryMaterial("hotplugging",
-                    getString(R.string.hotplugging));
+            category = createCustomPreferenceCategoryMaterial("hotplug", getString(R.string.hotplug));
             addPreference(category);
         }
 

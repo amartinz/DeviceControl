@@ -15,40 +15,26 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_version_name">Versionname: %s</string>
-    <string name="app_version_code">Versioncode: %s</string>
-
-    <string name="drawer_title_home">Home</string>
-    <!-- info -->
-    <string name="drawer_title_info">Information</string>
-    <string name="drawer_title_info_device" translatable="false">@string/device</string>
-    <string name="drawer_title_info_performance" translatable="false">@string/performance</string>
-    <!-- controls -->
-    <string name="drawer_title_controls">Controls</string>
-    <string name="drawer_title_controls_device" translatable="false">@string/device</string>
-    <string name="drawer_title_controls_processor" translatable="false">@string/processor</string>
-    <string name="drawer_title_controls_graphics" translatable="false">@string/graphics</string>
-    <string name="drawer_title_controls_file_system" translatable="false">@string/file_system</string>
-    <string name="drawer_title_controls_thermal" translatable="false">@string/thermal</string>
-    <!-- tools -->
-    <string name="drawer_title_tools">Tools</string>
-    <string name="drawer_title_tools_bootup_restoration" translatable="false">@string/bootup_restoration</string>
-    <string name="drawer_title_tools_app_manager" translatable="false">@string/app_manager</string>
-    <string name="drawer_title_tools_tasker" translatable="false">@string/tasker</string>
-    <string name="drawer_title_tools_flasher" translatable="false">@string/flasher</string>
-    <string name="drawer_title_tools_more" translatable="false">@string/more</string>
+    <string name="home">Home</string>
+    <string name="device">Device</string>
+    <string name="features">Features</string>
+    <string name="performance">Performance</string>
+    <string name="information">Information</string>
+    <string name="extras">Extras</string>
+    <string name="tools">Tools</string>
+    <string name="editors">Editors</string>
+    <string name="app_manager">App manager</string>
+    <string name="wireless_file_manager">Wireless file manager</string>
+    <string name="licenses">Licenses</string>
+    <string name="privacy">Privacy</string>
+    <string name="graphics">Graphics</string>
+    <string name="display">Display</string>
 
     <string name="welcome">Welcome</string>
-    <string name="welcome_message">To get started, swipe out the menu from the left or press the button at the very top
-        left!\n\nIf a feature is not supported by your device, it gets automatically hidden!\nSupported features depend on the
-        device you are using and the ROM and kernel you are running.\n\nIf you have no supported features, please try using a
-        custom kernel!\n\nPlease note, that you need a rooted device to enjoy all features of %s!
-    </string>
+    <string name="welcome_message">To get started, swipe out the menu from the left or press the button at the very top left!\n\nIf a feature is not supported by your device, it gets automatically hidden!\nSupported features depend on the device you are using and the ROM and kernel you are running.\n\nIf you have no supported features, please try using a custom kernel!\n\nPlease note, that you need a rooted device to enjoy all features of %s!</string>
     <string name="app_warning_root">Please note that %s requires a rooted device to fully work!</string>
     <string name="app_warning_busybox">Please note that %s requires a BusyBox to fully work!</string>
-    <string name="app_warning_busybox_note">BusyBox is required because not every system provides the same set of tools, which can
-        lead to bugs and instability.\n\nBusyBox is uniform and works the same on every device.
-    </string>
+    <string name="app_warning_busybox_note">BusyBox is required because not every system provides the same set of tools, which can lead to bugs and instability.\n\nBusyBox is uniform and works the same on every device.</string>
     <string name="start_wizard">Start wizard</string>
     <string name="get_busybox">Install BusyBox</string>
     <string name="more_information">More information</string>
@@ -65,40 +51,26 @@
     <string name="others">Others</string>
     <string name="help">Help</string>
     <string name="more">More…</string>
+
     <string name="dialog_warning">Warning!</string>
     <string name="dialog_warning_apply">Are you sure that you want to apply your settings?</string>
-    <string name="dialog_warning_suversion">Your installed root \"%s\" may not work properly. Using \"SuperSU\" is
-        recommended!\n\nProceed on your own risk!
-    </string>
+    <string name="dialog_warning_su_version">Your installed superuser \"%s\" may not work properly. Using \"SuperSU\" is recommended!</string>
     <string name="dialog_action_never_show_again">Never show again</string>
+
     <string name="toast_settings_applied">Successfully applied!</string>
     <string name="no_tweaks_available">No tweaks available</string>
-    <string name="no_tweaks_message">Sorry but your device doesn\'t have any supported features</string>
+    <string name="no_tweaks_message">Sorry but your device does not have any supported features</string>
     <string name="gov_tweaks">Tweakable values: %s</string>
     <string name="no_gov_tweaks_message">Sorry but this governor has no tunable values</string>
     <string name="no_io_tweaks_message">Sorry but this I/O scheduler has no tunable values</string>
-    <string name="home">Home</string>
-    <string name="device">Device</string>
-    <string name="features">Features</string>
-    <string name="performance">Performance</string>
-    <string name="information">Information</string>
-    <string name="extras">Extras</string>
-    <string name="tools">Tools</string>
-    <string name="editors">Editors</string>
-    <string name="app_manager">App manager</string>
-    <string name="wireless_file_manager">Wireless file manager</string>
-    <string name="licenses">Licenses</string>
-    <string name="privacy">Privacy</string>
-    <string name="graphics">Graphics</string>
-    <string name="display">Display</string>
     <string name="time_in_state">Time in state</string>
     <string name="unused_cpu_states">Unused cpu states</string>
     <string name="total_state_time">Total state time</string>
     <string name="no_states_file_found">No states file found.</string>
     <string name="deep_sleep">\"Deep sleep\"</string>
     <string name="device_information">Device information</string>
-    <string name="hotplugging">Hotplugging</string>
-    <string name="mpdecision_summary">Should be deactivated if you use a custom hotplugger</string>
+    <string name="hotplug">Hotplug</string>
+    <string name="mpdecision_summary">Should be deactivated if you use a custom hotplug replacement</string>
     <string name="thermal">Thermal driver</string>
     <string name="core_control">Core control</string>
     <string name="core_control_summary">Turns cpu cores off if temperature limit is reached</string>
@@ -120,7 +92,7 @@
     <string name="fast_charge_1_new">1 - Use stock AC level on USB</string>
     <string name="fast_charge_1_old">1 - Enabled</string>
     <string name="fast_charge_2">2 - Use custom mA on AC and USB</string>
-    <string name="failsafe">Failsafe</string>
+    <string name="failsafe">Fail safe</string>
     <string name="ac_level">AC level</string>
     <string name="ac_levels_valid">Valid AC levels</string>
     <string name="usb_level">USB level</string>
@@ -128,9 +100,7 @@
     <string name="any_level_valid">CAUTION! Any level is valid!</string>
     <string name="powersaving">Powersaving</string>
     <string name="lcd_power_reduce">LCD power reduce</string>
-    <string name="lcd_power_reduce_summary">Intelligently varies the backlight brightness of the display and helps maximizing
-        battery life.
-    </string>
+    <string name="lcd_power_reduce_summary">Intelligently varies the backlight brightness of the display and helps maximizing battery life.</string>
     <string name="power_efficient_work">Power efficient workqueue</string>
     <string name="power_efficient_work_summary">Allows the work to be rescheduled on a core that is already awake.</string>
     <string name="powersaving_sched_mc_title">Power scheduler</string>
@@ -166,8 +136,7 @@
     <string name="enable_keys_backlight">Enable keys backlight</string>
     <string name="enable_keys_backlight_summary">Light up touch keys when screen is on</string>
     <string name="enable_keys_notifications">Enable keys notifications</string>
-    <string name="enable_keys_notifications_summary">Light up touch keys when screen is off and a notification is received
-    </string>
+    <string name="enable_keys_notifications_summary">Light up touch keys when screen is off and a notification is received</string>
     <string name="enable_keyboard_backlight">Enable keyboard backlight</string>
     <string name="enable_keyboard_backlight_summary">Light up keyboard backlight when screen is on</string>
     <string name="vibrator_strength">Vibration strength</string>
@@ -192,10 +161,7 @@
     <string name="debug_strict_mode">Enable strict mode</string>
     <string name="shell">Shell</string>
     <string name="su_shell_context">Shell context</string>
-    <string name="su_shell_context_summary">The context under which Device Control should run its commands.\nThe default value is
-        <xliff:g example="Normal" id="value">\"%s\"</xliff:g>.\nCurrent value:
-        <xliff:g example="System app" id="value">\"%s\"</xliff:g>
-    </string>
+    <string name="su_shell_context_summary">The context under which Device Control should run its commands.\nThe default value is <xliff:g example="Normal" id="value">\"%s\"</xliff:g>.\nCurrent value: <xliff:g example="System app" id="value">\"%s\"</xliff:g></string>
     <string name="bootup_enabled">Reapply on boot</string>
     <string name="bootup_enabled_summary">If disabled bootup restoration will not run when the device is starting</string>
     <string name="version">Version</string>
@@ -212,31 +178,17 @@
     <string name="action">Action</string>
     <string name="value">Value</string>
     <string name="fstrim_title">Automatic FStrimming</string>
-    <string name="fstrim_summary">FStrim is used to discard (or \"trim\") blocks which are not in use by the filesystem.\nThis can
-        improve performance and reduce lags.
-    </string>
+    <string name="fstrim_summary">FStrim is used to discard (or \"trim\") blocks which are not in use by the filesystem.\nThis can improve performance and reduce lags.</string>
     <string name="fstrim_interval_title">FStrim interval</string>
     <string name="fstrim_interval_summary">Choose interval for automatic FStrimming.</string>
     <string name="enable">Enable</string>
     <string name="enable_msg">%s will be enabled.\n\nContinue?</string>
-    <string name="enable_msg_multi">%s app(s) will be enabled.\n(If any app is already enabled, nothing will
-        happen)\n\nContinue?
-    </string>
-    <string name="enable_msg_multi_action">Enabling app
-        <xliff:g example="10" id="value">%d</xliff:g>
-        of
-        <xliff:g example="71" id="value">%d</xliff:g>
-    </string>
+    <string name="enable_msg_multi">%s app(s) will be enabled.\nContinue?</string>
+    <string name="enable_msg_multi_action">Enabling app<xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
     <string name="disable">Disable</string>
     <string name="disable_msg">%s will be disabled.\n\nContinue?</string>
-    <string name="disable_msg_multi">%s app(s) will be disabled.\n(If any app is already disabled, nothing will
-        happen)\n\nContinue?
-    </string>
-    <string name="disable_msg_multi_action">Disabling app
-        <xliff:g example="10" id="value">%d</xliff:g>
-        of
-        <xliff:g example="71" id="value">%d</xliff:g>
-    </string>
+    <string name="disable_msg_multi">%s app(s) will be disabled.\nContinue?</string>
+    <string name="disable_msg_multi_action">Disabling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
     <string name="action_completed">Action completed successfully!</string>
     <string name="vm_settings">Dalvik settings</string>
     <string name="full_editor">Press to load full editor</string>
@@ -276,9 +228,7 @@
     <string name="about">About</string>
     <string name="preferences">Preferences</string>
     <string name="media_scan_trigger">Trigger media scan</string>
-    <string name="media_scan_summary">Manuall trigger a media scan, in case you have your phone connected via MTP and new files
-        are not visible.
-    </string>
+    <string name="media_scan_summary">Manually trigger a media scan, in case you have your phone connected via MTP and new files are not visible.</string>
     <string name="media_scan_triggered">Media scan triggered, this may take a while!</string>
     <string name="force_stop">Force stop</string>
     <string name="app_details">Application details</string>
@@ -331,13 +281,11 @@
     <string name="open_play_store">View application at Google Play\u2122</string>
     <string name="governor">Governor</string>
     <string name="skip_checks">Skip checks at startup</string>
-    <string name="skip_checks_summary">Do not check for root and busybox on startup\nProceed on your own risk!</string>
+    <string name="skip_checks_summary">Do not check for root and BusyBox on startup\nProceed on your own risk!</string>
     <string name="flasher">Flasher</string>
     <string name="add_item">Add item</string>
     <string name="recovery_type_title">Recovery script type</string>
-    <string name="flash_warning">You are about to flash!\nWhen continuing, your device will reboot to recovery and flash the
-        selected items.\n\nDo you want to proceed?
-    </string>
+    <string name="flash_warning">You are about to flash!\nWhen continuing, your device will reboot to recovery and flash the selected items.\n\nDo you want to proceed?</string>
     <string name="both">Both</string>
     <string name="pick_file">Pick a file</string>
     <string name="something_went_wrong">Sorry but something went wrong!</string>
@@ -370,11 +318,7 @@
     <string name="uninstalling">Uninstalling…</string>
     <string name="uninstall_msg">Do you really want to uninstall \"%s\"?\nThis action can not be undone!</string>
     <string name="uninstall_msg_multi">Do you really want to uninstall %s app(s)?\nThis action can not be undone!</string>
-    <string name="uninstall_msg_multi_action">Uninstalling app
-        <xliff:g example="10" id="value">%d</xliff:g>
-        of
-        <xliff:g example="71" id="value">%d</xliff:g>
-    </string>
+    <string name="uninstall_msg_multi_action">Uninstalling app  <xliff:g example="10" id="value">%d</xliff:g> ofn<xliff:g example="71" id="value">%d</xliff:g></string>
     <string name="uninstall_msg_system_app">Uninstalling system apps may require a reboot!</string>
     <string name="uninstall_success">Successfully uninstalled \"%s\"</string>
     <string name="sunlight_enhancement">Sunlight enhancement</string>
@@ -420,9 +364,7 @@
     <string name="display_gamma_calibration_summary">Tweak gamma values</string>
     <!-- No spaces after ',' -->
     <string name="hardware_display_gamma_calibration_desc_one">Red,Green,Blue</string>
-    <string name="install_info">The following file(s) are going to be installed.\n\nYou can add more zips by clicking on the \"Add
-        file\" button.
-    </string>
+    <string name="install_info">The following file(s) are going to be installed.\n\nYou can add more zips by clicking on the \"Add file\" button.</string>
     <string name="select_actions">Select the actions you would like to perform</string>
     <string name="select_recovery">Select your recovery variant</string>
     <string name="backup">Backup</string>
@@ -440,13 +382,9 @@
     <string name="alert_reboot_one_message">Your device will reboot and install the file.</string>
     <string name="alert_reboot_more_message">Your device will reboot and install the files.</string>
     <string name="alert_backup_space_title">Space left</string>
-    <string name="alert_backup_space_message">There is less than %sGB space left on the internal SD card. Do you want to continue
-        with the backup?
-    </string>
+    <string name="alert_backup_space_message">There is less than %sGB space left on the internal SD card. Do you want to continue with the backup?</string>
     <string name="alert_backup_title">Backup</string>
-    <string name="alert_backup_message">Specify the backup name (illegal characters will be removed).\n\nThe following options
-        will only work in OpenRecovery based recoveries.
-    </string>
+    <string name="alert_backup_message">Specify the backup name (illegal characters will be removed).\n\nThe following options will only work in OpenRecovery based recoveries.</string>
     <string name="remove_file_title">Remove file</string>
     <string name="remove_file_summary">Do you want to remove the file from the list?\n\n%s</string>
     <string name="emmc_rev">Revision</string>
@@ -455,11 +393,8 @@
     <string name="emmc_can_brick_true">Your eMMC is known to cause issues!</string>
     <string name="emmc_can_brick_false">Your eMMC should be safe!</string>
     <string name="press_learn_more">Press to learn more…</string>
-    <string name="setup_welcome">Welcome to the tasker setup</string>
-    <string name="setup_welcome_text">At the following pages you will be able to set up a task.\n\nTasks are disabled by default,
-        you will need to tick the checkbox on the right of each item to activate it.\n\nTo activate the Tasker, turn the switch at
-        the top right at the task list on.
-    </string>
+    <string name="setup_welcome">Welcome to the Tasker setup</string>
+    <string name="setup_welcome_text">At the following pages you will be able to set up a task.\n\nTasks are disabled by default, you will need to tick the checkbox on the right of each item to activate it.\n\nTo activate the Tasker, turn the switch at the top right at the task list on.</string>
     <string name="setup_trigger">Setup trigger</string>
     <string name="setup_category">Setup category</string>
     <string name="setup_action">Setup action</string>
@@ -469,36 +404,19 @@
     <string name="screen_on">Screen on</string>
     <string name="cpu">CPU</string>
     <string name="input_reset_on_suspend">Reset on suspend</string>
-    <string name="input_reset_on_suspend_summary">Reset the input device when suspending to workaround degraded touchpanel
-        sensitivity
-    </string>
+    <string name="input_reset_on_suspend_summary">Reset the input device when suspending to workaround degraded touch panel sensitivity</string>
     <string name="arch">Architecture</string>
     <string name="string_default">Default</string>
     <string name="touch_boost">Touch boost</string>
     <string name="permissions">Permissions</string>
     <string name="security_settings_desc">This app can access the following on your devices:</string>
-    <string name="join_two_items">
-        <xliff:g id="first_item">%1$s</xliff:g>
-        and
-        <xliff:g id="second_item">%2$s</xliff:g>
-    </string>
-    <string name="join_many_items_last">
-        <xliff:g id="all_but_last_item">%1$s</xliff:g>
-        and
-        <xliff:g id="last_item">%2$s</xliff:g>
-    </string>
-    <string name="security_settings_desc_multi" product="default">This app can access the following on your phone. In order to
-        improve performance and reduce memory usage, some of these permissions are available to
-        <xliff:g id="base_app_name">%1$s</xliff:g>
-        because it runs in the same process as<xliff:g id="additional_apps_list">%2$s</xliff:g>:
-    </string>
+    <string name="join_two_items"><xliff:g id="first_item">%1$s</xliff:g> and <xliff:g id="second_item">%2$s</xliff:g></string>
+    <string name="join_many_items_last"><xliff:g id="all_but_last_item">%1$s</xliff:g> and <xliff:g id="last_item">%2$s</xliff:g></string>
+    <string name="security_settings_desc_multi" product="default">This app can access the following on your phone. In order to improve performance and reduce memory usage, some of these permissions are available to <xliff:g id="base_app_name">%1$s</xliff:g> because it runs in the same process as <xliff:g id="additional_apps_list">%2$s</xliff:g>:</string>
     <string name="no_permissions">No permissions required</string>
     <string name="perm_costs_money">this may cost you money</string>
-    <string name="perms_new_perm_prefix">
-        <font fgcolor="#ff33b5e5" size="12">NEW:</font>
-    </string>
-    <string name="perms_description_app">Provided by<xliff:g id="app_name">%1$s</xliff:g>.
-    </string>
+    <string name="perms_new_perm_prefix"><font fgcolor="#ff33b5e5" size="12">NEW:</font></string>
+    <string name="perms_description_app">Provided by<xliff:g id="app_name">%1$s</xliff:g>.</string>
     <string name="environment">Environment</string>
     <string name="motion">Motion</string>
     <string name="position">Position</string>
@@ -526,8 +444,7 @@
     <string name="far">Far</string>
     <string name="near">Near</string>
     <string name="cpu_lock_freq">Lock frequencies</string>
-    <string name="cpu_lock_freq_summary">Tries to prevent modifying frequencies\nThis may not always work on some devices!
-    </string>
+    <string name="cpu_lock_freq_summary">Tries to prevent modifying frequencies\nThis may not always work on some devices!</string>
     <string name="cpu_lock_gov">Lock governors</string>
     <string name="cpu_lock_gov_summary">Tries to prevent modifying governors\nThis may not always work on some devices!</string>
     <string name="no_items_found">No items found…</string>
@@ -542,30 +459,46 @@
     <string name="platform_app">Platform app</string>
     <string name="untrusted_app">Untrusted app</string>
     <string name="community">Community</string>
-    <string name="community_message">If you need help, have feedback, ideas or feature requests or if you just want to discuss,
-        you can join our<b>Google+ community</b>.\n\nWith joining the community, you can also participate in BETA tests.\nBETA
-        builds can be less stable, but you will get more frequent updates with the latest features and fixes.
-    </string>
+    <string name="community_message">If you need help, have feedback, ideas or feature requests or if you just want to discuss, you can join our<b>Google+ community</b>.\n\nWith joining the community, you can also participate in BETA tests.\nBETA builds can be less stable, but you will get more frequent updates with the latest features and fixes.</string>
     <string name="join_beta_test">Join BETA</string>
     <string name="view_community">View Community</string>
     <string name="bootup_restoration">Bootup restoration</string>
     <string name="automated_restoration">Automated restoration</string>
     <string name="automated_restoration_on">Bootup restoration will be started automatically when the device is starting</string>
-    <string name="automated_restoration_off">A notification will be shown when the device is starting to trigger restoration
-        manually
-    </string>
+    <string name="automated_restoration_off">A notification will be shown when the device is starting to trigger restoration manually</string>
     <string name="automated_restoration_delay">Delay restoration</string>
     <string name="automated_restoration_delay_summary">Delay automated restoration by the set value</string>
     <string name="notification">Notification</string>
     <string name="bootup_items">Bootup items</string>
     <string name="bootup_category_no_items">Category does not contain any bootup items!</string>
-    <string name="open">Open</string>
+    <string name="launch_app">Launch app</string>
 
     <string name="dialog_permission_title">Permissions</string>
-    <string name="dialog_permission_summary">Since Android M some permissions need to get granted explicitly by the
-        user.\n\nDevice
-        Control asks you for telephony, external storage and location permissions, to function properly.\nWithout them, some
-        features like device information may break, as they are coupled to these permissions.
-    </string>
+    <string name="dialog_permission_summary">Since Android M some permissions need to get granted explicitly by the user.\n\nDevice Control asks you for telephony, external storage and location permissions, to function properly.\nWithout them, some features like device information may break, as they are coupled to these permissions.</string>
     <string name="widget_power">Reboot / Shutdown</string>
+
+    <!-- App -->
+    <string name="support">Support</string>
+    <string name="translate">Translate</string>
+    <string name="donate_">Donate</string>
+
+    <string name="donate_value">Donate %s</string>
+
+    <string name="donate_subscription">Use subscription</string>
+    <string name="donate_subscription_note">Note: Subscriptions are monthly!</string>
+
+    <string name="donate_via">Donate via %s</string>
+    <string name="donate_paypal_message">This will redirect you to PayPal to complete the donation.</string>
+
+    <string name="show_pollfish">Activate Pollfish</string>
+    <string name="show_pollfish_summary">For every taken survey you help us to grow. Feel free to deactivate it, of course :)</string>
+    <!-- Wizard -->
+    <string name="task_type">Task type</string>
+    <string name="event_based">Event based</string>
+    <string name="next">Next</string>
+    <string name="prev">Previous</string>
+    <string name="review">Review</string>
+    <string name="finish">Finish</string>
+    <string name="submit_confirm_message">Do you want to proceed?</string>
+    <string name="edit">Edit</string>
 </resources>
