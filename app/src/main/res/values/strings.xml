@@ -183,11 +183,13 @@
     <string name="fstrim_interval_summary">Choose interval for automatic FStrimming.</string>
     <string name="enable">Enable</string>
     <string name="enable_msg">%s will be enabled.\n\nContinue?</string>
-    <string name="enable_msg_multi">%s app(s) will be enabled.\nContinue?</string>
+    <string name="enable_msg_single">App will be enabled.\nContinue?</string>
+    <string name="enable_msg_multi">%s apps will be enabled.\nContinue?</string>
     <string name="enable_msg_multi_action">Enabling app<xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
     <string name="disable">Disable</string>
     <string name="disable_msg">%s will be disabled.\n\nContinue?</string>
-    <string name="disable_msg_multi">%s app(s) will be disabled.\nContinue?</string>
+    <string name="disable_msg_single">App will be disabled.\nContinue?</string>
+    <string name="disable_msg_multi">%s apps will be disabled.\nContinue?</string>
     <string name="disable_msg_multi_action">Disabling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
     <string name="action_completed">Action completed successfully!</string>
     <string name="vm_settings">Dalvik settings</string>

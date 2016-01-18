@@ -178,12 +178,20 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
             }
             case R.id.app_bar_enable: {
                 title = R.string.enable;
-                message = getString(R.string.enable_msg_multi, mSelectedApps.size());
+                if (mSelectedApps.size() > 1) {
+                    message = getString(R.string.enable_msg_multi, mSelectedApps.size());
+                } else {
+                    message = getString(R.string.enable_msg_single);
+                }
                 break;
             }
             case R.id.app_bar_disable: {
                 title = R.string.disable;
-                message = getString(R.string.disable_msg_multi, mSelectedApps.size());
+                if (mSelectedApps.size() > 1) {
+                    message = getString(R.string.disable_msg_multi, mSelectedApps.size());
+                } else {
+                    message = getString(R.string.disable_msg_single);
+                }
                 break;
             }
         }
