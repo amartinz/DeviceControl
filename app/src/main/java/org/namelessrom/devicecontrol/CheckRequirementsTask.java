@@ -102,16 +102,22 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
         }
 
         if (hasRoot && hasBusyBox) {
+            boolean showSuWarning = false;
             if (!TextUtils.isEmpty(suVersion) && !"-".equals(suVersion)) {
                 if (!suVersion.toUpperCase().contains("SUPERSU")) {
                     final DeviceConfig deviceConfig = DeviceConfig.get();
                     if (!deviceConfig.ignoreDialogWarningSuVersion) {
-                        alertDialog = showSuVersionWarning(mainActivity, suVersion);
-                        alertDialog.show();
-                        return;
+                        showSuWarning = true;
                     }
                 }
             }
+
+            if (showSuWarning) {
+                alertDialog = showSuVersionWarning(mainActivity, suVersion);
+                alertDialog.show();
+                return;
+            }
+
             letsGetItStarted(mainActivity);
             return;
         }
