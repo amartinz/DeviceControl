@@ -23,10 +23,10 @@ import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 
+import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.hardware.Emmc;
@@ -55,7 +55,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements IoUt
     private CustomListPreference mFstrimInterval;
     //----------------------------------------------------------------------------------------------
 
-    @Override protected int getFragmentId() { return DeviceConstants.ID_FILESYSTEM; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_CTRL_FILE_SYSTEM; }
 
     @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,10 +119,12 @@ public class FilesystemFragment extends AttachPreferenceFragment implements IoUt
         }
     }
 
-    @Override public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
-            Preference preference) {
+    @Override public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         if (preference == mIoSchedulerConfigure) {
-            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_IOSCHED_TUNING);
+            final Activity activity = getActivity();
+            if (activity instanceof ActivityCallbacks) {
+                ((ActivityCallbacks) activity).shouldLoadFragment(DeviceConstants.ID_IOSCHED_TUNING);
+            }
             return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -221,7 +223,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements IoUt
         final Activity activity = getActivity();
         if (activity != null && ioScheduler != null) {
             if (ioScheduler.available != null && ioScheduler.available.length > 0
-                    && !TextUtils.isEmpty(ioScheduler.current)) {
+                && !TextUtils.isEmpty(ioScheduler.current)) {
                 mIoScheduler.setEntries(ioScheduler.available);
                 mIoScheduler.setEntryValues(ioScheduler.available);
                 mIoScheduler.setValue(ioScheduler.current);

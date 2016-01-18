@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.modules.device;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
@@ -24,14 +25,14 @@ import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 
+import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
-import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.KsmUtils;
 import org.namelessrom.devicecontrol.hardware.UksmUtils;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
@@ -185,17 +186,24 @@ public class DeviceFeatureKernelFragment extends CustomPreferenceFragment implem
     }
 
     @Override public boolean onPreferenceClick(final Preference preference) {
+        final int id;
         if (mVoltageControl == preference) {
-            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_VOLTAGE);
-            return true;
+            id = DeviceConstants.ID_VOLTAGE;
         } else if (mKsm == preference) {
-            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_KSM);
-            return true;
+            id = DeviceConstants.ID_KSM;
         } else if (mUksm == preference) {
-            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_UKSM);
-            return true;
+            id = DeviceConstants.ID_UKSM;
         } else if (mEntropy == preference) {
-            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_ENTROPY);
+            id = DeviceConstants.ID_ENTROPY;
+        } else {
+            id = Integer.MIN_VALUE;
+        }
+
+        if (id != Integer.MIN_VALUE) {
+            final Activity activity = getActivity();
+            if (activity instanceof ActivityCallbacks) {
+                ((ActivityCallbacks) activity).shouldLoadFragment(id);
+            }
             return true;
         }
 

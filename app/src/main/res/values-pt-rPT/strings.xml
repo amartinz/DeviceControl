@@ -276,7 +276,7 @@
   <string name="warning_data_corruption_invert">Pode causar corrupção de dados se desligado</string>
   <string name="data_integrity_decreased_performance">Garante a integridade dos dados, mas diminui o desempenho</string>
   <string name="read_ahead">Leitura antecipada</string>
-  <string name="filesystem">Sistema de ficheiros</string>
+  <string name="file_system">Sistema de ficheiros</string>
   <string name="user_interface">Interface</string>
   <string name="swipe_on_content">Deslizar sobre o conteúdo</string>
   <string name="swipe_on_content_summary">Alternar o menu ao deslizar sobre todo o conteúdo</string>

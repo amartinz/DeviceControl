@@ -32,7 +32,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 public class ThermalFragment extends AttachPreferenceFragment implements Preference.OnPreferenceChangeListener {
 
-    @Override protected int getFragmentId() { return DeviceConstants.ID_THERMAL; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_CTRL_THERMAL; }
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -37,7 +37,7 @@ import android.widget.LinearLayout;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.MainActivity;
+import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
@@ -112,7 +112,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         return R.layout.preferences_cpu;
     }
 
-    @Override protected int getFragmentId() { return DeviceConstants.ID_PERFORMANCE_CPU_SETTINGS; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_CTRL_PROCESSOR; }
 
     @Override public void onResume() {
         super.onResume();
@@ -477,7 +477,10 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
 
     @Override public boolean onPreferenceClicked(MaterialPreference preference) {
         if (preference == mGovernorTuning) {
-            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_GOVERNOR_TUNABLE);
+            final Activity activity = getActivity();
+            if (activity instanceof ActivityCallbacks) {
+                ((ActivityCallbacks) activity).shouldLoadFragment(DeviceConstants.ID_GOVERNOR_TUNABLE);
+            }
             return true;
         }
         return false;

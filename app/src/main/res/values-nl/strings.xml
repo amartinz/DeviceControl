@@ -277,7 +277,7 @@
   <string name="warning_data_corruption_invert">Kan corruptie van data veroorzaken wanneer uitgeschakeld</string>
   <string name="data_integrity_decreased_performance">Zorgt voor gegevensintegriteit maar vermindert prestaties</string>
   <string name="read_ahead">Vooruit lezen</string>
-  <string name="filesystem">Bestandssysteem</string>
+  <string name="file_system">Bestandssysteem</string>
   <string name="user_interface">Uiterlijk</string>
   <string name="swipe_on_content">Veeg op inhoud</string>
   <string name="swipe_on_content_summary">Het menu schakelen wanneer er geswiped wordt over de hele inhoud</string>

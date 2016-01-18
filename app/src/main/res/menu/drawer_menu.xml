@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2013 - 2016 Alexander Martinz
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_main"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_home"
+            android:checkable="true"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/drawer_title_home" />
+    </group>
+    <!-- information subheader -->
+    <group
+        android:id="@+id/group_information"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_info"
+            android:title="@string/drawer_title_info">
+            <menu>
+                <item
+                    android:id="@+id/nav_item_info_device"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_perm_device_information_black_24dp"
+                    android:title="@string/drawer_title_info_device" />
+                <item
+                    android:id="@+id/nav_item_info_performance"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_developer_board_black_24dp"
+                    android:title="@string/drawer_title_info_performance" />
+            </menu>
+        </item>
+    </group>
+    <!-- controls subheader -->
+    <group
+        android:id="@+id/group_controls"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_controls"
+            android:title="@string/drawer_title_controls">
+            <menu>
+                <item
+                    android:id="@+id/nav_item_controls_device"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_developer_mode_black_24dp"
+                    android:title="@string/drawer_title_controls_device" />
+                <item
+                    android:id="@+id/nav_item_controls_processor"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_memory_black_24dp"
+                    android:title="@string/drawer_title_controls_processor" />
+                <item
+                    android:id="@+id/nav_item_controls_graphics"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_display"
+                    android:title="@string/drawer_title_controls_graphics" />
+                <item
+                    android:id="@+id/nav_item_controls_file_system"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_storage_black_24dp"
+                    android:title="@string/drawer_title_controls_file_system" />
+                <item
+                    android:id="@+id/nav_item_controls_thermal"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_whatshot_black_24dp"
+                    android:title="@string/drawer_title_controls_thermal" />
+            </menu>
+        </item>
+    </group>
+    <!-- tools subheader -->
+    <group
+        android:id="@+id/group_tools"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_tools"
+            android:title="@string/drawer_title_tools">
+            <menu>
+                <item
+                    android:id="@+id/nav_item_tools_bootup_restoration"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_settings_backup_restore_black_24dp"
+                    android:title="@string/drawer_title_tools_bootup_restoration" />
+                <item
+                    android:id="@+id/nav_item_tools_app_manager"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_android_black_24dp"
+                    android:title="@string/drawer_title_tools_app_manager" />
+                <item
+                    android:id="@+id/nav_item_tools_tasker"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_extension_black_24dp"
+                    android:title="@string/drawer_title_tools_tasker" />
+                <item
+                    android:id="@+id/nav_item_tools_flasher"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_flash_on_black_24dp"
+                    android:title="@string/drawer_title_tools_flasher" />
+                <item
+                    android:id="@+id/nav_item_tools_more"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_build_black_24dp"
+                    android:title="@string/drawer_title_tools_more" />
+            </menu>
+        </item>
+    </group>
+</menu>

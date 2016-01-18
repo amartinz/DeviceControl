@@ -16,13 +16,13 @@
 -->
 <resources>
     <!-- Accents -->
-    <color name="accent">@color/pallete_blue_500</color>
+    <color name="accent">#D32F2F</color>
     <color name="dark_background">#ff374046</color>
     <color name="dark_menu">#ff2e353a</color>
     <color name="darker_menu">#ff21272b</color>
-    <color name="dark_primary_dark">@color/pallete_blue_700</color>
+    <color name="dark_primary_dark">#B71C1C</color>
     <!-- Accents light -->
-    <color name="accent_light">@color/palette_teal_500</color>
+    <color name="accent_light">#009688</color>
     <color name="light_background">#fff5f5f5</color>
     <color name="light_menu">#ffe7e7e7</color>
     <color name="lighter_menu">#fff8f8f8</color>
@@ -82,4 +82,8 @@
 
     <color name="tab_color_normal">#b3ffffff</color>
     <color name="tab_color_selected">#ffffff</color>
+
+    <color name="text_dark">#FFF</color>
+    <color name="text_light">#000</color>
+    <color name="text_shadow">#000</color>
 </resources>

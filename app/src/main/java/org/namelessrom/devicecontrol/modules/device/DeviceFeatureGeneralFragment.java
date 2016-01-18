@@ -17,18 +17,19 @@
  */
 package org.namelessrom.devicecontrol.modules.device;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 
+import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.DisplayColorCalibration;
 import org.namelessrom.devicecontrol.hardware.DisplayGammaCalibration;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference;
@@ -68,7 +69,7 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
     private final ShellOutput.OnShellOutputListener mShellOutputListener =
             new ShellOutput.OnShellOutputListener() {
                 @Override public void onShellOutput(final ShellOutput output) {
-                    if (output == null || mGloveMode == null) return;
+                    if (output == null || mGloveMode == null) { return; }
 
                     mGloveMode.setChecked(output.output.contains(GLOVE_MODE_ENABLE));
                     mGloveMode.setEnabled(true);
@@ -304,13 +305,21 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
         return false;
     }
 
-    @Override
-    public boolean onPreferenceClick(Preference preference) {
+    @Override public boolean onPreferenceClick(Preference preference) {
+        final int id;
         if (mFastCharge == preference) {
-            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_FAST_CHARGE);
-            return true;
+            id = DeviceConstants.ID_FAST_CHARGE;
         } else if (mSoundControl == preference) {
-            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_SOUND_CONTROL);
+            id = DeviceConstants.ID_SOUND_CONTROL;
+        } else {
+            id = Integer.MIN_VALUE;
+        }
+
+        if (id != Integer.MIN_VALUE) {
+            final Activity activity = getActivity();
+            if (activity instanceof ActivityCallbacks) {
+                ((ActivityCallbacks) activity).shouldLoadFragment(id);
+            }
             return true;
         }
 
@@ -322,8 +331,7 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
     //==============================================================================================
 
     public static String restore(BootupConfig config) {
-        final ArrayList<BootupItem> items = config
-                .getItemsByCategory(BootupConfig.CATEGORY_DEVICE);
+        final ArrayList<BootupItem> items = config.getItemsByCategory(BootupConfig.CATEGORY_DEVICE);
         if (items.size() == 0) {
             return "";
         }
@@ -350,10 +358,10 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
     private static final String GLOVE_MODE_DISABLE = GLOVE_MODE + ",0";
 
     private void enableHts(final boolean enable) {
-        if (mGloveMode != null) mGloveMode.setEnabled(false);
+        if (mGloveMode != null) { mGloveMode.setEnabled(false); }
         final String mode = (enable ? GLOVE_MODE_ENABLE : GLOVE_MODE_DISABLE);
         Utils.getCommandResult(mShellOutputListener, Utils.getWriteCommand(COMMAND_PATH, mode) +
-                Utils.getReadCommand("/sys/class/sec/tsp/cmd_result"));
+                                                     Utils.getReadCommand("/sys/class/sec/tsp/cmd_result"));
     }
 
     /**

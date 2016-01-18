@@ -36,7 +36,7 @@ public class InformationFragment extends AttachFragment {
     private DeviceStatusView mDeviceStats;
     private CpuStateView mCpuStates;
 
-    @Override protected int getFragmentId() { return DeviceConstants.ID_PERFORMANCE_INFO; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_INFO_PERFORMANCE; }
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

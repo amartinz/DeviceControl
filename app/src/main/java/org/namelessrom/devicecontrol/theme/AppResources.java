@@ -1,6 +1,7 @@
 package org.namelessrom.devicecontrol.theme;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 
@@ -90,6 +91,10 @@ public class AppResources {
 
     public int getCardBackgroundColor() {
         return cardBackgroundColor;
+    }
+
+    @DrawableRes public int getDrawerHeaderResId() {
+        return isDarkTheme() ? R.drawable.drawer_header_bg_dark : R.drawable.drawer_header_bg_light;
     }
 
     public static ContextThemeWrapper getContextThemeWrapper(Context context) {

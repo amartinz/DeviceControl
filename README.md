@@ -39,7 +39,6 @@ Third party libraries
 * [RxAndroid](https://github.com/ReactiveX/RxAndroid)
 * [RxJava](https://github.com/ReactiveX/RxJava)
 * [RxPermissions](https://github.com/tbruyelle/RxPermissions)
-* [SlidingMenu](https://github.com/jfeinstein10/slidingmenu)
 
 Contribution
 -------

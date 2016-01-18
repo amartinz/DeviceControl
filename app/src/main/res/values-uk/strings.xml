@@ -224,7 +224,7 @@
   <string name="shutdown">Вимкнути</string>
   <string name="warning_data_corruption">Може викликати пошкодження даних, якщо включений</string>
   <string name="read_ahead">Читати далі</string>
-  <string name="filesystem">Файлова система</string>
+  <string name="file_system">Файлова система</string>
   <string name="user_interface">Інтерфейс</string>
   <string name="swipe_on_content">Проведіть по змісту</string>
   <string name="swipe_on_content_summary">Перейти в меню при зсуві вмісту</string>

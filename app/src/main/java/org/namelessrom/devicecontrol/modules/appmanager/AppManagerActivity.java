@@ -25,8 +25,7 @@ import org.namelessrom.devicecontrol.activities.BaseActivity;
 
 public class AppManagerActivity extends BaseActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_manager);
 

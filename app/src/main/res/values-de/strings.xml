@@ -291,7 +291,7 @@
   <string name="warning_data_corruption_invert">Kann zu Datenverlusten führen falls deaktiviert</string>
   <string name="data_integrity_decreased_performance">Stellt Datenintegrität sicher, verringert aber die Leistung</string>
   <string name="read_ahead">Read-Ahead</string>
-  <string name="filesystem">Dateisystem</string>
+  <string name="file_system">Dateisystem</string>
   <string name="user_interface">Benutzeroberfläche</string>
   <string name="swipe_on_content">Vollbild-Wischen</string>
   <string name="swipe_on_content_summary">Erlaube auf dem gesamten Bildschirm zu wischen, um zum Menü zu wechseln</string>

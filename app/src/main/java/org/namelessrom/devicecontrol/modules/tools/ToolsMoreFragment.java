@@ -17,19 +17,19 @@
  */
 package org.namelessrom.devicecontrol.modules.tools;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.IOUtils;
-import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.RootShell;
 
@@ -54,23 +54,32 @@ public class ToolsMoreFragment extends AttachPreferenceFragment {
         mSysctlVm = (CustomPreference) findPreference("sysctl_vm");
     }
 
-    @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
-            @NonNull final Preference preference) {
-        final String key = preference.getKey();
-
-        if (key == null || key.isEmpty()) return false;
-
+    @Override public boolean onPreferenceTreeClick(final PreferenceScreen prefScreen, @NonNull final Preference preference) {
         if (mMediaScan == preference) {
             startMediaScan();
-        } if (mWirelessFileManager == preference) {
-            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_TOOLS_WIRELESS_FM);
-        } else if (mBuildProp == preference) {
-            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_TOOLS_EDITORS_BUILD_PROP);
-        } else if (mSysctlVm == preference) {
-            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_TOOLS_VM);
+            return true;
         }
 
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
+        final int id;
+        if (mWirelessFileManager == preference) {
+            id = DeviceConstants.ID_TOOLS_WIRELESS_FM;
+        } else if (mBuildProp == preference) {
+            id = DeviceConstants.ID_TOOLS_EDITORS_BUILD_PROP;
+        } else if (mSysctlVm == preference) {
+            id = DeviceConstants.ID_TOOLS_VM;
+        } else {
+            id = Integer.MIN_VALUE;
+        }
+
+        if (id != Integer.MIN_VALUE) {
+            final Activity activity = getActivity();
+            if (activity instanceof ActivityCallbacks) {
+                ((ActivityCallbacks) activity).shouldLoadFragment(id);
+            }
+            return true;
+        }
+
+        return super.onPreferenceTreeClick(prefScreen, preference);
     }
 
     private void startMediaScan() {

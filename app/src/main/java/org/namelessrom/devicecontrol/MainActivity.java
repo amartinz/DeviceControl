@@ -17,33 +17,31 @@
  */
 package org.namelessrom.devicecontrol;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.CheckedTextView;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
-import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.pollfish.constants.Position;
 import com.pollfish.main.PollFish;
 import com.sense360.android.quinoa.lib.Sense360;
@@ -77,17 +75,14 @@ import org.namelessrom.devicecontrol.modules.preferences.PreferencesFragment;
 import org.namelessrom.devicecontrol.modules.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.modules.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.modules.tools.WirelessFileManagerFragment;
-import org.namelessrom.devicecontrol.ui.adapters.MenuListArrayAdapter;
-import org.namelessrom.devicecontrol.ui.views.MenuListItem;
+import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
-
-import java.util.ArrayList;
 
 import alexander.martinz.libs.execution.ShellManager;
 import alexander.martinz.vendor.Configuration;
 
-public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener, View.OnClickListener, MainActivityCallbacks {
+public class MainActivity extends BaseActivity implements ActivityCallbacks, NavigationView.OnNavigationItemSelectedListener {
 
     //==============================================================================================
     // Fields
@@ -97,8 +92,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     private static long mBackPressed;
     private Toast mToast;
 
-    private SlidingMenu slidingMenu;
-    private MaterialMenuIconToolbar materialMenu;
+    private Runnable mDrawerRunnable;
+    private DrawerLayout mDrawerLayout;
 
     public static boolean sDisableFragmentAnimations;
 
@@ -110,76 +105,15 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
     private CheckRequirementsTask mCheckRequirementsTask;
 
-    private ArrayList<MenuListArrayAdapter.MenuItem> setupMenuLists() {
-        final ArrayList<MenuListArrayAdapter.MenuItem> menuItems = new ArrayList<>();
-
-        // header - device
-        menuItems.add(new MenuListArrayAdapter.MenuItem(-1, R.string.device, -1));
-        // device - information
-        menuItems.add(new MenuListArrayAdapter.MenuItem(
-                DeviceConstants.ID_DEVICE_INFORMATION, R.string.device_information,
-                R.drawable.ic_perm_device_information_black_24dp));
-        // device - features
-        menuItems.add(new MenuListArrayAdapter.MenuItem(
-                DeviceConstants.ID_FEATURES, R.string.features,
-                R.drawable.ic_developer_mode_black_24dp));
-
-        // header - performance
-        menuItems.add(new MenuListArrayAdapter.MenuItem(-1, R.string.performance, -1));
-        // performance - information
-        menuItems.add(new MenuListArrayAdapter.MenuItem(
-                DeviceConstants.ID_PERFORMANCE_INFO, R.string.information,
-                R.drawable.ic_developer_board_black_24dp));
-        // performance - cpu
-        menuItems.add(new MenuListArrayAdapter.MenuItem(
-                DeviceConstants.ID_PERFORMANCE_CPU_SETTINGS, R.string.cpusettings,
-                R.drawable.ic_memory_black_24dp));
-        // performance - gpu
-        menuItems.add(new MenuListArrayAdapter.MenuItem(
-                DeviceConstants.ID_PERFORMANCE_GPU_SETTINGS, R.string.gpusettings,
-                R.drawable.ic_display));
-        // performance - thermal
-        if (Utils.fileExists(getString(R.string.directory_msm_thermal))
-            || Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
-            menuItems.add(new MenuListArrayAdapter.MenuItem(
-                    DeviceConstants.ID_THERMAL, R.string.thermal,
-                    R.drawable.ic_whatshot_black_24dp));
-        }
-        // performance - filesystem
-        menuItems.add(new MenuListArrayAdapter.MenuItem(
-                DeviceConstants.ID_FILESYSTEM, R.string.filesystem,
-                R.drawable.ic_storage_black_24dp));
-
-        // header - tools
-        menuItems.add(new MenuListArrayAdapter.MenuItem(-1, R.string.tools, -1));
-        // tools - bootup restoration
-        menuItems.add(new MenuListArrayAdapter.MenuItem(
-                DeviceConstants.ID_TOOLS_BOOTUP_RESTORATION, R.string.bootup_restoration,
-                R.drawable.ic_settings_backup_restore_black_24dp));
-        // tools - app manager
-        menuItems.add(new MenuListArrayAdapter.MenuItem(
-                DeviceConstants.ID_TOOLS_APP_MANAGER, R.string.app_manager,
-                R.drawable.ic_android_black_24dp));
-        // tools - tasker
-        menuItems.add(new MenuListArrayAdapter.MenuItem(
-                DeviceConstants.ID_TOOLS_TASKER, R.string.tasker,
-                // TODO: better icon
-                R.drawable.ic_extension_black_24dp));
-        // tools - flasher
-        menuItems.add(new MenuListArrayAdapter.MenuItem(
-                DeviceConstants.ID_TOOLS_FLASHER, R.string.flasher,
-                R.drawable.ic_flash_on_black_24dp));
-        // tools - more
-        menuItems.add(new MenuListArrayAdapter.MenuItem(
-                DeviceConstants.ID_TOOLS_MORE, R.string.more,
-                R.drawable.ic_build_black_24dp));
-
-        return menuItems;
-    }
-
     //==============================================================================================
     // Overridden Methods
     //==============================================================================================
+
+
+    @Override protected void setupTheme() {
+        final boolean isDarkTheme = AppResources.get().isDarkTheme();
+        setTheme(isDarkTheme ? R.style.AppTheme_Dark_Translucent : R.style.AppTheme_Light_Translucent);
+    }
 
     @Override protected void onResume() {
         super.onResume();
@@ -205,84 +139,86 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // setup action bar
+        setupToolbar();
+        setupMaterialMenu(this);
+
+        // lock the drawer so we can only open it AFTER we are done with our checks
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override public void onDrawerClosed(View drawerView) {
+                if (mDrawerRunnable != null) {
+                    mDrawerLayout.post(mDrawerRunnable);
+                }
+            }
+        });
+
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view_content);
+        mNavigationView.setNavigationItemSelectedListener(this);
+
+        loadFragmentPrivate(DeviceConstants.ID_HOME, false);
+        getSupportFragmentManager().executePendingTransactions();
+
+        mCheckRequirementsTask = new CheckRequirementsTask(this);
+        mCheckRequirementsTask.setPostExecuteHook(new Runnable() {
+            @Override public void run() {
+                setupDrawerItems();
+            }
+        });
+        mCheckRequirementsTask.execute();
+    }
+
+    private void setupToolbar() {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ViewCompat.setElevation(toolbar, 4.0f);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 if (mSubFragmentTitle == -1) {
-                    if (slidingMenu != null) {
-                        slidingMenu.toggle(true);
-                    }
+                    toggleDrawer();
                 } else {
                     onCustomBackPressed(true);
                 }
             }
         });
-
-        // setup material menu icon
-        materialMenu = new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
-            @Override public int getToolbarViewId() { return R.id.toolbar; }
-        };
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            materialMenu.setNeverDrawTouch(true);
-        }
-
-        Utils.setupDirectories();
-
-        final FrameLayout container = (FrameLayout) findViewById(R.id.container);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            container.setBackground(null);
-        } else {
-            //noinspection deprecation
-            container.setBackgroundDrawable(null);
-        }
-
-        final View v = getLayoutInflater().inflate(R.layout.menu_list, container, false);
-        final ListView menuList = (ListView) v.findViewById(R.id.navbarlist);
-        final LinearLayout menuContainer = (LinearLayout) v.findViewById(R.id.menu_container);
-        // setup our static items
-        ((TextView) v.findViewById(R.id.menu_header_tv)).setText(Device.get(this).getModelString());
-        menuContainer.findViewById(R.id.menu_prefs).setOnClickListener(this);
-        menuContainer.findViewById(R.id.menu_about).setOnClickListener(this);
-
-        final MenuListItem menuVersion = (MenuListItem) menuContainer.findViewById(R.id.menu_version);
-        setupMenuVersion(menuVersion);
-
-        slidingMenu = new SlidingMenu(this);
-        slidingMenu.setMode(SlidingMenu.LEFT);
-        slidingMenu.setShadowWidthRes(R.dimen.shadow_width);
-        slidingMenu.setShadowDrawable(R.drawable.shadow_left);
-        slidingMenu.setBehindWidthRes(R.dimen.slidingmenu_offset);
-        slidingMenu.setFadeEnabled(true);
-        slidingMenu.setFadeDegree(0.45f);
-        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        slidingMenu.setMenu(v);
-
-        // setup touch mode
-        setSwipeOnContent(DeviceConfig.get().swipeOnContent);
-
-        // setup menu list
-        final ArrayList<MenuListArrayAdapter.MenuItem> menuItems = setupMenuLists();
-        final MenuListArrayAdapter adapter = new MenuListArrayAdapter(this, R.layout.menu_main_list_item, menuItems);
-        menuList.setAdapter(adapter);
-        menuList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        menuList.setOnItemClickListener(this);
-
-        loadFragmentPrivate(DeviceConstants.ID_ABOUT, false);
-        getSupportFragmentManager().executePendingTransactions();
-
-        mCheckRequirementsTask = new CheckRequirementsTask(this);
-        mCheckRequirementsTask.execute();
     }
 
-    private void setupMenuVersion(MenuListItem menuVersion) {
+    private void setupDrawerItems() {
+        // manually check home drawer entry
+        mPreviousMenuItem = findMenuItem(R.id.nav_item_home);
+        if (mPreviousMenuItem != null) {
+            mPreviousMenuItem.setChecked(true);
+        }
+
+        if (!Utils.fileExists(getString(R.string.directory_msm_thermal))
+            && !Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
+            final MenuItem thermalItem = findMenuItem(R.id.nav_item_controls_thermal);
+            if (thermalItem != null) {
+                thermalItem.setVisible(false);
+            }
+        }
+
+        final View headerView = mNavigationView.getHeaderView(0);
+        final ImageView headerImage = (ImageView) headerView.findViewById(R.id.drawer_header_image);
+        headerImage.setImageResource(AppResources.get().getDrawerHeaderResId());
+        final ImageButton headerSettings = (ImageButton) headerView.findViewById(R.id.drawer_header_settings);
+        headerSettings.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                shouldLoadFragment(DeviceConstants.ID_PREFERENCES);
+            }
+        });
+
+        final FrameLayout footerContainer = (FrameLayout) findViewById(R.id.navigation_view_footer_container);
+        ViewCompat.setElevation(footerContainer, 4f);
+        final CheckedTextView footerAppVersion = (CheckedTextView) findViewById(R.id.nav_item_footer_version);
+        footerAppVersion.setDuplicateParentStateEnabled(true);
+
         PackageInfo myInfo = null;
         try {
             myInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException ignored) { }
+
         if (myInfo != null && !TextUtils.isEmpty(myInfo.versionName)) {
-            menuVersion.setTitle(myInfo.versionName);
+            footerAppVersion.setText(myInfo.versionName);
 
             // extract the git short log from the version name
             final String versionName = myInfo.versionName.replace("-dev", "").trim().toLowerCase();
@@ -292,7 +228,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                     final String commitUrl = String.format(Constants.GITHUB_DC_COMMIT_URL_BASE, splitted[1]);
                     // preheat a bit
                     ((Application) getApplicationContext()).getCustomTabsHelper().mayLaunchUrl(commitUrl);
-                    menuVersion.setOnClickListener(new View.OnClickListener() {
+                    footerContainer.setOnClickListener(new View.OnClickListener() {
                         @Override public void onClick(View v) {
                             ((Application) getApplicationContext()).getCustomTabsHelper().launchUrl(MainActivity.this, commitUrl);
                         }
@@ -302,46 +238,46 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         }
     }
 
-    @Override public void onClick(final View v) {
-        final int id = v.getId();
-        switch (id) {
-            case R.id.menu_prefs:
-                loadFragmentPrivate(DeviceConstants.ID_PREFERENCES, false);
-                break;
-            case R.id.menu_about:
-                loadFragmentPrivate(DeviceConstants.ID_ABOUT, false);
-                break;
-        }
-    }
-
-    @Override public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        final MenuListArrayAdapter.MenuItem item =
-                (MenuListArrayAdapter.MenuItem) adapterView.getItemAtPosition(i);
-        Logger.d(this, "onItemClick -> %s", item.id);
-        loadFragmentPrivate(item.id, false);
-    }
-
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         restoreActionBar();
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override protected void onPostCreate(final Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        materialMenu.syncState(savedInstanceState);
+    private void restoreActionBar() {
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(mTitle);
+        }
     }
 
-    @Override protected void onSaveInstanceState(@NonNull final Bundle outState) {
-        materialMenu.onSaveInstanceState(outState);
-        super.onSaveInstanceState(outState);
+    @Override public void toggleDrawer() {
+        if (mDrawerLayout == null) {
+            return;
+        }
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            mDrawerLayout.openDrawer(GravityCompat.START);
+        }
+    }
+
+    @Override public boolean closeDrawerIfShowing() {
+        if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        }
+        return false;
+    }
+
+    @Override public boolean onNavigationItemSelected(final MenuItem item) {
+        final int id = item.getItemId();
+        shouldLoadFragment(id);
+        return true;
     }
 
     private void onCustomBackPressed(final boolean animatePressed) {
-        Logger.v(this, "onCustomBackPressed(%s)", animatePressed);
-
         // toggle menu if it is showing and return
-        if (slidingMenu.isMenuShowing()) {
-            slidingMenu.toggle(true);
+        if (closeDrawerIfShowing()) {
             return;
         }
 
@@ -351,7 +287,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
             // if our listener handles onBackPressed(), return
             if (listener.onBackPressed()) {
-                Logger.v(this, "onBackPressed()");
+                Logger.v(this, "onBackPressed() handled by current fragment");
                 return;
             }
 
@@ -364,13 +300,11 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 iconState = MaterialMenuDrawable.IconState.ARROW;
             }
 
-            Logger.v(this, "iconState: %s", iconState);
-
             // we can separate actionbar back actions and back key presses
             if (animatePressed) {
-                materialMenu.animatePressedState(iconState);
+                mMaterialMenu.animatePressedState(iconState);
             } else {
-                materialMenu.animateState(iconState);
+                mMaterialMenu.animateState(iconState);
             }
 
             // after animating, go further
@@ -437,21 +371,28 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         mCurrentFragment = fragment;
     }
 
-    public static void loadFragment(final Activity activity, final int id) {
-        loadFragment(activity, id, false);
+    @Override public void shouldLoadFragment(final int id) {
+        shouldLoadFragment(id, false);
     }
 
-    public static void loadFragment(final Activity activity, final int id, final boolean onResume) {
-        if (activity instanceof MainActivity) {
-            ((MainActivity) activity).loadFragmentPrivate(id, onResume);
-        }
+    @Override public void shouldLoadFragment(final int id, final boolean onResume) {
+        // close drawer
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+
+        mDrawerRunnable = new Runnable() {
+            @Override public void run() {
+                loadFragmentPrivate(id, onResume);
+
+                mDrawerRunnable = null;
+            }
+        };
     }
 
     private void loadFragmentPrivate(final int i, final boolean onResume) {
         switch (i) {
             default: // slip through...
                 //--------------------------------------------------------------------------------------
-            case DeviceConstants.ID_ABOUT:
+            case DeviceConstants.ID_HOME:
                 if (!onResume) {
                     mCurrentFragment = new AboutFragment();
                 }
@@ -459,7 +400,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
-            case DeviceConstants.ID_DEVICE_INFORMATION:
+            case DeviceConstants.ID_INFO_DEVICE:
                 if (!onResume) {
                     mCurrentFragment = new DeviceInformationFragment();
                 }
@@ -467,7 +408,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
-            case DeviceConstants.ID_FEATURES:
+            case DeviceConstants.ID_CTRL_DEVICE:
                 if (!onResume) {
                     mCurrentFragment = new DeviceFeatureFragment();
                 }
@@ -511,7 +452,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 mTitle = mSubFragmentTitle = R.string.entropy;
                 break;
             //--------------------------------------------------------------------------------------
-            case DeviceConstants.ID_PERFORMANCE_INFO:
+            case DeviceConstants.ID_INFO_PERFORMANCE:
                 if (!onResume) {
                     mCurrentFragment = new InformationFragment();
                 }
@@ -519,7 +460,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
-            case DeviceConstants.ID_PERFORMANCE_CPU_SETTINGS:
+            case DeviceConstants.ID_CTRL_PROCESSOR:
                 if (!onResume) {
                     mCurrentFragment = new CpuSettingsFragment();
                 }
@@ -533,7 +474,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 mTitle = mSubFragmentTitle = R.string.cpu_governor_tuning;
                 break;
             //--------------------------------------------------------------------------------------
-            case DeviceConstants.ID_PERFORMANCE_GPU_SETTINGS:
+            case DeviceConstants.ID_CTRL_GRAPHICS:
                 if (!onResume) {
                     mCurrentFragment = new GpuSettingsFragment();
                 }
@@ -541,11 +482,11 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
-            case DeviceConstants.ID_FILESYSTEM:
+            case DeviceConstants.ID_CTRL_FILE_SYSTEM:
                 if (!onResume) {
                     mCurrentFragment = new FilesystemFragment();
                 }
-                mTitle = mFragmentTitle = R.string.filesystem;
+                mTitle = mFragmentTitle = R.string.file_system;
                 mSubFragmentTitle = -1;
                 break;
             case DeviceConstants.ID_IOSCHED_TUNING:
@@ -555,7 +496,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 mTitle = mSubFragmentTitle = R.string.io;
                 break;
             //--------------------------------------------------------------------------------------
-            case DeviceConstants.ID_THERMAL:
+            case DeviceConstants.ID_CTRL_THERMAL:
                 if (!onResume) {
                     mCurrentFragment = new ThermalFragment();
                 }
@@ -635,7 +576,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 mSubFragmentTitle = -1;
                 break;
         }
-
         restoreActionBar();
 
         if (onResume) {
@@ -643,7 +583,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         }
 
         final boolean isSubFragment = mSubFragmentTitle != -1;
-
         final FragmentManager fragmentManager = getSupportFragmentManager();
         if (!isSubFragment && fragmentManager.getBackStackEntryCount() > 0) {
             // set a lock to prevent calling setFragment as onResume gets called
@@ -658,8 +597,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         final FragmentTransaction ft = fragmentManager.beginTransaction();
 
         if (isSubFragment) {
-            ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right,
-                    R.anim.slide_in_left, R.anim.slide_out_left);
+            ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_right, R.anim.slide_in_left, R.anim.slide_out_left);
             ft.addToBackStack(null);
         }
 
@@ -673,27 +611,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             iconState = MaterialMenuDrawable.IconState.BURGER;
         }
 
-        materialMenu.animateState(iconState);
-    }
-
-    private void restoreActionBar() {
-        final ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(mTitle);
-        }
-    }
-
-    @Override public void toggleSlidingMenuIfShowing() {
-        if (slidingMenu != null && slidingMenu.isMenuShowing()) {
-            slidingMenu.toggle(true);
-        }
-    }
-
-    @Override public void setSwipeOnContent(boolean swipeOnContent) {
-        if (slidingMenu != null) {
-            slidingMenu.setTouchModeAbove(swipeOnContent
-                    ? SlidingMenu.TOUCHMODE_FULLSCREEN : SlidingMenu.TOUCHMODE_MARGIN);
-        }
+        mMaterialMenu.animateState(iconState);
     }
 
 }

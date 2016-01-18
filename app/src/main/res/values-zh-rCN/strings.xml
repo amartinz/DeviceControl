@@ -279,7 +279,7 @@
   <string name="warning_data_corruption_invert">禁用可能会导致数据损坏</string>
   <string name="data_integrity_decreased_performance">确保数据完整但性能会下降</string>
   <string name="read_ahead">预读</string>
-  <string name="filesystem">文件系统</string>
+  <string name="file_system">文件系统</string>
   <string name="user_interface">界面</string>
   <string name="swipe_on_content">任意位置滑出菜单</string>
   <string name="swipe_on_content_summary">在界面任意位置右滑均能打开菜单</string>

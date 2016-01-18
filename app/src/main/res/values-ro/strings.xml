@@ -266,7 +266,7 @@
   <string name="warning_data_corruption_invert">Poate cauza corupția datelor dacă este dezactivată</string>
   <string name="data_integrity_decreased_performance">Asigură integritatea datelor, dar scade performanța</string>
   <string name="read_ahead">Citește înainte</string>
-  <string name="filesystem">Sistemul de fișiere</string>
+  <string name="file_system">Sistemul de fișiere</string>
   <string name="user_interface">Interfață</string>
   <string name="swipe_on_content">Glisați pe conținut</string>
   <string name="swipe_on_content_summary">Comută meniul atunci când glisați pe întregul conținut</string>

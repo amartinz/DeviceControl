@@ -15,6 +15,12 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <!-- theme color -->
+    <attr name="themeColor" format="reference|color" />
+    <attr name="themeColorInvert" format="reference|color" />
+    <attr name="themeMenu" format="reference|color" />
+    <attr name="themeMenuFooter" format="reference|color" />
+    <attr name="drawerTextColor" format="reference|color" />
     <!-- awesome preference -->
     <declare-styleable name="AwesomePreference">
         <attr name="filePath" format="reference" />
@@ -31,11 +37,6 @@
         <attr name="min" format="integer" />
         <attr name="unitsLeft" format="string" />
         <attr name="unitsRight" format="string" />
-    </declare-styleable>
-    <!-- Menu item -->
-    <declare-styleable name="MenuListItem">
-        <attr name="menuItemImage" format="reference" />
-        <attr name="menuItemTitle" format="reference" />
     </declare-styleable>
     <!-- Sliding Menu -->
     <declare-styleable name="SlidingMenu">
@@ -74,11 +75,6 @@
         <attr name="mm_strokeWidth" format="integer" />
         <attr name="mm_rtlEnabled" format="boolean" />
     </declare-styleable>
-    <!-- theme color -->
-    <attr name="themeColor" format="reference|color" />
-    <attr name="themeColorInvert" format="reference|color" />
-    <attr name="themeMenu" format="reference|color" />
-    <attr name="themeMenuFooter" format="reference|color" />
     <!-- NumberProgressBar -->
     <attr name="numberProgressBarStyle" format="reference" />
     <declare-styleable name="NumberProgressBar">

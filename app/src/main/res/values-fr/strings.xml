@@ -267,7 +267,7 @@
   <string name="warning_data_corruption_invert">Peut provoquer la corruption des données si désactivé</string>
   <string name="data_integrity_decreased_performance">Assure l\'intégrité des données, mais diminue les performances</string>
   <string name="read_ahead">Lecture anticipée</string>
-  <string name="filesystem">Système de fichiers</string>
+  <string name="file_system">Système de fichiers</string>
   <string name="user_interface">Interface</string>
   <string name="swipe_on_content">Glisser sur le contenu</string>
   <string name="swipe_on_content_summary">Ouvre/ferme le menu avec un glissé sur toute la surface du contenu</string>

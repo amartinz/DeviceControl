@@ -30,7 +30,6 @@ public class DeviceConfig {
     private transient static final String NAME = "DeviceConfig";
 
     public boolean dcFirstStart;
-    public boolean swipeOnContent;
 
     public boolean darkTheme;
     public boolean showPollfish;

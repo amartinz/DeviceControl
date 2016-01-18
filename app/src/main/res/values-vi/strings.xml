@@ -267,7 +267,7 @@
   <string name="warning_data_corruption_invert">Có thể làm hỏng dữ liệu nếu tắt</string>
   <string name="data_integrity_decreased_performance">Đảm bảo tính toàn vẹn dữ liệu nhưng làm giảm hiệu suất</string>
   <string name="read_ahead">Đọc trước</string>
-  <string name="filesystem">Tập tin hệ thống</string>
+  <string name="file_system">Tập tin hệ thống</string>
   <string name="user_interface">Giao diện</string>
   <string name="swipe_on_content">Vuốt lên trên nội dung</string>
   <string name="swipe_on_content_summary">Bật/tắt menu khi vuốt trên toàn bộ nội dung</string>

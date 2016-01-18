@@ -289,22 +289,6 @@ public class Utils {
     }
 
     /**
-     * Setup the directories for Device Control
-     */
-    public static void setupDirectories() {
-        final String basePath = Application.get().getFilesDirectory();
-        final String[] dirList = new String[]{ basePath + DeviceConstants.DC_LOG_DIR };
-        File dir;
-        for (final String s : dirList) {
-            dir = new File(s);
-            if (!dir.exists()) {
-                Logger.v(Utils.class, String.format(
-                        "setupDirectories: creating %s -> %s", s, dir.mkdirs()));
-            }
-        }
-    }
-
-    /**
      * Reads string array from file
      *
      * @param path File to read from

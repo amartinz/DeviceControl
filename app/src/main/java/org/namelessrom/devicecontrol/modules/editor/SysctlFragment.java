@@ -17,13 +17,14 @@
  */
 package org.namelessrom.devicecontrol.modules.editor;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.support.annotation.NonNull;
 
+import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.MainActivity;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
@@ -94,7 +95,10 @@ public class SysctlFragment extends AttachPreferenceFragment {
     @Override public boolean onPreferenceTreeClick(final PreferenceScreen preferenceScreen,
             @NonNull final Preference preference) {
         if (preference == mFullEditor) {
-            MainActivity.loadFragment(getActivity(), DeviceConstants.ID_TOOLS_EDITORS_VM);
+            final Activity activity = getActivity();
+            if (activity instanceof ActivityCallbacks) {
+                ((ActivityCallbacks) activity).shouldLoadFragment(DeviceConstants.ID_TOOLS_EDITORS_VM);
+            }
             return true;
         } else if (preference == mDirtyRatio) {
             final String title = getString(R.string.dirty_ratio_title);

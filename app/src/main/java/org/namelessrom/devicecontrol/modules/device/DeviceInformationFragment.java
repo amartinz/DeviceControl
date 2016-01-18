@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class DeviceInformationFragment extends AttachViewPagerFragment {
 
-    @Override protected int getFragmentId() { return DeviceConstants.ID_DEVICE_INFORMATION; }
+    @Override protected int getFragmentId() { return DeviceConstants.ID_INFO_DEVICE; }
 
     @Override public ViewPagerAdapter getPagerAdapter() {
         final ArrayList<Fragment> fragments = new ArrayList<>(2);

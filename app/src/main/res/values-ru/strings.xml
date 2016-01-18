@@ -252,7 +252,7 @@
   <string name="shutdown">Завершение работы</string>
   <string name="warning_data_corruption">Может привести к повреждению данных, если включена</string>
   <string name="read_ahead">Упреждающее чтение</string>
-  <string name="filesystem">Файловая система</string>
+  <string name="file_system">Файловая система</string>
   <string name="user_interface">Интерфейс</string>
   <string name="swipe_on_content">Свайп по контенту</string>
   <string name="swipe_on_content_summary">Перейти в меню при свайпе по контенту</string>

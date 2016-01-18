@@ -29,32 +29,36 @@ public class DeviceConstants {
     //==============================================================================================
     // Fragments
     //==============================================================================================
-    public static final int ID_DEVICE_INFORMATION = 100000;
-    public static final int ID_FEATURES = 200000;
-    public static final int ID_FAST_CHARGE = ID_FEATURES + 1000;
-    public static final int ID_SOUND_CONTROL = ID_FEATURES + 1100;
-    public static final int ID_KSM = ID_FEATURES + 1200;
-    public static final int ID_UKSM = ID_FEATURES + 1300;
-    public static final int ID_VOLTAGE = ID_FEATURES + 1400;
-    public static final int ID_ENTROPY = ID_FEATURES + 1500;
-    public static final int ID_PERFORMANCE_INFO = 300000;
-    public static final int ID_PERFORMANCE_CPU_SETTINGS = 400000;
-    public static final int ID_GOVERNOR_TUNABLE = ID_PERFORMANCE_CPU_SETTINGS + 1000;
-    public static final int ID_PERFORMANCE_GPU_SETTINGS = 500000;
-    public static final int ID_FILESYSTEM = 600000;
-    public static final int ID_IOSCHED_TUNING = ID_FILESYSTEM + 1000;
-    public static final int ID_THERMAL = 700000;
-    public static final int ID_TOOLS_APP_MANAGER = 800000;
-    public static final int ID_TOOLS_TASKER = 900000;
-    public static final int ID_TOOLS_FLASHER = 1000000;
-    public static final int ID_TOOLS_MORE = 1100000;
+    public static final int ID_HOME = R.id.nav_item_home;
+    //--- INFO
+    public static final int ID_INFO_DEVICE = R.id.nav_item_info_device;
+    public static final int ID_INFO_PERFORMANCE = R.id.nav_item_info_performance;
+    //--- CTRL
+    public static final int ID_CTRL_DEVICE = R.id.nav_item_controls_device;
+    public static final int ID_FAST_CHARGE = ID_CTRL_DEVICE + 1000;
+    public static final int ID_SOUND_CONTROL = ID_CTRL_DEVICE + 1100;
+    public static final int ID_KSM = ID_CTRL_DEVICE + 1200;
+    public static final int ID_UKSM = ID_CTRL_DEVICE + 1300;
+    public static final int ID_VOLTAGE = ID_CTRL_DEVICE + 1400;
+    public static final int ID_ENTROPY = ID_CTRL_DEVICE + 1500;
+    public static final int ID_CTRL_PROCESSOR = R.id.nav_item_controls_processor;
+    public static final int ID_GOVERNOR_TUNABLE = ID_CTRL_PROCESSOR + 1000;
+    public static final int ID_CTRL_GRAPHICS = R.id.nav_item_controls_graphics;
+    public static final int ID_CTRL_FILE_SYSTEM = R.id.nav_item_controls_file_system;
+    public static final int ID_IOSCHED_TUNING = ID_CTRL_FILE_SYSTEM + 1000;
+    public static final int ID_CTRL_THERMAL = R.id.nav_item_controls_thermal;
+    //--- TOOLS
+    public static final int ID_TOOLS_BOOTUP_RESTORATION = R.id.nav_item_tools_bootup_restoration;
+    public static final int ID_TOOLS_APP_MANAGER = R.id.nav_item_tools_app_manager;
+    public static final int ID_TOOLS_TASKER = R.id.nav_item_tools_tasker;
+    public static final int ID_TOOLS_FLASHER = R.id.nav_item_tools_flasher;
+    public static final int ID_TOOLS_MORE = R.id.nav_item_tools_more;
     public static final int ID_TOOLS_VM = ID_TOOLS_MORE + 1000;
     public static final int ID_TOOLS_EDITORS_VM = ID_TOOLS_MORE + 1020;
     public static final int ID_TOOLS_EDITORS_BUILD_PROP = ID_TOOLS_MORE + 1100;
     public static final int ID_TOOLS_WIRELESS_FM = ID_TOOLS_MORE + 1300;
-    public static final int ID_TOOLS_BOOTUP_RESTORATION = 1200000;
-    public static final int ID_PREFERENCES = 8000000;
-    public static final int ID_ABOUT = 9000000;
+    //--- EXTRA
+    public static final int ID_PREFERENCES = R.id.drawer_header_settings;
     //----------------------------------------------------------------------------------------------
 
     //==============================================================================================

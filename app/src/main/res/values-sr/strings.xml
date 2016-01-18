@@ -294,7 +294,7 @@
   <string name="warning_data_corruption_invert">Може проузроковати оштећење података ако је онемогућено</string>
   <string name="data_integrity_decreased_performance">Осигурава интегритет података науштрб перформанси</string>
   <string name="read_ahead">Read-Ahead</string>
-  <string name="filesystem">Фајл систем</string>
+  <string name="file_system">Фајл систем</string>
   <string name="user_interface">Интерфејс</string>
   <string name="swipe_on_content">Превуци преко садржаја</string>
   <string name="swipe_on_content_summary">Укључи/Искључи мени када се превлачи преко целог садржаја</string>

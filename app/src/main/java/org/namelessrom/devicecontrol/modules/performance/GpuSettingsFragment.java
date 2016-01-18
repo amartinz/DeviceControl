@@ -50,7 +50,7 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
     private MaterialSwitchPreference m3dScaling = null;
 
     @Override protected int getFragmentId() {
-        return DeviceConstants.ID_PERFORMANCE_GPU_SETTINGS;
+        return DeviceConstants.ID_CTRL_GRAPHICS;
     }
 
     @Override protected int getLayoutResourceId() {

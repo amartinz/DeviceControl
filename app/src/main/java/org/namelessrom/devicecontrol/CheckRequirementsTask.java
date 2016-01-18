@@ -51,6 +51,8 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
     private boolean hasBusyBox;
     private String suVersion;
 
+    private Runnable mPostExecuteHook;
+
     public CheckRequirementsTask(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
 
@@ -65,6 +67,11 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
         } else {
             progressDialog = null;
         }
+    }
+
+    public CheckRequirementsTask setPostExecuteHook(Runnable postExecuteHook) {
+        mPostExecuteHook = postExecuteHook;
+        return this;
     }
 
     @Override protected void onPreExecute() {
@@ -142,6 +149,9 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
         Utils.patchSEPolicy(mainActivity);
 
         permissionDialog = showPermissionDialog(mainActivity);
+        if (permissionDialog == null && mPostExecuteHook != null) {
+            mainActivity.runOnUiThread(mPostExecuteHook);
+        }
     }
 
     private AlertDialog buildRequirementsDialog(final boolean hasRoot) {
@@ -233,6 +243,10 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
                         if (!location) {
                             rxPermissions.request(Manifest.permission.ACCESS_COARSE_LOCATION,
                                     Manifest.permission.ACCESS_FINE_LOCATION).subscribe();
+                        }
+
+                        if (mPostExecuteHook != null) {
+                            mainActivity.runOnUiThread(mPostExecuteHook);
                         }
                     }
                 });

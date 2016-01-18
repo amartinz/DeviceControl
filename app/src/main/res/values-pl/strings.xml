@@ -263,7 +263,7 @@
   <string name="warning_data_corruption">Może spowodować uszkodzenie danych, jeśli włączone</string>
   <string name="warning_data_corruption_invert">Może spowodować uszkodzenie danych, jeśli wyłączone</string>
   <string name="read_ahead">Odczyt z wyprzedzeniem</string>
-  <string name="filesystem">System plików</string>
+  <string name="file_system">System plików</string>
   <string name="user_interface">Interfejs</string>
   <string name="swipe_on_content">Przesuń na zawartości</string>
   <string name="swipe_on_content_summary">Przełącz menu, podczas przesuwania nad całą zawartością</string>

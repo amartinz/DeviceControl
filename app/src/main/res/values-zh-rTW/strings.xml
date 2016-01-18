@@ -147,7 +147,7 @@
   <string name="hot_reboot">快速重啟</string>
   <string name="shutdown">關機</string>
   <string name="read_ahead">預讀</string>
-  <string name="filesystem">檔案系統</string>
+  <string name="file_system">檔案系統</string>
   <string name="user_interface">介面</string>
   <string name="getting_information">獲取資訊</string>
   <string name="good">良好</string>

@@ -17,8 +17,10 @@
  */
 package org.namelessrom.devicecontrol;
 
-public interface MainActivityCallbacks {
-    void toggleSlidingMenuIfShowing();
+public interface ActivityCallbacks {
+    boolean closeDrawerIfShowing();
+    void toggleDrawer();
 
-    void setSwipeOnContent(boolean swipeOnContent);
+    void shouldLoadFragment(int id);
+    void shouldLoadFragment(int id, boolean onResume);
 }

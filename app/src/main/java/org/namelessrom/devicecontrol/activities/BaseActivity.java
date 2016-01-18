@@ -17,23 +17,47 @@
  */
 package org.namelessrom.devicecontrol.activities;
 
+import android.app.Activity;
 import android.app.ActivityManager.TaskDescription;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
+
+import com.balysv.materialmenu.MaterialMenuDrawable;
+import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.theme.AppResources;
 
 public abstract class BaseActivity extends AppCompatActivity {
+    protected MaterialMenuIconToolbar mMaterialMenu;
+    protected NavigationView mNavigationView;
+    protected MenuItem mPreviousMenuItem;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    protected void setupMaterialMenu(Activity activity) {
+        mMaterialMenu = new MaterialMenuIconToolbar(activity, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
+            @Override public int getToolbarViewId() { return R.id.toolbar; }
+        };
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mMaterialMenu.setNeverDrawTouch(true);
+        }
+    }
+
+    protected void setupTheme() {
         final boolean isDarkTheme = AppResources.get().isDarkTheme();
         setTheme(isDarkTheme ? R.style.AppTheme_Dark : R.style.AppTheme_Light);
+    }
 
+    @Override protected void onCreate(Bundle savedInstanceState) {
+        setupTheme();
         super.onCreate(savedInstanceState);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -50,6 +74,54 @@ public abstract class BaseActivity extends AppCompatActivity {
             final TaskDescription description = new TaskDescription(String.valueOf(getTitle()), appIcon, res.getAccentColor());
             setTaskDescription(description);
         }
+    }
+
+    @Override protected void onPostCreate(final Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        if (mMaterialMenu != null) {
+            mMaterialMenu.syncState(savedInstanceState);
+        }
+    }
+
+    @Override protected void onSaveInstanceState(final Bundle outState) {
+        if (mMaterialMenu != null) {
+            mMaterialMenu.onSaveInstanceState(outState);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    /** Searches and checks the {@link MenuItem} if found **/
+    public void checkMenuItem(final int menuId) {
+        final MenuItem menuItem = findMenuItem(menuId);
+        if (menuItem != null) {
+            checkMenuItem(menuItem);
+        }
+    }
+
+    /** Checks the {@link MenuItem} **/
+    public void checkMenuItem(@NonNull final MenuItem menuItem) {
+        // to work around a bug in the design library we need to store the menu item and
+        // uncheck it manually everytime we check a new item
+        if (mPreviousMenuItem != null) {
+            mPreviousMenuItem.setChecked(false);
+        }
+        menuItem.setChecked(true);
+        mPreviousMenuItem = menuItem;
+
+        if (mNavigationView != null) {
+            mNavigationView.invalidate();
+        }
+    }
+
+    @Nullable public MenuItem findMenuItem(final int menuId) {
+        return findMenuItem(mNavigationView, menuId);
+    }
+
+    @Nullable public MenuItem findMenuItem(@Nullable NavigationView navigationView, final int menuId) {
+        if (navigationView == null || navigationView.getMenu() == null) {
+            return null;
+        }
+        return navigationView.getMenu().findItem(menuId);
     }
 
 }

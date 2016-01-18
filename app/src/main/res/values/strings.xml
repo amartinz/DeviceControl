@@ -17,6 +17,27 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_version_name">Versionname: %s</string>
     <string name="app_version_code">Versioncode: %s</string>
+
+    <string name="drawer_title_home">Home</string>
+    <!-- info -->
+    <string name="drawer_title_info">Information</string>
+    <string name="drawer_title_info_device" translatable="false">@string/device</string>
+    <string name="drawer_title_info_performance" translatable="false">@string/performance</string>
+    <!-- controls -->
+    <string name="drawer_title_controls">Controls</string>
+    <string name="drawer_title_controls_device" translatable="false">@string/device</string>
+    <string name="drawer_title_controls_processor" translatable="false">@string/processor</string>
+    <string name="drawer_title_controls_graphics" translatable="false">@string/graphics</string>
+    <string name="drawer_title_controls_file_system" translatable="false">@string/file_system</string>
+    <string name="drawer_title_controls_thermal" translatable="false">@string/thermal</string>
+    <!-- tools -->
+    <string name="drawer_title_tools">Tools</string>
+    <string name="drawer_title_tools_bootup_restoration" translatable="false">@string/bootup_restoration</string>
+    <string name="drawer_title_tools_app_manager" translatable="false">@string/app_manager</string>
+    <string name="drawer_title_tools_tasker" translatable="false">@string/tasker</string>
+    <string name="drawer_title_tools_flasher" translatable="false">@string/flasher</string>
+    <string name="drawer_title_tools_more" translatable="false">@string/more</string>
+
     <string name="welcome">Welcome</string>
     <string name="welcome_message">To get started, swipe out the menu from the left or press the button at the very top
         left!\n\nIf a feature is not supported by your device, it gets automatically hidden!\nSupported features depend on the
@@ -46,7 +67,9 @@
     <string name="more">More…</string>
     <string name="dialog_warning">Warning!</string>
     <string name="dialog_warning_apply">Are you sure that you want to apply your settings?</string>
-    <string name="dialog_warning_suversion">Your installed root \"%s\" may not work properly. Using \"SuperSU\" is recommended!\n\nProceed on your own risk!</string>
+    <string name="dialog_warning_suversion">Your installed root \"%s\" may not work properly. Using \"SuperSU\" is
+        recommended!\n\nProceed on your own risk!
+    </string>
     <string name="dialog_action_never_show_again">Never show again</string>
     <string name="toast_settings_applied">Successfully applied!</string>
     <string name="no_tweaks_available">No tweaks available</string>
@@ -328,10 +351,8 @@
     <string name="warning_data_corruption_invert">May cause data corruption if disabled</string>
     <string name="data_integrity_decreased_performance">Ensures data integrity but decreases performance</string>
     <string name="read_ahead">Read ahead</string>
-    <string name="filesystem">Filesystem</string>
+    <string name="file_system">Filesystem</string>
     <string name="user_interface">Interface</string>
-    <string name="swipe_on_content">Swipe on content</string>
-    <string name="swipe_on_content_summary">Toggle the menu when swiping on the whole content</string>
     <string name="gpu_vendor">GPU vendor</string>
     <string name="gpu_renderer">GPU renderer</string>
     <string name="opengl_version">OpenGL version</string>

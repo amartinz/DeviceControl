@@ -101,4 +101,8 @@
     <!-- URLs -->
     <string name="non_google_plus_community_url" translatable="false">https://plus.google.com/u/0/communities/102835551008778372596</string>
     <string name="non_beta_url" translatable="false">https://play.google.com/apps/testing/org.namelessrom.devicecontrol</string>
+
+    <!-- dummy strings -->
+    <string name="dummy_header_title">OPPO R7Plusf</string>
+    <string name="dummy_header_subtitle">Android 6.0.1 / 64-bit</string>
 </resources>

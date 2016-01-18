@@ -146,7 +146,7 @@ public class ActionProcessor {
         // Extras
         categories.add(new Entry(Application.get().getString(R.string.extras), CATEGORY_EXTRAS));
         // Filesystem
-        categories.add(new Entry(Application.get().getString(R.string.filesystem), CATEGORY_FS));
+        categories.add(new Entry(Application.get().getString(R.string.file_system), CATEGORY_FS));
 
         return categories;
     }

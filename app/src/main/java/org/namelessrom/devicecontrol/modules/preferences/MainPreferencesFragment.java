@@ -17,13 +17,11 @@
  */
 package org.namelessrom.devicecontrol.modules.preferences;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.pollfish.main.PollFish;
 
-import org.namelessrom.devicecontrol.MainActivityCallbacks;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.theme.AppResources;
@@ -34,7 +32,6 @@ import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragm
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 
 public class MainPreferencesFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceChangeListener {
-    private MaterialSwitchPreference mSwipeOnContent;
     // TODO: more customization
     private MaterialSwitchPreference mDarkTheme;
 
@@ -51,10 +48,6 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         mDarkTheme = (MaterialSwitchPreference) view.findViewById(R.id.prefs_dark_theme);
         mDarkTheme.setChecked(AppResources.get().isDarkTheme());
         mDarkTheme.setOnPreferenceChangeListener(this);
-
-        mSwipeOnContent = (MaterialSwitchPreference) view.findViewById(R.id.prefs_swipe_on_content);
-        mSwipeOnContent.setChecked(configuration.swipeOnContent);
-        mSwipeOnContent.setOnPreferenceChangeListener(this);
 
         mShowPollfish = (MaterialSwitchPreference) view.findViewById(R.id.prefs_show_pollfish);
         mShowPollfish.setChecked(configuration.showPollfish);
@@ -74,20 +67,6 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
                 PollFish.hide();
             }
             mShowPollfish.setChecked(value);
-            return true;
-        } else if (mSwipeOnContent == preference) {
-            final boolean value = (Boolean) newValue;
-
-            DeviceConfig.get().swipeOnContent = value;
-            DeviceConfig.get().save();
-
-            mSwipeOnContent.setChecked(value);
-
-            // update the menu
-            final Activity activity = getActivity();
-            if (activity instanceof MainActivityCallbacks) {
-                ((MainActivityCallbacks) activity).setSwipeOnContent(value);
-            }
             return true;
         } else if (mDarkTheme == preference) {
             final boolean isDark = (Boolean) newValue;

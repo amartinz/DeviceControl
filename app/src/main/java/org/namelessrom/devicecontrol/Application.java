@@ -18,7 +18,6 @@
 package org.namelessrom.devicecontrol;
 
 import android.annotation.SuppressLint;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -72,11 +71,20 @@ public class Application extends android.app.Application {
             Application.sInstance = this;
             Paper.init(this);
 
-            buildCache();
-
             mCustomTabsHelper = new CustomTabsHelper(sInstance);
 
             setupEverything();
+        }
+    }
+
+    private void setupDirectories() {
+        final String basePath = getFilesDirectory();
+        final String[] dirList = new String[]{ basePath + DeviceConstants.DC_LOG_DIR };
+        for (final String s : dirList) {
+            final File dir = new File(s);
+            if (!dir.exists()) {
+                Logger.v(this, String.format("setupDirectories: creating %s -> %s", s, dir.mkdirs()));
+            }
         }
     }
 
@@ -89,8 +97,10 @@ public class Application extends android.app.Application {
     }
 
     private void setupEverythingAsync() {
-        DeviceConfig deviceConfig = DeviceConfig.get();
+        setupDirectories();
+        buildCache();
 
+        final DeviceConfig deviceConfig = DeviceConfig.get();
         if (deviceConfig.debugStrictMode) {
             Logger.setStrictModeEnabled(true);
         }
