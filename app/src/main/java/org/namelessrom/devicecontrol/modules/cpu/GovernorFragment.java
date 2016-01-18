@@ -21,13 +21,14 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
 import org.namelessrom.devicecontrol.ui.views.AttachMaterialPreferenceFragment;
@@ -108,11 +109,11 @@ public class GovernorFragment extends AttachMaterialPreferenceFragment implement
                 }
 
                 final String filePath = file.getAbsolutePath();
-                final String fileContent = Utils.readOneLine(filePath).trim().replaceAll("\n", "");
+                String tmp = Utils.readOneLine(filePath);
+                final String fileContent = (TextUtils.isEmpty(tmp) ? "" : tmp.trim().replaceAll("\n", ""));
                 mActivity.runOnUiThread(new Runnable() {
                     @Override public void run() {
-                        final MaterialEditTextPreference pref =
-                                new MaterialEditTextPreference(mActivity);
+                        final MaterialEditTextPreference pref = new MaterialEditTextPreference(mActivity);
                         pref.setAsCard(false);
                         pref.init(mActivity);
                         pref.setKey(filePath);
@@ -131,8 +132,7 @@ public class GovernorFragment extends AttachMaterialPreferenceFragment implement
             return null;
         }
 
-        @Override
-        public boolean onPreferenceChanged(MaterialPreference materialPreference, Object o) {
+        @Override public boolean onPreferenceChanged(MaterialPreference materialPreference, Object o) {
             final String value = String.valueOf(o);
             Utils.writeValue(materialPreference.getKey(), value);
             updateBootupListDb(materialPreference, value);
