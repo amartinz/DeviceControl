@@ -322,7 +322,7 @@
   <string name="sunlight_enhancement_summary">Побољшава осветљење екрана и читкост под сунчевом светлошћу</string>
   <string name="color_enhancement">Унапређење боја</string>
   <string name="dark_theme">Тамна тема</string>
-  <string name="dark_theme_summary">Пребаците између тамне и светле теме</string>
+  <string name="light_theme_summary">Пребаците између тамне и светле теме</string>
   <string name="platform_information">Информације о платформи</string>
   <string name="build_id">Build id</string>
   <string name="android_id">Верзија Андроида</string>

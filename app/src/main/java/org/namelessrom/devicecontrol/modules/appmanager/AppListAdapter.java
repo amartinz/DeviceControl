@@ -27,6 +27,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -52,8 +53,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHolder> {
-    private final Resources res;
-
     private final Activity mActivity;
     private final BaseAppListFragment mBaseAppListFragment;
     private ArrayList<AppItem> mAppList;
@@ -76,8 +75,6 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         mAppList = new ArrayList<>(mFiltered);
 
         mSelectedApps = new ArrayList<>();
-
-        res = mActivity.getResources();
     }
 
     public void refill(ArrayList<AppItem> appItems) {
@@ -153,11 +150,11 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             packageName.setText(appItem.getPackageName());
             appVersion.setText(appItem.getVersion());
 
-            int color = AppResources.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
-            appLabel.setTextColor(appItem.isSystemApp() ? res.getColor(R.color.red_middle) : color);
+            int color = AppResources.get().isLightTheme() ? Color.BLACK : Color.WHITE;
+            appLabel.setTextColor(appItem.isSystemApp() ? ContextCompat.getColor(mActivity, R.color.red_middle) : color);
 
             color = appItem.isEnabled() ? android.R.color.transparent : R.color.darker_gray;
-            cardView.setForeground(new ColorDrawable(mActivity.getResources().getColor(color)));
+            cardView.setForeground(new ColorDrawable(ContextCompat.getColor(mActivity, color)));
 
             appSelector.setChecked(mSelectedApps.contains(appItem));
         }

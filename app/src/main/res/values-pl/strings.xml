@@ -283,7 +283,7 @@
   <string name="sunlight_enhancement_summary">Zwiększanie jasności ekranu i czytelności w jasnym świetle słonecznym</string>
   <string name="color_enhancement">Poprawa koloru</string>
   <string name="dark_theme">Ciemny motyw</string>
-  <string name="dark_theme_summary">Przełącz pomiędzy ciemnym / jasnym motywem</string>
+  <string name="light_theme_summary">Przełącz pomiędzy ciemnym / jasnym motywem</string>
   <string name="platform_information">Platforma informacji</string>
   <string name="runtime">Runtime</string>
   <string name="type">Typ</string>

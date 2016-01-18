@@ -277,7 +277,7 @@
   <string name="sunlight_enhancement_summary">Повышение яркости и уровня читаемости экрана при ярком солнечном свете</string>
   <string name="color_enhancement">Улучшение цвета</string>
   <string name="dark_theme">Тёмное оформление</string>
-  <string name="dark_theme_summary">Переключение между темным / светлым оформлениями </string>
+  <string name="light_theme_summary">Переключение между темным / светлым оформлениями </string>
   <string name="platform_information">Информацию о платформе</string>
   <string name="android_id">Android id</string>
   <string name="type">Тип</string>

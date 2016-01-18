@@ -292,7 +292,7 @@
   <string name="sunlight_enhancement_summary">Améliore la lisibilité en augmentant la luminosité en plein soleil</string>
   <string name="color_enhancement">Amélioration des couleurs</string>
   <string name="dark_theme">Thème sombre</string>
-  <string name="dark_theme_summary">Basculer entre le thème sombre / clair</string>
+  <string name="light_theme_summary">Basculer entre le thème sombre / clair</string>
   <string name="platform_information">Détails de la plateforme</string>
   <string name="build_id">ID de compilation</string>
   <string name="android_id">Identifiant Android</string>

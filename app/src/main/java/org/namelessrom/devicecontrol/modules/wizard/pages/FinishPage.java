@@ -85,10 +85,10 @@ public class FinishPage extends Page {
         }
 
         @Override protected int getLayoutResource() {
-            if (AppResources.get().isDarkTheme()) {
-                return R.layout.wizard_page_list_dark;
+            if (AppResources.get().isLightTheme()) {
+                return R.layout.wizard_page_list_light;
             }
-            return R.layout.wizard_page_list_light;
+            return R.layout.wizard_page_list_dark;
         }
 
         @Override protected int getTitleResource() {

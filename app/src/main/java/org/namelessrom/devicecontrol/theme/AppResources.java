@@ -12,7 +12,7 @@ import org.namelessrom.devicecontrol.models.DeviceConfig;
 public class AppResources {
     private static AppResources sInstance;
 
-    private int isDarkTheme = -1;
+    private int isLightTheme = -1;
 
     private int accentColor;
     private int primaryColor;
@@ -20,19 +20,19 @@ public class AppResources {
     private int cardBackgroundColor;
 
     private AppResources() {
-        final boolean isDark = isDarkTheme();
+        final boolean isLight = isLightTheme();
 
-        this.cardBackgroundColor = isDark
-                ? getColor(R.color.cardview_dark_background)
-                : getColor(R.color.cardview_light_background);
+        this.cardBackgroundColor = isLight
+                ? getColor(R.color.cardview_light_background)
+                : getColor(R.color.cardview_dark_background);
 
-        this.accentColor = isDark
-                ? getColor(R.color.accent)
-                : getColor(R.color.accent_light);
+        this.accentColor = isLight
+                ? getColor(R.color.accent_light)
+                : getColor(R.color.accent);
 
-        this.primaryColor = isDark
-                ? getColor(R.color.dark_primary_dark)
-                : getColor(R.color.light_primary_dark);
+        this.primaryColor = isLight
+                ? getColor(R.color.light_primary_dark)
+                : getColor(R.color.dark_primary_dark);
     }
 
     public static AppResources get() {
@@ -47,18 +47,18 @@ public class AppResources {
         return Application.get().getColorApplication(colorResId);
     }
 
-    public boolean isDarkTheme() {
-        if (isDarkTheme == -1) {
-            isDarkTheme = DeviceConfig.get().darkTheme ? 1 : 0;
+    public boolean isLightTheme() {
+        if (isLightTheme == -1) {
+            isLightTheme = DeviceConfig.get().lightTheme ? 1 : 0;
         }
-        return (isDarkTheme == 1);
+        return (isLightTheme == 1);
     }
 
-    public AppResources setDarkTheme(boolean isDark) {
-        isDarkTheme = isDark ? 1 : 0;
+    public AppResources setLightTheme(boolean isLight) {
+        isLightTheme = isLight ? 1 : 0;
 
         DeviceConfig deviceConfig = DeviceConfig.get();
-        deviceConfig.darkTheme = isDark;
+        deviceConfig.lightTheme = isLight;
         deviceConfig.save();
 
         sInstance = new AppResources();
@@ -94,13 +94,13 @@ public class AppResources {
     }
 
     @DrawableRes public int getDrawerHeaderResId() {
-        return isDarkTheme() ? R.drawable.drawer_header_bg_dark : R.drawable.drawer_header_bg_light;
+        return isLightTheme() ? R.drawable.drawer_header_bg_light : R.drawable.drawer_header_bg_dark;
     }
 
     public static ContextThemeWrapper getContextThemeWrapper(Context context) {
-        final int themeId = AppResources.get().isDarkTheme()
-                ? R.style.AppTheme_Dark
-                : R.style.AppTheme_Light;
+        final int themeId = AppResources.get().isLightTheme()
+                ? R.style.AppTheme_Light
+                : R.style.AppTheme_Dark;
         return new ContextThemeWrapper(context, themeId);
     }
 

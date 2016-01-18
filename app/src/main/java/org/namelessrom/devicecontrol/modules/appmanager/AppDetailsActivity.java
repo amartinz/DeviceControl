@@ -281,7 +281,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
 
         mCacheGraph.setTouchEnabled(false);
 
-        final int color = AppResources.get().isDarkTheme() ? R.color.dark_background : R.color.light_background;
+        final int color = AppResources.get().isLightTheme() ? R.color.light_background : R.color.dark_background;
         mCacheGraph.setBackgroundResource(color);
 
         mCacheGraph.animateXY(ANIM_DUR, ANIM_DUR);
@@ -304,7 +304,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
 
         final int color = mAppItem.isSystemApp()
                 ? ContextCompat.getColor(this, R.color.red_middle)
-                : AppResources.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
+                : AppResources.get().isLightTheme() ? Color.BLACK : Color.WHITE;
         mAppLabel.setTextColor(color);
         mAppVersion.setText(mAppItem.getVersion());
 
@@ -490,7 +490,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
             l.setXEntrySpace(7f);
             l.setYEntrySpace(5f);
 
-            final int color = AppResources.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
+            final int color = AppResources.get().isLightTheme() ? Color.BLACK : Color.WHITE;
             l.setTextColor(color);
 
             // we are ready

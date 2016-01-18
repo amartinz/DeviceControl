@@ -305,7 +305,7 @@
   <string name="sunlight_enhancement_summary">在强光下提高显示亮度和可读性</string>
   <string name="color_enhancement">色彩增强</string>
   <string name="dark_theme">暗色主题</string>
-  <string name="dark_theme_summary">暗 / 亮主题之间切换</string>
+  <string name="light_theme_summary">暗 / 亮主题之间切换</string>
   <string name="platform_information">平台信息</string>
   <string name="build_id">版本号</string>
   <string name="android_id">Android ID</string>

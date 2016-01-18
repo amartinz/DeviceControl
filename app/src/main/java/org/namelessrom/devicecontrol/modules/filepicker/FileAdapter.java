@@ -119,7 +119,7 @@ public class FileAdapter extends BaseAdapter {
             }
         });
 
-        int color = AppResources.get().isDarkTheme() ? Color.WHITE : Color.BLACK;
+        int color = AppResources.get().isLightTheme() ? Color.BLACK : Color.WHITE;
 
         viewHolder.name.setText(file.getName());
 

@@ -292,7 +292,7 @@
   <string name="sunlight_enhancement_summary">Nâng cao độ sáng màn hình và khả năng xem dưới ánh sáng mặt trời</string>
   <string name="color_enhancement">Cải thiện màu sắc</string>
   <string name="dark_theme">Tông tối</string>
-  <string name="dark_theme_summary">Chuyển tông màu tối/sáng</string>
+  <string name="light_theme_summary">Chuyển tông màu tối/sáng</string>
   <string name="platform_information">Thông tin nền</string>
   <string name="build_id">Mã build</string>
   <string name="android_id">Mã Android</string>

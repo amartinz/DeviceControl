@@ -244,7 +244,7 @@
   <string name="sunlight_enhancement_summary">Підвищення яскравості дисплея під час яскравого сонячного світла</string>
   <string name="color_enhancement">Покращення кольору</string>
   <string name="dark_theme">Темна тема</string>
-  <string name="dark_theme_summary">Переключення між темною/світло теми</string>
+  <string name="light_theme_summary">Переключення між темною/світло теми</string>
   <string name="platform_information">Інформація про пристрій</string>
   <string name="build_id">Ідентифікатор збірки</string>
   <string name="android_id">Ідентифікатор Android</string>

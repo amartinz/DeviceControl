@@ -111,8 +111,8 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
 
 
     @Override protected void setupTheme() {
-        final boolean isDarkTheme = AppResources.get().isDarkTheme();
-        setTheme(isDarkTheme ? R.style.AppTheme_Dark_Translucent : R.style.AppTheme_Light_Translucent);
+        final boolean isLightTheme = AppResources.get().isLightTheme();
+        setTheme(isLightTheme ? R.style.AppTheme_Light_Translucent : R.style.AppTheme_Dark_Translucent);
     }
 
     @Override protected void onResume() {

@@ -291,7 +291,7 @@
   <string name="sunlight_enhancement_summary">Sporește luminozitatea afişajului şi lizibilitatea sub lumina strălucitoare a soarelui</string>
   <string name="color_enhancement">Intensificator culoare</string>
   <string name="dark_theme">Temă întunecată</string>
-  <string name="dark_theme_summary">Comută între tema întunecată / luminoasă</string>
+  <string name="light_theme_summary">Comută între tema întunecată / luminoasă</string>
   <string name="platform_information">Platformă de informare</string>
   <string name="build_id">Id compilare</string>
   <string name="android_id">Id Android</string>

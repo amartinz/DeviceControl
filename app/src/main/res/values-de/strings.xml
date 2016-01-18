@@ -319,7 +319,7 @@
   <string name="sunlight_enhancement_summary">Lesbarkeit des Displays bei grellem Sonnenlicht verbessern</string>
   <string name="color_enhancement">Farbverbesserung</string>
   <string name="dark_theme">Dunkles Design</string>
-  <string name="dark_theme_summary">Wechseln zwischen dem hellen und dunklen Design</string>
+  <string name="light_theme_summary">Wechseln zwischen dem hellen und dunklen Design</string>
   <string name="platform_information">Plattforminformationen</string>
   <string name="build_id">Build-Id</string>
   <string name="android_id">Android-Id</string>

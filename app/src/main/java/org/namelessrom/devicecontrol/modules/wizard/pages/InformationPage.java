@@ -56,10 +56,10 @@ public class InformationPage extends Page {
         }
 
         @Override protected int getLayoutResource() {
-            if (AppResources.get().isDarkTheme()) {
-                return R.layout.wizard_page_welcome_dark;
+            if (AppResources.get().isLightTheme()) {
+                return R.layout.wizard_page_welcome_light;
             }
-            return R.layout.wizard_page_welcome_light;
+            return R.layout.wizard_page_welcome_dark;
         }
 
         @Override protected int getTitleResource() { return R.string.setup_welcome; }

@@ -18,6 +18,7 @@
 package org.namelessrom.devicecontrol.modules.preferences;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.pollfish.main.PollFish;
@@ -33,7 +34,7 @@ import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 
 public class MainPreferencesFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceChangeListener {
     // TODO: more customization
-    private MaterialSwitchPreference mDarkTheme;
+    private MaterialSwitchPreference mLightTheme;
 
     private MaterialSwitchPreference mShowPollfish;
 
@@ -45,9 +46,9 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         super.onViewCreated(view, savedInstanceState);
         final DeviceConfig configuration = DeviceConfig.get();
 
-        mDarkTheme = (MaterialSwitchPreference) view.findViewById(R.id.prefs_dark_theme);
-        mDarkTheme.setChecked(AppResources.get().isDarkTheme());
-        mDarkTheme.setOnPreferenceChangeListener(this);
+        mLightTheme = (MaterialSwitchPreference) view.findViewById(R.id.prefs_light_theme);
+        mLightTheme.setChecked(AppResources.get().isLightTheme());
+        mLightTheme.setOnPreferenceChangeListener(this);
 
         mShowPollfish = (MaterialSwitchPreference) view.findViewById(R.id.prefs_show_pollfish);
         mShowPollfish.setChecked(configuration.showPollfish);
@@ -68,15 +69,16 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             }
             mShowPollfish.setChecked(value);
             return true;
-        } else if (mDarkTheme == preference) {
-            final boolean isDark = (Boolean) newValue;
-            AppResources.get().setDarkTheme(isDark);
-            mDarkTheme.setChecked(isDark);
+        } else if (mLightTheme == preference) {
+            final boolean isLight = (Boolean) newValue;
+            AppResources.get().setLightTheme(isLight);
+            mLightTheme.setChecked(isLight);
 
-            if (isDark) {
-                AppResources.get().setAccentColor(getResources().getColor(R.color.accent));
+            if (isLight) {
+                AppResources.get().setAccentColor(ContextCompat.getColor(getActivity(), R.color.accent_light));
             } else {
-                AppResources.get().setAccentColor(getResources().getColor(R.color.accent_light));
+                AppResources.get().setAccentColor(ContextCompat.getColor(getActivity(), R.color.accent));
+
             }
 
             // restart the activity to apply new theme

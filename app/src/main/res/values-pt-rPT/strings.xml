@@ -302,7 +302,7 @@
   <string name="sunlight_enhancement_summary">Aumentar a luminosidade e legibilidade do ecrã sob intensa luz solar</string>
   <string name="color_enhancement">Realce de cor</string>
   <string name="dark_theme">Tema escuro</string>
-  <string name="dark_theme_summary">Alternar entre o tema escuro / claro</string>
+  <string name="light_theme_summary">Alternar entre o tema escuro / claro</string>
   <string name="platform_information">Informações da plataforma</string>
   <string name="build_id">ID da versão</string>
   <string name="android_id">Id do Android</string>

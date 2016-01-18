@@ -303,7 +303,7 @@
   <string name="sunlight_enhancement_summary">Helderheid van het scherm en leesbaarheid verbeteren bij fel zonlicht</string>
   <string name="color_enhancement">Kleurverbetering</string>
   <string name="dark_theme">Donker thema</string>
-  <string name="dark_theme_summary">Schakelen tussen het donker / licht thema</string>
+  <string name="light_theme_summary">Schakelen tussen het donker / licht thema</string>
   <string name="platform_information">Platform informatie</string>
   <string name="build_id">Build id</string>
   <string name="android_id">Android id</string>

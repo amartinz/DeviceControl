@@ -31,7 +31,7 @@ public class DeviceConfig {
 
     public boolean dcFirstStart;
 
-    public boolean darkTheme;
+    public boolean lightTheme;
     public boolean showPollfish;
 
     public boolean skipChecks;

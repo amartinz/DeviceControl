@@ -36,9 +36,9 @@ public class PrivacyFragment extends Fragment {
         final WebView wv = (WebView) view.findViewById(R.id.dialog_help_webview);
         wv.getSettings().setTextZoom(90);
 
-        final String url = AppResources.get().isDarkTheme()
-                ? "file:///android_asset/privacy_dark.html"
-                : "file:///android_asset/privacy.html";
+        final String url = AppResources.get().isLightTheme()
+                ? "file:///android_asset/privacy.html"
+                : "file:///android_asset/privacy_dark.html";
         wv.loadUrl(url);
 
         return view;
