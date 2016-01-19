@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.modules.device;
+package org.namelessrom.devicecontrol.modules.info;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +27,7 @@ import android.view.View;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.modules.device.SensorActivity;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
 
 import java.util.ArrayList;
@@ -36,10 +37,10 @@ import java.util.Comparator;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 
-public class DeviceInformationSensorFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
+public class DeviceInfoSensorFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
 
     @Override protected int getLayoutResourceId() {
-        return R.layout.preferences_device_information_sensor;
+        return R.layout.pref_info_dev_sensor;
     }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {

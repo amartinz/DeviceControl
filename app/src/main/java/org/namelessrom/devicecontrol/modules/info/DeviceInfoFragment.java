@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.modules.device;
+package org.namelessrom.devicecontrol.modules.info;
 
 import android.support.v4.app.Fragment;
 
@@ -25,21 +25,24 @@ import org.namelessrom.devicecontrol.ui.views.AttachViewPagerFragment;
 
 import java.util.ArrayList;
 
-public class DeviceInformationFragment extends AttachViewPagerFragment {
+public class DeviceInfoFragment extends AttachViewPagerFragment {
 
     @Override protected int getFragmentId() { return DeviceConstants.ID_INFO_DEVICE; }
 
     @Override public ViewPagerAdapter getPagerAdapter() {
-        final ArrayList<Fragment> fragments = new ArrayList<>(3);
-        final ArrayList<CharSequence> titles = new ArrayList<>(3);
+        final ArrayList<Fragment> fragments = new ArrayList<>(4);
+        final ArrayList<CharSequence> titles = new ArrayList<>(4);
 
-        fragments.add(new DeviceInformationGeneralFragment());
+        fragments.add(new DeviceInfoGeneralFragment());
         titles.add(getString(R.string.general));
+
+        fragments.add(new DeviceInfoCpuFragment());
+        titles.add(getString(R.string.cpu));
 
         fragments.add(new DeviceInfoGpuFragment());
         titles.add(getString(R.string.gpu));
 
-        fragments.add(new DeviceInformationSensorFragment());
+        fragments.add(new DeviceInfoSensorFragment());
         titles.add(getString(R.string.sensors));
 
         return new ViewPagerAdapter(getChildFragmentManager(), fragments, titles);

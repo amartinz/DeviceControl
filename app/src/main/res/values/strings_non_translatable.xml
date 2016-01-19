@@ -84,7 +84,6 @@
     <string name="swappiness_title" translatable="false">Swappiness</string>
     <string name="vfs_title" translatable="false">VFS cache pressure</string>
     <!-- Licenses -->
-    <string name="copyright_help" translatable="false">Copyright \u00A9 2013–2014 Alexander \"Evisceration\" Martinz.</string>
     <string name="google_play_notice" translatable="false">Google Play is a trademark of Google Inc.</string>
     <!-- Arrays -->
     <!-- Sizes -->

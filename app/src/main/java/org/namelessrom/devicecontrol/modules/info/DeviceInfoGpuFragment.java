@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.namelessrom.devicecontrol.modules.device;
+package org.namelessrom.devicecontrol.modules.info;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,7 +39,7 @@ import hugo.weaving.DebugLog;
 public class DeviceInfoGpuFragment extends MaterialSupportPreferenceFragment {
 
     @Override protected int getLayoutResourceId() {
-        return R.layout.pref_info_gpu;
+        return R.layout.pref_info_dev_gpu;
     }
 
     @DebugLog @Override public void onViewCreated(final View view, Bundle savedInstanceState) {

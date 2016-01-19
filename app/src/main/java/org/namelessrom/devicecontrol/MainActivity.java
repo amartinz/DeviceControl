@@ -55,7 +55,7 @@ import org.namelessrom.devicecontrol.modules.bootup.BootupFragment;
 import org.namelessrom.devicecontrol.modules.cpu.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.modules.cpu.GovernorFragment;
 import org.namelessrom.devicecontrol.modules.device.DeviceFeatureFragment;
-import org.namelessrom.devicecontrol.modules.device.DeviceInformationFragment;
+import org.namelessrom.devicecontrol.modules.info.DeviceInfoFragment;
 import org.namelessrom.devicecontrol.modules.device.sub.FastChargeFragment;
 import org.namelessrom.devicecontrol.modules.device.sub.SoundControlFragment;
 import org.namelessrom.devicecontrol.modules.editor.BuildPropEditorFragment;
@@ -407,7 +407,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
             //--------------------------------------------------------------------------------------
             case DeviceConstants.ID_INFO_DEVICE:
                 if (!onResume) {
-                    mCurrentFragment = new DeviceInformationFragment();
+                    mCurrentFragment = new DeviceInfoFragment();
                 }
                 mTitle = mFragmentTitle = R.string.device;
                 mSubFragmentTitle = -1;

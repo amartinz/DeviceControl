@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.modules.device;
+package org.namelessrom.devicecontrol.modules.info;
 
 import android.app.Activity;
 import android.content.Context;
@@ -30,22 +30,20 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
 
-import java.util.List;
-
 import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.hardware.device.MemoryInfo;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 
-public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
+public class DeviceInfoGeneralFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener {
     private long[] mHits = new long[3];
     private boolean mEasterEggStarted = false;
 
     @Override protected int getLayoutResourceId() {
-        return R.layout.preferences_device_information_general;
+        return R.layout.pref_info_dev_general;
     }
 
-    public DeviceInformationGeneralFragment() { }
+    public DeviceInfoGeneralFragment() { }
 
     @Override public void onResume() {
         super.onResume();
@@ -88,29 +86,6 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
         addPreference(category, "memory_total", R.string.total, MemoryInfo.getAsMb(device.memoryInfo.total));
         addPreference(category, "memory_cached", R.string.cached, MemoryInfo.getAsMb(device.memoryInfo.cached));
         addPreference(category, "memory_free", R.string.free, MemoryInfo.getAsMb(device.memoryInfo.free));
-
-        // Processor
-        category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_processor);
-        final int bitResId = device.processorInfo.is64Bit ? R.string.bit_64 : R.string.bit_32;
-        addPreference(category, "cpu_bit", R.string.arch, getString(bitResId));
-
-        final String cpuAbi = getString(R.string.cpu_abi);
-        final List<String> abis = device.processorInfo.abisAsList();
-        final int length = abis.size();
-        for (int i = 0; i < length; i++) {
-            String abi = "cpu_abi";
-            String title = cpuAbi;
-            if (i != 0) {
-                abi = String.format("cpu_abi%s", i + 1);
-                title += String.valueOf(i + 1);
-            }
-            addPreference(category, abi, title, abis.get(i));
-        }
-
-        addPreference(category, "cpu_hardware", R.string.hardware, device.processorInfo.hardware);
-        addPreference(category, "cpu_processor", R.string.processor, device.processorInfo.processor);
-        addPreference(category, "cpu_features", R.string.features, device.processorInfo.features);
-        addPreference(category, "cpu_bogomips", R.string.bogomips, device.processorInfo.bogomips);
 
         // Kernel
         category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_kernel);

@@ -33,13 +33,6 @@
         app:prefKey="memory"
         app:prefTitle="@string/memory" />
 
-    <!-- Processor -->
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
-        android:id="@+id/cat_processor"
-        style="@style/MaterialPreferences.Default"
-        app:prefKey="processor"
-        app:prefTitle="@string/processor" />
-
     <!-- Kernel -->
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_kernel"

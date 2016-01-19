@@ -509,6 +509,8 @@
     <string name="cleared_data">Cleared data!</string>
     <string name="force_stopped_app">Force stopped app!</string>
 
+    <string name="clock_speed">Clock speed</string>
+    <string name="cores">Cores</string>
     <string name="frequency_available">Available frequencies</string>
     <string name="frequency_current">Current frequency</string>
     <string name="frequency_max">Maximum frequency</string>
