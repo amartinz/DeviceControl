@@ -58,8 +58,7 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
 
         // Platform
         CustomPreferenceCategoryMaterial category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_platform);
-        addPreference(category, "platform_version", R.string.version, device.platformVersion)
-                .setOnPreferenceClickListener(this); // selectable because of the easter egg
+        addPreference(category, "platform_version", R.string.version, device.platformVersion).setOnPreferenceClickListener(this);
         addPreference(category, "platform_id", R.string.build_id, device.platformId);
         addPreference(category, "platform_type", R.string.type, device.platformType);
         addPreference(category, "platform_tags", R.string.tags, device.platformTags);
@@ -71,8 +70,7 @@ public class DeviceInformationGeneralFragment extends MaterialSupportPreferenceF
         addPreference(category, "vm_version", R.string.version, device.vmVersion);
 
         // Device
-        category =
-                (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_device_information);
+        category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_device_information);
         // TODO: save / restore / check --> ANDROID ID
         addPreference(category, "android_id", R.string.android_id, device.androidId);
         addPreference(category, "device_manufacturer", R.string.manufacturer, device.manufacturer);

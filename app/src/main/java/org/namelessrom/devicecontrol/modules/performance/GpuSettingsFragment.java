@@ -19,6 +19,7 @@ package org.namelessrom.devicecontrol.modules.performance;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +35,6 @@ import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
 import org.namelessrom.devicecontrol.ui.views.AttachMaterialPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
-
-import java.util.ArrayList;
 
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
@@ -62,33 +61,9 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         getGpu();
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup root, Bundle savedState) {
+    @NonNull @Override public View onCreateView(LayoutInflater inflater, ViewGroup root, Bundle savedState) {
         final View view = super.onCreateView(inflater, root, savedState);
-        assert view != null;
-
         mCatGpu = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_gpu);
-
-        CustomPreferenceCategoryMaterial category =
-                (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_gpu_opengl);
-        if (GpuUtils.isOpenGLES20Supported()) {
-            // our preference and string for storing gpu / opengl information
-            MaterialPreference infoPref;
-
-            final ArrayList<String> glesInformation = GpuUtils.getOpenGLESInformation();
-
-            String tmp;
-            for (int i = 0; i < glesInformation.size(); i++) {
-                tmp = glesInformation.get(i);
-                if (!TextUtils.isEmpty(tmp)) {
-                    infoPref = new MaterialPreference(getActivity());
-                    infoPref.init(getActivity());
-                    category.addPreference(infoPref);
-                    infoPref.setTitle(getString(GpuUtils.GL_STRINGS[i]));
-                    infoPref.setSummary(tmp);
-                }
-            }
-        }
-
         return view;
     }
 
@@ -119,7 +94,7 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                     mFreqMax = new MaterialListPreference(activity);
                     mFreqMax.init(activity);
                     mFreqMax.setKey("pref_max_gpu");
-                    mFreqMax.setTitle(getString(R.string.gpu_freq_max));
+                    mFreqMax.setTitle(getString(R.string.frequency_max));
                     mFreqMax.setAdapter(mFreqMax.createAdapter(gpuNames, frequencies));
                     mFreqMax.setValue(tmp);
                     mCatGpu.addPreference(mFreqMax);
@@ -144,7 +119,7 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                     mFreqMin = new MaterialListPreference(activity);
                     mFreqMin.init(activity);
                     mFreqMin.setKey("pref_min_gpu");
-                    mFreqMin.setTitle(getString(R.string.gpu_freq_min));
+                    mFreqMin.setTitle(getString(R.string.frequency_min));
                     mFreqMin.setAdapter(mFreqMin.createAdapter(gpuNames, frequencies));
                     mFreqMin.setValue(tmp);
                     mCatGpu.addPreference(mFreqMin);
@@ -215,8 +190,7 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         } else if (m3dScaling == preference) {
             final boolean value = (Boolean) objVal;
             m3dScaling.setChecked(value);
-            ActionProcessor
-                    .processAction(ActionProcessor.ACTION_3D_SCALING, value ? "1" : "0", true);
+            ActionProcessor.processAction(ActionProcessor.ACTION_3D_SCALING, value ? "1" : "0", true);
             return true;
         }
 

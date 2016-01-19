@@ -21,11 +21,6 @@
     android:orientation="vertical">
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
-        android:id="@+id/cat_gpu_opengl"
-        style="@style/MaterialPreferences.Default"
-        app:prefTitle="@string/gpu_opengl" />
-
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_gpu"
         style="@style/MaterialPreferences.Default"
         app:prefTitle="@string/gpu" />

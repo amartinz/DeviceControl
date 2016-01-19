@@ -126,7 +126,7 @@
     <string name="settings">Settings</string>
     <string name="refresh">Refresh</string>
     <string name="hide_status">Hide status</string>
-    <string name="gpu">GPU</string>
+
     <string name="gpu_governor">GPU governor</string>
     <string name="gpusettings">GPU settings</string>
     <string name="gpu_freq_max">GPU maximum speed</string>
@@ -508,4 +508,9 @@
     <string name="cleared_cache">Cleared cache!</string>
     <string name="cleared_data">Cleared data!</string>
     <string name="force_stopped_app">Force stopped app!</string>
+
+    <string name="frequency_available">Available frequencies</string>
+    <string name="frequency_current">Current frequency</string>
+    <string name="frequency_max">Maximum frequency</string>
+    <string name="frequency_min">Minimum frequency</string>
 </resources>

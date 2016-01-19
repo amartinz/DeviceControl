@@ -26,8 +26,7 @@ public class CustomPreferenceCategoryMaterial extends MaterialPreferenceCategory
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public CustomPreferenceCategoryMaterial(Context context, AttributeSet attrs, int defStyleAttr,
-            int defStyleRes) {
+    public CustomPreferenceCategoryMaterial(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

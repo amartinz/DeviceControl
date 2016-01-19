@@ -30,11 +30,14 @@ public class DeviceInformationFragment extends AttachViewPagerFragment {
     @Override protected int getFragmentId() { return DeviceConstants.ID_INFO_DEVICE; }
 
     @Override public ViewPagerAdapter getPagerAdapter() {
-        final ArrayList<Fragment> fragments = new ArrayList<>(2);
-        final ArrayList<CharSequence> titles = new ArrayList<>(2);
+        final ArrayList<Fragment> fragments = new ArrayList<>(3);
+        final ArrayList<CharSequence> titles = new ArrayList<>(3);
 
         fragments.add(new DeviceInformationGeneralFragment());
         titles.add(getString(R.string.general));
+
+        fragments.add(new DeviceInfoGpuFragment());
+        titles.add(getString(R.string.gpu));
 
         fragments.add(new DeviceInformationSensorFragment());
         titles.add(getString(R.string.sensors));

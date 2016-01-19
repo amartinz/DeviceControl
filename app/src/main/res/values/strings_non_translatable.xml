@@ -105,6 +105,8 @@
     <string name="size_100_mb" translatable="false">100 MB</string>
     <!-- GPU / OpenGL -->
     <string name="gpu_opengl" translatable="false">GPU / OpenGL</string>
+    <string name="gpu" translatable="false">GPU</string>
+    <string name="opengl" translatable="false">OpenGL</string>
     <!-- Bits -->
     <string name="bit_32" translatable="false">32-bit</string>
     <string name="bit_64" translatable="false">64-bit</string>
