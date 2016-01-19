@@ -80,12 +80,7 @@ public class DeviceInfoGeneralFragment extends MaterialSupportPreferenceFragment
         addPreference(category, "device_radio_version", R.string.radio_version, device.radio);
         addPreference(category, "device_selinux", R.string.selinux, device.isSELinuxEnforcing
                 ? getString(R.string.selinux_enforcing) : getString(R.string.selinux_permissive));
-
-        // Memory
-        category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_memory);
-        addPreference(category, "memory_total", R.string.total, MemoryInfo.getAsMb(device.memoryInfo.total));
-        addPreference(category, "memory_cached", R.string.cached, MemoryInfo.getAsMb(device.memoryInfo.cached));
-        addPreference(category, "memory_free", R.string.free, MemoryInfo.getAsMb(device.memoryInfo.free));
+        addPreference(category, "memory_total", R.string.memory_total, MemoryInfo.getAsMb(device.memoryInfo.total));
 
         // Kernel
         category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_kernel);

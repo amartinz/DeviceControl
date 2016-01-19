@@ -515,4 +515,6 @@
     <string name="frequency_current">Current frequency</string>
     <string name="frequency_max">Maximum frequency</string>
     <string name="frequency_min">Minimum frequency</string>
+
+    <string name="memory_total">Available memory</string>
 </resources>

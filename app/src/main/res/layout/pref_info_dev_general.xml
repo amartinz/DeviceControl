@@ -26,13 +26,6 @@
         app:prefKey="device_information"
         app:prefTitle="@string/device_information" />
 
-    <!-- Memory -->
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
-        android:id="@+id/cat_memory"
-        style="@style/MaterialPreferences.Default"
-        app:prefKey="memory"
-        app:prefTitle="@string/memory" />
-
     <!-- Kernel -->
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_kernel"
