@@ -30,7 +30,6 @@
         <item name="colorAccent">@color/accent</item>
         <item name="colorPrimary">@color/dark_background</item>
         <item name="colorPrimaryDark">@color/dark_primary_dark</item>
-        <item name="colorControlHighlight">@color/accent</item>
         <item name="themeColor">@color/dark_background</item>
         <item name="themeColorInvert">@color/light_background</item>
         <item name="themeMenu">@color/dark_menu</item>
@@ -53,7 +52,6 @@
         <item name="colorAccent">@color/accent_light</item>
         <item name="colorPrimary">@color/light_background</item>
         <item name="colorPrimaryDark">@color/light_primary_dark</item>
-        <item name="colorControlHighlight">@color/accent_light</item>
         <item name="themeColor">@color/light_background</item>
         <item name="themeColorInvert">@color/dark_background</item>
         <item name="themeMenu">@color/light_menu</item>
