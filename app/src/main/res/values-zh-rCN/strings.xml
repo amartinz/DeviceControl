@@ -423,6 +423,23 @@
   <string name="cpu_lock_freq_summary">试图阻止修改频率\n可能在某些设备上不起作用！</string>
   <string name="cpu_lock_gov">锁定调速器</string>
   <string name="cpu_lock_gov_summary">试图阻止更改调速器\n可能在某些设备不工作！</string>
-  <string name="no_items_found">无此项目......</string>
+  <string name="no_items_found">无此项目...</string>
   <string name="notification">通知</string>
+  <string name="support">支持</string>
+  <string name="translate">翻译</string>
+  <string name="donate_">捐赠</string>
+  <string name="donate_value">捐赠%s</string>
+  <string name="donate_subscription">使用订阅</string>
+  <string name="donate_subscription_note">注： 每月订阅一次 ！</string>
+  <string name="donate_via">通过 %s 捐赠</string>
+  <string name="donate_paypal_message">这会将您重定向到 PayPal 来完成捐赠。</string>
+  <string name="show_pollfish">激活 Pollfish</string>
+  <string name="task_type">任务类型</string>
+  <string name="event_based">基于事件的</string>
+  <string name="next">下一步</string>
+  <string name="prev">上一步</string>
+  <string name="review">审查</string>
+  <string name="finish">完成</string>
+  <string name="submit_confirm_message">你想要继续吗？</string>
+  <string name="edit">编辑</string>
 </resources>

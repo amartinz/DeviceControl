@@ -256,4 +256,12 @@
   <string name="emmc_date">Дата</string>
   <string name="setup_complete">Встановлення завершено</string>
   <string name="string_default">За замовчуванням</string>
+  <string name="task_type">Тип завдання</string>
+  <string name="event_based">На основі подій</string>
+  <string name="next">Наступна</string>
+  <string name="prev">Попередня</string>
+  <string name="review">Переглянути</string>
+  <string name="finish">Завершити</string>
+  <string name="submit_confirm_message">Бажаєте продовжити?</string>
+  <string name="edit">Редагувати</string>
 </resources>

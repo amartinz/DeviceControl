@@ -419,4 +419,21 @@
   <string name="cpu_lock_gov_summary">Tenta impedir a modificação de governors\nIsto pode não funcionar em alguns dispositivos!</string>
   <string name="no_items_found">Nenhum item encontrado...</string>
   <string name="notification">Notificação</string>
+  <string name="support">Suporte</string>
+  <string name="translate">Traduzir</string>
+  <string name="donate_">Doar</string>
+  <string name="donate_value">Doar %s</string>
+  <string name="donate_subscription">Utilize a subscrição</string>
+  <string name="donate_subscription_note">Nota: As assinaturas são mensais!</string>
+  <string name="donate_via">Doar via %s</string>
+  <string name="donate_paypal_message">Isto redirecionará para o PayPal para completar a doação.</string>
+  <string name="show_pollfish">Ativar Pollfish</string>
+  <string name="task_type">Tipo de tarefa</string>
+  <string name="event_based">Evento baseado</string>
+  <string name="next">Próximo</string>
+  <string name="prev">Anterior</string>
+  <string name="review">Revisar</string>
+  <string name="finish">Finalizar</string>
+  <string name="submit_confirm_message">Deseja continuar?</string>
+  <string name="edit">Editar</string>
 </resources>

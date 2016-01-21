@@ -234,4 +234,12 @@
   <string name="system">Sistema</string>
   <string name="emmc_date">Fecha</string>
   <string name="string_default">Por defecto</string>
+  <string name="task_type">Tipo de tarea</string>
+  <string name="event_based">Evento basado</string>
+  <string name="next">Próximo</string>
+  <string name="prev">Anterior</string>
+  <string name="review">Revisar</string>
+  <string name="finish">Finalizar</string>
+  <string name="submit_confirm_message">¿Deseas continuar?</string>
+  <string name="edit">Editar</string>
 </resources>

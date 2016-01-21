@@ -369,4 +369,15 @@
   <string name="arch">Arhitectură</string>
   <string name="string_default">Implicit</string>
   <string name="touch_boost">Mărire impuls de atingere</string>
+  <string name="support">Ajutor</string>
+  <string name="donate_">Donează</string>
+  <string name="show_pollfish">Activează Pollfish</string>
+  <string name="task_type">Tip de sarcină</string>
+  <string name="event_based">Pe bază de eveniment</string>
+  <string name="next">Următorul</string>
+  <string name="prev">Anterior</string>
+  <string name="review">Revizui</string>
+  <string name="finish">Finalizează</string>
+  <string name="submit_confirm_message">Vrei să continui?</string>
+  <string name="edit">Editează</string>
 </resources>

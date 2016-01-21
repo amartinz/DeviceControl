@@ -20,4 +20,5 @@
   <string name="backup">Varmuuskopio</string>
   <string name="no_items_found">Kohteita ei löytynyt&#8230;</string>
   <string name="notification">Ilmoitus</string>
+  <string name="finish">Valmis</string>
 </resources>

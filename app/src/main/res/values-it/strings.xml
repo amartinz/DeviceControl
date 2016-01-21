@@ -358,4 +358,15 @@
   <string name="arch">Architettura</string>
   <string name="string_default">Predefinito</string>
   <string name="touch_boost">Touch boost</string>
+  <string name="support">Supporto</string>
+  <string name="donate_">Donare</string>
+  <string name="show_pollfish">Attiva Pollfish</string>
+  <string name="task_type">Tipo di attività</string>
+  <string name="event_based">Evento basato</string>
+  <string name="next">Prossimo</string>
+  <string name="prev">Precedente</string>
+  <string name="review">Recensione</string>
+  <string name="finish">Fine</string>
+  <string name="submit_confirm_message">Si desidera procedere?</string>
+  <string name="edit">Modifica</string>
 </resources>

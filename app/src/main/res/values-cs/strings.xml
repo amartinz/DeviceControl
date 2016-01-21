@@ -235,4 +235,12 @@
   <string name="system">Systém</string>
   <string name="emmc_date">Datum</string>
   <string name="string_default">Výchozí</string>
+  <string name="task_type">Typ úlohy</string>
+  <string name="event_based">Na základě události</string>
+  <string name="next">Další</string>
+  <string name="prev">Předchozí</string>
+  <string name="review">Prohlédnout</string>
+  <string name="finish">Dokončit</string>
+  <string name="submit_confirm_message">Chcete pokračovat?</string>
+  <string name="edit">Upravit</string>
 </resources>

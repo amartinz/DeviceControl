@@ -467,4 +467,22 @@
   <string name="notification">Обавештења</string>
   <string name="bootup_items">Ставке за покретање</string>
   <string name="bootup_category_no_items">Категорија не садржи ниједну ставку за покретање!</string>
+  <string name="support">Подршка</string>
+  <string name="translate">Преведи</string>
+  <string name="donate_">Донирајтe</string>
+  <string name="donate_value">Донирајте %s</string>
+  <string name="donate_subscription">Претплатите се</string>
+  <string name="donate_subscription_note">Напомена: Претплате су на месечном нивоу!</string>
+  <string name="donate_via">Донирај преко %s</string>
+  <string name="donate_paypal_message">бићете преусмерени на PayPal како бисте комплетирали донацију.</string>
+  <string name="show_pollfish">Активирање Pollfish-а</string>
+  <string name="show_pollfish_summary">Сваком анкетом коју одрадите помажете нам да напредујемо. Наравно, слободни сте да их искључите :)</string>
+  <string name="task_type">Врста задатка</string>
+  <string name="event_based">На основу догађаја</string>
+  <string name="next">Следећи</string>
+  <string name="prev">Претходни</string>
+  <string name="review">Мишљења других</string>
+  <string name="finish">Заврши</string>
+  <string name="submit_confirm_message">Желите ли да наставите?</string>
+  <string name="edit">Уреди</string>
 </resources>

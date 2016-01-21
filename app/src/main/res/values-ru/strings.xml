@@ -287,4 +287,22 @@
   <string name="emmc_date">Дата</string>
   <string name="setup_complete">Установка завершена</string>
   <string name="string_default">По умолчанию</string>
+  <string name="support">Поддерживать</string>
+  <string name="translate">Переводчик</string>
+  <string name="donate_">Пожертвовать</string>
+  <string name="donate_value">Пожертвовать %s</string>
+  <string name="donate_subscription">Воспользоваться подпиской</string>
+  <string name="donate_subscription_note">Примечание: Подписка оплачивается ежемесячно!</string>
+  <string name="donate_via">Пожертвовать через %s</string>
+  <string name="donate_paypal_message">Вы будете перенаправлены на PayPal.</string>
+  <string name="show_pollfish">Показать Pollfish</string>
+  <string name="show_pollfish_summary">Каждый выполненный вами опрос помогает нам расти. Не стесняйтесь, чтобы отключить его, конечно :)</string>
+  <string name="task_type">Тип задачи</string>
+  <string name="event_based">На основе события</string>
+  <string name="next">Следующий</string>
+  <string name="prev">Назад</string>
+  <string name="review">Обзор</string>
+  <string name="finish">Закончить</string>
+  <string name="submit_confirm_message">Вы хотите продолжить?</string>
+  <string name="edit">Изменить</string>
 </resources>

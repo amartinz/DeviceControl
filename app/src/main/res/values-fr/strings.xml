@@ -376,4 +376,20 @@
   <string name="steps">Pas</string>
   <string name="far">Éloigné</string>
   <string name="near">Proche</string>
+  <string name="support">Aide</string>
+  <string name="donate_">Faire un don</string>
+  <string name="donate_value">Faire un don de %s</string>
+  <string name="donate_subscription">Opter pour l\'abonnement</string>
+  <string name="donate_subscription_note">Remarque: Les abonnements sont mensuels !</string>
+  <string name="donate_via">Faire un don via %s</string>
+  <string name="donate_paypal_message">Cela vous redirigera vers PayPal pour terminer le don.</string>
+  <string name="show_pollfish">Activer Pollfish</string>
+  <string name="task_type">Type de tâche</string>
+  <string name="event_based">Événement basé</string>
+  <string name="next">Suivant</string>
+  <string name="prev">Précédent</string>
+  <string name="review">Revoir</string>
+  <string name="finish">Terminer</string>
+  <string name="submit_confirm_message">Voulez-vous continuer?</string>
+  <string name="edit">Editer</string>
 </resources>

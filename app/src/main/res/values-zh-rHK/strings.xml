@@ -25,7 +25,7 @@
   <string name="more_information">更多資訊</string>
   <string name="exit">退出</string>
   <string name="close">關閉</string>
-  <string name="message_loading">正在載入，請稍後......</string>
+  <string name="message_loading">正在載入，請稍後...</string>
   <string name="action_press_again">再按一次以退出</string>
   <string name="defaults_button">重置為預設值</string>
   <string name="general">一般設定</string>
@@ -213,4 +213,15 @@
   <string name="arch">硬體平台</string>
   <string name="string_default">預設</string>
   <string name="touch_boost">觸摸加速</string>
+  <string name="support">支援 </string>
+  <string name="donate_">捐贈</string>
+  <string name="show_pollfish">啟動 Pollfish</string>
+  <string name="task_type">任務類型</string>
+  <string name="event_based">基於事件</string>
+  <string name="next">下一個</string>
+  <string name="prev">上一頁</string>
+  <string name="review">審查</string>
+  <string name="finish">完成</string>
+  <string name="submit_confirm_message">您要繼續嗎？</string>
+  <string name="edit">編輯</string>
 </resources>

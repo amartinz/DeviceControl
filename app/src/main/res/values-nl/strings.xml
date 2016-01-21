@@ -423,4 +423,21 @@
   <string name="cpu_lock_gov_summary">Probeert om te voorkomen dat governors worden aangepast\nDit werkt niet op sommige apparaten!</string>
   <string name="no_items_found">Geen items gevonden&#8230;</string>
   <string name="notification">Melding</string>
+  <string name="support">Ondersteuning</string>
+  <string name="translate">Vertalen</string>
+  <string name="donate_">Doneer</string>
+  <string name="donate_value">Doneren %s</string>
+  <string name="donate_subscription">Gebruik abonnement</string>
+  <string name="donate_subscription_note">Opmerking: Abonnementen zijn maandelijks!</string>
+  <string name="donate_via">Doneren via %s</string>
+  <string name="donate_paypal_message">Dit zal u omleiden naar PayPal om de donatie te voltooien.</string>
+  <string name="show_pollfish">Pollfish activeren</string>
+  <string name="task_type">Taaktype</string>
+  <string name="event_based">Gebaseerd op gebeurtenis</string>
+  <string name="next">Volgende</string>
+  <string name="prev">Vorige</string>
+  <string name="review">Beoordeling</string>
+  <string name="finish">Afronden</string>
+  <string name="submit_confirm_message">Wilt u doorgaan?</string>
+  <string name="edit">Bewerken</string>
 </resources>

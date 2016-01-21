@@ -21,4 +21,15 @@
   <string name="system">Sistem</string>
   <string name="emmc_date">Tarih</string>
   <string name="string_default">Varsayılan</string>
+  <string name="support">Destek</string>
+  <string name="donate_">Bağış Yap</string>
+  <string name="show_pollfish">Pollfish i etkinleştir</string>
+  <string name="task_type">Görev türü</string>
+  <string name="event_based">Olay tabanlı</string>
+  <string name="next">Sonraki</string>
+  <string name="prev">Önceki</string>
+  <string name="review">İnceleme</string>
+  <string name="finish">Bitiş</string>
+  <string name="submit_confirm_message">Devam etmek istiyor musunuz?</string>
+  <string name="edit">Düzenle</string>
 </resources>
