@@ -19,7 +19,6 @@ package org.namelessrom.devicecontrol.actions.cpu;
 
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;

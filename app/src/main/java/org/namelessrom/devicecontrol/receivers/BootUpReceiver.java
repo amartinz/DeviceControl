@@ -43,11 +43,13 @@ public class BootUpReceiver extends BroadcastReceiver {
     private static final int NOTIFICATION_ID = 1000;
 
     @Override public void onReceive(final Context ctx, final Intent intent) {
-        AsyncTask.execute(new Runnable() {
-            @Override public void run() {
-                startBootupStuffsAsync(ctx);
-            }
-        });
+        if (intent != null && Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+            AsyncTask.execute(new Runnable() {
+                @Override public void run() {
+                    startBootupStuffsAsync(ctx);
+                }
+            });
+        }
     }
 
     private void startBootupStuffsAsync(Context ctx) {

@@ -287,38 +287,4 @@
     <string-array name="hardware_display_gamma_calibration_min" translatable="false">
         <item>0</item>
     </string-array>
-
-    <!-- GPU -->
-    <!-- Base paths, the other paths use this one + their path
-         for example: /sys/class/kgsl + /kgsl-3d0/pwrscale/trustzone/governor -->
-    <string-array name="gpu_base" translatable="false">
-        <item>/sys/class/kgsl</item>
-        <item>/sys/devices/platform/galcore/gpu/gpu0/gpufreq</item>
-    </string-array>
-    <!-- Governor -->
-    <string-array name="gpu_gov_path" translatable="false">
-        <item>/kgsl-3d0/pwrscale/trustzone/governor</item>
-        <item>/kgsl-3d0/devfreq/governor</item>
-        <item>/scaling_governor</item>
-    </string-array>
-    <string-array name="gpu_govs_avail_path" translatable="false">
-        <item>/kgsl-3d0/devfreq/available_governors</item>
-        <item>/scaling_available_governors</item>
-    </string-array>
-    <!-- Frequencies -->
-    <string-array name="gpu_freqs_avail" translatable="false">
-        <item>/kgsl-3d0/gpu_available_frequencies</item>
-        <item>/kgsl-3d0/devfreq/available_frequencies</item>
-        <item>/scaling_available_frequencies</item>
-    </string-array>
-    <string-array name="gpu_freqs_max" translatable="false">
-        <item>/kgsl-3d0/max_gpuclk</item>
-        <item>/kgsl-3d0/devfreq/max_freq</item>
-        <item>/scaling_max_freq</item>
-    </string-array>
-    <string-array name="gpu_freqs_min" translatable="false">
-        <item>/kgsl-3d0/min_gpuclk</item>
-        <item>/kgsl-3d0/devfreq/min_freq</item>
-        <item>/scaling_min_freq</item>
-    </string-array>
 </resources>

@@ -83,6 +83,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     }
 
     @Override protected View onCreateView(final ViewGroup parent) {
+        super.onCreateView(parent);
         try {
             final LayoutInflater mInflater =
                     (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

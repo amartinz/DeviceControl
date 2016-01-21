@@ -141,7 +141,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         }
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup root, Bundle savedState) {
+    @NonNull @Override public View onCreateView(LayoutInflater inflater, ViewGroup root, Bundle savedState) {
         final Activity activity = getActivity();
         setHasOptionsMenu(true);
 

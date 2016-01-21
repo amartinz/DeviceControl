@@ -39,8 +39,8 @@ class Md5 {
 
         byte b;
         int c = 0;
-        for (int i = 0, z = bytes.length; i < z; i++) {
-            b = bytes[i];
+        for (final byte aByte : bytes) {
+            b = aByte;
             buf[c++] = DIGITS[(b >> 4) & 0xf];
             buf[c++] = DIGITS[b & 0xf];
         }

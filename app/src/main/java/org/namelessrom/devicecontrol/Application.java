@@ -27,7 +27,6 @@ import android.support.v4.content.ContextCompat;
 
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.CustomTabsHelper;
-import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 

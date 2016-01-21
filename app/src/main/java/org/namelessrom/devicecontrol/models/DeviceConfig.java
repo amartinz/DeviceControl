@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.models;
 
 import android.text.TextUtils;
 
-import alexander.martinz.libs.execution.Shell;
 import io.paperdb.Paper;
 
 /**
