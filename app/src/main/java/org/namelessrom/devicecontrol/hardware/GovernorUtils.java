@@ -131,7 +131,7 @@ public class GovernorUtils {
             return;
         }
 
-        final String cmd = String.format("cat \"%s\" 2> /dev/null;" + "echo -n \"[\";" + "cat \"%s\" 2> /dev/null;",
+        final String cmd = String.format("(cat \"%s\") 2> /dev/null;" + "echo -n \"[\";" + "(cat \"%s\") 2> /dev/null;",
                 GOV_AVAILALBLE_PATH, GOV0_CURRENT_PATH);
         final Command command = new Command(cmd) {
             @Override public void onCommandCompleted(int id, int exitCode) {

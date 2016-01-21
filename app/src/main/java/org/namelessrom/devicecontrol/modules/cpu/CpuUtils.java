@@ -230,11 +230,11 @@ public class CpuUtils {
             return;
         }
 
-        final String cmd = String.format("cat \"%s\" 2> /dev/null;" +
+        final String cmd = String.format("(cat \"%s\") 2> /dev/null;" +
                                          "echo -n \"[\";"           +
-                                         "cat \"%s\" 2> /dev/null;" +
+                                         "(cat \"%s\") 2> /dev/null;" +
                                          "echo -n \" ]\";"           +
-                                         "cat \"%s\" 2> /dev/null;",
+                                         "(cat \"%s\") 2> /dev/null;",
                 FREQ_AVAIL, getMaxCpuFrequencyPath(0), getMinCpuFrequencyPath(0));
         final Command command = new Command(cmd) {
             @Override public void onCommandCompleted(int id, int exitCode) {

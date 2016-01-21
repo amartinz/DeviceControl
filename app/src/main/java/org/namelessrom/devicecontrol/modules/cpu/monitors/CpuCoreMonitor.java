@@ -53,7 +53,7 @@ public class CpuCoreMonitor {
     private final String CORE_STRING;
 
     private CpuCoreMonitor(final Activity activity) {
-        openShell();
+        getShell();
         mActivity = activity;
 
         CORE_STRING = mActivity.getString(R.string.core);
@@ -112,8 +112,8 @@ public class CpuCoreMonitor {
         }
     };
 
-    private void openShell() {
-        if (mShell == null || mShell.isClosed()) {
+    private Shell getShell() {
+        if (mShell == null || mShell.isClosed() || mShell.shouldClose()) {
             final boolean shouldUseRoot = shouldUseRoot();
             Logger.v(this, "shouldUseRoot: %s", shouldUseRoot);
             if (shouldUseRoot) {
@@ -122,6 +122,7 @@ public class CpuCoreMonitor {
                 mShell = ShellManager.get().getNormalShell();
             }
         }
+        return mShell;
     }
 
     private boolean shouldUseRoot() {
@@ -142,7 +143,7 @@ public class CpuCoreMonitor {
     }
 
     private void updateStates() {
-        if (mShell == null) {
+        if (getShell() == null) {
             Logger.e(this, "Could not open shell!");
             return;
         }
@@ -152,16 +153,16 @@ public class CpuCoreMonitor {
             // if cpufreq directory exists ...
             sb.append("if [ -d \"/sys/devices/system/cpu/cpu").append(String.valueOf(i)).append("/cpufreq\" ]; then ");
             // cat /path/to/cpu/frequency
-            sb.append(String.format("cat \"%s\" 2> /dev/null;", CpuUtils.get().getCpuFrequencyPath(i)));
+            sb.append(String.format("(cat \"%s\") 2> /dev/null;", CpuUtils.get().getCpuFrequencyPath(i)));
             sb.append("echo -n \" \";");
             // cat /path/to/cpu/frequency_max
-            sb.append(String.format("cat \"%s\" 2> /dev/null;", CpuUtils.get().getMaxCpuFrequencyPath(i)));
+            sb.append(String.format("(cat \"%s\") 2> /dev/null;", CpuUtils.get().getMaxCpuFrequencyPath(i)));
             sb.append("echo -n \" \";");
             // cat /path/to/cpu/governor
-            sb.append(String.format("cat \"%s\" 2> /dev/null;", GovernorUtils.get().getGovernorPath(i)));
+            sb.append(String.format("(cat \"%s\") 2> /dev/null;", GovernorUtils.get().getGovernorPath(i)));
             sb.append("echo -n \" \";");
             // ... else echo 0 for them
-            sb.append("else echo \"0 0 0\" 2> /dev/null;fi;");
+            sb.append("else echo \"0 0 0\";fi;");
         }
 
         // example output: 0 162000 1890000 interactive
@@ -212,7 +213,7 @@ public class CpuCoreMonitor {
             }
         };
         command.setOutputType(Command.OUTPUT_STRING);
-        mShell.add(command);
+        getShell().add(command);
     }
 
 }
