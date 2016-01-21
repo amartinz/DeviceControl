@@ -28,7 +28,7 @@
         android:id="@+id/drawer_header_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.85"
+        android:alpha="0.75"
         android:scaleType="centerCrop"
         tools:src="@drawable/drawer_header_bg_dark" />
 
