@@ -32,6 +32,7 @@ public class DeviceConstants {
     public static final int ID_HOME = R.id.nav_item_home;
     //--- INFO
     public static final int ID_INFO_DEVICE = R.id.nav_item_info_device;
+    public static final int ID_INFO_HARDWARE = R.id.nav_item_info_hardware;
     public static final int ID_INFO_PERFORMANCE = R.id.nav_item_info_performance;
     //--- CTRL
     public static final int ID_CTRL_DEVICE = R.id.nav_item_controls_device;

@@ -40,6 +40,11 @@
                     android:icon="@drawable/ic_perm_device_information_black_24dp"
                     android:title="@string/drawer_title_info_device" />
                 <item
+                    android:id="@+id/nav_item_info_hardware"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_devices_other_black_24dp"
+                    android:title="@string/drawer_title_info_hardware" />
+                <item
                     android:id="@+id/nav_item_info_performance"
                     android:checkable="true"
                     android:icon="@drawable/ic_developer_board_black_24dp"

@@ -99,7 +99,8 @@
     </declare-styleable>
     <!-- Card Views -->
     <declare-styleable name="CardTitleView">
+        <attr name="icon" />
+        <attr name="iconTint" format="color|reference" />
         <attr name="title" />
-        <attr name="icon"  />
     </declare-styleable>
 </resources>

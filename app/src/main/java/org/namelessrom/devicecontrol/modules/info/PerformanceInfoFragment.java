@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.modules.performance;
+package org.namelessrom.devicecontrol.modules.info;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,7 +31,7 @@ import org.namelessrom.devicecontrol.ui.views.AttachFragment;
 import org.namelessrom.devicecontrol.ui.views.CpuStateView;
 import org.namelessrom.devicecontrol.ui.views.DeviceStatusView;
 
-public class InformationFragment extends AttachFragment {
+public class PerformanceInfoFragment extends AttachFragment {
 
     private DeviceStatusView mDeviceStats;
     private CpuStateView mCpuStates;

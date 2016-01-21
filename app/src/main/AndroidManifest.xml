@@ -65,6 +65,9 @@
     <uses-permission android:name="android.permission.REBOOT" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <!-- Fingerprint -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
     <!-- GMS -->
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />

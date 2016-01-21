@@ -62,9 +62,10 @@ import org.namelessrom.devicecontrol.modules.editor.BuildPropEditorFragment;
 import org.namelessrom.devicecontrol.modules.editor.SysctlEditorFragment;
 import org.namelessrom.devicecontrol.modules.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.modules.flasher.FlasherFragment;
+import org.namelessrom.devicecontrol.modules.info.HardwareInfoFragment;
 import org.namelessrom.devicecontrol.modules.performance.FilesystemFragment;
 import org.namelessrom.devicecontrol.modules.performance.GpuSettingsFragment;
-import org.namelessrom.devicecontrol.modules.performance.InformationFragment;
+import org.namelessrom.devicecontrol.modules.info.PerformanceInfoFragment;
 import org.namelessrom.devicecontrol.modules.performance.ThermalFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.IoSchedConfigFragment;
@@ -412,6 +413,20 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
                 mTitle = mFragmentTitle = R.string.device;
                 mSubFragmentTitle = -1;
                 break;
+            case DeviceConstants.ID_INFO_PERFORMANCE:
+                if (!onResume) {
+                    mCurrentFragment = new PerformanceInfoFragment();
+                }
+                mTitle = mFragmentTitle = R.string.information;
+                mSubFragmentTitle = -1;
+                break;
+            case DeviceConstants.ID_INFO_HARDWARE:
+                if (!onResume) {
+                    mCurrentFragment = new HardwareInfoFragment();
+                }
+                mTitle = mFragmentTitle = R.string.hardware;
+                mSubFragmentTitle = -1;
+                break;
             //--------------------------------------------------------------------------------------
             case DeviceConstants.ID_CTRL_DEVICE:
                 if (!onResume) {
@@ -455,14 +470,6 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
                     mCurrentFragment = new EntropyFragment();
                 }
                 mTitle = mSubFragmentTitle = R.string.entropy;
-                break;
-            //--------------------------------------------------------------------------------------
-            case DeviceConstants.ID_INFO_PERFORMANCE:
-                if (!onResume) {
-                    mCurrentFragment = new InformationFragment();
-                }
-                mTitle = mFragmentTitle = R.string.information;
-                mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
             case DeviceConstants.ID_CTRL_PROCESSOR:

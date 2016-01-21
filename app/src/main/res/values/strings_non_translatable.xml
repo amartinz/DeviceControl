@@ -20,6 +20,7 @@
     <!-- info -->
     <string name="drawer_title_info" translatable="false">@string/information</string>
     <string name="drawer_title_info_device" translatable="false">@string/device</string>
+    <string name="drawer_title_info_hardware" translatable="false">@string/hardware</string>
     <string name="drawer_title_info_performance" translatable="false">@string/performance</string>
     <!-- controls -->
     <string name="drawer_title_controls">Controls</string>
