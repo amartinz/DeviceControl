@@ -54,12 +54,18 @@ public abstract class BaseEditorFragment extends AttachFragment implements Adapt
     }
 
     @Override public boolean onQueryTextChange(String s) {
-        getAdapter().filter(s);
+        final PropAdapter propAdapter = getAdapter();
+        if (propAdapter != null) {
+            propAdapter.filter(s);
+        }
         return true;
     }
 
     @Override public boolean onClose() {
-        getAdapter().filter(null);
+        final PropAdapter propAdapter = getAdapter();
+        if (propAdapter != null) {
+            propAdapter.filter(null);
+        }
         return false;
     }
 

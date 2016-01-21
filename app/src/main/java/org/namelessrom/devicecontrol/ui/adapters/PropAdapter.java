@@ -83,8 +83,9 @@ public class PropAdapter extends ArrayAdapter<Prop> {
         if (!TextUtils.isEmpty(query)) {
             Iterator<Prop> iterator = mFiltered.iterator();
             while (iterator.hasNext()) {
-                Prop prop = iterator.next();
-                if (!prop.getName().toLowerCase().contains(query)) {
+                final Prop prop = iterator.next();
+                final String propName = ((prop != null) ? prop.getName() : null);
+                if (!TextUtils.isEmpty(propName) && propName.toLowerCase().contains(query)) {
                     iterator.remove();
                 }
             }

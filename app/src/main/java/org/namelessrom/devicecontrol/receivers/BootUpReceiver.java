@@ -54,13 +54,20 @@ public class BootUpReceiver extends BroadcastReceiver {
         Paper.init(ctx);
         Utils.startTaskerService(ctx);
 
-        // TODO: verify on non sim device
-        final TelephonyManager telephonyManager = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
-        final String simCountryIso = telephonyManager.getSimCountryIso().toLowerCase();
-        Logger.v(this, "SimCountryIso: %s", simCountryIso);
-        if (BuildConfig.DEBUG || "us".equals(simCountryIso)) {
-            // TODO: configurable
+        if (BuildConfig.DEBUG) {
+            Logger.v(this, "Starting Sense360");
             Sense360.start(ctx.getApplicationContext());
+        } else {
+            // TODO: verify on non sim device
+            final TelephonyManager telephonyManager = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
+            if (telephonyManager != null) {
+                final String simCountryIso = telephonyManager.getSimCountryIso().toLowerCase();
+                Logger.v(this, "SimCountryIso: %s", simCountryIso);
+                // TODO: configurable
+                if ("us".equals(simCountryIso)) {
+                    Sense360.start(ctx.getApplicationContext());
+                }
+            }
         }
 
         BootupConfig bootupConfig = BootupConfig.get();
@@ -77,7 +84,6 @@ public class BootUpReceiver extends BroadcastReceiver {
         }
 
         final Intent bootupRestorationIntent = new Intent(ctx, BootupService.class);
-
         if (bootupConfig.isAutomatedRestoration) {
             ctx.startService(bootupRestorationIntent);
             Logger.v(this, "Starting automated bootup restoration");
