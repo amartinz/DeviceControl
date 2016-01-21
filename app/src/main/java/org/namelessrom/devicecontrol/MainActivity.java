@@ -580,6 +580,13 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
                 mTitle = mSubFragmentTitle = R.string.wireless_file_manager;
                 break;
             //--------------------------------------------------------------------------------------
+            case DeviceConstants.ID_APP_INFO_LICENSE:
+                ((Application) getApplicationContext()).getCustomTabsHelper().launchUrl(this, DeviceConstants.URL_DC_LICENSE);
+                break;
+            case DeviceConstants.ID_APP_INFO_PRIVACY:
+                ((Application) getApplicationContext()).getCustomTabsHelper().launchUrl(this, DeviceConstants.URL_DC_PRIVACY);
+                break;
+            //--------------------------------------------------------------------------------------
             case DeviceConstants.ID_PREFERENCES:
                 if (!onResume) {
                     mCurrentFragment = new PreferencesFragment();

@@ -36,6 +36,10 @@
     <string name="drawer_title_tools_tasker" translatable="false">@string/tasker</string>
     <string name="drawer_title_tools_flasher" translatable="false">@string/flasher</string>
     <string name="drawer_title_tools_more" translatable="false">@string/more</string>
+    <!-- app info -->
+    <string name="drawer_title_app_info">App information</string>
+    <string name="drawer_title_app_info_license" translatable="false">@string/licenses</string>
+    <string name="drawer_title_app_info_privacy" translatable="false">@string/privacy</string>
 
     <!-- Fonts -->
     <string name="font_bold" translatable="false">sans-serif-bold</string>

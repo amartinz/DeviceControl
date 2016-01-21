@@ -58,9 +58,18 @@ public class DeviceConstants {
     public static final int ID_TOOLS_EDITORS_VM = ID_TOOLS_MORE + 1020;
     public static final int ID_TOOLS_EDITORS_BUILD_PROP = ID_TOOLS_MORE + 1100;
     public static final int ID_TOOLS_WIRELESS_FM = ID_TOOLS_MORE + 1300;
+    //--- APP INFO
+    public static final int ID_APP_INFO_LICENSE = R.id.nav_item_app_info_license;
+    public static final int ID_APP_INFO_PRIVACY = R.id.nav_item_app_info_privacy;
     //--- EXTRA
     public static final int ID_PREFERENCES = R.id.drawer_header_settings;
     //----------------------------------------------------------------------------------------------
+
+    //==============================================================================================
+    // URLs
+    //==============================================================================================
+    public static final String URL_DC_LICENSE = "https://evisceration.github.io/devicecontrol/license.html";
+    public static final String URL_DC_PRIVACY = "https://evisceration.github.io/devicecontrol/privacy.html";
 
     //==============================================================================================
     // Directories

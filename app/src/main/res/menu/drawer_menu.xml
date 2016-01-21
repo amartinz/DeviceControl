@@ -124,4 +124,25 @@
             </menu>
         </item>
     </group>
+    <!-- app info subheader -->
+    <group
+        android:id="@+id/group_app_info"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_item_app_info"
+            android:title="@string/drawer_title_app_info">
+            <menu>
+                <item
+                    android:id="@+id/nav_item_app_info_privacy"
+                    android:checkable="false"
+                    android:icon="@drawable/ic_security_black_24dp"
+                    android:title="@string/drawer_title_app_info_privacy" />
+                <item
+                    android:id="@+id/nav_item_app_info_license"
+                    android:checkable="false"
+                    android:icon="@drawable/ic_copyright_black_24dp"
+                    android:title="@string/drawer_title_app_info_license" />
+            </menu>
+        </item>
+    </group>
 </menu>

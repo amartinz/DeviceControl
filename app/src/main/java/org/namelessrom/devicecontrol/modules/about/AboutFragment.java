@@ -30,17 +30,13 @@ public class AboutFragment extends AttachViewPagerFragment {
     @Override protected int getFragmentId() { return DeviceConstants.ID_HOME; }
 
     @Override public ViewPagerAdapter getPagerAdapter() {
-        final ArrayList<Fragment> fragments = new ArrayList<>(4);
-        final ArrayList<CharSequence> titles = new ArrayList<>(4);
+        final ArrayList<Fragment> fragments = new ArrayList<>(2);
+        final ArrayList<CharSequence> titles = new ArrayList<>(2);
 
         titles.add(getString(R.string.welcome));
         fragments.add(new WelcomeFragment());
         titles.add(getString(R.string.community));
         fragments.add(new CommunityFragment());
-        titles.add(getString(R.string.licenses));
-        fragments.add(new LicenseFragment());
-        titles.add(getString(R.string.privacy));
-        fragments.add(new PrivacyFragment());
 
         return new ViewPagerAdapter(getChildFragmentManager(), fragments, titles);
     }
