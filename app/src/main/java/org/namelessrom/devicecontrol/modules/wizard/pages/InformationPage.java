@@ -26,7 +26,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.wizard.setup.Page;
 import org.namelessrom.devicecontrol.modules.wizard.setup.SetupDataCallbacks;
 import org.namelessrom.devicecontrol.modules.wizard.ui.SetupPageFragment;
-import org.namelessrom.devicecontrol.theme.AppResources;
 
 public class InformationPage extends Page {
 
@@ -56,10 +55,7 @@ public class InformationPage extends Page {
         }
 
         @Override protected int getLayoutResource() {
-            if (AppResources.get().isLightTheme()) {
-                return R.layout.wizard_page_welcome_light;
-            }
-            return R.layout.wizard_page_welcome_dark;
+            return R.layout.wizard_page_welcome;
         }
 
         @Override protected int getTitleResource() { return R.string.setup_welcome; }

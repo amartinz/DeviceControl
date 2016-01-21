@@ -97,8 +97,9 @@
             <enum name="invisible" value="1" />
         </attr>
     </declare-styleable>
-    <!-- ForegroundImageView -->
-    <declare-styleable name="ForegroundImageView">
-        <attr name="android:foreground" />
+    <!-- Card Views -->
+    <declare-styleable name="CardTitleView">
+        <attr name="title" />
+        <attr name="icon"  />
     </declare-styleable>
 </resources>

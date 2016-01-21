@@ -23,7 +23,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -146,13 +145,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         final Activity activity = getActivity();
         setHasOptionsMenu(true);
 
-        // inflate the parent layout
         final View view = super.onCreateView(inflater, root, savedState);
-        // we know it because we return it, silence android studio
-        assert view != null;
-
-        final CardView cardView = (CardView) view.findViewById(R.id.card_core_stats_root);
-        cardView.setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
 
         mCpuInfo = (LinearLayout) view.findViewById(R.id.cpu_info);
 

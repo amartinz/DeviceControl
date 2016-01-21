@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol.ui.adapters;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.flasher.FlasherFragment;
-import org.namelessrom.devicecontrol.theme.AppResources;
+import org.namelessrom.devicecontrol.ui.views.CardView;
 
 import java.io.File;
 import java.util.List;
@@ -45,11 +44,9 @@ public class FlasherAdapter extends RecyclerView.Adapter<FlasherAdapter.FlashVie
     }
 
     @Override public FlashViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final CardView cardView = (CardView) LayoutInflater.from(parent.getContext())
+        final CardView card = (CardView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_flash_item, parent, false);
-        cardView.setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
-
-        return new FlashViewHolder(cardView);
+        return new FlashViewHolder(card);
     }
 
     @Override public void onBindViewHolder(FlashViewHolder holder, int position) {

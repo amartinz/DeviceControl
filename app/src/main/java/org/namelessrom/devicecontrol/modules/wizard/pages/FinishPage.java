@@ -29,7 +29,6 @@ import org.namelessrom.devicecontrol.modules.wizard.setup.Page;
 import org.namelessrom.devicecontrol.modules.wizard.setup.SetupDataCallbacks;
 import org.namelessrom.devicecontrol.modules.wizard.ui.ReviewAdapter;
 import org.namelessrom.devicecontrol.modules.wizard.ui.SetupPageFragment;
-import org.namelessrom.devicecontrol.theme.AppResources;
 
 import java.util.ArrayList;
 
@@ -85,10 +84,7 @@ public class FinishPage extends Page {
         }
 
         @Override protected int getLayoutResource() {
-            if (AppResources.get().isLightTheme()) {
-                return R.layout.wizard_page_list_light;
-            }
-            return R.layout.wizard_page_list_dark;
+            return R.layout.wizard_page_list;
         }
 
         @Override protected int getTitleResource() {

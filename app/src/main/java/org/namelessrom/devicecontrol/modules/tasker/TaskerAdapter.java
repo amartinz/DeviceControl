@@ -22,7 +22,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +35,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity;
-import org.namelessrom.devicecontrol.theme.AppResources;
+import org.namelessrom.devicecontrol.ui.views.CardView;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import java.util.Collections;
@@ -58,11 +57,8 @@ public class TaskerAdapter extends RecyclerView.Adapter<TaskerAdapter.TaskerView
     }
 
     @Override public TaskerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final CardView cardView = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_tasker, parent, false);
-        cardView.setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
-
-        return new TaskerViewHolder(cardView);
+        final CardView card = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_tasker, parent, false);
+        return new TaskerViewHolder(card);
     }
 
     @Override public void onBindViewHolder(TaskerViewHolder holder, int position) {

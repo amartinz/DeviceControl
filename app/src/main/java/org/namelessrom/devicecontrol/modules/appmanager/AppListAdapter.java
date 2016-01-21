@@ -22,13 +22,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -47,6 +45,7 @@ import com.kennyc.bottomsheet.BottomSheetListener;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.theme.AppResources;
+import org.namelessrom.devicecontrol.ui.views.CardView;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.MenuHelper;
 
@@ -278,10 +277,8 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
     }
 
     @Override public ViewHolder onCreateViewHolder(final ViewGroup parent, final int type) {
-        final CardView cardView = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_app_item, parent, false);
-        cardView.setCardBackgroundColor(AppResources.get().getCardBackgroundColor());
-        return new ViewHolder(cardView);
+        final CardView card = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_app_item, parent, false);
+        return new ViewHolder(card);
     }
 
     @Override public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
