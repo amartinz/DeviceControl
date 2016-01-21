@@ -19,7 +19,6 @@ import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.models.WebServerConfig;
 import org.namelessrom.devicecontrol.services.WebServerService;
@@ -27,7 +26,6 @@ import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.HtmlHelper;
 import org.namelessrom.devicecontrol.utils.SortHelper;
 
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import alexander.martinz.libs.hardware.device.Device;
 import alexander.martinz.libs.hardware.utils.IoUtils;
 
 /**

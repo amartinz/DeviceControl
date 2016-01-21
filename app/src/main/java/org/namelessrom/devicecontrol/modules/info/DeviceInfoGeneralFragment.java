@@ -21,16 +21,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.Application;
-import org.namelessrom.devicecontrol.Device;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.Emmc;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
 
 import alexander.martinz.libs.execution.RootShell;
+import alexander.martinz.libs.hardware.device.Device;
+import alexander.martinz.libs.hardware.device.KernelInfo;
 import alexander.martinz.libs.hardware.device.MemoryInfo;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
@@ -50,6 +54,53 @@ public class DeviceInfoGeneralFragment extends MaterialSupportPreferenceFragment
         mEasterEggStarted = false;
     }
 
+    @NonNull @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View v = super.onCreateView(inflater, container, savedInstanceState);
+
+        final CustomPreferenceCategoryMaterial kernelCategory =
+                (CustomPreferenceCategoryMaterial) v.findViewById(R.id.cat_kernel);
+        KernelInfo.feedWithInformation(new Device.KernelInfoListener() {
+            @Override public void onKernelInfoAvailable(@NonNull final KernelInfo kernelInfo) {
+                kernelCategory.post(new Runnable() {
+                    @Override public void run() {
+                        addPreference(kernelCategory, "kernel_version", R.string.version,
+                                String.format("%s %s", kernelInfo.version, kernelInfo.revision));
+                        addPreference(kernelCategory, "kernel_extras", R.string.extras, kernelInfo.extras);
+                        addPreference(kernelCategory, "kernel_gcc", R.string.toolchain, kernelInfo.toolchain);
+                        addPreference(kernelCategory, "kernel_date", R.string.build_date, kernelInfo.date);
+                        addPreference(kernelCategory, "kernel_host", R.string.host, kernelInfo.host);
+                    }
+                });
+            }
+        });
+
+        final CustomPreferenceCategoryMaterial deviceCategory =
+                (CustomPreferenceCategoryMaterial) v.findViewById(R.id.cat_device_information);
+        MemoryInfo.feedWithInformation(MemoryInfo.TYPE_MB, new Device.MemoryInfoListener() {
+            @Override public void onMemoryInfoAvailable(@NonNull final MemoryInfo memInfo) {
+                final Device device = Device.get(getActivity());
+                deviceCategory.post(new Runnable() {
+                    @Override public void run() {
+                        // TODO: save / restore / check --> ANDROID ID
+                        addPreference(deviceCategory, "android_id", R.string.android_id, device.androidId);
+                        addPreference(deviceCategory, "device_manufacturer", R.string.manufacturer, device.manufacturer);
+                        addPreference(deviceCategory, "device_device", R.string.device, device.device);
+                        addPreference(deviceCategory, "device_model", R.string.model, device.model);
+                        addPreference(deviceCategory, "device_product", R.string.product, device.product);
+                        addPreference(deviceCategory, "device_board", R.string.board, device.board);
+                        addPreference(deviceCategory, "device_bootloader", R.string.bootloader, device.bootloader);
+                        addPreference(deviceCategory, "device_radio_version", R.string.radio_version, device.radio);
+                        addPreference(deviceCategory, "device_selinux", R.string.selinux, device.isSELinuxEnforcing
+                                ? getString(R.string.selinux_enforcing) : getString(R.string.selinux_permissive));
+                        addPreference(deviceCategory, "memory_total", R.string.memory_total, MemoryInfo.getAsMb(memInfo.total));
+                    }
+                });
+            }
+        });
+
+        return v;
+    }
+
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final Device device = Device.get(getActivity());
@@ -66,30 +117,6 @@ public class DeviceInfoGeneralFragment extends MaterialSupportPreferenceFragment
         category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_runtime);
         addPreference(category, "vm_library", R.string.type, device.vmLibrary);
         addPreference(category, "vm_version", R.string.version, device.vmVersion);
-
-        // Device
-        category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_device_information);
-        // TODO: save / restore / check --> ANDROID ID
-        addPreference(category, "android_id", R.string.android_id, device.androidId);
-        addPreference(category, "device_manufacturer", R.string.manufacturer, device.manufacturer);
-        addPreference(category, "device_device", R.string.device, device.device);
-        addPreference(category, "device_model", R.string.model, device.model);
-        addPreference(category, "device_product", R.string.product, device.product);
-        addPreference(category, "device_board", R.string.board, device.board);
-        addPreference(category, "device_bootloader", R.string.bootloader, device.bootloader);
-        addPreference(category, "device_radio_version", R.string.radio_version, device.radio);
-        addPreference(category, "device_selinux", R.string.selinux, device.isSELinuxEnforcing
-                ? getString(R.string.selinux_enforcing) : getString(R.string.selinux_permissive));
-        addPreference(category, "memory_total", R.string.memory_total, MemoryInfo.getAsMb(device.memoryInfo.total));
-
-        // Kernel
-        category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_kernel);
-        addPreference(category, "kernel_version", R.string.version,
-                String.format("%s %s", device.kernelInfo.version, device.kernelInfo.revision));
-        addPreference(category, "kernel_extras", R.string.extras, device.kernelInfo.extras);
-        addPreference(category, "kernel_gcc", R.string.toolchain, device.kernelInfo.toolchain);
-        addPreference(category, "kernel_date", R.string.build_date, device.kernelInfo.date);
-        addPreference(category, "kernel_host", R.string.host, device.kernelInfo.host);
 
         // eMMC
         category = (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cat_emmc);

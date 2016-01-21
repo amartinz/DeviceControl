@@ -69,15 +69,19 @@ public class DeviceInfoGpuFragment extends MaterialSupportPreferenceFragment {
         });
 
         GpuReader.getGpuInformation(getActivity(), new GpuInformationListener() {
-            @Override public void onGpuInformation(@NonNull GpuInformation gpuInfo) {
-                if (gpuInfo.freqAvailable != null && !gpuInfo.freqAvailable.isEmpty()) {
-                    addPreference(gpuCategory, getString(R.string.frequency_available),
-                            GpuInformation.listFrequenciesFormatted(gpuInfo.freqAvailable));
-                }
+            @Override public void onGpuInformation(@NonNull final GpuInformation gpuInfo) {
+                gpuCategory.post(new Runnable() {
+                    @Override public void run() {
+                        if (gpuInfo.freqAvailable != null && !gpuInfo.freqAvailable.isEmpty()) {
+                            addPreference(gpuCategory, getString(R.string.frequency_available),
+                                    GpuInformation.listFrequenciesFormatted(gpuInfo.freqAvailable));
+                        }
 
-                addPreference(gpuCategory, getString(R.string.frequency_max), gpuInfo.freqAsMhz(gpuInfo.freqMax));
-                addPreference(gpuCategory, getString(R.string.frequency_min), gpuInfo.freqAsMhz(gpuInfo.freqMin));
-                addPreference(gpuCategory, getString(R.string.frequency_current), gpuInfo.freqAsMhz(gpuInfo.freqCur));
+                        addPreference(gpuCategory, getString(R.string.frequency_max), gpuInfo.freqAsMhz(gpuInfo.freqMax));
+                        addPreference(gpuCategory, getString(R.string.frequency_min), gpuInfo.freqAsMhz(gpuInfo.freqMin));
+                        addPreference(gpuCategory, getString(R.string.frequency_current), gpuInfo.freqAsMhz(gpuInfo.freqCur));
+                    }
+                });
             }
         });
     }
