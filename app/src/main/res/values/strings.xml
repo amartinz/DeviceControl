@@ -162,10 +162,7 @@
     <string name="debug_strict_mode">Enable strict mode</string>
     <string name="shell">Shell</string>
     <string name="su_shell_context">Shell context</string>
-    <string name="su_shell_context_summary">The context under which Device Control should run its commands.\nThe default value is
-        <xliff:g example="Normal" id="value">\"%s\"</xliff:g>.\nCurrent value:
-        <xliff:g example="System app" id="value">\"%s\"</xliff:g>
-    </string>
+    <string name="su_shell_context_summary">The context under which Device Control should run its commands.\nThe default value is <xliff:g example="Normal" id="value">\"%s\"</xliff:g>.\nCurrent value: <xliff:g example="System app" id="value">\"%s\"</xliff:g></string>
     <string name="bootup_enabled">Reapply on boot</string>
     <string name="bootup_enabled_summary">If disabled bootup restoration will not run when the device is starting</string>
     <string name="version">Version</string>
@@ -189,20 +186,12 @@
     <string name="enable_msg">%s will be enabled.\n\nContinue?</string>
     <string name="enable_msg_single">App will be enabled.\nContinue?</string>
     <string name="enable_msg_multi">%s apps will be enabled.\nContinue?</string>
-    <string name="enable_msg_multi_action">Enabling app
-        <xliff:g example="10" id="value">%d</xliff:g>
-        of
-        <xliff:g example="71" id="value">%d</xliff:g>
-    </string>
+    <string name="enable_msg_multi_action">Enabling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
     <string name="disable">Disable</string>
     <string name="disable_msg">%s will be disabled.\n\nContinue?</string>
     <string name="disable_msg_single">App will be disabled.\nContinue?</string>
     <string name="disable_msg_multi">%s apps will be disabled.\nContinue?</string>
-    <string name="disable_msg_multi_action">Disabling app
-        <xliff:g example="10" id="value">%d</xliff:g>
-        of
-        <xliff:g example="71" id="value">%d</xliff:g>
-    </string>
+    <string name="disable_msg_multi_action">Disabling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
     <string name="action_completed">Action completed successfully!</string>
     <string name="vm_settings">Dalvik settings</string>
     <string name="full_editor">Press to load full editor</string>
@@ -332,11 +321,7 @@
     <string name="uninstalling">Uninstalling…</string>
     <string name="uninstall_msg">Do you really want to uninstall \"%s\"?\nThis action can not be undone!</string>
     <string name="uninstall_msg_multi">Do you really want to uninstall %s app(s)?\nThis action can not be undone!</string>
-    <string name="uninstall_msg_multi_action">Uninstalling app
-        <xliff:g example="10" id="value">%d</xliff:g>
-        ofn
-        <xliff:g example="71" id="value">%d</xliff:g>
-    </string>
+    <string name="uninstall_msg_multi_action">Uninstalling app <xliff:g example="10" id="value">%d</xliff:g> of <xliff:g example="71" id="value">%d</xliff:g></string>
     <string name="uninstall_msg_system_app">Uninstalling system apps may require a reboot!</string>
     <string name="uninstall_success">Successfully uninstalled \"%s\"</string>
     <string name="sunlight_enhancement">Sunlight enhancement</string>
@@ -428,27 +413,13 @@
     <string name="touch_boost">Touch boost</string>
     <string name="permissions">Permissions</string>
     <string name="security_settings_desc">This app can access the following on your devices:</string>
-    <string name="join_two_items">
-        <xliff:g id="first_item">%1$s</xliff:g>
-        and
-        <xliff:g id="second_item">%2$s</xliff:g>
-    </string>
-    <string name="join_many_items_last">
-        <xliff:g id="all_but_last_item">%1$s</xliff:g>
-        and
-        <xliff:g id="last_item">%2$s</xliff:g>
-    </string>
-    <string name="security_settings_desc_multi" product="default">This app can access the following on your phone. In order to improve performance and reduce memory usage, some of these permissions are available to
-        <xliff:g id="base_app_name">%1$s</xliff:g>
-        because it runs in the same process as<xliff:g id="additional_apps_list">%2$s</xliff:g>:
-    </string>
+    <string name="join_two_items"><xliff:g id="first_item">%1$s</xliff:g> and <xliff:g id="second_item">%2$s</xliff:g></string>
+    <string name="join_many_items_last"><xliff:g id="all_but_last_item">%1$s</xliff:g> and <xliff:g id="last_item">%2$s</xliff:g></string>
+    <string name="security_settings_desc_multi" product="default">This app can access the following on your phone. In order to improve performance and reduce memory usage, some of these permissions are available to <xliff:g id="base_app_name">%1$s</xliff:g> because it runs in the same process as <xliff:g id="additional_apps_list">%2$s</xliff:g>:</string>
     <string name="no_permissions">No permissions required</string>
     <string name="perm_costs_money">this may cost you money</string>
-    <string name="perms_new_perm_prefix">
-        <font fgcolor="#ff33b5e5" size="12">NEW:</font>
-    </string>
-    <string name="perms_description_app">Provided by<xliff:g id="app_name">%1$s</xliff:g>.
-    </string>
+    <string name="perms_new_perm_prefix"><font fgcolor="#ff33b5e5" size="12">NEW:</font></string>
+    <string name="perms_description_app">Provided by <xliff:g id="app_name">%1$s</xliff:g>.</string>
     <string name="environment">Environment</string>
     <string name="motion">Motion</string>
     <string name="position">Position</string>
@@ -491,9 +462,7 @@
     <string name="platform_app">Platform app</string>
     <string name="untrusted_app">Untrusted app</string>
     <string name="community">Community</string>
-    <string name="community_message">If you need help, have feedback, ideas or feature requests or if you just want to discuss, you can join our
-        <b>Google+ community</b>.\n\nWith joining the community, you can also participate in BETA tests.\nBETA builds can be less stable, but you will get more frequent updates with the latest features and fixes.
-    </string>
+    <string name="community_message">If you need help, have feedback, ideas or feature requests or if you just want to discuss, you can join our <b>Google+ community</b>.\n\nWith joining the community, you can also participate in BETA tests.\nBETA builds can be less stable, but you will get more frequent updates with the latest features and fixes.</string>
     <string name="join_beta_test">Join BETA</string>
     <string name="view_community">View Community</string>
     <string name="bootup_restoration">Bootup restoration</string>
