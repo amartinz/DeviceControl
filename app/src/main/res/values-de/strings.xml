@@ -124,7 +124,6 @@
   <string name="settings">Einstellungen</string>
   <string name="refresh">Aktualisieren</string>
   <string name="hide_status">Status verbergen</string>
-  <string name="gpu">GPU</string>
   <string name="gpu_governor">GPU Governor</string>
   <string name="gpusettings">GPU-Einstellungen</string>
   <string name="gpu_freq_max">Maximale GPU-Geschwindigkeit</string>
@@ -404,7 +403,7 @@
   <string name="screen_on">Bildschirm an</string>
   <string name="cpu">CPU</string>
   <string name="input_reset_on_suspend">Automatisches Zurücksetzen</string>
-  <string name="input_reset_on_suspend_summary">Reset the input device when suspending to workaround degraded touch panel sensitivity</string>
+  <string name="input_reset_on_suspend_summary">Setzt den Touchscreen zurück, wenn der Bildschirm ausgeschaltet wird, um die Touchscreen-Empfindlichkeit zu verbessern</string>
   <string name="arch">Architektur</string>
   <string name="string_default">Standard</string>
   <string name="touch_boost">Berührungs-Boost</string>
@@ -469,8 +468,8 @@
   <string name="automated_restoration_delay">Wiederherstellung verzögern</string>
   <string name="automated_restoration_delay_summary">Automatische Wiederherstellung um den angegebenen Wert verzögern</string>
   <string name="notification">Benachrichtigung</string>
-  <string name="bootup_items">Bootup items</string>
-  <string name="bootup_category_no_items">Category does not contain any bootup items!</string>
+  <string name="bootup_items">Bootup Elemente</string>
+  <string name="bootup_category_no_items">Kategorie beinhaltet keine Bootup Elemente!</string>
   <string name="launch_app">App starten</string>
   <string name="dialog_permission_title">Berechtigungen</string>
   <string name="dialog_permission_summary">Seit Android M müssen einige Berechtigungen vom Anwender genehmigt werden.\n\nDevice Control fordert Berechtigungen für Telefonie, externer Speicher und Standort ein, um ordnungsgemäß zu funktionieren.\nOhne diese Berechtigungen funktionieren gewisse Funktionen leider nicht, da diese von den Berechtigungen abhängen.</string>
@@ -493,4 +492,21 @@
   <string name="finish">Fertig</string>
   <string name="submit_confirm_message">Möchtest Du fortfahren?</string>
   <string name="edit">Bearbeiten</string>
+  <string name="cleared_cache">Cache wurde geleert!</string>
+  <string name="cleared_data">Daten wurden gelöscht!</string>
+  <string name="force_stopped_app">App wurde erzwungen beendet!</string>
+  <string name="clock_speed">Taktfrequenz</string>
+  <string name="cores">Kerne</string>
+  <string name="frequency_available">Verfügbare Frequenzen</string>
+  <string name="frequency_current">Aktuelle Frequenz</string>
+  <string name="frequency_max">Maximale Frequenz</string>
+  <string name="frequency_min">Minimale Frequenz</string>
+  <string name="memory_total">Verfügbarer Speicher</string>
+  <string name="fingerprint">Fingerabdruck</string>
+  <string name="fingerprint_not_available">Fingerabdruck-Sensor nicht verfügbar</string>
+  <string name="fingerprint_no_secure_lock_screen">Keine Bildschirmsperre aktiviert, Fingerabdruck-Sensor nicht verfügbar!</string>
+  <string name="fingerprint_no_fingerprints">Keine Fingerabdrücke eingerichtet!</string>
+  <string name="fingerprint_press_to_authenticate">Fingerabdruck-Sensor zum Authentifizieren benutzen</string>
+  <string name="fingerprint_success">Erfolgreich authentifiziert!</string>
+  <string name="fingerprint_failed">Authentifizierung fehlgeschlagen!</string>
 </resources>
