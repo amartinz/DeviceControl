@@ -101,20 +101,14 @@
     <string name="any_level_valid">CAUTION! Any level is valid!</string>
     <string name="powersaving">Powersaving</string>
     <string name="lcd_power_reduce">LCD power reduce</string>
-    <string name="lcd_power_reduce_summary">Intelligently varies the backlight brightness of the display and helps maximizing battery life.</string>
+    <string name="lcd_power_reduce_summary">Intelligently varies the backlight brightness of the display and helps maximizing battery life</string>
     <string name="power_efficient_work">Power efficient workqueue</string>
-    <string name="power_efficient_work_summary">Allows the work to be rescheduled on a core that is already awake.</string>
+    <string name="power_efficient_work_summary">Allows the work to be rescheduled on a core that is already awake</string>
     <string name="powersaving_sched_mc_title">Power scheduler</string>
     <string name="powersaving_sched_mc_0">0 - Disabled</string>
     <string name="powersaving_sched_mc_1">1 - Balanced</string>
     <string name="powersaving_sched_mc_2">2 - Aggressive</string>
     <string name="intelli_plug_eco">Eco mode</string>
-    <string name="cpusettings">CPU settings</string>
-    <string name="current_speed">Current speed</string>
-    <string name="cpu_freq_max">CPU maximum speed</string>
-    <string name="cpu_freq_min">CPU minimum speed</string>
-    <string name="cpu_governor">CPU governor</string>
-    <string name="cpu_governor_tuning">CPU governor tuning</string>
     <string name="io">I/O scheduler</string>
     <string name="configure_format">Configure %s</string>
     <string name="sob">Apply automatically on boot</string>
@@ -122,17 +116,11 @@
     <string name="core_offline">Offline</string>
     <string name="core_status">Core status</string>
     <string name="core_limits">Core limits</string>
-    <string name="other_settings">Other settings</string>
     <string name="settings">Settings</string>
     <string name="refresh">Refresh</string>
     <string name="hide_status">Hide status</string>
-
-    <string name="gpu_governor">GPU governor</string>
-    <string name="gpusettings">GPU settings</string>
-    <string name="gpu_freq_max">GPU maximum speed</string>
-    <string name="gpu_freq_min">GPU minimum speed</string>
-    <string name="gpu_3d_scaling">GPU 3D scaling</string>
-    <string name="gpu_3d_scaling_summary">GPU 3D scaling intelligently regulates the gpu frequency</string>
+    <string name="gpu_3d_scaling">3D scaling</string>
+    <string name="gpu_3d_scaling_summary">3D scaling intelligently regulates the gpu frequency</string>
     <string name="touchkey">Touch key</string>
     <string name="enable_keys_backlight">Enable keys backlight</string>
     <string name="enable_keys_backlight_summary">Light up touch keys when screen is on</string>
@@ -167,8 +155,6 @@
     <string name="bootup_enabled_summary">If disabled bootup restoration will not run when the device is starting</string>
     <string name="version">Version</string>
     <string name="tasker">Tasker</string>
-    <string name="tasklist">Task list</string>
-    <string name="tasklist_summary">Setup, modify, enable or disable tasks.</string>
     <string name="list_empty">You have not set up any items yet!\nHow about adding some? :)</string>
     <string name="add_task">Add task</string>
     <string name="edit_task">Edit task</string>
@@ -223,12 +209,10 @@
     <string name="two_hours">2 Hours</string>
     <string name="four_hours">4 Hours</string>
     <string name="eight_hours">8 Hours</string>
-    <string name="cpu_temperature">CPU temperature:</string>
-    <string name="battery_temperature">Battery temperature:</string>
+    <string name="cpu_temperature">CPU temperature</string>
+    <string name="battery_temperature">Battery temperature</string>
     <string name="on">On</string>
     <string name="off">Off</string>
-    <string name="menu">Menu</string>
-    <string name="about">About</string>
     <string name="preferences">Preferences</string>
     <string name="media_scan_trigger">Trigger media scan</string>
     <string name="media_scan_summary">Manually trigger a media scan, in case you have your phone connected via MTP and new files are not visible.</string>
@@ -282,7 +266,6 @@
     <string name="error_download">Error downloading file!\nPlease try again later!</string>
     <string name="kernel_features">Kernel features</string>
     <string name="open_play_store">View application at Google Play\u2122</string>
-    <string name="governor">Governor</string>
     <string name="skip_checks">Skip checks at startup</string>
     <string name="skip_checks_summary">Do not check for root and BusyBox on startup\nProceed on your own risk!</string>
     <string name="flasher">Flasher</string>
@@ -405,7 +388,6 @@
     <string name="setup_complete">Setup is complete</string>
     <string name="screen_off">Screen off</string>
     <string name="screen_on">Screen on</string>
-    <string name="cpu">CPU</string>
     <string name="input_reset_on_suspend">Reset on suspend</string>
     <string name="input_reset_on_suspend_summary">Reset the input device when suspending to workaround degraded touch panel sensitivity</string>
     <string name="arch">Architecture</string>
@@ -456,7 +438,6 @@
     <string name="selinux_enforcing">Enforcing</string>
     <string name="selinux_permissive">Permissive</string>
     <string name="init">Init (highest init context)</string>
-    <string name="su">SU</string>
     <string name="system_server">System server</string>
     <string name="system_app">System app</string>
     <string name="platform_app">Platform app</string>
@@ -471,7 +452,6 @@
     <string name="automated_restoration_off">A notification will be shown when the device is starting to trigger restoration manually</string>
     <string name="automated_restoration_delay">Delay restoration</string>
     <string name="automated_restoration_delay_summary">Delay automated restoration by the set value</string>
-    <string name="notification">Notification</string>
     <string name="bootup_items">Bootup items</string>
     <string name="bootup_category_no_items">Category does not contain any bootup items!</string>
     <string name="launch_app">Launch app</string>
@@ -484,12 +464,9 @@
     <string name="support">Support</string>
     <string name="translate">Translate</string>
     <string name="donate_">Donate</string>
-
     <string name="donate_value">Donate %s</string>
-
     <string name="donate_subscription">Use subscription</string>
     <string name="donate_subscription_note">Note: Subscriptions are monthly!</string>
-
     <string name="donate_via">Donate via %s</string>
     <string name="donate_paypal_message">This will redirect you to PayPal to complete the donation.</string>
 
@@ -515,6 +492,8 @@
     <string name="frequency_current">Current frequency</string>
     <string name="frequency_max">Maximum frequency</string>
     <string name="frequency_min">Minimum frequency</string>
+    <string name="governor">Governor</string>
+    <string name="governor_tuning">Governor tuning</string>
 
     <string name="memory_total">Available memory</string>
 

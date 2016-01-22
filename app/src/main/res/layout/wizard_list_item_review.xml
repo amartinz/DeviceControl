@@ -43,6 +43,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        tools:text="@string/cpu_freq_max" />
+        tools:text="@string/frequency_max" />
 
 </LinearLayout>

@@ -157,25 +157,25 @@ public class ActionProcessor {
 
         // CPU
         if (TextUtils.equals(CATEGORY_CPU, category)) {
-            actions.add(new Entry(Application.get().getString(R.string.cpu_freq_max),
+            actions.add(new Entry(Application.get().getString(R.string.frequency_max),
                     ACTION_CPU_FREQUENCY_MAX));
-            actions.add(new Entry(Application.get().getString(R.string.cpu_freq_min),
+            actions.add(new Entry(Application.get().getString(R.string.frequency_min),
                     ACTION_CPU_FREQUENCY_MIN));
-            actions.add(new Entry(Application.get().getString(R.string.cpu_governor),
+            actions.add(new Entry(Application.get().getString(R.string.governor),
                     ACTION_CPU_GOVERNOR));
         }
         // GPU
         if (TextUtils.equals(CATEGORY_GPU, category)) {
             if (Utils.fileExists(GpuUtils.get().getGpuFreqMaxPath())) {
-                actions.add(new Entry(Application.get().getString(R.string.gpu_freq_max),
+                actions.add(new Entry(Application.get().getString(R.string.frequency_max),
                         ACTION_GPU_FREQUENCY_MAX));
             }
             if (Utils.fileExists(GpuUtils.get().getGpuFreqMinPath())) {
-                actions.add(new Entry(Application.get().getString(R.string.gpu_freq_min),
+                actions.add(new Entry(Application.get().getString(R.string.frequency_min),
                         ACTION_GPU_FREQUENCY_MIN));
             }
             if (Utils.fileExists(GpuUtils.get().getGpuGovPath())) {
-                actions.add(new Entry(Application.get().getString(R.string.gpu_governor),
+                actions.add(new Entry(Application.get().getString(R.string.governor),
                         ACTION_GPU_GOVERNOR));
             }
             if (Utils.fileExists(GpuUtils.FILE_3D_SCALING)) {

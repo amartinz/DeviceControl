@@ -77,13 +77,13 @@
             android:id="@+id/cpu_pref_max"
             style="@style/MaterialPreferences.Default"
             app:prefKey="pref_max"
-            app:prefTitle="@string/cpu_freq_max" />
+            app:prefTitle="@string/frequency_max" />
 
         <alexander.martinz.libs.materialpreferences.MaterialListPreference
             android:id="@+id/cpu_pref_min"
             style="@style/MaterialPreferences.Default"
             app:prefKey="pref_min"
-            app:prefTitle="@string/cpu_freq_min" />
+            app:prefTitle="@string/frequency_min" />
 
         <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
             android:id="@+id/cpu_pref_cpu_lock"
@@ -107,12 +107,12 @@
             android:id="@+id/cpu_pref_governor"
             style="@style/MaterialPreferences.Default"
             app:prefKey="pref_governor"
-            app:prefTitle="@string/cpu_governor" />
+            app:prefTitle="@string/governor" />
 
         <alexander.martinz.libs.materialpreferences.MaterialPreference
             android:id="@+id/cpu_pref_governor_tuning"
             style="@style/MaterialPreferences.Default"
-            app:prefTitle="@string/cpu_governor_tuning" />
+            app:prefTitle="@string/governor_tuning" />
 
         <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
             android:id="@+id/cpu_pref_gov_lock"

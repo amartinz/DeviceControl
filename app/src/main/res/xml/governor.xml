@@ -18,6 +18,6 @@
 
     <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
         android:key="key_gov_category"
-        android:title="@string/cpu_governor" />
+        android:title="@string/governor" />
 
 </PreferenceScreen>

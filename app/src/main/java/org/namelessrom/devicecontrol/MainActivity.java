@@ -476,21 +476,21 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
                 if (!onResume) {
                     mCurrentFragment = new CpuSettingsFragment();
                 }
-                mTitle = mFragmentTitle = R.string.cpusettings;
+                mTitle = mFragmentTitle = R.string.processor;
                 mSubFragmentTitle = -1;
                 break;
             case DeviceConstants.ID_GOVERNOR_TUNABLE:
                 if (!onResume) {
                     mCurrentFragment = new GovernorFragment();
                 }
-                mTitle = mSubFragmentTitle = R.string.cpu_governor_tuning;
+                mTitle = mSubFragmentTitle = R.string.governor_tuning;
                 break;
             //--------------------------------------------------------------------------------------
             case DeviceConstants.ID_CTRL_GRAPHICS:
                 if (!onResume) {
                     mCurrentFragment = new GpuSettingsFragment();
                 }
-                mTitle = mFragmentTitle = R.string.gpusettings;
+                mTitle = mFragmentTitle = R.string.graphics;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------

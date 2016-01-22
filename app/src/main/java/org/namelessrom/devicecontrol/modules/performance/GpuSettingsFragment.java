@@ -137,7 +137,7 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                     mGpuGovernor = new MaterialListPreference(activity);
                     mGpuGovernor.init(activity);
                     mGpuGovernor.setKey("pref_gpu_gov");
-                    mGpuGovernor.setTitle(getString(R.string.gpu_governor));
+                    mGpuGovernor.setTitle(getString(R.string.governor));
                     mGpuGovernor.setAdapter(mGpuGovernor.createAdapter(gpuGovs, gpuGovs));
                     mGpuGovernor.setValue(tmp);
                     mCatGpu.addPreference(mGpuGovernor);
