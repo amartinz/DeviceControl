@@ -237,6 +237,9 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
         if (mDrawerLayout == null) {
             return;
         }
+        if (mDrawerLayout.getDrawerLockMode(GravityCompat.START) != DrawerLayout.LOCK_MODE_UNLOCKED) {
+            return;
+        }
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
@@ -250,6 +253,12 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
             return true;
         }
         return false;
+    }
+
+    @Override public void setDrawerLockState(int lockMode) {
+        if (mDrawerLayout != null) {
+            mDrawerLayout.setDrawerLockMode(lockMode, GravityCompat.START);
+        }
     }
 
     @Override public boolean onNavigationItemSelected(final MenuItem item) {
