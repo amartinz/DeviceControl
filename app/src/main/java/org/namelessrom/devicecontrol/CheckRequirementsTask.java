@@ -54,6 +54,8 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
 
     private Runnable mPostExecuteHook;
 
+    private static final String[] WHITELIST_SU = { "SUPERSU", "CM-SU" };
+
     public CheckRequirementsTask(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
 
@@ -109,20 +111,23 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
         }
 
         if (hasRoot && hasBusyBox) {
-            boolean showSuWarning = false;
+            boolean showSuWarning = true;
             if (!TextUtils.isEmpty(suVersion) && !"-".equals(suVersion)) {
-                if (!suVersion.toUpperCase().contains("SUPERSU")) {
-                    final DeviceConfig deviceConfig = DeviceConfig.get();
-                    if (!deviceConfig.ignoreDialogWarningSuVersion) {
-                        showSuWarning = true;
+                final String suVersionCompare = suVersion.toUpperCase();
+                for (final String whitelist : WHITELIST_SU) {
+                    if (suVersionCompare.contains(whitelist)) {
+                        showSuWarning = false;
                     }
                 }
             }
 
             if (showSuWarning) {
-                alertDialog = showSuVersionWarning(mainActivity, suVersion);
-                alertDialog.show();
-                return;
+                final DeviceConfig deviceConfig = DeviceConfig.get();
+                if (!deviceConfig.ignoreDialogWarningSuVersion) {
+                    alertDialog = showSuVersionWarning(mainActivity, suVersion);
+                    alertDialog.show();
+                    return;
+                }
             }
 
             letsGetItStarted(mainActivity);
