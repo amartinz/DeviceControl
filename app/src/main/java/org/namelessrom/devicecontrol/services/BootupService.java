@@ -85,7 +85,7 @@ public class BootupService extends IntentService {
         //========================================================================================================================
         // No Root, No Friends, That's Life ...
         //========================================================================================================================
-        if (RootCheck.isRooted()) {
+        if (!RootCheck.isRooted()) {
             Logger.e(this, "No Root, No Friends, That's Life ...");
             return;
         }
