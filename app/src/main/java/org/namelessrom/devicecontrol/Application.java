@@ -26,6 +26,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.WorkerThread;
 import android.support.v4.content.ContextCompat;
 
 import org.namelessrom.devicecontrol.models.DeviceConfig;
@@ -73,9 +74,11 @@ public class Application extends android.app.Application {
             Application.sInstance = this;
             Paper.init(this);
 
-            mCustomTabsHelper = new CustomTabsHelper(sInstance);
-
-            setupEverything();
+            AsyncTask.execute(new Runnable() {
+                @Override public void run() {
+                    setupEverythingAsync();
+                }
+            });
         }
     }
 
@@ -90,17 +93,8 @@ public class Application extends android.app.Application {
         }
     }
 
-    private void setupEverything() {
-        AsyncTask.execute(new Runnable() {
-            @Override public void run() {
-                setupEverythingAsync();
-            }
-        });
-    }
-
-    private void setupEverythingAsync() {
+    @WorkerThread private void setupEverythingAsync() {
         setupDirectories();
-        buildCache();
 
         final DeviceConfig deviceConfig = DeviceConfig.get();
         if (deviceConfig.debugStrictMode) {
@@ -113,7 +107,7 @@ public class Application extends android.app.Application {
         dumpInformation();
     }
 
-    private void buildCache() {
+    private BitmapLruCache buildCache() {
         final File cacheLocation;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             cacheLocation = new File(getExternalCacheDir(), "bitmapCache");
@@ -121,13 +115,14 @@ public class Application extends android.app.Application {
             cacheLocation = new File(getFilesDir(), "bitmapCache");
         }
         //noinspection ResultOfMethodCallIgnored
-        Logger.d(this, "Setting up cache at: %s -> %s", cacheLocation.getAbsolutePath(), cacheLocation.mkdirs());
+        Logger.d(this, "Setting up cache: %s\nNeed to create dirs: %s", cacheLocation.getAbsolutePath(), cacheLocation.mkdirs());
 
         final BitmapLruCache.Builder builder = new BitmapLruCache.Builder(this);
         builder.setMemoryCacheEnabled(true).setMemoryCacheMaxSizeUsingHeapSize(0.25f);
         builder.setDiskCacheEnabled(true).setDiskCacheLocation(cacheLocation);
 
         mCache = builder.build();
+        return mCache;
     }
 
     private void dumpInformation() {
@@ -141,10 +136,16 @@ public class Application extends android.app.Application {
     }
 
     public BitmapLruCache getBitmapCache() {
+        if (mCache == null) {
+            mCache = buildCache();
+        }
         return mCache;
     }
 
     public CustomTabsHelper getCustomTabsHelper() {
+        if (mCustomTabsHelper == null) {
+            mCustomTabsHelper = new CustomTabsHelper(sInstance);
+        }
         return mCustomTabsHelper;
     }
 
