@@ -1,3 +1,20 @@
+/*
+ *  Copyright (C) 2013 - 2016 Alexander "Evisceration" Martinz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 package org.namelessrom.devicecontrol.modules.info.hardware;
 
 import android.annotation.TargetApi;
@@ -14,9 +31,6 @@ import org.namelessrom.devicecontrol.ui.views.CardTitleView;
 
 import alexander.martinz.libs.hardware.security.Fingerprinter;
 
-/**
- * Created by amartinz on 21.01.16.
- */
 public class FingerprintView extends CardTitleView {
     private Fingerprinter fingerprinter;
 
@@ -47,25 +61,30 @@ public class FingerprintView extends CardTitleView {
 
         final FrameLayout content = getContentView();
         content.addView(statusView);
-        statusView.setText(R.string.fingerprint_press_to_authenticate);
 
-        fingerprinter = new Fingerprinter(getContext(), new Fingerprinter.FingerprinterCallback() {
-            @Override public void onAuthenticationError(int errMsgId, CharSequence errString) {
-                statusView.setText(errString);
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            statusView.setText(R.string.fingerprint_press_to_authenticate);
 
-            @Override public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
-                statusView.setText(helpString);
-            }
+            fingerprinter = new Fingerprinter(getContext(), new Fingerprinter.FingerprinterCallback() {
+                @Override public void onAuthenticationError(int errMsgId, CharSequence errString) {
+                    statusView.setText(errString);
+                }
 
-            @Override public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
-                statusView.setText(R.string.fingerprint_success);
-            }
+                @Override public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
+                    statusView.setText(helpString);
+                }
 
-            @Override public void onAuthenticationFailed() {
-                statusView.setText(R.string.fingerprint_failed);
-            }
-        });
+                @Override public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
+                    statusView.setText(R.string.fingerprint_success);
+                }
+
+                @Override public void onAuthenticationFailed() {
+                    statusView.setText(R.string.fingerprint_failed);
+                }
+            });
+        } else {
+            setSupported(false);
+        }
     }
 
     public void setSupported(boolean isSupported) {
@@ -76,6 +95,10 @@ public class FingerprintView extends CardTitleView {
     }
 
     public void onResume() {
+        if (fingerprinter == null) {
+            return;
+        }
+
         final int setup = fingerprinter.hasFingerprintsSetup();
         if (setup == Fingerprinter.SETUP_OK) {
             if (!fingerprinter.init()) {
@@ -107,13 +130,13 @@ public class FingerprintView extends CardTitleView {
     }
 
     public void onPause() {
-        if (isSupported) {
+        if (isSupported && fingerprinter != null) {
             fingerprinter.stopListening();
         }
     }
 
     public void onDestroy() {
-        if (isSupported) {
+        if (isSupported && fingerprinter != null) {
             fingerprinter.onDestroy();
         }
     }
