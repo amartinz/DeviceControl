@@ -181,7 +181,7 @@ public class AppHelper {
 
             if (processList.size() <= 1) {
                 Logger.i(TAG, "Using fallback to get process list");
-                final List<ProcessManager.Process> processes = ProcessManager.getRunningApps(context);
+                final List<ProcessManager.Process> processes = ProcessManager.getRunningApps();
                 for (final ProcessManager.Process process : processes) {
                     if (pkg.equals(process.name)) {
                         return true;

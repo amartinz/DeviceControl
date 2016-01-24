@@ -82,12 +82,6 @@ import alexander.martinz.libs.execution.ShellManager;
 import alexander.martinz.vendor.Configuration;
 
 public class MainActivity extends BaseActivity implements ActivityCallbacks, NavigationView.OnNavigationItemSelectedListener {
-
-    //==============================================================================================
-    // Fields
-    //==============================================================================================
-    private static final Object lockObject = new Object();
-
     private static long mBackPressed;
     private Toast mToast;
 
@@ -103,11 +97,6 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
     private int mSubFragmentTitle = -1;
 
     private CheckRequirementsTask mCheckRequirementsTask;
-
-    //==============================================================================================
-    // Overridden Methods
-    //==============================================================================================
-
 
     @Override protected void setupTheme() {
         final boolean isLightTheme = AppResources.get().isLightTheme();
@@ -339,14 +328,8 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
     }
 
     @Override protected void onDestroy() {
-        synchronized (lockObject) {
-            Logger.i(this, "closing shells");
-            try {
-                ShellManager.get().cleanupShells();
-            } catch (Exception e) {
-                Logger.e(this, String.format("onDestroy(): %s", e));
-            }
-        }
+        Logger.i(this, "closing shells");
+        ShellManager.get().cleanupShells();
 
         if (mCheckRequirementsTask != null) {
             mCheckRequirementsTask.destroy();
