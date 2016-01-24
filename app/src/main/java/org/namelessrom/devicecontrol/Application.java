@@ -18,14 +18,20 @@
 package org.namelessrom.devicecontrol;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
+import android.support.v4.app.ActivityManagerCompat;
 import android.support.v4.content.ContextCompat;
 
 import org.namelessrom.devicecontrol.models.DeviceConfig;
+import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.CustomTabsHelper;
 
 import java.io.File;
@@ -71,6 +77,11 @@ public class Application extends android.app.Application {
             Paper.init(this);
 
             mCustomTabsHelper = new CustomTabsHelper(sInstance);
+
+            final ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            final boolean isLowEndGfx = ActivityManagerCompat.isLowRamDevice(am);
+            Logger.d(this, "isLowEndGfx: %s", isLowEndGfx);
+            AppResources.get().setLowEndGfx(isLowEndGfx);
 
             setupEverything();
         }
@@ -154,8 +165,12 @@ public class Application extends android.app.Application {
         }
     }
 
-    public int getColorApplication(final int resId) {
+    public int getColorApplication(@ColorRes final int resId) {
         return ContextCompat.getColor(this, resId);
+    }
+
+    public Drawable getDrawableApplication(@DrawableRes final int resId) {
+        return ContextCompat.getDrawable(this, resId);
     }
 
     public String[] getStringArray(final int resId) {

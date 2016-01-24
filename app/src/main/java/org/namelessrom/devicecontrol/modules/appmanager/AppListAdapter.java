@@ -38,6 +38,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.kennyc.bottomsheet.BottomSheet;
@@ -47,7 +48,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.ui.views.CardView;
 import org.namelessrom.devicecontrol.utils.AppHelper;
-import org.namelessrom.devicecontrol.utils.MenuHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -176,7 +176,10 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             final BottomSheet.Builder builder = new BottomSheet.Builder(mActivity, R.style.AppManagerBottomSheetStyle);
             builder.setTitle(appItem.getLabel()).setListener(appBottomSheetListener);
 
-            final Menu menu = MenuHelper.inflateMenu(mActivity, R.menu.sheet_app_item);
+            final PopupMenu popupMenu = new PopupMenu(mActivity, null);
+            popupMenu.inflate(R.menu.sheet_app_item);
+
+            final Menu menu = popupMenu.getMenu();
             if (appItem.isEnabled()) {
                 menu.removeItem(R.id.sheet_enable);
                 if (!appItem.isRunning(mActivity)) {

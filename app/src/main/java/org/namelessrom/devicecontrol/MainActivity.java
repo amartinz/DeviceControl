@@ -200,7 +200,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
 
         final View headerView = mNavigationView.getHeaderView(0);
         final ImageView headerImage = (ImageView) headerView.findViewById(R.id.drawer_header_image);
-        headerImage.setImageResource(AppResources.get().getDrawerHeaderResId());
+        headerImage.setImageDrawable(AppResources.get().getDrawerHeader());
         final ImageButton headerSettings = (ImageButton) headerView.findViewById(R.id.drawer_header_settings);
         headerSettings.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -354,9 +354,12 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
                 Logger.e(this, String.format("onDestroy(): %s", e));
             }
         }
+
         if (mCheckRequirementsTask != null) {
             mCheckRequirementsTask.destroy();
         }
+
+        AppResources.get().cleanup();
         super.onDestroy();
     }
 

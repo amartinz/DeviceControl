@@ -1,6 +1,9 @@
 package org.namelessrom.devicecontrol.theme;
 
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -12,12 +15,16 @@ import org.namelessrom.devicecontrol.models.DeviceConfig;
 public class AppResources {
     private static AppResources sInstance;
 
+    private boolean isLowEndGfx = false;
+
     private int isLightTheme = -1;
 
     private int accentColor;
     private int primaryColor;
 
     private int cardBackgroundColor;
+
+    private Drawable drawerHeaderDrawable;
 
     private AppResources() {
         final boolean isLight = isLightTheme();
@@ -43,8 +50,20 @@ public class AppResources {
         return sInstance;
     }
 
-    private int getColor(int colorResId) {
+    public boolean isLowEndGfx() {
+        return this.isLowEndGfx;
+    }
+
+    public void setLowEndGfx(boolean isLowEndGfx) {
+        this.isLowEndGfx = isLowEndGfx;
+    }
+
+    private int getColor(@ColorRes int colorResId) {
         return Application.get().getColorApplication(colorResId);
+    }
+
+    private Drawable getDrawable(@DrawableRes int drawableResId) {
+        return Application.get().getDrawableApplication(drawableResId);
     }
 
     public boolean isLightTheme() {
@@ -97,6 +116,18 @@ public class AppResources {
         return isLightTheme() ? R.drawable.drawer_header_bg_light : R.drawable.drawer_header_bg_dark;
     }
 
+    public Drawable getDrawerHeader() {
+        if (drawerHeaderDrawable == null) {
+            final boolean isLowEndGfx = isLowEndGfx();
+            if (isLowEndGfx) {
+                drawerHeaderDrawable = new ColorDrawable(getPrimaryColor());
+            } else {
+                drawerHeaderDrawable = getDrawable(getDrawerHeaderResId());
+            }
+        }
+        return drawerHeaderDrawable;
+    }
+
     public static ContextThemeWrapper getContextThemeWrapper(Context context) {
         final int themeId = AppResources.get().isLightTheme()
                 ? R.style.AppTheme_Light
@@ -106,6 +137,10 @@ public class AppResources {
 
     public static LayoutInflater getThemeLayoutInflater(Context context, LayoutInflater inflater) {
         return inflater.cloneInContext(getContextThemeWrapper(context));
+    }
+
+    public void cleanup() {
+        drawerHeaderDrawable = null;
     }
 
 }
