@@ -122,7 +122,8 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
             prefs.edit().putBoolean(Constants.KEY_LOW_END_GFX, isLowEndGfx).commit();
 
-            // restart the activity to update effects
+            // restart the activity and cleanup AppResources to update effects
+            AppResources.get().cleanup();
             Utils.restartActivity(getActivity());
             return true;
         } else if (mUseSense360 == preference) {
