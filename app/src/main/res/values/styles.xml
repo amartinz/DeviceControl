@@ -16,6 +16,10 @@
 -->
 <resources>
 
+    <style name="AppTheme.Empty" parent="android:Theme.Translucent.NoTitleBar">
+        <!-- Customize stuff here -->
+    </style>
+
     <style name="AppTheme.Dark" parent="AppTheme.Dark.Base">
         <!-- Customize stuff here -->
     </style>
