@@ -30,6 +30,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.RootShell;
+import alexander.martinz.libs.hardware.cpu.CpuReader;
 
 public class CpuFreqMaxAction extends BaseAction {
 
@@ -68,7 +69,7 @@ public class CpuFreqMaxAction extends BaseAction {
 
         final boolean lockFreq = DeviceConfig.get().perfCpuLock;
 
-        final int cpus = CpuUtils.get().getNumOfCpus();
+        final int cpus = CpuReader.readAvailableCores();
         final StringBuilder sb = new StringBuilder(lockFreq ? cpus * 3 : cpus * 2);
 
         final BootupConfig configuration = BootupConfig.get();
@@ -77,11 +78,10 @@ public class CpuFreqMaxAction extends BaseAction {
             if (i != 0) {
                 sb.append(CpuUtils.get().onlineCpu(i));
             }
-            path = CpuUtils.get().getMaxCpuFrequencyPath(i);
+            path = CpuReader.getPathCoreFreqMax(i);
             sb.append(Utils.getWriteCommand(path, value));
             if (bootup) {
-                configuration.addItem(new BootupItem(BootupConfig.CATEGORY_CPU,
-                        "cpu_max" + i, CpuUtils.get().getMaxCpuFrequencyPath(i), value, true));
+                configuration.addItem(new BootupItem(BootupConfig.CATEGORY_CPU, "cpu_max" + i, path, value, true));
             }
             if (lockFreq) {
                 sb.append(Utils.lockFile(path));

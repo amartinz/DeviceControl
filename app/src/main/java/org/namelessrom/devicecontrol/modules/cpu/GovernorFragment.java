@@ -27,7 +27,6 @@ import android.view.View;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
@@ -36,10 +35,13 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 
+import alexander.martinz.libs.hardware.cpu.CpuInformation;
+import alexander.martinz.libs.hardware.cpu.CpuInformationListener;
+import alexander.martinz.libs.hardware.cpu.CpuReader;
 import alexander.martinz.libs.materialpreferences.MaterialEditTextPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 
-public class GovernorFragment extends AttachMaterialPreferenceFragment implements GovernorUtils.GovernorListener {
+public class GovernorFragment extends AttachMaterialPreferenceFragment implements CpuInformationListener {
     private CustomPreferenceCategoryMaterial mCategory;
 
     @Override protected int getFragmentId() { return DeviceConstants.ID_GOVERNOR_TUNABLE; }
@@ -53,21 +55,9 @@ public class GovernorFragment extends AttachMaterialPreferenceFragment implement
 
         mCategory.post(new Runnable() {
             @Override public void run() {
-                GovernorUtils.get().getGovernor(GovernorFragment.this);
+                CpuReader.getCpuInformation(GovernorFragment.this);
             }
         });
-    }
-
-    @Override public void onGovernor(@NonNull final GovernorUtils.Governor governor) {
-        final File governorDir = new File("/sys/devices/system/cpu/cpufreq/" + governor.current);
-        boolean hasTunables = governorDir.exists();
-        if (!hasTunables) {
-            mCategory.setTitle(getString(R.string.no_gov_tweaks_message));
-            return;
-        }
-
-        mCategory.setTitle(getString(R.string.gov_tweaks, governor.current));
-        new AddPreferences(getActivity(), governorDir).execute();
     }
 
     @Override public boolean onOptionsItemSelected(final MenuItem item) {
@@ -84,6 +74,31 @@ public class GovernorFragment extends AttachMaterialPreferenceFragment implement
         }
 
         return false;
+    }
+
+    @Override public void onCpuInformation(@NonNull final CpuInformation cpuInformation) {
+        File governorDir = new File("/sys/devices/system/cpu/cpufreq/" + cpuInformation.govCur);
+        boolean hasTunables = governorDir.exists();
+        if (!hasTunables) {
+            // TODO: new kernel / octa core
+            governorDir = new File("/sys/devices/system/cpu/cpu0/cpufreq/" + cpuInformation.govCur);
+            hasTunables = governorDir.exists();
+            if (!hasTunables) {
+                mCategory.post(new Runnable() {
+                    @Override public void run() {
+                        mCategory.setTitle(getString(R.string.no_gov_tweaks_message));
+                    }
+                });
+                return;
+            }
+        }
+
+        mCategory.post(new Runnable() {
+            @Override public void run() {
+                mCategory.setTitle(getString(R.string.gov_tweaks, cpuInformation.govCur));
+            }
+        });
+        new AddPreferences(getActivity(), governorDir).execute();
     }
 
     private class AddPreferences extends AsyncTask<Void, Void, Void> implements MaterialPreference.MaterialPreferenceChangeListener {

@@ -97,7 +97,7 @@ public class DeviceInfoCpuFragment extends MaterialSupportPreferenceFragment {
     }
 
     private void setupCpu() {
-        CpuReader.getCpuInformation(getActivity(), new CpuInformationListener() {
+        CpuReader.getCpuInformation(new CpuInformationListener() {
             @Override public void onCpuInformation(@NonNull final CpuInformation cpuInformation) {
                 catCpu.post(new Runnable() {
                     @Override public void run() {

@@ -27,7 +27,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuStateMonitor;
 import org.namelessrom.devicecontrol.objects.BootupItem;
-import org.namelessrom.devicecontrol.objects.CpuCore;
+import alexander.martinz.libs.hardware.cpu.CpuCore;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
@@ -49,25 +49,8 @@ public class CpuUtils {
     //----------------------------------------------------------------------------------------------
     public static final String CPU_BASE = "/sys/devices/system/cpu/";
     public static final String CORE_ONLINE = CPU_BASE + "cpu%s/online";
-    public static final String CORE_PRESENT = CPU_BASE + "present";
-    public static final String FREQ_AVAIL = CPU_BASE + "cpu0/cpufreq/scaling_available_frequencies";
-    public static final String FREQ_CURRENT = CPU_BASE + "cpu%s/cpufreq/scaling_cur_freq";
-    public static final String FREQ_MAX = CPU_BASE + "cpu%s/cpufreq/scaling_max_freq";
-    public static final String FREQ_MIN = CPU_BASE + "cpu%s/cpufreq/scaling_min_freq";
 
     public static final String FREQ_TIME_IN_STATE = CPU_BASE + "cpu0/cpufreq/stats/time_in_state";
-
-    public static class Frequency {
-        public final String[] available;
-        public final String maximum;
-        public final String minimum;
-
-        public Frequency(final String[] avail, final String max, final String min) {
-            available = avail;
-            maximum = max;
-            minimum = min;
-        }
-    }
 
     public static class State {
         public final List<CpuStateMonitor.CpuState> states;
@@ -77,14 +60,6 @@ public class CpuUtils {
             states = stateList;
             totalTime = totalStateTime;
         }
-    }
-
-    public interface FrequencyListener {
-        void onFrequency(@NonNull final Frequency cpuFreq);
-    }
-
-    public interface CoreListener {
-        void onCores(@NonNull final List<CpuCore> cores);
     }
 
     public interface StateListener {
@@ -100,18 +75,6 @@ public class CpuUtils {
             sInstance = new CpuUtils();
         }
         return sInstance;
-    }
-
-    @NonNull public String getCpuFrequencyPath(final int cpu) {
-        return String.format(FREQ_CURRENT, cpu);
-    }
-
-    @NonNull public String getMaxCpuFrequencyPath(final int cpu) {
-        return String.format(FREQ_MAX, cpu);
-    }
-
-    @NonNull public String getMinCpuFrequencyPath(final int cpu) {
-        return String.format(FREQ_MIN, cpu);
     }
 
     @NonNull public String getOnlinePath(final int cpu) {
@@ -133,49 +96,6 @@ public class CpuUtils {
             return temp;
         }
         return -1;
-    }
-
-    @Nullable public String[] getAvailableFrequencies(final boolean sorted) {
-        final String freqsRaw = Utils.readOneLine(FREQ_AVAIL);
-        if (freqsRaw != null && !freqsRaw.isEmpty()) {
-            final String[] freqs = freqsRaw.split(" ");
-            if (!sorted) {
-                return freqs;
-            }
-            Arrays.sort(freqs, new Comparator<String>() {
-                @Override
-                public int compare(String object1, String object2) {
-                    return Utils.tryValueOf(object1, 0).compareTo(Utils.tryValueOf(object2, 0));
-                }
-            });
-            Collections.reverse(Arrays.asList(freqs));
-            return freqs;
-        }
-        return null;
-    }
-
-    /**
-     * Get total number of cpus
-     *
-     * @return total number of cpus
-     */
-    public int getNumOfCpus() {
-        int numOfCpu = 1;
-        final String numOfCpus = Utils.readOneLine(CORE_PRESENT);
-        if (numOfCpus != null && !numOfCpus.isEmpty()) {
-            final String[] cpuCount = numOfCpus.split("-");
-            if (cpuCount.length > 1) {
-                try {
-                    numOfCpu = Utils.parseInt(cpuCount[1]) - Utils.parseInt(cpuCount[0]) + 1;
-                    if (numOfCpu < 0) {
-                        numOfCpu = 1;
-                    }
-                } catch (NumberFormatException ex) {
-                    numOfCpu = 1;
-                }
-            }
-        }
-        return numOfCpu;
     }
 
     public String restore(BootupConfig config) {
@@ -216,72 +136,6 @@ public class CpuUtils {
         return sbCmd.toString();
     }
 
-    public void getCpuFreq(final FrequencyListener listener) {
-        final Shell shell;
-        if (new File(FREQ_AVAIL).canRead() && new File(getMaxCpuFrequencyPath(0)).canRead()
-            && new File(getMinCpuFrequencyPath(0)).canRead()) {
-            shell = ShellManager.get().getNormalShell();
-        } else {
-            shell = ShellManager.get().getRootShell();
-        }
-
-        if (shell == null) {
-            Logger.e(this, "Could not open shell!");
-            return;
-        }
-
-        final String cmd = String.format("(cat \"%s\") 2> /dev/null;" +
-                                         "echo -n \"[\";" +
-                                         "(cat \"%s\") 2> /dev/null;" +
-                                         "echo -n \" ]\";" +
-                                         "(cat \"%s\") 2> /dev/null;",
-                FREQ_AVAIL, getMaxCpuFrequencyPath(0), getMinCpuFrequencyPath(0));
-        final Command command = new Command(cmd) {
-            @Override public void onCommandCompleted(int id, int exitCode) {
-                super.onCommandCompleted(id, exitCode);
-
-                String output = getOutput();
-                if (output == null) {
-                    return;
-                }
-                output = output.replace("\n", " ");
-
-                final List<String> result = Arrays.asList(output.split(" "));
-                if (result.isEmpty()) {
-                    return;
-                }
-
-                final List<String> tmpList = new ArrayList<>();
-                String tmpMax = "";
-                String tmpMin = "";
-
-                for (final String s : result) {
-                    if (TextUtils.isEmpty(s)) {
-                        continue;
-                    }
-                    if (s.charAt(0) == '[') {
-                        tmpMax = s.substring(1, s.length());
-                    } else if (s.charAt(0) == ']') {
-                        tmpMin = s.substring(1, s.length());
-                    } else {
-                        tmpList.add(s);
-                    }
-                }
-
-                final String max = tmpMax;
-                final String min = tmpMin;
-                final String[] avail = tmpList.toArray(new String[tmpList.size()]);
-                Application.HANDLER.post(new Runnable() {
-                    @Override public void run() {
-                        listener.onFrequency(new Frequency(avail, max, min));
-                    }
-                });
-            }
-        };
-        command.setOutputType(Command.OUTPUT_STRING);
-        shell.add(command);
-    }
-
     @NonNull public String onlineCpu(final int cpu) {
         // protect against onlining core 0
         if (cpu == 0) {
@@ -294,53 +148,6 @@ public class CpuUtils {
             sb.append(Utils.getWriteCommand(pathOnline, "1"));
         }
         return sb.toString();
-    }
-
-    /**
-     * Convert to MHz and append a tag
-     *
-     * @param mhzString The string to convert to MHz
-     * @return tagged and converted String
-     */
-    @NonNull public static String toMhz(final String mhzString) {
-        int value = -1;
-        if (!TextUtils.isEmpty(mhzString)) {
-            try {
-                value = Utils.parseInt(mhzString) / 1000;
-            } catch (NumberFormatException exc) {
-                Logger.e(CpuUtils.get(), "toMhz", exc);
-                value = -1;
-            }
-        }
-
-        if (value != -1) {
-            return String.valueOf(value) + " MHz";
-        } else {
-            return Application.get().getString(R.string.core_offline);
-        }
-    }
-
-    /**
-     * Convert from MHz
-     *
-     * @param value The string in MHz format (eg. "2457 MHz")
-     * @return The original value as integer (eg. 2457000)
-     */
-    public static int fromMhz(@Nullable String value) {
-        if (TextUtils.isEmpty(value)) {
-            return -1;
-        }
-        if (!value.contains("MHz")) {
-            // no MHz, maybe we have passed in a correct frequency already...
-            return Utils.tryParse(value.trim(), -1);
-        }
-        value = value.replace("MHz", "").trim();
-
-        final int intValue = Utils.tryParse(value, -1);
-        if (intValue != -1) {
-            return intValue * 1000;
-        }
-        return -1;
     }
 
 }

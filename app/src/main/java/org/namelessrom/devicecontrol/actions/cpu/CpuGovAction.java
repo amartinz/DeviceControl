@@ -24,13 +24,13 @@ import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
-import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.RootShell;
+import alexander.martinz.libs.hardware.cpu.CpuReader;
 
 public class CpuGovAction extends BaseAction {
 
@@ -69,7 +69,7 @@ public class CpuGovAction extends BaseAction {
 
         final boolean lockGov = DeviceConfig.get().perfCpuGovLock;
 
-        final int cpus = CpuUtils.get().getNumOfCpus();
+        final int cpus = CpuReader.readAvailableCores();
         final StringBuilder sb = new StringBuilder(cpus * 2);
 
         final BootupConfig configuration = BootupConfig.get();
@@ -78,11 +78,10 @@ public class CpuGovAction extends BaseAction {
             if (i != 0) {
                 sb.append(CpuUtils.get().onlineCpu(i));
             }
-            path = GovernorUtils.get().getGovernorPath(i);
+            path = CpuReader.getPathCoreGov(i);
             sb.append(Utils.getWriteCommand(path, value));
             if (bootup) {
-                configuration.addItem(new BootupItem(BootupConfig.CATEGORY_CPU,
-                        "cpu_gov" + i, GovernorUtils.get().getGovernorPath(i), value, true));
+                configuration.addItem(new BootupItem(BootupConfig.CATEGORY_CPU, "cpu_gov" + i, path, value, true));
             }
             if (lockGov) {
                 sb.append(Utils.lockFile(path));

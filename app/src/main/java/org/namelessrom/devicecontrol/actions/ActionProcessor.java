@@ -43,11 +43,14 @@ import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
 import org.namelessrom.devicecontrol.hardware.KsmUtils;
-import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import alexander.martinz.libs.hardware.cpu.CpuInformation;
+import alexander.martinz.libs.hardware.cpu.CpuReader;
 
 public class ActionProcessor {
 
@@ -223,21 +226,17 @@ public class ActionProcessor {
         if (TextUtils.isEmpty(action)) return values;
 
         // CPU frequencies
-        if (TextUtils.equals(ACTION_CPU_FREQUENCY_MAX, action)
-                || TextUtils.equals(ACTION_CPU_FREQUENCY_MIN, action)) {
-            final String[] freqs = CpuUtils.get().getAvailableFrequencies(true);
-            if (freqs == null) return values;
-
-            for (final String s : freqs) {
-                values.add(new Entry(CpuUtils.toMhz(s), s));
+        if (TextUtils.equals(ACTION_CPU_FREQUENCY_MAX, action) || TextUtils.equals(ACTION_CPU_FREQUENCY_MIN, action)) {
+            final List<Integer> freqList = CpuReader.readFreqAvail(0);
+            for (final int value : freqList) {
+                final String s = String.valueOf(value);
+                values.add(new Entry(CpuInformation.toMhz(s), s));
             }
         } else
 
         // CPU governor
         if (TextUtils.equals(ACTION_CPU_GOVERNOR, action)) {
-            final String[] governors = GovernorUtils.get().getAvailableCpuGovernors();
-            if (governors == null) return values;
-
+            final List<String> governors = CpuReader.readGovAvail(0);
             for (final String s : governors) {
                 values.add(new Entry(s, s));
             }

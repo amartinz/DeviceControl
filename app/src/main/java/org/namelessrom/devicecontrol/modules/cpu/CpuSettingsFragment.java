@@ -17,20 +17,18 @@
  */
 package org.namelessrom.devicecontrol.modules.cpu;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import org.namelessrom.devicecontrol.ActivityCallbacks;
@@ -40,12 +38,9 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
-import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
-import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuCoreMonitor;
 import org.namelessrom.devicecontrol.objects.BootupItem;
-import org.namelessrom.devicecontrol.objects.CpuCore;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.ui.preferences.AutoEditTextPreference;
@@ -53,23 +48,24 @@ import org.namelessrom.devicecontrol.ui.preferences.AutoSwitchPreference;
 import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
 import org.namelessrom.devicecontrol.ui.views.AttachMaterialPreferenceFragment;
 import org.namelessrom.devicecontrol.ui.views.CpuCoreView;
-import org.namelessrom.devicecontrol.utils.DrawableHelper;
 import org.namelessrom.devicecontrol.utils.PreferenceUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import alexander.martinz.libs.execution.RootShell;
+import alexander.martinz.libs.hardware.cpu.CpuCore;
+import alexander.martinz.libs.hardware.cpu.CpuCoreMonitor;
+import alexander.martinz.libs.hardware.cpu.CpuInformation;
+import alexander.martinz.libs.hardware.cpu.CpuInformationListener;
+import alexander.martinz.libs.hardware.cpu.CpuReader;
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
+import butterknife.BindString;
 
-public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implements CpuUtils.CoreListener, CpuUtils.FrequencyListener,
-        GovernorUtils.GovernorListener, MaterialPreference.MaterialPreferenceChangeListener, MaterialPreference.MaterialPreferenceClickListener {
+public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implements CpuCoreMonitor.CoreListener, MaterialPreference.MaterialPreferenceChangeListener, MaterialPreference.MaterialPreferenceClickListener, CpuInformationListener {
 
     private MaterialListPreference mMax;
     private MaterialListPreference mMin;
@@ -81,6 +77,8 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
 
     private MaterialSwitchPreference mMpDecision;
     private MaterialListPreference mCpuQuietGov;
+
+    @BindString(R.string.core) String coreString;
 
     private static final int ID_MPDECISION = 200;
     //----------------------------------------------------------------------------------------------
@@ -116,19 +114,18 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
     @Override public void onResume() {
         super.onResume();
         if (mStatusHide != null && mStatusHide.isChecked()) {
-            CpuCoreMonitor.getInstance(getActivity()).start(this, 750);
+            CpuCoreMonitor.getInstance(Application.HANDLER).start(this, 750);
         }
-        CpuUtils.get().getCpuFreq(this);
-        GovernorUtils.get().getGovernor(this);
+        CpuReader.getCpuInformation(CpuSettingsFragment.this);
     }
 
     @Override public void onPause() {
         super.onPause();
-        CpuCoreMonitor.getInstance(getActivity()).stop();
+        CpuCoreMonitor.getInstance(Application.HANDLER).stop();
     }
 
     @Override public void onDestroy() {
-        CpuCoreMonitor.getInstance(getActivity()).destroy();
+        CpuCoreMonitor.getInstance(Application.HANDLER).destroy();
         super.onDestroy();
     }
 
@@ -141,8 +138,23 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         }
     }
 
+    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_refresh, menu);
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        final int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_action_refresh: {
+                CpuReader.getCpuInformation(CpuSettingsFragment.this);
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @NonNull @Override public View onCreateView(LayoutInflater inflater, ViewGroup root, Bundle savedState) {
-        final Activity activity = getActivity();
         setHasOptionsMenu(true);
 
         final View view = super.onCreateView(inflater, root, savedState);
@@ -155,9 +167,9 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             @Override public void onCheckedChanged(final CompoundButton button, final boolean b) {
                 if (b) {
                     mCpuInfo.setVisibility(View.VISIBLE);
-                    CpuCoreMonitor.getInstance(activity).start(CpuSettingsFragment.this, 750);
+                    CpuCoreMonitor.getInstance(Application.HANDLER).start(CpuSettingsFragment.this, 750);
                 } else {
-                    CpuCoreMonitor.getInstance(activity).stop();
+                    CpuCoreMonitor.getInstance(Application.HANDLER).stop();
                     mCpuInfo.setVisibility(View.GONE);
                 }
                 deviceConfig.perfCpuInfo = b;
@@ -172,29 +184,11 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         }
 
         CpuCore tmpCore;
-        final int mCpuNum = CpuUtils.get().getNumOfCpus();
-        final String format = getString(R.string.core) + " %s:";
-        for (int i = 0; i < mCpuNum; i++) {
-            tmpCore = new CpuCore(String.format(format, String.valueOf(i)), "0", "0", "0");
+        final int numCpus = CpuReader.readAvailableCores();
+        for (int i = 0; i < numCpus; i++) {
+            tmpCore = new CpuCore(i, "0", "0", "0");
             generateRow(i, tmpCore);
         }
-
-        Drawable refreshDrawable = ContextCompat.getDrawable(activity, R.drawable.ic_refresh_white_24dp);
-        refreshDrawable = DrawableHelper.applyAccentColorFilter(refreshDrawable.mutate());
-
-        final CustomPreferenceCategoryMaterial coreLimits =
-                (CustomPreferenceCategoryMaterial) view.findViewById(R.id.core_limits);
-
-        final ImageView imageViewCpu = new ImageView(activity);
-        imageViewCpu.setImageDrawable(refreshDrawable);
-        imageViewCpu.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                // animate, just to make it look cool...
-                rotateView(v);
-                CpuUtils.get().getCpuFreq(CpuSettingsFragment.this);
-            }
-        });
-        coreLimits.addToWidgetFrame(imageViewCpu);
 
         mMax = (MaterialListPreference) view.findViewById(R.id.cpu_pref_max);
         mMax.setSpinnerTextViewColor(AppResources.get().getAccentColor());
@@ -207,19 +201,6 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         mCpuLock = (MaterialSwitchPreference) view.findViewById(R.id.cpu_pref_cpu_lock);
         mCpuLock.getSwitch().setChecked(deviceConfig.perfCpuLock);
         mCpuLock.setOnPreferenceChangeListener(this);
-
-        final CustomPreferenceCategoryMaterial governor =
-                (CustomPreferenceCategoryMaterial) view.findViewById(R.id.cpu_cat_gov);
-        final ImageView imageViewGov = new ImageView(activity);
-        imageViewGov.setImageDrawable(refreshDrawable);
-        imageViewGov.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                // animate, just to make it look cool...
-                rotateView(v);
-                GovernorUtils.get().getGovernor(CpuSettingsFragment.this);
-            }
-        });
-        governor.addToWidgetFrame(imageViewGov);
 
         mGovernor = (MaterialListPreference) view.findViewById(R.id.cpu_pref_governor);
         mGovernor.setSpinnerTextViewColor(AppResources.get().getAccentColor());
@@ -239,39 +220,18 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             setupHotpluggingPreferences();
         }
 
-        // compensate mpdecision's madness
-        mMax.postDelayed(new Runnable() {
+        view.post(new Runnable() {
             @Override public void run() {
-                rotateView(imageViewCpu);
-                CpuUtils.get().getCpuFreq(CpuSettingsFragment.this);
-                mMin.postDelayed(new Runnable() {
+                CpuReader.getCpuInformation(CpuSettingsFragment.this);
+                view.postDelayed(new Runnable() {
                     @Override public void run() {
-                        rotateView(imageViewCpu);
-                        CpuUtils.get().getCpuFreq(CpuSettingsFragment.this);
+                        CpuReader.getCpuInformation(CpuSettingsFragment.this);
                     }
-                }, 300);
+                }, 500);
             }
-        }, 300);
-        mGovernor.postDelayed(new Runnable() {
-            @Override public void run() {
-                rotateView(imageViewGov);
-                GovernorUtils.get().getGovernor(CpuSettingsFragment.this);
-            }
-        }, 300);
+        });
 
         return view;
-    }
-
-    private void rotateView(View v) {
-        if (v == null) {
-            return;
-        }
-        v.clearAnimation();
-
-        ObjectAnimator animator = ObjectAnimator.ofFloat(v, "rotation", 0.0f, 360.0f);
-        animator.setDuration(500);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.start();
     }
 
     private void setupHotpluggingPreferences() {
@@ -409,8 +369,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
     private CustomPreferenceCategoryMaterial createCustomPreferenceCategoryMaterial(String key,
             String title) {
         final Activity activity = getActivity();
-        final CustomPreferenceCategoryMaterial preference =
-                new CustomPreferenceCategoryMaterial(activity);
+        final CustomPreferenceCategoryMaterial preference = new CustomPreferenceCategoryMaterial(activity);
         preference.init(activity);
         preference.setKey(key);
         preference.setTitle(title);
@@ -460,9 +419,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             final String path = Application.get().getString(R.string.file_cpu_quiet_cur_gov);
             final String value = String.valueOf(o);
             RootShell.fireAndForget(Utils.getWriteCommand(path, value));
-            BootupConfig.setBootup(new BootupItem(
-                    BootupConfig.CATEGORY_EXTRAS, mCpuQuietGov.getKey(),
-                    path, value, true));
+            BootupConfig.setBootup(new BootupItem(BootupConfig.CATEGORY_EXTRAS, mCpuQuietGov.getKey(), path, value, true));
             return true;
         }
 
@@ -480,40 +437,6 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         return false;
     }
 
-    @Override public void onFrequency(@NonNull final CpuUtils.Frequency cpuFreq) {
-        final String[] mAvailableFrequencies = cpuFreq.available;
-        Arrays.sort(mAvailableFrequencies, new Comparator<String>() {
-            @Override
-            public int compare(String object1, String object2) {
-                return Utils.tryValueOf(object1, 0).compareTo(Utils.tryValueOf(object2, 0));
-            }
-        });
-        Collections.reverse(Arrays.asList(mAvailableFrequencies));
-
-        final ArrayList<String> entries = new ArrayList<>();
-        for (final String mAvailableFreq : mAvailableFrequencies) {
-            entries.add(CpuUtils.toMhz(mAvailableFreq));
-        }
-
-        final String[] entryArray = entries.toArray(new String[entries.size()]);
-
-        mMax.setAdapter(mMax.createAdapter(entryArray, mAvailableFrequencies));
-        mMax.setValue(cpuFreq.maximum);
-        mMax.setEnabled(true);
-
-        mMin.setAdapter(mMin.createAdapter(entryArray, mAvailableFrequencies));
-        mMin.setValue(cpuFreq.minimum);
-        mMin.setEnabled(true);
-
-        entries.clear();
-    }
-
-    @Override public void onGovernor(@NonNull final GovernorUtils.Governor governor) {
-        mGovernor.setAdapter(mGovernor.createAdapter(governor.available, governor.available));
-        mGovernor.setValue(governor.current);
-        mGovernor.setEnabled(true);
-    }
-
     public View generateRow(final int core, final CpuCore cpuCore) {
         if (!isAdded() || mCpuInfo == null) {
             return null;
@@ -529,11 +452,11 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         if (rowView instanceof CpuCoreView) {
             final boolean isOffline = cpuCore.current == 0;
 
-            ((CpuCoreView) rowView).core.setText(cpuCore.core);
+            ((CpuCoreView) rowView).core.setText(String.format("%s %s:", coreString, cpuCore.core));
             ((CpuCoreView) rowView).freq.setText(isOffline
                     ? getString(R.string.core_offline)
-                    : CpuUtils.toMhz(String.valueOf(cpuCore.current))
-                      + " / " + CpuUtils.toMhz(String.valueOf(cpuCore.max))
+                    : CpuInformation.toMhz(String.valueOf(cpuCore.current))
+                      + " / " + CpuInformation.toMhz(String.valueOf(cpuCore.max))
                       + " [" + cpuCore.governor + ']');
             ((CpuCoreView) rowView).bar.setMax(cpuCore.max);
             ((CpuCoreView) rowView).bar.setProgress(cpuCore.current);
@@ -543,5 +466,38 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         return rowView;
     }
 
+    @Override public void onCpuInformation(@NonNull final CpuInformation cpuInformation) {
+        final Integer[] availableFrequencies = cpuInformation.freqAvail.toArray(new Integer[cpuInformation.freqAvail.size()]);
+
+        final ArrayList<String> entries = new ArrayList<>();
+        for (final Integer availableFreq : availableFrequencies) {
+            entries.add(CpuInformation.toMhz(String.valueOf(availableFreq)));
+        }
+
+        final ArrayList<String> entryValues = new ArrayList<>();
+        for (final Integer availableFreq : availableFrequencies) {
+            entryValues.add(String.valueOf(availableFreq));
+        }
+
+        final String[] entryArray = entries.toArray(new String[entries.size()]);
+        final String[] entryValuesArray = entryValues.toArray(new String[entryValues.size()]);
+        final String[] govAvail = cpuInformation.govAvail.toArray(new String[cpuInformation.govAvail.size()]);
+
+        mMax.post(new Runnable() {
+            @Override public void run() {
+                mMax.setAdapter(mMax.createAdapter(entryArray, entryValuesArray));
+                mMax.setValue(String.valueOf(cpuInformation.freqMax));
+                mMax.setEnabled(true);
+
+                mMin.setAdapter(mMin.createAdapter(entryArray, entryValuesArray));
+                mMin.setValue(String.valueOf(cpuInformation.freqMin));
+                mMin.setEnabled(true);
+
+                mGovernor.setAdapter(mGovernor.createAdapter(govAvail, govAvail));
+                mGovernor.setValue(cpuInformation.govCur);
+                mGovernor.setEnabled(true);
+            }
+        });
+    }
 }
 
