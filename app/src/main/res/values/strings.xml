@@ -510,5 +510,5 @@
     <string name="use_sense360">Use Sense360</string>
     <string name="use_sense360_summary">To learn more about Sense360, long press this card</string>
 
-    <string name="restart_activity">Restart activity to apply changes</string>
+    <string name="restart_activity">Restart app to apply changes</string>
 </resources>
