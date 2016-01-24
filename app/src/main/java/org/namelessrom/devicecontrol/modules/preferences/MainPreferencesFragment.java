@@ -17,12 +17,16 @@
  */
 package org.namelessrom.devicecontrol.modules.preferences;
 
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.pollfish.main.PollFish;
 
+import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.theme.AppResources;
@@ -31,30 +35,36 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class MainPreferencesFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceChangeListener {
     // TODO: more customization
-    private MaterialSwitchPreference mLightTheme;
+    @Bind(R.id.prefs_light_theme) MaterialSwitchPreference mLightTheme;
+    @Bind(R.id.prefs_low_end_gfx) MaterialSwitchPreference mLowEndGfx;
 
-    private MaterialSwitchPreference mShowPollfish;
+    @Bind(R.id.prefs_show_pollfish) MaterialSwitchPreference mShowPollfish;
 
     @Override protected int getLayoutResourceId() {
-        return R.layout.preferences_app_device_control_main;
+        return R.layout.pref_app_main;
     }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final DeviceConfig configuration = DeviceConfig.get();
+        ButterKnife.bind(this, view);
 
-        mLightTheme = (MaterialSwitchPreference) view.findViewById(R.id.prefs_light_theme);
         mLightTheme.setChecked(AppResources.get().isLightTheme());
         mLightTheme.setOnPreferenceChangeListener(this);
 
-        mShowPollfish = (MaterialSwitchPreference) view.findViewById(R.id.prefs_show_pollfish);
+        mLowEndGfx.setChecked(AppResources.get().isLowEndGfx(getContext()));
+        mLowEndGfx.setOnPreferenceChangeListener(this);
+
+        final DeviceConfig configuration = DeviceConfig.get();
         mShowPollfish.setChecked(configuration.showPollfish);
         mShowPollfish.setOnPreferenceChangeListener(this);
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override public boolean onPreferenceChanged(MaterialPreference preference, Object newValue) {
         if (mShowPollfish == preference) {
             final boolean value = (Boolean) newValue;
@@ -82,6 +92,17 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             }
 
             // restart the activity to apply new theme
+            Utils.restartActivity(getActivity());
+            return true;
+        } else if (mLowEndGfx == preference) {
+            final boolean isLowEndGfx = (Boolean) newValue;
+            AppResources.get().setLowEndGfx(isLowEndGfx);
+            mLowEndGfx.setChecked(isLowEndGfx);
+
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
+            prefs.edit().putBoolean(Constants.KEY_LOW_END_GFX, isLowEndGfx).commit();
+
+            // restart the activity to update effects
             Utils.restartActivity(getActivity());
             return true;
         }

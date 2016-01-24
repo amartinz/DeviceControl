@@ -40,7 +40,7 @@ public class AdvancedPreferencesFragment extends MaterialSupportPreferenceFragme
     private MaterialSwitchPreference mExtensiveLogging;
 
     @Override protected int getLayoutResourceId() {
-        return R.layout.preferences_app_device_control_advanced;
+        return R.layout.pref_app_advanced;
     }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {

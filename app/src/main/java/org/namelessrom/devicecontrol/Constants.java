@@ -20,4 +20,6 @@ package org.namelessrom.devicecontrol;
 public class Constants {
     public static final String GITHUB_BASE_URL = "https://github.com/Evisceration";
     public static final String GITHUB_DC_COMMIT_URL_BASE = GITHUB_BASE_URL + "/DeviceControl/commits/%s";
+
+    public static final String KEY_LOW_END_GFX = "low_end_gfx";
 }

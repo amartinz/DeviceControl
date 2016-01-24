@@ -1,21 +1,27 @@
 package org.namelessrom.devicecontrol.theme;
 
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.v4.app.ActivityManagerCompat;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 
 import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.Constants;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 
 public class AppResources {
     private static AppResources sInstance;
 
-    private boolean isLowEndGfx = false;
+    private Boolean isLowEndGfx = null;
 
     private int isLightTheme = -1;
 
@@ -50,7 +56,17 @@ public class AppResources {
         return sInstance;
     }
 
-    public boolean isLowEndGfx() {
+    public boolean isLowEndGfx(Context context) {
+        if (isLowEndGfx == null) {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+            final ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+
+            final boolean isLowEndGfx = ActivityManagerCompat.isLowRamDevice(am);
+            final boolean setLowEndGfx = prefs.getBoolean(Constants.KEY_LOW_END_GFX, isLowEndGfx);
+            Logger.d(this, "isLowEndGfx: %s | setLowEndGfx: %s", isLowEndGfx, setLowEndGfx);
+
+            this.isLowEndGfx = setLowEndGfx;
+        }
         return this.isLowEndGfx;
     }
 
@@ -116,9 +132,9 @@ public class AppResources {
         return isLightTheme() ? R.drawable.drawer_header_bg_light : R.drawable.drawer_header_bg_dark;
     }
 
-    public Drawable getDrawerHeader() {
+    public Drawable getDrawerHeader(Context context) {
         if (drawerHeaderDrawable == null) {
-            final boolean isLowEndGfx = isLowEndGfx();
+            final boolean isLowEndGfx = isLowEndGfx(context);
             if (isLowEndGfx) {
                 drawerHeaderDrawable = new ColorDrawable(getPrimaryColor());
             } else {
@@ -141,6 +157,8 @@ public class AppResources {
 
     public void cleanup() {
         drawerHeaderDrawable = null;
+        isLowEndGfx = null;
+        sInstance = null;
     }
 
 }

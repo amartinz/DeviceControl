@@ -200,7 +200,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
 
         final View headerView = mNavigationView.getHeaderView(0);
         final ImageView headerImage = (ImageView) headerView.findViewById(R.id.drawer_header_image);
-        headerImage.setImageDrawable(AppResources.get().getDrawerHeader());
+        headerImage.setImageDrawable(AppResources.get().getDrawerHeader(this));
         final ImageButton headerSettings = (ImageButton) headerView.findViewById(R.id.drawer_header_settings);
         headerSettings.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
