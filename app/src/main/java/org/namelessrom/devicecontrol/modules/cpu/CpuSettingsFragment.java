@@ -213,7 +213,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             setupHotpluggingPreferences();
         }
 
-        view.post(new Runnable() {
+        view.postDelayed(new Runnable() {
             @Override public void run() {
                 CpuReader.getCpuInformation(CpuSettingsFragment.this);
                 view.postDelayed(new Runnable() {
@@ -222,7 +222,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                     }
                 }, 500);
             }
-        });
+        }, 250);
 
         return view;
     }
