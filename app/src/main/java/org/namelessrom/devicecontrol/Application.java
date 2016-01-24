@@ -52,7 +52,7 @@ public class Application extends android.app.Application {
         return Application.sInstance;
     }
 
-    public static Application getApplication(Context context) {
+    public static Application get(Context context) {
         return (Application) context.getApplicationContext();
     }
 

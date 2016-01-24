@@ -25,11 +25,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompat;
-import android.telephony.TelephonyManager;
 
 import com.sense360.android.quinoa.lib.Sense360;
 
-import org.namelessrom.devicecontrol.BuildConfig;
+import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
@@ -56,20 +55,8 @@ public class BootUpReceiver extends BroadcastReceiver {
         Paper.init(ctx);
         Utils.startTaskerService(ctx);
 
-        if (BuildConfig.DEBUG) {
-            Logger.v(this, "Starting Sense360");
+        if (Constants.useSense360(ctx)) {
             Sense360.start(ctx.getApplicationContext());
-        } else {
-            // TODO: verify on non sim device
-            final TelephonyManager telephonyManager = (TelephonyManager) ctx.getSystemService(Context.TELEPHONY_SERVICE);
-            if (telephonyManager != null) {
-                final String simCountryIso = telephonyManager.getSimCountryIso().toLowerCase();
-                Logger.v(this, "SimCountryIso: %s", simCountryIso);
-                // TODO: configurable
-                if ("us".equals(simCountryIso)) {
-                    Sense360.start(ctx.getApplicationContext());
-                }
-            }
         }
 
         BootupConfig bootupConfig = BootupConfig.get();

@@ -55,6 +55,13 @@
             app:prefSummary="@string/show_pollfish_summary"
             app:prefTitle="@string/show_pollfish" />
 
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/prefs_use_sense360"
+            style="@style/MaterialPreferences.Default"
+            app:prefKey="use_sense360"
+            app:prefSummary="@string/use_sense360_summary"
+            app:prefTitle="@string/use_sense360" />
+
     </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
 
 </LinearLayout>

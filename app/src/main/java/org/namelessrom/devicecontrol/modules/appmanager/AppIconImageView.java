@@ -60,7 +60,7 @@ public class AppIconImageView extends CacheableImageView {
             mCache = null;
             return;
         }
-        mCache = Application.getApplication(context).getBitmapCache();
+        mCache = Application.get(context).getBitmapCache();
     }
 
     public boolean loadImage(AppItem appItem, OnImageLoadedListener listener) {

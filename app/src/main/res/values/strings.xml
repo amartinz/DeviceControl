@@ -507,4 +507,6 @@
 
     <string name="low_end_gfx">Reduced graphic effects</string>
     <string name="low_end_gfx_summary">Use less graphic effects, which may work better on some devices</string>
+    <string name="use_sense360">Use Sense360</string>
+    <string name="use_sense360_summary">To learn more about Sense360, long press this card</string>
 </resources>

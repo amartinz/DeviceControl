@@ -18,6 +18,8 @@
 package org.namelessrom.devicecontrol.modules.preferences;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,6 +28,7 @@ import android.view.View;
 
 import com.pollfish.main.PollFish;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
@@ -44,6 +47,7 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
     @Bind(R.id.prefs_low_end_gfx) MaterialSwitchPreference mLowEndGfx;
 
     @Bind(R.id.prefs_show_pollfish) MaterialSwitchPreference mShowPollfish;
+    @Bind(R.id.prefs_use_sense360) MaterialSwitchPreference mUseSense360;
 
     @Override protected int getLayoutResourceId() {
         return R.layout.pref_app_main;
@@ -53,15 +57,31 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
+        final Context context = getContext();
+
         mLightTheme.setChecked(AppResources.get().isLightTheme());
         mLightTheme.setOnPreferenceChangeListener(this);
 
-        mLowEndGfx.setChecked(AppResources.get().isLowEndGfx(getContext()));
+        mLowEndGfx.setChecked(AppResources.get().isLowEndGfx(context));
         mLowEndGfx.setOnPreferenceChangeListener(this);
 
         final DeviceConfig configuration = DeviceConfig.get();
         mShowPollfish.setChecked(configuration.showPollfish);
         mShowPollfish.setOnPreferenceChangeListener(this);
+
+        if (Constants.canUseSense360(context)) {
+            mUseSense360.setChecked(Constants.useSense360(context));
+            mUseSense360.setOnPreferenceChangeListener(this);
+            mUseSense360.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override public boolean onLongClick(View v) {
+                    final Activity activity = getActivity();
+                    Application.get(activity).getCustomTabsHelper().launchUrl(activity, Constants.URL_SENSE360);
+                    return true;
+                }
+            });
+        } else {
+            mUseSense360.setVisibility(View.GONE);
+        }
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -104,6 +124,12 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
 
             // restart the activity to update effects
             Utils.restartActivity(getActivity());
+            return true;
+        } else if (mUseSense360 == preference) {
+            final boolean useSense360 = (Boolean) newValue;
+
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
+            prefs.edit().putBoolean(Constants.KEY_USE_SENSE360, useSense360).commit();
             return true;
         }
 

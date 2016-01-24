@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol;
 
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -30,7 +29,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,17 +53,17 @@ import org.namelessrom.devicecontrol.modules.bootup.BootupFragment;
 import org.namelessrom.devicecontrol.modules.cpu.CpuSettingsFragment;
 import org.namelessrom.devicecontrol.modules.cpu.GovernorFragment;
 import org.namelessrom.devicecontrol.modules.device.DeviceFeatureFragment;
-import org.namelessrom.devicecontrol.modules.info.DeviceInfoFragment;
 import org.namelessrom.devicecontrol.modules.device.sub.FastChargeFragment;
 import org.namelessrom.devicecontrol.modules.device.sub.SoundControlFragment;
 import org.namelessrom.devicecontrol.modules.editor.BuildPropEditorFragment;
 import org.namelessrom.devicecontrol.modules.editor.SysctlEditorFragment;
 import org.namelessrom.devicecontrol.modules.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.modules.flasher.FlasherFragment;
+import org.namelessrom.devicecontrol.modules.info.DeviceInfoFragment;
 import org.namelessrom.devicecontrol.modules.info.HardwareInfoFragment;
+import org.namelessrom.devicecontrol.modules.info.PerformanceInfoFragment;
 import org.namelessrom.devicecontrol.modules.performance.FilesystemFragment;
 import org.namelessrom.devicecontrol.modules.performance.GpuSettingsFragment;
-import org.namelessrom.devicecontrol.modules.info.PerformanceInfoFragment;
 import org.namelessrom.devicecontrol.modules.performance.ThermalFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.IoSchedConfigFragment;
@@ -126,12 +124,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
             }
         }
 
-        // TODO: verify on non sim device
-        final TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        final String simCountryIso = telephonyManager.getSimCountryIso().toLowerCase();
-        Logger.v(this, "SimCountryIso: %s", simCountryIso);
-        if (BuildConfig.DEBUG || "us".equals(simCountryIso)) {
-            // TODO: configurable
+        if (Constants.useSense360(this)) {
             Sense360.start(getApplicationContext());
         }
     }
@@ -226,7 +219,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
             if (versionName.contains("-git-")) {
                 final String[] splitted = versionName.split("-git-");
                 if (splitted.length == 2) {
-                    final String commitUrl = String.format(Constants.GITHUB_DC_COMMIT_URL_BASE, splitted[1]);
+                    final String commitUrl = String.format(Constants.URL_GITHUB_DC_COMMITS_BASE, splitted[1]);
                     // preheat a bit
                     ((Application) getApplicationContext()).getCustomTabsHelper().mayLaunchUrl(commitUrl);
                     footerContainer.setOnClickListener(new View.OnClickListener() {
