@@ -231,9 +231,9 @@ public class CpuUtils {
         }
 
         final String cmd = String.format("(cat \"%s\") 2> /dev/null;" +
-                                         "echo -n \"[\";"           +
+                                         "echo -n \"[\";" +
                                          "(cat \"%s\") 2> /dev/null;" +
-                                         "echo -n \" ]\";"           +
+                                         "echo -n \" ]\";" +
                                          "(cat \"%s\") 2> /dev/null;",
                 FREQ_AVAIL, getMaxCpuFrequencyPath(0), getMinCpuFrequencyPath(0));
         final Command command = new Command(cmd) {
@@ -318,6 +318,29 @@ public class CpuUtils {
         } else {
             return Application.get().getString(R.string.core_offline);
         }
+    }
+
+    /**
+     * Convert from MHz
+     *
+     * @param value The string in MHz format (eg. "2457 MHz")
+     * @return The original value as integer (eg. 2457000)
+     */
+    public static int fromMhz(@Nullable String value) {
+        if (TextUtils.isEmpty(value)) {
+            return -1;
+        }
+        if (!value.contains("MHz")) {
+            // no MHz, maybe we have passed in a correct frequency already...
+            return Utils.tryParse(value.trim(), -1);
+        }
+        value = value.replace("MHz", "").trim();
+
+        final int intValue = Utils.tryParse(value, -1);
+        if (intValue != -1) {
+            return intValue * 1000;
+        }
+        return -1;
     }
 
 }
