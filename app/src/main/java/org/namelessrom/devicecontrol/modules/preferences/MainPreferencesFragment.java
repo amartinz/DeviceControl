@@ -23,11 +23,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 
 import com.pollfish.main.PollFish;
 
+import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.R;
@@ -111,8 +114,7 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
 
             }
 
-            // restart the activity to apply new theme
-            Utils.restartActivity(getActivity());
+            showRestartSnackbar(mLightTheme);
             return true;
         } else if (mLowEndGfx == preference) {
             final boolean isLowEndGfx = (Boolean) newValue;
@@ -122,9 +124,7 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
             prefs.edit().putBoolean(Constants.KEY_LOW_END_GFX, isLowEndGfx).commit();
 
-            // restart the activity and cleanup AppResources to update effects
-            AppResources.get().cleanup();
-            Utils.restartActivity(getActivity());
+            showRestartSnackbar(mLowEndGfx);
             return true;
         } else if (mUseSense360 == preference) {
             final boolean useSense360 = (Boolean) newValue;
@@ -135,6 +135,23 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         }
 
         return false;
+    }
+
+    private void showRestartSnackbar(View view) {
+        final Activity activity = getActivity();
+        if (activity instanceof ActivityCallbacks) {
+            ((ActivityCallbacks) activity).setDrawerLockState(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
+
+        Snackbar.make(view, R.string.restart_activity, Snackbar.LENGTH_INDEFINITE)
+                .setAction(android.R.string.ok, new View.OnClickListener() {
+                    @Override public void onClick(View v) {
+                        // restart the activity and cleanup AppResources to update effects and theme
+                        AppResources.get().cleanup();
+                        Utils.restartActivity(getActivity());
+                    }
+                })
+                .show();
     }
 
 }

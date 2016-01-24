@@ -491,9 +491,7 @@ public class Utils {
         if (activity == null) {
             return;
         }
-        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         activity.finish();
-        activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         activity.startActivity(activity.getIntent());
     }
 

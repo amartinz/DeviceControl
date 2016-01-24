@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol;
 public interface ActivityCallbacks {
     boolean closeDrawerIfShowing();
     void toggleDrawer();
+    void setDrawerLockState(int lockMode);
 
     void shouldLoadFragment(int id);
     void shouldLoadFragment(int id, boolean onResume);
