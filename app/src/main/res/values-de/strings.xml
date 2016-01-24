@@ -54,7 +54,7 @@
   <string name="more">Mehr&#8230;</string>
   <string name="dialog_warning">Achtung!</string>
   <string name="dialog_warning_apply">Bist du sicher, dass du die Einstellungen anwenden möchtest?</string>
-  <string name="dialog_warning_su_version">Dein installierter Superuser \"%s\" funktioniert möglicherweise nicht ordnungsgemäß. Ich empfehle \"SuperSU\" zu verwenden!</string>
+  <string name="dialog_warning_su_version">Der installierte Superuser \"%s\" ist funktionsfähig, wurde aber mit Device Control nicht getestet und es können Fehler auftreten.\nFalls irgendwelche Probleme auftreten, wird die Verwendung von \"SuperSU\" empfohlen!</string>
   <string name="dialog_action_never_show_again">Nicht wieder zeigen</string>
   <string name="toast_settings_applied">Erfolgreich angewendet!</string>
   <string name="no_tweaks_available">Keine Optimierungen verfügbar</string>
@@ -492,4 +492,9 @@
   <string name="fingerprint_press_to_authenticate">Fingerabdruck-Sensor zum Authentifizieren benutzen</string>
   <string name="fingerprint_success">Erfolgreich authentifiziert!</string>
   <string name="fingerprint_failed">Authentifizierung fehlgeschlagen!</string>
+  <string name="low_end_gfx">Reduzierte Grafik-Effekte</string>
+  <string name="low_end_gfx_summary">Weniger grafische Effekte benutzen, was die App-Performance auf einigen Geräten verbessern kann</string>
+  <string name="use_sense360">Verwenden von Sense360</string>
+  <string name="use_sense360_summary">Drücke lange auf diese Karte, um mehr über Sense360 zu erfahren</string>
+  <string name="restart_activity">App neustarten zum Anwenden der Änderungen</string>
 </resources>
