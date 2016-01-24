@@ -116,7 +116,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
     @Override public void onResume() {
         super.onResume();
         if (mStatusHide != null && mStatusHide.isChecked()) {
-            CpuCoreMonitor.getInstance(getActivity()).start(this, 1000);
+            CpuCoreMonitor.getInstance(getActivity()).start(this, 750);
         }
         CpuUtils.get().getCpuFreq(this);
         GovernorUtils.get().getGovernor(this);
@@ -155,7 +155,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             @Override public void onCheckedChanged(final CompoundButton button, final boolean b) {
                 if (b) {
                     mCpuInfo.setVisibility(View.VISIBLE);
-                    CpuCoreMonitor.getInstance(activity).start(CpuSettingsFragment.this, 1000);
+                    CpuCoreMonitor.getInstance(activity).start(CpuSettingsFragment.this, 750);
                 } else {
                     CpuCoreMonitor.getInstance(activity).stop();
                     mCpuInfo.setVisibility(View.GONE);
@@ -537,6 +537,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                       + " [" + cpuCore.governor + ']');
             ((CpuCoreView) rowView).bar.setMax(cpuCore.max);
             ((CpuCoreView) rowView).bar.setProgress(cpuCore.current);
+            Logger.v(this, String.format("updated row(%s);", cpuCore.toString()));
         }
 
         return rowView;

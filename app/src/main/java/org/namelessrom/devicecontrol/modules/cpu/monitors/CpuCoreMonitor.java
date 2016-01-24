@@ -78,8 +78,8 @@ public class CpuCoreMonitor {
         mListener = listener;
         mInterval = interval;
         if (!isStarted) {
-            Application.HANDLER.post(mUpdater);
             isStarted = true;
+            Application.HANDLER.post(mUpdater);
             Logger.i(this, "started, interval: " + String.valueOf(mInterval));
         } else {
             Logger.i(this, "updated interval: " + String.valueOf(mInterval));
@@ -90,8 +90,8 @@ public class CpuCoreMonitor {
 
     public CpuCoreMonitor stop() {
         if (isStarted) {
-            mListener = null;
             isStarted = false;
+            mListener = null;
             Application.HANDLER.removeCallbacks(mUpdater);
             Logger.v(this, "stopped!");
         }
@@ -151,21 +151,22 @@ public class CpuCoreMonitor {
         final StringBuilder sb = new StringBuilder();
         for (int i = 0; i < CPU_COUNT; i++) {
             // if cpufreq directory exists ...
-            sb.append("if [ -d \"/sys/devices/system/cpu/cpu").append(String.valueOf(i)).append("/cpufreq\" ]; then ");
+            sb.append("if [ -d \"/sys/devices/system/cpu/cpu").append(String.valueOf(i)).append("/cpufreq\" ]; then\n");
             // cat /path/to/cpu/frequency
-            sb.append(String.format("(cat \"%s\") 2> /dev/null;", CpuUtils.get().getCpuFrequencyPath(i)));
+            sb.append(String.format("(cat \"%s\") 2> /dev/null;\n", CpuUtils.get().getCpuFrequencyPath(i)));
             sb.append("echo -n \" \";");
             // cat /path/to/cpu/frequency_max
-            sb.append(String.format("(cat \"%s\") 2> /dev/null;", CpuUtils.get().getMaxCpuFrequencyPath(i)));
+            sb.append(String.format("(cat \"%s\") 2> /dev/null;\n", CpuUtils.get().getMaxCpuFrequencyPath(i)));
             sb.append("echo -n \" \";");
             // cat /path/to/cpu/governor
-            sb.append(String.format("(cat \"%s\") 2> /dev/null;", GovernorUtils.get().getGovernorPath(i)));
-            sb.append("echo -n \" \";");
+            sb.append(String.format("(cat \"%s\") 2> /dev/null;\n", GovernorUtils.get().getGovernorPath(i)));
             // ... else echo 0 for them
             sb.append("else echo \"0 0 0\";fi;");
+            // ... and append a space on the end
+            sb.append("echo -n \" \";");
         }
 
-        // example output: 0 162000 1890000 interactive
+        // example output: 162000 1890000 interactive
         final String cmd = sb.toString();
         final Command command = new Command(cmd) {
             @Override public void onCommandCompleted(int id, int exitCode) {
