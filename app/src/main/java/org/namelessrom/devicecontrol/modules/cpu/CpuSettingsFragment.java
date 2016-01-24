@@ -423,9 +423,10 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             final String other = String.valueOf(mMin.getValue());
             final boolean updateOther = Utils.parseInt(selected) < Utils.parseInt(other);
             if (updateOther) {
-                mMin.setValue(selected);
+                onPreferenceChanged(mMin, selected);
             }
 
+            mMax.setValue(selected);
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MAX, selected, true);
             return true;
         } else if (preference == mMin) {
@@ -433,9 +434,10 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             final String other = String.valueOf(mMax.getValue());
             final boolean updateOther = Utils.parseInt(selected) > Utils.parseInt(other);
             if (updateOther) {
-                mMax.setValue(selected);
+                onPreferenceChanged(mMax, selected);
             }
 
+            mMin.setValue(selected);
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MIN, selected, true);
             return true;
         } else if (preference == mCpuLock) {
@@ -496,11 +498,11 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         final String[] entryArray = entries.toArray(new String[entries.size()]);
 
         mMax.setAdapter(mMax.createAdapter(entryArray, mAvailableFrequencies));
-        mMax.setValue(CpuUtils.toMhz(cpuFreq.maximum));
+        mMax.setValue(cpuFreq.maximum);
         mMax.setEnabled(true);
 
         mMin.setAdapter(mMin.createAdapter(entryArray, mAvailableFrequencies));
-        mMin.setValue(CpuUtils.toMhz(cpuFreq.minimum));
+        mMin.setValue(cpuFreq.minimum);
         mMin.setEnabled(true);
 
         entries.clear();
