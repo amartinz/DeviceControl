@@ -63,47 +63,48 @@ import alexander.martinz.libs.hardware.cpu.CpuReader;
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
+import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.ButterKnife;
 
 public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implements CpuCoreMonitor.CoreListener, MaterialPreference.MaterialPreferenceChangeListener, MaterialPreference.MaterialPreferenceClickListener, CpuInformationListener {
 
-    private MaterialListPreference mMax;
-    private MaterialListPreference mMin;
-    private MaterialSwitchPreference mCpuLock;
+    @Bind(R.id.cpu_pref_max) MaterialListPreference mMax;
+    @Bind(R.id.cpu_pref_min) MaterialListPreference mMin;
+    @Bind(R.id.cpu_pref_cpu_lock) MaterialSwitchPreference mCpuLock;
 
-    private MaterialListPreference mGovernor;
-    private MaterialPreference mGovernorTuning;
-    private MaterialSwitchPreference mCpuGovLock;
+    @Bind(R.id.cpu_pref_governor) MaterialListPreference mGovernor;
+    @Bind(R.id.cpu_pref_governor_tuning) MaterialPreference mGovernorTuning;
+    @Bind(R.id.cpu_pref_gov_lock) MaterialSwitchPreference mCpuGovLock;
 
     private MaterialSwitchPreference mMpDecision;
     private MaterialListPreference mCpuQuietGov;
 
+    @Bind(R.id.cpu_info_hide) SwitchCompat mStatusHide;
+    @Bind(R.id.cpu_info) LinearLayout mCpuInfo;
+
     @BindString(R.string.core) String coreString;
 
     private static final int ID_MPDECISION = 200;
-    //----------------------------------------------------------------------------------------------
 
-    private SwitchCompat mStatusHide;
-    private LinearLayout mCpuInfo;
 
-    private final ShellOutput.OnShellOutputListener mShellOutputListener =
-            new ShellOutput.OnShellOutputListener() {
-                @Override public void onShellOutput(final ShellOutput shellOutput) {
-                    if (shellOutput != null) {
-                        switch (shellOutput.id) {
-                            case ID_MPDECISION:
-                                if (mMpDecision != null) {
-                                    mMpDecision.setChecked(!TextUtils.isEmpty(shellOutput.output));
-                                    mMpDecision.setOnPreferenceChangeListener(
-                                            CpuSettingsFragment.this);
-                                }
-                                break;
-                            default:
-                                break;
+    private final ShellOutput.OnShellOutputListener mShellOutputListener = new ShellOutput.OnShellOutputListener() {
+        @Override public void onShellOutput(final ShellOutput shellOutput) {
+            if (shellOutput != null) {
+                switch (shellOutput.id) {
+                    case ID_MPDECISION:
+                        if (mMpDecision != null) {
+                            mMpDecision.setChecked(!TextUtils.isEmpty(shellOutput.output));
+                            mMpDecision.setOnPreferenceChangeListener(
+                                    CpuSettingsFragment.this);
                         }
-                    }
+                        break;
+                    default:
+                        break;
                 }
-            };
+            }
+        }
+    };
 
     @Override protected int getLayoutResourceId() {
         return R.layout.preferences_cpu;
@@ -158,11 +159,9 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         setHasOptionsMenu(true);
 
         final View view = super.onCreateView(inflater, root, savedState);
-
-        mCpuInfo = (LinearLayout) view.findViewById(R.id.cpu_info);
+        ButterKnife.bind(this, view);
 
         final DeviceConfig deviceConfig = DeviceConfig.get();
-        mStatusHide = (SwitchCompat) view.findViewById(R.id.cpu_info_hide);
         mStatusHide.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override public void onCheckedChanged(final CompoundButton button, final boolean b) {
                 if (b) {
@@ -190,26 +189,20 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             generateRow(i, tmpCore);
         }
 
-        mMax = (MaterialListPreference) view.findViewById(R.id.cpu_pref_max);
         mMax.setSpinnerTextViewColor(AppResources.get().getAccentColor());
         mMax.setOnPreferenceChangeListener(this);
 
-        mMin = (MaterialListPreference) view.findViewById(R.id.cpu_pref_min);
         mMin.setSpinnerTextViewColor(AppResources.get().getAccentColor());
         mMin.setOnPreferenceChangeListener(this);
 
-        mCpuLock = (MaterialSwitchPreference) view.findViewById(R.id.cpu_pref_cpu_lock);
         mCpuLock.getSwitch().setChecked(deviceConfig.perfCpuLock);
         mCpuLock.setOnPreferenceChangeListener(this);
 
-        mGovernor = (MaterialListPreference) view.findViewById(R.id.cpu_pref_governor);
         mGovernor.setSpinnerTextViewColor(AppResources.get().getAccentColor());
         mGovernor.setOnPreferenceChangeListener(this);
 
-        mGovernorTuning = (MaterialPreference) view.findViewById(R.id.cpu_pref_governor_tuning);
         mGovernorTuning.setOnPreferenceClickListener(this);
 
-        mCpuGovLock = (MaterialSwitchPreference) view.findViewById(R.id.cpu_pref_gov_lock);
         mCpuGovLock.getSwitch().setChecked(deviceConfig.perfCpuGovLock);
         mCpuGovLock.setOnPreferenceChangeListener(this);
 
@@ -262,8 +255,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         }
 
         if (cpuQuiet) {
-            final String[] govs = Utils.readOneLine(
-                    getString(R.string.file_cpu_quiet_avail_gov)).split(" ");
+            final String[] govs = Utils.readOneLine(getString(R.string.file_cpu_quiet_avail_gov)).split(" ");
             final String gov = Utils.readOneLine(getString(R.string.file_cpu_quiet_cur_gov));
             mCpuQuietGov = new MaterialListPreference(getActivity());
             mCpuQuietGov.setAsCard(false);
@@ -283,8 +275,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
         paths = getResources().getStringArray(R.array.directories_intelli_plug);
         path = Utils.checkPaths(paths);
         if (!TextUtils.isEmpty(path)) {
-            category = createCustomPreferenceCategoryMaterial("intelli_plug",
-                    getString(R.string.intelli_plug));
+            category = createCustomPreferenceCategoryMaterial("intelli_plug", getString(R.string.intelli_plug));
             addPreference(category);
 
             // setup intelli plug toggle
@@ -366,8 +357,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
 
     }
 
-    private CustomPreferenceCategoryMaterial createCustomPreferenceCategoryMaterial(String key,
-            String title) {
+    private CustomPreferenceCategoryMaterial createCustomPreferenceCategoryMaterial(String key, String title) {
         final Activity activity = getActivity();
         final CustomPreferenceCategoryMaterial preference = new CustomPreferenceCategoryMaterial(activity);
         preference.init(activity);
@@ -416,7 +406,7 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             new MpDecisionAction(value ? "1" : "0", true).triggerAction();
             return true;
         } else if (preference == mCpuQuietGov) {
-            final String path = Application.get().getString(R.string.file_cpu_quiet_cur_gov);
+            final String path = getString(R.string.file_cpu_quiet_cur_gov);
             final String value = String.valueOf(o);
             RootShell.fireAndForget(Utils.getWriteCommand(path, value));
             BootupConfig.setBootup(new BootupItem(BootupConfig.CATEGORY_EXTRAS, mCpuQuietGov.getKey(), path, value, true));
