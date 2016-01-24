@@ -43,6 +43,7 @@
 -keep public class com.github.mikephil.charting.animation.* {
     public protected *;
 }
+-dontwarn com.github.mikephil.charting.data.realm.**
 
 # Paper
 -keep class io.paperdb.** { *; }
