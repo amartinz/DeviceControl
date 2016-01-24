@@ -34,6 +34,8 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import java.util.ArrayList;
+
 import alexander.martinz.libs.execution.RootCheck;
 import alexander.martinz.libs.execution.binaries.BusyBox;
 import alexander.martinz.libs.hardware.device.Device;
@@ -250,19 +252,25 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
                     @Override public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
 
+                        final ArrayList<String> toRequest = new ArrayList<>();
                         if (!storage) {
-                            rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe();
+                            // we only launch this code on M anyways, but please shut up android studio
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                toRequest.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+                            }
+                            toRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
                         }
 
                         if (!telephony) {
-                            rxPermissions.request(Manifest.permission.READ_PHONE_STATE).subscribe();
+                            toRequest.add(Manifest.permission.READ_PHONE_STATE);
                         }
 
                         if (!location) {
-                            rxPermissions.request(Manifest.permission.ACCESS_COARSE_LOCATION,
-                                    Manifest.permission.ACCESS_FINE_LOCATION).subscribe();
+                            toRequest.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+                            toRequest.add(Manifest.permission.ACCESS_FINE_LOCATION);
                         }
+
+                        rxPermissions.request(toRequest.toArray(new String[toRequest.size()])).subscribe();
 
                         if (mPostExecuteHook != null) {
                             mainActivity.runOnUiThread(mPostExecuteHook);
