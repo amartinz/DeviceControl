@@ -55,7 +55,7 @@
 
     <string name="dialog_warning">Warning!</string>
     <string name="dialog_warning_apply">Are you sure that you want to apply your settings?</string>
-    <string name="dialog_warning_su_version">Your installed superuser \"%s\" may not work properly. Using \"SuperSU\" is recommended!</string>
+    <string name="dialog_warning_su_version">Your installed superuser \"%s\" is functional but might not work reliable with Device Control, because I have not tested it.\nIf you encounter any problems, using \"SuperSU\" is recommended!</string>
     <string name="dialog_action_never_show_again">Never show again</string>
 
     <string name="toast_settings_applied">Successfully applied!</string>
