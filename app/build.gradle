@@ -95,11 +95,14 @@ dependencies {
     // see https://github.com/Evisceration/logger
     compile 'com.github.Evisceration:logger:1.0.5'
 
-    compile project(':modules:ExecutionLibrary:library')
-    compile project(':modules:HardwareLibrary:library')
-
+    // see https://github.com/Evisceration/ExecutionLibrary
+    compile project(':ExecutionLibrary')
+    // see https://github.com/Evisceration/HardwareLibrary
+    compile project(':HardwareLibrary')
     // see https://github.com/Evisceration/MaterialPreferences
-    compile project(':modules:MaterialPreferences:library')
+    compile project(':MaterialPreferences')
+    // see https://android.googlesource.com/platform/frameworks/volley
+    compile project(':volley')
 
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:cardview-v7:23.1.1'

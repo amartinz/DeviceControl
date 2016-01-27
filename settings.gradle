@@ -1,8 +1,16 @@
-include ':app', ':Proprietary'
+include ':app'
 
-include ':modules:ExecutionLibrary:library'
-include ':modules:HardwareLibrary:library'
-include ':modules:MaterialPreferences:library'
+include ':ExecutionLibrary'
+project (':ExecutionLibrary').projectDir = new File('modules/ExecutionLibrary/library')
+
+include ':HardwareLibrary'
+project (':HardwareLibrary').projectDir = new File('modules/HardwareLibrary/library')
+
+include ':MaterialPreferences'
+project (':MaterialPreferences').projectDir = new File('modules/MaterialPreferences/library')
+
+include(":volley")
+project(':volley').projectDir = new File('modules/volley')
 
 if (new File("modules/Vendor").exists()) {
     include ':modules:Vendor'
