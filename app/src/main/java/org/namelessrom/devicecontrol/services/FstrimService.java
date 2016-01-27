@@ -28,7 +28,7 @@ import java.io.FileOutputStream;
 
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.execution.binaries.BusyBox;
+import alexander.martinz.libs.execution.BusyBox;
 
 public class FstrimService extends IntentService {
     public static final String ACTION_TASKER_FSTRIM = "action_tasker_fstrim";

@@ -30,7 +30,7 @@
             android:animateLayoutChanges="true"
             android:orientation="vertical">
 
-            <org.namelessrom.devicecontrol.ui.views.CustomRecyclerView
+            <org.namelessrom.devicecontrol.views.CustomRecyclerView
                 android:id="@android:id/list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

@@ -23,10 +23,10 @@ import android.preference.PreferenceCategory;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeEditTextPreference;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomePreferenceCategory;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
-import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.preferences.AwesomeEditTextPreference;
+import org.namelessrom.devicecontrol.preferences.AwesomePreferenceCategory;
+import org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference;
+import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.PreferenceUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 

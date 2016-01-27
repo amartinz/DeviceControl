@@ -21,7 +21,7 @@
     android:orientation="vertical">
 
     <!-- Interface -->
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_prefs_interface"
         style="@style/MaterialPreferences.Default"
         app:prefTitle="@string/user_interface">
@@ -40,10 +40,10 @@
             app:prefSummary="@string/low_end_gfx_summary"
             app:prefTitle="@string/low_end_gfx" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial>
 
     <!-- Support -->
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_prefs_support"
         style="@style/MaterialPreferences.Default"
         app:prefTitle="@string/support">
@@ -62,7 +62,7 @@
             app:prefSummary="@string/use_sense360_summary"
             app:prefTitle="@string/use_sense360" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial>
 
 </LinearLayout>
 

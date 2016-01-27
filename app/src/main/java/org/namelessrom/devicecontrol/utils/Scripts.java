@@ -17,7 +17,7 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import alexander.martinz.libs.execution.binaries.BusyBox;
+import alexander.martinz.libs.execution.BusyBox;
 
 /**
  * Defines and runs Scripts.

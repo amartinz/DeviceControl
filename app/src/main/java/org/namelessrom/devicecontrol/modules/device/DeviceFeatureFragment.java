@@ -22,7 +22,7 @@ import android.support.v4.app.Fragment;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
-import org.namelessrom.devicecontrol.ui.views.AttachViewPagerFragment;
+import org.namelessrom.devicecontrol.views.AttachViewPagerFragment;
 
 import java.util.ArrayList;
 

@@ -17,44 +17,44 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory
         android:key="ksm_info"
         android:title="@string/information">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="ksm_full_scans"
             android:title="@string/full_scans" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="ksm_pages_shared"
             android:title="@string/pages_shared" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="ksm_pages_sharing"
             android:title="@string/pages_sharing" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="ksm_pages_unshared"
             android:title="@string/pages_unshared" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="ksm_pages_volatile"
             android:title="@string/pages_volatile" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory
         android:key="ksm_settings"
         android:title="@string/ksm">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:key="ksm_run"
             android:title="@string/enable_ksm"
             android:summary="@string/reduce_memory_increase_cpu_load"
             dc:filePath="@string/file_ksm_run"
             dc:category="extras" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:key="ksm_deferred"
             android:title="@string/deferred_timer"
             android:summary="@string/deferred_timer_summary"
@@ -62,16 +62,16 @@
             dc:filePath="@string/file_ksm_deferred"
             dc:category="extras" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="ksm_pages_to_scan"
             android:title="@string/pages_to_scan"
             android:dependency="ksm_run" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="ksm_sleep"
             android:title="@string/sleep_between_scans"
             android:dependency="ksm_run" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

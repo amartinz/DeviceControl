@@ -17,9 +17,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/microphone" />
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory android:title="@string/microphone" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.AwesomeSeekBarPreference
+    <org.namelessrom.devicecontrol.preferences.AwesomeSeekBarPreference
         android:defaultValue="0"
         android:key="microphone_gain"
         android:max="20"
@@ -32,9 +32,9 @@
         dc:unitsLeft=""
         dc:unitsRight="" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/speaker" />
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory android:title="@string/speaker" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.AwesomeSeekBarPreference
+    <org.namelessrom.devicecontrol.preferences.AwesomeSeekBarPreference
         android:defaultValue="0"
         android:key="speaker_gain"
         android:max="20"
@@ -47,9 +47,9 @@
         dc:unitsLeft=""
         dc:unitsRight="" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/headphones" />
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory android:title="@string/headphones" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.AwesomeSeekBarPreference
+    <org.namelessrom.devicecontrol.preferences.AwesomeSeekBarPreference
         android:defaultValue="0"
         android:key="volume_gain"
         android:max="20"
@@ -62,7 +62,7 @@
         dc:unitsLeft=""
         dc:unitsRight="" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
         android:key="sc_version"
         android:selectable="false"
         android:summary="@string/empty"

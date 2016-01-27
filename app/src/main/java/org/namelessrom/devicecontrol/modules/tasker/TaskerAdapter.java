@@ -35,7 +35,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity;
-import org.namelessrom.devicecontrol.ui.views.CardView;
+import org.namelessrom.devicecontrol.views.CardView;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import java.util.Collections;

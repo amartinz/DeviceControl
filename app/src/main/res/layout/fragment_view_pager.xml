@@ -31,7 +31,7 @@
         app:tabSelectedTextColor="@color/tab_color_selected"
         app:tabTextColor="@color/tab_color_normal" />
 
-    <org.namelessrom.devicecontrol.ui.views.NoSwipeViewPager
+    <org.namelessrom.devicecontrol.views.NoSwipeViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

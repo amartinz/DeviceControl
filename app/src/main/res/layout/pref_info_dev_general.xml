@@ -6,35 +6,35 @@
     android:orientation="vertical">
 
     <!-- Platform -->
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_platform"
         style="@style/MaterialPreferences.Default"
         app:prefKey="platform"
         app:prefTitle="@string/platform_information" />
 
     <!-- Runtime -->
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_runtime"
         style="@style/MaterialPreferences.Default"
         app:prefKey="runtime"
         app:prefTitle="@string/runtime" />
 
     <!-- Device information -->
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_device_information"
         style="@style/MaterialPreferences.Default"
         app:prefKey="device_information"
         app:prefTitle="@string/device_information" />
 
     <!-- Kernel -->
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_kernel"
         style="@style/MaterialPreferences.Default"
         app:prefKey="kernel"
         app:prefTitle="@string/kernel" />
 
     <!-- eMMC -->
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_emmc"
         style="@style/MaterialPreferences.Default"
         app:prefKey="emmc"

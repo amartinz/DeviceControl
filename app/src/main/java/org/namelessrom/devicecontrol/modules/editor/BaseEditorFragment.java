@@ -25,8 +25,7 @@ import android.widget.SearchView;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
-import org.namelessrom.devicecontrol.ui.adapters.PropAdapter;
-import org.namelessrom.devicecontrol.ui.views.AttachFragment;
+import org.namelessrom.devicecontrol.views.AttachFragment;
 
 public abstract class BaseEditorFragment extends AttachFragment implements AdapterView.OnItemClickListener, ShellOutput.OnShellOutputListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 

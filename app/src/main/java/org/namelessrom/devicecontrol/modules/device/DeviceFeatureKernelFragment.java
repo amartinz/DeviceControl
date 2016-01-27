@@ -34,11 +34,11 @@ import org.namelessrom.devicecontrol.hardware.UksmUtils;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.ui.views.CustomPreferenceFragment;
+import org.namelessrom.devicecontrol.preferences.AwesomeListPreference;
+import org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference;
+import org.namelessrom.devicecontrol.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.views.CustomPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;

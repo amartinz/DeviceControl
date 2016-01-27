@@ -20,7 +20,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <org.namelessrom.devicecontrol.ui.views.CardView
+    <org.namelessrom.devicecontrol.views.CardView
         style="@style/CardView.Light"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,5 +30,5 @@
 
         <include layout="@layout/merge_wizard_welcome" />
 
-    </org.namelessrom.devicecontrol.ui.views.CardView>
+    </org.namelessrom.devicecontrol.views.CardView>
 </FrameLayout>

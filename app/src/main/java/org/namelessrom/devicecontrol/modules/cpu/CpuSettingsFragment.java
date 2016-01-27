@@ -43,11 +43,11 @@ import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.theme.AppResources;
-import org.namelessrom.devicecontrol.ui.preferences.AutoEditTextPreference;
-import org.namelessrom.devicecontrol.ui.preferences.AutoSwitchPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
-import org.namelessrom.devicecontrol.ui.views.AttachMaterialPreferenceFragment;
-import org.namelessrom.devicecontrol.ui.views.CpuCoreView;
+import org.namelessrom.devicecontrol.preferences.AutoEditTextPreference;
+import org.namelessrom.devicecontrol.preferences.AutoSwitchPreference;
+import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
+import org.namelessrom.devicecontrol.views.AttachMaterialPreferenceFragment;
+import org.namelessrom.devicecontrol.views.CpuCoreView;
 import org.namelessrom.devicecontrol.utils.PreferenceUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 

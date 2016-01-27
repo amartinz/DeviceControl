@@ -16,32 +16,32 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
         android:icon="@drawable/ic_wifi_tethering_black_24dp"
         android:key="wireless_file_manager"
         android:title="@string/wireless_file_manager" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/editors">
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory android:title="@string/editors">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:icon="@drawable/ic_create_black_24dp"
             android:key="build_prop"
             android:title="@string/buildprop" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:icon="@drawable/ic_create_black_24dp"
             android:key="sysctl_vm"
             android:title="@string/sysctl_vm" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/general">
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory android:title="@string/general">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="media_scan"
             android:summary="@string/media_scan_summary"
             android:title="@string/media_scan_trigger" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

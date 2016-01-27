@@ -38,8 +38,7 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.RequestFileActivity;
 import org.namelessrom.devicecontrol.theme.AppResources;
-import org.namelessrom.devicecontrol.ui.adapters.FlasherAdapter;
-import org.namelessrom.devicecontrol.ui.views.AttachFragment;
+import org.namelessrom.devicecontrol.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 
 import java.io.File;

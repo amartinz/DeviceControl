@@ -23,14 +23,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <org.namelessrom.devicecontrol.ui.views.DeviceStatusView
+        <org.namelessrom.devicecontrol.views.DeviceStatusView
             android:id="@+id/device_stats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <Space android:layout_width="match_parent" android:layout_height="10dp" />
 
-        <org.namelessrom.devicecontrol.ui.views.CpuStateView
+        <org.namelessrom.devicecontrol.views.CpuStateView
             android:id="@+id/cpu_states"
             android:layout_width="match_parent"
             android:layout_height="0dp"

@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import alexander.martinz.libs.execution.RootCheck;
 import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.execution.ShellManager;
-import alexander.martinz.libs.execution.binaries.BusyBox;
+import alexander.martinz.libs.execution.BusyBox;
 import io.paperdb.Paper;
 
 public class BootupService extends IntentService {

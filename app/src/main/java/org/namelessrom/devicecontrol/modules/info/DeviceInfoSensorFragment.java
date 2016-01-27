@@ -28,7 +28,7 @@ import android.view.View;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.device.SensorActivity;
-import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
+import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
 
 import java.util.ArrayList;
 import java.util.Collections;

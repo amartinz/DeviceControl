@@ -32,8 +32,8 @@ import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.theme.AppResources;
-import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
-import org.namelessrom.devicecontrol.ui.views.AttachMaterialPreferenceFragment;
+import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
+import org.namelessrom.devicecontrol.views.AttachMaterialPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;

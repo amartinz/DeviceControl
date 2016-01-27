@@ -28,7 +28,7 @@
         app:prefTitle="@string/bootup_enabled" />
 
     <!-- automated restoration -->
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_bootup_automated"
         style="@style/MaterialPreferences.Default"
         app:prefTitle="@string/automated_restoration">
@@ -47,7 +47,7 @@
             app:prefSummary="@string/automated_restoration_delay_summary"
             app:prefTitle="@string/automated_restoration_delay" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial>
 
 </LinearLayout>
 

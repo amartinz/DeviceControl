@@ -16,47 +16,47 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
+    <org.namelessrom.devicecontrol.preferences.CustomTogglePreference
         android:key="wireless_file_manager"
         android:title="@string/wireless_file_manager" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
+    <org.namelessrom.devicecontrol.preferences.CustomEditTextPreference
         android:key="wfm_port"
         android:title="@string/wfm_port"
         android:defaultValue="8080"
         android:inputType="number" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/authentication">
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory android:title="@string/authentication">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
+        <org.namelessrom.devicecontrol.preferences.CustomTogglePreference
             android:key="wfm_auth"
             android:title="@string/wfm_auth"
             android:summary="@string/wfm_auth_summary"
             android:defaultValue="true" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
+        <org.namelessrom.devicecontrol.preferences.CustomEditTextPreference
             android:key="wfm_username"
             android:title="@string/username"
             android:defaultValue="root"
             android:inputType="text"
             android:dependency="wfm_auth" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference
+        <org.namelessrom.devicecontrol.preferences.CustomEditTextPreference
             android:key="wfm_password"
             android:title="@string/password"
             android:defaultValue="toor"
             android:inputType="textPassword"
             android:dependency="wfm_auth" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory android:title="@string/extras">
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory android:title="@string/extras">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
+        <org.namelessrom.devicecontrol.preferences.CustomTogglePreference
             android:key="wfm_root"
             android:title="@string/wfm_root"
             android:defaultValue="false" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

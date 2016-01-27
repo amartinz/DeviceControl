@@ -27,7 +27,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.views.CardTitleView;
+import org.namelessrom.devicecontrol.views.CardTitleView;
 
 import alexander.martinz.libs.hardware.security.Fingerprinter;
 

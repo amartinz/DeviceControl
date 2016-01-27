@@ -37,7 +37,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.util.ArrayList;
 
 import alexander.martinz.libs.execution.RootCheck;
-import alexander.martinz.libs.execution.binaries.BusyBox;
+import alexander.martinz.libs.execution.BusyBox;
 import alexander.martinz.libs.hardware.device.Device;
 
 public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {

@@ -27,9 +27,9 @@ import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.views.AttachFragment;
-import org.namelessrom.devicecontrol.ui.views.CpuStateView;
-import org.namelessrom.devicecontrol.ui.views.DeviceStatusView;
+import org.namelessrom.devicecontrol.views.AttachFragment;
+import org.namelessrom.devicecontrol.views.CpuStateView;
+import org.namelessrom.devicecontrol.views.DeviceStatusView;
 
 public class PerformanceInfoFragment extends AttachFragment {
 

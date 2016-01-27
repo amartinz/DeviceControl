@@ -246,7 +246,7 @@
 
         <!-- Widgets -->
         <receiver
-            android:name=".ui.widgets.RebootWidget"
+            android:name=".widgets.RebootWidget"
             android:icon="@drawable/ic_power_settings_new_white_24dp"
             android:label="@string/reboot"
             tools:ignore="ExportedReceiver">
@@ -261,7 +261,7 @@
         </receiver>
 
         <activity
-            android:name=".ui.widgets.RebootWidget$RebootDialogActivity"
+            android:name=".widgets.RebootWidget$RebootDialogActivity"
             android:label="@string/widget_power"
             android:launchMode="singleInstance"
             android:theme="@style/CustomDialog"

@@ -29,8 +29,8 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
-import org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial;
-import org.namelessrom.devicecontrol.ui.views.AttachMaterialPreferenceFragment;
+import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
+import org.namelessrom.devicecontrol.views.AttachMaterialPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;

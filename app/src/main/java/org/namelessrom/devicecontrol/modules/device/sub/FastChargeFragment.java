@@ -25,11 +25,11 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.objects.BootupItem;
-import org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomListPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference;
+import org.namelessrom.devicecontrol.preferences.CustomEditTextPreference;
+import org.namelessrom.devicecontrol.preferences.CustomListPreference;
+import org.namelessrom.devicecontrol.preferences.CustomPreference;
+import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 public class FastChargeFragment extends AttachPreferenceFragment implements Preference.OnPreferenceChangeListener {

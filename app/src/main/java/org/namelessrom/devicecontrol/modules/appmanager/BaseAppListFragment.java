@@ -44,7 +44,7 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.ui.views.CustomRecyclerView;
+import org.namelessrom.devicecontrol.views.CustomRecyclerView;
 import org.namelessrom.devicecontrol.utils.SortHelper;
 
 import java.util.ArrayList;

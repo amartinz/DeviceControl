@@ -34,7 +34,7 @@ import java.util.Collections;
 import java.util.List;
 
 import alexander.martinz.libs.hardware.device.Device;
-import alexander.martinz.libs.hardware.utils.IoUtils;
+import alexander.martinz.libs.hardware.utils.HwIoUtils;
 
 /**
  * A wrapper for the AsyncHttpServer
@@ -149,7 +149,7 @@ public class ServerWrapper {
                 } catch (IOException ioe) {
                     Logger.e(this, "Error!", ioe);
                 } finally {
-                    IoUtils.closeQuietly(is);
+                    HwIoUtils.closeQuietly(is);
                 }
             }
             res.send(HtmlHelper.loadPathAsString(path));

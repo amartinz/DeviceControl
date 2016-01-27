@@ -21,12 +21,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_processor"
         style="@style/MaterialPreferences.Default"
         app:prefTitle="@string/processor" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cat_cpu"
         style="@style/MaterialPreferences.Default"
         app:prefTitle="@string/cpu" />

@@ -22,7 +22,7 @@
     android:orientation="vertical">
 
     <!-- Core status -->
-    <org.namelessrom.devicecontrol.ui.views.CardView
+    <org.namelessrom.devicecontrol.views.CardView
         android:id="@+id/card_core_stats_root"
         style="@style/CardView.Light"
         android:layout_width="match_parent"
@@ -63,10 +63,10 @@
 
         </LinearLayout>
 
-    </org.namelessrom.devicecontrol.ui.views.CardView>
+    </org.namelessrom.devicecontrol.views.CardView>
 
     <!-- Core limits -->
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/core_limits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,10 +93,10 @@
             app:prefSummary="@string/cpu_lock_freq_summary"
             app:prefTitle="@string/cpu_lock_freq" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial>
 
     <!-- Governor -->
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
         android:id="@+id/cpu_cat_gov"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -122,6 +122,6 @@
             app:prefSummary="@string/cpu_lock_gov_summary"
             app:prefTitle="@string/cpu_lock_gov" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategoryMaterial>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial>
 
 </LinearLayout>

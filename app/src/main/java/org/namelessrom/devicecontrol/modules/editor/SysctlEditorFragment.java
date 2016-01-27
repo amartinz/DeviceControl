@@ -41,7 +41,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.objects.Prop;
 import org.namelessrom.devicecontrol.objects.ShellOutput;
-import org.namelessrom.devicecontrol.ui.adapters.PropAdapter;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -50,7 +49,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.execution.binaries.BusyBox;
+import alexander.martinz.libs.execution.BusyBox;
 
 public class SysctlEditorFragment extends BaseEditorFragment {
 

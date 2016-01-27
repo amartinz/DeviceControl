@@ -27,9 +27,9 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.WebServerConfig;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
 import org.namelessrom.devicecontrol.services.WebServerService;
-import org.namelessrom.devicecontrol.ui.preferences.CustomEditTextPreference;
-import org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference;
-import org.namelessrom.devicecontrol.ui.views.AttachPreferenceFragment;
+import org.namelessrom.devicecontrol.preferences.CustomEditTextPreference;
+import org.namelessrom.devicecontrol.preferences.CustomTogglePreference;
+import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 

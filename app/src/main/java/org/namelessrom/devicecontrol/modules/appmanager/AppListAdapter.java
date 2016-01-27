@@ -46,7 +46,7 @@ import com.kennyc.bottomsheet.BottomSheetListener;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.theme.AppResources;
-import org.namelessrom.devicecontrol.ui.views.CardView;
+import org.namelessrom.devicecontrol.views.CardView;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
 import java.util.ArrayList;

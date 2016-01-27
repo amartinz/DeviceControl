@@ -55,7 +55,7 @@ import java.util.TimeZone;
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.NormalShell;
 import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.execution.binaries.BusyBox;
+import alexander.martinz.libs.execution.BusyBox;
 
 import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
 

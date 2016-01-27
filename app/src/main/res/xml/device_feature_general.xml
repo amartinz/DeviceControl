@@ -17,22 +17,22 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
         android:icon="@drawable/ic_flash_on_black_24dp"
         android:key="fast_charge"
         android:summary="@string/fast_charge_summary"
         android:title="@string/fast_charge" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
         android:icon="@drawable/ic_equalizer_black_24dp"
         android:key="sound_control"
         android:title="@string/sound_control" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory
         android:key="input_gestures"
         android:title="@string/gestures">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="knockon_gesture_enable"
             android:summary="@string/knock_on_summary"
@@ -41,28 +41,28 @@
             dc:filePathList="@array/files_knock_on"
             dc:fileValue="@array/files_knock_on_values" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="sweep_to_wake"
             android:title="@string/sweep_to_wake"
             dc:category="device"
             dc:filePathList="@array/files_sweep_to_wake" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="sweep_to_volume"
             android:title="@string/sweep_to_volume"
             dc:category="device"
             dc:filePathList="@array/files_sweep_to_volume" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory
         android:key="touchkey"
         android:title="@string/touchkey">
 
         <!-- Touchkey backlight -->
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:defaultValue="true"
             android:key="touchkey_light"
             android:summary="@string/enable_keys_backlight_summary"
@@ -72,7 +72,7 @@
             dc:multifile="true"
             dc:valueChecked="255" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:defaultValue="true"
             android:key="touchkey_bln"
             android:summary="@string/enable_keys_notifications_summary"
@@ -80,7 +80,7 @@
             dc:category="device"
             dc:filePath="@string/file_touchkey_bln" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:defaultValue="true"
             android:key="keyboard_light"
             android:summary="@string/enable_keyboard_backlight_summary"
@@ -89,13 +89,13 @@
             dc:filePath="@string/file_keyboard_light"
             dc:valueChecked="255" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory
         android:key="graphics"
         android:title="@string/display">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="lcd_power_reduce"
             android:summary="@string/lcd_power_reduce_summary"
@@ -103,7 +103,7 @@
             dc:category="device"
             dc:filePathList="@array/files_lcd_power_reduce" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="lcd_sunlight_enhancement"
             android:summary="@string/sunlight_enhancement_summary"
@@ -111,26 +111,26 @@
             dc:category="device"
             dc:filePathList="@array/files_lcd_sunlight_enhancement" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="lcd_color_enhancement"
             android:title="@string/color_enhancement"
             dc:category="device"
             dc:filePathList="@array/files_lcd_color_enhancement" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.hardware.DisplayColor
+        <org.namelessrom.devicecontrol.preferences.hardware.DisplayColor
             android:key="display_color_calibration"
             android:dialogTitle="@string/display_color_calibration"
             android:title="@string/display_color_calibration"
             android:summary="@string/display_color_calibration_summary" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.hardware.DisplayGamma
+        <org.namelessrom.devicecontrol.preferences.hardware.DisplayGamma
             android:key="display_gamma_calibration"
             android:dialogTitle="@string/display_gamma_calibration"
             android:title="@string/display_gamma_calibration"
             android:summary="@string/display_gamma_calibration_summary" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeListPreference
             android:defaultValue="2"
             android:entries="@array/panel_color_temp_entries"
             android:entryValues="@array/panel_color_temp_entries_values"
@@ -140,13 +140,13 @@
             dc:category="device"
             dc:filePathList="@array/files_panel_color_temp" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory
         android:key="extras"
         android:title="@string/extras">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="logger_mode"
             android:summary="@string/logger_mode_summary"
@@ -154,19 +154,19 @@
             dc:category="device"
             dc:filePath="@string/file_logger_mode" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory
         android:key="input_others"
         android:title="@string/others">
 
-        <org.namelessrom.devicecontrol.ui.preferences.hardware.VibratorIntensity
+        <org.namelessrom.devicecontrol.preferences.hardware.VibratorIntensity
             android:dialogTitle="@string/vibrator_strength"
             android:key="vibrator_tuning"
             android:summary="@string/vibrator_strength_summary"
             android:title="@string/vibrator_strength" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="input_glove_mode_aw"
             android:summary="@string/glove_mode_summary"
@@ -174,12 +174,12 @@
             dc:category="device"
             dc:filePathList="@array/files_glove_mode" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
+        <org.namelessrom.devicecontrol.preferences.CustomTogglePreference
             android:key="input_glove_mode"
             android:summary="@string/glove_mode_summary"
             android:title="@string/glove_mode" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:defaultValue="false"
             android:key="input_reset_on_suspend"
             android:summary="@string/input_reset_on_suspend_summary"
@@ -187,6 +187,6 @@
             dc:category="device"
             dc:filePathList="@array/files_reset_on_suspend" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

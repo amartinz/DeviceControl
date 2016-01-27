@@ -34,7 +34,7 @@ import org.namelessrom.devicecontrol.utils.CustomTabsHelper;
 
 import java.io.File;
 
-import alexander.martinz.libs.execution.ShellLogger;
+import alexander.martinz.libs.execution.ShellManager;
 import io.paperdb.Paper;
 import uk.co.senab.bitmapcache.BitmapLruCache;
 
@@ -69,7 +69,7 @@ public class Application extends android.app.Application {
         if (Application.sInstance == null) {
             // force enable logger until we hit the user preference
             Logger.setEnabled(true);
-            ShellLogger.DEBUG = true;
+            ShellManager.enableDebug(true);
 
             Application.sInstance = this;
             Paper.init(this);
@@ -102,7 +102,7 @@ public class Application extends android.app.Application {
         }
 
         Logger.setEnabled(deviceConfig.extensiveLogging);
-        ShellLogger.DEBUG = deviceConfig.extensiveLogging;
+        ShellManager.enableDebug(deviceConfig.extensiveLogging);
 
         dumpInformation();
     }

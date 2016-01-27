@@ -26,7 +26,7 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.info.hardware.FingerprintView;
-import org.namelessrom.devicecontrol.ui.views.AttachFragment;
+import org.namelessrom.devicecontrol.views.AttachFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

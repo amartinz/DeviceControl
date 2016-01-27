@@ -40,7 +40,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.modules.wizard.AddTaskActivity;
 import org.namelessrom.devicecontrol.services.TaskerService;
-import org.namelessrom.devicecontrol.ui.views.AttachFragment;
+import org.namelessrom.devicecontrol.views.AttachFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.List;

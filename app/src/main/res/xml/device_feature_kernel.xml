@@ -17,36 +17,36 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory
         android:key="kernel_features"
         android:title="@string/kernel_features">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="entropy"
             android:title="@string/entropy" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="ksm"
             android:title="@string/ksm" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:key="uksm"
             android:title="@string/uksm" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory
         android:key="powersaving"
         android:title="@string/powersaving">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:key="power_efficient_work"
             android:summary="@string/power_efficient_work_summary"
             android:title="@string/power_efficient_work"
             dc:category="extras"
             dc:filePath="@string/file_power_efficient_workqueue" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeListPreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeListPreference
             android:entries="@array/mc_power_savings_entries"
             android:entryValues="@array/mc_power_savings_values"
             android:key="sched_mc_power_savings"
@@ -54,36 +54,36 @@
             dc:category="extras"
             dc:filePath="@string/file_mc_power_sched" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory
         android:key="voltage"
         android:title="@string/voltage">
 
-        <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+        <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
             android:key="msm_dcvs"
             android:summary="@string/msm_dcvs_summary"
             android:title="@string/msm_dcvs"
             dc:category="extras"
             dc:filePath="@string/file_msm_dcvs" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+        <org.namelessrom.devicecontrol.preferences.CustomPreference
             android:icon="@drawable/ic_general_voltage"
             android:key="voltage_control"
             android:summary="@string/voltage_control_summary"
             android:title="@string/voltage_control" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory
         android:key="extras"
         android:title="@string/extras">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.preferences.CustomListPreference
             android:key="tcp_congestion_control"
             android:title="@string/tcp_congestion_control" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>
 

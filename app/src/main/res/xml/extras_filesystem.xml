@@ -17,51 +17,51 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dc="http://schemas.android.com/apk/res-auto">
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
+    <org.namelessrom.devicecontrol.preferences.CustomListPreference
         android:key="io"
         android:title="@string/io" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreference
+    <org.namelessrom.devicecontrol.preferences.CustomPreference
         android:key="io_configure"
         android:title="@string/configure_format" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
+    <org.namelessrom.devicecontrol.preferences.CustomListPreference
         android:entries="@array/read_ahead_entries"
         android:entryValues="@array/read_ahead_values"
         android:key="read_ahead"
         android:title="@string/read_ahead" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+    <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
         android:key="fsync"
         android:summary="@string/warning_data_corruption_invert"
         android:title="@string/fsync"
         dc:category="extras"
         dc:filePath="@string/file_fsync" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+    <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
         android:key="dyn_fsync"
         android:summary="@string/warning_data_corruption"
         android:title="@string/dyn_fsync"
         dc:category="extras"
         dc:filePath="@string/file_dyn_fsync" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.AwesomeTogglePreference
+    <org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference
         android:key="mmc_software_crc"
         android:summary="@string/data_integrity_decreased_performance"
         android:title="@string/mmc_software_crc"
         dc:category="extras"
         dc:filePath="@string/file_mmc_software_crc" />
 
-    <org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory
         android:key="fstrim_cat"
         android:title="@string/fstrim_title">
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomTogglePreference
+        <org.namelessrom.devicecontrol.preferences.CustomTogglePreference
             android:key="fstrim"
             android:title="@string/fstrim_title"
             android:summary="@string/fstrim_summary" />
 
-        <org.namelessrom.devicecontrol.ui.preferences.CustomListPreference
+        <org.namelessrom.devicecontrol.preferences.CustomListPreference
             android:key="fstrim_interval"
             android:dependency="fstrim"
             android:title="@string/fstrim_interval_title"
@@ -70,6 +70,6 @@
             android:entryValues="@array/fstrim_values"
             android:defaultValue="7" />
 
-    </org.namelessrom.devicecontrol.ui.preferences.CustomPreferenceCategory>
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategory>
 
 </PreferenceScreen>

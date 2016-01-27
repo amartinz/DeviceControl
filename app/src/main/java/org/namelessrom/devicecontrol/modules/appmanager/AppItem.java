@@ -34,7 +34,7 @@ import org.namelessrom.devicecontrol.utils.AppHelper;
 
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.execution.binaries.BusyBox;
+import alexander.martinz.libs.execution.BusyBox;
 
 public class AppItem {
     private final PackageInfo pkgInfo;

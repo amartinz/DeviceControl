@@ -37,8 +37,8 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.execution.binaries.BusyBox;
-import alexander.martinz.libs.hardware.utils.ProcessManager;
+import alexander.martinz.libs.execution.BusyBox;
+import alexander.martinz.libs.hardware.ProcessManager;
 import hugo.weaving.DebugLog;
 
 import static org.namelessrom.devicecontrol.DeviceConstants.ID_PGREP;
