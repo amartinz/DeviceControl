@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
         mCheckRequirementsTask.execute();
     }
 
-    private void setupToolbar() {
+    @Override protected void setupToolbar() {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ViewCompat.setElevation(toolbar, 4.0f);

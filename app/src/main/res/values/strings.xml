@@ -466,7 +466,7 @@
     <string name="donate_subscription">Use subscription</string>
     <string name="donate_subscription_note">Note: Subscriptions are monthly!</string>
     <string name="donate_via">Donate via %s</string>
-    <string name="donate_paypal_message">This will redirect you to PayPal to complete the donation.</string>
+    <string name="donate_message">This will redirect you to %s to complete the donation.</string>
 
     <string name="show_pollfish">Activate Pollfish</string>
     <string name="show_pollfish_summary">For every taken survey you help us to grow. Feel free to deactivate it, of course :)</string>

@@ -35,14 +35,14 @@ public class CommunityFragment extends Fragment {
         final Button betaButton = (Button) view.findViewById(R.id.betaTestButton);
         betaButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                AppHelper.viewInBrowser(getString(R.string.non_beta_url));
+                AppHelper.viewInBrowser(getContext(), getString(R.string.non_beta_url));
             }
         });
 
         final Button communityButton = (Button) view.findViewById(R.id.communityButton);
         communityButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                AppHelper.viewInBrowser(getString(R.string.non_google_plus_community_url));
+                AppHelper.viewInBrowser(getContext(), getString(R.string.non_google_plus_community_url));
             }
         });
 

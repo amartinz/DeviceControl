@@ -49,8 +49,6 @@ import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputLis
  */
 public class AppHelper {
     private static final String TAG = "AppHelper";
-    private static final String DONATE_URL =
-            "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZSN2SW53JJQJY";
 
     public static boolean preventOnResume = false;
 
@@ -271,23 +269,6 @@ public class AppHelper {
             Logger.e(AppHelper.class, exc.getMessage());
         }
         return false;
-    }
-
-    public static boolean startExternalDonation(final Context context) {
-        final Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(DONATE_URL));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        try {
-            context.startActivity(intent);
-            return true;
-        } catch (Exception exc) {
-            return false;
-        }
-    }
-
-    public static void viewInBrowser(final String url) {
-        viewInBrowser(Application.get(), url);
     }
 
     public static void viewInBrowser(final Context context, final String url) {

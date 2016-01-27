@@ -9,8 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
@@ -19,7 +22,7 @@ import org.namelessrom.devicecontrol.utils.DrawableHelper;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class CardTitleView extends FrameLayout {
+public class CardTitleView extends LinearLayout {
     @Bind(android.R.id.icon) ImageView icon;
     @Bind(android.R.id.title) TextView title;
     @Bind(android.R.id.content) FrameLayout content;
@@ -50,6 +53,7 @@ public class CardTitleView extends FrameLayout {
     }
 
     protected void init(@Nullable AttributeSet attrs) {
+        setOrientation(LinearLayout.VERTICAL);
         final LayoutInflater inflater = LayoutInflater.from(getContext());
         inflater.inflate(R.layout.card_view_title, this, true);
 
@@ -64,6 +68,8 @@ public class CardTitleView extends FrameLayout {
             } else {
                 icon.setImageResource(iconResId);
             }
+        } else {
+            icon.setVisibility(View.GONE);
         }
 
         if (titleResId != Integer.MIN_VALUE) {
@@ -87,5 +93,45 @@ public class CardTitleView extends FrameLayout {
 
     public FrameLayout getContentView() {
         return content;
+    }
+
+    @Override public void addView(View child) {
+        if (content != null) {
+            content.addView(child);
+            return;
+        }
+        super.addView(child);
+    }
+
+    @Override public void addView(View child, int index) {
+        if (content != null) {
+            content.addView(child, index);
+            return;
+        }
+        super.addView(child, index);
+    }
+
+    @Override public void addView(View child, int width, int height) {
+        if (content != null) {
+            content.addView(child, width, height);
+            return;
+        }
+        super.addView(child, width, height);
+    }
+
+    @Override public void addView(View child, ViewGroup.LayoutParams params) {
+        if (content != null) {
+            content.addView(child, params);
+            return;
+        }
+        super.addView(child, params);
+    }
+
+    @Override public void addView(View child, int index, ViewGroup.LayoutParams params) {
+        if (content != null) {
+            content.addView(child, index, params);
+            return;
+        }
+        super.addView(child, index, params);
     }
 }

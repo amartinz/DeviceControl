@@ -17,10 +17,6 @@
 package org.namelessrom.devicecontrol.modules.preferences;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
@@ -40,22 +36,6 @@ public class PreferencesActivity extends BaseActivity {
                 .beginTransaction()
                 .replace(R.id.container, new MainPreferencesFragment())
                 .commit();
-    }
-
-    private void setupToolbar() {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ViewCompat.setElevation(toolbar, 4.0f);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                finish();
-            }
-        });
-
-        final ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     public void needsRestart() {

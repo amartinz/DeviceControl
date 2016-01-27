@@ -14,7 +14,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,14 +25,11 @@
     android:orientation="vertical"
     tools:context="org.namelessrom.devicecontrol.MainActivity">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/actionbar_toolbar" />
+    <include layout="@layout/actionbar_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp"
         android:fillViewport="true">
 
         <LinearLayout
@@ -38,96 +37,150 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                style="?android:attr/listSeparatorTextViewStyle"
+            <org.namelessrom.devicecontrol.views.CardTitleView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="@string/google_play" />
+                app:title="@string/google_play">
 
-            <RadioGroup
-                android:id="@+id/radioGroupDonation"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupDonation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/radioDonation1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Donate 2€" />
+
+                        <RadioButton
+                            android:id="@+id/radioDonation2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            tools:text="Donate 5€" />
+
+                        <RadioButton
+                            android:id="@+id/radioDonation3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Donate 10€" />
+
+                        <RadioButton
+                            android:id="@+id/radioDonation4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Donate 20€" />
+
+                        <RadioButton
+                            android:id="@+id/radioDonation5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Donate 50€" />
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+                        <android.support.v7.widget.SwitchCompat
+                            android:id="@+id/cbDonationSubscription"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/donate_subscription" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:text="@string/donate_subscription_note" />
+
+                    <Button
+                        android:id="@+id/bDonateGooglePlay"
+                        style="?android:borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="5dp"
+                        android:textColor="?attr/colorAccent"
+                        tools:text="@string/donate_via" />
+                </LinearLayout>
+            </org.namelessrom.devicecontrol.views.CardTitleView>
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="@string/google_play_notice" />
 
-                <RadioButton
-                    android:id="@+id/radioDonation1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Donate 2€" />
-
-                <RadioButton
-                    android:id="@+id/radioDonation2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    tools:text="Donate 5€" />
-
-                <RadioButton
-                    android:id="@+id/radioDonation3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Donate 10€" />
-
-                <RadioButton
-                    android:id="@+id/radioDonation4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Donate 20€" />
-
-                <RadioButton
-                    android:id="@+id/radioDonation5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Donate 50€" />
-
-            </RadioGroup>
-
-            <CheckBox
-                android:id="@+id/cbDonationSubscription"
+            <org.namelessrom.devicecontrol.views.CardTitleView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:text="@string/donate_subscription" />
+                app:title="@string/flattr">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <TextView
+                    <TextView
+                        android:id="@+id/tvDonateFlattr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/donate_message" />
+
+                    <Button
+                        android:id="@+id/bDonateFlattr"
+                        style="?android:borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="5dp"
+                        android:textColor="?attr/colorAccent"
+                        tools:text="@string/donate_via" />
+                </LinearLayout>
+            </org.namelessrom.devicecontrol.views.CardTitleView>
+
+            <org.namelessrom.devicecontrol.views.CardTitleView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/donate_subscription_note" />
+                android:layout_marginTop="10dp"
+                app:title="@string/paypal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <Button
-                android:id="@+id/bDonateGooglePlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                tools:text="@string/donate_via" />
+                    <TextView
+                        android:id="@+id/tvDonatePayPal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/donate_message" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/google_play_notice" />
-
-            <TextView
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginTop="20dp"
-                android:text="@string/paypal" />
-
-            <Button
-                android:id="@+id/bDonatePayPal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="@string/donate_via" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/donate_paypal_message" />
-
+                    <Button
+                        android:id="@+id/bDonatePayPal"
+                        style="?android:borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="5dp"
+                        android:textColor="?attr/colorAccent"
+                        tools:text="@string/donate_via" />
+                </LinearLayout>
+            </org.namelessrom.devicecontrol.views.CardTitleView>
         </LinearLayout>
 
     </ScrollView>

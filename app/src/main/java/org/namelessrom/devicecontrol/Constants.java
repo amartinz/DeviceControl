@@ -25,6 +25,10 @@ import android.telephony.TelephonyManager;
 public class Constants {
     private static final String TAG = Constants.class.getSimpleName();
 
+    public static final String URL_DONATE_FLATTR =
+            "https://flattr.com/submit/auto?user_id=amartinz&url=https://github.com/Evisceration/DeviceControl&title=DeviceControl&language=en_GB&tags=github&category=software";
+    public static final String URL_DONATE_PAYPAL =
+            "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZSN2SW53JJQJY";
     public static final String URL_GITHUB_BASE = "https://github.com/Evisceration";
     public static final String URL_GITHUB_DC_COMMITS_BASE = URL_GITHUB_BASE + "/DeviceControl/commits/%s";
     public static final String URL_SENSE360 = "http://sense360.com";

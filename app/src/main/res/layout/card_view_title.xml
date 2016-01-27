@@ -18,10 +18,10 @@
   -->
 
 <org.namelessrom.devicecontrol.views.CardView
+    style="@style/CardView.Light"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/CardView.Light"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
@@ -29,7 +29,7 @@
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
-    app:contentPadding="5dp">
+    app:contentPadding="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,13 +40,13 @@
             android:id="@android:id/icon"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_margin="8dp"
+            android:layout_margin="6dp"
             tools:src="@drawable/ic_fingerprint_black_24dp" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_margin="2dp"
             android:orientation="vertical">
 
             <TextView
@@ -63,7 +63,8 @@
             <FrameLayout
                 android:id="@android:id/content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp" />
         </LinearLayout>
     </LinearLayout>
 </org.namelessrom.devicecontrol.views.CardView>

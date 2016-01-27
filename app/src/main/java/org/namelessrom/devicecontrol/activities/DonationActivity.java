@@ -18,21 +18,19 @@
 package org.namelessrom.devicecontrol.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
-import com.balysv.materialmenu.MaterialMenuDrawable;
-import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
+import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -51,47 +49,37 @@ public class DonationActivity extends BaseActivity implements BillingProcessor.I
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donate);
 
+        setupToolbar();
+
         // get instance of the BillingProcessor
         mBillingProcessor = new BillingProcessor(this, Configuration.getGooglePlayApiKeyDc(), this);
-
-        // setup action bar
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) { finish(); }
-        });
-        final MaterialMenuIconToolbar materialMenu =
-                new MaterialMenuIconToolbar(this, Color.WHITE, MaterialMenuDrawable.Stroke.THIN) {
-                    @Override public int getToolbarViewId() { return R.id.toolbar; }
-                };
-        materialMenu.setState(MaterialMenuDrawable.IconState.ARROW);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            materialMenu.setNeverDrawTouch(true);
-        }
 
         // set up the buttons
         mGooglePlay = (Button) findViewById(R.id.bDonateGooglePlay);
         mGooglePlay.setText(getString(R.string.donate_via, getString(R.string.google_play)));
         mGooglePlay.setOnClickListener(this);
 
+        final Button flattr = (Button) findViewById(R.id.bDonateFlattr);
+        flattr.setText(getString(R.string.donate_via, getString(R.string.flattr)));
+        flattr.setOnClickListener(this);
+        final TextView flattrText = (TextView) findViewById(R.id.tvDonateFlattr);
+        flattrText.setText(getString(R.string.donate_message, getString(R.string.flattr)));
+
         final Button payPal = (Button) findViewById(R.id.bDonatePayPal);
         payPal.setText(getString(R.string.donate_via, getString(R.string.paypal)));
         payPal.setOnClickListener(this);
+        final TextView payPalText = (TextView) findViewById(R.id.tvDonatePayPal);
+        payPalText.setText(getString(R.string.donate_message, getString(R.string.paypal)));
 
         // set up radio buttons
         mRadioGroup = (RadioGroup) findViewById(R.id.radioGroupDonation);
         mRadioGroup.setOnCheckedChangeListener(this);
         final String donateValue = getString(R.string.donate_value);
-        ((RadioButton) findViewById(R.id.radioDonation1))
-                .setText(String.format(donateValue, "2€"));
-        ((RadioButton) findViewById(R.id.radioDonation2))
-                .setText(String.format(donateValue, "5€"));
-        ((RadioButton) findViewById(R.id.radioDonation3))
-                .setText(String.format(donateValue, "10€"));
-        ((RadioButton) findViewById(R.id.radioDonation4))
-                .setText(String.format(donateValue, "20€"));
-        ((RadioButton) findViewById(R.id.radioDonation5))
-                .setText(String.format(donateValue, "50€"));
+        ((RadioButton) findViewById(R.id.radioDonation1)).setText(String.format(donateValue, "2€"));
+        ((RadioButton) findViewById(R.id.radioDonation2)).setText(String.format(donateValue, "5€"));
+        ((RadioButton) findViewById(R.id.radioDonation3)).setText(String.format(donateValue, "10€"));
+        ((RadioButton) findViewById(R.id.radioDonation4)).setText(String.format(donateValue, "20€"));
+        ((RadioButton) findViewById(R.id.radioDonation5)).setText(String.format(donateValue, "50€"));
     }
 
     @Override public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -102,7 +90,7 @@ public class DonationActivity extends BaseActivity implements BillingProcessor.I
         final int id = v.getId();
         switch (id) {
             case R.id.bDonateGooglePlay:
-                final CheckBox cbSub = (CheckBox) findViewById(R.id.cbDonationSubscription);
+                final SwitchCompat cbSub = (SwitchCompat) findViewById(R.id.cbDonationSubscription);
                 final boolean useSub = cbSub != null && cbSub.isChecked();
 
                 final int radioButtonId = mRadioGroup.getCheckedRadioButtonId();
@@ -110,29 +98,19 @@ public class DonationActivity extends BaseActivity implements BillingProcessor.I
                 switch (radioButtonId) {
                     default:
                     case R.id.radioDonation1:
-                        productId = useSub
-                                ? DeviceConstants.SUB_DONATION_1
-                                : DeviceConstants.SKU_DONATION_1;
+                        productId = useSub ? DeviceConstants.SUB_DONATION_1 : DeviceConstants.SKU_DONATION_1;
                         break;
                     case R.id.radioDonation2:
-                        productId = useSub
-                                ? DeviceConstants.SUB_DONATION_2
-                                : DeviceConstants.SKU_DONATION_2;
+                        productId = useSub ? DeviceConstants.SUB_DONATION_2 : DeviceConstants.SKU_DONATION_2;
                         break;
                     case R.id.radioDonation3:
-                        productId = useSub
-                                ? DeviceConstants.SUB_DONATION_3
-                                : DeviceConstants.SKU_DONATION_3;
+                        productId = useSub ? DeviceConstants.SUB_DONATION_3 : DeviceConstants.SKU_DONATION_3;
                         break;
                     case R.id.radioDonation4:
-                        productId = useSub
-                                ? DeviceConstants.SUB_DONATION_4
-                                : DeviceConstants.SKU_DONATION_4;
+                        productId = useSub ? DeviceConstants.SUB_DONATION_4 : DeviceConstants.SKU_DONATION_4;
                         break;
                     case R.id.radioDonation5:
-                        productId = useSub
-                                ? DeviceConstants.SUB_DONATION_5
-                                : DeviceConstants.SKU_DONATION_5;
+                        productId = useSub ? DeviceConstants.SUB_DONATION_5 : DeviceConstants.SKU_DONATION_5;
                         break;
                 }
                 if (useSub) {
@@ -141,15 +119,17 @@ public class DonationActivity extends BaseActivity implements BillingProcessor.I
                     mBillingProcessor.purchase(this, productId);
                 }
                 break;
+            case R.id.bDonateFlattr:
+                AppHelper.viewInBrowser(this, Constants.URL_DONATE_FLATTR);
+                break;
             case R.id.bDonatePayPal:
-                AppHelper.startExternalDonation(this);
+                AppHelper.viewInBrowser(this, Constants.URL_DONATE_PAYPAL);
                 break;
         }
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (mBillingProcessor == null ||
-            !mBillingProcessor.handleActivityResult(requestCode, resultCode, data)) {
+        if (mBillingProcessor == null || !mBillingProcessor.handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -159,7 +139,6 @@ public class DonationActivity extends BaseActivity implements BillingProcessor.I
             mBillingProcessor.release();
             mBillingProcessor = null;
         }
-
         super.onDestroy();
     }
 
