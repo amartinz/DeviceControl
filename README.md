@@ -1,6 +1,8 @@
 DeviceControl
 ===============================
 
+[![Flattr this git repo](https://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=amartinz&url=https://github.com/Evisceration/DeviceControl&title=DeviceControl&language=en_GB&tags=github&category=software)
+
 ![Logo](ic_launcher-web.png)
 
 [Device Control][1] is an app to control several features of your device as well as some nice extra features like
