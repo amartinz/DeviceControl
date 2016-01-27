@@ -64,5 +64,53 @@
 
     </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial>
 
+    <!-- Expert -->
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
+        android:id="@+id/cat_prefs_expert"
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/expert_mode">
+
+        <!-- Enable expert mode -->
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/prefs_expert_enable"
+            style="@style/MaterialPreferences.Default"
+            app:prefSummary="@string/expert_mode_summary"
+            app:prefTitle="@string/expert_mode_title" />
+
+        <!-- Skip checks -->
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/prefs_expert_skip_checks"
+            style="@style/MaterialPreferences.Default"
+            app:prefSummary="@string/skip_checks_summary"
+            app:prefTitle="@string/skip_checks" />
+
+        <!-- Shell context -->
+        <alexander.martinz.libs.materialpreferences.MaterialListPreference
+            android:id="@+id/prefs_expert_su_shell_context"
+            style="@style/MaterialPreferences.Default"
+            app:prefEntries="@array/su_shell_context_entries"
+            app:prefEntryValues="@array/su_shell_context_values"
+            app:prefPlaceOnBottom="true"
+            app:prefTitle="@string/su_shell_context" />
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial>
+
+    <!-- Debug -->
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
+        android:id="@+id/cat_prefs_debug"
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/debugging">
+
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/prefs_extensive_logging"
+            style="@style/MaterialPreferences.Default"
+            app:prefTitle="@string/extensive_logging" />
+
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/prefs_debug_strict_mode"
+            style="@style/MaterialPreferences.Default"
+            app:prefTitle="@string/debug_strict_mode" />
+
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial>
+
 </LinearLayout>
 

@@ -3,9 +3,11 @@ package org.namelessrom.devicecontrol.preferences;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 
+import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.theme.AppResources;
 
 import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
@@ -35,12 +37,19 @@ public class CustomPreferenceCategoryMaterial extends MaterialPreferenceCategory
             return false;
         }
 
-        setBackgroundColor(AppResources.get().getCardBackgroundColor());
+        if (isInEditMode()) {
+            setBackgroundColor(ContextCompat.getColor(getContext(), R.color.cardview_dark_background));
+        } else {
+            setBackgroundColor(AppResources.get().getCardBackgroundColor());
+        }
 
         return true;
     }
 
     @Override public LayoutInflater getCustomLayoutInflater() {
+        if (isInEditMode()) {
+            return LayoutInflater.from(getContext());
+        }
         return AppResources.getThemeLayoutInflater(getContext(), LayoutInflater.from(getContext()));
     }
 }

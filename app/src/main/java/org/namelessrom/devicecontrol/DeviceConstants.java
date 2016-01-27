@@ -61,8 +61,6 @@ public class DeviceConstants {
     //--- APP INFO
     public static final int ID_APP_INFO_LICENSE = R.id.nav_item_app_info_license;
     public static final int ID_APP_INFO_PRIVACY = R.id.nav_item_app_info_privacy;
-    //--- EXTRA
-    public static final int ID_PREFERENCES = R.id.drawer_header_settings;
     //----------------------------------------------------------------------------------------------
 
     //==============================================================================================

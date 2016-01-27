@@ -145,12 +145,12 @@
     <string name="hot">Hot</string>
     <string name="logger_mode">Enable logcat</string>
     <string name="logger_mode_summary">Uncheck to remove any logs from logcat</string>
-    <string name="debugging">Debugging</string>
-    <string name="extensive_logging">Extensive logging</string>
-    <string name="debug_strict_mode">Enable strict mode</string>
-    <string name="shell">Shell</string>
-    <string name="su_shell_context">Shell context</string>
-    <string name="su_shell_context_summary">The context under which Device Control should run its commands.\nThe default value is <xliff:g example="Normal" id="value">\"%s\"</xliff:g>.\nCurrent value: <xliff:g example="System app" id="value">\"%s\"</xliff:g></string>
+    <!-- Expert preferences, preferences only meant for experienced users -->
+    <string name="expert_mode">Expert mode</string>
+    <string name="expert_mode_title">Enable expert mode</string>
+    <string name="expert_mode_summary">Show preferences for power users</string>
+    <string name="skip_checks">Skip requirements checks</string>
+    <string name="skip_checks_summary">Do not check for requirements when the app launches</string>
     <string name="bootup_enabled">Reapply on boot</string>
     <string name="bootup_enabled_summary">If disabled bootup restoration will not run when the device is starting</string>
     <string name="version">Version</string>
@@ -266,8 +266,6 @@
     <string name="error_download">Error downloading file!\nPlease try again later!</string>
     <string name="kernel_features">Kernel features</string>
     <string name="open_play_store">View application at Google Play\u2122</string>
-    <string name="skip_checks">Skip checks at startup</string>
-    <string name="skip_checks_summary">Do not check for root and BusyBox on startup\nProceed on your own risk!</string>
     <string name="flasher">Flasher</string>
     <string name="add_item">Add item</string>
     <string name="recovery_type_title">Recovery script type</string>
@@ -509,6 +507,4 @@
     <string name="low_end_gfx_summary">Use less graphic effects, which may work better on some devices</string>
     <string name="use_sense360">Use Sense360</string>
     <string name="use_sense360_summary">To learn more about Sense360, long press this card</string>
-
-    <string name="restart_activity">Restart app to apply changes</string>
 </resources>

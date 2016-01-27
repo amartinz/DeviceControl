@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -70,7 +71,7 @@ import org.namelessrom.devicecontrol.modules.performance.sub.IoSchedConfigFragme
 import org.namelessrom.devicecontrol.modules.performance.sub.KsmFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.UksmFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.VoltageFragment;
-import org.namelessrom.devicecontrol.modules.preferences.PreferencesFragment;
+import org.namelessrom.devicecontrol.modules.preferences.PreferencesActivity;
 import org.namelessrom.devicecontrol.modules.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.modules.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.modules.tools.WirelessFileManagerFragment;
@@ -186,7 +187,8 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
         final ImageButton headerSettings = (ImageButton) headerView.findViewById(R.id.drawer_header_settings);
         headerSettings.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                shouldLoadFragment(DeviceConstants.ID_PREFERENCES);
+                final Intent intent = new Intent(MainActivity.this, PreferencesActivity.class);
+                startActivityForResult(intent, PreferencesActivity.REQUEST_PREFERENCES);
             }
         });
 
@@ -219,6 +221,19 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
                 }
             }
         }
+    }
+
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (PreferencesActivity.REQUEST_PREFERENCES == requestCode) {
+            if (resultCode == PreferencesActivity.RESULT_NEEDS_RESTART) {
+                // restart the activity and cleanup AppResources to update effects and theme
+                AppResources.get().cleanup();
+                Utils.restartActivity(MainActivity.this);
+            }
+            return;
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -573,14 +588,6 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
                 break;
             case DeviceConstants.ID_APP_INFO_PRIVACY:
                 ((Application) getApplicationContext()).getCustomTabsHelper().launchUrl(this, DeviceConstants.URL_DC_PRIVACY);
-                break;
-            //--------------------------------------------------------------------------------------
-            case DeviceConstants.ID_PREFERENCES:
-                if (!onResume) {
-                    mCurrentFragment = new PreferencesFragment();
-                }
-                mTitle = mFragmentTitle = R.string.preferences;
-                mSubFragmentTitle = -1;
                 break;
         }
         restoreActionBar();

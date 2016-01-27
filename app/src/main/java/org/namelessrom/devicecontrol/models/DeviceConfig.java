@@ -43,6 +43,8 @@ public class DeviceConfig {
 
     public boolean ignoreDialogWarningSuVersion;
 
+    public boolean expertMode;
+
     // TODO: readd
     public String suShellContext = "normal"; //Shell.CONTEXT_NORMAL;
 

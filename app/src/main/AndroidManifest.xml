@@ -196,6 +196,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.namelessrom.devicecontrol.MainActivity" />
         </activity>
+        <activity
+            android:name=".modules.preferences.PreferencesActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/preferences"
+            android:launchMode="singleTask"
+            android:parentActivityName=".MainActivity"
+            android:taskAffinity="">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.namelessrom.devicecontrol.MainActivity" />
+        </activity>
         <!-- Device activities -->
         <activity
             android:name=".modules.device.SensorActivity"

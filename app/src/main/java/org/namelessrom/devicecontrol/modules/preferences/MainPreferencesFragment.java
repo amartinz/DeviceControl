@@ -23,21 +23,21 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 
 import com.pollfish.main.PollFish;
 
-import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Constants;
+import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
+import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
 import org.namelessrom.devicecontrol.theme.AppResources;
-import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.ShellManager;
+import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
@@ -46,11 +46,19 @@ import butterknife.ButterKnife;
 
 public class MainPreferencesFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceChangeListener {
     // TODO: more customization
-    @Bind(R.id.prefs_light_theme) MaterialSwitchPreference mLightTheme;
-    @Bind(R.id.prefs_low_end_gfx) MaterialSwitchPreference mLowEndGfx;
+    @Bind(R.id.prefs_light_theme) MaterialSwitchPreference lightTheme;
+    @Bind(R.id.prefs_low_end_gfx) MaterialSwitchPreference lowEndGfx;
 
-    @Bind(R.id.prefs_show_pollfish) MaterialSwitchPreference mShowPollfish;
-    @Bind(R.id.prefs_use_sense360) MaterialSwitchPreference mUseSense360;
+    @Bind(R.id.prefs_show_pollfish) MaterialSwitchPreference showPollfish;
+    @Bind(R.id.prefs_use_sense360) MaterialSwitchPreference useSense360;
+
+    @Bind(R.id.prefs_expert_enable) MaterialSwitchPreference expertEnable;
+    @Bind(R.id.prefs_expert_skip_checks) MaterialSwitchPreference skipChecks;
+    @Bind(R.id.prefs_expert_su_shell_context) MaterialListPreference shellContext;
+
+    @Bind(R.id.cat_prefs_debug) CustomPreferenceCategoryMaterial debugCategory;
+    @Bind(R.id.prefs_debug_strict_mode) MaterialSwitchPreference debugStrictMode;
+    @Bind(R.id.prefs_extensive_logging) MaterialSwitchPreference extensiveLogging;
 
     @Override protected int getLayoutResourceId() {
         return R.layout.pref_app_main;
@@ -61,21 +69,21 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         ButterKnife.bind(this, view);
 
         final Context context = getContext();
-
-        mLightTheme.setChecked(AppResources.get().isLightTheme());
-        mLightTheme.setOnPreferenceChangeListener(this);
-
-        mLowEndGfx.setChecked(AppResources.get().isLowEndGfx(context));
-        mLowEndGfx.setOnPreferenceChangeListener(this);
-
         final DeviceConfig configuration = DeviceConfig.get();
-        mShowPollfish.setChecked(configuration.showPollfish);
-        mShowPollfish.setOnPreferenceChangeListener(this);
+
+        lightTheme.setChecked(AppResources.get().isLightTheme());
+        lightTheme.setOnPreferenceChangeListener(this);
+
+        lowEndGfx.setChecked(AppResources.get().isLowEndGfx(context));
+        lowEndGfx.setOnPreferenceChangeListener(this);
+
+        showPollfish.setChecked(configuration.showPollfish);
+        showPollfish.setOnPreferenceChangeListener(this);
 
         if (Constants.canUseSense360(context)) {
-            mUseSense360.setChecked(Constants.useSense360(context));
-            mUseSense360.setOnPreferenceChangeListener(this);
-            mUseSense360.setOnLongClickListener(new View.OnLongClickListener() {
+            useSense360.setChecked(Constants.useSense360(context));
+            useSense360.setOnPreferenceChangeListener(this);
+            useSense360.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override public boolean onLongClick(View v) {
                     final Activity activity = getActivity();
                     Application.get(activity).getCustomTabsHelper().launchUrl(activity, Constants.URL_SENSE360);
@@ -83,13 +91,36 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
                 }
             });
         } else {
-            mUseSense360.setVisibility(View.GONE);
+            useSense360.setVisibility(View.GONE);
         }
+
+        expertEnable.setChecked(configuration.expertMode);
+        expertEnable.setOnPreferenceChangeListener(this);
+
+        skipChecks.setChecked(configuration.skipChecks);
+        skipChecks.setOnPreferenceChangeListener(this);
+
+        debugStrictMode.setChecked(configuration.debugStrictMode);
+        debugStrictMode.setOnPreferenceChangeListener(this);
+
+        extensiveLogging.setChecked(configuration.extensiveLogging);
+        extensiveLogging.setOnPreferenceChangeListener(this);
+
+        // TODO: investigate if needed
+        /*
+        shellContext.setValue(configuration.suShellContext);
+        String summary = getString(R.string.su_shell_context_summary, getString(R.string.normal), shellContext.getValue());
+        shellContext.setSummary(summary);
+        shellContext.setValue(configuration.suShellContext);
+        shellContext.setOnPreferenceChangeListener(this);
+        */
+
+        updateExpertVisiblity(configuration.expertMode);
     }
 
     @SuppressLint("CommitPrefEdits")
     @Override public boolean onPreferenceChanged(MaterialPreference preference, Object newValue) {
-        if (mShowPollfish == preference) {
+        if (showPollfish == preference) {
             final boolean value = (Boolean) newValue;
 
             DeviceConfig.get().showPollfish = value;
@@ -100,33 +131,36 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             } else {
                 PollFish.hide();
             }
-            mShowPollfish.setChecked(value);
+            showPollfish.setChecked(value);
             return true;
-        } else if (mLightTheme == preference) {
+        } else if (lightTheme == preference) {
             final boolean isLight = (Boolean) newValue;
             AppResources.get().setLightTheme(isLight);
-            mLightTheme.setChecked(isLight);
+            lightTheme.setChecked(isLight);
 
             if (isLight) {
                 AppResources.get().setAccentColor(ContextCompat.getColor(getActivity(), R.color.accent_light));
             } else {
                 AppResources.get().setAccentColor(ContextCompat.getColor(getActivity(), R.color.accent));
-
             }
 
-            showRestartSnackbar(mLightTheme);
+            if (getActivity() instanceof PreferencesActivity) {
+                ((PreferencesActivity) getActivity()).needsRestart();
+            }
             return true;
-        } else if (mLowEndGfx == preference) {
+        } else if (lowEndGfx == preference) {
             final boolean isLowEndGfx = (Boolean) newValue;
             AppResources.get().setLowEndGfx(isLowEndGfx);
-            mLowEndGfx.setChecked(isLowEndGfx);
+            lowEndGfx.setChecked(isLowEndGfx);
 
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
             prefs.edit().putBoolean(Constants.KEY_LOW_END_GFX, isLowEndGfx).commit();
 
-            showRestartSnackbar(mLowEndGfx);
+            if (getActivity() instanceof PreferencesActivity) {
+                ((PreferencesActivity) getActivity()).needsRestart();
+            }
             return true;
-        } else if (mUseSense360 == preference) {
+        } else if (useSense360 == preference) {
             final boolean useSense360 = (Boolean) newValue;
 
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
@@ -134,24 +168,66 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             return true;
         }
 
+        final DeviceConfig deviceConfig = DeviceConfig.get();
+        if (expertEnable == preference) {
+            final boolean value = (Boolean) newValue;
+
+            deviceConfig.expertMode = value;
+            deviceConfig.save();
+
+            expertEnable.setChecked(value);
+            updateExpertVisiblity(deviceConfig.expertMode);
+            return true;
+        } else if (skipChecks == preference) {
+            final boolean value = (Boolean) newValue;
+
+            deviceConfig.skipChecks = value;
+            deviceConfig.save();
+
+            skipChecks.setChecked(value);
+            return true;
+        } else if (shellContext == preference) {
+            final String value = String.valueOf(newValue);
+
+            final String summary = getString(R.string.su_shell_context_summary, getString(R.string.normal), value);
+            shellContext.setSummary(summary);
+
+            deviceConfig.suShellContext = value;
+            deviceConfig.save();
+
+            // reopen shells to switch context
+            Logger.i(this, "reopening shells");
+            ShellManager.get().cleanupShells();
+            return true;
+        } else if (extensiveLogging == preference) {
+            final boolean value = (Boolean) newValue;
+
+            deviceConfig.extensiveLogging = value;
+            deviceConfig.save();
+
+            Logger.setEnabled(value);
+            extensiveLogging.setChecked(value);
+            return true;
+        } else if (debugStrictMode == preference) {
+            final boolean value = (Boolean) newValue;
+
+            deviceConfig.debugStrictMode = value;
+            deviceConfig.save();
+
+            Logger.setStrictModeEnabled(value);
+            debugStrictMode.setChecked(value);
+            return true;
+        }
+
         return false;
     }
 
-    private void showRestartSnackbar(View view) {
-        final Activity activity = getActivity();
-        if (activity instanceof ActivityCallbacks) {
-            ((ActivityCallbacks) activity).setDrawerLockState(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        }
-
-        Snackbar.make(view, R.string.restart_activity, Snackbar.LENGTH_INDEFINITE)
-                .setAction(android.R.string.ok, new View.OnClickListener() {
-                    @Override public void onClick(View v) {
-                        // restart the activity and cleanup AppResources to update effects and theme
-                        AppResources.get().cleanup();
-                        Utils.restartActivity(getActivity());
-                    }
-                })
-                .show();
+    private void updateExpertVisiblity(boolean isExpertMode) {
+        final int visibility = (isExpertMode ? View.VISIBLE : View.GONE);
+        skipChecks.setVisibility(visibility);
+        // TODO: investigate if needed
+        shellContext.setVisibility(View.GONE);
+        debugCategory.setVisibility(visibility);
     }
 
 }
