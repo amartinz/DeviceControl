@@ -27,7 +27,7 @@
         style="@style/CardView.Light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/card_margin"
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="4dp"
