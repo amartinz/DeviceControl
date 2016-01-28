@@ -22,6 +22,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,13 +34,13 @@ import org.namelessrom.devicecontrol.R;
 import java.util.ArrayList;
 
 public abstract class AttachViewPagerFragment extends AttachFragment {
-    private NoSwipeViewPager mViewPager;
+    private ViewPager mViewPager;
 
     @Override protected int getFragmentId() {
         return 0;
     }
 
-    public NoSwipeViewPager getViewPager() {
+    public ViewPager getViewPager() {
         return mViewPager;
     }
 
@@ -48,7 +49,7 @@ public abstract class AttachViewPagerFragment extends AttachFragment {
         final View view = inflater.inflate(R.layout.fragment_view_pager, container, false);
 
         final ViewPagerAdapter adapter = getPagerAdapter();
-        mViewPager = (NoSwipeViewPager) view.findViewById(R.id.viewpager);
+        mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(3);
 
