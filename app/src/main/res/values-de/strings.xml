@@ -143,12 +143,11 @@
   <string name="hot">Heiß</string>
   <string name="logger_mode">Aktiviere Logcat</string>
   <string name="logger_mode_summary">Entferne den Hacken, um den Logcat zu deaktivieren</string>
-  <string name="debugging">Debugging</string>
-  <string name="extensive_logging">Umfangreiche Protokollierung</string>
-  <string name="debug_strict_mode">Strikten Modus aktivieren</string>
-  <string name="shell">Shell</string>
-  <string name="su_shell_context">Shell Kontext</string>
-  <string name="su_shell_context_summary">Der Kontext unter dem Device Control Befehle ausführen sollte.\nDer Standardwert ist <xliff:g example="Normal" id="value">\"%s\"</xliff:g>.\nMomentaner Wert: <xliff:g example="System app" id="value">\"%s\"</xliff:g></string>
+  <string name="expert_mode">Experten-Modus</string>
+  <string name="expert_mode_title">Experten-Modus aktivieren</string>
+  <string name="expert_mode_summary">Zeige Einstellungen für Power-User</string>
+  <string name="skip_checks">Überspringe Anforderungen-Überprüfung</string>
+  <string name="skip_checks_summary">Wenn die App startet, keine Anforderungen überprüfen</string>
   <string name="bootup_enabled">Beim Starten anwenden</string>
   <string name="bootup_enabled_summary">Falls deaktiviert, wird die Neustart-Wiederherstellung nicht ausgeführt, wenn das Gerät startet</string>
   <string name="version">Version</string>
@@ -264,8 +263,6 @@
   <string name="error_download">Fehler beim Herunterladen der Datei!\nBitte versuche es später erneut!</string>
   <string name="kernel_features">Kernel-Funktionen</string>
   <string name="open_play_store">Anwendung auf Google Play\u2122 anzeigen</string>
-  <string name="skip_checks">Überspringe Überprüfungen beim Start</string>
-  <string name="skip_checks_summary">Überspringe das Überprüfen der Root-Rechte und BusyBox beim Starten der Anwendung\nFortfahren auf eigene Gefahr!</string>
   <string name="flasher">Flasher</string>
   <string name="add_item">Element hinzufügen</string>
   <string name="recovery_type_title">Recovery-Typ</string>
@@ -285,11 +282,6 @@
   <string name="read_ahead">Read-Ahead</string>
   <string name="file_system">Dateisystem</string>
   <string name="user_interface">Benutzeroberfläche</string>
-  <string name="gpu_vendor">GPU-Hersteller</string>
-  <string name="gpu_renderer">GPU-Renderer</string>
-  <string name="opengl_version">OpenGL-Version</string>
-  <string name="opengl_extensions">OpenGL-Erweiterungen</string>
-  <string name="shader_version">Shader-Version</string>
   <string name="getting_information">Abrufen von Informationen</string>
   <string name="health">Gesundheit</string>
   <string name="good">Gut</string>
@@ -346,7 +338,6 @@
   <string name="gamma_tuning_saturation">Sättigung</string>
   <string name="display_gamma_calibration">Gammakorrektur</string>
   <string name="display_gamma_calibration_summary">Gammawerte einstellen</string>
-  <string name="hardware_display_gamma_calibration_desc_one">Rot,Grün,Blau</string>
   <string name="install_info">Die folgende(n) Datei(en) sind bereit zur Installation.\n\nDu kannst mehr komprimierte Dateien (.zip) über die \"Datei hinzufügen\" Taste hinzufügen.</string>
   <string name="select_actions">Wählen Sie die Aktionen aus, die Sie ausführen möchten</string>
   <string name="select_recovery">Wählen Sie Ihre Recovery-Variante</string>
@@ -399,32 +390,8 @@
   <string name="perm_costs_money">Hierfür können Gebühren anfallen</string>
   <string name="perms_new_perm_prefix"><font fgcolor="#ff33b5e5" size="12">NEU: </font></string>
   <string name="perms_description_app">Zur Verfügung gestellt von <xliff:g id="app_name">%1$s</xliff:g>.</string>
-  <string name="environment">Umgebung</string>
-  <string name="motion">Bewegung</string>
-  <string name="position">Position</string>
   <string name="sensor_information">Sensorinformationen anzeigen</string>
   <string name="sensor_information_summary">Zeigt detaillierte Sensorinformationen von deinem Gerät an</string>
-  <string name="sensor_light">Licht</string>
-  <string name="sensor_temperature">Temperatur</string>
-  <string name="sensor_pressure">Luftdruck</string>
-  <string name="sensor_pressure_note">Hinweis: die Werte können in %1$s oder %2$s angegeben sein, abhängig von der Implementation des Herstellers</string>
-  <string name="sensor_relative_humitidy">Relative Luftfeuchtigkeit</string>
-  <string name="sensor_accelerometer">Beschleunigungsmesser (einschließlich Schwerkraft)</string>
-  <string name="sensor_accelerometer_linear">Beschleunigungsmesser (ausgenommen Schwerkraft)</string>
-  <string name="sensor_gravity">Schwerkraft</string>
-  <string name="sensor_rotation_vector">Dreh-Vektor</string>
-  <string name="sensor_gyroscope">Gyroskop</string>
-  <string name="sensor_gyroscope_uncalibrated">Gyroskop (unkalibriert)</string>
-  <string name="sensor_step">Schrittzähler</string>
-  <string name="sensor_proximity">Annäherungssensor</string>
-  <string name="sensor_magnetic_field">Magnetfeld</string>
-  <string name="sensor_magnetic_field_uncalibrated">Magnetfeld (unkalibriert)</string>
-  <string name="sensor_geomagnetic_rotation_vector">Geomagnetischer Dreh-Vektor</string>
-  <string name="sensor_game_rotation_vector">Spiel Dreh-Vektor</string>
-  <string name="power_usage">Stromverbrauch</string>
-  <string name="steps">Schritte</string>
-  <string name="far">Weit</string>
-  <string name="near">Nah</string>
   <string name="cpu_lock_freq">Sperre Frequenzen</string>
   <string name="cpu_lock_freq_summary">Probiert das Modifizieren der Frequenzen zu verhindern\nDies funktioniert möglicherweise nicht auf allen Geräten!</string>
   <string name="cpu_lock_gov">Sperre Governors</string>
@@ -462,7 +429,7 @@
   <string name="donate_subscription">Abonnement verwenden</string>
   <string name="donate_subscription_note">Hinweis: Abonnements sind monatlich!</string>
   <string name="donate_via">Spenden via %s</string>
-  <string name="donate_paypal_message">Du wirst zu PayPal weitergeleitet, um die Spende abzuschließen.</string>
+  <string name="donate_message">Du wirst zu %s weitergeleitet, um die Spende durchzuführen.</string>
   <string name="show_pollfish">Pollfish aktivieren</string>
   <string name="show_pollfish_summary">Mit jeder durchgeführten Umfrage hilfst Du uns besser zu werden. Wenn Du möchtest, kannst Du die Umfragen natürlich deaktivieren :)</string>
   <string name="task_type">Aufgaben-Typ</string>
@@ -496,5 +463,4 @@
   <string name="low_end_gfx_summary">Weniger grafische Effekte benutzen, was die App-Performance auf einigen Geräten verbessern kann</string>
   <string name="use_sense360">Verwenden von Sense360</string>
   <string name="use_sense360_summary">Drücke lange auf diese Karte, um mehr über Sense360 zu erfahren</string>
-  <string name="restart_activity">App neustarten zum Anwenden der Änderungen</string>
 </resources>
