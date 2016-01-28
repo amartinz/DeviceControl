@@ -59,11 +59,11 @@ public class GpuUtils {
     };
 
     public static final int[] GL_STRINGS = new int[]{
-            R.string.gpu_vendor,        // gpu vendor
-            R.string.gpu_renderer,      // gpu renderer
-            R.string.opengl_version,    // opengl version
-            R.string.opengl_extensions, // opengl extensions
-            R.string.shader_version     // shader language version
+            R.string.hardware_gpu_vendor,        // gpu vendor
+            R.string.hardware_gpu_renderer,      // gpu renderer
+            R.string.hardware_opengl_version,    // opengl version
+            R.string.hardware_opengl_extensions, // opengl extensions
+            R.string.hardware_shader_version     // shader language version
     };
 
     private static String gpuBasePath = null;

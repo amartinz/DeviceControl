@@ -81,9 +81,9 @@ public class SensorActivity extends BaseActivity {
             materialMenu.setNeverDrawTouch(true);
         }
 
-        mTitleList.add(getString(R.string.environment));
-        mTitleList.add(getString(R.string.motion));
-        mTitleList.add(getString(R.string.position));
+        mTitleList.add(getString(R.string.hardware_environment));
+        mTitleList.add(getString(R.string.hardware_motion));
+        mTitleList.add(getString(R.string.hardware_position));
 
         final ViewPagerAdapter adapter = new ViewPagerAdapter(mTitleList);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
