@@ -23,8 +23,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.daimajia.numberprogressbar.NumberProgressBar;
-
 import org.namelessrom.devicecontrol.R;
 
 public abstract class AttachPreferenceProgressFragment extends AttachPreferenceFragment {

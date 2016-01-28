@@ -21,7 +21,7 @@
     android:orientation="vertical"
     android:animateLayoutChanges="true">
 
-    <com.daimajia.numberprogressbar.NumberProgressBar
+    <org.namelessrom.devicecontrol.views.NumberProgressBar
         android:id="@+id/preference_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

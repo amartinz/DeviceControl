@@ -52,7 +52,7 @@ Copyright (C) 2012  James Roberts
 
     </LinearLayout>
 
-    <com.daimajia.numberprogressbar.NumberProgressBar
+    <org.namelessrom.devicecontrol.views.NumberProgressBar
         android:id="@+id/ui_bar"
         android:layout_width="match_parent"
         android:layout_height="10dp"

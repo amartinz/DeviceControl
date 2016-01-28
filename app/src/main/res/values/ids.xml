@@ -18,6 +18,4 @@
     <item name="divider" type="id" />
     <item name="list_item_container" type="id" />
     <item name="tools" type="id" />
-    <!-- Sliding Menu -->
-    <item name="selected_view" type="id" />
 </resources>

@@ -86,11 +86,13 @@ android {
 }
 
 dependencies {
-    if (new File("modules/Vendor").exists()) {
-        compile project(':modules:Vendor')
-    } else {
+    try {
+        compile project(':Vendor')
+    } catch (Exception ignored) {
         compile 'alexander.martinz.vendor:vendor:1.0.0@aar'
     }
+
+    compile project(':ExternalSources')
 
     // see https://github.com/Evisceration/logger
     compile 'com.github.Evisceration:logger:1.0.5'
@@ -117,9 +119,6 @@ dependencies {
 
     // see https://github.com/PhilJay/MPAndroidChart
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.0'
-
-    // see https://github.com/koush/ion
-    compile 'com.koushikdutta.ion:ion:2.1.6'
 
     // see https://www.pollfish.com/android
     compile 'com.pollfish:pollfish:4.1.0:googleplayRelease@aar'

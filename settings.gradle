@@ -1,17 +1,22 @@
 include ':app'
 
 include ':ExecutionLibrary'
-project (':ExecutionLibrary').projectDir = new File('modules/ExecutionLibrary/library')
+project(':ExecutionLibrary').projectDir = new File('modules/ExecutionLibrary/library')
 
 include ':HardwareLibrary'
-project (':HardwareLibrary').projectDir = new File('modules/HardwareLibrary/library')
+project(':HardwareLibrary').projectDir = new File('modules/HardwareLibrary/library')
 
 include ':MaterialPreferences'
-project (':MaterialPreferences').projectDir = new File('modules/MaterialPreferences/library')
+project(':MaterialPreferences').projectDir = new File('modules/MaterialPreferences/library')
 
 include(":volley")
 project(':volley').projectDir = new File('modules/volley')
 
-if (new File("modules/Vendor").exists()) {
-    include ':modules:Vendor'
+include ':ExternalSources'
+project(':ExternalSources').projectDir = new File('modules/ExternalSources')
+
+final File vendorDir = new File("modules/Vendor");
+if (vendorDir.exists()) {
+    include ':Vendor'
+    project(':Vendor').projectDir = vendorDir
 }

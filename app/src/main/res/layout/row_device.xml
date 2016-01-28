@@ -61,7 +61,7 @@
             android:textSize="12sp"
             tools:text="0°C" />
 
-        <com.daimajia.numberprogressbar.NumberProgressBar
+        <org.namelessrom.devicecontrol.views.NumberProgressBar
             android:id="@+id/ui_device_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

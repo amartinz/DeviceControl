@@ -204,13 +204,13 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
 
         category = (PreferenceCategory) findPreference("graphics");
         final DisplayColor displayColor =
-                (DisplayColor) findPreference(DisplayColorCalibration.TAG);
+                (DisplayColor) findPreference("display_color_calibration");
         if (!DisplayColor.isSupported()) {
             category.removePreference(displayColor);
         }
 
         final DisplayGamma displayGamma =
-                (DisplayGamma) findPreference(DisplayGammaCalibration.TAG);
+                (DisplayGamma) findPreference("display_gamma_calibration");
         if (!DisplayGamma.isSupported()) {
             category.removePreference(displayGamma);
         }

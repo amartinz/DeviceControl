@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.daimajia.numberprogressbar.NumberProgressBar;
-
 import org.namelessrom.devicecontrol.R;
 
 public class CpuCoreView extends LinearLayout {
