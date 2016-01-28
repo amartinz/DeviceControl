@@ -33,7 +33,7 @@ import org.namelessrom.devicecontrol.hardware.KsmUtils;
 import org.namelessrom.devicecontrol.hardware.UksmUtils;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
 import org.namelessrom.devicecontrol.models.BootupConfig;
-import org.namelessrom.devicecontrol.objects.BootupItem;
+import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.preferences.AwesomeListPreference;
 import org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;

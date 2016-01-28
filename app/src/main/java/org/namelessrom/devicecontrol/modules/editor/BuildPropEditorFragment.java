@@ -39,8 +39,7 @@ import android.widget.TextView;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.objects.Prop;
-import org.namelessrom.devicecontrol.objects.ShellOutput;
+import org.namelessrom.devicecontrol.utils.ShellOutput;
 import org.namelessrom.devicecontrol.utils.Scripts;
 import org.namelessrom.devicecontrol.utils.Utils;
 

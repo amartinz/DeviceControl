@@ -24,7 +24,7 @@ import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
 import org.namelessrom.devicecontrol.models.BootupConfig;
-import org.namelessrom.devicecontrol.objects.BootupItem;
+import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.Command;

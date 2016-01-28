@@ -35,7 +35,7 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.ExtraUtils;
 import org.namelessrom.devicecontrol.models.ExtraConfig;
-import org.namelessrom.devicecontrol.objects.ShellOutput;
+import org.namelessrom.devicecontrol.utils.ShellOutput;
 import org.namelessrom.devicecontrol.preferences.AwesomeEditTextPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.preferences.CustomTogglePreference;

@@ -3,8 +3,6 @@ package org.namelessrom.devicecontrol.modules.bootup;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import org.namelessrom.devicecontrol.objects.BootupItem;
-
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 
 public class BootupItemPreference extends MaterialSwitchPreference {

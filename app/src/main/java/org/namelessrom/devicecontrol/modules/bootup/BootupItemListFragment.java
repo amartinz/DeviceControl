@@ -26,7 +26,6 @@ import android.view.View;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
-import org.namelessrom.devicecontrol.objects.BootupItem;
 import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
 import org.namelessrom.devicecontrol.utils.Utils;
 

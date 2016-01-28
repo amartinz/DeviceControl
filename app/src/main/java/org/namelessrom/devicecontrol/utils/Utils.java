@@ -32,7 +32,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
-import org.namelessrom.devicecontrol.objects.ShellOutput;
 import org.namelessrom.devicecontrol.services.TaskerService;
 
 import java.io.BufferedReader;
@@ -57,7 +56,7 @@ import alexander.martinz.libs.execution.NormalShell;
 import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.execution.BusyBox;
 
-import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
+import static org.namelessrom.devicecontrol.utils.ShellOutput.OnShellOutputListener;
 
 public class Utils {
     private static final String TAG = "Utils";

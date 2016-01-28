@@ -29,7 +29,7 @@ import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.hardware.Emmc;
+import alexander.martinz.libs.hardware.Emmc;
 import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
 
 import alexander.martinz.libs.execution.RootShell;

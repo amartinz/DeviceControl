@@ -60,7 +60,6 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.modules.appmanager.permissions.AppSecurityPermissions;
-import org.namelessrom.devicecontrol.objects.PackageStatsObserver;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 

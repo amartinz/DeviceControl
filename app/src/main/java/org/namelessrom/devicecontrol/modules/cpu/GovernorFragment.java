@@ -28,7 +28,7 @@ import android.view.View;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
-import org.namelessrom.devicecontrol.objects.BootupItem;
+import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
 import org.namelessrom.devicecontrol.views.AttachMaterialPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;

@@ -1,4 +1,4 @@
-package org.namelessrom.devicecontrol.objects;
+package org.namelessrom.devicecontrol.modules.appmanager;
 
 import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageStats;

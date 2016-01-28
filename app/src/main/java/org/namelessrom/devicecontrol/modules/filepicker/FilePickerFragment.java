@@ -24,8 +24,7 @@ import android.view.View;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.activities.FilePickerActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
-import org.namelessrom.devicecontrol.objects.FlashItem;
-import org.namelessrom.devicecontrol.objects.ShellOutput;
+import org.namelessrom.devicecontrol.utils.ShellOutput;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
 import org.namelessrom.devicecontrol.utils.Utils;
 

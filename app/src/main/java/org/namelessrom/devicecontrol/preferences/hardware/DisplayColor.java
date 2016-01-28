@@ -30,15 +30,17 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
-import org.namelessrom.devicecontrol.hardware.DisplayColorCalibration;
-import org.namelessrom.devicecontrol.objects.BootupItem;
+import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import alexander.martinz.libs.hardware.display.DisplayColorCalibration;
 
 /**
  * Special preference type that allows configuration of Color settings
@@ -61,8 +63,12 @@ public class DisplayColor extends DialogPreference {
     private String[] mCurrentColors;
     private String mOriginalColors;
 
+    private final DisplayColorCalibration displayColorCalibration;
+
     public DisplayColor(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        displayColorCalibration = new DisplayColorCalibration(context);
 
         setLayoutResource(R.layout.preference);
         setDialogLayoutResource(R.layout.preference_display_color_calibration);
@@ -71,7 +77,7 @@ public class DisplayColor extends DialogPreference {
     @Override protected void onBindDialogView(@NonNull final View view) {
         super.onBindDialogView(view);
 
-        mOriginalColors = DisplayColorCalibration.get().getCurColors();
+        mOriginalColors = displayColorCalibration.getCurColors();
         Logger.v(this, "mOriginalColors -> %s", mOriginalColors);
         mCurrentColors = mOriginalColors.split(" ");
 
@@ -94,12 +100,12 @@ public class DisplayColor extends DialogPreference {
         defaultsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final int defaultValue = DisplayColorCalibration.get().getDefValue();
+                final int defaultValue = displayColorCalibration.getDefValue();
                 for (int i = 0; i < mSeekBars.size(); i++) {
                     mSeekBars.get(i).mSeekBar.setProgress(defaultValue);
                     mCurrentColors[i] = String.valueOf(defaultValue);
                 }
-                DisplayColorCalibration.get().setColors(TextUtils.join(" ", mCurrentColors));
+                displayColorCalibration.setColors(TextUtils.join(" ", mCurrentColors));
             }
         });
     }
@@ -110,14 +116,14 @@ public class DisplayColor extends DialogPreference {
         if (positiveResult) {
             BootupConfig.setBootup(new BootupItem(
                     BootupConfig.CATEGORY_DEVICE, DisplayColorCalibration.TAG,
-                    DisplayColorCalibration.get().getPath(),
-                    DisplayColorCalibration.get().getCurColors(), true));
+                    displayColorCalibration.getPath(),
+                    displayColorCalibration.getCurColors(), true));
         } else if (mOriginalColors != null) {
-            DisplayColorCalibration.get().setColors(mOriginalColors);
+            displayColorCalibration.setColors(mOriginalColors);
         }
     }
 
-    public static boolean isSupported() { return DisplayColorCalibration.get().isSupported(); }
+    public static boolean isSupported() { return new DisplayColorCalibration(Application.get()).isSupported(); }
 
     private class ColorSeekBar implements SeekBar.OnSeekBarChangeListener {
         private int mIndex;
@@ -129,8 +135,7 @@ public class DisplayColor extends DialogPreference {
             mValue = value;
             mIndex = index;
 
-            mSeekBar.setMax(DisplayColorCalibration.get().getMaxValue() -
-                    DisplayColorCalibration.get().getMinValue());
+            mSeekBar.setMax(displayColorCalibration.getMaxValue() - displayColorCalibration.getMinValue());
             mSeekBar.setOnSeekBarChangeListener(this);
         }
 
@@ -139,12 +144,12 @@ public class DisplayColor extends DialogPreference {
         }
 
         @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            final int min = DisplayColorCalibration.get().getMinValue();
-            final int max = DisplayColorCalibration.get().getMaxValue();
+            final int min = displayColorCalibration.getMinValue();
+            final int max = displayColorCalibration.getMaxValue();
 
             if (fromUser) {
                 mCurrentColors[mIndex] = String.valueOf(progress + min);
-                DisplayColorCalibration.get().setColors(TextUtils.join(" ", mCurrentColors));
+                displayColorCalibration.setColors(TextUtils.join(" ", mCurrentColors));
             }
 
             final int percent = Math.round(100F * progress / (max - min));

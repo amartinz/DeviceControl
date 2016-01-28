@@ -15,20 +15,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.objects;
+package org.namelessrom.devicecontrol.modules.filepicker;
 
-public class ShellOutput {
+import java.io.File;
+import java.io.Serializable;
 
-    public final int id;
-    public final String output;
+public class FlashItem implements Serializable {
 
-    public ShellOutput(final int id, final String output) {
-        this.id = id;
-        this.output = output;
+    private String path;
+    private String name;
+
+    public FlashItem(final String name, final String path) {
+        this.path = path;
+        this.name = name;
     }
 
-    public interface OnShellOutputListener {
-        void onShellOutput(final ShellOutput shellOutput);
+    public FlashItem(final String path) {
+        this.path = path;
+        String[] tmp = path.split(File.separator);
+        this.name = tmp[tmp.length - 1];
     }
+
+    public String getPath() { return path; }
+
+    public void setPath(final String path) { this.path = path; }
+
+    public String getName() { return name; }
+
+    public void setName(final String name) { this.name = name; }
 
 }

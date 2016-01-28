@@ -27,7 +27,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.objects.Prop;
 
 import java.util.ArrayList;
 import java.util.Iterator;

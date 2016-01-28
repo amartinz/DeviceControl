@@ -32,7 +32,7 @@ import org.namelessrom.devicecontrol.modules.device.DeviceFeatureKernelFragment;
 import org.namelessrom.devicecontrol.modules.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.VoltageFragment;
-import org.namelessrom.devicecontrol.objects.BootupItem;
+import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 

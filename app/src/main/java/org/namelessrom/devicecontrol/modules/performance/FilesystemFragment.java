@@ -29,7 +29,7 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
-import org.namelessrom.devicecontrol.hardware.Emmc;
+import alexander.martinz.libs.hardware.Emmc;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference;

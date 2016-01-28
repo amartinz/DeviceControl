@@ -24,7 +24,7 @@ import android.preference.PreferenceScreen;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
-import org.namelessrom.devicecontrol.objects.BootupItem;
+import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.preferences.CustomEditTextPreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;

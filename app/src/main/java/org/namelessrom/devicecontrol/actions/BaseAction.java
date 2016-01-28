@@ -18,7 +18,7 @@
 package org.namelessrom.devicecontrol.actions;
 
 import org.namelessrom.devicecontrol.models.BootupConfig;
-import org.namelessrom.devicecontrol.objects.BootupItem;
+import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 
 public abstract class BaseAction {
 

@@ -18,7 +18,6 @@
 package org.namelessrom.devicecontrol.modules.cpu;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.Application;
@@ -26,20 +25,11 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuStateMonitor;
-import org.namelessrom.devicecontrol.objects.BootupItem;
-import alexander.martinz.libs.hardware.cpu.CpuCore;
+import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-
-import alexander.martinz.libs.execution.Command;
-import alexander.martinz.libs.execution.Shell;
-import alexander.martinz.libs.execution.ShellManager;
 
 /**
  * Generic CPU Tasks.

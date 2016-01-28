@@ -30,7 +30,7 @@ import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.Application;
 import org.namelessrom.devicecontrol.Logger;
-import org.namelessrom.devicecontrol.objects.PackageStatsObserver;
+import org.namelessrom.devicecontrol.modules.appmanager.PackageStatsObserver;
 
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
@@ -42,7 +42,7 @@ import alexander.martinz.libs.hardware.ProcessManager;
 import hugo.weaving.DebugLog;
 
 import static org.namelessrom.devicecontrol.DeviceConstants.ID_PGREP;
-import static org.namelessrom.devicecontrol.objects.ShellOutput.OnShellOutputListener;
+import static org.namelessrom.devicecontrol.utils.ShellOutput.OnShellOutputListener;
 
 /**
  * Helper class for application interactions like cleaning the cache
