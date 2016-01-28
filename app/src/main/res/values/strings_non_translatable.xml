@@ -142,4 +142,5 @@
     <string name="debugging" translatable="false">Debugging</string>
     <string name="extensive_logging" translatable="false">Extensive logging</string>
     <string name="debug_strict_mode" translatable="false">Enable strict mode</string>
+    <string name="shell" translatable="false">Shell</string>
 </resources>
