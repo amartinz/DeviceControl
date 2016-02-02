@@ -420,7 +420,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
                 if (!onResume) {
                     mCurrentFragment = new PerformanceInfoFragment();
                 }
-                mTitle = mFragmentTitle = R.string.information;
+                mTitle = mFragmentTitle = R.string.performance;
                 mSubFragmentTitle = -1;
                 break;
             case DeviceConstants.ID_INFO_HARDWARE:
@@ -435,7 +435,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
                 if (!onResume) {
                     mCurrentFragment = new DeviceFeatureFragment();
                 }
-                mTitle = mFragmentTitle = R.string.features;
+                mTitle = mFragmentTitle = R.string.device;
                 mSubFragmentTitle = -1;
                 break;
             case DeviceConstants.ID_FAST_CHARGE:
