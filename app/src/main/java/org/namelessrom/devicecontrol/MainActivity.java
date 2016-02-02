@@ -76,9 +76,11 @@ import org.namelessrom.devicecontrol.modules.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.modules.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.modules.tools.WirelessFileManagerFragment;
 import org.namelessrom.devicecontrol.theme.AppResources;
+import org.namelessrom.devicecontrol.theme.NavigationDrawerResources;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import alexander.martinz.libs.execution.RootCheck;
 import alexander.martinz.libs.execution.ShellManager;
 import alexander.martinz.vendor.Configuration;
 
@@ -98,6 +100,16 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
     private int mSubFragmentTitle = -1;
 
     private CheckRequirementsTask mCheckRequirementsTask;
+
+    private static final int[] menuItemsNeedRoot = {
+            // controls
+            R.id.nav_item_controls_device, R.id.nav_item_controls_processor, R.id.nav_item_controls_graphics,
+            R.id.nav_item_controls_file_system, R.id.nav_item_controls_thermal,
+            // tools
+            R.id.nav_item_tools_bootup_restoration, R.id.nav_item_tools_tasker, R.id.nav_item_tools_flasher,
+            // TODO: enable in non root mode
+            R.id.nav_item_tools_app_manager, R.id.nav_item_tools_more
+    };
 
     @Override protected void setupTheme() {
         final boolean isLightTheme = AppResources.get().isLightTheme();
@@ -137,6 +149,8 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
         });
 
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view_content);
+        mNavigationView.setItemIconTintList(NavigationDrawerResources.get().getItemIconColor());
+        mNavigationView.setItemTextColor(NavigationDrawerResources.get().getItemTextColor());
         mNavigationView.setNavigationItemSelectedListener(this);
 
         loadFragmentPrivate(DeviceConstants.ID_HOME, false);
@@ -173,11 +187,24 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
             mPreviousMenuItem.setChecked(true);
         }
 
-        if (!Utils.fileExists(getString(R.string.directory_msm_thermal))
-            && !Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
-            final MenuItem thermalItem = findMenuItem(R.id.nav_item_controls_thermal);
-            if (thermalItem != null) {
-                thermalItem.setVisible(false);
+        final boolean isRooted;
+        if (mCheckRequirementsTask != null) {
+            isRooted = mCheckRequirementsTask.hasRootGranted;
+        } else {
+            isRooted = RootCheck.isRooted();
+        }
+
+        if (isRooted) {
+            if (!Utils.fileExists(getString(R.string.directory_msm_thermal))
+                && !Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
+                final MenuItem thermalItem = findMenuItem(R.id.nav_item_controls_thermal);
+                if (thermalItem != null) {
+                    thermalItem.setEnabled(false);
+                }
+            }
+        } else {
+            for (final int menuItemId : menuItemsNeedRoot) {
+                enableMenuItem(menuItemId, false);
             }
         }
 
@@ -220,6 +247,13 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
                     });
                 }
             }
+        }
+    }
+
+    private void enableMenuItem(int menuItemId, boolean enabled) {
+        final MenuItem item = findMenuItem(menuItemId);
+        if (item != null) {
+            item.setEnabled(enabled);
         }
     }
 

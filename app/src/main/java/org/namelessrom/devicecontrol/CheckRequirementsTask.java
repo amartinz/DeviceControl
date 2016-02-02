@@ -50,7 +50,8 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
     private AlertDialog alertDialog;
     private AlertDialog permissionDialog;
 
-    private boolean hasRoot;
+    public boolean hasRoot;
+    public boolean hasRootGranted;
     private boolean hasBusyBox;
     private String suVersion;
 
@@ -94,6 +95,7 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
         hasRoot = RootCheck.isRooted(true);
         if (hasRoot) {
             suVersion = RootCheck.getSuVersion(true);
+            hasRootGranted = RootCheck.isRootGranted();
         }
         hasBusyBox = BusyBox.isAvailable(true);
 
@@ -166,7 +168,9 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
         }
 
         // patch sepolicy
-        Utils.patchSEPolicy(mainActivity);
+        if (hasRootGranted) {
+            Utils.patchSEPolicy(mainActivity);
+        }
 
         permissionDialog = showPermissionDialog(mainActivity);
         if (permissionDialog == null && mPostExecuteHook != null) {

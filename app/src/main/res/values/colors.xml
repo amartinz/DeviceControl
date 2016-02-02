@@ -83,7 +83,19 @@
     <color name="tab_color_normal">#b3ffffff</color>
     <color name="tab_color_selected">#ffffff</color>
 
-    <color name="text_dark">#FFF</color>
-    <color name="text_light">#000</color>
+    <color name="drawer_icon_dark">#FFB71C1C</color>
+    <color name="drawer_icon_dark_checked">@color/drawer_text_dark</color>
+    <color name="drawer_icon_dark_disabled">#80B71C1C</color>
+    <color name="drawer_icon_light">#FF00796B</color>
+    <color name="drawer_icon_light_checked">@color/drawer_text_dark</color>
+    <color name="drawer_icon_light_disabled">#8000796B</color>
+
+    <color name="drawer_text_dark">@android:color/white</color>
+    <color name="drawer_text_dark_checked">@android:color/white</color>
+    <color name="drawer_text_dark_disabled">#80FFFFFF</color>
+    <color name="drawer_text_light">@android:color/black</color>
+    <color name="drawer_text_light_checked">@android:color/white</color>
+    <color name="drawer_text_light_disabled">#80000000</color>
+
     <color name="text_shadow">#000</color>
 </resources>

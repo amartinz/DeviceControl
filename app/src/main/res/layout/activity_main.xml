@@ -58,8 +58,6 @@
                 android:layout_weight="1"
                 app:elevation="0dp"
                 app:headerLayout="@layout/drawer_header"
-                app:itemIconTint="?attr/colorPrimaryDark"
-                app:itemTextColor="?attr/drawerTextColor"
                 app:menu="@menu/drawer_menu" />
 
             <View

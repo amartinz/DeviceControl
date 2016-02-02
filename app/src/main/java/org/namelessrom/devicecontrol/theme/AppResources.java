@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityManagerCompat;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -56,6 +57,10 @@ public class AppResources {
         return sInstance;
     }
 
+    public static int getColor(@ColorRes int colorResId) {
+        return Application.get().getColorApplication(colorResId);
+    }
+
     public boolean isLowEndGfx(Context context) {
         if (isLowEndGfx == null) {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
@@ -72,10 +77,6 @@ public class AppResources {
 
     public void setLowEndGfx(boolean isLowEndGfx) {
         this.isLowEndGfx = isLowEndGfx;
-    }
-
-    private int getColor(@ColorRes int colorResId) {
-        return Application.get().getColorApplication(colorResId);
     }
 
     private Drawable getDrawable(@DrawableRes int drawableResId) {
@@ -156,6 +157,8 @@ public class AppResources {
     }
 
     public void cleanup() {
+        NavigationDrawerResources.get().cleanup();
+
         drawerHeaderDrawable = null;
         isLowEndGfx = null;
         sInstance = null;

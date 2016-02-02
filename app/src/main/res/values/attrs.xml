@@ -20,7 +20,6 @@
     <attr name="themeColorInvert" format="reference|color" />
     <attr name="themeMenu" format="reference|color" />
     <attr name="themeMenuFooter" format="reference|color" />
-    <attr name="drawerTextColor" format="reference|color" />
     <!-- awesome preference -->
     <declare-styleable name="AwesomePreference">
         <attr name="filePath" format="reference" />
