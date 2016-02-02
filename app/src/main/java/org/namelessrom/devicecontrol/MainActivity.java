@@ -391,6 +391,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
 
         if (mCheckRequirementsTask != null) {
             mCheckRequirementsTask.destroy();
+            mCheckRequirementsTask = null;
         }
 
         AppResources.get().cleanup();
