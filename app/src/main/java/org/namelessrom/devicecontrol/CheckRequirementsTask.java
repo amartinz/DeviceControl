@@ -94,8 +94,8 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
 
         hasRoot = RootCheck.isRooted(true);
         if (hasRoot) {
-            suVersion = RootCheck.getSuVersion(true);
             hasRootGranted = RootCheck.isRootGranted();
+            suVersion = RootCheck.getSuVersion(true);
         }
         hasBusyBox = BusyBox.isAvailable(true);
 
