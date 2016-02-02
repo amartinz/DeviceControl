@@ -63,16 +63,20 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    dexOptions {
+        dexInProcess = true
+    }
+
     lintOptions {
         abortOnError false
         checkAllWarnings true
         // do not warn about translations
         disable 'MissingTranslation', 'ExtraTranslation';
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
     }
 
     packagingOptions {
