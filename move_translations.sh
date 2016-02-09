@@ -12,8 +12,8 @@ languages=("af-ZA" "ar-SA" "ca-ES" "cs-CZ" "da-DK" "de-DE" "el-GR" "es-ES" "fa-I
            "ja-JP" "ko-KR" "nl-NL" "no-NO" "pl-PL" "pt-BR" "pt-PT" "ro-RO" "ru-RU" "sr-SP" "sv-SE" "th-TH" "tr-TR" "uk-UA"
            "vi-VN" "zh-CN"  "zh-HK" "zh-TW")
 values=(   "af"    "ar"    "ca"    "cs"    "da"    "de"    "el"    "es"    "fa"    "fi"    "fr"    "hi"    "hu"    "it"
-	       "ja"    "ko"    "nl"    "nb-rNO" "pl"   "pt-rBR" "pt-rPT" "ro"  "ru"    "sr"    "sv-rSE" "th"   "tr"    "uk"
-	       "vi"    "zh-rCN" "zh-rHK" "zh-rTW")
+           "ja"    "ko"    "nl"    "nb-rNO" "pl"   "pt-rBR" "pt-rPT" "ro"  "ru"    "sr"    "sv"    "th"    "tr"    "uk"
+           "vi"    "zh-rCN" "zh-rHK" "zh-rTW")
 ###########################################################################
 core="app/src/main/res/values"
 hw="modules/HardwareLibrary/library/src/main/res/values"
