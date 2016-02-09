@@ -34,6 +34,7 @@ import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 
+import alexander.martinz.libs.execution.BusyBox;
 import alexander.martinz.libs.execution.RootShell;
 
 public class ToolsMoreFragment extends AttachPreferenceFragment {
@@ -53,8 +54,11 @@ public class ToolsMoreFragment extends AttachPreferenceFragment {
 
         mWirelessFileManager = (CustomPreference) findPreference("wireless_file_manager");
 
+        final boolean hasBusyBox = BusyBox.isAvailable();
         mBuildProp = (CustomPreference) findPreference("build_prop");
+        mBuildProp.setEnabled(hasBusyBox);
         mSysctlVm = (CustomPreference) findPreference("sysctl_vm");
+        mSysctlVm.setEnabled(hasBusyBox);
     }
 
     @Override public boolean onPreferenceTreeClick(final PreferenceScreen prefScreen, @NonNull final Preference preference) {

@@ -29,16 +29,18 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
-import alexander.martinz.libs.hardware.Emmc;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.preferences.CustomTogglePreference;
-import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
+
+import alexander.martinz.libs.execution.BusyBox;
+import alexander.martinz.libs.hardware.Emmc;
 
 public class FilesystemFragment extends AttachPreferenceFragment implements IoUtils.IoSchedulerListener, Preference.OnPreferenceChangeListener {
 
@@ -100,20 +102,15 @@ public class FilesystemFragment extends AttachPreferenceFragment implements IoUt
             getPreferenceScreen().removePreference(mSoftwareCrc);
         }
 
-        final boolean canBrickEmmc = Emmc.get().canBrick();
         mFstrim = (CustomTogglePreference) findPreference(TaskerConfig.FSTRIM);
-        if (canBrickEmmc) {
+        mFstrimInterval = (CustomListPreference) findPreference(TaskerConfig.FSTRIM_INTERVAL);
+        if (Emmc.get().canBrick() || !BusyBox.isAvailable()) {
             mFstrim.setEnabled(false);
+            mFstrimInterval.setEnabled(false);
         } else {
             mFstrim.setChecked(TaskerConfig.get().fstrimEnabled);
             mFstrim.setOnPreferenceChangeListener(this);
-        }
 
-        mFstrimInterval =
-                (CustomListPreference) findPreference(TaskerConfig.FSTRIM_INTERVAL);
-        if (canBrickEmmc) {
-            mFstrimInterval.setEnabled(false);
-        } else {
             mFstrimInterval.setValueIndex(getFstrim());
             mFstrimInterval.setOnPreferenceChangeListener(this);
         }
