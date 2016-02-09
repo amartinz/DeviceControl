@@ -125,7 +125,11 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.0'
 
     // see https://www.pollfish.com/android
-    compile 'com.pollfish:pollfish:4.1.0:googleplayRelease@aar'
+    if (true /* Google Play */) {
+        compile 'com.pollfish:pollfish:4.1.0:googleplayRelease@aar'
+    } else {
+        compile 'com.pollfish:pollfish:4.1.0:universalRelease@aar'
+    }
     compile 'com.google.android.gms:play-services-ads:8.4.0'
 
     // see https://github.com/pilgr/Paper
