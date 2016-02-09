@@ -41,6 +41,8 @@ public class DeviceConfig {
     public boolean perfCpuGovLock;
     public boolean perfCpuInfo;
 
+    public boolean ignoreDialogWarningBusyBox;
+    public boolean ignoreDialogWarningRoot;
     public boolean ignoreDialogWarningSuVersion;
 
     public boolean expertMode;

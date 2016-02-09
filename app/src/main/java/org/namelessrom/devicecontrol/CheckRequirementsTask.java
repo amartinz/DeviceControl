@@ -19,6 +19,7 @@ package org.namelessrom.devicecontrol;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -35,9 +36,10 @@ import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-import alexander.martinz.libs.execution.RootCheck;
 import alexander.martinz.libs.execution.BusyBox;
+import alexander.martinz.libs.execution.RootCheck;
 import alexander.martinz.libs.hardware.device.Device;
 
 public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
@@ -46,8 +48,8 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
     private final MainActivity mainActivity;
     private final boolean skipChecks;
 
+    private final ArrayList<Dialog> dialogs = new ArrayList<>();
     private final ProgressDialog progressDialog;
-    private AlertDialog alertDialog;
     private AlertDialog permissionDialog;
 
     public boolean hasRoot;
@@ -105,7 +107,7 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
     @Override protected void onPostExecute(Void result) {
         // actually skip that stuff
         if (skipChecks) {
-            letsGetItStarted(mainActivity);
+            letsGetItStarted();
             return;
         }
 
@@ -114,7 +116,15 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
             progressDialog.dismiss();
         }
 
-        if (hasRoot && hasBusyBox) {
+        final DeviceConfig deviceConfig = DeviceConfig.get();
+
+        // if we have root and got root granted ...
+        if (hasRoot && hasRootGranted) {
+            // ... check if we have busybox and throw a warning, if there is no busybox
+            if (!hasBusyBox && !deviceConfig.ignoreDialogWarningBusyBox) {
+                dialogs.add(buildBusyBoxDialog());
+            }
+
             boolean showSuWarning = true;
             if (!TextUtils.isEmpty(suVersion) && !"-".equals(suVersion)) {
                 final String suVersionCompare = suVersion.toUpperCase();
@@ -126,20 +136,18 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
             }
 
             if (showSuWarning) {
-                final DeviceConfig deviceConfig = DeviceConfig.get();
                 if (!deviceConfig.ignoreDialogWarningSuVersion) {
-                    alertDialog = showSuVersionWarning(mainActivity, suVersion);
-                    alertDialog.show();
-                    return;
+                    dialogs.add(buildSuVersionWarning(suVersion));
                 }
             }
-
-            letsGetItStarted(mainActivity);
-            return;
+        } else {
+            // ... else show the root warning dialog
+            if (!deviceConfig.ignoreDialogWarningRoot) {
+                dialogs.add(buildRootDialog());
+            }
         }
 
-        alertDialog = buildRequirementsDialog(hasRoot);
-        alertDialog.show();
+        letsGetItStarted();
     }
 
     private String getString(@StringRes final int resId) {
@@ -158,7 +166,7 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
         }
     };
 
-    private void letsGetItStarted(MainActivity mainActivity) {
+    private void letsGetItStarted() {
         Utils.startTaskerService(mainActivity);
 
         DeviceConfig deviceConfig = DeviceConfig.get();
@@ -172,48 +180,78 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
             Utils.patchSEPolicy(mainActivity);
         }
 
+        for (final Dialog dialog : dialogs) {
+            if (dialog != null) {
+                dialog.show();
+            }
+        }
+
         permissionDialog = showPermissionDialog(mainActivity);
         if (permissionDialog == null && mPostExecuteHook != null) {
             mainActivity.runOnUiThread(mPostExecuteHook);
         }
     }
 
-    private AlertDialog buildRequirementsDialog(final boolean hasRoot) {
-        final String statusText;
-        final String actionText;
-        if (!hasRoot) {
-            statusText = getString(R.string.app_warning_root, getString(R.string.app_name));
-            actionText = getString(R.string.more_information);
-        } else {
-            statusText = getString(R.string.app_warning_busybox, getString(R.string.app_name)) + "\n\n"
-                         + getString(R.string.app_warning_busybox_note);
-            actionText = getString(R.string.get_busybox);
-        }
+    private AlertDialog buildBusyBoxDialog() {
+        final String statusText = getString(R.string.warning_busybox) + "\n\n" + getString(R.string.warning_busybox_note);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
         builder.setTitle(R.string.missing_requirements);
         builder.setCancelable(false);
         builder.setMessage(statusText);
-        builder.setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.dialog_action_never_show_again, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
-                mainActivity.finish();
+                final DeviceConfig deviceConfig = DeviceConfig.get();
+                deviceConfig.ignoreDialogWarningBusyBox = true;
+                deviceConfig.save();
+
                 dialog.dismiss();
             }
         });
-        builder.setPositiveButton(actionText, new DialogInterface.OnClickListener() {
+        builder.setNeutralButton(R.string.ignore, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
-                if (!hasRoot) {
-                    String url = String.format("https://www.google.com/#q=how+to+root+%s", Device.get(mainActivity).model);
-                    ((Application) mainActivity.getApplicationContext()).getCustomTabsHelper().launchUrl(mainActivity, url);
-                } else {
-                    BusyBox.offerBusyBox(mainActivity);
-                }
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton(R.string.get_busybox, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                BusyBox.offerBusyBox(mainActivity);
             }
         });
         return builder.create();
     }
 
-    private AlertDialog showSuVersionWarning(final MainActivity mainActivity, String suVersion) {
+    private AlertDialog buildRootDialog() {
+        final String statusText = getString(R.string.warning_root) + "\n\n" + getString(R.string.warning_root_note);
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
+        builder.setTitle(R.string.missing_requirements);
+        builder.setCancelable(false);
+        builder.setMessage(statusText);
+        builder.setNegativeButton(R.string.dialog_action_never_show_again, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                final DeviceConfig deviceConfig = DeviceConfig.get();
+                deviceConfig.ignoreDialogWarningRoot = true;
+                deviceConfig.save();
+
+                dialog.dismiss();
+            }
+        });
+        builder.setNeutralButton(R.string.more_information, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                final String url = String.format("https://www.google.com/#q=how+to+root+%s", Device.get(mainActivity).model);
+                ((Application) mainActivity.getApplicationContext()).getCustomTabsHelper().launchUrl(mainActivity, url);
+            }
+        });
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        return builder.create();
+    }
+
+    private AlertDialog buildSuVersionWarning(String suVersion) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
         builder.setTitle(R.string.dialog_warning);
         builder.setMessage(getString(R.string.dialog_warning_su_version, suVersion));
@@ -224,13 +262,11 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
                 deviceConfig.save();
 
                 dialog.dismiss();
-                letsGetItStarted(mainActivity);
             }
         });
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                letsGetItStarted(mainActivity);
             }
         });
         return builder.create();
@@ -288,14 +324,20 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
     }
 
     public void destroy() {
-        if (alertDialog != null) {
-            alertDialog.dismiss();
-        }
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
         if (permissionDialog != null) {
             permissionDialog.dismiss();
+        }
+
+        final Iterator<Dialog> iterator = dialogs.iterator();
+        while (iterator.hasNext()) {
+            final Dialog dialog = iterator.next();
+            if (dialog != null) {
+                dialog.dismiss();
+            }
+            iterator.remove();
         }
     }
 }
