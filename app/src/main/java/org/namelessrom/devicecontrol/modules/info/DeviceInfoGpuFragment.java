@@ -17,7 +17,6 @@
 
 package org.namelessrom.devicecontrol.modules.info;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -48,25 +47,21 @@ public class DeviceInfoGpuFragment extends MaterialSupportPreferenceFragment {
         final MaterialPreferenceCategory gpuCategory = (MaterialPreferenceCategory) view.findViewById(R.id.cat_gpu);
         final MaterialPreferenceCategory openGlCategory = (MaterialPreferenceCategory) view.findViewById(R.id.cat_opengl);
 
-        AsyncTask.execute(new Runnable() {
-            @Override public void run() {
-                final ArrayList<String> glesInformation = OpenGlInformation.getOpenGLESInformation();
-                final int glesLength = glesInformation.size();
+        final ArrayList<String> glesInformation = OpenGlInformation.getOpenGLESInformation();
+        final int glesLength = glesInformation.size();
 
-                for (int i = 0; i < glesLength; i++) {
-                    final String summary = glesInformation.get(i);
-                    if (!TextUtils.isEmpty(summary)) {
-                        final String title = getString(OpenGlInformation.GL_STRINGS[i]);
-                        final boolean postOnGpu = (i < 2);
-                        view.post(new Runnable() {
-                            @Override public void run() {
-                                addPreference((postOnGpu ? gpuCategory : openGlCategory), title, summary);
-                            }
-                        });
+        for (int i = 0; i < glesLength; i++) {
+            final String summary = glesInformation.get(i);
+            if (!TextUtils.isEmpty(summary)) {
+                final String title = getString(OpenGlInformation.GL_STRINGS[i]);
+                final boolean postOnGpu = (i < 2);
+                view.post(new Runnable() {
+                    @Override public void run() {
+                        addPreference((postOnGpu ? gpuCategory : openGlCategory), title, summary);
                     }
-                }
+                });
             }
-        });
+        }
 
         GpuReader.getGpuInformation(getActivity(), new GpuInformationListener() {
             @Override public void onGpuInformation(@NonNull final GpuInformation gpuInfo) {

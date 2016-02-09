@@ -107,6 +107,14 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             super(v);
             cardView = (CardView) v.findViewById(R.id.card_view);
 
+            appIcon = (AppIconImageView) v.findViewById(R.id.app_icon);
+            appLabel = (TextView) v.findViewById(R.id.app_label);
+            packageName = (TextView) v.findViewById(R.id.app_package);
+            appVersion = (TextView) v.findViewById(R.id.app_version);
+
+            appSelector = (CheckBox) v.findViewById(R.id.app_selector);
+            appSelector.setOnCheckedChangeListener(this);
+
             container = (LinearLayout) v.findViewById(R.id.app_details_container);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 container.setOnTouchListener(new View.OnTouchListener() {
@@ -130,14 +138,6 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                 }
             });
             container.setOnLongClickListener(this);
-
-            appIcon = (AppIconImageView) v.findViewById(R.id.app_icon);
-            appLabel = (TextView) v.findViewById(R.id.app_label);
-            packageName = (TextView) v.findViewById(R.id.app_package);
-            appVersion = (TextView) v.findViewById(R.id.app_version);
-
-            appSelector = (CheckBox) v.findViewById(R.id.app_selector);
-            appSelector.setOnCheckedChangeListener(this);
         }
 
         public void bind(final AppItem appItem) {
