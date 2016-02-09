@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 public class Constants {
     private static final String TAG = Constants.class.getSimpleName();
@@ -36,28 +37,47 @@ public class Constants {
     public static final String KEY_LOW_END_GFX = "low_end_gfx";
     public static final String KEY_USE_SENSE360 = "use_sense360";
 
-    public static boolean canUseSense360(Context context) {
+    private static final String[] SENSE_360_COUNTRY_LIST = { "us" };
+    public static final int SENSE360_OK = 0;
+    public static final int SENSE360_NO = 1;
+    public static final int SENSE360_FAILED_DETECTION = 2;
+
+    public static int canUseSense360(Context context) {
         // always enable on debug builds
         if (BuildConfig.DEBUG) {
-            return true;
+            Logger.v(TAG, "canUseSense360: debug mode, returning true");
+            return SENSE360_OK;
         }
 
         final TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         if (telephonyManager != null) {
-            final String simCountryIso = telephonyManager.getSimCountryIso().toLowerCase();
+            String simCountryIso = telephonyManager.getSimCountryIso();
+            if (!TextUtils.isEmpty(simCountryIso)) {
+                simCountryIso = simCountryIso.trim().toLowerCase();
+            }
             Logger.v(TAG, "SimCountryIso: %s", simCountryIso);
-            // if we can get the sim country iso and have an US user, we are able to use Sense360
-            return "us".equals(simCountryIso);
+
+            // if we can get the sim country iso and have a whitelisted user, we are able to use Sense360
+            int returnCode = SENSE360_NO;
+            for (final String country : SENSE_360_COUNTRY_LIST) {
+                if (TextUtils.equals(country, simCountryIso)) {
+                    returnCode = SENSE360_OK;
+                    break;
+                }
+            }
+            Logger.v(TAG, "canUseSense360: %s", returnCode);
+            return returnCode;
         }
 
         // TODO: verify on non sim device
         // if we could not detect the sim country iso (no telephony devices) assume we can use it
-        return true;
+        Logger.v(TAG, "canUseSense360: detection failed, returning true");
+        return SENSE360_FAILED_DETECTION;
     }
 
     public static boolean useSense360(Context context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         // enable by default, if we can use sense360 and have not toggled the preference, it resolves in true
-        return prefs.getBoolean(KEY_USE_SENSE360, canUseSense360(context));
+        return prefs.getBoolean(KEY_USE_SENSE360, canUseSense360(context) == SENSE360_OK);
     }
 }

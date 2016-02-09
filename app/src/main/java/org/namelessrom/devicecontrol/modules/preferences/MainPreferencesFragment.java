@@ -80,7 +80,7 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         showPollfish.setChecked(configuration.showPollfish);
         showPollfish.setOnPreferenceChangeListener(this);
 
-        if (Constants.canUseSense360(context)) {
+        if (Constants.canUseSense360(context) == Constants.SENSE360_OK) {
             useSense360.setChecked(Constants.useSense360(context));
             useSense360.setOnPreferenceChangeListener(this);
             useSense360.setOnLongClickListener(new View.OnLongClickListener() {
