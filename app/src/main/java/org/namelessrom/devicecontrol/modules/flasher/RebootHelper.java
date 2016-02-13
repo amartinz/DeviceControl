@@ -22,6 +22,7 @@ package org.namelessrom.devicecontrol.modules.flasher;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.PowerManager;
@@ -31,6 +32,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.FlasherConfig;
@@ -38,18 +40,22 @@ import org.namelessrom.devicecontrol.modules.flasher.recovery.RecoveryInfo;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import javax.inject.Inject;
+
 import alexander.martinz.libs.execution.RootShell;
 
 public class RebootHelper {
-
     private RecoveryHelper mRecoveryHelper;
 
+    @Inject PowerManager powerManager;
+
     public RebootHelper(RecoveryHelper recoveryHelper) {
+        App.get().getAppComponent().inject(this);
+
         mRecoveryHelper = recoveryHelper;
     }
 
-    private void showBackupDialog(final Context context, final String[] items,
-            final boolean wipeData, final boolean wipeCaches) {
+    private void showBackupDialog(final Context context, final String[] items, final boolean wipeData, final boolean wipeCaches) {
         final double spaceLeft = IOUtils.get().getSpaceLeft();
         if (spaceLeft < 1.0) {
             AlertDialog.Builder alert = new AlertDialog.Builder(context);
@@ -58,30 +64,26 @@ public class RebootHelper {
                     R.string.alert_backup_space_message, 1.0));
 
             alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-
-                public void onClick(DialogInterface dialog, int whichButton) {
+                @Override public void onClick(DialogInterface dialog, int whichButton) {
                     dialog.dismiss();
 
                     reallyShowBackupDialog(context, items, wipeData, wipeCaches);
                 }
             });
 
-            alert.setNegativeButton(android.R.string.cancel,
-                    new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
+            alert.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
             alert.show();
         } else {
             reallyShowBackupDialog(context, items, wipeData, wipeCaches);
         }
     }
 
-    private void reallyShowBackupDialog(final Context context, final String[] items,
-            final boolean wipeData, final boolean wipeCaches) {
-
+    private void reallyShowBackupDialog(final Context context, final String[] items, final boolean wipeData,
+            final boolean wipeCaches) {
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
         alert.setTitle(R.string.alert_backup_title);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_backup,
@@ -108,8 +110,7 @@ public class RebootHelper {
         }
 
         alert.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int whichButton) {
+            @Override public void onClick(DialogInterface dialog, int whichButton) {
                 dialog.dismiss();
 
                 String text = input.getText().toString();
@@ -143,8 +144,7 @@ public class RebootHelper {
         });
 
         alert.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
+            @Override public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
@@ -168,8 +168,7 @@ public class RebootHelper {
         }
 
         alert.setPositiveButton(R.string.install_now, new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int whichButton) {
+            @Override public void onClick(DialogInterface dialog, int whichButton) {
                 dialog.dismiss();
                 if (backup) {
                     showBackupDialog(context, items, wipeData, wipeCaches);
@@ -180,8 +179,7 @@ public class RebootHelper {
         });
 
         alert.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
+            @Override public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
@@ -189,8 +187,10 @@ public class RebootHelper {
         alert.show();
     }
 
-    private void reboot(final Context context, final String[] items, final boolean wipeData,
-            final boolean wipeCaches, final String backupFolder, final String backupOptions) {
+    private void reboot(Context context, String[] items, boolean wipeData, boolean wipeCaches, String folder, String options) {
+        final ProgressDialog rebootDialog = showRebootProgressDialog(context);
+        rebootDialog.show();
+
         final int[] recoveries;
         final int flashType = FlasherConfig.get().recoveryType;
         if (FlasherConfig.RECOVERY_TYPE_CWM == flashType) {
@@ -211,25 +211,32 @@ public class RebootHelper {
                 files[i] = mRecoveryHelper.getRecoveryFilePath(recovery, items[i]);
             }
 
-            final String[] commands = mRecoveryHelper.getCommands(recovery, files, wipeData,
-                    wipeCaches, backupFolder, backupOptions);
+            final String[] commands = mRecoveryHelper.getCommands(recovery, files, wipeData, wipeCaches, folder, options);
             if (commands != null) {
                 for (final String s : commands) {
                     sb.append(s).append("\n");
                 }
             }
 
-            final String cmd = String.format("mkdir -p /cache/recovery/;\necho '%s' > '%s';\n",
-                    sb.toString(), file);
+            final String cmd = String.format("mkdir -p /cache/recovery/;\necho '%s' > '%s';\nsync;\n", sb.toString(), file);
             RootShell.fireAndBlock(cmd);
             Utils.setPermissions(file, "0644", android.os.Process.myUid(), 2001);
         }
 
         try {
-            ((PowerManager) context.getSystemService(Activity.POWER_SERVICE)).reboot("recovery");
+            powerManager.reboot("recovery");
         } catch (Exception exc) {
             Logger.e(this, "can not reboot using power manager", exc);
-            RootShell.fireAndForget("sync;reboot recovery;\n");
+            RootShell.fireAndBlock("sync;reboot recovery;\n");
         }
+    }
+
+    public static ProgressDialog showRebootProgressDialog(Context context) {
+        final ProgressDialog rebootDialog = new ProgressDialog(context);
+        rebootDialog.setTitle(R.string.rebooting);
+        rebootDialog.setMessage(context.getString(R.string.please_wait));
+        rebootDialog.setCancelable(false);
+        rebootDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        return rebootDialog;
     }
 }

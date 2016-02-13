@@ -37,6 +37,7 @@ import android.widget.RemoteViews;
 
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.modules.flasher.RebootHelper;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import alexander.martinz.libs.execution.RootShell;
@@ -157,11 +158,7 @@ public class RebootWidget extends AppWidgetProvider {
         }
 
         private void showRebootDialog(final String rebootCmd) {
-            rebootDialog = new ProgressDialog(this);
-            rebootDialog.setTitle(R.string.rebooting);
-            rebootDialog.setMessage(getString(R.string.please_wait));
-            rebootDialog.setCancelable(false);
-            rebootDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            rebootDialog = RebootHelper.showRebootProgressDialog(this);
 
             new AsyncTask<Void, Void, Void>() {
                 @Override protected void onPreExecute() {

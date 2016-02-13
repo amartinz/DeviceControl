@@ -17,7 +17,9 @@
  */
 package org.namelessrom.devicecontrol;
 
+import android.content.Context;
 import android.os.Environment;
+import android.os.PowerManager;
 
 import org.namelessrom.devicecontrol.utils.CustomTabsHelper;
 
@@ -60,6 +62,10 @@ public class AppModule {
 
     @Provides @Singleton CustomTabsHelper providesCustomTabsHelper() {
         return new CustomTabsHelper(app);
+    }
+
+    @Provides @Singleton PowerManager providesPowerManager() {
+        return (PowerManager) app.getSystemService(Context.POWER_SERVICE);
     }
 
 }
