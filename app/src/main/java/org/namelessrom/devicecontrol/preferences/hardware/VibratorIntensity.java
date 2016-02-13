@@ -32,7 +32,7 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
@@ -234,7 +234,7 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
 
     public static boolean isSupported() {
         if (paths == null) {
-            paths = Application.get().getStringArray(R.array.hardware_vibrator_paths);
+            paths = App.get().getStringArray(R.array.hardware_vibrator_paths);
         }
         return (Utils.fileExists(paths));
     }

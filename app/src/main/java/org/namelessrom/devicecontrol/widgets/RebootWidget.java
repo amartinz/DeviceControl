@@ -35,7 +35,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
@@ -95,11 +95,11 @@ public class RebootWidget extends AppWidgetProvider {
             super.onCreate(savedInstanceState);
 
             final String[] rebootOptions = new String[]{
-                    Application.get().getString(R.string.shutdown),
-                    Application.get().getString(R.string.reboot),
-                    Application.get().getString(R.string.hot_reboot),
-                    Application.get().getString(R.string.recovery),
-                    Application.get().getString(R.string.bootloader),
+                    App.get().getString(R.string.shutdown),
+                    App.get().getString(R.string.reboot),
+                    App.get().getString(R.string.hot_reboot),
+                    App.get().getString(R.string.recovery),
+                    App.get().getString(R.string.bootloader),
             };
 
             final Drawable powerDrawable = ContextCompat.getDrawable(this, R.drawable.ic_power_settings_new_white_24dp).mutate();

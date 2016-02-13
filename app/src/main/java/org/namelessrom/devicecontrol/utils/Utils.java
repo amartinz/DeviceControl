@@ -27,7 +27,7 @@ import android.os.BatteryManager;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
@@ -62,7 +62,7 @@ public class Utils {
     private static final String TAG = "Utils";
 
     private static final String[] BLACKLIST =
-            Application.get().getStringArray(R.array.file_black_list);
+            App.get().getStringArray(R.array.file_black_list);
     private static final String[] ENABLED_STATES = { "Y", "TRUE", "1", "255" };
 
     public static boolean isNameless(Context context) {
@@ -113,7 +113,7 @@ public class Utils {
         InputStreamReader reader = null;
         BufferedReader br = null;
         try {
-            htmlStream = Application.get().getAssets().open(path);
+            htmlStream = App.get().getAssets().open(path);
             reader = new InputStreamReader(htmlStream);
             br = new BufferedReader(reader);
             String line;
@@ -355,7 +355,7 @@ public class Utils {
             @Override public void onCommandCompleted(final int id, int exitcode) {
                 super.onCommandCompleted(id, exitcode);
                 final String result = getOutput();
-                Application.HANDLER.post(new Runnable() {
+                App.HANDLER.post(new Runnable() {
                     @Override public void run() {
                         if (listener != null) {
                             listener.onShellOutput(new ShellOutput(id, result));
@@ -387,7 +387,7 @@ public class Utils {
     }
 
     public static void toggleComponent(final ComponentName component, final boolean disable) {
-        final PackageManager pm = Application.get().getPackageManager();
+        final PackageManager pm = App.get().getPackageManager();
         if (pm != null) {
             pm.setComponentEnabledSetting(component,
                     (disable
@@ -470,7 +470,7 @@ public class Utils {
                 break;
         }
 
-        return Application.get().getString(health);
+        return App.get().getString(health);
     }
 
     public static void remount(final String path, final String mode) {

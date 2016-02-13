@@ -32,7 +32,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import org.namelessrom.devicecontrol.ActivityCallbacks;
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
@@ -115,18 +115,18 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
     @Override public void onResume() {
         super.onResume();
         if (mStatusHide != null && mStatusHide.isChecked()) {
-            CpuCoreMonitor.getInstance(Application.HANDLER).start(this, 750);
+            CpuCoreMonitor.getInstance(App.HANDLER).start(this, 750);
         }
         CpuReader.getCpuInformation(CpuSettingsFragment.this);
     }
 
     @Override public void onPause() {
         super.onPause();
-        CpuCoreMonitor.getInstance(Application.HANDLER).stop();
+        CpuCoreMonitor.getInstance(App.HANDLER).stop();
     }
 
     @Override public void onDestroy() {
-        CpuCoreMonitor.getInstance(Application.HANDLER).destroy();
+        CpuCoreMonitor.getInstance(App.HANDLER).destroy();
         super.onDestroy();
     }
 
@@ -166,9 +166,9 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             @Override public void onCheckedChanged(final CompoundButton button, final boolean b) {
                 if (b) {
                     mCpuInfo.setVisibility(View.VISIBLE);
-                    CpuCoreMonitor.getInstance(Application.HANDLER).start(CpuSettingsFragment.this, 750);
+                    CpuCoreMonitor.getInstance(App.HANDLER).start(CpuSettingsFragment.this, 750);
                 } else {
-                    CpuCoreMonitor.getInstance(Application.HANDLER).stop();
+                    CpuCoreMonitor.getInstance(App.HANDLER).stop();
                     mCpuInfo.setVisibility(View.GONE);
                 }
                 deviceConfig.perfCpuInfo = b;

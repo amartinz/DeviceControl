@@ -25,7 +25,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.device.SensorActivity;
 import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
@@ -47,7 +47,7 @@ public class DeviceInfoSensorFragment extends MaterialSupportPreferenceFragment 
         super.onViewCreated(view, savedInstanceState);
 
         final SensorManager sensorManager =
-                (SensorManager) Application.get().getSystemService(Context.SENSOR_SERVICE);
+                (SensorManager) App.get().getSystemService(Context.SENSOR_SERVICE);
 
         final MaterialPreference sensorTest =
                 (MaterialPreference) view.findViewById(R.id.sensor_test);

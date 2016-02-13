@@ -28,7 +28,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.DonationActivity;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
@@ -50,7 +50,7 @@ public class WelcomeFragment extends Fragment {
         translateButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 final Activity activity = getActivity();
-                ((Application) activity.getApplicationContext()).getCustomTabsHelper().launchUrl(activity, URL_TRANSLATION);
+                ((App) activity.getApplicationContext()).getCustomTabsHelper().launchUrl(activity, URL_TRANSLATION);
             }
         });
 

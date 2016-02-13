@@ -18,7 +18,7 @@ import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.models.WebServerConfig;
 import org.namelessrom.devicecontrol.services.WebServerService;
@@ -107,7 +107,7 @@ public class ServerWrapper {
         setupApi();
         Logger.v(this, "[!] Setup api");
 
-        mServer.directory(Application.get(), "/license", "license.html");
+        mServer.directory(App.get(), "/license", "license.html");
         Logger.v(this, "[!] Setup route: /license");
 
         mServer.get("/files", new HttpServerRequestCallback() {

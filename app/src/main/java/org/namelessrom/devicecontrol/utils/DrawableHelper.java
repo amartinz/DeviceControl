@@ -28,7 +28,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.theme.AppResources;
 
@@ -62,11 +62,11 @@ public class DrawableHelper {
 
     @Nullable public static Drawable getDrawable(@DrawableRes int drawableRes) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return Application.get().getDrawable(drawableRes);
+            return App.get().getDrawable(drawableRes);
         }
 
         //noinspection deprecation
-        return Application.get().getResources().getDrawable(drawableRes);
+        return App.get().getResources().getDrawable(drawableRes);
     }
 
     public static Bitmap drawableToBitmap(Drawable drawable) {

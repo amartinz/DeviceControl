@@ -5,7 +5,7 @@ import android.content.pm.PackageStats;
 import android.os.Parcel;
 import android.os.RemoteException;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 
 /**
@@ -49,7 +49,7 @@ public class PackageStatsObserver extends IPackageStatsObserver.Stub {
     @Override public void onGetStatsCompleted(final PackageStats pStats, final boolean success)
             throws RemoteException {
         Logger.v(this, "onGetStatsCompleted(): %s", success);
-        Application.HANDLER.post(new Runnable() {
+        App.HANDLER.post(new Runnable() {
             @Override
             public void run() {
                 packageStatsListener.onPackageStats(pStats);

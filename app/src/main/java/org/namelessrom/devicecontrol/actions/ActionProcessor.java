@@ -20,7 +20,7 @@ package org.namelessrom.devicecontrol.actions;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.cpu.CpuFreqMaxAction;
 import org.namelessrom.devicecontrol.actions.cpu.CpuFreqMinAction;
@@ -131,9 +131,9 @@ public class ActionProcessor {
     public static ArrayList<Entry> getTriggers() {
         final ArrayList<Entry> triggers = new ArrayList<>();
 
-        Entry e = new Entry(Application.get().getString(R.string.screen_off), TRIGGER_SCREEN_OFF);
+        Entry e = new Entry(App.get().getString(R.string.screen_off), TRIGGER_SCREEN_OFF);
         triggers.add(e);
-        e = new Entry(Application.get().getString(R.string.screen_on), TRIGGER_SCREEN_ON);
+        e = new Entry(App.get().getString(R.string.screen_on), TRIGGER_SCREEN_ON);
         triggers.add(e);
 
         return triggers;
@@ -143,13 +143,13 @@ public class ActionProcessor {
         final ArrayList<Entry> categories = new ArrayList<>();
 
         // CPU
-        categories.add(new Entry(Application.get().getString(R.string.cpu), CATEGORY_CPU));
+        categories.add(new Entry(App.get().getString(R.string.cpu), CATEGORY_CPU));
         // GPU
-        categories.add(new Entry(Application.get().getString(R.string.gpu), CATEGORY_GPU));
+        categories.add(new Entry(App.get().getString(R.string.gpu), CATEGORY_GPU));
         // Extras
-        categories.add(new Entry(Application.get().getString(R.string.extras), CATEGORY_EXTRAS));
+        categories.add(new Entry(App.get().getString(R.string.extras), CATEGORY_EXTRAS));
         // Filesystem
-        categories.add(new Entry(Application.get().getString(R.string.file_system), CATEGORY_FS));
+        categories.add(new Entry(App.get().getString(R.string.file_system), CATEGORY_FS));
 
         return categories;
     }
@@ -160,61 +160,61 @@ public class ActionProcessor {
 
         // CPU
         if (TextUtils.equals(CATEGORY_CPU, category)) {
-            actions.add(new Entry(Application.get().getString(R.string.frequency_max),
+            actions.add(new Entry(App.get().getString(R.string.frequency_max),
                     ACTION_CPU_FREQUENCY_MAX));
-            actions.add(new Entry(Application.get().getString(R.string.frequency_min),
+            actions.add(new Entry(App.get().getString(R.string.frequency_min),
                     ACTION_CPU_FREQUENCY_MIN));
-            actions.add(new Entry(Application.get().getString(R.string.governor),
+            actions.add(new Entry(App.get().getString(R.string.governor),
                     ACTION_CPU_GOVERNOR));
         }
         // GPU
         if (TextUtils.equals(CATEGORY_GPU, category)) {
             if (Utils.fileExists(GpuUtils.get().getGpuFreqMaxPath())) {
-                actions.add(new Entry(Application.get().getString(R.string.frequency_max),
+                actions.add(new Entry(App.get().getString(R.string.frequency_max),
                         ACTION_GPU_FREQUENCY_MAX));
             }
             if (Utils.fileExists(GpuUtils.get().getGpuFreqMinPath())) {
-                actions.add(new Entry(Application.get().getString(R.string.frequency_min),
+                actions.add(new Entry(App.get().getString(R.string.frequency_min),
                         ACTION_GPU_FREQUENCY_MIN));
             }
             if (Utils.fileExists(GpuUtils.get().getGpuGovPath())) {
-                actions.add(new Entry(Application.get().getString(R.string.governor),
+                actions.add(new Entry(App.get().getString(R.string.governor),
                         ACTION_GPU_GOVERNOR));
             }
             if (Utils.fileExists(GpuUtils.FILE_3D_SCALING)) {
-                actions.add(new Entry(Application.get().getString(R.string.gpu_3d_scaling),
+                actions.add(new Entry(App.get().getString(R.string.gpu_3d_scaling),
                         ACTION_3D_SCALING));
             }
         }
         // Extras
         if (TextUtils.equals(CATEGORY_EXTRAS, category)) {
             if (Utils.fileExists(KsmUtils.KSM_PATH)) {
-                if (Utils.fileExists(Application.get().getString(R.string.file_ksm_run))) {
-                    actions.add(new Entry(Application.get().getString(R.string.enable_ksm),
+                if (Utils.fileExists(App.get().getString(R.string.file_ksm_run))) {
+                    actions.add(new Entry(App.get().getString(R.string.enable_ksm),
                             ACTION_KSM_ENABLED));
                 }
-                if (Utils.fileExists(Application.get().getString(R.string.file_ksm_deferred))) {
-                    actions.add(new Entry(Application.get().getString(R.string.deferred_timer),
+                if (Utils.fileExists(App.get().getString(R.string.file_ksm_deferred))) {
+                    actions.add(new Entry(App.get().getString(R.string.deferred_timer),
                             ACTION_KSM_DEFERRED));
                 }
                 if (Utils.fileExists(KsmUtils.KSM_PAGES_TO_SCAN)) {
-                    actions.add(new Entry(Application.get().getString(R.string.pages_to_scan),
+                    actions.add(new Entry(App.get().getString(R.string.pages_to_scan),
                             ACTION_KSM_PAGES));
                 }
                 if (Utils.fileExists(KsmUtils.KSM_SLEEP)) {
-                    actions.add(new Entry(Application.get().getString(R.string.sleep_between_scans),
+                    actions.add(new Entry(App.get().getString(R.string.sleep_between_scans),
                             ACTION_KSM_SLEEP));
                 }
             }
             if (Utils.fileExists(MpDecisionAction.MPDECISION_PATH)) {
-                actions.add(new Entry(Application.get().getString(R.string.mpdecision),
+                actions.add(new Entry(App.get().getString(R.string.mpdecision),
                         ACTION_MPDECISION));
             }
         }
         // Filesystem
         if (TextUtils.equals(CATEGORY_FS, category)) {
-            actions.add(new Entry(Application.get().getString(R.string.io), ACTION_IO_SCHEDULER));
-            actions.add(new Entry(Application.get().getString(R.string.read_ahead),
+            actions.add(new Entry(App.get().getString(R.string.io), ACTION_IO_SCHEDULER));
+            actions.add(new Entry(App.get().getString(R.string.read_ahead),
                     ACTION_READ_AHEAD));
         }
 
@@ -278,8 +278,8 @@ public class ActionProcessor {
             }
         }else
         if (TextUtils.equals(ACTION_READ_AHEAD, action)) {
-            final String[] entries = Application.get().getStringArray(R.array.read_ahead_entries);
-            final String[] vals = Application.get().getStringArray(R.array.read_ahead_values);
+            final String[] entries = App.get().getStringArray(R.array.read_ahead_entries);
+            final String[] vals = App.get().getStringArray(R.array.read_ahead_values);
             for (int i = 0; i < entries.length; i++) {
                 values.add(new Entry(entries[i], vals[i]));
             }
@@ -380,8 +380,8 @@ public class ActionProcessor {
     }
 
     private static void addValuesOnOff(final ArrayList<Entry> values) {
-        values.add(new Entry(Application.get().getString(R.string.on), "1"));
-        values.add(new Entry(Application.get().getString(R.string.off), "0"));
+        values.add(new Entry(App.get().getString(R.string.on), "1"));
+        values.add(new Entry(App.get().getString(R.string.off), "0"));
     }
 
     public static void processAction(final String action, final String value) {

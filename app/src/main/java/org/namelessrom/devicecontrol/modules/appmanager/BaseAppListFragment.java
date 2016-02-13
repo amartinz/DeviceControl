@@ -42,7 +42,7 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.views.CustomRecyclerView;
 import org.namelessrom.devicecontrol.utils.SortHelper;
@@ -345,7 +345,7 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
 
     private class LoadApps extends AsyncTask<Void, Void, ArrayList<AppItem>> {
         @Override protected ArrayList<AppItem> doInBackground(Void... params) {
-            final PackageManager pm = Application.get().getPackageManager();
+            final PackageManager pm = App.get().getPackageManager();
             final ArrayList<AppItem> appList = new ArrayList<>();
             final List<PackageInfo> pkgInfos = pm.getInstalledPackages(0);
 

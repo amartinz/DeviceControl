@@ -8,12 +8,11 @@ import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityManagerCompat;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
@@ -58,7 +57,7 @@ public class AppResources {
     }
 
     public static int getColor(@ColorRes int colorResId) {
-        return Application.get().getColorApplication(colorResId);
+        return App.get().getColorApplication(colorResId);
     }
 
     public boolean isLowEndGfx(Context context) {
@@ -80,7 +79,7 @@ public class AppResources {
     }
 
     private Drawable getDrawable(@DrawableRes int drawableResId) {
-        return Application.get().getDrawableApplication(drawableResId);
+        return App.get().getDrawableApplication(drawableResId);
     }
 
     public boolean isLightTheme() {

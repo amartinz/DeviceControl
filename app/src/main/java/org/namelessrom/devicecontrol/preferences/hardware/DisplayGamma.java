@@ -36,7 +36,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
@@ -217,7 +217,7 @@ public class DisplayGamma extends DialogPreference {
     }
 
     public static boolean isSupported() {
-        return new DisplayGammaCalibration(Application.get()).isSupported();
+        return new DisplayGammaCalibration(App.get()).isSupported();
     }
 
     private static class SavedState extends BaseSavedState {

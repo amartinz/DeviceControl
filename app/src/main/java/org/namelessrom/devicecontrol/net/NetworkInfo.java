@@ -20,7 +20,7 @@ package org.namelessrom.devicecontrol.net;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -45,7 +45,7 @@ public class NetworkInfo {
     }
 
     public static String getWifiIp() {
-        final WifiManager wifiManager = (WifiManager) Application.get().getSystemService(Context.WIFI_SERVICE);
+        final WifiManager wifiManager = (WifiManager) App.get().getSystemService(Context.WIFI_SERVICE);
         int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
 
         final String formattedIp = String.format("%d.%d.%d.%d",

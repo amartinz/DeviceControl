@@ -32,7 +32,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
@@ -43,7 +43,7 @@ public class DeviceStatusView extends LinearLayout {
 
     private int mBatteryTemperature = 0;
     private String mBatteryExtra =
-            String.format(" - %s…", Application.get().getString(R.string.getting_information));
+            String.format(" - %s…", App.get().getString(R.string.getting_information));
 
     private boolean mIsAttached = false;
 

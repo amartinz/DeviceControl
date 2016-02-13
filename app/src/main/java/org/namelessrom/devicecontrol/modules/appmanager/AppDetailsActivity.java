@@ -55,7 +55,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
@@ -75,7 +75,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
     private static final int ANIM_DUR = 1000;
 
     private static final Handler mHandler = new Handler();
-    private final PackageManager mPm = Application.get().getPackageManager();
+    private final PackageManager mPm = App.get().getPackageManager();
 
     private AppItem mAppItem;
 
@@ -198,7 +198,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                 menu.removeItem(R.id.menu_action_play_store);
             }
             // prevent disabling Device Control
-            if (Application.get().getPackageName().equals(mAppItem.getPackageName())) {
+            if (App.get().getPackageName().equals(mAppItem.getPackageName())) {
                 menu.removeItem(R.id.menu_app_disable);
             }
 
@@ -310,7 +310,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         setupPermissionsView();
 
         // prevent uninstalling of Device Control
-        mUninstall.setEnabled(!TextUtils.equals(Application.get().getPackageName(), mAppItem.getPackageName()));
+        mUninstall.setEnabled(!TextUtils.equals(App.get().getPackageName(), mAppItem.getPackageName()));
 
         AppHelper.getSize(mPm, this, mAppItem.getPackageName());
         refreshAppControls();

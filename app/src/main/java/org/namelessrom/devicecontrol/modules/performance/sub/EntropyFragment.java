@@ -29,7 +29,7 @@ import android.view.View;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
@@ -52,7 +52,7 @@ import alexander.martinz.libs.execution.RootShell;
 public class EntropyFragment extends AttachPreferenceProgressFragment implements Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener {
     private static final String URL_RNG =
             "http://sourceforge.net/projects/namelessrom/files/romextras/binaries/rngd/download";
-    private static final File RNGD = new File(Application.get().getFilesDirectory(), "rngd");
+    private static final File RNGD = new File(App.get().getFilesDirectory(), "rngd");
 
     private CustomPreference mEntropyAvail;
     private AwesomeEditTextPreference mReadWakeupThreshold;

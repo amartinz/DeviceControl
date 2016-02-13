@@ -35,7 +35,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
@@ -137,7 +137,7 @@ public class SysctlEditorFragment extends BaseEditorFragment {
         mLoadingView.setVisibility(View.VISIBLE);
 
         final StringBuilder sb = new StringBuilder();
-        final String dn = Application.get().getFilesDirectory();
+        final String dn = App.get().getFilesDirectory();
 
         if (new File("/system/etc/sysctl.conf").exists()) {
             sb.append(Scripts.copyFile("/system/etc/sysctl.conf", dn + "/sysctl.conf"));
@@ -179,7 +179,7 @@ public class SysctlEditorFragment extends BaseEditorFragment {
                             @Override public void onClick(DialogInterface dialogInterface, int i) {
                                 Utils.remount("/system", "rw");
                                 Utils.getCommandResult(SysctlEditorFragment.this, APPLY,
-                                        Scripts.copyFile(Application.get().getFilesDirectory() + "/sysctl.conf", Scripts.SYSCTL));
+                                        Scripts.copyFile(App.get().getFilesDirectory() + "/sysctl.conf", Scripts.SYSCTL));
                                 dialogInterface.dismiss();
                                 Toast.makeText(activity, getString(R.string.toast_settings_applied), Toast.LENGTH_SHORT).show();
                             }
@@ -247,7 +247,7 @@ public class SysctlEditorFragment extends BaseEditorFragment {
         final Activity activity = getActivity();
         if (activity == null) { return; }
 
-        final String dn = Application.get().getFilesDirectory();
+        final String dn = App.get().getFilesDirectory();
         String title;
 
         final View editDialog = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_prop, null);

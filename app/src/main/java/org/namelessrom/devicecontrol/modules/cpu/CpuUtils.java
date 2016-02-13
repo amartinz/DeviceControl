@@ -20,7 +20,7 @@ package org.namelessrom.devicecontrol.modules.cpu;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
@@ -72,7 +72,7 @@ public class CpuUtils {
     }
 
     public int getCpuTemperature() {
-        String tmp = Utils.readOneLine(Application.get().getString(R.string.file_thermal_cpu));
+        String tmp = Utils.readOneLine(App.get().getString(R.string.file_thermal_cpu));
         if (!TextUtils.isEmpty(tmp) && !tmp.trim().isEmpty()) {
             int temp;
             try {

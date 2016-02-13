@@ -31,7 +31,7 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
@@ -43,8 +43,8 @@ public class DialogHelper {
             final String path, final String category) {
         if (activity == null) return;
 
-        final String cancel = Application.get().getString(android.R.string.cancel);
-        final String ok = Application.get().getString(android.R.string.ok);
+        final String cancel = App.get().getString(android.R.string.cancel);
+        final String ok = App.get().getString(android.R.string.ok);
         final View alphaDialog = LayoutInflater.from(activity)
                 .inflate(R.layout.dialog_seekbar, null, false);
 

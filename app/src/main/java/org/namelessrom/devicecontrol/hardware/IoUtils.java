@@ -20,7 +20,7 @@ package org.namelessrom.devicecontrol.hardware;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -137,7 +137,7 @@ public class IoUtils {
 
                 final String scheduler = tmpString;
                 final String[] availableSchedulers = tmpList.toArray(new String[tmpList.size()]);
-                Application.HANDLER.post(new Runnable() {
+                App.HANDLER.post(new Runnable() {
                     @Override public void run() {
                         listener.onIoScheduler(new IoScheduler(availableSchedulers, scheduler));
                     }

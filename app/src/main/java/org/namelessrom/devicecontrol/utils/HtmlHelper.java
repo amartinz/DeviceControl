@@ -21,7 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 
 import java.io.InputStream;
@@ -80,7 +80,7 @@ public class HtmlHelper {
 
     @Nullable private static InputStream loadPathInternal(final String path) {
         try {
-            return Application.get().getAssets().open(path);
+            return App.get().getAssets().open(path);
         } catch (Exception exc) {
             Logger.e(HtmlHelper.class, "loadPath", exc);
         }

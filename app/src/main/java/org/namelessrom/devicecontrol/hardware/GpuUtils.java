@@ -30,7 +30,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
@@ -103,7 +103,7 @@ public class GpuUtils {
 
     @Nullable public String getGpuBasePath() {
         if (gpuBasePath == null) {
-            final String[] paths = Application.get().getStringArray(R.array.hardware_gpu_base);
+            final String[] paths = App.get().getStringArray(R.array.hardware_gpu_base);
             for (final String s : paths) {
                 if (Utils.fileExists(s)) {
                     gpuBasePath = s;
@@ -120,7 +120,7 @@ public class GpuUtils {
     @Nullable public String getGpuGovPath() {
         if (gpuGovPath == null) {
             final String base = getGpuBasePath();
-            final String[] paths = Application.get().getStringArray(R.array.hardware_gpu_gov_path);
+            final String[] paths = App.get().getStringArray(R.array.hardware_gpu_gov_path);
             for (final String s : paths) {
                 if (Utils.fileExists(base + s)) {
                     gpuGovPath = base + s;
@@ -137,7 +137,7 @@ public class GpuUtils {
     @Nullable public String getGpuGovsAvailablePath() {
         if (gpuGovsAvailablePath == null) {
             final String base = getGpuBasePath();
-            final String[] paths = Application.get().getStringArray(R.array.hardware_gpu_govs_avail_path);
+            final String[] paths = App.get().getStringArray(R.array.hardware_gpu_govs_avail_path);
             for (final String s : paths) {
                 if (Utils.fileExists(base + s)) {
                     gpuGovsAvailablePath = base + s;
@@ -154,7 +154,7 @@ public class GpuUtils {
     @Nullable public String getGpuFreqsAvailPath() {
         if (gpuFreqsAvailPath == null) {
             final String base = getGpuBasePath();
-            final String[] paths = Application.get().getStringArray(R.array.hardware_gpu_freqs_avail);
+            final String[] paths = App.get().getStringArray(R.array.hardware_gpu_freqs_avail);
             for (final String s : paths) {
                 if (Utils.fileExists(base + s)) {
                     gpuFreqsAvailPath = base + s;
@@ -171,7 +171,7 @@ public class GpuUtils {
     @Nullable public String getGpuFreqMaxPath() {
         if (gpuFreqMaxPath == null) {
             final String base = getGpuBasePath();
-            final String[] paths = Application.get().getStringArray(R.array.hardware_gpu_freqs_max);
+            final String[] paths = App.get().getStringArray(R.array.hardware_gpu_freqs_max);
             for (final String s : paths) {
                 if (Utils.fileExists(base + s)) {
                     gpuFreqMaxPath = base + s;
@@ -188,7 +188,7 @@ public class GpuUtils {
     @Nullable public String getGpuFreqMinPath() {
         if (gpuFreqMinPath == null) {
             final String base = getGpuBasePath();
-            final String[] paths = Application.get().getStringArray(R.array.hardware_gpu_freqs_min);
+            final String[] paths = App.get().getStringArray(R.array.hardware_gpu_freqs_min);
             for (final String s : paths) {
                 if (Utils.fileExists(base + s)) {
                     gpuFreqMinPath = base + s;
@@ -302,7 +302,7 @@ public class GpuUtils {
 
     public static boolean isOpenGLES20Supported() {
         final ActivityManager am = (ActivityManager)
-                Application.get().getSystemService(Context.ACTIVITY_SERVICE);
+                App.get().getSystemService(Context.ACTIVITY_SERVICE);
         final ConfigurationInfo info = am.getDeviceConfigurationInfo();
         if (info == null) {
             // we could not get the configuration information, let's return false

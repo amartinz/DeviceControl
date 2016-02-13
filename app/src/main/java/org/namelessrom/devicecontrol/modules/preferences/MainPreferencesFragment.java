@@ -28,7 +28,7 @@ import android.view.View;
 
 import com.pollfish.main.PollFish;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
@@ -86,7 +86,7 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             useSense360.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override public boolean onLongClick(View v) {
                     final Activity activity = getActivity();
-                    Application.get(activity).getCustomTabsHelper().launchUrl(activity, Constants.URL_SENSE360);
+                    App.get(activity).getCustomTabsHelper().launchUrl(activity, Constants.URL_SENSE360);
                     return true;
                 }
             });

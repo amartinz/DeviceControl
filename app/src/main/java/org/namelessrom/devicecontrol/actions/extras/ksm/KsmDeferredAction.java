@@ -19,7 +19,7 @@ package org.namelessrom.devicecontrol.actions.extras.ksm;
 
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
@@ -64,7 +64,7 @@ public class KsmDeferredAction extends BaseAction {
             return;
         }
 
-        final String path = Application.get().getString(R.string.file_ksm_deferred);
+        final String path = App.get().getString(R.string.file_ksm_deferred);
         setBootup(path);
 
         RootShell.fireAndForget(new Command(Utils.getWriteCommand(path, value)));

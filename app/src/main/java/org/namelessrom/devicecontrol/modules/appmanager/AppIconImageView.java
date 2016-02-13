@@ -25,7 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
@@ -33,12 +33,15 @@ import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.RejectedExecutionException;
 
+import javax.inject.Inject;
+
+import hugo.weaving.DebugLog;
 import uk.co.senab.bitmapcache.BitmapLruCache;
 import uk.co.senab.bitmapcache.CacheableBitmapDrawable;
 import uk.co.senab.bitmapcache.CacheableImageView;
 
 public class AppIconImageView extends CacheableImageView {
-    private final BitmapLruCache mCache;
+    @Inject BitmapLruCache mCache;
 
     private ImageLoadTask mCurrentTask;
 
@@ -60,10 +63,10 @@ public class AppIconImageView extends CacheableImageView {
             mCache = null;
             return;
         }
-        mCache = Application.get(context).getBitmapCache();
+        ((App) context.getApplicationContext()).getAppComponent().inject(this);
     }
 
-    public boolean loadImage(AppItem appItem, OnImageLoadedListener listener) {
+    @DebugLog public boolean loadImage(AppItem appItem, OnImageLoadedListener listener) {
         // First check whether there's already a task running, if so cancel it
         if (null != mCurrentTask) {
             mCurrentTask.cancel(true);
@@ -76,7 +79,6 @@ public class AppIconImageView extends CacheableImageView {
         BitmapDrawable wrapper = mCache.getFromMemoryCache(pkgName);
 
         if (null != wrapper) {
-            Logger.v(this, "Setting image drawable from memory cache");
             // The cache has it, so just display it
             setImageDrawable(wrapper);
             return true;
@@ -107,8 +109,7 @@ public class AppIconImageView extends CacheableImageView {
         private final BitmapFactory.Options mDecodeOpts;
 
         ImageLoadTask(CacheableImageView imageView, AppItem appItem, BitmapLruCache cache,
-                BitmapFactory.Options decodeOpts,
-                OnImageLoadedListener listener) {
+                BitmapFactory.Options decodeOpts, OnImageLoadedListener listener) {
             mAppItem = appItem;
             mCache = cache;
             mContext = imageView.getContext();
@@ -117,8 +118,7 @@ public class AppIconImageView extends CacheableImageView {
             mDecodeOpts = decodeOpts;
         }
 
-        @Override
-        protected CacheableBitmapDrawable doInBackground(String... params) {
+        @DebugLog @Override protected CacheableBitmapDrawable doInBackground(String... params) {
             // Return early if the ImageView has disappeared.
             if (null == mImageViewRef.get()) {
                 return null;
@@ -131,10 +131,9 @@ public class AppIconImageView extends CacheableImageView {
             if (null == result) {
                 Logger.d(this, "Loading -> %s", pkgName);
 
-                Drawable drawable = mAppItem.getApplicationInfo()
-                        .loadIcon(mContext.getPackageManager());
-                Bitmap bitmap = DrawableHelper.drawableToBitmap(drawable);
-                InputStream is = DrawableHelper.bitmapToInputStream(bitmap);
+                final Drawable drawable = mAppItem.getApplicationInfo().loadIcon(mContext.getPackageManager());
+                final Bitmap bitmap = DrawableHelper.drawableToBitmap(drawable);
+                final InputStream is = DrawableHelper.bitmapToInputStream(bitmap);
 
                 // Add to cache
                 result = mCache.put(pkgName, is, mDecodeOpts);
@@ -145,8 +144,7 @@ public class AppIconImageView extends CacheableImageView {
             return result;
         }
 
-        @Override
-        protected void onPostExecute(CacheableBitmapDrawable result) {
+        @Override protected void onPostExecute(CacheableBitmapDrawable result) {
             super.onPostExecute(result);
 
             CacheableImageView iv = mImageViewRef.get();

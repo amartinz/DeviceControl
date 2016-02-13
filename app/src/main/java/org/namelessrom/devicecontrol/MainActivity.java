@@ -239,10 +239,10 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
                 if (splitted.length == 2) {
                     final String commitUrl = String.format(Constants.URL_GITHUB_DC_COMMITS_BASE, splitted[1]);
                     // preheat a bit
-                    ((Application) getApplicationContext()).getCustomTabsHelper().mayLaunchUrl(commitUrl);
+                    ((App) getApplicationContext()).getCustomTabsHelper().mayLaunchUrl(commitUrl);
                     footerContainer.setOnClickListener(new View.OnClickListener() {
                         @Override public void onClick(View v) {
-                            ((Application) getApplicationContext()).getCustomTabsHelper().launchUrl(MainActivity.this, commitUrl);
+                            ((App) getApplicationContext()).getCustomTabsHelper().launchUrl(MainActivity.this, commitUrl);
                         }
                     });
                 }
@@ -619,10 +619,10 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
                 break;
             //--------------------------------------------------------------------------------------
             case DeviceConstants.ID_APP_INFO_LICENSE:
-                ((Application) getApplicationContext()).getCustomTabsHelper().launchUrl(this, DeviceConstants.URL_DC_LICENSE);
+                ((App) getApplicationContext()).getCustomTabsHelper().launchUrl(this, DeviceConstants.URL_DC_LICENSE);
                 break;
             case DeviceConstants.ID_APP_INFO_PRIVACY:
-                ((Application) getApplicationContext()).getCustomTabsHelper().launchUrl(this, DeviceConstants.URL_DC_PRIVACY);
+                ((App) getApplicationContext()).getCustomTabsHelper().launchUrl(this, DeviceConstants.URL_DC_PRIVACY);
                 break;
         }
         restoreActionBar();

@@ -30,7 +30,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
@@ -123,7 +123,7 @@ public class DisplayColor extends DialogPreference {
         }
     }
 
-    public static boolean isSupported() { return new DisplayColorCalibration(Application.get()).isSupported(); }
+    public static boolean isSupported() { return new DisplayColorCalibration(App.get()).isSupported(); }
 
     private class ColorSeekBar implements SeekBar.OnSeekBarChangeListener {
         private int mIndex;

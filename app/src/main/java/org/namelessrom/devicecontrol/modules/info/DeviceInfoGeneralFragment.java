@@ -27,7 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
 import alexander.martinz.libs.hardware.Emmc;
 import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
@@ -159,7 +159,7 @@ public class DeviceInfoGeneralFragment extends MaterialSupportPreferenceFragment
             return true;
         } else if ("emmc_can_brick".equals(key)) {
             final Activity activity = getActivity();
-            ((Application) activity.getApplicationContext()).getCustomTabsHelper().launchUrl(activity, Emmc.BRICK_INFO_URL);
+            ((App) activity.getApplicationContext()).getCustomTabsHelper().launchUrl(activity, Emmc.BRICK_INFO_URL);
             return true;
         }
 

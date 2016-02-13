@@ -240,7 +240,7 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
         builder.setNeutralButton(R.string.more_information, new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
                 final String url = String.format("https://www.google.com/#q=how+to+root+%s", Device.get(mainActivity).model);
-                ((Application) mainActivity.getApplicationContext()).getCustomTabsHelper().launchUrl(mainActivity, url);
+                ((App) mainActivity.getApplicationContext()).getCustomTabsHelper().launchUrl(mainActivity, url);
             }
         });
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {

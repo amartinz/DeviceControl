@@ -22,7 +22,7 @@ package org.namelessrom.devicecontrol.modules.cpu.monitors;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -94,7 +94,7 @@ public class CpuStateMonitor {
 
         Collections.sort(mStates, Collections.reverseOrder());
 
-        Application.HANDLER.post(new Runnable() {
+        App.HANDLER.post(new Runnable() {
             @Override
             public void run() {
                 listener.onStates(new CpuUtils.State(mStates, getTotalStateTime(mStates)));

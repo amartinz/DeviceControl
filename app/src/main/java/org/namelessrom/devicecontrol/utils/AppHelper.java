@@ -28,7 +28,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 
-import org.namelessrom.devicecontrol.Application;
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.modules.appmanager.PackageStatsObserver;
 
@@ -200,7 +200,7 @@ public class AppHelper {
      */
     public static boolean isServiceRunning(final String serviceName) {
         final List<ActivityManager.RunningServiceInfo> services =
-                ((ActivityManager) Application.get().getSystemService(Context.ACTIVITY_SERVICE))
+                ((ActivityManager) App.get().getSystemService(Context.ACTIVITY_SERVICE))
                         .getRunningServices(Integer.MAX_VALUE);
 
         if (services != null) {
@@ -240,7 +240,7 @@ public class AppHelper {
      */
     public static boolean isPackageInstalled(final String packageName) {
         try {
-            Application.get().getPackageManager().getPackageInfo(packageName, 0);
+            App.get().getPackageManager().getPackageInfo(packageName, 0);
             return true;
         } catch (Exception e) {
             return false;
@@ -263,7 +263,7 @@ public class AppHelper {
         try {
             final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            Application.get().startActivity(i);
+            App.get().startActivity(i);
             return true;
         } catch (Exception exc) {
             Logger.e(AppHelper.class, exc.getMessage());
