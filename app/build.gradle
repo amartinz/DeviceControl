@@ -70,6 +70,7 @@ android {
 
     dexOptions {
         dexInProcess = true
+        javaMaxHeapSize "4g"
     }
 
     lintOptions {
