@@ -27,6 +27,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.pollfish.main.PollFish;
+import com.sense360.android.quinoa.lib.Sense360;
 
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Constants;
@@ -43,6 +44,7 @@ import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragm
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class MainPreferencesFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceChangeListener {
     // TODO: more customization
@@ -165,6 +167,15 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
 
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
             prefs.edit().putBoolean(Constants.KEY_USE_SENSE360, useSense360).commit();
+
+            if (useSense360) {
+                Timber.v("Starting Sense360");
+                Sense360.start(getContext().getApplicationContext());
+            } else {
+                Timber.v("Stopping Sense360");
+                Sense360.stop(getContext().getApplicationContext());
+            }
+
             return true;
         }
 
@@ -196,7 +207,7 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             deviceConfig.save();
 
             // reopen shells to switch context
-            Logger.i(this, "reopening shells");
+            Timber.v("reopening shells");
             ShellManager.get().cleanupShells();
             return true;
         } else if (extensiveLogging == preference) {

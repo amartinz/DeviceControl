@@ -124,7 +124,11 @@ public class BootUpReceiver extends BroadcastReceiver {
             App.HANDLER.removeCallbacks(sense360Runnable);
 
             if (Constants.useSense360(ctx)) {
+                Timber.v("Starting Sense360");
                 Sense360.start(ctx.getApplicationContext());
+            } else {
+                Timber.v("Stopping Sense360");
+                Sense360.stop(ctx.getApplicationContext());
             }
         }
     };

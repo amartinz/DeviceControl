@@ -155,11 +155,13 @@ dependencies {
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.5.1@aar'
 
     // Sense360
-    compile 'com.sense360:sense360-quinoa:2.0.3@aar'
+    compile 'com.sense360:sense360-quinoa:2.1.2@aar'
     compile 'com.google.android.gms:play-services-location:8.4.0'
-    compile 'com.google.android.gms:play-services-gcm:8.4.0'
-    compile 'com.google.guava:guava:18.0'
-    compile 'com.squareup.okhttp:okhttp:2.6.0'
+    compile('com.google.android.gms:play-services-gcm:8.4.0') {
+        exclude module: 'play-services-measurement'
+    }
+    compile 'com.google.code.gson:gson:2.5'
+    compile 'com.squareup.okhttp:okhttp:2.7.1'
 
     // Dagger 2
     // see https://github.com/google/dagger

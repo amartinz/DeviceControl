@@ -128,7 +128,11 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
         }
 
         if (Constants.useSense360(this)) {
+            Timber.v("Starting Sense360");
             Sense360.start(getApplicationContext());
+        } else {
+            Timber.v("Stopping Sense360");
+            Sense360.stop(getApplicationContext());
         }
     }
 
