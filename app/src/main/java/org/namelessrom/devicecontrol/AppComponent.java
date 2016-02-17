@@ -17,7 +17,6 @@
  */
 package org.namelessrom.devicecontrol;
 
-import org.namelessrom.devicecontrol.modules.appmanager.AppIconImageView;
 import org.namelessrom.devicecontrol.modules.flasher.RebootHelper;
 
 import javax.inject.Singleton;
@@ -28,7 +27,6 @@ import dagger.Component;
 public interface AppComponent {
     void inject(App app);
 
-    void inject(AppIconImageView appIconImageView);
     void inject(RebootHelper rebootHelper);
 
     void inject(Logger logger);

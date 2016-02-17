@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
@@ -32,8 +33,6 @@ import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.CustomTabsHelper;
 
 import java.io.File;
-
-import javax.inject.Inject;
 
 import alexander.martinz.libs.execution.ShellManager;
 import hugo.weaving.DebugLog;
@@ -52,8 +51,8 @@ public class App extends android.app.Application {
 
     private AppComponent appComponent;
 
-    @Inject BitmapLruCache bitmapLruCache;
-    @Inject CustomTabsHelper customTabsHelper;
+    private BitmapLruCache bitmapLruCache;
+    private CustomTabsHelper customTabsHelper;
 
     public static App get() {
         return App.sInstance;
@@ -106,7 +105,17 @@ public class App extends android.app.Application {
         return appComponent;
     }
 
+    public BitmapLruCache getBitmapLruCache() {
+        if (bitmapLruCache == null) {
+            bitmapLruCache = setupBitmapLruCache();
+        }
+        return bitmapLruCache;
+    }
+
     public CustomTabsHelper getCustomTabsHelper() {
+        if (customTabsHelper == null) {
+            customTabsHelper = new CustomTabsHelper(this);
+        }
         return customTabsHelper;
     }
 
@@ -136,6 +145,39 @@ public class App extends android.app.Application {
             final int gmsVersion = getResources().getInteger(R.integer.google_play_services_version);
             Timber.v("Google Play Services -> %s", gmsVersion);
         }
+    }
+
+    private BitmapLruCache setupBitmapLruCache() {
+        File cacheLocation = null;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            cacheLocation = new File(getExternalCacheDir(), "bitmapCache");
+
+            // if we can not read or write, use the internal storage for caches
+            try {
+                if (!cacheLocation.canRead() || !cacheLocation.canWrite()) {
+                    cacheLocation = null;
+                }
+            } catch (SecurityException sex) {
+                cacheLocation = null;
+                Timber.e(sex, "can not read or write directory");
+            }
+        }
+
+        if (cacheLocation == null) {
+            cacheLocation = new File(getFilesDir(), "bitmapCache");
+        }
+
+        try {
+            Timber.d("Setting up cache: %s\nNeed to create dirs: %s", cacheLocation.getAbsolutePath(), cacheLocation.mkdirs());
+        } catch (SecurityException sex) {
+            Timber.wtf(sex, "can not create directory");
+        }
+
+        final BitmapLruCache.Builder builder = new BitmapLruCache.Builder(this);
+        builder.setMemoryCacheEnabled(true).setMemoryCacheMaxSizeUsingHeapSize(0.25f);
+        builder.setDiskCacheEnabled(true).setDiskCacheLocation(cacheLocation);
+
+        return builder.build();
     }
 
     @SuppressLint("SdCardPath") public String getFilesDirectory() {
