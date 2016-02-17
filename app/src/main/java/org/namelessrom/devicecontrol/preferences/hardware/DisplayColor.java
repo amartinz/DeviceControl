@@ -31,7 +31,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
@@ -78,14 +78,19 @@ public class DisplayColor extends DialogPreference {
         super.onBindDialogView(view);
 
         mOriginalColors = displayColorCalibration.getCurColors();
-        mCurrentColors = mOriginalColors.split(" ");
+        if (mOriginalColors != null) {
+            mCurrentColors = mOriginalColors.split(" ");
+        }
 
         for (int i = 0; i < SEEKBAR_ID.length; i++) {
             SeekBar seekBar = (SeekBar) view.findViewById(SEEKBAR_ID[i]);
             TextView value = (TextView) view.findViewById(SEEKBAR_VALUE_ID[i]);
             ColorSeekBar colorSeekBar = new ColorSeekBar(seekBar, value, i);
             mSeekBars.add(colorSeekBar);
-            colorSeekBar.setValueFromString(mCurrentColors[i]);
+
+            if (mCurrentColors != null) {
+                colorSeekBar.setValueFromString(mCurrentColors[i]);
+            }
         }
     }
 

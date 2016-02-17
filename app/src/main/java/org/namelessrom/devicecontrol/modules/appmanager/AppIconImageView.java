@@ -36,6 +36,7 @@ import java.util.concurrent.RejectedExecutionException;
 import javax.inject.Inject;
 
 import hugo.weaving.DebugLog;
+import timber.log.Timber;
 import uk.co.senab.bitmapcache.BitmapLruCache;
 import uk.co.senab.bitmapcache.CacheableBitmapDrawable;
 import uk.co.senab.bitmapcache.CacheableImageView;
@@ -76,9 +77,8 @@ public class AppIconImageView extends CacheableImageView {
 
         // Check to see if the memory cache already has the bitmap. We can
         // safely do this on the main thread.
-        BitmapDrawable wrapper = mCache.getFromMemoryCache(pkgName);
-
-        if (null != wrapper) {
+        BitmapDrawable wrapper = ((mCache != null) ? mCache.getFromMemoryCache(pkgName) : null);
+        if (wrapper != null) {
             // The cache has it, so just display it
             setImageDrawable(wrapper);
             return true;
@@ -87,7 +87,6 @@ public class AppIconImageView extends CacheableImageView {
             setImageDrawable(null);
 
             mCurrentTask = new ImageLoadTask(this, appItem, mCache, null, listener);
-
             try {
                 mCurrentTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             } catch (RejectedExecutionException e) {
@@ -120,16 +119,18 @@ public class AppIconImageView extends CacheableImageView {
 
         @DebugLog @Override protected CacheableBitmapDrawable doInBackground(String... params) {
             // Return early if the ImageView has disappeared.
-            if (null == mImageViewRef.get()) {
+            if (mImageViewRef.get() != null) {
+                return null;
+            }
+            if (mCache == null) {
                 return null;
             }
             final String pkgName = mAppItem.getPackageName();
 
             // Now we're not on the main thread we can check all caches
             CacheableBitmapDrawable result = mCache.get(pkgName, mDecodeOpts);
-
-            if (null == result) {
-                Logger.d(this, "Loading -> %s", pkgName);
+            if (result != null) {
+                Timber.d("Loading -> %s", pkgName);
 
                 final Drawable drawable = mAppItem.getApplicationInfo().loadIcon(mContext.getPackageManager());
                 final Bitmap bitmap = DrawableHelper.drawableToBitmap(drawable);
@@ -138,7 +139,7 @@ public class AppIconImageView extends CacheableImageView {
                 // Add to cache
                 result = mCache.put(pkgName, is, mDecodeOpts);
             } else {
-                Logger.d(this, "Got from Cache -> %s", pkgName);
+                Timber.d("Got from Cache -> %s", pkgName);
             }
 
             return result;
@@ -148,11 +149,11 @@ public class AppIconImageView extends CacheableImageView {
             super.onPostExecute(result);
 
             CacheableImageView iv = mImageViewRef.get();
-            if (null != iv) {
+            if (iv != null) {
                 iv.setImageDrawable(result);
             }
 
-            if (null != mListener) {
+            if (mListener != null) {
                 mListener.onImageLoaded(result);
             }
         }

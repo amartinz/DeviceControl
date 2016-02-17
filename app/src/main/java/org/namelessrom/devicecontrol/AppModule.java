@@ -45,14 +45,30 @@ public class AppModule {
     }
 
     @Provides @Singleton BitmapLruCache providesBitmapLruCache() {
-        final File cacheLocation;
+        File cacheLocation = null;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             cacheLocation = new File(app.getExternalCacheDir(), "bitmapCache");
-        } else {
+
+            // if we can not read or write, use the internal storage for caches
+            try {
+                if (!cacheLocation.canRead() || !cacheLocation.canWrite()) {
+                    cacheLocation = null;
+                }
+            } catch (SecurityException sex) {
+                cacheLocation = null;
+                Timber.e(sex, "can not read or write directory");
+            }
+        }
+
+        if (cacheLocation == null) {
             cacheLocation = new File(app.getFilesDir(), "bitmapCache");
         }
 
-        Timber.d("Setting up cache: %s\nNeed to create dirs: %s", cacheLocation.getAbsolutePath(), cacheLocation.mkdirs());
+        try {
+            Timber.d("Setting up cache: %s\nNeed to create dirs: %s", cacheLocation.getAbsolutePath(), cacheLocation.mkdirs());
+        } catch (SecurityException sex) {
+            Timber.wtf(sex, "can not create directory");
+        }
 
         final BitmapLruCache.Builder builder = new BitmapLruCache.Builder(app);
         builder.setMemoryCacheEnabled(true).setMemoryCacheMaxSizeUsingHeapSize(0.25f);

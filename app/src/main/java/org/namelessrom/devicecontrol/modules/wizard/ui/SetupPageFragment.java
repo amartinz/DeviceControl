@@ -18,8 +18,8 @@
 
 package org.namelessrom.devicecontrol.modules.wizard.ui;
 
-import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,12 +62,12 @@ public abstract class SetupPageFragment extends Fragment {
         setUpPage();
     }
 
-    @Override public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof SetupDataCallbacks)) {
+    @Override public void onAttach(Context context) {
+        super.onAttach(context);
+        if (!(context instanceof SetupDataCallbacks)) {
             throw new ClassCastException("Activity must implement SetupDataCallbacks");
         }
-        mCallbacks = (SetupDataCallbacks) activity;
+        mCallbacks = (SetupDataCallbacks) context;
     }
 
     @Override public void onDetach() {
