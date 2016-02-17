@@ -18,4 +18,31 @@
  */
 package org.namelessrom.devicecontrol;
 
-public class Logger extends alexander.martinz.libs.logger.Logger { }
+import android.content.Context;
+import android.os.Vibrator;
+
+import javax.inject.Inject;
+
+public class Logger extends alexander.martinz.libs.logger.Logger {
+    public static Logger logger;
+
+    @Inject Vibrator vibrator;
+
+    private Logger(Context context) {
+        ((App) context.getApplicationContext()).getAppComponent().inject(this);
+    }
+
+    public static Logger get(Context context) {
+        if (logger == null) {
+            logger = new Logger(context);
+        }
+        return logger;
+    }
+
+    public void debugVibrate() {
+        if (BuildConfig.DEBUG) {
+            vibrator.cancel();
+            vibrator.vibrate(100);
+        }
+    }
+}

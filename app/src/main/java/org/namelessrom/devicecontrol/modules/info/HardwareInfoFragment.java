@@ -26,6 +26,7 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.info.hardware.FingerprintView;
+import org.namelessrom.devicecontrol.modules.info.hardware.GpsView;
 import org.namelessrom.devicecontrol.views.AttachFragment;
 
 import butterknife.Bind;
@@ -33,8 +34,8 @@ import butterknife.ButterKnife;
 import rx.functions.Action1;
 
 public class HardwareInfoFragment extends AttachFragment {
-
-    @Bind(R.id.hardware_fingerprint) FingerprintView hardwareFingerprint;
+    @Bind(R.id.hardware_fingerprint) FingerprintView fingerprintView;
+    @Bind(R.id.hardware_gps) GpsView gpsView;
 
     @Override protected int getFragmentId() { return DeviceConstants.ID_INFO_HARDWARE; }
 
@@ -53,24 +54,27 @@ public class HardwareInfoFragment extends AttachFragment {
         // use hardcoded string to support older apis as well
         final boolean fingerprintGranted = rxPermissions.isGranted("android.permission.USE_FINGERPRINT");
         if (fingerprintGranted) {
-            hardwareFingerprint.setSupported(true);
-            hardwareFingerprint.onResume();
+            fingerprintView.setSupported(true);
+            fingerprintView.onResume();
         } else {
-            hardwareFingerprint.setSupported(false);
+            fingerprintView.setSupported(false);
             rxPermissions.request("android.permission.USE_FINGERPRINT").subscribe(new Action1<Boolean>() {
                 @Override public void call(Boolean isGranted) {
                     if (isGranted) {
-                        hardwareFingerprint.setSupported(true);
-                        hardwareFingerprint.onResume();
+                        fingerprintView.setSupported(true);
+                        fingerprintView.onResume();
                     }
                 }
             });
         }
+
+        gpsView.onResume();
     }
 
     @Override public void onPause() {
         super.onPause();
-        hardwareFingerprint.onPause();
+        fingerprintView.onPause();
+        gpsView.onPause();
     }
 
 }

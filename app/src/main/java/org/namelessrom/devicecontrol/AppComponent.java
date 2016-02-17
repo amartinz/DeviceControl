@@ -31,6 +31,8 @@ public interface AppComponent {
     void inject(AppIconImageView appIconImageView);
     void inject(RebootHelper rebootHelper);
 
+    void inject(Logger logger);
+
     final class Initializer {
         static AppComponent init(final App app) {
             return DaggerAppComponent.builder()

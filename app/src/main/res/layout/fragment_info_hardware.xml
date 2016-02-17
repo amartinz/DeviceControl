@@ -32,4 +32,12 @@
         app:iconTint="?attr/colorAccent"
         app:title="@string/fingerprint" />
 
+    <org.namelessrom.devicecontrol.modules.info.hardware.GpsView
+        android:id="@+id/hardware_gps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_place_black_24dp"
+        app:iconTint="?attr/colorAccent"
+        app:title="@string/gps" />
+
 </LinearLayout>

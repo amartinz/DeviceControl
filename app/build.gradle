@@ -152,6 +152,8 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.1'
     // see https://github.com/tbruyelle/RxPermissions
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.5.1@aar'
+    // see https://github.com/mcharmas/Android-ReactiveLocation
+    compile 'pl.charmas.android:android-reactive-location:0.8@aar'
 
     // Sense360
     compile 'com.sense360:sense360-quinoa:2.1.2@aar'

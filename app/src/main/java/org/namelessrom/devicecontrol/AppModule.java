@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol;
 import android.content.Context;
 import android.os.Environment;
 import android.os.PowerManager;
+import android.os.Vibrator;
 
 import org.namelessrom.devicecontrol.utils.CustomTabsHelper;
 
@@ -83,6 +84,10 @@ public class AppModule {
 
     @Provides @Singleton PowerManager providesPowerManager() {
         return (PowerManager) app.getSystemService(Context.POWER_SERVICE);
+    }
+
+    @Provides @Singleton Vibrator providesVibrator() {
+        return (Vibrator) app.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
 }
