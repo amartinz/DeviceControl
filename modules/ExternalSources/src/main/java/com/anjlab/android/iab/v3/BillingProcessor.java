@@ -299,7 +299,9 @@ public class BillingProcessor extends BillingBase {
 			return false;
 		}
 		int responseCode = data.getIntExtra(Constants.RESPONSE_CODE, Constants.BILLING_RESPONSE_RESULT_OK);
-		Log.d(LOG_TAG, String.format("resultCode = %d, responseCode = %d", resultCode, responseCode));
+		if (Constants.DEBUG) {
+			Log.d(LOG_TAG, String.format("resultCode = %d, responseCode = %d", resultCode, responseCode));
+		}
 		String purchasePayload = getPurchasePayload();
 		if (resultCode == Activity.RESULT_OK && responseCode == Constants.BILLING_RESPONSE_RESULT_OK && !TextUtils.isEmpty(purchasePayload)) {
 			String purchaseData = data.getStringExtra(Constants.INAPP_PURCHASE_DATA);
