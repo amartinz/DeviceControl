@@ -8,8 +8,6 @@ fi
 
 echo "===== Cleaning ====="
 ${GRADLE_EXE} clean
-echo "===== Updating ====="
-${GRADLE_EXE} --refresh-dependencies
 echo "===== Building ====="
 ${GRADLE_EXE} assembleRelease
 echo "=====   DONE   ====="

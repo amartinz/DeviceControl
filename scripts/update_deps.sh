@@ -6,6 +6,6 @@ else
   source scripts/config.sh
 fi
 
-echo "===== Building ====="
-${GRADLE_EXE} assembleRelease
+echo "===== Updating ====="
+${GRADLE_EXE} assembleDebug --refresh-dependencies
 echo "=====   DONE   ====="
