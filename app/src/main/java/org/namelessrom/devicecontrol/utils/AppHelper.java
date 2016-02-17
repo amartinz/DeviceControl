@@ -48,8 +48,6 @@ import static org.namelessrom.devicecontrol.utils.ShellOutput.OnShellOutputListe
  * Helper class for application interactions like cleaning the cache
  */
 public class AppHelper {
-    private static final String TAG = "AppHelper";
-
     public static boolean preventOnResume = false;
 
     /**
