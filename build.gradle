@@ -1,5 +1,12 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    ext {
+        useGooglePlay = true
+        useLocalSources = false
+
+        gradleVersion = '2.0.0-beta5'
+    }
+
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
@@ -8,7 +15,7 @@ buildscript {
         flatDir { dirs 'aars' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-beta5'
+        classpath "com.android.tools.build:gradle:${rootProject.ext.gradleVersion}"
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
 
