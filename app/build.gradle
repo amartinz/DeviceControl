@@ -85,9 +85,6 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude '.readme'
     }
-
-    // until all third party packages got updated
-    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
