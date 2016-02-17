@@ -78,7 +78,6 @@ public class DisplayColor extends DialogPreference {
         super.onBindDialogView(view);
 
         mOriginalColors = displayColorCalibration.getCurColors();
-        Logger.v(this, "mOriginalColors -> %s", mOriginalColors);
         mCurrentColors = mOriginalColors.split(" ");
 
         for (int i = 0; i < SEEKBAR_ID.length; i++) {

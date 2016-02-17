@@ -28,12 +28,13 @@ import android.support.v4.app.NotificationCompat;
 
 import com.koushikdutta.async.AsyncServerSocket;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.WebServerConfig;
 import org.namelessrom.devicecontrol.net.NetworkInfo;
 import org.namelessrom.devicecontrol.net.ServerWrapper;
 import org.namelessrom.devicecontrol.theme.AppResources;
+
+import timber.log.Timber;
 
 public class WebServerService extends Service {
     public static final int NOTIFICATION_ONGOING = 7861;
@@ -108,19 +109,16 @@ public class WebServerService extends Service {
 
     @Override public int onStartCommand(final Intent intent, final int flags, final int startId) {
         if (intent == null || intent.getAction() == null || intent.getAction().isEmpty()) {
-            Logger.w(this, "intent or action is null or empty!");
             stopServer();
             return START_NOT_STICKY;
         }
         final String action = intent.getAction();
-        Logger.v(this, "action: " + action);
-
         if (ACTION_START.equals(action)) {
-            Logger.i(this, "creating server!");
+            Timber.v("creating server!");
             mServerWrapper = new ServerWrapper(this);
             mServerWrapper.createServer();
         } else {
-            Logger.i(this, "stopping service!");
+            Timber.v("stopping service!");
             stopServer();
         }
         return START_NOT_STICKY;

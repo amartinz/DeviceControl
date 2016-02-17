@@ -17,21 +17,11 @@
  */
 package org.namelessrom.devicecontrol.hardware;
 
-import android.app.ActivityManager;
-import android.content.Context;
-import android.content.pm.ConfigurationInfo;
-import android.opengl.EGL14;
-import android.opengl.EGLConfig;
-import android.opengl.EGLContext;
-import android.opengl.EGLDisplay;
-import android.opengl.EGLSurface;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
@@ -42,30 +32,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-import static android.opengl.GLES20.GL_EXTENSIONS;
-import static android.opengl.GLES20.GL_RENDERER;
-import static android.opengl.GLES20.GL_SHADING_LANGUAGE_VERSION;
-import static android.opengl.GLES20.GL_VENDOR;
-import static android.opengl.GLES20.GL_VERSION;
-import static android.opengl.GLES20.glGetString;
+import timber.log.Timber;
 
 public class GpuUtils {
-    public static final int[] GL_INFO = new int[]{
-            GL_VENDOR,                  // gpu vendor
-            GL_RENDERER,                // gpu renderer
-            GL_VERSION,                 // opengl version
-            GL_EXTENSIONS,              // opengl extensions
-            GL_SHADING_LANGUAGE_VERSION // shader language version
-    };
-
-    public static final int[] GL_STRINGS = new int[]{
-            R.string.hardware_gpu_vendor,        // gpu vendor
-            R.string.hardware_gpu_renderer,      // gpu renderer
-            R.string.hardware_opengl_version,    // opengl version
-            R.string.hardware_opengl_extensions, // opengl extensions
-            R.string.hardware_shader_version     // shader language version
-    };
-
     private static String gpuBasePath = null;
     private static String gpuGovPath = null;
     private static String gpuGovsAvailablePath = null;
@@ -81,8 +50,7 @@ public class GpuUtils {
         public final String min;
         public final String governor;
 
-        public Gpu(final String[] availFreqs, final String maxFreq, final String minFreq,
-                final String gov) {
+        public Gpu(final String[] availFreqs, final String maxFreq, final String minFreq, final String gov) {
             available = availFreqs;
             max = maxFreq;
             min = minFreq;
@@ -243,9 +211,9 @@ public class GpuUtils {
 
     public boolean containsGov(final String gov) {
         final String[] governors = GovernorUtils.get().getAvailableGpuGovernors();
-        if (governors == null) return false;
+        if (governors == null) { return false; }
         for (final String s : governors) {
-            if (gov.toLowerCase().equals(s.toLowerCase())) return true;
+            if (gov.toLowerCase().equals(s.toLowerCase())) { return true; }
         }
         return false;
     }
@@ -272,7 +240,7 @@ public class GpuUtils {
         try {
             mhzInt = Utils.parseInt(mhz);
         } catch (Exception exc) {
-            Logger.e(GpuUtils.get(), exc.getMessage());
+            Timber.e(exc.getMessage());
             mhzInt = 0;
         }
         return (String.valueOf(mhzInt / 1000000) + " MHz");
@@ -283,14 +251,14 @@ public class GpuUtils {
             try {
                 return String.valueOf(Utils.parseInt(mhzString.replace(" MHz", "")) * 1000000);
             } catch (Exception exc) {
-                Logger.e(GpuUtils.get(), exc.getMessage());
+                Timber.e(exc.getMessage());
             }
         }
         return "0";
     }
 
     @Nullable public static String[] freqsToMhz(final String[] frequencies) {
-        if (frequencies == null) return null;
+        if (frequencies == null) { return null; }
         final String[] names = new String[frequencies.length];
 
         for (int i = 0; i < frequencies.length; i++) {
@@ -298,83 +266,6 @@ public class GpuUtils {
         }
 
         return names;
-    }
-
-    public static boolean isOpenGLES20Supported() {
-        final ActivityManager am = (ActivityManager)
-                App.get().getSystemService(Context.ACTIVITY_SERVICE);
-        final ConfigurationInfo info = am.getDeviceConfigurationInfo();
-        if (info == null) {
-            // we could not get the configuration information, let's return false
-            return false;
-        }
-        final int glEsVersion = ((info.reqGlEsVersion & 0xffff0000) >> 16);
-        Logger.v("isOpenGLES20Supported", "glEsVersion: %s (%s)", glEsVersion,
-                info.getGlEsVersion());
-        return (glEsVersion >= 2);
-    }
-
-    @NonNull public static ArrayList<String> getOpenGLESInformation() {
-        final ArrayList<String> glesInformation = new ArrayList<>(GL_INFO.length);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // get a hold of the display and initialize
-            final EGLDisplay dpy = EGL14.eglGetDisplay(EGL14.EGL_DEFAULT_DISPLAY);
-            final int[] vers = new int[2];
-            EGL14.eglInitialize(dpy, vers, 0, vers, 1);
-
-            // find a suitable opengl config. since we do not render, we are not that strict
-            // about the exact attributes
-            final int[] configAttr = {
-                    EGL14.EGL_COLOR_BUFFER_TYPE, EGL14.EGL_RGB_BUFFER,
-                    EGL14.EGL_LEVEL, 0,
-                    EGL14.EGL_RENDERABLE_TYPE, EGL14.EGL_OPENGL_ES2_BIT,
-                    EGL14.EGL_SURFACE_TYPE, EGL14.EGL_PBUFFER_BIT,
-                    EGL14.EGL_NONE
-            };
-            final EGLConfig[] configs = new EGLConfig[1];
-            final int[] numConfig = new int[1];
-            EGL14.eglChooseConfig(dpy, configAttr, 0, configs, 0, 1, numConfig, 0);
-            if (numConfig[0] == 0) {
-                Logger.w("getOpenGLESInformation", "no config found! PANIC!");
-            }
-            final EGLConfig config = configs[0];
-
-            // we need a surface for our context, even if we do not render anything
-            // so let's create a little offset surface
-            final int[] surfAttr = {
-                    EGL14.EGL_WIDTH, 64,
-                    EGL14.EGL_HEIGHT, 64,
-                    EGL14.EGL_NONE
-            };
-            final EGLSurface surf = EGL14.eglCreatePbufferSurface(dpy, config, surfAttr, 0);
-
-            // finally let's create our context
-            final int[] ctxAttrib = { EGL14.EGL_CONTEXT_CLIENT_VERSION, 2, EGL14.EGL_NONE };
-            final EGLContext ctx =
-                    EGL14.eglCreateContext(dpy, config, EGL14.EGL_NO_CONTEXT, ctxAttrib, 0);
-
-            // set up everything, make the context our current context
-            EGL14.eglMakeCurrent(dpy, surf, surf, ctx);
-
-            // get the informations we desire
-            for (final int aGL_INFO : GpuUtils.GL_INFO) {
-                glesInformation.add(glGetString(aGL_INFO));
-            }
-
-            // free and destroy everything
-            EGL14.eglMakeCurrent(dpy, EGL14.EGL_NO_SURFACE, EGL14.EGL_NO_SURFACE,
-                    EGL14.EGL_NO_CONTEXT);
-            EGL14.eglDestroySurface(dpy, surf);
-            EGL14.eglDestroyContext(dpy, ctx);
-            EGL14.eglTerminate(dpy);
-        } else {
-            // ... no comment
-            for (final int aGL_INFO : GpuUtils.GL_INFO) {
-                glesInformation.add(glGetString(aGL_INFO));
-            }
-        }
-
-        return glesInformation;
     }
 
 }

@@ -32,9 +32,9 @@ import java.util.List;
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.Shell;
 import alexander.martinz.libs.execution.ShellManager;
+import timber.log.Timber;
 
 public class IoUtils {
-
     public static final String[] IO_SCHEDULER_PATH = {
             "/sys/block/mmcblk0/queue/scheduler",
             "/sys/block/mmcblk1/queue/scheduler"
@@ -93,58 +93,67 @@ public class IoUtils {
     public void getIoScheduler(final IoSchedulerListener listener) {
         final Shell shell;
         if (new File(IO_SCHEDULER_PATH[0]).canRead()) {
-            Logger.v(this, "Using normal shell!");
+            Timber.v("Using normal shell!");
             shell = ShellManager.get().getNormalShell();
         } else {
-            Logger.v(this, "Using root shell!");
+            Timber.v("Using root shell!");
             shell = ShellManager.get().getRootShell();
         }
 
         if (shell == null) {
-            Logger.e(this, "Could not open shell!");
+            Timber.e("Could not open shell!");
             return;
         }
 
         final String cmd = String.format("cat \"%s\" 2> /dev/null;", IO_SCHEDULER_PATH[0]);
-        final Command command = new Command(cmd) {
-            @Override public void onCommandCompleted(int id, int exitCode) {
-                super.onCommandCompleted(id, exitCode);
-
-                final String output = getOutput();
-                if (output == null) {
-                    return;
-                }
-
-                final List<String> result = Arrays.asList(output.split(" "));
-                if (result.isEmpty()) {
-                    return;
-                }
-
-                final List<String> tmpList = new ArrayList<>();
-                String tmpString = "";
-
-                for (final String s : result) {
-                    if (TextUtils.isEmpty(s)) {
-                        continue;
-                    }
-                    if (s.charAt(0) == '[') {
-                        tmpString = s.substring(1, s.length() - 1);
-                        tmpList.add(tmpString);
-                    } else {
-                        tmpList.add(s);
-                    }
-                }
-
-                final String scheduler = tmpString;
-                final String[] availableSchedulers = tmpList.toArray(new String[tmpList.size()]);
-                App.HANDLER.post(new Runnable() {
-                    @Override public void run() {
-                        listener.onIoScheduler(new IoScheduler(availableSchedulers, scheduler));
-                    }
-                });
-            }
-        };
+        final Command command = new IoCommand(cmd, listener);
         command.setOutputType(Command.OUTPUT_STRING);
         shell.add(command);
+    }
+
+    private static class IoCommand extends Command {
+        private final IoSchedulerListener listener;
+
+        public IoCommand(String cmd, IoSchedulerListener listener) {
+            super(cmd);
+            this.listener = listener;
+        }
+
+        @Override public void onCommandCompleted(int id, int exitCode) {
+            super.onCommandCompleted(id, exitCode);
+
+            final String output = getOutput();
+            if (output == null) {
+                return;
+            }
+
+            final List<String> result = Arrays.asList(output.split(" "));
+            if (result.isEmpty()) {
+                return;
+            }
+
+            final List<String> tmpList = new ArrayList<>();
+            String tmpString = "";
+
+            for (final String s : result) {
+                if (TextUtils.isEmpty(s)) {
+                    continue;
+                }
+                if (s.charAt(0) == '[') {
+                    tmpString = s.substring(1, s.length() - 1);
+                    tmpList.add(tmpString);
+                } else {
+                    tmpList.add(s);
+                }
+            }
+
+            final String scheduler = tmpString;
+            final String[] availableSchedulers = tmpList.toArray(new String[tmpList.size()]);
+            App.HANDLER.post(new Runnable() {
+                @Override public void run() {
+                    listener.onIoScheduler(new IoScheduler(availableSchedulers, scheduler));
+                }
+            });
+        }
     }
 }

@@ -21,13 +21,13 @@ package org.namelessrom.devicecontrol.models;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import io.paperdb.Paper;
+import timber.log.Timber;
 
 /**
  * Bootup configuration which auto serializes itself to a file
@@ -88,7 +88,7 @@ public class BootupConfig {
     public synchronized BootupConfig addItem(@NonNull BootupItem bootupItem) {
         deleteItem(bootupItem);
         items.add(bootupItem);
-        Logger.d(this, "added item -> %s", bootupItem.toString());
+        Timber.d("added item -> %s", bootupItem.toString());
         return this;
     }
 
@@ -98,7 +98,7 @@ public class BootupConfig {
             BootupItem item = iterator.next();
             if (bootupItem.equals(item)) {
                 iterator.remove();
-                Logger.d(this, "removed item -> %s", item.toString());
+                Timber.d("removed item -> %s", item.toString());
             }
         }
         return this;

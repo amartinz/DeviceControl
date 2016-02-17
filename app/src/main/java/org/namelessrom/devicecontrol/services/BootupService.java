@@ -18,36 +18,37 @@
 package org.namelessrom.devicecontrol.services;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
+import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.modules.device.DeviceFeatureFragment;
 import org.namelessrom.devicecontrol.modules.device.DeviceFeatureKernelFragment;
 import org.namelessrom.devicecontrol.modules.editor.SysctlFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.EntropyFragment;
 import org.namelessrom.devicecontrol.modules.performance.sub.VoltageFragment;
-import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
 
+import alexander.martinz.libs.execution.BusyBox;
 import alexander.martinz.libs.execution.RootCheck;
 import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.execution.ShellManager;
-import alexander.martinz.libs.execution.BusyBox;
+import hugo.weaving.DebugLog;
 import io.paperdb.Paper;
+import timber.log.Timber;
 
 public class BootupService extends IntentService {
-    private static final Object lockObject = new Object();
-
     public BootupService() {
         super("BootupService");
     }
@@ -62,14 +63,9 @@ public class BootupService extends IntentService {
     }
 
     @Override public void onDestroy() {
-        synchronized (lockObject) {
-            Logger.i(this, "closing shells");
-            try {
-                ShellManager.get().cleanupShells();
-            } catch (Exception e) {
-                Logger.e(this, String.format("onDestroy(): %s", e));
-            }
-        }
+        Timber.d("closing shells");
+        ShellManager.get().cleanupShells();
+
         super.onDestroy();
     }
 
@@ -78,7 +74,7 @@ public class BootupService extends IntentService {
 
         final DeviceConfig configuration = DeviceConfig.get();
         if (configuration.dcFirstStart) {
-            Logger.i(this, "First start not completed, exiting");
+            Timber.i("First start not completed, exiting");
             return;
         }
 
@@ -86,7 +82,7 @@ public class BootupService extends IntentService {
         // No Root, No Friends, That's Life ...
         //========================================================================================================================
         if (!RootCheck.isRooted()) {
-            Logger.e(this, "No Root, No Friends, That's Life ...");
+            Timber.e("No Root, No Friends, That's Life ...");
             return;
         }
 
@@ -94,126 +90,135 @@ public class BootupService extends IntentService {
         Utils.patchSEPolicy(this);
 
         final BootupConfig bootupConfig = BootupConfig.get();
-
-        int delay = bootupConfig.automatedRestorationDelay;
-        if (delay != 0) {
-            Logger.v(this, "Delaying bootup restoration by %s seconds", delay);
-            try {
-                Thread.sleep(delay * 1000);
-            } catch (Exception ignored) { }
-            Logger.v(this, "Done sleeping, starting the actual work");
+        final int delay = bootupConfig.automatedRestorationDelay;
+        if (delay > 0) {
+            Timber.v("Delaying bootup restoration by %s seconds", delay);
         }
-
-        //========================================================================================================================
-        // Tasker
-        //========================================================================================================================
-        TaskerConfig taskerConfig = TaskerConfig.get();
-        if (taskerConfig.fstrimEnabled) {
-            Logger.v(this, "Scheduling Tasker - FSTRIM");
-            AlarmHelper.setAlarmFstrim(this, taskerConfig.fstrimInterval);
-        }
-
-        //========================================================================================================================
-        // Fields For Reapplying
-        //========================================================================================================================
-        final StringBuilder sbCmd = new StringBuilder();
-        String cmd;
-
-        //========================================================================================================================
-        // Custom Shell Command
-        //========================================================================================================================
-        //sbCmd.append(PreferenceHelper.getString(CUSTOM_SHELL_COMMAND,"echo \"Hello world!\"")).append(";\n");
-
-        //========================================================================================================================
-        // Device
-        //========================================================================================================================
-        Logger.i(this, "----- DEVICE START -----");
-        cmd = DeviceFeatureFragment.restore(bootupConfig);
-        Logger.v(this, cmd);
-        sbCmd.append(cmd);
-        Logger.i(this, "----- DEVICE END -----");
-
-        //========================================================================================================================
-        // Performance
-        //========================================================================================================================
-        Logger.i(this, "----- CPU START -----");
-        cmd = CpuUtils.get().restore(bootupConfig);
-        Logger.v(this, cmd);
-        sbCmd.append(cmd);
-        Logger.i(this, "----- CPU END -----");
-
-        Logger.i(this, "----- GPU START -----");
-        cmd = GpuUtils.get().restore(bootupConfig);
-        Logger.v(this, cmd);
-        sbCmd.append(cmd);
-        Logger.i(this, "----- GPU END -----");
-
-        Logger.i(this, "----- EXTRAS START -----");
-        cmd = DeviceFeatureKernelFragment.restore(bootupConfig);
-        Logger.v(this, cmd);
-        sbCmd.append(cmd);
-        Logger.i(this, "----- EXTRAS END -----");
-
-        Logger.i(this, "----- VOLTAGE START -----");
-        // TODO: FULLY convert to bootup
-        cmd = VoltageFragment.restore(bootupConfig);
-        Logger.v(this, cmd);
-        sbCmd.append(cmd);
-        Logger.i(this, "----- VOLTAGE END -----");
-
-        //========================================================================================================================
-        // Tools
-        //========================================================================================================================
-        Logger.i(this, "----- TOOLS START -----");
-        cmd = SysctlFragment.restore(bootupConfig);
-        Logger.v(this, cmd);
-        sbCmd.append(cmd);
-        if (new File("/system/etc/sysctl.conf").exists()) {
-            sbCmd.append(BusyBox.callBusyBoxApplet("sysctl", "-p;"));
-        }
-
-        cmd = EntropyFragment.restore();
-        if (!TextUtils.isEmpty(cmd)) {
-            Logger.v(this, cmd);
-            sbCmd.append(cmd);
-        }
-        Logger.i(this, "----- TOOLS END -----");
-
-        Logger.i(this, "----- SPECIAL START -----");
-        cmd = restoreCategory(bootupConfig, BootupConfig.CATEGORY_INTELLI_HOTPLUG);
-        Logger.v(this, cmd);
-        sbCmd.append(cmd);
-
-        cmd = restoreCategory(bootupConfig, BootupConfig.CATEGORY_MAKO_HOTPLUG);
-        Logger.v(this, cmd);
-        sbCmd.append(cmd);
-        Logger.i(this, "----- SPECIAL END -----");
-
-        //========================================================================================================================
-        // Execute
-        //========================================================================================================================
-        cmd = sbCmd.toString();
-        Logger.v(this, "Starting bootup with cmd:\n%s", cmd);
-        if (!cmd.isEmpty()) {
-            RootShell.fireAndForget(cmd);
-        }
-        Logger.i(this, "Bootup Done!");
+        new Handler().postDelayed(new BootupRunnable(getApplicationContext(), bootupConfig), delay);
     }
 
-    private String restoreCategory(BootupConfig config, String category) {
-        final ArrayList<BootupItem> items = config.getItemsByCategory(category);
-        if (items.size() == 0) {
-            return "";
+    private static final class BootupRunnable implements Runnable {
+        private BootupConfig bootupConfig;
+        private Context context;
+
+        public BootupRunnable(Context context, BootupConfig bootupConfig) {
+            this.context = context;
+            this.bootupConfig = bootupConfig;
         }
 
-        final StringBuilder sbCmd = new StringBuilder();
-        for (final BootupItem item : items) {
-            if (!item.enabled) {
-                continue;
+        @DebugLog @Override public void run() {
+            //========================================================================================================================
+            // Tasker
+            //========================================================================================================================
+            final TaskerConfig taskerConfig = TaskerConfig.get();
+            if (taskerConfig.fstrimEnabled) {
+                Timber.v("Scheduling Tasker - FSTRIM");
+                AlarmHelper.setAlarmFstrim(context, taskerConfig.fstrimInterval);
             }
-            sbCmd.append(Utils.getWriteCommand(item.filename, item.value));
+
+            //========================================================================================================================
+            // Fields For Reapplying
+            //========================================================================================================================
+            final StringBuilder sbCmd = new StringBuilder();
+            String cmd;
+
+            //========================================================================================================================
+            // Custom Shell Command
+            //========================================================================================================================
+            //sbCmd.append(PreferenceHelper.getString(CUSTOM_SHELL_COMMAND,"echo \"Hello world!\"")).append(";\n");
+
+            //========================================================================================================================
+            // Device
+            //========================================================================================================================
+            Timber.v("----- DEVICE START -----");
+            cmd = DeviceFeatureFragment.restore(bootupConfig);
+            Timber.v(cmd);
+            sbCmd.append(cmd);
+            Timber.v("----- DEVICE END -----");
+
+            //========================================================================================================================
+            // Performance
+            //========================================================================================================================
+            Timber.v("----- CPU START -----");
+            cmd = CpuUtils.get().restore(bootupConfig);
+            Timber.v(cmd);
+            sbCmd.append(cmd);
+            Timber.v("----- CPU END -----");
+
+            Timber.v("----- GPU START -----");
+            cmd = GpuUtils.get().restore(bootupConfig);
+            Timber.v(cmd);
+            sbCmd.append(cmd);
+            Timber.v("----- GPU END -----");
+
+            Timber.v("----- EXTRAS START -----");
+            cmd = DeviceFeatureKernelFragment.restore(bootupConfig);
+            Timber.v(cmd);
+            sbCmd.append(cmd);
+            Timber.v("----- EXTRAS END -----");
+
+            Timber.v("----- VOLTAGE START -----");
+            // TODO: FULLY convert to bootup
+            cmd = VoltageFragment.restore(bootupConfig);
+            Timber.v(cmd);
+            sbCmd.append(cmd);
+            Timber.v("----- VOLTAGE END -----");
+
+            //========================================================================================================================
+            // Tools
+            //========================================================================================================================
+            Timber.v("----- TOOLS START -----");
+            cmd = SysctlFragment.restore(bootupConfig);
+            Timber.v(cmd);
+            sbCmd.append(cmd);
+            if (new File("/system/etc/sysctl.conf").exists()) {
+                sbCmd.append(BusyBox.callBusyBoxApplet("sysctl", "-p;"));
+            }
+
+            cmd = EntropyFragment.restore();
+            if (!TextUtils.isEmpty(cmd)) {
+                Timber.v(cmd);
+                sbCmd.append(cmd);
+            }
+            Timber.v("----- TOOLS END -----");
+
+            Timber.v("----- SPECIAL START -----");
+            cmd = restoreCategory(bootupConfig, BootupConfig.CATEGORY_INTELLI_HOTPLUG);
+            Timber.v(cmd);
+            sbCmd.append(cmd);
+
+            cmd = restoreCategory(bootupConfig, BootupConfig.CATEGORY_MAKO_HOTPLUG);
+            Timber.v(cmd);
+            sbCmd.append(cmd);
+            Timber.v("----- SPECIAL END -----");
+
+            //========================================================================================================================
+            // Execute
+            //========================================================================================================================
+            cmd = sbCmd.toString();
+            Timber.v("Starting bootup with cmd:\n%s", cmd);
+            if (!cmd.isEmpty()) {
+                RootShell.fireAndBlock(cmd);
+            }
+
+            Timber.v("Bootup Done!");
         }
 
-        return sbCmd.toString();
+        private String restoreCategory(BootupConfig config, String category) {
+            final ArrayList<BootupItem> items = config.getItemsByCategory(category);
+            if (items.size() == 0) {
+                return "";
+            }
+
+            final StringBuilder sbCmd = new StringBuilder();
+            for (final BootupItem item : items) {
+                if (!item.enabled) {
+                    continue;
+                }
+                sbCmd.append(Utils.getWriteCommand(item.filename, item.value));
+            }
+
+            return sbCmd.toString();
+        }
     }
 }

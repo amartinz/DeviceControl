@@ -28,7 +28,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
@@ -51,18 +51,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import alexander.martinz.libs.execution.BusyBox;
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.NormalShell;
 import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.execution.BusyBox;
+import timber.log.Timber;
 
 import static org.namelessrom.devicecontrol.utils.ShellOutput.OnShellOutputListener;
 
 public class Utils {
-    private static final String TAG = "Utils";
-
-    private static final String[] BLACKLIST =
-            App.get().getStringArray(R.array.file_black_list);
+    private static final String[] BLACKLIST = App.get().getStringArray(R.array.file_black_list);
     private static final String[] ENABLED_STATES = { "Y", "TRUE", "1", "255" };
 
     public static boolean isNameless(Context context) {
@@ -151,9 +149,9 @@ public class Utils {
                 return ((trim && value != null) ? value.trim() : value);
             } catch (Exception e) {
                 if (e instanceof FileNotFoundException) {
-                    Logger.w(TAG, "file exists but can not be read, trying with root");
+                    Timber.v("file exists but can not be read, trying with root");
                 } else {
-                    Logger.e(TAG, "could not read file: " + sFile, e);
+                    Timber.e(e, "could not read file: %s", sFile);
                 }
                 return readFileViaShell(sFile, true);
             } finally {
@@ -161,7 +159,7 @@ public class Utils {
                 Utils.closeQuietly(fileReader);
             }
         } else {
-            Logger.w(TAG, "File does not exist or is not readable -> %s", sFile);
+            Timber.v("File does not exist or is not readable -> %s", sFile);
         }
         return null;
     }
@@ -193,7 +191,7 @@ public class Utils {
                 Utils.closeQuietly(reader);
             }
         } else {
-            Logger.w(TAG, "File does not exist or is not readable -> %s", sFile);
+            Timber.v("File does not exist or is not readable -> %s", sFile);
         }
         return null;
     }
@@ -306,9 +304,9 @@ public class Utils {
 
     public static String[] listFiles(final String path, final String[] blacklist) {
         final String output = RootShell.fireAndBlockStringNewline(String.format("ls %s", path));
-        Logger.v(Utils.class, "listFiles --> output: %s", output);
+        Timber.v("listFiles --> output: %s", output);
         if (TextUtils.isEmpty(output)) {
-            return new String[0];
+            return Constants.EMPTY_STRINGS;
         }
 
         final String[] files = output.trim().split("\n");
@@ -338,7 +336,7 @@ public class Utils {
             return "";
         }
         final String[] splitted = path.trim().split("/");
-        Logger.v(Utils.class, "getFileName(%s) --> %s", path, splitted[splitted.length - 1]);
+        Timber.v("getFileName(%s) --> %s", path, splitted[splitted.length - 1]);
         return splitted[splitted.length - 1];
     }
 
@@ -355,13 +353,7 @@ public class Utils {
             @Override public void onCommandCompleted(final int id, int exitcode) {
                 super.onCommandCompleted(id, exitcode);
                 final String result = getOutput();
-                App.HANDLER.post(new Runnable() {
-                    @Override public void run() {
-                        if (listener != null) {
-                            listener.onShellOutput(new ShellOutput(id, result));
-                        }
-                    }
-                });
+                App.HANDLER.post(new CommandListenerRunnable(listener, id, result));
             }
         };
         if (NEWLINE) {
@@ -494,19 +486,8 @@ public class Utils {
         activity.startActivity(activity.getIntent());
     }
 
-    public static int tryParse(final String parse, final int def) {
-        try { return Utils.parseInt(parse); } catch (Exception exc) { return def; }
-    }
-
     public static Integer tryValueOf(final String value, final int def) {
         try { return Integer.valueOf(value); } catch (Exception exc) { return def; }
-    }
-
-    public static String humanReadableKiloByteCount(final long kilobytes) {
-        if (kilobytes < 1024) { return kilobytes + " kB"; }
-        final int exp = (int) (Math.log(kilobytes) / Math.log(1024));
-        return String.format("%.0f %sB", kilobytes / Math.pow(1024, exp),
-                String.valueOf("MGTPE".charAt(exp - 1)));
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -526,7 +507,7 @@ public class Utils {
             if (integer != null) { integer = integer.trim(); }
             return Integer.parseInt(integer);
         } catch (NumberFormatException exc) {
-            Logger.e("Utils", String.format("parseInt(%s, %s)", integer, def), exc);
+            Timber.e(exc, "parseInt(%s, %s)", integer, def);
             return def;
         }
     }
@@ -556,5 +537,23 @@ public class Utils {
         }
 
         RootShell.fireAndForget(sb.toString());
+    }
+
+    private static class CommandListenerRunnable implements Runnable {
+        private final OnShellOutputListener listener;
+        private final int id;
+        private final String result;
+
+        public CommandListenerRunnable(OnShellOutputListener listener, int id, String result) {
+            this.listener = listener;
+            this.id = id;
+            this.result = result;
+        }
+
+        @Override public void run() {
+            if (listener != null) {
+                listener.onShellOutput(new ShellOutput(id, result));
+            }
+        }
     }
 }

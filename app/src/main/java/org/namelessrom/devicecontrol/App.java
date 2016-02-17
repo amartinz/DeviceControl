@@ -19,7 +19,6 @@ package org.namelessrom.devicecontrol;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -27,6 +26,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.WorkerThread;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.CustomTabsHelper;
@@ -38,13 +38,17 @@ import javax.inject.Inject;
 import alexander.martinz.libs.execution.ShellManager;
 import hugo.weaving.DebugLog;
 import io.paperdb.Paper;
+import timber.log.Timber;
 import uk.co.senab.bitmapcache.BitmapLruCache;
 
 // XXX: DO NOT USE ROOT HERE! NEVER!
 public class App extends android.app.Application {
     public static final Handler HANDLER = new Handler();
 
+    private static final Timber.Tree DEBUG_TREE = new Timber.DebugTree();
+
     private static App sInstance;
+    private static boolean enableDebug;
 
     private AppComponent appComponent;
 
@@ -75,6 +79,11 @@ public class App extends android.app.Application {
             buildComponentAndInject();
 
             // force enable logger until we hit the user preference
+            if (BuildConfig.DEBUG) {
+                Timber.plant(DEBUG_TREE);
+            } else {
+                Timber.plant(new AwesomeTree());
+            }
             Logger.setEnabled(true);
             ShellManager.enableDebug(true);
 
@@ -103,26 +112,29 @@ public class App extends android.app.Application {
 
     @WorkerThread private void setupEverythingAsync() {
         final DeviceConfig deviceConfig = DeviceConfig.get();
+        App.enableDebug = deviceConfig.extensiveLogging;
+
         if (deviceConfig.debugStrictMode) {
             Logger.setStrictModeEnabled(true);
         }
 
-        Logger.setEnabled(deviceConfig.extensiveLogging);
-        ShellManager.enableDebug(deviceConfig.extensiveLogging);
+        Logger.setEnabled(App.enableDebug);
+        ShellManager.enableDebug(App.enableDebug);
+
+        Timber.d("Enable debug: %s", App.enableDebug);
 
         final String basePath = getFilesDirectory();
         final String[] dirList = new String[]{ basePath + DeviceConstants.DC_LOG_DIR };
         for (final String s : dirList) {
             final File dir = new File(s);
             if (!dir.exists()) {
-                Logger.v(this, String.format("setupDirectories: creating %s -> %s", s, dir.mkdirs()));
+                Timber.v("setupDirectories: creating %s -> %s", s, dir.mkdirs());
             }
         }
 
-        if (Logger.getEnabled()) {
-            final Resources res = getResources();
-            final int gmsVersion = res.getInteger(R.integer.google_play_services_version);
-            Logger.i(this, "Google Play Services -> %s", gmsVersion);
+        if (BuildConfig.DEBUG || App.enableDebug) {
+            final int gmsVersion = getResources().getInteger(R.integer.google_play_services_version);
+            Timber.v("Google Play Services -> %s", gmsVersion);
         }
     }
 
@@ -147,4 +159,21 @@ public class App extends android.app.Application {
         return getResources().getStringArray(resId);
     }
 
+    public static void setEnableDebug(boolean enableDebug) {
+        App.enableDebug = enableDebug;
+    }
+
+    public static boolean getEnableDebug() {
+        return App.enableDebug;
+    }
+
+    private static class AwesomeTree extends Timber.DebugTree {
+        @Override protected void log(int priority, String tag, String message, Throwable t) {
+            if (!App.enableDebug && (priority == Log.VERBOSE || priority == Log.DEBUG || priority == Log.INFO)) {
+                return;
+            }
+
+            super.log(priority, tag, message, t);
+        }
+    }
 }

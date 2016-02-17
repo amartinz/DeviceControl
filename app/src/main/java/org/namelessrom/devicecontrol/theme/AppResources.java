@@ -14,9 +14,10 @@ import android.view.LayoutInflater;
 
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Constants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
+
+import timber.log.Timber;
 
 public class AppResources {
     private static AppResources sInstance;
@@ -67,7 +68,7 @@ public class AppResources {
 
             final boolean isLowEndGfx = ActivityManagerCompat.isLowRamDevice(am);
             final boolean setLowEndGfx = prefs.getBoolean(Constants.KEY_LOW_END_GFX, isLowEndGfx);
-            Logger.d(this, "isLowEndGfx: %s | setLowEndGfx: %s", isLowEndGfx, setLowEndGfx);
+            Timber.d("isLowEndGfx: %s | setLowEndGfx: %s", isLowEndGfx, setLowEndGfx);
 
             this.isLowEndGfx = setLowEndGfx;
         }

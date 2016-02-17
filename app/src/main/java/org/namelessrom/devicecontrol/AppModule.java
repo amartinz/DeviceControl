@@ -29,6 +29,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import timber.log.Timber;
 import uk.co.senab.bitmapcache.BitmapLruCache;
 
 @Module
@@ -51,7 +52,7 @@ public class AppModule {
             cacheLocation = new File(app.getFilesDir(), "bitmapCache");
         }
 
-        Logger.d(this, "Setting up cache: %s\nNeed to create dirs: %s", cacheLocation.getAbsolutePath(), cacheLocation.mkdirs());
+        Timber.d("Setting up cache: %s\nNeed to create dirs: %s", cacheLocation.getAbsolutePath(), cacheLocation.mkdirs());
 
         final BitmapLruCache.Builder builder = new BitmapLruCache.Builder(app);
         builder.setMemoryCacheEnabled(true).setMemoryCacheMaxSizeUsingHeapSize(0.25f);

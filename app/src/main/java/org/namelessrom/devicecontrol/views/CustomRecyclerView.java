@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
-import org.namelessrom.devicecontrol.Logger;
+import timber.log.Timber;
 
 public class CustomRecyclerView extends RecyclerView {
     public CustomRecyclerView(Context context) {
@@ -20,6 +20,6 @@ public class CustomRecyclerView extends RecyclerView {
     }
 
     @Override public void scrollTo(int x, int y) {
-        Logger.e(this, "RecyclerView does not support scrolling to an absolute position.");
+        Timber.v("RecyclerView does not support scrolling to an absolute position.");
     }
 }

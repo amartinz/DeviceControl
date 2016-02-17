@@ -30,7 +30,6 @@ import com.sense360.android.quinoa.lib.Sense360;
 
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Constants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.services.BootupService;
@@ -38,6 +37,7 @@ import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import io.paperdb.Paper;
+import timber.log.Timber;
 
 public class BootUpReceiver extends BroadcastReceiver {
     private static final int NOTIFICATION_ID = 1000;
@@ -66,20 +66,20 @@ public class BootUpReceiver extends BroadcastReceiver {
         BootupConfig bootupConfig = BootupConfig.get();
         boolean isBootup = bootupConfig.isEnabled;
         if (!isBootup) {
-            Logger.v(this, "User does not want to restore settings on bootup");
+            Timber.v("User does not want to restore settings on bootup");
             return;
         }
 
         int size = bootupConfig.items.size();
         if (size == 0) {
-            Logger.v(this, "No bootup items, not starting bootup restoration");
+            Timber.v("No bootup items, not starting bootup restoration");
             return;
         }
 
         final Intent bootupRestorationIntent = new Intent(ctx, BootupService.class);
         if (bootupConfig.isAutomatedRestoration) {
             ctx.startService(bootupRestorationIntent);
-            Logger.v(this, "Starting automated bootup restoration");
+            Timber.v("Starting automated bootup restoration");
             return;
         }
 
@@ -115,7 +115,7 @@ public class BootUpReceiver extends BroadcastReceiver {
             if (sense360 == Constants.SENSE360_FAILED_DETECTION && delayCounter < DELAY_RETRIES_SENSE360) {
                 delayCounter++;
 
-                Logger.v(BootUpReceiver.this, "Sense360: detection failed, retry in %sms | %s of %s",
+                Timber.v("Sense360: detection failed, retry in %sms | %s of %s",
                         DELAY_SENSE360, delayCounter, DELAY_RETRIES_SENSE360);
 
                 App.HANDLER.postDelayed(sense360Runnable, DELAY_SENSE360);

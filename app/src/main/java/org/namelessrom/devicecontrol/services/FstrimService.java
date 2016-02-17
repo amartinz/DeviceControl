@@ -21,14 +21,14 @@ import android.app.IntentService;
 import android.content.Intent;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.FileOutputStream;
 
+import alexander.martinz.libs.execution.BusyBox;
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.execution.BusyBox;
+import timber.log.Timber;
 
 public class FstrimService extends IntentService {
     public static final String ACTION_TASKER_FSTRIM = "action_tasker_fstrim";
@@ -43,7 +43,7 @@ public class FstrimService extends IntentService {
         if (intent == null || !ACTION_TASKER_FSTRIM.equals(intent.getAction())) {
             return;
         }
-        Logger.i(this, "FSTRIM RUNNING");
+        Timber.v("FSTRIM RUNNING");
 
         final String path = getFilesDir().getAbsolutePath() + DeviceConstants.DC_LOG_FILE_FSTRIM;
         final String cmd = "date;"
@@ -58,7 +58,7 @@ public class FstrimService extends IntentService {
         final Command command = new Command(cmd) {
             @Override public void onCommandOutput(int id, String line) {
                 super.onCommandOutput(id, line);
-                Logger.v(this, "Result: " + line);
+                Timber.v("Result: %s", line);
                 writeLog(line);
             }
 

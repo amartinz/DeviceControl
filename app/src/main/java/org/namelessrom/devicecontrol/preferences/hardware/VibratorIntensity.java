@@ -33,13 +33,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.RootShell;
+import timber.log.Timber;
 
 public class VibratorIntensity extends DialogPreference implements SeekBar.OnSeekBarChangeListener {
 
@@ -158,23 +158,19 @@ public class VibratorIntensity extends DialogPreference implements SeekBar.OnSee
         // Restore percent value from SharedPreferences object
         final BootupItem item = BootupConfig.get().getItemByName("vibrator_tuning");
         final String value = (item != null) ? item.value : null;
-        final int percent = strengthToPercent(value != null
-                ? Utils.parseInt(mOriginalValue) : defValue);
-        Logger.v(this, "value: %s, percent: %s", value, percent);
+        final int percent = strengthToPercent(value != null ? Utils.parseInt(mOriginalValue) : defValue);
+        Timber.v("value: %s, percent: %s", value, percent);
         mSeekBar.setOnSeekBarChangeListener(this);
         mSeekBar.setProgress(percent);
 
-        view.findViewById(R.id.vibrator_test).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (vib != null) {
-                            vib.cancel();
-                            vib.vibrate(250);
-                        }
-                    }
+        view.findViewById(R.id.vibrator_test).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                if (vib != null) {
+                    vib.cancel();
+                    vib.vibrate(250);
                 }
-        );
+            }
+        });
     }
 
     @Override protected void onDialogClosed(final boolean positiveResult) {

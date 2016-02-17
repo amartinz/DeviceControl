@@ -205,6 +205,7 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             deviceConfig.extensiveLogging = value;
             deviceConfig.save();
 
+            App.setEnableDebug(value);
             Logger.setEnabled(value);
             extensiveLogging.setChecked(value);
             return true;

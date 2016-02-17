@@ -22,11 +22,12 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
 
 import java.io.InputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+
+import timber.log.Timber;
 
 /**
  * Easier formatting of HTML pages
@@ -82,7 +83,7 @@ public class HtmlHelper {
         try {
             return App.get().getAssets().open(path);
         } catch (Exception exc) {
-            Logger.e(HtmlHelper.class, "loadPath", exc);
+            Timber.e(exc, "loadPathInternal");
         }
         return null;
     }
@@ -91,7 +92,7 @@ public class HtmlHelper {
         try {
             return Utils.loadFromAssets(path);
         } catch (Exception exc) {
-            Logger.e(HtmlHelper.class, "loadPath", exc);
+            Timber.e(exc, "loadPathAsStringInternal");
         }
         return "";
     }

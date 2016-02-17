@@ -17,103 +17,115 @@
  */
 package org.namelessrom.devicecontrol.utils;
 
-import org.namelessrom.devicecontrol.Logger;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import java.io.File;
 import java.util.Hashtable;
+
+import timber.log.Timber;
 
 /**
  * Helper class to get the content type of files via checking their extension
  */
 public class ContentTypes {
-
-    private final Hashtable<String, String> mContentTypes;
     private static ContentTypes contentTypes;
 
+    private final Hashtable<String, String> contentTypeTable;
+
     private ContentTypes() {
-        mContentTypes = new Hashtable<>();
-        mContentTypes.put("3gp", "video/3gp");
-        mContentTypes.put("7z", "application/x-7z-compressed");
-        mContentTypes.put("aac", "audio/x-aac");
-        mContentTypes.put("apk", "application/vnd.android.package-archive");
-        mContentTypes.put("avi", "video/avi");
-        mContentTypes.put("bin", "application/octet-stream");
-        mContentTypes.put("bmp", "image/bmp");
-        mContentTypes.put("bz", "application/x-bzip");
-        mContentTypes.put("bz2", "application/x-bzip2");
-        mContentTypes.put("css", "text/css");
-        mContentTypes.put("deb", "application/x-debian-package");
-        mContentTypes.put("doc", "application/msword");
-        mContentTypes.put("dot", "application/msword");
-        mContentTypes.put("exe", "application/octet-stream");
-        mContentTypes.put("flv", "video/x-flv");
-        mContentTypes.put("gif", "image/gif");
-        mContentTypes.put("gz", "application/x-gzip");
-        mContentTypes.put("gzip", "application/x-gzip");
-        mContentTypes.put("htm", "text/html");
-        mContentTypes.put("html", "text/html");
-        mContentTypes.put("htmls", "text/html");
-        mContentTypes.put("ico", "image/x-icon");
-        mContentTypes.put("jpe", "image/jpeg");
-        mContentTypes.put("jpeg", "image/jpeg");
-        mContentTypes.put("jpg", "image/jpeg");
-        mContentTypes.put("js", "application/javascript");
-        mContentTypes.put("json", "application/json");
-        mContentTypes.put("m4v", "video/x-m4v");
-        mContentTypes.put("mov", "video/quicktime");
-        mContentTypes.put("mp3", "audio/mpeg3");
-        mContentTypes.put("mp4", "video/mp4");
-        mContentTypes.put("mpeg", "video/mpeg");
-        mContentTypes.put("ogg", "audio/ogg");
-        mContentTypes.put("pdf", "application/pdf");
-        mContentTypes.put("png", "image/png");
-        mContentTypes.put("ppt", "application/powerpoint");
-        mContentTypes.put("rar", "application/x-rar-compressed");
-        mContentTypes.put("rss", "application/rss+xml");
-        mContentTypes.put("rtf", "application/rtf");
-        mContentTypes.put("shtml", "text/html");
-        mContentTypes.put("swf", "application/x-shockwave-flash");
-        mContentTypes.put("tar", "application/x-tar");
-        mContentTypes.put("tgz", "application/x-compressed");
-        mContentTypes.put("torrent", "application/x-bittorrent");
-        mContentTypes.put("ttf", "application/x-font-ttf");
-        mContentTypes.put("txt", "text/plain");
-        mContentTypes.put("wav", "audio/wav");
-        mContentTypes.put("webm", "video/webm");
-        mContentTypes.put("wmv", "video/x-ms-wmv");
-        mContentTypes.put("xhtml", "application/xhtml+xml");
-        mContentTypes.put("xml", "application/rss+xml");
-        mContentTypes.put("zip", "application/zip");
+        contentTypeTable = new Hashtable<>();
+        contentTypeTable.put("3gp", "video/3gp");
+        contentTypeTable.put("7z", "application/x-7z-compressed");
+        contentTypeTable.put("aac", "audio/x-aac");
+        contentTypeTable.put("apk", "application/vnd.android.package-archive");
+        contentTypeTable.put("avi", "video/avi");
+        contentTypeTable.put("bin", "application/octet-stream");
+        contentTypeTable.put("bmp", "image/bmp");
+        contentTypeTable.put("bz", "application/x-bzip");
+        contentTypeTable.put("bz2", "application/x-bzip2");
+        contentTypeTable.put("css", "text/css");
+        contentTypeTable.put("deb", "application/x-debian-package");
+        contentTypeTable.put("doc", "application/msword");
+        contentTypeTable.put("dot", "application/msword");
+        contentTypeTable.put("exe", "application/octet-stream");
+        contentTypeTable.put("flv", "video/x-flv");
+        contentTypeTable.put("gif", "image/gif");
+        contentTypeTable.put("gz", "application/x-gzip");
+        contentTypeTable.put("gzip", "application/x-gzip");
+        contentTypeTable.put("htm", "text/html");
+        contentTypeTable.put("html", "text/html");
+        contentTypeTable.put("htmls", "text/html");
+        contentTypeTable.put("ico", "image/x-icon");
+        contentTypeTable.put("jpe", "image/jpeg");
+        contentTypeTable.put("jpeg", "image/jpeg");
+        contentTypeTable.put("jpg", "image/jpeg");
+        contentTypeTable.put("js", "application/javascript");
+        contentTypeTable.put("json", "application/json");
+        contentTypeTable.put("m4v", "video/x-m4v");
+        contentTypeTable.put("mov", "video/quicktime");
+        contentTypeTable.put("mp3", "audio/mpeg3");
+        contentTypeTable.put("mp4", "video/mp4");
+        contentTypeTable.put("mpeg", "video/mpeg");
+        contentTypeTable.put("ogg", "audio/ogg");
+        contentTypeTable.put("pdf", "application/pdf");
+        contentTypeTable.put("png", "image/png");
+        contentTypeTable.put("ppt", "application/powerpoint");
+        contentTypeTable.put("rar", "application/x-rar-compressed");
+        contentTypeTable.put("rss", "application/rss+xml");
+        contentTypeTable.put("rtf", "application/rtf");
+        contentTypeTable.put("shtml", "text/html");
+        contentTypeTable.put("swf", "application/x-shockwave-flash");
+        contentTypeTable.put("tar", "application/x-tar");
+        contentTypeTable.put("tgz", "application/x-compressed");
+        contentTypeTable.put("torrent", "application/x-bittorrent");
+        contentTypeTable.put("ttf", "application/x-font-ttf");
+        contentTypeTable.put("txt", "text/plain");
+        contentTypeTable.put("wav", "audio/wav");
+        contentTypeTable.put("webm", "video/webm");
+        contentTypeTable.put("wmv", "video/x-ms-wmv");
+        contentTypeTable.put("xhtml", "application/xhtml+xml");
+        contentTypeTable.put("xml", "application/rss+xml");
+        contentTypeTable.put("zip", "application/zip");
     }
 
     public static ContentTypes getInstance() {
-        if (contentTypes == null) contentTypes = new ContentTypes();
+        if (contentTypes == null) {
+            contentTypes = new ContentTypes();
+        }
         return contentTypes;
     }
 
-    public String getContentType(final String path) {
+    @NonNull public String getContentType(final String path) {
         final String type = tryGetContentType(path);
-        if (type != null) return type;
+        if (type != null) {
+            return type;
+        }
         return "text/plain";
     }
 
-    private String tryGetContentType(final String path) {
+    @Nullable private String tryGetContentType(final String path) {
         final int index = path.lastIndexOf(".");
         if (index != -1) {
             final String fileExtension = path.substring(index + 1);
-            Logger.v(this, String.format("fileExtension: %s", fileExtension));
-            final String ct = mContentTypes.get(fileExtension);
-            if (ct != null) {return ct; }
+            Timber.v("fileExtension: %s", fileExtension);
+            final String ct = contentTypeTable.get(fileExtension);
+            if (ct != null) {
+                return ct;
+            }
         }
         return null;
     }
 
-    public static boolean isFiletypeMatching(final File file, final String fileType) {
+    public static boolean isFiletypeMatching(@NonNull final File file, @Nullable final String fileType) {
         return isFiletypeMatching(file.getName(), fileType);
     }
 
-    public static boolean isFiletypeMatching(final String name, final String fileType) {
-        if (fileType.isEmpty()) return true;
+    public static boolean isFiletypeMatching(@Nullable final String name, @Nullable final String fileType) {
+        if (TextUtils.isEmpty(fileType) || TextUtils.isEmpty(name)) {
+            return true;
+        }
         final String[] tmpString = name.split("\\.");
         final String tmp = tmpString.length > 0 ? tmpString[tmpString.length - 1] : null;
         return (tmp != null && tmp.equals(fileType));

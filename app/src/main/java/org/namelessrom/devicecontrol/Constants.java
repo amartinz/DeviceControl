@@ -23,8 +23,10 @@ import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
+import timber.log.Timber;
+
 public class Constants {
-    private static final String TAG = Constants.class.getSimpleName();
+    public static final String[] EMPTY_STRINGS = new String[0];
 
     public static final String URL_DONATE_FLATTR =
             "https://flattr.com/submit/auto?user_id=amartinz&url=https://github.com/Evisceration/DeviceControl&title=DeviceControl&language=en_GB&tags=github&category=software";
@@ -45,7 +47,7 @@ public class Constants {
     public static int canUseSense360(Context context) {
         // always enable on debug builds
         if (BuildConfig.DEBUG) {
-            Logger.v(TAG, "canUseSense360: debug mode, returning true");
+            Timber.v("canUseSense360: debug mode, returning true");
             return SENSE360_OK;
         }
 
@@ -55,7 +57,7 @@ public class Constants {
             if (!TextUtils.isEmpty(simCountryIso)) {
                 simCountryIso = simCountryIso.trim().toLowerCase();
             }
-            Logger.v(TAG, "SimCountryIso: %s", simCountryIso);
+            Timber.v("SimCountryIso: %s", simCountryIso);
 
             // if we can get the sim country iso and have a whitelisted user, we are able to use Sense360
             int returnCode = SENSE360_NO;
@@ -65,13 +67,13 @@ public class Constants {
                     break;
                 }
             }
-            Logger.v(TAG, "canUseSense360: %s", returnCode);
+            Timber.v("canUseSense360: %s", returnCode);
             return returnCode;
         }
 
         // TODO: verify on non sim device
         // if we could not detect the sim country iso (no telephony devices) assume we can use it
-        Logger.v(TAG, "canUseSense360: detection failed, returning true");
+        Timber.v("canUseSense360: detection failed, returning true");
         return SENSE360_FAILED_DETECTION;
     }
 

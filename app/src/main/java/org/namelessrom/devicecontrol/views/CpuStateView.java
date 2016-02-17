@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuStateMonitor;
@@ -35,6 +34,8 @@ import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuStateMonitor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class CpuStateView extends LinearLayout implements CpuUtils.StateListener {
 
@@ -60,11 +61,11 @@ public class CpuStateView extends LinearLayout implements CpuUtils.StateListener
     }
 
     public void onResume() {
-        Logger.d(this, "onResume");
+        Timber.d("onResume");
     }
 
     public void onPause() {
-        Logger.d(this, "onPause");
+        Timber.d("onPause");
     }
 
     public void onDestroy() {
@@ -94,7 +95,7 @@ public class CpuStateView extends LinearLayout implements CpuUtils.StateListener
                 try {
                     CpuStateMonitor.getInstance().updateStates(CpuStateView.this);
                 } catch (IOException e) {
-                    Logger.e(this, "updateStates()", e);
+                    Timber.e(e, "updateStates()");
                 }
             }
             return null;

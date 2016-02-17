@@ -83,6 +83,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import alexander.martinz.libs.execution.RootCheck;
 import alexander.martinz.libs.execution.ShellManager;
 import alexander.martinz.vendor.Configuration;
+import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements ActivityCallbacks, NavigationView.OnNavigationItemSelectedListener {
     private static long mBackPressed;
@@ -121,7 +122,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
         if (DeviceConfig.get().showPollfish) {
             final String pfApiKey = Configuration.getPollfishApiKeyDc();
             if (!TextUtils.equals("---", pfApiKey)) {
-                Logger.v(this, "PollFish.init()");
+                Timber.d("PollFish.init()");
                 PollFish.init(this, pfApiKey, Position.BOTTOM_RIGHT, 50);
             }
         }
@@ -328,7 +329,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
 
             // if our listener handles onBackPressed(), return
             if (listener.onBackPressed()) {
-                Logger.v(this, "onBackPressed() handled by current fragment");
+                Timber.v("onBackPressed() handled by current fragment");
                 return;
             }
 
@@ -386,7 +387,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
     }
 
     @Override protected void onDestroy() {
-        Logger.i(this, "closing shells");
+        Timber.d("closing shells");
         ShellManager.get().cleanupShells();
 
         if (mCheckRequirementsTask != null) {
@@ -406,7 +407,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
         if (fragment == null) {
             return;
         }
-        Logger.v(this, "setFragment: %s", fragment.getId());
+        Timber.d("setFragment: %s", fragment.getId());
         mCurrentFragment = fragment;
     }
 

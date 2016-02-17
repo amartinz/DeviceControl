@@ -20,13 +20,13 @@ package org.namelessrom.devicecontrol.models;
 
 import android.support.annotation.NonNull;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import io.paperdb.Paper;
+import timber.log.Timber;
 
 /**
  * Tasker configuration which auto serializes itself to a file
@@ -72,7 +72,7 @@ public class TaskerConfig {
 
     public synchronized TaskerConfig addItem(@NonNull TaskerItem taskerItem) {
         items.add(taskerItem);
-        Logger.d(this, "added item -> %s", taskerItem.toString());
+        Timber.d("added item -> %s", taskerItem.toString());
 
         return this;
     }
@@ -83,7 +83,7 @@ public class TaskerConfig {
             TaskerItem item = iterator.next();
             if (taskerItem.equals(item)) {
                 iterator.remove();
-                Logger.d(this, "removed item -> %s", item.toString());
+                Timber.d("removed item -> %s", item.toString());
             }
         }
 

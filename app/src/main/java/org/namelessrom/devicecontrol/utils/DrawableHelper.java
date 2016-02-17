@@ -29,12 +29,13 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.theme.AppResources;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+
+import timber.log.Timber;
 
 /**
  * Helps with ddddddrawwabllessr5hhwr5hbwb
@@ -43,7 +44,7 @@ public class DrawableHelper {
 
     @Nullable public static Drawable applyColorFilter(Drawable drawable, @ColorInt int color) {
         if (drawable == null) {
-            Logger.w("DrawableHelper", "drawable is null!");
+            Timber.w("drawable is null!");
             return null;
         }
         final LightingColorFilter lightingColorFilter = new LightingColorFilter(Color.BLACK, color);

@@ -22,20 +22,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
 import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
 
 import java.util.List;
 
-public class ScreenReceiver extends BroadcastReceiver {
+import timber.log.Timber;
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
+public class ScreenReceiver extends BroadcastReceiver {
+    @Override public void onReceive(Context context, Intent intent) {
         final String action = intent.getAction();
         if (action != null && !action.isEmpty()) {
-            Logger.i(this, String.format("action: %s", action));
             if (Intent.ACTION_SCREEN_ON.equals(action)) {
                 new Worker().execute(ActionProcessor.TRIGGER_SCREEN_ON);
             } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
@@ -44,19 +42,17 @@ public class ScreenReceiver extends BroadcastReceiver {
         }
     }
 
-    private class Worker extends AsyncTask<String, Void, Void> {
-        @Override
-        protected Void doInBackground(String... params) {
+    private static class Worker extends AsyncTask<String, Void, Void> {
+        @Override protected Void doInBackground(String... params) {
             final String trigger = params[0];
-            Logger.v(this, "Trigger: %s", trigger);
+            Timber.v("Trigger: %s", trigger);
 
-            final List<TaskerItem> itemList = TaskerConfig.get()
-                    .getItemsByTrigger(trigger);
+            final List<TaskerItem> itemList = TaskerConfig.get().getItemsByTrigger(trigger);
 
-            Logger.v(this, "Items: %s", itemList.size());
+            Timber.v("Items: %s", itemList.size());
 
             for (final TaskerItem item : itemList) {
-                Logger.v(this, "Processing: %s | %s | %s", item.name, item.value, item.enabled);
+                Timber.v("Processing: %s | %s | %s", item.name, item.value, item.enabled);
                 if (item.enabled) {
                     ActionProcessor.getProcessAction(item.name, item.value, false);
                 }

@@ -227,7 +227,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                 return true;
             }
             case R.id.menu_action_play_store: {
-                AppHelper.showInPlaystore("market://details?id=" + mAppItem.getPackageName());
+                AppHelper.showInPlayStore("market://details?id=" + mAppItem.getPackageName());
                 return true;
             }
             case R.id.menu_app_disable: {

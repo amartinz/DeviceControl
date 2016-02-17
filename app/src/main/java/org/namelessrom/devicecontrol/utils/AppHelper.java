@@ -29,17 +29,17 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.modules.appmanager.PackageStatsObserver;
 
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.execution.BusyBox;
+import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.hardware.ProcessManager;
 import hugo.weaving.DebugLog;
+import timber.log.Timber;
 
 import static org.namelessrom.devicecontrol.DeviceConstants.ID_PGREP;
 import static org.namelessrom.devicecontrol.utils.ShellOutput.OnShellOutputListener;
@@ -58,14 +58,12 @@ public class AppHelper {
      *
      * @param pkg The package name of the application
      */
-    public static void getSize(final PackageManager pm,
-            final PackageStatsObserver.OnPackageStatsListener l, final String pkg) {
+    public static void getSize(final PackageManager pm, final PackageStatsObserver.OnPackageStatsListener l, final String pkg) {
         try {
-            final Method getPackageSizeInfo = pm.getClass().getMethod("getPackageSizeInfo",
-                    String.class, IPackageStatsObserver.class);
-            getPackageSizeInfo.invoke(pm, pkg, new PackageStatsObserver(l));
+            Method m = pm.getClass().getMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
+            m.invoke(pm, pkg, new PackageStatsObserver(l));
         } catch (Exception e) {
-            Logger.e(AppHelper.class, "AppHelper.getSize()", e);
+            Timber.e(e, "AppHelper.getSize()");
         }
     }
 
@@ -117,14 +115,14 @@ public class AppHelper {
             external = String.format(dirs, externalBase, externalBase, externalBase, externalBase, externalBase);
         }
 
-        Logger.d(TAG, "internal -> %s", internal);
-        Logger.d(TAG, "external -> %s", external);
+        Timber.d("internal -> %s", internal);
+        Timber.d("external -> %s", external);
 
         try {
             final Method m = pm.getClass().getDeclaredMethod(method, String.class, IPackageDataObserver.class);
             m.invoke(pm, pkg, null);
         } catch (Exception e) {
-            Logger.e(TAG, "could not call " + method + " via reflection", e);
+            Timber.e(e, "could not call %s via reflection", method);
         }
 
         RootShell.fireAndForget(String.format("%s%s%s", cmdPrefix, internal, external));
@@ -132,11 +130,10 @@ public class AppHelper {
 
     public static void uninstallPackage(PackageManager pm, String pkg) {
         try {
-            final Method m = pm.getClass().getDeclaredMethod("deletePackage",
-                    String.class, IPackageDeleteObserver.class, int.class);
+            Method m = pm.getClass().getDeclaredMethod("deletePackage", String.class, IPackageDeleteObserver.class, int.class);
             m.invoke(pm, pkg, null, /* DELETE_ALL_USERS */ 2);
         } catch (Exception e) {
-            Logger.e(TAG, "could not call deletePackage via reflection", e);
+            Timber.e(e, "could not call deletePackage via reflection");
         }
     }
 
@@ -178,7 +175,7 @@ public class AppHelper {
             }
 
             if (processList.size() <= 1) {
-                Logger.i(TAG, "Using fallback to get process list");
+                Timber.v("Using fallback to get process list");
                 final List<ProcessManager.Process> processes = ProcessManager.getRunningApps();
                 for (final ProcessManager.Process process : processes) {
                     if (pkg.equals(process.name)) {
@@ -187,7 +184,7 @@ public class AppHelper {
                 }
             }
         } else {
-            Logger.e(TAG, "Could not get list of running processes!");
+            Timber.e("Could not get list of running processes!");
         }
         return false;
     }
@@ -259,14 +256,14 @@ public class AppHelper {
     /**
      * Shows the app in Google's Play Store if Play Store is installed
      */
-    public static boolean showInPlaystore(final String uri) {
+    public static boolean showInPlayStore(final String uri) {
         try {
             final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             App.get().startActivity(i);
             return true;
         } catch (Exception exc) {
-            Logger.e(AppHelper.class, exc.getMessage());
+            Timber.e(exc, exc.getMessage());
         }
         return false;
     }
@@ -277,7 +274,7 @@ public class AppHelper {
         try {
             context.startActivity(i);
         } catch (Exception e) {
-            Logger.e(AppHelper.class, "viewInBrowser", e);
+            Timber.e(e, "viewInBrowser");
         }
     }
 
