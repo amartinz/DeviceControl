@@ -155,7 +155,7 @@ public class AppHelper {
      * @param process The process name to search for
      */
     public static void getProcess(final OnShellOutputListener listener, final String process) {
-        Utils.getCommandResult(listener, ID_PGREP, String.format("pgrep %s", process));
+        Utils.getCommandResult(listener, ID_PGREP, BusyBox.callBusyBoxApplet("pgrep", process));
     }
 
     /**
