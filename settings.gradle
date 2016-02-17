@@ -9,9 +9,6 @@ project(':HardwareLibrary').projectDir = new File('modules/HardwareLibrary/libra
 include ':MaterialPreferences'
 project(':MaterialPreferences').projectDir = new File('modules/MaterialPreferences/library')
 
-include(":volley")
-project(':volley').projectDir = new File('modules/volley')
-
 include ':ExternalSources'
 project(':ExternalSources').projectDir = new File('modules/ExternalSources')
 
