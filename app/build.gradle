@@ -142,7 +142,9 @@ dependencies {
 
     // see https://github.com/pilgr/Paper
     //compile 'io.paperdb:paperdb:0.9'
-    compile 'com.github.Evisceration:Paper:6ad14da863'
+    compile 'com.github.Evisceration:Paper:-SNAPSHOT'
+    compile 'com.esotericsoftware:kryo:3.0.3'
+    compile 'de.javakaffee:kryo-serializers:0.37'
 
     // see https://github.com/Kennyc1012/BottomSheet
     compile 'com.github.Kennyc1012:BottomSheet:2.0.7'
