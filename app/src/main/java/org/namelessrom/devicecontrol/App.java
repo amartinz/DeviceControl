@@ -161,7 +161,10 @@ public class App extends android.app.Application {
             final File externalCache = new File(getExternalCacheDir(), "bitmapCache");
             clearDirectory(externalCache);
 
-            final File internalCache = new File(getFilesDir(), "bitmapCache");
+            final File internalCacheOld = new File(getFilesDir(), "bitmapCache");
+            clearDirectory(internalCacheOld);
+
+            final File internalCache = new File(getCacheDir(), "bitmapCache");
             clearDirectory(internalCache);
         }
 

@@ -115,7 +115,7 @@ public class AppIconImageView extends CacheableImageView {
             options = decodeOpts;
         }
 
-        @DebugLog @Override protected CacheableBitmapDrawable doInBackground(String... params) {
+        @Override protected CacheableBitmapDrawable doInBackground(String... params) {
             // Return early if the ImageView has disappeared.
             if (weakReference.get() == null) {
                 return null;
@@ -124,24 +124,7 @@ public class AppIconImageView extends CacheableImageView {
                 return null;
             }
 
-            final String pkgName = appItem.getPackageName();
-
-            // Now we're not on the main thread we can check all caches
-            CacheableBitmapDrawable result = bitmapLruCache.get(pkgName, options);
-            if (result != null) {
-                Timber.d("Loading -> %s", pkgName);
-
-                final Drawable drawable = appItem.getApplicationInfo().loadIcon(context.getPackageManager());
-                final Bitmap bitmap = DrawableHelper.drawableToBitmap(drawable);
-                final InputStream is = DrawableHelper.bitmapToInputStream(bitmap);
-
-                // Add to cache
-                result = bitmapLruCache.put(pkgName, is, options);
-            } else {
-                Timber.d("Got from Cache -> %s", pkgName);
-            }
-
-            return result;
+            return getBitmap();
         }
 
         @Override protected void onPostExecute(CacheableBitmapDrawable result) {
@@ -155,6 +138,26 @@ public class AppIconImageView extends CacheableImageView {
             if (imageLoadedListener != null) {
                 imageLoadedListener.onImageLoaded(result);
             }
+        }
+
+        @DebugLog private CacheableBitmapDrawable getBitmap() {
+            final String pkgName = appItem.getPackageName();
+
+            // Now we're not on the main thread we can check all caches
+            final CacheableBitmapDrawable result = bitmapLruCache.get(pkgName, options);
+            if (result == null) {
+                Timber.d("Loading -> %s", pkgName);
+
+                final Drawable drawable = appItem.getApplicationInfo().loadIcon(context.getPackageManager());
+                final Bitmap bitmap = DrawableHelper.drawableToBitmap(drawable);
+                final InputStream is = DrawableHelper.bitmapToInputStream(bitmap);
+
+                // Add to cache
+                return bitmapLruCache.put(pkgName, is, options);
+            } else {
+                Timber.d("Got from Cache -> %s", pkgName);
+            }
+            return null;
         }
     }
 }
