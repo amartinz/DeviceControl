@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.modules.info.hardware;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.location.Address;
@@ -28,6 +29,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.location.LocationRequest;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
@@ -70,15 +72,16 @@ public class GpsView extends CardTitleView {
 
     @Override protected void init(@Nullable AttributeSet attrs) {
         super.init(attrs);
-        unknownLocation = getContext().getString(R.string.gps_unknown_location);
+        final Context context = getContext();
 
-        statusView = new TextView(getContext());
+        unknownLocation = context.getString(R.string.gps_unknown_location);
+        statusView = new TextView(context);
 
         final FrameLayout content = getContentView();
         content.addView(statusView);
         statusView.setText(R.string.gps_requesting_location);
 
-        final ReactiveLocationProvider provider = new ReactiveLocationProvider(getContext());
+        final ReactiveLocationProvider provider = new ReactiveLocationProvider(context);
 
         final LocationRequest locationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -102,6 +105,13 @@ public class GpsView extends CardTitleView {
     }
 
     public void onResume() {
+        final RxPermissions rxPermissions = RxPermissions.getInstance(getContext());
+        final boolean location = rxPermissions.isGranted(Manifest.permission.ACCESS_COARSE_LOCATION) &&
+                                 rxPermissions.isGranted(Manifest.permission.ACCESS_FINE_LOCATION);
+        if (!location) {
+            rxPermissions.request(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+
         addressSubscription = addressObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
