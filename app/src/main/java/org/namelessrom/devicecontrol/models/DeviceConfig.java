@@ -50,6 +50,8 @@ public class DeviceConfig {
     // TODO: readd
     public String suShellContext = "normal"; //Shell.CONTEXT_NORMAL;
 
+    public int appVersion;
+
     private transient static DeviceConfig instance;
 
     private DeviceConfig() {

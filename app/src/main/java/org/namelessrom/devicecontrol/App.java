@@ -44,6 +44,8 @@ import uk.co.senab.bitmapcache.BitmapLruCache;
 public class App extends android.app.Application {
     public static final Handler HANDLER = new Handler();
 
+    private static final int APP_VERSION = 1;
+
     private static final Timber.Tree DEBUG_TREE = new Timber.DebugTree();
 
     private static App sInstance;
@@ -141,9 +143,41 @@ public class App extends android.app.Application {
             }
         }
 
+        handleAppUpgrades();
+
         if (BuildConfig.DEBUG || App.enableDebug) {
             final int gmsVersion = getResources().getInteger(R.integer.google_play_services_version);
             Timber.v("Google Play Services -> %s", gmsVersion);
+        }
+    }
+
+    private void handleAppUpgrades() {
+        boolean needsUpgrade = false;
+
+        final DeviceConfig deviceConfig = DeviceConfig.get();
+        if (deviceConfig.appVersion < 1) {
+            needsUpgrade = true;
+
+            final File externalCache = new File(getExternalCacheDir(), "bitmapCache");
+            clearDirectory(externalCache);
+
+            final File internalCache = new File(getFilesDir(), "bitmapCache");
+            clearDirectory(internalCache);
+        }
+
+        if (needsUpgrade) {
+            deviceConfig.appVersion = APP_VERSION;
+            deviceConfig.save();
+        }
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored") private void clearDirectory(File directory) {
+        if (directory.exists()) {
+            final File[] cacheFiles = directory.listFiles();
+            for (final File cacheFile : cacheFiles) {
+                cacheFile.delete();
+            }
+            directory.delete();
         }
     }
 
@@ -164,7 +198,7 @@ public class App extends android.app.Application {
         }
 
         if (cacheLocation == null) {
-            cacheLocation = new File(getFilesDir(), "bitmapCache");
+            cacheLocation = new File(getCacheDir(), "bitmapCache");
         }
 
         try {
