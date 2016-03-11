@@ -18,6 +18,8 @@ import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import timber.log.Timber;
+
 public class SeekBarPreference extends Preference implements OnSeekBarChangeListener {
     private final String TAG = getClass().getName();
 
@@ -65,7 +67,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
             final String newInterval = attrs.getAttributeValue(DC, "interval");
             if (newInterval != null) { mInterval = Utils.parseInt(newInterval); }
         } catch (Exception e) {
-            Logger.e(TAG, "Invalid interval value", e);
+            Timber.e(e, "Invalid interval value");
         }
     }
 
@@ -92,7 +94,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
             mTitle = (TextView) layout.findViewById(android.R.id.title);
             return layout;
         } catch (Exception e) {
-            Logger.e(TAG, "Error creating seek bar preference", e);
+            Timber.e(e, "Error creating seek bar preference");
             return null;
         }
     }
@@ -116,7 +118,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
                         ViewGroup.LayoutParams.WRAP_CONTENT);
             }
         } catch (Exception ex) {
-            Logger.e(TAG, "Error binding view: " + ex.toString());
+            Timber.e(ex, "Error binding view!");
         }
         updateView(view);
     }
@@ -139,7 +141,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
             final TextView unitsLeft = (TextView) layout.findViewById(R.id.seekBarPrefUnitsLeft);
             unitsLeft.setText(mUnitsLeft);
         } catch (Exception e) {
-            Logger.e(TAG, "Error updating seek bar preference", e);
+            Timber.e(e, "Error updating seek bar preference");
         }
     }
 
@@ -183,7 +185,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
             try {
                 temp = (Integer) defValue;
             } catch (Exception ex) {
-                Logger.e(TAG, "Invalid default value: " + defValue.toString());
+                Timber.e(ex, "Invalid default value: %s", String.valueOf(defValue));
             }
             mCurrentValue = temp;
         }

@@ -25,7 +25,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.PowerManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,18 +39,12 @@ import org.namelessrom.devicecontrol.modules.flasher.recovery.RecoveryInfo;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import javax.inject.Inject;
-
 import alexander.martinz.libs.execution.RootShell;
 
 public class RebootHelper {
     private RecoveryHelper mRecoveryHelper;
 
-    @Inject PowerManager powerManager;
-
     public RebootHelper(RecoveryHelper recoveryHelper) {
-        App.get().getAppComponent().inject(this);
-
         mRecoveryHelper = recoveryHelper;
     }
 
@@ -224,7 +217,7 @@ public class RebootHelper {
         }
 
         try {
-            powerManager.reboot("recovery");
+            App.get().getPowerManager().reboot("recovery");
         } catch (Exception exc) {
             Logger.e(this, "can not reboot using power manager", exc);
             RootShell.fireAndBlock("sync;reboot recovery;\n");

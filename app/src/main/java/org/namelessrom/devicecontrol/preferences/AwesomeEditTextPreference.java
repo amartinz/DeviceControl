@@ -28,6 +28,8 @@ import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
+import timber.log.Timber;
+
 /**
  * Automatically handles reading to files to automatically set the value,
  * writing to files on preference change, even with multiple files,
@@ -90,7 +92,7 @@ public class AwesomeEditTextPreference extends CustomEditTextPreference {
         }
 
         if (mCategory == null || mCategory.isEmpty()) {
-            Logger.w(this, "Category is not set! Defaulting to \"default\"");
+            Timber.w("Category is not set! Defaulting to \"default\"");
             mCategory = "default";
         }
     }

@@ -35,6 +35,7 @@ import java.util.List;
 
 import alexander.martinz.libs.hardware.device.Device;
 import alexander.martinz.libs.hardware.utils.HwIoUtils;
+import timber.log.Timber;
 
 /**
  * A wrapper for the AsyncHttpServer
@@ -137,7 +138,7 @@ public class ServerWrapper {
             if (!shouldPass(req, res)) {
                 return;
             }
-            Logger.v(this, "[+] Received connection from: %s", req.getHeaders().get("User-Agent"));
+            Timber.v("[+] Received connection from: %s", req.getHeaders().get("User-Agent"));
             final String path = remapPath(req.getPath());
             res.getHeaders().set("Content-Type", ContentTypes.getInstance().getContentType(path));
 
@@ -147,7 +148,7 @@ public class ServerWrapper {
                     res.sendStream(is, is.available());
                     return;
                 } catch (IOException ioe) {
-                    Logger.e(this, "Error!", ioe);
+                    Timber.e(ioe, "Error!");
                 } finally {
                     HwIoUtils.closeQuietly(is);
                 }
@@ -167,8 +168,8 @@ public class ServerWrapper {
             }
             boolean isDirectory = true;
             final String filePath = HtmlHelper.urlDecode(req.getPath()).replace("/files/", "");
-            Logger.v(this, "req.getPath(): " + req.getPath());
-            Logger.v(this, "filePath: " + filePath);
+            Timber.v("req.getPath(): %s", req.getPath());
+            Timber.v("filePath: %s", filePath);
             File file;
             String sdRoot;
             if (webServerConfig.root) {
@@ -222,15 +223,15 @@ public class ServerWrapper {
                 res.send(new Gson().toJson(fileEntries));
             } else {
                 final String contentType = ContentTypes.getInstance().getContentType(file.getAbsolutePath());
-                Logger.v(this, "Requested file: %s", file.getName());
-                Logger.v(this, "Content-Type: %s", contentType);
+                Timber.v("Requested file: %s", file.getName());
+                Timber.v("Content-Type: %s", contentType);
                 res.setContentType(contentType);
                 res.sendFile(file);
             }
         }
     };
 
-    private final HttpServerRequestCallback informationCallback = new HttpServerRequestCallback() {
+    private static final HttpServerRequestCallback informationCallback = new HttpServerRequestCallback() {
         @Override public void onRequest(final AsyncHttpServerRequest req, final AsyncHttpServerResponse res) {
 
         }

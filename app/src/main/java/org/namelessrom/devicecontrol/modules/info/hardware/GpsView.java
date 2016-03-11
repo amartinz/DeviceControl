@@ -117,7 +117,7 @@ public class GpsView extends CardTitleView {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
                     @Override public void call(String s) {
-                        Logger.get(getContext()).debugVibrate();
+                        Logger.debugVibrate();
                         statusView.setText(s);
                     }
                 }, new ErrorHandler(statusView));

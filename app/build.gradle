@@ -42,6 +42,9 @@ android {
         } else {
             signingConfig signingConfigs.release
         }
+
+        // vectors ftw
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -69,7 +72,6 @@ android {
     }
 
     dexOptions {
-        dexInProcess = true
         javaMaxHeapSize "4g"
     }
 
@@ -97,7 +99,7 @@ dependencies {
     compile project(':ExternalSources')
 
     // see https://github.com/Evisceration/logger
-    compile 'com.github.Evisceration:logger:1.0.5'
+    compile 'com.github.Evisceration:logger:1.0.7'
 
     if (rootProject.ext.useLocalSources) {
         // see https://github.com/Evisceration/ExecutionLibrary
@@ -107,27 +109,36 @@ dependencies {
         // see https://github.com/Evisceration/MaterialPreferences
         compile project(':MaterialPreferences')
     } else {
-        compile 'com.github.Evisceration:ExecutionLibrary:-SNAPSHOT'
-        compile 'com.github.Evisceration:HardwareLibrary:-SNAPSHOT'
-        compile 'com.github.Evisceration:MaterialPreferences:-SNAPSHOT'
+        compile 'com.github.Evisceration:ExecutionLibrary:master-SNAPSHOT'
+        compile 'com.github.Evisceration:HardwareLibrary:master-SNAPSHOT'
+        compile 'com.github.Evisceration:MaterialPreferences:master-SNAPSHOT'
     }
 
-    // see https://github.com/JakeWharton/timber
-    compile 'com.jakewharton.timber:timber:4.1.0'
+    // see https://github.com/pilgr/Paper
+    //compile 'io.paperdb:paperdb:0.9'
+    compile 'com.github.Evisceration:Paper:master-SNAPSHOT'
+    // see https://github.com/EsotericSoftware/kryo
+    compile 'com.esotericsoftware:kryo:3.0.3'
+    // see https://github.com/magro/kryo-serializers
+    compile 'de.javakaffee:kryo-serializers:0.37'
 
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:cardview-v7:23.1.1'
-    compile 'com.android.support:customtabs:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.android.support:support-v13:23.1.1'
+    // see https://github.com/JakeWharton/timber
+    compile 'com.jakewharton.timber:timber:4.1.1'
+
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:cardview-v7:23.2.1'
+    compile 'com.android.support:customtabs:23.2.1'
+    compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile 'com.android.support:support-v13:23.2.1'
+    compile 'com.android.support:support-vector-drawable:23.2.1'
 
     // see https://github.com/JakeWharton/butterknife
     compile 'com.jakewharton:butterknife:8.0.0-SNAPSHOT'
     apt 'com.jakewharton:butterknife-compiler:8.0.0-SNAPSHOT'
 
     // see https://github.com/PhilJay/MPAndroidChart
-    compile 'com.github.PhilJay:MPAndroidChart:v2.2.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
 
     // see https://www.pollfish.com/android
     if (rootProject.ext.useGooglePlay /* Google Play */) {
@@ -137,14 +148,8 @@ dependencies {
     }
     compile 'com.google.android.gms:play-services-ads:8.4.0'
 
-    // see https://github.com/pilgr/Paper
-    //compile 'io.paperdb:paperdb:0.9'
-    compile 'com.github.Evisceration:Paper:-SNAPSHOT'
-    compile 'com.esotericsoftware:kryo:3.0.3'
-    compile 'de.javakaffee:kryo-serializers:0.37'
-
     // see https://github.com/Kennyc1012/BottomSheet
-    compile 'com.github.Kennyc1012:BottomSheet:2.0.7'
+    compile 'com.github.Kennyc1012:BottomSheet:2.1.1'
 
     // see https://github.com/ReactiveX/RxAndroid
     compile 'io.reactivex:rxandroid:1.1.0'
@@ -156,17 +161,14 @@ dependencies {
     compile 'pl.charmas.android:android-reactive-location:0.8@aar'
 
     // Sense360
+    // see http://sense360.com/documentation.php?android
     compile 'com.sense360:sense360-quinoa:2.1.2@aar'
     compile 'com.google.android.gms:play-services-location:8.4.0'
     compile('com.google.android.gms:play-services-gcm:8.4.0') {
         exclude module: 'play-services-measurement'
     }
-    compile 'com.google.code.gson:gson:2.5'
-    compile 'com.squareup.okhttp:okhttp:2.7.1'
-
-    // Dagger 2
-    // see https://github.com/google/dagger
-    apt 'com.google.dagger:dagger-compiler:2.0.2'
-    compile 'com.google.dagger:dagger:2.0.2'
-    provided 'org.glassfish:javax.annotation:10.0-b28'
+    // see https://github.com/google/gson
+    compile 'com.google.code.gson:gson:2.6.2'
+    // see https://github.com/square/okhttp
+    compile 'com.squareup.okhttp:okhttp:2.7.5'
 }

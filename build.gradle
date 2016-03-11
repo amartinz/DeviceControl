@@ -4,7 +4,7 @@ buildscript {
         useGooglePlay = true
         useLocalSources = false
 
-        gradleVersion = '2.0.0-beta5'
+        gradleVersion = '2.1.0-alpha1'
     }
 
     repositories {

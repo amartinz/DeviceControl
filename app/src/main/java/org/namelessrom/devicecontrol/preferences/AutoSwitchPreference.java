@@ -33,6 +33,7 @@ import java.util.Arrays;
 
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
+import timber.log.Timber;
 
 /**
  * Automatically handles reading to files to automatically set the value,
@@ -103,8 +104,7 @@ public class AutoSwitchPreference extends MaterialSwitchPreference {
             final String[] values = res.getStringArray(fileValue)[index].split(";");
             mValueChecked = values[0];
             mValueNotChecked = values[1];
-            Logger.d(this, "mValueChecked -> %s\nmValueNotChecked -> %s",
-                    mValueChecked, mValueNotChecked);
+            Timber.d("mValueChecked -> %s\nmValueNotChecked -> %s", mValueChecked, mValueNotChecked);
         }
 
         if (TextUtils.isEmpty(mValueChecked)) {

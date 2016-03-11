@@ -32,6 +32,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.Arrays;
 
+import timber.log.Timber;
+
 /**
  * Automatically handles reading to files to automatically set the value,
  * writing to files on preference change, even with multiple files,
@@ -106,12 +108,11 @@ public class AwesomeTogglePreference extends CustomTogglePreference {
             final String[] values = res.getStringArray(fileValue)[index].split(";");
             mValueChecked = values[0];
             mValueNotChecked = values[1];
-            Logger.d(this, "mValueChecked -> %s\nmValueNotChecked -> %s",
-                    mValueChecked, mValueNotChecked);
+            Timber.d("mValueChecked -> %s\nmValueNotChecked -> %s", mValueChecked, mValueNotChecked);
         }
 
         if (mCategory == null || mCategory.isEmpty()) {
-            Logger.w(this, "Category is not set! Defaulting to \"default\"");
+            Timber.w("Category is not set! Defaulting to \"default\"");
             mCategory = "default";
         }
         if (TextUtils.isEmpty(mValueChecked)) mValueChecked = "1";
@@ -126,7 +127,7 @@ public class AwesomeTogglePreference extends CustomTogglePreference {
 
     public void setupTitle() {
         if (!isSupported()) {
-            Logger.v(this, "setupTitle -> not supported");
+            Timber.v("setupTitle -> not supported");
             return;
         }
         final Integer title = PreferenceUtils.getTitle(Utils.getFileName(mPath));
@@ -137,7 +138,7 @@ public class AwesomeTogglePreference extends CustomTogglePreference {
 
     public void setupSummary() {
         if (!isSupported()) {
-            Logger.v(this, "setupSummary -> not supported");
+            Timber.v("setupSummary -> not supported");
             return;
         }
         final Integer summary = PreferenceUtils.getSummary(Utils.getFileName(mPath));

@@ -23,6 +23,8 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.PowerManager;
+import android.os.Vibrator;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.WorkerThread;
@@ -51,10 +53,11 @@ public class App extends android.app.Application {
     private static App sInstance;
     private static boolean enableDebug;
 
-    private AppComponent appComponent;
-
     private BitmapLruCache bitmapLruCache;
     private CustomTabsHelper customTabsHelper;
+
+    private PowerManager powerManager;
+    private Vibrator vibrator;
 
     public static App get() {
         return App.sInstance;
@@ -62,6 +65,34 @@ public class App extends android.app.Application {
 
     public static App get(Context context) {
         return ((App) context.getApplicationContext());
+    }
+
+    public BitmapLruCache getBitmapLruCache() {
+        if (bitmapLruCache == null) {
+            bitmapLruCache = setupBitmapLruCache();
+        }
+        return bitmapLruCache;
+    }
+
+    public CustomTabsHelper getCustomTabsHelper() {
+        if (customTabsHelper == null) {
+            customTabsHelper = new CustomTabsHelper(this);
+        }
+        return customTabsHelper;
+    }
+
+    public PowerManager getPowerManager() {
+        if (powerManager == null) {
+            powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        }
+        return powerManager;
+    }
+
+    public Vibrator getVibrator() {
+        if (vibrator == null) {
+            vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        }
+        return vibrator;
     }
 
     @Override public void onLowMemory() {
@@ -76,8 +107,6 @@ public class App extends android.app.Application {
 
         if (App.sInstance == null) {
             App.sInstance = this;
-
-            buildComponentAndInject();
 
             // force enable logger until we hit the user preference
             if (BuildConfig.DEBUG) {
@@ -96,29 +125,6 @@ public class App extends android.app.Application {
                 }
             });
         }
-    }
-
-    @DebugLog public void buildComponentAndInject() {
-        appComponent = AppComponent.Initializer.init(this);
-        appComponent.inject(this);
-    }
-
-    public AppComponent getAppComponent() {
-        return appComponent;
-    }
-
-    public BitmapLruCache getBitmapLruCache() {
-        if (bitmapLruCache == null) {
-            bitmapLruCache = setupBitmapLruCache();
-        }
-        return bitmapLruCache;
-    }
-
-    public CustomTabsHelper getCustomTabsHelper() {
-        if (customTabsHelper == null) {
-            customTabsHelper = new CustomTabsHelper(this);
-        }
-        return customTabsHelper;
     }
 
     @WorkerThread private void setupEverythingAsync() {
