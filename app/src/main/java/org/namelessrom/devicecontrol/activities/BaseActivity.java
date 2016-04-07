@@ -48,13 +48,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void setupToolbar() {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ViewCompat.setElevation(toolbar, 4.0f);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                finish();
-            }
-        });
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            ViewCompat.setElevation(toolbar, 4.0f);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
 
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

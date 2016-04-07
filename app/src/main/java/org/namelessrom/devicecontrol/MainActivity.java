@@ -123,11 +123,15 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
             final String pfApiKey = Configuration.getPollfishApiKeyDc();
             if (!TextUtils.equals("---", pfApiKey)) {
                 Timber.d("PollFish.init()");
-                PollFish.init(this, pfApiKey, Position.BOTTOM_RIGHT, 50);
+                final PollFish.ParamsBuilder paramsBuilder = new PollFish.ParamsBuilder(pfApiKey)
+                        .indicatorPosition(Position.BOTTOM_RIGHT)
+                        .indicatorPadding(50)
+                        .build();
+                PollFish.initWith(this, paramsBuilder);
             }
         }
 
-        if (Constants.useSense360(this)) {
+        if (!Sense360.isUserOptedOut(getApplicationContext())) {
             Timber.v("Starting Sense360");
             Sense360.start(getApplicationContext());
         } else {
@@ -145,7 +149,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
 
         // lock the drawer so we can only open it AFTER we are done with our checks
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+        mDrawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
             @Override public void onDrawerClosed(View drawerView) {
                 if (mDrawerRunnable != null) {
                     mDrawerLayout.post(mDrawerRunnable);
@@ -172,17 +176,19 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
 
     @Override protected void setupToolbar() {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ViewCompat.setElevation(toolbar, 4.0f);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                if (mSubFragmentTitle == -1) {
-                    toggleDrawer();
-                } else {
-                    onCustomBackPressed(true);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            ViewCompat.setElevation(toolbar, 4.0f);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    if (mSubFragmentTitle == -1) {
+                        toggleDrawer();
+                    } else {
+                        onCustomBackPressed(true);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private void setupDrawerItems() {

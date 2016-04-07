@@ -278,6 +278,13 @@
             android:launchMode="singleInstance"
             android:theme="@style/CustomDialog"
             android:excludeFromRecents="true" />
+
+        <!-- Providers -->
+        <provider
+            android:name="com.sense360.android.quinoa.lib.preferences.MultiProcessPreferencesProvider"
+            android:authorities="${applicationId}.provider.quinoapreferences"
+            android:exported="false"
+            android:process=":sensethreesixty" />
     </application>
 
 </manifest>

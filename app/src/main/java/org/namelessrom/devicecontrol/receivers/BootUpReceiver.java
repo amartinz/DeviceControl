@@ -28,8 +28,6 @@ import android.support.v4.app.NotificationCompat;
 
 import com.sense360.android.quinoa.lib.Sense360;
 
-import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.services.BootupService;
@@ -41,11 +39,6 @@ import timber.log.Timber;
 
 public class BootUpReceiver extends BroadcastReceiver {
     private static final int NOTIFICATION_ID = 1000;
-
-    private static final int DELAY_SENSE360 = 5000;
-    private static final int DELAY_RETRIES_SENSE360 = 5;
-
-    private int delayCounter;
 
     @Override public void onReceive(final Context ctx, final Intent intent) {
         if (intent != null && Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
@@ -61,7 +54,13 @@ public class BootUpReceiver extends BroadcastReceiver {
         Paper.init(ctx);
         Utils.startTaskerService(ctx);
 
-        App.HANDLER.post(sense360Runnable);
+        if (!Sense360.isUserOptedOut(ctx.getApplicationContext())) {
+            Timber.v("Starting Sense360");
+            Sense360.start(ctx.getApplicationContext());
+        } else {
+            Timber.v("Stopping Sense360");
+            Sense360.stop(ctx.getApplicationContext());
+        }
 
         BootupConfig bootupConfig = BootupConfig.get();
         boolean isBootup = bootupConfig.isEnabled;
@@ -105,32 +104,4 @@ public class BootUpReceiver extends BroadcastReceiver {
         final NotificationManager notificationManager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(NOTIFICATION_ID, notification);
     }
-
-    private final Runnable sense360Runnable = new Runnable() {
-        @Override public void run() {
-            final Context ctx = App.get();
-            final int sense360 = Constants.canUseSense360(ctx);
-
-            // if detection failed and we have not reached the retry threshold, retry later
-            if (sense360 == Constants.SENSE360_FAILED_DETECTION && delayCounter < DELAY_RETRIES_SENSE360) {
-                delayCounter++;
-
-                Timber.v("Sense360: detection failed, retry in %sms | %s of %s",
-                        DELAY_SENSE360, delayCounter, DELAY_RETRIES_SENSE360);
-
-                App.HANDLER.postDelayed(sense360Runnable, DELAY_SENSE360);
-                return;
-            }
-            App.HANDLER.removeCallbacks(sense360Runnable);
-
-            if (Constants.useSense360(ctx)) {
-                Timber.v("Starting Sense360");
-                Sense360.start(ctx.getApplicationContext());
-            } else {
-                Timber.v("Stopping Sense360");
-                Sense360.stop(ctx.getApplicationContext());
-            }
-        }
-    };
-
 }

@@ -82,19 +82,15 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         showPollfish.setChecked(configuration.showPollfish);
         showPollfish.setOnPreferenceChangeListener(this);
 
-        if (Constants.canUseSense360(context) == Constants.SENSE360_OK) {
-            useSense360.setChecked(Constants.useSense360(context));
-            useSense360.setOnPreferenceChangeListener(this);
-            useSense360.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override public boolean onLongClick(View v) {
-                    final Activity activity = getActivity();
-                    App.get(activity).getCustomTabsHelper().launchUrl(activity, Constants.URL_SENSE360);
-                    return true;
-                }
-            });
-        } else {
-            useSense360.setVisibility(View.GONE);
-        }
+        useSense360.setChecked(!Sense360.isUserOptedOut(getContext().getApplicationContext()));
+        useSense360.setOnPreferenceChangeListener(this);
+        useSense360.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override public boolean onLongClick(View v) {
+                final Activity activity = getActivity();
+                App.get(activity).getCustomTabsHelper().launchUrl(activity, Constants.URL_SENSE360);
+                return true;
+            }
+        });
 
         expertEnable.setChecked(configuration.expertMode);
         expertEnable.setOnPreferenceChangeListener(this);
@@ -165,15 +161,15 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         } else if (useSense360 == preference) {
             final boolean useSense360 = (Boolean) newValue;
 
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
-            prefs.edit().putBoolean(Constants.KEY_USE_SENSE360, useSense360).commit();
-
+            final Context applicationContext = getContext().getApplicationContext();
             if (useSense360) {
                 Timber.v("Starting Sense360");
-                Sense360.start(getContext().getApplicationContext());
+                Sense360.userOptIn(applicationContext);
+                Sense360.start(applicationContext);
             } else {
                 Timber.v("Stopping Sense360");
-                Sense360.stop(getContext().getApplicationContext());
+                Sense360.userOptOut(applicationContext);
+                Sense360.stop(applicationContext);
             }
 
             return true;
