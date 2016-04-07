@@ -96,6 +96,9 @@
         android:theme="@style/AppTheme.Empty"
         tools:replace="android:supportsRtl">
         <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="a2ce406456c2fd2bae29fe53d24d521a37435d63" />
+        <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 

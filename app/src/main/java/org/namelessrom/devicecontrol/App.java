@@ -31,12 +31,16 @@ import android.support.annotation.WorkerThread;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.CustomTabsHelper;
 
 import java.io.File;
 
 import alexander.martinz.libs.execution.ShellManager;
+import io.fabric.sdk.android.Fabric;
 import io.paperdb.Paper;
 import timber.log.Timber;
 import uk.co.senab.bitmapcache.BitmapLruCache;
@@ -106,6 +110,8 @@ public class App extends android.app.Application {
 
         if (App.sInstance == null) {
             App.sInstance = this;
+
+            Fabric.with(App.sInstance, new Answers(), new Crashlytics());
 
             // force enable logger until we hit the user preference
             if (BuildConfig.DEBUG) {
