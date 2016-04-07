@@ -54,7 +54,7 @@
         android:elevation="4dp"
         android:src="@drawable/ic_add_white_24dp"
         app:fabSize="normal"
-        app:layout_anchor="@id/main_content"
+        app:layout_anchor="@id/cards_layout_container"
         app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>
