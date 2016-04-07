@@ -23,6 +23,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.support.annotation.ColorRes;
@@ -47,7 +48,7 @@ import uk.co.senab.bitmapcache.BitmapLruCache;
 
 // XXX: DO NOT USE ROOT HERE! NEVER!
 public class App extends android.app.Application {
-    public static final Handler HANDLER = new Handler();
+    public static final Handler HANDLER = new Handler(Looper.getMainLooper());
 
     private static final int APP_VERSION = 1;
 
@@ -147,7 +148,7 @@ public class App extends android.app.Application {
 
         handleAppUpgrades();
 
-        if (BuildConfig.DEBUG || App.enableDebug) {
+        if (App.enableDebug) {
             final int gmsVersion = getResources().getInteger(R.integer.google_play_services_version);
             Timber.v("Google Play Services -> %s", gmsVersion);
         }

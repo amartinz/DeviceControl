@@ -43,10 +43,6 @@ public class AppIconImageView extends CacheableImageView {
 
     private ImageLoadTask mCurrentTask;
 
-    public interface OnImageLoadedListener {
-        void onImageLoaded(CacheableBitmapDrawable result);
-    }
-
     public AppIconImageView(Context context) {
         this(context, null);
     }
@@ -64,7 +60,7 @@ public class AppIconImageView extends CacheableImageView {
         mCache = App.get(context).getBitmapLruCache();
     }
 
-    @DebugLog public boolean loadImage(AppItem appItem, OnImageLoadedListener listener) {
+    @DebugLog public boolean loadImage(AppItem appItem) {
         // First check whether there's already a task running, if so cancel it
         if (mCurrentTask != null) {
             mCurrentTask.cancel(true);
@@ -83,7 +79,7 @@ public class AppIconImageView extends CacheableImageView {
             // Memory Cache doesn't have the URL, do threaded request...
             setImageDrawable(null);
 
-            mCurrentTask = new ImageLoadTask(this, appItem, mCache, null, listener);
+            mCurrentTask = new ImageLoadTask(this, appItem, mCache);
             try {
                 mCurrentTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             } catch (RejectedExecutionException e) {
@@ -95,23 +91,15 @@ public class AppIconImageView extends CacheableImageView {
     }
 
     private static class ImageLoadTask extends AsyncTask<String, Void, CacheableBitmapDrawable> {
-        private final Context context;
         private final BitmapLruCache bitmapLruCache;
         private final AppItem appItem;
 
         private final WeakReference<CacheableImageView> weakReference;
-        private final OnImageLoadedListener imageLoadedListener;
 
-        private final BitmapFactory.Options options;
-
-        ImageLoadTask(CacheableImageView imageView, AppItem appItem, BitmapLruCache cache,
-                BitmapFactory.Options decodeOpts, OnImageLoadedListener listener) {
+        ImageLoadTask(CacheableImageView imageView, AppItem appItem, BitmapLruCache cache) {
             this.appItem = appItem;
             bitmapLruCache = cache;
-            context = imageView.getContext();
             weakReference = new WeakReference<>(imageView);
-            imageLoadedListener = listener;
-            options = decodeOpts;
         }
 
         @Override protected CacheableBitmapDrawable doInBackground(String... params) {
@@ -127,32 +115,28 @@ public class AppIconImageView extends CacheableImageView {
         }
 
         @Override protected void onPostExecute(CacheableBitmapDrawable result) {
-            super.onPostExecute(result);
-
-            CacheableImageView iv = weakReference.get();
+            final CacheableImageView iv = weakReference.get();
             if (iv != null) {
                 iv.setImageDrawable(result);
             }
-
-            if (imageLoadedListener != null) {
-                imageLoadedListener.onImageLoaded(result);
-            }
+            weakReference.clear();
         }
 
         @DebugLog private CacheableBitmapDrawable getBitmap() {
             final String pkgName = appItem.getPackageName();
 
             // Now we're not on the main thread we can check all caches
-            final CacheableBitmapDrawable result = bitmapLruCache.get(pkgName, options);
+            final CacheableBitmapDrawable result = bitmapLruCache.get(pkgName, null);
             if (result == null) {
                 Timber.d("Loading -> %s", pkgName);
 
+                final Context context = weakReference.get().getContext();
                 final Drawable drawable = appItem.getApplicationInfo().loadIcon(context.getPackageManager());
                 final Bitmap bitmap = DrawableHelper.drawableToBitmap(drawable);
                 final InputStream is = DrawableHelper.bitmapToInputStream(bitmap);
 
                 // Add to cache
-                return bitmapLruCache.put(pkgName, is, options);
+                return bitmapLruCache.put(pkgName, is, null);
             } else {
                 Timber.d("Got from Cache -> %s", pkgName);
             }

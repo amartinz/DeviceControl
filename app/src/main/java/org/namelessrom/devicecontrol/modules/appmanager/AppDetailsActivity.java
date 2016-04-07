@@ -297,7 +297,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         mAppDetailsContainer.setVisibility(View.VISIBLE);
         mAppDetailsError.setVisibility(View.GONE);
 
-        mAppIcon.loadImage(mAppItem, null);
+        mAppIcon.loadImage(mAppItem);
         mAppLabel.setText(mAppItem.getLabel());
         mAppPackage.setText(mAppItem.getPackageName());
         mAppContainer.setBackgroundResource(mAppItem.isEnabled() ? android.R.color.transparent : R.color.darker_gray);

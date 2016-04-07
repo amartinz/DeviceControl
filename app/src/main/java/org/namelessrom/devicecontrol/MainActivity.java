@@ -41,8 +41,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.CustomEvent;
 import com.pollfish.constants.Position;
 import com.pollfish.main.PollFish;
 import com.sense360.android.quinoa.lib.Sense360;

@@ -276,7 +276,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
 
     @Override public void onViewAttachedToWindow(ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        holder.appIcon.loadImage(holder.appItem, null);
+        holder.appIcon.loadImage(holder.appItem);
     }
 
     @Override public ViewHolder onCreateViewHolder(final ViewGroup parent, final int type) {
