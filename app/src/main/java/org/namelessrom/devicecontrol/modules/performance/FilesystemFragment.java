@@ -26,7 +26,6 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
@@ -41,6 +40,7 @@ import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import alexander.martinz.libs.execution.BusyBox;
 import alexander.martinz.libs.hardware.Emmc;
+import timber.log.Timber;
 
 public class FilesystemFragment extends AttachPreferenceFragment implements IoUtils.IoSchedulerListener, Preference.OnPreferenceChangeListener {
 
@@ -161,7 +161,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements IoUt
                 AlarmHelper.cancelAlarmFstrim(getActivity());
             }
             mFstrim.setChecked(value);
-            Logger.v(this, String.format("mFstrim: %s", value));
+            Timber.v("mFstrim: %s", value);
             return true;
         } else if (mFstrimInterval == preference) {
             final String value = String.valueOf(o);
@@ -173,7 +173,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements IoUt
             if (mFstrim.isChecked()) {
                 AlarmHelper.setAlarmFstrim(getActivity(), realValue);
             }
-            Logger.v(this, "mFstrimInterval: " + value);
+            Timber.v("mFstrimInterval: %s", value);
             return true;
         }
 
@@ -181,15 +181,7 @@ public class FilesystemFragment extends AttachPreferenceFragment implements IoUt
     }
 
     private String mapReadAhead(final String value) {
-        int val;
-
-        // try to parse the value we are writing
-        try {
-            val = Utils.parseInt(value);
-        } catch (Exception exc) {
-            Logger.e(this, exc.getMessage());
-            val = -1;
-        }
+        final int val = Utils.parseInt(value);
 
         // check the value and return the corresponding string
         switch (val) {

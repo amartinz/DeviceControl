@@ -19,11 +19,10 @@ package org.namelessrom.devicecontrol.actions.fs;
 
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
-import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -61,7 +60,6 @@ public class IoSchedulerAction extends BaseAction {
 
     @Override public void triggerAction() {
         if (TextUtils.isEmpty(value)) {
-            Logger.wtf(this, "No value for action!");
             return;
         }
 

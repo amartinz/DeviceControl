@@ -34,8 +34,6 @@ public class DeviceConfig {
     public boolean showPollfish;
 
     public boolean skipChecks;
-    public boolean debugStrictMode;
-    public boolean extensiveLogging;
 
     public boolean perfCpuLock;
     public boolean perfCpuGovLock;

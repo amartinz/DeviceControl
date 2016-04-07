@@ -28,15 +28,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.KsmUtils;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.DialogHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -235,27 +234,22 @@ public class KsmFragment extends AttachPreferenceFragment implements Preference.
                 String tmp;
                 if (mFullScans != null) {
                     tmp = strings.get(0);
-                    Logger.v(this, "strings.get(0): " + tmp);
                     mFullScans.setSummary(tmp);
                 }
                 if (mPagesShared != null) {
                     tmp = strings.get(1);
-                    Logger.v(this, "strings.get(1): " + tmp);
                     mPagesShared.setSummary(tmp);
                 }
                 if (mPagesSharing != null) {
                     tmp = strings.get(2);
-                    Logger.v(this, "strings.get(2): " + tmp);
                     mPagesSharing.setSummary(tmp);
                 }
                 if (mPagesUnshared != null) {
                     tmp = strings.get(3);
-                    Logger.v(this, "strings.get(3): " + tmp);
                     mPagesUnshared.setSummary(tmp);
                 }
                 if (mPagesVolatile != null) {
                     tmp = strings.get(4);
-                    Logger.v(this, "strings.get(4): " + tmp);
                     mPagesVolatile.setSummary(tmp);
                 }
             }

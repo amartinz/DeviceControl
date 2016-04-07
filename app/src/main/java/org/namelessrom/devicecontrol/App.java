@@ -37,7 +37,6 @@ import org.namelessrom.devicecontrol.utils.CustomTabsHelper;
 import java.io.File;
 
 import alexander.martinz.libs.execution.ShellManager;
-import hugo.weaving.DebugLog;
 import io.paperdb.Paper;
 import timber.log.Timber;
 import uk.co.senab.bitmapcache.BitmapLruCache;
@@ -51,7 +50,7 @@ public class App extends android.app.Application {
     private static final Timber.Tree DEBUG_TREE = new Timber.DebugTree();
 
     private static App sInstance;
-    private static boolean enableDebug;
+    private static boolean enableDebug = BuildConfig.DEBUG;
 
     private BitmapLruCache bitmapLruCache;
     private CustomTabsHelper customTabsHelper;
@@ -114,7 +113,6 @@ public class App extends android.app.Application {
             } else {
                 Timber.plant(new AwesomeTree());
             }
-            Logger.setEnabled(true);
             ShellManager.enableDebug(true);
 
             Paper.init(this);
@@ -128,14 +126,6 @@ public class App extends android.app.Application {
     }
 
     @WorkerThread private void setupEverythingAsync() {
-        final DeviceConfig deviceConfig = DeviceConfig.get();
-        App.enableDebug = deviceConfig.extensiveLogging;
-
-        if (deviceConfig.debugStrictMode) {
-            Logger.setStrictModeEnabled(true);
-        }
-
-        Logger.setEnabled(App.enableDebug);
         ShellManager.enableDebug(App.enableDebug);
 
         Timber.d("Enable debug: %s", App.enableDebug);
@@ -242,14 +232,6 @@ public class App extends android.app.Application {
 
     public String[] getStringArray(final int resId) {
         return getResources().getStringArray(resId);
-    }
-
-    public static void setEnableDebug(boolean enableDebug) {
-        App.enableDebug = enableDebug;
-    }
-
-    public static boolean getEnableDebug() {
-        return App.enableDebug;
     }
 
     private static class AwesomeTree extends Timber.DebugTree {

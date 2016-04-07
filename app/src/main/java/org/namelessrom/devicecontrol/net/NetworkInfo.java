@@ -28,7 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import alexander.martinz.libs.logger.Logger;
+import timber.log.Timber;
 
 /**
  * Helper class for network informations like getting the ip address of the device
@@ -50,7 +50,7 @@ public class NetworkInfo {
 
         final String formattedIp = String.format("%d.%d.%d.%d",
                 (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
-        Logger.v(TAG, "formattedIp (wifi) -> %s", formattedIp);
+        Timber.v("formattedIp (wifi) -> %s", formattedIp);
         return formattedIp;
     }
 

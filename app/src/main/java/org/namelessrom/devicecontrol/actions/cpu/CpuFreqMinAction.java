@@ -19,13 +19,12 @@ package org.namelessrom.devicecontrol.actions.cpu;
 
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
-import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
+import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.Command;
@@ -63,7 +62,6 @@ public class CpuFreqMinAction extends BaseAction {
 
     @Override public void triggerAction() {
         if (TextUtils.isEmpty(value)) {
-            Logger.wtf(this, "No value for action!");
             return;
         }
 

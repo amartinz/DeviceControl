@@ -21,7 +21,6 @@ import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.View;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.activities.FilePickerActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.utils.ShellOutput;
@@ -30,6 +29,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import timber.log.Timber;
 
 /**
  * A class for picking a file
@@ -101,14 +102,14 @@ public class FilePickerFragment extends ListFragment implements OnBackPressedLis
             return;
         }
 
-        Logger.v(this, String.format("onFile(%s)", currentPath));
+        Timber.v("onFile(%s)", currentPath);
         loadFiles(currentPath, true);
     }
 
     @Override public void onFlashItemPicked(final FlashItem item) {
         if (!ContentTypes.isFiletypeMatching(item.getName(), fileType)) { return; }
 
-        Logger.v(this, String.format("filePicked(%s)", item.getPath()));
+        Timber.v("filePicked(%s)", item.getPath());
         if (getActivity() instanceof FilePickerActivity) {
             ((FilePickerActivity) getActivity()).onFlashItemPicked(item);
         }

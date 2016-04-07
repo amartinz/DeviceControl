@@ -26,11 +26,12 @@ import android.os.Environment;
 import android.os.storage.StorageManager;
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class CwmBasedRecovery extends RecoveryInfo {
 
@@ -145,7 +146,7 @@ public class CwmBasedRecovery extends RecoveryInfo {
                     .getMethod("getVolumePaths", new Class[0])
                     .invoke(storageManager);
         } catch (Exception ex) {
-            Logger.e(this, "error getting volume paths", ex);
+            Timber.e(ex, "error getting volume paths");
             return null;
         }
     }
@@ -158,7 +159,7 @@ public class CwmBasedRecovery extends RecoveryInfo {
             return (String) localObject.getClass().getMethod("getPath", new Class[0])
                     .invoke(localObject);
         } catch (Exception ex) {
-            Logger.e(this, "error getting primary volume path", ex);
+            Timber.e(ex, "error getting primary volume path");
             return null;
         }
     }

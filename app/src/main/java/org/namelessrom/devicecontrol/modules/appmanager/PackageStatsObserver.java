@@ -6,7 +6,8 @@ import android.os.Parcel;
 import android.os.RemoteException;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
+
+import timber.log.Timber;
 
 /**
  * Our Stub for the package stats observer.
@@ -46,9 +47,8 @@ public class PackageStatsObserver extends IPackageStatsObserver.Stub {
         return true;
     }
 
-    @Override public void onGetStatsCompleted(final PackageStats pStats, final boolean success)
-            throws RemoteException {
-        Logger.v(this, "onGetStatsCompleted(): %s", success);
+    @Override public void onGetStatsCompleted(final PackageStats pStats, final boolean success) throws RemoteException {
+        Timber.v("onGetStatsCompleted(): %s", success);
         App.HANDLER.post(new Runnable() {
             @Override
             public void run() {

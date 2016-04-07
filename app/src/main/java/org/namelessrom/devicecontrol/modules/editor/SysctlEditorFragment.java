@@ -37,18 +37,18 @@ import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.ShellOutput;
 import org.namelessrom.devicecontrol.utils.Scripts;
+import org.namelessrom.devicecontrol.utils.ShellOutput;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.execution.BusyBox;
+import alexander.martinz.libs.execution.RootShell;
+import timber.log.Timber;
 
 public class SysctlEditorFragment extends BaseEditorFragment {
 
@@ -195,11 +195,11 @@ public class SysctlEditorFragment extends BaseEditorFragment {
                 RootShell.fireAndForget("chmod 644 /system/etc/sysctl.conf;sysctl -p /system/etc/sysctl.conf;");
                 break;
             default:
-                Logger.v(this, "onReadPropsCompleted: " + shellOutput.output);
+                Timber.v("onReadPropsCompleted: %s", shellOutput.output);
                 if (isAdded()) {
                     loadProp(shellOutput.output);
                 } else {
-                    Logger.w(this, "Not attached!");
+                    Timber.w("Not attached!");
                 }
                 break;
         }

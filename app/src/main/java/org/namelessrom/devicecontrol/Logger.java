@@ -20,7 +20,7 @@ package org.namelessrom.devicecontrol;
 
 import android.os.Vibrator;
 
-public class Logger extends alexander.martinz.libs.logger.Logger {
+public class Logger {
     public static void debugVibrate() {
         if (BuildConfig.DEBUG) {
             final Vibrator vibrator = App.get().getVibrator();

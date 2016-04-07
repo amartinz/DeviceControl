@@ -27,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.modules.wizard.setup.Page;
@@ -35,6 +34,8 @@ import org.namelessrom.devicecontrol.modules.wizard.setup.SetupDataCallbacks;
 import org.namelessrom.devicecontrol.modules.wizard.ui.SetupPageFragment;
 
 import java.util.ArrayList;
+
+import timber.log.Timber;
 
 public class ValuePage extends Page {
     private ValueFragment fragment;
@@ -83,7 +84,7 @@ public class ValuePage extends Page {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override public void onItemClick(AdapterView<?> adapterView, View view, int i,
                         long l) {
-                    Logger.i(this, "position: %s | values: %s", i, entryValues.get(i));
+                    Timber.i("position: %s | values: %s", i, entryValues.get(i));
                     setData(entryValues.get(i));
                     mCallbacks.onPageLoaded(mPage);
                 }

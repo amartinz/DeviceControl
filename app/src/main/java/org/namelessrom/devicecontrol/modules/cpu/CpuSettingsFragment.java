@@ -34,7 +34,6 @@ import android.widget.LinearLayout;
 import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
@@ -434,7 +433,6 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
 
         View rowView = mCpuInfo.getChildAt(core);
         if (rowView == null) {
-            Logger.v(this, String.format("generateRow(%s);", cpuCore.toString()));
             rowView = new CpuCoreView(getActivity());
             mCpuInfo.addView(rowView);
         }
@@ -450,7 +448,6 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                       + " [" + cpuCore.governor + ']');
             ((CpuCoreView) rowView).bar.setMax(cpuCore.max);
             ((CpuCoreView) rowView).bar.setProgress(cpuCore.current);
-            Logger.v(this, String.format("updated row(%s);", cpuCore.toString()));
         }
 
         return rowView;

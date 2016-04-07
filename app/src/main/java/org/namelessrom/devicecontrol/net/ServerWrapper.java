@@ -19,7 +19,6 @@ import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
 import com.koushikdutta.async.http.server.HttpServerRequestCallback;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.models.WebServerConfig;
 import org.namelessrom.devicecontrol.services.WebServerService;
 import org.namelessrom.devicecontrol.utils.ContentTypes;
@@ -97,19 +96,19 @@ public class ServerWrapper {
         webServerConfig = WebServerConfig.get();
 
         mServer = new AsyncHttpServer();
-        Logger.v(this, "[!] Server created");
+        Timber.v("[!] Server created");
 
         setupFonts();
-        Logger.v(this, "[!] Setup fonts");
+        Timber.v("[!] Setup fonts");
 
         setupWebSockets();
-        Logger.v(this, "[!] Setup websockets");
+        Timber.v("[!] Setup websockets");
 
         setupApi();
-        Logger.v(this, "[!] Setup api");
+        Timber.v("[!] Setup api");
 
         mServer.directory(App.get(), "/license", "license.html");
-        Logger.v(this, "[!] Setup route: /license");
+        Timber.v("[!] Setup route: /license");
 
         mServer.get("/files", new HttpServerRequestCallback() {
             @Override public void onRequest(final AsyncHttpServerRequest req, final AsyncHttpServerResponse res) {
@@ -117,14 +116,14 @@ public class ServerWrapper {
             }
         });
         mServer.get("/files/(?s).*", filesCallback);
-        Logger.v(this, "[!] Setup route: /files/(?s).*");
+        Timber.v("[!] Setup route: /files/(?s).*");
 
         mServer.get("/information", informationCallback);
-        Logger.v(this, "[!] Setup route: /information");
+        Timber.v("[!] Setup route: /information");
 
         // should be always the last, matches anything that the stuff above did not
         mServer.get("/(?s).*", mainCallback);
-        Logger.v(this, "[!] Setup route: /");
+        Timber.v("[!] Setup route: /");
 
         mServerSocket = mServer.listen(WebServerConfig.get().port);
 
@@ -297,7 +296,7 @@ public class ServerWrapper {
 
                 socket.setStringCallback(new WebSocket.StringCallback() {
                     @Override public void onStringAvailable(final String s) {
-                        Logger.v(this, s);
+                        Timber.v(s);
                         //noinspection StatementWithEmptyBody
                         if (ACTION_CONNECTED.equals(s)) {
                             //TODO: initializing
@@ -321,7 +320,7 @@ public class ServerWrapper {
         mServer.get("/api/device", new HttpServerRequestCallback() {
             @Override public void onRequest(final AsyncHttpServerRequest req, final AsyncHttpServerResponse res) {
                 final String result = Device.get(mService).update().toString();
-                Logger.v(this, result);
+                Timber.v(result);
                 res.send(result);
             }
         });
@@ -342,7 +341,7 @@ public class ServerWrapper {
 
     private void registerReceivers() {
         if (mService == null) {
-            Logger.wtf(this, "mService is null!");
+            Timber.wtf("mService is null!");
             return;
         }
         final Intent sticky = mService.registerReceiver(mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -354,7 +353,7 @@ public class ServerWrapper {
 
     private void unregisterReceivers() {
         if (mService == null) {
-            Logger.wtf(this, "mService is null!");
+            Timber.wtf("mService is null!");
             return;
         }
         try {

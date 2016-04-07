@@ -57,7 +57,6 @@ public abstract class SetupPageFragment extends Fragment {
 
     @Override public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Logger.v(this, "onActivityCreated");
         mPage = mCallbacks.getPage(mKey);
         setUpPage();
     }

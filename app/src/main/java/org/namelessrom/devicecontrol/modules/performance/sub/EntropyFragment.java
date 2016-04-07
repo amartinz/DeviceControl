@@ -31,23 +31,23 @@ import com.koushikdutta.ion.Ion;
 
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.ExtraUtils;
 import org.namelessrom.devicecontrol.models.ExtraConfig;
-import org.namelessrom.devicecontrol.utils.ShellOutput;
 import org.namelessrom.devicecontrol.preferences.AwesomeEditTextPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.preferences.CustomTogglePreference;
-import org.namelessrom.devicecontrol.views.AttachPreferenceProgressFragment;
 import org.namelessrom.devicecontrol.utils.AppHelper;
+import org.namelessrom.devicecontrol.utils.ShellOutput;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.views.AttachPreferenceProgressFragment;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import alexander.martinz.libs.execution.RootShell;
+import timber.log.Timber;
 
 public class EntropyFragment extends AttachPreferenceProgressFragment implements Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener {
     private static final String URL_RNG =
@@ -120,7 +120,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
             return true;
         } else if (mRngActive == preference) {
             if (!RNGD.exists()) {
-                Logger.i(this, "%s does not exist, downloading...", RNGD.getAbsolutePath());
+                Timber.i("%s does not exist, downloading...", RNGD.getAbsolutePath());
                 mRngActive.setEnabled(false);
                 mProgressBar.setVisibility(View.VISIBLE);
 
@@ -132,7 +132,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
                         .setCallback(new FutureCallback<File>() {
                             @Override public void onCompleted(final Exception e, final File res) {
                                 if (e != null) {
-                                    Logger.e(this, "Error downloading rngd!");
+                                    Timber.e("Error downloading rngd!");
                                     if (mRngActive != null) {
                                         mRngActive.setSummary(R.string.error_download);
                                     }
@@ -155,10 +155,10 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
             setRngdPermissions();
 
             if ((Boolean) o) {
-                Logger.v(this, "Starting rngd");
+                Timber.v("Starting rngd");
                 RootShell.fireAndForget(String.format("%s -P;\n", RNGD.getAbsolutePath()));
             } else {
-                Logger.v(this, "Stopping rngd");
+                Timber.v("Stopping rngd");
                 AppHelper.killProcess(getActivity(), RNGD.getAbsolutePath());
             }
             AppHelper.getProcess(this, RNGD.getAbsolutePath());
@@ -169,7 +169,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
     }
 
     public void setRngdPermissions() {
-        Logger.v(this, "RNGD --> setReadable: %s, setExectuable: %s",
+        Timber.v("RNGD --> setReadable: %s, setExectuable: %s",
                 RNGD.setReadable(true, false),
                 RNGD.setExecutable(true, false));
     }
@@ -233,7 +233,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
                 String tmp;
                 if (mEntropyAvail != null) {
                     tmp = strings.get(0);
-                    Logger.v(this, "strings.get(0): " + tmp);
+                    Timber.v("strings.get(0): %s", tmp);
                     mEntropyAvail.setSummary(tmp);
                 }
             }

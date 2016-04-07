@@ -28,13 +28,13 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.RootShell;
 import alexander.martinz.libs.execution.BusyBox;
+import timber.log.Timber;
 
 public class AppItem {
     private final PackageInfo pkgInfo;
@@ -99,9 +99,7 @@ public class AppItem {
             try {
                 activity.startActivity(i);
                 return true;
-            } catch (ActivityNotFoundException anfe) {
-                Logger.e(appItem.getPackageName(), "Could not launch activity", anfe);
-            }
+            } catch (ActivityNotFoundException ignored) { }
         }
 
         return false;
@@ -213,8 +211,7 @@ public class AppItem {
         }
 
         final String cmd = sb.toString();
-        Logger.v(appItem.getPackageName(), cmd);
-
+        Timber.v("Created command: %s", cmd);
         // create the dialog (will not be shown for a long amount of time though)
         if (withFeedback) {
             final ProgressDialog dialog;

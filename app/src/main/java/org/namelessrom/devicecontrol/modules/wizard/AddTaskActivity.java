@@ -34,7 +34,6 @@ import android.widget.Toast;
 import com.balysv.materialmenu.MaterialMenuDrawable;
 import com.balysv.materialmenu.extras.toolbar.MaterialMenuIconToolbar;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.models.TaskerConfig;
@@ -45,6 +44,8 @@ import org.namelessrom.devicecontrol.modules.wizard.setup.PageList;
 import org.namelessrom.devicecontrol.modules.wizard.setup.SetupDataCallbacks;
 import org.namelessrom.devicecontrol.modules.wizard.setup.TaskerSetupWizardData;
 import org.namelessrom.devicecontrol.modules.wizard.ui.StepPagerStrip;
+
+import timber.log.Timber;
 
 public class AddTaskActivity extends BaseActivity implements SetupDataCallbacks {
     public static final String ARG_ITEM = "arg_item";
@@ -99,7 +100,7 @@ public class AddTaskActivity extends BaseActivity implements SetupDataCallbacks 
         }
 
         final TaskerItem item = (TaskerItem) getIntent().getSerializableExtra(ARG_ITEM);
-        Logger.v(this, "TaskerItem: %s", item == null ? "null" : item.toString());
+        Timber.v("TaskerItem: %s", item == null ? "null" : item.toString());
         if (item != null) {
             mSetupData.setSetupData(item);
             toolbar.setTitle(R.string.edit_task);

@@ -32,7 +32,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 
 import java.text.Collator;
@@ -429,12 +428,10 @@ public class AppSecurityPermissions {
                         throw new Exception("app.loadLabel returned null!");
                     }
                 } catch (Exception e) {
-                    Logger.e(this, "Error loading label", e);
                     pgrp.mLabel = pgrp.loadLabel(mPm);
                 }
             }
             if (pgrp.mLabel == null) {
-                Logger.w(this, "label is null, continue");
                 continue;
             }
             mPermGroupsList.add(pgrp);

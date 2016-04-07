@@ -94,23 +94,5 @@
             app:prefTitle="@string/su_shell_context" />
     </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial>
 
-    <!-- Debug -->
-    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
-        android:id="@+id/cat_prefs_debug"
-        style="@style/MaterialPreferences.Default"
-        app:prefTitle="@string/debugging">
-
-        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
-            android:id="@+id/prefs_extensive_logging"
-            style="@style/MaterialPreferences.Default"
-            app:prefTitle="@string/extensive_logging" />
-
-        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
-            android:id="@+id/prefs_debug_strict_mode"
-            style="@style/MaterialPreferences.Default"
-            app:prefTitle="@string/debug_strict_mode" />
-
-    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial>
-
 </LinearLayout>
 

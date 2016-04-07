@@ -98,9 +98,6 @@ dependencies {
 
     compile project(':ExternalSources')
 
-    // see https://github.com/Evisceration/logger
-    compile 'com.github.Evisceration:logger:1.0.7'
-
     if (rootProject.ext.useLocalSources) {
         // see https://github.com/Evisceration/ExecutionLibrary
         compile project(':ExecutionLibrary')

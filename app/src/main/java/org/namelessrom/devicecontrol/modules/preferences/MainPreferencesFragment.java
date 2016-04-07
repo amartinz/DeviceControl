@@ -31,10 +31,8 @@ import com.sense360.android.quinoa.lib.Sense360;
 
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Constants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
-import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
 import org.namelessrom.devicecontrol.theme.AppResources;
 
 import alexander.martinz.libs.execution.ShellManager;
@@ -57,10 +55,6 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
     @Bind(R.id.prefs_expert_enable) MaterialSwitchPreference expertEnable;
     @Bind(R.id.prefs_expert_skip_checks) MaterialSwitchPreference skipChecks;
     @Bind(R.id.prefs_expert_su_shell_context) MaterialListPreference shellContext;
-
-    @Bind(R.id.cat_prefs_debug) CustomPreferenceCategoryMaterial debugCategory;
-    @Bind(R.id.prefs_debug_strict_mode) MaterialSwitchPreference debugStrictMode;
-    @Bind(R.id.prefs_extensive_logging) MaterialSwitchPreference extensiveLogging;
 
     @Override protected int getLayoutResourceId() {
         return R.layout.pref_app_main;
@@ -98,12 +92,6 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         skipChecks.setChecked(configuration.skipChecks);
         skipChecks.setOnPreferenceChangeListener(this);
 
-        debugStrictMode.setChecked(configuration.debugStrictMode);
-        debugStrictMode.setOnPreferenceChangeListener(this);
-
-        extensiveLogging.setChecked(configuration.extensiveLogging);
-        extensiveLogging.setOnPreferenceChangeListener(this);
-
         // TODO: investigate if needed
         /*
         shellContext.setValue(configuration.suShellContext);
@@ -113,7 +101,7 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         shellContext.setOnPreferenceChangeListener(this);
         */
 
-        updateExpertVisiblity(configuration.expertMode);
+        updateExpertVisibility(configuration.expertMode);
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -183,7 +171,7 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             deviceConfig.save();
 
             expertEnable.setChecked(value);
-            updateExpertVisiblity(deviceConfig.expertMode);
+            updateExpertVisibility(deviceConfig.expertMode);
             return true;
         } else if (skipChecks == preference) {
             final boolean value = (Boolean) newValue;
@@ -206,36 +194,16 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             Timber.v("reopening shells");
             ShellManager.get().cleanupShells();
             return true;
-        } else if (extensiveLogging == preference) {
-            final boolean value = (Boolean) newValue;
-
-            deviceConfig.extensiveLogging = value;
-            deviceConfig.save();
-
-            App.setEnableDebug(value);
-            Logger.setEnabled(value);
-            extensiveLogging.setChecked(value);
-            return true;
-        } else if (debugStrictMode == preference) {
-            final boolean value = (Boolean) newValue;
-
-            deviceConfig.debugStrictMode = value;
-            deviceConfig.save();
-
-            Logger.setStrictModeEnabled(value);
-            debugStrictMode.setChecked(value);
-            return true;
         }
 
         return false;
     }
 
-    private void updateExpertVisiblity(boolean isExpertMode) {
+    private void updateExpertVisibility(boolean isExpertMode) {
         final int visibility = (isExpertMode ? View.VISIBLE : View.GONE);
         skipChecks.setVisibility(visibility);
         // TODO: investigate if needed
         shellContext.setVisibility(View.GONE);
-        debugCategory.setVisibility(visibility);
     }
 
 }

@@ -19,7 +19,6 @@ package org.namelessrom.devicecontrol.actions.extras.uksm;
 
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.hardware.UksmUtils;
@@ -59,7 +58,6 @@ public class UksmSleepAction extends BaseAction {
 
     @Override public void triggerAction() {
         if (TextUtils.isEmpty(value)) {
-            Logger.wtf(this, "No value for action!");
             return;
         }
 

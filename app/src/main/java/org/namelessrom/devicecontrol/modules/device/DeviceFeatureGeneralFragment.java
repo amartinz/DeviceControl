@@ -380,7 +380,6 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
                 String currentLine;
                 while ((currentLine = reader.readLine()) != null) {
                     if (currentLine.equals(GLOVE_MODE)) {
-                        Logger.v(this, "Glove mode / high touch sensitivity supported");
                         return true;
                     }
                 }
@@ -397,7 +396,6 @@ public class DeviceFeatureGeneralFragment extends CustomPreferenceFragment imple
             }
         }
 
-        Logger.v(this, "Glove mode / high touch sensitivity NOT supported");
         return false;
     }
 

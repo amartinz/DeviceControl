@@ -21,11 +21,12 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.wizard.setup.Page;
 import org.namelessrom.devicecontrol.modules.wizard.setup.SetupDataCallbacks;
 import org.namelessrom.devicecontrol.modules.wizard.ui.SetupPageFragment;
+
+import timber.log.Timber;
 
 public class InformationPage extends Page {
 
@@ -51,7 +52,7 @@ public class InformationPage extends Page {
         @Override protected void setUpPage() {
             mPage.setRequired(false);
             mPage.setCompleted(true);
-            Logger.v(this, "TaskerItem: %s", mCallbacks.getSetupData().toString());
+            Timber.v("TaskerItem: %s", mCallbacks.getSetupData().toString());
         }
 
         @Override protected int getLayoutResource() {

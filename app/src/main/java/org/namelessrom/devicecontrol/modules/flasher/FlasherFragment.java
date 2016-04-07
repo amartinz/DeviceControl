@@ -34,7 +34,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.RequestFileActivity;
 import org.namelessrom.devicecontrol.theme.AppResources;
@@ -43,6 +42,8 @@ import org.namelessrom.devicecontrol.utils.IOUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import timber.log.Timber;
 
 public class FlasherFragment extends AttachFragment implements RequestFileActivity.RequestFileCallback {
     private RecyclerView mRecyclerView;
@@ -102,13 +103,13 @@ public class FlasherFragment extends AttachFragment implements RequestFileActivi
     }
 
     @Override public void fileRequested(String filePath) {
-        Logger.v(this, "fileRequested --> %s", filePath);
+        Timber.v("fileRequested --> %s", filePath);
         if (TextUtils.isEmpty(filePath)) {
             Snackbar.make(mRecyclerView, R.string.file_not_found, Snackbar.LENGTH_SHORT);
         } else {
             if (filePath.startsWith("null")) {
                 filePath = filePath.replaceFirst("null", IOUtils.get().getPrimarySdCard());
-                Logger.v(this, "filePath started with null! modified -> %s", filePath);
+                Timber.v("filePath started with null! modified -> %s", filePath);
             }
             addFile(new File(filePath));
         }

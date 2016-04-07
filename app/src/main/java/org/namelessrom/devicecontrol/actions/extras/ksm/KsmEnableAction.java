@@ -20,7 +20,6 @@ package org.namelessrom.devicecontrol.actions.extras.ksm;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
@@ -60,7 +59,6 @@ public class KsmEnableAction extends BaseAction {
 
     @Override public void triggerAction() {
         if (TextUtils.isEmpty(value)) {
-            Logger.wtf(this, "No value for action!");
             return;
         }
 

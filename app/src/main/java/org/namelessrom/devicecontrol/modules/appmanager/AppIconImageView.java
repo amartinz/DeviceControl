@@ -26,7 +26,6 @@ import android.os.AsyncTask;
 import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
 import java.io.InputStream;
@@ -88,7 +87,7 @@ public class AppIconImageView extends CacheableImageView {
             try {
                 mCurrentTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             } catch (RejectedExecutionException e) {
-                Logger.e(this, "rejected task execution", e);
+                Timber.e(e, "rejected task execution");
             }
 
             return false;

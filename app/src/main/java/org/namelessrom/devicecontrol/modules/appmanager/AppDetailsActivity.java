@@ -56,7 +56,6 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.modules.appmanager.permissions.AppSecurityPermissions;
@@ -64,6 +63,9 @@ import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
 import java.util.ArrayList;
+
+import hugo.weaving.DebugLog;
+import timber.log.Timber;
 
 public class AppDetailsActivity extends BaseActivity implements PackageStatsObserver.OnPackageStatsListener, View.OnClickListener {
     public static final String ARG_FROM_ACTIVITY = "arg_from_activity";
@@ -171,7 +173,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         refreshAppDetails();
     }
 
-    @Nullable private String getTargetPackageName(@Nullable Intent intent) {
+    @DebugLog @Nullable private String getTargetPackageName(@Nullable Intent intent) {
         String packageName = null;
         Bundle args = null;
         if (intent != null) {
@@ -185,7 +187,6 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                 packageName = intent.getData().getSchemeSpecificPart();
             }
         }
-        Logger.i(this, "packageName: %s", String.valueOf(packageName));
         return packageName;
     }
 
@@ -424,8 +425,9 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
     }
 
     @Override public void onPackageStats(final PackageStats packageStats) {
-        Logger.i(this, "onAppSizeEvent()");
-        if (packageStats == null) { return; }
+        if (packageStats == null) {
+            return;
+        }
 
         final long totalSize = packageStats.codeSize + packageStats.dataSize
                                + packageStats.externalCodeSize + packageStats.externalDataSize
@@ -505,7 +507,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
             try {
                 AppHelper.getSize(mPm, AppDetailsActivity.this, mAppItem.getPackageName());
             } catch (Exception e) {
-                Logger.e(this, "AppHelper.getSize(): " + e);
+                Timber.e(e, "AppHelper.getSize()");
             }
         }
     };

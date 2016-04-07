@@ -33,12 +33,13 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.Serializable;
+
+import timber.log.Timber;
 
 public class RequestFileActivity extends Activity {
 
@@ -79,7 +80,7 @@ public class RequestFileActivity extends Activity {
                 throw new ActivityNotFoundException();
             }
         } catch (ActivityNotFoundException e) {
-            Logger.e(this, "No activity found to handle file picking! Falling back to default!", e);
+            Timber.e(e, "No activity found to handle file picking! Falling back to default!");
             launchInternalPicker();
         }
     }
@@ -91,27 +92,24 @@ public class RequestFileActivity extends Activity {
         try {
             startActivityForResult(intent, REQUEST_PICK_FILE_TWO);
         } catch (ActivityNotFoundException e) {
-            Logger.wtf(this, "Could not start default activity to pick files", e);
+            Timber.wtf(e, "Could not start default activity to pick files");
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK
-                && (requestCode == REQUEST_PICK_FILE || requestCode == REQUEST_PICK_FILE_TWO)) {
+        if (resultCode == RESULT_OK && (requestCode == REQUEST_PICK_FILE || requestCode == REQUEST_PICK_FILE_TWO)) {
 
             if (data == null) {
-                Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_LONG)
-                        .show();
+                Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
             } else {
                 try {
                     // some file pickers like AndroZip allow to pick the file but we error out when
                     // trying to read the provider as it is not exported
                     handleActivityResult(data, requestCode);
                 } catch (SecurityException se) {
-                    Logger.e(this, "could not handle activity result", se);
-                    Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_LONG)
-                            .show();
+                    Timber.e(se, "could not handle activity result");
+                    Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -132,7 +130,7 @@ public class RequestFileActivity extends Activity {
             filePath = data.getStringExtra("path");
         }
 
-        Logger.i(this, "uri: %s, filepath: %s", uri, filePath);
+        Timber.i("uri: %s, filepath: %s", uri, filePath);
 
         if (!Utils.fileExists(filePath) && uri != null) {
             final ContentResolver cr = getContentResolver();

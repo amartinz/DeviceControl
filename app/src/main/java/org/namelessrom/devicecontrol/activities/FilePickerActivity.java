@@ -25,7 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.modules.filepicker.FilePickerFragment;
@@ -34,6 +33,8 @@ import org.namelessrom.devicecontrol.modules.filepicker.FlashItem;
 
 import java.io.File;
 import java.util.Locale;
+
+import timber.log.Timber;
 
 public class FilePickerActivity extends BaseActivity implements FilePickerListener {
 
@@ -65,7 +66,7 @@ public class FilePickerActivity extends BaseActivity implements FilePickerListen
         i.putExtras(b);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             final Uri uri = Uri.fromFile(new File(flashItem.getPath()));
-            Logger.v(this, "Uri: %s", uri.toString());
+            Timber.v("Uri: %s", uri.toString());
             i.setDataAndNormalize(uri);
         } else {
             // we do not have the convenient normalizing method so we need to "normalize" ourselves
@@ -85,7 +86,7 @@ public class FilePickerActivity extends BaseActivity implements FilePickerListen
             // finally done, lets build that garbage back to an uri…
             uri = new Uri.Builder().scheme(scheme).path(path).build();
 
-            Logger.v(this, "Legacy | Uri: %s", uri.toString());
+            Timber.v("Legacy | Uri: %s", uri.toString());
             i.setData(uri);
         }
         setResult(Activity.RESULT_OK, i);
@@ -95,9 +96,8 @@ public class FilePickerActivity extends BaseActivity implements FilePickerListen
     @Override public void onFilePicked(final File ignored) { }
 
     @Override public void onBackPressed() {
-        if (mCurrentFragment instanceof OnBackPressedListener
-                && ((OnBackPressedListener) mCurrentFragment).onBackPressed()) {
-            Logger.v(this, "onBackPressed()");
+        if (mCurrentFragment instanceof OnBackPressedListener && ((OnBackPressedListener) mCurrentFragment).onBackPressed()) {
+            Timber.v("onBackPressed()");
         } else if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
         } else {

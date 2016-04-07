@@ -37,16 +37,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.ShellOutput;
 import org.namelessrom.devicecontrol.utils.Scripts;
+import org.namelessrom.devicecontrol.utils.ShellOutput;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 import alexander.martinz.libs.execution.BusyBox;
+import timber.log.Timber;
 
 public class BuildPropEditorFragment extends BaseEditorFragment {
 
@@ -154,11 +154,11 @@ public class BuildPropEditorFragment extends BaseEditorFragment {
                 }
                 break;
             default:
-                Logger.v(this, "onReadPropsCompleted: " + shellOutput.output);
+                Timber.v("onReadPropsCompleted: %s", shellOutput.output);
                 if (isAdded()) {
                     loadBuildProp(shellOutput.output);
                 } else {
-                    Logger.w(this, "Not attached!");
+                    Timber.w("Not attached!");
                 }
                 break;
         }

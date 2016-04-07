@@ -28,17 +28,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
-import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.hardware.UksmUtils;
+import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.preferences.AwesomeTogglePreference;
 import org.namelessrom.devicecontrol.preferences.CustomListPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.DialogHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -247,32 +246,26 @@ public class UksmFragment extends AttachPreferenceFragment implements Preference
                 String tmp;
                 if (mPagesShared != null) {
                     tmp = strings.get(0);
-                    Logger.v(this, "strings.get(0): " + tmp);
                     mPagesShared.setSummary(tmp);
                 }
                 if (mPagesScanned != null) {
                     tmp = strings.get(1);
-                    Logger.v(this, "strings.get(1): " + tmp);
                     mPagesScanned.setSummary(tmp);
                 }
                 if (mFullScans != null) {
                     tmp = strings.get(2);
-                    Logger.v(this, "strings.get(2): " + tmp);
                     mFullScans.setSummary(tmp);
                 }
                 if (mHashStrength != null) {
                     tmp = strings.get(3);
-                    Logger.v(this, "strings.get(3): " + tmp);
                     mHashStrength.setSummary(tmp);
                 }
                 if (mPagesSharing != null) {
                     tmp = strings.get(4);
-                    Logger.v(this, "strings.get(4): " + tmp);
                     mPagesSharing.setSummary(tmp);
                 }
                 if (mSleepTimes != null) {
                     tmp = strings.get(5);
-                    Logger.v(this, "strings.get(5): " + tmp);
                     mSleepTimes.setSummary(tmp);
                 }
             }

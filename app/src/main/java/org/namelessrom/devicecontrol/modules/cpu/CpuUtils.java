@@ -21,7 +21,6 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuStateMonitor;
@@ -30,6 +29,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 /**
  * Generic CPU Tasks.
@@ -78,7 +79,7 @@ public class CpuUtils {
             try {
                 temp = Utils.parseInt(tmp);
             } catch (Exception e) {
-                Logger.e(this, "could not read cpu temperature", e);
+                Timber.e(e, "could not read cpu temperature");
                 return -1;
             }
             temp = (temp < 0 ? 0 : temp);

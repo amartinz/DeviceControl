@@ -43,15 +43,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.hardware.VoltageUtils;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.models.ExtraConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import java.util.ArrayList;
 
@@ -236,10 +235,8 @@ public class VoltageFragment extends AttachPreferenceFragment {
                     mNames = VoltageUtils.get().getUvValues(true);
                     mValues = VoltageUtils.get().getUvValues(false);
                 } catch (Exception exc) {
-                    Logger.e(this, "UV ERROR: " + exc.getMessage());
                     return "ERROR";
                 }
-                Logger.v(this, "UV TABLE: " + buildTable(mValues));
 
                 String name;
                 CustomPreference pref;
@@ -365,8 +362,6 @@ public class VoltageFragment extends AttachPreferenceFragment {
         final StringBuilder restore = new StringBuilder();
         if (hasVdd) {
             final String value = ExtraConfig.get().vdd;
-            Logger.v(VoltageFragment.class, "VDD Table: " + value);
-
             if (!TextUtils.isEmpty(value)) {
                 final String[] values = value.split("XXX");
                 for (final String s : values) {
@@ -375,8 +370,6 @@ public class VoltageFragment extends AttachPreferenceFragment {
             }
         } else {
             final String value = ExtraConfig.get().uv;
-            Logger.v(VoltageFragment.class, "UV Table: " + value);
-
             if (!TextUtils.isEmpty(value)) {
                 restore.append(Utils.getWriteCommand(VoltageUtils.UV_TABLE_FILE, value));
             }

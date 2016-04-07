@@ -19,7 +19,6 @@ package org.namelessrom.devicecontrol.actions.fs;
 
 import android.text.TextUtils;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.hardware.IoUtils;
@@ -61,7 +60,6 @@ public class ReadAheadAction extends BaseAction {
 
     @Override public void triggerAction() {
         if (TextUtils.isEmpty(value)) {
-            Logger.wtf(this, "No value for action!");
             return;
         }
 

@@ -32,7 +32,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.FlasherConfig;
 import org.namelessrom.devicecontrol.modules.flasher.recovery.RecoveryInfo;
@@ -40,6 +39,7 @@ import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.RootShell;
+import timber.log.Timber;
 
 public class RebootHelper {
     private RecoveryHelper mRecoveryHelper;
@@ -219,7 +219,7 @@ public class RebootHelper {
         try {
             App.get().getPowerManager().reboot("recovery");
         } catch (Exception exc) {
-            Logger.e(this, "can not reboot using power manager", exc);
+            Timber.e(exc, "can not reboot using power manager");
             RootShell.fireAndBlock("sync;reboot recovery;\n");
         }
     }

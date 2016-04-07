@@ -139,9 +139,6 @@
     <!-- expert preferences -->
     <string name="su_shell_context" translatable="false">Shell context</string>
     <string name="su_shell_context_summary" translatable="false">The context under which Device Control should run its commands.\nThe default value is <xliff:g example="Normal" id="value">\"%s\"</xliff:g>.\nCurrent value: <xliff:g example="System app" id="value">\"%s\"</xliff:g></string>
-    <string name="debugging" translatable="false">Debugging</string>
-    <string name="extensive_logging" translatable="false">Extensive logging</string>
-    <string name="debug_strict_mode" translatable="false">Enable strict mode</string>
     <string name="shell" translatable="false">Shell</string>
 
     <string name="gps" translatable="false">GPS</string>

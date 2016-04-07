@@ -34,7 +34,7 @@ import android.support.customtabs.CustomTabsSession;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.theme.AppResources;
 
-import alexander.martinz.libs.logger.Logger;
+import timber.log.Timber;
 
 public class CustomTabsHelper {
     private CustomTabsClient mClient;
@@ -65,7 +65,7 @@ public class CustomTabsHelper {
             return false;
         }
 
-        Logger.d(this, "warming up -> %s", mClient.warmup(0));
+        Timber.d("warming up -> %s", mClient.warmup(0));
         return true;
     }
 
@@ -77,7 +77,7 @@ public class CustomTabsHelper {
             return false;
         }
 
-        Logger.d(this, "may launch url -> %s", mSession.mayLaunchUrl(Uri.parse(url), null, null));
+        Timber.d("may launch url -> %s", mSession.mayLaunchUrl(Uri.parse(url), null, null));
         return true;
     }
 
@@ -89,7 +89,7 @@ public class CustomTabsHelper {
         try {
             createBuilder(activity).enableUrlBarHiding().build().launchUrl(activity, Uri.parse(url));
         } catch (ActivityNotFoundException anfe) {
-            Logger.e(this, "could not launch url!", anfe);
+            Timber.e(anfe, "could not launch url!");
         }
     }
 

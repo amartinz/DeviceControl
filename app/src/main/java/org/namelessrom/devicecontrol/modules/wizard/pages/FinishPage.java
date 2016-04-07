@@ -22,7 +22,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.modules.wizard.setup.Page;
@@ -31,6 +30,8 @@ import org.namelessrom.devicecontrol.modules.wizard.ui.ReviewAdapter;
 import org.namelessrom.devicecontrol.modules.wizard.ui.SetupPageFragment;
 
 import java.util.ArrayList;
+
+import timber.log.Timber;
 
 public class FinishPage extends Page {
     private FinishFragment fragment;
@@ -80,7 +81,7 @@ public class FinishPage extends Page {
                     R.layout.wizard_list_item_review, entries, values);
 
             listView.setAdapter(adapter);
-            Logger.v(this, "TaskerItem: %s", mCallbacks.getSetupData().toString());
+            Timber.v("TaskerItem: %s", mCallbacks.getSetupData().toString());
         }
 
         @Override protected int getLayoutResource() {
