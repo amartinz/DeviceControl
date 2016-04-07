@@ -187,6 +187,26 @@ public class App extends android.app.Application {
     }
 
     private BitmapLruCache setupBitmapLruCache() {
+        final File cacheLocation = getCacheDirectory();
+        try {
+            Timber.d("Setting up cache: %s\nNeed to create dirs: %s", cacheLocation.getAbsolutePath(), cacheLocation.mkdirs());
+        } catch (SecurityException sex) {
+            Timber.wtf(sex, "can not create directory");
+        }
+
+        final BitmapLruCache.Builder builder = new BitmapLruCache.Builder(this);
+        builder.setMemoryCacheEnabled(true).setMemoryCacheMaxSizeUsingHeapSize(0.25f);
+        builder.setDiskCacheEnabled(true).setDiskCacheLocation(cacheLocation);
+
+        return builder.build();
+    }
+
+    private File getCacheDirectory() {
+        // TODO: configurable
+        if (true) {
+            return new File(getCacheDir(), "bitmapCache");
+        }
+
         File cacheLocation = null;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             cacheLocation = new File(getExternalCacheDir(), "bitmapCache");
@@ -205,18 +225,7 @@ public class App extends android.app.Application {
         if (cacheLocation == null) {
             cacheLocation = new File(getCacheDir(), "bitmapCache");
         }
-
-        try {
-            Timber.d("Setting up cache: %s\nNeed to create dirs: %s", cacheLocation.getAbsolutePath(), cacheLocation.mkdirs());
-        } catch (SecurityException sex) {
-            Timber.wtf(sex, "can not create directory");
-        }
-
-        final BitmapLruCache.Builder builder = new BitmapLruCache.Builder(this);
-        builder.setMemoryCacheEnabled(true).setMemoryCacheMaxSizeUsingHeapSize(0.25f);
-        builder.setDiskCacheEnabled(true).setDiskCacheLocation(cacheLocation);
-
-        return builder.build();
+        return cacheLocation;
     }
 
     @SuppressLint("SdCardPath") public String getFilesDirectory() {
