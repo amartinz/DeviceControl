@@ -78,6 +78,15 @@ android {
         disable 'MissingTranslation', 'ExtraTranslation';
     }
 
+    productFlavors {
+        google {
+            ext.useGooglePlay = true
+        }
+        universal {
+            ext.useGooglePlay = false
+        }
+    }
+
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
@@ -95,6 +104,7 @@ dependencies {
     compile project(':ExternalSources')
 
     if (rootProject.ext.useLocalSources) {
+        logger.quiet("Using local sources...")
         // see https://github.com/Evisceration/ExecutionLibrary
         compile project(':ExecutionLibrary')
         // see https://github.com/Evisceration/HardwareLibrary
@@ -102,6 +112,7 @@ dependencies {
         // see https://github.com/Evisceration/MaterialPreferences
         compile project(':MaterialPreferences')
     } else {
+        logger.quiet("Using external sources...")
         compile 'com.github.Evisceration:ExecutionLibrary:master-SNAPSHOT'
         compile 'com.github.Evisceration:HardwareLibrary:master-SNAPSHOT'
         compile 'com.github.Evisceration:MaterialPreferences:master-SNAPSHOT'
@@ -134,8 +145,10 @@ dependencies {
 
     // see https://www.pollfish.com/android
     if (rootProject.ext.useGooglePlay /* Google Play */) {
+        logger.quiet("Using Google Play sdk...")
         compile 'com.pollfish:pollfish:4.2.0:googleplayRelease@aar'
     } else {
+        logger.quiet("Using universal sdk...")
         compile 'com.pollfish:pollfish:4.2.0:universalRelease@aar'
     }
     compile 'com.google.android.gms:play-services-ads:8.4.0'
