@@ -28,8 +28,6 @@ proguard/
 *.iws
 .idea/
 .gradle
-local.properties
-.idea/workspace.xml
 out/
 proguard_logs/
 build/
@@ -39,3 +37,6 @@ build/
 .navigation
 *.hprof
 captures/
+
+# Fabric
+fabric.properties

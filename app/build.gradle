@@ -43,9 +43,6 @@ android {
         } else {
             signingConfig signingConfigs.release
         }
-
-        // vectors ftw
-        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -62,8 +59,6 @@ android {
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
-            applicationIdSuffix '.dev'
-            versionNameSuffix '-dev'
         }
     }
 
@@ -123,20 +118,19 @@ dependencies {
     // see https://github.com/JakeWharton/timber
     compile 'com.jakewharton.timber:timber:4.1.1'
 
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:cardview-v7:23.2.1'
-    compile 'com.android.support:customtabs:23.2.1'
-    compile 'com.android.support:design:23.2.1'
-    compile 'com.android.support:recyclerview-v7:23.2.1'
-    compile 'com.android.support:support-v13:23.2.1'
-    compile 'com.android.support:support-vector-drawable:23.2.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:cardview-v7:23.3.0'
+    compile 'com.android.support:customtabs:23.3.0'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:support-v13:23.3.0'
 
     // see https://github.com/JakeWharton/butterknife
     compile 'com.jakewharton:butterknife:8.0.0-SNAPSHOT'
     apt 'com.jakewharton:butterknife-compiler:8.0.0-SNAPSHOT'
 
     // see https://github.com/PhilJay/MPAndroidChart
-    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
 
     // see https://www.pollfish.com/android
     if (rootProject.ext.useGooglePlay /* Google Play */) {

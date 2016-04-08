@@ -205,7 +205,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
             isRooted = RootCheck.isRooted();
         }
 
-        if (isRooted) {
+        if (isRooted || BuildConfig.DEBUG) {
             if (!Utils.fileExists(getString(R.string.directory_msm_thermal))
                 && !Utils.fileExists(getString(R.string.file_intelli_thermal_base))) {
                 final MenuItem thermalItem = findMenuItem(R.id.nav_item_controls_thermal);
