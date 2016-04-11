@@ -61,7 +61,6 @@ public class MainBootupFragment extends MaterialSupportPreferenceFragment implem
 
         mAutomatedRestorationDelay =
                 (MaterialListPreference) view.findViewById(R.id.prefs_bootup_automated_delay);
-        mAutomatedRestorationDelay.setSpinnerTextViewColor(AppResources.get().getAccentColor());
         mAutomatedRestorationDelay
                 .setValue(String.valueOf(configuration.automatedRestorationDelay));
         mAutomatedRestorationDelay.setOnPreferenceChangeListener(this);

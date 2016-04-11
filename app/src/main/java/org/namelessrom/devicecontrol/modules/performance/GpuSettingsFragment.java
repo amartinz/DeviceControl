@@ -98,7 +98,6 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                     mFreqMax.setAdapter(mFreqMax.createAdapter(gpuNames, frequencies));
                     mFreqMax.setValue(tmp);
                     mCatGpu.addPreference(mFreqMax);
-                    mFreqMax.setSpinnerTextViewColor(AppResources.get().getAccentColor());
                     mFreqMax.setOnPreferenceChangeListener(this);
                 }
             }
@@ -123,7 +122,6 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                     mFreqMin.setAdapter(mFreqMin.createAdapter(gpuNames, frequencies));
                     mFreqMin.setValue(tmp);
                     mCatGpu.addPreference(mFreqMin);
-                    mFreqMin.setSpinnerTextViewColor(AppResources.get().getAccentColor());
                     mFreqMin.setOnPreferenceChangeListener(this);
                 }
             }
@@ -141,7 +139,6 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                     mGpuGovernor.setAdapter(mGpuGovernor.createAdapter(gpuGovs, gpuGovs));
                     mGpuGovernor.setValue(tmp);
                     mCatGpu.addPreference(mGpuGovernor);
-                    mGpuGovernor.setSpinnerTextViewColor(AppResources.get().getAccentColor());
                     mGpuGovernor.setOnPreferenceChangeListener(this);
                 }
             }

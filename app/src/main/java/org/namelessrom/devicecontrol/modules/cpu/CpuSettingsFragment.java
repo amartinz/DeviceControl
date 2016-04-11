@@ -40,15 +40,14 @@ import org.namelessrom.devicecontrol.actions.extras.MpDecisionAction;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
-import org.namelessrom.devicecontrol.utils.ShellOutput;
-import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.preferences.AutoEditTextPreference;
 import org.namelessrom.devicecontrol.preferences.AutoSwitchPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
+import org.namelessrom.devicecontrol.utils.PreferenceUtils;
+import org.namelessrom.devicecontrol.utils.ShellOutput;
+import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.views.AttachMaterialPreferenceFragment;
 import org.namelessrom.devicecontrol.views.CpuCoreView;
-import org.namelessrom.devicecontrol.utils.PreferenceUtils;
-import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -188,17 +187,12 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             generateRow(i, tmpCore);
         }
 
-        mMax.setSpinnerTextViewColor(AppResources.get().getAccentColor());
-        mMax.setOnPreferenceChangeListener(this);
-
-        mMin.setSpinnerTextViewColor(AppResources.get().getAccentColor());
-        mMin.setOnPreferenceChangeListener(this);
+        mMax.setOnPreferenceChangeListener(CpuSettingsFragment.this);
+        mMin.setOnPreferenceChangeListener(CpuSettingsFragment.this);
+        mGovernor.setOnPreferenceChangeListener(CpuSettingsFragment.this);
 
         mCpuLock.getSwitch().setChecked(deviceConfig.perfCpuLock);
         mCpuLock.setOnPreferenceChangeListener(this);
-
-        mGovernor.setSpinnerTextViewColor(AppResources.get().getAccentColor());
-        mGovernor.setOnPreferenceChangeListener(this);
 
         mGovernorTuning.setOnPreferenceClickListener(this);
 
@@ -264,7 +258,6 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             mCpuQuietGov.setAdapter(mCpuQuietGov.createAdapter(govs, govs));
             mCpuQuietGov.setValue(gov);
             category.addPreference(mCpuQuietGov);
-            mCpuQuietGov.setSpinnerTextViewColor(AppResources.get().getAccentColor());
             mCpuQuietGov.setOnPreferenceChangeListener(this);
         }
 
@@ -368,24 +361,26 @@ public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implem
     @Override public boolean onPreferenceChanged(MaterialPreference preference, Object o) {
         if (preference == mMax) {
             final String selected = String.valueOf(o);
+            mMax.setValue(selected);
+
             final String other = String.valueOf(mMin.getValue());
             final boolean updateOther = Utils.parseInt(selected) < Utils.parseInt(other);
             if (updateOther) {
                 onPreferenceChanged(mMin, selected);
             }
 
-            mMax.setValue(selected);
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MAX, selected, true);
             return true;
         } else if (preference == mMin) {
             final String selected = String.valueOf(o);
+            mMin.setValue(selected);
+
             final String other = String.valueOf(mMax.getValue());
             final boolean updateOther = Utils.parseInt(selected) > Utils.parseInt(other);
             if (updateOther) {
                 onPreferenceChanged(mMax, selected);
             }
 
-            mMin.setValue(selected);
             ActionProcessor.processAction(ActionProcessor.ACTION_CPU_FREQUENCY_MIN, selected, true);
             return true;
         } else if (preference == mCpuLock) {

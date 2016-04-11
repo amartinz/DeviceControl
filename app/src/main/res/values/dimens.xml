@@ -19,7 +19,7 @@
     <dimen name="app_margin">8dp</dimen>
     <dimen name="title_top_margin">10dp</dimen>
 
-    <dimen name="card_margin">10dp</dimen>
+    <dimen name="card_margin">6dp</dimen>
     <dimen name="hardware_card_margin">@dimen/card_margin</dimen>
     <dimen name="material_prefs_card_margin">@dimen/card_margin</dimen>
 </resources>
