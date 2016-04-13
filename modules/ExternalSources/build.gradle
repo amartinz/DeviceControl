@@ -23,8 +23,16 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
 
     // see https://github.com/koush/ion
     compile 'com.koushikdutta.ion:ion:2.1.7'
+
+    // see https://github.com/JakeWharton/DiskLruCache
+    compile 'com.jakewharton:disklrucache:2.0.2'
+    // see https://github.com/chrisbanes/Android-BitmapCache
+    compile('com.github.chrisbanes.bitmapcache:library:2.3') {
+        exclude group: 'com.android.support'
+        exclude group: 'com.google.android'
+    }
 }
