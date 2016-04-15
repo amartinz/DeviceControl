@@ -20,6 +20,7 @@ package org.namelessrom.devicecontrol;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -125,6 +126,11 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
             Timber.v("Stopping Sense360");
             Sense360.stop(getApplicationContext());
         }
+    }
+
+    @Override public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        PollFishImpl.initPollFish(this);
     }
 
     @Override protected void onCreate(Bundle savedInstanceState) {

@@ -55,6 +55,7 @@
 -dontwarn org.objenesis.**
 
 # pollfish
+-dontwarn com.pollfish.**
 -keep class com.pollfish.** { *; }
 
 # my stuff
