@@ -43,6 +43,13 @@ android {
         } else {
             signingConfig signingConfigs.release
         }
+
+        def String keyPollFish = project.hasProperty("api_key_PollFish") ? api_key_PollFish : "---";
+        buildConfigField('String', 'API_KEY_POLL_FISH', keyPollFish);
+
+        def String keyGooglePlay = project.hasProperty("api_key_GooglePlay") ? api_key_GooglePlay : "---";
+        buildConfigField('String', 'API_KEY_GOOGLE_PLAY', keyGooglePlay)
+
     }
 
     buildTypes {
@@ -68,7 +75,7 @@ android {
     }
 
     dexOptions {
-        javaMaxHeapSize "4g"
+        dexInProcess true
     }
 
     lintOptions {
@@ -79,12 +86,8 @@ android {
     }
 
     productFlavors {
-        google {
-            ext.useGooglePlay = true
-        }
-        universal {
-            ext.useGooglePlay = false
-        }
+        google {}
+        universal {}
     }
 
     packagingOptions {
@@ -95,12 +98,6 @@ android {
 }
 
 dependencies {
-    try {
-        compile project(':Vendor')
-    } catch (Exception ignored) {
-        compile 'alexander.martinz.vendor:vendor:1.0.0@aar'
-    }
-
     compile project(':ExternalSources')
 
     if (rootProject.ext.useLocalSources) {
@@ -144,13 +141,8 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
 
     // see https://www.pollfish.com/android
-    if (rootProject.ext.useGooglePlay /* Google Play */) {
-        logger.quiet("Using Google Play sdk...")
-        compile 'com.pollfish:pollfish:4.2.0:googleplayRelease@aar'
-    } else {
-        logger.quiet("Using universal sdk...")
-        compile 'com.pollfish:pollfish:4.2.0:universalRelease@aar'
-    }
+    googleCompile 'com.pollfish:pollfish:4.2.0:googleplayRelease@aar'
+    universalCompile 'com.pollfish:pollfish:4.2.0:universalRelease@aar'
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     compile 'com.google.android.gms:play-services-base:8.4.0'
 

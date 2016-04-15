@@ -38,6 +38,7 @@
             android:orientation="vertical">
 
             <org.namelessrom.devicecontrol.views.CardTitleView
+                android:id="@+id/card_donate_google_play"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="@string/google_play">

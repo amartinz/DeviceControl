@@ -20,9 +20,9 @@ package org.namelessrom.devicecontrol.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -30,34 +30,50 @@ import android.widget.TextView;
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 
+import org.namelessrom.devicecontrol.BuildConfig;
 import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
-import alexander.martinz.vendor.Configuration;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class DonationActivity extends BaseActivity implements BillingProcessor.IBillingHandler,
         View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-    private Button mGooglePlay;
-    private RadioGroup mRadioGroup;
+    @Bind(R.id.bDonateGooglePlay) Button mGooglePlay;
+    @Bind(R.id.radioGroupDonation) RadioGroup mRadioGroup;
 
     private BillingProcessor mBillingProcessor;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donate);
+        ButterKnife.bind(this);
 
         setupToolbar();
 
         // get instance of the BillingProcessor
-        mBillingProcessor = new BillingProcessor(this, Configuration.getGooglePlayApiKeyDc(), this);
+        mBillingProcessor = new BillingProcessor(this, BuildConfig.API_KEY_GOOGLE_PLAY, this);
 
         // set up the buttons
-        mGooglePlay = (Button) findViewById(R.id.bDonateGooglePlay);
-        mGooglePlay.setText(getString(R.string.donate_via, getString(R.string.google_play)));
-        mGooglePlay.setOnClickListener(this);
+        if (!TextUtils.isEmpty(BuildConfig.API_KEY_GOOGLE_PLAY) && !TextUtils.equals("---", BuildConfig.API_KEY_GOOGLE_PLAY)) {
+            findViewById(R.id.card_donate_google_play).setVisibility(View.VISIBLE);
+            mGooglePlay.setText(getString(R.string.donate_via, getString(R.string.google_play)));
+            mGooglePlay.setOnClickListener(this);
+
+            // set up radio buttons
+            mRadioGroup.setOnCheckedChangeListener(this);
+            final String donateValue = getString(R.string.donate_value);
+            ((RadioButton) findViewById(R.id.radioDonation1)).setText(String.format(donateValue, "2€"));
+            ((RadioButton) findViewById(R.id.radioDonation2)).setText(String.format(donateValue, "5€"));
+            ((RadioButton) findViewById(R.id.radioDonation3)).setText(String.format(donateValue, "10€"));
+            ((RadioButton) findViewById(R.id.radioDonation4)).setText(String.format(donateValue, "20€"));
+            ((RadioButton) findViewById(R.id.radioDonation5)).setText(String.format(donateValue, "50€"));
+        } else {
+            findViewById(R.id.card_donate_google_play).setVisibility(View.GONE);
+        }
 
         final Button flattr = (Button) findViewById(R.id.bDonateFlattr);
         flattr.setText(getString(R.string.donate_via, getString(R.string.flattr)));
@@ -70,16 +86,6 @@ public class DonationActivity extends BaseActivity implements BillingProcessor.I
         payPal.setOnClickListener(this);
         final TextView payPalText = (TextView) findViewById(R.id.tvDonatePayPal);
         payPalText.setText(getString(R.string.donate_message, getString(R.string.paypal)));
-
-        // set up radio buttons
-        mRadioGroup = (RadioGroup) findViewById(R.id.radioGroupDonation);
-        mRadioGroup.setOnCheckedChangeListener(this);
-        final String donateValue = getString(R.string.donate_value);
-        ((RadioButton) findViewById(R.id.radioDonation1)).setText(String.format(donateValue, "2€"));
-        ((RadioButton) findViewById(R.id.radioDonation2)).setText(String.format(donateValue, "5€"));
-        ((RadioButton) findViewById(R.id.radioDonation3)).setText(String.format(donateValue, "10€"));
-        ((RadioButton) findViewById(R.id.radioDonation4)).setText(String.format(donateValue, "20€"));
-        ((RadioButton) findViewById(R.id.radioDonation5)).setText(String.format(donateValue, "50€"));
     }
 
     @Override public void onCheckedChanged(RadioGroup group, int checkedId) {

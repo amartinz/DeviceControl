@@ -11,9 +11,3 @@ project(':MaterialPreferences').projectDir = new File('modules/MaterialPreferenc
 
 include ':ExternalSources'
 project(':ExternalSources').projectDir = new File('modules/ExternalSources')
-
-final File vendorDir = new File("modules/Vendor");
-if (vendorDir.exists()) {
-    include ':Vendor'
-    project(':Vendor').projectDir = vendorDir
-}

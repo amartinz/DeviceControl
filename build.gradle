@@ -1,10 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        useGooglePlay = true
         useLocalSources = false
 
-        gradleVersion = '2.1.0-alpha5'
+        gradleVersion = '2.1.0-beta1'
     }
 
     repositories {

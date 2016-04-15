@@ -41,13 +41,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
-import com.pollfish.constants.Position;
-import com.pollfish.main.PollFish;
 import com.sense360.android.quinoa.lib.Sense360;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
-import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.modules.about.AboutFragment;
 import org.namelessrom.devicecontrol.modules.appmanager.AppListFragment;
 import org.namelessrom.devicecontrol.modules.bootup.BootupFragment;
@@ -77,12 +74,12 @@ import org.namelessrom.devicecontrol.modules.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.modules.tools.WirelessFileManagerFragment;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.theme.NavigationDrawerResources;
+import org.namelessrom.devicecontrol.thirdparty.PollFishImpl;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import alexander.martinz.libs.execution.RootCheck;
 import alexander.martinz.libs.execution.ShellManager;
-import alexander.martinz.vendor.Configuration;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements ActivityCallbacks, NavigationView.OnNavigationItemSelectedListener {
@@ -119,17 +116,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
 
     @Override protected void onResume() {
         super.onResume();
-        if (DeviceConfig.get().showPollfish) {
-            final String pfApiKey = Configuration.getPollfishApiKeyDc();
-            if (!TextUtils.equals("---", pfApiKey)) {
-                Timber.d("PollFish.init()");
-                final PollFish.ParamsBuilder paramsBuilder = new PollFish.ParamsBuilder(pfApiKey)
-                        .indicatorPosition(Position.BOTTOM_RIGHT)
-                        .indicatorPadding(50)
-                        .build();
-                PollFish.initWith(this, paramsBuilder);
-            }
-        }
+        PollFishImpl.initPollFish(this);
 
         if (!Sense360.isUserOptedOut(getApplicationContext())) {
             Timber.v("Starting Sense360");

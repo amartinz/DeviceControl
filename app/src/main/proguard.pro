@@ -82,5 +82,6 @@ public static void main(java.lang.String[]);
 -keep interface com.squareup.okhttp.** { *; }
 -dontwarn com.squareup.okhttp.**
 -dontwarn okio.**
+-keep class okio.**
 
 ##### Sense360 END
