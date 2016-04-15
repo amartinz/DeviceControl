@@ -31,10 +31,9 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.hardware.GovernorUtils;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
-import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
-import org.namelessrom.devicecontrol.views.AttachMaterialPreferenceFragment;
 import org.namelessrom.devicecontrol.utils.Utils;
+import org.namelessrom.devicecontrol.views.AttachMaterialPreferenceFragment;
 
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
@@ -81,13 +80,6 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             tmp = gpu.max;
             if (!TextUtils.isEmpty(tmp) && freqsLength != 0 && freqsLength == namesLength) {
                 tmp = tmp.trim();
-                for (int i = 0; i < freqsLength; i++) {
-                    if (frequencies[i].equals(tmp)) {
-                        tmp = gpuNames[i];
-                        break;
-                    }
-                }
-
                 if (mFreqMax != null) {
                     mFreqMax.setValue(tmp);
                 } else {
@@ -105,13 +97,6 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
             tmp = gpu.min;
             if (!TextUtils.isEmpty(tmp) && freqsLength != 0 && freqsLength == namesLength) {
                 tmp = tmp.trim();
-                for (int i = 0; i < freqsLength; i++) {
-                    if (frequencies[i].equals(tmp)) {
-                        tmp = gpuNames[i];
-                        break;
-                    }
-                }
-
                 if (mFreqMin != null) {
                     mFreqMin.setValue(tmp);
                 } else {
@@ -120,8 +105,8 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                     mFreqMin.setKey("pref_min_gpu");
                     mFreqMin.setTitle(getString(R.string.frequency_min));
                     mFreqMin.setAdapter(mFreqMin.createAdapter(gpuNames, frequencies));
-                    mFreqMin.setValue(tmp);
                     mCatGpu.addPreference(mFreqMin);
+                    mFreqMin.setValue(tmp);
                     mFreqMin.setOnPreferenceChangeListener(this);
                 }
             }
@@ -137,8 +122,8 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                     mGpuGovernor.setKey("pref_gpu_gov");
                     mGpuGovernor.setTitle(getString(R.string.governor));
                     mGpuGovernor.setAdapter(mGpuGovernor.createAdapter(gpuGovs, gpuGovs));
-                    mGpuGovernor.setValue(tmp);
                     mCatGpu.addPreference(mGpuGovernor);
+                    mGpuGovernor.setValue(tmp);
                     mGpuGovernor.setOnPreferenceChangeListener(this);
                 }
             }
@@ -152,8 +137,8 @@ public class GpuSettingsFragment extends AttachMaterialPreferenceFragment implem
                 m3dScaling.setKey("3d_scaling");
                 m3dScaling.setTitle(getString(R.string.gpu_3d_scaling));
                 m3dScaling.setSummary(getString(R.string.gpu_3d_scaling_summary));
-                m3dScaling.setChecked(Utils.isEnabled(tmp, false));
                 mCatGpu.addPreference(m3dScaling);
+                m3dScaling.setChecked(Utils.isEnabled(tmp, false));
                 m3dScaling.setOnPreferenceChangeListener(this);
             }
         }
