@@ -57,3 +57,11 @@ def getGitCommitHash() {
     def refHead = new File(gitFolder + head[1].trim())
     return refHead.text.trim().take(takeFromHash)
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
