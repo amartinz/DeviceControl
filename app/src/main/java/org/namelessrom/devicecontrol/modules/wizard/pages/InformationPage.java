@@ -17,9 +17,9 @@
  */
 package org.namelessrom.devicecontrol.modules.wizard.pages;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.wizard.setup.Page;

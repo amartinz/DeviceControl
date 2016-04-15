@@ -18,13 +18,13 @@
 
 package org.namelessrom.devicecontrol.modules.wizard;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -112,7 +112,7 @@ public class AddTaskActivity extends BaseActivity implements SetupDataCallbacks 
         mNextButton = (Button) findViewById(R.id.next_button);
         mPrevButton = (Button) findViewById(R.id.prev_button);
         mSetupData.registerListener(this);
-        mPagerAdapter = new CustomPagerAdapter(getFragmentManager());
+        mPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setPageMargin(getResources().getDimensionPixelOffset(R.dimen.app_margin));
