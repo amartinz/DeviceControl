@@ -107,7 +107,7 @@ public class AppHelper {
             // 5 x base
             final String dirs = "%s/app_*;%s/cache;%s/databases;%s/files;%s/shared_prefs;";
             method = "clearApplicationUserData";
-            cmdPrefix = String.format("pkill -TERM %s;", pkg);
+            cmdPrefix = String.format("pkill -TERM %s;pm clear %s;sync;", pkg, pkg);
 
             internal = String.format(dirs, internalBase, internalBase, internalBase, internalBase, internalBase);
             external = String.format(dirs, externalBase, externalBase, externalBase, externalBase, externalBase);
@@ -123,7 +123,7 @@ public class AppHelper {
             Timber.e(e, "could not call %s via reflection", method);
         }
 
-        RootShell.fireAndForget(String.format("%s%s%s", cmdPrefix, internal, external));
+        RootShell.fireAndForget(String.format("%s%s%s;sync;", cmdPrefix, internal, external));
     }
 
     public static void uninstallPackage(PackageManager pm, String pkg) {

@@ -31,9 +31,9 @@ import android.widget.Toast;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
+import alexander.martinz.libs.execution.BusyBox;
 import alexander.martinz.libs.execution.Command;
 import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.execution.BusyBox;
 import timber.log.Timber;
 
 public class AppItem {
@@ -122,23 +122,7 @@ public class AppItem {
     }
 
     private void disableOrEnable(String cmd, final DisableEnableListener listener) {
-        final Command command = new Command(cmd) {
-            @Override public void onCommandTerminated(int id, String reason) {
-                super.onCommandTerminated(id, reason);
-                if (listener != null) {
-                    listener.OnDisabledOrEnabled();
-                }
-            }
-
-            @Override public void onCommandCompleted(int id, int exitcode) {
-                super.onCommandCompleted(id, exitcode);
-                if (listener != null) {
-                    listener.OnDisabledOrEnabled();
-                }
-            }
-
-        };
-
+        final Command command = new DisableEnableCommand(cmd, listener);
         RootShell.fireAndForget(command);
     }
 
@@ -196,8 +180,6 @@ public class AppItem {
         // build our command
         final StringBuilder sb = new StringBuilder();
 
-        sb.append(String.format("pm uninstall %s;", appItem.getPackageName()));
-
         if (appItem.isSystemApp()) {
             sb.append(BusyBox.callBusyBoxApplet("mount", "-o rw,remount /system;"));
         }
@@ -205,58 +187,74 @@ public class AppItem {
         sb.append(String.format("rm -rf %s;", appItem.getApplicationInfo().publicSourceDir));
         sb.append(String.format("rm -rf %s;", appItem.getApplicationInfo().sourceDir));
         sb.append(String.format("rm -rf %s;", appItem.getApplicationInfo().dataDir));
+        sb.append("sync;");
 
         if (appItem.isSystemApp()) {
             sb.append(BusyBox.callBusyBoxApplet("mount", "-o ro,remount /system;"));
         }
+        sb.append("sync;echo \"Done!\"");
 
         final String cmd = sb.toString();
         Timber.v("Created command: %s", cmd);
         // create the dialog (will not be shown for a long amount of time though)
-        if (withFeedback) {
-            final ProgressDialog dialog;
-            dialog = new ProgressDialog(activity);
-            dialog.setTitle(R.string.uninstalling);
-            dialog.setMessage(activity.getString(R.string.applying_wait));
-            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            dialog.setCancelable(false);
+        new AsyncTask<Void, Void, Void>() {
+            private ProgressDialog dialog;
 
-            new AsyncTask<Void, Void, Void>() {
-                @Override protected void onPreExecute() {
+            @Override protected void onPreExecute() {
+                if (withFeedback) {
+                    dialog = new ProgressDialog(activity);
+                    dialog.setTitle(R.string.uninstalling);
+                    dialog.setMessage(activity.getString(R.string.applying_wait));
+                    dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    dialog.setCancelable(false);
                     dialog.show();
                 }
+            }
 
-                @Override protected Void doInBackground(Void... voids) {
-                    RootShell.fireAndBlock(cmd);
-                    return null;
-                }
-
-                @Override protected void onPostExecute(Void aVoid) {
-                    dialog.dismiss();
-                    Toast.makeText(activity,
-                            activity.getString(R.string.uninstall_success, appItem.getLabel()),
-                            Toast.LENGTH_SHORT).show();
-                    if (listener != null) {
-                        listener.OnUninstallComplete();
-                    }
-                }
-            }.execute();
-            return;
-        }
-
-        new AsyncTask<Void, Void, Void>() {
             @Override protected Void doInBackground(Void... voids) {
-                RootShell.fireAndBlock(cmd);
+                final String uninstallCmd = String.format("pm uninstall %s;sync;", appItem.getPackageName());
+                Timber.d("1) > %s", RootShell.fireAndBlockString(uninstallCmd));
+                Timber.d("2) > %s", RootShell.fireAndBlockString(cmd));
                 return null;
             }
 
             @Override protected void onPostExecute(Void aVoid) {
+                if (withFeedback) {
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                    Toast.makeText(activity,
+                            activity.getString(R.string.uninstall_success, appItem.getLabel()),
+                            Toast.LENGTH_SHORT).show();
+                }
                 if (listener != null) {
                     listener.OnUninstallComplete();
                 }
             }
         }.execute();
-
     }
 
+    private static class DisableEnableCommand extends Command {
+        private final DisableEnableListener listener;
+
+        public DisableEnableCommand(String cmd, DisableEnableListener listener) {
+            super(cmd);
+            this.listener = listener;
+        }
+
+        @Override public void onCommandTerminated(int id, String reason) {
+            super.onCommandTerminated(id, reason);
+            if (listener != null) {
+                listener.OnDisabledOrEnabled();
+            }
+        }
+
+        @Override public void onCommandCompleted(int id, int exitcode) {
+            super.onCommandCompleted(id, exitcode);
+            if (listener != null) {
+                listener.OnDisabledOrEnabled();
+            }
+        }
+
+    }
 }
