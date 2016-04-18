@@ -31,7 +31,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
@@ -83,9 +82,9 @@ public class DisplayColor extends DialogPreference {
         }
 
         for (int i = 0; i < SEEKBAR_ID.length; i++) {
-            SeekBar seekBar = (SeekBar) view.findViewById(SEEKBAR_ID[i]);
-            TextView value = (TextView) view.findViewById(SEEKBAR_VALUE_ID[i]);
-            ColorSeekBar colorSeekBar = new ColorSeekBar(seekBar, value, i);
+            final SeekBar seekBar = (SeekBar) view.findViewById(SEEKBAR_ID[i]);
+            final TextView value = (TextView) view.findViewById(SEEKBAR_VALUE_ID[i]);
+            final ColorSeekBar colorSeekBar = new ColorSeekBar(seekBar, value, i);
             mSeekBars.add(colorSeekBar);
 
             if (mCurrentColors != null) {
@@ -106,7 +105,7 @@ public class DisplayColor extends DialogPreference {
             public void onClick(View v) {
                 final int defaultValue = displayColorCalibration.getDefValue();
                 for (int i = 0; i < mSeekBars.size(); i++) {
-                    mSeekBars.get(i).mSeekBar.setProgress(defaultValue);
+                    mSeekBars.get(i).seekBar.setProgress(defaultValue);
                     mCurrentColors[i] = String.valueOf(defaultValue);
                 }
                 displayColorCalibration.setColors(TextUtils.join(" ", mCurrentColors));
@@ -130,34 +129,41 @@ public class DisplayColor extends DialogPreference {
     public static boolean isSupported() { return new DisplayColorCalibration(App.get()).isSupported(); }
 
     private class ColorSeekBar implements SeekBar.OnSeekBarChangeListener {
-        private int mIndex;
-        private SeekBar mSeekBar;
-        private TextView mValue;
+        private final int max;
+        private final int min;
 
-        public ColorSeekBar(SeekBar seekBar, TextView value, int index) {
-            mSeekBar = seekBar;
-            mValue = value;
-            mIndex = index;
+        private int index;
+        private SeekBar seekBar;
+        private TextView tvValue;
 
-            mSeekBar.setMax(displayColorCalibration.getMaxValue() - displayColorCalibration.getMinValue());
-            mSeekBar.setOnSeekBarChangeListener(this);
+        public ColorSeekBar(SeekBar seekBar, TextView tvValue , int index) {
+            this.max = displayColorCalibration.getMaxValue();
+            this.min = displayColorCalibration.getMinValue();
+
+            this.seekBar = seekBar;
+            this.tvValue = tvValue ;
+            this.index = index;
+
+            this.seekBar.setMax(max - min);
+            this.seekBar.setOnSeekBarChangeListener(this);
         }
 
         public void setValueFromString(String valueString) {
-            mSeekBar.setProgress(Utils.parseInt(valueString));
+            seekBar.setProgress(Utils.parseInt(valueString));
         }
 
         @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            final int min = displayColorCalibration.getMinValue();
-            final int max = displayColorCalibration.getMaxValue();
+            if (mCurrentColors == null) {
+                return;
+            }
 
             if (fromUser) {
-                mCurrentColors[mIndex] = String.valueOf(progress + min);
+                mCurrentColors[index] = String.valueOf(progress + min);
                 displayColorCalibration.setColors(TextUtils.join(" ", mCurrentColors));
             }
 
             final int percent = Math.round(100F * progress / (max - min));
-            mValue.setText(String.format("%d%%", percent));
+            tvValue.setText(String.format("%d%%", percent));
         }
 
         @Override public void onStartTrackingTouch(SeekBar seekBar) { }
