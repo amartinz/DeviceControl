@@ -233,13 +233,12 @@ public class AppHelper {
      * @param packageName The package name
      * @return true if package is installed, false otherwise
      */
-    public static boolean isPackageInstalled(final String packageName) {
+    public static boolean isPackageInstalled(@NonNull final String packageName) {
         try {
             App.get().getPackageManager().getPackageInfo(packageName, 0);
             return true;
-        } catch (Exception e) {
-            return false;
-        }
+        } catch (Exception ignored) { }
+        return false;
     }
 
     /**

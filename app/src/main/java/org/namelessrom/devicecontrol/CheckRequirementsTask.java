@@ -30,9 +30,12 @@ import android.os.Looper;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import org.namelessrom.devicecontrol.models.DeviceConfig;
+import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
@@ -43,6 +46,8 @@ import alexander.martinz.libs.execution.RootCheck;
 import alexander.martinz.libs.hardware.device.Device;
 
 public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
+    private static final String XPOSED_INSTALLER_PACAKGE = "de.robv.android.xposed.installer";
+
     private final Handler mHandler = new Handler(Looper.getMainLooper());
 
     private final MainActivity mainActivity;
@@ -173,6 +178,11 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
         if (deviceConfig.dcFirstStart) {
             deviceConfig.dcFirstStart = false;
             deviceConfig.save();
+
+            final boolean isXposedInstalled = AppHelper.isPackageInstalled(XPOSED_INSTALLER_PACAKGE);
+            final CustomEvent customEvent = new CustomEvent("first_start");
+            customEvent.putCustomAttribute("xposed_installed", isXposedInstalled ? "true" : "false");
+            Answers.getInstance().logCustom(customEvent);
         }
 
         // patch sepolicy
