@@ -35,15 +35,17 @@ public class ExtraConfig {
 
     private transient static ExtraConfig instance;
 
+    private ExtraConfig() { }
+
     public static ExtraConfig get() {
         if (instance == null) {
-            instance = Paper.get(NAME, new ExtraConfig());
+            instance = Paper.book().read(NAME, new ExtraConfig());
         }
         return instance;
     }
 
     public ExtraConfig save() {
-        Paper.put(NAME, ExtraConfig.this);
+        Paper.book().write(NAME, ExtraConfig.this);
         return this;
     }
 

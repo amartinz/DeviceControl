@@ -35,15 +35,17 @@ public class FlasherConfig {
 
     private transient static FlasherConfig instance;
 
+    private FlasherConfig() { }
+
     public static FlasherConfig get() {
         if (instance == null) {
-            instance = Paper.get(NAME, new FlasherConfig());
+            instance = Paper.book().read(NAME, new FlasherConfig());
         }
         return instance;
     }
 
     public FlasherConfig save() {
-        Paper.put(NAME, FlasherConfig.this);
+        Paper.book().write(NAME, FlasherConfig.this);
         return this;
     }
 

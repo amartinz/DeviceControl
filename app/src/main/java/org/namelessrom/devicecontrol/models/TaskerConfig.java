@@ -46,15 +46,17 @@ public class TaskerConfig {
 
     private transient static TaskerConfig instance;
 
+    private TaskerConfig() { }
+
     public static TaskerConfig get() {
         if (instance == null) {
-            instance = Paper.get(NAME, new TaskerConfig());
+            instance = Paper.book().read(NAME, new TaskerConfig());
         }
         return instance;
     }
 
     public TaskerConfig save() {
-        Paper.put(NAME, TaskerConfig.this);
+        Paper.book().write(NAME, TaskerConfig.this);
         return this;
     }
 

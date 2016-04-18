@@ -53,15 +53,17 @@ public class BootupConfig {
 
     private transient static BootupConfig instance;
 
+    private BootupConfig() { }
+
     public static BootupConfig get() {
         if (instance == null) {
-            instance = Paper.get(NAME, new BootupConfig());
+            instance = Paper.book().read(NAME, new BootupConfig());
         }
         return instance;
     }
 
     public BootupConfig save() {
-        Paper.put(NAME, BootupConfig.this);
+        Paper.book().write(NAME, BootupConfig.this);
         return this;
     }
 

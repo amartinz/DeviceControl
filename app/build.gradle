@@ -116,8 +116,7 @@ dependencies {
     }
 
     // see https://github.com/pilgr/Paper
-    //compile 'io.paperdb:paperdb:0.9'
-    compile 'com.github.Evisceration:Paper:master-SNAPSHOT'
+    compile 'io.paperdb:paperdb:1.1'
     // see https://github.com/EsotericSoftware/kryo
     compile 'com.esotericsoftware:kryo:3.0.3'
     // see https://github.com/magro/kryo-serializers

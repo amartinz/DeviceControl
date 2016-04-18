@@ -58,13 +58,13 @@ public class DeviceConfig {
 
     public static DeviceConfig get() {
         if (instance == null) {
-            instance = Paper.get(NAME, new DeviceConfig());
+            instance = Paper.book().read(NAME, new DeviceConfig());
         }
         return instance;
     }
 
     public DeviceConfig save() {
-        Paper.put(NAME, DeviceConfig.this);
+        Paper.book().write(NAME, DeviceConfig.this);
         return this;
     }
 

@@ -42,15 +42,17 @@ public class WebServerConfig {
 
     private transient static WebServerConfig instance;
 
+    private WebServerConfig() { }
+
     public static WebServerConfig get() {
         if (instance == null) {
-            instance = Paper.get(NAME, new WebServerConfig());
+            instance = Paper.book().read(NAME, new WebServerConfig());
         }
         return instance;
     }
 
     public WebServerConfig save() {
-        Paper.put(NAME, WebServerConfig.this);
+        Paper.book().write(NAME, WebServerConfig.this);
         return this;
     }
 
