@@ -29,7 +29,7 @@ android {
         applicationId 'org.namelessrom.devicecontrol'
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 150
+        versionCode 151
         versionName '0.8.6.4'
 
         def String gitRevision = getGitCommitHash()
@@ -76,6 +76,7 @@ android {
 
     dexOptions {
         dexInProcess true
+        preDexLibraries true
     }
 
     lintOptions {
