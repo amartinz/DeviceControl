@@ -28,9 +28,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,13 +47,17 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.views.CustomRecyclerView;
 import org.namelessrom.devicecontrol.utils.SortHelper;
+import org.namelessrom.devicecontrol.views.CustomRecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+
+import alexander.martinz.libs.execution.NormalShell;
+import hugo.weaving.DebugLog;
+import timber.log.Timber;
 
 public abstract class BaseAppListFragment extends Fragment implements SearchView.OnQueryTextListener, SearchView.OnCloseListener, View.OnClickListener {
     private static final int ANIM_DURATION = 450;
@@ -341,24 +348,56 @@ public abstract class BaseAppListFragment extends Fragment implements SearchView
         mEmptyView.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
     }
 
-    protected abstract boolean isFiltered(ApplicationInfo applicationInfo);
+    protected abstract boolean isFiltered(@NonNull ApplicationInfo applicationInfo);
 
     private class LoadApps extends AsyncTask<Void, Void, ArrayList<AppItem>> {
         @Override protected ArrayList<AppItem> doInBackground(Void... params) {
             final PackageManager pm = App.get().getPackageManager();
             final ArrayList<AppItem> appList = new ArrayList<>();
-            final List<PackageInfo> pkgInfos = pm.getInstalledPackages(0);
+            final List<PackageInfo> pkgInfos = new ArrayList<>();
+
+            List<PackageInfo> tmp = getInstalledPackages(pm);
+            if (tmp == null || tmp.isEmpty()) {
+                tmp = getInstalledPackagesShell(pm);
+            }
+            pkgInfos.addAll(tmp);
 
             for (final PackageInfo pkgInfo : pkgInfos) {
                 if (pkgInfo.applicationInfo == null || isFiltered(pkgInfo.applicationInfo)) {
                     continue;
                 }
-                appList.add(new AppItem(pkgInfo,
-                        String.valueOf(pkgInfo.applicationInfo.loadLabel(pm))));
+                appList.add(new AppItem(pkgInfo, String.valueOf(pkgInfo.applicationInfo.loadLabel(pm))));
             }
             Collections.sort(appList, SortHelper.sAppComparator);
 
             return appList;
+        }
+
+        @DebugLog @Nullable private List<PackageInfo> getInstalledPackages(PackageManager pm) {
+            try {
+                return pm.getInstalledPackages(0);
+            } catch (Exception exc) {
+                Timber.e(exc, "Could not get installed packages via package manager, falling back...");
+            }
+            return null;
+        }
+
+        @DebugLog @NonNull private List<PackageInfo> getInstalledPackagesShell(PackageManager pm) {
+            final List<PackageInfo> pkgInfos = new ArrayList<>();
+            final List<String> cmdResultList = NormalShell.fireAndBlockList("pm list packages");
+            if (cmdResultList != null && !cmdResultList.isEmpty()) {
+                for (final String cmdResult : cmdResultList) {
+                    if (TextUtils.isEmpty(cmdResult)) {
+                        continue;
+                    }
+                    final String pkgName = cmdResult.substring(cmdResult.indexOf(":") + 1);
+                    try {
+                        final PackageInfo pkgInfo = pm.getPackageInfo(pkgName, 0);
+                        pkgInfos.add(pkgInfo);
+                    } catch (Exception ignored) { }
+                }
+            }
+            return pkgInfos;
         }
 
         @Override protected void onPostExecute(final ArrayList<AppItem> appItems) {
