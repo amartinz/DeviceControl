@@ -18,8 +18,6 @@
 package org.namelessrom.devicecontrol;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -228,16 +226,10 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
         final CheckedTextView footerAppVersion = (CheckedTextView) findViewById(R.id.nav_item_footer_version);
         footerAppVersion.setDuplicateParentStateEnabled(true);
 
-        PackageInfo myInfo = null;
-        try {
-            myInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-        } catch (PackageManager.NameNotFoundException ignored) { }
-
-        if (myInfo != null && !TextUtils.isEmpty(myInfo.versionName)) {
-            footerAppVersion.setText(myInfo.versionName);
-
+        if (!TextUtils.isEmpty(BuildConfig.VERSION_NAME)) {
+            footerAppVersion.setText(BuildConfig.VERSION_NAME);
             // extract the git short log from the version name
-            final String versionName = myInfo.versionName.replace("-dev", "").trim().toLowerCase();
+            final String versionName = BuildConfig.VERSION_NAME.replace("-dev", "").trim().toLowerCase();
             if (versionName.contains("-git-")) {
                 final String[] splitted = versionName.split("-git-");
                 if (splitted.length == 2) {
