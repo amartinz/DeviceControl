@@ -100,7 +100,7 @@ android {
 dependencies {
     compile project(':ExternalSources')
 
-    if (rootProject.ext.useLocalSources) {
+    if (useLocalSources) {
         logger.quiet("Using local sources...")
         // see https://github.com/Evisceration/ExecutionLibrary
         compile project(':ExecutionLibrary')
@@ -122,6 +122,9 @@ dependencies {
     // see https://github.com/magro/kryo-serializers
     compile 'de.javakaffee:kryo-serializers:0.37'
 
+    // see https://github.com/Evisceration/UniversalDebug
+    compile 'at.amartinz:universal-debug:1.0.0'
+    compile 'at.amartinz:universal-debug-fabric:1.0.0'
     // see https://github.com/JakeWharton/timber
     compile 'com.jakewharton.timber:timber:4.1.1'
 

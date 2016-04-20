@@ -32,16 +32,21 @@ import android.support.annotation.WorkerThread;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.Answers;
-
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.CustomTabsHelper;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import alexander.martinz.libs.execution.ShellManager;
-import io.fabric.sdk.android.Fabric;
+import at.amartinz.universaldebug.UniversalDebug;
+import at.amartinz.universaldebug.fabric.FabricConfig;
+import at.amartinz.universaldebug.fabric.trees.CrashlyticsComponent;
+import at.amartinz.universaldebug.trees.BaseTree;
+import at.amartinz.universaldebug.trees.LogComponent;
+import at.amartinz.universaldebug.trees.VibrationComponent;
+import at.amartinz.universaldebug.trees.WriterComponent;
 import io.paperdb.Paper;
 import timber.log.Timber;
 import uk.co.senab.bitmapcache.BitmapLruCache;
@@ -51,8 +56,6 @@ public class App extends android.app.Application {
     public static final Handler HANDLER = new Handler(Looper.getMainLooper());
 
     private static final int APP_VERSION = 1;
-
-    private static final Timber.Tree DEBUG_TREE = new Timber.DebugTree();
 
     private static App sInstance;
     private static boolean enableDebug = BuildConfig.DEBUG;
@@ -108,33 +111,35 @@ public class App extends android.app.Application {
 
     @Override public void onCreate() {
         super.onCreate();
-
-        if (App.sInstance == null) {
-            App.sInstance = this;
-
-            Fabric.with(App.sInstance, new Answers(), new Crashlytics());
-
-            // force enable logger until we hit the user preference
-            if (BuildConfig.DEBUG) {
-                Timber.plant(DEBUG_TREE);
-            } else {
-                Timber.plant(new AwesomeTree());
-            }
-            ShellManager.enableDebug(true);
-
-            Paper.init(this);
-
-            AsyncTask.execute(new Runnable() {
-                @Override public void run() {
-                    setupEverythingAsync();
-                }
-            });
+        if (App.sInstance != null) {
+            return;
         }
+        App.sInstance = this;
+
+        final UniversalDebug universalDebug = new UniversalDebug(this)
+                .withDebug(BuildConfig.DEBUG)
+                .withTimber(true)
+                .withDebugTree(buildDebugTree())
+                .withProductionTree(buildProductionTree());
+
+        final FabricConfig fabricConfig = new FabricConfig(universalDebug)
+                .withAnswers()
+                .withCrashlytics();
+        universalDebug.withExtension(fabricConfig);
+
+        universalDebug.install();
+        ShellManager.enableDebug(App.enableDebug);
+
+        Paper.init(this);
+
+        AsyncTask.execute(new Runnable() {
+            @Override public void run() {
+                setupEverythingAsync();
+            }
+        });
     }
 
     @WorkerThread private void setupEverythingAsync() {
-        ShellManager.enableDebug(App.enableDebug);
-
         Timber.d("Enable debug: %s", App.enableDebug);
 
         final String basePath = getFilesDirectory();
@@ -250,13 +255,44 @@ public class App extends android.app.Application {
         return getResources().getStringArray(resId);
     }
 
-    private static class AwesomeTree extends Timber.DebugTree {
-        @Override protected void log(int priority, String tag, String message, Throwable t) {
-            if (!App.enableDebug && (priority == Log.VERBOSE || priority == Log.DEBUG || priority == Log.INFO)) {
-                return;
-            }
+    private BaseTree buildDebugTree() {
+        return buildTree(true);
+    }
 
-            super.log(priority, tag, message, t);
+    private BaseTree buildProductionTree() {
+        return buildTree(false);
+    }
+
+    private BaseTree buildTree(boolean isDebug) {
+        final HashSet<Integer> priorityFilter = new HashSet<>();
+        // if we are in release mode, remove all log calls except ERROR and WARN
+        if (!isDebug) {
+            priorityFilter.addAll(Arrays.asList(Log.ASSERT, Log.DEBUG, Log.INFO, Log.VERBOSE));
         }
+        final BaseTree baseTree = new BaseTree(this, priorityFilter);
+
+        final LogComponent logComponent = new LogComponent(baseTree);
+        baseTree.addComponent(logComponent);
+
+        if (isDebug) {
+            final VibrationComponent vibrationComponent = new VibrationComponent(baseTree);
+            // only vibrate on error logs
+            final HashSet<Integer> vibrationFilter = new HashSet<>(
+                    Arrays.asList(Log.ASSERT, Log.DEBUG, Log.INFO, Log.VERBOSE, Log.WARN));
+            vibrationComponent.setPriorityFilterSet(vibrationFilter);
+            baseTree.addComponent(vibrationComponent);
+
+            final WriterComponent writerComponent = new WriterComponent(baseTree, getExternalCacheDir());
+            // only vibrate on error and warning logs
+            final HashSet<Integer> writerFilter = new HashSet<>(
+                    Arrays.asList(Log.ASSERT, Log.DEBUG, Log.INFO, Log.VERBOSE, Log.WARN));
+            writerComponent.setPriorityFilterSet(writerFilter);
+            baseTree.addComponent(writerComponent);
+        }
+
+        final CrashlyticsComponent crashlyticsComponent = new CrashlyticsComponent(baseTree);
+        baseTree.addComponent(crashlyticsComponent);
+
+        return baseTree;
     }
 }
