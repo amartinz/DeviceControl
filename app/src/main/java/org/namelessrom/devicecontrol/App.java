@@ -185,8 +185,10 @@ public class App extends android.app.Application {
     @SuppressWarnings("ResultOfMethodCallIgnored") private void clearDirectory(File directory) {
         if (directory.exists()) {
             final File[] cacheFiles = directory.listFiles();
-            for (final File cacheFile : cacheFiles) {
-                cacheFile.delete();
+            if (cacheFiles != null) {
+                for (final File cacheFile : cacheFiles) {
+                    cacheFile.delete();
+                }
             }
             directory.delete();
         }
