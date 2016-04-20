@@ -23,7 +23,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 
 import com.sense360.android.quinoa.lib.Sense360;
@@ -60,6 +62,11 @@ public class BootUpReceiver extends BroadcastReceiver {
         } else {
             Timber.v("Stopping Sense360");
             Sense360.stop(ctx.getApplicationContext());
+        }
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        if (prefs.getBoolean(ctx.getString(R.string.key_quick_actions), false)) {
+            ActionReceiver.Notification.showNotification(ctx.getApplicationContext());
         }
 
         BootupConfig bootupConfig = BootupConfig.get();

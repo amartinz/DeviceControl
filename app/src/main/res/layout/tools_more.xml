@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2013 - 2016 Alexander "Evisceration" Martinz
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/tools">
+
+        <alexander.martinz.libs.materialpreferences.MaterialPreference
+            android:id="@+id/pref_wireless_file_manager"
+            style="@style/MaterialPreferences.Default"
+            app:prefIcon="@drawable/ic_wifi_tethering_black_24dp"
+            app:prefTitle="@string/wireless_file_manager" />
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial>
+
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/editors">
+
+        <alexander.martinz.libs.materialpreferences.MaterialPreference
+            android:id="@+id/pref_buildprop"
+            style="@style/MaterialPreferences.Default"
+            app:prefIcon="@drawable/ic_create_black_24dp"
+            app:prefTitle="@string/buildprop" />
+
+        <alexander.martinz.libs.materialpreferences.MaterialPreference
+            android:id="@+id/pref_sysctl_vm"
+            style="@style/MaterialPreferences.Default"
+            app:prefIcon="@drawable/ic_create_black_24dp"
+            app:prefTitle="@string/sysctl_vm" />
+
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial>
+
+    <org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial
+        style="@style/MaterialPreferences.Default"
+        app:prefTitle="@string/general">
+
+        <alexander.martinz.libs.materialpreferences.MaterialPreference
+            android:id="@+id/pref_media_scan"
+            style="@style/MaterialPreferences.Default"
+            app:prefSummary="@string/media_scan_summary"
+            app:prefTitle="@string/media_scan_trigger" />
+
+        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
+            android:id="@+id/pref_quick_actions"
+            style="@style/MaterialPreferences.Default"
+            app:prefKey="@string/key_quick_actions"
+            app:prefSummary="@string/quick_actions_summary"
+            app:prefTitle="@string/quick_actions" />
+
+    </org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial>
+
+</LinearLayout>

@@ -24,7 +24,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.NotificationCompat;
 
 import com.koushikdutta.async.AsyncServerSocket;
 
@@ -78,7 +78,7 @@ public class WebServerService extends Service {
         builder.setContentTitle(title)
                 .setContentText(text)
                 .setOngoing(true)
-                .setSmallIcon(R.drawable.ic_wifi_tethering_black_24dp)
+                .setSmallIcon(R.drawable.ic_wifi_tethering_white_24dp)
                 .setColor(AppResources.get().getAccentColor())
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
@@ -90,7 +90,7 @@ public class WebServerService extends Service {
         final Intent stop = new Intent(this, WebServerService.class);
         stop.setAction(WebServerService.ACTION_STOP);
         final PendingIntent stopIntent = PendingIntent.getService(this, 0, stop, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.addAction(android.R.drawable.ic_menu_close_clear_cancel, getString(R.string.stop), stopIntent);
+        builder.addAction(R.drawable.ic_close_black_24dp, getString(R.string.stop), stopIntent);
     }
 
     public void setNotification(Notification notification) {

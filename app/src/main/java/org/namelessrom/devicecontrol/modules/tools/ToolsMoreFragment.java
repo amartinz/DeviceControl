@@ -18,61 +18,85 @@
 package org.namelessrom.devicecontrol.modules.tools;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceScreen;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.text.TextUtils;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
+import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.preferences.CustomPreference;
-import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.utils.IOUtils;
+import org.namelessrom.devicecontrol.receivers.ActionReceiver;
+import org.namelessrom.devicecontrol.utils.AppHelper;
 
 import alexander.martinz.libs.execution.BusyBox;
-import alexander.martinz.libs.execution.RootShell;
+import alexander.martinz.libs.materialpreferences.MaterialPreference;
+import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
+import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class ToolsMoreFragment extends AttachPreferenceFragment {
-    private CustomPreference mMediaScan;
+public class ToolsMoreFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener, MaterialPreference.MaterialPreferenceChangeListener {
+    @Bind(R.id.pref_wireless_file_manager) MaterialPreference wirelessFileManager;
 
-    private CustomPreference mBuildProp;
-    private CustomPreference mSysctlVm;
-    private CustomPreference mWirelessFileManager;
+    @Bind(R.id.pref_buildprop) MaterialPreference buildProp;
+    @Bind(R.id.pref_sysctl_vm) MaterialPreference sysctlVm;
 
-    @Override protected int getFragmentId() { return DeviceConstants.ID_TOOLS_MORE; }
+    @Bind(R.id.pref_media_scan) MaterialPreference mediaScan;
+    @Bind(R.id.pref_quick_actions) MaterialSwitchPreference quickActions;
 
-    @Override public void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.tools_more);
-
-        mMediaScan = (CustomPreference) findPreference("media_scan");
-
-        mWirelessFileManager = (CustomPreference) findPreference("wireless_file_manager");
-
-        final boolean hasBusyBox = BusyBox.isAvailable();
-        mBuildProp = (CustomPreference) findPreference("build_prop");
-        mBuildProp.setEnabled(hasBusyBox);
-        mSysctlVm = (CustomPreference) findPreference("sysctl_vm");
-        mSysctlVm.setEnabled(hasBusyBox);
+    @Override protected int getLayoutResourceId() {
+        return R.layout.tools_more;
     }
 
-    @Override public boolean onPreferenceTreeClick(final PreferenceScreen prefScreen, @NonNull final Preference preference) {
-        if (mMediaScan == preference) {
-            startMediaScan();
+    public ToolsMoreFragment() { }
+
+    @NonNull @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View view = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, view);
+
+        final Context context = view.getContext().getApplicationContext();
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final boolean quickActionsEnabled = prefs.getBoolean(getString(R.string.key_quick_actions), false);
+        if (quickActionsEnabled) {
+            ActionReceiver.Notification.showNotification(context);
+        }
+        quickActions.setChecked(quickActionsEnabled);
+
+        return view;
+    }
+
+    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        wirelessFileManager.setOnPreferenceClickListener(this);
+
+        final boolean hasBusyBox = BusyBox.isAvailable();
+        buildProp.setEnabled(hasBusyBox);
+        buildProp.setOnPreferenceClickListener(this);
+        sysctlVm.setEnabled(hasBusyBox);
+        sysctlVm.setOnPreferenceClickListener(this);
+
+        mediaScan.setOnPreferenceClickListener(this);
+        quickActions.setOnPreferenceChangeListener(this);
+    }
+
+    @Override public boolean onPreferenceClicked(MaterialPreference preference) {
+        if (mediaScan == preference) {
+            AppHelper.startMediaScan(mediaScan, getContext());
             return true;
         }
 
         final int id;
-        if (mWirelessFileManager == preference) {
+        if (wirelessFileManager == preference) {
             id = DeviceConstants.ID_TOOLS_WIRELESS_FM;
-        } else if (mBuildProp == preference) {
+        } else if (buildProp == preference) {
             id = DeviceConstants.ID_TOOLS_EDITORS_BUILD_PROP;
-        } else if (mSysctlVm == preference) {
+        } else if (sysctlVm == preference) {
             id = DeviceConstants.ID_TOOLS_VM;
         } else {
             id = Integer.MIN_VALUE;
@@ -86,24 +110,24 @@ public class ToolsMoreFragment extends AttachPreferenceFragment {
             return true;
         }
 
-        return super.onPreferenceTreeClick(prefScreen, preference);
+        return false;
     }
 
-    private void startMediaScan() {
-        final String format = "am broadcast -a android.intent.action.MEDIA_MOUNTED -d file://%s;";
-        final StringBuilder sb = new StringBuilder();
-        sb.append(String.format(format, IOUtils.get().getPrimarySdCard()));
-        if (!TextUtils.isEmpty(IOUtils.get().getSecondarySdCard())) {
-            sb.append(String.format(format, IOUtils.get().getSecondarySdCard()));
-        }
-        RootShell.fireAndForget(sb.toString());
+    @Override public boolean onPreferenceChanged(MaterialPreference preference, Object newValue) {
+        if (quickActions == preference) {
+            final Context context = getContext().getApplicationContext();
+            final boolean enabled = (Boolean) newValue;
+            if (enabled) {
+                ActionReceiver.Notification.showNotification(context);
+            } else {
+                ActionReceiver.Notification.cancelNotification(context);
+            }
 
-        final View view = tryToGetAnyView();
-        if (view != null) {
-            Snackbar.make(view, R.string.media_scan_triggered, Snackbar.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(getContext(), R.string.media_scan_triggered, Toast.LENGTH_LONG).show();
+            PreferenceManager.getDefaultSharedPreferences(context).edit()
+                    .putBoolean(getString(R.string.key_quick_actions), enabled)
+                    .apply();
+            return true;
         }
+        return false;
     }
-
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  Copyright (C) 2013 - 2015 Alexander "Evisceration" Martinz
+<!--  Copyright (C) 2013 - 2016 Alexander "Evisceration" Martinz
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -85,6 +85,12 @@
     -->
     <uses-feature android:name="android.hardware.screen.landscape" android:required="false" />
     <uses-feature android:name="android.hardware.wifi" android:required="false" />
+
+    <permission
+        android:name="org.namelessrom.devicecontrol.TRIGGER_ACTION"
+        android:description="@string/permission_trigger_action_desc"
+        android:label="@string/permission_trigger_action"
+        android:protectionLevel="dangerous" />
 
     <application
         android:name=".App"
@@ -220,6 +226,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.namelessrom.devicecontrol.MainActivity" />
         </activity>
+        <!-- Widget activities -->
+        <activity
+            android:name=".widgets.RebootWidget$RebootDialogActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/widget_power"
+            android:launchMode="singleInstance"
+            android:theme="@style/CustomDialog" />
+        <activity
+            android:name=".activities.QuickActionActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/quick_actions"
+            android:launchMode="singleInstance"
+            android:theme="@style/CustomDialog" />
 
         <!-- Services -->
         <service
@@ -255,6 +274,13 @@
                     android:scheme="android_secret_code" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".receivers.ActionReceiver"
+            android:permission="org.namelessrom.devicecontrol.TRIGGER_ACTION">
+            <intent-filter>
+                <action android:name="org.namelessrom.devicecontrol.TRIGGER_ACTION" />
+            </intent-filter>
+        </receiver>
 
         <!-- Widgets -->
         <receiver
@@ -271,13 +297,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider_reboot" />
         </receiver>
-
-        <activity
-            android:name=".widgets.RebootWidget$RebootDialogActivity"
-            android:label="@string/widget_power"
-            android:launchMode="singleInstance"
-            android:theme="@style/CustomDialog"
-            android:excludeFromRecents="true" />
 
         <!-- Providers -->
         <provider

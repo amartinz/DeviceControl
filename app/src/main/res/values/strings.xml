@@ -16,6 +16,9 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="permission_trigger_action">Trigger action</string>
+    <string name="permission_trigger_action_desc">Allows triggering actions via Device Control</string>
+
     <string name="home">Home</string>
     <string name="device">Device</string>
     <string name="features">Features</string>
@@ -481,4 +484,8 @@
     <string name="gps_requesting_location">Requesting location…</string>
     <string name="gps_requesting_location_error">Could not request location!</string>
     <string name="gps_unknown_location">Unknown location</string>
+
+    <string name="quick_actions">Quick actions</string>
+    <string name="quick_actions_summary">Show a low priority notification, which will offer quick actions when pressed</string>
+    <string name="quick_actions_content">Press to open quick actions</string>
 </resources>
