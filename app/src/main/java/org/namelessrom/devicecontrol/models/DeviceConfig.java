@@ -21,6 +21,8 @@ package org.namelessrom.devicecontrol.models;
 import android.text.TextUtils;
 
 import io.paperdb.Paper;
+import io.paperdb.PaperDbException;
+import timber.log.Timber;
 
 /**
  * Device configuration which auto serializes itself to a file
@@ -64,7 +66,11 @@ public class DeviceConfig {
     }
 
     public DeviceConfig save() {
-        Paper.book().write(NAME, DeviceConfig.this);
+        try {
+            Paper.book().write(NAME, DeviceConfig.this);
+        } catch (PaperDbException pde) {
+            Timber.e(pde, "Could not write %s", NAME);
+        }
         return this;
     }
 

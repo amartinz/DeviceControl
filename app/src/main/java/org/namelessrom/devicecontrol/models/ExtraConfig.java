@@ -19,6 +19,8 @@
 package org.namelessrom.devicecontrol.models;
 
 import io.paperdb.Paper;
+import io.paperdb.PaperDbException;
+import timber.log.Timber;
 
 /**
  * Extra configuration which auto serializes itself to a file
@@ -45,7 +47,11 @@ public class ExtraConfig {
     }
 
     public ExtraConfig save() {
-        Paper.book().write(NAME, ExtraConfig.this);
+        try {
+            Paper.book().write(NAME, ExtraConfig.this);
+        } catch (PaperDbException pde) {
+            Timber.e(pde, "Could not write %s", NAME);
+        }
         return this;
     }
 

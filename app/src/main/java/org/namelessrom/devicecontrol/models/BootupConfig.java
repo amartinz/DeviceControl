@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import io.paperdb.Paper;
+import io.paperdb.PaperDbException;
 import timber.log.Timber;
 
 /**
@@ -63,7 +64,11 @@ public class BootupConfig {
     }
 
     public BootupConfig save() {
-        Paper.book().write(NAME, BootupConfig.this);
+        try {
+            Paper.book().write(NAME, BootupConfig.this);
+        } catch (PaperDbException pde) {
+            Timber.e(pde, "Could not write %s", NAME);
+        }
         return this;
     }
 

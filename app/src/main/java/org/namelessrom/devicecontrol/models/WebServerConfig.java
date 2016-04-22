@@ -19,6 +19,8 @@
 package org.namelessrom.devicecontrol.models;
 
 import io.paperdb.Paper;
+import io.paperdb.PaperDbException;
+import timber.log.Timber;
 
 /**
  * Web server configuration which auto serializes itself to a file
@@ -52,7 +54,11 @@ public class WebServerConfig {
     }
 
     public WebServerConfig save() {
-        Paper.book().write(NAME, WebServerConfig.this);
+        try {
+            Paper.book().write(NAME, WebServerConfig.this);
+        } catch (PaperDbException pde) {
+            Timber.e(pde, "Could not write %s", NAME);
+        }
         return this;
     }
 

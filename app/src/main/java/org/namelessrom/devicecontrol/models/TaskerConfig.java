@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import io.paperdb.Paper;
+import io.paperdb.PaperDbException;
 import timber.log.Timber;
 
 /**
@@ -56,7 +57,11 @@ public class TaskerConfig {
     }
 
     public TaskerConfig save() {
-        Paper.book().write(NAME, TaskerConfig.this);
+        try {
+            Paper.book().write(NAME, TaskerConfig.this);
+        } catch (PaperDbException pde) {
+            Timber.e(pde, "Could not write %s", NAME);
+        }
         return this;
     }
 
