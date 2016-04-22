@@ -209,12 +209,8 @@ public class App extends android.app.Application {
         return builder.build();
     }
 
+    // TODO: configurable
     private File getCacheDirectory() {
-        // TODO: configurable
-        if (true) {
-            return new File(getCacheDir(), "bitmapCache");
-        }
-
         File cacheLocation = null;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             cacheLocation = new File(getExternalCacheDir(), "bitmapCache");
