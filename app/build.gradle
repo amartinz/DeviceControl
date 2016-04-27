@@ -138,8 +138,8 @@ dependencies {
     compile 'com.android.support:support-v13:23.3.0'
 
     // see https://github.com/JakeWharton/butterknife
-    compile 'com.jakewharton:butterknife:8.0.0-SNAPSHOT'
-    apt 'com.jakewharton:butterknife-compiler:8.0.0-SNAPSHOT'
+    compile 'com.jakewharton:butterknife:8.0.0'
+    apt 'com.jakewharton:butterknife-compiler:8.0.0'
 
     // see https://github.com/PhilJay/MPAndroidChart
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
@@ -151,12 +151,12 @@ dependencies {
     compile 'com.google.android.gms:play-services-base:8.4.0'
 
     // see https://github.com/Kennyc1012/BottomSheet
-    compile 'com.github.Kennyc1012:BottomSheet:2.1.1'
+    compile 'com.github.Kennyc1012:BottomSheet:2.1.2'
 
     // see https://github.com/ReactiveX/RxAndroid
     compile 'io.reactivex:rxandroid:1.1.0'
     // see https://github.com/ReactiveX/RxJava
-    compile 'io.reactivex:rxjava:1.1.2'
+    compile 'io.reactivex:rxjava:1.1.3'
     // see https://github.com/tbruyelle/RxPermissions
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
     // see https://github.com/mcharmas/Android-ReactiveLocation

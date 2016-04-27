@@ -61,25 +61,25 @@ import alexander.martinz.libs.hardware.cpu.CpuReader;
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CpuSettingsFragment extends AttachMaterialPreferenceFragment implements CpuCoreMonitor.CoreListener, MaterialPreference.MaterialPreferenceChangeListener, MaterialPreference.MaterialPreferenceClickListener, CpuInformationListener {
 
-    @Bind(R.id.cpu_pref_max) MaterialListPreference mMax;
-    @Bind(R.id.cpu_pref_min) MaterialListPreference mMin;
-    @Bind(R.id.cpu_pref_cpu_lock) MaterialSwitchPreference mCpuLock;
+    @BindView(R.id.cpu_pref_max) MaterialListPreference mMax;
+    @BindView(R.id.cpu_pref_min) MaterialListPreference mMin;
+    @BindView(R.id.cpu_pref_cpu_lock) MaterialSwitchPreference mCpuLock;
 
-    @Bind(R.id.cpu_pref_governor) MaterialListPreference mGovernor;
-    @Bind(R.id.cpu_pref_governor_tuning) MaterialPreference mGovernorTuning;
-    @Bind(R.id.cpu_pref_gov_lock) MaterialSwitchPreference mCpuGovLock;
+    @BindView(R.id.cpu_pref_governor) MaterialListPreference mGovernor;
+    @BindView(R.id.cpu_pref_governor_tuning) MaterialPreference mGovernorTuning;
+    @BindView(R.id.cpu_pref_gov_lock) MaterialSwitchPreference mCpuGovLock;
 
     private MaterialSwitchPreference mMpDecision;
     private MaterialListPreference mCpuQuietGov;
 
-    @Bind(R.id.cpu_info_hide) SwitchCompat mStatusHide;
-    @Bind(R.id.cpu_info) LinearLayout mCpuInfo;
+    @BindView(R.id.cpu_info_hide) SwitchCompat mStatusHide;
+    @BindView(R.id.cpu_info) LinearLayout mCpuInfo;
 
     @BindString(R.string.core) String coreString;
 

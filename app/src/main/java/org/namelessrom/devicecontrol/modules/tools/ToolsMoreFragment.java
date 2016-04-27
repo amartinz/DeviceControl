@@ -38,17 +38,17 @@ import alexander.martinz.libs.execution.BusyBox;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ToolsMoreFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceClickListener, MaterialPreference.MaterialPreferenceChangeListener {
-    @Bind(R.id.pref_wireless_file_manager) MaterialPreference wirelessFileManager;
+    @BindView(R.id.pref_wireless_file_manager) MaterialPreference wirelessFileManager;
 
-    @Bind(R.id.pref_buildprop) MaterialPreference buildProp;
-    @Bind(R.id.pref_sysctl_vm) MaterialPreference sysctlVm;
+    @BindView(R.id.pref_buildprop) MaterialPreference buildProp;
+    @BindView(R.id.pref_sysctl_vm) MaterialPreference sysctlVm;
 
-    @Bind(R.id.pref_media_scan) MaterialPreference mediaScan;
-    @Bind(R.id.pref_quick_actions) MaterialSwitchPreference quickActions;
+    @BindView(R.id.pref_media_scan) MaterialPreference mediaScan;
+    @BindView(R.id.pref_quick_actions) MaterialSwitchPreference quickActions;
 
     @Override protected int getLayoutResourceId() {
         return R.layout.tools_more;

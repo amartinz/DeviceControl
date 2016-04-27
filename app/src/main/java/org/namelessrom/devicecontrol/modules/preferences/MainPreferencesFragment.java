@@ -40,21 +40,21 @@ import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
 
 public class MainPreferencesFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceChangeListener {
     // TODO: more customization
-    @Bind(R.id.prefs_light_theme) MaterialSwitchPreference lightTheme;
-    @Bind(R.id.prefs_low_end_gfx) MaterialSwitchPreference lowEndGfx;
+    @BindView(R.id.prefs_light_theme) MaterialSwitchPreference lightTheme;
+    @BindView(R.id.prefs_low_end_gfx) MaterialSwitchPreference lowEndGfx;
 
-    @Bind(R.id.prefs_show_pollfish) MaterialSwitchPreference showPollfish;
-    @Bind(R.id.prefs_use_sense360) MaterialSwitchPreference useSense360;
+    @BindView(R.id.prefs_show_pollfish) MaterialSwitchPreference showPollfish;
+    @BindView(R.id.prefs_use_sense360) MaterialSwitchPreference useSense360;
 
-    @Bind(R.id.prefs_expert_enable) MaterialSwitchPreference expertEnable;
-    @Bind(R.id.prefs_expert_skip_checks) MaterialSwitchPreference skipChecks;
-    @Bind(R.id.prefs_expert_su_shell_context) MaterialListPreference shellContext;
+    @BindView(R.id.prefs_expert_enable) MaterialSwitchPreference expertEnable;
+    @BindView(R.id.prefs_expert_skip_checks) MaterialSwitchPreference skipChecks;
+    @BindView(R.id.prefs_expert_su_shell_context) MaterialListPreference shellContext;
 
     @Override protected int getLayoutResourceId() {
         return R.layout.pref_app_main;

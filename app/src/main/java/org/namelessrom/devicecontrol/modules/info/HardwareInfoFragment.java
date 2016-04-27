@@ -29,13 +29,13 @@ import org.namelessrom.devicecontrol.modules.info.hardware.FingerprintView;
 import org.namelessrom.devicecontrol.modules.info.hardware.GpsView;
 import org.namelessrom.devicecontrol.views.AttachFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
 
 public class HardwareInfoFragment extends AttachFragment {
-    @Bind(R.id.hardware_fingerprint) FingerprintView fingerprintView;
-    @Bind(R.id.hardware_gps) GpsView gpsView;
+    @BindView(R.id.hardware_fingerprint) FingerprintView fingerprintView;
+    @BindView(R.id.hardware_gps) GpsView gpsView;
 
     @Override protected int getFragmentId() { return DeviceConstants.ID_INFO_HARDWARE; }
 

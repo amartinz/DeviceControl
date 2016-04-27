@@ -19,13 +19,13 @@ import android.widget.TextView;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CardTitleView extends LinearLayout {
-    @Bind(android.R.id.icon) ImageView icon;
-    @Bind(android.R.id.title) TextView title;
-    @Bind(android.R.id.content) FrameLayout content;
+    @BindView(android.R.id.icon) ImageView icon;
+    @BindView(android.R.id.title) TextView title;
+    @BindView(android.R.id.content) FrameLayout content;
 
     private int iconResId = Integer.MIN_VALUE;
     private int iconTint = Integer.MIN_VALUE;

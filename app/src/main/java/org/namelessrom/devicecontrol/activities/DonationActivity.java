@@ -36,14 +36,14 @@ import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DonationActivity extends BaseActivity implements BillingProcessor.IBillingHandler,
         View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-    @Bind(R.id.bDonateGooglePlay) Button mGooglePlay;
-    @Bind(R.id.radioGroupDonation) RadioGroup mRadioGroup;
+    @BindView(R.id.bDonateGooglePlay) Button mGooglePlay;
+    @BindView(R.id.radioGroupDonation) RadioGroup mRadioGroup;
 
     private BillingProcessor mBillingProcessor;
 

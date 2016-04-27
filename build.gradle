@@ -3,13 +3,12 @@ buildscript {
     ext {
         useLocalSources = false
 
-        gradleVersion = '2.1.0-beta3'
+        gradleVersion = '2.1.0'
     }
 
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "http://dl.bintray.com/tbruyelle/tbruyelle" }
         maven { url 'https://maven.fabric.io/public' }
         flatDir { dirs 'aars' }
@@ -30,7 +29,6 @@ allprojects {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "http://dl.bintray.com/tbruyelle/tbruyelle" }
         maven { url 'https://maven.fabric.io/public' }
         flatDir { dirs 'aars' }
@@ -58,7 +56,7 @@ def getGitCommitHash() {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
+    gradleVersion = '2.13'
 }
 
 task clean(type: Delete) {
