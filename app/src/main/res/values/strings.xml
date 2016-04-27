@@ -488,4 +488,19 @@
     <string name="quick_actions">Quick actions</string>
     <string name="quick_actions_summary">Show a low priority notification, which will offer quick actions when pressed</string>
     <string name="quick_actions_content">Press to open quick actions</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="supported">Supported</string>
+    <string name="vendor">Vendor</string>
+    <string name="description">Description</string>
+    <string name="id_device">Device ID</string>
+    <string name="id_system">System ID</string>
+    <string name="algorithms">Algorithms</string>
+    <string name="security_level">Security level</string>
+    <string name="hdcp_level">HDCP level</string>
+    <string name="hdcp_level_max">Maximum HDCP level</string>
+    <string name="usage_reporting_supported">Usage reporting supported</string>
+    <string name="session_number_max">Maximum number of sessions</string>
+    <string name="session_number_open">Number of open sessions</string>
 </resources>

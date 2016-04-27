@@ -45,6 +45,11 @@
                     android:icon="@drawable/ic_devices_other_black_24dp"
                     android:title="@string/drawer_title_info_hardware" />
                 <item
+                    android:id="@+id/nav_item_info_software"
+                    android:checkable="true"
+                    android:icon="@drawable/ic_code_black_24dp"
+                    android:title="@string/drawer_title_info_software" />
+                <item
                     android:id="@+id/nav_item_info_performance"
                     android:checkable="true"
                     android:icon="@drawable/ic_developer_board_black_24dp"

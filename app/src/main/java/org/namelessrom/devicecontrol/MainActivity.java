@@ -59,6 +59,7 @@ import org.namelessrom.devicecontrol.modules.flasher.FlasherFragment;
 import org.namelessrom.devicecontrol.modules.info.DeviceInfoFragment;
 import org.namelessrom.devicecontrol.modules.info.HardwareInfoFragment;
 import org.namelessrom.devicecontrol.modules.info.PerformanceInfoFragment;
+import org.namelessrom.devicecontrol.modules.info.SoftwareInfoFragment;
 import org.namelessrom.devicecontrol.modules.performance.FilesystemFragment;
 import org.namelessrom.devicecontrol.modules.performance.GpuSettingsFragment;
 import org.namelessrom.devicecontrol.modules.performance.ThermalFragment;
@@ -449,18 +450,25 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
                 mTitle = mFragmentTitle = R.string.device;
                 mSubFragmentTitle = -1;
                 break;
-            case DeviceConstants.ID_INFO_PERFORMANCE:
-                if (!onResume) {
-                    mCurrentFragment = new PerformanceInfoFragment();
-                }
-                mTitle = mFragmentTitle = R.string.performance;
-                mSubFragmentTitle = -1;
-                break;
             case DeviceConstants.ID_INFO_HARDWARE:
                 if (!onResume) {
                     mCurrentFragment = new HardwareInfoFragment();
                 }
                 mTitle = mFragmentTitle = R.string.hardware;
+                mSubFragmentTitle = -1;
+                break;
+            case DeviceConstants.ID_INFO_SOFTWARE:
+                if (!onResume) {
+                    mCurrentFragment = new SoftwareInfoFragment();
+                }
+                mTitle = mFragmentTitle = R.string.software;
+                mSubFragmentTitle = -1;
+                break;
+            case DeviceConstants.ID_INFO_PERFORMANCE:
+                if (!onResume) {
+                    mCurrentFragment = new PerformanceInfoFragment();
+                }
+                mTitle = mFragmentTitle = R.string.performance;
                 mSubFragmentTitle = -1;
                 break;
             //--------------------------------------------------------------------------------------
