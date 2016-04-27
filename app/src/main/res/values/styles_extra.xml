@@ -32,4 +32,10 @@
         <item name="bottom_sheet_item_icon_color">?colorAccent</item>
     </style>
 
+    <style name="MaterialPreferences.Default">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="prefIconTint">?colorAccent</item>
+    </style>
+
 </resources>
