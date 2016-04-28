@@ -60,7 +60,13 @@ public class DeviceConfig {
 
     public static DeviceConfig get() {
         if (instance == null) {
-            instance = Paper.book().read(NAME, new DeviceConfig());
+            final DeviceConfig config = new DeviceConfig();
+            try {
+                instance = Paper.book().read(NAME, config);
+            } catch (PaperDbException pde) {
+                instance = config;
+                Timber.e(pde, "Could not read %s", NAME);
+            }
         }
         return instance;
     }

@@ -48,7 +48,13 @@ public class WebServerConfig {
 
     public static WebServerConfig get() {
         if (instance == null) {
-            instance = Paper.book().read(NAME, new WebServerConfig());
+            final WebServerConfig config = new WebServerConfig();
+            try {
+                instance = Paper.book().read(NAME, config);
+            } catch (PaperDbException pde) {
+                instance = config;
+                Timber.e(pde, "Could not read %s", NAME);
+            }
         }
         return instance;
     }

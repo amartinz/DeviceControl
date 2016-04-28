@@ -51,7 +51,13 @@ public class TaskerConfig {
 
     public static TaskerConfig get() {
         if (instance == null) {
-            instance = Paper.book().read(NAME, new TaskerConfig());
+            final TaskerConfig config = new TaskerConfig();
+            try {
+                instance = Paper.book().read(NAME, config);
+            } catch (PaperDbException pde) {
+                instance = config;
+                Timber.e(pde, "Could not read %s", NAME);
+            }
         }
         return instance;
     }

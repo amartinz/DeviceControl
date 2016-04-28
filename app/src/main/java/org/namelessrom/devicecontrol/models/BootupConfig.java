@@ -58,7 +58,13 @@ public class BootupConfig {
 
     public static BootupConfig get() {
         if (instance == null) {
-            instance = Paper.book().read(NAME, new BootupConfig());
+            final BootupConfig config = new BootupConfig();
+            try {
+                instance = Paper.book().read(NAME, config);
+            } catch (PaperDbException pde) {
+                instance = config;
+                Timber.e(pde, "Could not read %s", NAME);
+            }
         }
         return instance;
     }

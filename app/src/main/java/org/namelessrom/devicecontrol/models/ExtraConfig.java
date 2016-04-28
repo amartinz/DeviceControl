@@ -41,7 +41,13 @@ public class ExtraConfig {
 
     public static ExtraConfig get() {
         if (instance == null) {
-            instance = Paper.book().read(NAME, new ExtraConfig());
+            final ExtraConfig config = new ExtraConfig();
+            try {
+                instance = Paper.book().read(NAME, config);
+            } catch (PaperDbException pde) {
+                instance = config;
+                Timber.e(pde, "Could not read %s", NAME);
+            }
         }
         return instance;
     }

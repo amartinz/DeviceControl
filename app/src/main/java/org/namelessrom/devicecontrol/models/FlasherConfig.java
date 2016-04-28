@@ -41,7 +41,13 @@ public class FlasherConfig {
 
     public static FlasherConfig get() {
         if (instance == null) {
-            instance = Paper.book().read(NAME, new FlasherConfig());
+            final FlasherConfig config = new FlasherConfig();
+            try {
+                instance = Paper.book().read(NAME, config);
+            } catch (PaperDbException pde) {
+                instance = config;
+                Timber.e(pde, "Could not read %s", NAME);
+            }
         }
         return instance;
     }
