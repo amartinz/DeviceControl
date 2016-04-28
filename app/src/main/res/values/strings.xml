@@ -489,6 +489,7 @@
     <string name="quick_actions_summary">Show a low priority notification, which will offer quick actions when pressed</string>
     <string name="quick_actions_content">Press to open quick actions</string>
 
+    <string name="software">Software</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="supported">Supported</string>

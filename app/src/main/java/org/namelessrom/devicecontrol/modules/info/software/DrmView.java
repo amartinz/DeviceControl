@@ -86,6 +86,7 @@ public class DrmView extends CardTitleView {
 
         supported = ButterKnife.findById(content, R.id.drm_supported);
         extrasContainer = ButterKnife.findById(content, R.id.drm_container);
+        extrasContainer.setVisibility(View.GONE);
 
         vendor = ButterKnife.findById(content, R.id.drm_vendor);
         version = ButterKnife.findById(content, R.id.drm_version);

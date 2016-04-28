@@ -16,12 +16,14 @@
  */
 package org.namelessrom.devicecontrol.modules.info;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.namelessrom.devicecontrol.BuildConfig;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.info.software.DrmView;
@@ -29,8 +31,11 @@ import org.namelessrom.devicecontrol.views.AttachFragment;
 
 import alexander.martinz.libs.hardware.drm.BaseDrmInfo;
 import alexander.martinz.libs.hardware.drm.DrmInfoManager;
+import alexander.martinz.libs.hardware.knox.KnoxInformation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import hugo.weaving.DebugLog;
+import timber.log.Timber;
 
 public class SoftwareInfoFragment extends AttachFragment {
     @BindView(R.id.drm_provider_widevine) DrmView widevineView;
@@ -48,15 +53,45 @@ public class SoftwareInfoFragment extends AttachFragment {
 
     @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!DrmInfoManager.isSupported()) {
-            // TODO: handle
-            return;
+        if (DrmInfoManager.isSupported()) {
+            setupDrmInfo();
         }
 
-        final BaseDrmInfo widevineInfo = DrmInfoManager.getWidevineDrmInfo();
-        widevineView.setDrmInfo(widevineInfo);
+        if (BuildConfig.DEBUG) {
+            debugPrintKnoxInfo();
+        }
+    }
 
-        final BaseDrmInfo playReadyInfo = DrmInfoManager.getPlayReadyDrmInfo();
-        playReadyView.setDrmInfo(playReadyInfo);
+    private void setupDrmInfo() {
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+            @Override public void run() {
+                final BaseDrmInfo widevineInfo = DrmInfoManager.getWidevineDrmInfo();
+                widevineView.post(new Runnable() {
+                    @Override public void run() {
+                        widevineView.setDrmInfo(widevineInfo);
+                    }
+                });
+            }
+        });
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+            @Override public void run() {
+                final BaseDrmInfo playReadyInfo = DrmInfoManager.getPlayReadyDrmInfo();
+                playReadyView.post(new Runnable() {
+                    @Override public void run() {
+                        playReadyView.setDrmInfo(playReadyInfo);
+                    }
+                });
+            }
+        });
+    }
+
+    // just for testing
+    @DebugLog private void debugPrintKnoxInfo() {
+        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
+            @Override public void run() {
+                final KnoxInformation knoxInformation = KnoxInformation.get();
+                Timber.d("Knox Information:\n%s", knoxInformation);
+            }
+        });
     }
 }
