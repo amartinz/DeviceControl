@@ -35,9 +35,9 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.File;
 
-import alexander.martinz.libs.hardware.cpu.CpuInformation;
-import alexander.martinz.libs.hardware.cpu.CpuInformationListener;
-import alexander.martinz.libs.hardware.cpu.CpuReader;
+import at.amartinz.hardware.cpu.CpuInformation;
+import at.amartinz.hardware.cpu.CpuInformationListener;
+import at.amartinz.hardware.cpu.CpuReader;
 import alexander.martinz.libs.materialpreferences.MaterialEditTextPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 

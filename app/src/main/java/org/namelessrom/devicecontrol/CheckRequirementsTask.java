@@ -41,9 +41,9 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import alexander.martinz.libs.execution.BusyBox;
-import alexander.martinz.libs.execution.RootCheck;
-import alexander.martinz.libs.hardware.device.Device;
+import at.amartinz.execution.BusyBox;
+import at.amartinz.execution.RootCheck;
+import at.amartinz.hardware.device.Device;
 
 public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
     private static final String XPOSED_INSTALLER_PACAKGE = "de.robv.android.xposed.installer";

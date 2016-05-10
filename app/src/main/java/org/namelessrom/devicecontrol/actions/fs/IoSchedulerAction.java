@@ -26,8 +26,8 @@ import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import alexander.martinz.libs.execution.Command;
-import alexander.martinz.libs.execution.RootShell;
+import at.amartinz.execution.Command;
+import at.amartinz.execution.RootShell;
 
 public class IoSchedulerAction extends BaseAction {
 

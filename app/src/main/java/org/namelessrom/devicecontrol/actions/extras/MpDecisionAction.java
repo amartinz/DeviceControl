@@ -5,8 +5,8 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.actions.ActionProcessor;
 import org.namelessrom.devicecontrol.actions.BaseAction;
 
-import alexander.martinz.libs.execution.Command;
-import alexander.martinz.libs.execution.RootShell;
+import at.amartinz.execution.Command;
+import at.amartinz.execution.RootShell;
 
 public class MpDecisionAction extends BaseAction {
     public static final String MPDECISION_PATH = "/system/bin/mpdecision";

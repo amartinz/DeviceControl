@@ -54,7 +54,7 @@ import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
 import java.util.ArrayList;
 
-import alexander.martinz.libs.execution.RootShell;
+import at.amartinz.execution.RootShell;
 
 public class VoltageFragment extends AttachPreferenceFragment {
     private PreferenceCategory mCategory;

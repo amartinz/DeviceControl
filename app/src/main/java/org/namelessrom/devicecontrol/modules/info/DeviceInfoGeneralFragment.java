@@ -29,13 +29,13 @@ import android.view.ViewGroup;
 
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
-import alexander.martinz.libs.hardware.Emmc;
+import at.amartinz.hardware.Emmc;
 import org.namelessrom.devicecontrol.preferences.CustomPreferenceCategoryMaterial;
 
-import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.hardware.device.Device;
-import alexander.martinz.libs.hardware.device.KernelInfo;
-import alexander.martinz.libs.hardware.device.MemoryInfo;
+import at.amartinz.execution.RootShell;
+import at.amartinz.hardware.device.Device;
+import at.amartinz.hardware.device.KernelInfo;
+import at.amartinz.hardware.device.MemoryInfo;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 

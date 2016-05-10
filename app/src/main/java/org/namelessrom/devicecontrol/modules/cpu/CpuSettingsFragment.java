@@ -52,12 +52,12 @@ import org.namelessrom.devicecontrol.views.CpuCoreView;
 import java.util.ArrayList;
 import java.util.List;
 
-import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.hardware.cpu.CpuCore;
-import alexander.martinz.libs.hardware.cpu.CpuCoreMonitor;
-import alexander.martinz.libs.hardware.cpu.CpuInformation;
-import alexander.martinz.libs.hardware.cpu.CpuInformationListener;
-import alexander.martinz.libs.hardware.cpu.CpuReader;
+import at.amartinz.execution.RootShell;
+import at.amartinz.hardware.cpu.CpuCore;
+import at.amartinz.hardware.cpu.CpuCoreMonitor;
+import at.amartinz.hardware.cpu.CpuInformation;
+import at.amartinz.hardware.cpu.CpuInformationListener;
+import at.amartinz.hardware.cpu.CpuReader;
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;

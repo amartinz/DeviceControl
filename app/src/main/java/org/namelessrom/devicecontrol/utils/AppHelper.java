@@ -41,9 +41,9 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.List;
 
-import alexander.martinz.libs.execution.BusyBox;
-import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.hardware.ProcessManager;
+import at.amartinz.execution.BusyBox;
+import at.amartinz.execution.RootShell;
+import at.amartinz.hardware.ProcessManager;
 import hugo.weaving.DebugLog;
 import timber.log.Timber;
 

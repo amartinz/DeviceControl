@@ -1,10 +1,10 @@
 include ':app'
 
 include ':ExecutionLibrary'
-project(':ExecutionLibrary').projectDir = new File('modules/ExecutionLibrary/library')
+project(':ExecutionLibrary').projectDir = new File('modules/ExecutionLibrary/execution')
 
 include ':HardwareLibrary'
-project(':HardwareLibrary').projectDir = new File('modules/HardwareLibrary/library')
+project(':HardwareLibrary').projectDir = new File('modules/HardwareLibrary/hardware')
 
 include ':MaterialPreferences'
 project(':MaterialPreferences').projectDir = new File('modules/MaterialPreferences/library')

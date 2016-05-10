@@ -51,10 +51,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import alexander.martinz.libs.execution.BusyBox;
-import alexander.martinz.libs.execution.Command;
-import alexander.martinz.libs.execution.NormalShell;
-import alexander.martinz.libs.execution.RootShell;
+import at.amartinz.execution.BusyBox;
+import at.amartinz.execution.Command;
+import at.amartinz.execution.NormalShell;
+import at.amartinz.execution.RootShell;
 import timber.log.Timber;
 
 import static org.namelessrom.devicecontrol.utils.ShellOutput.OnShellOutputListener;

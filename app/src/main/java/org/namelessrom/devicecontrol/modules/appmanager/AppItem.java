@@ -31,9 +31,9 @@ import android.widget.Toast;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
-import alexander.martinz.libs.execution.BusyBox;
-import alexander.martinz.libs.execution.Command;
-import alexander.martinz.libs.execution.RootShell;
+import at.amartinz.execution.BusyBox;
+import at.amartinz.execution.Command;
+import at.amartinz.execution.RootShell;
 import timber.log.Timber;
 
 public class AppItem {

@@ -41,7 +41,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 
-import alexander.martinz.libs.hardware.display.DisplayGammaCalibration;
+import at.amartinz.hardware.display.DisplayGammaCalibration;
 
 /**
  * Special preference type that allows configuration of Gamma settings

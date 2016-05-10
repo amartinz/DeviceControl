@@ -40,23 +40,23 @@ import org.namelessrom.devicecontrol.theme.AppResources;
 
 import java.util.ArrayList;
 
-import alexander.martinz.libs.hardware.sensors.BaseSensor;
-import alexander.martinz.libs.hardware.sensors.environment.AmbientTemperatureSensor;
-import alexander.martinz.libs.hardware.sensors.environment.LightSensor;
-import alexander.martinz.libs.hardware.sensors.environment.PressureSensor;
-import alexander.martinz.libs.hardware.sensors.environment.RelativeHumiditySensor;
-import alexander.martinz.libs.hardware.sensors.motion.AccelerometerLinearSensor;
-import alexander.martinz.libs.hardware.sensors.motion.AccelerometerSensor;
-import alexander.martinz.libs.hardware.sensors.motion.GravitySensor;
-import alexander.martinz.libs.hardware.sensors.motion.GyroscopeSensor;
-import alexander.martinz.libs.hardware.sensors.motion.GyroscopeUncalibratedSensor;
-import alexander.martinz.libs.hardware.sensors.motion.RotationVectorSensor;
-import alexander.martinz.libs.hardware.sensors.motion.StepSensor;
-import alexander.martinz.libs.hardware.sensors.position.GameRotationVectorSensor;
-import alexander.martinz.libs.hardware.sensors.position.GeomagneticRotationVectorSensor;
-import alexander.martinz.libs.hardware.sensors.position.MagneticFieldSensor;
-import alexander.martinz.libs.hardware.sensors.position.MagneticFieldUncalibratedSensor;
-import alexander.martinz.libs.hardware.sensors.position.ProximitySensor;
+import at.amartinz.hardware.sensors.BaseSensor;
+import at.amartinz.hardware.sensors.environment.AmbientTemperatureSensor;
+import at.amartinz.hardware.sensors.environment.LightSensor;
+import at.amartinz.hardware.sensors.environment.PressureSensor;
+import at.amartinz.hardware.sensors.environment.RelativeHumiditySensor;
+import at.amartinz.hardware.sensors.motion.AccelerometerLinearSensor;
+import at.amartinz.hardware.sensors.motion.AccelerometerSensor;
+import at.amartinz.hardware.sensors.motion.GravitySensor;
+import at.amartinz.hardware.sensors.motion.GyroscopeSensor;
+import at.amartinz.hardware.sensors.motion.GyroscopeUncalibratedSensor;
+import at.amartinz.hardware.sensors.motion.RotationVectorSensor;
+import at.amartinz.hardware.sensors.motion.StepSensor;
+import at.amartinz.hardware.sensors.position.GameRotationVectorSensor;
+import at.amartinz.hardware.sensors.position.GeomagneticRotationVectorSensor;
+import at.amartinz.hardware.sensors.position.MagneticFieldSensor;
+import at.amartinz.hardware.sensors.position.MagneticFieldUncalibratedSensor;
+import at.amartinz.hardware.sensors.position.ProximitySensor;
 
 public class SensorActivity extends BaseActivity {
     private final ArrayList<BaseSensor> mSensorList = new ArrayList<>();

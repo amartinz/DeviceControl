@@ -46,7 +46,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import alexander.martinz.libs.execution.RootShell;
+import at.amartinz.execution.RootShell;
 import timber.log.Timber;
 
 public class EntropyFragment extends AttachPreferenceProgressFragment implements Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener {

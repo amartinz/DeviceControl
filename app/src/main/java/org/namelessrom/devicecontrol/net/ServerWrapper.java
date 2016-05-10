@@ -32,8 +32,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import alexander.martinz.libs.hardware.device.Device;
-import alexander.martinz.libs.hardware.utils.HwIoUtils;
+import at.amartinz.hardware.device.Device;
+import at.amartinz.hardware.utils.HwIoUtils;
 import timber.log.Timber;
 
 /**

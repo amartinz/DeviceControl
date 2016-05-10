@@ -49,8 +49,8 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import alexander.martinz.libs.hardware.cpu.CpuInformation;
-import alexander.martinz.libs.hardware.cpu.CpuReader;
+import at.amartinz.hardware.cpu.CpuInformation;
+import at.amartinz.hardware.cpu.CpuReader;
 
 public class ActionProcessor {
 

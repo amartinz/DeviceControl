@@ -46,8 +46,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import alexander.martinz.libs.execution.BusyBox;
-import alexander.martinz.libs.execution.RootShell;
+import at.amartinz.execution.BusyBox;
+import at.amartinz.execution.RootShell;
 import timber.log.Timber;
 
 public class SysctlEditorFragment extends BaseEditorFragment {

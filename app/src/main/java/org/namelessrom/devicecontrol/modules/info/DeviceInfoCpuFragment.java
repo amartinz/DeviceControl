@@ -30,11 +30,11 @@ import org.namelessrom.devicecontrol.R;
 
 import java.util.List;
 
-import alexander.martinz.libs.hardware.cpu.CpuInformation;
-import alexander.martinz.libs.hardware.cpu.CpuInformationListener;
-import alexander.martinz.libs.hardware.cpu.CpuReader;
-import alexander.martinz.libs.hardware.device.Device;
-import alexander.martinz.libs.hardware.device.ProcessorInfo;
+import at.amartinz.hardware.cpu.CpuInformation;
+import at.amartinz.hardware.cpu.CpuInformationListener;
+import at.amartinz.hardware.cpu.CpuReader;
+import at.amartinz.hardware.device.Device;
+import at.amartinz.hardware.device.ProcessorInfo;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;

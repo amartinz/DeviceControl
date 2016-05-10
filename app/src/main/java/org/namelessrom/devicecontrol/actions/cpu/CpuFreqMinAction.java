@@ -27,9 +27,9 @@ import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.modules.cpu.CpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import alexander.martinz.libs.execution.Command;
-import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.hardware.cpu.CpuReader;
+import at.amartinz.execution.Command;
+import at.amartinz.execution.RootShell;
+import at.amartinz.hardware.cpu.CpuReader;
 
 public class CpuFreqMinAction extends BaseAction {
 

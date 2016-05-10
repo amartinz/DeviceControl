@@ -39,7 +39,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import alexander.martinz.libs.execution.ShellManager;
+import at.amartinz.execution.ShellManager;
 import at.amartinz.universaldebug.UniversalDebug;
 import at.amartinz.universaldebug.fabric.FabricConfig;
 import at.amartinz.universaldebug.fabric.trees.CrashlyticsComponent;

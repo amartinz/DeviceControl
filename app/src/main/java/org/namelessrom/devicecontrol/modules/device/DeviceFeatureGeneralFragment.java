@@ -25,10 +25,7 @@ import android.preference.PreferenceScreen;
 
 import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.DeviceConstants;
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
-import alexander.martinz.libs.hardware.display.DisplayColorCalibration;
-import alexander.martinz.libs.hardware.display.DisplayGammaCalibration;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
 import org.namelessrom.devicecontrol.utils.ShellOutput;

@@ -28,8 +28,8 @@ import android.widget.TextView;
 
 import org.namelessrom.devicecontrol.R;
 
-import alexander.martinz.libs.hardware.device.Device;
-import alexander.martinz.libs.hardware.device.ProcessorInfo;
+import at.amartinz.hardware.device.Device;
+import at.amartinz.hardware.device.ProcessorInfo;
 
 public class DrawerHeaderTitle extends FrameLayout {
     public DrawerHeaderTitle(Context context) {

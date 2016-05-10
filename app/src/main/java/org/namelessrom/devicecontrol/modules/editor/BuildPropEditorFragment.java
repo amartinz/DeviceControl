@@ -45,7 +45,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import alexander.martinz.libs.execution.BusyBox;
+import at.amartinz.execution.BusyBox;
 import timber.log.Timber;
 
 public class BuildPropEditorFragment extends BaseEditorFragment {

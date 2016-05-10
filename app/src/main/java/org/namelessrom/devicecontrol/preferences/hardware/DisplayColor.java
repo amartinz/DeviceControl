@@ -39,7 +39,7 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import alexander.martinz.libs.hardware.display.DisplayColorCalibration;
+import at.amartinz.hardware.display.DisplayColorCalibration;
 
 /**
  * Special preference type that allows configuration of Color settings

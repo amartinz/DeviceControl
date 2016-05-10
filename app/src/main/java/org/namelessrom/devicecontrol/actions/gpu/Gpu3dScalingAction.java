@@ -24,7 +24,7 @@ import org.namelessrom.devicecontrol.actions.BaseAction;
 import org.namelessrom.devicecontrol.hardware.GpuUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import alexander.martinz.libs.execution.RootShell;
+import at.amartinz.execution.RootShell;
 
 public class Gpu3dScalingAction extends BaseAction {
 

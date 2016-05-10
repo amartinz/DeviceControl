@@ -29,7 +29,7 @@ import android.widget.TextView;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.views.CardTitleView;
 
-import alexander.martinz.libs.hardware.security.Fingerprinter;
+import at.amartinz.hardware.security.Fingerprinter;
 
 public class FingerprintView extends CardTitleView {
     private Fingerprinter fingerprinter;

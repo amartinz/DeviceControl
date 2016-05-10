@@ -38,7 +38,7 @@ import org.namelessrom.devicecontrol.modules.flasher.recovery.RecoveryInfo;
 import org.namelessrom.devicecontrol.utils.IOUtils;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import alexander.martinz.libs.execution.RootShell;
+import at.amartinz.execution.RootShell;
 import timber.log.Timber;
 
 public class RebootHelper {

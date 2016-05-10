@@ -25,9 +25,9 @@ import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.io.FileOutputStream;
 
-import alexander.martinz.libs.execution.BusyBox;
-import alexander.martinz.libs.execution.Command;
-import alexander.martinz.libs.execution.RootShell;
+import at.amartinz.execution.BusyBox;
+import at.amartinz.execution.Command;
+import at.amartinz.execution.RootShell;
 import timber.log.Timber;
 
 public class FstrimService extends IntentService {

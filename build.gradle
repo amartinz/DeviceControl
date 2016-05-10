@@ -4,18 +4,22 @@ buildscript {
         useLocalSources = findProperty("we_are_awesome_developers") ?: false
 
         gradleVersion = '2.1.0'
+
+        supportLibVersion = '23.3.0'
     }
 
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
         maven { url "http://dl.bintray.com/tbruyelle/tbruyelle" }
-        maven { url 'https://maven.fabric.io/public' }
-        flatDir { dirs 'aars' }
+        maven { url "https://maven.fabric.io/public" }
+        flatDir { dirs "aars" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${gradleVersion}"
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
+
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
 
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
@@ -30,8 +34,8 @@ allprojects {
         jcenter()
         maven { url "https://jitpack.io" }
         maven { url "http://dl.bintray.com/tbruyelle/tbruyelle" }
-        maven { url 'https://maven.fabric.io/public' }
-        flatDir { dirs 'aars' }
+        maven { url "https://maven.fabric.io/public" }
+        flatDir { dirs "aars" }
     }
 }
 

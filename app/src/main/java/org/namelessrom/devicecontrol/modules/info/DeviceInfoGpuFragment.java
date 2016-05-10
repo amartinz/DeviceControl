@@ -26,10 +26,10 @@ import org.namelessrom.devicecontrol.R;
 
 import java.util.ArrayList;
 
-import alexander.martinz.libs.hardware.gpu.GpuInformation;
-import alexander.martinz.libs.hardware.gpu.GpuInformationListener;
-import alexander.martinz.libs.hardware.gpu.GpuReader;
-import alexander.martinz.libs.hardware.opengl.OpenGlInformation;
+import at.amartinz.hardware.gpu.GpuInformation;
+import at.amartinz.hardware.gpu.GpuInformationListener;
+import at.amartinz.hardware.gpu.GpuReader;
+import at.amartinz.hardware.opengl.OpenGlInformation;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreferenceCategory;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;

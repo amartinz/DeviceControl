@@ -34,7 +34,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.receivers.ActionReceiver;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
-import alexander.martinz.libs.execution.BusyBox;
+import at.amartinz.execution.BusyBox;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;

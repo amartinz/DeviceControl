@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import alexander.martinz.libs.execution.Command;
-import alexander.martinz.libs.execution.Shell;
-import alexander.martinz.libs.execution.ShellManager;
+import at.amartinz.execution.Command;
+import at.amartinz.execution.Shell;
+import at.amartinz.execution.ShellManager;
 import timber.log.Timber;
 
 public class IoUtils {

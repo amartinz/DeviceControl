@@ -33,7 +33,7 @@ import android.widget.TextView;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.views.CardTitleView;
 
-import alexander.martinz.libs.hardware.drm.BaseDrmInfo;
+import at.amartinz.hardware.drm.BaseDrmInfo;
 import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
 

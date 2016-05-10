@@ -38,8 +38,8 @@ import org.namelessrom.devicecontrol.utils.AlarmHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
 
-import alexander.martinz.libs.execution.BusyBox;
-import alexander.martinz.libs.hardware.Emmc;
+import at.amartinz.execution.BusyBox;
+import at.amartinz.hardware.Emmc;
 import timber.log.Timber;
 
 public class FilesystemFragment extends AttachPreferenceFragment implements IoUtils.IoSchedulerListener, Preference.OnPreferenceChangeListener {

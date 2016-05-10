@@ -40,10 +40,10 @@ import org.namelessrom.devicecontrol.utils.Utils;
 import java.io.File;
 import java.util.ArrayList;
 
-import alexander.martinz.libs.execution.BusyBox;
-import alexander.martinz.libs.execution.RootCheck;
-import alexander.martinz.libs.execution.RootShell;
-import alexander.martinz.libs.execution.ShellManager;
+import at.amartinz.execution.BusyBox;
+import at.amartinz.execution.RootCheck;
+import at.amartinz.execution.RootShell;
+import at.amartinz.execution.ShellManager;
 import hugo.weaving.DebugLog;
 import io.paperdb.Paper;
 import timber.log.Timber;

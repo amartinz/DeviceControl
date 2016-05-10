@@ -31,7 +31,7 @@ import android.text.TextUtils;
 import java.io.File;
 import java.util.ArrayList;
 
-import alexander.martinz.libs.execution.RootShell;
+import at.amartinz.execution.RootShell;
 
 public class IOUtils {
     public static final String SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath();

@@ -78,8 +78,8 @@ import org.namelessrom.devicecontrol.thirdparty.PollFishImpl;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import alexander.martinz.libs.execution.RootCheck;
-import alexander.martinz.libs.execution.ShellManager;
+import at.amartinz.execution.RootCheck;
+import at.amartinz.execution.ShellManager;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements ActivityCallbacks, NavigationView.OnNavigationItemSelectedListener {

@@ -29,9 +29,9 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.info.software.DrmView;
 import org.namelessrom.devicecontrol.views.AttachFragment;
 
-import alexander.martinz.libs.hardware.drm.BaseDrmInfo;
-import alexander.martinz.libs.hardware.drm.DrmInfoManager;
-import alexander.martinz.libs.hardware.knox.KnoxInformation;
+import at.amartinz.hardware.drm.BaseDrmInfo;
+import at.amartinz.hardware.drm.DrmInfoManager;
+import at.amartinz.hardware.knox.KnoxInformation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
