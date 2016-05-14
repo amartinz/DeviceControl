@@ -42,12 +42,8 @@ android {
             signingConfig signingConfigs.release
         }
 
-        def String keyPollFish = project.hasProperty("api_key_PollFish") ? api_key_PollFish : "---";
         buildConfigField('String', 'API_KEY_POLL_FISH', keyPollFish);
-
-        def String keyGooglePlay = project.hasProperty("api_key_GooglePlay") ? api_key_GooglePlay : "---";
         buildConfigField('String', 'API_KEY_GOOGLE_PLAY', keyGooglePlay)
-
     }
 
     buildTypes {
@@ -115,7 +111,7 @@ dependencies {
     }
 
     // see https://github.com/pilgr/Paper
-    compile 'io.paperdb:paperdb:1.1'
+    compile 'io.paperdb:paperdb:1.5'
     // see https://github.com/EsotericSoftware/kryo
     compile 'com.esotericsoftware:kryo:3.0.3'
     // see https://github.com/magro/kryo-serializers

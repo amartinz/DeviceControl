@@ -5,7 +5,10 @@ buildscript {
 
         gradleVersion = '2.1.0'
 
-        supportLibVersion = '23.3.0'
+        supportLibVersion = '23.4.0'
+
+        keyGooglePlay = findProperty("api_key_GooglePlay") ?: "---";
+        keyPollFish = findProperty("api_key_PollFish") ?: "---";
     }
 
     repositories {
