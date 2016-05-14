@@ -35,12 +35,7 @@ android {
             versionName(versionName + '-git-' + gitRevision)
         }
 
-        def String localProps = System.getenv('SIGNING_PROP_FILE')
-        if (localProps == null) {
-            signingConfig signingConfigs.debug
-        } else {
-            signingConfig signingConfigs.release
-        }
+        signingConfig signingConfigs.release
 
         buildConfigField('String', 'API_KEY_POLL_FISH', keyPollFish);
         buildConfigField('String', 'API_KEY_GOOGLE_PLAY', keyGooglePlay)
