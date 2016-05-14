@@ -9,18 +9,16 @@ android {
 
     signingConfigs {
         release {
-            def String localProps = System.getenv('SIGNING_PROP_FILE')
-            if (localProps == null) {
+            def store = project.findProperty("sign_store") ?: "debug.keystore"
+            storeFile file(store)
+
+            if ("debug.keystore".equals(store)) {
                 logger.quiet('Not signing the build!')
-                storeFile file("debug.keystore")
             } else {
                 logger.quiet('Signing the build!')
-                def Properties keyProps = new Properties()
-                keyProps.load(new FileInputStream(file(localProps)))
-                storeFile file(keyProps["store"])
-                storePassword keyProps["storePass"]
-                keyAlias keyProps["alias"]
-                keyPassword keyProps["pass"]
+                storePassword project.property("sign_store_pass")
+                keyAlias project.property("sign_key_alias")
+                keyPassword project.property("sign_key_pass")
             }
         }
     }
