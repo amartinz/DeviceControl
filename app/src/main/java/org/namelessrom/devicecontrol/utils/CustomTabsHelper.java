@@ -88,8 +88,8 @@ public class CustomTabsHelper {
         }
         try {
             createBuilder(activity).enableUrlBarHiding().build().launchUrl(activity, Uri.parse(url));
-        } catch (ActivityNotFoundException anfe) {
-            Timber.e(anfe, "could not launch url!");
+        } catch (ActivityNotFoundException | SecurityException exc) {
+            Timber.e(exc, "could not launch url!");
         }
     }
 
