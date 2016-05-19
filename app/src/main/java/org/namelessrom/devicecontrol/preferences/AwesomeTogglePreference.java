@@ -23,7 +23,6 @@ import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import org.namelessrom.devicecontrol.Logger;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
@@ -115,14 +114,14 @@ public class AwesomeTogglePreference extends CustomTogglePreference {
             Timber.w("Category is not set! Defaulting to \"default\"");
             mCategory = "default";
         }
-        if (TextUtils.isEmpty(mValueChecked)) mValueChecked = "1";
-        if (TextUtils.isEmpty(mValueNotChecked)) mValueNotChecked = "0";
+        if (TextUtils.isEmpty(mValueChecked)) { mValueChecked = "1"; }
+        if (TextUtils.isEmpty(mValueNotChecked)) { mValueNotChecked = "0"; }
     }
 
     public void initValue() { initValue(false); }
 
     public void initValue(final boolean contains) {
-        if (isSupported()) setChecked(Utils.isEnabled(Utils.readOneLine(mPath), contains));
+        if (isSupported()) { setChecked(Utils.isEnabled(Utils.readOneLine(mPath), contains)); }
     }
 
     public void setupTitle() {

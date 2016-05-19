@@ -18,30 +18,17 @@
 package org.namelessrom.devicecontrol.modules.appmanager;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 
-import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.utils.DrawableHelper;
+import com.bumptech.glide.Glide;
 
-import java.io.InputStream;
-import java.lang.ref.WeakReference;
-import java.util.concurrent.RejectedExecutionException;
+import org.namelessrom.devicecontrol.R;
 
 import hugo.weaving.DebugLog;
-import timber.log.Timber;
-import uk.co.senab.bitmapcache.BitmapLruCache;
-import uk.co.senab.bitmapcache.CacheableBitmapDrawable;
-import uk.co.senab.bitmapcache.CacheableImageView;
 
-public class AppIconImageView extends CacheableImageView {
-    private BitmapLruCache mCache;
-
-    private ImageLoadTask mCurrentTask;
-
+public class AppIconImageView extends ImageView {
     public AppIconImageView(Context context) {
         this(context, null);
     }
@@ -52,96 +39,17 @@ public class AppIconImageView extends CacheableImageView {
 
     public AppIconImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        if (isInEditMode()) {
-            mCache = null;
-            return;
-        }
-        mCache = App.get(context).getBitmapLruCache();
     }
 
-    @DebugLog public boolean loadImage(AppItem appItem) {
-        // First check whether there's already a task running, if so cancel it
-        if (mCurrentTask != null) {
-            mCurrentTask.cancel(true);
-        }
-
-        final String pkgName = appItem.getPackageName();
-
-        // Check to see if the memory cache already has the bitmap. We can
-        // safely do this on the main thread.
-        BitmapDrawable wrapper = ((mCache != null) ? mCache.getFromMemoryCache(pkgName) : null);
-        if (wrapper != null) {
-            // The cache has it, so just display it
-            setImageDrawable(wrapper);
-            return true;
-        } else {
-            // Memory Cache doesn't have the URL, do threaded request...
-            setImageDrawable(null);
-
-            mCurrentTask = new ImageLoadTask(this, appItem, mCache);
-            try {
-                mCurrentTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            } catch (RejectedExecutionException e) {
-                Timber.e(e, "rejected task execution");
-            }
-
-            return false;
-        }
+    @DebugLog public void loadImage(AppItem appItem) {
+        Glide.with(getContext())
+                .load(resourceToUri(appItem.getPackageName(), appItem.getApplicationInfo().icon))
+                .placeholder(R.mipmap.ic_launcher_default)
+                .into(this);
     }
 
-    private static class ImageLoadTask extends AsyncTask<String, Void, CacheableBitmapDrawable> {
-        private final BitmapLruCache bitmapLruCache;
-        private final AppItem appItem;
-
-        private final WeakReference<CacheableImageView> weakReference;
-
-        ImageLoadTask(CacheableImageView imageView, AppItem appItem, BitmapLruCache cache) {
-            this.appItem = appItem;
-            bitmapLruCache = cache;
-            weakReference = new WeakReference<>(imageView);
-        }
-
-        @Override protected CacheableBitmapDrawable doInBackground(String... params) {
-            // Return early if the ImageView has disappeared.
-            if (weakReference.get() == null) {
-                Timber.d("ImageView has disappeared!");
-                return null;
-            }
-            if (bitmapLruCache == null) {
-                Timber.d("BitmapLruCache does not exist!");
-                return null;
-            }
-
-            return getBitmap();
-        }
-
-        @Override protected void onPostExecute(CacheableBitmapDrawable result) {
-            final CacheableImageView iv = weakReference.get();
-            if (iv != null) {
-                iv.setImageDrawable(result);
-            }
-            weakReference.clear();
-        }
-
-        @DebugLog private CacheableBitmapDrawable getBitmap() {
-            final String pkgName = appItem.getPackageName();
-
-            // Now we're not on the main thread we can check all caches
-            final CacheableBitmapDrawable result = bitmapLruCache.get(pkgName, null);
-            if (result == null) {
-                Timber.d("Loading -> %s", pkgName);
-
-                final Context context = weakReference.get().getContext();
-                final Drawable drawable = appItem.getApplicationInfo().loadIcon(context.getPackageManager());
-                final Bitmap bitmap = DrawableHelper.drawableToBitmap(drawable);
-                final InputStream is = DrawableHelper.bitmapToInputStream(bitmap);
-
-                // Add to cache
-                return bitmapLruCache.put(pkgName, is, null);
-            } else {
-                Timber.d("Got from Cache -> %s", pkgName);
-            }
-            return result;
-        }
+    private Uri resourceToUri(String packageName, int resourceId) {
+        return Uri.parse(String.format("android.resource://%s/%s", packageName, resourceId));
     }
+
 }

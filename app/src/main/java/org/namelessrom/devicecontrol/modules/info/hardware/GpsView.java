@@ -23,6 +23,7 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Location;
 import android.os.Build;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
@@ -31,7 +32,8 @@ import android.widget.TextView;
 import com.google.android.gms.location.LocationRequest;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
-import org.namelessrom.devicecontrol.Logger;
+import org.namelessrom.devicecontrol.App;
+import org.namelessrom.devicecontrol.BuildConfig;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.views.CardTitleView;
 
@@ -117,7 +119,11 @@ public class GpsView extends CardTitleView {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
                     @Override public void call(String s) {
-                        Logger.debugVibrate();
+                        if (BuildConfig.DEBUG) {
+                            final Vibrator vibrator = App.get().getVibrator();
+                            vibrator.cancel();
+                            vibrator.vibrate(75);
+                        }
                         statusView.setText(s);
                     }
                 }, new ErrorHandler(statusView));

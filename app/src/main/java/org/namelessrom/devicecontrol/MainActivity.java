@@ -392,8 +392,6 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
         }
 
         AppResources.get().cleanup();
-
-        App.get(this).getBitmapLruCache().trimMemory();
         super.onDestroy();
     }
 

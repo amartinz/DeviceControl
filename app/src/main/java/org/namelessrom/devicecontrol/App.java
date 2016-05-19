@@ -21,7 +21,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
@@ -49,7 +48,6 @@ import at.amartinz.universaldebug.trees.VibrationComponent;
 import at.amartinz.universaldebug.trees.WriterComponent;
 import io.paperdb.Paper;
 import timber.log.Timber;
-import uk.co.senab.bitmapcache.BitmapLruCache;
 
 // XXX: DO NOT USE ROOT HERE! NEVER!
 public class App extends android.app.Application {
@@ -60,7 +58,6 @@ public class App extends android.app.Application {
     private static App sInstance;
     private static boolean enableDebug = BuildConfig.DEBUG;
 
-    private BitmapLruCache bitmapLruCache;
     private CustomTabsHelper customTabsHelper;
 
     private PowerManager powerManager;
@@ -72,13 +69,6 @@ public class App extends android.app.Application {
 
     public static App get(Context context) {
         return ((App) context.getApplicationContext());
-    }
-
-    public BitmapLruCache getBitmapLruCache() {
-        if (bitmapLruCache == null) {
-            bitmapLruCache = setupBitmapLruCache();
-        }
-        return bitmapLruCache;
     }
 
     public CustomTabsHelper getCustomTabsHelper() {
@@ -100,13 +90,6 @@ public class App extends android.app.Application {
             vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         }
         return vibrator;
-    }
-
-    @Override public void onLowMemory() {
-        super.onLowMemory();
-        if (bitmapLruCache != null) {
-            bitmapLruCache.trimMemory();
-        }
     }
 
     @Override public void onCreate() {
@@ -192,44 +175,6 @@ public class App extends android.app.Application {
             }
             directory.delete();
         }
-    }
-
-    private BitmapLruCache setupBitmapLruCache() {
-        final File cacheLocation = getCacheDirectory();
-        try {
-            Timber.d("Setting up cache: %s\nNeed to create dirs: %s", cacheLocation.getAbsolutePath(), cacheLocation.mkdirs());
-        } catch (SecurityException sex) {
-            Timber.wtf(sex, "can not create directory");
-        }
-
-        final BitmapLruCache.Builder builder = new BitmapLruCache.Builder(this);
-        builder.setMemoryCacheEnabled(true).setMemoryCacheMaxSizeUsingHeapSize(0.25f);
-        builder.setDiskCacheEnabled(true).setDiskCacheLocation(cacheLocation);
-
-        return builder.build();
-    }
-
-    // TODO: configurable
-    private File getCacheDirectory() {
-        File cacheLocation = null;
-        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            cacheLocation = new File(getExternalCacheDir(), "bitmapCache");
-
-            // if we can not read or write, use the internal storage for caches
-            try {
-                if (!cacheLocation.canRead() || !cacheLocation.canWrite()) {
-                    cacheLocation = null;
-                }
-            } catch (SecurityException sex) {
-                cacheLocation = null;
-                Timber.e(sex, "can not read or write directory");
-            }
-        }
-
-        if (cacheLocation == null) {
-            cacheLocation = new File(getCacheDir(), "bitmapCache");
-        }
-        return cacheLocation;
     }
 
     @SuppressLint("SdCardPath") public String getFilesDirectory() {
