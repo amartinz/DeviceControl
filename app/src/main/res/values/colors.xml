@@ -15,6 +15,26 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <color name="colorAccent">#009688</color>
+    <color name="colorPrimary">#fff5f5f5</color>
+    <color name="colorPrimaryDark">@color/palette_teal_700</color>
+    <color name="themeColor">#fff5f5f5</color>
+    <color name="themeColorInvert">#ff374046</color>
+    <color name="themeMenu">#ffe7e7e7</color>
+    <color name="themeMenuFooter">#fff8f8f8</color>
+
+    <color name="cardview_background">@color/cardview_light_background</color>
+
+    <color name="graph_background">@color/light_background</color>
+    <color name="graph_text_color">#000</color>
+
+    <color name="drawer_icon">#FF00796B</color>
+    <color name="drawer_icon_checked">@android:color/white</color>
+    <color name="drawer_icon_disabled">#8000796B</color>
+    <color name="drawer_text">@android:color/black</color>
+    <color name="drawer_text_checked">@android:color/white</color>
+    <color name="drawer_text_disabled">#80000000</color>
+
     <!-- Accents -->
     <color name="accent">#D32F2F</color>
     <color name="dark_background">#ff374046</color>
@@ -82,20 +102,6 @@
 
     <color name="tab_color_normal">#b3ffffff</color>
     <color name="tab_color_selected">#ffffff</color>
-
-    <color name="drawer_icon_dark">#FFB71C1C</color>
-    <color name="drawer_icon_dark_checked">@color/drawer_text_dark</color>
-    <color name="drawer_icon_dark_disabled">#80B71C1C</color>
-    <color name="drawer_icon_light">#FF00796B</color>
-    <color name="drawer_icon_light_checked">@color/drawer_text_dark</color>
-    <color name="drawer_icon_light_disabled">#8000796B</color>
-
-    <color name="drawer_text_dark">@android:color/white</color>
-    <color name="drawer_text_dark_checked">@android:color/white</color>
-    <color name="drawer_text_dark_disabled">#80FFFFFF</color>
-    <color name="drawer_text_light">@android:color/black</color>
-    <color name="drawer_text_light_checked">@android:color/white</color>
-    <color name="drawer_text_light_disabled">#80000000</color>
 
     <color name="text_shadow">#000</color>
 </resources>

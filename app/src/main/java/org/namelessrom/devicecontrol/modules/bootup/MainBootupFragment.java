@@ -48,7 +48,7 @@ public class MainBootupFragment extends MaterialSupportPreferenceFragment implem
         final BootupConfig configuration = BootupConfig.get();
 
         mBootupEnabled = (MaterialSwitchPreference) view.findViewById(R.id.prefs_bootup_enabled);
-        mBootupEnabled.setBackgroundColor(AppResources.get().getCardBackgroundColor());
+        mBootupEnabled.setBackgroundColor(AppResources.getColor(getContext(), R.color.cardview_background));
         mBootupEnabled.setChecked(configuration.isEnabled);
         mBootupEnabled.setOnPreferenceChangeListener(this);
 

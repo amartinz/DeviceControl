@@ -36,21 +36,12 @@ public class CustomPreferenceCategoryMaterial extends MaterialPreferenceCategory
         if (!super.init(context, attrs)) {
             return false;
         }
-
-        if (isInEditMode()) {
-            setBackgroundColor(ContextCompat.getColor(getContext(), R.color.cardview_dark_background));
-        } else {
-            setBackgroundColor(AppResources.get().getCardBackgroundColor());
-        }
-
+        setBackgroundColor(ContextCompat.getColor(getContext(), R.color.cardview_background));
         return true;
     }
 
     @Override public LayoutInflater getCustomLayoutInflater() {
-        if (isInEditMode()) {
-            return LayoutInflater.from(getContext());
-        }
-        return AppResources.getThemeLayoutInflater(getContext(), LayoutInflater.from(getContext()));
+        return LayoutInflater.from(getContext());
     }
 }
 

@@ -98,11 +98,7 @@ public class SensorActivity extends BaseActivity {
         BaseSensor.setIconTintGlobal(iconTint);
 
         // and set the background
-        final boolean isLightTheme = AppResources.get().isLightTheme();
-        final int backgroundColor = isLightTheme
-                ? ContextCompat.getColor(this, R.color.cardview_light_background)
-                : ContextCompat.getColor(this, R.color.cardview_dark_background);
-        BaseSensor.setBackgroundColorGlobal(backgroundColor);
+        BaseSensor.setBackgroundColorGlobal(ContextCompat.getColor(this, R.color.cardview_background));
 
         // Environment
         final View environmentRoot = findViewById(R.id.environment_layout);

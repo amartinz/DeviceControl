@@ -150,7 +150,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             packageName.setText(appItem.getPackageName());
             appVersion.setText(appItem.getVersion());
 
-            int color = AppResources.get().isLightTheme() ? Color.BLACK : Color.WHITE;
+            int color = ContextCompat.getColor(mActivity, R.color.graph_text_color);;
             appLabel.setTextColor(appItem.isSystemApp() ? ContextCompat.getColor(mActivity, R.color.red_middle) : color);
 
             color = appItem.isEnabled() ? android.R.color.transparent : R.color.darker_gray;

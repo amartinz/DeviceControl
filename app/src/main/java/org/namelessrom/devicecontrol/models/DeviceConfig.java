@@ -30,9 +30,13 @@ import timber.log.Timber;
 public class DeviceConfig {
     private transient static final String NAME = "DeviceConfig";
 
+    public static final int THEME_AUTO = 1;
+    public static final int THEME_DAY = 2;
+    public static final int THEME_NIGHT = 3;
+
     public boolean dcFirstStart;
 
-    public boolean lightTheme;
+    public int themeMode = THEME_NIGHT;
     public boolean showPollfish;
 
     public boolean skipChecks;

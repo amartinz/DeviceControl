@@ -16,6 +16,16 @@
 -->
 <resources>
 
+    <string-array name="theme_mode">
+        <item>@string/automatically</item>
+        <item>@string/day</item>
+        <item>@string/night</item>
+    </string-array>
+    <string-array name="theme_mode_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
     <!-- Panel Color -->
     <string-array name="panel_color_temp_entries">
         <item>@string/cold</item>

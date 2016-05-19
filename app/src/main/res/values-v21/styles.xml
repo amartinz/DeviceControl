@@ -16,38 +16,12 @@
 -->
 <resources>
 
-    <style name="AppTheme.Dark" parent="AppTheme.Dark.Base">
-        <item name="android:navigationBarColor">@color/accent</item>
-    </style>
-
-    <style name="AppTheme.Dark.Translucent" parent="AppTheme.Dark">
+    <style name="AppTheme.Default.Translucent" parent="AppTheme.Default">
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
-    <style name="AppTheme.Light" parent="AppTheme.Light.Base">
-        <item name="android:navigationBarColor">@color/accent_light</item>
-    </style>
-
-    <style name="AppTheme.Light.Translucent" parent="AppTheme.Light">
-        <item name="android:windowTranslucentStatus">true</item>
-    </style>
-
-    <style name="VerticalDivider">
-        <item name="android:id">@id/divider</item>
-        <item name="android:layout_width">2dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginLeft">5dp</item>
-        <item name="android:layout_marginRight">5dp</item>
-        <item name="android:background">?colorAccent</item>
-    </style>
-
-    <style name="ButtonBarDivider">
-        <item name="android:id">@id/divider</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">1dp</item>
-        <item name="android:background">@android:color/darker_gray</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:layout_marginTop">10dp</item>
+    <style name="AppTheme.Default" parent="AppTheme.Base">
+        <item name="android:navigationBarColor">@color/colorAccent</item>
     </style>
 
     <style name="CustomDialog" parent="Theme.AppCompat.Light.Dialog">

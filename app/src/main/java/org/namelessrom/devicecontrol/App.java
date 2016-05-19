@@ -19,16 +19,13 @@ package org.namelessrom.devicecontrol;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
 import android.os.Vibrator;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.WorkerThread;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
 import org.namelessrom.devicecontrol.models.DeviceConfig;
@@ -114,12 +111,32 @@ public class App extends android.app.Application {
         ShellManager.enableDebug(App.enableDebug);
 
         Paper.init(this);
+        setupThemeMode();
 
         AsyncTask.execute(new Runnable() {
             @Override public void run() {
                 setupEverythingAsync();
             }
         });
+    }
+
+    public static void setupThemeMode() {
+        final DeviceConfig deviceConfig = DeviceConfig.get();
+        switch (deviceConfig.themeMode) {
+            case DeviceConfig.THEME_AUTO: {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+                break;
+            }
+            case DeviceConfig.THEME_DAY: {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            }
+            default:
+            case DeviceConfig.THEME_NIGHT: {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            }
+        }
     }
 
     @WorkerThread private void setupEverythingAsync() {
@@ -184,14 +201,6 @@ public class App extends android.app.Application {
         } else {
             return "/data/data/" + getPackageName();
         }
-    }
-
-    public int getColorApplication(@ColorRes final int resId) {
-        return ContextCompat.getColor(this, resId);
-    }
-
-    public Drawable getDrawableApplication(@DrawableRes final int resId) {
-        return ContextCompat.getDrawable(this, resId);
     }
 
     public String[] getStringArray(final int resId) {

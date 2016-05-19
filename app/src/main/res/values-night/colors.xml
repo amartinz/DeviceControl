@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2013 - 2014 Alexander "Evisceration" Martinz
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <color name="colorAccent">#D32F2F</color>
+    <color name="colorPrimary">#ff374046</color>
+    <color name="colorPrimaryDark">#B71C1C</color>
+    <color name="themeColor">#ff374046</color>
+    <color name="themeColorInvert">#fff5f5f5</color>
+    <color name="themeMenu">#ff2e353a</color>
+    <color name="themeMenuFooter">#ff21272b</color>
+
+    <color name="cardview_background">@color/cardview_dark_background</color>
+
+    <color name="graph_background">@color/dark_background</color>
+    <color name="graph_text_color">#fff</color>
+
+    <color name="drawer_icon">#FFB71C1C</color>
+    <color name="drawer_icon_checked">@android:color/white</color>
+    <color name="drawer_icon_disabled">#80B71C1C</color>
+    <color name="drawer_text">@android:color/white</color>
+    <color name="drawer_text_checked">@android:color/white</color>
+    <color name="drawer_text_disabled">#80FFFFFF</color>
+</resources>

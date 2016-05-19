@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.pollfish.main.PollFish;
@@ -34,6 +33,7 @@ import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.theme.AppResources;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 import at.amartinz.execution.ShellManager;
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;
@@ -46,7 +46,7 @@ import timber.log.Timber;
 
 public class MainPreferencesFragment extends MaterialSupportPreferenceFragment implements MaterialPreference.MaterialPreferenceChangeListener {
     // TODO: more customization
-    @BindView(R.id.prefs_light_theme) MaterialSwitchPreference lightTheme;
+    @BindView(R.id.prefs_theme_mode) MaterialListPreference themeMode;
     @BindView(R.id.prefs_low_end_gfx) MaterialSwitchPreference lowEndGfx;
 
     @BindView(R.id.prefs_show_pollfish) MaterialSwitchPreference showPollfish;
@@ -67,10 +67,10 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         final Context context = getContext();
         final DeviceConfig configuration = DeviceConfig.get();
 
-        lightTheme.setChecked(AppResources.get().isLightTheme());
-        lightTheme.setOnPreferenceChangeListener(this);
+        themeMode.setValueIndex(DeviceConfig.get().themeMode - 1);
+        themeMode.setOnPreferenceChangeListener(this);
 
-        lowEndGfx.setChecked(AppResources.get().isLowEndGfx(context));
+        lowEndGfx.setChecked(AppResources.get(context).isLowEndGfx(context));
         lowEndGfx.setOnPreferenceChangeListener(this);
 
         showPollfish.setChecked(configuration.showPollfish);
@@ -119,24 +119,22 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             }
             showPollfish.setChecked(value);
             return true;
-        } else if (lightTheme == preference) {
-            final boolean isLight = (Boolean) newValue;
-            AppResources.get().setLightTheme(isLight);
-            lightTheme.setChecked(isLight);
-
-            if (isLight) {
-                AppResources.get().setAccentColor(ContextCompat.getColor(getActivity(), R.color.accent_light));
-            } else {
-                AppResources.get().setAccentColor(ContextCompat.getColor(getActivity(), R.color.accent));
+        } else if (themeMode == preference) {
+            final int mode = Utils.tryValueOf(String.valueOf(newValue), -1);
+            if (mode == -1) {
+                return false;
             }
+            AppResources.get(getContext()).setThemeMode(mode);
+            themeMode.setValueIndex(mode - 1);
 
+            App.setupThemeMode();
             if (getActivity() instanceof PreferencesActivity) {
                 ((PreferencesActivity) getActivity()).needsRestart();
             }
             return true;
         } else if (lowEndGfx == preference) {
             final boolean isLowEndGfx = (Boolean) newValue;
-            AppResources.get().setLowEndGfx(isLowEndGfx);
+            AppResources.get(getContext().getApplicationContext()).setLowEndGfx(isLowEndGfx);
             lowEndGfx.setChecked(isLowEndGfx);
 
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());

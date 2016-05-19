@@ -73,13 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void setupTheme() {
-        final boolean isLightTheme = AppResources.get().isLightTheme();
-        setTheme(isLightTheme ? R.style.AppTheme_Light : R.style.AppTheme_Dark);
-    }
-
     @Override protected void onCreate(Bundle savedInstanceState) {
-        setupTheme();
         super.onCreate(savedInstanceState);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

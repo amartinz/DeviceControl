@@ -40,7 +40,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.balysv.materialmenu.MaterialMenuDrawable;
-import com.sense360.android.quinoa.lib.Sense360;
 
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
@@ -73,7 +72,6 @@ import org.namelessrom.devicecontrol.modules.tasker.TaskerFragment;
 import org.namelessrom.devicecontrol.modules.tools.ToolsMoreFragment;
 import org.namelessrom.devicecontrol.modules.tools.WirelessFileManagerFragment;
 import org.namelessrom.devicecontrol.theme.AppResources;
-import org.namelessrom.devicecontrol.theme.NavigationDrawerResources;
 import org.namelessrom.devicecontrol.thirdparty.PollFishImpl;
 import org.namelessrom.devicecontrol.thirdparty.Sense360Impl;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -110,11 +108,6 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
             R.id.nav_item_tools_app_manager, R.id.nav_item_tools_more
     };
 
-    @Override protected void setupTheme() {
-        final boolean isLightTheme = AppResources.get().isLightTheme();
-        setTheme(isLightTheme ? R.style.AppTheme_Light_Translucent : R.style.AppTheme_Dark_Translucent);
-    }
-
     @Override protected void onResume() {
         super.onResume();
         PollFishImpl.initPollFish(this);
@@ -144,8 +137,6 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
         });
 
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view_content);
-        mNavigationView.setItemIconTintList(NavigationDrawerResources.get().getItemIconColor());
-        mNavigationView.setItemTextColor(NavigationDrawerResources.get().getItemTextColor());
         mNavigationView.setNavigationItemSelectedListener(this);
 
         loadFragmentPrivate(DeviceConstants.ID_HOME, false);

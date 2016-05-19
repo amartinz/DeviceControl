@@ -16,50 +16,25 @@
 -->
 <resources>
 
-    <style name="AppTheme.Empty" parent="android:Theme.Translucent.NoTitleBar">
-        <!-- Customize stuff here -->
+    <style name="AppTheme.Default.Translucent" parent="AppTheme.Default">
+        <!-- customize here -->
     </style>
 
-    <style name="AppTheme.Dark" parent="AppTheme.Dark.Base">
-        <!-- Customize stuff here -->
+    <style name="AppTheme.Default" parent="AppTheme.Base">
+        <!-- customize here -->
     </style>
 
-    <style name="AppTheme.Dark.Translucent" parent="AppTheme.Dark">
-        <!-- Customize stuff here -->
-    </style>
-
-    <style name="AppTheme.Dark.Base" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.Base" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:listDivider">@drawable/transparent</item>
         <item name="windowActionBar">false</item>
-        <item name="colorAccent">@color/accent</item>
-        <item name="colorControlHighlight">@color/accent</item>
-        <item name="colorPrimary">@color/dark_background</item>
-        <item name="colorPrimaryDark">@color/dark_primary_dark</item>
-        <item name="themeColor">@color/dark_background</item>
-        <item name="themeColorInvert">@color/light_background</item>
-        <item name="themeMenu">@color/dark_menu</item>
-        <item name="themeMenuFooter">@color/darker_menu</item>
-    </style>
-
-    <style name="AppTheme.Light" parent="AppTheme.Light.Base">
-        <!-- Customize stuff here -->
-    </style>
-
-    <style name="AppTheme.Light.Translucent" parent="AppTheme.Light">
-        <!-- Customize stuff here -->
-    </style>
-
-    <style name="AppTheme.Light.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:listDivider">@drawable/transparent</item>
-        <item name="windowActionBar">false</item>
-        <item name="colorAccent">@color/accent_light</item>
-        <item name="colorControlHighlight">@color/accent_light</item>
-        <item name="colorPrimary">@color/light_background</item>
-        <item name="colorPrimaryDark">@color/light_primary_dark</item>
-        <item name="themeColor">@color/light_background</item>
-        <item name="themeColorInvert">@color/dark_background</item>
-        <item name="themeMenu">@color/light_menu</item>
-        <item name="themeMenuFooter">@color/lighter_menu</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="themeColor">@color/themeColor</item>
+        <item name="themeColorInvert">@color/themeColorInvert</item>
+        <item name="themeMenu">@color/themeMenu</item>
+        <item name="themeMenuFooter">@color/themeMenuFooter</item>
     </style>
 
     <style name="VerticalDivider">

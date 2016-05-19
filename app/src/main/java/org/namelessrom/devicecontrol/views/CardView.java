@@ -20,7 +20,6 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.theme.AppResources;
 
 public class CardView extends android.support.v7.widget.CardView {
 
@@ -40,12 +39,6 @@ public class CardView extends android.support.v7.widget.CardView {
     }
 
     private void init() {
-        final int backgroundColor;
-        if (!isInEditMode()) {
-            backgroundColor = AppResources.get().getCardBackgroundColor();
-        } else {
-            backgroundColor = ContextCompat.getColor(getContext(), R.color.cardview_light_background);
-        }
-        setCardBackgroundColor(backgroundColor);
+        setCardBackgroundColor(ContextCompat.getColor(getContext(), R.color.cardview_background));
     }
 }

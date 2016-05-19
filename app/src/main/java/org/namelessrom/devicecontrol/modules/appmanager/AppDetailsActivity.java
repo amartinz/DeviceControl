@@ -25,7 +25,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -59,7 +58,6 @@ import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.modules.appmanager.permissions.AppSecurityPermissions;
-import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
 import java.util.ArrayList;
@@ -280,9 +278,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         mCacheGraph.setDrawCenterText(true);
 
         mCacheGraph.setTouchEnabled(false);
-
-        final int color = AppResources.get().isLightTheme() ? R.color.light_background : R.color.dark_background;
-        mCacheGraph.setBackgroundResource(color);
+        mCacheGraph.setBackgroundResource(R.color.graph_background);
 
         mCacheGraph.animateXY(ANIM_DUR, ANIM_DUR);
     }
@@ -304,7 +300,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
 
         final int color = mAppItem.isSystemApp()
                 ? ContextCompat.getColor(this, R.color.red_middle)
-                : AppResources.get().isLightTheme() ? Color.BLACK : Color.WHITE;
+                : ContextCompat.getColor(this, R.color.graph_text_color);
         mAppLabel.setTextColor(color);
         mAppVersion.setText(mAppItem.getVersion());
 
@@ -482,7 +478,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
             l.setXEntrySpace(7f);
             l.setYEntrySpace(5f);
 
-            final int color = AppResources.get().isLightTheme() ? Color.BLACK : Color.WHITE;
+            final int color = ContextCompat.getColor(this, R.color.graph_text_color);
             l.setTextColor(color);
 
             // we are ready

@@ -9,8 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.v4.app.ActivityManagerCompat;
-import android.view.ContextThemeWrapper;
-import android.view.LayoutInflater;
+import android.support.v4.content.ContextCompat;
 
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Constants;
@@ -24,41 +23,39 @@ public class AppResources {
 
     private Boolean isLowEndGfx = null;
 
-    private int isLightTheme = -1;
+    private int themeMode = -1;
 
     private int accentColor;
     private int primaryColor;
 
-    private int cardBackgroundColor;
-
     private Drawable drawerHeaderDrawable;
 
-    private AppResources() {
-        final boolean isLight = isLightTheme();
-
-        this.cardBackgroundColor = isLight
-                ? getColor(R.color.cardview_light_background)
-                : getColor(R.color.cardview_dark_background);
-
-        this.accentColor = isLight
-                ? getColor(R.color.accent_light)
-                : getColor(R.color.accent);
-
-        this.primaryColor = isLight
-                ? getColor(R.color.light_primary_dark)
-                : getColor(R.color.dark_primary_dark);
+    private AppResources(Context context) {
+        this.accentColor = getColor(context, R.color.colorAccent);
+        this.primaryColor = getColor(context, R.color.colorPrimaryDark);
     }
 
-    public static AppResources get() {
-        if (sInstance == null) {
-            sInstance = new AppResources();
-        }
+    @Deprecated public static AppResources get() {
+        return get(App.get());
+    }
 
+    public static AppResources get(Context context) {
+        if (sInstance == null) {
+            sInstance = new AppResources(context);
+        }
         return sInstance;
     }
 
     public static int getColor(@ColorRes int colorResId) {
-        return App.get().getColorApplication(colorResId);
+        return getColor(App.get(), colorResId);
+    }
+
+    public static int getColor(Context context, @ColorRes int colorResId) {
+        return ContextCompat.getColor(context, colorResId);
+    }
+
+    private static Drawable getDrawable(Context context, @DrawableRes int drawableResId) {
+        return ContextCompat.getDrawable(context, drawableResId);
     }
 
     public boolean isLowEndGfx(Context context) {
@@ -79,31 +76,23 @@ public class AppResources {
         this.isLowEndGfx = isLowEndGfx;
     }
 
-    private Drawable getDrawable(@DrawableRes int drawableResId) {
-        return App.get().getDrawableApplication(drawableResId);
-    }
 
-    public boolean isLightTheme() {
-        if (isLightTheme == -1) {
-            isLightTheme = DeviceConfig.get().lightTheme ? 1 : 0;
+    public int getThemeMode() {
+        if (themeMode == -1) {
+            themeMode = DeviceConfig.get().themeMode;
         }
-        return (isLightTheme == 1);
+        return themeMode;
     }
 
-    public AppResources setLightTheme(boolean isLight) {
-        isLightTheme = isLight ? 1 : 0;
+    public AppResources setThemeMode(int themeMode) {
+        this.themeMode = themeMode;
 
         DeviceConfig deviceConfig = DeviceConfig.get();
-        deviceConfig.lightTheme = isLight;
+        deviceConfig.themeMode = themeMode;
         deviceConfig.save();
 
-        sInstance = new AppResources();
+        sInstance = new AppResources(App.get());
 
-        return this;
-    }
-
-    public AppResources setAccentColor(int accentColor) {
-        this.accentColor = accentColor;
         return this;
     }
 
@@ -111,26 +100,8 @@ public class AppResources {
         return accentColor;
     }
 
-    public AppResources setPrimaryColor(int primaryColor) {
-        this.primaryColor = primaryColor;
-        return this;
-    }
-
     public int getPrimaryColor() {
         return primaryColor;
-    }
-
-    public AppResources setCardBackgroundColor(int cardBackgroundColor) {
-        this.cardBackgroundColor = cardBackgroundColor;
-        return this;
-    }
-
-    public int getCardBackgroundColor() {
-        return cardBackgroundColor;
-    }
-
-    @DrawableRes public int getDrawerHeaderResId() {
-        return isLightTheme() ? R.drawable.drawer_header_bg_light : R.drawable.drawer_header_bg_dark;
     }
 
     public Drawable getDrawerHeader(Context context) {
@@ -139,26 +110,13 @@ public class AppResources {
             if (isLowEndGfx) {
                 drawerHeaderDrawable = new ColorDrawable(getPrimaryColor());
             } else {
-                drawerHeaderDrawable = getDrawable(getDrawerHeaderResId());
+                drawerHeaderDrawable = getDrawable(context, R.drawable.drawer_header_bg);
             }
         }
         return drawerHeaderDrawable;
     }
 
-    public static ContextThemeWrapper getContextThemeWrapper(Context context) {
-        final int themeId = AppResources.get().isLightTheme()
-                ? R.style.AppTheme_Light
-                : R.style.AppTheme_Dark;
-        return new ContextThemeWrapper(context, themeId);
-    }
-
-    public static LayoutInflater getThemeLayoutInflater(Context context, LayoutInflater inflater) {
-        return inflater.cloneInContext(getContextThemeWrapper(context));
-    }
-
     public void cleanup() {
-        NavigationDrawerResources.get().cleanup();
-
         drawerHeaderDrawable = null;
         isLowEndGfx = null;
         sInstance = null;

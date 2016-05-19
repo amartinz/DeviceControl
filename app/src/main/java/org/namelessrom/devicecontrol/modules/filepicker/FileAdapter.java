@@ -118,8 +118,7 @@ public class FileAdapter extends BaseAdapter {
             }
         });
 
-        int color = AppResources.get().isLightTheme() ? Color.BLACK : Color.WHITE;
-
+        int color = ContextCompat.getColor(context, R.color.graph_text_color);
         viewHolder.name.setText(file.getName());
 
         if (isDirectory) {
@@ -130,18 +129,18 @@ public class FileAdapter extends BaseAdapter {
             viewHolder.info.setText(String.valueOf(new Date(file.lastModified())) + " | "
                     + Formatter.formatFileSize(context, file.length()));
 
-            // Color the list entry if a filetype is set, to make searching easier
+            // Color the list entry if a file type is set, to make searching easier
             if (ContentTypes.isFiletypeMatching(file, fileType)) {
                 if (colorResId > 0) {
                     color = colorResId;
                 } else {
-                    color = context.getResources().getColor(R.color.grass);
+                    color = ContextCompat.getColor(context, R.color.grass);
                 }
             }
         }
 
         viewHolder.name.setTextColor(color);
-        viewHolder.info.setTextColor(context.getResources().getColor(R.color.blueish_strong));
+        viewHolder.info.setTextColor(ContextCompat.getColor(context, R.color.blueish_strong));
         viewHolder.icon.setColorFilter(Color.parseColor("#FFFFFF"));
         viewHolder.icon.setColorFilter(color);
 

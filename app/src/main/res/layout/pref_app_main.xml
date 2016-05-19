@@ -26,12 +26,14 @@
         style="@style/MaterialPreferences.Default"
         app:prefTitle="@string/user_interface">
 
-        <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
-            android:id="@+id/prefs_light_theme"
+        <alexander.martinz.libs.materialpreferences.MaterialListPreference
+            android:id="@+id/prefs_theme_mode"
             style="@style/MaterialPreferences.Default"
             app:prefKey="light_theme"
-            app:prefSummary="@string/light_theme_summary"
-            app:prefTitle="@string/light_theme" />
+            app:prefSummary="@string/theme_mode_summary"
+            app:prefEntries="@array/theme_mode"
+            app:prefEntryValues="@array/theme_mode_values"
+            app:prefTitle="@string/theme_mode" />
 
         <alexander.martinz.libs.materialpreferences.MaterialSwitchPreference
             android:id="@+id/prefs_low_end_gfx"
