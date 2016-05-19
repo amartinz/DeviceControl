@@ -149,15 +149,19 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
         } else if (useSense360 == preference) {
             final boolean useSense360 = (Boolean) newValue;
 
-            final Context applicationContext = getContext().getApplicationContext();
-            if (useSense360) {
-                Timber.v("Starting Sense360");
-                Sense360.userOptIn(applicationContext);
-                Sense360.start(applicationContext);
-            } else {
-                Timber.v("Stopping Sense360");
-                Sense360.userOptOut(applicationContext);
-                Sense360.stop(applicationContext);
+            try {
+                final Context applicationContext = getContext().getApplicationContext();
+                if (useSense360) {
+                    Timber.v("Starting Sense360");
+                    Sense360.userOptIn(applicationContext);
+                    Sense360.start(applicationContext);
+                } else {
+                    Timber.v("Stopping Sense360");
+                    Sense360.userOptOut(applicationContext);
+                    Sense360.stop(applicationContext);
+                }
+            } catch (NoSuchMethodError | Exception exc) {
+                Timber.e(exc, "Could not start/stop Sense360");
             }
 
             return true;

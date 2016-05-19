@@ -75,6 +75,7 @@ import org.namelessrom.devicecontrol.modules.tools.WirelessFileManagerFragment;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.theme.NavigationDrawerResources;
 import org.namelessrom.devicecontrol.thirdparty.PollFishImpl;
+import org.namelessrom.devicecontrol.thirdparty.Sense360Impl;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -117,14 +118,7 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
     @Override protected void onResume() {
         super.onResume();
         PollFishImpl.initPollFish(this);
-
-        if (!Sense360.isUserOptedOut(getApplicationContext())) {
-            Timber.v("Starting Sense360");
-            Sense360.start(getApplicationContext());
-        } else {
-            Timber.v("Stopping Sense360");
-            Sense360.stop(getApplicationContext());
-        }
+        Sense360Impl.init(getApplicationContext());
     }
 
     @Override public void onConfigurationChanged(Configuration newConfig) {

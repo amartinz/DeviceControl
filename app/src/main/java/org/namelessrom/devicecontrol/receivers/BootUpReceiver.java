@@ -34,6 +34,7 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.services.BootupService;
 import org.namelessrom.devicecontrol.theme.AppResources;
+import org.namelessrom.devicecontrol.thirdparty.Sense360Impl;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import io.paperdb.Paper;
@@ -56,13 +57,7 @@ public class BootUpReceiver extends BroadcastReceiver {
         Paper.init(ctx);
         Utils.startTaskerService(ctx);
 
-        if (!Sense360.isUserOptedOut(ctx.getApplicationContext())) {
-            Timber.v("Starting Sense360");
-            Sense360.start(ctx.getApplicationContext());
-        } else {
-            Timber.v("Stopping Sense360");
-            Sense360.stop(ctx.getApplicationContext());
-        }
+        Sense360Impl.init(ctx.getApplicationContext());
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
         if (prefs.getBoolean(ctx.getString(R.string.key_quick_actions), false)) {
