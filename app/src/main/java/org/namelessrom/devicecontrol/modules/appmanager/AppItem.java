@@ -264,6 +264,12 @@ public class AppItem {
             final String uninstallCmd = String.format("pm uninstall %s;sync;", appItem.getPackageName());
             RootShell.fireAndForget(uninstallCmd);
             RootShell.fireAndForget(cmd);
+
+            // fake delay to make all more smooth
+            try {
+                Thread.sleep(750);
+            } catch (Exception ignored) { }
+
             return null;
         }
 
