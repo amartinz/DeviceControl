@@ -102,10 +102,12 @@ public class App extends android.app.Application {
                 .withDebugTree(buildDebugTree())
                 .withProductionTree(buildProductionTree());
 
-        final FabricConfig fabricConfig = new FabricConfig(universalDebug)
-                .withAnswers()
-                .withCrashlytics();
-        universalDebug.withExtension(fabricConfig);
+        if (!enableDebug) {
+            final FabricConfig fabricConfig = new FabricConfig(universalDebug)
+                    .withAnswers()
+                    .withCrashlytics();
+            universalDebug.withExtension(fabricConfig);
+        }
 
         universalDebug.install();
         ShellManager.enableDebug(App.enableDebug);
