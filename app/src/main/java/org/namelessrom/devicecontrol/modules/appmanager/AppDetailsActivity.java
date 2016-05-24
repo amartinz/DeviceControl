@@ -461,7 +461,8 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
             sliceList.add(new Entry(packageStats.cacheSize + packageStats.externalCacheSize, 3));
 
             final PieDataSet dataSet = new PieDataSet(sliceList, getString(R.string.app_size));
-            dataSet.setSliceSpace(5f);
+            // no space to work around a bug
+            dataSet.setSliceSpace(0f);
             dataSet.setColors(ColorTemplate.createColors(ColorTemplate.VORDIPLOM_COLORS));
 
             final PieData data = new PieData(textList, dataSet);
