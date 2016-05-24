@@ -32,7 +32,6 @@ import android.text.TextUtils;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.utils.AppHelper;
@@ -285,13 +284,11 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
     private AlertDialog showPermissionDialog(final Context context) {
         // TODO: new wizard, more user friendly
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            final RxPermissions rxPermissions = RxPermissions.getInstance(context);
-
-            final boolean storage = rxPermissions.isGranted(Manifest.permission.READ_EXTERNAL_STORAGE)
-                                    && rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            final boolean telephony = rxPermissions.isGranted(Manifest.permission.READ_PHONE_STATE);
-            final boolean location = rxPermissions.isGranted(Manifest.permission.ACCESS_COARSE_LOCATION)
-                                     && rxPermissions.isGranted(Manifest.permission.ACCESS_FINE_LOCATION);
+            final boolean storage = mainActivity.isGranted(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                    && mainActivity.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            final boolean telephony = mainActivity.isGranted(Manifest.permission.READ_PHONE_STATE);
+            final boolean location = mainActivity.isGranted(Manifest.permission.ACCESS_COARSE_LOCATION)
+                                     && mainActivity.isGranted(Manifest.permission.ACCESS_FINE_LOCATION);
 
             boolean needsPermissionGrant = !storage || !telephony || !location;
             if (needsPermissionGrant) {
@@ -320,7 +317,7 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
                             toRequest.add(Manifest.permission.ACCESS_FINE_LOCATION);
                         }
 
-                        rxPermissions.request(toRequest.toArray(new String[toRequest.size()])).subscribe();
+                        mainActivity.requestPermissions(toRequest);
 
                         if (mPostExecuteHook != null) {
                             mainActivity.runOnUiThread(mPostExecuteHook);

@@ -21,8 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.tbruyelle.rxpermissions.RxPermissions;
-
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.modules.info.hardware.FingerprintView;
@@ -31,7 +29,6 @@ import org.namelessrom.devicecontrol.views.AttachFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.functions.Action1;
 
 public class HardwareInfoFragment extends AttachFragment {
     @BindView(R.id.hardware_fingerprint) FingerprintView fingerprintView;
@@ -49,25 +46,7 @@ public class HardwareInfoFragment extends AttachFragment {
 
     @Override public void onResume() {
         super.onResume();
-        final RxPermissions rxPermissions = RxPermissions.getInstance(getContext());
-
-        // use hardcoded string to support older apis as well
-        final boolean fingerprintGranted = rxPermissions.isGranted("android.permission.USE_FINGERPRINT");
-        if (fingerprintGranted) {
-            fingerprintView.setSupported(true);
-            fingerprintView.onResume();
-        } else {
-            fingerprintView.setSupported(false);
-            rxPermissions.request("android.permission.USE_FINGERPRINT").subscribe(new Action1<Boolean>() {
-                @Override public void call(Boolean isGranted) {
-                    if (isGranted) {
-                        fingerprintView.setSupported(true);
-                        fingerprintView.onResume();
-                    }
-                }
-            });
-        }
-
+        fingerprintView.onResume();
         gpsView.onResume();
     }
 

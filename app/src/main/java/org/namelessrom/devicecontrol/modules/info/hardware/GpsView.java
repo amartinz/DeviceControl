@@ -20,23 +20,26 @@ package org.namelessrom.devicecontrol.modules.info.hardware;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.os.Build;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.location.LocationRequest;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.BuildConfig;
 import org.namelessrom.devicecontrol.R;
+import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.views.CardTitleView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pl.charmas.android.reactivelocation.ReactiveLocationProvider;
@@ -107,11 +110,16 @@ public class GpsView extends CardTitleView {
     }
 
     public void onResume() {
-        final RxPermissions rxPermissions = RxPermissions.getInstance(getContext());
-        final boolean location = rxPermissions.isGranted(Manifest.permission.ACCESS_COARSE_LOCATION) &&
-                                 rxPermissions.isGranted(Manifest.permission.ACCESS_FINE_LOCATION);
+        final Context context = getContext();
+        final boolean location = BaseActivity.isGranted(context, Manifest.permission.ACCESS_COARSE_LOCATION) &&
+                                 BaseActivity.isGranted(context, Manifest.permission.ACCESS_FINE_LOCATION);
         if (!location) {
-            rxPermissions.request(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
+            final Intent intent = new Intent(BaseActivity.ACTION_REQUEST_PERMISSION);
+            final ArrayList<String> permissions = new ArrayList<>(2);
+            permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+            permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            intent.putStringArrayListExtra(BaseActivity.EXTRA_PERMISSIONS, permissions);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         }
 
         addressSubscription = addressObservable
