@@ -31,6 +31,8 @@ import android.widget.Toast;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 
+import java.lang.ref.WeakReference;
+
 import at.amartinz.execution.BusyBox;
 import at.amartinz.execution.Command;
 import at.amartinz.execution.RootShell;
@@ -106,11 +108,11 @@ public class AppItem {
     }
 
     public void disable(final DisableEnableListener listener) {
-        disableOrEnable(String.format("pm disable %s 2> /dev/null", pkgInfo.packageName), listener);
+        disableOrEnable(String.format("pm disable %s 2> /dev/null;", pkgInfo.packageName), listener);
     }
 
     public void enable(final DisableEnableListener listener) {
-        disableOrEnable(String.format("pm enable %s 2> /dev/null", pkgInfo.packageName), listener);
+        disableOrEnable(String.format("pm enable %s 2> /dev/null;", pkgInfo.packageName), listener);
     }
 
     public void disableOrEnable(final DisableEnableListener listener) {
@@ -192,52 +194,18 @@ public class AppItem {
         if (appItem.isSystemApp()) {
             sb.append(BusyBox.callBusyBoxApplet("mount", "-o ro,remount /system;"));
         }
-        sb.append("sync;echo \"Done!\"");
+        sb.append("sync;echo \"Done!\";");
 
         final String cmd = sb.toString();
         Timber.v("Created command: %s", cmd);
         // create the dialog (will not be shown for a long amount of time though)
-        new AsyncTask<Void, Void, Void>() {
-            private ProgressDialog dialog;
-
-            @Override protected void onPreExecute() {
-                if (withFeedback) {
-                    dialog = new ProgressDialog(activity);
-                    dialog.setTitle(R.string.uninstalling);
-                    dialog.setMessage(activity.getString(R.string.applying_wait));
-                    dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                    dialog.setCancelable(false);
-                    dialog.show();
-                }
-            }
-
-            @Override protected Void doInBackground(Void... voids) {
-                final String uninstallCmd = String.format("pm uninstall %s;sync;", appItem.getPackageName());
-                Timber.d("1) > %s", RootShell.fireAndBlockString(uninstallCmd));
-                Timber.d("2) > %s", RootShell.fireAndBlockString(cmd));
-                return null;
-            }
-
-            @Override protected void onPostExecute(Void aVoid) {
-                if (withFeedback) {
-                    if (dialog != null && dialog.isShowing()) {
-                        dialog.dismiss();
-                    }
-                    Toast.makeText(activity,
-                            activity.getString(R.string.uninstall_success, appItem.getLabel()),
-                            Toast.LENGTH_SHORT).show();
-                }
-                if (listener != null) {
-                    listener.OnUninstallComplete();
-                }
-            }
-        }.execute();
+        new UninstallAsyncTask(withFeedback, activity, appItem, cmd, listener).execute();
     }
 
     private static class DisableEnableCommand extends Command {
         private final DisableEnableListener listener;
 
-        public DisableEnableCommand(String cmd, DisableEnableListener listener) {
+        DisableEnableCommand(String cmd, DisableEnableListener listener) {
             super(cmd);
             this.listener = listener;
         }
@@ -249,12 +217,70 @@ public class AppItem {
             }
         }
 
-        @Override public void onCommandCompleted(int id, int exitcode) {
-            super.onCommandCompleted(id, exitcode);
+        @Override public void onCommandCompleted(int id, int exitCode) {
+            super.onCommandCompleted(id, exitCode);
             if (listener != null) {
                 listener.OnDisabledOrEnabled();
             }
         }
+    }
 
+    private static class UninstallAsyncTask extends AsyncTask<Void, Void, Void> {
+        private final boolean withFeedback;
+        private final WeakReference<Activity> activityReference;
+        private final AppItem appItem;
+        private final String cmd;
+        private final UninstallListener listener;
+        private final ProgressDialog dialog;
+
+        UninstallAsyncTask(boolean withFeedback, Activity activity, AppItem appItem, String cmd, UninstallListener listener) {
+            this.withFeedback = withFeedback;
+            this.activityReference = new WeakReference<>(activity);
+            this.appItem = appItem;
+            this.cmd = cmd;
+            this.listener = listener;
+
+            if (this.withFeedback) {
+                this.dialog = new ProgressDialog(activity);
+            } else {
+                this.dialog = null;
+            }
+        }
+
+        @Override protected void onPreExecute() {
+            if (dialog != null) {
+                final Activity activity = activityReference.get();
+                if (activity != null) {
+                    dialog.setTitle(R.string.uninstalling);
+                    dialog.setMessage(activity.getString(R.string.applying_wait));
+                    dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    dialog.setCancelable(false);
+                    dialog.show();
+                }
+            }
+        }
+
+        @Override protected Void doInBackground(Void... voids) {
+            final String uninstallCmd = String.format("pm uninstall %s;sync;", appItem.getPackageName());
+            RootShell.fireAndForget(uninstallCmd);
+            RootShell.fireAndForget(cmd);
+            return null;
+        }
+
+        @Override protected void onPostExecute(Void aVoid) {
+            if (withFeedback) {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                final Activity activity = activityReference.get();
+                if (activity != null) {
+                    Toast.makeText(activity, activity.getString(R.string.uninstall_success, appItem.getLabel()),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+            if (listener != null) {
+                listener.OnUninstallComplete();
+            }
+        }
     }
 }
