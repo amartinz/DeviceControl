@@ -331,20 +331,30 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
     }
 
     public void destroy() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
-        if (permissionDialog != null) {
-            permissionDialog.dismiss();
-        }
-
-        final Iterator<Dialog> iterator = dialogs.iterator();
-        while (iterator.hasNext()) {
-            final Dialog dialog = iterator.next();
-            if (dialog != null) {
-                dialog.dismiss();
-            }
-            iterator.remove();
+        if (mainActivity != null) {
+            mainActivity.runOnUiThread(mDestroyRunnable);
+        } else {
+            mDestroyRunnable.run();
         }
     }
+
+    private final Runnable mDestroyRunnable = new Runnable() {
+        @Override public void run() {
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            if (permissionDialog != null) {
+                permissionDialog.dismiss();
+            }
+
+            final Iterator<Dialog> iterator = dialogs.iterator();
+            while (iterator.hasNext()) {
+                final Dialog dialog = iterator.next();
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+                iterator.remove();
+            }
+        }
+    };
 }
