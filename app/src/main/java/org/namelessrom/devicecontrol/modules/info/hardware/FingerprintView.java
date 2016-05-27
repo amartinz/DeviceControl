@@ -63,6 +63,7 @@ public class FingerprintView extends CardTitleView {
         content.addView(statusView);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            setSupported(true);
             statusView.setText(R.string.fingerprint_press_to_authenticate);
 
             fingerprinter = new Fingerprinter(getContext(), new Fingerprinter.FingerprinterCallback() {
