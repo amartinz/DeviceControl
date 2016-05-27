@@ -108,9 +108,9 @@ public class TaskerFragment extends AttachFragment {
                             Utils.toggleComponent(new ComponentName(activity.getPackageName(),
                                     TaskerService.class.getName()), !isChecked);
                             if (isChecked) {
-                                Utils.startTaskerService(activity);
+                                TaskerService.startTaskerService(activity);
                             } else {
-                                Utils.stopTaskerService(activity);
+                                TaskerService.stopTaskerService(activity);
                             }
                         }
                     }

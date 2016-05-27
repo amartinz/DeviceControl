@@ -27,15 +27,14 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-
-import com.sense360.android.quinoa.lib.Sense360;
+import android.text.TextUtils;
 
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
 import org.namelessrom.devicecontrol.services.BootupService;
+import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.thirdparty.Sense360Impl;
-import org.namelessrom.devicecontrol.utils.Utils;
 
 import io.paperdb.Paper;
 import timber.log.Timber;
@@ -44,18 +43,30 @@ public class BootUpReceiver extends BroadcastReceiver {
     private static final int NOTIFICATION_ID = 1000;
 
     @Override public void onReceive(final Context ctx, final Intent intent) {
-        if (intent != null && Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-            AsyncTask.execute(new Runnable() {
-                @Override public void run() {
-                    startBootupStuffsAsync(ctx);
-                }
-            });
+        if (intent == null) {
+            return;
+        }
+        final String action = intent.getAction();
+        if (TextUtils.isEmpty(action)) {
+            return;
+        }
+
+        switch (action) {
+            case Intent.ACTION_BOOT_COMPLETED:
+            case "android.intent.action.QUICKBOOT_POWERON": {
+                AsyncTask.execute(new Runnable() {
+                    @Override public void run() {
+                        startBootupStuffsAsync(ctx);
+                    }
+                });
+                break;
+            }
         }
     }
 
     private void startBootupStuffsAsync(Context ctx) {
         Paper.init(ctx);
-        Utils.startTaskerService(ctx);
+        TaskerService.startTaskerService(ctx);
 
         Sense360Impl.init(ctx.getApplicationContext());
 

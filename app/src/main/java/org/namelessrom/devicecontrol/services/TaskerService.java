@@ -18,12 +18,16 @@
 package org.namelessrom.devicecontrol.services;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 
 import org.namelessrom.devicecontrol.models.TaskerConfig;
+import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
 import org.namelessrom.devicecontrol.receivers.ScreenReceiver;
+
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -36,11 +40,41 @@ public class TaskerService extends Service {
 
     public TaskerService() { }
 
-    @Override
-    public IBinder onBind(final Intent intent) { return null; }
+    public static boolean startTaskerService(Context context) {
+        TaskerConfig taskerConfig = TaskerConfig.get();
+        if (!taskerConfig.enabled) {
+            return false;
+        }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+        boolean enabled = false;
+        final List<TaskerItem> taskerItemList = taskerConfig.items;
+        for (final TaskerItem item : taskerItemList) {
+            if (item.enabled) {
+                enabled = true;
+                break;
+            }
+        }
+
+        final Intent tasker = new Intent(context, TaskerService.class);
+        if (enabled) {
+            tasker.setAction(TaskerService.ACTION_START);
+        } else {
+            tasker.setAction(TaskerService.ACTION_STOP);
+        }
+        context.startService(tasker);
+
+        return enabled;
+    }
+
+    public static void stopTaskerService(Context context) {
+        final Intent tasker = new Intent(context, TaskerService.class);
+        tasker.setAction(TaskerService.ACTION_STOP);
+        context.startService(tasker);
+    }
+
+    @Override public IBinder onBind(final Intent intent) { return null; }
+
+    @Override public int onStartCommand(Intent intent, int flags, int startId) {
         if (!TaskerConfig.get().enabled) {
             stopSelf();
             return START_NOT_STICKY;

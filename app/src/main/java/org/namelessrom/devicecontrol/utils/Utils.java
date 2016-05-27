@@ -21,7 +21,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.BatteryManager;
 import android.support.annotation.Nullable;
@@ -30,9 +29,6 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.models.TaskerConfig;
-import org.namelessrom.devicecontrol.modules.tasker.TaskerItem;
-import org.namelessrom.devicecontrol.services.TaskerService;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -48,7 +44,6 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 
 import at.amartinz.execution.BusyBox;
@@ -388,38 +383,6 @@ public class Utils {
                     PackageManager.DONT_KILL_APP
             );
         }
-    }
-
-    public static boolean startTaskerService(Context context) {
-        TaskerConfig taskerConfig = TaskerConfig.get();
-        if (!taskerConfig.enabled) {
-            return false;
-        }
-
-        boolean enabled = false;
-        final List<TaskerItem> taskerItemList = taskerConfig.items;
-        for (final TaskerItem item : taskerItemList) {
-            if (item.enabled) {
-                enabled = true;
-                break;
-            }
-        }
-
-        final Intent tasker = new Intent(context, TaskerService.class);
-        if (enabled) {
-            tasker.setAction(TaskerService.ACTION_START);
-        } else {
-            tasker.setAction(TaskerService.ACTION_STOP);
-        }
-        context.startService(tasker);
-
-        return enabled;
-    }
-
-    public static void stopTaskerService(Context context) {
-        final Intent tasker = new Intent(context, TaskerService.class);
-        tasker.setAction(TaskerService.ACTION_STOP);
-        context.startService(tasker);
     }
 
     public static boolean isEnabled(String s, final boolean contains) {

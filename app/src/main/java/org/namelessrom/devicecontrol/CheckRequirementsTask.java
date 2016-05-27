@@ -34,6 +34,7 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 
 import org.namelessrom.devicecontrol.models.DeviceConfig;
+import org.namelessrom.devicecontrol.services.TaskerService;
 import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
@@ -171,7 +172,7 @@ public class CheckRequirementsTask extends AsyncTask<Void, Void, Void> {
     };
 
     private void letsGetItStarted() {
-        Utils.startTaskerService(mainActivity);
+        TaskerService.startTaskerService(mainActivity);
 
         DeviceConfig deviceConfig = DeviceConfig.get();
         if (deviceConfig.dcFirstStart) {
