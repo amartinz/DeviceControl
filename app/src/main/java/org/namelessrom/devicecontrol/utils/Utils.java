@@ -24,7 +24,10 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.BatteryManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.Constants;
@@ -500,6 +503,22 @@ public class Utils {
         }
 
         RootShell.fireAndForget(sb.toString());
+    }
+
+    public static void startMediaScan(@Nullable View view, @Nullable Context context) {
+        final String format = "am broadcast -a android.intent.action.MEDIA_MOUNTED -d file://%s;";
+        final StringBuilder sb = new StringBuilder();
+        sb.append(String.format(format, IOUtils.get().getPrimarySdCard()));
+        if (!TextUtils.isEmpty(IOUtils.get().getSecondarySdCard())) {
+            sb.append(String.format(format, IOUtils.get().getSecondarySdCard()));
+        }
+        RootShell.fireAndForget(sb.toString());
+
+        if (view != null) {
+            Snackbar.make(view, R.string.media_scan_triggered, Snackbar.LENGTH_LONG).show();
+        } else if (context != null) {
+            Toast.makeText(context, R.string.media_scan_triggered, Toast.LENGTH_LONG).show();
+        }
     }
 
     private static class CommandListenerRunnable implements Runnable {

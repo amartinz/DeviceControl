@@ -28,7 +28,6 @@ import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.listeners.OnBackPressedListener;
 import org.namelessrom.devicecontrol.listeners.OnSectionAttachedListener;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 
@@ -58,7 +57,7 @@ public abstract class AttachMaterialPreferenceFragment extends MaterialSupportPr
     @Override public void onResume() {
         super.onResume();
         final Activity activity = getActivity();
-        if (!AppHelper.preventOnResume && activity instanceof MainActivity) {
+        if (!MainActivity.preventOnResume && activity instanceof MainActivity) {
             ((MainActivity) activity).setFragment(this);
         }
         if (activity instanceof ActivityCallbacks) {

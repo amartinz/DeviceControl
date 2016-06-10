@@ -1,5 +1,8 @@
 include ':app'
 
+include ':AppManagerLibrary'
+project(':AppManagerLibrary').projectDir = new File('modules/AppManagerLibrary')
+
 include ':ExecutionLibrary'
 project(':ExecutionLibrary').projectDir = new File('modules/ExecutionLibrary/execution')
 

@@ -30,11 +30,11 @@ import android.widget.TextView;
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.BuildConfig;
 import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -126,10 +126,10 @@ public class DonationActivity extends BaseActivity implements BillingProcessor.I
                 }
                 break;
             case R.id.bDonateFlattr:
-                AppHelper.viewInBrowser(this, Constants.URL_DONATE_FLATTR);
+                App.viewInBrowser(this, Constants.URL_DONATE_FLATTR);
                 break;
             case R.id.bDonatePayPal:
-                AppHelper.viewInBrowser(this, Constants.URL_DONATE_PAYPAL);
+                App.viewInBrowser(this, Constants.URL_DONATE_PAYPAL);
                 break;
         }
     }

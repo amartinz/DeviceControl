@@ -17,6 +17,7 @@
  */
 package org.namelessrom.devicecontrol.modules.tools;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,7 +31,7 @@ import org.namelessrom.devicecontrol.services.WebServerService;
 import org.namelessrom.devicecontrol.preferences.CustomEditTextPreference;
 import org.namelessrom.devicecontrol.preferences.CustomTogglePreference;
 import org.namelessrom.devicecontrol.views.AttachPreferenceFragment;
-import org.namelessrom.devicecontrol.utils.AppHelper;
+import at.amartinz.appmanager.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 
@@ -133,8 +134,9 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment implem
 
     @Override public boolean onPreferenceClick(final Preference preference) {
         if (mWirelessFileManager == preference) {
-            final Intent i = new Intent(getActivity(), WebServerService.class);
-            if (AppHelper.isServiceRunning(WebServerService.class.getName())) {
+            final Activity activity = getActivity();
+            final Intent i = new Intent(activity, WebServerService.class);
+            if (AppHelper.isServiceRunning(activity, WebServerService.class.getName())) {
                 i.setAction(WebServerService.ACTION_STOP);
                 mWirelessFileManager.setSummary(R.string.web_server_not_running);
             } else {
@@ -158,7 +160,7 @@ public class WirelessFileManagerFragment extends AttachPreferenceFragment implem
     }
 
     public void updateWebServerPreference() {
-        final boolean isRunning = AppHelper.isServiceRunning(WebServerService.class.getName());
+        final boolean isRunning = AppHelper.isServiceRunning(getActivity(), WebServerService.class.getName());
         final String text;
         if (isRunning) {
             final String ip = NetworkInfo.getAnyIpAddress();

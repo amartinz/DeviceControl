@@ -7,6 +7,9 @@ buildscript {
 
         supportLibVersion = '23.4.0'
 
+        toolsVersion = '23.0.3'
+        sdkVersion = 23
+
         keyGooglePlay = findProperty("api_key_GooglePlay") ?: "---";
         keyPollFish = findProperty("api_key_PollFish") ?: "---";
     }

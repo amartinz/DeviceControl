@@ -1,0 +1,14 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion sdkVersion
+    buildToolsVersion toolsVersion
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion sdkVersion
+
+    }
+}
+
+apply from: 'dependencies.gradle'

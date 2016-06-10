@@ -37,8 +37,6 @@ import org.namelessrom.devicecontrol.models.ExtraConfig;
 import org.namelessrom.devicecontrol.preferences.AwesomeEditTextPreference;
 import org.namelessrom.devicecontrol.preferences.CustomPreference;
 import org.namelessrom.devicecontrol.preferences.CustomTogglePreference;
-import org.namelessrom.devicecontrol.utils.AppHelper;
-import org.namelessrom.devicecontrol.utils.ShellOutput;
 import org.namelessrom.devicecontrol.utils.Utils;
 import org.namelessrom.devicecontrol.views.AttachPreferenceProgressFragment;
 
@@ -46,13 +44,20 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import at.amartinz.appmanager.AppHelper;
 import at.amartinz.execution.RootShell;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class EntropyFragment extends AttachPreferenceProgressFragment implements Preference.OnPreferenceChangeListener, ShellOutput.OnShellOutputListener {
+public class EntropyFragment extends AttachPreferenceProgressFragment implements Preference.OnPreferenceChangeListener {
     private static final String URL_RNG =
             "http://sourceforge.net/projects/namelessrom/files/romextras/binaries/rngd/download";
-    private static final File RNGD = new File(App.get().getFilesDirectory(), "rngd");
+    private static final String RNGD_NAME = "rngd";
+    private static final File RNGD = new File(App.get().getFilesDirectory(), RNGD_NAME);
 
     private CustomPreference mEntropyAvail;
     private AwesomeEditTextPreference mReadWakeupThreshold;
@@ -97,7 +102,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
 
 
         mRngActive = (CustomTogglePreference) findPreference("rng_active");
-        AppHelper.getProcess(this, RNGD.getAbsolutePath());
+        checkRngdActive();
         mRngActive.setOnPreferenceChangeListener(this);
 
         new RefreshTask().execute();
@@ -144,7 +149,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
                                 }
 
                                 setRngdPermissions();
-                                AppHelper.getProcess(EntropyFragment.this, RNGD.getAbsolutePath());
+                                checkRngdActive();
 
                                 mProgressBar.setVisibility(View.GONE);
                             }
@@ -159,9 +164,10 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
                 RootShell.fireAndForget(String.format("%s -P;\n", RNGD.getAbsolutePath()));
             } else {
                 Timber.v("Stopping rngd");
+                AppHelper.killProcess(getActivity(), RNGD_NAME);
                 AppHelper.killProcess(getActivity(), RNGD.getAbsolutePath());
             }
-            AppHelper.getProcess(this, RNGD.getAbsolutePath());
+            checkRngdActive();
             return true;
         }
 
@@ -169,7 +175,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
     }
 
     public void setRngdPermissions() {
-        Timber.v("RNGD --> setReadable: %s, setExectuable: %s",
+        Timber.v("RNGD --> setReadable: %s, setExecutable: %s",
                 RNGD.setReadable(true, false),
                 RNGD.setExecutable(true, false));
     }
@@ -184,7 +190,7 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
         switch (id) {
             case R.id.menu_action_refresh:
                 new RefreshTask().execute();
-                AppHelper.getProcess(this, RNGD.getAbsolutePath());
+                checkRngdActive();
             default:
                 break;
         }
@@ -192,23 +198,39 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
         return false;
     }
 
-    public void onShellOutput(final ShellOutput shellOutput) {
-        if (shellOutput == null) { return; }
-
-        if (shellOutput.id == DeviceConstants.ID_PGREP) {
-            if (mRngActive != null) {
-                final boolean isActive =
-                        shellOutput.output != null && !shellOutput.output.isEmpty();
-                mRngActive.setChecked(isActive);
-                if (!RNGD.exists()) {
-                    mRngActive.setSummary(R.string.install_rng);
-                    mRngStartup.setEnabled(false);
-                } else {
-                    mRngActive.setSummary("");
-                    mRngStartup.setEnabled(true);
-                }
-            }
+    // TODO: rework whole class
+    private void checkRngdActive() {
+        if (!RNGD.exists()) {
+            mRngActive.setSummary(R.string.install_rng);
+            mRngActive.setChecked(false);
+            mRngStartup.setEnabled(false);
+            // no point in checking if it is running, if it does not even exist
+            return;
         }
+
+        mRngActive.setSummary("");
+        mRngStartup.setEnabled(true);
+        Observable.
+                create(new Observable.OnSubscribe<Boolean>() {
+                    @Override public void call(Subscriber<? super Boolean> subscriber) {
+                        final List<Integer> processIdList = AppHelper.getProcessIds(RNGD_NAME);
+                        boolean isActive = !processIdList.isEmpty();
+
+                        if (!isActive) {
+                            isActive = !AppHelper.getProcessIds(RNGD.getAbsolutePath()).isEmpty();
+                        }
+
+                        subscriber.onNext(isActive);
+                        subscriber.onCompleted();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Boolean>() {
+                    @Override public void call(Boolean isActive) {
+                        mRngActive.setChecked(isActive);
+                    }
+                });
     }
 
     public static String restore() {
@@ -219,11 +241,10 @@ public class EntropyFragment extends AttachPreferenceProgressFragment implements
     }
 
     private class RefreshTask extends AsyncTask<Void, Void, List<String>> {
-
         @Override protected List<String> doInBackground(Void... params) {
             final ArrayList<String> list = new ArrayList<>();
 
-            list.add(Utils.readOneLine(ExtraUtils.ENTROPY_AVAIL));     // 0
+            list.add(Utils.readOneLine(ExtraUtils.ENTROPY_AVAIL));
 
             return list;
         }

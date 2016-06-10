@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.DrawableHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 /**
  * Created by amartinz on 20.04.16.
@@ -54,7 +54,7 @@ public class QuickActionActivity extends Activity implements DialogInterface.OnC
     @Override public void onClick(DialogInterface dialog, int which) {
         switch (which) {
             case 0: {
-                AppHelper.startMediaScan(null, getApplicationContext());
+                Utils.startMediaScan(null, getApplicationContext());
                 break;
             }
         }

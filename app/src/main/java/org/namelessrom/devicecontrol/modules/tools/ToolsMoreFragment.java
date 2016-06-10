@@ -32,7 +32,7 @@ import org.namelessrom.devicecontrol.ActivityCallbacks;
 import org.namelessrom.devicecontrol.DeviceConstants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.receivers.ActionReceiver;
-import org.namelessrom.devicecontrol.utils.AppHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 import at.amartinz.execution.BusyBox;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
@@ -87,7 +87,7 @@ public class ToolsMoreFragment extends MaterialSupportPreferenceFragment impleme
 
     @Override public boolean onPreferenceClicked(MaterialPreference preference) {
         if (mediaScan == preference) {
-            AppHelper.startMediaScan(mediaScan, getContext());
+            Utils.startMediaScan(mediaScan, getContext());
             return true;
         }
 

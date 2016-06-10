@@ -29,7 +29,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.AppHelper;
+import at.amartinz.appmanager.AppHelper;
 
 import java.lang.ref.WeakReference;
 

@@ -1,11 +1,10 @@
-package org.namelessrom.devicecontrol.modules.appmanager;
+package at.amartinz.appmanager;
 
 import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageStats;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
-
-import org.namelessrom.devicecontrol.App;
 
 import timber.log.Timber;
 
@@ -15,7 +14,6 @@ import timber.log.Timber;
  * going crazy and produces apps, which crash at onTransact...
  */
 public class PackageStatsObserver extends IPackageStatsObserver.Stub {
-
     private static final String DESCRIPTOR = "android.content.pm.IPackageStatsObserver";
 
     private OnPackageStatsListener packageStatsListener;
@@ -27,11 +25,11 @@ public class PackageStatsObserver extends IPackageStatsObserver.Stub {
     @Override public boolean onTransact(int code, Parcel data, Parcel reply, int flags)
             throws RemoteException {
         switch (code) {
-            case INTERFACE_TRANSACTION: {
+            case IBinder.INTERFACE_TRANSACTION: {
                 reply.writeString(DESCRIPTOR);
                 return true;
             }
-            case FIRST_CALL_TRANSACTION: {
+            case IBinder.FIRST_CALL_TRANSACTION: {
                 data.enforceInterface(DESCRIPTOR);
                 final PackageStats _arg0;
                 if ((0 != data.readInt())) {
@@ -49,12 +47,7 @@ public class PackageStatsObserver extends IPackageStatsObserver.Stub {
 
     @Override public void onGetStatsCompleted(final PackageStats pStats, final boolean success) throws RemoteException {
         Timber.v("onGetStatsCompleted(): %s", success);
-        App.HANDLER.post(new Runnable() {
-            @Override
-            public void run() {
-                packageStatsListener.onPackageStats(pStats);
-            }
-        });
+        packageStatsListener.onPackageStats(pStats);
     }
 
     public interface OnPackageStatsListener {

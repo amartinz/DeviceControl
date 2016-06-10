@@ -29,7 +29,7 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.QuickActionActivity;
 import org.namelessrom.devicecontrol.theme.AppResources;
-import org.namelessrom.devicecontrol.utils.AppHelper;
+import org.namelessrom.devicecontrol.utils.Utils;
 
 public class ActionReceiver extends BroadcastReceiver {
     public static final String ACTION = "org.namelessrom.devicecontrol.TRIGGER_ACTION";
@@ -58,7 +58,7 @@ public class ActionReceiver extends BroadcastReceiver {
                 break;
             }
             case ACTION_MEDIA_SCAN: {
-                AppHelper.startMediaScan(null, context);
+                Utils.startMediaScan(null, context);
                 break;
             }
         }

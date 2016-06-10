@@ -19,6 +19,8 @@ package org.namelessrom.devicecontrol;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
@@ -207,6 +209,16 @@ public class App extends android.app.Application {
 
     public String[] getStringArray(final int resId) {
         return getResources().getStringArray(resId);
+    }
+
+    public static void viewInBrowser(final Context context, final String url) {
+        final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            context.startActivity(i);
+        } catch (Exception e) {
+            Timber.e(e, "viewInBrowser");
+        }
     }
 
     private BaseTree buildDebugTree() {

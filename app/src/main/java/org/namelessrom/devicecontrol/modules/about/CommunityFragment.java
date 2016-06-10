@@ -24,8 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 
 public class CommunityFragment extends Fragment {
     @Override public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -35,14 +35,14 @@ public class CommunityFragment extends Fragment {
         final Button betaButton = (Button) view.findViewById(R.id.betaTestButton);
         betaButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                AppHelper.viewInBrowser(getContext(), getString(R.string.non_beta_url));
+                App.viewInBrowser(getContext(), getString(R.string.non_beta_url));
             }
         });
 
         final Button communityButton = (Button) view.findViewById(R.id.communityButton);
         communityButton.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                AppHelper.viewInBrowser(getContext(), getString(R.string.non_google_plus_community_url));
+                App.viewInBrowser(getContext(), getString(R.string.non_google_plus_community_url));
             }
         });
 

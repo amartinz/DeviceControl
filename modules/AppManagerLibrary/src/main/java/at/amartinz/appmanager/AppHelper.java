@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.namelessrom.devicecontrol.utils;
+package at.amartinz.appmanager;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -27,35 +27,23 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.Toast;
-
-import org.namelessrom.devicecontrol.App;
-import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.modules.appmanager.PackageStatsObserver;
 
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import at.amartinz.execution.BusyBox;
 import at.amartinz.execution.RootShell;
 import at.amartinz.hardware.ProcessManager;
-import hugo.weaving.DebugLog;
 import timber.log.Timber;
-
-import static org.namelessrom.devicecontrol.DeviceConstants.ID_PGREP;
-import static org.namelessrom.devicecontrol.utils.ShellOutput.OnShellOutputListener;
 
 /**
  * Helper class for application interactions like cleaning the cache
  */
 public class AppHelper {
-    public static boolean preventOnResume = false;
-
     /**
      * Gets the package stats of the given application.
      * The package stats are getting sent via OTTO
@@ -150,16 +138,28 @@ public class AppHelper {
         final ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         am.killBackgroundProcesses(process);
 
-        RootShell.fireAndForget(BusyBox.callBusyBoxApplet("pkill", String.format("-TERM %s;", process)));
+        RootShell.fireAndForget(BusyBox.callBusyBoxApplet("pkill", process));
+        RootShell.fireAndForget(BusyBox.callBusyBoxApplet("pkill", String.format("-l TERM %s", process)));
     }
 
     /**
-     * Search for a progress and return it via Otto's event bus.
-     *
-     * @param process The process name to search for
+     * @param processName The process name / path to search for
      */
-    public static void getProcess(final OnShellOutputListener listener, final String process) {
-        Utils.getCommandResult(listener, ID_PGREP, BusyBox.callBusyBoxApplet("pgrep", process));
+    @NonNull @WorkerThread public static List<Integer> getProcessIds(final String processName) {
+        final ArrayList<Integer> processIdList = new ArrayList<>();
+        final List<String> result = RootShell.fireAndBlockList(BusyBox.callBusyBoxApplet("pgrep", processName));
+        if (result != null && !result.isEmpty()) {
+            for (final String entry : result) {
+                final int processId;
+                try {
+                    processId = Integer.valueOf(entry);
+                } catch (NumberFormatException nfe) {
+                    continue;
+                }
+                processIdList.add(processId);
+            }
+        }
+        return processIdList;
     }
 
     /**
@@ -168,7 +168,7 @@ public class AppHelper {
      * @param pkg The package name of the application
      * @return Whether the app is running
      */
-    @DebugLog public static boolean isAppRunning(Context context, @NonNull String pkg) {
+    public static boolean isAppRunning(Context context, @NonNull String pkg) {
         final ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         final List<ActivityManager.RunningAppProcessInfo> processList = am.getRunningAppProcesses();
         if (processList != null) {
@@ -199,18 +199,21 @@ public class AppHelper {
      * @param serviceName The name of the service
      * @return Whether the service is running or not
      */
-    public static boolean isServiceRunning(final String serviceName) {
-        final List<ActivityManager.RunningServiceInfo> services =
-                ((ActivityManager) App.get().getSystemService(Context.ACTIVITY_SERVICE))
-                        .getRunningServices(Integer.MAX_VALUE);
+    public static boolean isServiceRunning(Context context, String serviceName) {
+        final ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        final List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
+        if (services == null || services.isEmpty()) {
+            return false;
+        }
 
-        if (services != null) {
-            for (final ActivityManager.RunningServiceInfo info : services) {
-                if (info.service != null) {
-                    if (info.service.getClassName() != null && info.service.getClassName()
-                            .equalsIgnoreCase(serviceName)) {
-                        return true;
-                    }
+        for (final ActivityManager.RunningServiceInfo info : services) {
+            if (info != null && info.service != null) {
+                final String className = info.service.getClassName();
+                if (TextUtils.isEmpty(className)) {
+                    continue;
+                }
+                if (className.equalsIgnoreCase(serviceName)) {
+                    return true;
                 }
             }
         }
@@ -225,11 +228,12 @@ public class AppHelper {
      * @return A human readable data size
      */
     public static String convertSize(final long size) {
-        if (size <= 0) { return "0 B"; }
+        if (size <= 0) {
+            return "0 B";
+        }
         final String[] units = new String[]{ "B", "KB", "MB", "GB", "TB" };
         int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
-        return new DecimalFormat("#,##0.##")
-                       .format(size / Math.pow(1024, digitGroups)) + ' ' + units[digitGroups];
+        return new DecimalFormat("#,##0.##").format(size / Math.pow(1024, digitGroups)) + ' ' + units[digitGroups];
     }
 
 
@@ -239,9 +243,9 @@ public class AppHelper {
      * @param packageName The package name
      * @return true if package is installed, false otherwise
      */
-    public static boolean isPackageInstalled(@NonNull final String packageName) {
+    public static boolean isPackageInstalled(Context context, @NonNull final String packageName) {
         try {
-            App.get().getPackageManager().getPackageInfo(packageName, 0);
+            context.getPackageManager().getPackageInfo(packageName, 0);
             return true;
         } catch (Exception ignored) { }
         return false;
@@ -252,49 +256,27 @@ public class AppHelper {
      *
      * @return true if installed
      */
-    public static boolean isPlayStoreInstalled() {
-        return isPackageInstalled("com.android.vending");
+    public static boolean isPlayStoreInstalled(Context context) {
+        return isPackageInstalled(context, "com.android.vending");
     }
 
     /**
      * Shows the app in Google's Play Store if Play Store is installed
      */
-    public static boolean showInPlayStore(final String uri) {
+    public static boolean showInPlayStore(Context context, String packageName) {
+        final String uriString = String.format("market://details?id=%s", packageName);
+        final Uri uri = Uri.parse(uriString);
+
+        final Intent i = new Intent(Intent.ACTION_VIEW, uri);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
-            final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            App.get().startActivity(i);
+            context.startActivity(i);
             return true;
         } catch (Exception exc) {
             Timber.e(exc, exc.getMessage());
         }
+
         return false;
-    }
-
-    public static void viewInBrowser(final Context context, final String url) {
-        final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        try {
-            context.startActivity(i);
-        } catch (Exception e) {
-            Timber.e(e, "viewInBrowser");
-        }
-    }
-
-    public static void startMediaScan(@Nullable View view, @Nullable Context context) {
-        final String format = "am broadcast -a android.intent.action.MEDIA_MOUNTED -d file://%s;";
-        final StringBuilder sb = new StringBuilder();
-        sb.append(String.format(format, IOUtils.get().getPrimarySdCard()));
-        if (!TextUtils.isEmpty(IOUtils.get().getSecondarySdCard())) {
-            sb.append(String.format(format, IOUtils.get().getSecondarySdCard()));
-        }
-        RootShell.fireAndForget(sb.toString());
-
-        if (view != null) {
-            Snackbar.make(view, R.string.media_scan_triggered, Snackbar.LENGTH_LONG).show();
-        } else if (context != null) {
-            Toast.makeText(context, R.string.media_scan_triggered, Toast.LENGTH_LONG).show();
-        }
     }
 
 }

@@ -74,7 +74,6 @@ import org.namelessrom.devicecontrol.modules.tools.WirelessFileManagerFragment;
 import org.namelessrom.devicecontrol.theme.AppResources;
 import org.namelessrom.devicecontrol.thirdparty.PollFishImpl;
 import org.namelessrom.devicecontrol.thirdparty.Sense360Impl;
-import org.namelessrom.devicecontrol.utils.AppHelper;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import at.amartinz.execution.RootCheck;
@@ -82,6 +81,8 @@ import at.amartinz.execution.ShellManager;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements ActivityCallbacks, NavigationView.OnNavigationItemSelectedListener {
+    public static boolean preventOnResume = false;
+
     private static long mBackPressed;
     private Toast mToast;
 
@@ -624,12 +625,12 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
         final FragmentManager fragmentManager = getSupportFragmentManager();
         if (!isSubFragment && fragmentManager.getBackStackEntryCount() > 0) {
             // set a lock to prevent calling setFragment as onResume gets called
-            AppHelper.preventOnResume = true;
+            preventOnResume = true;
             MainActivity.sDisableFragmentAnimations = true;
             fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             MainActivity.sDisableFragmentAnimations = false;
             // release the lock
-            AppHelper.preventOnResume = false;
+            preventOnResume = false;
         }
 
         final FragmentTransaction ft = fragmentManager.beginTransaction();

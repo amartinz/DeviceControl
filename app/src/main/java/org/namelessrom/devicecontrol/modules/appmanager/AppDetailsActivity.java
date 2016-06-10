@@ -58,10 +58,11 @@ import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.activities.BaseActivity;
 import org.namelessrom.devicecontrol.modules.appmanager.permissions.AppSecurityPermissions;
-import org.namelessrom.devicecontrol.utils.AppHelper;
+import at.amartinz.appmanager.AppHelper;
 
 import java.util.ArrayList;
 
+import at.amartinz.appmanager.PackageStatsObserver;
 import hugo.weaving.DebugLog;
 import timber.log.Timber;
 
@@ -193,7 +194,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
         getMenuInflater().inflate(R.menu.menu_app_details, menu);
 
         if (mAppItem != null) {
-            if (!AppHelper.isPlayStoreInstalled()) {
+            if (!AppHelper.isPlayStoreInstalled(this)) {
                 menu.removeItem(R.id.menu_action_play_store);
             }
             // prevent disabling Device Control
@@ -226,7 +227,7 @@ public class AppDetailsActivity extends BaseActivity implements PackageStatsObse
                 return true;
             }
             case R.id.menu_action_play_store: {
-                AppHelper.showInPlayStore("market://details?id=" + mAppItem.getPackageName());
+                AppHelper.showInPlayStore(this, mAppItem.getPackageName());
                 return true;
             }
             case R.id.menu_app_disable: {

@@ -1,0 +1,14 @@
+dependencies {
+    if (useLocalSources) {
+        compile project(':ExecutionLibrary')
+        compile project(':HardwareLibrary')
+    } else {
+        // see https://github.com/Evisceration/ExecutionLibrary
+        compile 'at.amartinz:execution:1.0.0'
+        // see https://github.com/Evisceration/HardwareLibrary
+        compile 'at.amartinz:hardware:1.0.1'
+    }
+
+    // see https://github.com/JakeWharton/timber
+    compile 'com.jakewharton.timber:timber:4.1.2'
+}

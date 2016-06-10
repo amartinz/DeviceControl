@@ -26,9 +26,9 @@ import com.bumptech.glide.Glide;
 
 import org.namelessrom.devicecontrol.R;
 
-import hugo.weaving.DebugLog;
-
 public class AppIconImageView extends ImageView {
+    private static final String RESOURCE_FORMATTER = "android.resource://%s/%s";
+
     public AppIconImageView(Context context) {
         this(context, null);
     }
@@ -41,15 +41,15 @@ public class AppIconImageView extends ImageView {
         super(context, attrs, defStyle);
     }
 
-    @DebugLog public void loadImage(AppItem appItem) {
+    public void loadImage(AppItem appItem) {
         Glide.with(getContext())
                 .load(resourceToUri(appItem.getPackageName(), appItem.getApplicationInfo().icon))
                 .placeholder(R.mipmap.ic_launcher_default)
                 .into(this);
     }
 
-    private Uri resourceToUri(String packageName, int resourceId) {
-        return Uri.parse(String.format("android.resource://%s/%s", packageName, resourceId));
+    private static Uri resourceToUri(String packageName, int resourceId) {
+        return Uri.parse(String.format(RESOURCE_FORMATTER, packageName, resourceId));
     }
 
 }

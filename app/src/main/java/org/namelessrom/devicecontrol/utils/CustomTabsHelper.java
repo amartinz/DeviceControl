@@ -34,6 +34,7 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.customtabs.CustomTabsServiceConnection;
 import android.support.customtabs.CustomTabsSession;
 
+import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.theme.AppResources;
 
@@ -116,7 +117,7 @@ public class CustomTabsHelper {
             }
         }
 
-        AppHelper.viewInBrowser(activity, url);
+        App.viewInBrowser(activity, url);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
