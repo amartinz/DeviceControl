@@ -33,13 +33,14 @@ import org.namelessrom.devicecontrol.Constants;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.DeviceConfig;
 import org.namelessrom.devicecontrol.theme.AppResources;
+import org.namelessrom.devicecontrol.thirdparty.Sense360Impl;
 import org.namelessrom.devicecontrol.utils.Utils;
 
-import at.amartinz.execution.ShellManager;
 import alexander.martinz.libs.materialpreferences.MaterialListPreference;
 import alexander.martinz.libs.materialpreferences.MaterialPreference;
 import alexander.martinz.libs.materialpreferences.MaterialSupportPreferenceFragment;
 import alexander.martinz.libs.materialpreferences.MaterialSwitchPreference;
+import at.amartinz.execution.ShellManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -150,13 +151,9 @@ public class MainPreferencesFragment extends MaterialSupportPreferenceFragment i
             try {
                 final Context applicationContext = getContext().getApplicationContext();
                 if (useSense360) {
-                    Timber.v("Starting Sense360");
-                    Sense360.userOptIn(applicationContext);
-                    Sense360.start(applicationContext);
+                    Sense360Impl.optIn(applicationContext);
                 } else {
-                    Timber.v("Stopping Sense360");
-                    Sense360.userOptOut(applicationContext);
-                    Sense360.stop(applicationContext);
+                    Sense360Impl.optOut(applicationContext);
                 }
             } catch (NoSuchMethodError | Exception exc) {
                 Timber.e(exc, "Could not start/stop Sense360");

@@ -35,8 +35,6 @@ android {
             versionName(versionName + '-git-' + gitRevision)
         }
 
-        signingConfig signingConfigs.release
-
         buildConfigField('String', 'API_KEY_POLL_FISH', keyPollFish);
         buildConfigField('String', 'API_KEY_GOOGLE_PLAY', keyGooglePlay)
     }
@@ -48,6 +46,8 @@ android {
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
+
+            signingConfig signingConfigs.release
         }
         debug {
             debuggable true
@@ -55,6 +55,8 @@ android {
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
+
+            signingConfig signingConfigs.release
         }
     }
 
@@ -76,8 +78,7 @@ android {
     }
 
     productFlavors {
-        google {}
-        universal {}
+        normal {}
     }
 
     packagingOptions {
@@ -136,12 +137,6 @@ dependencies {
     // see https://github.com/PhilJay/MPAndroidChart
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 
-    // see https://www.pollfish.com/android
-    googleCompile 'com.pollfish:pollfish:4.2.0:googleplayRelease@aar'
-    universalCompile 'com.pollfish:pollfish:4.2.0:universalRelease@aar'
-    compile 'com.google.android.gms:play-services-ads:8.4.0'
-    compile 'com.google.android.gms:play-services-base:8.4.0'
-
     // see https://github.com/Kennyc1012/BottomSheet
     compile 'com.github.Kennyc1012:BottomSheet:2.1.2'
 
@@ -154,7 +149,7 @@ dependencies {
 
     // Sense360
     // see http://sense360.com/documentation.php?android
-    compile 'com.sense360:sense360-quinoa:2.3.4@aar'
+    compile 'com.sense360:sense360-quinoa:2.4.1@aar'
     compile 'com.google.android.gms:play-services-location:8.4.0'
     compile('com.google.android.gms:play-services-gcm:8.4.0') {
         exclude module: 'play-services-measurement'
@@ -162,7 +157,11 @@ dependencies {
     // see https://github.com/google/gson
     compile 'com.google.code.gson:gson:2.6.2'
     // see https://github.com/square/okhttp
-    compile 'com.squareup.okhttp:okhttp:2.7.5'
+    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+
+    // see https://www.pollfish.com/android
+    compile 'com.pollfish:pollfish:4.2.1:googleplayRelease@aar'
+    compile 'com.google.android.gms:play-services-base:8.4.0'
 
     // FABRIC
     // see https://fabric.io/kits/android/answers

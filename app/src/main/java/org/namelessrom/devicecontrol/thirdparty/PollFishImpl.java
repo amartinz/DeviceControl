@@ -19,9 +19,6 @@ import org.namelessrom.devicecontrol.models.DeviceConfig;
 
 import timber.log.Timber;
 
-/**
- * Created by amartinz on 15.04.16.
- */
 public class PollFishImpl {
     public static void initPollFish(Activity activity) {
         if (!DeviceConfig.get().showPollfish) {
@@ -40,6 +37,7 @@ public class PollFishImpl {
                     .pollfishUserNotEligibleListener(pollFishListener)
                     .pollfishClosedListener(pollFishListener)
                     .pollfishOpenedListener(pollFishListener)
+                    .releaseMode(!BuildConfig.DEBUG)
                     .build();
             PollFish.initWith(activity, paramsBuilder);
 
