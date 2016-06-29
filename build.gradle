@@ -3,20 +3,22 @@ buildscript {
     ext {
         useLocalSources = findProperty("we_are_awesome_developers") ?: false
 
-        gradleVersion = '2.1.0'
+        gradleVersion = '2.2.0-alpha4'
 
-        supportLibVersion = '23.4.0'
+        targetSdk = 24
+        buildTools = '24.0.0'
 
-        keyGooglePlay = findProperty("api_key_GooglePlay") ?: "---";
-        keyPollFish = findProperty("api_key_PollFish") ?: "---";
+        supportLibVersion = '24.0.0'
+
+        keyGooglePlay = findProperty("api_key_GooglePlay") ?: "\"---\"";
+        keyPollFish = findProperty("api_key_PollFish") ?: "\"---\"";
     }
 
     repositories {
         jcenter()
-        maven { url "https://jitpack.io" }
-        maven { url "http://dl.bintray.com/tbruyelle/tbruyelle" }
-        maven { url "https://maven.fabric.io/public" }
         flatDir { dirs "aars" }
+        maven { url "https://maven.fabric.io/public" }
+        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${gradleVersion}"
@@ -35,10 +37,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://jitpack.io" }
-        maven { url "http://dl.bintray.com/tbruyelle/tbruyelle" }
-        maven { url "https://maven.fabric.io/public" }
         flatDir { dirs "aars" }
+        maven { url "https://maven.fabric.io/public" }
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -63,7 +64,7 @@ def getGitCommitHash() {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.13'
+    gradleVersion = '2.14'
 }
 
 task clean(type: Delete) {
