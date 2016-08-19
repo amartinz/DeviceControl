@@ -23,14 +23,12 @@ import android.text.TextUtils;
 import org.namelessrom.devicecontrol.App;
 import org.namelessrom.devicecontrol.R;
 import org.namelessrom.devicecontrol.models.BootupConfig;
-import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuStateMonitor;
 import org.namelessrom.devicecontrol.modules.bootup.BootupItem;
+import org.namelessrom.devicecontrol.modules.cpu.monitors.CpuStateMonitor;
 import org.namelessrom.devicecontrol.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import timber.log.Timber;
 
 /**
  * Generic CPU Tasks.
@@ -72,21 +70,17 @@ public class CpuUtils {
         return String.format(CORE_ONLINE, cpu);
     }
 
+    // TODO: newer qcom support, tsens has scaling factors
     public int getCpuTemperature() {
         String tmp = Utils.readOneLine(App.get().getString(R.string.file_thermal_cpu));
+        int temp = -1;
         if (!TextUtils.isEmpty(tmp) && !tmp.trim().isEmpty()) {
-            int temp;
-            try {
-                temp = Utils.parseInt(tmp);
-            } catch (Exception e) {
-                Timber.e(e, "could not read cpu temperature");
-                return -1;
+            temp = Utils.parseInt(tmp, -1);
+            if (temp > 100 || temp < 0) {
+                temp = -1;
             }
-            temp = (temp < 0 ? 0 : temp);
-            temp = (temp > 100 ? 100 : temp);
-            return temp;
         }
-        return -1;
+        return temp;
     }
 
     public String restore(BootupConfig config) {
