@@ -118,6 +118,7 @@
     </string-array>
     <string-array name="files_lcd_sunlight_enhancement" translatable="false">
         <item>/sys/class/graphics/fb0/sre</item>
+        <item>/sys/class/graphics/fb0/hbm</item>
     </string-array>
     <string-array name="files_lcd_color_enhancement" translatable="false">
         <item>/sys/class/graphics/fb0/color_enhance</item>

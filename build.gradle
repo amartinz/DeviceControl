@@ -6,7 +6,7 @@ buildscript {
         gradleVersion = '2.2.0-beta2'
 
         targetSdk = 24
-        buildTools = '24.0.0'
+        buildTools = '24.0.1'
 
         supportLibVersion = '24.2.0'
 
@@ -44,22 +44,23 @@ allprojects {
 }
 
 def getGitCommitHash() {
-    def gitFolder = "$projectDir/.git/"
-    if (!new File(gitFolder + "HEAD").exists()) {
+    def gitFolderPath = "$projectDir/.git/"
+    def gitFolder = new File(gitFolderPath + "HEAD");
+    if (!gitFolder.exists()) {
         return null
     }
 
     // how many characters we extract from the hash
     def takeFromHash = 6
 
-    def head = new File(gitFolder + "HEAD").text.split(":")
+    def head = gitFolder.text.split(":")
     def isCommit = (head.length == 1)
 
     if (isCommit) {
         return head[0].trim().take(takeFromHash)
     }
 
-    def refHead = new File(gitFolder + head[1].trim())
+    def refHead = new File(gitFolderPath + head[1].trim())
     return refHead.text.trim().take(takeFromHash)
 }
 
