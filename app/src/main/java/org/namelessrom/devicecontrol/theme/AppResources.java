@@ -23,8 +23,6 @@ public class AppResources {
 
     private Boolean isLowEndGfx = null;
 
-    private int themeMode = -1;
-
     private int accentColor;
     private int primaryColor;
 
@@ -76,22 +74,10 @@ public class AppResources {
         this.isLowEndGfx = isLowEndGfx;
     }
 
-
-    public int getThemeMode() {
-        if (themeMode == -1) {
-            themeMode = DeviceConfig.get().themeMode;
-        }
-        return themeMode;
-    }
-
     public AppResources setThemeMode(int themeMode) {
-        this.themeMode = themeMode;
-
         DeviceConfig deviceConfig = DeviceConfig.get();
         deviceConfig.themeMode = themeMode;
         deviceConfig.save();
-
-        sInstance = new AppResources(App.get());
 
         return this;
     }

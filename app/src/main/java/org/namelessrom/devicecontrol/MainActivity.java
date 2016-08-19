@@ -388,7 +388,6 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
         if (fragment == null) {
             return;
         }
-        Timber.d("setFragment: %s", fragment.getId());
         mCurrentFragment = fragment;
     }
 

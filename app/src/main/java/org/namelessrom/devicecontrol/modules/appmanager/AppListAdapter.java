@@ -22,9 +22,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -45,9 +45,8 @@ import com.kennyc.bottomsheet.BottomSheet;
 import com.kennyc.bottomsheet.BottomSheetListener;
 
 import org.namelessrom.devicecontrol.R;
-import org.namelessrom.devicecontrol.theme.AppResources;
-import org.namelessrom.devicecontrol.views.CardView;
 import org.namelessrom.devicecontrol.utils.AppHelper;
+import org.namelessrom.devicecontrol.views.CardView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -150,7 +149,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
             packageName.setText(appItem.getPackageName());
             appVersion.setText(appItem.getVersion());
 
-            int color = ContextCompat.getColor(mActivity, R.color.graph_text_color);;
+            int color = ContextCompat.getColor(mActivity, R.color.graph_text_color);
             appLabel.setTextColor(appItem.isSystemApp() ? ContextCompat.getColor(mActivity, R.color.red_middle) : color);
 
             color = appItem.isEnabled() ? android.R.color.transparent : R.color.darker_gray;
@@ -196,10 +195,10 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
         }
 
         private final BottomSheetListener appBottomSheetListener = new BottomSheetListener() {
-            @Override public void onSheetShown() { }
+            @Override public void onSheetShown(@NonNull BottomSheet bottomSheet) { }
 
-            @Override public void onSheetItemSelected(MenuItem item) {
-                final int id = item.getItemId();
+            @Override public void onSheetItemSelected(@NonNull BottomSheet bottomSheet, MenuItem menuItem) {
+                final int id = menuItem.getItemId();
                 switch (id) {
                     case R.id.sheet_open: {
                         final boolean success = appItem.launchActivity(mActivity);
@@ -260,7 +259,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.ViewHold
                 }
             }
 
-            @Override public void onSheetDismissed(int a) { }
+            @Override public void onSheetDismissed(@NonNull BottomSheet bottomSheet, @DismissEvent int i) { }
         };
     }
 

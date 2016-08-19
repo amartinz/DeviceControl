@@ -111,13 +111,13 @@ dependencies {
     // see https://github.com/EsotericSoftware/kryo
     compile 'com.esotericsoftware:kryo:3.0.3'
     // see https://github.com/magro/kryo-serializers
-    compile 'de.javakaffee:kryo-serializers:0.37'
+    compile 'de.javakaffee:kryo-serializers:0.38'
 
     // see https://github.com/Evisceration/UniversalDebug
     compile 'at.amartinz:universal-debug:1.0.0'
     compile 'at.amartinz:universal-debug-fabric:1.0.0'
     // see https://github.com/JakeWharton/timber
-    compile 'com.jakewharton.timber:timber:4.1.2'
+    compile 'com.jakewharton.timber:timber:4.3.0'
 
     // see https://github.com/bumptech/glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
@@ -131,19 +131,19 @@ dependencies {
     compile "com.android.support:support-v13:${supportLibVersion}"
 
     // see https://github.com/JakeWharton/butterknife
-    compile 'com.jakewharton:butterknife:8.0.1'
-    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
 
     // see https://github.com/PhilJay/MPAndroidChart
-    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.5'
 
     // see https://github.com/Kennyc1012/BottomSheet
-    compile 'com.github.Kennyc1012:BottomSheet:2.1.2'
+    compile 'com.github.Kennyc1012:BottomSheet:2.3.1'
 
     // see https://github.com/ReactiveX/RxAndroid
-    compile 'io.reactivex:rxandroid:1.2.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
     // see https://github.com/ReactiveX/RxJava
-    compile 'io.reactivex:rxjava:1.1.5'
+    compile 'io.reactivex:rxjava:1.1.9'
     // see https://github.com/mcharmas/Android-ReactiveLocation
     compile 'pl.charmas.android:android-reactive-location:0.9@aar'
 
@@ -155,9 +155,9 @@ dependencies {
         exclude module: 'play-services-measurement'
     }
     // see https://github.com/google/gson
-    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.google.code.gson:gson:2.7'
     // see https://github.com/square/okhttp
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
 
     // see https://www.pollfish.com/android
     compile 'com.pollfish:pollfish:4.2.1:googleplayRelease@aar'
@@ -165,11 +165,11 @@ dependencies {
 
     // FABRIC
     // see https://fabric.io/kits/android/answers
-    compile('com.crashlytics.sdk.android:answers:1.3.8@aar') {
+    compile('com.crashlytics.sdk.android:answers:1.3.9@aar') {
         transitive = true;
     }
     // see https://fabric.io/kits/android/crashlytics
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.0@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.2@aar') {
         transitive = true;
     }
 }

@@ -3,12 +3,12 @@ buildscript {
     ext {
         useLocalSources = findProperty("we_are_awesome_developers") ?: false
 
-        gradleVersion = '2.2.0-alpha4'
+        gradleVersion = '2.2.0-beta2'
 
         targetSdk = 24
         buildTools = '24.0.0'
 
-        supportLibVersion = '24.0.0'
+        supportLibVersion = '24.2.0'
 
         keyGooglePlay = findProperty("api_key_GooglePlay") ?: "\"---\"";
         keyPollFish = findProperty("api_key_PollFish") ?: "\"---\"";
@@ -64,7 +64,8 @@ def getGitCommitHash() {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.14'
+    gradleVersion = '3.0'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
 
 task clean(type: Delete) {

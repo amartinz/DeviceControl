@@ -40,43 +40,52 @@ public class PollFishImpl {
                     .releaseMode(!BuildConfig.DEBUG)
                     .build();
             PollFish.initWith(activity, paramsBuilder);
-
-            if (BuildConfig.DEBUG) {
-                PollFish.show();
-            }
         } else {
             Timber.w("No proper PollFish api key configured!");
         }
     }
 
-    public static class PollFishListener implements PollfishSurveyNotAvailableListener, PollfishSurveyReceivedListener, PollfishSurveyCompletedListener, PollfishUserNotEligibleListener, PollfishClosedListener, PollfishOpenedListener {
+    private static final class PollFishListener implements PollfishSurveyNotAvailableListener, PollfishSurveyReceivedListener, PollfishSurveyCompletedListener, PollfishUserNotEligibleListener, PollfishClosedListener, PollfishOpenedListener {
+        private static final String NOT_AVAILABLE = "pollfish_survey_not_available";
+        private static final String RECEIVED = "pollfish_survey_received";
+        private static final String COMPLETED = "pollfish_survey_completed";
+
+        private static final String NOT_ELIGIBLE = "pollfish_user_not_eligible";
+        private static final String CLOSED = "pollfish_closed";
+        private static final String OPENED = "pollfish_opened";
 
         @Override public void onPollfishSurveyNotAvailable() {
-            Answers.getInstance().logCustom(new CustomEvent("pollfish_survey_not_available"));
+            Timber.d(NOT_AVAILABLE);
+            Answers.getInstance().logCustom(new CustomEvent(NOT_AVAILABLE));
         }
 
         @Override public void onPollfishSurveyReceived(boolean playfulSurveys, int surveyPrice) {
-            final CustomEvent event = new CustomEvent("pollfish_survey_received");
+            Timber.d(RECEIVED);
+            final CustomEvent event = new CustomEvent(RECEIVED);
             event.putCustomAttribute("playful", playfulSurveys ? "true" : "false");
             Answers.getInstance().logCustom(event);
         }
 
         @Override public void onPollfishSurveyCompleted(boolean playfulSurveys, int surveyPrice) {
-            final CustomEvent event = new CustomEvent("pollfish_survey_completed");
+            Timber.d(COMPLETED);
+            final CustomEvent event = new CustomEvent(COMPLETED);
             event.putCustomAttribute("playful", playfulSurveys ? "true" : "false");
             Answers.getInstance().logCustom(event);
         }
 
         @Override public void onUserNotEligible() {
-            Answers.getInstance().logCustom(new CustomEvent("pollfish_user_not_eligible"));
+            Timber.d(NOT_ELIGIBLE);
+            Answers.getInstance().logCustom(new CustomEvent(NOT_ELIGIBLE));
         }
 
         @Override public void onPollfishClosed() {
-            Answers.getInstance().logCustom(new CustomEvent("pollfish_closed"));
+            Timber.d(CLOSED);
+            Answers.getInstance().logCustom(new CustomEvent(CLOSED));
         }
 
         @Override public void onPollfishOpened() {
-            Answers.getInstance().logCustom(new CustomEvent("pollfish_opened"));
+            Timber.d(OPENED);
+            Answers.getInstance().logCustom(new CustomEvent(OPENED));
         }
     }
 }
