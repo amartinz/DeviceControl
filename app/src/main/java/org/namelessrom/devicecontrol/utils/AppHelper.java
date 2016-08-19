@@ -259,26 +259,21 @@ public class AppHelper {
     /**
      * Shows the app in Google's Play Store if Play Store is installed
      */
-    public static boolean showInPlayStore(final String uri) {
-        try {
-            final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            App.get().startActivity(i);
-            return true;
-        } catch (Exception exc) {
-            Timber.e(exc, exc.getMessage());
-        }
-        return false;
+    public static boolean showInPlayStore(final String packageName) {
+        final String url = String.format("market://details?id=%s", packageName);
+        return AppHelper.viewInBrowser(App.get(), url);
     }
 
-    public static void viewInBrowser(final Context context, final String url) {
+    public static boolean viewInBrowser(final Context context, final String url) {
         final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
             context.startActivity(i);
+            return true;
         } catch (Exception e) {
-            Timber.e(e, "viewInBrowser");
+            Timber.e(e, e.getMessage());
         }
+        return false;
     }
 
     public static void startMediaScan(@Nullable View view, @Nullable Context context) {

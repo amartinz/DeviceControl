@@ -26,7 +26,6 @@ import android.content.pm.PermissionGroupInfo;
 import android.content.pm.PermissionInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +42,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import timber.log.Timber;
 
 /**
  * This class contains the SecurityPermissions view implementation.
@@ -61,7 +62,6 @@ public class AppSecurityPermissions {
     public static final int WHICH_NEW = 1 << 2;
     public static final int WHICH_ALL = 0xffff;
 
-    private final static String TAG = "AppSecurityPermissions";
     private final Context mContext;
     private final LayoutInflater mInflater;
     private final PackageManager mPm;
@@ -138,8 +138,8 @@ public class AppSecurityPermissions {
         PackageInfo pkgInfo;
         try {
             pkgInfo = mPm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
-        } catch (NameNotFoundException e) {
-            Log.w(TAG, "Couldn't retrieve permissions for package:" + packageName);
+        } catch (RuntimeException | NameNotFoundException e) {
+            Timber.w("Couldn't retrieve permissions for package: %s", packageName);
             return;
         }
         // Extract all user permissions
@@ -152,7 +152,13 @@ public class AppSecurityPermissions {
     }
 
     private void getAllUsedPermissions(int sharedUid, Set<MyPermissionInfo> permSet) {
-        String sharedPkgList[] = mPm.getPackagesForUid(sharedUid);
+        final String sharedPkgList[];
+        try {
+            sharedPkgList = mPm.getPackagesForUid(sharedUid);
+        } catch (RuntimeException rex) {
+            // we are screwed
+            return;
+        }
         if (sharedPkgList == null || (sharedPkgList.length == 0)) {
             return;
         }
@@ -165,8 +171,8 @@ public class AppSecurityPermissions {
         try {
             PackageInfo pkgInfo = mPm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
             extractPerms(pkgInfo, permSet, pkgInfo);
-        } catch (NameNotFoundException e) {
-            Log.w(TAG, "Couldn't retrieve permissions for package: " + packageName);
+        } catch (RuntimeException |NameNotFoundException e) {
+            Timber.w("Couldn't retrieve permissions for package: %s", packageName);
         }
     }
 
@@ -232,7 +238,7 @@ public class AppSecurityPermissions {
                     mPermGroups.put(tmpPermInfo.group, group);
                 }
                 final boolean newPerm = installedPkgInfo != null
-                        && (existingFlags & PackageInfo.REQUESTED_PERMISSION_GRANTED) == 0;
+                                        && (existingFlags & PackageInfo.REQUESTED_PERMISSION_GRANTED) == 0;
                 MyPermissionInfo myPerm = new MyPermissionInfo(tmpPermInfo);
                 myPerm.mNewReqFlags = flagsList[i];
                 myPerm.mExistingReqFlags = existingFlags;
@@ -241,7 +247,7 @@ public class AppSecurityPermissions {
                 myPerm.mNew = newPerm;
                 permSet.add(myPerm);
             } catch (NameNotFoundException e) {
-                Log.i(TAG, "Ignoring unknown permission:" + permName);
+                Timber.i("Ignoring unknown permission: %s", permName);
             }
         }
     }
@@ -271,8 +277,7 @@ public class AppSecurityPermissions {
     }
 
     public View getPermissionsView() {
-        LinearLayout permsView =
-                (LinearLayout) mInflater.inflate(R.layout.app_perms_summary, null, false);
+        LinearLayout permsView = (LinearLayout) mInflater.inflate(R.layout.app_perms_summary, null, false);
         LinearLayout displayList = (LinearLayout) permsView.findViewById(R.id.perms_list);
         View noPermsView = permsView.findViewById(R.id.no_permissions);
 

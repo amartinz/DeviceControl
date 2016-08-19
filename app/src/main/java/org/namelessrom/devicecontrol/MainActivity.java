@@ -625,7 +625,9 @@ public class MainActivity extends BaseActivity implements ActivityCallbacks, Nav
             // set a lock to prevent calling setFragment as onResume gets called
             AppHelper.preventOnResume = true;
             MainActivity.sDisableFragmentAnimations = true;
-            fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            try {
+                fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            } catch (IllegalArgumentException ignored) { }
             MainActivity.sDisableFragmentAnimations = false;
             // release the lock
             AppHelper.preventOnResume = false;
